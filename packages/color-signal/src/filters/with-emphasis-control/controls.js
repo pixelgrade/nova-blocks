@@ -9,16 +9,16 @@ const EmphasisAreaControl = props => {
   const { emphasisArea } = attributes;
 
   return (
-      <ColorSignalCustomizeControls>
-        <RangeControl
-          value={ emphasisArea }
-          onChange={ ( emphasisArea ) => setAttributes( { emphasisArea } ) }
-          label={ __( 'Emphasis Area' ) }
-          min={ 0 }
-          max={ 100 }
-          step={ 5 }
-        />
-      </ColorSignalCustomizeControls>
+    <ColorSignalCustomizeControls>
+      <RangeControl
+        value={ emphasisArea }
+        onChange={ ( emphasisArea ) => setAttributes( { emphasisArea } ) }
+        label={ __( 'Emphasis Area' ) }
+        min={ 0 }
+        max={ 100 }
+        step={ 5 }
+      />
+    </ColorSignalCustomizeControls>
   )
 }
 

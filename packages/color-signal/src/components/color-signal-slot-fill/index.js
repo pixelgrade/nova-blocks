@@ -3,22 +3,47 @@ import {
   __experimentalUseSlot as useSlot
 } from '@wordpress/components';
 
-const slotName = 'ColorSignalCustomizeControls'
+import { useBlockEditContext } from "@wordpress/block-editor";
 
-const {Fill, Slot: ColorSignalCustomizeControlsSlot } = createSlotFill( slotName );
+import { ControlsGroup } from "@novablocks/block-editor";
 
-function Slot( {children}) {
-  const slot = useSlot( slotName );
+const SLOT_NAME = 'ColorSignalCustomizeControls';
+
+const { Fill, Slot } = createSlotFill( SLOT_NAME );
+
+const ColorSignalCustomizeSlot = ( {
+  bubblesVirtually = true,
+  ...props
+} ) => {
+  const slot = useSlot( SLOT_NAME );
   const hasFills = Boolean( slot.fills && slot.fills.length );
 
   if ( ! hasFills ) {
     return null;
   }
 
-  return <ColorSignalCustomizeControlsSlot />
+  return (
+    <Slot { ...props } bubblesVirtually={ bubblesVirtually } />
+  );
 }
 
-const ColorSignalCustomizeControls = Fill;
-ColorSignalCustomizeControls.Slot = Slot;
+const ColorSignalCustomizeFill = ( { children, title } ) => {
+  const { isSelected } = useBlockEditContext();
+
+  if ( ! isSelected ) {
+    return null;
+  }
+
+  return (
+    <Fill>
+      <ControlsGroup title={ title }>
+        { children }
+      </ControlsGroup>
+    </Fill>
+  );
+}
+
+const ColorSignalCustomizeControls = ColorSignalCustomizeFill;
+ColorSignalCustomizeControls.Slot = ColorSignalCustomizeSlot;
 
 export default ColorSignalCustomizeControls;
