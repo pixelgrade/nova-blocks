@@ -30,9 +30,9 @@ import './carousel';
   function handleGrids( selector ) {
     $( selector ).each( function( i, grid ) {
       const $grid = $( grid );
-      const $block = $grid.closest( '.novablocks-block' );
-      const $cards = $grid.closest( '.novablocks-collection__cards' );
-      const $posts = $grid.children( '.novablocks-card, .supernova-item' );
+      const $block = $grid.closest( '.supernova, .novablocks-block' );
+      const $cards = $grid.closest( '.supernova__layout, .novablocks-collection__cards' );
+      const $posts = $grid.children();
       const attributes = $grid.data();
       const cardsCount = $posts.length;
 
