@@ -8,6 +8,14 @@
       margin-left: 0;
       margin-right: 0;
     }
+    
+    > .wp-block {
+      --nb-block-top-spacing: 0;
+      
+      > .supernova__layout {
+        margin-top: calc(var(--nb-block-top-spacing) * var(--nb-spacing));
+      }
+    }
   }
   
 }
