@@ -192,6 +192,8 @@ function novablocks_get_post_card_contents( $post, $attributes ) {
 		)
 	), $attributes );
 
+	echo novablocks_get_card_item_link( get_permalink( $post ), $attributes );
+
 	return ob_get_clean();
 }
 
