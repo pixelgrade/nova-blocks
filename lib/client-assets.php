@@ -85,10 +85,6 @@ if ( ! function_exists( 'novablocks_register_packages_scripts' ) ) {
 			// Determine the current package name (its directory).
 			$package = basename( dirname( $path ) );
 
-			if ( $package === 'media-composition' ) {
-				echo '';
-			}
-
 			// Prefix `novablocks-` to package name to get script handle.
 			// For example, `…/build/components/index.js` becomes `novablocks-components`.
 			$handle = 'novablocks-' . $package;
@@ -264,10 +260,6 @@ function novablocks_register_block_types() {
 	foreach ( glob( novablocks_get_plugin_path() . 'build/block-library/blocks/*' ) as $blockpath ) {
 
 		$block = basename( $blockpath );
-
-		if ( $block === 'supernova' ) {
-			echo '';
-		}
 
 		$block_dir_url = trailingslashit( trailingslashit( novablocks_get_plugin_url() ) . 'build/block-library/blocks/' . $block );
 
