@@ -1644,7 +1644,7 @@ function novablocks_optimize_frontend_scripts_output() {
 	// But we don't want them in the frontend since it would be wasteful.
 	$scripts_to_remove = array(
 			'novablocks/media/frontend',
-			'novablocks/advanced-gallery/frontend',
+			'novablocks/media-composition/frontend',
 			'novablocks/posts-collection/frontend',
 	);
 
@@ -1859,7 +1859,7 @@ function novablocks_get_supernova_card_markup( $media, $content, $attributes ) {
 
 	$cssProps = array(
 		'--collection-card-media-opacity: ' . $attributes[ 'cardMediaOpacity' ] / 100,
-		'--collection-card-content-area-width: ' . $attributes[ 'contentAreaWidth' ] . '%',
+		'--nb-card-content-area-width: ' . $attributes[ 'contentAreaWidth' ] . '%',
 	);
 
 	$innerContainerClasses = array(

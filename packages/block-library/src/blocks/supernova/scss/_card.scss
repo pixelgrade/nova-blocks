@@ -7,7 +7,7 @@
   --nb-card-gap: calc( var(--nb-spacing) * var(--nb-element-spacing-multiplier, 1) * var(--nb-collection-gutter, 0) / 10 );
   --nb-card-content-padding: calc( var(--nb-spacing) * var(--nb-element-spacing-multiplier, 1) * ( 2 * var(--nb-card-content-padding-multiplier, 0) ) );
   --nb-card-image-padding: calc( var(--nb-spacing) * var(--nb-element-spacing-multiplier, 1) * ( 2 * var(--nb-card-media-padding-multiplier, 0) ) );
-  --nb-card-content-column-width: calc( var(--collection-card-content-area-width) - var(--nb-card-gap) * 0.5 );
+  --nb-card-content-column-width: calc( var(--nb-card-content-area-width) - var(--nb-card-gap) * 0.5 );
   --nb-card-media-column-width: calc( 100% - var(--nb-card-content-column-width) - var(--nb-card-gap));
 
   & &__inner-container[class] {

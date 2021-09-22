@@ -72,7 +72,7 @@ if ( ! function_exists( 'novablocks_register_packages_scripts' ) ) {
 	function novablocks_register_packages_scripts() {
 
 		$blob_style_dependent_handles = array(
-			'novablocks-advanced-gallery',
+			'novablocks-media-composition',
 		);
 
 		foreach ( glob( trailingslashit( novablocks_get_plugin_path() ) . 'build/*/index.js' ) as $path ) {
@@ -84,6 +84,10 @@ if ( ! function_exists( 'novablocks_register_packages_scripts' ) ) {
 
 			// Determine the current package name (its directory).
 			$package = basename( dirname( $path ) );
+
+			if ( $package === 'media-composition' ) {
+				echo '';
+			}
 
 			// Prefix `novablocks-` to package name to get script handle.
 			// For example, `…/build/components/index.js` becomes `novablocks-components`.
@@ -135,7 +139,7 @@ if ( ! function_exists( 'novablocks_register_packages_scripts' ) ) {
 			$style_dependencies = array();
 
 			if ( in_array( $handle, $blob_style_dependent_handles ) ) {
-				$style_dependencies[] = 'novablocks-blob-style';
+				$style_dependencies[] = 'novablocks-shape-modeling-style';
 			}
 
 			// Register styles for the current package, if the files exist.
@@ -234,7 +238,7 @@ function novablocks_register_block_types() {
 		'novablocks/google-map/frontend'
 	);
 
-	$advanced_gallery_style_dependent_blocks = array(
+	$media_composition_style_dependent_blocks = array(
 		'advanced-gallery',
 		'media',
 		'supernova',
@@ -260,6 +264,11 @@ function novablocks_register_block_types() {
 	foreach ( glob( novablocks_get_plugin_path() . 'build/block-library/blocks/*' ) as $blockpath ) {
 
 		$block = basename( $blockpath );
+
+		if ( $block === 'supernova' ) {
+			echo '';
+		}
+
 		$block_dir_url = trailingslashit( trailingslashit( novablocks_get_plugin_url() ) . 'build/block-library/blocks/' . $block );
 
 		// possible script files to be registered for each block
@@ -391,8 +400,8 @@ function novablocks_register_block_types() {
 				}
 			}
 
-			if ( in_array( $block, $advanced_gallery_style_dependent_blocks ) ) {
-				$css_dependencies[] = 'novablocks-advanced-gallery-' . $key;
+			if ( in_array( $block, $media_composition_style_dependent_blocks ) ) {
+				$css_dependencies[] = 'novablocks-media-composition-' . $key;
 			}
 
 			if ( in_array( $block, $collection_style_dependent_blocks ) ) {

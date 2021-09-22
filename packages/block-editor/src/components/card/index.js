@@ -26,7 +26,7 @@ export const Card = ( props ) => {
   );
 
   const style = Object.assign( {}, props.style, {
-    '--collection-card-content-area-width': `${ contentAreaWidth }%`,
+    '--nb-card-content-area-width': `${ contentAreaWidth }%`,
   } );
 
   const children = Children.toArray( props.children );
