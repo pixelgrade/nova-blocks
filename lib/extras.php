@@ -617,7 +617,7 @@ function novablocks_get_block_editor_settings() {
 				'value' => 'custom',
 			),
 		),
-		'advancedGalleryPresetOptions' => novablocks_get_advanced_gallery_presets(),
+		'advancedGalleryPresetOptions' => novablocks_get_media_composition_markup_presets(),
 		'blobPresetOptions'            => novablocks_get_blob_presets(),
 		'theme_support'                => novablocks_get_theme_support(),
 	);
@@ -835,7 +835,7 @@ function novablocks_get_blob_presets() {
 	);
 }
 
-function novablocks_get_advanced_gallery_presets() {
+function novablocks_get_media_composition_markup_presets() {
 	return array(
 		array(
 			'label'  => 'The Cloud Atlas',
@@ -1019,7 +1019,7 @@ function novablocks_get_data_attributes( $data_attributes_array, $attributes, $b
 	return $data_attributes;
 }
 
-function novablocks_get_advanced_gallery_component_attributes() {
+function novablocks_get_media_composition_markup_component_attributes() {
 
 	return novablocks_merge_attributes_from_array( array(
 		'packages/shape-modeling/src/attributes.json',
@@ -1028,11 +1028,11 @@ function novablocks_get_advanced_gallery_component_attributes() {
 	
 }
 
-function novablocks_render_advanced_gallery( $attributes ) {
-	echo novablocks_get_advanced_gallery( $attributes );
+function novablocks_render_media_composition( $attributes ) {
+	echo novablocks_get_media_composition_markup( $attributes );
 }
 
-function novablocks_get_advanced_gallery( $attributes ) {
+function novablocks_get_media_composition_markup( $attributes ) {
 
 	ob_start();
 
@@ -1046,7 +1046,7 @@ function novablocks_get_advanced_gallery( $attributes ) {
 		$images = $attributes['gallery'];
 	}
 
-	$attributes_config = novablocks_get_advanced_gallery_component_attributes();
+	$attributes_config = novablocks_get_media_composition_markup_component_attributes();
 	$attributes = novablocks_get_attributes_with_defaults( $attributes, $attributes_config );
 	$data_attributes_array = array_map( 'novablocks_camel_case_to_kebab_case', array_keys( $attributes ) );
 
@@ -1078,8 +1078,8 @@ function novablocks_get_advanced_gallery( $attributes ) {
 
 	if ( ! empty( $images ) && is_array( $images ) ) {
 
-		echo '<div class="novablocks-advanced-gallery" ' . join( ' ', $data_attributes ) . ' style="' . $style . '">';
-		echo '<div class="novablocks-advanced-gallery__grid">';
+		echo '<div class="novablocks-media-composition" style="' . $style . '">';
+		echo '<div class="novablocks-media-composition__grid">';
 
 		foreach ( $images as $image ) {
 
@@ -1114,27 +1114,27 @@ function novablocks_get_advanced_gallery( $attributes ) {
 			}
 
 			if ( ! empty( $url ) ) {
-				echo '<div class="novablocks-advanced-gallery__grid-item">';
-				echo '<div class="novablocks-advanced-gallery__grid-item-media">';
+				echo '<div class="novablocks-media-composition__grid-item">';
+				echo '<div class="novablocks-media-composition__grid-item-media">';
 
 				if ( isset( $image['type'] ) && $image['type'] === 'video' ) {
-					echo '<video muted autoplay loop playsinline class="novablocks-advanced-gallery__image" src="' . esc_url( $image['url'] ) . '"/>';
+					echo '<video muted autoplay loop playsinline class="novablocks-media-composition__image" src="' . esc_url( $image['url'] ) . '"/>';
 				} else {
-					echo '<img class="novablocks-advanced-gallery__image" src="' . $url . '" />';
+					echo '<img class="novablocks-media-composition__image" src="' . $url . '" />';
 				}
 
 				echo '</div>';
 
 				if ( $has_caption || $has_description ) {
 
-					echo '<div class="novablocks-advanced-gallery__grid-item-info">';
+					echo '<div class="novablocks-media-composition__grid-item-info">';
 
 					if ( $has_caption ) {
-						echo '<div class="novablocks-advanced-gallery__grid-item-caption">' . $image['caption'] . '</div>';
+						echo '<div class="novablocks-media-composition__grid-item-caption">' . $image['caption'] . '</div>';
 					}
 
 					if ( $has_description ) {
-						echo '<div class="novablocks-advanced-gallery__grid-item-description">' . $attachment->post_content . '</div>';
+						echo '<div class="novablocks-media-composition__grid-item-description">' . $attachment->post_content . '</div>';
 					}
 
 					echo '</div>';
@@ -1866,15 +1866,19 @@ function novablocks_get_supernova_card_markup( $media, $content, $attributes ) {
 		'supernova-item__inner-container'
 	);
 
-	$contentPaletteClasses = novablocks_get_color_signal_classes( $attributes );
-
 	$align = preg_split( '/\b\s+/', $attributes[ 'contentPosition' ] );
 
-	$contentClasses = array(
+	$contentClasses = array_merge( array(
 		'supernova-item__content',
 		'supernova-item__content--valign-' . $align[0],
 		'supernova-item__content--halign-' . $align[1],
-	);
+	), novablocks_get_color_signal_classes( $attributes ) );
+
+	$mediaClasses = array( 'supernova-item__media-wrapper' );
+
+	if ( $attributes[ 'sourceType' ] === 'content' ) {
+		$mediaClasses = array_merge( $mediaClasses, novablocks_get_color_signal_classes( $attributes ) );
+	}
 
 	$data_attributes_array = array_map( 'novablocks_camel_case_to_kebab_case', array_keys( $attributes ) );
 	$blacklist = array( 'images' );
@@ -1882,10 +1886,10 @@ function novablocks_get_supernova_card_markup( $media, $content, $attributes ) {
 
 	ob_start(); ?>
 
-	<div class="supernova__layout-item <?php echo join( ' ', $contentPaletteClasses ); ?>" <?php echo join( ' ', $data_attributes ); ?>>
+	<div class="supernova__layout-item">
 		<div class="<?php echo join( ' ', $cardClasses ); ?>"
 			 style="<?php echo join( '; ', $cssProps ); ?>">
-			<div class="supernova-item__media-wrapper">
+			<div class="<?php echo join( ' ', $mediaClasses ); ?>">
 				<div class="supernova-item__media-aspect-ratio">
 					<div class="novablocks-doppler__mask novablocks-doppler__wrapper">
 						<div class="supernova-item__media-doppler novablocks-doppler__target">
@@ -1895,7 +1899,7 @@ function novablocks_get_supernova_card_markup( $media, $content, $attributes ) {
 				</div>
 			</div>
 			<?php if ( novablocks_show_card_contents( $attributes ) ) { ?>
-				<div class="<?php echo join( ' ', $contentClasses ); ?>">
+				<div class="<?php echo join( ' ', $contentClasses ); ?>" <?php echo join( ' ', $data_attributes ); ?>>
 					<div class="<?php echo join( ' ', $innerContainerClasses ); ?>" >
 						<?php echo $content; ?>
 					</div>

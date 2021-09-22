@@ -1,3 +1,4 @@
+import classnames from 'classnames';
 import { Spring, animated } from 'react-spring/renderprops';
 import { createHigherOrderComponent } from '@wordpress/compose';
 import { Fragment } from "@wordpress/element";
@@ -16,7 +17,15 @@ const withShapeModelingDecoration = createHigherOrderComponent( OriginalComponen
 
 	return ( props ) => {
 
-		const { attributes } = props;
+		const {
+		  attributes,
+      name,
+      colorSignal: {
+        utils: {
+          getColorSignalClassnames
+        }
+      }
+		} = props;
 
 		const {
 			blobsEnableMask,
@@ -39,14 +48,21 @@ const withShapeModelingDecoration = createHigherOrderComponent( OriginalComponen
 		const svgMaskPath = generatePath( blobMaskAtts );
 		const svgPath = generatePath( blobAtts );
 
+    const colorSignalClassnames = getColorSignalClassnames( attributes, true );
+
+		const blobMaskClasses = classnames(
+		  'blob-mix__mask',
+      colorSignalClassnames
+    );
+
 		return (
 			<div className={ 'blob-mix' } style={ blobsStyles }>
 				<Spring config={ { delay: 0 } } to={ { path: svgMaskPath } }>
 					{ springProps => {
 						return (
 							<Fragment>
-								<div className={ `novablocks-advanced-gallery__grid-item-mask blob-mix__media` }>
-									<animated.div className="blob-mix__mask" style={ blobsEnableMask ? getBlobMaskStyles( springProps.path, svgViewBox ) : {} }>
+								<div className={ `novablocks-media-composition__grid-item-mask blob-mix__media` }>
+									<animated.div className={ blobMaskClasses } style={ blobsEnableMask ? getBlobMaskStyles( springProps.path, svgViewBox ) : {} }>
 										<OriginalComponent { ...props } />
 									</animated.div>
 									<svg className="blob-mix__mask-debug" viewBox={ svgViewBox } preserveAspectRatio='none' xmlns='http://www.w3.org/2000/svg' version='1.1'>

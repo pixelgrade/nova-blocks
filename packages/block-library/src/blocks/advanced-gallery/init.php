@@ -8,18 +8,18 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-function novablocks_get_advanced_gallery_attributes() {
-	$advanced_gallery_components_attributes = novablocks_get_advanced_gallery_component_attributes();
+function novablocks_get_media_composition_markup_attributes() {
+	$advanced_gallery_components_attributes = novablocks_get_media_composition_markup_component_attributes();
 	$advanced_gallery_block_attributes = novablocks_get_attributes_from_json( 'packages/block-library/src/blocks/advanced-gallery/attributes.json' );
 
 	return array_merge( $advanced_gallery_components_attributes, $advanced_gallery_block_attributes );
 }
 
-if ( ! function_exists( 'novablocks_render_advanced_gallery_block' ) ) {
+if ( ! function_exists( 'novablocks_render_media_composition_block' ) ) {
 
-	function novablocks_render_advanced_gallery_block( $attributes, $content ) {
+	function novablocks_render_media_composition_block( $attributes, $content ) {
 
-		$attributes_config = novablocks_get_advanced_gallery_attributes();
+		$attributes_config = novablocks_get_media_composition_markup_attributes();
 		$attributes = novablocks_get_attributes_with_defaults( $attributes, $attributes_config );
 
 		$classes = array_merge(
@@ -38,7 +38,7 @@ if ( ! function_exists( 'novablocks_render_advanced_gallery_block' ) ) {
 		ob_start(); ?>
 
 		<div class="<?php echo esc_attr( join( ' ', $classes ) ); ?>">
-			<?php novablocks_render_advanced_gallery( $attributes ); ?>
+			<?php novablocks_render_media_composition( $attributes ); ?>
 		</div>
 
 		<?php return ob_get_clean();

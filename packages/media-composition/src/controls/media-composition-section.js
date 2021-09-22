@@ -45,7 +45,7 @@ const MediaCompositionControls = props => {
       <ControlsTab label={ __( 'General' ) }>
         <Notice
           key={ 'advanced-gallery-quick-start' }
-          id={ 'novablocks-advanced-gallery-quick-start' }
+          id={ 'novablocks-media-composition-quick-start' }
           content={ <p><strong>Quick start:</strong> Set up your gallery layout using the presets list below and use the Customize tab to fine-tune the details</p> }
           dismissLabel={ '✔ Ok, I got it!' }
         />

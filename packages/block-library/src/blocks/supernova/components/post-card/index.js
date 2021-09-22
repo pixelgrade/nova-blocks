@@ -2,8 +2,6 @@ import { __ } from "@wordpress/i18n";
 
 import { withSelect } from "@wordpress/data";
 
-import { getMeta, sanitizeMediaResponse } from './utils';
-
 import {
   Card,
   CardMeta,
@@ -11,7 +9,12 @@ import {
   CardDescription,
   CardFooter,
   CardButton,
-} from "../card";
+  CardMediaWrapper,
+} from "@novablocks/block-editor";
+
+import { withShapeModelingDecoration } from "@novablocks/shape-modeling";
+
+import { getMeta, sanitizeMediaResponse } from './utils';
 
 const withMedia = withSelect( ( select, ownProps ) => {
   const { getMedia } = select( 'core' );
@@ -34,7 +37,20 @@ const withMedia = withSelect( ( select, ownProps ) => {
   }
 } );
 
-export const PostCard = withMedia( props => {
+const PostCardMedia = withShapeModelingDecoration( ( props ) => {
+
+  const { media } = props;
+
+  if ( ! media ) {
+    return null;
+  }
+
+  return (
+    <img className={ `supernova-item__media` } src={ media.url } width={ media.width } height={ media.height }/>
+  )
+} );
+
+const PostCard = withMedia( props => {
 
   const {
     attributes,
@@ -46,6 +62,7 @@ export const PostCard = withMedia( props => {
     showTitle,
     showDescription,
     showButtons,
+    media,
   } = attributes;
 
   const {
@@ -55,6 +72,9 @@ export const PostCard = withMedia( props => {
 
   return (
     <Card { ...props }>
+      <CardMediaWrapper { ...props }>
+        <PostCardMedia { ...props } />
+      </CardMediaWrapper>
       <CardMeta show={ showMeta }>{ metaAboveTitle }</CardMeta>
       <CardTitle show={ showTitle }>{ post.title.raw }</CardTitle>
       <CardMeta show={ showMeta }>{ metaBelowTitle }</CardMeta>
@@ -64,4 +84,6 @@ export const PostCard = withMedia( props => {
       </CardFooter>
     </Card>
   );
-} )
+} );
+
+export default PostCard;

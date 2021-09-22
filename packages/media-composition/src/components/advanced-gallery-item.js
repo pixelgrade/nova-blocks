@@ -16,22 +16,22 @@ const AdvancedGalleryItem = ( props ) => {
   const hasDescription = typeof imageDescription === 'string' && !! imageDescription;
 
   return (
-    <div className={ `novablocks-advanced-gallery__grid-item` } style={ gridItem.getStyle() }>
-      <div className={ `novablocks-advanced-gallery__grid-item-media` }>
+    <div className={ `novablocks-media-composition__grid-item` } style={ gridItem.getStyle() }>
+      <div className={ `novablocks-media-composition__grid-item-media` }>
         <AdvancedGalleryItemMedia { ...props } seedOffset={ props?.index } />
       </div>
       {
         ( hasCaption || hasDescription ) &&
-        <div className="novablocks-advanced-gallery__grid-item-info">
+        <div className="novablocks-media-composition__grid-item-info">
           {
             hasCaption &&
-            <div className={ `novablocks-advanced-gallery__grid-item-caption` }
+            <div className={ `novablocks-media-composition__grid-item-caption` }
                  dangerouslySetInnerHTML={ { __html: imageCaption } }>
             </div>
           }
           {
             typeof hasDescription &&
-            <div className={ `novablocks-advanced-gallery__grid-item-description` }
+            <div className={ `novablocks-media-composition__grid-item-description` }
                  dangerouslySetInnerHTML={ { __html: imageDescription } }>
             </div>
           }

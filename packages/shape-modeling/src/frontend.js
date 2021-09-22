@@ -1,5 +1,7 @@
 import $ from 'jquery';
 
+import { getColorSignalClassnames } from "@novablocks/utils";
+
 import {
 	generatePath,
 	getBlobAttsFromAttributes,
@@ -10,14 +12,15 @@ import {
 
 $( function() {
 
-	$( '.novablocks-advanced-gallery' ).each( ( i, gallery ) => {
+	$( '.novablocks-media-composition' ).each( ( i, gallery ) => {
 		const $gallery = $( gallery );
-		const $gridItems = $gallery.find( '.novablocks-advanced-gallery__grid-item' );
-		const attributes = $gallery.data();
+		const $gridItems = $gallery.find( '.novablocks-media-composition__grid-item' );
+		const $block = $gallery.closest( '[data-blobs-enable-mask], [data-blobs-enable-decoration]' );
+		const attributes = $block.data();
 
 		$gridItems.each( ( j, gridItem ) => {
 			const $gridItem = $( gridItem );
-			const $mediaWrap = $gridItem.find( '.novablocks-advanced-gallery__grid-item-media' );
+			const $mediaWrap = $gridItem.find( '.novablocks-media-composition__grid-item-media' );
 			const $media = $mediaWrap.children();
 
 			const newAttributes = Object.assign( {}, attributes, {
@@ -33,9 +36,17 @@ $( function() {
 			const blobMaskAtts = getBlobAttsFromAttributes( newAttributes, 'blobMask' );
 			const svgMaskPath = generatePath( blobMaskAtts );
 
+			const contentAttributes = Object.assign( {}, attributes, {
+        colorSignal: attributes.contentColorSignal,
+        paletteVariation: attributes.contentPaletteVariation,
+        useSourceColorAsReference: false
+      } );
+
+			const blobMaskClassname = `blob-mix__mask ${ getColorSignalClassnames( contentAttributes, true ) }`;
+
 			$media.wrap( '<div class="blob-mix">' );
-			$media.wrap( '<div class="novablocks-advanced-gallery__grid-item-mask blob-mix__media"> ');
-			$media.wrap( '<div class="blob-mix__mask">' );
+			$media.wrap( '<div class="novablocks-media-composition__grid-item-mask blob-mix__media"> ');
+			$media.wrap( '<div class="' + blobMaskClassname + '">' );
 
 			const $blobMix = $media.closest( '.blob-mix' );
 			const $blobMixMedia = $media.closest( '.blob-mix__media' );

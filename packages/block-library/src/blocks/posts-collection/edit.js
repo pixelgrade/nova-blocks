@@ -3,10 +3,7 @@ import classnames from "classnames";
 import { Card } from "@novablocks/components";
 import { PostCard } from "@novablocks/block-editor";
 
-import {
-  getColorSignalClassnames,
-  getContentVariationBySignal,
-} from "@novablocks/utils";
+import { getContentVariationBySignal } from "@novablocks/color-signal";
 
 import {
   CollectionHeader,
@@ -28,11 +25,15 @@ const PreviewEdit = ( props ) => {
 
   const {
     attributes,
-    setAttributes,
     posts,
     clientId,
     className,
     isSelected,
+    colorSignal: {
+      utils: {
+        getColorSignalClassnames
+      }
+    }
   } = props;
 
   const {

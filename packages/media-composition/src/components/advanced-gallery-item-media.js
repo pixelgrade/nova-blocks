@@ -10,9 +10,9 @@ const AdvancedGalleryItemMedia = ( props ) => {
   return (
     <Fragment>
       { image.type !== 'video' &&
-        <img className={ `novablocks-advanced-gallery__image` } src={ imageURL } alt={ image?.alt } style={ styles } /> }
+        <img className={ `novablocks-media-composition__image` } src={ imageURL } alt={ image?.alt } style={ styles } /> }
       { image.type === 'video' &&
-        <video muted autoPlay loop playsInline className={ `novablocks-advanced-gallery__image` } style={ styles } src={ image.url } /> }
+        <video muted autoPlay loop playsInline className={ `novablocks-media-composition__image` } style={ styles } src={ image.url } /> }
     </Fragment>
   )
 }

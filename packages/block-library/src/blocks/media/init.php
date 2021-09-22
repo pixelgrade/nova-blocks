@@ -128,7 +128,7 @@ if ( ! function_exists( 'novablocks_render_media_block' ) ) {
 								</div>
 							<?php } ?>
 		                    <div class="novablocks-media__aside">
-			                    <?php novablocks_render_advanced_gallery( $attributes ); ?>
+			                    <?php novablocks_render_media_composition( $attributes ); ?>
 		                    </div>
 		                </div>
 		            </div>

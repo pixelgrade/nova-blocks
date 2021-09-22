@@ -44,9 +44,16 @@ export const Card = ( props ) => {
   );
 }
 
-export const CardContentWrapper = ( props ) => { 
+export const CardContentWrapper = ( props ) => {
 
-  const { attributes } = props;
+  const {
+    attributes,
+    colorSignal: {
+      utils: {
+        getColorSignalClassnames
+      }
+    }
+  } = props;
 
   const align = getAlignFromMatrix( attributes?.contentPosition );
 
@@ -54,6 +61,7 @@ export const CardContentWrapper = ( props ) => {
     `supernova-item__content`,
     `supernova-item__content--valign-${ align[0] }`,
     `supernova-item__content--halign-${ align[1] }`,
+    getColorSignalClassnames( attributes, true )
   );
 
   return (
@@ -62,17 +70,6 @@ export const CardContentWrapper = ( props ) => {
         { props.children }
       </div>
     </div>
-  )
-}
-
-const CardMediaContent = props => {
-  const { media } = props;
-
-  return (
-    <Fragment>
-      { media && <CardMediaItem { ...props } /> }
-      { ! media && props.children }
-    </Fragment>
   )
 }
 
@@ -89,24 +86,8 @@ export const CardMediaWrapper = ( props ) => {
   return (
     <div className={ `supernova-item__media-wrapper` }>
       <div className={ `supernova-item__media-aspect-ratio` }>
-        <CardMediaContent { ...props } />
+        { props.children }
       </div>
     </div>
   );
-}
-
-const CardMediaItem = ( props ) => {
-
-  const {
-    media: {
-      type,
-      width,
-      height,
-      url,
-    },
-  } = props;
-
-  return (
-    <img className={ `supernova-item__media` } src={ url } width={ width } height={ height } />
-  )
 }

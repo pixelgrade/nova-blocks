@@ -1,8 +1,8 @@
 @mixin advanced-gallery-overlay-styles {
 
-	.novablocks-advanced-gallery {
+	.novablocks-media-composition {
 
-		.novablocks-advanced-gallery__grid,
+		.novablocks-media-composition__grid,
 		.novablocks-change-media-overlay {
 
 			transition: var(--nb-transition);
@@ -10,11 +10,11 @@
 			--nb-transition-duration: .15s;
 		}
 
-    .novablocks-advanced-gallery__grid {
+    .novablocks-media-composition__grid {
       pointer-events: none;
     }
 
-    .novablocks-advanced-gallery__grid-item {
+    .novablocks-media-composition__grid-item {
       pointer-events: auto;
     }
 
@@ -25,7 +25,7 @@
 				pointer-events: auto;
 			}
 
-			.novablocks-advanced-gallery__grid {
+			.novablocks-media-composition__grid {
 				opacity: 0.7;
 			}
 		}

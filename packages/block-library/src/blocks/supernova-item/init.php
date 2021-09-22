@@ -37,7 +37,7 @@ if ( ! function_exists( 'novablocks_render_supernova_item_block' ) ) {
 		$attributes = novablocks_get_attributes_with_defaults( $attributes, $attributes_config );
 
 		$card_content = $content;
-		$card_media = novablocks_get_advanced_gallery( $attributes );
+		$card_media = novablocks_get_media_composition_markup( $attributes );
 
 		if ( 'fields' === $attributes[ 'sourceType' ] ) {
 			$card_content = novablocks_get_card_contents( $attributes );

@@ -52,7 +52,7 @@
 }
 
 .novablocks-media,
-.novablocks-media .novablocks-advanced-gallery,
+.novablocks-media .novablocks-media-composition,
 .novablocks-media__layout,
 .novablocks-media__aside,
 .novablocks-media__content {
@@ -79,7 +79,7 @@
 		padding-bottom: calc( -1 * var(--emphasis-bottom-spacing) * var(--nb-media-spacing));
 
 		.components-placeholder,
-		.novablocks-advanced-gallery {
+		.novablocks-media-composition {
 			margin-top: calc( var(--emphasis-top-spacing) * var(--nb-media-spacing));
 			margin-bottom: calc( var(--emphasis-bottom-spacing) * var(--nb-media-spacing));
 		}
