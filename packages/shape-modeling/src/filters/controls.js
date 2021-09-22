@@ -37,13 +37,13 @@ const Controls = ( props ) => {
 			<ControlsTab label={ __( 'Settings' ) }>
 				<ShapeDebugControls { ...props } />
         <ShapePropsControls { ...props }
-          prefix={ 'blob' }
+          prefix={ 'blobMask' }
           enableAttribute={ 'blobsEnableMask' }
           groupTitle={ __( 'Media Shape' ) }
           toggleLabel={ __( 'Enable Media Shape', '__plugin_txtd' ) }
         />
         <ShapePropsControls { ...props }
-          prefix={ 'blobMask' }
+          prefix={ 'blob' }
           enableAttribute={ 'blobsEnableDecoration' }
           groupTitle={ __( 'Decorative Shape' ) }
           toggleLabel={ __( 'Enable Blob Decoration', '__plugin_txtd' ) }
