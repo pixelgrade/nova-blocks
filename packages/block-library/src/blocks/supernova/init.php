@@ -18,6 +18,7 @@ function novablocks_get_supernova_attributes() {
 		'packages/collection/src/collection-attributes.json',
 		'packages/collection/src/grid-generator-attributes.json',
 		'packages/color-signal/src/attributes.json',
+		'packages/color-signal/src/filters/with-emphasis-control/attributes.json',
 		'packages/scrolling-effect/src/attributes.json',
 		'packages/shape-modeling/src/attributes.json',
 
@@ -50,6 +51,7 @@ if ( ! function_exists( 'novablocks_render_supernova_block' ) ) {
 
 		$classes = array(
 			'supernova',
+			'supernova-source-type-' . $attributes[ 'sourceType' ],
 			'alignfull',
 		);
 
@@ -103,12 +105,6 @@ if ( ! function_exists( 'novablocks_render_supernova_block' ) ) {
 
 		$supernova_header = novablocks_get_collection_header_output( $attributes );
 
-		$align_class ='';
-
-		if ( ! empty( $attributes['align']) ) {
-			$align_class = 'align' . $attributes['align'];
-		}
-
 		ob_start(); ?>
 
         <div
@@ -118,9 +114,10 @@ if ( ! function_exists( 'novablocks_render_supernova_block' ) ) {
 			<?php if ( $supernova_header ) { ?>
 				<?php echo $supernova_header ?>
 			<?php } ?>
-			<?php if ( "parametric" === $attributes[ 'layoutStyle' ] ) {
-					$layoutClasses[] = 'novablocks-grid';
-				?>
+			<?php
+			if ( "parametric" === $attributes[ 'layoutStyle' ] ) {
+				$layoutClasses[] = 'novablocks-grid';
+			?>
 				<div class="<?php echo join( ' ', $layoutClasses );?>" <?php echo join( ' ', $data_attributes ); ?>>
 					<?php echo $content; ?>
 				</div>

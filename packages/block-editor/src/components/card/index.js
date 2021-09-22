@@ -20,7 +20,6 @@ export const Card = ( props ) => {
   } = props;
 
   const classNames = classnames(
-    props.className,
     `supernova-item`,
     `supernova-item--layout-${ cardLayout }`,
     `supernova-item--aspect-ratio-${ thumbnailAspectRatioString }`,

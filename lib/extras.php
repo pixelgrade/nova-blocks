@@ -1051,7 +1051,16 @@ function novablocks_get_advanced_gallery( $attributes ) {
 	$data_attributes_array = array_map( 'novablocks_camel_case_to_kebab_case', array_keys( $attributes ) );
 
 	// the images attribute outputs a lot of code which is not used in the frontend
-	$blacklist = array( 'images', 'gallery' );
+	$blacklist = array(
+		'images',
+		'gallery',
+		'color-signal',
+		'palette',
+		'palette-variation',
+		'content-palette-variation',
+		'content-color-signal',
+		'use-source-color-as-reference'
+	);
 
 	foreach ( $blacklist as $attribute ) {
 		if ( ( $key = array_search( $attribute, $data_attributes_array ) ) !== false ) {
@@ -1873,11 +1882,10 @@ function novablocks_get_supernova_card_markup( $media, $content, $attributes ) {
 
 	ob_start(); ?>
 
-	<div class="supernova__layout-item">
-		<div <?php echo join( ' ', $data_attributes ); ?>
-			 class="<?php echo join( ' ', $cardClasses ); ?>"
+	<div class="supernova__layout-item <?php echo join( ' ', $contentPaletteClasses ); ?>" <?php echo join( ' ', $data_attributes ); ?>>
+		<div class="<?php echo join( ' ', $cardClasses ); ?>"
 			 style="<?php echo join( '; ', $cssProps ); ?>">
-			<div class="supernova-item__media-wrapper <?php echo join( ' ', $contentPaletteClasses ); ?>">
+			<div class="supernova-item__media-wrapper">
 				<div class="supernova-item__media-aspect-ratio">
 					<div class="novablocks-doppler__mask novablocks-doppler__wrapper">
 						<div class="supernova-item__media-doppler novablocks-doppler__target">
@@ -1895,6 +1903,7 @@ function novablocks_get_supernova_card_markup( $media, $content, $attributes ) {
 			<?php } ?>
 		</div>
 	</div>
+
 	<?php return ob_get_clean();
 }
 

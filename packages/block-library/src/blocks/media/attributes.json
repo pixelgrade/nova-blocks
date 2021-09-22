@@ -34,9 +34,5 @@
 	"contentPadding": {
 		"type": "number",
 		"default": 100
-	},
-	"emphasisArea": {
-		"type": "number",
-		"default": 100
 	}
 }
