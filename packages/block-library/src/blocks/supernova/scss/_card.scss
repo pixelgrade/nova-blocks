@@ -1,4 +1,7 @@
 .supernova-item {
+  
+  position: relative;
+  
   display: flex;
   flex-direction: column;
 
@@ -138,7 +141,6 @@
   flex-direction: column;
   flex-grow: 1;
 
-  position: relative;
   overflow: hidden;
 
   &:before,
@@ -207,4 +209,20 @@
 
 .supernova-item__media-doppler {
   height: 100%;
+}
+
+.supernova-item__link {
+  position: absolute;
+  
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  
+  display: block;
+}
+
+.novablocks-grid__item-buttons {
+  position: relative;
+  z-index: 1;
 }

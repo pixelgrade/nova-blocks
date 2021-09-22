@@ -2005,6 +2005,18 @@ function novablocks_get_card_item_buttons( $buttons, $attributes ) {
 	return ob_get_clean();
 }
 
+function novablocks_get_card_item_link( $url, $attributes ) {
+
+	ob_start(); 
+	
+	if ($attributes['sourceType'] === 'content') {?>
+		<a href="<?php echo $url ?>" class="supernova-item__link"></a>
+	<?php } 
+		
+	return ob_get_clean();
+
+}
+
 function novablocks_get_signal_options_from_variation( $variation ) {
 	$blockSignal = novablocks_get_signal_from_variation( $variation );
 
