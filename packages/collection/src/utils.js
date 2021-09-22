@@ -6,6 +6,7 @@ export const getGridStyle = ( attributes ) => {
 
 	return {
 		display: 'grid',
+		gridGap: 'var(--parametric-gap)',
 		gridTemplateColumns: `repeat( ${ gridcolumns }, 1fr )`,
 		gridTemplateRows: `repeat( ${ gridrows }, auto )`,
 	};

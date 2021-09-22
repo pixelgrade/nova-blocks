@@ -72,3 +72,7 @@
     }
   }
 }
+
+.supernova__layout--parametric {
+  --parametric-gap: calc(var(--nb-grid-spacing)*var(--nb-grid-spacing-modifier, 1))
+}
