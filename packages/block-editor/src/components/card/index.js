@@ -20,14 +20,13 @@ export const Card = ( props ) => {
   } = props;
 
   const classNames = classnames(
-    props.className,
     `supernova-item`,
     `supernova-item--layout-${ cardLayout }`,
     `supernova-item--aspect-ratio-${ thumbnailAspectRatioString }`,
   );
 
   const style = Object.assign( {}, props.style, {
-    '--collection-card-content-area-width': `${ contentAreaWidth }%`,
+    '--nb-card-content-area-width': `${ contentAreaWidth }%`,
   } );
 
   const children = Children.toArray( props.children );

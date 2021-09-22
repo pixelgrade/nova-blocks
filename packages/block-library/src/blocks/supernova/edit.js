@@ -81,6 +81,7 @@ const SupernovaPreview = props => {
   const className = classnames(
     props.className,
     'supernova',
+    `supernova-source-type-${ sourceType }`,
     'alignfull'
   );
 
@@ -126,10 +127,15 @@ const PostsCollectionLayout = props => {
             return null;
           }
 
-          const className = getColorSignalClassnames( innerBlock.attributes, true );
+          const className = classnames(
+            'supernova__layout-item',
+            getColorSignalClassnames( innerBlock.attributes, true )
+          );
 
           return (
-            <PostCard { ...props } post={ post } className={ className } key={index} />
+            <div className={ className }>
+              <PostCard { ...props } post={ post } key={index} />
+            </div>
           )
         } )
       }
