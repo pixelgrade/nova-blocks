@@ -617,7 +617,7 @@ function novablocks_get_block_editor_settings() {
 				'value' => 'custom',
 			),
 		),
-		'advancedGalleryPresetOptions' => novablocks_get_advanced_gallery_presets(),
+		'advancedGalleryPresetOptions' => novablocks_get_media_composition_markup_presets(),
 		'blobPresetOptions'            => novablocks_get_blob_presets(),
 		'theme_support'                => novablocks_get_theme_support(),
 	);
@@ -835,7 +835,7 @@ function novablocks_get_blob_presets() {
 	);
 }
 
-function novablocks_get_advanced_gallery_presets() {
+function novablocks_get_media_composition_markup_presets() {
 	return array(
 		array(
 			'label'  => 'The Cloud Atlas',
@@ -1019,7 +1019,7 @@ function novablocks_get_data_attributes( $data_attributes_array, $attributes, $b
 	return $data_attributes;
 }
 
-function novablocks_get_advanced_gallery_component_attributes() {
+function novablocks_get_media_composition_markup_component_attributes() {
 
 	return novablocks_merge_attributes_from_array( array(
 		'packages/shape-modeling/src/attributes.json',
@@ -1028,11 +1028,11 @@ function novablocks_get_advanced_gallery_component_attributes() {
 	
 }
 
-function novablocks_render_advanced_gallery( $attributes ) {
-	echo novablocks_get_advanced_gallery( $attributes );
+function novablocks_render_media_composition( $attributes ) {
+	echo novablocks_get_media_composition_markup( $attributes );
 }
 
-function novablocks_get_advanced_gallery( $attributes ) {
+function novablocks_get_media_composition_markup( $attributes ) {
 
 	ob_start();
 
@@ -1046,7 +1046,7 @@ function novablocks_get_advanced_gallery( $attributes ) {
 		$images = $attributes['gallery'];
 	}
 
-	$attributes_config = novablocks_get_advanced_gallery_component_attributes();
+	$attributes_config = novablocks_get_media_composition_markup_component_attributes();
 	$attributes = novablocks_get_attributes_with_defaults( $attributes, $attributes_config );
 	$data_attributes_array = array_map( 'novablocks_camel_case_to_kebab_case', array_keys( $attributes ) );
 
@@ -1078,10 +1078,10 @@ function novablocks_get_advanced_gallery( $attributes ) {
 
 	if ( ! empty( $images ) && is_array( $images ) ) {
 
-		echo '<div class="novablocks-advanced-gallery" ' . join( ' ', $data_attributes ) . ' style="' . $style . '">';
-		echo '<div class="novablocks-advanced-gallery__grid">';
+		echo '<div class="novablocks-media-composition" style="' . $style . '">';
+		echo '<div class="novablocks-media-composition__grid">';
 
-		foreach ( $images as $image ) {
+		foreach ( $images as $index => $image ) {
 
 			if ( is_string( $image ) ) {
 				$image = json_decode( $image );
@@ -1114,27 +1114,29 @@ function novablocks_get_advanced_gallery( $attributes ) {
 			}
 
 			if ( ! empty( $url ) ) {
-				echo '<div class="novablocks-advanced-gallery__grid-item">';
-				echo '<div class="novablocks-advanced-gallery__grid-item-media">';
+				echo '<div class="novablocks-media-composition__grid-item">';
+				echo '<div class="novablocks-media-composition__grid-item-media">';
+
+				$data_attrs = 'data-shape-modeling-target data-shape-modeling-shape-offset="' . $index . '"';
 
 				if ( isset( $image['type'] ) && $image['type'] === 'video' ) {
-					echo '<video muted autoplay loop playsinline class="novablocks-advanced-gallery__image" src="' . esc_url( $image['url'] ) . '"/>';
+					echo '<video class="novablocks-media-composition__image" ' . $data_attrs . ' muted autoplay loop playsinline src="' . esc_url( $image['url'] ) . '"/>';
 				} else {
-					echo '<img class="novablocks-advanced-gallery__image" src="' . $url . '" />';
+					echo '<img class="novablocks-media-composition__image" ' . $data_attrs . ' src="' . $url . '" />';
 				}
 
 				echo '</div>';
 
 				if ( $has_caption || $has_description ) {
 
-					echo '<div class="novablocks-advanced-gallery__grid-item-info">';
+					echo '<div class="novablocks-media-composition__grid-item-info">';
 
 					if ( $has_caption ) {
-						echo '<div class="novablocks-advanced-gallery__grid-item-caption">' . $image['caption'] . '</div>';
+						echo '<div class="novablocks-media-composition__grid-item-caption">' . $image['caption'] . '</div>';
 					}
 
 					if ( $has_description ) {
-						echo '<div class="novablocks-advanced-gallery__grid-item-description">' . $attachment->post_content . '</div>';
+						echo '<div class="novablocks-media-composition__grid-item-description">' . $attachment->post_content . '</div>';
 					}
 
 					echo '</div>';
@@ -1348,13 +1350,13 @@ function novablocks_get_supernova_card_media_markup( $media ) {
 
 	if ( ! empty( $url ) ) {
 		if ( isset( $media['type'] ) && $media['type'] === 'video' ) {
-			echo '<video class="supernova-item__media" muted autoplay loop playsinline src="' . esc_url( $url ) . '"/>';
+			echo '<video class="supernova-item__media" data-shape-modeling-target muted autoplay loop playsinline src="' . esc_url( $url ) . '"/>';
 		} else {
 			$url = novablocks_get_image_url( $media, 'novablocks_medium' );
-			echo '<img class="supernova-item__media" src="' . $url . '" />';
+			echo '<img class="supernova-item__media" data-shape-modeling-target src="' . $url . '" />';
 		}
 	} else { ?>
-		<div class="supernova-item__media supernova-item__media--placeholder">
+		<div class="supernova-item__media supernova-item__media--placeholder" data-shape-modeling-target>
 			<svg width="100" height="67" viewBox="0 0 100 67" fill="none" xmlns="http://www.w3.org/2000/svg">
 				<path d="M96.722 0H3.279C1.229 0 0 1.229 0 3.279V63.115C0 65.164 1.229 66.393 3.279 66.393H96.721C98.771 66.393 99.999 65.164 99.999 63.115V3.279C100 1.229 98.771 0 96.722 0ZM4.918 6.558C4.918 5.533 5.532 4.918 6.557 4.918H93.443C94.468 4.918 95.082 5.533 95.082 6.558V59.836C95.082 60.08 95.045 60.3 94.978 60.495C88.865 54.214 68.521 33.606 64.755 33.606C60.757 33.606 39.42 56.811 35.172 61.475H31.447C33.415 59.153 36.274 55.808 39.525 52.107C34.42 47.976 29.403 44.263 27.87 44.263C25.059 44.263 11.092 56.738 5.979 61.391C5.309 61.196 4.919 60.648 4.919 59.836V6.558H4.918Z" fill="currentColor"/>
 				<path d="M38.119 16.629C42.731 16.629 46.471 20.366 46.471 24.978C46.471 29.59 42.731 33.328 38.119 33.328C33.508 33.328 29.768 29.59 29.768 24.978C29.769 20.367 33.508 16.629 38.119 16.629Z" fill="currentColor"/>
@@ -1866,15 +1868,13 @@ function novablocks_get_supernova_card_markup( $media, $content, $attributes ) {
 		'supernova-item__inner-container'
 	);
 
-	$contentPaletteClasses = novablocks_get_color_signal_classes( $attributes );
-
 	$align = preg_split( '/\b\s+/', $attributes[ 'contentPosition' ] );
 
-	$contentClasses = array(
+	$contentClasses = array_merge( array(
 		'supernova-item__content',
 		'supernova-item__content--valign-' . $align[0],
 		'supernova-item__content--halign-' . $align[1],
-	);
+	), novablocks_get_color_signal_classes( $attributes ) );
 
 	$data_attributes_array = array_map( 'novablocks_camel_case_to_kebab_case', array_keys( $attributes ) );
 	$blacklist = array( 'images' );
@@ -1882,7 +1882,7 @@ function novablocks_get_supernova_card_markup( $media, $content, $attributes ) {
 
 	ob_start(); ?>
 
-	<div class="supernova__layout-item <?php echo join( ' ', $contentPaletteClasses ); ?>" <?php echo join( ' ', $data_attributes ); ?>>
+	<div class="supernova__layout-item">
 		<div class="<?php echo join( ' ', $cardClasses ); ?>"
 			 style="<?php echo join( '; ', $cssProps ); ?>">
 			<div class="supernova-item__media-wrapper">
@@ -1895,7 +1895,7 @@ function novablocks_get_supernova_card_markup( $media, $content, $attributes ) {
 				</div>
 			</div>
 			<?php if ( novablocks_show_card_contents( $attributes ) ) { ?>
-				<div class="<?php echo join( ' ', $contentClasses ); ?>">
+				<div class="<?php echo join( ' ', $contentClasses ); ?>" <?php echo join( ' ', $data_attributes ); ?>>
 					<div class="<?php echo join( ' ', $innerContainerClasses ); ?>" >
 						<?php echo $content; ?>
 					</div>

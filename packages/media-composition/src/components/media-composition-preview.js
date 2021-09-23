@@ -56,11 +56,11 @@ const AdvancedGalleryPreview = ( props ) => {
 			onSelect={ onSelectImages }
 			value={ galleryValue }
 			render={ ( { open } ) => (
-				<div className={ 'novablocks-advanced-gallery' } ref={ ref } style={ galleryStyle }>
-					<div className={ `novablocks-advanced-gallery__media-edit novablocks-change-media-overlay` } onClick={ open }>
+				<div className={ 'novablocks-media-composition' } ref={ ref } style={ galleryStyle }>
+					<div className={ `novablocks-media-composition__media-edit novablocks-change-media-overlay` } onClick={ open }>
 						<span>{ __( 'Change Media', '__plugin_txtd' ) }</span>
 					</div>
-					<div className={ `novablocks-advanced-gallery__grid` } style={ gridStyle }>
+					<div className={ `novablocks-media-composition__grid` } style={ gridStyle }>
 						{ gridItemsCollection.gridItems.map( ( item, index ) => (
 							<AdvancedGalleryItem gridItem={ item } key={ index } index={ index } { ...props } />
 						) ) }

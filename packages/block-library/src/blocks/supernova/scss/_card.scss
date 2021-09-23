@@ -24,6 +24,12 @@
   object-fit: var(--nb-card-media-object-fit, cover);
 }
 
+.supernova-item__media--placeholder {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
 
 .supernova-item__content,
 .supernova-item__media-wrapper {

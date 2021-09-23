@@ -16,8 +16,6 @@ export { default as getPlaceholderImages } from './get-placeholder-images';
 export { default as normalizeImages } from './normalize-images';
 
 export * from './card';
-export * from './post-card';
-
 
 export {
   getSvg,

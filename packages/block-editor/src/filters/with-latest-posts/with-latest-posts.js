@@ -1,6 +1,6 @@
-import { createHigherOrderComponent } from "@wordpress/compose";
+import { createHigherOrderComponent, compose } from "@wordpress/compose";
 import { useSupports } from "../../hooks";
-import { useSelect } from "@wordpress/data";
+import { withDispatch, useSelect } from "@wordpress/data";
 import { STORE_NAME } from "./store";
 import { useMemo } from "@wordpress/element";
 import { isSpecificPostModeActive, queryCriteriaFromAttributes } from "./utils";
@@ -32,7 +32,7 @@ const withLatestPosts = createHigherOrderComponent( BlockEdit => {
 
     const posts = useSelect( select => {
       return select( 'core' ).getEntityRecords( 'postType', 'post', latestPostsQuery );
-    }, [ latestPostsQuery ] )
+    }, [ latestPostsQuery ] );
 
     return (
       <BlockEdit { ...props } posts={ posts } />
@@ -40,4 +40,18 @@ const withLatestPosts = createHigherOrderComponent( BlockEdit => {
   }
 }, 'withLatestPosts' );
 
-export default withLatestPosts;
+const withMarkPostsAsDisplayed = withDispatch( ( dispatch, props ) => {
+  const { attributes } = props;
+  const { markPostsAsDisplayed, markSpecificPostsAsDisplayed } = dispatch( STORE_NAME );
+
+  const markPosts = isSpecificPostModeActive( attributes ) ? markSpecificPostsAsDisplayed : markPostsAsDisplayed;
+
+  return {
+    markPostsAsDisplayed: markPosts
+  }
+} );
+
+export default compose( [
+  withLatestPosts,
+  withMarkPostsAsDisplayed
+] );

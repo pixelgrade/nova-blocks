@@ -6,17 +6,14 @@ import { useBlockProps } from "@wordpress/block-editor";
 import { useSelect, useDispatch } from "@wordpress/data";
 
 import { CollectionHeader } from "@novablocks/collection";
-import { getColorSignalClassnames } from "@novablocks/color-signal";
 
-import {
-  useInnerBlocks,
-  PostCard
-} from "@novablocks/block-editor";
+import { useInnerBlocks } from "@novablocks/block-editor";
 
 import BlockControls from './block-controls';
 
 import {
   CollectionLayout,
+  PostCard,
   SupernovaItemPreview,
 } from './components';
 
@@ -67,7 +64,12 @@ const SupernovaEdit = props => {
 
 const SupernovaPreview = props => {
 
-  const { attributes } = props;
+  const {
+    attributes,
+    markPostsAsDisplayed,
+    posts,
+    clientId
+  } = props;
 
   const {
     align,
@@ -89,6 +91,8 @@ const SupernovaPreview = props => {
     className: className,
     style: props.style,
   } );
+
+  markPostsAsDisplayed( clientId, sourceType === 'content' ? posts : [] );
 
   return (
     <div { ...blockProps }>
@@ -112,6 +116,15 @@ const SupernovaPreview = props => {
 const PostsCollectionLayout = props => {
   const { posts, clientId } = props;
   const innerBlocks = useInnerBlocks( clientId );
+  const attributes = Object.assign( {}, props.attributes, {
+    colorSignal: props.attributes.contentColorSignal,
+    paletteVariation: props.attributes.contentPaletteVariation,
+    useSourceColorAsReference: false
+  } );
+
+  const passedProps = Object.assign({}, props, {
+    attributes: attributes
+  } );
 
   if ( ! Array.isArray( posts ) ) {
     return null;
@@ -127,14 +140,9 @@ const PostsCollectionLayout = props => {
             return null;
           }
 
-          const className = classnames(
-            'supernova__layout-item',
-            getColorSignalClassnames( innerBlock.attributes, true )
-          );
-
           return (
-            <div className={ className }>
-              <PostCard { ...props } post={ post } key={index} />
+            <div className={ 'supernova__layout-item' }>
+              <PostCard { ...passedProps } post={ post } key={ index } />
             </div>
           )
         } )
