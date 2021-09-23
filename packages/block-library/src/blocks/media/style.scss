@@ -1,5 +1,5 @@
 .novablocks-media {
-  --nb-media-gutter: var(--nb-media-spacing);
+  --nb-layout-gap: calc( var(--nb-media-layout-gutter) * 0.02 * var(--nb-media-spacing);
 
   margin-left: auto;
 	margin-right: auto;
@@ -26,13 +26,13 @@
 }
 
 .novablocks-media__layout {
-	margin-top: calc( -1 * var(--nb-media-gutter) );
-	margin-left: calc( -1 * var(--nb-media-gutter) );
+	margin-top: calc( -1 * var(--nb-layout-gap) );
+	margin-left: calc( -1 * var(--nb-layout-gap) );
 	pointer-events: none;
 
 	> * {
-		padding-left: var(--nb-media-gutter);
-		margin-top: var(--nb-media-gutter);
+		padding-left: var(--nb-layout-gap);
+		margin-top: var(--nb-layout-gap);
 		pointer-events: auto;
 	}
 
@@ -91,7 +91,7 @@
 	}
 
 	@include below(tablet) {
-		--nb-media-gutter: 0 !important;
+		--nb-layout-gap: 0 !important;
 		--nb-block-top-spacing: 1;
 		--nb-block-bottom-spacing: 1;
 		--nb-emphasis-top-spacing: 0;

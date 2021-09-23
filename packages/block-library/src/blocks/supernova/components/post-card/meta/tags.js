@@ -1,4 +1,4 @@
-import { useApiFetch } from "../../../index";
+import { useApiFetch } from "@novablocks/block-editor";
 
 const Tags = ( props ) => {
 

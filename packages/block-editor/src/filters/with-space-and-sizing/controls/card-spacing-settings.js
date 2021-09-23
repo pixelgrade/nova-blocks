@@ -25,7 +25,7 @@ const CardSpacing = props => {
   const CONTENT_SPACING_MAX_VALUE = 3;
 
   return (
-    <ControlsGroup title={ __( 'Card Spacing' ) }>
+    <ControlsGroup title={ __( 'Block Spacing' ) }>
       <RangeControl
         value={ blockTopSpacing }
         onChange={ ( blockTopSpacing ) => setAttributes( { blockTopSpacing } ) }

@@ -1,9 +1,8 @@
-.supernova__layout-item {
+.supernova-item {
   background: none !important;
 
   .novablocks-media-composition__grid-item-media .blob-mix__mask,
-  .supernova-source-type-content & .supernova-item__media-wrapper,
-  .supernova-item__content {
+  .supernova-source-type-content & .supernova-item__media-wrapper {
     background: var(--nb-bg-color);
   }
   

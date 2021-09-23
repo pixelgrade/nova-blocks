@@ -91,7 +91,7 @@ if ( ! function_exists( 'novablocks_render_media_block' ) ) {
 			'--nb-emphasis-bottom-spacing:' . $emphasisBottomSpacing . ';' .
 			'--nb-emphasis-area:' . $emphasisArea . ';' .
 			'--nb-media-content-width:' . $contentAreaWidth . '%;' .
-			'--nb-media-gutter:' . 'calc( ' . $layoutGutter . ' * var(--nb-media-spacing) * 5 / 100 );' .
+			'--nb-media-layout-gutter:' . $layoutGutter . ';' .
 			'--card-content-padding: ' . $attributes['contentPadding'] . ';';
 
 		$blockPaletteClasses = novablocks_get_color_signal_classes( $attributes );
