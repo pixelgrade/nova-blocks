@@ -22,7 +22,7 @@ import {
 const Controls = withColorSignalProps( props => {
 
   return (
-    <ControlsSection label={ __( 'Color Signal' ) } order={ 10 }>
+    <ControlsSection id={ 'color-signal' } label={ __( 'Color Signal' ) } order={ 10 }>
       <ControlsTab label={ __( 'Customize' ) }>
         <Notice
           key={ 'color-signal-quick-start' }

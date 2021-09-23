@@ -39,7 +39,7 @@ const BlockHeightControls = function( props ) {
 	const { minHeightFallback } = attributes;
 
 	return (
-		<ControlsSection label={ __( 'Layout' ) }>
+		<ControlsSection id={ 'layout' } label={ __( 'Layout' ) }>
 			<ControlsTab label={ __( 'Settings' ) }>
 				<RadioControl
 					key={ 'hero-minimum-height-controls' }
@@ -133,7 +133,7 @@ class HeroEdit extends Component {
 				<HeroPreview { ...this.props } />
 				<BlockControls { ...this.props } />
 				<BlockHeightControls { ...this.props } />
-				<ControlsSection label={ __( 'Display' ) } group={ __( 'Block Modules' ) }>
+				<ControlsSection id={ 'display' } label={ __( 'Display' ) } group={ __( 'Block Modules' ) }>
 					<ControlsTab label={ __( 'Settings' ) }>
 						<ControlsGroup title={ __( 'Set up elements for this block', '__plugin_txtd' ) }>
 							<ToggleGroup

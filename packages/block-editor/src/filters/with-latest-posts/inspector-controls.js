@@ -29,7 +29,7 @@ const Controls = ( props ) => {
   const loadPosts = sourceType === 'content';
 
   return (
-    <ControlsSection label={ __( 'Content Loader' ) } group={ __( 'Input' ) } order={ 10 }>
+    <ControlsSection id={ 'content-loader' } label={ __( 'Content Loader' ) } group={ __( 'Input' ) } order={ 10 }>
       <ControlsTab label={ __( 'Settings' ) }>
         <SelectControl
           key={ 'collection-source-type' }

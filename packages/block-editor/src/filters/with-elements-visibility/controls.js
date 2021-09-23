@@ -7,7 +7,7 @@ import { MetadataSource, ElementsVisibilityToggles } from "./components";
 const ElementsDisplaySection = ( props ) => {
 
   return (
-    <ControlsSection label={ __( 'Elements Visibility' ) } group={ __( 'Input' ) } order={ 20 }>
+    <ControlsSection id={ 'elements-visibility' } label={ __( 'Elements Visibility' ) } group={ __( 'Input' ) } order={ 20 }>
       <ControlsTab label={ __( 'Settings' ) }>
         <ControlsGroup title={ __( 'Set up elements for this block', '__plugin_txtd' ) }>
           <ElementsVisibilityToggles {...props}/>

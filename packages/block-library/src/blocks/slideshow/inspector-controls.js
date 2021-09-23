@@ -73,7 +73,7 @@ const SlideshowInspectorControls = function( props ) {
 		<Fragment>
 			{
 				!! galleryImages.length &&
-				<ControlsSection label={ __( 'Slides' ) }>
+				<ControlsSection id={ 'slides' } label={ __( 'Slides' ) }>
 					<ControlsTab label={ __( 'Settings' ) }>
 						<GalleryPreview
 							key={ 'slideshow-gallery-preview' }
@@ -106,7 +106,7 @@ const SlideshowInspectorControls = function( props ) {
 			{
 				'gallery' === slideshowType &&
 				<Fragment>
-					<ControlsSection label={ __( 'Layout' ) }>
+					<ControlsSection id={ 'layout' } label={ __( 'Layout' ) }>
 						<ControlsTab label={ __( 'Settings' ) }>
 							<RadioControl
 								key={ 'slideshow-minimum-height-controls' }

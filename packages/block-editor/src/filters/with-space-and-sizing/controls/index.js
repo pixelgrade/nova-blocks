@@ -14,7 +14,7 @@ import VisualBalanceSettings from "./visual-balance-settings";
 const SpaceAndSizingControls = ( props ) => {
 
   return (
-    <ControlsSection label={ __( 'Space and Sizing' ) } order={ 20 }>
+    <ControlsSection id={ 'space-and-sizing' } label={ __( 'Space and Sizing' ) } order={ 20 }>
       <ControlsTab label={ __( 'Presets' ) }>
         <SpaceAndSizingPresets { ...props } />
       </ControlsTab>

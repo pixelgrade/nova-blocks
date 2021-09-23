@@ -32,7 +32,7 @@ const ScrollingEffectPanel = ( props ) => {
   }
 
   return (
-    <ControlsSection label={ __( 'Scrolling Effect' ) } group={ __( 'Modules' ) } order={ 20 }>
+    <ControlsSection id={ 'scrolling-effect' } label={ __( 'Scrolling Effect' ) } group={ __( 'Modules' ) } order={ 20 }>
       <ControlsTab label={ __( 'Customize' ) }>
         <RadioControl
           key={ 'novablocks-scrolling-effect' }

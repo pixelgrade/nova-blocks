@@ -4,7 +4,13 @@ import { Fragment, useCallback, useMemo } from '@wordpress/element';
 
 const PresetControl = ( props ) => {
 
-	const { randomize, attributes, setAttributes, options } = props;
+	const {
+	  label,
+    options,
+	  randomize,
+    attributes,
+    setAttributes,
+	} = props;
 
 	const randomizeAttributes = useCallback( () => {
 	  if ( typeof randomize === "function" ) {
@@ -48,8 +54,13 @@ const PresetControl = ( props ) => {
 	return (
 		<Fragment>
 			<RadioControl
-				{ ...props }
-				options={ presetOptions }
+        label={ label }
+				options={ presetOptions.map( option => {
+				  return {
+            label: option.label,
+            value: option.value
+          }
+        } ) }
 				selected={ selectedPreset }
 				onChange={ onPresetChange }
 			/>
