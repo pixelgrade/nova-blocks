@@ -16,7 +16,7 @@ import {
 
 const getTabAccentColor = ( label ) => {
 
-	if ( __( 'General' ) === label ) {
+	if ( __( 'Presets' ) === label ) {
 		return ACCENT_COLORS[0];
 	}
 

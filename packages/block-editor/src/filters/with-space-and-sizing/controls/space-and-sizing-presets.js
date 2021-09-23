@@ -4,7 +4,7 @@ import { PresetControl } from "../../../components";
 import { useSupports } from "../../../hooks";
 import { getRandomAttributes } from "../utils";
 
-const SpaceAndSizingGeneral = ( props ) => {
+const SpaceAndSizingPresets = ( props ) => {
 
   const supports = useSupports( props.name );
 
@@ -36,4 +36,4 @@ const SpaceAndSizingGeneral = ( props ) => {
   )
 }
 
-export default SpaceAndSizingGeneral;
+export default SpaceAndSizingPresets;

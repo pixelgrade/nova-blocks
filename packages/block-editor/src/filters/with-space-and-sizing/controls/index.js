@@ -2,7 +2,7 @@ import { __ } from "@wordpress/i18n";
 
 import { ControlsSection, ControlsTab } from "../../../components";
 
-import SpaceAndSizingGeneral from './space-and-sizing-general';
+import SpaceAndSizingPresets from './space-and-sizing-presets';
 
 import CardSpacingCustomize from './card-spacing-customize';
 import CardSpacingSettings from './card-spacing-settings';
@@ -15,8 +15,8 @@ const SpaceAndSizingControls = ( props ) => {
 
   return (
     <ControlsSection label={ __( 'Space and Sizing' ) } order={ 20 }>
-      <ControlsTab label={ __( 'General' ) }>
-        <SpaceAndSizingGeneral { ...props } />
+      <ControlsTab label={ __( 'Presets' ) }>
+        <SpaceAndSizingPresets { ...props } />
       </ControlsTab>
       <ControlsTab label={ __( 'Customize', '__plugin_txtd' ) }>
         <CardSpacingCustomize key={ 'card-spacing-customize' } { ...props } />

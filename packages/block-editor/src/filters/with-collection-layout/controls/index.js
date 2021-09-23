@@ -38,7 +38,7 @@ const Controls = ( props ) => {
 
   return (
     <ControlsSection label={ __( 'Collection Layout' ) } group={ __( 'Block Anatomy', '__plugin_txtd' ) }>
-      <ControlsTab label={ __( 'General' ) }>
+      <ControlsTab label={ __( 'Presets' ) }>
         <PresetControl
           label={ __( 'Choose a layout preset:', '__plugin_txtd' ) }
           options={ presets }
