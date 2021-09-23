@@ -1870,6 +1870,10 @@ function novablocks_get_supernova_card_markup( $media, $content, $attributes ) {
 
 	$align = preg_split( '/\b\s+/', $attributes[ 'contentPosition' ] );
 
+	$attributes[ 'colorSignal' ] = $attributes[ 'contentColorSignal' ];
+	$attributes[ 'paletteVariation' ] = $attributes[ 'contentPaletteVariation' ];
+	$attributes[ 'useSourceColorAsReference' ] = false;
+
 	$contentClasses = array_merge( array(
 		'supernova-item__content',
 		'supernova-item__content--valign-' . $align[0],
@@ -1910,10 +1914,14 @@ function novablocks_get_supernova_card_markup( $media, $content, $attributes ) {
 function novablocks_get_supernova_card_markup_from_post( $post, $attributes ) {
 	$media_url = get_the_post_thumbnail_url( $post );
 
-	$media_markup = novablocks_get_supernova_card_media_markup( array(
-		'type' => 'image',
-		'url'  => $media_url,
-	) );
+	$media_markup = '';
+
+	if ( ! empty( $media_url ) ) {
+		$media_markup = novablocks_get_supernova_card_media_markup( array(
+			'type' => 'image',
+			'url'  => $media_url,
+		) );
+	}
 
 	$content_markup = novablocks_get_post_card_contents( $post, $attributes );
 
