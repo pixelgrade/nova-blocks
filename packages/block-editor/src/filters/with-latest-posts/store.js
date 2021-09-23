@@ -16,7 +16,7 @@ import {
 /**
  * Internal dependencies
  */
-export const STORE_NAME = 'posts-collection';
+export const STORE_NAME = 'supernova';
 
 const initialState = {
 	queryBlocks: [], // list of Query blocks in the order they are on the page

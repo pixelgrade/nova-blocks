@@ -64,7 +64,12 @@ const SupernovaEdit = props => {
 
 const SupernovaPreview = props => {
 
-  const { attributes } = props;
+  const {
+    attributes,
+    markPostsAsDisplayed,
+    posts,
+    clientId
+  } = props;
 
   const {
     align,
@@ -86,6 +91,8 @@ const SupernovaPreview = props => {
     className: className,
     style: props.style,
   } );
+
+  markPostsAsDisplayed( clientId, sourceType === 'content' ? posts : [] );
 
   return (
     <div { ...blockProps }>
