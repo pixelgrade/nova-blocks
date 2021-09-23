@@ -42,7 +42,7 @@ const VisualBalanceSettings = ( props ) => {
         } }
         min={ 0 }
         max={ 100 }
-        step={ 10 }
+        step={ 25 }
       />
       <RangeControl
         label={ __( 'Media Area Padding', '__plugin_txtd' ) }
@@ -52,7 +52,7 @@ const VisualBalanceSettings = ( props ) => {
         } }
         min={ 0 }
         max={ 100 }
-        step={ 10 }
+        step={ 25 }
       />
       <RangeControl
         label={ __( 'Content to Media Spacing / Layout Gutter', '__plugin_txtd' ) }
@@ -60,7 +60,7 @@ const VisualBalanceSettings = ( props ) => {
         onChange={ ( layoutGutter ) => setAttributes( { layoutGutter } ) }
         min={ 0 }
         max={ 100 }
-        step={ 5 }
+        step={ 25 }
       />
     </ControlsGroup>
   )

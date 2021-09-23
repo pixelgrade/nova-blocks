@@ -49,7 +49,7 @@ class ButtonInspectorControls extends Component {
 
 		return (
 			<Fragment>
-				<ControlsSection label={ __( 'Map Design' ) }>
+				<ControlsSection id={ 'map-design' } label={ __( 'Map Design' ) }>
 					<ControlsTab label={ __( 'Customize' ) }>
 						<MapStyleSelectControl
 							{ ...this.props }
@@ -98,7 +98,7 @@ class ButtonInspectorControls extends Component {
 						/>
 					</ControlsTab>
 				</ControlsSection>
-				<ControlsSection label={ __( 'Setup' ) }>
+				<ControlsSection id={ 'setup' } label={ __( 'Setup' ) }>
 					<ControlsTab label={ __( 'Settings' ) }>
 						<ApiKeyPanelBody
 							key={ 'google-map-api-key-controls' }

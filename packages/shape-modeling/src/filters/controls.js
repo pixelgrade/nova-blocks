@@ -23,8 +23,8 @@ const Controls = ( props ) => {
 	} = props;
 
 	return (
-		<ControlsSection label={ __( 'Shape Modeling' ) } group={ __( 'Modules' ) } order={ 30 }>
-			<ControlsTab label={ __( 'General' ) }>
+		<ControlsSection id={ 'shape-modeling' } label={ __( 'Shape Modeling' ) } group={ __( 'Modules' ) } order={ 30 }>
+			<ControlsTab label={ __( 'Presets' ) }>
 				<p>Use this tool to generate shapes and combine them with your images to create designs that are a unique and memorable part of your brand identity.</p>
 				<PresetControl
 					key={ 'blob-style-preset' }

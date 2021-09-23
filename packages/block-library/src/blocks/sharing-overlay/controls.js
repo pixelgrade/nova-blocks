@@ -39,7 +39,7 @@ const Controls = ( props ) => {
   } = attributes;
 
   return (
-    <ControlsSection label={ __( 'Display' ) }>
+    <ControlsSection id={ 'display' } label={ __( 'Display' ) }>
       <ControlsTab label={ __( 'Settings' ) }>
         <HeadingToolbar minLevel={ 2 } maxLevel={ 5 } selectedLevel={ headingLevel } onChange={ ( newLevel ) => setAttributes( { headingLevel: newLevel } ) } />
         <ControlsGroup title={ __( 'Set up sections for this block', '__plugin_txtd' ) }>

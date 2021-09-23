@@ -45,8 +45,8 @@ const OverlayFilterControls = ( props ) => {
   }
 
   return (
-      <ControlsSection label = { __( 'Overlay Filter' ) } group={__('Modules')} order={ 40 }>
-        <ControlsTab label={ __( 'General' ) }>
+      <ControlsSection id={ 'overlay-filter' } label = { __( 'Overlay Filter' ) } group={__('Modules')} order={ 40 }>
+        <ControlsTab label={ __( 'Settings' ) }>
             <RadioControl
               label={ __( 'Overlay Filter', '__plugin_txtd' ) }
               selected={ overlayFilterStyle }

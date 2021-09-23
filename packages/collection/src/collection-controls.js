@@ -32,7 +32,7 @@ const CollectionInspectorControls = ( props ) => {
 	const onChange = typeof props.onChange !== 'function' ? setAttributes : props.onChange;
 
 	return (
-		<ControlsSection label={ __( 'Display' ) }>
+		<ControlsSection id={ 'display' } label={ __( 'Display' ) }>
 			<ControlsTab label={ __( 'Settings' ) }>
 				<RadioControl
 					key={ 'collection-image-resizing' }

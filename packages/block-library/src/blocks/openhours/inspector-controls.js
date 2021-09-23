@@ -72,7 +72,7 @@ const OpenHoursInspectorControls = function( props ) {
 	return (
 
 		<Fragment>
-			<ControlsSection label={ __( 'Setup' ) }>
+			<ControlsSection is={ 'setup' } label={ __( 'Setup' ) }>
 				<ControlsTab label={ __( 'Settings' ) }>
 					<TextareaControl
 						key={ 'openhours-schedule-controls' }
@@ -91,7 +91,7 @@ const OpenHoursInspectorControls = function( props ) {
 					</div>
 				</ControlsTab>
 			</ControlsSection>
-			<ControlsSection label={ __( 'Display' ) }>
+			<ControlsSection id={ 'display' } label={ __( 'Display' ) }>
 				<ControlsTab label={ __( 'Settings' ) }>
 					<RadioControl
 						key={ 'openhours-display-controls' }

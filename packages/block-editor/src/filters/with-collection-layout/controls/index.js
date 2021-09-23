@@ -37,15 +37,21 @@ const Controls = ( props ) => {
   }, [ layoutStyle ] );
 
   return (
-    <ControlsSection label={ __( 'Collection Layout' ) } group={ __( 'Block Anatomy', '__plugin_txtd' ) }>
-      <ControlsTab label={ __( 'General' ) }>
-        <PresetControl
-          label={ __( 'Choose a layout preset:', '__plugin_txtd' ) }
-          options={ presets }
-          randomize={ getRandomAttributes }
-          { ...props }
-        />
-      </ControlsTab>
+    <ControlsSection
+      id={ 'collection-layout' }
+      label={ __( 'Collection Layout', '__plugin_txtd' ) }
+      group={ __( 'Block Anatomy', '__plugin_txtd' ) }>
+      {
+        layoutStyle === 'parametric' &&
+        <ControlsTab label={ __( 'Presets' ) }>
+          <PresetControl
+            label={ __( 'Choose a layout preset:', '__plugin_txtd' ) }
+            options={ presets }
+            randomize={ getRandomAttributes }
+            { ...props }
+          />
+        </ControlsTab>
+      }
       <ControlsTab label={ __( 'Settings' ) }>
         <ControlsGroup title={ __( 'Collection Layout Style' ) }>
           <RadioControl

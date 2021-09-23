@@ -59,8 +59,8 @@ const MediaPreview = function( props ) {
 	const cssVars = {
 		'--nb-emphasis-area': emphasisArea,
     '--card-content-padding': contentPadding,
-		'--nb--media-content-width': `${ contentAreaWidth }%`,
-		'--nb--media-gutter': `calc( ${ layoutGutter } * var(--nb--media-spacing) * 5 / 100 )`,
+		'--nb-media-content-width': `${ contentAreaWidth }%`,
+		'--nb-media-layout-gutter': layoutGutter,
 	};
 
 	const blockClassNames = classnames(

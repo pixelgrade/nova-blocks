@@ -21,7 +21,7 @@ const FoodMenuItemInspectorControls = function( props ) {
 	} = props;
 
 	return (
-		<ControlsSection label={__('Layout')}>
+		<ControlsSection id={ 'layout' } label={ __( 'Layout' ) }>
 			<ControlsTab label={ __( 'Settings' ) }>
 				<ToggleControl
 					label={__( 'Highlight item', '__plugin_txtd' )}

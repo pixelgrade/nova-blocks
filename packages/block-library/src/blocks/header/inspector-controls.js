@@ -48,8 +48,8 @@ const HeaderInspectorControls = ( props ) => {
   const customizerHeaderLink = novablocks_urls.novablocks_customizer_header_link;
 
   return (
-    <ControlsSection label={ __('Layout') }>
-      <ControlsTab label={__('Settings') }>
+    <ControlsSection id={ 'layout' } label={ __( 'Layout' ) }>
+      <ControlsTab label={ __( 'Settings' ) }>
         <Notice
           key={ 'header-position-quick-start' }
           id={ 'novablocks-header-position-quick-start' }

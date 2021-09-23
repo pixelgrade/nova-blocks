@@ -40,9 +40,9 @@ const MediaCompositionControls = props => {
 	} = attributes;
 
   return (
-    <ControlsSection label={ __( 'Media Composition' ) } group={ __( 'Modules' ) } order={ 10 } key={ 'media-composition-controls-section' }>
+    <ControlsSection id={ 'media-composition' } label={ __( 'Media Composition' ) } group={ __( 'Modules' ) } order={ 10 } key={ 'media-composition-controls-section' }>
 
-      <ControlsTab label={ __( 'General' ) }>
+      <ControlsTab label={ __( 'Presets' ) }>
         <Notice
           key={ 'advanced-gallery-quick-start' }
           id={ 'novablocks-media-composition-quick-start' }

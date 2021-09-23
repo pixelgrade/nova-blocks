@@ -39,7 +39,7 @@ class Inspector extends Component {
     }
 
     return (
-    <ControlsSection label={ __( 'Layout' ) }>
+    <ControlsSection id={ 'layout' } label={ __( 'Layout' ) }>
       <ControlsTab label={ __( 'Alignments' ) }>
         <RadioControl
           key={ 'novablocks-card-layout-controls' }

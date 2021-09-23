@@ -22,12 +22,12 @@ const Drawers = ( ownProps ) => {
 
 	const [ active, setActive ] = useState( false );
 	const [ open, setOpen ] = useMemoryState( 'drawerOpen', false );
-	const [ lastActiveDrawerTitle, setLastActiveDrawerTitle ] = useMemoryState( 'drawerActiveTitle',false );
+	const [ lastActiveDrawerId, setLastActiveDrawerId ] = useMemoryState( 'drawerActiveId',false );
 	const [ wrapperHeight, setWrapperHeight ] = useMemoryState( 'drawerHeight', 0 );
 
 	const existingDrawer = useMemo( () => drawerLists.some( drawerList => {
 		const drawers = getDrawersFromList( drawerList );
-		return drawers.some( drawer => drawer?.props?.title === lastActiveDrawerTitle );
+		return drawers.some( drawer => drawer?.props?.title === lastActiveDrawerId );
 	} ), [ drawerLists ] );
 
 	useEffect( () => {
@@ -37,7 +37,7 @@ const Drawers = ( ownProps ) => {
 
       drawerLists.some( drawerList => {
         const drawers = getDrawersFromList( drawerList );
-        const drawerIndex = drawers.findIndex( drawer => drawer?.props?.title === lastActiveDrawerTitle );
+        const drawerIndex = drawers.findIndex( drawer => drawer?.props?.title === lastActiveDrawerId );
 
         if ( drawerIndex > -1 ) {
           index += drawerIndex;
@@ -127,14 +127,14 @@ const Drawers = ( ownProps ) => {
 								{
 									orderedDrawers.map( ( orderedDrawer, drawerIndex ) => {
 										const { props, target } = orderedDrawer;
-										const { title } = props;
+										const { id, title } = props;
 
 										return (
 											<Drawer { ...props }
 												key={ `drawer-${ drawerListIndex }-${ drawerIndex }` }
 												onClick={ () => {
 													setActive( target );
-													setLastActiveDrawerTitle( title );
+													setLastActiveDrawerId( id );
 													setOpen( true );
 													onOpen();
 												} } />
