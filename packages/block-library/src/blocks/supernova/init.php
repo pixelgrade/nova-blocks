@@ -52,11 +52,20 @@ if ( ! function_exists( 'novablocks_render_supernova_block' ) ) {
 		$classes = array(
 			'supernova',
 			'supernova-source-type-' . $attributes[ 'sourceType' ],
-			'alignfull',
+			'alignfull'
+		);
+
+		$inner_container_classes = array(
+			'wp-block__inner-container'
 		);
 
 		if ( ! empty( $attributes['overlayFilterStyle'] ) ) {
 			$classes[] = $attributes['overlayFilterStyle'];
+		}
+
+		if ( ! empty ( $attributes['align'] ) ) {
+			$classes[]                 = 'block-is-' . $attributes['align'];
+			$inner_container_classes[] = 'align' . $attributes['align'];
 		}
 
 		$blockPaletteClasses = novablocks_get_color_signal_classes( $attributes );
@@ -122,7 +131,7 @@ if ( ! function_exists( 'novablocks_render_supernova_block' ) ) {
 					<?php echo $content; ?>
 				</div>
 			<?php } else { ?>
-				<div class="wp-block__inner-container">
+				<div class="<?php echo join( ' ', $inner_container_classes ); ?>">
 					<div class="<?php echo join( ' ', $layoutClasses );?>">
 						<?php echo $content; ?>
 					</div>

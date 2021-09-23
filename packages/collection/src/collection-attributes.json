@@ -1,7 +1,7 @@
 {
 	"align": {
 		"type": "string",
-		"default": "full"
+		"default": "none"
 	},
 	"contentAlign": {
 		"type": "string",

@@ -219,3 +219,23 @@
   margin-left: 0;
   margin-right: 0;
 }
+
+.block-is-wide {
+  --block-content-start: ws;
+  --block-content-end: we;
+  
+  .novablocks-sidecar--sidebar-right & {
+    --block-content-start: var(--block-limit-left);
+    --block-content-end: ce;
+  }
+}
+
+.block-is-wide {
+  --block-content-start: ws;
+  --block-content-end: we;
+}
+
+.block-is-full {
+  --block-content-start: fs;
+  --block-content-end: fe;
+}
