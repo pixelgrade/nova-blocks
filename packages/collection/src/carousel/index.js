@@ -17,8 +17,9 @@ import { onBeforeSlideChange } from './utils';
       useTransform: false, // to allow parallax effect inside
       slidesToShow: attributes.columns,
       dots: attributes.showPagination === 1,
+      dotsClass: `slick-dots ${PALETTE_CLASS} ${PALETTE_VARIATION_CLASS} ${CONTENT_SIGNAL_CLASS}`,
       arrows: attributes.showArrows === 1,
-      prevArrow: `<button class="slick-prev ${PALETTE_CLASS} ${PALETTE_VARIATION_CLASS} ${CONTENT_SIGNAL_CLASS}" aria-label="Previous" type="button">Previous</button>`,
+      prevArrow: `<button class="test slick-prev ${PALETTE_CLASS} ${PALETTE_VARIATION_CLASS} ${CONTENT_SIGNAL_CLASS}" aria-label="Previous" type="button">Previous</button>`,
       nextArrow: `<button class="slick-next ${PALETTE_CLASS} ${PALETTE_VARIATION_CLASS} ${CONTENT_SIGNAL_CLASS}" aria-label="Next" type="button">Next</button>`,
       variableWidth: attributes.carouselLayout === 'variable' || attributes.carouselLayout === 'content',
       infinite: true,

@@ -28,6 +28,23 @@ const SliderArrow = ( props ) => {
   )
 }
 
+const generateDotsClasses = (props) => {
+
+  const { attributes } = props;
+
+  const {
+    palette,
+    contentPaletteVariation,
+    contentColorSignal
+  } = attributes;
+
+  const PALETTE_CLASS = `sm-palette-${palette}`;
+  const PALETTE_VARIATION_CLASS = `sm-variation-${contentPaletteVariation}`;
+  const CONTENT_SIGNAL_CLASS = `sm-color-signal-${contentColorSignal}`;
+
+  return `slick-dots ${PALETTE_CLASS} ${PALETTE_VARIATION_CLASS} ${CONTENT_SIGNAL_CLASS}`
+}
+
 const CarouselLayout = ( props ) => {
 
   const { attributes } = props;
@@ -42,6 +59,7 @@ const CarouselLayout = ( props ) => {
   const settings = {
     arrows: showArrows,
     dots: showPagination,
+    dotsClass: generateDotsClasses(props),
     infinite: true,
     variableWidth: carouselLayout === 'variable' || carouselLayout === 'content',
     prevArrow: <SliderArrow {...props} />,

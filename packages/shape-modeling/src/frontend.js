@@ -17,7 +17,7 @@ $( function() {
     const $target = $( target );
     const seedOffsetData = $target.data( 'shape-modeling-shape-offset' );
     const seedOffset = seedOffsetData ? parseInt( seedOffsetData, 10 ) : 0;
-		const $block = $target.closest( '[data-blobs-enable-mask], [data-blobs-enable-decoration]' );
+		const $block = $target.closest( '[data-blob-sides]' );
 		const attributes = $block.data();
 
     const newAttributes = Object.assign( {}, attributes, {

@@ -40,11 +40,14 @@
    * Pagination
    */
   .slick-dots {
+    
     margin-top: var(--nb-spacing);
     margin-bottom: 0;
     
     padding-bottom: var(--nb-spacing);
     padding-left: 0;
+    
+    background: none !important;
   
     button {
 
@@ -129,6 +132,9 @@
     }
   }
   
+  .slick-dotted.slick-slider {
+    margin-bottom: 0;
+  }
   
 }
 
@@ -164,5 +170,14 @@
       }
      
     }
+  }
+}
+
+.supernova-card-layout--stacked {
+  
+  .slick-dots {
+    position: absolute;
+    bottom: var(--nb-spacing);
+    z-index: 1000;
   }
 }

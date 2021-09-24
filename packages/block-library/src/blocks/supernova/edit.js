@@ -76,7 +76,8 @@ const SupernovaPreview = props => {
     headerPosition,
     showCollectionTitle,
     showCollectionSubtitle,
-    sourceType
+    sourceType,
+    cardLayout
   } = attributes;
 
 
@@ -84,6 +85,7 @@ const SupernovaPreview = props => {
     props.className,
     'supernova',
     `supernova-source-type-${ sourceType }`,
+    `supernova-card-layout--${cardLayout}`,
     'alignfull',
     `block-is-${align}`
   );
