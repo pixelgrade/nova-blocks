@@ -7,7 +7,6 @@ import { Fragment } from '@wordpress/element';
 
 const enableGridGeneratorControls = [
 	'novablocks/posts-collection',
-	'novablocks/supernova',
 ];
 
 const withGridGeneratorControls = createHigherOrderComponent(OriginalComponent => {

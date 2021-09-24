@@ -15,8 +15,6 @@ function novablocks_get_supernova_attributes() {
 
 		'packages/media-composition/src/attributes.json',
 
-		'packages/collection/src/collection-attributes.json',
-		'packages/collection/src/grid-generator-attributes.json',
 		'packages/color-signal/src/attributes.json',
 		'packages/color-signal/src/filters/with-emphasis-control/attributes.json',
 		'packages/scrolling-effect/src/attributes.json',
@@ -54,14 +52,6 @@ if ( ! function_exists( 'novablocks_render_supernova_block' ) ) {
 			'supernova-source-type-' . $attributes[ 'sourceType' ],
 			'alignfull'
 		);
-
-		if ( ! empty( $attributes['overlayFilterStyle'] ) ) {
-			$classes[] = $attributes['overlayFilterStyle'];
-		}
-
-		if ( ! empty ( $attributes['align'] ) ) {
-			$classes[]                 = 'block-is-' . $attributes['align'];
-		}
 
 		$blockPaletteClasses = novablocks_get_color_signal_classes( $attributes );
 		$classes = array_merge( $classes, $blockPaletteClasses );

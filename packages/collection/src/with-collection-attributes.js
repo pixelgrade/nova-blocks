@@ -3,7 +3,6 @@ import attributes from "./collection-attributes.json";
 
 const enableGridGeneratorControls = [
   'novablocks/posts-collection',
-  'novablocks/supernova',
 ];
 
 function addGridGeneratorAttributes( block ) {
