@@ -55,17 +55,12 @@ if ( ! function_exists( 'novablocks_render_supernova_block' ) ) {
 			'alignfull'
 		);
 
-		$inner_container_classes = array(
-			'wp-block__inner-container'
-		);
-
 		if ( ! empty( $attributes['overlayFilterStyle'] ) ) {
 			$classes[] = $attributes['overlayFilterStyle'];
 		}
 
 		if ( ! empty ( $attributes['align'] ) ) {
 			$classes[]                 = 'block-is-' . $attributes['align'];
-			$inner_container_classes[] = 'align' . $attributes['align'];
 		}
 
 		$blockPaletteClasses = novablocks_get_color_signal_classes( $attributes );
@@ -75,6 +70,7 @@ if ( ! function_exists( 'novablocks_render_supernova_block' ) ) {
 			"supernova__layout",
 			"supernova__layout--" . $attributes[ 'layoutStyle' ],
 			"supernova__layout--" . $attributes[ 'carouselLayout' ] . "-width",
+			'align' . $attributes['align']
 		);
 
 		// @todo: Find a solution for this.
@@ -131,10 +127,8 @@ if ( ! function_exists( 'novablocks_render_supernova_block' ) ) {
 					<?php echo $content; ?>
 				</div>
 			<?php } else { ?>
-				<div class="<?php echo join( ' ', $inner_container_classes ); ?>">
-					<div class="<?php echo join( ' ', $layoutClasses );?>">
-						<?php echo $content; ?>
-					</div>
+				<div class="<?php echo join( ' ', $layoutClasses );?>">
+					<?php echo $content; ?>
 				</div>
 			<?php } ?>
 		</div>

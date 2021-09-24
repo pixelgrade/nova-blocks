@@ -1,6 +1,7 @@
 @import "scss/card";
 @import "scss/collection";
 @import "scss/carousel";
+@import "scss/block-alignments";
 
 //[data-type="novablocks/supernova"][data-type] {
 //  margin-top: 0;
@@ -39,7 +40,7 @@
     content: '';
     position: absolute;
     left: 0;
-    grid-column: var(--block-content-start)/var(--block-content-end);
+    grid-column: var(--custom-limit-left)/var(--custom-limit-right);
     background: linear-gradient(
         90deg,
         var(--nb-bg-color) 0,

@@ -230,6 +230,16 @@
   }
 }
 
+[data-align="full"] {
+  width: 100%;
+}
+
+.alignnone,
+[data-align="none"] {
+  --block-content-start: cs;
+  --block-content-end: ce;
+}
+
 .block-is-wide {
   --block-content-start: ws;
   --block-content-end: we;
