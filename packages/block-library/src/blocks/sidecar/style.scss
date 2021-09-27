@@ -136,7 +136,7 @@
     
     >:last-child {
       position: sticky;
-      top: var(--sticky-element-top-spacing);
+      top: var(--sticky-element-top-spacing, 0);
       margin-bottom: 1em;
       
       transition: var(--nb-transition);
