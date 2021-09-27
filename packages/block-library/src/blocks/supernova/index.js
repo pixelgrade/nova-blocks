@@ -21,8 +21,6 @@ import { withSetChildrenAttributes } from "./filters";
 
 const withVariations = settings => {
 
-  console.log( settings.name );
-
   if ( settings.name !== 'novablocks/supernova' ) {
     return settings;
   }
