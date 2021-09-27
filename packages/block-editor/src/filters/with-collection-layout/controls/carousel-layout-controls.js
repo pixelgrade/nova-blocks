@@ -27,6 +27,7 @@ const CarouselLayoutControls = ( props ) => {
     <Fragment>
       <ControlsGroup title={ __( 'Cards Count' ) }>
         <PostsCountControl { ...props } />
+        { carouselLayout === 'fixed' && <ItemsPerRowControl { ...props } /> }
       </ControlsGroup>
       <ControlsGroup title={ __( 'Layout' ) }>
         <RadioControl

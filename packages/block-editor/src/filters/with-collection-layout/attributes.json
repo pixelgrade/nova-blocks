@@ -3,6 +3,10 @@
 		"type": "string",
 		"default": "parametric"
 	},
+	"columns": {
+		"type": "number",
+		"default": 1
+	},
 	"gridcolumns": {
 		"type": "number",
 		"default": 6
