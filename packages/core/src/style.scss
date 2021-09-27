@@ -90,13 +90,16 @@ $slick-arrow-color: var(--sm-current-fg1-color);
 	-webkit-mask-image: -webkit-linear-gradient(0deg, white 0, white 100%);
 }
 
-//.supernova-item__media-aspect-ratio > * {
-//  position: absolute;
-//  top: 0;
-//  right: 0;
-//  bottom: 0;
-//  left: 0;
-//}
+.supernova-item__media-aspect-ratio {
+  
+  > * {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+  }
+}
 
 .novablocks-card__layout {
 	--card-layout-gap: calc(var(--nb-card-spacing-modifier, 0.5) * var(--nb-spacing));

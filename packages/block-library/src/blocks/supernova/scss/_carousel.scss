@@ -186,3 +186,13 @@
     z-index: 1000;
   }
 }
+
+.supernova__layout--variable-width {
+  
+  .supernova-item__media-aspect-ratio {
+    
+    > * {
+      position: relative;
+    }
+  }
+}

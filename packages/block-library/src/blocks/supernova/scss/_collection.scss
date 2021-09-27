@@ -15,6 +15,11 @@
   
   + .supernova__layout {
     @include block-spacing;
+    
+    --nb-element-spacing-multiplier: 1;
+    
+    padding-top: 0;
+    padding-bottom: 0;
   }
 }
 
