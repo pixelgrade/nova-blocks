@@ -1,6 +1,8 @@
 .supernova__layout {
   --nb-grid-spacing: var(--nb-spacing);
   
+  @include block-spacing;
+  
   /*
    * Force top spacing so there will be a gap
    * between collection and collection title.
