@@ -16,7 +16,7 @@ const withContentAlignmentControls = createHigherOrderComponent( OriginalCompone
 
     return (
       <Fragment>
-        <Controls {...props}/>
+        <Controls { ...props } />
         <OriginalComponent { ...props } />
       </Fragment>
     )

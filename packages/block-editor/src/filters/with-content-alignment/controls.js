@@ -1,6 +1,6 @@
 import { BlockControls, BlockAlignmentControl } from '@wordpress/block-editor';
 
-const Controls = (props) => {
+const Controls = ( props ) => {
 
   const {
     attributes: {
@@ -24,7 +24,7 @@ const Controls = (props) => {
       <BlockAlignmentControl
         value={ align }
         onChange={ updateAlignment }
-        controls={['wide', 'full']}
+        controls={ [ 'wide', 'full' ] }
       />
     </BlockControls>
   )
