@@ -66,9 +66,7 @@ export const CardContentWrapper = ( props ) => {
 
   return (
     <div className={ contentClassName }>
-      <div className={ 'supernova-item__inner-container' }>
-        { props.children }
-      </div>
+      { props.children }
     </div>
   )
 }

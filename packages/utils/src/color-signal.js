@@ -18,9 +18,7 @@ export const getColorSignalClassnames = ( attributes, supports ) => {
   }
 
   if ( supports === true || colorSignalSupport === true || colorSignalSupport?.paletteVariationClassname ) {
-    if ( colorSignal !== 0 ) {
-      newClassnames.push( `sm-variation-${ paletteVariation }` );
-    }
+    newClassnames.push( `sm-variation-${ paletteVariation }` );
   }
 
   if ( supports === true || colorSignalSupport === true || colorSignalSupport?.colorSignalClassname ) {
