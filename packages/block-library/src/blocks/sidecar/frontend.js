@@ -211,8 +211,29 @@ const handleOverlappingOnScroll = () => {
     const content = children.filter( child => child.classList.contains( 'novablocks-content' ) );
 
     if ( content.length ) {
-      const contentBlocks = content[0].children;
-      contentBlocksArray = contentBlocksArray.concat( Array.from( contentBlocks ) );
+
+      let contentBlocks = content[0].children;
+      let contentItemsArray = Array.from(contentBlocks);
+
+      /*
+       * We don't want to consider Supernova as overlapping block,
+       * but the blocks inside of Supernova. This is because Supernova
+       * is always full, to always match the site grid.
+       */
+      contentItemsArray.forEach( block => {
+        if ( block.classList.contains( 'supernova' ) ) {
+          const supernovaInsideBlocks = block.children;
+          contentBlocksArray = contentBlocksArray.concat( Array.from(supernovaInsideBlocks) );
+        }
+      })
+
+      /*
+       * Filter initial array of blocks
+       * and remove Supernova from that array.
+       */
+      const filteredItems = contentItemsArray.filter ( block => ! block.classList.contains('supernova'));
+
+      contentBlocksArray = contentBlocksArray.concat( Array.from( filteredItems ) );
     }
 
     const sidebar = children.filter( child => child.classList.contains( 'novablocks-sidebar' ) );
