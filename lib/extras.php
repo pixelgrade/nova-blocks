@@ -1720,14 +1720,11 @@ function novablocks_get_localize_to_window_script( $object_name, $l10n ) {
 	return $script;
 }
 
-function novablocks_get_color_signal_classes( $attributes ) {
+function novablocks_get_color_signal_classes( $attributes, $outputSignal = false ) {
 	$classes = array();
 
 	$classes[] = 'sm-palette-' . $attributes['palette'];
-
-	if ( $attributes['colorSignal'] !== 0 ) {
-		$classes[] = 'sm-variation-' . $attributes['paletteVariation'];
-	}
+	$classes[] = 'sm-variation-' . $attributes['paletteVariation'];
 
 	if ( ! empty( $attributes['useSourceColorAsReference'] ) ) {
 		$classes[] = 'sm-palette--shifted';

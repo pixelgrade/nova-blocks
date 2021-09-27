@@ -1,5 +1,6 @@
 .entry-content,
 .wp-block-column,
+.block-editor-block-list__layout,
 [class*="__inner-container"][class] {
   @include block-spacing-reset;
   @include block-spacing-top-level-multiplier;

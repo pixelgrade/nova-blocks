@@ -54,13 +54,12 @@ const SuperNovaItemContent = ( props ) => {
   } = props;
 
   const [ showPopover, setShowPopover ] = useState( false );
-  const innerBlocksProps = useInnerBlocksProps();
   const TitleTagName = `h${ level + 1 }`;
   const SubTitleTagName = `h${ level + 2 }`;
 
   if ( sourceType === 'fields' ) {
     return (
-      <Fragment>
+      <div className={ 'supernova-item__inner-container' }>
         <div className={ `novablocks-card__meta block-editor-block-list__block is-style-meta` }>
           <RichText
             className={ `novablocks-card__meta-size-modifier` }
@@ -140,9 +139,13 @@ const SuperNovaItemContent = ( props ) => {
             </Popover>
           }
         </CardButton>
-      </Fragment>
+      </div>
     )
   }
+
+  const innerBlocksProps = useInnerBlocksProps( {
+    className: 'supernova-item__inner-container'
+  } );
 
   return (
     <div { ...innerBlocksProps } />
