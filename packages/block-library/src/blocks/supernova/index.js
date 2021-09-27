@@ -65,10 +65,11 @@ registerBlockType( 'novablocks/supernova', {
         controls: true,
         duotone: true
       },
-//      scrollingEffect: {
-//        attributes: true,
-//        controls: true,
-//      },
+      scrollingEffect: {
+        attributes: true,
+        controls: true,
+        customWrapper: true,
+      },
       shapeModeling: {
         attributes: true,
         controls: true,

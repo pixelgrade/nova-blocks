@@ -7,28 +7,14 @@ const getScrollContainerHeight = () => {
 	return useOrientation && window.screen && window.screen.availHeight || window.innerHeight
 };
 
-const getAttributes = ( container ) => {
-
-  const $block = $( container ).closest( '[data-scrolling-effect]' );
-
-  return {
-    followThroughStart: !! $block.data( 'smooth-start' ),
-    followThroughEnd: !! $block.data( 'smooth-end' ),
-    scrollingEffect: $block.data( 'scrolling-effect' ),
-    focalPoint: $block.data( 'focal-point' ),
-    finalFocalPoint: $block.data( 'final-focal-point' ),
-    initialBackgroundScale: $block.data( 'initial-background-scale' ),
-    finalBackgroundScale: $block.data( 'final-background-scale' ),
-  };
-}
-
 const getConfig = ( container ) => {
 
   return {
-    scrollContainerBox: { top: 0, left: 0 },
-    scrollContainerHeight: getScrollContainerHeight(),
-    containerWidth: container.offsetWidth,
-    containerHeight: container.offsetHeight,
+    scrollContainerBox: {
+      top: 0,
+      left: 0,
+      height: getScrollContainerHeight()
+    },
     containerBox: container.getBoundingClientRect(),
   }
 }
@@ -40,7 +26,8 @@ $( function() {
 
 	$blocks.each( function( i, container ) {
 		const $container = $( container );
-		const attributes = getAttributes( container );
+		const $block = $container.closest( '[data-scrolling-effect]' );
+		const attributes = $block.data();
 		const config = getConfig( container );
 
 		$container.data( {
@@ -54,7 +41,6 @@ $( function() {
 
 		function parallaxUpdateState() {
 			const newConfig = Object.assign( {}, config, getConfig( container ) );
-
 			const state = getState( newConfig, attributes );
 
 			$container.data( 'state', state );
@@ -76,13 +62,13 @@ $( function() {
 
 			$blocks.each( function( i, container ) {
 				const $container = $( container );
-        const attributes = getAttributes( container );
+        const $block = $container.closest( '[data-scrolling-effect]' );
+        const attributes = $block.data();
 				const $background = $container.data( 'parallax' );
 				const $foreground = $background.find( '.novablocks-doppler__foreground' );
 				const state = $container.data( 'state' );
 				const config = $container.data( 'config' );
 				const cfg = Object.assign( {}, state, config );
-
 				const props = getProps( cfg, attributes, true );
 
 				$foreground.css( 'transform', `translate3d(0,${ -props.moveY * props.parallaxAmount }px,0)` );

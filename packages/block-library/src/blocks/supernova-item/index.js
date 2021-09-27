@@ -80,13 +80,13 @@ registerBlockType( 'novablocks/supernova-item', {
       overlayFilter: {
         attributes: true,
       },
-//      scrollingEffect: {
-//        attributes: true,
-//      },
+      scrollingEffect: {
+        attributes: true,
+        customWrapper: true,
+      },
       shapeModeling: {
         attributes: true,
       }
-//      latestPosts: true,
     }
   },
   edit,
