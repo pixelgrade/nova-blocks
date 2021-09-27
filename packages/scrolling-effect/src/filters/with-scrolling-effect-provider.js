@@ -1,4 +1,4 @@
-import { useCallback, useRef, useState } from "@wordpress/element";
+import { useCallback, useEffect, useRef, useState } from "@wordpress/element";
 import { createHigherOrderComponent } from "@wordpress/compose";
 
 import {
@@ -6,7 +6,6 @@ import {
   useOnScroll,
   useScrollContainer,
   useScrollContainerBox,
-  useEffectDebugger
 } from "@novablocks/block-editor";
 
 import DopplerContext from "../context";
@@ -22,8 +21,8 @@ const withDopplerProvider = createHigherOrderComponent( WrappedComponent => {
     const scrollContainer = useScrollContainer();
     const [ setScrollContainerNode, scrollContainerResizeEntry ] = useResizeObserver();
     const scrollContainerBox = useScrollContainerBox( scrollContainer );
-//
-    useEffectDebugger( () => {
+
+    useEffect( () => {
       setScrollContainerNode( scrollContainer );
     }, [ scrollContainer ] )
 
@@ -39,18 +38,18 @@ const withDopplerProvider = createHigherOrderComponent( WrappedComponent => {
 
     useOnScroll( scrollContainer, onScroll );
 
-    useEffectDebugger( () => {
+    useEffect( () => {
       if ( containerRef.current ) {
         setContainerNode( containerRef.current );
       }
     }, [ containerRef ] );
 
-    useEffectDebugger( () => {
+    useEffect( () => {
       const box = containerResizeEntry.contentRect;
       setContainerBox( containerResizeEntry.contentRect );
     }, [ containerResizeEntry ] );
 
-    useEffectDebugger( () => {
+    useEffect( () => {
 
       if ( containerBox && scrollContainerBox ) {
 
@@ -77,7 +76,7 @@ const withDopplerProvider = createHigherOrderComponent( WrappedComponent => {
 
     return (
       <div className={ `novablocks-doppler__mask novablocks-doppler__wrapper` } ref={ containerRef }>
-        <DopplerContext.Provider value={ { contextValue } }>
+        <DopplerContext.Provider value={ contextValue }>
           <WrappedComponent { ...props } />
         </DopplerContext.Provider>
       </div>

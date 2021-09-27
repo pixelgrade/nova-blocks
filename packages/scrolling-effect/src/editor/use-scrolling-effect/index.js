@@ -2,8 +2,8 @@ import { useContext } from "@wordpress/element";
 
 import context from '../../context';
 
-const useDoppler = () => {
+const useScrollingEffect = () => {
   return useContext( context );
 }
 
-export default useDoppler;
+export default useScrollingEffect;

@@ -1,6 +1,6 @@
 import { findParents } from "@novablocks/utils";
 
-export { default as useDoppler } from "./use-doppler";
+export { default as useScrollingEffect } from "./use-doppler";
 
 export const createBlockObservers = ( container, callback ) => {
   const observers = [];

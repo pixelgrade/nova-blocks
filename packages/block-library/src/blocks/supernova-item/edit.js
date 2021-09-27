@@ -7,6 +7,8 @@ import {
   useBlockProps,
 } from '@wordpress/block-editor';
 
+import { useScrollingEffect, withScrollingEffect } from '@novablocks/scrolling-effect';
+
 const useInnerBlocksProps = wp.blockEditor.useInnerBlocksProps || wp.blockEditor.__experimentalUseInnerBlocksProps;
 
 import { Popover } from '@wordpress/components';
@@ -27,13 +29,29 @@ const SuperNovaItemEdit = props => {
     <div { ...blockProps }>
       <Card { ...props }>
         <CardMediaWrapper { ...props }>
-          <MediaCompositionPreview { ...props } />
+          <CardMedia { ...props } />
         </CardMediaWrapper>
         <SuperNovaItemContent { ...props } />
       </Card>
     </div>
   )
 };
+
+const CardMedia = withScrollingEffect( ( props ) => {
+
+  const { isSelected } = props;
+  const scrollingEffect = useScrollingEffect();
+
+  if ( ! isSelected ) {
+    return <MediaCompositionPreview { ...props } />
+  }
+  
+  return (
+    <div style={ scrollingEffect?.style }>
+      <MediaCompositionPreview { ...props } />
+    </div>
+  )
+} );
 
 const SuperNovaItemContent = ( props ) => {
 

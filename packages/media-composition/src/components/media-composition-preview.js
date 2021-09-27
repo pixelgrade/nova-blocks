@@ -14,7 +14,7 @@ import {
   GridItemCollection
 } from "../utils";
 
-const AdvancedGalleryPreview = ( props ) => {
+const MediaCompositionPreview = ( props ) => {
 
 	const {
 		attributes,
@@ -71,4 +71,4 @@ const AdvancedGalleryPreview = ( props ) => {
 	);
 };
 
-export default AdvancedGalleryPreview;
+export default MediaCompositionPreview;

@@ -17,7 +17,7 @@ const useScrollContainerBox = ( element ) => {
 
   useEffect( () => {
     if ( !! element ) {
-      setBox( entry.contentRect );
+      setBox( element.getBoundingClientRect() );
     }
   }, [ entry ] )
 
