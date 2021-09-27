@@ -1,7 +1,7 @@
 import { __ } from "@wordpress/i18n";
 import { RadioControl } from "@wordpress/components";
 
-import { ControlsSection, ControlsTab } from "@novablocks/block-editor";
+import { ControlsSection, ControlsTab, useSupports } from "@novablocks/block-editor";
 
 const ScrollingEffectPanel = ( props ) => {
 
@@ -15,16 +15,15 @@ const ScrollingEffectPanel = ( props ) => {
     name,
   } = props;
 
+  const supports = useSupports( name );
+
   const {
     motionPresetOptions,
-    theme_support: {
-      doppler
-    }
   } = settings;
 
   const scrollingEffectOptions = [ ...settings.scrollingEffectOptions ];
 
-  if ( !! doppler && ( doppler.includes( name ) ) ) {
+  if ( supports?.novaBlocks?.scrollingEffect === true || supports?.novaBlocks?.scrollingEffect?.doppler === true ) {
     scrollingEffectOptions.push( {
       label: __( 'Doppler by Pixelgrade ®' ),
       value: 'doppler'

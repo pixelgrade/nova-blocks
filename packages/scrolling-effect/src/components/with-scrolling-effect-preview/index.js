@@ -1,16 +1,19 @@
 import { useCallback, useState } from "@wordpress/element";
 import { createHigherOrderComponent } from "@wordpress/compose";
 
+import { useScrollingEffect } from "../../index";
 import { easeInOutCubic, easeOutQuart } from "@novablocks/easings";
 
-import { scrollFromTo } from './utils';
+import scrollFromTo from './scroll-from-to';
 
-const withDopplerPreview = createHigherOrderComponent( WrappedComponent => {
+const withScrollingEffectPreview = createHigherOrderComponent( WrappedComponent => {
 
   return ( props ) => {
 
     const [ isScrolling, setIsScrolling ] = useState( false );
-    const { parallax } = props;
+    const scrollingEffect = useScrollingEffect();
+
+    console.log( scrollingEffect );
 
     const previewScrolling = useCallback( () => {
 
@@ -21,7 +24,7 @@ const withDopplerPreview = createHigherOrderComponent( WrappedComponent => {
           containerBox,
           scrollContainerBox,
         }
-      } = parallax;
+      } = scrollingEffect;
 
       if ( ! container || ! scrollContainer ) {
         return;
@@ -57,12 +60,12 @@ const withDopplerPreview = createHigherOrderComponent( WrappedComponent => {
       scrollFromTo( scrollContainer, scrollTop, start, easeOutQuart, 3000, onStart, () => {
         scrollFromTo( scrollContainer, start, end, easeInOutCubic, 1000, onStart, onEnd );
       } );
-    }, [ parallax ] );
+    }, [ scrollingEffect ] );
 
     return (
       <WrappedComponent isScrolling={ isScrolling } previewScrolling={ previewScrolling } { ...props } />
     )
   }
-}, 'withDopplerPreview' );
+}, 'withScrollingEffectPreview' );
 
-export default withDopplerPreview;
+export default withScrollingEffectPreview;

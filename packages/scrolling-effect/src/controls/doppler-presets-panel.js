@@ -1,4 +1,5 @@
 import { PanelBody, RadioControl } from "@wordpress/components";
+import PreviewScrollingButton from "./preview-scrolling-button";
 
 const DopplerPresetsPanel = ( props ) => {
 
@@ -35,6 +36,7 @@ const DopplerPresetsPanel = ( props ) => {
         } }
         options={ motionPresetOptions }
       />
+      <PreviewScrollingButton { ...props } />
 
     </PanelBody>
   )
