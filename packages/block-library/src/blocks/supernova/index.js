@@ -19,6 +19,22 @@ import attributes from './attributes';
 
 import { withSetChildrenAttributes } from "./filters";
 
+const withVariations = settings => {
+
+  if ( settings.name !== 'novablocks/supernova' ) {
+    return settings;
+  }
+
+  return {
+    ...settings,
+    variations,
+  }
+}
+
+// We're doing this through a filter that should run last, to make sure all attributes needed for these variations
+// are already added to the block's settings. Also, the filter needs to be added before the block is actually registered
+addFilter( 'blocks.registerBlockType', 'novablocks/supernova/with-variations', withVariations, Number.MAX_SAFE_INTEGER );
+
 registerBlockType( 'novablocks/supernova', {
   apiVersion: 2,
   title: __( 'Super Nova', '__plugin_txtd' ),
@@ -73,7 +89,6 @@ registerBlockType( 'novablocks/supernova', {
   save: function() {
     return <InnerBlocks.Content />
   },
-  variations,
 } );
 
 addFilter( 'editor.BlockEdit', 'novablocks/supernova/with-set-children-attributes', withSetChildrenAttributes, Number.MAX_SAFE_INTEGER );
