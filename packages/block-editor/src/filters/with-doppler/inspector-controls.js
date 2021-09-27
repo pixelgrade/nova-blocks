@@ -49,14 +49,14 @@ const ScrollingEffectPanel = ( props ) => {
 
   const {
     motionPresetOptions,
-    theme_support: {
-      doppler
-    }
+    theme_support
   } = settings;
 
   const scrollingEffectOptions = [ ...settings.scrollingEffectOptions ];
 
-  if ( !! doppler && ( doppler.includes( name ) ) ) {
+  // Find the theme_support block details.
+  const found = Object.keys(theme_support).find( key => theme_support[key].name === name );
+  if ( !! found && ( theme_support[found].supports.includes( 'doppler' ) ) ) {
     scrollingEffectOptions.push( {
       label: __( 'Doppler by Pixelgrade ®' ),
       value: 'doppler'
