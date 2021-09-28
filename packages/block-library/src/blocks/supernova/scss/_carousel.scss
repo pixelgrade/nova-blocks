@@ -118,7 +118,7 @@
   }
 
   .slick-prev {
-    left: calc(0.5 * var(--nb-grid-spacing));
+    left: 50px;
 
     &:before {
       border-top: var(--nb-carousel-arrow-width) solid var(--nb-carousel-arrow-color);
@@ -128,7 +128,7 @@
   }
 
   .slick-next {
-    right: calc(0.5 * var(--nb-grid-spacing));
+    right: 50px;
 
     &:before {
       border-top: var(--nb-carousel-arrow-width) solid var(--nb-carousel-arrow-color);
