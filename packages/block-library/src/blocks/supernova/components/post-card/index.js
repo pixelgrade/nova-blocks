@@ -1,6 +1,7 @@
 import { __ } from "@wordpress/i18n";
 
 import { withSelect } from "@wordpress/data";
+import { __unstableStripHTML as stripHTML } from '@wordpress/dom';
 
 import {
   Card,
@@ -70,6 +71,8 @@ const PostCard = withMedia( props => {
     metaBelowTitle,
   } = getMeta( props );
 
+  console.log(post);
+
   return (
     <Card { ...props }>
       <CardMediaWrapper { ...props }>
@@ -78,7 +81,7 @@ const PostCard = withMedia( props => {
       <CardMeta show={ showMeta }>{ metaAboveTitle }</CardMeta>
       <CardTitle show={ showTitle }>{ post.title.raw }</CardTitle>
       <CardMeta show={ showMeta }>{ metaBelowTitle }</CardMeta>
-      <CardDescription show={ showDescription }>{ post.excerpt.raw }</CardDescription>
+      <CardDescription show={ showDescription }>{ stripHTML(post.excerpt.rendered) }</CardDescription>
       <CardFooter show={ showButtons }>
         <CardButton>{ __( 'Read More' ) }</CardButton>
       </CardFooter>
