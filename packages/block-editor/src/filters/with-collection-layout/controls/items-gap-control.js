@@ -19,7 +19,7 @@ const ItemsGapControl = ( props ) => {
       label={ __( 'Items Gap' ) }
       min={ 0 }
       max={ 100 }
-      step={ 25 }
+      step={ 5 }
     />
   )
 }
