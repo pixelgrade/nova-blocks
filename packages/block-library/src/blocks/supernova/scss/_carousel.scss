@@ -88,7 +88,10 @@
       }
     }
   }
-
+  
+  &.slick-dotted.slick-slider {
+    margin-bottom: 0;
+  }
 
   /*
    * Arrows
@@ -135,10 +138,6 @@
       border-right: var(--nb-carousel-arrow-width) solid var(--nb-carousel-arrow-color);
       transform: translate(-70%, -50%) rotate(45deg);
     }
-  }
-  
-  .slick-dotted.slick-slider {
-    margin-bottom: 0;
   }
   
 }

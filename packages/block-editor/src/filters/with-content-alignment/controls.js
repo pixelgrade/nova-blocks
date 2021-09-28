@@ -10,12 +10,13 @@ const Controls = ( props ) => {
   } = props;
 
   function updateAlignment( nextAlign ) {
+
     const extraUpdatedAttributes = [ 'wide', 'full' ].includes( nextAlign )
       ? { width: undefined, height: undefined }
       : {};
     setAttributes( {
       ...extraUpdatedAttributes,
-      align: nextAlign,
+      align: nextAlign ? nextAlign : 'none'
     } );
   }
 

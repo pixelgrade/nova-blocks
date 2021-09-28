@@ -71,8 +71,6 @@ const PostCard = withMedia( props => {
     metaBelowTitle,
   } = getMeta( props );
 
-  console.log(post);
-
   return (
     <Card { ...props }>
       <CardMediaWrapper { ...props }>

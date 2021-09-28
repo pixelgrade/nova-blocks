@@ -99,10 +99,9 @@ const SupernovaPreview = props => {
 
   return (
     <div { ...blockProps }>
-      {/*<div className={ `wp-block__inner-container` }>*/}
         {
           headerPosition === 0 && ( showCollectionTitle || showCollectionSubtitle ) &&
-          <div className="wp-block" data-align={ align }>
+          <div className="wp-block supernova-header__inner-container" data-align={ align }>
             <CollectionHeader { ...props } />
           </div>
         }
@@ -111,7 +110,6 @@ const SupernovaPreview = props => {
           { sourceType === 'content' && <PostsCollectionLayout { ...props } /> }
           { sourceType !== 'content' && <NotPostsCollectionLayout { ...props } /> }
         </div>
-      {/*</div>*/}
     </div>
   );
 }

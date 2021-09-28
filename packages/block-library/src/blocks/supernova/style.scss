@@ -19,6 +19,19 @@
   &[class] {
     --emphasis-area-width: calc( var(--nb-collection-emphasis-area, 100) * 1% );
   }
+  
+  > .alignfull:not([class*='carousel']) {
+    margin-left: 0;
+    margin-right: 0;
+    
+    padding-left: var(--nb-container-spacings);
+    padding-right: var(--nb-container-spacings);
+  }
+  
+  > :not([class*='alignfull']) {
+    padding-left: 0;
+    padding-right: 0;
+  }
 }
 
 //.supernova__inner-container[class] > .wp-block {
@@ -66,4 +79,14 @@
 
 .supernova-item--layout-stacked {
   display: grid !important;
+}
+
+.supernova-header__inner-container {
+  
+  padding-left: 0;
+  padding-right: 0;
+  
+  > * {
+    --nb-element-spacing-multiplier: 0.5;
+  }
 }

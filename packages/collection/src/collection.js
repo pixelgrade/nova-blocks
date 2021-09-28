@@ -31,7 +31,7 @@ export const CollectionTitle = ( props ) => {
 	}
 
 	return (
-		<div className="block-editor-block-list__block wp-block novablocks-collection__title" data-align="wide">
+		<div className="block-editor-block-list__block wp-block novablocks-collection__title">
 			<RichText
 				tagName={ `h${ collectionTitleLevel }` }
 				value={ title }
@@ -60,7 +60,7 @@ export const CollectionSubtitle = ( props ) => {
 	}
 
 	return (
-		<div className="block-editor-block-list__block wp-block novablocks-collection__subtitle" data-align="wide">
+		<div className="block-editor-block-list__block wp-block novablocks-collection__subtitle">
 			<RichText
 				tagName={ 'p' }
 				className={ 'is-style-lead' }

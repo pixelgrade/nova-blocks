@@ -10,13 +10,13 @@
   }
 }
 
-.novablocks-collection__title,
-.novablocks-collection__subtitle {
+.supernova-header__inner-container {
   
   + .supernova__layout {
     @include block-spacing;
     
     --nb-element-spacing-multiplier: 1;
+    --nb-block-top-spacing: 1;
     
     padding-top: 0;
     padding-bottom: 0;

@@ -62,6 +62,14 @@ if ( ! function_exists( 'novablocks_render_supernova_block' ) ) {
 			"supernova__layout--" . $attributes[ 'carouselLayout' ] . "-width",
 			'align' . $attributes['align']
 		);
+		
+		$supernova_header_classes = array(
+			"supernova-header__inner-container",
+		);
+
+		if ( ! empty($attributes['align'] ) ) {
+			$supernova_header_classes[] = "align" . $attributes['align'];
+		}
 
 		// @todo: Find a solution for this.
 		// The CSS Props list is getting really big,
@@ -107,7 +115,9 @@ if ( ! function_exists( 'novablocks_render_supernova_block' ) ) {
 			<?php echo join( " ", $data_attributes ); ?>
 			style="<?php echo join(';', $cssProps ); ?>">
 			<?php if ( $supernova_header ) { ?>
-				<?php echo $supernova_header ?>
+				<div class="<?php echo join(' ', $supernova_header_classes ) ?>">
+					<?php echo $supernova_header ?>
+				</div>
 			<?php } ?>
 			<?php
 			if ( "parametric" === $attributes[ 'layoutStyle' ] ) {

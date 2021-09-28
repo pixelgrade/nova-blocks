@@ -1,13 +1,46 @@
 .supernova {
   
   > .wp-block {
-    margin-top: 0;
-    margin-bottom: 0;
+    
+    &:not(:only-child) {
+      @include block-spacing;
+  
+      --nb-element-spacing-multiplier: 1;
+      --nb-block-top-spacing: 1;
+  
+      padding-top: 0;
+      padding-bottom: 0;
+  
+      width: 100%;
+  
+      &:first-child {
+        margin-top: 0;
+      }
+    }
+    
+    &:only-child {
+      margin-bottom: 0;
+    }
+  
+    &[data-align="full"] {
+      
+      padding-left: var(--nb-container-spacings);
+      padding-right: var(--nb-container-spacings);
+      
+      > .supernova__layout--carousel {
+        margin-left: calc( -1 * var(--nb-container-spacings) );
+        margin-right: calc( -1 * var(--nb-container-spacings) );
+      }
+    }
+    
+    &:not([data-align="full"]) {
+      padding-left: 0;
+      padding-right: 0;
+    }
+    
   }
   
   > .wp-block__inner-container {
-    //@include layout-grid;
-    //grid-column: var(--all-columns);
     
     > * {
       margin-left: 0;
