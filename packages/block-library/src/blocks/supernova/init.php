@@ -68,6 +68,7 @@ if ( ! function_exists( 'novablocks_render_supernova_block' ) ) {
 		// We should break them in different functions.
 		$cssProps = array(
 			'--nb-collection-columns-count: ' . $attributes[ 'columns' ],
+			'--nb-grid-spacing-multiplier: ' . $attributes[ 'gridGap' ],
 			'--nb-collection-gutter: ' . $attributes[ 'layoutGutter' ],
 
 			'--nb-card-content-padding-multiplier: ' . $attributes[ 'contentPadding' ] / 100,

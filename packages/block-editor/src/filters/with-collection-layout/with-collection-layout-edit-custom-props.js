@@ -8,15 +8,18 @@ const withCollectionLayoutEditCustomProps = createHigherOrderComponent( Original
     const supports = useSupports( props.name );
     const { attributes } = props;
 
-    const { columns } = attributes;
+    const { columns, gridGap } = attributes;
 
     const style = props.style ? props.style : {};
 
     if ( !! supports?.novaBlocks?.collectionLayout ) {
 
-      let collectionLayoutProps = { '--nb-collection-columns-count': columns }
+      let collectionLayoutProps = {
+        '--nb-collection-columns-count': columns,
+        '--nb-grid-spacing-modifier': gridGap
+      }
 
-      Object.assign( style, collectionLayoutProps);
+      Object.assign( style, collectionLayoutProps );
     }
 
     return (

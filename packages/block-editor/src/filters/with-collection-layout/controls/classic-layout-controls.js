@@ -4,6 +4,7 @@ import { ControlsGroup } from "../../../components";
 
 import PostsCountControl from './posts-count-control';
 import ItemsPerRowControl from "./items-per-row-control";
+import ItemsGapControls from "./items-gap-control";
 
 const ClassicLayoutControls = ( props ) => {
 
@@ -15,6 +16,7 @@ const ClassicLayoutControls = ( props ) => {
     <ControlsGroup title={ __( 'Cards Count' ) }>
       <PostsCountControl { ...props } />
       <ItemsPerRowControl { ...props } />
+      <ItemsGapControls { ...props } />
     </ControlsGroup>
   )
 };

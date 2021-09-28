@@ -3,6 +3,8 @@ import { RangeControl } from '@wordpress/components';
 
 import { ControlsGroup } from "../../../../components";
 
+import ItemsGapControls from "../items-gap-control";
+
 const GridAnatomyControls = ( props ) => {
 
   const {
@@ -39,6 +41,7 @@ const GridAnatomyControls = ( props ) => {
         min={ 1 }
         max={ 12 }
       />
+      <ItemsGapControls { ...props } />
     </ControlsGroup>
   )
 }

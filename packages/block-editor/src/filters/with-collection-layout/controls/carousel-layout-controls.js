@@ -1,11 +1,12 @@
 import { __ } from "@wordpress/i18n";
 import { Fragment } from "@wordpress/element";
-import { RadioControl, ToggleControl } from '@wordpress/components';
+import { RadioControl } from '@wordpress/components';
 
 import { ControlsGroup } from "../../../components";
 
 import PostsCountControl from "./posts-count-control";
 import ItemsPerRowControl from "./items-per-row-control";
+import ItemsGapControls from "./items-gap-control";
 
 const CarouselLayoutControls = ( props ) => {
 
@@ -28,6 +29,7 @@ const CarouselLayoutControls = ( props ) => {
       <ControlsGroup title={ __( 'Cards Count' ) }>
         <PostsCountControl { ...props } />
         { carouselLayout === 'fixed' && <ItemsPerRowControl { ...props } /> }
+        <ItemsGapControls { ...props } />
       </ControlsGroup>
       <ControlsGroup title={ __( 'Layout' ) }>
         <RadioControl
