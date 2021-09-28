@@ -39,13 +39,11 @@ const SuperNovaItemEdit = props => {
 
 const CardMedia = withScrollingEffect( ( props ) => {
 
-  const { isSelected } = props;
   const scrollingEffect = useScrollingEffect();
 
-  if ( ! isSelected ) {
-    return <MediaCompositionPreview { ...props } />
-  }
-  
+  // @todo at some point preview should be available in specific conditions
+  return <MediaCompositionPreview { ...props } />
+
   return (
     <div style={ scrollingEffect?.style }>
       <MediaCompositionPreview { ...props } />

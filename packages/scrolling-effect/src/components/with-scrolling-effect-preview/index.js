@@ -13,8 +13,6 @@ const withScrollingEffectPreview = createHigherOrderComponent( WrappedComponent 
     const [ isScrolling, setIsScrolling ] = useState( false );
     const scrollingEffect = useScrollingEffect();
 
-    console.log( scrollingEffect );
-
     const previewScrolling = useCallback( () => {
 
       const {
