@@ -17,9 +17,13 @@ import {
   SupernovaItemPreview,
 } from './components';
 
-import { withPreviewAttributes } from './utils';
+import {
+  withControlsVisibility,
+  withPreviewAttributes
+} from './components';
 
 const SupernovaEdit = props => {
+
   const { attributes, clientId } = props;
 
   const {
@@ -27,7 +31,7 @@ const SupernovaEdit = props => {
     cardLayout,
     contentPadding,
     layoutGutter,
-    postsToShow
+    postsToShow,
   } = attributes;
 
   const itemsCount = useSelect( select => select( 'core/block-editor' ).getBlockCount( clientId ), [ clientId ] );
@@ -164,4 +168,5 @@ const NotPostsCollectionLayout = withPreviewAttributes( props => {
   )
 } );
 
-export default SupernovaEdit;
+export default withControlsVisibility( SupernovaEdit );
+

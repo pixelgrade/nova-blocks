@@ -69,6 +69,7 @@ registerBlockType( 'novablocks/supernova', {
         attributes: true,
         controls: true,
         customWrapper: true,
+        doppler: true
       },
       shapeModeling: {
         attributes: true,

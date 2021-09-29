@@ -13,7 +13,6 @@ import "./with-random-defaults";
 import './with-settings';
 import './with-content-alignment';
 
-// worked on
 import "./with-card-elements-stacking";
 import "./with-collection-layout";
 import "./with-overlay-filter";

@@ -1,4 +1,4 @@
-export const scrollFromTo = ( scrollContainer, start, end, easing = x => x, speed = 1000, onStart = () => {}, onEnd = () => {} ) => {
+const scrollFromTo = ( scrollContainer, start, end, easing = x => x, speed = 1000, onStart = () => {}, onEnd = () => {} ) => {
 
   const length = end - start;
   const duration = Math.abs( length ) * 1000 / speed;
@@ -27,3 +27,5 @@ export const scrollFromTo = ( scrollContainer, start, end, easing = x => x, spee
     }
   }, duration );
 }
+
+export default scrollFromTo;

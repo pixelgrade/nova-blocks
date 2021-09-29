@@ -1,6 +1,6 @@
 .supernova__layout {
-  --nb-grid-spacing: var(--nb-spacing);
-  
+  --nb-grid-spacing: calc(var(--nb-spacing) * var(--nb-grid-spacing-modifier) * 0.02);
+
   /*
    * Force top spacing so there will be a gap
    * between collection and collection title.
@@ -82,9 +82,8 @@
   }
 
   @include with-editor-layout-selectors {
-
     display: grid;
-    grid-gap: calc( var(--nb-grid-spacing) * var(--nb-grid-spacing-modifier, 1) );
+    grid-gap: var(--nb-grid-spacing);
     grid-template-columns: repeat(var(--nb-collection-columns, 1), 1fr);
 
     > * {
@@ -94,5 +93,5 @@
 }
 
 .supernova__layout--parametric {
-  --parametric-gap: calc(var(--nb-grid-spacing)*var(--nb-grid-spacing-modifier, 1))
+  --parametric-gap: var(--nb-grid-spacing);
 }

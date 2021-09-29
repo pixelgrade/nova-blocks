@@ -7,6 +7,10 @@
 		"type": "number",
 		"default": 1
 	},
+	"gridGap": {
+		"type": "number",
+		"default": 50
+	},
 	"gridcolumns": {
 		"type": "number",
 		"default": 6

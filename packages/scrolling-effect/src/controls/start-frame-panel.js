@@ -23,10 +23,6 @@ const StartFramePanel = ( props ) => {
   const parallaxFocalPointImage = useMemo( () => getParallaxFocalPointImage( media ), [ media ] );
   const isDoppler = scrollingEffect === 'doppler';
 
-  if ( ! parallaxFocalPointImage ) {
-    return null;
-  }
-
   const staticPanelTitle = __( 'Static Scrolling Settings', '__plugin_txtd' );
   const parallaxPanelTitle = __( 'Parallax Scrolling Settings', '__plugin_txtd' );
   const dopplerPanelTitle = __( 'Start Frame', '__plugin_txtd' );

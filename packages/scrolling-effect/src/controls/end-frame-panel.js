@@ -20,11 +20,9 @@ const EndFramePanel = ( props ) => {
     scrollingEffect,
   } = attributes;
 
-  const parallaxFocalPointImage = useMemo( () => {
-    getParallaxFocalPointImage( media );
-  }, [ media ] );
+  const parallaxFocalPointImage = useMemo( () => getParallaxFocalPointImage( media ), [ media ] );
 
-  if ( ! parallaxFocalPointImage || scrollingEffect !== 'doppler' ) {
+  if ( scrollingEffect !== 'doppler' ) {
     return null;
   }
 

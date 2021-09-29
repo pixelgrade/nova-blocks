@@ -60,7 +60,7 @@ const VisualBalanceSettings = ( props ) => {
         onChange={ ( layoutGutter ) => setAttributes( { layoutGutter } ) }
         min={ 0 }
         max={ 100 }
-        step={ 25 }
+        step={ 5 }
       />
     </ControlsGroup>
   )

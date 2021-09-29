@@ -141,8 +141,7 @@
 }
 
 .novablocks-grid {
-	--nb-grid-spacing: var(--nb-spacing);
-	grid-gap: calc( var(--nb-grid-spacing) * var(--nb-grid-spacing-modifier, 1) );
+	grid-gap: var(--nb-grid-spacing);
 
 	.novablocks-grid__item {
 		--theme-content-width-normal: 100%;
@@ -158,13 +157,13 @@
 .block-is-highlighted.content-is-highlighted {
 
 	@include above(tablet) {
-		--nb-grid-spacing-modifier: 0.5;
+		//--nb-grid-spacing-modifier: 0.5;
 	}
 }
 
 .novablocks-grid__area + .novablocks-grid__area,
 .novablocks-grid__area > * + * {
-	margin-top: calc( var(--nb-grid-spacing) * var(--nb-grid-spacing-modifier, 1) );
+	margin-top: var(--nb-grid-spacing);
 }
 
 .novablocks-grid--mask {
@@ -197,7 +196,7 @@
 
 	.novablocks-grid__column:first-child &:first-child:last-child {
 		position: sticky;
-		top: calc( var(--nb-grid-spacing) * var(--nb-grid-spacing-modifier, 1) );
+		top: var(--nb-grid-spacing);
 	}
 }
 

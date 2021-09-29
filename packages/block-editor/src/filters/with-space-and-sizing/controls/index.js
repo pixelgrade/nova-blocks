@@ -1,4 +1,5 @@
 import { __ } from "@wordpress/i18n";
+import { createContext, useContext } from "@wordpress/element";
 
 import { ControlsSection, ControlsTab } from "../../../components";
 
@@ -12,7 +13,11 @@ import MinimumContainerHeight from './minimum-container-height';
 import VisualBalanceCustomize from "./visual-balance-customize";
 import VisualBalanceSettings from "./visual-balance-settings";
 
+import ControlsVisibilityContext from '../../../context';
+
 const SpaceAndSizingControls = ( props ) => {
+
+  const visibilityContext = useContext( ControlsVisibilityContext );
 
   return (
     <ControlsSection id={ 'space-and-sizing' } label={ __( 'Space and Sizing' ) } order={ 20 }>
@@ -31,8 +36,8 @@ const SpaceAndSizingControls = ( props ) => {
       </ControlsTab>
       <ControlsTab label={ __( 'Settings', '__plugin_txtd' ) }>
         <CardSpacingSettings key={ 'card-spacing-settings' } { ...props } />
-        <MinimumContainerHeight key={ 'minimum-container-height' } { ...props } />
-        <ImageContainerHeightSettings key={ 'image-container-height-settings' } { ...props } />
+        { visibilityContext.minimumContainerHeight && <MinimumContainerHeight key={ 'minimum-container-height' } { ...props } /> }
+        { visibilityContext.imageContainerHeight && <ImageContainerHeightSettings key={ 'image-container-height-settings' } { ...props } /> }
         <VisualBalanceSettings key={ 'visual-balance-settings' } { ...props } />
       </ControlsTab>
     </ControlsSection>

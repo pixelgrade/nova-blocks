@@ -2,14 +2,14 @@ import { createHigherOrderComponent } from "@wordpress/compose";
 
 import { useSupports } from "@novablocks/block-editor";
 
-import withDoppler from "./with-scrolling-effect";
+import withScrollingEffectProvider from "./with-scrolling-effect-provider";
 
-const withDopplerWrapper = createHigherOrderComponent( OriginalComponent => {
+const withScrollingEffectWrapper = createHigherOrderComponent( OriginalComponent => {
 
   return ( props ) => {
 
     const supports = useSupports( props.name );
-    const WrappedComponent = withDoppler( OriginalComponent );
+    const WrappedComponent = withScrollingEffectProvider( OriginalComponent );
 
     if ( ! supports?.novaBlocks?.scrollingEffect || !! supports?.novaBlocks?.scrollingEffect.customWrapper ) {
       return <OriginalComponent { ...props } />
@@ -18,6 +18,6 @@ const withDopplerWrapper = createHigherOrderComponent( OriginalComponent => {
     return <WrappedComponent { ...props } />
   };
 
-}, 'withDopplerWrapper' );
+}, 'withScrollingEffectWrapper' );
 
-export default withDopplerWrapper;
+export default withScrollingEffectWrapper;

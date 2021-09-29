@@ -1,7 +1,9 @@
 import { __ } from "@wordpress/i18n";
 import { Button } from "@wordpress/components";
 
-const PreviewScrollingButton = ( props ) => {
+import { withScrollingEffectPreview } from '../components';
+
+const PreviewScrollingButton = withScrollingEffectPreview( props => {
 
   const {
     isScrolling,
@@ -17,6 +19,6 @@ const PreviewScrollingButton = ( props ) => {
         onClick={ previewScrolling }>{ __( 'Preview Scrolling', '__plugin_txtd' ) }</Button>
     </div>
   )
-}
+} );
 
 export default PreviewScrollingButton;

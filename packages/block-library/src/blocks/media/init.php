@@ -30,13 +30,14 @@ if ( ! function_exists( 'novablocks_render_media_block' ) ) {
 
 	function novablocks_render_media_block( $attributes, $content ) {
 
-		$classes = array( 'novablocks-media' );
-		$blockClasses = [];
-
 		// having no default value makes the card stretch vertically which is a desired outcome
-		$classes = novablocks_get_alignment_classes( $attributes );
-
-		$blockClasses[] = novablocks_get_content_style_class( $attributes );
+		$classes = array_merge(
+			array(
+				'novablocks-media'
+			),
+			novablocks_get_alignment_classes( $attributes ),
+			novablocks_get_color_signal_classes( $attributes )
+		);
 
 		$attributes_config = novablocks_get_media_attributes();
 		$attributes = novablocks_get_attributes_with_defaults( $attributes, $attributes_config );
@@ -67,6 +68,8 @@ if ( ! function_exists( 'novablocks_render_media_block' ) ) {
 		}
 
 		$classes[] = 'alignfull';
+		$contentVariation = novablocks_get_content_variation( $attributes );
+		$classes[] = 'sm-variation-' . $contentVariation . '@below-tablet';
 
 		if ( empty( $attributes['gallery'] ) && ! empty( $attributes['images'] ) ) {
 			$attributes['gallery'] = $attributes['images'];
@@ -82,8 +85,6 @@ if ( ! function_exists( 'novablocks_render_media_block' ) ) {
 		$contentAreaWidth = $attributes['contentAreaWidth'];
 		$layoutGutter = $attributes['layoutGutter'];
 
-		$blockClasses[] = 'novablocks-block';
-
 		$style =
 			'--nb-block-top-spacing:' . $blockTopSpacing . ';' .
 			'--nb-block-bottom-spacing:' . $blockBottomSpacing . ';' .
@@ -94,12 +95,6 @@ if ( ! function_exists( 'novablocks_render_media_block' ) ) {
 			'--nb-media-layout-gutter:' . $layoutGutter . ';' .
 			'--card-content-padding: ' . $attributes['contentPadding'] . ';';
 
-		$blockPaletteClasses = novablocks_get_color_signal_classes( $attributes );
-
-		$blockClasses = array_merge( $blockClasses, $blockPaletteClasses );
-		$contentVariation = novablocks_get_content_variation( $attributes );
-		$blockClasses[] = 'sm-variation-' . $contentVariation . '@below-tablet';
-
 		$contentClasses = array(
 			'novablocks-media__inner-container',
 			'novablocks-block__content'
@@ -108,7 +103,6 @@ if ( ! function_exists( 'novablocks_render_media_block' ) ) {
 		$contentPaletteClasses = novablocks_get_content_palette_classes( $attributes );
 		$contentClasses = array_merge( $contentClasses, $contentPaletteClasses );
 
-
 		ob_start(); ?>
 
         <div
@@ -116,7 +110,6 @@ if ( ! function_exists( 'novablocks_render_media_block' ) ) {
 			style="<?php echo $style ?>"
 			<?php echo join( " ", $data_attributes ); ?>
 		>
-            <div class="<?php echo esc_attr( join( ' ', $blockClasses ) ); ?>">
 	            <div class="wp-block-group__inner-container">
 		            <div class="wp-block alignwide">
 		                <div class="novablocks-media__layout">
@@ -133,7 +126,6 @@ if ( ! function_exists( 'novablocks_render_media_block' ) ) {
 		                </div>
 		            </div>
 	            </div>
-            </div>
         </div>
 
 		<?php return ob_get_clean();

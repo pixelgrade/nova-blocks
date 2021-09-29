@@ -1,6 +1,6 @@
 export { default as getChildAttributes } from './get-child-attributes';
 
-const getPreviewAttributes = ( attributes ) => {
+export const getPreviewAttributes = ( attributes ) => {
 
   if ( ! needsPreview( attributes ) ) {
     return Object.assign( {}, attributes, {
@@ -23,11 +23,3 @@ const getPreviewAttributes = ( attributes ) => {
 export const needsPreview = ( attributes ) => {
   return [ "parametric", "carousel" ].includes( attributes.layoutStyle ) && attributes.sourceType !== "content";
 }
-
-export const withPreviewAttributes = ( WrappedComponent => {
-  return props => {
-    return (
-      <WrappedComponent { ...props } attributes={ getPreviewAttributes( props.attributes ) } />
-    );
-  }
-} );
