@@ -40,6 +40,10 @@
       }
     }
   }
+  
+  .slick-list {
+    padding: 0 !important;
+  }
 
   /*
    * Pagination
@@ -121,7 +125,7 @@
   }
 
   .slick-prev {
-    left: 50px;
+    left: var(--nb-container-spacings);
 
     &:before {
       border-top: var(--nb-carousel-arrow-width) solid var(--nb-carousel-arrow-color);
@@ -131,7 +135,7 @@
   }
 
   .slick-next {
-    right: 50px;
+    right: var(--nb-container-spacings);
 
     &:before {
       border-top: var(--nb-carousel-arrow-width) solid var(--nb-carousel-arrow-color);

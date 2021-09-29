@@ -1,6 +1,9 @@
 .supernova {
   
   > .wp-block {
+  
+    padding-left: var(--nb-container-spacings);
+    padding-right: var(--nb-container-spacings);
     
     &:not(:only-child) {
       @include block-spacing;
@@ -24,20 +27,11 @@
   
     &[data-align="full"] {
       
-      padding-left: var(--nb-container-spacings);
-      padding-right: var(--nb-container-spacings);
-      
       > .supernova__layout--carousel {
         margin-left: calc( -1 * var(--nb-container-spacings) );
         margin-right: calc( -1 * var(--nb-container-spacings) );
       }
     }
-    
-    &:not([data-align="full"]) {
-      padding-left: 0;
-      padding-right: 0;
-    }
-    
   }
   
   > .wp-block__inner-container {

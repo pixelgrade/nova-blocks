@@ -1,3 +1,55 @@
+/*
+ * Supernova is a spacial block, so
+ * it's alignment need some adjustments.
+ */
+
+.supernova {
+  
+  /*
+   * Supernova has always alignfull applied on it
+   * so it's children need to have
+   * some padding left and right.
+   */
+  > * {
+    padding-left: var(--nb-container-spacings);
+    padding-right: var(--nb-container-spacings);
+  }
+  
+  /*
+   * .alignfull {
+   *    margin-left: calc(-1 * var(--nb-container-spacings))
+   *    margin-right: calc(-1 * var(--nb-container-spacings))
+   * }
+   *
+   * A nested alignfull class nested inside another alignfull
+   * will cause some trouble with it's negative margin,
+   * so we choose to reset it.
+   */
+  > .alignfull {
+    margin-left: 0;
+    margin-right: 0;
+  }
+  
+  /*
+   * When Supernova is set up as a slideshow,
+   * we don't need that padding-left and right on it,
+   * but on it's children.
+   * @todo: Maybe add some classes like supernova-is-slideshow
+   * based on block attributes, to avoid selectors like this one.
+   */
+  &[data-card-layout="stacked"][data-layout-style="carousel"] {
+    
+    &:not([data-columns]) {
+      
+      &,
+      .supernova__layout--carousel {
+        padding-left: 0;
+        padding-right: 0;
+      }
+    }
+  }
+}
+
 .novablocks-sidecar--sidebar-right:not(.ignore-block) {
   
   .block-is-wide,
