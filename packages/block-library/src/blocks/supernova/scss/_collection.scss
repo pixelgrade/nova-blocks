@@ -73,7 +73,6 @@
 
 .supernova__layout--classic,
 .supernova__layout--parametric {
-  
   --nb-collection-columns: var(--nb-collection-columns-count);
   --nb-collection-columns-below-tablet: 1;
   
@@ -87,6 +86,7 @@
     grid-template-columns: repeat(var(--nb-collection-columns, 1), 1fr);
 
     > * {
+      width: 100%;
       margin: 0;
     }
   }

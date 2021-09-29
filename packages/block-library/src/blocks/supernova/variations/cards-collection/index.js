@@ -9,8 +9,11 @@ const attributes = {
 
   sourceType: 'fields',
   layoutStyle: 'classic',
-  contentPadding: 0,
-  layoutGutter: 25,
+
+  emphasisTopSpacing: 1,
+  emphasisBottomSpacing: 1,
+  contentPadding: 50,
+  layoutGutter: 0,
 
   postsToShow: CARDS_COUNT,
   columns: 3,
@@ -18,7 +21,18 @@ const attributes = {
   cardLayout: 'vertical',
   contentPosition: 'top left',
   cardMediaOpacity: 100,
+
+  colorSignal: 2,
+  paletteVariation: 9,
+  contentColorSignal: 2,
+  contentPaletteVariation: 1,
 };
+
+const innerBlockAttributes = Object.assign( {}, attributes, {
+  colorSignal: attributes.contentColorSignal,
+  paletteVariation: attributes.contentPaletteVariation,
+  useSourceColorAsReference: false
+} );
 
 const cardsCollection = {
   name: __( 'Cards Collection', '__plugin_txtd' ),
@@ -26,7 +40,7 @@ const cardsCollection = {
   description: __( 'Cards Collection', '__plugin_txtd' ),
   icon: getSvg( iconSvg ),
   attributes,
-  innerBlocks: Array.from( Array( 3 ) ).map( () => [ 'novablocks/supernova-item', attributes ] )
+  innerBlocks: Array.from( Array( 3 ) ).map( () => [ 'novablocks/supernova-item', innerBlockAttributes ] )
 }
 
 export default cardsCollection;
