@@ -77,6 +77,7 @@ const SupernovaPreview = props => {
 
   const {
     align,
+    columns,
     headerPosition,
     showCollectionTitle,
     showCollectionSubtitle,
@@ -91,7 +92,8 @@ const SupernovaPreview = props => {
     `supernova-source-type-${ sourceType }`,
     `supernova-card-layout--${cardLayout}`,
     'alignfull',
-    `block-is-${align}`
+    `block-is-${align}`,
+    `${columns === 1 ? 'supernova-layout-one-column' : ''}`
   );
 
   const blockProps = useBlockProps( {
@@ -99,21 +101,27 @@ const SupernovaPreview = props => {
     style: props.style,
   } );
 
+  const alignClassname = 'align' + align;
+
   markPostsAsDisplayed( clientId, sourceType === 'content' ? posts : [] );
 
   return (
     <div { ...blockProps }>
         {
           headerPosition === 0 && ( showCollectionTitle || showCollectionSubtitle ) &&
-          <div className="supernova-header__inner-container" data-align={ align }>
-            <CollectionHeader { ...props } />
+          <div className={alignClassname}>
+            <div className="supernova-header__inner-container">
+              <CollectionHeader { ...props } />
+            </div>
           </div>
         }
 
-        <div className="wp-block" data-align={ align }>
+      <div className={alignClassname}>
+        <div className="supernova-content__inner-container" >
           { sourceType === 'content' && <PostsCollectionLayout { ...props } /> }
           { sourceType !== 'content' && <NotPostsCollectionLayout { ...props } /> }
         </div>
+      </div>
     </div>
   );
 }

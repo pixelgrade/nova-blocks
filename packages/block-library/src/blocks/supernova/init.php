@@ -29,6 +29,7 @@ function novablocks_get_supernova_attributes() {
 		'packages/block-editor/src/filters/with-overlay-filter/attributes.json',
 		'packages/block-editor/src/filters/with-emphasis-control/attributes.json',
 		'packages/block-editor/src/filters/with-card-elements-stacking/attributes.json',
+		'packages/block-editor/src/filters/with-collection-layout/attributes.json',
 	) );
 
 }
@@ -50,8 +51,13 @@ if ( ! function_exists( 'novablocks_render_supernova_block' ) ) {
 		$classes = array(
 			'supernova',
 			'supernova-source-type-' . $attributes[ 'sourceType' ],
-			'alignfull'
+			'alignfull',
+			'supernova-card-layout--' . $attributes[ 'cardLayout' ]
 		);
+
+		if ( $attributes['columns'] === 1 ) {
+			$classes[] = 'supernova-layout-one-column';
+		}
 
 		$blockPaletteClasses = novablocks_get_color_signal_classes( $attributes );
 		$classes = array_merge( $classes, $blockPaletteClasses );
@@ -60,24 +66,15 @@ if ( ! function_exists( 'novablocks_render_supernova_block' ) ) {
 			"supernova__layout",
 			"supernova__layout--" . $attributes[ 'layoutStyle' ],
 			"supernova__layout--" . $attributes[ 'carouselLayout' ] . "-width",
-			'align' . $attributes['align']
+			"supernova-content__inner-container",
 		);
-		
-		$supernova_header_classes = array(
-			"supernova-header__inner-container",
-		);
-
-		if ( ! empty($attributes['align'] ) ) {
-			$supernova_header_classes[] = "align" . $attributes['align'];
-		}
 
 		// @todo: Find a solution for this.
 		// The CSS Props list is getting really big,
 		// We should break them in different functions.
 		$cssProps = array(
 			'--nb-collection-columns-count: ' . $attributes[ 'columns' ],
-			'--nb-grid-spacing-multiplier: ' . $attributes[ 'gridGap' ],
-			'--nb-collection-gutter: ' . $attributes[ 'layoutGutter' ],
+			'--nb-grid-spacing-modifier: ' . $attributes[ 'gridGap' ],
 
 			'--nb-card-content-padding-multiplier: ' . $attributes[ 'contentPadding' ] / 100,
 			'--nb-card-media-padding-multiplier: ' . $attributes[ 'imagePadding' ] / 100,
@@ -116,9 +113,11 @@ if ( ! function_exists( 'novablocks_render_supernova_block' ) ) {
 			<?php echo join( " ", $data_attributes ); ?>
 			style="<?php echo join(';', $cssProps ); ?>">
 			<?php if ( $supernova_header ) { ?>
-				<div class="<?php echo join(' ', $supernova_header_classes ) ?>">
+			<div class="<?php echo "align" . $attributes['align']; ?>">
+				<div class="supernova-header__inner-container">
 					<?php echo $supernova_header ?>
 				</div>
+			</div>
 			<?php } ?>
 			<?php
 			if ( "parametric" === $attributes[ 'layoutStyle' ] ) {
@@ -128,8 +127,10 @@ if ( ! function_exists( 'novablocks_render_supernova_block' ) ) {
 					<?php echo $content; ?>
 				</div>
 			<?php } else { ?>
-				<div class="<?php echo join( ' ', $layoutClasses );?>">
-					<?php echo $content; ?>
+				<div class="<?php echo "align" . $attributes['align']; ?>">
+					<div class="<?php echo join( ' ', $layoutClasses );?>">
+						<?php echo $content; ?>
+					</div>
 				</div>
 			<?php } ?>
 		</div>

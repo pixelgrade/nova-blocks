@@ -43,6 +43,7 @@
   
   .slick-list {
     padding: 0 !important;
+    margin: 0 !important;
   }
 
   /*
@@ -160,10 +161,8 @@
 [data-layout-style="carousel"] {
   
   &[data-card-layout="stacked"] {
-    
-    &[data-show-pagination="1"] {
       
-      &:not( [data-columns] ) {
+      &[data-columns="1"] {
         
         .supernova-item__content {
           padding-bottom: calc(3 * var(--nb-spacing));
@@ -176,8 +175,7 @@
           z-index: 1000;
         }
       }
-     
-    }
+    
   }
 }
 

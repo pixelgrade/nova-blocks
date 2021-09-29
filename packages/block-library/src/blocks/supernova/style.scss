@@ -1,7 +1,7 @@
-@import "scss/card";
-@import "scss/collection";
-@import "scss/carousel";
-@import "scss/block-alignments";
+@import 'scss/card';
+@import 'scss/collection';
+@import 'scss/carousel';
+@import 'scss/block-alignments';
 
 .supernova {
 
@@ -21,6 +21,7 @@
   &:before {
     content: '';
     position: absolute;
+    top: 0;
     left: 0;
     grid-column: var(--custom-limit-left)/var(--custom-limit-right);
     background: linear-gradient(
@@ -35,7 +36,6 @@
   }
 
 }
-
 
 /*
  * Currently Slick is applying display: inline-block.
@@ -54,5 +54,49 @@
   
   > * {
     --nb-element-spacing-multiplier: 0.5;
+  }
+}
+
+/*
+ * Hero
+ */
+.supernova {
+  
+  &.supernova-card-layout--stacked {
+  
+    &.supernova-layout-one-column {
+    
+      .supernova__layout,
+      .supernova__layout-item {
+        --nb-block-top-spacing: 0
+      }
+  
+      > .alignfull {
+    
+        > [class*='__inner-container'] {
+          padding-left: 0;
+          padding-right: 0;
+        }
+      }
+    }
+  }
+  
+  &.supernova-layout-one-column {
+  
+    [class*="__inner-container"] > :first-child {
+      --nb-block-top-spacing: 1;
+    }
+  }
+  
+  /*
+ * When we have more than 1 element
+ * per columns, (cards are stacked horizontally),
+ * we need space on :first-child
+ */
+  &:not(.supernova-layout-one-column) {
+    
+    .supernova-content__inner-container > :first-child {
+      --nb-block-top-spacing: 1;
+    }
   }
 }
