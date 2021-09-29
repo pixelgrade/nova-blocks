@@ -1,4 +1,8 @@
 {
+	"variation": {
+		"type": "string",
+		"default": "supernova"
+	},
 	"align": {
 		"type": "string",
 		"default": "wide"

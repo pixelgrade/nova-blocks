@@ -13,7 +13,7 @@ import { getSvg } from '@novablocks/block-editor';
 
 import edit from './edit';
 import variations from './variations';
-import iconSvg from './super-nova-block.svg';
+import iconSvg from './supernova-block.svg';
 
 import attributes from './attributes';
 
