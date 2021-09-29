@@ -5,6 +5,7 @@ import "./with-elements-visibility"; // @todo use supports API
 import "./with-cards-manager"; // @todo use supports API
 import "./with-content-position-matrix";
 import "./with-controls-sections";
+import "./with-controls-visibility";
 import "./with-deprecated-group";
 import "./with-font-size-picker"; // @todo maybe rely on supports API
 import "./with-latest-posts";

@@ -12,6 +12,7 @@ import {
   ControlsTab,
   Notice,
   PresetControl,
+  withVisibility,
 } from '@novablocks/block-editor';
 
 import { getRandomAttributes } from "../utils";
@@ -183,4 +184,4 @@ const ImageResizingControls = ( props ) => {
   )
 }
 
-export default MediaCompositionControls;
+export default withVisibility( 'media-composition-section' )( MediaCompositionControls );

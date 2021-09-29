@@ -2,6 +2,7 @@ import { RadioControl } from '@wordpress/components';
 import { __ } from '@wordpress/i18n';
 
 import { ControlsGroup } from "../../../components";
+import withVisibility from "../../../components/with-visibility";
 
 const MinimumContainerHeight = props => {
 
@@ -16,7 +17,7 @@ const MinimumContainerHeight = props => {
   } = attributes;
 
   return (
-    <ControlsGroup key={ 'minimum-container-height' } title={ __( 'Minimum Container Height', '__plugin_txtd' ) }>
+    <ControlsGroup title={ __( 'Minimum Container Height', '__plugin_txtd' ) }>
       <RadioControl
         selected={ minHeightFallback }
         onChange={ minHeightFallback => {
@@ -30,4 +31,4 @@ const MinimumContainerHeight = props => {
   )
 }
 
-export default MinimumContainerHeight;
+export default withVisibility( 'minimum-container-height' )( MinimumContainerHeight );

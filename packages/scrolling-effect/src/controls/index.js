@@ -2,6 +2,7 @@ import ScrollingEffectPanel from "./scrolling-effect-panel";
 import DopplerPresetsPanel from "./doppler-presets-panel";
 import StartFramePanel from "./start-frame-panel";
 import EndFramePanel from "./end-frame-panel";
+import { withVisibility } from "@novablocks/block-editor";
 
 const Controls = ( props ) => {
 
@@ -14,4 +15,4 @@ const Controls = ( props ) => {
   )
 };
 
-export default Controls;
+export default withVisibility( 'scrolling-effect-section' )( Controls );

@@ -1,7 +1,7 @@
 import { createHigherOrderComponent } from "@wordpress/compose";
 import { Fragment } from "@wordpress/element";
 
-import { useSupports } from "@novablocks/block-editor";
+import { useSupports, withVisibility } from "@novablocks/block-editor";
 
 import { MediaCompositionSection } from "../controls";
 
