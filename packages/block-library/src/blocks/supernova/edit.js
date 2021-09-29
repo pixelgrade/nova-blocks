@@ -105,7 +105,7 @@ const SupernovaPreview = props => {
     <div { ...blockProps }>
         {
           headerPosition === 0 && ( showCollectionTitle || showCollectionSubtitle ) &&
-          <div className="wp-block supernova-header__inner-container" data-align={ align }>
+          <div className="supernova-header__inner-container" data-align={ align }>
             <CollectionHeader { ...props } />
           </div>
         }
