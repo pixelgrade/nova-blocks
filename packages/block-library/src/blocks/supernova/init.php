@@ -112,28 +112,29 @@ if ( ! function_exists( 'novablocks_render_supernova_block' ) ) {
 
 		ob_start(); ?>
 
-        <div
+		<div
 			class="<?php echo join( ' ', $classes ); ?>"
 			<?php echo join( " ", $data_attributes ); ?>
-			style="<?php echo join(';', $cssProps ); ?>">
+			style="<?php echo join( ';', $cssProps ); ?>">
 			<?php if ( $supernova_header ) { ?>
-			<div class="<?php echo "align" . $attributes['align']; ?>">
-				<div class="supernova-header__inner-container">
-					<?php echo $supernova_header ?>
+				<div class="<?php echo "align" . $attributes['align']; ?>">
+					<div class="supernova-header__inner-container">
+						<?php echo $supernova_header ?>
+					</div>
 				</div>
-			</div>
-			<?php } ?>
-			<?php
-			if ( "parametric" === $attributes[ 'layoutStyle' ] ) {
+			<?php }
+
+			if ( "parametric" === $attributes['layoutStyle'] ) {
 				$layoutClasses[] = 'novablocks-grid';
-			?>
-				<div class="<?php echo join( ' ', $layoutClasses );?>" <?php echo join( ' ', $data_attributes ); ?>>
+				?>
+				<div class="<?php echo join( ' ', $layoutClasses ); ?>" <?php echo join( ' ', $data_attributes ); ?>>
 					<?php echo $content; ?>
 				</div>
 			<?php } else { ?>
+
 				<div class="<?php echo "align" . $attributes['align']; ?>">
 					<div class="supernova-content__inner-container">
-						<div class="<?php echo join( ' ', $layoutClasses );?>">
+						<div class="<?php echo join( ' ', $layoutClasses ); ?>">
 							<?php echo $content; ?>
 						</div>
 					</div>
