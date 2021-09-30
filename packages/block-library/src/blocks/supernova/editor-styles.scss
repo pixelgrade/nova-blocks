@@ -1,0 +1,62 @@
+/*
+ * The following CSS is duplicated from block-alignments.scss
+ * Inside the editor we are not using the same logic as frontend,
+ * to apply stop-left or stop-right classes on supernova.
+ * Because of that we are applying the same CSS as on frontend,
+ * except the extra specificity added by [class*='stop'].
+ */
+.novablocks-sidecar {
+  
+  &--sidebar-right:not(.ignore-block) {
+    
+    .block-is-wide,
+    .block-is-none {
+      
+      --custom-limit-left: var(--block-limit-left);
+      --custom-limit-right: ce;
+      
+      > * {
+        --block-content-start: ws !important;
+        --block-content-end: ce !important;
+      }
+    }
+    
+    .block-is-full {
+      
+      
+      --custom-limit-left: var(--block-limit-left);
+      --custom-limit-right: ce;
+      
+      > * {
+        --block-content-start: fs !important;
+        --block-content-end: ce !important;
+      }
+    }
+  }
+  
+  &--sidebar-left:not(.ignore-block) {
+    
+    .block-is-wide,
+    .block-is-none {
+      
+      --custom-limit-left: cs;
+      --custom-limit-right: var(--block-limit-right);
+      
+      > * {
+        --block-content-start: cs !important;
+        --block-content-end: we !important;
+      }
+    }
+    
+    .block-is-full {
+      
+      --custom-limit-left: cs;
+      --custom-limit-right: var(--block-limit-right);
+      
+      > * {
+        --block-content-start: cs !important;
+        --block-content-end: fe !important;
+      }
+    }
+  }
+}
