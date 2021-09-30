@@ -14,5 +14,13 @@
 	"metadataPosition": {
 		"type": "string",
 		"default": "above-title"
+	},
+	"primaryMetadata": {
+		"type": "string",
+		"default": "category"
+	},
+	"secondaryMetadata": {
+		"type": "string",
+		"default": "date"
 	}
 }

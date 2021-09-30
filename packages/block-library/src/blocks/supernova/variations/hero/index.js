@@ -20,9 +20,7 @@ const attributes = {
   contentPosition: 'bottom center',
   cardMediaOpacity: 40,
 
-  colorSignal: 0,
-  paletteVariation: 12,
-  contentColorSignal: 0,
+  contentColorSignal: 3,
   contentPaletteVariation: 12,
   overlayFilterStrength: 70,
 
@@ -47,7 +45,7 @@ const innerBlocks = [
 const heroVariation = {
   name: __( 'Hero of the Galaxy', '__plugin_txtd' ),
   title: __( 'Hero of the Galaxy', '__plugin_txtd' ),
-  description: __( 'Hero of the Galaxy', '__plugin_txtd' ),
+  description: __( 'A great way to get your visitors acquainted with your content.', '__plugin_txtd' ),
   icon: getSvg( iconSvg ),
   attributes: attributes,
   innerBlocks,

@@ -29,7 +29,7 @@ const attributes = {
 const advancedGallery = {
   name: __( 'Advanced Gallery', '__plugin_txtd' ),
   title: __( 'Advanced Gallery', '__plugin_txtd' ),
-  description: __( 'Advanced Gallery', '__plugin_txtd' ),
+  description: __( 'Display galleries of images in unique and creative compositions.', '__plugin_txtd' ),
   icon: getSvg( iconSvg ),
   attributes,
   innerBlocks: [

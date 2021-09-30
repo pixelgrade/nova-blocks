@@ -21,11 +21,6 @@ const attributes = {
   cardLayout: 'vertical',
   contentPosition: 'top left',
   cardMediaOpacity: 100,
-
-  colorSignal: 2,
-  paletteVariation: 9,
-  contentColorSignal: 2,
-  contentPaletteVariation: 1,
 };
 
 const innerBlockAttributes = Object.assign( {}, attributes, {
@@ -37,10 +32,11 @@ const innerBlockAttributes = Object.assign( {}, attributes, {
 const cardsCollection = {
   name: __( 'Cards Collection', '__plugin_txtd' ),
   title: __( 'Cards Collection', '__plugin_txtd' ),
-  description: __( 'Cards Collection', '__plugin_txtd' ),
+  description: __( 'Display a list of related items placed within a coherent layout.', '__plugin_txtd' ),
   icon: getSvg( iconSvg ),
   attributes,
-  innerBlocks: Array.from( Array( 3 ) ).map( () => [ 'novablocks/supernova-item', innerBlockAttributes ] )
+  innerBlocks: Array.from( Array( 3 ) ).map( () => [ 'novablocks/supernova-item', innerBlockAttributes ] ),
+  isActive: ( block, variation ) => block.variation === variation.variation
 }
 
 export default cardsCollection;

@@ -20,6 +20,11 @@
   .supernova {
     --display-mode: block;
   }
+  
+  [class*='__inner-container'] {
+    padding-left: 0;
+    padding-right: 0;
+  }
 }
 
 .novablocks-sidecar {
