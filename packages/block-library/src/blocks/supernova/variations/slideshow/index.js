@@ -20,8 +20,8 @@ const attributes = {
 
   cardLayout: 'stacked',
   contentPosition: 'center center',
-  cardMediaOpacity: 40,
-  paletteVariation: 12,
+  overlayFilterStrength: 40,
+  contentPaletteVariation: 12,
 };
 
 const slideshow = {
