@@ -81,13 +81,6 @@
     }
   }
   
-  &.supernova-layout-one-column {
-  
-    [class*="__inner-container"] > :first-child {
-      --nb-block-top-spacing: 1;
-    }
-  }
-  
   /*
  * When we have more than 1 element
  * per columns, (cards are stacked horizontally),

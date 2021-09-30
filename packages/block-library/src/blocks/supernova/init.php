@@ -65,8 +65,7 @@ if ( ! function_exists( 'novablocks_render_supernova_block' ) ) {
 		$layoutClasses = array(
 			"supernova__layout",
 			"supernova__layout--" . $attributes[ 'layoutStyle' ],
-			"supernova__layout--" . $attributes[ 'carouselLayout' ] . "-width",
-			"supernova-content__inner-container",
+			"supernova__layout--" . $attributes[ 'carouselLayout' ] . "-width"
 		);
 
 		// @todo: Find a solution for this.
@@ -129,8 +128,10 @@ if ( ! function_exists( 'novablocks_render_supernova_block' ) ) {
 				</div>
 			<?php } else { ?>
 				<div class="<?php echo "align" . $attributes['align']; ?>">
-					<div class="<?php echo join( ' ', $layoutClasses );?>">
-						<?php echo $content; ?>
+					<div class="supernova-content__inner-container">
+						<div class="<?php echo join( ' ', $layoutClasses );?>">
+							<?php echo $content; ?>
+						</div>
 					</div>
 				</div>
 			<?php } ?>
