@@ -3,7 +3,12 @@ import { dispatch, select, subscribe } from "@wordpress/data";
 import { getSupports } from "@novablocks/block-editor";
 
 import { getParentVariation } from "./editor/utils";
-import { computeColorSignal, getAbsoluteColorVariation, removeSiteVariationOffset } from "./utils";
+import {
+  computeColorSignal,
+  getAbsoluteColorVariation,
+  getSignalRelativeToVariation,
+  removeSiteVariationOffset,
+} from "./utils";
 
 const getBlockList = () => select( 'core/editor' ).getBlocks();
 
@@ -69,11 +74,16 @@ const updateBlock = ( block ) => {
     const parentVariation = getParentVariation( clientId );
     const absoluteVariation = getAbsoluteColorVariation( attributes );
     const nextVariation = computeColorSignal( parentVariation, colorSignal, absoluteVariation );
+
+    const nextColorSignal = useSourceColorAsReference ? getSignalRelativeToVariation( absoluteVariation, parentVariation ) : colorSignal;
     const finalVariation = useSourceColorAsReference ? 1 : removeSiteVariationOffset( nextVariation );
 
+    console.log();
+
     // dispatch new attributes only if the new paletteVariation value differs from the current one
-    if ( paletteVariation !== finalVariation ) {
+    if ( paletteVariation !== finalVariation || colorSignal !== nextColorSignal ) {
       updateBlockAttributes( clientId, {
+        colorSignal: nextColorSignal,
         paletteVariation: finalVariation,
       } );
     }

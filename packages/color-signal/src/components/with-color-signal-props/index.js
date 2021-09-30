@@ -1,4 +1,4 @@
-import { useCallback, useMemo } from "@wordpress/element";
+import { useCallback } from "@wordpress/element";
 import { useMemoryState } from "@novablocks/block-editor";
 import { getParentVariation } from "../../editor/utils";
 import {
@@ -14,9 +14,9 @@ const withColorSignalProps = OriginalComponent => {
 
     const { attributes, setAttributes, clientId } = props;
     const [ showFunctionalColors, setShowFunctionalColors ] = useMemoryState( 'showFunctionalColors', false );
-    const referenceVariation = useMemo( () => getParentVariation( clientId ), [ clientId ] );
 
     const updateBlock = useCallback( ( newAttributes, useSourceOnSameVariation = false, useSourceOnSameSignal = false ) => {
+      const referenceVariation = getParentVariation( clientId );
       const nextAttributes = Object.assign( {}, attributes, newAttributes );
       const { palette, useSourceColorAsReference } = nextAttributes;
       const sourceIndex = getSourceIndexFromPaletteId( palette );
@@ -41,7 +41,7 @@ const withColorSignalProps = OriginalComponent => {
         contentPaletteVariation: contentColorSignal === 0 ? finalVariation : nextContentVariation,
       } );
 
-    }, [ attributes ] );
+    }, [ attributes, clientId ] );
 
     return (
       <OriginalComponent
