@@ -1856,10 +1856,6 @@ function novablocks_get_supernova_card_markup( $media, $content, $attributes ) {
 
 	$align = preg_split( '/\b\s+/', $attributes[ 'contentPosition' ] );
 
-	$attributes[ 'colorSignal' ] = $attributes[ 'contentColorSignal' ];
-	$attributes[ 'paletteVariation' ] = $attributes[ 'contentPaletteVariation' ];
-	$attributes[ 'useSourceColorAsReference' ] = false;
-
 	$contentClasses = array_merge( array(
 		'supernova-item__content',
 		'supernova-item__content--valign-' . $align[0],

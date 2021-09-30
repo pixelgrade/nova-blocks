@@ -5,7 +5,14 @@ import classnames from 'classnames';
 
 import MediaComposition from '@novablocks/media-composition';
 
-import { getAlignmentClassnames } from '@novablocks/utils';
+import {
+  getAlignmentClassnames,
+  getColorSignalClassnames,
+} from '@novablocks/utils';
+
+import {
+  getContentVariationBySignal
+} from '@novablocks/color-signal';
 
 import { InnerBlocks } from '@wordpress/block-editor';
 
@@ -14,12 +21,6 @@ const MediaPreview = function( props ) {
   const {
     attributes,
     settings,
-    colorSignal: {
-      utils: {
-        getColorSignalClassnames,
-        getContentVariationBySignal
-      }
-    }
   } = props;
 
 	const {

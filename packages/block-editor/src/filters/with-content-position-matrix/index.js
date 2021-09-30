@@ -51,20 +51,26 @@ const withInnerBlocksContentPosition = createHigherOrderComponent( OriginalCompo
   return ( props ) => {
 
     const supports = useSupports( props.name );
+    const { setAttributes, clientId } = props;
 
     if ( ! supports?.novaBlocks?.contentPositionMatrixToolbar ) {
       return <OriginalComponent { ...props } />
     }
 
-    const { clientId, attributes } = props;
-    const { contentPosition } = attributes;
-    const alignment = contentPosition.split( " " );
-    const horizontalAlignment = alignment[1] || 'center';
+    const newSetAttributes = ( attributes ) => {
+      const { contentPosition } = attributes;
 
-    // @todo maybe find a better solution instead of reapply-ing attributes every render
-    alignBlockChildren( clientId, horizontalAlignment );
+      if ( !! contentPosition ) {
+        const alignment = contentPosition.split( " " );
+        const horizontalAlignment = alignment[1] || 'center';
 
-    return <OriginalComponent { ...props } />
+        alignBlockChildren( clientId, horizontalAlignment );
+      }
+
+      setAttributes( attributes );
+    }
+
+    return <OriginalComponent { ...props } setAttributes={ newSetAttributes } />
   };
 }, 'withInnerBlocksContentPosition' );
 

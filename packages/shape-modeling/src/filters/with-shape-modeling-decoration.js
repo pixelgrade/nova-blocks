@@ -11,26 +11,20 @@ import {
   getBlobMaskStyles,
 } from '../utils';
 
+import { getColorSignalClassnames } from "@novablocks/utils";
+
 import { ShapeDebug } from '../components';
 
 const withShapeModelingDecoration = createHigherOrderComponent( OriginalComponent => {
 
 	return ( props ) => {
 
-		const {
-		  attributes,
-      name,
-      colorSignal: {
-        utils: {
-          getColorSignalClassnames
-        }
-      }
-		} = props;
+		const { attributes } = props;
 
 		const {
 			blobsEnableMask,
 			blobsEnableDecoration,
-			enableShapeDebug
+			enableShapeDebug,
 		} = attributes;
 
 		const seedOffset = Number.isInteger( props.seedOffset ) ? props.seedOffset : 0;

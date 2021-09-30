@@ -2,7 +2,6 @@
  * WordPress dependencies
  */
 import { __ } from '@wordpress/i18n';
-import { addFilter } from '@wordpress/hooks';
 import { registerBlockType } from '@wordpress/blocks';
 import { select } from "@wordpress/data";
 import { InnerBlocks } from '@wordpress/block-editor';
@@ -17,24 +16,6 @@ import edit from './edit';
 import variations from './variations';
 import deprecated from './deprecated';
 import attributes from './attributes.json';
-import attributesColorSignal from './attributes-color-signal.json';
-
-const withColorSignalAttributes = ( settings ) => {
-
-  if ( 'novablocks/header' !== settings.name ) {
-    return settings;
-  }
-
-  return {
-    ...settings,
-    attributes: {
-      ...settings.attributes,
-      ...attributesColorSignal
-    }
-  };
-
-}
-addFilter( 'blocks.registerBlockType', 'novablocks/header-color-signal-attributes-overwrite', withColorSignalAttributes, 20 );
 
 registerBlockType( 'novablocks/header', {
 	title: __( 'Header', '__plugin_txtd' ),
@@ -47,7 +28,13 @@ registerBlockType( 'novablocks/header', {
     html: false,
     multiple: false,
     novaBlocks: {
-      colorSignal: true,
+      colorSignal: {
+        attributes: true,
+        controls: true,
+        paletteClassname: true,
+        paletteVariationClassname: true,
+        colorSignalClassname: true,
+      },
     },
   },
 	variations,

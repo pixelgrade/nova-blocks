@@ -14,6 +14,7 @@ import withColorSignalSaveDataAttributes from "./filters/with-color-signal-save-
 
 addFilter( 'blocks.registerBlockType', 'novablocks/with-color-signal-attributes', withColorSignalAttributes );
 addFilter( 'blocks.registerBlockType', 'novablocks/with-color-signal-deprecated', withColorSignalsDeprecated );
+addFilter( 'editor.BlockListBlock', 'novablocks/with-color-signal', withColorSignal );
 addFilter( 'editor.BlockEdit', 'novablocks/with-color-signal', withColorSignal );
 addFilter( 'editor.BlockEdit', 'novablocks/with-color-signal-controls', withColorSignalControls );
 addFilter( 'editor.BlockListBlock', 'novablocks/with-color-signal-edit-classnames', withColorSignalEditClassnames );

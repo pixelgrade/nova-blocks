@@ -15,6 +15,7 @@ import { Popover } from '@wordpress/components';
 
 import { MediaCompositionPreview } from "@novablocks/media-composition";
 import { Card, CardButton, CardMediaWrapper } from "@novablocks/block-editor";
+import { getColorSignalClassnames } from "@novablocks/utils";
 
 const SuperNovaItemEdit = props => {
 
@@ -54,28 +55,35 @@ const CardMedia = withScrollingEffect( ( props ) => {
 const SuperNovaItemContent = ( props ) => {
 
   const {
-    attributes: {
-      sourceType,
-      level,
-      metaAboveTitle,
-      metaBelowTitle,
-      title,
-      subtitle,
-      description,
-      buttonText,
-      buttonUrl,
-      buttonOpensInNewTab,
-    },
+    attributes,
     setAttributes,
   } = props;
+
+  const {
+    sourceType,
+    level,
+    metaAboveTitle,
+    metaBelowTitle,
+    title,
+    subtitle,
+    description,
+    buttonText,
+    buttonUrl,
+    buttonOpensInNewTab,
+  } = attributes;
 
   const [ showPopover, setShowPopover ] = useState( false );
   const TitleTagName = `h${ level + 1 }`;
   const SubTitleTagName = `h${ level + 2 }`;
 
+  const containerClassname = classnames(
+    `supernova-item__inner-container`,
+    getColorSignalClassnames( attributes, true )
+  );
+
   if ( sourceType === 'fields' ) {
     return (
-      <div className={ 'supernova-item__inner-container' }>
+      <div className={ containerClassname }>
         <div className={ `novablocks-card__meta block-editor-block-list__block is-style-meta` }>
           <RichText
             className={ `novablocks-card__meta-size-modifier` }
@@ -160,7 +168,10 @@ const SuperNovaItemContent = ( props ) => {
   }
 
   const innerBlocksProps = useInnerBlocksProps( {
-    className: 'supernova-item__inner-container'
+    className: classnames(
+      'supernova-item__inner-container',
+      getColorSignalClassnames( attributes, true )
+    )
   } );
 
   return (

@@ -1,9 +1,4 @@
 /**
- * Internal dependencies
- */
-import HeroBackground from './background';
-
-/**
  * WordPress dependencies
  */
 import { InnerBlocks } from '@wordpress/block-editor';
@@ -11,7 +6,15 @@ const useInnerBlocksProps = wp.blockEditor.useInnerBlocksProps || wp.blockEditor
 
 import { useSelect } from '@wordpress/data';
 
-import { getAlignmentClassnames } from "@novablocks/utils";
+/**
+ * Internal dependencies
+ */
+import {
+  getAlignmentClassnames,
+  getColorSignalClassnames
+} from "@novablocks/utils";
+
+import HeroBackground from './background';
 
 const HeroPreview = function( props ) {
 
@@ -20,11 +23,6 @@ const HeroPreview = function( props ) {
 		className,
 		clientId,
 		settings,
-    colorSignal: {
-      utils: {
-        getColorSignalClassnames
-      }
-    }
 	} = props;
 
 	const {

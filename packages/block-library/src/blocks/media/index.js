@@ -77,8 +77,10 @@ registerBlockType( 'novablocks/media', {
         deprecated: true
       },
       spaceAndSizing: {
-        advancedSpacing: true
-      }
+        attributes: true,
+        controls: true,
+        advancedSpacing: true,
+      },
     },
   },
 	edit,

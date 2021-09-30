@@ -46,14 +46,7 @@ export const Card = ( props ) => {
 
 export const CardContentWrapper = ( props ) => {
 
-  const {
-    attributes,
-    colorSignal: {
-      utils: {
-        getColorSignalClassnames
-      }
-    }
-  } = props;
+  const { attributes } = props;
 
   const align = getAlignFromMatrix( attributes?.contentPosition );
 
@@ -61,7 +54,6 @@ export const CardContentWrapper = ( props ) => {
     `supernova-item__content`,
     `supernova-item__content--valign-${ align[0] }`,
     `supernova-item__content--halign-${ align[1] }`,
-    getColorSignalClassnames( attributes, true )
   );
 
   return (

@@ -78,6 +78,7 @@ registerBlockType( 'novablocks/supernova', {
       spaceAndSizing: {
         attributes: true,
         controls: true,
+        advancedSpacing: true,
       },
       noDataAlign: true
     },

@@ -1,8 +1,10 @@
 /**
  * Internal dependencies
  */
-import SlideshowBackground from './background';
 import { GalleryPlaceholder, getEditorScrollContainer } from '@novablocks/block-editor';
+import { getColorSignalClassnames } from '@novablocks/utils';
+
+import SlideshowBackground from './background';
 
 /**
  * WordPress dependencies
@@ -46,11 +48,6 @@ const SlideshowPreview = class extends Component {
 			attributes,
 			previewImage,
 			className,
-      colorSignal: {
-        utils: {
-          getColorSignalClassnames
-        }
-      }
 		} = this.props;
 
     const {

@@ -1,5 +1,6 @@
-import { __ } from "@wordpress/i18n";
+import classnames from 'classnames';
 
+import { __ } from "@wordpress/i18n";
 import { withSelect } from "@wordpress/data";
 import { __unstableStripHTML as stripHTML } from '@wordpress/dom';
 
@@ -14,6 +15,8 @@ import {
 } from "@novablocks/block-editor";
 
 import { withShapeModelingDecoration } from "@novablocks/shape-modeling";
+
+import { getColorSignalClassnames } from "@novablocks/utils";
 
 import { getMeta, sanitizeMediaResponse } from './utils';
 
@@ -71,18 +74,25 @@ const PostCard = withMedia( props => {
     metaBelowTitle,
   } = getMeta( props );
 
+  const contentWrapperClassname = classnames(
+    'supernova-item__inner-container',
+    getColorSignalClassnames( attributes, true )
+  );
+
   return (
     <Card { ...props }>
       <CardMediaWrapper { ...props }>
         <PostCardMedia { ...props } />
       </CardMediaWrapper>
-      <CardMeta show={ showMeta }>{ metaAboveTitle }</CardMeta>
-      <CardTitle show={ showTitle }>{ post.title.raw }</CardTitle>
-      <CardMeta show={ showMeta }>{ metaBelowTitle }</CardMeta>
-      <CardDescription show={ showDescription }>{ stripHTML(post.excerpt.rendered) }</CardDescription>
-      <CardFooter show={ showButtons }>
-        <CardButton>{ __( 'Read More' ) }</CardButton>
-      </CardFooter>
+      <div className={ contentWrapperClassname }>
+        <CardMeta show={ showMeta }>{ metaAboveTitle }</CardMeta>
+        <CardTitle show={ showTitle }>{ post.title.raw }</CardTitle>
+        <CardMeta show={ showMeta }>{ metaBelowTitle }</CardMeta>
+        <CardDescription show={ showDescription }>{ stripHTML(post.excerpt.rendered) }</CardDescription>
+        <CardFooter show={ showButtons }>
+          <CardButton>{ __( 'Read More' ) }</CardButton>
+        </CardFooter>
+      </div>
     </Card>
   );
 } );

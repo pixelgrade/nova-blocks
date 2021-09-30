@@ -1,15 +1,12 @@
 import classnames from "classnames";
 
+import { getColorSignalClassnames } from '@novablocks/utils';
+
 const OpenTableSave = function( props ) {
 
 	const {
 		attributes,
 		className,
-    colorSignal: {
-      utils: {
-        getColorSignalClassnames
-      }
-    }
 	} = props;
 
 	const {

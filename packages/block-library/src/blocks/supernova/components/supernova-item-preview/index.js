@@ -13,17 +13,11 @@ import {
 } from "@novablocks/block-editor";
 
 import { MediaCompositionPreview } from "@novablocks/media-composition";
+import { getColorSignalClassnames } from "@novablocks/utils";
 
 const SupernovaItemPreview = props => {
 
-  const {
-    attributes,
-    colorSignal: {
-      utils: {
-        getColorSignalClassnames
-      }
-    }
-  } = props;
+  const { attributes } = props;
   const className = getColorSignalClassnames( attributes, true );
   const { style, ...otherProps } = props;
 
