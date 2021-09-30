@@ -20,9 +20,7 @@ const attributes = {
   contentPosition: 'bottom center',
   cardMediaOpacity: 40,
 
-  colorSignal: 0,
-  paletteVariation: 12,
-  contentColorSignal: 0,
+  contentColorSignal: 3,
   contentPaletteVariation: 12,
   overlayFilterStrength: 70,
 
