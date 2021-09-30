@@ -17,7 +17,7 @@ const attributes = {
 const postsCollection = {
   name: __( 'Posts Collection', '__plugin_txtd' ),
   title: __( 'Posts Collection', '__plugin_txtd' ),
-  description: __( 'Posts Collection', '__plugin_txtd' ),
+  description: __( 'Show Latest Posts.', '__plugin_txtd' ),
   icon: getSvg( iconSvg ),
   attributes,
   innerBlocks: Array.from( Array( CARDS_COUNT ) ).map( () => [ 'novablocks/supernova-item', attributes ] ),

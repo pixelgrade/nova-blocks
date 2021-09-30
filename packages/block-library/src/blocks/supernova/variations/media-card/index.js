@@ -27,7 +27,7 @@ const innerBlocks = [
 const mediaCard = {
   name: __( 'Media Card Constellation', '__plugin_txtd' ),
   title: __( 'Media Card Constellation', '__plugin_txtd' ),
-  description: __( 'Media Card Constellation', '__plugin_txtd' ),
+  description: __( 'Display media objects alongside short pieces of content.', '__plugin_txtd' ),
   icon: getSvg( iconSvg ),
   attributes,
   innerBlocks: [ [ 'novablocks/supernova-item', attributes, innerBlocks ] ],

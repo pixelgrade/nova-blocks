@@ -28,7 +28,7 @@ const attributes = {
 const slideshow = {
   name: __( 'Slideshow me the Way', '__plugin_txtd' ),
   title: __( 'Slideshow me the Way', '__plugin_txtd' ),
-  description: __( 'Slideshow me the Way', '__plugin_txtd' ),
+  description: __( 'Display more than one piece of content in a single, coveted space.', '__plugin_txtd' ),
   icon: getSvg( iconSvg ),
   attributes,
   innerBlocks: Array.from( Array( CARDS_COUNT ) ).map( () => [ 'novablocks/supernova-item', attributes ] ),
