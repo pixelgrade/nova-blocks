@@ -46,20 +46,31 @@
   &:not(&--parametric) .supernova-item--layout-horizontal,
   &:not(&--parametric) .supernova-item--layout-horizontal-reverse {
     flex-direction: row;
-
-    .supernova-item__content {
-      width: var(--nb-card-content-column-width);
-      flex: 1 0 var(--nb-card-content-column-width);
+    
+    @include below(tablet) {
+      flex-direction: column;
     }
 
-    .supernova-item__media-wrapper {
-      width: var(--nb-card-media-column-width);
-      flex: 1 0 var(--nb-card-media-column-width);
+    @include above(tablet) {
+      
+      .supernova-item__content {
+        width: var(--nb-card-content-column-width);
+        flex: 1 0 var(--nb-card-content-column-width);
+      }
+  
+      .supernova-item__media-wrapper {
+        width: var(--nb-card-media-column-width);
+        flex: 1 0 var(--nb-card-media-column-width);
+      }
     }
   }
 
   &:not(&--parametric) .supernova-item--layout-horizontal-reverse {
     flex-direction: row-reverse;
+    
+    @include below(tablet) {
+      flex-direction: column;
+    }
   }
 }
 
