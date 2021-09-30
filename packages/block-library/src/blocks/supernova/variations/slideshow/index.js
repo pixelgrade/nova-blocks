@@ -21,6 +21,7 @@ const attributes = {
   cardLayout: 'stacked',
   contentPosition: 'center center',
   overlayFilterStrength: 40,
+  contentColorSignal: 3,
   contentPaletteVariation: 12,
 };
 
