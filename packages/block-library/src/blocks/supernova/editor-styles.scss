@@ -1,26 +1,62 @@
-.supernova {
+/*
+ * The following CSS is duplicated from block-alignments.scss
+ * Inside the editor we are not using the same logic as frontend,
+ * to apply stop-left or stop-right classes on supernova.
+ * Because of that we are applying the same CSS as on frontend,
+ * except the extra specificity added by [class*='stop'].
+ */
+.novablocks-sidecar {
   
-  > .wp-block {
-    margin-top: 0;
-    margin-bottom: 0;
-  }
-  
-  > .wp-block__inner-container {
-    //@include layout-grid;
-    //grid-column: var(--all-columns);
+  &--sidebar-right:not(.ignore-block) {
     
-    > * {
-      margin-left: 0;
-      margin-right: 0;
+    .block-is-wide,
+    .block-is-none {
+      
+      --custom-limit-left: var(--block-limit-left);
+      --custom-limit-right: ce;
+      
+      > * {
+        --block-content-start: ws !important;
+        --block-content-end: ce !important;
+      }
     }
     
-    > .wp-block {
-      --nb-block-top-spacing: 0;
+    .block-is-full {
       
-      > .supernova__layout {
-        margin-top: calc(var(--nb-block-top-spacing) * var(--nb-spacing));
+      
+      --custom-limit-left: var(--block-limit-left);
+      --custom-limit-right: ce;
+      
+      > * {
+        --block-content-start: fs !important;
+        --block-content-end: ce !important;
       }
     }
   }
   
+  &--sidebar-left:not(.ignore-block) {
+    
+    .block-is-wide,
+    .block-is-none {
+      
+      --custom-limit-left: cs;
+      --custom-limit-right: var(--block-limit-right);
+      
+      > * {
+        --block-content-start: cs !important;
+        --block-content-end: we !important;
+      }
+    }
+    
+    .block-is-full {
+      
+      --custom-limit-left: cs;
+      --custom-limit-right: var(--block-limit-right);
+      
+      > * {
+        --block-content-start: cs !important;
+        --block-content-end: fe !important;
+      }
+    }
+  }
 }
