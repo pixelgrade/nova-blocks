@@ -1,7 +1,10 @@
 import { __ } from "@wordpress/i18n";
 import { RadioControl, RangeControl, ToggleControl } from "@wordpress/components";
 
-import { ControlsGroup } from "../../../components";
+import {
+  ControlsGroup,
+  withVisibility
+} from "../../../components";
 
 const ImageContainerHeightSettings = ( props ) => {
 
@@ -59,4 +62,4 @@ const ImageContainerHeightSettings = ( props ) => {
   )
 }
 
-export default ImageContainerHeightSettings;
+export default withVisibility( 'image-container-height' )( ImageContainerHeightSettings );

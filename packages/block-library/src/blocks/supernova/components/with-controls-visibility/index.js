@@ -6,15 +6,18 @@ const withControlsVisibility = OriginalComponent => {
 
     const {
       attributes,
-      setSpaceAndSizingControlsVisibility
+      setControlsVisibility
     } = props;
 
     useEffect( () => {
       const { cardLayout } = attributes;
 
-      setSpaceAndSizingControlsVisibility( {
-        minimumContainerHeight: cardLayout === 'stacked',
-        imageContainerHeight: cardLayout !== 'stacked'
+      setControlsVisibility( {
+        'minimum-container-height': cardLayout === 'stacked',
+        'image-container-height': cardLayout !== 'stacked',
+        'media-composition-section': cardLayout !== 'stacked',
+        'shape-modeling-section': cardLayout !== 'stacked',
+        'scrolling-effect-section': cardLayout === 'stacked',
       } );
 
     }, [ attributes ] );

@@ -1,5 +1,5 @@
 import { createContext } from "@wordpress/element";
 
-const ControlsVisibilityContext = createContext( 'SpaceAndSizingControlsVisibility' );
+const ControlsVisibilityContext = createContext( 'ControlsVisibility' );
 
 export default ControlsVisibilityContext;

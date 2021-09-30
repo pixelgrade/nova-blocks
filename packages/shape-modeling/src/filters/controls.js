@@ -3,7 +3,7 @@ import { __ } from '@wordpress/i18n';
 import {
   ControlsSection,
   ControlsTab,
-  PresetControl
+  PresetControl, withVisibility
 } from "@novablocks/block-editor";
 
 import {
@@ -54,4 +54,4 @@ const Controls = ( props ) => {
 	)
 };
 
-export default Controls;
+export default withVisibility( 'shape-modeling-section' )( Controls );

@@ -1,10 +1,8 @@
 /**
  * Internal dependencies
  */
+import { select } from "@wordpress/data";
 import { getSvg } from "@novablocks/block-editor";
-
-import edit from './edit';
-import iconSvg from './super-nova-block.svg';
 
 /**
  * WordPress dependencies
@@ -17,8 +15,10 @@ import { getRandomArrayFromArray, getRandomBetween } from "@novablocks/utils";
 import { generateDefaults, getPlaceholderImages } from "@novablocks/block-editor";
 import { getRandomAttributes } from "@novablocks/media-composition";
 
+
+import edit from './edit';
+import iconSvg from './supernova-block.svg';
 import attributes from './attributes.json';
-import { select } from "@wordpress/data";
 
 async function getNewDefaults( block ) {
   const numberOfImages = getRandomBetween( 2, 4 );
