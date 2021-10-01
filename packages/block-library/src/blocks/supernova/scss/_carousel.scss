@@ -146,11 +146,11 @@
  * Pagination is true,
  * and Number of Items per Row is set to 1.
  */
-[data-layout-style="carousel"] {
+.supernova-card-layout--stacked {
   
-  &[data-card-layout="stacked"] {
+  &.supernova-layout-one-column {
       
-      &[data-columns="1"] {
+      .supernova__layout--carousel {
         
         .supernova-item__content {
           padding-bottom: calc(3 * var(--nb-spacing));
