@@ -14,7 +14,8 @@ const withSpaceAndSizingEditCustomProps = createHigherOrderComponent( OriginalCo
       contentPadding,
       imageResizing,
       thumbnailAspectRatio,
-      layoutGutter
+      layoutGutter,
+      minHeightFallback
     } = attributes;
 
     const style = props.style ? props.style : {};
@@ -30,7 +31,8 @@ const withSpaceAndSizingEditCustomProps = createHigherOrderComponent( OriginalCo
         '--nb-collection-gutter': layoutGutter,
 
         '--nb-card-content-padding-multiplier': contentPadding / 100,
-        '--nb-card-media-padding-multiplier': imagePadding / 100
+        '--nb-card-media-padding-multiplier': imagePadding / 100,
+        '--nb-supernova-minimum-height': minHeightFallback + 'vh'
       }
 
       Object.assign( style, spaceAndSizingProps);

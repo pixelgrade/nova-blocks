@@ -34,6 +34,13 @@
     height: 100%;
     width: 100%;
   }
+  
+  &.supernova-has-minimum-height {
+    
+    .supernova-item__media-aspect-ratio {
+      --nb-card-media-padding-top: var(--nb-supernova-minimum-height);
+    }
+  }
 
 }
 
@@ -93,3 +100,4 @@
     }
   }
 }
+
