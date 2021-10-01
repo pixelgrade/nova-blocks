@@ -26,10 +26,10 @@ const transition = ( $current, $next, sign = 1 ) => {
       nextFg.style.position = 'relative';
     },
     progress: function( elements, percentComplete, remaining, tweenValue, activeCall ) {
-        next.style.left = slideWidth * tweenValue + 'px';
-        nextFg.style.left = ( - slideWidth ) * tweenValue + 'px';
-        nextBg.style.left = ( move - slideWidth ) * tweenValue + 'px';
-        currentBg.style.left = ( - move ) * ( 1 - tweenValue ) + 'px';
+        next.style.left = `${ slideWidth * tweenValue * sign }px`;
+        nextFg.style.left = `${ ( - slideWidth ) * tweenValue * sign }px`;
+        nextBg.style.left = `${ ( move - slideWidth ) * tweenValue * sign }px`;
+        currentBg.style.left = `${ ( - move ) * ( 1 - tweenValue ) * sign }px`;
     },
     complete: function() {
       $current.removeClass( 'slick-slide--current' );
