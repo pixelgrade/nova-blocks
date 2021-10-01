@@ -1,6 +1,7 @@
 const TRANSITION_DURATION = 1000;
 const TRANSITION_EASING = 'easeInOutCirc';
 const FOREGROUND_SELECTOR = '.supernova-item__content';
+const BACKGROUND_SELECTOR = '.supernova-item__media-wrapper';
 
 const transition = ( $current, $next, sign = 1 ) => {
   const slideWidth = $current.outerWidth();
@@ -8,6 +9,9 @@ const transition = ( $current, $next, sign = 1 ) => {
 
   const next = $next.children().get( 0 );
   const nextFg = $next.find( FOREGROUND_SELECTOR ).get( 0 );
+  const nextBg = $next.find( BACKGROUND_SELECTOR ).get( 0 );
+
+  const currentBg = $current.find( BACKGROUND_SELECTOR ).get( 0 );
 
   $current.velocity( {
     tween: [ 0, 1 ]
@@ -19,10 +23,13 @@ const transition = ( $current, $next, sign = 1 ) => {
       $current.addClass( 'slick-slide--current' );
       $next.addClass( 'slick-slide--next' );
       next.style.position = 'relative';
+      nextFg.style.position = 'relative';
     },
     progress: function( elements, percentComplete, remaining, tweenValue, activeCall ) {
         next.style.left = slideWidth * tweenValue + 'px';
-        nextFg.style.left = ( move - slideWidth ) * tweenValue + 'px';
+        nextFg.style.left = ( - slideWidth ) * tweenValue + 'px';
+        nextBg.style.left = ( move - slideWidth ) * tweenValue + 'px';
+        currentBg.style.left = ( - move ) * ( 1 - tweenValue ) + 'px';
     },
     complete: function() {
       $current.removeClass( 'slick-slide--current' );
