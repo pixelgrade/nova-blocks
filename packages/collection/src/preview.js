@@ -130,7 +130,7 @@ export const ParametricGrid = ( props ) => {
 
   const style = {
     '--card-media-padding': imagePadding,
-    '--card-content-padding': contentPadding,
+    '--nb-card-content-padding-multiplier': contentPadding / 100,
     '--card-media-padding-top': getCardMediaPaddingTop( thumbnailAspectRatio ),
     '--card-media-object-fit': imageResizing === 'cropped' ? 'cover' : 'scale-down',
     ...getGridStyle( attributes ),

@@ -1,4 +1,12 @@
 /**
+ * WordPress dependencies
+ */
+import { __ } from '@wordpress/i18n';
+import { registerBlockType } from '@wordpress/blocks';
+import { select } from "@wordpress/data";
+import { addFilter } from "@wordpress/hooks";
+
+/**
  * Internal dependencies
  */
 import iconSvg from './media-block.svg';
@@ -11,10 +19,7 @@ import {
   getRandomBetween,
 } from "@novablocks/utils";
 
-import {
-  attributes as mediaCompositionAttributes,
-  getRandomAttributes
-} from "@novablocks/media-composition";
+import { getRandomAttributes } from "@novablocks/media-composition";
 
 import {
   getSvg,
@@ -23,16 +28,8 @@ import {
   insertTemplate,
 } from "@novablocks/block-editor";
 
-import blockAttributes from './attributes';
-
-const attributes = Object.assign( {}, blockAttributes, mediaCompositionAttributes );
-
-/**
- * WordPress dependencies
- */
-import { __ } from '@wordpress/i18n';
-import { registerBlockType } from '@wordpress/blocks';
-import { select } from "@wordpress/data";
+import attributes from './attributes';
+import attributesOverwrite from "./attributes-overwrite.json";
 
 async function getNewDefaults() {
   const numberOfImages = getRandomBetween( 2, 4 );
@@ -54,11 +51,29 @@ async function getNewDefaults() {
 }
 
 const settings = select( 'novablocks' ).getSettings();
+const BLOCK_NAME = 'novablocks/media';
 
-generateDefaults( 'novablocks/media', getNewDefaults );
-insertTemplate( 'novablocks/media', settings.media.template );
+generateDefaults( BLOCK_NAME, getNewDefaults );
+insertTemplate( BLOCK_NAME, settings.media.template );
 
-registerBlockType( 'novablocks/media', {
+const overwriteAttributes = ( settings ) => {
+
+  if ( settings.name !== BLOCK_NAME ) {
+    return settings;
+  }
+
+  return {
+    ...settings,
+    attributes: {
+      ...settings.attributes,
+      ...attributesOverwrite
+    }
+  };
+}
+
+addFilter( 'blocks.registerBlockType', 'novablocks/media/attributes-overwrite', overwriteAttributes, 20 );
+
+registerBlockType( BLOCK_NAME, {
 	title: __( 'Media Card Constellation (Deprecated)', '__plugin_txtd' ),
 	description: __( 'Display media objects alongside short pieces of content.', '__plugin_txtd' ),
 	category: 'nova-blocks',
@@ -72,10 +87,11 @@ registerBlockType( 'novablocks/media', {
     html: false,
     novaBlocks: {
       colorSignal: true,
-      shapeModeling: true,
       contentPositionMatrixToolbar: {
         deprecated: true
       },
+      mediaComposition: true,
+      shapeModeling: true,
       spaceAndSizing: {
         attributes: true,
         controls: true,
@@ -86,7 +102,7 @@ registerBlockType( 'novablocks/media', {
 	edit,
 	save,
 	getEditWrapperProps() {
-		const settings = wp.data.select( 'core/block-editor' ).getSettings();
+		const settings = select( 'core/block-editor' ).getSettings();
 		return settings.alignWide ? { 'data-align': 'full' } : {};
 	},
 	transforms,
