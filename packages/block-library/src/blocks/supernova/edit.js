@@ -82,7 +82,8 @@ const SupernovaPreview = props => {
     showCollectionTitle,
     showCollectionSubtitle,
     sourceType,
-    cardLayout
+    cardLayout,
+    minHeightFallback
   } = attributes;
 
 
@@ -93,7 +94,8 @@ const SupernovaPreview = props => {
     `supernova-card-layout--${cardLayout}`,
     'alignfull',
     `block-is-${align}`,
-    `${columns === 1 ? 'supernova-layout-one-column' : ''}`
+    `${columns === 1 ? 'supernova-layout-one-column' : ''}`,
+    `${minHeightFallback !== 0 ? 'supernova-has-minimum-height' : ''}`
   );
 
   const blockProps = useBlockProps( {

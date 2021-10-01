@@ -133,6 +133,11 @@
     }
   }
   
+  .slick-dots,
+  .slick-arrow {
+    z-index: 2000;
+  }
+  
 }
 
 /*
@@ -159,8 +164,6 @@
         .slick-dots {
           position: absolute;
           bottom: var(--nb-spacing);
-    
-          z-index: 1000;
         }
       }
     
@@ -172,7 +175,6 @@
   .slick-dots {
     position: absolute;
     bottom: var(--nb-spacing);
-    z-index: 1000;
   }
 }
 

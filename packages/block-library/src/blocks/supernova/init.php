@@ -108,6 +108,11 @@ if ( ! function_exists( 'novablocks_render_supernova_block' ) ) {
 			'--nb-advanced-gallery-grid-gap: ' . $attributes['elementsDistance'] . 'px',
 		);
 
+		if ( $attributes['minHeightFallback'] !== 0 ) {
+			$classes[] = 'supernova-has-minimum-height';
+			$cssProps[] = '--nb-supernova-minimum-height: ' . $attributes['minHeightFallback'] . 'vh';
+		}
+
 		$spacingProps = novablocks_get_spacing_css( $attributes );
 		$cssProps = array_merge( $cssProps, $spacingProps );
 
