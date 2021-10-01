@@ -1,5 +1,5 @@
 {
-	"overlayFilterStyle": {
+	"overlayFilterType": {
 		"type": "string",
 		"default": "unitone"
 	},

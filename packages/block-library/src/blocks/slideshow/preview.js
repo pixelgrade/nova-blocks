@@ -9,12 +9,10 @@ import SlideshowBackground from './background';
 /**
  * WordPress dependencies
  */
-import {
-	Component,
-	Fragment,
- } from '@wordpress/element';
+import { Component, Fragment } from '@wordpress/element';
 
 const SlideshowPreview = class extends Component {
+
 	constructor() {
 		super( ...arguments );
 
@@ -56,7 +54,7 @@ const SlideshowPreview = class extends Component {
       contentPaddingCustom,
       contentWidth,
       contentWidthCustom,
-      minHeight,
+      minHeightFallback,
 
       // alignment
       contentPosition,
@@ -106,7 +104,7 @@ const SlideshowPreview = class extends Component {
 		} );
 
     const scrollContainer = getEditorScrollContainer();
-		const attributesHeight = scrollContainer.offsetHeight * minHeight / 100;
+		const attributesHeight = scrollContainer.offsetHeight * minHeightFallback / 100;
 
 		styles.slideshow.minHeight = Math.max( attributesHeight, mediaMinHeight, maxAspectRatio ) + 'px';
 

@@ -13,18 +13,14 @@ function novablocks_get_slideshow_attributes() {
 	return novablocks_merge_attributes_from_array( array(
 		'packages/block-library/src/blocks/slideshow/attributes.json',
 
-		'packages/block-editor/src/components/color-controls/attributes.json',
-		'packages/block-editor/src/components/layout-controls/attributes.json',
-
 		"packages/color-signal/src/attributes.json",
 		"packages/color-signal/src/attributes-alt.json",
-		'packages/block-editor/src/filters/with-content-position-matrix/attributes.json',
 		"packages/scrolling-effect/src/attributes.json",
 		"packages/scrolling-effect/src/attributes-alt.json",
+
+		'packages/block-editor/src/filters/with-content-position-matrix/attributes.json',
 		"packages/block-editor/src/filters/with-overlay-filter/attributes.json",
 		"packages/block-editor/src/filters/with-space-and-sizing/attributes.json",
-
-		"packages/block-library/src/blocks/slideshow/attributes-spacing.json",
 	) );
 
 }

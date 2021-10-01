@@ -56,26 +56,37 @@ registerBlockType( 'novablocks/slideshow', {
 	category: 'nova-blocks',
   icon: getSvg( iconSvg ),
 	// Additional search terms
-	keywords: [ __( 'slider', '__plugin_txtd' ), __( 'carousel', '__plugin_txtd' ), __( 'images', '__plugin_txtd' ), __( 'cover', '__plugin_txtd' ) ],
+	keywords: [
+	  __( 'slider', '__plugin_txtd' ),
+    __( 'carousel', '__plugin_txtd' ),
+    __( 'images', '__plugin_txtd' ),
+    __( 'cover', '__plugin_txtd' )
+  ],
 	attributes,
   supports: {
     html: false,
     novaBlocks: {
       colorSignal: {
+        attributes: true,
         altAttributes: true,
         addOverlayColorDeprecatedMethod: true,
+        controls: true,
       },
       overlayFilter: {
-        duotone: false
+        attributes: true,
+        controls: true,
+        duotone: false,
       },
       contentPositionMatrixToolbar: {
-        deprecated: true
+        deprecated: true,
       },
       customDefaults: true,
-//      scrollingEffect: {
-//        altAttributes: true,
-//        customWrapper: true,
-//      },
+      scrollingEffect: {
+        attributes: true,
+        altAttributes: true,
+        controls: true,
+        customWrapper: true,
+      },
       spaceAndSizing: true
     },
   },

@@ -61,7 +61,7 @@ const TRANSITION_EASING = "easeInOutCirc";
   function getBlockMinHeight( $block ) {
     const sliderWidth = $block.find( SLIDER_SELECTOR ).outerWidth();
     const windowHeight = window.innerHeight;
-    const sliderMinHeight = parseInt( $block.data( 'min-height' ) ) * windowHeight / 100;
+    const sliderMinHeight = parseInt( $block.data( 'min-height-fallback' ) ) * windowHeight / 100;
     let mediaMinHeight = 0;
     let slideMaxHeight = 0;
     let maxAspectRatio = 0;
