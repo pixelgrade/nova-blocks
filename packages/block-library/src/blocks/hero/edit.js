@@ -1,3 +1,7 @@
+import { __ } from '@wordpress/i18n';
+import { Fragment, useEffect, useCallback } from '@wordpress/element';
+import { select, useSelect } from '@wordpress/data';
+
 /**
  * Internal dependencies
  */
@@ -8,59 +12,42 @@ import {
 	ToggleGroup,
 } from '@novablocks/block-editor';
 
+import { withControlsVisibility } from './components';
 import heroAttributes from './attributes';
 
 import HeroPreview from './preview';
 import BlockControls from './block-controls';
 
-import { __ } from '@wordpress/i18n';
+const HeroEdit = ( props ) => {
 
-import {
-	RadioControl,
-} from '@wordpress/components';
+  const {
+    attributes,
+    setAttributes,
+    settings
+  } = props;
 
-import {
-	Component,
-	Fragment
-} from '@wordpress/element';
+  const index = useSelect( select => {
+    const { getBlocks, getSelectedBlockClientId } = select( 'core/block-editor' );
+    const heroBlocks = getBlocks().filter( block => block.name === 'novablocks/hero' );
+    return heroBlocks.findIndex( block => block.clientId === getSelectedBlockClientId() );
+  } );
 
-import {
-	select
-} from '@wordpress/data';
+  const toggles = [{
+    label: __( 'Inner Content' ),
+    attribute: 'displayInnerContent'
+  }];
 
-const BlockHeightControls = function( props ) {
+  if ( index === 0 ) {
+    toggles.push({
+      label: __( 'Position Indicators' ),
+      attribute: 'positionIndicators'
+    }, {
+      label: __( 'Scroll Indicator' ),
+      attribute: 'scrollIndicator'
+    });
+  }
 
-	const {
-		attributes,
-		setAttributes,
-		settings,
-	} = props;
-
-	const { minHeightFallback } = attributes;
-
-	return (
-		<ControlsSection id={ 'layout' } label={ __( 'Layout' ) }>
-			<ControlsTab label={ __( 'Settings' ) }>
-				<RadioControl
-					key={ 'hero-minimum-height-controls' }
-					label={ __( 'Minimum Height', '__plugin_txtd' ) }
-					selected={ minHeightFallback }
-					onChange={ minHeightFallback => {
-						setAttributes( {
-							minHeightFallback: parseFloat( minHeightFallback )
-						} );
-					} }
-					options={ settings.minimumHeightOptions }
-				/>
-			</ControlsTab>
-		</ControlsSection>
-	);
-};
-
-class HeroEdit extends Component {
-
-	getDefaults( attributes ) {
-		const { settings } = this.props;
+	const getDefaults = useCallback( attributes => {
 		const { scrollIndicator } = attributes;
 		const defaults = {};
 
@@ -71,86 +58,47 @@ class HeroEdit extends Component {
 		}
 
 		return defaults;
-	}
+	}, [ settings ] );
 
-	getNewAttributes( attributes ) {
+	const getNewAttributes = useCallback( attributes => {
 		const { scrollIndicator } = attributes;
-
-		const index = select( 'core/block-editor' ).getBlocks().filter( ( block ) => {
-			return block.name === 'novablocks/hero';
-		} ).findIndex( block => {
-			return block.clientId === this.props.clientId
-		} );
 
 		const newScrollIndicatorBlock = index === 0 && scrollIndicator;
 
 		return {
-			scrollIndicator: scrollIndicator,
 			scrollIndicatorBlock: newScrollIndicatorBlock,
 		};
-	}
+	}, [ index ] );
 
-	updateAttributes( newAttributes = {} ) {
-		const { attributes, setAttributes } = this.props;
-		const defaults = this.getDefaults( attributes );
-		const computedAttributes = this.getNewAttributes( { ...attributes, ...defaults, ...newAttributes } );
+	const updateAttributes = ( newAttributes = {} ) => {
+		const defaults = getDefaults( attributes );
+		const computedAttributes = getNewAttributes( { ...attributes, ...defaults, ...newAttributes } );
 		setAttributes( Object.assign( {}, newAttributes, computedAttributes ) );
 	}
 
-	componentDidMount() {
-		this.updateAttributes();
-	}
+  useEffect( updateAttributes, [] );
 
-	render() {
-		const { attributes } = this.props;
-		const updateAttributes = this.updateAttributes.bind( this );
-
-		const { getBlocks, getSelectedBlockClientId } = select( 'core/block-editor' );
-
-		const heroBlocks = getBlocks().filter( ( block ) => {
-			return block.name === 'novablocks/hero';
-		} );
-
-		const index = heroBlocks.findIndex( block => block.clientId === getSelectedBlockClientId() );
-
-		const toggles = [{
-			label: __( 'Inner Content' ),
-			attribute: 'displayInnerContent'
-		}];
-
-		if ( index === 0 ) {
-			toggles.push({
-				label: __( 'Position Indicators' ),
-				attribute: 'positionIndicators'
-			}, {
-				label: __( 'Scroll Indicator' ),
-				attribute: 'scrollIndicator'
-			});
-		}
-
-		return (
-			<Fragment>
-				<HeroPreview { ...this.props } />
-				<BlockControls { ...this.props } />
-				<BlockHeightControls { ...this.props } />
-				<ControlsSection id={ 'display' } label={ __( 'Display' ) } group={ __( 'Block Modules' ) }>
-					<ControlsTab label={ __( 'Settings' ) }>
-						<ControlsGroup title={ __( 'Set up elements for this block', '__plugin_txtd' ) }>
-							<ToggleGroup
-								onChange={ updateAttributes }
-								toggles={ toggles.map( toggle => {
-									return {
-										...toggle,
-										value: attributes[ toggle.attribute ]
-									}
-								} ) }
-							/>
-						</ControlsGroup>
-					</ControlsTab>
-				</ControlsSection>
-			</Fragment>
-		);
-	}
+  return (
+    <Fragment>
+      <HeroPreview { ...props } />
+      <BlockControls { ...props } />
+      <ControlsSection id={ 'elements-visibility' } label={ __( 'Elements Visibility' ) } group={ __( 'Input' ) }>
+        <ControlsTab label={ __( 'Settings' ) }>
+          <ControlsGroup title={ __( 'Set up elements for this block', '__plugin_txtd' ) }>
+            <ToggleGroup
+              onChange={ updateAttributes }
+              toggles={ toggles.map( toggle => {
+                return {
+                  ...toggle,
+                  value: attributes[ toggle.attribute ]
+                }
+              } ) }
+            />
+          </ControlsGroup>
+        </ControlsTab>
+      </ControlsSection>
+    </Fragment>
+  );
 }
 
-export default HeroEdit;
+export default withControlsVisibility( HeroEdit );

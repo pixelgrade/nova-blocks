@@ -3,7 +3,7 @@ import { RadioControl, RangeControl } from "@wordpress/components";
 
 import { getControlsClasses } from "@novablocks/utils";
 
-import { ControlsGroup } from "../../../components";
+import { ControlsGroup, withVisibility } from "../../../components";
 
 import {
   CONTENT_AREA_MIN_WIDTH,
@@ -62,4 +62,4 @@ const getBalanceAttributes = ( { balanceEmphasis, balanceFocalPoint } ) => {
   }
 };
 
-export default VisualBalanceCustomize;
+export default withVisibility( 'visual-balance' )( VisualBalanceCustomize );

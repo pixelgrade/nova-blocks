@@ -1,7 +1,7 @@
 import { __ } from "@wordpress/i18n";
 import { RangeControl } from "@wordpress/components";
 
-import { ControlsGroup } from "../../../components";
+import { ControlsGroup, withVisibility } from "../../../components";
 
 import {
   CONTENT_AREA_MIN_WIDTH,
@@ -66,4 +66,4 @@ const VisualBalanceSettings = ( props ) => {
   )
 }
 
-export default VisualBalanceSettings;
+export default withVisibility( 'visual-balance' )( VisualBalanceSettings );
