@@ -15,16 +15,11 @@ import {
 } from './utils';
 
 const GRID_SELECTOR = '.novablocks-grid';
-const CAROUSEL_SELECTOR = '.novablocks-collection--carousel .novablocks-collection__layout, ' +
-                          '.supernova__layout--carousel';
-
-import './carousel';
 
 (function($, window, undefined) {
 
 	const defaultBlockWidth = 1152; // magic
 
-//  handleCarousels( CAROUSEL_SELECTOR );
   handleGrids( GRID_SELECTOR );
 
   function handleGrids( selector ) {
@@ -178,48 +173,6 @@ import './carousel';
 
         createLayout();
       }
-
-    } );
-  }
-
-  function handleCarousels( selector ) {
-
-    $( selector ).each( function( i, carousel ) {
-
-      const $carousel = $( carousel );
-      const block = carousel.closest( '[data-layout-style="carousel"]' );
-      const attributes = block.dataset;
-
-      const SLICK_OPTIONS = {
-        useTransform: false, // to allow parallax effect inside
-        slidesToShow: attributes.columns,
-        arrows: attributes.showArrows,
-        dots: attributes.showPagination,
-        variableWidth: attributes.carouselLayout === 'variable',
-        customPaging: function( slick, index ) {
-          return '<a>' + ( index + 1 ) + '</a>';
-        },
-        infinite: true,
-        responsive: [
-          {
-            breakpoint: 1024,
-            settings: {
-              arrows: false,
-              centerMode: true,
-              infinite: true,
-              slidesToShow: 1,
-              variableWidth: false,
-              centerPadding: '30px',
-            }
-          },
-        ]
-      }
-
-      $carousel.on( 'init beforeChange', function() {
-        $carousel.find( '.novablocks-doppler__wrapper' ).trigger( 'update' );
-      } );
-
-      $carousel.slick( SLICK_OPTIONS );
 
     } );
   }
