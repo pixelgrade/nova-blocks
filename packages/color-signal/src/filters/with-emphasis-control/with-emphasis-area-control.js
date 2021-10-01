@@ -6,9 +6,9 @@ import Controls from "./controls";
 
 const withEmphasisAreaControl = createHigherOrderComponent( OriginalComponent => {
 
-  return (props) => {
+  return ( props ) => {
 
-    const supports = useSupports(props.name);
+    const supports = useSupports( props.name );
     const colorSignalSupport = supports?.novaBlocks?.colorSignal;
 
     if ( colorSignalSupport !== true && colorSignalSupport?.controls !== true ) {
@@ -16,12 +16,12 @@ const withEmphasisAreaControl = createHigherOrderComponent( OriginalComponent =>
     }
 
     return (
-       <Fragment>
-        <OriginalComponent {...props}/>
-        <Controls {...props} />
-       </Fragment>
+      <Fragment>
+        <OriginalComponent { ...props }/>
+        <Controls { ...props } />
+      </Fragment>
     )
   }
-}, 'WithEmphasisAreaControl')
+}, 'WithEmphasisAreaControl' )
 
 export default withEmphasisAreaControl;

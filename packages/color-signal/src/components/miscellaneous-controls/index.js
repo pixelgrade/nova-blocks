@@ -1,18 +1,23 @@
 import { __ } from "@wordpress/i18n";
 import { Fragment } from "@wordpress/element";
 
-import { ControlsGroup } from "@novablocks/block-editor";
+import { ControlsGroup, useSupports } from "@novablocks/block-editor";
 
 import FunctionalColorsToggleControl from "../functional-colors-toggle";
 import ColorReferenceToggleControl from "../color-reference-toggle";
 
 const MiscellaneousControls = ( props ) => {
 
+  const supports = useSupports( props.name );
+  const disableFunctionalColors = ! supports?.novaBlocks?.colorSignal?.functionalColors;
+
   return (
     <Fragment>
-      <ControlsGroup title={ __( 'Miscellanous' ) } className={ 'novablocks-controls-group--colors-miscellanous-controls' }>
-        <FunctionalColorsToggleControl { ...props } />
-      </ControlsGroup>
+      { ! disableFunctionalColors &&
+        <ControlsGroup title={ __( 'Miscellanous' ) } className={ 'novablocks-controls-group--colors-miscellanous-controls' }>
+          <FunctionalColorsToggleControl { ...props } />
+        </ControlsGroup>
+      }
       <ColorReferenceToggleControl { ...props } />
     </Fragment>
   )

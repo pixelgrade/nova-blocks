@@ -8,15 +8,7 @@ const FunctionalColorsToggleControl = ( props ) => {
   const {
     showFunctionalColors,
     setShowFunctionalColors,
-    name
   } = props;
-
-  const supports = useSupports( name );
-  const disableFunctionalColors = ! supports?.novaBlocks?.colorSignal?.functionalColors;
-
-  if ( disableFunctionalColors ) {
-    return null;
-  }
 
   return (
     <ToggleControl

@@ -1,6 +1,8 @@
 import { __ } from "@wordpress/i18n";
 import { RangeControl } from "@wordpress/components";
 
+import { withVisibility } from "@novablocks/block-editor";
+
 import { ColorSignalCustomizeControls } from "../../components";
 
 const EmphasisAreaControl = props => {
@@ -22,4 +24,4 @@ const EmphasisAreaControl = props => {
   )
 }
 
-export default EmphasisAreaControl;
+export default withVisibility( 'emphasis-area' )( EmphasisAreaControl );
