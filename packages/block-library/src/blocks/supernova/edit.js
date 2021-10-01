@@ -169,8 +169,6 @@ const NotPostsCollectionLayout = withPreviewAttributes( props => {
   const { sourceType } = attributes;
   const innerBlocks = useInnerBlocks( clientId );
 
-  console.log( 'aici props', props );
-
   return (
     <CollectionLayout { ...props }>
       { sourceType !== 'content' && innerBlocks.map( innerBlock => <SupernovaItemPreview { ...innerBlock } /> ) }
