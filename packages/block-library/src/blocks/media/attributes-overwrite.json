@@ -1,0 +1,6 @@
+{
+	"contentPadding": {
+		"type": "number",
+		"default": 50
+	}
+}

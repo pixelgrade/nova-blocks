@@ -1,4 +1,5 @@
 .novablocks-media {
+  --nb-card-content-padding: calc( var(--nb-spacing) * var(--nb-element-spacing-multiplier, 1) * ( 2 * var(--nb-card-content-padding-multiplier, 0) ) );
   --nb-layout-gap: calc( var(--nb-media-layout-gutter) * 0.02 * var(--nb-media-spacing) );
 
   margin-left: auto;

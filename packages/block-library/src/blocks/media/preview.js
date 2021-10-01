@@ -3,7 +3,7 @@
  */
 import classnames from 'classnames';
 
-import MediaComposition from '@novablocks/media-composition';
+import { MediaCompositionPreview } from '@novablocks/media-composition';
 
 import {
   getAlignmentClassnames,
@@ -59,7 +59,7 @@ const MediaPreview = function( props ) {
 
 	const cssVars = {
 		'--nb-emphasis-area': emphasisArea,
-    '--card-content-padding': contentPadding,
+    '--nb-card-content-padding-multiplier': contentPadding / 100,
 		'--nb-media-content-width': `${ contentAreaWidth }%`,
 		'--nb-media-layout-gutter': layoutGutter,
 	};
@@ -94,7 +94,7 @@ const MediaPreview = function( props ) {
 								</div>
 							</div>
 							<div className="novablocks-media__aside">
-								<MediaComposition { ...passedProps } />
+								<MediaCompositionPreview { ...passedProps } />
 							</div>
 						</div>
 					</div>

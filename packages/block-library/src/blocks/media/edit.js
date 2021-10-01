@@ -7,19 +7,27 @@ import MediaPreview from './preview';
 /**
  * WordPress dependencies
  */
-import { Fragment } from '@wordpress/element';
+import { Fragment, useCallback } from '@wordpress/element';
 
-const MediaEdit = function( props ) {
-	function updateImages( media ) {
-		props.setAttributes( {
+const MediaEdit = ( props ) => {
+
+  const { setAttributes } = props;
+
+	const updateImages = useCallback( media => {
+		setAttributes( {
 			images: media.map( ( image ) => JSON.stringify( { id: image.id, url: image.url, alt: image.alt } ) ),
 		} );
-	}
+	}, [] );
+
+	const passedProps = {
+	  ...props,
+    updateImages
+  }
 
 	return (
 		<Fragment>
-			<MediaPreview { ...{ ...props, updateImages } } />
-			<BlockControls { ...{ ...props, updateImages } } />
+			<MediaPreview { ...passedProps } />
+			<BlockControls { ...passedProps } />
 		</Fragment>
 	);
 };
