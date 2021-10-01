@@ -191,15 +191,15 @@
   &:not(.supernova-layout-one-column) {
   
     .supernova__layout--carousel {
-      margin-left: calc(-1 * var(--nb-grid-spacing));
-      margin-right: calc(-1 * var(--nb-grid-spacing));
+      margin-left: calc(-0.5 * var(--nb-grid-spacing));
+      margin-right: calc(-0.5 * var(--nb-grid-spacing));
     }
-    
+  
     .slick-slide {
-      
+    
       > div {
-        margin-left: var(--nb-grid-spacing);
-        margin-right: var(--nb-grid-spacing);
+        margin-left: calc(0.5 * var(--nb-grid-spacing));
+        margin-right: calc(0.5 * var(--nb-grid-spacing));
       }
     }
   }
