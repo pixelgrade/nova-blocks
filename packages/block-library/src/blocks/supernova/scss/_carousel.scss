@@ -1,6 +1,4 @@
 .supernova__layout--carousel {
-  margin-left: calc(-0.5 * var(--nb-grid-spacing));
-  margin-right: calc(-0.5 * var(--nb-grid-spacing));
 
   /*
    * Carousel Settings
@@ -8,15 +6,6 @@
   --nb-carousel-arrow-width: 2px;
   --nb-carousel-arrow-color: #555555;
   --nb-carousel-arrow-bg: #ffffff;
-  
-  .supernova-item {
-    
-    &:not(.supernova-item--layout-stacked) {
-      padding-left: calc( 0.5 * var(--nb-grid-spacing) );
-      padding-right: calc( 0.5 * var(--nb-grid-spacing) );
-    }
-   
-  }
   
   .supernova__layout-item,
   .supernova-item {
@@ -193,6 +182,25 @@
     
     > * {
       position: relative;
+    }
+  }
+}
+
+.supernova {
+  
+  &:not(.supernova-layout-one-column) {
+  
+    .supernova__layout--carousel {
+      margin-left: calc(-1 * var(--nb-grid-spacing));
+      margin-right: calc(-1 * var(--nb-grid-spacing));
+    }
+    
+    .slick-slide {
+      
+      > div {
+        margin-left: var(--nb-grid-spacing);
+        margin-right: var(--nb-grid-spacing);
+      }
     }
   }
 }
