@@ -9,7 +9,10 @@
   &[class*='layout-stacked'] {
     
     .supernova-item__media-wrapper + .supernova-item__content {
-      background: none;
+      
+      .supernova-item__inner-container {
+        background: none;
+      }
     }
   }
   

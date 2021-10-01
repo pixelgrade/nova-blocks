@@ -1850,17 +1850,17 @@ function novablocks_get_supernova_card_markup( $media, $content, $attributes ) {
 		'--nb-card-content-area-width: ' . $attributes[ 'contentAreaWidth' ] . '%',
 	);
 
-	$innerContainerClasses = array(
+	$innerContainerClasses = array_merge( array(
 		'supernova-item__inner-container'
-	);
+	), novablocks_get_color_signal_classes( $attributes ) );
 
-	$align = preg_split( '/\b\s+/', $attributes[ 'contentPosition' ] );
+	$align = preg_split( '/\b\s+/', $attributes['contentPosition'] );
 
-	$contentClasses = array_merge( array(
+	$contentClasses = array(
 		'supernova-item__content',
 		'supernova-item__content--valign-' . $align[0],
 		'supernova-item__content--halign-' . $align[1],
-	), novablocks_get_color_signal_classes( $attributes ) );
+	);
 
 	$data_attributes_array = array_map( 'novablocks_camel_case_to_kebab_case', array_keys( $attributes ) );
 	$blacklist = array( 'images' );
@@ -1881,8 +1881,8 @@ function novablocks_get_supernova_card_markup( $media, $content, $attributes ) {
 				</div>
 			</div>
 			<?php if ( novablocks_show_card_contents( $attributes ) ) { ?>
-				<div class="<?php echo join( ' ', $contentClasses ); ?>" <?php echo join( ' ', $data_attributes ); ?>>
-					<div class="<?php echo join( ' ', $innerContainerClasses ); ?>" >
+				<div class="<?php echo join( ' ', $contentClasses ); ?>" >
+					<div class="<?php echo join( ' ', $innerContainerClasses ); ?>" <?php echo join( ' ', $data_attributes ); ?>>
 						<?php echo $content; ?>
 					</div>
 				</div>
