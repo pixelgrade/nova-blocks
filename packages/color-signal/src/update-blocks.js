@@ -78,8 +78,6 @@ const updateBlock = ( block ) => {
     const nextColorSignal = useSourceColorAsReference ? getSignalRelativeToVariation( absoluteVariation, parentVariation ) : colorSignal;
     const finalVariation = useSourceColorAsReference ? 1 : removeSiteVariationOffset( nextVariation );
 
-    console.log();
-
     // dispatch new attributes only if the new paletteVariation value differs from the current one
     if ( paletteVariation !== finalVariation || colorSignal !== nextColorSignal ) {
       updateBlockAttributes( clientId, {
