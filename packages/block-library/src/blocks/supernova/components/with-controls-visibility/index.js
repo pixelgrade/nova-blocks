@@ -20,6 +20,7 @@ const withControlsVisibility = OriginalComponent => {
         'media-composition-section': cardLayout !== 'stacked',
         'shape-modeling-section': cardLayout !== 'stacked',
         'scrolling-effect-section': cardLayout === 'stacked',
+        'emphasis-area': cardLayout !== 'stacked'
       } );
 
     }, [ attributes ] );
