@@ -13,7 +13,7 @@ import VisualBalanceCustomize from "./visual-balance-customize";
 import ImageContainerHeightCustomize from "./image-container-height-customize";
 
 import ContentPadding from "./content-padding";
-import ContentWidth from "./content-width";
+import VisualBalance from "./visual-balance";
 import MediaPadding from "./media-padding";
 import ContentToMediaSpacing from "./content-to-media-spacing";
 
@@ -26,14 +26,14 @@ const SpaceAndSizingControls = ( props ) => {
       </ControlsTab>
       <ControlsTab label={ __( 'Customize', '__plugin_txtd' ) }>
         <CardSpacingCustomize key={ 'card-spacing-customize' } { ...props } />
-        <ImageContainerHeightCustomize key={ 'image-container-customize' } { ...props } />
-        <VisualBalanceCustomize key={ 'visual-balance-customize' } { ...props } />
+        <ImageContainerHeightCustomize id={'image-container-height'} key={ 'image-container-customize' } { ...props } />
+        <VisualBalanceCustomize key={ 'visual-balance-customize' } id={'visual-balance'} { ...props } />
       </ControlsTab>
       <ControlsTab label={ __( 'Settings', '__plugin_txtd' ) }>
         <CardSpacingSettings key={ 'card-spacing-settings' } { ...props } />
         <MinimumContainerHeight id={ 'minimum-container-height' } key={ 'minimum-container-height' } { ...props } />
         <ImageContainerHeightSettings id={ 'image-container-height' } key={ 'image-container-height-settings' } { ...props } />
-        <ContentWidth id={'content-width-relative-to-media'} key={'content-width-relative-to-media'} {...props}/>
+        <VisualBalance id={'visual-balance'} key={'visual-balance'} {...props}/>
         <ContentPadding id={'content-padding'} key={'content-padding'} {...props}/>
         <MediaPadding id={'media-padding'} key={'media-padding'} {...props}/>
         <ContentToMediaSpacing id={'content-to-media-spacing'} key={'content-to-media-spacing'} {...props}/>

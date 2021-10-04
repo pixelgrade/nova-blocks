@@ -7,10 +7,9 @@ import withVisibility from "../../../components/with-visibility";
 import {
   CONTENT_AREA_MIN_WIDTH,
   CONTENT_AREA_MAX_WIDTH,
-  CONTENT_AREA_MID_VALUE
 } from './visual-balance-constants';
 
-const ContentWidth = props => {
+const VisualBalance = props => {
 
   const {
     attributes,
@@ -32,4 +31,4 @@ const ContentWidth = props => {
   )
 }
 
-export default withVisibility('content-width-relative-to-media')(ContentWidth);
+export default withVisibility('visual-balance')(VisualBalance);
