@@ -3,7 +3,7 @@ import { RadioControl } from "@wordpress/components";
 
 import { getAspectRatioAttributes, getControlsClasses } from "@novablocks/utils";
 
-import { ControlsGroup } from "../../../components";
+import { ControlsGroup, withVisibility } from "../../../components";
 
 const ImageContainerHeightCustomize = ( props ) => {
 
@@ -52,4 +52,4 @@ const ImageContainerHeightCustomize = ( props ) => {
   )
 }
 
-export default ImageContainerHeightCustomize;
+export default withVisibility('image-container-height')(ImageContainerHeightCustomize);
