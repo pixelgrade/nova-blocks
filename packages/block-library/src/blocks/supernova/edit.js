@@ -1,18 +1,17 @@
 import classnames from "classnames";
 
 import { createBlock } from '@wordpress/blocks';
-import { Fragment, useEffect } from "@wordpress/element";
 import { useBlockProps } from "@wordpress/block-editor";
 import { useSelect, useDispatch } from "@wordpress/data";
+import { Fragment, useEffect } from "@wordpress/element";
 
 import { CollectionHeader } from "@novablocks/collection";
-
 import { useInnerBlocks } from "@novablocks/block-editor";
 
 import BlockControls from './block-controls';
 
 import {
-  CollectionLayout,
+  SupernovaLayout,
   PostCard,
   SupernovaItemPreview,
 } from './components';
@@ -91,11 +90,11 @@ const SupernovaPreview = props => {
     props.className,
     'supernova',
     `supernova-source-type-${ sourceType }`,
-    `supernova-card-layout--${cardLayout}`,
+    `supernova-card-layout--${ cardLayout }`,
     'alignfull',
-    `block-is-${align}`,
-    `${columns === 1 ? 'supernova-layout-one-column' : ''}`,
-    `${minHeightFallback !== 0 ? 'supernova-has-minimum-height' : ''}`
+    `block-is-${ align }`,
+    `${ columns === 1 ? 'supernova-layout-one-column' : '' }`,
+    `${ minHeightFallback !== 0 ? 'supernova-has-minimum-height' : '' }`
   );
 
   const blockProps = useBlockProps( {
@@ -109,23 +108,34 @@ const SupernovaPreview = props => {
 
   return (
     <div { ...blockProps }>
-        {
-          headerPosition === 0 && ( showCollectionTitle || showCollectionSubtitle ) &&
-          <div className={alignClassname}>
-            <div className="supernova-header__inner-container">
-              <CollectionHeader { ...props } />
-            </div>
+      {
+        headerPosition === 0 && ( showCollectionTitle || showCollectionSubtitle ) &&
+        <div className={ alignClassname }>
+          <div className="supernova-header__inner-container">
+            <CollectionHeader { ...props } />
           </div>
-        }
+        </div>
+      }
 
-      <div className={alignClassname}>
-        <div className="supernova-content__inner-container" >
-          { sourceType === 'content' && <PostsCollectionLayout { ...props } /> }
-          { sourceType !== 'content' && <NotPostsCollectionLayout { ...props } /> }
+      <div className={ alignClassname }>
+        <div className="supernova-content__inner-container">
+          <CollectionBody { ...props } />
         </div>
       </div>
     </div>
   );
+}
+
+const CollectionBody = props => {
+  const { attributes } = props;
+  const { sourceType } = attributes;
+
+  return (
+    <Fragment>
+      { sourceType === 'content' && <PostsCollectionLayout { ...props } /> }
+      { sourceType !== 'content' && <NotPostsCollectionLayout { ...props } /> }
+    </Fragment>
+  )
 }
 
 const PostsCollectionLayout = props => {
@@ -146,7 +156,7 @@ const PostsCollectionLayout = props => {
   }
 
   return (
-    <CollectionLayout { ...props }>
+    <SupernovaLayout { ...props }>
       {
         posts.map( ( post, index ) => {
           const innerBlock = innerBlocks[ index ];
@@ -162,7 +172,7 @@ const PostsCollectionLayout = props => {
           )
         } )
       }
-    </CollectionLayout>
+    </SupernovaLayout>
   )
 }
 
@@ -172,9 +182,9 @@ const NotPostsCollectionLayout = withPreviewAttributes( props => {
   const innerBlocks = useInnerBlocks( clientId );
 
   return (
-    <CollectionLayout { ...props }>
+    <SupernovaLayout { ...props }>
       { sourceType !== 'content' && innerBlocks.map( innerBlock => <SupernovaItemPreview { ...innerBlock } /> ) }
-    </CollectionLayout>
+    </SupernovaLayout>
   )
 } );
 

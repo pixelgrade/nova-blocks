@@ -1,0 +1,10 @@
+{
+	"columns": {
+		"type": "number",
+		"default": 3
+	},
+	"contentPosition": {
+		"type": "string",
+		"default": "center left"
+	}
+}

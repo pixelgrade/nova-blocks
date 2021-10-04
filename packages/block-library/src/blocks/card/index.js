@@ -50,7 +50,13 @@ registerBlockType( 'novablocks/card', {
     html: false,
     novaBlocks: {
       customDefaults: true,
-      colorSignal: true,
+      colorSignal: {
+        attributes: true
+      },
+      contentPositionMatrixToolbar: true,
+      elementsVisibility: {
+        attributes: true
+      }
     }
   },
 	edit,

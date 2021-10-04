@@ -74,7 +74,6 @@ registerBlockType( 'novablocks/hero', {
       overlayFilter: {
         attributes: true,
         controls: true,
-        duotone: true
       },
       contentPositionMatrixToolbar: {
         deprecated: true

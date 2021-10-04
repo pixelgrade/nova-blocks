@@ -75,7 +75,6 @@ registerBlockType( 'novablocks/slideshow', {
       overlayFilter: {
         attributes: true,
         controls: true,
-        duotone: false,
       },
       contentPositionMatrixToolbar: {
         deprecated: true,

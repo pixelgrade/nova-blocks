@@ -6,6 +6,8 @@ export const applyLayoutEngine = state => {
 
   const debug = false;
 
+  console.log( 'aici', state );
+
   // Before we can get to generating the "grid areas" for each post (meaning start col and row plus end col and ro),
   // we need to do a couple of preliminary calculations.
   // To hold the data, we will work with matrices, uni or bidimensional, representing the actual columns and rows.
@@ -702,6 +704,8 @@ const getFirstOccurence = ( nth, nthMatrix ) => {
 const getAreaWidth = ( nth, nthMatrix ) => {
   const { row, col } = getFirstOccurence( nth, nthMatrix );
   let width = 1;
+
+  console.log( nth, nthMatrix );
 
   while ( nth === nthMatrix[ row ][ col + width ] ) {
     width = width + 1;

@@ -1255,9 +1255,9 @@ if ( ! function_exists( 'novablocks_get_collection_output' ) ) {
 
 		$cssProps = array(
 			'--card-content-padding: ' . $attributes['contentPadding'],
-			'--card-media-padding: ' . $attributes['imagePadding'],
-			'--card-media-padding-top: ' . novablocks_get_card_media_padding_top( $attributes['containerHeight'] ) . '%',
-			'--card-media-object-fit: ' . ( $attributes['imageResizing'] === 'cropped' ? 'cover' : 'scale-down' ),
+			'--nb-card-media-padding: ' . $attributes['imagePadding'],
+			'--nb-card-media-padding-top: ' . novablocks_get_card_media_padding_top( $attributes['containerHeight'] ) . '%',
+			'--nb-card-media-object-fit: ' . ( $attributes['imageResizing'] === 'cropped' ? 'cover' : 'scale-down' ),
 		);
 
 		$cssProps = array_merge( $cssProps, novablocks_get_spacing_css( $attributes ) );

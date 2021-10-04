@@ -1,10 +1,9 @@
 import classnames from "classnames";
-
-import { ClassicLayout, CarouselLayout, ParametricLayout } from '../index';
+import { CollectionLayout } from "@novablocks/collection";
 
 const useInnerBlocksProps = wp.blockEditor.useInnerBlocksProps || wp.blockEditor.__experimentalUseInnerBlocksProps;
 
-const CollectionLayout = ( props ) => {
+const SupernovaLayout = ( props ) => {
 
   const { attributes } = props;
   const { layoutStyle, carouselLayout, preview } = attributes;
@@ -32,26 +31,13 @@ const CollectionLayout = ( props ) => {
 
   if ( preview ) {
     return (
-      <Layout { ...props } className={ className } />
+      <CollectionLayout { ...props } className={ className } />
     )
   }
 
   return (
-    <Layout { ...props } { ...innerBlocksProps } />
+    <CollectionLayout { ...props } { ...innerBlocksProps } />
   )
 }
 
-const Layout = ( props ) => {
-  const { attributes, className } = props;
-  const { layoutStyle } = attributes;
-
-  return (
-    <div className={ className }>
-      { layoutStyle === 'classic' && <ClassicLayout { ...props } /> }
-      { layoutStyle === 'carousel' && <CarouselLayout { ...props } /> }
-      { layoutStyle === 'parametric' && <ParametricLayout { ...props } /> }
-    </div>
-  )
-}
-
-export default CollectionLayout;
+export default SupernovaLayout;

@@ -1,4 +1,5 @@
 import { __ } from '@wordpress/i18n';
+import { useEffect, useMemo } from "@wordpress/element";
 
 import {
   RadioControl,
@@ -57,6 +58,19 @@ const OverlayType = ( props ) => {
     style,
     overlayFilterType,
   } = attributes;
+
+  const supports = useSupports( props.name );
+  const supportsDuotone = useMemo( () => !! supports?.novaBlocks?.overlayFilter?.duotone, [ supports ] );
+
+  useEffect( () => {
+    if ( ! supportsDuotone && overlayFilterType !== 'unitone' ) {
+      setAttributes( { overlayFilterType: 'unitone' } );
+    }
+  }, [ overlayFilterType, supportsDuotone ] );
+
+  if ( ! supportsDuotone ) {
+    return null;
+  }
 
   return (
     <RadioControl

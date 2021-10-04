@@ -1,26 +1,24 @@
 /**
- * Internal dependencies
+ * WordPress dependencies
  */
-import iconSvg from './posts-collection-block.svg';
-import edit from './edit';
-import transforms from './transforms';
-import variations from './variations';
+import { __ } from "@wordpress/i18n";
+import { registerBlockType } from "@wordpress/blocks";
+import { InnerBlocks } from "@wordpress/block-editor";
+import { select } from "@wordpress/data";
 
 /**
  * Nova Blocks dependencies
  */
 import { getSvg } from "@novablocks/block-editor";
-import { Collection } from "@novablocks/collection";
 
 /**
- * WordPress dependencies
+ * Internal dependencies
  */
-import { __ } from '@wordpress/i18n';
-import { registerBlockType } from '@wordpress/blocks';
-import { InnerBlocks } from '@wordpress/block-editor';
-
-import blockAttributes from './attributes';
-const attributes = Object.assign( {}, blockAttributes, Collection.attributes );
+import attributes from "./attributes";
+import iconSvg from "./posts-collection-block.svg";
+import edit from "./edit";
+import transforms from "./transforms";
+import variations from "./variations";
 
 registerBlockType( 'novablocks/posts-collection', {
 	title: __( 'Posts Collection (Deprecated)', '__plugin_txtd' ),
@@ -44,7 +42,7 @@ registerBlockType( 'novablocks/posts-collection', {
 	},
   transforms,
 	getEditWrapperProps() {
-		const settings = wp.data.select( 'core/block-editor' ).getSettings();
+		const settings = select( 'core/block-editor' ).getSettings();
 		return settings.alignWide ? { 'data-align': 'full' } : {};
 	},
 } );

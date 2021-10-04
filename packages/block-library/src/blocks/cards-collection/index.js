@@ -4,16 +4,37 @@
 import { __ } from '@wordpress/i18n';
 import { registerBlockType } from '@wordpress/blocks';
 import { InnerBlocks } from '@wordpress/block-editor';
+import { addFilter } from '@wordpress/hooks';
 
 /**
  * Internal dependencies
  */
 import { getSvg } from "@novablocks/block-editor";
+
 import iconSvg from './cards-collection-block.svg';
 import edit from './edit';
 import transforms from './transforms';
+import attributesOverwrite from "./attributes-overwrite.json";
 
-registerBlockType( 'novablocks/cards-collection', {
+const BLOCK_NAME = 'novablocks/cards-collection';
+
+const overwriteAttributes = ( settings ) => {
+
+  if ( settings.name !== BLOCK_NAME ) {
+    return settings;
+  }
+
+  return {
+    ...settings,
+    attributes: {
+      ...settings.attributes,
+      ...attributesOverwrite
+    }
+  };
+}
+addFilter( 'blocks.registerBlockType', 'novablocks/media/cards-collection-overwrite', overwriteAttributes, 20 );
+
+registerBlockType( BLOCK_NAME, {
 	title: __( 'Cards Collection (Deprecated)', '__plugin_txtd' ),
 	description: __( 'Display a list of related items placed within a coherent layout.', '__plugin_txtd' ),
 	category: 'nova-blocks',
@@ -28,6 +49,8 @@ registerBlockType( 'novablocks/cards-collection', {
     novaBlocks: {
       colorSignal: true,
       spaceAndSizing: true,
+      elementsVisibility: true,
+      collectionLayout: true,
     },
   },
 	edit,

@@ -1,10 +1,8 @@
-import { getCardMediaPaddingTop, debounce, below } from "@novablocks/utils";
-
 import {
-	applyLayoutEngine,
-} from './layout-engine';
-
-import {
+  getCardMediaPaddingTop,
+  debounce,
+  below,
+  applyLayoutEngine,
   getAreaClassname,
   removeSmallestColumn,
   normalizeColumns,
@@ -12,7 +10,7 @@ import {
 	getGridStyle,
 	redistributeCardsInAreas,
 	isLandscape,
-} from './utils';
+} from "@novablocks/utils";
 
 const GRID_SELECTOR = '.novablocks-grid';
 
@@ -33,9 +31,9 @@ const GRID_SELECTOR = '.novablocks-grid';
 
       let addedCards;
 
-      grid.style.setProperty( '--card-media-padding', attributes.imagePadding );
-      grid.style.setProperty( '--card-media-padding-top', getCardMediaPaddingTop( attributes.thumbnailAspectRatio ) );
-      grid.style.setProperty( '--card-media-object-fit', attributes.imageResizing === 'cropped' ? 'cover' : 'scale-down' );
+      grid.style.setProperty( '--nb-card-media-padding', attributes.imagePadding );
+      grid.style.setProperty( '--nb-card-media-padding-top', getCardMediaPaddingTop( attributes.thumbnailAspectRatio ) );
+      grid.style.setProperty( '--nb-card-media-object-fit', attributes.imageResizing === 'cropped' ? 'cover' : 'scale-down' );
 
       if ( attributes.layoutStyle !== 'parametric' ) {
         $grid.removeClass( 'novablocks-grid' );

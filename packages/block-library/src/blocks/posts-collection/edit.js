@@ -1,57 +1,29 @@
 import classnames from "classnames";
 
-import { Card } from "@novablocks/components";
-import { PostCard } from "@novablocks/block-editor";
+import { __ } from '@wordpress/i18n';
+import { Fragment } from '@wordpress/element';
 
-import { getContentVariationBySignal } from "@novablocks/color-signal";
 import { getColorSignalClassnames } from '@novablocks/utils';
 
 import {
-  CollectionHeader,
-  GridGenerator,
-} from "@novablocks/collection";
-
-const {
+  CarouselLayoutPreview,
   ClassicLayoutPreview,
   ParametricLayoutPreview,
-  CarouselLayoutPreview
-} = GridGenerator;
-
-import { __ } from '@wordpress/i18n';
-import { Fragment } from '@wordpress/element';
-import { isSpecificPostModeActive } from "@novablocks/block-editor/src/filters/with-latest-posts/utils";
-import { STORE_NAME } from "@novablocks/block-editor/src/filters/with-latest-posts/store";
+} from "@novablocks/collection";
 
 const PreviewEdit = ( props ) => {
 
   const {
     attributes,
     posts,
-    clientId,
     className,
     isSelected,
   } = props;
 
   const {
-    showMedia,
-    showMeta,
-    showTitle,
-    showDescription,
-    showButtons,
-
     layoutStyle,
     contentAlign,
-
-    headerPosition,
   } = attributes;
-
-  const markPostsAsDisplayed = useDispatch( dispatch => {
-    return isSpecificPostModeActive( attributes )
-    ? dispatch( STORE_NAME ).markSpecificPostsAsDisplayed
-    : dispatch( STORE_NAME ).markPostsAsDisplayed;
-  }, [ attributes ] );
-
-  markPostsAsDisplayed( clientId, posts );
 
   if ( Array.isArray( posts ) && ! posts.length ) {
     return (
@@ -60,47 +32,6 @@ const PreviewEdit = ( props ) => {
       </div>
     )
   }
-
-  const getContent = ( index, props, isLandscape ) => {
-    const post = posts?.[ index ];
-
-    const contentVariation = getContentVariationBySignal( props.attributes );
-
-    const cardProps = {
-      placeholder: true,
-      hasFixedAspectRatio: true,
-      isLandscape,
-      showMedia,
-      showMeta,
-      showTitle,
-      showContent: showDescription,
-      showButtons,
-      className: `sm-variation-${ contentVariation }`
-    };
-
-    return (
-      <Fragment>
-        {
-          headerPosition - 1 === index &&
-          <div className="novablocks-grid__item">
-            <CollectionHeader { ...props } />
-          </div>
-        }
-        {
-          post &&
-          <div className="novablocks-grid__item">
-            <PostCard { ...props } post={ post } isLandscape={ isLandscape } />
-          </div>
-        }
-        {
-          ! post &&
-          <div className="novablocks-grid__item">
-            <Card { ...cardProps } />
-          </div>
-        }
-      </Fragment>
-    )
-  };
 
   const classname = classnames(
     'novablocks-block',
@@ -128,7 +59,6 @@ const PreviewEdit = ( props ) => {
         <div className={ classname }>
           <ParametricLayoutPreview
             { ...props }
-            getContent={ getContent }
             cardsCount={ posts?.length || attributes?.postsToShow || 0 }
             posts={ posts }
             isSelected={ isSelected }
