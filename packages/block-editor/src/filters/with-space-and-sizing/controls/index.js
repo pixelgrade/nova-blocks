@@ -10,6 +10,7 @@ import ImageContainerHeightSettings from './image-container-height-settings';
 import MinimumContainerHeight from './minimum-container-height';
 
 import VisualBalanceCustomize from "./visual-balance-customize";
+import ImageContainerHeightCustomize from "./image-container-height-customize";
 
 import ContentPadding from "./content-padding";
 import ContentWidth from "./content-width";
@@ -25,12 +26,7 @@ const SpaceAndSizingControls = ( props ) => {
       </ControlsTab>
       <ControlsTab label={ __( 'Customize', '__plugin_txtd' ) }>
         <CardSpacingCustomize key={ 'card-spacing-customize' } { ...props } />
-        {/* !!! We need to remove all ImageContainerHeightCustomize
-          * and  VisualBalanceCustomize dependencies when we
-          * completely remove those components.
-          */
-        }
-        {/*<ImageContainerHeightCustomize key={ 'image-container-customize' } { ...props } />*/}
+        <ImageContainerHeightCustomize key={ 'image-container-customize' } { ...props } />
         <VisualBalanceCustomize key={ 'visual-balance-customize' } { ...props } />
       </ControlsTab>
       <ControlsTab label={ __( 'Settings', '__plugin_txtd' ) }>
