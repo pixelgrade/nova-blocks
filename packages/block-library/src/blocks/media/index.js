@@ -87,7 +87,7 @@ registerBlockType( BLOCK_NAME, {
     html: false,
     novaBlocks: {
       colorSignal: true,
-      contentPositionMatrixToolbar: {
+      contentPosition: {
         deprecated: true
       },
       mediaComposition: true,

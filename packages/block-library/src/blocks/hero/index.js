@@ -76,7 +76,7 @@ registerBlockType( 'novablocks/hero', {
         controls: true,
         duotone: true
       },
-      contentPositionMatrixToolbar: {
+      contentPosition: {
         deprecated: true
       },
       customDefaults: true,
