@@ -1,3 +1,32 @@
 .wp-block-group {
   @include block-spacing;
 }
+
+.wp-block-group[class] {
+  
+  background-color: transparent;
+  
+  > [class*='__inner-container'] {
+  
+    position: relative;
+  
+    &:before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      grid-column: var(--block-limit-left)/var(--block-limit-right);
+      background: linear-gradient(
+          90deg,
+          var(--nb-bg-color) 0,
+          var(--nb-bg-color) var(--emphasis-area-width, 100%),
+          transparent var(--emphasis-area-width, 100%)
+      );
+  
+      height: 100%;
+      width: 100%;
+      
+      z-index: -1;
+    }
+  }
+}
