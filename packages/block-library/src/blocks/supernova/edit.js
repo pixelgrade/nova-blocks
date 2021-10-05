@@ -6,19 +6,15 @@ import { useSelect, useDispatch } from "@wordpress/data";
 import { Fragment, useEffect } from "@wordpress/element";
 
 import { CollectionHeader } from "@novablocks/collection";
+
 import { useInnerBlocks } from "@novablocks/block-editor";
 
 import BlockControls from './block-controls';
 
 import {
-  SupernovaLayout,
-  PostCard,
-  SupernovaItemPreview,
-} from './components';
-
-import {
+  PostsCollectionLayout,
+  NotPostsCollectionLayout,
   withControlsVisibility,
-  withPreviewAttributes
 } from './components';
 
 const SupernovaEdit = props => {
@@ -119,74 +115,13 @@ const SupernovaPreview = props => {
 
       <div className={ alignClassname }>
         <div className="supernova-content__inner-container">
-          <CollectionBody { ...props } />
+          { sourceType === 'content' && <PostsCollectionLayout { ...props } /> }
+          { sourceType !== 'content' && <NotPostsCollectionLayout { ...props } /> }
         </div>
       </div>
     </div>
   );
 }
-
-const CollectionBody = props => {
-  const { attributes } = props;
-  const { sourceType } = attributes;
-
-  return (
-    <Fragment>
-      { sourceType === 'content' && <PostsCollectionLayout { ...props } /> }
-      { sourceType !== 'content' && <NotPostsCollectionLayout { ...props } /> }
-    </Fragment>
-  )
-}
-
-const PostsCollectionLayout = props => {
-  const { posts, clientId } = props;
-  const innerBlocks = useInnerBlocks( clientId );
-  const attributes = Object.assign( {}, props.attributes, {
-    colorSignal: props.attributes.contentColorSignal,
-    paletteVariation: props.attributes.contentPaletteVariation,
-    useSourceColorAsReference: false
-  } );
-
-  const passedProps = Object.assign({}, props, {
-    attributes: attributes
-  } );
-
-  if ( ! Array.isArray( posts ) ) {
-    return null;
-  }
-
-  return (
-    <SupernovaLayout { ...props }>
-      {
-        posts.map( ( post, index ) => {
-          const innerBlock = innerBlocks[ index ];
-
-          if ( ! innerBlock ) {
-            return null;
-          }
-
-          return (
-            <div className={ 'supernova__layout-item' }>
-              <PostCard { ...passedProps } post={ post } key={ index } />
-            </div>
-          )
-        } )
-      }
-    </SupernovaLayout>
-  )
-}
-
-const NotPostsCollectionLayout = withPreviewAttributes( props => {
-  const { attributes, clientId } = props;
-  const { sourceType } = attributes;
-  const innerBlocks = useInnerBlocks( clientId );
-
-  return (
-    <SupernovaLayout { ...props }>
-      { sourceType !== 'content' && innerBlocks.map( innerBlock => <SupernovaItemPreview { ...innerBlock } /> ) }
-    </SupernovaLayout>
-  )
-} );
 
 export default withControlsVisibility( SupernovaEdit );
 

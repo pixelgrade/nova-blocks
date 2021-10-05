@@ -1,4 +1,4 @@
-import { useApiFetch } from "@novablocks/block-editor";
+import { useApiFetch } from "../../../index";
 
 const Category = ( props ) => {
 

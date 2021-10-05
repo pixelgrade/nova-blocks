@@ -21,6 +21,7 @@ import transforms from "./transforms";
 import variations from "./variations";
 
 registerBlockType( 'novablocks/posts-collection', {
+  apiVersion: 2,
 	title: __( 'Posts Collection (Deprecated)', '__plugin_txtd' ),
 	description: __( 'Show Latest Posts', '__plugin_txtd' ),
 	category: 'nova-blocks',
@@ -34,6 +35,8 @@ registerBlockType( 'novablocks/posts-collection', {
       latestPosts: true,
       spaceAndSizing: true,
       elementsVisibility: true,
+      collectionLayout: true,
+      overlayFilter: true,
     },
   },
 	edit,

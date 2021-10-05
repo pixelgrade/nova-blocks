@@ -1,29 +1,22 @@
-import classnames from "classnames";
-
 import { __ } from '@wordpress/i18n';
-import { Fragment } from '@wordpress/element';
-
-import { getColorSignalClassnames } from '@novablocks/utils';
 
 import {
-  CarouselLayoutPreview,
-  ClassicLayoutPreview,
-  ParametricLayoutPreview,
+  CarouselLayout,
+  ClassicLayout,
+  ParametricLayout,
 } from "@novablocks/collection";
+
+import { PostCard } from "@novablocks/block-editor";
+import { useBlockProps } from "@wordpress/block-editor";
 
 const PreviewEdit = ( props ) => {
 
-  const {
-    attributes,
-    posts,
-    className,
-    isSelected,
-  } = props;
+  const { className, posts } = props;
 
-  const {
-    layoutStyle,
-    contentAlign,
-  } = attributes;
+  const blockProps = useBlockProps( {
+    className: className,
+    style: props.style,
+  } );
 
   if ( Array.isArray( posts ) && ! posts.length ) {
     return (
@@ -33,40 +26,55 @@ const PreviewEdit = ( props ) => {
     )
   }
 
-  const classname = classnames(
-    'novablocks-block',
-    'novablocks-block-spacing',
+  return (
+    <div { ...blockProps }>
+      <CollectionBody { ...props } />
+    </div>
+  )
+};
 
-    `novablocks-collection`,
-    `novablocks-collection--align-${ contentAlign }`,
+const CollectionBody = props => {
 
-    getColorSignalClassnames( attributes, true ),
-    className
-  );
+  const { posts } = props;
+
+  const attributes = Object.assign( {}, props.attributes, {
+    colorSignal: props.attributes.contentColorSignal,
+    paletteVariation: props.attributes.contentPaletteVariation,
+    useSourceColorAsReference: false
+  } );
+
+  const { layoutStyle } = attributes;
+
+  const passedProps = Object.assign({}, props, {
+    attributes: attributes
+  } );
 
   return (
-    <Fragment>
+    <div>
       {
         layoutStyle === 'classic' &&
-        <ClassicLayoutPreview { ...props } />
+        <ClassicLayout { ...props } />
       }
       {
         layoutStyle === 'carousel' &&
-        <CarouselLayoutPreview { ...props } />
+        <CarouselLayout { ...props } />
       }
       {
-        layoutStyle === 'parametric' &&
-        <div className={ classname }>
-          <ParametricLayoutPreview
-            { ...props }
-            cardsCount={ posts?.length || attributes?.postsToShow || 0 }
-            posts={ posts }
-            isSelected={ isSelected }
-          />
-        </div>
+        layoutStyle === 'parametric' && Array.isArray( posts ) && posts.length &&
+        <ParametricLayout { ...props }>
+          {
+            posts.map( post => {
+              return (
+                <div className={ 'supernova__layout-item' } key={ post.id }>
+                  <PostCard { ...passedProps } post={ post } />
+                </div>
+              )
+            } )
+          }
+        </ParametricLayout>
       }
-    </Fragment>
+    </div>
   )
-};
+}
 
 export default PreviewEdit;

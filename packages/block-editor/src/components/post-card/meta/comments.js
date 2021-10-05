@@ -1,7 +1,7 @@
-import { useApiFetch } from "@novablocks/block-editor";
-
 import { addQueryArgs } from '@wordpress/url';
 import { __ } from '@wordpress/i18n';
+
+import { useApiFetch } from "../../../index";
 
 const Comments = ( props ) => {
 

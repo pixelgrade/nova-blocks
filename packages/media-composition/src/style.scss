@@ -1,9 +1,7 @@
 .novablocks-media-composition {
-	// padding top to make sure negative margin of child doesn't collapse
 	position: relative;
 
   height: 100%;
-	padding-top: var( --nb-advanced-gallery-aspect-ratio, 50% );
 
 	margin-top: var(--nb-advanced-gallery-vertical-spacing);
 	margin-bottom: var(--nb-advanced-gallery-vertical-spacing);

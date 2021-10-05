@@ -6,5 +6,9 @@
 	"contentPosition": {
 		"type": "string",
 		"default": "center left"
+	},
+	"layoutStyle": {
+		"type": "string",
+		"default": "classic"
 	}
 }

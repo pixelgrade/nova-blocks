@@ -12,9 +12,7 @@ import {
   CardFooter,
   CardButton,
   CardMediaWrapper,
-} from "@novablocks/block-editor";
-
-import { withShapeModelingDecoration } from "@novablocks/shape-modeling";
+} from "../index";
 
 import { getColorSignalClassnames } from "@novablocks/utils";
 
@@ -41,7 +39,7 @@ const withMedia = withSelect( ( select, ownProps ) => {
   }
 } );
 
-const PostCardMedia = withShapeModelingDecoration( ( props ) => {
+const PostCardMedia = ( props ) => {
 
   const { media } = props;
 
@@ -52,14 +50,16 @@ const PostCardMedia = withShapeModelingDecoration( ( props ) => {
   return (
     <img className={ `supernova-item__media` } src={ media.url } width={ media.width } height={ media.height }/>
   )
-} );
+}
 
 const PostCard = withMedia( props => {
 
   const {
     attributes,
-    post
+    post,
   } = props;
+
+  const CardMedia = props.PostCardMedia || PostCardMedia;
 
   const {
     showMeta,
@@ -82,7 +82,7 @@ const PostCard = withMedia( props => {
   return (
     <Card { ...props }>
       <CardMediaWrapper { ...props }>
-        <PostCardMedia { ...props } />
+        <CardMedia { ...props } />
       </CardMediaWrapper>
       <div className={ contentWrapperClassname }>
         <CardMeta show={ showMeta }>{ metaAboveTitle }</CardMeta>

@@ -6,6 +6,7 @@ export { default as HeadingLevelIcon } from "./heading-level-icon";
 export { default as HeadingToolbar } from "./heading-toolbar";
 export { default as Notice } from "./notice";
 export { default as ParametricGrid } from "./parametric-grid";
+export { default as PostCard } from "./post-card";
 export { default as PresetControl } from "./preset-control";
 export { default as QueryControls } from "./query-controls";
 export { default as SignalControl } from "./signal-control";
