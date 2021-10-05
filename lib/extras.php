@@ -1197,6 +1197,20 @@ function novablocks_get_color_classes( $attributes ) {
 	return $classes;
 }
 
+function novablocks_get_spacing_and_sizing_css( $attributes ) {
+	return array_merge(
+		novablocks_get_spacing_css( $attributes ),
+		array(
+			'--nb-collection-gutter: ' . $attributes['layoutGutter'],
+			'--nb-grid-spacing-modifier: ' . $attributes[ 'gridGap' ],
+			'--nb-card-content-padding-multiplier: ' . $attributes[ 'contentPadding' ] / 100,
+			'--nb-card-media-padding-multiplier: ' . $attributes[ 'imagePadding' ] / 100,
+			'--nb-card-media-padding-top: ' . novablocks_get_card_media_padding_top( $attributes['thumbnailAspectRatio'] ) . '%',
+			'--nb-card-media-object-fit: ' . ( $attributes['imageResizing'] === 'cropped' ? 'cover' : 'scale-down' ),
+		)
+	);
+}
+
 function novablocks_get_spacing_css( $attributes ) {
 
 	if ( ! isset( $attributes['blockTopSpacing'] ) ) {
@@ -1254,10 +1268,7 @@ if ( ! function_exists( 'novablocks_get_collection_output' ) ) {
 		}
 
 		$cssProps = array(
-			'--card-content-padding: ' . $attributes['contentPadding'],
-			'--nb-card-media-padding: ' . $attributes['imagePadding'],
-			'--nb-card-media-padding-top: ' . novablocks_get_card_media_padding_top( $attributes['containerHeight'] ) . '%',
-			'--nb-card-media-object-fit: ' . ( $attributes['imageResizing'] === 'cropped' ? 'cover' : 'scale-down' ),
+
 		);
 
 		$cssProps = array_merge( $cssProps, novablocks_get_spacing_css( $attributes ) );
@@ -1336,7 +1347,7 @@ function novablocks_get_card_media_markup( $media ) {
 	return ob_get_clean();
 }
 
-function novablocks_get_supernova_card_media_markup( $media ) {
+function novablocks_get_collection_card_media_markup( $media ) {
 
 	$url = $media['url'];
 
@@ -1357,8 +1368,8 @@ function novablocks_get_supernova_card_media_markup( $media ) {
 }
 
 function novablocks_get_card_post_meta( $post, $attributes ) {
-	$primaryMeta = novablocks_get_meta( $post, $attributes[ 'primaryMetadata' ] );
-	$secondaryMeta = novablocks_get_meta( $post, $attributes[ 'secondaryMetadata' ] );
+	$primaryMeta = novablocks_get_post_card_meta( $post, $attributes[ 'primaryMetadata' ] );
+	$secondaryMeta = novablocks_get_post_card_meta( $post, $attributes[ 'secondaryMetadata' ] );
 	$aboveTitleMeta = '';
 	$belowTitleMeta = '';
 
@@ -1838,7 +1849,7 @@ function novablocks_merge_attributes_from_array( $pathsArray ) {
 }
 
 
-function novablocks_get_supernova_card_markup( $media, $content, $attributes ) {
+function novablocks_get_collection_card_markup( $media, $content, $attributes ) {
 
 	$cardClasses = array(
 		'supernova-item',
@@ -1868,7 +1879,7 @@ function novablocks_get_supernova_card_markup( $media, $content, $attributes ) {
 
 	ob_start(); ?>
 
-	<div class="supernova__layout-item">
+	<div class="nb-collection__layout-item">
 		<div class="<?php echo join( ' ', $cardClasses ); ?>"
 			 style="<?php echo join( '; ', $cssProps ); ?>">
 			<div class="supernova-item__media-wrapper">
@@ -1893,10 +1904,10 @@ function novablocks_get_supernova_card_markup( $media, $content, $attributes ) {
 	<?php return ob_get_clean();
 }
 
-function novablocks_get_supernova_card_markup_from_post( $post, $attributes ) {
+function novablocks_get_collection_card_markup_from_post( $post, $attributes ) {
 	$media_url = get_the_post_thumbnail_url( $post );
 
-	$media_markup = novablocks_get_supernova_card_media_markup( array(
+	$media_markup = novablocks_get_collection_card_media_markup( array(
 		'type' => 'image',
 		'url'  => $media_url,
 	) );
@@ -1906,7 +1917,7 @@ function novablocks_get_supernova_card_markup_from_post( $post, $attributes ) {
 	$attributes['colorSignal'] = $attributes['contentColorSignal'];
 	$attributes['paletteVariation'] = $attributes['contentPaletteVariation'];
 
-	return novablocks_get_supernova_card_markup( $media_markup, $content_markup, $attributes );
+	return novablocks_get_collection_card_markup( $media_markup, $content_markup, $attributes );
 
 }
 
@@ -1933,7 +1944,7 @@ function novablocks_get_card_item_meta( $metaValue, $attributes ) {
 	ob_start(); ?>
 
 	<?php if ( false !== $attributes['showMeta'] && ! empty( $metaValue ) ) { ?>
-		<p class="novablocks-grid__item-meta novablocks-card__meta is-style-meta">
+		<p class="nb-grid__item-meta novablocks-card__meta is-style-meta">
 			<span class="novablocks-card__meta-size-modifier">
 				<?php echo $metaValue; ?>
 			</span>
@@ -1949,7 +1960,7 @@ function novablocks_get_card_item_title( $title, $attributes ) {
 	ob_start();
 
 	if ( ! empty( $title ) && ! empty( $attributes['showTitle'] ) ) {
-		echo '<' . $titleTag . ' class="novablocks-grid__item-title novablocks-card__title">';
+		echo '<' . $titleTag . ' class="nb-grid__item-title novablocks-card__title">';
 		echo '<span class="novablocks-card__title-size-modifier">';
 		echo $title;
 		echo '</span>';
@@ -1963,7 +1974,7 @@ function novablocks_get_card_item_description( $description, $attributes ) {
 	ob_start();
 
 	if ( ! empty( $description ) && ! empty( $attributes['showDescription'] ) ) { ?>
-		<p class="novablocks-grid__item-description novablocks-card__description">
+		<p class="nb-grid__item-description novablocks-card__description">
 			<span class="novablocks-card__description-size-modifier">
 				<?php echo $description; ?>
 			</span>
@@ -1977,7 +1988,7 @@ function novablocks_get_card_item_buttons( $buttons, $attributes ) {
 	ob_start();
 
 	if ( ! empty( $attributes['showButtons'] ) && ! empty( $buttons ) ) { ?>
-		<div class="novablocks-grid__item-buttons novablocks-card__buttons">
+		<div class="nb-grid__item-buttons novablocks-card__buttons">
 			<?php foreach ( $buttons as $button ) { ?>
 				<div class="wp-block-button is-style-text">
 					<a class="wp-block-button__link" href="<?php echo $button['url'] ?>">
@@ -2164,3 +2175,153 @@ function nova_blocks_alter_wp_render_duotone_support( $block_content, $block ) {
 }
 
 add_filter( 'render_block', 'nova_blocks_alter_wp_render_duotone_support', 10, 2 );
+
+function novablocks_get_collection_markup( $attributes, $content ) {
+
+	if ( "content" === $attributes['sourceType'] ) {
+		$content = novablocks_get_posts_colleciton_cards_markup( $attributes );
+	}
+
+	$collection_header = novablocks_get_collection_header_output( $attributes );
+
+	$layoutClasses = array(
+		"nb-collection__layout",
+		"nb-collection__layout--" . $attributes['layoutStyle'],
+		"nb-collection__layout--" . $attributes['carouselLayout'] . "-width"
+	);
+
+	ob_start(); ?>
+
+	<?php if ( $collection_header ) { ?>
+		<div class="<?php echo "align" . $attributes['align']; ?>">
+			<div class="nb-collection__inner-container">
+				<?php echo $collection_header ?>
+			</div>
+		</div>
+	<?php } ?>
+
+	<div class="<?php echo "align" . $attributes['align']; ?>">
+		<div class="nb-collection__inner-container">
+			<div class="<?php echo join( ' ', $layoutClasses ); ?>">
+				<?php echo $content; ?>
+			</div>
+		</div>
+	</div>
+
+	<?php return ob_get_clean();
+}
+
+function novablocks_get_posts_colleciton_cards_markup( $attributes ) {
+	global $novablocks_rendered_posts_ids;
+
+	ob_start();
+
+	$args  = novablocks_build_articles_query( $attributes );
+	$posts = get_posts( $args );
+
+	foreach ( $posts as $post ) {
+
+		array_push( $novablocks_rendered_posts_ids, $post->ID );
+		$card_markup = novablocks_get_collection_card_markup_from_post( $post, $attributes );
+		echo apply_filters( 'novablocks_get_collection_card_markup', $card_markup, $post, $attributes );
+	}
+
+	return ob_get_clean();
+}
+
+function novablocks_show_card_contents( $attributes ) {
+	return ! empty( $attributes['showMeta'] ) ||
+		   ! empty( $attributes['showTitle'] ) ||
+		   ! empty( $attributes['showSubtitle'] ) ||
+		   ! empty( $attributes['showDescription'] ) ||
+		   ! empty( $attributes['showButtons'] );
+}
+
+function novablocks_get_post_card_contents( $post, $attributes ) {
+	ob_start();
+
+	$title = get_the_title( $post );
+	$postMeta       = novablocks_get_card_post_meta( $post, $attributes );
+	$aboveTitleMeta = $postMeta[0];
+	$belowTitleMeta = $postMeta[1];
+	echo novablocks_get_card_item_meta( $aboveTitleMeta, $attributes );
+	echo novablocks_get_card_item_title( $title, $attributes );
+	echo novablocks_get_card_item_meta( $belowTitleMeta, $attributes );
+
+	$excerpt        = get_the_excerpt( $post );
+	echo novablocks_get_card_item_description( $excerpt, $attributes );
+
+	echo novablocks_get_card_item_buttons( array(
+		array(
+			'text' => 'Read More',
+			'url' => get_permalink( $post )
+		)
+	), $attributes );
+
+	echo novablocks_get_card_item_link( get_permalink( $post ), $attributes );
+
+	return ob_get_clean();
+}
+
+function novablocks_get_post_card_meta( $post, $meta ) {
+
+	if ( $meta === 'author' ) {
+		return get_the_author_meta( 'display_name', $post->post_author );
+	}
+
+	if ( $meta === 'category' ) {
+		$categories = wp_get_post_categories( $post->ID );
+
+		if ( ! empty( $categories ) && ! is_wp_error( $categories ) ) {
+			$category_id  = $categories[0];
+			$category     = get_the_category_by_ID( $category_id );
+
+			return $category;
+		}
+	}
+
+	if ( $meta === 'comments' ) {
+		$comments_number = absint( get_comments_number( $post->ID ) );
+
+		if ( $comments_number === 0 ) {
+			return esc_html__( 'No Comments', '__plugin_txtd' );
+		}
+
+		return esc_html(
+			sprintf(
+				_nx(
+					'%1$s Comment',
+					'%1$s Comments',
+					$comments_number,
+					'comments title',
+					'__plugin_txtd'
+				),
+				number_format_i18n( $comments_number )
+			)
+		);
+	}
+
+	if ( $meta === 'date' ) {
+		return esc_html( get_the_date( '', $post ) );
+	}
+
+	if ( $meta === 'tags' ) {
+		$tags = get_the_tags( $post->ID );
+
+		if ( ! empty( $tags ) && ! is_wp_error( $tags ) ) {
+			$tag_names = array_map( 'novablocks_get_tag_name', $tags );
+
+			return join( ', ', $tag_names );
+		}
+	}
+
+	if ( $meta == 'reading-time' ) {
+		return sprintf( __( '%s min read', '__plugin_txtd' ), novablocks_get_post_reading_time_in_minutes( $post ) );
+	}
+
+	return '';
+}
+
+function novablocks_get_tag_name( $tag ) {
+	return $tag->name;
+}

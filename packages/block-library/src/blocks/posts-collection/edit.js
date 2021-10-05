@@ -1,15 +1,14 @@
 import { __ } from '@wordpress/i18n';
 
 import {
-  CarouselLayout,
-  ClassicLayout,
-  ParametricLayout,
+  CollectionHeader,
+  CollectionBody,
 } from "@novablocks/collection";
 
 import { PostCard } from "@novablocks/block-editor";
 import { useBlockProps } from "@wordpress/block-editor";
 
-const PreviewEdit = ( props ) => {
+const Edit = ( props ) => {
 
   const { className, posts } = props;
 
@@ -28,12 +27,13 @@ const PreviewEdit = ( props ) => {
 
   return (
     <div { ...blockProps }>
-      <CollectionBody { ...props } />
+      <CollectionHeader { ...props } />
+      <PostsCollection { ...props } />
     </div>
   )
 };
 
-const CollectionBody = props => {
+const PostsCollection = props => {
 
   const { posts } = props;
 
@@ -43,38 +43,27 @@ const CollectionBody = props => {
     useSourceColorAsReference: false
   } );
 
-  const { layoutStyle } = attributes;
-
   const passedProps = Object.assign({}, props, {
     attributes: attributes
   } );
 
+  if ( ! Array.isArray( posts ) ) {
+    return null;
+  }
+
   return (
-    <div>
+    <CollectionBody { ...passedProps }>
       {
-        layoutStyle === 'classic' &&
-        <ClassicLayout { ...props } />
+        posts.map( post => {
+          return (
+            <div className={ 'nb-collection__layout-item' } key={ post.id }>
+              <PostCard { ...passedProps } post={ post } />
+            </div>
+          )
+        } )
       }
-      {
-        layoutStyle === 'carousel' &&
-        <CarouselLayout { ...props } />
-      }
-      {
-        layoutStyle === 'parametric' && Array.isArray( posts ) && posts.length &&
-        <ParametricLayout { ...props }>
-          {
-            posts.map( post => {
-              return (
-                <div className={ 'supernova__layout-item' } key={ post.id }>
-                  <PostCard { ...passedProps } post={ post } />
-                </div>
-              )
-            } )
-          }
-        </ParametricLayout>
-      }
-    </div>
+    </CollectionBody>
   )
 }
 
-export default PreviewEdit;
+export default Edit;

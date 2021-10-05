@@ -28,6 +28,11 @@ $( function() {
 		const $container = $( container );
 		const $block = $container.closest( '[data-scrolling-effect]' );
 		const attributes = $block.data();
+
+		if ( ! attributes ) {
+		  return;
+    }
+
 		const config = getConfig( container );
 
 		$container.data( {
@@ -64,6 +69,11 @@ $( function() {
 				const $container = $( container );
         const $block = $container.closest( '[data-scrolling-effect]' );
         const attributes = $block.data();
+
+        if ( ! attributes ) {
+          return;
+        }
+
 				const $background = $container.data( 'parallax' );
 				const $foreground = $background.find( '.novablocks-doppler__foreground' );
 				const state = $container.data( 'state' );

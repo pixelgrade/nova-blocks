@@ -1,6 +1,6 @@
 const AreaDebug = ( { area } ) => {
   return (
-    <div className={ 'novablocks-grid__debug' }>
+    <div className={ 'nb-grid__debug' }>
       { `nth: ${ area.nth }` }<br/>
       { `posts count: ${ area.postsCount }` }<br/>
       { `initial posts count: ${ area.initialPostsCount }` }<br/>

@@ -1,4 +1,4 @@
-.supernova__layout--carousel {
+.nb-collection__layout--carousel {
 
   /*
    * Carousel Settings
@@ -7,7 +7,7 @@
   --nb-carousel-arrow-color: #555555;
   --nb-carousel-arrow-bg: #ffffff;
   
-  .supernova__layout-item,
+  .nb-collection__layout-item,
   .supernova-item {
     height: 100%;
   }
@@ -155,7 +155,7 @@
   
   &.supernova-layout-one-column {
       
-      .supernova__layout--carousel {
+      .nb-collection__layout--carousel {
         
         .supernova-item__content {
           padding-bottom: calc(3 * var(--nb-spacing));
@@ -178,7 +178,7 @@
   }
 }
 
-.supernova__layout--variable-width {
+.nb-collection__layout--variable-width {
   
   .supernova-item__media-aspect-ratio {
     
@@ -192,7 +192,7 @@
   
   &:not(.supernova-layout-one-column) {
   
-    .supernova__layout--carousel {
+    .nb-collection__layout--carousel {
       margin-left: calc(-0.5 * var(--nb-grid-spacing));
       margin-right: calc(-0.5 * var(--nb-grid-spacing));
     }

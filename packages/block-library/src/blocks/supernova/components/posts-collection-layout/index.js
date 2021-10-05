@@ -29,7 +29,7 @@ const PostsCollectionLayout = props => {
           }
 
           return (
-            <div className={ 'supernova__layout-item' }>
+            <div className={ 'nb-collection__layout-item' }>
               <PostCard { ...passedProps } post={ post } key={ index } />
             </div>
           )

@@ -41,6 +41,6 @@ if ( ! function_exists( 'novablocks_render_supernova_item_block' ) ) {
 			$card_content = novablocks_get_card_contents( $attributes );
 		}
 
-		return novablocks_get_supernova_card_markup( $card_media, $card_content, $attributes );
+		return novablocks_get_collection_card_markup( $card_media, $card_content, $attributes );
 	}
 }

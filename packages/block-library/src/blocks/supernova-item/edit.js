@@ -22,7 +22,7 @@ const SuperNovaItemEdit = props => {
   const blockProps = useBlockProps( {
     className: classnames(
       props.className,
-      'supernova__layout-item'
+      'nb-collection__layout-item'
     )
   } );
 

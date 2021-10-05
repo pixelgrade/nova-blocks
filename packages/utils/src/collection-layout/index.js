@@ -132,38 +132,38 @@ export const getAreaBaseClassname = ( area ) => {
   const { nth } = area;
 
   return classnames([
-    'novablocks-grid__area',
-    `novablocks-grid__area--nth-${ nth }`,
+    'nb-grid__area',
+    `nb-grid__area--nth-${ nth }`,
   ]);
 };
 
 export const getAreaClassnameByAspectRatio = ( area, attributes ) => {
   return classnames([
     {
-      'novablocks-grid__area--portrait': ! isLandscape( area, attributes ),
-      'novablocks-grid__area--landscape': isLandscape( area, attributes ),
+      'nb-grid__area--portrait': ! isLandscape( area, attributes ),
+      'nb-grid__area--landscape': isLandscape( area, attributes ),
     }
   ]);
 };
 
 export const getAreaClassnameByWidthRatio = ( widthRatio ) => {
   return classnames([{
-    'novablocks-grid__area--width-xs': widthRatio < 0.3,
-    'novablocks-grid__area--width-s': 0.3 <= widthRatio && widthRatio < 0.5,
-    'novablocks-grid__area--width-m': 0.5 <= widthRatio && widthRatio < 0.66,
-    'novablocks-grid__area--width-l': 0.66 <= widthRatio && widthRatio < 0.80,
-    'novablocks-grid__area--width-xl': 0.80 <= widthRatio && widthRatio < 0.95,
-    'novablocks-grid__area--width-full': 0.95 <= widthRatio,
+    'nb-grid__area--width-xs': widthRatio < 0.3,
+    'nb-grid__area--width-s': 0.3 <= widthRatio && widthRatio < 0.5,
+    'nb-grid__area--width-m': 0.5 <= widthRatio && widthRatio < 0.66,
+    'nb-grid__area--width-l': 0.66 <= widthRatio && widthRatio < 0.80,
+    'nb-grid__area--width-xl': 0.80 <= widthRatio && widthRatio < 0.95,
+    'nb-grid__area--width-full': 0.95 <= widthRatio,
   }]);
 };
 
 export const getAreaClassnameByHeightRatio = ( heightRatio ) => {
   return classnames([{
-    'novablocks-grid__area--height-xs': heightRatio < 0.34,
-    'novablocks-grid__area--height-s': 0.34 <= heightRatio && heightRatio < 0.5,
-    'novablocks-grid__area--height-m': 0.5 <= heightRatio && heightRatio < 0.66,
-    'novablocks-grid__area--height-l': 0.66 <= heightRatio && heightRatio < 0.80,
-    'novablocks-grid__area--height-xl': 0.80 <= heightRatio,
+    'nb-grid__area--height-xs': heightRatio < 0.34,
+    'nb-grid__area--height-s': 0.34 <= heightRatio && heightRatio < 0.5,
+    'nb-grid__area--height-m': 0.5 <= heightRatio && heightRatio < 0.66,
+    'nb-grid__area--height-l': 0.66 <= heightRatio && heightRatio < 0.80,
+    'nb-grid__area--height-xl': 0.80 <= heightRatio,
   }])
 };
 

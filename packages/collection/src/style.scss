@@ -1,2 +1,7 @@
-@import "scss/collection/style";
 @import "scss/grid/style";
+
+.novablocks-collection {
+  // @todo styles for emphasisArea &co similar to supernova
+  position: relative;
+  @include layout-grid;
+}

@@ -38,7 +38,7 @@ export const CardTitle = withVisibilityAndPlaceholder( ( props ) => {
   const TitleTagName = props.titleTagName || 'h3';
 
   return (
-    <TitleTagName className={ 'wp-block novablocks-grid__item-title novablocks-card__title' }>
+    <TitleTagName className={ 'wp-block nb-grid__item-title novablocks-card__title' }>
       <span className="novablocks-card__title-size-modifier">
         { ! placeholder ? children : <TextPlaceholder/> }
       </span>
@@ -58,7 +58,7 @@ export const CardMeta = withVisibilityAndPlaceholder( ( props ) => {
   }
 
   return (
-    <div className="novablocks-grid__item-meta novablocks-card__meta is-style-meta">
+    <div className="nb-grid__item-meta novablocks-card__meta is-style-meta">
       <div className="novablocks-card__meta-size-modifier">
         { ! placeholder ? children : <TextPlaceholder rows={ 1 } /> }
       </div>
@@ -73,7 +73,7 @@ export const CardDescription = withVisibilityAndPlaceholder( ( props ) => {
     children,
   } = props;
 
-  const wrapperClassName = 'wp-block novablocks-grid__item-description novablocks-card__description';
+  const wrapperClassName = 'wp-block nb-grid__item-description novablocks-card__description';
   const fontSizeClassName = 'novablocks-card__description-size-modifier';
 
   return (
@@ -93,7 +93,7 @@ export const CardFooter = withVisibilityAndPlaceholder( ( props ) => {
   } = props;
 
   return (
-    <div className="wp-block novablocks-grid__item-buttons novablocks-card__buttons">
+    <div className="wp-block nb-grid__item-buttons novablocks-card__buttons">
       <div className="novablocks-card__buttons-size-modifier">
         { ! placeholder ? children : <TextPlaceholder rows={ 1 } /> }
       </div>

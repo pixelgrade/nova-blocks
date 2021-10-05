@@ -49,7 +49,7 @@ const CardEdit = ( props ) => {
 			<div className="novablocks-card__layout">
 				{
 					showMedia &&
-					<div className="novablocks-card__layout-media novablocks-grid__item-media">
+					<div className="novablocks-card__layout-media nb-grid__item-media">
 						<MediaUpload
 							type="image"
 							value={ !! media && media.id }

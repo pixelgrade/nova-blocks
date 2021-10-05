@@ -1,4 +1,4 @@
-import { CollectionLayout } from "@novablocks/collection";
+import { CollectionBody } from "@novablocks/collection";
 
 const useInnerBlocksProps = wp.blockEditor.useInnerBlocksProps || wp.blockEditor.__experimentalUseInnerBlocksProps;
 
@@ -17,12 +17,12 @@ const SupernovaLayout = props => {
 
   if ( preview ) {
     return (
-      <CollectionLayout { ...props } />
+      <CollectionBody { ...props } />
     )
   }
 
   return (
-    <CollectionLayout { ...props } { ...innerBlocksProps } />
+    <CollectionBody { ...props } { ...innerBlocksProps } />
   )
 }
 

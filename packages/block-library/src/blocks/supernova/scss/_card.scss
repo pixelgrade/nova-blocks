@@ -36,13 +36,13 @@
   flex: 0 0 auto;
 }
 
-.supernova__layout {
+.nb-collection__layout {
 
   &:not(&--parametric) .supernova-item--layout-vertical-reverse {
     flex-direction: column-reverse;
   }
 
-  &--parametric .novablocks-grid__area--landscape .supernova-item,
+  &--parametric .nb-grid__area--landscape .supernova-item,
   &:not(&--parametric) .supernova-item--layout-horizontal,
   &:not(&--parametric) .supernova-item--layout-horizontal-reverse {
     flex-direction: row;
@@ -141,7 +141,7 @@
   
   img,
   video {
-    opacity: calc( 1 - var(--nb-overlay-filter-strength, 1));
+    opacity: calc( 1 - var(--nb-overlay-filter-strength, 0));
   }
 }
 
@@ -184,9 +184,9 @@
  * Carousel Layout - Variable Width
  */
 
-.supernova__layout--carousel {
+.nb-collection__layout--carousel {
   
-  &.supernova__layout--variable-width {
+  &.nb-collection__layout--variable-width {
   
     // Replace display: tablet; width: 1px; trick
     // with flex-basis, so we can use display: grid
@@ -216,7 +216,7 @@
   }
 }
 
-.supernova__layout--content-width {
+.nb-collection__layout--content-width {
   
   .slick-slide {
     --slider-content-width: calc( 100vw - ( var(--theme-wrapper-sides-spacing) + var(--full) + var(--wds) + var(--wde) + var(--grid-gap) ) * 2);
@@ -239,7 +239,7 @@
   display: block;
 }
 
-.novablocks-grid__item-buttons {
+.nb-grid__item-buttons {
   position: relative;
   z-index: 1;
 }

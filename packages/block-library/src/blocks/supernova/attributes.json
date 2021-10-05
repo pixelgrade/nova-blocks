@@ -11,10 +11,6 @@
 		"type": "boolean",
 		"default": true
 	},
-	"cardLayout": {
-		"type": "string",
-		"default": "vertical"
-	},
 	"headerPosition": {
 		"type": "number",
 		"default": 0

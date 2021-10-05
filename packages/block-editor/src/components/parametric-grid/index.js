@@ -50,7 +50,7 @@ const ParametricGrid = ( props ) => {
           };
 
           return (
-            <div className={ `novablocks-grid__column` } style={ areaColumnStyle }>
+            <div className={ `nb-grid__column` } style={ areaColumnStyle }>
               { areas.map( area => {
                 addedCards += area.postsCount;
 

@@ -5,7 +5,10 @@ import { useBlockProps } from "@wordpress/block-editor";
 import { useSelect, useDispatch } from "@wordpress/data";
 import { Fragment, useEffect } from "@wordpress/element";
 
-import { CollectionHeader } from "@novablocks/collection";
+import {
+  CollectionHeader,
+  CollectionBody
+} from "@novablocks/collection";
 
 import { useInnerBlocks } from "@novablocks/block-editor";
 
@@ -98,27 +101,16 @@ const SupernovaPreview = props => {
     style: props.style,
   } );
 
-  const alignClassname = 'align' + align;
-
   markPostsAsDisplayed( clientId, sourceType === 'content' ? posts : [] );
 
   return (
     <div { ...blockProps }>
       {
         headerPosition === 0 && ( showCollectionTitle || showCollectionSubtitle ) &&
-        <div className={ alignClassname }>
-          <div className="supernova-header__inner-container">
-            <CollectionHeader { ...props } />
-          </div>
-        </div>
+        <CollectionHeader { ...props } />
       }
-
-      <div className={ alignClassname }>
-        <div className="supernova-content__inner-container">
-          { sourceType === 'content' && <PostsCollectionLayout { ...props } /> }
-          { sourceType !== 'content' && <NotPostsCollectionLayout { ...props } /> }
-        </div>
-      </div>
+        { sourceType === 'content' && <PostsCollectionLayout { ...props } /> }
+        { sourceType !== 'content' && <NotPostsCollectionLayout { ...props } /> }
     </div>
   );
 }

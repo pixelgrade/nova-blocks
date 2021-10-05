@@ -1,1 +1,1 @@
-import './frontend/carousel';
+import "@novablocks/collection/frontend";

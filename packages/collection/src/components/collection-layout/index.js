@@ -7,9 +7,9 @@ const CollectionLayout = ( props ) => {
 
   const className = classnames(
     props.className,
-    `supernova__layout`,
-    `supernova__layout--${ layoutStyle }`,
-    { [ `supernova__layout--${ carouselLayout }-width` ]: layoutStyle === 'carousel' }
+    `nb-collection__layout`,
+    `nb-collection__layout--${ layoutStyle }`,
+    { [ `nb-collection__layout--${ carouselLayout }-width` ]: layoutStyle === 'carousel' }
   );
 
   const passedProps = Object.assign( {}, props, { className } );

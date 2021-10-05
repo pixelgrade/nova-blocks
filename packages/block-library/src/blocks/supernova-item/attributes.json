@@ -3,10 +3,6 @@
 		"type": "boolean",
 		"default": true
 	},
-	"cardLayout": {
-		"type": "string",
-		"default": "vertical"
-	},
 	"level": {
 		"type": "number",
 		"default": 2

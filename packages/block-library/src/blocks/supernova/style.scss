@@ -57,7 +57,7 @@
   display: grid !important;
 }
 
-.supernova-header__inner-container {
+.nb-collection__inner-container {
   
   > * {
     --nb-element-spacing-multiplier: 0.5;
@@ -73,8 +73,8 @@
   
     &.supernova-layout-one-column {
     
-      .supernova__layout,
-      .supernova__layout-item {
+      .nb-collection__layout,
+      .nb-collection__layout-item {
         --nb-block-top-spacing: 0
       }
   
@@ -93,11 +93,11 @@
  * per columns, (cards are stacked horizontally),
  * we need space on :first-child
  */
-  &:not(.supernova-layout-one-column) {
-    
-    .supernova-content__inner-container > :first-child {
-      --nb-block-top-spacing: 1;
-    }
-  }
+  //&:not(.supernova-layout-one-column) {
+  //
+  //  .nb-collection__inner-container > :first-child {
+  //    --nb-block-top-spacing: 1;
+  //  }
+  //}
 }
 

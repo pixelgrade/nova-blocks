@@ -46,7 +46,7 @@ const CardsCollectionEdit = ( props ) => {
   const alignClassname = 'align' + align;
 
   const innerBlocksProps = useInnerBlocksProps( {
-    className: 'supernova__layout supernova__layout--classic',
+    className: 'nb-collection__layout nb-collection__layout--classic',
   }, {
     allowedBlocks: ALLOWED_BLOCKS,
     template: CARDS_COLLECTION_TEMPLATE,
@@ -59,13 +59,13 @@ const CardsCollectionEdit = ( props ) => {
       {
         headerPosition === 0 && ( showCollectionTitle || showCollectionSubtitle ) &&
         <div className={ alignClassname }>
-          <div className="supernova-header__inner-container">
+          <div className="nb-collection__inner-container">
             <CollectionHeader { ...props } />
           </div>
         </div>
       }
       <div className={ alignClassname }>
-        <div className="supernova-content__inner-container">
+        <div className="nb-collection__inner-container">
           <div { ...innerBlocksProps } />
         </div>
       </div>

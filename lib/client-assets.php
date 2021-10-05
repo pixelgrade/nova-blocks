@@ -300,6 +300,7 @@ function novablocks_register_block_types() {
 			 */
 			if ( $key === 'script' ) {
 				$dependencies[] = 'novablocks-color-signal/frontend';
+				$dependencies[] = 'novablocks-collection/frontend';
 				$dependencies[] = 'novablocks-media-composition/frontend';
 				$dependencies[] = 'novablocks-scrolling-effect/frontend';
 				$dependencies[] = 'novablocks-shape-modeling/frontend';
