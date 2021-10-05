@@ -1357,8 +1357,8 @@ function novablocks_get_supernova_card_media_markup( $media ) {
 }
 
 function novablocks_get_card_post_meta( $post, $attributes ) {
-	$primaryMeta = novablocks_get_meta( $post, $attributes[ 'primaryMetadata' ] );
-	$secondaryMeta = novablocks_get_meta( $post, $attributes[ 'secondaryMetadata' ] );
+	$primaryMeta = '<span class="novablocks-card__meta--primary">' . novablocks_get_meta( $post, $attributes[ 'primaryMetadata' ] ) . '</span>';
+	$secondaryMeta = '<span class="novablocks-card__meta--secondary">' . novablocks_get_meta( $post, $attributes[ 'secondaryMetadata' ] ) . '</span>';
 	$aboveTitleMeta = '';
 	$belowTitleMeta = '';
 

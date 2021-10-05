@@ -36,9 +36,9 @@ export const getMeta = ( props ) => {
   if ( primaryMeta && secondaryMeta ) {
     combinedMeta = (
       <Fragment>
-        { primaryMeta }
+        <span className={'novablocks-card__meta--primary'}>{ primaryMeta }</span>
         <RawHTML style={ { display: 'inline' } }>{ ' &mdash; ' }</RawHTML>
-        { secondaryMeta }
+        <span className={'novablocks-card__meta--secondary'}>{ secondaryMeta }</span>
       </Fragment>
     );
   } else {
