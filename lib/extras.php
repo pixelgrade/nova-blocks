@@ -1902,6 +1902,7 @@ function novablocks_get_collection_card_markup_from_post( $post, $attributes ) {
 
 	$attributes['colorSignal'] = $attributes['contentColorSignal'];
 	$attributes['paletteVariation'] = $attributes['contentPaletteVariation'];
+	$attributes['useSourceColorAsReference'] = false;
 
 	return novablocks_get_collection_card_markup( $media_markup, $content_markup, $attributes );
 

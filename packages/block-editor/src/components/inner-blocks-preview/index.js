@@ -1,4 +1,4 @@
-import { useInnerBlocks } from "@novablocks/block-editor";
+import { useInnerBlocks } from "../../index";
 
 const InnerBlocksPreview = props => {
   const { clientId } = props;

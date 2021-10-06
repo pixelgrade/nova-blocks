@@ -17,7 +17,6 @@
     position: absolute;
     top: 0;
     left: 0;
-    z-index: -1; // would rather do this until it breaks instead of forcing any z-index context on other elements
 
     height: 100%;
     width: 100%;
@@ -55,6 +54,7 @@
 }
 
 .nb-collection__inner-container {
+  position: relative;
   
   > * {
     --nb-element-spacing-multiplier: 0.5;

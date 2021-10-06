@@ -1,7 +1,8 @@
 import { Fragment } from "@wordpress/element";
-import { CardButton, CardDescription, CardFooter, CardMeta, CardTitle } from "@novablocks/block-editor";
 
-const FieldsPreview = ( props ) => {
+import { CardButton, CardDescription, CardFooter, CardMeta, CardTitle } from "../../index";
+
+const CardFieldsPreview = ( props ) => {
 
   const {
     attributes: {
@@ -31,4 +32,4 @@ const FieldsPreview = ( props ) => {
   )
 }
 
-export default FieldsPreview;
+export default CardFieldsPreview;

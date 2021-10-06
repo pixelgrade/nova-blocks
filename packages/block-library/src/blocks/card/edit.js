@@ -2,15 +2,14 @@
  * WordPress dependencies
  */
 import classnames from 'classnames';
+
 import { RichText } from '@wordpress/block-editor';
 import { __ } from '@wordpress/i18n';
+import { InnerBlocks, MediaUpload } from '@wordpress/block-editor';
+
+import { getColorSignalClassnames } from "@novablocks/utils";
 
 import CardMedia from './media';
-
-import {
-	InnerBlocks,
-	MediaUpload,
- } from '@wordpress/block-editor';
 
 const CardEdit = ( props ) => {
 
@@ -70,17 +69,15 @@ const CardEdit = ( props ) => {
 				{
 					( showMeta || showTitle || showSubtitle || showDescription || showButtons ) &&
 					<div className="novablocks-card__layout-content">
-            <div className="novablocks-card__inner-container">
+            <div className={ `novablocks-card__inner-container ${ getColorSignalClassnames( attributes, true ) }` }>
               {
                 showMeta &&
                 <RichText
                   className={ `novablocks-card__meta block-editor-block-list__block is-style-meta` }
                   tagName={ 'p' }
-                  value={meta}
-                  onChange={meta => {
-                    setAttributes( {meta} )
-                  }}
-                  placeholder={ __( 'Meta' ) }
+                  value={ meta }
+                  onChange={ meta => { setAttributes( { meta } ) } }
+                  placeholder={ __( 'Meta', '__plugin_txtd' ) }
                   allowedFormats={ [] }
                 />
               }
@@ -88,12 +85,10 @@ const CardEdit = ( props ) => {
                 showTitle &&
                 <RichText
                   className={ `novablocks-card__title block-editor-block-list__block` }
-                  tagName={`h${level + 1}`}
-                  value={title}
-                  onChange={title => {
-                    setAttributes( {title} )
-                  }}
-                  placeholder={ __( 'Title' ) }
+                  tagName={ `h${ level + 1 }` }
+                  value={ title }
+                  onChange={ title => { setAttributes( { title } ) } }
+                  placeholder={ __( 'Title', '__plugin_txtd' ) }
                   allowedFormats={ [] }
                 />
               }
@@ -101,12 +96,10 @@ const CardEdit = ( props ) => {
                 showSubtitle &&
                 <RichText
                   className={ `novablocks-card__subtitle block-editor-block-list__block` }
-                  tagName={ `h${level + 2}` }
-                  value={subtitle}
-                  onChange={subtitle => {
-                    setAttributes( {subtitle} )
-                  }}
-                  placeholder={ __( 'Subtitle' ) }
+                  tagName={ `h${ level + 2 }` }
+                  value={ subtitle }
+                  onChange={ subtitle => { setAttributes( { subtitle } ) } }
+                  placeholder={ __( 'Subtitle', '__plugin_txtd' ) }
                   allowedFormats={ [] }
                 />
               }
@@ -115,11 +108,9 @@ const CardEdit = ( props ) => {
                 <RichText
                   className={ `novablocks-card__description block-editor-block-list__block` }
                   tagName={ 'p' }
-                  value={description}
-                  onChange={description => {
-                    setAttributes( {description} )
-                  }}
-                  placeholder={ __( 'This is just an example of what a description for this card could look like' ) }
+                  value={ description }
+                  onChange={ description => { setAttributes( { description } ) } }
+                  placeholder={ __( 'This is just an example of what a description for this card could look like', '__plugin_txtd' ) }
                   allowedFormats={ [] }
                 />
               }
