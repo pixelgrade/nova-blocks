@@ -51,7 +51,7 @@ if ( ! function_exists( 'novablocks_render_supernova_block' ) ) {
 		);
 
 		if ( $attributes['columns'] === 1 ) {
-			$classes[] = 'supernova-layout-one-column';
+			$classes[] = 'supernova--one-column';
 		}
 
 		if ( ! empty ( $attributes['align'] ) ) {
@@ -87,7 +87,7 @@ if ( ! function_exists( 'novablocks_render_supernova_block' ) ) {
 		);
 
 		if ( $attributes['minHeightFallback'] !== 0 ) {
-			$classes[]  = 'supernova-has-minimum-height';
+			$classes[]  = 'supernova--has-minimum-height';
 			$cssProps[] = '--nb-supernova-minimum-height: ' . $attributes['minHeightFallback'] . 'vh';
 		}
 

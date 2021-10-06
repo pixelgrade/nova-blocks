@@ -92,8 +92,10 @@ const SupernovaPreview = props => {
     `supernova--card-layout-${ cardLayout }`,
     'alignfull',
     `block-is-${ align }`,
-    `${ columns === 1 ? 'supernova-layout-one-column' : '' }`,
-    `${ minHeightFallback !== 0 ? 'supernova-has-minimum-height' : '' }`
+    {
+      'supernova--one-column': columns === 1,
+      'supernova--has-minimum-height': minHeightFallback !== 0,
+    }
   );
 
   const blockProps = useBlockProps( {
@@ -105,12 +107,9 @@ const SupernovaPreview = props => {
 
   return (
     <div { ...blockProps }>
-      {
-        headerPosition === 0 && ( showCollectionTitle || showCollectionSubtitle ) &&
-        <CollectionHeader { ...props } />
-      }
-        { sourceType === 'content' && <PostsCollectionLayout { ...props } /> }
-        { sourceType !== 'content' && <NotPostsCollectionLayout { ...props } /> }
+      { headerPosition === 0 && ( showCollectionTitle || showCollectionSubtitle ) && <CollectionHeader { ...props } /> }
+      { sourceType === 'content' && <PostsCollectionLayout { ...props } /> }
+      { sourceType !== 'content' && <NotPostsCollectionLayout { ...props } /> }
     </div>
   );
 }

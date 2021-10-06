@@ -1271,14 +1271,14 @@ if ( ! function_exists( 'novablocks_get_collection_output' ) ) {
 		ob_start(); ?>
 
 		<?php if ( $collection_header ) { ?>
-			<div class="<?php echo "align" . $attributes['align']; ?>">
+			<div class="<?php echo "nb-collection__header  align" . $attributes['align']; ?>">
 				<div class="nb-collection__inner-container">
 					<?php echo $collection_header ?>
 				</div>
 			</div>
 		<?php } ?>
 
-		<div class="<?php echo "align" . $attributes['align']; ?>">
+		<div class="<?php echo "nb-collection__body  align" . $attributes['align']; ?>">
 			<div class="nb-collection__inner-container">
 				<div class="<?php echo join( ' ', $layoutClasses ); ?>">
 					<?php echo $content; ?>
@@ -1295,17 +1295,13 @@ function novablocks_get_collection_header_output( $attributes ) {
 
 	$output = '';
 
-	if ( ! empty( $attributes['showCollectionTitle'] ) ) {
-
+	if ( ! empty( $attributes['showCollectionTitle'] ) && ! empty( $attributes['title'] ) ) {
 		$output .= '<' . $titleTag . ' class="novablocks-collection__title wp-block">';
-
 		$output .= $attributes['title'];
-
-
 		$output .= '</' . $titleTag . '>';
 	}
 
-	if ( ! empty( $attributes['showCollectionSubtitle'] ) ) {
+	if ( ! empty( $attributes['showCollectionSubtitle'] ) && ! empty( $attributes['subtitle'] ) ) {
 		$output .= '<p class="novablocks-collection__subtitle wp-block is-style-lead">' . $attributes['subtitle'] . '</p>';
 	}
 

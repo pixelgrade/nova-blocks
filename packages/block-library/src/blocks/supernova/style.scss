@@ -4,38 +4,35 @@
 @import 'scss/block-alignments';
 
 .supernova {
-
-  &[class] {
-    --emphasis-area-width: calc( var(--nb-collection-emphasis-area, 100) * 1% );
-  }
-}
-
-.supernova {
   position: relative;
   @include layout-grid;
-  
-  background: none !important;
-  
   grid-column: var(--all-columns);
-  
+
+  --emphasis-area-width: calc( var(--nb-collection-emphasis-area, 100) * 1% );
+  background: none !important;
+
   &:before {
     content: '';
+
     position: absolute;
     top: 0;
     left: 0;
-    grid-column: var(--custom-limit-left)/var(--custom-limit-right);
+    z-index: -1; // would rather do this until it breaks instead of forcing any z-index context on other elements
+
+    height: 100%;
+    width: 100%;
+
+    grid-column: var(--custom-limit-left) / var(--custom-limit-right);
+
     background: linear-gradient(
         90deg,
         var(--nb-bg-color) 0,
         var(--nb-bg-color) var(--emphasis-area-width),
         transparent var(--emphasis-area-width)
     );
-    
-    height: 100%;
-    width: 100%;
   }
   
-  &.supernova-has-minimum-height {
+  &.supernova--has-minimum-height {
     
     .supernova-item__media-aspect-ratio {
       --nb-card-media-padding-top: var(--nb-supernova-minimum-height);
@@ -68,10 +65,10 @@
  * Hero
  */
 .supernova {
-  
+
   &.supernova--card-layout-stacked {
-  
-    &.supernova-layout-one-column {
+
+    &.supernova--one-column {
     
       .nb-collection__layout,
       .nb-collection__layout-item {
@@ -87,13 +84,13 @@
       }
     }
   }
-  
+
   /*
  * When we have more than 1 element
  * per columns, (cards are stacked horizontally),
  * we need space on :first-child
  */
-  //&:not(.supernova-layout-one-column) {
+  //&:not(.supernova--one-column) {
   //
   //  .nb-collection__inner-container > :first-child {
   //    --nb-block-top-spacing: 1;

@@ -5,7 +5,7 @@ import { useBlockProps } from "@wordpress/block-editor";
 import { select, dispatch } from "@wordpress/data";
 
 import { useInnerBlocks } from "@novablocks/block-editor";
-import { CollectionHeader } from "@novablocks/collection";
+import { CollectionBody, CollectionHeader } from "@novablocks/collection";
 
 const useInnerBlocksProps = wp.blockEditor.useInnerBlocksProps || wp.blockEditor.__experimentalUseInnerBlocksProps;
 
@@ -22,18 +22,10 @@ const CARDS_COLLECTION_TEMPLATE = [
 const CardsCollectionEdit = ( props ) => {
 
 	const {
-	  attributes,
     clientId,
     isSelected,
     className,
 	} = props;
-
-	const {
-	  align,
-    headerPosition,
-    showCollectionTitle,
-    showCollectionSubtitle,
-  } = attributes;
 
   const innerBlocks = useInnerBlocks( clientId );
 	const hasAppender = !! innerBlocks && innerBlocks.length < 4 && isSelected;
@@ -42,8 +34,6 @@ const CardsCollectionEdit = ( props ) => {
     className: className,
     style: props.style,
   } );
-
-  const alignClassname = 'align' + align;
 
   const innerBlocksProps = useInnerBlocksProps( {
     className: 'nb-collection__layout nb-collection__layout--classic',
@@ -56,19 +46,8 @@ const CardsCollectionEdit = ( props ) => {
 
   return (
     <div { ...blockProps }>
-      {
-        headerPosition === 0 && ( showCollectionTitle || showCollectionSubtitle ) &&
-        <div className={ alignClassname }>
-          <div className="nb-collection__inner-container">
-            <CollectionHeader { ...props } />
-          </div>
-        </div>
-      }
-      <div className={ alignClassname }>
-        <div className="nb-collection__inner-container">
-          <div { ...innerBlocksProps } />
-        </div>
-      </div>
+      <CollectionHeader { ...props } />
+      <CollectionBody { ...props } { ...innerBlocksProps } />
 		</div>
 	);
 };
