@@ -5,12 +5,8 @@ import { useBlockProps } from "@wordpress/block-editor";
 import { useSelect, useDispatch } from "@wordpress/data";
 import { Fragment, useEffect } from "@wordpress/element";
 
-import {
-  CollectionHeader,
-  CollectionBody
-} from "@novablocks/collection";
-
 import { useInnerBlocks } from "@novablocks/block-editor";
+import { CollectionHeader } from "@novablocks/collection";
 
 import BlockControls from './block-controls';
 
@@ -90,12 +86,12 @@ const SupernovaPreview = props => {
     'supernova',
     `supernova--source-type-${ sourceType }`,
     `supernova--card-layout-${ cardLayout }`,
-    'alignfull',
-    `block-is-${ align }`,
     {
       'supernova--one-column': columns === 1,
       'supernova--has-minimum-height': minHeightFallback !== 0,
-    }
+    },
+    'alignfull',
+    `block-is-${ align }`,
   );
 
   const blockProps = useBlockProps( {
