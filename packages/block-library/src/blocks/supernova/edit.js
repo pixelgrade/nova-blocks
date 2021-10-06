@@ -88,8 +88,8 @@ const SupernovaPreview = props => {
   const className = classnames(
     props.className,
     'supernova',
-    `supernova-source-type-${ sourceType }`,
-    `supernova-card-layout--${ cardLayout }`,
+    `supernova--source-type-${ sourceType }`,
+    `supernova--card-layout-${ cardLayout }`,
     'alignfull',
     `block-is-${ align }`,
     `${ columns === 1 ? 'supernova-layout-one-column' : '' }`,

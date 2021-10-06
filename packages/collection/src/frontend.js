@@ -14,7 +14,7 @@ import {
 
 import './frontend/carousel';
 
-const GRID_SELECTOR = '.nb-collection__layout';
+const GRID_SELECTOR = '.nb-collection__layout--parametric';
 
 (function($, window, undefined) {
 

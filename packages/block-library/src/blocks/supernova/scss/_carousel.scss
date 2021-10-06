@@ -151,7 +151,7 @@
  * Pagination is true,
  * and Number of Items per Row is set to 1.
  */
-.supernova-card-layout--stacked {
+.supernova--card-layout-stacked {
   
   &.supernova-layout-one-column {
       
@@ -170,7 +170,7 @@
   }
 }
 
-.supernova-card-layout--stacked {
+.supernova--card-layout-stacked {
   
   .slick-dots {
     position: absolute;

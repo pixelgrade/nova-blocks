@@ -71,7 +71,7 @@ const CarouselLayout = ( props ) => {
   }
 
   return (
-    <Slider {...settings}>{props.children}</Slider>
+    <Slider { ...settings }>{ props.children }</Slider>
   );
 }
 

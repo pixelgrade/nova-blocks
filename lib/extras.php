@@ -1211,6 +1211,13 @@ function novablocks_get_spacing_and_sizing_css( $attributes ) {
 	);
 }
 
+function novablocks_get_collection_layout_css( $attributes ) {
+	return array(
+		'--nb-collection-columns-count: ' . $attributes['columns'],
+		'--nb-grid-spacing-modifier: ' . $attributes['gridGap']
+	);
+}
+
 function novablocks_get_spacing_css( $attributes ) {
 
 	if ( ! isset( $attributes['blockTopSpacing'] ) ) {
@@ -1248,50 +1255,33 @@ function novablocks_get_spacing_css( $attributes ) {
 if ( ! function_exists( 'novablocks_get_collection_output' ) ) {
 
 	function novablocks_get_collection_output( $attributes, $content ) {
-		$data_attributes_array = array_map( 'novablocks_camel_case_to_kebab_case', array_keys( $attributes ) );
-		$data_attributes = novablocks_get_data_attributes( $data_attributes_array, $attributes );
 
-		$classes = array(
-			'novablocks-block',
-			'novablocks-block-spacing',
-			'novablocks-collection',
-			'novablocks-collection--align-' . $attributes[ 'contentAlign' ],
-			'alignfull',
-		);
-
-		if ( $attributes['thumbnailAspectRatioString'] !== 'auto' ) {
-			$classes[] = 'novablocks-card--fixed-media-aspect-ratio';
+		if ( "content" === $attributes['sourceType'] ) {
+			$content = novablocks_get_posts_colleciton_cards_markup( $attributes );
 		}
 
-		if ( ! empty( $attributes['className'] ) ) {
-			$classes[] = $attributes['className'];
-		}
+		$collection_header = novablocks_get_collection_header_output( $attributes );
 
-		$cssProps = array(
-
+		$layoutClasses = array(
+			"nb-collection__layout",
+			"nb-collection__layout--" . $attributes['layoutStyle'],
+			"nb-collection__layout--" . $attributes['carouselLayout'] . "-width"
 		);
-
-		$cssProps = array_merge( $cssProps, novablocks_get_spacing_css( $attributes ) );
-		$style = join( '; ', $cssProps );
-
-		$classes = array_merge( $classes, novablocks_get_color_classes( $attributes ) );
-
-		$classes = array_merge( $classes, novablocks_get_color_signal_classes( $attributes ) );
-		$className = join( ' ', $classes );
 
 		ob_start(); ?>
 
-		<div
-			class="<?php echo $className; ?>"
-			style="<?php echo $style; ?>"
-			<?php echo join( " ", $data_attributes ); ?>
-		>
-			<div class="wp-block-group__inner-container">
-				<?php echo novablocks_get_collection_header_output( $attributes ); ?>
-				<div class="novablocks-collection__cards wp-block alignwide">
-					<div class="novablocks-collection__layout">
-						<?php echo $content; ?>
-					</div>
+		<?php if ( $collection_header ) { ?>
+			<div class="<?php echo "align" . $attributes['align']; ?>">
+				<div class="nb-collection__inner-container">
+					<?php echo $collection_header ?>
+				</div>
+			</div>
+		<?php } ?>
+
+		<div class="<?php echo "align" . $attributes['align']; ?>">
+			<div class="nb-collection__inner-container">
+				<div class="<?php echo join( ' ', $layoutClasses ); ?>">
+					<?php echo $content; ?>
 				</div>
 			</div>
 		</div>
@@ -2175,41 +2165,6 @@ function nova_blocks_alter_wp_render_duotone_support( $block_content, $block ) {
 }
 
 add_filter( 'render_block', 'nova_blocks_alter_wp_render_duotone_support', 10, 2 );
-
-function novablocks_get_collection_markup( $attributes, $content ) {
-
-	if ( "content" === $attributes['sourceType'] ) {
-		$content = novablocks_get_posts_colleciton_cards_markup( $attributes );
-	}
-
-	$collection_header = novablocks_get_collection_header_output( $attributes );
-
-	$layoutClasses = array(
-		"nb-collection__layout",
-		"nb-collection__layout--" . $attributes['layoutStyle'],
-		"nb-collection__layout--" . $attributes['carouselLayout'] . "-width"
-	);
-
-	ob_start(); ?>
-
-	<?php if ( $collection_header ) { ?>
-		<div class="<?php echo "align" . $attributes['align']; ?>">
-			<div class="nb-collection__inner-container">
-				<?php echo $collection_header ?>
-			</div>
-		</div>
-	<?php } ?>
-
-	<div class="<?php echo "align" . $attributes['align']; ?>">
-		<div class="nb-collection__inner-container">
-			<div class="<?php echo join( ' ', $layoutClasses ); ?>">
-				<?php echo $content; ?>
-			</div>
-		</div>
-	</div>
-
-	<?php return ob_get_clean();
-}
 
 function novablocks_get_posts_colleciton_cards_markup( $attributes ) {
 	global $novablocks_rendered_posts_ids;

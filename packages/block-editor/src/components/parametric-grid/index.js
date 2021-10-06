@@ -1,6 +1,5 @@
 import {
   applyLayoutEngine,
-  getCardMediaPaddingTop,
   getGridStyle,
   getParametricLayoutAreaClassName,
   isLandscape,
@@ -13,31 +12,16 @@ const ParametricGrid = ( props ) => {
     attributes,
     getContent,
     cardsCount,
-    gridClassName,
+    className
   } = props;
-
-  const {
-    thumbnailAspectRatio,
-    imagePadding,
-    imageResizing,
-    contentPadding,
-  } = attributes;
 
   let areaColumns = applyLayoutEngine( attributes );
   let addedCards = 0;
 
   redistributeCardsInAreas( areaColumns, cardsCount, attributes );
 
-  const style = {
-    '--nb-card-media-padding': imagePadding,
-    '--nb-card-content-padding-multiplier': contentPadding / 100,
-    '--nb-card-media-padding-top': getCardMediaPaddingTop( thumbnailAspectRatio ),
-    '--nb-card-media-object-fit': imageResizing === 'cropped' ? 'cover' : 'scale-down',
-    ...getGridStyle( attributes ),
-  };
-
   return (
-    <div className={ gridClassName } style={ style }>
+    <div className={ className } style={ getGridStyle( attributes ) }>
       {
         !! areaColumns && areaColumns.map( areaColumn => {
           let { areas, row, col, width, height } = areaColumn;

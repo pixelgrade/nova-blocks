@@ -43,13 +43,11 @@ if ( ! function_exists( 'novablocks_render_supernova_block' ) ) {
 		$data_attributes_array = array_map( 'novablocks_camel_case_to_kebab_case', array_keys( $attributes ) );
 		$data_attributes       = novablocks_get_data_attributes( $data_attributes_array, $attributes );
 
-
-
 		$classes = array(
-			'supernova',
-			'supernova-source-type-' . $attributes['sourceType'],
 			'alignfull',
-			'supernova-card-layout--' . $attributes['cardLayout']
+			'supernova',
+			'supernova--source-type-' . $attributes['sourceType'],
+			'supernova--card-layout-' . $attributes['cardLayout']
 		);
 
 		if ( $attributes['columns'] === 1 ) {
@@ -77,11 +75,6 @@ if ( ! function_exists( 'novablocks_render_supernova_block' ) ) {
 				'--nb-collection-emphasis-area: ' . $attributes['emphasisArea'],
 
 				/*
-				 * Collection Layout
-				 */
-				'--nb-collection-columns-count: ' . $attributes['columns'],
-
-				/*
 				 * Overlay Filter
 				 */
 				'--nb-overlay-filter-strength: ' . $attributes['overlayFilterStrength'] / 100,
@@ -100,7 +93,8 @@ if ( ! function_exists( 'novablocks_render_supernova_block' ) ) {
 
 		$cssProps = array_merge(
 			$cssProps,
-			novablocks_get_spacing_and_sizing_css( $attributes )
+			novablocks_get_spacing_and_sizing_css( $attributes ),
+			novablocks_get_collection_layout_css( $attributes ),
 		);
 
 		ob_start(); ?>
@@ -110,7 +104,7 @@ if ( ! function_exists( 'novablocks_render_supernova_block' ) ) {
 			style="<?php echo join( ';', $cssProps ); ?>"
 			<?php echo join( " ", $data_attributes ); ?>
 		>
-			<?php echo novablocks_get_collection_markup( $attributes, $content ); ?>
+			<?php echo novablocks_get_collection_output( $attributes, $content ); ?>
 		</div>
 
 		<?php return ob_get_clean();

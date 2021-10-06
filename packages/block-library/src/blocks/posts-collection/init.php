@@ -70,7 +70,7 @@ if ( ! function_exists( 'novablocks_render_posts_collection_block' ) ) {
 			style="<?php echo join( '; ', $cssProps ) ?>"
 			<?php echo join( " ", $data_attributes ); ?>
 		>
-			<?php echo novablocks_get_collection_markup( $attributes, $content ); ?>
+			<?php echo novablocks_get_collection_output( $attributes, $content ); ?>
 		</div>
 
 		<?php return ob_get_clean();

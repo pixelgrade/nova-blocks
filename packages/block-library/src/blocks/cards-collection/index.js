@@ -14,6 +14,8 @@ import { getSvg } from "@novablocks/block-editor";
 import iconSvg from './cards-collection-block.svg';
 import edit from './edit';
 import transforms from './transforms';
+
+import attributes from "./attributes.json";
 import attributesOverwrite from "./attributes-overwrite.json";
 
 const BLOCK_NAME = 'novablocks/cards-collection';
@@ -32,12 +34,13 @@ const overwriteAttributes = ( settings ) => {
     }
   };
 }
-addFilter( 'blocks.registerBlockType', 'novablocks/media/cards-collection-overwrite', overwriteAttributes, 20 );
+addFilter( 'blocks.registerBlockType', 'novablocks/cards-collection-overwrite', overwriteAttributes, 20 );
 
 registerBlockType( BLOCK_NAME, {
 	title: __( 'Cards Collection (Deprecated)', '__plugin_txtd' ),
 	description: __( 'Display a list of related items placed within a coherent layout.', '__plugin_txtd' ),
 	category: 'nova-blocks',
+  attributes,
   icon: getSvg( iconSvg ),
 	keywords: [
 	  __( 'grid', '__plugin_txtd' ),

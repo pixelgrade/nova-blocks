@@ -1,4 +1,5 @@
 import classnames from "classnames";
+import { Fragment } from "@wordpress/element";
 import { CarouselLayout, ClassicLayout, ParametricLayout } from "../index";
 
 const CollectionLayout = ( props ) => {
@@ -15,11 +16,11 @@ const CollectionLayout = ( props ) => {
   const passedProps = Object.assign( {}, props, { className } );
 
   return (
-    <div className={ className }>
+    <Fragment>
       { layoutStyle === 'classic' && <ClassicLayout { ...passedProps } /> }
       { layoutStyle === 'carousel' && <CarouselLayout { ...passedProps } /> }
       { layoutStyle === 'parametric' && <ParametricLayout { ...passedProps } /> }
-    </div>
+    </Fragment>
   )
 }
 
