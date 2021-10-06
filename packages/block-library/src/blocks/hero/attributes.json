@@ -11,10 +11,6 @@
 		"type": "object",
 		"default": null
 	},
-	"minHeightFallback": {
-		"type": "number",
-		"default": 100
-	},
 	"scrollIndicator": {
 		"type": "boolean",
 		"source": "meta",

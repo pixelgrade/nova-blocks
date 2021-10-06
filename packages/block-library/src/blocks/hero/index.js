@@ -1,48 +1,31 @@
 /**
+ * WordPress dependencies
+ */
+import { __ } from "@wordpress/i18n";
+import { registerBlockType } from "@wordpress/blocks";
+import { select } from "@wordpress/data";
+import { addFilter } from "@wordpress/hooks";
+
+import { getSvg } from "@novablocks/block-editor";
+
+import {
+	generateDefaults,
+	insertTemplate,
+} from "@novablocks/block-editor";
+
+/**
  * Internal dependencies
  */
 import iconSvg from './hero-block.svg';
 import edit from './edit';
 import save from './save';
 import transforms from './transforms';
-
-import { getRandomBetween } from "@novablocks/utils";
-import { getSvg } from "@novablocks/block-editor";
-
-import attributes from './attributes.json';
-
-import {
-	generateDefaults,
-	getPlaceholderImages,
-	insertTemplate,
-} from "@novablocks/block-editor";
+import attributes from "./attributes.json";
 
 // Load deprecated file
 import './deprecated';
 
-/**
- * WordPress dependencies
- */
-import { __ } from '@wordpress/i18n';
-import { registerBlockType } from '@wordpress/blocks';
-import { select } from '@wordpress/data';
-
-async function getNewDefaults() {
-	const placeholderImages = await getPlaceholderImages();
-	const index = getRandomBetween( 0, placeholderImages.length - 1 );
-	const image = placeholderImages[index];
-
-	if ( typeof image?.download === "function" ) {
-		image.download();
-	}
-
-	return {
-		media: {
-			...image,
-			type: 'image',
-		},
-	};
-}
+import getNewDefaults from './get-new-defaults';
 
 const settings = select( 'novablocks' ).getSettings();
 
@@ -76,6 +59,8 @@ registerBlockType( 'novablocks/hero', {
         controls: true,
       },
       contentPosition: {
+        attributes: true,
+        controls: true,
         deprecated: true
       },
       customDefaults: true,
