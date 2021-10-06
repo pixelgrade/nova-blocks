@@ -77,6 +77,7 @@ registerBlockType( 'novablocks/slideshow', {
         controls: true,
       },
       contentPosition: {
+        attributes: true,
         deprecated: true,
       },
       customDefaults: true,
