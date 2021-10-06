@@ -191,18 +191,20 @@
 .supernova {
   
   &:not(.supernova-layout-one-column) {
-  
-    .supernova__layout--carousel {
-      margin-left: calc(-0.5 * var(--nb-grid-spacing));
-      margin-right: calc(-0.5 * var(--nb-grid-spacing));
-    }
-  
-    .slick-slide {
     
-      > div {
-        margin-left: calc(0.5 * var(--nb-grid-spacing));
-        margin-right: calc(0.5 * var(--nb-grid-spacing));
-      }
+    .slick-track {
+      gap: var(--nb-grid-spacing);
+    }
+  }
+  
+  &:not(.block-is-full) {
+  
+    .slick-prev {
+      left: calc(-1.5 * var(--nb-container-spacings));
+    }
+    
+    .slick-next {
+      right: calc(-1.5 * var(--nb-container-spacings));
     }
   }
 }

@@ -59,6 +59,8 @@
 
 .supernova-header__inner-container {
   
+  position: relative;
+  
   > * {
     --nb-element-spacing-multiplier: 0.5;
   }
