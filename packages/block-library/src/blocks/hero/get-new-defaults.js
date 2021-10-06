@@ -12,6 +12,7 @@ async function getNewDefaults() {
 
   return {
     minHeightFallback: 100,
+    overlayFilterStrength: 75,
     media: {
       ...image,
       type: 'image',
