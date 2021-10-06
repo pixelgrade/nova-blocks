@@ -37,7 +37,7 @@ export const getMeta = ( props ) => {
     combinedMeta = (
       <Fragment>
         <span className={'novablocks-card__meta--primary'}>{ primaryMeta }</span>
-        <RawHTML style={ { display: 'inline' } }>{ ' &mdash; ' }</RawHTML>
+        <span className={'novablocks-card__meta-separator'}></span>
         <span className={'novablocks-card__meta--secondary'}>{ secondaryMeta }</span>
       </Fragment>
     );

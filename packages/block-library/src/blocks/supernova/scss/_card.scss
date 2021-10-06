@@ -243,3 +243,24 @@
   position: relative;
   z-index: 1;
 }
+
+.novablocks-card__meta-separator {
+  
+  display: inline-block;
+  vertical-align: middle;
+ 
+  width: 2em;
+  
+  margin-left: 0.25em;
+  margin-right: 0.25em;
+  
+  box-sizing: content-box;
+  
+  &:after {
+    content: "";
+    display: block;
+    width: 100%;
+    height: 0.075em;
+    background: currentColor;
+  }
+}

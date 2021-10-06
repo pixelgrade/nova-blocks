@@ -1025,7 +1025,7 @@ function novablocks_get_media_composition_markup_component_attributes() {
 		'packages/shape-modeling/src/attributes.json',
 		'packages/media-composition/src/attributes.json'
 	) );
-	
+
 }
 
 function novablocks_render_media_composition( $attributes ) {
@@ -1359,11 +1359,18 @@ function novablocks_get_supernova_card_media_markup( $media ) {
 function novablocks_get_card_post_meta( $post, $attributes ) {
 	$primaryMeta = '<span class="novablocks-card__meta--primary">' . novablocks_get_meta( $post, $attributes[ 'primaryMetadata' ] ) . '</span>';
 	$secondaryMeta = '<span class="novablocks-card__meta--secondary">' . novablocks_get_meta( $post, $attributes[ 'secondaryMetadata' ] ) . '</span>';
+	$metaSeparator = '<span class="novablocks-card__meta-separator"></span>';
+	$secondaryMetaIsOutput = $attributes['secondaryMetadata'] !== 'none';
 	$aboveTitleMeta = '';
 	$belowTitleMeta = '';
 
 	if ( ! empty( $primaryMeta ) && ! empty( $secondaryMeta ) ) {
-		$combinedMeta = $primaryMeta . ' &mdash; ' . $secondaryMeta;
+		$combinedMeta = $primaryMeta;
+
+		if ( $secondaryMetaIsOutput ) {
+			$combinedMeta .= $metaSeparator . $secondaryMeta;
+		}
+
 	} else {
 		$combinedMeta = empty( $primaryMeta ) ? $secondaryMeta : $primaryMeta;
 	}
@@ -1513,11 +1520,11 @@ add_filter( 'image_size_names_choose', 'novablocks_custom_image_sizes' );
 
 function novablocks_custom_image_sizes( $sizes ) {
 	return array_merge( $sizes, array(
-			'novablocks_huge'   => esc_html__( 'Nova Blocks Huge', '__plugin_txtd' ),
-			'novablocks_large'  => esc_html__( 'Nova Blocks Large', '__plugin_txtd' ),
-			'novablocks_medium' => esc_html__( 'Nova Blocks Medium', '__plugin_txtd' ),
-			'novablocks_small'  => esc_html__( 'Nova Blocks Small', '__plugin_txtd' ),
-			'novablocks_tiny'   => esc_html__( 'Nova Blocks Tiny', '__plugin_txtd' ),
+		'novablocks_huge'   => esc_html__( 'Nova Blocks Huge', '__plugin_txtd' ),
+		'novablocks_large'  => esc_html__( 'Nova Blocks Large', '__plugin_txtd' ),
+		'novablocks_medium' => esc_html__( 'Nova Blocks Medium', '__plugin_txtd' ),
+		'novablocks_small'  => esc_html__( 'Nova Blocks Small', '__plugin_txtd' ),
+		'novablocks_tiny'   => esc_html__( 'Nova Blocks Tiny', '__plugin_txtd' ),
 	) );
 }
 
@@ -1634,9 +1641,9 @@ function novablocks_optimize_frontend_scripts_output() {
 	// We let them be so we can have a consistent dependency generation logic.
 	// But we don't want them in the frontend since it would be wasteful.
 	$scripts_to_remove = array(
-			'novablocks/media/frontend',
-			'novablocks/media-composition/frontend',
-			'novablocks/posts-collection/frontend',
+		'novablocks/media/frontend',
+		'novablocks/media-composition/frontend',
+		'novablocks/posts-collection/frontend',
 	);
 
 	foreach ( $scripts_to_remove as $handle ) {
@@ -1993,12 +2000,12 @@ function novablocks_get_card_item_buttons( $buttons, $attributes ) {
 
 function novablocks_get_card_item_link( $url, $attributes ) {
 
-	ob_start(); 
-	
+	ob_start();
+
 	if ($attributes['sourceType'] === 'content') {?>
 		<a href="<?php echo $url ?>" class="supernova-item__link"></a>
-	<?php } 
-		
+	<?php }
+
 	return ob_get_clean();
 
 }
