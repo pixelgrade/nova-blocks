@@ -1,9 +1,12 @@
 /*
- * Supernova is a spacial block, so
+ * Supernova is a special block, so
  * it's alignment need some adjustments.
  */
 
 .supernova {
+  
+  --wide-content-width: calc(100% - var(--full) * 2 + var(--nb-wrapper-sides-spacing) * 2);
+  --regular-content-width: calc(var(--wide-content-width) - var(--wds)*2 - var(--wde)*2 - var(--grid-gap) * 2);
   
   > .alignfull[class] {
     margin-left: 0;
@@ -93,3 +96,49 @@
     }
   }
 }
+
+/*
+ * To avoid using grid inside Supernova,
+ * we are going to use classic alignment
+ * styling for blocks.
+ *
+ * .block { max-width: var(--block-width); margin-left: auto; margin-right: auto; }
+ 
+ * Stacked cards are different types of cards,
+ * and they can hold content in a similar way of groups.
+ * That means, inside stacked card, block alignments
+ * should work similar to the rest of the site.
+ */
+.supernova-card-layout--stacked {
+  
+  &.supernova-layout-one-column {
+    
+    .supernova-item__inner-container {
+      
+      > * {
+        max-width: var(--block-width);
+        margin-left: auto;
+        margin-right: auto;
+      }
+    
+      > :not([class*='align']) {
+        --block-width: var(--regular-content-width);
+      }
+      
+      > .alignwide {
+        --block-width: var(--wide-content-width);
+      }
+      
+      /*
+       * When block is full, we want to 'cancel'
+       * the padding applied by parent.
+       */
+      > .alignfull {
+        margin-left: calc(-1 * var(--nb-card-content-padding, 0));
+        margin-right: calc(-1 * var(--nb-card-content-padding, 0));
+      }
+    }
+  }
+}
+
+

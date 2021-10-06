@@ -76,7 +76,7 @@ registerBlockType( 'novablocks/slideshow', {
         attributes: true,
         controls: true,
       },
-      contentPositionMatrixToolbar: {
+      contentPosition: {
         deprecated: true,
       },
       customDefaults: true,

@@ -70,6 +70,9 @@ registerBlockType( 'novablocks/supernova-item', {
       colorSignal: {
         attributes: true,
       },
+      contentPosition: {
+        attributes: true,
+      },
       elementsVisibility: {
         attributes: true,
       },

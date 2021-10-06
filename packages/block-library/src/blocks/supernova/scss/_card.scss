@@ -82,10 +82,10 @@
     grid-area: 1 / 1 / span 1 / span 1;
   }
 
-  .supernova-item__inner-container {
-    margin-left: auto;
-    margin-right: auto;
-  }
+  //.supernova-item__inner-container {
+  //  margin-left: auto;
+  //  margin-right: auto;
+  //}
 
   &.supernova-item--style-basic .supernova-item__inner-container {
     background: none;
@@ -243,4 +243,25 @@
 .nb-grid__item-buttons {
   position: relative;
   z-index: 1;
+}
+
+.novablocks-card__meta-separator {
+  
+  display: inline-block;
+  vertical-align: middle;
+ 
+  width: 2em;
+  
+  margin-left: 0.25em;
+  margin-right: 0.25em;
+  
+  box-sizing: content-box;
+  
+  &:after {
+    content: "";
+    display: block;
+    width: 100%;
+    height: 0.075em;
+    background: currentColor;
+  }
 }

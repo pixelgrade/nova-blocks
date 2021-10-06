@@ -23,7 +23,7 @@ const CardSpacingCustomize = ( props ) => {
   } = attributes;
 
   const supports = useSupports( props.name );
-  const showVerticalAlignment = supports?.novaBlocks?.contentPositionMatrixToolbar;
+  const showVerticalAlignment = supports?.novaBlocks?.contentPosition;
 
   return (
     <ControlsGroup title={ __( 'Emphasis by Space' ) } key={ 'space-and-sizing-customize-1' }>

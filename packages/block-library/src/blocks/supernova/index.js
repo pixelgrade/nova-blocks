@@ -53,7 +53,10 @@ registerBlockType( 'novablocks/supernova', {
         controls: true,
       },
       colorSignal: true,
-      contentPositionMatrixToolbar: true,
+      contentPosition: {
+        attributes: true,
+        controls: true
+      },
       elementsVisibility: true,
       latestPosts: true,
       mediaComposition: {
