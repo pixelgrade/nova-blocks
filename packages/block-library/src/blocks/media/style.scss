@@ -1,5 +1,7 @@
 .novablocks-media {
   background: none !important;
+
+  --nb-card-media-padding: calc( var(--nb-spacing) * var(--nb-element-spacing-multiplier, 1) * ( 2 * var(--nb-card-media-padding-multiplier, 0) ) );
   --nb-card-content-padding: calc( var(--nb-spacing) * var(--nb-element-spacing-multiplier, 1) * ( 2 * var(--nb-card-content-padding-multiplier, 0) ) );
   --nb-layout-gap: calc( var(--nb-collection-gutter) * 0.02 * var(--nb-media-spacing) );
 
@@ -127,6 +129,33 @@
 	&.has-image-on-the-left {
 		--nb-media-background-direction: -90deg;
 	}
+}
+
+.novablocks-media__media-wrapper {
+  padding: var(--nb-card-media-padding, 0);
+}
+
+.novablocks-media__media-wrapper,
+.novablocks-media__media-aspect-ratio {
+  height: 100%;
+}
+
+.novablocks-media__media-aspect-ratio {
+  position: relative;
+
+  &:before {
+    content: "";
+    padding-top: var(--nb-card-media-padding-top, 100%);
+    display: block;
+  }
+
+  > * {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+  }
 }
 
 // Transition between different alignment states

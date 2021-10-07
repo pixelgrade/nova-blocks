@@ -3,35 +3,22 @@
  */
 import classnames from 'classnames';
 
-import { MediaCompositionPreview } from '@novablocks/media-composition';
-
-import {
-  getAlignmentClassnames,
-  getColorSignalClassnames,
-} from '@novablocks/utils';
-
-import {
-  getContentVariationBySignal
-} from '@novablocks/color-signal';
-
 import { InnerBlocks } from '@wordpress/block-editor';
 
-const MediaPreview = function( props ) {
+import { MediaCompositionPreview } from '@novablocks/media-composition';
+import { getColorSignalClassnames } from '@novablocks/utils';
+import { getContentVariationBySignal } from '@novablocks/color-signal';
+
+const MediaPreview = ( props ) => {
 
   const {
     attributes,
     settings,
-    style,
   } = props;
 
 	const {
-    className,
     contentStyle,
-
-    mediaPosition,
     images,
-
-    verticalAlignment,
 
     palette,
     useSourceColorAsReference,
@@ -79,7 +66,11 @@ const MediaPreview = function( props ) {
               </div>
             </div>
             <div className="novablocks-media__aside">
-              <MediaCompositionPreview { ...passedProps } />
+              <div className="novablocks-media__media-wrapper">
+                <div className="novablocks-media__media-aspect-ratio">
+                  <MediaCompositionPreview { ...passedProps } />
+                </div>
+              </div>
             </div>
           </div>
         </div>

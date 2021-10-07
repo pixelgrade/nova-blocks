@@ -1197,17 +1197,28 @@ function novablocks_get_color_classes( $attributes ) {
 	return $classes;
 }
 
-function novablocks_get_spacing_and_sizing_css( $attributes ) {
+function novablocks_get_spacing_and_sizing_css( $attributes, $advanced = false ) {
+
+	$spacing_props = novablocks_get_spacing_css( $attributes );
+
+	if ( $advanced ) {
+		$spacing_props = novablocks_get_spacing_advanced_css( $attributes );
+	}
+
 	return array_merge(
-		novablocks_get_spacing_css( $attributes ),
-		array(
-			'--nb-collection-gutter: ' . $attributes['layoutGutter'],
-			'--nb-grid-spacing-modifier: ' . $attributes[ 'gridGap' ],
-			'--nb-card-content-padding-multiplier: ' . $attributes[ 'contentPadding' ] / 100,
-			'--nb-card-media-padding-multiplier: ' . $attributes[ 'imagePadding' ] / 100,
-			'--nb-card-media-padding-top: ' . novablocks_get_card_media_padding_top( $attributes['thumbnailAspectRatio'] ) . '%',
-			'--nb-card-media-object-fit: ' . ( $attributes['imageResizing'] === 'cropped' ? 'cover' : 'scale-down' ),
-		)
+		$spacing_props,
+		novablocks_get_sizing_css( $attributes ),
+	);
+}
+
+function novablocks_get_sizing_css( $attributes ) {
+	return array(
+		'--nb-collection-gutter: ' . $attributes['layoutGutter'],
+		'--nb-grid-spacing-modifier: ' . $attributes[ 'gridGap' ],
+		'--nb-card-content-padding-multiplier: ' . $attributes[ 'contentPadding' ] / 100,
+		'--nb-card-media-padding-multiplier: ' . $attributes[ 'imagePadding' ] / 100,
+		'--nb-card-media-padding-top: ' . novablocks_get_card_media_padding_top( $attributes['thumbnailAspectRatio'] ) . '%',
+		'--nb-card-media-object-fit: ' . ( $attributes['imageResizing'] === 'cropped' ? 'cover' : 'scale-down' ),
 	);
 }
 
@@ -1220,29 +1231,26 @@ function novablocks_get_collection_layout_css( $attributes ) {
 
 function novablocks_get_spacing_css( $attributes ) {
 
-	if ( ! isset( $attributes['blockTopSpacing'] ) ) {
-		$blockTopSpacing = 0;
-	} else {
-		$blockTopSpacing = $attributes['blockTopSpacing'];
-	}
+	$blockTopSpacing = $attributes['blockTopSpacing'];
+	$blockBottomSpacing = $attributes['blockBottomSpacing'];
+	$emphasisTopSpacing = $attributes['emphasisTopSpacing'];
+	$emphasisBottomSpacing = $attributes['emphasisBottomSpacing'];
 
-	if ( ! isset( $attributes['blockBottomSpacing'] ) ) {
-		$blockBottomSpacing = 0;
-	} else {
-		$blockBottomSpacing = $attributes['blockBottomSpacing'];
-	}
+	return array(
+		'--nb-block-top-spacing: ' . $blockTopSpacing,
+		'--nb-block-bottom-spacing: ' . $blockBottomSpacing,
+		'--nb-emphasis-top-spacing: ' . $emphasisTopSpacing,
+		'--nb-emphasis-bottom-spacing: ' . $emphasisBottomSpacing,
+	);
+}
 
-	if ( ! isset( $attributes['emphasisTopSpacing'] ) ) {
-		$emphasisTopSpacing = 1;
-	} else {
-		$emphasisTopSpacing = $attributes['emphasisTopSpacing'];
-	}
+function novablocks_get_spacing_advanced_css( $attributes ) {
+	$verticalAlignment = isset( $attributes['verticalAlignment'] ) ? $attributes['verticalAlignment'] : 'center';
 
-	if ( ! isset( $attributes['emphasisBottomSpacing'] ) ) {
-		$emphasisBottomSpacing = 1;
-	} else {
-		$emphasisBottomSpacing = $attributes['emphasisBottomSpacing'];
-	}
+	$blockTopSpacing = $attributes['blockTopSpacing'];
+	$blockBottomSpacing = $attributes['blockBottomSpacing'];
+	$emphasisTopSpacing = $verticalAlignment === 'top' ? abs( $attributes['emphasisTopSpacing'] ) : $attributes['emphasisTopSpacing'];
+	$emphasisBottomSpacing = $verticalAlignment === 'bottom' ? abs( $attributes['emphasisBottomSpacing'] ) : $attributes['emphasisBottomSpacing'];
 
 	return array(
 		'--nb-block-top-spacing: ' . $blockTopSpacing,

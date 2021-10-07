@@ -24,7 +24,6 @@ const withSpaceAndSizingEditCustomProps = createHigherOrderComponent( OriginalCo
 
       let spaceAndSizingProps = {
         ...getSpacingCSSProps( attributes ),
-        '--nb-card-media-padding': imagePadding,
         '--nb-card-media-padding-top': getCardMediaPaddingTop( thumbnailAspectRatio ),
         '--nb-card-media-object-fit': imageResizing === 'cropped' ? 'cover' : 'scale-down',
 
