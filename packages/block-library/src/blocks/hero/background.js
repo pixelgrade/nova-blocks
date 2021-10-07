@@ -5,28 +5,16 @@ const HeroBackground = function( props ) {
 
 	const {
 		attributes: {
-			overlayFilterStyle,
-			overlayFilterStrength,
 			media,
 		}
 	} = props;
 
-	const styles = {
-		opacity: 1,
-	};
-
-  Object.assign( styles, props?.doppler?.style );
-
-  if ( overlayFilterStyle !== 'none' ) {
-		styles.opacity = 1 - ( overlayFilterStrength / 100 );
-	}
-
 	return (
     <div className="novablocks-hero__background">
       { !! media && media.type === 'image' && typeof media.sizes !== 'undefined' &&
-        <img className="novablocks-hero__media" src={ media.sizes.full.url } alt={ media.alt } style={ styles } /> }
+        <img className="novablocks-hero__media" src={ media.sizes.full.url } alt={ media.alt } style={ props?.doppler?.style } /> }
       { !! media && media.type === 'video' &&
-        <video muted autoPlay loop playsInline className="novablocks-hero__media" style={ styles } src={ media.url } /> }
+        <video muted autoPlay loop playsInline className="novablocks-hero__media" style={ props?.doppler?.style } src={ media.url } /> }
     </div>
 	);
 };

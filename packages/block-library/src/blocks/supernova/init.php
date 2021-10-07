@@ -74,11 +74,6 @@ if ( ! function_exists( 'novablocks_render_supernova_block' ) ) {
 				'--nb-emphasis-area: ' . $attributes['emphasisArea'],
 
 				/*
-				 * Overlay Filter
-				 */
-				'--nb-overlay-filter-strength: ' . $attributes['overlayFilterStrength'] / 100,
-
-				/*
 				 * Media Composition
 				 */
 				'--nb-advanced-gallery-grid-gap: ' . $attributes['elementsDistance'] . 'px',
@@ -92,6 +87,7 @@ if ( ! function_exists( 'novablocks_render_supernova_block' ) ) {
 
 		$cssProps = array_merge(
 			$cssProps,
+			novablocks_get_overlay_filter_css( $attributes ),
 			novablocks_get_spacing_and_sizing_css( $attributes ),
 			novablocks_get_collection_layout_css( $attributes ),
 		);

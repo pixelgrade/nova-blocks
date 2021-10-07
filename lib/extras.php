@@ -1211,6 +1211,12 @@ function novablocks_get_spacing_and_sizing_css( $attributes, $advanced = false )
 	);
 }
 
+function novablocks_get_overlay_filter_css( $attributes ) {
+	return array(
+		'--nb-overlay-filter-strength: ' . $attributes['overlayFilterStrength'] / 100,
+	);
+}
+
 function novablocks_get_sizing_css( $attributes ) {
 	return array(
 		'--nb-collection-gutter: ' . $attributes['layoutGutter'],

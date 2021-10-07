@@ -72,43 +72,17 @@ if ( ! function_exists( 'novablocks_render_hero_block' ) ) {
 		);
 		$media = wp_parse_args( $media, $media_args );
 
-		$spacingProps = novablocks_get_spacing_css( $attributes );
-		$heroStyle = join( '; ', $spacingProps );
-		$heroStyle .= '; --nb-hero-text-color: ' . $attributes['contentColor'] . ';';
+		$css_props = array_merge(
+			novablocks_get_overlay_filter_css( $attributes ),
+			novablocks_get_spacing_and_sizing_css( $attributes ),
+		);
 
-		$foregroundStyle = '';
 		$mediaStyle = novablocks_get_focal_point_style( $attributes['focalPoint'] );
 
-		$contentStyle = '';
-		if ( ! empty( $attributes['contentWidth'] ) && $attributes['contentWidth'] === 'custom' ) {
-			$contentStyle .= '--nb-content-width: ' . floatval( $attributes['contentWidthCustom'] ) . '%;';
-		}
-		if ( ! empty( $attributes['contentPadding'] ) && $attributes['contentPadding'] === 'custom' ) {
-			$contentStyle .= '--nb-content-padding: ' . floatval( $attributes['contentPaddingCustom'] ) . '%;';
-		}
-
-		if ( ! empty( $attributes['contentColor'] ) && $attributes['contentColor'] !== '#FFF' ) {
-			$contentStyle .= '--theme-dark-primary: #FFF';
-		}
-
-		$minHeight = isset( $attributes['minHeightFallback'] ) ? floatval( $attributes['minHeightFallback'] ) : 75;
-		$heroHeight = $foregroundHeight = $minHeight;
-
-		if ( 'doppler' === $attributes['scrollingEffect'] ) {
-			$heroHeight = 2 * $minHeight;
-			$foregroundHeight = 100;
-		}
-
-		$heroStyle .= 'min-height: calc(' . $heroHeight . '* var(--nb-1vh, 1vh)); ';
-		$foregroundStyle .= 'min-height: calc(' . $foregroundHeight . ' * var(--nb-1vh, 1vh)); ';
-
-		if ( ! empty( $attributes['overlayFilterStyle'] ) && $attributes['overlayFilterStyle'] !== 'none' ) {
-			$mediaStyle .= 'opacity: ' . ( 1 - floatval( $attributes['overlayFilterStrength'] ) / 100 ) . '; ';
-		}
-
 		$scrollIndicator = ! empty( $attributes['scrollIndicatorBlock'] );
+		$scrollIndicatorClasses = array(  );
 
-		$scrollIndicatorClasses = array( 'novablocks-hero__indicator' );
+		$heroHeight = $attributes[ 'scrollingEffect' ] === 'doppler' ? $attributes[ 'minHeightFallback' ] : $attributes[ 'minHeightFallback' ] * 2;
 
 		if ( $heroHeight > 100 ) {
 			$scrollIndicatorClasses[] = 'novablocks-hero__indicator--middle';
@@ -127,7 +101,7 @@ if ( ! function_exists( 'novablocks_render_hero_block' ) ) {
 
 		<div <?php echo $id; ?>
 			class="<?php echo esc_attr( join( ' ', $classes ) ); ?>"
-			style="<?php echo esc_attr( $heroStyle ); ?>"
+			style="<?php echo esc_attr( join( '; ', $css_props ) ); ?>"
 			<?php echo join( " ", $data_attributes ); ?>
 		>
 
