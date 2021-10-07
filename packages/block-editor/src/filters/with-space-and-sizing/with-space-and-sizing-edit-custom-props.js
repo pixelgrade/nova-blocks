@@ -31,7 +31,7 @@ const withSpaceAndSizingEditCustomProps = createHigherOrderComponent( OriginalCo
 
         '--nb-card-content-padding-multiplier': contentPadding / 100,
         '--nb-card-media-padding-multiplier': imagePadding / 100,
-        '--nb-supernova-minimum-height': minHeightFallback + 'vh'
+        '--nb-minimum-container-height': minHeightFallback + 'vh'
       }
 
       Object.assign( style, spaceAndSizingProps);

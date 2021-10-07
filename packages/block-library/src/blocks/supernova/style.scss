@@ -34,7 +34,7 @@
   &.supernova--has-minimum-height {
     
     .supernova-item__media-aspect-ratio {
-      --nb-card-media-padding-top: var(--nb-supernova-minimum-height);
+      --nb-card-media-padding-top: var(--nb-minimum-container-height);
     }
   }
 
