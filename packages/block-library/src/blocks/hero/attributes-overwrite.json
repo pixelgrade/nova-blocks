@@ -1,0 +1,6 @@
+{
+	"minHeightFallback": {
+		"type": "number",
+		"default": 100
+	}
+}

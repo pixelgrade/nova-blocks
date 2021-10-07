@@ -21,18 +21,35 @@ import edit from './edit';
 import save from './save';
 import transforms from './transforms';
 import attributes from "./attributes.json";
+import attributesOverwrite from "./attributes-overwrite.json";
+import getNewDefaults from './get-new-defaults';
 
 // Load deprecated file
 import './deprecated';
 
-import getNewDefaults from './get-new-defaults';
-
 const settings = select( 'novablocks' ).getSettings();
+const BLOCK_NAME = 'novablocks/hero';
 
-generateDefaults( 'novablocks/hero', getNewDefaults );
-insertTemplate( 'novablocks/hero', settings.hero.template );
+generateDefaults( BLOCK_NAME, getNewDefaults );
+insertTemplate( BLOCK_NAME, settings.hero.template );
 
-registerBlockType( 'novablocks/hero', {
+const overwriteAttributes = ( settings ) => {
+
+  if ( settings.name !== BLOCK_NAME ) {
+    return settings;
+  }
+
+  return {
+    ...settings,
+    attributes: {
+      ...settings.attributes,
+      ...attributesOverwrite
+    }
+  };
+}
+addFilter( 'blocks.registerBlockType', 'novablocks/hero/attributes-overwrite', overwriteAttributes, 20 );
+
+registerBlockType( BLOCK_NAME, {
 	title: __( 'Hero of the Galaxy (Deprecated)', '__plugin_txtd' ),
 	description: __( 'A great way to get your visitors acquainted with your content.', '__plugin_txtd' ),
 	category: 'nova-blocks',
