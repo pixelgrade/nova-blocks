@@ -90,8 +90,8 @@ if ( ! function_exists( 'novablocks_render_media_block' ) ) {
 			'--nb-emphasis-top-spacing:' . $emphasisTopSpacing . ';' .
 			'--nb-emphasis-bottom-spacing:' . $emphasisBottomSpacing . ';' .
 			'--nb-emphasis-area:' . $attributes['emphasisArea'] . ';' .
-			'--nb-media-content-width:' . $attributes['contentAreaWidth'] . '%;' .
-			'--nb-media-layout-gutter:' . $attributes['layoutGutter'] . ';' .
+			'--nb-card-content-area-width:' . $attributes['contentAreaWidth'] . '%;' .
+			'--nb-collection-gutter:' . $attributes['layoutGutter'] . ';' .
 			'--nb-card-content-padding-multiplier: ' . $attributes[ 'contentPadding' ] / 100 . ';';
 
 		$contentClasses = array(

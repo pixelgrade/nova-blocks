@@ -21,6 +21,7 @@ const MediaPreview = function( props ) {
   const {
     attributes,
     settings,
+    style,
   } = props;
 
 	const {
@@ -30,26 +31,11 @@ const MediaPreview = function( props ) {
     mediaPosition,
     images,
 
-    // alignment
     verticalAlignment,
-    emphasisArea,
-
-    contentAreaWidth,
-    layoutGutter,
 
     palette,
     useSourceColorAsReference,
-
-    contentPadding,
 	} = attributes;
-
-	const classNames = classnames(
-		className,
-		`novablocks-media`,
-		`has-image-on-the-${ mediaPosition }`,
-		`novablocks-u-valign-${ verticalAlignment }`,
-    getAlignmentClassnames( attributes )
-	);
 
 	const passedProps = props;
 
@@ -57,12 +43,12 @@ const MediaPreview = function( props ) {
 		passedProps.attributes.images = images.map( image => JSON.parse( image ) );
 	}
 
-	const cssVars = {
-		'--nb-emphasis-area': emphasisArea,
-    '--nb-card-content-padding-multiplier': contentPadding / 100,
-		'--nb-media-content-width': `${ contentAreaWidth }%`,
-		'--nb-media-layout-gutter': layoutGutter,
-	};
+//	const cssVars = {
+//		'--nb-emphasis-area': emphasisArea,
+//    '--nb-card-content-padding-multiplier': contentPadding / 100,
+//		'--nb-media-content-width': `${ contentAreaWidth }%`,
+//		'--nb-media-layout-gutter': layoutGutter,
+//	};
 
 	const blockClassNames = classnames(
 		`novablocks-block`,
@@ -83,24 +69,22 @@ const MediaPreview = function( props ) {
   );
 
   return (
-		<div className={ classNames } style={ cssVars }>
-			<div className={ blockClassNames }>
-				<div className="wp-block-group__inner-container">
-					<div className="wp-block" data-align="wide">
-						<div className="novablocks-media__layout">
-							<div className="novablocks-media__content">
-								<div className={ contentClassNames }>
-									<InnerBlocks allowedBlocks={ settings.media.allowedBlocks } />
-								</div>
-							</div>
-							<div className="novablocks-media__aside">
-								<MediaCompositionPreview { ...passedProps } />
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
+    <div className={ blockClassNames }>
+      <div className="wp-block-group__inner-container">
+        <div className="wp-block" data-align="wide">
+          <div className="novablocks-media__layout">
+            <div className="novablocks-media__content">
+              <div className={ contentClassNames }>
+                <InnerBlocks allowedBlocks={ settings.media.allowedBlocks } />
+              </div>
+            </div>
+            <div className="novablocks-media__aside">
+              <MediaCompositionPreview { ...passedProps } />
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
 	);
 };
 

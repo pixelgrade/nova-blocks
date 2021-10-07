@@ -1,6 +1,7 @@
 .novablocks-media {
+  background: none !important;
   --nb-card-content-padding: calc( var(--nb-spacing) * var(--nb-element-spacing-multiplier, 1) * ( 2 * var(--nb-card-content-padding-multiplier, 0) ) );
-  --nb-layout-gap: calc( var(--nb-media-layout-gutter) * 0.02 * var(--nb-media-spacing) );
+  --nb-layout-gap: calc( var(--nb-collection-gutter) * 0.02 * var(--nb-media-spacing) );
 
   margin-left: auto;
 	margin-right: auto;
@@ -43,11 +44,11 @@
 		align-items: stretch;
 
 		.novablocks-media__aside {
-			flex: 1 1 calc( 100% - var(--nb-media-content-width, 50%) );
+			flex: 1 1 calc( 100% - var(--nb-card-content-area-width, 50%) );
 		}
 
 		.novablocks-media__content {
-			flex: 1 1 var(--nb-media-content-width, 50%);
+			flex: 1 1 var(--nb-card-content-area-width, 50%);
 		}
 	}
 }

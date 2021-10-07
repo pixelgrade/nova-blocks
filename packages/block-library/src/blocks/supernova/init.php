@@ -71,7 +71,7 @@ if ( ! function_exists( 'novablocks_render_supernova_block' ) ) {
 				/*
 				 * Color Signal
 				 */
-				'--nb-collection-emphasis-area: ' . $attributes['emphasisArea'],
+				'--nb-emphasis-area: ' . $attributes['emphasisArea'],
 
 				/*
 				 * Overlay Filter

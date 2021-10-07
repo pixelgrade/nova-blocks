@@ -8,7 +8,7 @@
   @include layout-grid;
   grid-column: var(--all-columns);
 
-  --emphasis-area-width: calc( var(--nb-collection-emphasis-area, 100) * 1% );
+  --emphasis-area-width: calc( var(--nb-emphasis-area, 100) * 1% );
   background: none !important;
 
   &:before {
