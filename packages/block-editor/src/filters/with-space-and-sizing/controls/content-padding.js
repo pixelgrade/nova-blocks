@@ -1,7 +1,10 @@
 import { RangeControl } from "@wordpress/components";
 import { __ } from '@wordpress/i18n';
 
-import { ControlsGroup } from "../../../components";
+import {
+  ControlsGroup,
+  withVisibility
+} from "../../../components";
 
 const ContentPadding = props => {
 
@@ -27,4 +30,4 @@ const ContentPadding = props => {
   )
 }
 
-export default ContentPadding;
+export default withVisibility( 'content-padding' )( ContentPadding );

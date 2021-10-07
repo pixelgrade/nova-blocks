@@ -34,8 +34,17 @@
 	@include image-cover;
 }
 
-.novablocks-hero__inner-container[class] {
-  
+.novablocks-hero {
+  padding-top: 0;
+  padding-bottom: 0;
+
+  --nb-hero-bottom-spacing: var(--nb-emphasis-bottom-spacing);
+  --nb-hero-top-spacing: var(--nb-emphasis-top-spacing);
+}
+
+.novablocks-hero__inner-container[class][class] {
+  padding-top: calc(var(--nb-hero-top-spacing) * var(--nb-spacing) * var(--nb-element-spacing-multiplier));
+  padding-bottom: calc(var(--nb-hero-bottom-spacing) * var(--nb-spacing) * var(--nb-element-spacing-multiplier));
   max-width: none;
   
   > .wp-block-group {
@@ -72,11 +81,8 @@
         --block-content-start: cs;
         --block-content-end: ce;
       }
-      
     }
-    
   }
-  
 }
 
 .novablocks-hero__indicator {

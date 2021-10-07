@@ -6,32 +6,22 @@
 		var(--nb-transition-easing);
 }
 
-
-[data-type="novablocks/hero"] {
-
-  &[data-type] {
-    margin-top: 0;
-    margin-bottom: 0;
-    padding-top: 0;
-    padding-bottom: 0;
-  }
+.novablocks-hero__foreground {
+  width: 100%;
 }
 
-.novablocks-hero {
-  
-  &__inner-container {
+.novablocks-hero__inner-container {
     
-    [data-align="full"] {
-      margin-left: calc(-1 * var(--nb-container-spacings));
-      margin-right: calc(-1 * var(--nb-container-spacings));
-    }
-  
-    > *:not([data-align]) {
-      --block-content-start: cs;
-      --block-content-end: ce;
-    
-      width: 100%;
-    }
+  [data-align="full"] {
+    margin-left: calc(-1 * var(--nb-container-spacings));
+    margin-right: calc(-1 * var(--nb-container-spacings));
+  }
+
+  > *:not([data-align]) {
+    --block-content-start: cs;
+    --block-content-end: ce;
+
+    width: 100%;
   }
 }
 

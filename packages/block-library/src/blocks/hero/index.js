@@ -50,6 +50,7 @@ const overwriteAttributes = ( settings ) => {
 addFilter( 'blocks.registerBlockType', 'novablocks/hero/attributes-overwrite', overwriteAttributes, 20 );
 
 registerBlockType( BLOCK_NAME, {
+  apiVersion: 2,
 	title: __( 'Hero of the Galaxy (Deprecated)', '__plugin_txtd' ),
 	description: __( 'A great way to get your visitors acquainted with your content.', '__plugin_txtd' ),
 	category: 'nova-blocks',
@@ -87,15 +88,12 @@ registerBlockType( BLOCK_NAME, {
         controls: true,
         customWrapper: true,
       },
-      spaceAndSizing: true
+      spaceAndSizing: true,
+      noDataAlign: true,
     },
 	},
 	attributes,
 	edit,
 	save,
-	getEditWrapperProps() {
-		const settings = select( 'core/block-editor' ).getSettings();
-		return settings.alignWide ? { 'data-align': 'full' } : {};
-	},
   transforms
 } );
