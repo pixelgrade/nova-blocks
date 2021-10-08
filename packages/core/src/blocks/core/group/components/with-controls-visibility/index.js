@@ -12,9 +12,10 @@ const withControlsVisibility = OriginalComponent => {
     useEffect( () => {
 
       setControlsVisibility( {
-        'emphasis-area': false,
+        'minimum-container-height': false,
         'image-container-height': false,
         'visual-balance': false,
+        'emphasis-area': false,
         'content-padding': false,
         'media-padding': false,
         'content-to-media-spacing': false,

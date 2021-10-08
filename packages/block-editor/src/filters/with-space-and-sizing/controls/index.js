@@ -26,8 +26,8 @@ const SpaceAndSizingControls = ( props ) => {
       </ControlsTab>
       <ControlsTab label={ __( 'Customize', '__plugin_txtd' ) }>
         <CardSpacingCustomize key={ 'card-spacing-customize' } { ...props } />
-        <ImageContainerHeightCustomize id={'image-container-height'} key={ 'image-container-customize' } { ...props } />
-        <VisualBalanceCustomize key={ 'visual-balance-customize' } id={'visual-balance'} { ...props } />
+        <ImageContainerHeightCustomize key={ 'image-container-customize' } { ...props } />
+        <VisualBalanceCustomize key={ 'visual-balance-customize' } { ...props } />
       </ControlsTab>
       <ControlsTab label={ __( 'Settings', '__plugin_txtd' ) }>
         <CardSpacingSettings key={ 'card-spacing-settings' } { ...props } />
