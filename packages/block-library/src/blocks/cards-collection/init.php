@@ -32,7 +32,7 @@ if ( ! function_exists( 'novablocks_render_cards_collection_block' ) ) {
 		$data_attributes       = novablocks_get_data_attributes( $data_attributes_array, $attributes );
 
 		$cssProps = array_merge(
-			novablocks_get_spacing_and_sizing_css( $attributes ),
+			novablocks_get_space_and_sizing_css( $attributes ),
 			novablocks_get_collection_layout_css( $attributes ),
 		);
 

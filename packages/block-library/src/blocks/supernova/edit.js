@@ -1,11 +1,9 @@
 import classnames from "classnames";
 
-import { createBlock } from '@wordpress/blocks';
 import { useBlockProps } from "@wordpress/block-editor";
-import { useSelect, useDispatch } from "@wordpress/data";
-import { Fragment, useEffect } from "@wordpress/element";
+import { Fragment } from "@wordpress/element";
 
-import { useInnerBlocks } from "@novablocks/block-editor";
+import { useInnerBlocksCount } from "@novablocks/block-editor";
 import { CollectionHeader } from "@novablocks/collection";
 
 import BlockControls from './block-controls';
@@ -21,36 +19,20 @@ const SupernovaEdit = props => {
   const { attributes, clientId } = props;
 
   const {
-    sourceType,
-    cardLayout,
-    contentPadding,
-    layoutGutter,
-    postsToShow,
+    title,
+    subtitle,
+    contentColorSignal,
+    contentPaletteVariation,
+    ...cardAttributes
   } = attributes;
 
-  const itemsCount = useSelect( select => select( 'core/block-editor' ).getBlockCount( clientId ), [ clientId ] );
-  const { replaceInnerBlocks } = useDispatch( 'core/block-editor' );
-  const innerBlocks = useInnerBlocks( clientId );
+  Object.assign( cardAttributes, {
+    colorSignal: contentColorSignal,
+    paletteVariation: contentPaletteVariation,
+    useSourceColorAsReference: false,
+  } );
 
-  useEffect( () => {
-    const newInnerBlocks = innerBlocks.slice( 0, postsToShow );
-
-    if ( postsToShow > itemsCount ) {
-      for ( let i = 0; i < postsToShow - itemsCount; i++ ) {
-        newInnerBlocks.push( createBlock( 'novablocks/supernova-item', {
-          sourceType,
-          cardLayout,
-          contentPadding,
-          layoutGutter,
-          title: 'Title',
-          description: 'This is just an example of what a description for this card could look like',
-          buttonText: 'Button',
-        } ) );
-      }
-    }
-
-    replaceInnerBlocks( clientId, newInnerBlocks );
-  }, [ postsToShow ] );
+  useInnerBlocksCount( clientId, attributes, 'novablocks/supernova-item', cardAttributes );
 
   return (
     <Fragment>

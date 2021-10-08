@@ -1197,7 +1197,7 @@ function novablocks_get_color_classes( $attributes ) {
 	return $classes;
 }
 
-function novablocks_get_spacing_and_sizing_css( $attributes, $advanced = false ) {
+function novablocks_get_space_and_sizing_css( $attributes, $advanced = false ) {
 
 	$spacing_props = novablocks_get_spacing_css( $attributes );
 

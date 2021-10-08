@@ -30,7 +30,7 @@ if ( ! function_exists( 'novablocks_render_posts_collection_block' ) ) {
 		$attributes        = novablocks_get_attributes_with_defaults( $attributes, $attributes_config );
 
 		$cssProps = array_merge(
-			novablocks_get_spacing_and_sizing_css( $attributes )
+			novablocks_get_space_and_sizing_css( $attributes )
 		);
 
 		$classes = array(

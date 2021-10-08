@@ -54,6 +54,7 @@ registerBlockType( BLOCK_NAME, {
       spaceAndSizing: true,
       elementsVisibility: true,
       collectionLayout: true,
+      noDataAlign: true,
     },
   },
 	edit,

@@ -87,7 +87,7 @@ if ( ! function_exists( 'novablocks_render_supernova_block' ) ) {
 		$cssProps = array_merge(
 			$cssProps,
 			novablocks_get_overlay_filter_css( $attributes ),
-			novablocks_get_spacing_and_sizing_css( $attributes ),
+			novablocks_get_space_and_sizing_css( $attributes ),
 			novablocks_get_collection_layout_css( $attributes ),
 		);
 

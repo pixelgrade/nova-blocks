@@ -23,9 +23,6 @@ const Controls = ( props ) => {
     sourceType
   } = attributes;
 
-  const itemsCount = useSelect( ( select ) => select( 'core/block-editor' ).getBlockCount( clientId ), [ clientId ] );
-  const { innerBlocks } = useSelect( ( select ) => select( 'core/block-editor' ).getBlock( clientId ), [ clientId ] );
-
   const loadPosts = sourceType === 'content';
 
   return (
@@ -53,16 +50,6 @@ const Controls = ( props ) => {
           } }
           numberOfItems={ postsToShow }
           onNumberOfItemsChange={ _postsToShow => {
-            const { replaceInnerBlocks } = useDispatch( 'core/block-editor' );
-            const newInnerBlocks = innerBlocks.slice( 0, _postsToShow );
-
-            if ( _postsToShow > itemsCount ) {
-              for ( let i = 0; i < _postsToShow - itemsCount; i++ ) {
-                newInnerBlocks.push( createBlock( 'novablocks/supernova-item' ) );
-              }
-            }
-
-            replaceInnerBlocks( clientId, newInnerBlocks );
             setAttributes( { postsToShow: _postsToShow } )
           } }
           loadingMode={ loadingMode }

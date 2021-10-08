@@ -37,6 +37,7 @@ registerBlockType( 'novablocks/posts-collection', {
       latestPosts: true,
       overlayFilter: true,
       spaceAndSizing: true,
+      noDataAlign: true,
     },
   },
 	edit,
@@ -44,8 +45,4 @@ registerBlockType( 'novablocks/posts-collection', {
 		return <InnerBlocks.Content />;
 	},
   transforms,
-	getEditWrapperProps() {
-		const settings = select( 'core/block-editor' ).getSettings();
-		return settings.alignWide ? { 'data-align': 'full' } : {};
-	},
 } );

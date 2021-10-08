@@ -4,7 +4,7 @@
 import { useBlockProps } from "@wordpress/block-editor";
 import { select, dispatch } from "@wordpress/data";
 
-import { useInnerBlocks } from "@novablocks/block-editor";
+import { useInnerBlocks, useInnerBlocksCount } from "@novablocks/block-editor";
 import { CollectionBody, CollectionHeader } from "@novablocks/collection";
 
 const useInnerBlocksProps = wp.blockEditor.useInnerBlocksProps || wp.blockEditor.__experimentalUseInnerBlocksProps;
@@ -23,12 +23,9 @@ const CardsCollectionEdit = ( props ) => {
 
 	const {
     clientId,
-    isSelected,
+    attributes,
     className,
 	} = props;
-
-  const innerBlocks = useInnerBlocks( clientId );
-	const hasAppender = !! innerBlocks && innerBlocks.length < 4 && isSelected;
 
   const blockProps = useBlockProps( {
     className: className,
@@ -40,9 +37,11 @@ const CardsCollectionEdit = ( props ) => {
   }, {
     allowedBlocks: ALLOWED_BLOCKS,
     template: CARDS_COLLECTION_TEMPLATE,
-    renderAppender: hasAppender ? window.undefined : false,
+    renderAppender: false,
     templateInsertUpdatesSelection: false
   } );
+
+  useInnerBlocksCount( clientId, attributes, 'novablocks/card', attributes );
 
   return (
     <div { ...blockProps }>

@@ -76,7 +76,7 @@ if ( ! function_exists( 'novablocks_render_hero_block' ) ) {
 
 		$css_props = array_merge(
 			novablocks_get_overlay_filter_css( $attributes ),
-			novablocks_get_spacing_and_sizing_css( $attributes ),
+			novablocks_get_space_and_sizing_css( $attributes ),
 		);
 
 		$mediaStyle = novablocks_get_focal_point_style( $attributes['focalPoint'] );

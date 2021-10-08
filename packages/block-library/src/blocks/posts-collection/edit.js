@@ -8,6 +8,8 @@ import {
 import { PostCard } from "@novablocks/block-editor";
 import { useBlockProps } from "@wordpress/block-editor";
 
+import { withControlsVisibility } from './components';
+
 const Edit = ( props ) => {
 
   const { className, posts } = props;
@@ -66,4 +68,4 @@ const PostsCollection = props => {
   )
 }
 
-export default Edit;
+export default withControlsVisibility( Edit );

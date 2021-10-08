@@ -77,7 +77,7 @@ if ( ! function_exists( 'novablocks_render_media_block' ) ) {
 			$attributes['gallery'] = $attributes['images'];
 		}
 
-		$css_props = novablocks_get_spacing_and_sizing_css( $attributes, true );
+		$css_props = novablocks_get_space_and_sizing_css( $attributes, true );
 
 		$contentClasses = array(
 			'novablocks-media__inner-container',
