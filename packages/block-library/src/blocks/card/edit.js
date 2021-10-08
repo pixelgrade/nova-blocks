@@ -25,8 +25,8 @@ const CardEdit = ( props ) => {
     description,
     media,
     meta,
-
     contentAlign,
+
     showMedia,
     showTitle,
     showSubtitle,

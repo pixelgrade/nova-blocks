@@ -1,5 +1,4 @@
 import { TextPlaceholder } from "@novablocks/components";
-import { RawHTML } from "@wordpress/element";
 
 export const CardButton = ( props ) => {
 

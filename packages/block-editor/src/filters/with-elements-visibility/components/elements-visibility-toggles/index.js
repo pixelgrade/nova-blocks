@@ -31,7 +31,7 @@ const ElementsVisibilityToggles = (props) => {
   // and the postsToShow is equal with 1.
   const IS_HERO = CARD_IS_STACKED && postsToShow === 1;
 
-  let blockToggles = [...collectionToggles, ...cardToggles];
+  let blockToggles = [ ...collectionToggles, ...cardToggles ];
 
   if ( IS_HERO ) {
     blockToggles.push( ...heroToggles );
@@ -44,9 +44,7 @@ const ElementsVisibilityToggles = (props) => {
   return (
     <ToggleGroup
       onChange={ setAttributes }
-      toggles={ blockToggles.filter( toggle => {
-        return toggle.attribute !== 'showSubtitle';
-      } ).map( toggle => {
+      toggles={ blockToggles.map( toggle => {
         return {
           ...toggle,
           value: attributes[ toggle.attribute ]

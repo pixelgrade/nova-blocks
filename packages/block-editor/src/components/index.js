@@ -1,6 +1,5 @@
 export { default as AutocompleteTokenField } from "./autocomplete-tokenfield";
 export { default as BlockVerticalAlignmentToolbar } from "./block-vertical-alignment-toolbar";
-export { default as CardsManager } from './cards-manager';
 export { default as ControlsGroup } from './controls-group';
 export { default as CardFieldsPreview } from './card-fields-preview';
 export { default as HeadingLevelIcon } from "./heading-level-icon";

@@ -17,6 +17,7 @@ import transforms from './transforms';
 
 import attributes from "./attributes.json";
 import attributesOverwrite from "./attributes-overwrite.json";
+import { withSetChildrenAttributes } from "./filters";
 
 const BLOCK_NAME = 'novablocks/cards-collection';
 
@@ -67,3 +68,5 @@ registerBlockType( BLOCK_NAME, {
 		return settings.alignWide ? { 'data-align': 'full' } : {};
 	},
 } );
+
+addFilter( 'editor.BlockEdit', 'novablocks/cards-collection/with-set-children-attributes', withSetChildrenAttributes, Number.MAX_SAFE_INTEGER );
