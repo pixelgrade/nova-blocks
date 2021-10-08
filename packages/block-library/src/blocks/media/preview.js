@@ -66,8 +66,8 @@ const MediaPreview = ( props ) => {
               </div>
             </div>
             <div className="novablocks-media__aside">
-              <div className="novablocks-media__media-wrapper">
-                <div className="novablocks-media__media-aspect-ratio">
+              <div className="novablocks-media__media-aspect-ratio">
+                <div className="novablocks-media__media-wrapper">
                   <MediaCompositionPreview { ...passedProps } />
                 </div>
               </div>

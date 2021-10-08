@@ -24,6 +24,8 @@ function novablocks_get_hero_attributes() {
 		'packages/block-editor/src/filters/with-content-position-matrix/attributes.json',
 		"packages/block-editor/src/filters/with-overlay-filter/attributes.json",
 		"packages/block-editor/src/filters/with-space-and-sizing/attributes.json",
+
+		"packages/block-library/src/blocks/hero/attributes-overwrite.json",
 	) );
 
 }
@@ -80,9 +82,9 @@ if ( ! function_exists( 'novablocks_render_hero_block' ) ) {
 		$mediaStyle = novablocks_get_focal_point_style( $attributes['focalPoint'] );
 
 		$scrollIndicator = ! empty( $attributes['scrollIndicatorBlock'] );
-		$scrollIndicatorClasses = array(  );
+		$scrollIndicatorClasses = array( 'novablocks-hero__indicator' );
 
-		$heroHeight = $attributes[ 'scrollingEffect' ] === 'doppler' ? $attributes[ 'minHeightFallback' ] : $attributes[ 'minHeightFallback' ] * 2;
+		$heroHeight = $attributes[ 'scrollingEffect' ] === 'doppler' ? $attributes[ 'minHeightFallback' ] * 2 : $attributes[ 'minHeightFallback' ];
 
 		if ( $heroHeight > 100 ) {
 			$scrollIndicatorClasses[] = 'novablocks-hero__indicator--middle';

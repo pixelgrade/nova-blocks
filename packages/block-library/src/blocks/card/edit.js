@@ -111,7 +111,6 @@ const CardEdit = ( props ) => {
                   value={ description }
                   onChange={ description => { setAttributes( { description } ) } }
                   placeholder={ __( 'This is just an example of what a description for this card could look like', '__plugin_txtd' ) }
-                  allowedFormats={ [] }
                 />
               }
               {

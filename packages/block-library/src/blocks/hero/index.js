@@ -47,7 +47,7 @@ const overwriteAttributes = ( settings ) => {
     }
   };
 }
-addFilter( 'blocks.registerBlockType', 'novablocks/hero/attributes-overwrite', overwriteAttributes, 20 );
+addFilter( 'blocks.registerBlockType', 'novablocks/hero/attributes-overwrite', overwriteAttributes, Number.MAX_SAFE_INTEGER );
 
 registerBlockType( BLOCK_NAME, {
   apiVersion: 2,

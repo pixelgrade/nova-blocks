@@ -1,4 +1,5 @@
 import { Fragment } from "@wordpress/element";
+import { __unstableStripHTML as stripHTML } from '@wordpress/dom';
 
 import { CardButton, CardDescription, CardFooter, CardMeta, CardTitle } from "../../index";
 
@@ -24,7 +25,7 @@ const CardFieldsPreview = ( props ) => {
       <CardMeta show={ showMeta }>{ metaAboveTitle }</CardMeta>
       <CardTitle show={ showTitle }>{ title }</CardTitle>
       <CardMeta show={ showMeta }>{ metaBelowTitle }</CardMeta>
-      <CardDescription show={ showDescription }>{ description }</CardDescription>
+      <CardDescription show={ showDescription }>{ stripHTML( description ) }</CardDescription>
       <CardFooter show={ showButtons && !! buttonText }>
         <CardButton>{ buttonText }</CardButton>
       </CardFooter>

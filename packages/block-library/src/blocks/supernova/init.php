@@ -82,7 +82,6 @@ if ( ! function_exists( 'novablocks_render_supernova_block' ) ) {
 
 		if ( $attributes['minHeightFallback'] !== 0 ) {
 			$classes[]  = 'supernova--has-minimum-height';
-			$cssProps[] = '--nb-minimum-container-height: ' . $attributes['minHeightFallback'] . 'vh';
 		}
 
 		$cssProps = array_merge(

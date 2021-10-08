@@ -4,8 +4,7 @@
 	position: relative;
 
 	display: flex;
-  min-height: var(--nb-minimum-container-height);
-  
+
   &__inner-container {
     width: 100%;
   }
@@ -22,6 +21,10 @@
   @include above(tablet) {
    @include block-spacing;
   }
+}
+
+.novablocks-hero__foreground {
+  min-height: var(--nb-minimum-container-height);
 }
 
 .novablocks-hero.scrolling-effect-doppler {

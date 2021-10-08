@@ -1,12 +1,4 @@
-[data-type="novablocks/media"] {
-
-  &[data-type] {
-    margin-top: 0;
-    margin-bottom: 0;
-    padding-top: 0;
-    padding-bottom: 0;
-  }
-
+.novablocks-media {
 	@include advanced-gallery-overlay-styles;
 }
 

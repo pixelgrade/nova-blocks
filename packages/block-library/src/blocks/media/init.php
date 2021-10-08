@@ -105,8 +105,8 @@ if ( ! function_exists( 'novablocks_render_media_block' ) ) {
 							</div>
 						<?php } ?>
 						<div class="novablocks-media__aside">
-							<div class="novablocks-media__media-wrapper">
-								<div class="novablocks-media__media-aspect-ratio">
+							<div class="novablocks-media__media-aspect-ratio">
+								<div class="novablocks-media__media-wrapper">
 									<?php novablocks_render_media_composition( $attributes ); ?>
 								</div>
 							</div>

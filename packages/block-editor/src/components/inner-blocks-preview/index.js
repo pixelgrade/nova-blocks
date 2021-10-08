@@ -1,3 +1,4 @@
+import { getSaveElement } from "@wordpress/blocks";
 import { useInnerBlocks } from "../../index";
 
 const InnerBlocksPreview = props => {

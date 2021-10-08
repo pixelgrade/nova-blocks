@@ -43,13 +43,14 @@ const innerBlocks = [
 ];
 
 const heroVariation = {
-  name: __( 'Hero of the Galaxy', '__plugin_txtd' ),
+  name: 'novablocks/supernova/hero',
   title: __( 'Hero of the Galaxy', '__plugin_txtd' ),
   description: __( 'A great way to get your visitors acquainted with your content.', '__plugin_txtd' ),
   icon: getSvg( iconSvg ),
   attributes: attributes,
   innerBlocks,
-  isActive: ( block, variation ) => block.variation === variation.variation
+  isActive: ( block, variation ) => block.variation === variation.variation,
+  scope: [ 'block', 'inserter', 'transform' ],
 };
 
 export default heroVariation;

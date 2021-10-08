@@ -132,7 +132,6 @@ const SuperNovaItemContent = ( props ) => {
             tagName={ 'span' }
             value={ description }
             onChange={ description => { setAttributes( { description } ) } }
-            allowedFormats={ [] }
           />
         </p>
         <CardButton>

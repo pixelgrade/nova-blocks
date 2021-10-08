@@ -97,6 +97,8 @@ export const getSignalOptionsFromVariation = ( variation ) => {
     return Math.abs( variation - variation1 ) < Math.abs( variation - variation2 ) ? -1 : 1;
   } );
 
+  variationOptions[0] = variation;
+
   return variationOptions;
 }
 
@@ -125,12 +127,15 @@ export const getContentVariationBySignal = ( attributes ) => {
  * @param paletteVariation the block's current paletteVariation attribute's value
  * @returns {*}
  */
-export const computeColorSignal = ( reference, colorSignal, paletteVariation ) => {
-  const currentSignal = getSignalRelativeToVariation( paletteVariation, reference );
+export const computeColorSignal = ( reference, colorSignal, paletteVariation = false ) => {
   const signalOptions = getSignalOptionsFromVariation( reference );
 
-  if ( currentSignal === colorSignal ) {
-    return paletteVariation;
+  if ( Number.isInteger( paletteVariation ) ) {
+    const currentSignal = getSignalRelativeToVariation( paletteVariation, reference );
+
+    if ( currentSignal === colorSignal ) {
+      return paletteVariation;
+    }
   }
 
   return signalOptions[ colorSignal ];

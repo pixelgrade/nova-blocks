@@ -34,7 +34,7 @@ const overwriteAttributes = ( settings ) => {
     }
   };
 }
-addFilter( 'blocks.registerBlockType', 'novablocks/cards-collection-overwrite', overwriteAttributes, 20 );
+addFilter( 'blocks.registerBlockType', 'novablocks/cards-collection-overwrite', overwriteAttributes, Number.MAX_SAFE_INTEGER );
 
 registerBlockType( BLOCK_NAME, {
 	title: __( 'Cards Collection (Deprecated)', '__plugin_txtd' ),

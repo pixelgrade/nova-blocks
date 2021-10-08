@@ -1,15 +1,8 @@
+import { select } from '@wordpress/data';
+
 /**
  * Internal dependencies
  */
-import iconSvg from './slideshow-block.svg';
-import edit from './edit';
-import save from './save';
-import transforms from './transforms';
-import { select } from '@wordpress/data';
-
-// Load deprecated file
-import './deprecated';
-
 import {
   getRandomArrayFromArray,
   getRandomBetween,
@@ -21,10 +14,15 @@ import {
   getSvg
 } from "@novablocks/block-editor";
 
-import blockAttributes from "./attributes";
+import iconSvg from './slideshow-block.svg';
+import edit from './edit';
+import save from './save';
+import transforms from './transforms';
+import attributes from "./attributes";
 
-// Load extras file
-const attributes = Object.assign( {}, blockAttributes );
+// Load deprecated file
+import './deprecated';
+
 
 /**
  * WordPress dependencies
@@ -51,6 +49,7 @@ async function getNewDefaults() {
 generateDefaults( 'novablocks/slideshow', getNewDefaults );
 
 registerBlockType( 'novablocks/slideshow', {
+  apiVersion: 2,
 	title: __( 'Slideshow Me the Way (Deprecated)', '__plugin_txtd' ),
 	description: __( 'Display more than one piece of content in a single, coveted space.', '__plugin_txtd' ),
 	category: 'nova-blocks',
@@ -87,14 +86,11 @@ registerBlockType( 'novablocks/slideshow', {
         controls: true,
         customWrapper: true,
       },
-      spaceAndSizing: true
+      spaceAndSizing: true,
+      noDataAlign: true,
     },
   },
 	edit,
 	save,
   transforms,
-	getEditWrapperProps() {
-		const settings = select( 'core/block-editor' ).getSettings();
-		return settings.alignWide ? { 'data-align': 'full' } : {};
-	},
 } );

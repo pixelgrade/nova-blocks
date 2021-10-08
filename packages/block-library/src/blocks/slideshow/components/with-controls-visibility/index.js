@@ -15,6 +15,9 @@ const withControlsVisibility = OriginalComponent => {
         'image-container-height': false,
         'visual-balance': false,
         'emphasis-area': false,
+        'content-padding': false,
+        'media-padding': false,
+        'content-to-media-spacing': false,
       } );
 
     }, [ attributes ] );

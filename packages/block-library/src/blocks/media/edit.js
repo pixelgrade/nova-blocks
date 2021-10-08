@@ -32,12 +32,12 @@ const MediaEdit = ( props ) => {
   }
 
   const className = classnames(
-    props.className,
-    `alignfull`,
     `novablocks-media`,
     `novablocks-u-valign-${ verticalAlignment }`,
     `has-image-on-the-${ mediaPosition }`,
-    getAlignmentClassnames( attributes )
+    getAlignmentClassnames( attributes ),
+    props.className,
+    `alignfull`,
   );
 
   const blockProps = useBlockProps( {

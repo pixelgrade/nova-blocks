@@ -4,37 +4,44 @@ export default {
   to: [
     {
       type: 'block',
-      blocks: ['novablocks/supernova'],
-      transform: function( attributes, innerBlocks ) {
+      blocks: [ 'novablocks/supernova' ],
+      transform: ( attributes, innerBlocks ) => {
 
         const {
-          contentPosition,
-          overlayFilterStrength,
-          media
+          media,
+          paletteVariation,
         } = attributes;
 
         const { caption, title, ...image } = media;
 
-        const commonAttributes = {
-          cardLayout: 'stacked',
-          contentPosition,
+        const collectionAttributes = Object.assign( {}, attributes, {
+          variation: 'hero',
+
+          layoutStyle: 'classic',
+          postsToShow: 1,
           sourceType: 'blocks',
-        }
 
-        const cardAttributes = Object.assign( {}, attributes, commonAttributes, {
-          images: [ image ],
-        } );
+          cardLayout: 'stacked',
 
-        const collectionAttributes = Object.assign( {}, attributes, commonAttributes, {
-          layout: 'classic',
-          cardMediaOpacity: ( 100 - overlayFilterStrength ),
-          columns: 1,
-          align: 'full',
+          contentColorSignal: 0,
+          contentPaletteVariation: paletteVariation,
+
           emphasisTopSpacing: 0,
           emphasisBottomSpacing: 0,
+
+          contentPadding: 50,
+          imagePadding: 0,
+
+          collectionTitle: '',
+          collectionSubtitle: '',
           showCollectionTitle: false,
           showCollectionSubtitle: false,
-          contentPadding: 100,
+        } );
+
+        const cardAttributes = Object.assign( {}, collectionAttributes, {
+          images: [ image ],
+          colorSignal: 0,
+          paletteVariation: paletteVariation,
         } );
 
         return createBlock( 'novablocks/supernova', collectionAttributes, [
