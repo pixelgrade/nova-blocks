@@ -30,6 +30,7 @@ const overwriteAttributes = ( settings ) => {
   return {
     ...settings,
     attributes: {
+      ...attributes,
       ...settings.attributes,
       ...attributesOverwrite
     }
