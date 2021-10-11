@@ -2,6 +2,7 @@
 @import 'scss/collection';
 @import 'scss/carousel';
 @import 'scss/block-alignments';
+@import 'scss/block-background';
 
 .supernova {
   position: relative;
@@ -11,33 +12,14 @@
   --emphasis-area-width: calc( var(--nb-emphasis-area, 100) * 1% );
   background: none !important;
 
-  &:before {
-    content: '';
-
-    position: absolute;
-    top: 0;
-    left: 0;
-
-    height: 100%;
-    width: 100%;
-
-    grid-column: var(--custom-limit-left) / var(--custom-limit-right);
-
-    background: linear-gradient(
-        90deg,
-        var(--nb-bg-color) 0,
-        var(--nb-bg-color) var(--emphasis-area-width),
-        transparent var(--emphasis-area-width)
-    );
-  }
+  @include block-background;
   
   &.supernova--has-minimum-height {
-    
+  
     .supernova-item__media-aspect-ratio {
       --nb-card-media-padding-top: var(--nb-minimum-container-height);
     }
   }
-
 }
 
 /*
@@ -80,17 +62,5 @@
       }
     }
   }
-
-  /*
- * When we have more than 1 element
- * per columns, (cards are stacked horizontally),
- * we need space on :first-child
- */
-  //&:not(.supernova--one-column) {
-  //
-  //  .nb-collection__inner-container > :first-child {
-  //    --nb-block-top-spacing: 1;
-  //  }
-  //}
 }
 

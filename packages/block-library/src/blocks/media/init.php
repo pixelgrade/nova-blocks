@@ -19,8 +19,7 @@ function novablocks_get_media_attributes() {
 
 		'packages/block-editor/src/filters/with-card-details/attributes.json',
 		'packages/block-editor/src/filters/with-content-position-matrix/attributes.json',
-		'packages/block-editor/src/filters/with-emphasis-area/attributes.json',
-		'packages/block-editor/src/filters/with-emphasis-level/attributes.json',
+		'packages/block-editor/src/filters/with-emphasis-control/attributes.json',
 		'packages/block-editor/src/filters/with-space-and-sizing/attributes.json',
 
 		'packages/block-library/src/blocks/media/attributes-overwrite.json',
@@ -78,6 +77,16 @@ if ( ! function_exists( 'novablocks_render_media_block' ) ) {
 		}
 
 		$css_props = novablocks_get_space_and_sizing_css( $attributes, true );
+
+		if ( ! empty($attributes['emphasisArea'])) {
+
+			$css_props = array_merge(
+				$css_props,
+				array(
+					'--nb-emphasis-area: ' . $attributes['emphasisArea'],
+				)
+			);
+		}
 
 		$contentClasses = array(
 			'novablocks-media__inner-container',
