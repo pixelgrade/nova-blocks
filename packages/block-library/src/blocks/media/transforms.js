@@ -44,10 +44,11 @@ export default {
         const cardAttributes = Object.assign( {}, attributes, commonAttributes );
 
         const collectionAttributes = Object.assign( {}, attributes, commonAttributes, {
-          layout: 'classic',
+          layoutStyle: 'classic',
           columns: 1,
           cardMediaOpacity: 100,
           align: 'wide',
+          postsToShow: 1
         } );
 
         return createBlock( 'novablocks/supernova', collectionAttributes, [
