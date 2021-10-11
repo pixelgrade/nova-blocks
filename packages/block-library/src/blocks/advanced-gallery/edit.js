@@ -1,4 +1,5 @@
 import MediaComposition from '@novablocks/media-composition';
+import { CardMediaWrapper } from "@novablocks/block-editor";
 
 const Edit = ( props ) => {
 
@@ -10,10 +11,11 @@ const Edit = ( props ) => {
 
 	return (
 		<div className={ className }>
-			<MediaComposition { ...props } />
+      <CardMediaWrapper {...props}>
+			  <MediaComposition { ...props } />
+      </CardMediaWrapper>
 		</div>
 	);
-
 };
 
 export default Edit;
