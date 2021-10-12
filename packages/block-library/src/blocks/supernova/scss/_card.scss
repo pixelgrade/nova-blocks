@@ -153,33 +153,6 @@
   width: 100%;
 }
 
-.supernova-item__content {
-  display: flex;
-  flex-direction: column;
-  flex-grow: 1;
-
-  overflow: hidden;
-
-  &:before,
-  &:after {
-    content: '';
-    display: block;
-    height: 0;
-    flex: 1 0 auto;
-  }
-
-  &--valign-top:before,
-  &--valign-bottom:after {
-    flex-grow: 0;
-  }
-
-  @each $align in left, center, right {
-    &--halign-#{ $align } {
-      text-align: $align;
-    }
-  }
-}
-
 /*
  * Carousel Layout - Variable Width
  */

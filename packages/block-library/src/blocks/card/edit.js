@@ -7,7 +7,7 @@ import { RichText } from '@wordpress/block-editor';
 import { __ } from '@wordpress/i18n';
 import { InnerBlocks, MediaUpload } from '@wordpress/block-editor';
 
-import { getColorSignalClassnames } from "@novablocks/utils";
+import {getAlignFromMatrix, getColorSignalClassnames} from "@novablocks/utils";
 
 import CardMedia from './media';
 
@@ -43,6 +43,14 @@ const CardEdit = ( props ) => {
     'novablocks-block__content',
   );
 
+  const align = getAlignFromMatrix( attributes?.contentPosition );
+
+  const contentClassName = classnames(
+    `novablocks-card__layout-content`,
+    `supernova-item__content--valign-${ align[0] }`,
+    `supernova-item__content--halign-${ align[1] }`,
+  );
+
 	return (
 		<div className={ className }>
 			<div className="novablocks-card__layout">
@@ -68,7 +76,7 @@ const CardEdit = ( props ) => {
 				}
 				{
 					( showMeta || showTitle || showSubtitle || showDescription || showButtons ) &&
-					<div className="novablocks-card__layout-content">
+					<div className={contentClassName}>
             <div className={ `novablocks-card__inner-container ${ getColorSignalClassnames( attributes, true ) }` }>
               {
                 showMeta &&

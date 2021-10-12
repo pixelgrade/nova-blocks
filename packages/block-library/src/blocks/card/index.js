@@ -53,10 +53,12 @@ registerBlockType( 'novablocks/card', {
       colorSignal: {
         attributes: true
       },
-      contentPositionMatrixToolbar: true,
       elementsVisibility: {
         attributes: true
-      }
+      },
+      contentPosition: {
+        attributes: true,
+      },
     }
   },
 	edit,
