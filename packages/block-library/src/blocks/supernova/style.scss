@@ -14,7 +14,7 @@
 
   @include block-background;
   
-  &.supernova--has-minimum-height {
+  &.supernova--has-minimum-height:not([data-scrolling-effect="doppler"]) {
   
     .supernova-item__media-aspect-ratio {
       --nb-card-media-padding-top: var(--nb-minimum-container-height);
