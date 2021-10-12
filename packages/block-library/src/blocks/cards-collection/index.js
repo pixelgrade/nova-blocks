@@ -57,6 +57,10 @@ registerBlockType( BLOCK_NAME, {
       elementsVisibility: true,
       collectionLayout: true,
       noDataAlign: true,
+      contentPosition: {
+        attributes: true,
+        controls: true
+      },
     },
   },
 	edit,
