@@ -2,5 +2,9 @@
 	"minHeightFallback": {
 		"type": "number",
 		"default": 100
+	},
+	"overlayFilterStrength": {
+		"type": "number",
+		"default": 30
 	}
 }

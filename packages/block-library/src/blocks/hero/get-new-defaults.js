@@ -11,7 +11,6 @@ async function getNewDefaults() {
   }
 
   return {
-    overlayFilterStrength: 75,
     media: {
       ...image,
       type: 'image',
