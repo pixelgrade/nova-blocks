@@ -23,8 +23,12 @@
   }
 }
 
+[data-scrolling-effect="doppler"] {
+  --nb-minimum-container-height-doppler: 150vh;
+}
+
 .novablocks-hero__foreground {
-  min-height: calc(var(--nb-minimum-container-height) - var(--admin-bar-height, 0px));
+  min-height: calc(var(--nb-minimum-container-height-doppler, var(--nb-minimum-container-height)) - var(--admin-bar-height, 0px));
 }
 
 .novablocks-hero.scrolling-effect-doppler {
