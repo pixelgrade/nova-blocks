@@ -87,6 +87,7 @@ registerBlockType( BLOCK_NAME, {
         altAttributes: true,
         controls: true,
         customWrapper: true,
+        doppler: true
       },
       spaceAndSizing: true,
       noDataAlign: true,
