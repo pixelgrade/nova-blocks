@@ -10,5 +10,9 @@
 	"layoutStyle": {
 		"type": "string",
 		"default": "classic"
+	},
+	"postsToShow": {
+		"type": "integer",
+		"default": 3
 	}
 }
