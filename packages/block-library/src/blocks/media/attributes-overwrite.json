@@ -1,7 +1,7 @@
 {
 	"contentPadding": {
 		"type": "number",
-		"default": 100
+		"default": 50
 	},
 	"layoutGutter": {
 		"type": "number",
