@@ -63,5 +63,12 @@
       }
     }
   }
+  
+  &:not(.supernova-layout-one-column) {
+    
+    .nb-collection__body  .nb-collection__inner-container > :first-child {
+      --nb-block-top-spacing: 1;
+    }
+  }
 }
 
