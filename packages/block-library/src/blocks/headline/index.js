@@ -22,10 +22,6 @@ registerBlockType( 'novablocks/headline', {
 	// Additional search terms
 	keywords: [ __( 'heading', '__plugin_txtd' ), __( 'title', '__plugin_txtd' ), __( 'cta', '__plugin_txtd' ), __( 'call to action', '__plugin_txtd' ) ],
 	attributes: {
-		align: {
-			type: "string",
-			default: "center"
-		},
 		primary: {
 			type: "string",
 			default: __( "Our Story", '__plugin_txtd' )
