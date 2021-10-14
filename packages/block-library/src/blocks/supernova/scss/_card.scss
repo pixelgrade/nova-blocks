@@ -1,17 +1,19 @@
+.supernova {
+  --nb-card-layout-gap: calc( var(--nb-spacing) * var(--nb-element-spacing-multiplier, 1) * var(--nb-collection-gutter-multiplier, 0) );
+  --nb-card-content-padding: calc( var(--nb-spacing) * var(--nb-element-spacing-multiplier, 1) * ( 2 * var(--nb-card-content-padding-multiplier, 0) ) );
+  --nb-card-media-padding: calc( var(--nb-spacing) * var(--nb-element-spacing-multiplier, 1) * ( 2 * var(--nb-card-media-padding-multiplier, 0) ) );
+
+  --nb-card-content-column-width: calc( var(--nb-card-content-area-width) - var(--nb-card-layout-gap) * 0.5 );
+  --nb-card-media-column-width: calc( 100% - var(--nb-card-content-column-width) - var(--nb-card-layout-gap));
+}
+
 .supernova-item {
-  
   position: relative;
   
   display: flex;
   flex-direction: column;
 
-  gap: var(--nb-card-gap);
-
-  --nb-card-gap: calc( var(--nb-spacing) * var(--nb-element-spacing-multiplier, 1) * var(--nb-collection-gutter, 0) * 0.02 );
-  --nb-card-content-padding: calc( var(--nb-spacing) * var(--nb-element-spacing-multiplier, 1) * ( 2 * var(--nb-card-content-padding-multiplier, 0) ) );
-  --nb-card-media-padding: calc( var(--nb-spacing) * var(--nb-element-spacing-multiplier, 1) * ( 2 * var(--nb-card-media-padding-multiplier, 0) ) );
-  --nb-card-content-column-width: calc( var(--nb-card-content-area-width) - var(--nb-card-gap) * 0.5 );
-  --nb-card-media-column-width: calc( 100% - var(--nb-card-content-column-width) - var(--nb-card-gap));
+  gap: var(--nb-card-layout-gap);
 
   & &__inner-container[class] {
     padding: var(--nb-card-content-padding, 0);

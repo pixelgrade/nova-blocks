@@ -10,7 +10,7 @@ const withContentLoaderControls = createHigherOrderComponent( OriginalComponent 
 
     const supports = useSupports( props.name );
 
-    if ( ! supports?.novaBlocks?.contentLoader ) {
+    if ( supports?.novaBlocks?.contentLoader !== true && supports?.novaBlocks?.contentLoader?.controls !== true ) {
       return (
         <OriginalComponent { ...props } />
       )

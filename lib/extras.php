@@ -1219,12 +1219,13 @@ function novablocks_get_overlay_filter_css( $attributes ) {
 
 function novablocks_get_sizing_css( $attributes ) {
 	return array(
-		'--nb-collection-gutter: ' . $attributes['layoutGutter'],
-		'--nb-card-content-padding-multiplier: ' . $attributes[ 'contentPadding' ] / 100,
-		'--nb-card-media-padding-multiplier: ' . $attributes[ 'imagePadding' ] / 100,
+		'--nb-collection-gutter-multiplier: ' . $attributes['layoutGutter'] / 100,
+		'--nb-card-content-padding-multiplier: ' . $attributes['contentPadding'] / 100,
+		'--nb-card-media-padding-multiplier: ' . $attributes['imagePadding'] / 100,
 		'--nb-card-media-padding-top: ' . novablocks_get_card_media_padding_top( $attributes['thumbnailAspectRatio'] ) . '%',
 		'--nb-card-media-object-fit: ' . ( $attributes['imageResizing'] === 'cropped' ? 'cover' : 'scale-down' ),
 		'--nb-minimum-container-height: ' . $attributes['minHeightFallback'] . 'vh',
+		'--nb-card-content-area-width: ' . $attributes['contentAreaWidth'] . '%',
 	);
 }
 

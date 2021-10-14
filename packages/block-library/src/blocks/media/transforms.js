@@ -44,6 +44,7 @@ export default {
         const cardAttributes = Object.assign( {}, attributes, commonAttributes );
 
         const collectionAttributes = Object.assign( {}, attributes, commonAttributes, {
+          variation: 'media-card',
           layoutStyle: 'classic',
           columns: 1,
           cardMediaOpacity: 100,
