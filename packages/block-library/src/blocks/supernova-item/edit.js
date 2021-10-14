@@ -96,6 +96,13 @@ const SuperNovaItemContent = ( props ) => {
     getColorSignalClassnames( attributes, true )
   );
 
+  const innerBlocksProps = useInnerBlocksProps( {
+    className: classnames(
+      'supernova-item__inner-container',
+      getColorSignalClassnames( attributes, true )
+    )
+  } );
+
   if ( sourceType === 'fields' ) {
     return (
       <div className={ containerClassname }>
@@ -213,13 +220,6 @@ const SuperNovaItemContent = ( props ) => {
       </div>
     )
   }
-
-  const innerBlocksProps = useInnerBlocksProps( {
-    className: classnames(
-      'supernova-item__inner-container',
-      getColorSignalClassnames( attributes, true )
-    )
-  } );
 
   return (
     <div { ...innerBlocksProps } />

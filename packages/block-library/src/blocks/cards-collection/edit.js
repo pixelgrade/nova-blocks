@@ -19,12 +19,6 @@ import { withControlsVisibility } from "./components";
 
 const ALLOWED_BLOCKS = [ 'novablocks/card' ];
 
-const CARDS_COLLECTION_TEMPLATE = [
-	[ 'novablocks/card' ],
-	[ 'novablocks/card' ],
-	[ 'novablocks/card' ],
-];
-
 const CardsCollectionEdit = ( props ) => {
 
 	const {
@@ -50,12 +44,13 @@ const CardsCollectionEdit = ( props ) => {
     className: 'nb-collection__layout nb-collection__layout--classic',
   }, {
     allowedBlocks: ALLOWED_BLOCKS,
-    template: CARDS_COLLECTION_TEMPLATE,
     renderAppender: false,
     templateInsertUpdatesSelection: false
   } );
 
-  useInnerBlocksCount( clientId, attributes, 'novablocks/card', attributes );
+  const { title, subtitle, ...innerBlockAttributes } = attributes;
+
+  useInnerBlocksCount( clientId, attributes, 'novablocks/card', innerBlockAttributes );
 
   return (
     <div { ...blockProps }>

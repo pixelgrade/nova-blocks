@@ -54,11 +54,15 @@ registerBlockType( 'novablocks/advanced-gallery', {
     html: false,
     novaBlocks: {
       mediaComposition: true,
-      spaceAndSizing: true
+      spaceAndSizing: true,
     }
 	},
 	// Additional search terms
-	keywords: [ __( 'image with text', '__plugin_txtd' ), __( 'columns', '__plugin_txtd' ), __( 'side text', '__plugin_txtd' ) ],
+	keywords: [
+	  __( 'image with text', '__plugin_txtd' ),
+    __( 'columns', '__plugin_txtd' ),
+    __( 'side text', '__plugin_txtd' )
+  ],
 	edit,
 	save() {
 		return false;
