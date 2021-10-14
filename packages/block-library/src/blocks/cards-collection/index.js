@@ -48,7 +48,7 @@ const withColumnsDeprecated = ( settings ) => {
       {
         attributes: settings.attributes,
         isEligible( attributes, innerBlocks ) {
-          return attributes.columns !== innerBlocks.length || postsToShow !== innerBlocks.length;
+          return attributes.columns !== innerBlocks.length || attributes.postsToShow !== innerBlocks.length;
         },
         migrate( attributes, innerBlocks ) {
           return [ Object.assign( {}, attributes, {

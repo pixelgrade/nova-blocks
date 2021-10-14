@@ -8,19 +8,25 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-function novablocks_get_media_composition_markup_attributes() {
-	$advanced_gallery_components_attributes = novablocks_get_media_composition_markup_component_attributes();
-	$advanced_gallery_block_attributes = novablocks_get_attributes_from_json( 'packages/block-library/src/blocks/advanced-gallery/attributes.json' );
+function novablocks_get_advanced_gallery_attributes() {
 
-	return array_merge( $advanced_gallery_components_attributes, $advanced_gallery_block_attributes );
+	return novablocks_merge_attributes_from_array( array(
+		'packages/block-library/src/blocks/advanced-gallery/attributes.json',
+		'packages/media-composition/src/attributes.json',
+		'packages/block-editor/src/filters/with-space-and-sizing/attributes.json',
+	) );
 }
 
-if ( ! function_exists( 'novablocks_render_media_composition_block' ) ) {
+if ( ! function_exists( 'novablocks_render_advanced_gallery_block' ) ) {
 
-	function novablocks_render_media_composition_block( $attributes, $content ) {
+	function novablocks_render_advanced_gallery_block( $attributes, $content ) {
 
-		$attributes_config = novablocks_get_media_composition_markup_attributes();
+		$attributes_config = novablocks_get_advanced_gallery_attributes();
 		$attributes = novablocks_get_attributes_with_defaults( $attributes, $attributes_config );
+
+		$cssProps = array_merge(
+			novablocks_get_space_and_sizing_css( $attributes ),
+		);
 
 		$classes = array_merge(
 			array( 'novablocks-gallery' ),
@@ -37,8 +43,12 @@ if ( ! function_exists( 'novablocks_render_media_composition_block' ) ) {
 
 		ob_start(); ?>
 
-		<div class="<?php echo esc_attr( join( ' ', $classes ) ); ?>">
-			<?php novablocks_render_media_composition( $attributes ); ?>
+		<div
+			class="<?php echo esc_attr( join( ' ', $classes ) ); ?>"
+			style="<?php echo join( ';', $cssProps ); ?>">
+			<div class="novablocks-media__aspect-ratio">
+				<?php novablocks_render_media_composition( $attributes ); ?>
+			</div>
 		</div>
 
 		<?php return ob_get_clean();

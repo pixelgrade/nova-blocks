@@ -1078,7 +1078,7 @@ function novablocks_get_media_composition_markup( $attributes ) {
 
 	if ( ! empty( $images ) && is_array( $images ) ) {
 
-		echo '<div class="novablocks-media-composition" style="' . $style . '">';
+		echo '<div class="novablocks-media-composition" style="' . $style . '" ' . join( ' ', $data_attributes ) . '>';
 		echo '<div class="novablocks-media-composition__grid">';
 
 		foreach ( $images as $index => $image ) {
@@ -1220,7 +1220,6 @@ function novablocks_get_overlay_filter_css( $attributes ) {
 function novablocks_get_sizing_css( $attributes ) {
 	return array(
 		'--nb-collection-gutter: ' . $attributes['layoutGutter'],
-		'--nb-grid-spacing-modifier: ' . $attributes[ 'gridGap' ],
 		'--nb-card-content-padding-multiplier: ' . $attributes[ 'contentPadding' ] / 100,
 		'--nb-card-media-padding-multiplier: ' . $attributes[ 'imagePadding' ] / 100,
 		'--nb-card-media-padding-top: ' . novablocks_get_card_media_padding_top( $attributes['thumbnailAspectRatio'] ) . '%',
