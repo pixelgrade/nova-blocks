@@ -30,7 +30,6 @@ const overwriteAttributes = ( settings ) => {
   return {
     ...settings,
     attributes: {
-      ...attributes,
       ...settings.attributes,
       ...attributesOverwrite
     }
@@ -49,7 +48,6 @@ const withColumnsDeprecated = ( settings ) => {
       {
         attributes: settings.attributes,
         isEligible( attributes, innerBlocks ) {
-          console.log( 'aici', attributes, innerBlocks );
           return attributes.columns !== innerBlocks.length || postsToShow !== innerBlocks.length;
         },
         migrate( attributes, innerBlocks ) {
@@ -88,7 +86,8 @@ registerBlockType( BLOCK_NAME, {
       noDataAlign: true,
       contentPosition: {
         attributes: true,
-        controls: true
+        controls: true,
+        deprecated: true
       },
     },
   },
