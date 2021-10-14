@@ -70,7 +70,6 @@ const SuperNovaItemContent = ( props ) => {
 
   const {
     sourceType,
-    level,
     metaAboveTitle,
     metaBelowTitle,
     title,
@@ -85,11 +84,12 @@ const SuperNovaItemContent = ( props ) => {
     showDescription,
     showButtons,
     showMeta,
+    cardTitleLevel
   } = attributes;
 
   const [ showPopover, setShowPopover ] = useState( false );
-  const TitleTagName = `h${ level + 1 }`;
-  const SubTitleTagName = `h${ level + 2 }`;
+  const TitleTagName = `h${ cardTitleLevel }`;
+  const SubTitleTagName = `h${ cardTitleLevel }`;
 
   const containerClassname = classnames(
     `supernova-item__inner-container`,
@@ -123,7 +123,7 @@ const SuperNovaItemContent = ( props ) => {
         }
         {
           showTitle &&
-          <TitleTagName className={ `novablocks-card__title block-editor-block-list__block` }>
+          <TitleTagName className={ `novablocks-card__title block-editor-block-list__block test` }>
             <RichText
               className={ `novablocks-card__title-size-modifier` }
               placeholder={ `Title` }
