@@ -1298,6 +1298,11 @@ if ( ! function_exists( 'novablocks_get_collection_output' ) ) {
 				<div class="<?php echo join( ' ', $layoutClasses ); ?>">
 					<?php echo $content; ?>
 				</div>
+				<?php if ( $attributes['scrollIndicator'] ) { ?>
+					<div class="nb-collection__scroll-indicator">
+						<svg width="160" height="50" viewBox="0 0 160 50" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M0 50C55 50 45 0 80 0C115 0 105 50 160 50H0Z" fill="currentColor"/></svg>
+					</div>
+				<?php } ?>
 			</div>
 		</div>
 

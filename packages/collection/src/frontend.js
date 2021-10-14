@@ -13,6 +13,7 @@ import {
 } from "@novablocks/utils";
 
 import './frontend/carousel';
+import './frontend/scroll-indicator';
 
 const GRID_SELECTOR = '.nb-collection__layout--parametric';
 
