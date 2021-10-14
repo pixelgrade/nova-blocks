@@ -5,6 +5,6 @@
 	},
 	"layoutGutter": {
 		"type": "number",
-		"default": 100
+		"default": 50
 	}
 }

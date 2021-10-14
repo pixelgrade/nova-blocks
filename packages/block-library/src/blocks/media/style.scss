@@ -6,9 +6,9 @@
   
   background: none !important;
 
-  --nb-card-media-padding: calc( var(--nb-spacing) * var(--nb-element-spacing-multiplier, 1) * ( 2 * var(--nb-card-media-padding-multiplier, 0) ) );
-  --nb-card-content-padding: calc( var(--nb-spacing) * var(--nb-element-spacing-multiplier, 1) * ( 2 * var(--nb-card-content-padding-multiplier, 0) ) );
-  --nb-card-layout-gap: calc( var(--nb-spacing) * var(--nb-element-spacing-multiplier, 1) * var(--nb-collection-gutter-multiplier, 0) );
+  --nb-card-media-padding: calc( var(--nb-spacing) * var(--nb-element-spacing-multiplier, 1) * 2 * var(--nb-card-media-padding-multiplier, 0) );
+  --nb-card-content-padding: calc( var(--nb-spacing) * var(--nb-element-spacing-multiplier, 1) * 2 * var(--nb-card-content-padding-multiplier, 0) );
+  --nb-card-layout-gap: calc( var(--nb-spacing) * var(--nb-element-spacing-multiplier, 1) * 2 * var(--nb-collection-gutter-multiplier, 0) );
   
   --emphasis-area-width: calc( var(--nb-emphasis-area, 100) * 1% );
 
