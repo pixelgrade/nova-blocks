@@ -26,7 +26,7 @@ function novablocks_get_supernova_attributes() {
 		'packages/block-editor/src/filters/with-content-position-matrix/attributes.json',
 		'packages/block-editor/src/filters/with-elements-visibility/attributes.json',
 		'packages/block-editor/src/filters/with-emphasis-control/attributes.json',
-		'packages/block-editor/src/filters/with-latest-posts/attributes.json',
+		'packages/block-editor/src/filters/with-content-loader/attributes.json',
 		'packages/block-editor/src/filters/with-overlay-filter/attributes.json',
 		'packages/block-editor/src/filters/with-space-and-sizing/attributes.json',
 		'packages/block-editor/src/filters/with-collection-layout/attributes.json',
