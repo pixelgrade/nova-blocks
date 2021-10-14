@@ -47,6 +47,10 @@ const updateBlock = ( block ) => {
     const { getBlockParents, getBlock } = select( 'core/block-editor' );
     const parents = getBlockParents( clientId ).slice();
 
+    if ( typeof colorSignal === "undefined" || typeof paletteVariation === "undefined" ) {
+      return false;
+    }
+
     // @todo maybe find closest parent with colorSignal support
     if ( parents.length ) {
       const parentClientId = parents.pop();
@@ -67,7 +71,7 @@ const updateBlock = ( block ) => {
           } );
         }
 
-        return;
+        return false;
       }
     }
 

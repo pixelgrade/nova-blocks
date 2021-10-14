@@ -38,6 +38,35 @@ const overwriteAttributes = ( settings ) => {
 }
 addFilter( 'blocks.registerBlockType', 'novablocks/cards-collection-overwrite', overwriteAttributes, Number.MAX_SAFE_INTEGER );
 
+const withColumnsDeprecated = ( settings ) => {
+
+  if ( settings.name !== BLOCK_NAME ) {
+    return settings;
+  }
+
+  return Object.assign( {}, settings, {
+    deprecated: [
+      {
+        attributes: settings.attributes,
+        isEligible( attributes, innerBlocks ) {
+          console.log( 'aici', attributes, innerBlocks );
+          return attributes.columns !== innerBlocks.length || postsToShow !== innerBlocks.length;
+        },
+        migrate( attributes, innerBlocks ) {
+          return [ Object.assign( {}, attributes, {
+            columns: innerBlocks.length,
+            postsToShow: innerBlocks.length,
+          } ), innerBlocks ]
+        },
+        save() {
+          return <InnerBlocks.Content />;
+        },
+      }
+    ],
+  } );
+}
+addFilter( 'blocks.registerBlockType', 'novablocks/cards-collection/with-columns-deprecated', withColumnsDeprecated, Number.MAX_SAFE_INTEGER );
+
 registerBlockType( BLOCK_NAME, {
 	title: __( 'Cards Collection (Deprecated)', '__plugin_txtd' ),
 	description: __( 'Display a list of related items placed within a coherent layout.', '__plugin_txtd' ),
@@ -68,10 +97,10 @@ registerBlockType( BLOCK_NAME, {
 		return <InnerBlocks.Content />;
 	},
   transforms,
-	getEditWrapperProps() {
-		const settings = wp.data.select( 'core/block-editor' ).getSettings();
-		return settings.alignWide ? { 'data-align': 'full' } : {};
-	},
+  getEditWrapperProps() {
+    const settings = wp.data.select( 'core/block-editor' ).getSettings();
+    return settings.alignWide ? { 'data-align': 'full' } : {};
+  },
 } );
 
 addFilter( 'editor.BlockEdit', 'novablocks/cards-collection/with-set-children-attributes', withSetChildrenAttributes, Number.MAX_SAFE_INTEGER );

@@ -1,18 +1,21 @@
+import classnames from 'classnames';
+
 /**
  * WordPress dependencies
  */
 import { useBlockProps } from "@wordpress/block-editor";
 import { select, dispatch } from "@wordpress/data";
 
-import classnames from 'classnames';
-
-import { useInnerBlocks, useInnerBlocksCount } from "@novablocks/block-editor";
-import { CollectionBody, CollectionHeader } from "@novablocks/collection";
-
 const useInnerBlocksProps = wp.blockEditor.useInnerBlocksProps || wp.blockEditor.__experimentalUseInnerBlocksProps;
 
+/**
+ * Internal dependencies
+ */
+import { useInnerBlocksCount } from "@novablocks/block-editor";
+import { CollectionBody, CollectionHeader } from "@novablocks/collection";
+import { getAlignFromMatrix } from "@novablocks/utils";
+
 import { withControlsVisibility } from "./components";
-import {getAlignFromMatrix} from "@novablocks/utils";
 
 const ALLOWED_BLOCKS = [ 'novablocks/card' ];
 

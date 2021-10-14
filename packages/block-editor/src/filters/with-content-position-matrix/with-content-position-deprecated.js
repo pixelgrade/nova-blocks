@@ -2,7 +2,7 @@ import {isUndefined} from "lodash";
 
 const withContentPositionDeprecated = ( settings ) => {
 
-  if ( !settings?.supports?.novaBlocks?.contentPosition?.deprecated ) {
+  if ( ! settings?.supports?.novaBlocks?.contentPosition?.deprecated ) {
     return settings;
   }
 
