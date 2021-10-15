@@ -5,6 +5,7 @@ import { __ } from '@wordpress/i18n';
 import { registerBlockType } from '@wordpress/blocks';
 import { InnerBlocks } from '@wordpress/block-editor';
 import { addFilter } from '@wordpress/hooks';
+import {isUndefined} from "lodash";
 
 /**
  * Internal dependencies
@@ -37,7 +38,7 @@ const overwriteAttributes = ( settings ) => {
 }
 addFilter( 'blocks.registerBlockType', 'novablocks/cards-collection-overwrite', overwriteAttributes, Number.MAX_SAFE_INTEGER );
 
-const withColumnsDeprecated = ( settings ) => {
+const withCardsCollectionDeprecated = ( settings ) => {
 
   if ( settings.name !== BLOCK_NAME ) {
     return settings;
@@ -59,11 +60,35 @@ const withColumnsDeprecated = ( settings ) => {
         save() {
           return <InnerBlocks.Content />;
         },
+      },
+      {
+        attributes: {
+          ...settings.attributes,
+          contentAlign: {
+            type: "string",
+            default: "left"
+          }
+        },
+        isEligible( attributes ) {
+          return !isUndefined( attributes.contentAlign ) && isUndefined( attributes.contentPosition );
+        },
+        migrate( attributes ) {
+
+          const { contentAlign } = attributes;
+
+          return [
+            Object.assign( {}, attributes, {
+              contentPosition: `center ${contentAlign}`
+            } )
+          ];
+
+        },
+        save: settings.save
       }
     ],
   } );
 }
-addFilter( 'blocks.registerBlockType', 'novablocks/cards-collection/with-columns-deprecated', withColumnsDeprecated, Number.MAX_SAFE_INTEGER );
+addFilter( 'blocks.registerBlockType', 'novablocks/cards-collection/deprecated', withCardsCollectionDeprecated, Number.MAX_SAFE_INTEGER );
 
 registerBlockType( BLOCK_NAME, {
 	title: __( 'Cards Collection (Deprecated)', '__plugin_txtd' ),
