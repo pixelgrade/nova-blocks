@@ -91,6 +91,9 @@ registerBlockType( BLOCK_NAME, {
       },
       spaceAndSizing: true,
       noDataAlign: true,
+      elementsVisibility: {
+        attributes: true,
+      }
     },
 	},
 	attributes,
