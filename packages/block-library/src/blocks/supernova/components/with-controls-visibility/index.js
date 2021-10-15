@@ -10,14 +10,14 @@ const withControlsVisibility = OriginalComponent => {
     } = props;
 
     useEffect( () => {
-      const { cardLayout, layoutStyle } = attributes;
+      const { cardLayout, layoutStyle, sourceType } = attributes;
 
       setControlsVisibility( {
         'minimum-container-height': cardLayout === 'stacked',
         'image-container-height': cardLayout !== 'stacked',
         'visual-balance' : layoutStyle !== 'parametric' && [ 'horizontal', 'horizontal-reverse' ].includes( cardLayout ),
         'content-to-media-spacing': cardLayout !== 'stacked',
-        'media-composition-section': cardLayout !== 'stacked',
+        'media-composition-section': cardLayout !== 'stacked' && sourceType !== 'content',
         'shape-modeling-section': cardLayout !== 'stacked',
         'scrolling-effect-section': cardLayout === 'stacked',
         'emphasis-area': cardLayout !== 'stacked',
