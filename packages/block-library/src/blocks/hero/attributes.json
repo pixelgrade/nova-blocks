@@ -30,9 +30,5 @@
 	"templateInserted": {
 	  	"type": "boolean",
 		"default": false
-	},
-	"displayInnerContent": {
-		"type": "boolean",
-		"default": true
 	}
 }

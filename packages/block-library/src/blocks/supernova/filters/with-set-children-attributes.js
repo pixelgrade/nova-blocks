@@ -12,7 +12,6 @@ const withSetChildrenAttributes = OriginalComponent => {
     const { getBlock } = useSelect( select => select( 'core/block-editor' ) );
 
     const setChildrenAttributes = useCallback( attributes => {
-
       const { innerBlocks } = getBlock( clientId );
       const newAttributes = getChildAttributes( attributes );
 
