@@ -1,6 +1,6 @@
 import classnames from 'classnames';
 
-import { Children, Fragment } from '@wordpress/element';
+import { Children } from '@wordpress/element';
 
 import { getAlignFromMatrix } from "@novablocks/utils";
 
@@ -14,7 +14,6 @@ export const Card = ( props ) => {
     media,
     attributes: {
       cardLayout,
-      contentAreaWidth,
       thumbnailAspectRatioString,
     },
   } = props;

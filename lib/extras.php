@@ -1890,15 +1890,17 @@ function novablocks_get_collection_card_markup( $media, $content, $attributes ) 
 	<div class="nb-collection__layout-item">
 		<div class="<?php echo join( ' ', $cardClasses ); ?>"
 			 style="<?php echo join( '; ', $cssProps ); ?>">
-			<div class="supernova-item__media-wrapper">
-				<div class="supernova-item__media-aspect-ratio">
-					<div class="novablocks-doppler__mask novablocks-doppler__wrapper">
-						<div class="supernova-item__media-doppler novablocks-doppler__target">
-							<?php echo $media; ?>
+			<?php if ( ! empty( $media ) && $attributes[ 'showMedia' ] ) { ?>
+				<div class="supernova-item__media-wrapper">
+					<div class="supernova-item__media-aspect-ratio">
+						<div class="novablocks-doppler__mask novablocks-doppler__wrapper">
+							<div class="supernova-item__media-doppler novablocks-doppler__target">
+								<?php echo $media; ?>
+							</div>
 						</div>
 					</div>
 				</div>
-			</div>
+			<?php } ?>
 			<?php if ( novablocks_show_card_contents( $attributes ) ) { ?>
 				<div class="<?php echo join( ' ', $contentClasses ); ?>" >
 					<div class="<?php echo join( ' ', $innerContainerClasses ); ?>" <?php echo join( ' ', $data_attributes ); ?>>
