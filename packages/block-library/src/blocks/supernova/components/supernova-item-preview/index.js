@@ -11,16 +11,17 @@ import { getColorSignalClassnames } from "@novablocks/utils";
 const SupernovaItemPreview = props => {
 
   const { attributes } = props;
+  const { showMedia, sourceType } = props;
   const className = getColorSignalClassnames( attributes, true );
   const { style, ...otherProps } = props;
 
   return (
     <Card { ...otherProps } className={ className }>
-      <CardMediaWrapper { ...props }>
+      { showMedia && <CardMediaWrapper { ...props }>
         <MediaCompositionPreview { ...props } />
-      </CardMediaWrapper>
-      { attributes.sourceType === 'fields' && <CardFieldsPreview { ...props } /> }
-      { attributes.sourceType === 'blocks' && <InnerBlocksPreview { ...props } /> }
+      </CardMediaWrapper> }
+      { sourceType === 'fields' && <CardFieldsPreview { ...props } /> }
+      { sourceType === 'blocks' && <InnerBlocksPreview { ...props } /> }
     </Card>
   )
 }

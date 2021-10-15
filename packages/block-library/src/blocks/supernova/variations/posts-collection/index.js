@@ -11,6 +11,8 @@ const attributes = {
   layoutStyle: 'parametric',
   contentPosition: 'center left',
   contentPadding: 0,
+  layoutGutter: 10,
+
   postsToShow: CARDS_COUNT,
 }
 

@@ -85,9 +85,11 @@ const SupernovaPreview = props => {
 
   return (
     <div { ...blockProps }>
-      { headerPosition === 0 && ( showCollectionTitle || showCollectionSubtitle ) && <CollectionHeader { ...props } /> }
-      { sourceType === 'content' && <PostsCollectionLayout { ...props } /> }
-      { sourceType !== 'content' && <NotPostsCollectionLayout { ...props } /> }
+      <div className="supernova__inner-container">
+        { headerPosition === 0 && ( showCollectionTitle || showCollectionSubtitle ) && <CollectionHeader { ...props } /> }
+        { sourceType === 'content' && <PostsCollectionLayout { ...props } /> }
+        { sourceType !== 'content' && <NotPostsCollectionLayout { ...props } /> }
+      </div>
     </div>
   );
 }

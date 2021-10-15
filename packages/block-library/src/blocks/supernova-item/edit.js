@@ -84,12 +84,14 @@ const SuperNovaItemContent = ( props ) => {
     showDescription,
     showButtons,
     showMeta,
-    cardTitleLevel
+    displayInnerContent,
+
+    cardTitleLevel,
   } = attributes;
 
   const [ showPopover, setShowPopover ] = useState( false );
   const TitleTagName = `h${ cardTitleLevel }`;
-  const SubTitleTagName = `h${ cardTitleLevel }`;
+  const SubTitleTagName = `h${ cardTitleLevel + 1 }`;
 
   const containerClassname = classnames(
     `supernova-item__inner-container`,
@@ -123,7 +125,7 @@ const SuperNovaItemContent = ( props ) => {
         }
         {
           showTitle &&
-          <TitleTagName className={ `novablocks-card__title block-editor-block-list__block test` }>
+          <TitleTagName className={ `novablocks-card__title block-editor-block-list__block` }>
             <RichText
               className={ `novablocks-card__title-size-modifier` }
               placeholder={ `Title` }
@@ -135,21 +137,6 @@ const SuperNovaItemContent = ( props ) => {
               allowedFormats={ [] }
             />
           </TitleTagName>
-        }
-        {
-          showMeta &&
-          <div className={ 'novablocks-card__meta block-editor-block-list__block is-style-meta' }>
-            <RichText
-              className={ `novablocks-card__meta-size-modifier` }
-              placeholder={ `Meta` }
-              tagName={ 'p' }
-              value={ metaBelowTitle }
-              onChange={ metaBelowTitle => {
-                setAttributes( { metaBelowTitle } )
-              } }
-              allowedFormats={ [] }
-            />
-          </div>
         }
         {
           showSubtitle &&
@@ -165,6 +152,21 @@ const SuperNovaItemContent = ( props ) => {
               allowedFormats={ [] }
             />
           </SubTitleTagName>
+        }
+        {
+          showMeta &&
+          <div className={ 'novablocks-card__meta block-editor-block-list__block is-style-meta' }>
+            <RichText
+              className={ `novablocks-card__meta-size-modifier` }
+              placeholder={ `Meta` }
+              tagName={ 'p' }
+              value={ metaBelowTitle }
+              onChange={ metaBelowTitle => {
+                setAttributes( { metaBelowTitle } )
+              } }
+              allowedFormats={ [] }
+            />
+          </div>
         }
         {
           showDescription &&
@@ -222,8 +224,8 @@ const SuperNovaItemContent = ( props ) => {
   }
 
   return (
-    <div { ...innerBlocksProps } />
-  )
+    displayInnerContent && <div { ...innerBlocksProps } />
+  );
 }
 
 export default SuperNovaItemEdit;

@@ -12,8 +12,7 @@ const attributes = {
 
   emphasisTopSpacing: 1,
   emphasisBottomSpacing: 1,
-  contentPadding: 50,
-  layoutGutter: 0,
+  layoutGutter: 10,
 
   postsToShow: CARDS_COUNT,
   columns: 3,

@@ -6,8 +6,8 @@ const CollectionBody = ( props ) => {
   const { align } = attributes;
 
   return (
-    <div className={ `align${ align }` }>
-      <div className="nb-collection__inner-container">
+    <div className={ `nb-collection__body  align${ align }` }>
+      <div className={ `nb-collection__inner-container` }>
         <CollectionLayout { ...props }>
           { props.children }
         </CollectionLayout>
