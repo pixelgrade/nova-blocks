@@ -41,7 +41,7 @@
 	},
 	"displayInnerContent": {
 		"type": "boolean",
-		"default": false
+		"default": true
 	},
 	"showPagination": {
 		"type": "boolean",

@@ -84,7 +84,9 @@ const SuperNovaItemContent = ( props ) => {
     showDescription,
     showButtons,
     showMeta,
-    cardTitleLevel
+    displayInnerContent,
+
+    cardTitleLevel,
   } = attributes;
 
   const [ showPopover, setShowPopover ] = useState( false );
@@ -222,8 +224,8 @@ const SuperNovaItemContent = ( props ) => {
   }
 
   return (
-    <div { ...innerBlocksProps } />
-  )
+    displayInnerContent && <div { ...innerBlocksProps } />
+  );
 }
 
 export default SuperNovaItemEdit;
