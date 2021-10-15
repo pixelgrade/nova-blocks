@@ -36,26 +36,21 @@ if ( ! function_exists( 'novablocks_render_cards_collection_block' ) ) {
 			novablocks_get_collection_layout_css( $attributes ),
 		);
 
+		$align = preg_split( '/\b\s+/', $attributes['contentPosition'] );
+
 		$classes = array(
 			'alignfull',
 			'supernova',
 			'supernova--source-type-' . $attributes[ 'sourceType' ],
-			'supernova--card-layout-' . $attributes[ 'cardLayout' ]
-		);
-
-		$align = preg_split( '/\b\s+/', $attributes['contentPosition'] );
-
-		$align_classes = array(
-			'supernova-item__content--valign-' . $align[0],
-			'supernova-item__content--halign-' . $align[1],
+			'supernova--card-layout-' . $attributes[ 'cardLayout' ],
+			'supernova--valign-' . $align[0],
+			'supernova--halign-' . $align[1],
 		);
 		
-		$block_classes = array_merge($classes, $align_classes);
-
 		ob_start(); ?>
 
 		<div
-			class="<?php echo join( ' ', $block_classes ); ?>"
+			class="<?php echo join( ' ', $classes ); ?>"
 			style="<?php echo join( ';', $cssProps ); ?>"
 			<?php echo join( " ", $data_attributes ); ?>
 		>

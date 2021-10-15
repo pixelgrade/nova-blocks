@@ -8,6 +8,8 @@ import { CollectionHeader } from "@novablocks/collection";
 
 import BlockControls from './block-controls';
 
+import { getAlignFromMatrix } from "@novablocks/utils";
+
 import {
   PostsCollectionLayout,
   NotPostsCollectionLayout,
@@ -62,6 +64,7 @@ const SupernovaPreview = props => {
     minHeightFallback
   } = attributes;
 
+  const contentAlign = getAlignFromMatrix( attributes?.contentPosition );
 
   const className = classnames(
     props.className,
@@ -74,6 +77,8 @@ const SupernovaPreview = props => {
     },
     'alignfull',
     `block-is-${ align }`,
+    `supernova--valign-${ contentAlign[0] }`,
+    `supernova--halign-${ contentAlign[1] }`,
   );
 
   const blockProps = useBlockProps( {
