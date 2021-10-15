@@ -42,11 +42,15 @@ if ( ! function_exists( 'novablocks_render_supernova_block' ) ) {
 		$data_attributes_array = array_map( 'novablocks_camel_case_to_kebab_case', array_keys( $attributes ) );
 		$data_attributes       = novablocks_get_data_attributes( $data_attributes_array, $attributes );
 
+		$align = preg_split( '/\b\s+/', $attributes['contentPosition'] );
+
 		$classes = array(
 			'alignfull',
 			'supernova',
 			'supernova--source-type-' . $attributes['sourceType'],
-			'supernova--card-layout-' . $attributes['cardLayout']
+			'supernova--card-layout-' . $attributes['cardLayout'],
+			'supernova--valign-' . $align[0],
+			'supernova--halign-' . $align[1],
 		);
 
 		if ( $attributes['columns'] === 1 ) {
