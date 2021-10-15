@@ -6,21 +6,29 @@
 @import 'scss/content-alignments';
 
 .supernova {
-  position: relative;
-  @include layout-grid;
+  --emphasis-area-width: calc( var(--nb-emphasis-area, 100) * 1% );
+
   grid-column: var(--all-columns);
 
-  --emphasis-area-width: calc( var(--nb-emphasis-area, 100) * 1% );
   background: none !important;
-
   @include block-background;
-  
+
   &.supernova--has-minimum-height:not([data-scrolling-effect="doppler"]) {
   
     .supernova-item__media-aspect-ratio {
       --nb-card-media-padding-top: var(--nb-minimum-container-height);
     }
   }
+}
+
+.supernova__inner-container {
+  // stack above block background
+  position: relative;
+
+  // apply our default grid layout and remove padding-left inherited from __inner-container
+  @include layout-grid;
+  padding-left: 0 !important;
+  padding-right: 0 !important;
 }
 
 /*
@@ -39,36 +47,3 @@
 .nb-collection__inner-container {
   position: relative;
 }
-
-/*
- * Hero
- */
-.supernova {
-
-  &.supernova--card-layout-stacked {
-
-    &.supernova--one-column {
-    
-      .nb-collection__layout,
-      .nb-collection__layout-item {
-        --nb-block-top-spacing: 0
-      }
-  
-      > .alignfull {
-    
-        > [class*='__inner-container'] {
-          padding-left: 0;
-          padding-right: 0;
-        }
-      }
-    }
-  }
-  
-  &:not(.supernova-layout-one-column) {
-    
-    .nb-collection__header + .nb-collection__body  .nb-collection__inner-container > :first-child {
-      --nb-block-top-spacing: 1;
-    }
-  }
-}
-

@@ -16,18 +16,16 @@ const CollectionSubtitle = ( props ) => {
   }
 
   return (
-    <div className="block-editor-block-list__block wp-block novablocks-collection__subtitle">
-      <RichText
-        tagName={ 'p' }
-        className={ 'is-style-lead' }
-        value={ subtitle }
-        placeholder={ __( 'Collection subtitle', '__plugin_txtd' ) }
-        onChange={ subtitle => {
-          setAttributes( { subtitle } );
-        } }
-        allowedFormats={ [] }
-      />
-    </div>
+    <RichText
+      tagName={ 'p' }
+      className={ 'novablocks-collection__subtitle is-style-lead' }
+      value={ subtitle }
+      placeholder={ __( 'Collection subtitle', '__plugin_txtd' ) }
+      onChange={ subtitle => {
+        setAttributes( { subtitle } );
+      } }
+      allowedFormats={ [] }
+    />
   )
 };
 

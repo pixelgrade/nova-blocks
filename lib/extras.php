@@ -1901,7 +1901,7 @@ function novablocks_get_collection_card_markup( $media, $content, $attributes ) 
 					</div>
 				</div>
 			<?php } ?>
-			<?php if ( novablocks_show_card_contents( $attributes ) ) { ?>
+			<?php if ( novablocks_show_card_contents( $attributes ) && ! empty( $content ) ) { ?>
 				<div class="<?php echo join( ' ', $contentClasses ); ?>" >
 					<div class="<?php echo join( ' ', $innerContainerClasses ); ?>" <?php echo join( ' ', $data_attributes ); ?>>
 						<?php echo $content; ?>
@@ -1935,6 +1935,7 @@ function novablocks_get_collection_card_markup_from_post( $post, $attributes ) {
 
 
 function novablocks_get_card_contents( $attributes ) {
+
 	ob_start();
 
 	echo novablocks_get_card_item_meta( $attributes['metaAboveTitle'], $attributes );
@@ -1952,9 +1953,9 @@ function novablocks_get_card_contents( $attributes ) {
 }
 
 function novablocks_get_card_item_meta( $metaValue, $attributes ) {
-	ob_start(); ?>
+	ob_start();
 
-	<?php if ( false !== $attributes['showMeta'] && ! empty( $metaValue ) ) { ?>
+	if ( false !== $attributes['showMeta'] && ! empty( $metaValue ) ) { ?>
 		<p class="nb-grid__item-meta novablocks-card__meta is-style-meta">
 			<span class="novablocks-card__meta-size-modifier">
 				<?php echo $metaValue; ?>
@@ -1996,17 +1997,30 @@ function novablocks_get_card_item_description( $description, $attributes ) {
 }
 
 function novablocks_get_card_item_buttons( $buttons, $attributes ) {
-	ob_start();
 
-	if ( ! empty( $attributes['showButtons'] ) && ! empty( $buttons ) ) { ?>
-		<div class="nb-grid__item-buttons novablocks-card__buttons">
-			<?php foreach ( $buttons as $button ) { ?>
+	$buttons_markup = '';
+
+	if ( ! empty( $buttons ) ) {
+		ob_start();
+
+		foreach ( $buttons as $button ) {
+			if ( ! empty ( $button[ 'text' ] ) ) { ?>
 				<div class="wp-block-button is-style-text">
 					<a class="wp-block-button__link" href="<?php echo $button['url'] ?>">
 						<span class="novablocks-card__buttons-size-modifier"><?php echo $button['text']; ?></span>
 					</a>
 				</div>
-			<?php } ?>
+			<?php }
+		}
+
+		$buttons_markup = ob_get_clean();
+	}
+
+	ob_start();
+
+	if ( ! empty( $attributes['showButtons'] ) && ! empty( $buttons_markup ) ) { ?>
+		<div class="nb-grid__item-buttons novablocks-card__buttons">
+			<?php echo $buttons_markup; ?>
 		</div>
 	<?php }
 
