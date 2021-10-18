@@ -35,8 +35,7 @@ const cardsCollection = {
   icon: getSvg( iconSvg ),
   attributes,
   innerBlocks: Array.from( Array( 3 ) ).map( () => [ 'novablocks/supernova-item', innerBlockAttributes ] ),
-  isActive: ( block, variation ) => block.variation === variation.variation,
-  scope: [ 'block', 'inserter', 'transform' ]
+  isActive: ( block, variation ) => block.variation === variation.variation
 }
 
 export default cardsCollection;

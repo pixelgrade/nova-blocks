@@ -227,7 +227,8 @@ function novablocks_register_block_types() {
 
 	$bully_dependent_scripts = array(
 		'novablocks/hero/frontend',
-		'novablocks/slideshow/frontend'
+		'novablocks/slideshow/frontend',
+		'novablocks/supernova/frontend'
 	);
 
 	$google_maps_api_dependent_scripts = array(

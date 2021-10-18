@@ -1,4 +1,5 @@
 import { CollectionLayout } from '../index';
+import { ScrollIndicator } from '../index';
 
 const CollectionBody = ( props ) => {
 
@@ -11,6 +12,7 @@ const CollectionBody = ( props ) => {
         <CollectionLayout { ...props }>
           { props.children }
         </CollectionLayout>
+        <ScrollIndicator {...props}/>
       </div>
     </div>
   );
