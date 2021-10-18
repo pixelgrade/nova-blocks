@@ -21,19 +21,50 @@ ready( () => {
   // Get the Palette Basis Offset value to use it as the top most reference variation
   const siteVariation = getSiteColorVariation();
 
-  updateAllBlocksSignal( siteVariation );
+  updateColors( siteVariation );
 
   // If we are inside the Customize Preview iframe, update the palette variation for all blocks
   // every time the Palette Basis Offset value is changed
   if ( parent?.wp?.customize ) {
     parent.wp.customize( 'sm_site_color_variation', setting => {
       setting.bind( ( newValue, oldValue ) => {
-        updateAllBlocksSignal( newValue );
+        updateColors( newValue );
       } );
     } )
   }
 
 } );
+
+const updateColors = ( siteVariation ) => {
+  updateAllBlocksSignal( siteVariation );
+  updateScrollIndicator();
+}
+
+const updateScrollIndicator = () => {
+  const blocks = document.querySelectorAll( '[data-scroll-indicator]' );
+  const blocksArray = [ ...blocks ].filter( block => !! block.dataset.scrollIndicator );
+
+  blocksArray.forEach( block => {
+    const indicator = block.querySelector( '.nb-collection__scroll-indicator' );
+    const nextElement = block.nextElementSibling;
+
+    console.log( indicator, !! nextElement?.dataset?.colorSignal );
+
+    if ( !! indicator && !! nextElement?.dataset?.colorSignal ) {
+      const attributes = nextElement.dataset;
+      const colorClasses = getColorSignalClassnames( attributes, true );
+
+      colorClasses.split( " " ).forEach( className => {
+        indicator.classList.add( className );
+      } );
+
+      indicator.dataset.palette = attributes.palette;
+      indicator.dataset.paletteVariation = attributes.paletteVariation;
+      indicator.dataset.useSourceColorAsReference = attributes.useSourceColorAsReference;
+    }
+
+  } );
+}
 
 /**
  *  * If the Palette Basis Offset value has been changed after the content has been created

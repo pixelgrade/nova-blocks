@@ -6,13 +6,18 @@
   
   display: flex;
   justify-content: center;
-  color: var(--nb-bg-color);
-  
+
   z-index: 9999;
   
   transition: all .3s ease-out;
   transition-property: opacity;
   cursor: pointer;
+
+  background: none !important;
+
+  svg {
+    fill: var(--nb-bg-color);
+  }
   
   &:after {
     content: '';
@@ -22,7 +27,7 @@
     
     width: 12px;
     height: 12px;
-    border: 2px solid currentColor;
+    border: 2px solid var(--nb-fg2-color);
     border-left: 0;
     border-top: 0;
     

@@ -50,9 +50,5 @@
 	"multiplePlaceholderImages": {
 		"type": "boolean",
 		"default": false
-	},
-	"cardMediaOpacity": {
-		"type": "number",
-		"default": 100
 	}
 }

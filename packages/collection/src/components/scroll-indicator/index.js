@@ -1,8 +1,6 @@
 const ScrollIndicator = ( props ) => {
-  const {
-    attributes,
-  } = props;
 
+  const { attributes } = props;
   const { scrollIndicator } = attributes;
 
   if ( ! scrollIndicator ) {
@@ -10,7 +8,7 @@ const ScrollIndicator = ( props ) => {
   }
 
   return (
-    <div className="nb-collection__scroll-indicator"/>
+    <div className="nb-collection__scroll-indicator" />
   )
 }
 
