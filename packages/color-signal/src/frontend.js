@@ -45,10 +45,19 @@ const updateScrollIndicator = () => {
   const blocksArray = [ ...blocks ].filter( block => !! block.dataset.scrollIndicator );
 
   blocksArray.forEach( block => {
-    const indicator = block.querySelector( '.nb-collection__scroll-indicator' );
+    const indicator = block.querySelector( '.nb-scroll-indicator' );
     const nextElement = block.nextElementSibling;
 
-    console.log( indicator, !! nextElement?.dataset?.colorSignal );
+    if ( ! nextElement ) {
+      return;
+    }
+
+    const nextElementStyles = window.getComputedStyle( nextElement );
+    const marginTop = nextElementStyles.getPropertyValue( 'margin-top' );
+
+    if ( parseInt( marginTop, 10 ) !== 0 ) {
+      return;
+    }
 
     if ( !! indicator && !! nextElement?.dataset?.colorSignal ) {
       const attributes = nextElement.dataset;

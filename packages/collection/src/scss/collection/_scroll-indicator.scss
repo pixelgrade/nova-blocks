@@ -1,4 +1,4 @@
-.nb-collection__scroll-indicator {
+.nb-scroll-indicator {
   position: absolute;
   right: 0;
   bottom: 0;
@@ -7,7 +7,7 @@
   display: flex;
   justify-content: center;
 
-  z-index: 9999;
+  z-index: 10;
   
   transition: all .3s ease-out;
   transition-property: opacity;
@@ -35,11 +35,11 @@
   }
 }
 
-.nb-collection__scroll-indicator--hidden {
+.nb-scroll-indicator--hidden {
   opacity: 0;
 }
 
-.nb-collection__scroll-indicator:not(.nb-collection__scroll-indicator--middle) {
+.nb-scroll-indicator:not(.nb-scroll-indicator--middle) {
   width: 160px;
   height: 50px;
   

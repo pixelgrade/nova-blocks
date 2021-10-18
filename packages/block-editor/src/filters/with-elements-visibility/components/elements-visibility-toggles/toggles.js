@@ -38,7 +38,7 @@ const heroToggles = [
     attribute: 'positionIndicators'
   }, {
     label: __( 'Scroll Indicator', '__plugin_txtd' ),
-    attribute: 'scrollIndicator'
+    attribute: 'scrollIndicatorBlock'
   },
   {
     label: __( 'Inner Content', '__plugin_txtd' ),

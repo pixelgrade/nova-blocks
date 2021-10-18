@@ -44,7 +44,7 @@ const HeroPreview = props => {
 			<HeroBackground { ...props } />
 			<div className="novablocks-hero__foreground novablocks-doppler__foreground novablocks-u-content-padding novablocks-u-content-align">
 				{ displayInnerContent && <div { ...innerBlocksProps } /> }
-				{ scrollIndicator && <div className="novablocks-hero__indicator"></div> }
+				{ scrollIndicator && <div className="nb-scroll-indicator"></div> }
 			</div>
     </Fragment>
 	);

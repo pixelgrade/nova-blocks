@@ -81,17 +81,6 @@ if ( ! function_exists( 'novablocks_render_hero_block' ) ) {
 
 		$mediaStyle = novablocks_get_focal_point_style( $attributes['focalPoint'] );
 
-		$scrollIndicator = ! empty( $attributes['scrollIndicatorBlock'] );
-		$scrollIndicatorClasses = array( 'novablocks-hero__indicator' );
-
-		$heroHeight = $attributes[ 'scrollingEffect' ] === 'doppler' ? $attributes[ 'minHeightFallback' ] * 2 : $attributes[ 'minHeightFallback' ];
-
-		if ( $heroHeight > 100 ) {
-			$scrollIndicatorClasses[] = 'novablocks-hero__indicator--middle';
-		}
-
-		$scrollIndicatorClass = join( ' ', $scrollIndicatorClasses );
-
 		ob_start();
 
 		do_action( 'novablocks_hero:before' );
@@ -138,11 +127,7 @@ if ( ! function_exists( 'novablocks_render_hero_block' ) ) {
 						echo $content;
 					} ?>
                 </div>
-				<?php if ( $scrollIndicator ) { ?>
-                    <div class="<?php echo esc_attr( $scrollIndicatorClass ); ?>">
-                        <?php echo $novablocks_settings['hero']['scrollIndicatorMarkup']; ?>
-                    </div>
-				<?php } ?>
+				<?php novablocks_render_scroll_indicator( $attributes ); ?>
             </div>
 
 			<?php do_action( 'novablocks_hero:before_closing_tag', $attributes ) ?>

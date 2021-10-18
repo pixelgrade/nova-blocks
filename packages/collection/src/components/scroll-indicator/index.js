@@ -8,7 +8,7 @@ const ScrollIndicator = ( props ) => {
   }
 
   return (
-    <div className="nb-collection__scroll-indicator" />
+    <div className="nb-scroll-indicator" />
   )
 }
 
