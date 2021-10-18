@@ -1,9 +1,4 @@
-import {
-  attributes as mediaCompositionAttributes,
-  getRandomAttributes
-} from '@novablocks/media-composition';
-
-import iconSvg from './advanced-gallery-block.svg';
+import { getRandomAttributes } from '@novablocks/media-composition';
 
 import {
 	generateDefaults,
@@ -20,9 +15,8 @@ import edit from './edit';
 import deprecated from './deprecated';
 import transforms from './transforms';
 
-import blockAttributes from './attributes';
-
-const attributes = Object.assign( {}, blockAttributes, mediaCompositionAttributes );
+import iconSvg from './advanced-gallery-block.svg';
+import attributes from './attributes';
 
 /**
  * WordPress dependencies
@@ -59,11 +53,16 @@ registerBlockType( 'novablocks/advanced-gallery', {
 		align: [ 'wide', 'full' ],
     html: false,
     novaBlocks: {
-      shapeModeling: true
+      mediaComposition: true,
+      spaceAndSizing: true,
     }
 	},
 	// Additional search terms
-	keywords: [ __( 'image with text', '__plugin_txtd' ), __( 'columns', '__plugin_txtd' ), __( 'side text', '__plugin_txtd' ) ],
+	keywords: [
+	  __( 'image with text', '__plugin_txtd' ),
+    __( 'columns', '__plugin_txtd' ),
+    __( 'side text', '__plugin_txtd' )
+  ],
 	edit,
 	save() {
 		return false;

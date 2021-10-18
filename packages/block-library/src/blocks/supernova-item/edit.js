@@ -70,7 +70,6 @@ const SuperNovaItemContent = ( props ) => {
 
   const {
     sourceType,
-    level,
     metaAboveTitle,
     metaBelowTitle,
     title,
@@ -85,16 +84,26 @@ const SuperNovaItemContent = ( props ) => {
     showDescription,
     showButtons,
     showMeta,
+    displayInnerContent,
+
+    cardTitleLevel,
   } = attributes;
 
   const [ showPopover, setShowPopover ] = useState( false );
-  const TitleTagName = `h${ level + 1 }`;
-  const SubTitleTagName = `h${ level + 2 }`;
+  const TitleTagName = `h${ cardTitleLevel }`;
+  const SubTitleTagName = `h${ cardTitleLevel + 1 }`;
 
   const containerClassname = classnames(
     `supernova-item__inner-container`,
     getColorSignalClassnames( attributes, true )
   );
+
+  const innerBlocksProps = useInnerBlocksProps( {
+    className: classnames(
+      'supernova-item__inner-container',
+      getColorSignalClassnames( attributes, true )
+    )
+  } );
 
   if ( sourceType === 'fields' ) {
     return (
@@ -130,21 +139,6 @@ const SuperNovaItemContent = ( props ) => {
           </TitleTagName>
         }
         {
-          showMeta &&
-          <div className={ 'novablocks-card__meta block-editor-block-list__block is-style-meta' }>
-            <RichText
-              className={ `novablocks-card__meta-size-modifier` }
-              placeholder={ `Meta` }
-              tagName={ 'p' }
-              value={ metaBelowTitle }
-              onChange={ metaBelowTitle => {
-                setAttributes( { metaBelowTitle } )
-              } }
-              allowedFormats={ [] }
-            />
-          </div>
-        }
-        {
           showSubtitle &&
           <SubTitleTagName className={ `novablocks-card__subtitle block-editor-block-list__block` }>
             <RichText
@@ -158,6 +152,21 @@ const SuperNovaItemContent = ( props ) => {
               allowedFormats={ [] }
             />
           </SubTitleTagName>
+        }
+        {
+          showMeta &&
+          <div className={ 'novablocks-card__meta block-editor-block-list__block is-style-meta' }>
+            <RichText
+              className={ `novablocks-card__meta-size-modifier` }
+              placeholder={ `Meta` }
+              tagName={ 'p' }
+              value={ metaBelowTitle }
+              onChange={ metaBelowTitle => {
+                setAttributes( { metaBelowTitle } )
+              } }
+              allowedFormats={ [] }
+            />
+          </div>
         }
         {
           showDescription &&
@@ -214,16 +223,9 @@ const SuperNovaItemContent = ( props ) => {
     )
   }
 
-  const innerBlocksProps = useInnerBlocksProps( {
-    className: classnames(
-      'supernova-item__inner-container',
-      getColorSignalClassnames( attributes, true )
-    )
-  } );
-
   return (
-    <div { ...innerBlocksProps } />
-  )
+    displayInnerContent && <div { ...innerBlocksProps } />
+  );
 }
 
 export default SuperNovaItemEdit;

@@ -5,6 +5,7 @@ import { __ } from '@wordpress/i18n';
 import { registerBlockType } from '@wordpress/blocks';
 import { InnerBlocks } from '@wordpress/block-editor';
 import { addFilter } from '@wordpress/hooks';
+import {isUndefined} from "lodash";
 
 /**
  * Internal dependencies
@@ -30,13 +31,64 @@ const overwriteAttributes = ( settings ) => {
   return {
     ...settings,
     attributes: {
-      ...attributes,
       ...settings.attributes,
       ...attributesOverwrite
     }
   };
 }
 addFilter( 'blocks.registerBlockType', 'novablocks/cards-collection-overwrite', overwriteAttributes, Number.MAX_SAFE_INTEGER );
+
+const withCardsCollectionDeprecated = ( settings ) => {
+
+  if ( settings.name !== BLOCK_NAME ) {
+    return settings;
+  }
+
+  return Object.assign( {}, settings, {
+    deprecated: [
+      {
+        attributes: settings.attributes,
+        isEligible( attributes, innerBlocks ) {
+          return attributes.columns !== innerBlocks.length || attributes.postsToShow !== innerBlocks.length;
+        },
+        migrate( attributes, innerBlocks ) {
+          return [ Object.assign( {}, attributes, {
+            columns: innerBlocks.length,
+            postsToShow: innerBlocks.length,
+          } ), innerBlocks ]
+        },
+        save() {
+          return <InnerBlocks.Content />;
+        },
+      },
+      {
+        attributes: {
+          ...settings.attributes,
+          contentAlign: {
+            type: "string",
+            default: "left"
+          }
+        },
+        isEligible( attributes ) {
+          return !isUndefined( attributes.contentAlign ) && isUndefined( attributes.contentPosition );
+        },
+        migrate( attributes ) {
+
+          const { contentAlign } = attributes;
+
+          return [
+            Object.assign( {}, attributes, {
+              contentPosition: `center ${contentAlign}`
+            } )
+          ];
+
+        },
+        save: settings.save
+      }
+    ],
+  } );
+}
+addFilter( 'blocks.registerBlockType', 'novablocks/cards-collection/deprecated', withCardsCollectionDeprecated, Number.MAX_SAFE_INTEGER );
 
 registerBlockType( BLOCK_NAME, {
 	title: __( 'Cards Collection (Deprecated)', '__plugin_txtd' ),
@@ -59,7 +111,8 @@ registerBlockType( BLOCK_NAME, {
       noDataAlign: true,
       contentPosition: {
         attributes: true,
-        controls: true
+        controls: true,
+        deprecated: true
       },
     },
   },
@@ -68,10 +121,10 @@ registerBlockType( BLOCK_NAME, {
 		return <InnerBlocks.Content />;
 	},
   transforms,
-	getEditWrapperProps() {
-		const settings = wp.data.select( 'core/block-editor' ).getSettings();
-		return settings.alignWide ? { 'data-align': 'full' } : {};
-	},
+  getEditWrapperProps() {
+    const settings = wp.data.select( 'core/block-editor' ).getSettings();
+    return settings.alignWide ? { 'data-align': 'full' } : {};
+  },
 } );
 
 addFilter( 'editor.BlockEdit', 'novablocks/cards-collection/with-set-children-attributes', withSetChildrenAttributes, Number.MAX_SAFE_INTEGER );

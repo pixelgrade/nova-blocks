@@ -21,7 +21,8 @@ const MediaPreview = ( props ) => {
     images,
 
     palette,
-    useSourceColorAsReference,
+    contentColorSignal,
+    contentPaletteVariation,
 	} = attributes;
 
 	const passedProps = props;
@@ -30,29 +31,21 @@ const MediaPreview = ( props ) => {
 		passedProps.attributes.images = images.map( image => JSON.parse( image ) );
 	}
 
-//	const cssVars = {
-//		'--nb-emphasis-area': emphasisArea,
-//    '--nb-card-content-padding-multiplier': contentPadding / 100,
-//		'--nb-media-content-width': `${ contentAreaWidth }%`,
-//		'--nb-media-layout-gutter': layoutGutter,
-//	};
-
 	const blockClassNames = classnames(
 		`novablocks-block`,
 		`content-is-${ contentStyle }`,
     getColorSignalClassnames( attributes, true ),
   );
 
-	const contentVariation = getContentVariationBySignal( attributes );
-
 	const contentClassNames = classnames(
     `novablocks-media__inner-container`,
     `novablocks-block__content`,
-    `sm-palette-${ palette }`,
-    `sm-variation-${ contentVariation }`,
-    {
-      'sm-palette--shifted': useSourceColorAsReference
-    }
+    getColorSignalClassnames( {
+      palette,
+      colorSignal: contentColorSignal,
+      paletteVariation: contentPaletteVariation,
+      useSourceColorAsReference: false
+    }, true )
   );
 
   return (

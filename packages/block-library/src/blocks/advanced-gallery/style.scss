@@ -1,3 +1,13 @@
-.something-else {
-	color: blue;
+.novablocks-media__aspect-ratio {
+  position: relative;
+
+  &:before {
+    content: "";
+    padding-top: var(--nb-card-media-padding-top, 100%);
+    display: block;
+  }
+
+  > .novablocks-media-composition {
+    @include cover;
+  }
 }

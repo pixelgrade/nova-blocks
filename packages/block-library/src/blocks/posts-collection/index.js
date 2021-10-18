@@ -34,7 +34,7 @@ registerBlockType( 'novablocks/posts-collection', {
       colorSignal: true,
       collectionLayout: true,
       elementsVisibility: true,
-      latestPosts: true,
+      contentLoader: true,
       overlayFilter: true,
       spaceAndSizing: true,
       noDataAlign: true,

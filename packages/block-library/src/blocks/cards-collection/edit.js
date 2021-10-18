@@ -1,26 +1,23 @@
+import classnames from 'classnames';
+
 /**
  * WordPress dependencies
  */
 import { useBlockProps } from "@wordpress/block-editor";
 import { select, dispatch } from "@wordpress/data";
 
-import classnames from 'classnames';
-
-import { useInnerBlocks, useInnerBlocksCount } from "@novablocks/block-editor";
-import { CollectionBody, CollectionHeader } from "@novablocks/collection";
-
 const useInnerBlocksProps = wp.blockEditor.useInnerBlocksProps || wp.blockEditor.__experimentalUseInnerBlocksProps;
 
+/**
+ * Internal dependencies
+ */
+import { useInnerBlocksCount } from "@novablocks/block-editor";
+import { CollectionBody, CollectionHeader } from "@novablocks/collection";
+import { getAlignFromMatrix } from "@novablocks/utils";
+
 import { withControlsVisibility } from "./components";
-import {getAlignFromMatrix} from "@novablocks/utils";
 
 const ALLOWED_BLOCKS = [ 'novablocks/card' ];
-
-const CARDS_COLLECTION_TEMPLATE = [
-	[ 'novablocks/card' ],
-	[ 'novablocks/card' ],
-	[ 'novablocks/card' ],
-];
 
 const CardsCollectionEdit = ( props ) => {
 
@@ -47,12 +44,13 @@ const CardsCollectionEdit = ( props ) => {
     className: 'nb-collection__layout nb-collection__layout--classic',
   }, {
     allowedBlocks: ALLOWED_BLOCKS,
-    template: CARDS_COLLECTION_TEMPLATE,
     renderAppender: false,
     templateInsertUpdatesSelection: false
   } );
 
-  useInnerBlocksCount( clientId, attributes, 'novablocks/card', attributes );
+  const { title, subtitle, ...innerBlockAttributes } = attributes;
+
+  useInnerBlocksCount( clientId, attributes, 'novablocks/card', innerBlockAttributes );
 
   return (
     <div { ...blockProps }>

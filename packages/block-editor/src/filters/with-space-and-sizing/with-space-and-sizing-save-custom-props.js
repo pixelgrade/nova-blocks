@@ -1,5 +1,5 @@
-import { getSupports } from "../../utils";
 import { getSpacingCSSProps } from "@novablocks/utils";
+import { getSupports } from "../../utils";
 
 const withSpaceAndSizingSaveCustomProps = ( element, blockType, attributes ) => {
 

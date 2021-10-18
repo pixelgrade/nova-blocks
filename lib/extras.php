@@ -1078,7 +1078,7 @@ function novablocks_get_media_composition_markup( $attributes ) {
 
 	if ( ! empty( $images ) && is_array( $images ) ) {
 
-		echo '<div class="novablocks-media-composition" style="' . $style . '">';
+		echo '<div class="novablocks-media-composition" style="' . $style . '" ' . join( ' ', $data_attributes ) . '>';
 		echo '<div class="novablocks-media-composition__grid">';
 
 		foreach ( $images as $index => $image ) {
@@ -1219,13 +1219,13 @@ function novablocks_get_overlay_filter_css( $attributes ) {
 
 function novablocks_get_sizing_css( $attributes ) {
 	return array(
-		'--nb-collection-gutter: ' . $attributes['layoutGutter'],
-		'--nb-grid-spacing-modifier: ' . $attributes[ 'gridGap' ],
-		'--nb-card-content-padding-multiplier: ' . $attributes[ 'contentPadding' ] / 100,
-		'--nb-card-media-padding-multiplier: ' . $attributes[ 'imagePadding' ] / 100,
+		'--nb-collection-gutter-multiplier: ' . $attributes['layoutGutter'] / 100,
+		'--nb-card-content-padding-multiplier: ' . $attributes['contentPadding'] / 100,
+		'--nb-card-media-padding-multiplier: ' . $attributes['imagePadding'] / 100,
 		'--nb-card-media-padding-top: ' . novablocks_get_card_media_padding_top( $attributes['thumbnailAspectRatio'] ) . '%',
 		'--nb-card-media-object-fit: ' . ( $attributes['imageResizing'] === 'cropped' ? 'cover' : 'scale-down' ),
 		'--nb-minimum-container-height: ' . $attributes['minHeightFallback'] . 'vh',
+		'--nb-card-content-area-width: ' . $attributes['contentAreaWidth'] . '%',
 	);
 }
 
@@ -1911,16 +1911,18 @@ function novablocks_get_collection_card_markup( $media, $content, $attributes ) 
 	<div class="nb-collection__layout-item">
 		<div class="<?php echo join( ' ', $cardClasses ); ?>"
 			 style="<?php echo join( '; ', $cssProps ); ?>">
-			<div class="supernova-item__media-wrapper">
-				<div class="supernova-item__media-aspect-ratio">
-					<div class="novablocks-doppler__mask novablocks-doppler__wrapper">
-						<div class="supernova-item__media-doppler novablocks-doppler__target">
-							<?php echo $media; ?>
+			<?php if ( ! empty( $media ) && $attributes[ 'showMedia' ] ) { ?>
+				<div class="supernova-item__media-wrapper">
+					<div class="supernova-item__media-aspect-ratio">
+						<div class="novablocks-doppler__mask novablocks-doppler__wrapper">
+							<div class="supernova-item__media-doppler novablocks-doppler__target">
+								<?php echo $media; ?>
+							</div>
 						</div>
 					</div>
 				</div>
-			</div>
-			<?php if ( novablocks_show_card_contents( $attributes ) ) { ?>
+			<?php } ?>
+			<?php if ( novablocks_show_card_contents( $attributes ) && ! empty( $content ) ) { ?>
 				<div class="<?php echo join( ' ', $contentClasses ); ?>" >
 					<div class="<?php echo join( ' ', $innerContainerClasses ); ?>" <?php echo join( ' ', $data_attributes ); ?>>
 						<?php echo $content; ?>
@@ -1954,6 +1956,7 @@ function novablocks_get_collection_card_markup_from_post( $post, $attributes ) {
 
 
 function novablocks_get_card_contents( $attributes ) {
+
 	ob_start();
 
 	echo novablocks_get_card_item_meta( $attributes['metaAboveTitle'], $attributes );
@@ -1971,9 +1974,9 @@ function novablocks_get_card_contents( $attributes ) {
 }
 
 function novablocks_get_card_item_meta( $metaValue, $attributes ) {
-	ob_start(); ?>
+	ob_start();
 
-	<?php if ( false !== $attributes['showMeta'] && ! empty( $metaValue ) ) { ?>
+	if ( false !== $attributes['showMeta'] && ! empty( $metaValue ) ) { ?>
 		<p class="nb-grid__item-meta novablocks-card__meta is-style-meta">
 			<span class="novablocks-card__meta-size-modifier">
 				<?php echo $metaValue; ?>
@@ -2015,17 +2018,30 @@ function novablocks_get_card_item_description( $description, $attributes ) {
 }
 
 function novablocks_get_card_item_buttons( $buttons, $attributes ) {
-	ob_start();
 
-	if ( ! empty( $attributes['showButtons'] ) && ! empty( $buttons ) ) { ?>
-		<div class="nb-grid__item-buttons novablocks-card__buttons">
-			<?php foreach ( $buttons as $button ) { ?>
+	$buttons_markup = '';
+
+	if ( ! empty( $buttons ) ) {
+		ob_start();
+
+		foreach ( $buttons as $button ) {
+			if ( ! empty ( $button[ 'text' ] ) ) { ?>
 				<div class="wp-block-button is-style-text">
 					<a class="wp-block-button__link" href="<?php echo $button['url'] ?>">
 						<span class="novablocks-card__buttons-size-modifier"><?php echo $button['text']; ?></span>
 					</a>
 				</div>
-			<?php } ?>
+			<?php }
+		}
+
+		$buttons_markup = ob_get_clean();
+	}
+
+	ob_start();
+
+	if ( ! empty( $attributes['showButtons'] ) && ! empty( $buttons_markup ) ) { ?>
+		<div class="nb-grid__item-buttons novablocks-card__buttons">
+			<?php echo $buttons_markup; ?>
 		</div>
 	<?php }
 

@@ -24,3 +24,12 @@
     }
   }
 }
+
+.supernova {
+  
+  @each $align in left, center, right {
+    &--halign-#{ $align } {
+      text-align: $align;
+    }
+  }
+}

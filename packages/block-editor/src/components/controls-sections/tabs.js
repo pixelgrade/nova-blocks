@@ -52,7 +52,7 @@ const ActiveSectionTabs = ( props ) => {
 	const [ activeTabLabel, setActiveTabLabel ] = useMemoryState( 'activeTab', tabs[0].props.label );
 	const existingTab = useMemo( () => tabs.some( tab => activeTabLabel === tab.props.label ), [ tabs, activeTabLabel ] );
 
-	useEffect( () => {
+  useEffect( () => {
 
     if ( ! existingTab ) {
       setActiveTabLabel( tabs[0].props.label );

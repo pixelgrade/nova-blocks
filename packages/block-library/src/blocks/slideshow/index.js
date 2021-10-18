@@ -88,6 +88,9 @@ registerBlockType( 'novablocks/slideshow', {
       },
       spaceAndSizing: true,
       noDataAlign: true,
+      elementsVisibility: {
+        attributes: true,
+      }
     },
   },
 	edit,

@@ -12,7 +12,7 @@ const withLatestPosts = createHigherOrderComponent( BlockEdit => {
     const { preventDuplicatePosts } = attributes;
     const supports = useSupports( props.name );
 
-    if ( ! supports?.novaBlocks?.latestPosts ) {
+    if ( ! supports?.novaBlocks?.contentLoader ) {
       return <BlockEdit { ...props } />
     }
 

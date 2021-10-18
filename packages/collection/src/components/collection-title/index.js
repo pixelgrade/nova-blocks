@@ -17,17 +17,16 @@ const CollectionTitle = ( props ) => {
   }
 
   return (
-    <div className="block-editor-block-list__block wp-block novablocks-collection__title">
-      <RichText
-        tagName={ `h${ collectionTitleLevel }` }
-        value={ title }
-        placeholder={ __( 'Collection title', '__plugin_txtd' ) }
-        onChange={ title => {
-          setAttributes( { title } );
-        } }
-        allowedFormats = {[ 'core/link' ]}
-      />
-    </div>
+    <RichText
+      tagName={ `h${ collectionTitleLevel }` }
+      className={ `novablocks-collection__title` }
+      value={ title }
+      placeholder={ __( 'Collection title', '__plugin_txtd' ) }
+      onChange={ title => {
+        setAttributes( { title } );
+      } }
+      allowedFormats={ [ 'core/link' ] }
+    />
   );
 };
 

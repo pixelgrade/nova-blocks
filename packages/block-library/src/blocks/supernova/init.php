@@ -26,7 +26,7 @@ function novablocks_get_supernova_attributes() {
 		'packages/block-editor/src/filters/with-content-position-matrix/attributes.json',
 		'packages/block-editor/src/filters/with-elements-visibility/attributes.json',
 		'packages/block-editor/src/filters/with-emphasis-control/attributes.json',
-		'packages/block-editor/src/filters/with-latest-posts/attributes.json',
+		'packages/block-editor/src/filters/with-content-loader/attributes.json',
 		'packages/block-editor/src/filters/with-overlay-filter/attributes.json',
 		'packages/block-editor/src/filters/with-space-and-sizing/attributes.json',
 		'packages/block-editor/src/filters/with-collection-layout/attributes.json',
@@ -42,11 +42,15 @@ if ( ! function_exists( 'novablocks_render_supernova_block' ) ) {
 		$data_attributes_array = array_map( 'novablocks_camel_case_to_kebab_case', array_keys( $attributes ) );
 		$data_attributes       = novablocks_get_data_attributes( $data_attributes_array, $attributes );
 
+		$align = preg_split( '/\b\s+/', $attributes['contentPosition'] );
+
 		$classes = array(
 			'alignfull',
 			'supernova',
 			'supernova--source-type-' . $attributes['sourceType'],
-			'supernova--card-layout-' . $attributes['cardLayout']
+			'supernova--card-layout-' . $attributes['cardLayout'],
+			'supernova--valign-' . $align[0],
+			'supernova--halign-' . $align[1],
 		);
 
 		if ( $attributes['columns'] === 1 ) {
@@ -98,7 +102,9 @@ if ( ! function_exists( 'novablocks_render_supernova_block' ) ) {
 			style="<?php echo join( ';', $cssProps ); ?>"
 			<?php echo join( " ", $data_attributes ); ?>
 		>
-			<?php echo novablocks_get_collection_output( $attributes, $content ); ?>
+			<div class="supernova__inner-container">
+				<?php echo novablocks_get_collection_output( $attributes, $content ); ?>
+			</div>
 		</div>
 
 		<?php return ob_get_clean();

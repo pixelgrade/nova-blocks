@@ -1,7 +1,5 @@
-import { useSpring, animated } from 'react-spring';
-import { orderBy } from 'lodash';
 import classnames from 'classnames';
-import { useResizeObserver, useMemoryState } from '../../index';
+import { orderBy } from 'lodash';
 
 import {
 	Children,
@@ -12,6 +10,8 @@ import {
 	useState,
  } from '@wordpress/element';
 
+import { useMemoryState } from '../../index';
+
 const Drawers = ( ownProps ) => {
 
   const { children } = ownProps;
@@ -20,36 +20,18 @@ const Drawers = ( ownProps ) => {
 	const drawerPanels = childrenArray.filter( child => child.type === DrawerPanel );
   const beforeChildren = children.filter( child => child.type === DrawerListBefore );
 
-	const [ active, setActive ] = useState( false );
 	const [ open, setOpen ] = useMemoryState( 'drawerOpen', false );
-	const [ lastActiveDrawerId, setLastActiveDrawerId ] = useMemoryState( 'drawerActiveId',false );
+	const [ lastActiveDrawerId, setLastActiveDrawerId ] = useMemoryState( 'drawerActiveId', false );
 	const [ wrapperHeight, setWrapperHeight ] = useMemoryState( 'drawerHeight', 0 );
 
 	const existingDrawer = useMemo( () => drawerLists.some( drawerList => {
 		const drawers = getDrawersFromList( drawerList );
-		return drawers.some( drawer => drawer?.props?.title === lastActiveDrawerId );
+		return drawers.some( drawer => drawer?.props?.id === lastActiveDrawerId );
 	} ), [ drawerLists ] );
 
 	useEffect( () => {
 
-    if ( existingDrawer ) {
-      let index = 0;
-
-      drawerLists.some( drawerList => {
-        const drawers = getDrawersFromList( drawerList );
-        const drawerIndex = drawers.findIndex( drawer => drawer?.props?.title === lastActiveDrawerId );
-
-        if ( drawerIndex > -1 ) {
-          index += drawerIndex;
-        } else {
-          index += drawers.length;
-        }
-
-        return drawerIndex > -1;
-      } );
-
-      setActive( index );
-    } else {
+    if ( ! existingDrawer ) {
       setOpen( false );
     }
 
@@ -67,7 +49,8 @@ const Drawers = ( ownProps ) => {
 	};
 
 	const getActiveDrawerTitleHeight = () => {
-		const activeRef = refMap.get( drawerPanels[active] );
+	  const drawerPanel = drawerPanels.find( drawerPanel => drawerPanel.props.id === lastActiveDrawerId );
+		const activeRef = refMap.get( drawerPanel );
 		return !! activeRef ? activeRef.clientHeight : 0;
 	};
 
@@ -78,16 +61,7 @@ const Drawers = ( ownProps ) => {
 		setWrapperHeight( !! open ? drawerPanelHeight : drawerListHeight );
 	};
 
-//	const { height, transform } = useSpring({
-//		transform: open ? 'translate3d(-100%,0,0)' : 'translate3d(0%,0,0)',
-////		height: wrapperHeight,
-//		// avoid height animation on first render
-//		immediate: ! open && false === active
-//	} );
-
-	useEffect( () => {
-		updateHeight();
-	}, [ open, active ] );
+	useEffect( updateHeight, [ open ] );
 
 	const transform = open ? 'translate3d(-100%,0,0)' : 'translate3d(0%,0,0)';
 
@@ -109,31 +83,20 @@ const Drawers = ( ownProps ) => {
 
 						totalDrawers = totalDrawers + drawers.length;
 
-						const drawersWithTarget = drawers.map( ( drawer, index ) => {
-							const defaultTarget = totalDrawers - drawers.length + index;
-							const target = Number.isInteger( drawer.props?.target ) ? drawer.props.target : defaultTarget;
-
-							return {
-								...drawer,
-								target,
-							}
-						} );
-
-						const orderedDrawers = orderBy( drawersWithTarget, drawer => drawer.props.order || 100, ['asc'] );
+						const orderedDrawers = orderBy( drawers, drawer => drawer.props.order || 100, ['asc'] );
 
 						return (
 							<div className={ `novablocks-drawers__list` } key={ `drawer-list-${ drawerListIndex }` }>
 								{ title && <div className={ `novablocks-drawers__list-title` }>{ title }</div> }
 								{
 									orderedDrawers.map( ( orderedDrawer, drawerIndex ) => {
-										const { props, target } = orderedDrawer;
-										const { id, title } = props;
+										const { props } = orderedDrawer;
+										const { id } = props;
 
 										return (
 											<Drawer { ...props }
 												key={ `drawer-${ drawerListIndex }-${ drawerIndex }` }
 												onClick={ () => {
-													setActive( target );
 													setLastActiveDrawerId( id );
 													setOpen( true );
 													onOpen();
@@ -151,13 +114,13 @@ const Drawers = ( ownProps ) => {
 						const className = classnames(
 							'novablocks-drawers__panel',
 							{
-								'novablocks-drawers__panel--hidden': index !== active
+								'novablocks-drawers__panel--hidden': lastActiveDrawerId !== drawerPanel.props.id
 							}
 						);
 
 						return (
-							<div key={ `drawer-panel-${ index }` } className={ className } ref={ ref => ref && refMap.set( drawerPanel, ref ) }>
-								<DrawerWithProps { ...drawerPanel.props } isActive={ index === active } goBack={ () => {
+							<div key={ `drawer-panel-${ drawerPanel.props.id }` } className={ className } ref={ ref => ref && refMap.set( drawerPanel, ref ) }>
+								<DrawerWithProps { ...drawerPanel.props } isActive={ lastActiveDrawerId === drawerPanel.props.id } goBack={ () => {
 									setOpen( false );
 									onClose();
 								} } updateHeight={ updateHeight } />

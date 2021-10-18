@@ -1,27 +1,29 @@
 /**
+ * WordPress dependencies
+ */
+import { __ } from '@wordpress/i18n';
+import { registerBlockType } from '@wordpress/blocks';
+import { addFilter } from '@wordpress/hooks';
+
+/**
  * Internal dependencies
  */
-import edit from './edit';
-import save from './save';
-import iconSvg from './card-block.svg';
-
-import {
-  getRandomArrayFromArray,
-} from "@novablocks/utils";
-
 import {
 	generateDefaults,
 	getPlaceholderImages,
   getSvg,
 } from "@novablocks/block-editor";
 
-import attributes from "./attributes";
+import { getRandomArrayFromArray } from "@novablocks/utils";
 
-/**
- * WordPress dependencies
- */
-import { __ } from '@wordpress/i18n';
-import { registerBlockType } from '@wordpress/blocks';
+import edit from './edit';
+import save from './save';
+import iconSvg from './card-block.svg';
+
+import attributes from "./attributes";
+import attributesOverwrite from "./attributes-overwrite.json";
+
+const BLOCK_NAME = 'novablocks/card';
 
 async function getNewDefaults() {
 	const placeholderImages = await getPlaceholderImages();
@@ -36,9 +38,25 @@ async function getNewDefaults() {
 	};
 }
 
-generateDefaults( 'novablocks/card', getNewDefaults );
+generateDefaults( BLOCK_NAME, getNewDefaults );
 
-registerBlockType( 'novablocks/card', {
+const overwriteAttributes = ( settings ) => {
+
+  if ( settings.name !== BLOCK_NAME ) {
+    return settings;
+  }
+
+  return {
+    ...settings,
+    attributes: {
+      ...settings.attributes,
+      ...attributesOverwrite
+    }
+  };
+}
+addFilter( 'blocks.registerBlockType', 'novablocks/card-attributes-overwrite', overwriteAttributes, Number.MAX_SAFE_INTEGER );
+
+registerBlockType( BLOCK_NAME, {
 	title: __( 'Card', '__plugin_txtd' ),
 	description: __( 'Display related pieces of information in a flexible container visually resembling a playing card.', '__plugin_txtd' ),
 	category: 'nova-blocks',
@@ -58,6 +76,7 @@ registerBlockType( 'novablocks/card', {
       },
       contentPosition: {
         attributes: true,
+        deprecated: true
       },
     }
   },

@@ -8,7 +8,6 @@ const attributes = {
   sourceType: 'blocks',
   layoutStyle: 'classic',
   contentPadding: 100,
-  layoutGutter: 25,
   cardLayout: 'stacked',
 
   postsToShow: 1,

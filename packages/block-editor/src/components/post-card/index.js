@@ -59,14 +59,12 @@ const PostCard = withMedia( props => {
     post,
   } = props;
 
-  const CardMedia = props.PostCardMedia || PostCardMedia;
-
   const {
     showMeta,
     showTitle,
     showDescription,
     showButtons,
-    media,
+    showMedia,
   } = attributes;
 
   const {
@@ -81,9 +79,12 @@ const PostCard = withMedia( props => {
 
   return (
     <Card { ...props }>
-      <CardMediaWrapper { ...props }>
-        <CardMedia { ...props } />
-      </CardMediaWrapper>
+      {
+        showMedia &&
+        <CardMediaWrapper { ...props }>
+          <PostCardMedia { ...props } />
+        </CardMediaWrapper>
+      }
       <div className={ contentWrapperClassname }>
         <CardMeta show={ showMeta }>{ metaAboveTitle }</CardMeta>
         <CardTitle show={ showTitle }>{ post.title.raw }</CardTitle>

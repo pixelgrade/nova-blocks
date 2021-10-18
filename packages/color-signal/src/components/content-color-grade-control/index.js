@@ -14,10 +14,8 @@ const ContentColorGradeControl = props => {
   } = props;
 
   const {
-    palette,
-    paletteVariation,
     contentPaletteVariation,
-    contentColorSignal
+    contentColorSignal,
   } = attributes;
 
   const supports = useSupports( name );
@@ -28,21 +26,15 @@ const ContentColorGradeControl = props => {
   }
 
   const onColorGradeChange = useCallback( nextContentPaletteVariation => {
-
-    const absoluteVariation = getAbsoluteColorVariation( {
-      palette,
-      paletteVariation: nextContentPaletteVariation,
-      useSourceColorAsReference: false
-    } );
-
-    const nextContentColorSignal = getSignalRelativeToVariation( absoluteVariation, paletteVariation );
+    const absoluteVariation = getAbsoluteColorVariation( attributes );
+    const nextContentColorSignal = getSignalRelativeToVariation( nextContentPaletteVariation, absoluteVariation );
 
     setAttributes( {
       contentColorSignal: nextContentColorSignal,
       contentPaletteVariation: nextContentPaletteVariation
     } );
 
-  }, [ palette, paletteVariation ] );
+  }, [ attributes ] );
 
   return (
     <ColorGradesControl { ...props }

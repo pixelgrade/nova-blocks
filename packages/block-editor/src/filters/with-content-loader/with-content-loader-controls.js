@@ -1,15 +1,16 @@
 import { createHigherOrderComponent } from "@wordpress/compose";
-import { useSupports } from "../../hooks";
 import { Fragment } from "@wordpress/element";
+
+import { useSupports } from "../../hooks";
 import InspectorControls from "./inspector-controls";
 
-const withLatestPostsControls = createHigherOrderComponent( OriginalComponent => {
+const withContentLoaderControls = createHigherOrderComponent( OriginalComponent => {
 
   return ( props ) => {
 
     const supports = useSupports( props.name );
 
-    if ( ! supports?.novaBlocks?.latestPosts ) {
+    if ( supports?.novaBlocks?.contentLoader !== true && supports?.novaBlocks?.contentLoader?.controls !== true ) {
       return (
         <OriginalComponent { ...props } />
       )
@@ -22,6 +23,6 @@ const withLatestPostsControls = createHigherOrderComponent( OriginalComponent =>
       </Fragment>
     )
   }
-}, 'withLatestPostsControls' );
+}, 'withContentLoaderControls' );
 
-export default withLatestPostsControls;
+export default withContentLoaderControls;

@@ -58,7 +58,7 @@ registerBlockType( 'novablocks/supernova', {
         controls: true
       },
       elementsVisibility: true,
-      latestPosts: true,
+      contentLoader: true,
       mediaComposition: {
         attributes: true,
         controls: true,
