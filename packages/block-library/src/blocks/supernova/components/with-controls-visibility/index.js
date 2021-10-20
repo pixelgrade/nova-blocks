@@ -29,7 +29,7 @@ const withControlsVisibility = OriginalComponent => {
         'content-to-media-spacing': cardLayout !== 'stacked',
 
         // Media Composition
-        'media-composition-section': !! showMedia && cardLayout !== 'stacked' && sourceType !== 'content',
+        'media-composition-section': !! showMedia && sourceType !== 'content',
 
         // Shape Modeling
         'shape-modeling-section': cardLayout !== 'stacked',

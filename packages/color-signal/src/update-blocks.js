@@ -71,6 +71,8 @@ const updateBlock = ( block ) => {
           } );
         }
 
+        updateInnerBlocks( block );
+
         return false;
       }
     }
@@ -90,6 +92,11 @@ const updateBlock = ( block ) => {
       } );
     }
   }
+
+  updateInnerBlocks( block );
+}
+
+const updateInnerBlocks = ( block ) => {
 
   // recursively update all innerBlocks
   if ( Array.isArray( block.innerBlocks ) ) {

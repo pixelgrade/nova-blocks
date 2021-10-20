@@ -21,10 +21,6 @@ const ContentColorGradeControl = props => {
   const supports = useSupports( name );
   const colorSignalSupport = supports?.novaBlocks?.colorSignal;
 
-  if ( colorSignalSupport !== true && colorSignalSupport?.contentColorSignal !== true ) {
-    return null;
-  }
-
   const onColorGradeChange = useCallback( nextContentPaletteVariation => {
     const absoluteVariation = getAbsoluteColorVariation( attributes );
     const nextContentColorSignal = getSignalRelativeToVariation( nextContentPaletteVariation, absoluteVariation );
@@ -35,6 +31,10 @@ const ContentColorGradeControl = props => {
     } );
 
   }, [ attributes ] );
+
+  if ( colorSignalSupport !== true && colorSignalSupport?.contentColorSignal !== true ) {
+    return null;
+  }
 
   return (
     <ColorGradesControl { ...props }
