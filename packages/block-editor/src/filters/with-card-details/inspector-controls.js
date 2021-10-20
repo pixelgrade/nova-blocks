@@ -3,24 +3,19 @@ import { PanelRow } from "@wordpress/components";
 
 import { getControlsClasses, getLevelAttributes } from "@novablocks/utils";
 
-import { ControlsGroup, ControlsSection, ControlsTab, HeadingToolbar } from "../../components";
-import { MetadataSource, MetadataPosition } from "./components";
+import { ControlsGroup, ControlsSection, ControlsTab, HeadingToolbar, withVisibility } from "../../components";
+
+import {
+  CardTitleLevel,
+  CollectionTitleLevel,
+  MetadataSource,
+  MetadataPosition
+} from "./components";
 
 const InspectorControls = ( props ) => {
 
-  const {
-    attributes,
-    setAttributes,
-    name
-  } = props;
-
-  const {
-    level, // title starting level
-    collectionTitleLevel,
-    cardTitleLevel,
-
-    metadataPosition,
-  } = attributes;
+  const { attributes, setAttributes } = props;
+  const { level } = attributes;
 
   return (
     <ControlsSection id={ 'card-layout' } label={ __( 'Card Details' ) }>
@@ -41,30 +36,7 @@ const InspectorControls = ( props ) => {
         </div>
       </ControlsTab>
       <ControlsTab label={ __( 'Settings' ) }>
-        <ControlsGroup title={ __( 'Content' ) }>
-          <PanelRow>
-            <span className={'components-base-control__label '}>{__( 'Collection Title Heading', '__plugin_txtd' )}</span>
-            <HeadingToolbar
-              minLevel={ 1 }
-              maxLevel={ 5 }
-              selectedLevel={ collectionTitleLevel }
-              onChange={ collectionTitleLevel => {
-                setAttributes( { collectionTitleLevel } );
-              } }
-            />
-          </PanelRow>
-          <PanelRow>
-            <span className={ 'components-base-control__label' }>{__( 'Card Title Heading', '__plugin_txtd' )}</span>
-            <HeadingToolbar
-              minLevel={ 1 }
-              maxLevel={ 5 }
-              selectedLevel={ cardTitleLevel }
-              onChange={ cardTitleLevel => {
-                setAttributes( { cardTitleLevel } );
-              } }
-            />
-          </PanelRow>
-        </ControlsGroup>
+        <CardDetailsContent { ...props } />
         <MetadataSource { ...props } />
         <MetadataPosition { ...props } />
       </ControlsTab>
@@ -72,4 +44,14 @@ const InspectorControls = ( props ) => {
   )
 }
 
-export default InspectorControls;
+export const CardDetailsContent = withVisibility( 'card-details-content' )( props => {
+  return (
+    <ControlsGroup title={ __( 'Content' ) }>
+      <CollectionTitleLevel { ...props } />
+      <CardTitleLevel { ...props } />
+    </ControlsGroup>
+  )
+} );
+
+
+export default withVisibility( 'card-details' )( InspectorControls );
