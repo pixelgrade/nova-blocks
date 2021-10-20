@@ -10,7 +10,7 @@ const withControlsVisibility = OriginalComponent => {
     } = props;
 
     useEffect( () => {
-      const { cardLayout, layoutStyle, sourceType } = attributes;
+      const { cardLayout, layoutStyle, sourceType, showMeta } = attributes;
 
       setControlsVisibility( {
         'minimum-container-height': cardLayout === 'stacked',
@@ -21,6 +21,8 @@ const withControlsVisibility = OriginalComponent => {
         'shape-modeling-section': cardLayout !== 'stacked',
         'scrolling-effect-section': cardLayout === 'stacked',
         'emphasis-area': cardLayout !== 'stacked',
+        'metadata-source': showMeta === true,
+        'metadata-position': showMeta === true,
       } );
 
     }, [ attributes ] );

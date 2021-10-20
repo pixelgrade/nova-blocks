@@ -1,10 +1,10 @@
 import { __ } from "@wordpress/i18n";
-import { PanelRow, RadioControl } from "@wordpress/components";
+import { PanelRow } from "@wordpress/components";
 
 import { getControlsClasses, getLevelAttributes } from "@novablocks/utils";
 
 import { ControlsGroup, ControlsSection, ControlsTab, HeadingToolbar } from "../../components";
-import { MetadataSource } from "./components";
+import { MetadataSource, MetadataPosition } from "./components";
 
 const InspectorControls = ( props ) => {
 
@@ -66,20 +66,7 @@ const InspectorControls = ( props ) => {
           </PanelRow>
         </ControlsGroup>
         <MetadataSource { ...props } />
-        <ControlsGroup title={ __( 'Metadata Position' ) }>
-          <RadioControl
-            key={ 'collection-image-resizing' }
-            selected={ metadataPosition }
-            onChange={ metadataPosition => {
-              setAttributes( { metadataPosition } )
-            } }
-            options={ [
-              { label: 'Above Title', value: 'above-title' },
-              { label: 'Below Title', value: 'below-title' },
-              { label: 'Split (Above Title / Below Content)', value: 'split' },
-            ] }
-          />
-        </ControlsGroup>
+        <MetadataPosition { ...props } />
       </ControlsTab>
     </ControlsSection>
   )
