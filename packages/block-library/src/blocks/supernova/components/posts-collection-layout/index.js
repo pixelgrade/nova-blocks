@@ -1,5 +1,5 @@
-import { PostCard, useInnerBlocks } from "@novablocks/block-editor";
-import { SupernovaLayout } from "../index";
+import { useInnerBlocks } from "@novablocks/block-editor";
+import { PostCard, SupernovaLayout } from "../index";
 
 const PostsCollectionLayout = props => {
   const { posts, clientId } = props;
