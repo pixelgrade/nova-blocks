@@ -2,46 +2,33 @@
 @import 'scss/collection';
 @import 'scss/carousel';
 @import 'scss/block-alignments';
+@import 'scss/block-background';
+@import 'scss/content-alignments';
 
 .supernova {
+  --emphasis-area-width: calc( var(--nb-emphasis-area, 100) * 1% );
 
-  &[class] {
-    --emphasis-area-width: calc( var(--nb-collection-emphasis-area, 100) * 1% );
+  grid-column: var(--all-columns);
+
+  background: none !important;
+  @include block-background;
+
+  &.supernova--has-minimum-height:not([data-scrolling-effect="doppler"]) {
+  
+    .supernova-item__media-aspect-ratio {
+      --nb-card-media-padding-top: var(--nb-minimum-container-height);
+    }
   }
 }
 
-.supernova {
+.supernova__inner-container {
+  // stack above block background
   position: relative;
-  @include layout-grid;
-  
-  background: none !important;
-  
-  grid-column: var(--all-columns);
-  
-  &:before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    grid-column: var(--custom-limit-left)/var(--custom-limit-right);
-    background: linear-gradient(
-        90deg,
-        var(--nb-bg-color) 0,
-        var(--nb-bg-color) var(--emphasis-area-width),
-        transparent var(--emphasis-area-width)
-    );
-    
-    height: 100%;
-    width: 100%;
-  }
-  
-  &.supernova-has-minimum-height {
-    
-    .supernova-item__media-aspect-ratio {
-      --nb-card-media-padding-top: var(--nb-supernova-minimum-height);
-    }
-  }
 
+  // apply our default grid layout and remove padding-left inherited from __inner-container
+  @include layout-grid;
+  padding-left: 0 !important;
+  padding-right: 0 !important;
 }
 
 /*
@@ -57,49 +44,6 @@
   display: grid !important;
 }
 
-.supernova-header__inner-container {
-  
+.nb-collection__inner-container {
   position: relative;
-  
-  > * {
-    --nb-element-spacing-multiplier: 0.5;
-  }
 }
-
-/*
- * Hero
- */
-.supernova {
-  
-  &.supernova-card-layout--stacked {
-  
-    &.supernova-layout-one-column {
-    
-      .supernova__layout,
-      .supernova__layout-item {
-        --nb-block-top-spacing: 0
-      }
-  
-      > .alignfull {
-    
-        > [class*='__inner-container'] {
-          padding-left: 0;
-          padding-right: 0;
-        }
-      }
-    }
-  }
-  
-  /*
- * When we have more than 1 element
- * per columns, (cards are stacked horizontally),
- * we need space on :first-child
- */
-  &:not(.supernova-layout-one-column) {
-    
-    .supernova-content__inner-container > :first-child {
-      --nb-block-top-spacing: 1;
-    }
-  }
-}
-

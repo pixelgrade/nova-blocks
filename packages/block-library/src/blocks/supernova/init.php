@@ -21,14 +21,14 @@ function novablocks_get_supernova_attributes() {
 		'packages/shape-modeling/src/attributes.json',
 
 		'packages/block-editor/src/filters/with-card-details/attributes.json',
-		'packages/block-editor/src/filters/with-elements-visibility/attributes.json',
+		'packages/block-editor/src/filters/with-card-elements-stacking/attributes.json',
 		'packages/block-editor/src/filters/with-cards-manager/attributes.json',
 		'packages/block-editor/src/filters/with-content-position-matrix/attributes.json',
-		'packages/block-editor/src/filters/with-latest-posts/attributes.json',
-		'packages/block-editor/src/filters/with-space-and-sizing/attributes.json',
-		'packages/block-editor/src/filters/with-overlay-filter/attributes.json',
+		'packages/block-editor/src/filters/with-elements-visibility/attributes.json',
 		'packages/block-editor/src/filters/with-emphasis-control/attributes.json',
-		'packages/block-editor/src/filters/with-card-elements-stacking/attributes.json',
+		'packages/block-editor/src/filters/with-content-loader/attributes.json',
+		'packages/block-editor/src/filters/with-overlay-filter/attributes.json',
+		'packages/block-editor/src/filters/with-space-and-sizing/attributes.json',
 		'packages/block-editor/src/filters/with-collection-layout/attributes.json',
 	) );
 
@@ -37,26 +37,24 @@ function novablocks_get_supernova_attributes() {
 if ( ! function_exists( 'novablocks_render_supernova_block' ) ) {
 
 	function novablocks_render_supernova_block( $attributes, $content ) {
-		global $novablocks_rendered_posts_ids;
-
-		$attributes_config = novablocks_get_supernova_attributes();
-		$attributes = novablocks_get_attributes_with_defaults( $attributes, $attributes_config );
-
+		$attributes_config     = novablocks_get_supernova_attributes();
+		$attributes            = novablocks_get_attributes_with_defaults( $attributes, $attributes_config );
 		$data_attributes_array = array_map( 'novablocks_camel_case_to_kebab_case', array_keys( $attributes ) );
-		$data_attributes = novablocks_get_data_attributes( $data_attributes_array, $attributes );
+		$data_attributes       = novablocks_get_data_attributes( $data_attributes_array, $attributes );
 
-		$args  = novablocks_build_articles_query( $attributes );
-		$posts = get_posts( $args );
+		$align = preg_split( '/\b\s+/', $attributes['contentPosition'] );
 
 		$classes = array(
-			'supernova',
-			'supernova-source-type-' . $attributes[ 'sourceType' ],
 			'alignfull',
-			'supernova-card-layout--' . $attributes[ 'cardLayout' ]
+			'supernova',
+			'supernova--source-type-' . $attributes['sourceType'],
+			'supernova--card-layout-' . $attributes['cardLayout'],
+			'supernova--valign-' . $align[0],
+			'supernova--halign-' . $align[1],
 		);
 
 		if ( $attributes['columns'] === 1 ) {
-			$classes[] = 'supernova-layout-one-column';
+			$classes[] = 'supernova--one-column';
 		}
 
 		if ( ! empty ( $attributes['align'] ) ) {
@@ -64,103 +62,49 @@ if ( ! function_exists( 'novablocks_render_supernova_block' ) ) {
 		}
 
 		$blockPaletteClasses = novablocks_get_color_signal_classes( $attributes );
-		$classes = array_merge( $classes, $blockPaletteClasses );
+		$classes             = array_merge( $classes, $blockPaletteClasses );
 
-		$layoutClasses = array(
-			"supernova__layout",
-			"supernova__layout--" . $attributes[ 'layoutStyle' ],
-			"supernova__layout--" . $attributes[ 'carouselLayout' ] . "-width"
-		);
+
 		/*
 		 * @todo: Find a solution for this.
 		 * The CSS Props list is getting really big,
 		 * We should break them in different functions.
 		 */
-		$cssProps = array(
-			/*
-			 * Color Signal
-			 */
-			'--nb-collection-emphasis-area: ' . $attributes['emphasisArea'],
+		$cssProps = array_merge(
+			array(
+				/*
+				 * Color Signal
+				 */
+				'--nb-emphasis-area: ' . $attributes['emphasisArea'],
 
-			/*
-			 * Collection Layout
-			 */
-			'--nb-collection-columns-count: ' . $attributes[ 'columns' ],
-
-			/*
-			 * Space and Sizing
-			 */
-			'--nb-collection-gutter: ' . $attributes['layoutGutter'],
-			'--nb-grid-spacing-modifier: ' . $attributes[ 'gridGap' ],
-			'--nb-card-content-padding-multiplier: ' . $attributes[ 'contentPadding' ] / 100,
-			'--nb-card-media-padding-multiplier: ' . $attributes[ 'imagePadding' ] / 100,
-			'--nb-card-media-padding-top: ' . novablocks_get_card_media_padding_top( $attributes['thumbnailAspectRatio'] ) . '%',
-			'--nb-card-media-object-fit: ' . ( $attributes['imageResizing'] === 'cropped' ? 'cover' : 'scale-down' ),
-
-			/*
-			 * Overlay Filter
-			 */
-			'--nb-overlay-filter-strength: ' . $attributes['overlayFilterStrength' ] / 100,
-
-			/*
-			 * Media Composition
-			 */
-			'--nb-advanced-gallery-grid-gap: ' . $attributes['elementsDistance'] . 'px',
+				/*
+				 * Media Composition
+				 */
+				'--nb-advanced-gallery-grid-gap: ' . $attributes['elementsDistance'] . 'px',
+			)
 		);
 
 		if ( $attributes['minHeightFallback'] !== 0 ) {
-			$classes[] = 'supernova-has-minimum-height';
-			$cssProps[] = '--nb-supernova-minimum-height: ' . $attributes['minHeightFallback'] . 'vh';
+			$classes[]  = 'supernova--has-minimum-height';
 		}
 
-		$spacingProps = novablocks_get_spacing_css( $attributes );
-		$cssProps = array_merge( $cssProps, $spacingProps );
-
-		if ( "content" === $attributes[ 'sourceType' ] ) {
-
-			ob_start();
-
-			foreach ( $posts as $post ) {
-				array_push( $novablocks_rendered_posts_ids, $post->ID );
-				$card_markup = novablocks_get_supernova_card_markup_from_post( $post, $attributes );
-				echo apply_filters( 'novablocks_get_supernova_card_markup', $card_markup, $post, $attributes );
-			}
-
-			$content = ob_get_clean();
-		}
-
-		$supernova_header = novablocks_get_collection_header_output( $attributes );
+		$cssProps = array_merge(
+			$cssProps,
+			novablocks_get_overlay_filter_css( $attributes ),
+			novablocks_get_space_and_sizing_css( $attributes ),
+			novablocks_get_collection_layout_css( $attributes ),
+		);
 
 		ob_start(); ?>
 
 		<div
 			class="<?php echo join( ' ', $classes ); ?>"
+			style="<?php echo join( ';', $cssProps ); ?>"
 			<?php echo join( " ", $data_attributes ); ?>
-			style="<?php echo join( ';', $cssProps ); ?>">
-			<?php if ( $supernova_header ) { ?>
-				<div class="<?php echo "align" . $attributes['align']; ?>">
-					<div class="supernova-header__inner-container">
-						<?php echo $supernova_header ?>
-					</div>
-				</div>
-			<?php }
-
-			if ( "parametric" === $attributes['layoutStyle'] ) {
-				$layoutClasses[] = 'novablocks-grid';
-				?>
-				<div class="<?php echo join( ' ', $layoutClasses ); ?>" <?php echo join( ' ', $data_attributes ); ?>>
-					<?php echo $content; ?>
-				</div>
-			<?php } else { ?>
-
-				<div class="<?php echo "align" . $attributes['align']; ?>">
-					<div class="supernova-content__inner-container">
-						<div class="<?php echo join( ' ', $layoutClasses ); ?>">
-							<?php echo $content; ?>
-						</div>
-					</div>
-				</div>
-			<?php } ?>
+		>
+			<div class="supernova__inner-container">
+				<?php echo novablocks_get_collection_output( $attributes, $content ); ?>
+			</div>
 		</div>
 
 		<?php return ob_get_clean();

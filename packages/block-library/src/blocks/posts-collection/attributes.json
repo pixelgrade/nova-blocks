@@ -1,14 +1,6 @@
 {
-	"order": {
+	"align": {
 		"type": "string",
-		"default": "desc"
-	},
-	"orderBy": {
-		"type": "string",
-		"default": "date"
-	},
-	"category": {
-		"type": "string",
-		"default": "all"
+		"default": "wide"
 	}
 }

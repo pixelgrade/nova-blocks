@@ -1,4 +1,4 @@
-.supernova__layout--carousel {
+.nb-collection__layout--carousel {
 
   /*
    * Carousel Settings
@@ -7,7 +7,7 @@
   --nb-carousel-arrow-color: #555555;
   --nb-carousel-arrow-bg: #ffffff;
   
-  .supernova__layout-item,
+  .nb-collection__layout-item,
   .supernova-item {
     height: 100%;
   }
@@ -151,11 +151,11 @@
  * Pagination is true,
  * and Number of Items per Row is set to 1.
  */
-.supernova-card-layout--stacked {
+.supernova--card-layout-stacked {
   
-  &.supernova-layout-one-column {
+  &.supernova--one-column {
       
-      .supernova__layout--carousel {
+      .nb-collection__layout--carousel {
         
         .supernova-item__content {
           padding-bottom: calc(3 * var(--nb-spacing));
@@ -170,7 +170,7 @@
   }
 }
 
-.supernova-card-layout--stacked {
+.supernova--card-layout-stacked {
   
   .slick-dots {
     position: absolute;
@@ -178,7 +178,7 @@
   }
 }
 
-.supernova__layout--variable-width {
+.nb-collection__layout--variable-width {
   
   .supernova-item__media-aspect-ratio {
     
@@ -189,20 +189,20 @@
 }
 
 .supernova {
-  
-  &:not(.supernova-layout-one-column) {
-    
+
+  &:not(.supernova--one-column) {
+
     .slick-track {
       gap: var(--nb-grid-spacing);
     }
   }
-  
+
   &:not(.block-is-full) {
-  
+
     .slick-prev {
       left: calc(-1.5 * var(--nb-container-spacings));
     }
-    
+
     .slick-next {
       right: calc(-1.5 * var(--nb-container-spacings));
     }

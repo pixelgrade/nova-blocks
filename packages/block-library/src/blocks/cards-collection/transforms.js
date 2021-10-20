@@ -21,32 +21,32 @@ export default {
   to: [
     {
       type: 'block',
-      blocks: ['novablocks/supernova'],
-      transform: function( attributes, innerBlocks ) {
+      blocks: [ 'novablocks/supernova' ],
+      transform: ( attributes, innerBlocks ) => {
 
         const commonAttributes = {
-          contentPosition: 'center left',
+          ...attributes,
+          sourceType: 'fields',
         };
 
         const collectionAttributes = Object.assign( {}, commonAttributes, {
           align: 'wide',
-          sourceType: 'fields',
-          columns: innerBlocks.length,
         } );
 
         const newInnerBlocks = innerBlocks.map( block => {
           const { media, ...passedAttributes } = block.attributes;
           const { caption, title, ...image } = media;
-
-          return createBlock( 'novablocks/supernova-item', Object.assign( {}, attributes, commonAttributes, {
+          const innerBlockAttributes = Object.assign( {}, commonAttributes, {
             images: [ image ],
             defaultsGenerated: true,
             ...passedAttributes,
             ...getSupernovaItemAttributesFromButtons( block )
-          } ) );
+          } )
+
+          return createBlock( 'novablocks/supernova-item', innerBlockAttributes );
         } );
 
-        return createBlock( 'novablocks/supernova', Object.assign( {}, attributes, commonAttributes, collectionAttributes ), newInnerBlocks );
+        return createBlock( 'novablocks/supernova', collectionAttributes, newInnerBlocks );
       },
     },
   ],

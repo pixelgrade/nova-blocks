@@ -19,8 +19,7 @@ function novablocks_get_media_attributes() {
 
 		'packages/block-editor/src/filters/with-card-details/attributes.json',
 		'packages/block-editor/src/filters/with-content-position-matrix/attributes.json',
-		'packages/block-editor/src/filters/with-emphasis-area/attributes.json',
-		'packages/block-editor/src/filters/with-emphasis-level/attributes.json',
+		'packages/block-editor/src/filters/with-emphasis-control/attributes.json',
 		'packages/block-editor/src/filters/with-space-and-sizing/attributes.json',
 
 		'packages/block-library/src/blocks/media/attributes-overwrite.json',
@@ -77,22 +76,17 @@ if ( ! function_exists( 'novablocks_render_media_block' ) ) {
 			$attributes['gallery'] = $attributes['images'];
 		}
 
-		$verticalAlignment = isset( $attributes['verticalAlignment'] ) ? $attributes['verticalAlignment'] : 'center';
+		$css_props = novablocks_get_space_and_sizing_css( $attributes, true );
 
-		$blockTopSpacing = $attributes['blockTopSpacing'];
-		$blockBottomSpacing = $attributes['blockBottomSpacing'];
-		$emphasisTopSpacing = $verticalAlignment === 'top' ? abs( $attributes['emphasisTopSpacing'] ) : $attributes['emphasisTopSpacing'];
-		$emphasisBottomSpacing = $verticalAlignment === 'bottom' ? abs( $attributes['emphasisBottomSpacing'] ) : $attributes['emphasisBottomSpacing'];
+		if ( ! empty($attributes['emphasisArea'])) {
 
-		$style =
-			'--nb-block-top-spacing:' . $blockTopSpacing . ';' .
-			'--nb-block-bottom-spacing:' . $blockBottomSpacing . ';' .
-			'--nb-emphasis-top-spacing:' . $emphasisTopSpacing . ';' .
-			'--nb-emphasis-bottom-spacing:' . $emphasisBottomSpacing . ';' .
-			'--nb-emphasis-area:' . $attributes['emphasisArea'] . ';' .
-			'--nb-media-content-width:' . $attributes['contentAreaWidth'] . '%;' .
-			'--nb-media-layout-gutter:' . $attributes['layoutGutter'] . ';' .
-			'--nb-card-content-padding-multiplier: ' . $attributes[ 'contentPadding' ] / 100 . ';';
+			$css_props = array_merge(
+				$css_props,
+				array(
+					'--nb-emphasis-area: ' . $attributes['emphasisArea'],
+				)
+			);
+		}
 
 		$contentClasses = array(
 			'novablocks-media__inner-container',
@@ -106,7 +100,7 @@ if ( ! function_exists( 'novablocks_render_media_block' ) ) {
 
         <div
 			class="<?php echo esc_attr( join( ' ', $classes ) ); ?>"
-			style="<?php echo $style ?>"
+			style="<?php echo esc_attr( join( '; ', $css_props ) ) ?>"
 			<?php echo join( " ", $data_attributes ); ?>
 		>
 			<div class="wp-block-group__inner-container">
@@ -120,7 +114,11 @@ if ( ! function_exists( 'novablocks_render_media_block' ) ) {
 							</div>
 						<?php } ?>
 						<div class="novablocks-media__aside">
-							<?php novablocks_render_media_composition( $attributes ); ?>
+							<div class="novablocks-media__media-aspect-ratio">
+								<div class="novablocks-media__media-wrapper">
+									<?php novablocks_render_media_composition( $attributes ); ?>
+								</div>
+							</div>
 						</div>
 					</div>
 				</div>

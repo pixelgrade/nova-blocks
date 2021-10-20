@@ -1,13 +1,15 @@
-import { ToggleGroup } from '../../../../components/index';
+import { ToggleGroup } from '../../../../index';
 
 import {
-  collectionToggles,
-  heroToggles,
   carouselToggles,
-  cardToggles
+  collectionToggles,
+  contentElementsToggle,
+  contentToggles,
+  heroToggles,
+  mediaToggles,
 } from "./toggles";
 
-const ElementsVisibilityToggles = (props) => {
+const ElementsVisibilityToggles = ( props ) => {
 
   const {
     attributes,
@@ -15,9 +17,10 @@ const ElementsVisibilityToggles = (props) => {
   } = props;
 
   const {
-    layoutStyle,
     cardLayout,
-    postsToShow
+    layoutStyle,
+    postsToShow,
+    sourceType,
   } = attributes;
 
   // A block is considered carousel when layoutStyle,
@@ -31,7 +34,16 @@ const ElementsVisibilityToggles = (props) => {
   // and the postsToShow is equal with 1.
   const IS_HERO = CARD_IS_STACKED && postsToShow === 1;
 
-  let blockToggles = [...collectionToggles, ...cardToggles];
+  const blockToggles = [];
+
+  blockToggles.push( ...collectionToggles );
+  blockToggles.push( ...mediaToggles );
+
+  if ( sourceType !== "blocks" ) {
+    blockToggles.push( ...contentElementsToggle );
+  } else {
+    blockToggles.push( ...contentToggles );
+  }
 
   if ( IS_HERO ) {
     blockToggles.push( ...heroToggles );
@@ -44,9 +56,7 @@ const ElementsVisibilityToggles = (props) => {
   return (
     <ToggleGroup
       onChange={ setAttributes }
-      toggles={ blockToggles.filter( toggle => {
-        return toggle.attribute !== 'showSubtitle';
-      } ).map( toggle => {
+      toggles={ blockToggles.map( toggle => {
         return {
           ...toggle,
           value: attributes[ toggle.attribute ]

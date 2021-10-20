@@ -5,37 +5,46 @@ export default {
     {
       type: 'block',
       blocks: ['novablocks/supernova'],
-      transform: function( attributes, innerBlocks ) {
+      transform: function( attributes ) {
 
-        const { galleryImages, overlayFilterStrength, ...passedAttributes } = attributes;
+        const { paletteVariation } = attributes;
+        const { galleryImages, ...otherAttributes } = attributes;
 
-        const commonAttributes = {
-          cardLayout: 'stacked',
+        const collectionAttributes = Object.assign( {}, otherAttributes, {
+          variation: 'slideshow',
+
           layoutStyle: 'carousel',
+          postsToShow: galleryImages.length,
           sourceType: 'fields',
-          contentPosition: 'center center',
-          showCollectionTitle: false,
-          showCollectionSubtitle: false,
-          contentPadding: 100,
-          ...passedAttributes
-        }
 
-        const collectionAttributes = Object.assign( {}, attributes, commonAttributes, {
-          cardMediaOpacity: ( 100 - overlayFilterStrength ),
-          align: 'full',
+          cardLayout: 'stacked',
+
+          contentColorSignal: 0,
+          contentPaletteVariation: paletteVariation,
+
           emphasisTopSpacing: 0,
           emphasisBottomSpacing: 0,
+
+          contentPadding: 50,
+          imagePadding: 0,
+
+          collectionTitle: '',
+          collectionSubtitle: '',
+          showCollectionTitle: false,
+          showCollectionSubtitle: false,
         } );
 
         const newInnerBlocks = galleryImages.map( image => {
           const { caption, title, ...otherImageProps } = image;
-          return createBlock( 'novablocks/supernova-item', Object.assign( {}, commonAttributes, {
+          const cardAttributes = Object.assign( {}, collectionAttributes, {
             images: [ otherImageProps ],
             title: title,
             description: caption,
             showTitle: true,
             showDescription: true,
-          } ) );
+          } )
+
+          return createBlock( 'novablocks/supernova-item', cardAttributes );
         } );
 
         return createBlock( 'novablocks/supernova', collectionAttributes, newInnerBlocks )

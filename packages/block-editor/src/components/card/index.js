@@ -1,6 +1,6 @@
 import classnames from 'classnames';
 
-import { Children, Fragment } from '@wordpress/element';
+import { Children } from '@wordpress/element';
 
 import { getAlignFromMatrix } from "@novablocks/utils";
 
@@ -14,7 +14,6 @@ export const Card = ( props ) => {
     media,
     attributes: {
       cardLayout,
-      contentAreaWidth,
       thumbnailAspectRatioString,
     },
   } = props;
@@ -25,16 +24,12 @@ export const Card = ( props ) => {
     `supernova-item--aspect-ratio-${ thumbnailAspectRatioString }`,
   );
 
-  const style = Object.assign( {}, props.style, {
-    '--nb-card-content-area-width': `${ contentAreaWidth }%`,
-  } );
-
   const children = Children.toArray( props.children );
   const mediaChildren = children.filter( child => child.type === CardMediaWrapper )
   const passedChildren = children.filter( child => child.type !== CardMediaWrapper && child.type !== CardContentWrapper );
 
   return (
-    <div className={ classNames } style={ style }>
+    <div className={ classNames } style={ props.style }>
       { ! mediaChildren.length && media && <CardMediaWrapper media={ media } { ...props } /> }
       { !! mediaChildren.length && mediaChildren }
       <CardContentWrapper { ...props }>

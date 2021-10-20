@@ -10,11 +10,15 @@ const collectionToggles = [
   },
 ]
 
-const cardToggles = [
+const mediaToggles = [
   {
     label: __( 'Media', '__plugin_txtd' ),
     attribute: 'showMedia',
-  }, {
+  }
+]
+
+const contentElementsToggle = [
+  {
     label: __( 'Title', '__plugin_txtd' ),
     attribute: 'showTitle',
   }, {
@@ -32,17 +36,20 @@ const cardToggles = [
   }
 ]
 
+const contentToggles = [
+  {
+    label: __( 'Inner Content', '__plugin_txtd' ),
+    attribute: 'displayInnerContent'
+  }
+];
+
 const heroToggles = [
   {
     label: __( 'Position Indicators', '__plugin_txtd' ),
     attribute: 'positionIndicators'
   }, {
     label: __( 'Scroll Indicator', '__plugin_txtd' ),
-    attribute: 'scrollIndicator'
-  },
-  {
-    label: __( 'Inner Content', '__plugin_txtd' ),
-    attribute: 'displayInnerContent'
+    attribute: 'scrollIndicatorBlock'
   }
 ]
 
@@ -58,8 +65,10 @@ const carouselToggles = [
 ]
 
 export {
+  carouselToggles,
   collectionToggles,
-  cardToggles,
+  mediaToggles,
+  contentElementsToggle,
+  contentToggles,
   heroToggles,
-  carouselToggles
 }

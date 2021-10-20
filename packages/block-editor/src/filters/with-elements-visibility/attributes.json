@@ -33,15 +33,17 @@
 	},
 	"positionIndicators": {
 		"type": "boolean",
-		"default": false
+		"source": "meta",
+		"meta": "novablocks_hero_position_indicators",
+		"default": true
 	},
-	"scrollIndicator": {
+	"scrollIndicatorBlock": {
 		"type": "boolean",
 		"default": false
 	},
 	"displayInnerContent": {
 		"type": "boolean",
-		"default": false
+		"default": true
 	},
 	"showPagination": {
 		"type": "boolean",

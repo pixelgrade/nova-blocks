@@ -74,11 +74,12 @@ const ControlsSectionsComponent = ( props ) => {
 						return (
 							<DrawerList title={ key } key={ key }>
 								{ sections.map( ( section, index ) => {
-									const { label, order } = section.props;
+									const { id, label, order } = section.props;
 
 									return (
 										<Drawer
-											key={ index }
+											key={ id }
+                      id={ id }
 											title={ label }
 											order={ order }
 										/>
@@ -114,7 +115,7 @@ const ControlsSectionsComponent = ( props ) => {
 							} );
 
 							return (
-								<DrawerPanel key={ index }>
+								<DrawerPanel key={ index } id={ section.props.id }>
 									<ActiveSectionTabs
 										title={ section.props.label }
 										tabs={ compiledTabs }

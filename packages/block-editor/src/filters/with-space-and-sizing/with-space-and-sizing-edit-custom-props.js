@@ -1,6 +1,6 @@
 import { createHigherOrderComponent } from "@wordpress/compose";
+import { getSpacingCSSProps } from "@novablocks/utils";
 import { useSupports } from "../../hooks";
-import {getCardMediaPaddingTop, getSpacingCSSProps} from "@novablocks/utils";
 
 const withSpaceAndSizingEditCustomProps = createHigherOrderComponent( OriginalComponent => {
 
@@ -9,33 +9,10 @@ const withSpaceAndSizingEditCustomProps = createHigherOrderComponent( OriginalCo
     const supports = useSupports( props.name );
     const { attributes } = props;
 
-    const {
-      imagePadding,
-      contentPadding,
-      imageResizing,
-      thumbnailAspectRatio,
-      layoutGutter,
-      minHeightFallback
-    } = attributes;
-
     const style = props.style ? props.style : {};
 
     if ( !! supports?.novaBlocks?.spaceAndSizing ) {
-
-      let spaceAndSizingProps = {
-        ...getSpacingCSSProps( attributes ),
-        '--nb-card-media-padding': imagePadding,
-        '--nb-card-media-padding-top': getCardMediaPaddingTop( thumbnailAspectRatio ),
-        '--nb-card-media-object-fit': imageResizing === 'cropped' ? 'cover' : 'scale-down',
-
-        '--nb-collection-gutter': layoutGutter,
-
-        '--nb-card-content-padding-multiplier': contentPadding / 100,
-        '--nb-card-media-padding-multiplier': imagePadding / 100,
-        '--nb-supernova-minimum-height': minHeightFallback + 'vh'
-      }
-
-      Object.assign( style, spaceAndSizingProps);
+      Object.assign( style, getSpacingCSSProps( attributes ) );
     }
 
     return (

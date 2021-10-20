@@ -1,0 +1,14 @@
+{
+	"align": {
+		"type": "string",
+		"default": "wide"
+	},
+	"title": {
+		"type": "string",
+		"default": "Collection Title"
+	},
+	"subtitle": {
+		"type": "string",
+		"default": "Collection Subtitle"
+	}
+}

@@ -8,7 +8,6 @@ const attributes = {
   sourceType: 'blocks',
   layoutStyle: 'classic',
   contentPadding: 100,
-  layoutGutter: 25,
   cardLayout: 'stacked',
 
   postsToShow: 1,
@@ -17,8 +16,8 @@ const attributes = {
   showCollectionTitle: false,
   showCollectionSubtitle: false,
 
-  contentPosition: 'bottom center',
-  cardMediaOpacity: 40,
+  contentPosition: 'center center',
+  minHeightFallback: 100,
 
   contentColorSignal: 3,
   contentPaletteVariation: 12,
@@ -30,10 +29,15 @@ const attributes = {
   scrollingEffect: 'parallax',
 }
 
+const innerBlockAttributes = Object.assign( {}, attributes, {
+  colorSignal: 3,
+  paletteVariation: 12,
+} );
+
 const innerBlocks = [
   [
     'novablocks/supernova-item',
-    attributes,
+    innerBlockAttributes,
     [
       [ 'novablocks/headline', { level: 2, className: "has-larger-font-size", fontSize: "larger" } ],
       [ 'core/separator', {} ],
@@ -43,13 +47,13 @@ const innerBlocks = [
 ];
 
 const heroVariation = {
-  name: __( 'Hero of the Galaxy', '__plugin_txtd' ),
+  name: 'novablocks/supernova/hero',
   title: __( 'Hero of the Galaxy', '__plugin_txtd' ),
   description: __( 'A great way to get your visitors acquainted with your content.', '__plugin_txtd' ),
   icon: getSvg( iconSvg ),
   attributes: attributes,
   innerBlocks,
-  isActive: ( block, variation ) => block.variation === variation.variation
+  isActive: ( block, variation ) => block.variation === variation.variation,
 };
 
 export default heroVariation;

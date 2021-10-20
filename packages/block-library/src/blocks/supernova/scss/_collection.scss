@@ -1,29 +1,8 @@
-.supernova__layout {
+.nb-collection__layout {
   --nb-grid-spacing: calc(var(--nb-spacing) * var(--nb-grid-spacing-modifier) * 0.02);
-
-  /*
-   * Force top spacing so there will be a gap
-   * between collection and collection title.
-   */
-  &[class][class][class] {
-    --nb-block-top-spacing: 1;
-  }
 }
 
-.supernova-header__inner-container {
-  
-  + .supernova__layout {
-    @include block-spacing;
-    
-    --nb-element-spacing-multiplier: 1;
-    --nb-block-top-spacing: 1;
-    
-    padding-top: 0;
-    padding-bottom: 0;
-  }
-}
-
-.supernova__layout--fixed-width {
+.nb-collection__layout--fixed-width {
   .supernova-item:not(.supernova-item--aspect-ratio-auto) {
     .novablocks-card__media-image {
       @include image-cover;
@@ -65,14 +44,14 @@
 
 @mixin with-editor-layout-selectors {
 
-  &:not(.supernova__layout--edit),
-  &.supernova__layout--edit > .block-editor-inner-blocks > .block-editor-block-list__layout {
+  &:not(.nb-collection__layout--edit),
+  &.nb-collection__layout--edit > .block-editor-inner-blocks > .block-editor-block-list__layout {
     @content;
   }
 }
 
-.supernova__layout--classic,
-.supernova__layout--parametric {
+.nb-collection__layout--classic,
+.nb-collection__layout--parametric {
   --nb-collection-columns: var(--nb-collection-columns-count);
   --nb-collection-columns-below-tablet: 1;
   
@@ -92,6 +71,6 @@
   }
 }
 
-.supernova__layout--parametric {
+.nb-collection__layout--parametric {
   --parametric-gap: var(--nb-grid-spacing);
 }

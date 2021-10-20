@@ -21,19 +21,70 @@ ready( () => {
   // Get the Palette Basis Offset value to use it as the top most reference variation
   const siteVariation = getSiteColorVariation();
 
-  updateAllBlocksSignal( siteVariation );
+  updateColors( siteVariation );
 
   // If we are inside the Customize Preview iframe, update the palette variation for all blocks
   // every time the Palette Basis Offset value is changed
   if ( parent?.wp?.customize ) {
     parent.wp.customize( 'sm_site_color_variation', setting => {
       setting.bind( ( newValue, oldValue ) => {
-        updateAllBlocksSignal( newValue );
+        updateColors( newValue );
       } );
     } )
   }
 
 } );
+
+const updateColors = ( siteVariation ) => {
+  updateAllBlocksSignal( siteVariation );
+  updateScrollIndicator();
+}
+
+const updateScrollIndicator = () => {
+  const blocks = document.querySelectorAll( '[data-scroll-indicator-block]' );
+  const blocksArray = [ ...blocks ].filter( block => !! block.dataset.scrollIndicatorBlock );
+
+  blocksArray.forEach( block => {
+    const indicator = block.querySelector( '.nb-scroll-indicator' );
+    const nextElement = block.nextElementSibling;
+
+    if ( ! nextElement ) {
+      applySiteColorSignal( indicator );
+      return;
+    }
+
+    const nextElementStyles = window.getComputedStyle( nextElement );
+    const marginTop = nextElementStyles.getPropertyValue( 'margin-top' );
+
+    if ( parseInt( marginTop, 10 ) !== 0 ) {
+      applySiteColorSignal( indicator );
+      return;
+    }
+
+    if ( !! indicator && !! nextElement?.dataset?.colorSignal ) {
+      const attributes = nextElement.dataset;
+      const classNamesToAdd = getColorSignalClassnames( attributes, true );
+      const classNamesToRemove = [ ...indicator.classList ].filter( className => {
+        return className.indexOf( 'sm-palette-' ) > -1 ||
+               className.indexOf( 'sm-variation-' ) > -1 ||
+               className.indexOf( 'sm-color-signal-' ) > -1;
+      } ).join( " " );
+
+      removeClass( indicator, classNamesToRemove );
+      addClass( indicator, classNamesToAdd );
+    }
+
+  } );
+}
+
+const applySiteColorSignal = ( indicator ) => {
+
+  if ( ! indicator ) {
+    return;
+  }
+
+  addClass( indicator, `sm-variation-${ getSiteColorVariation() }` );
+}
 
 /**
  *  * If the Palette Basis Offset value has been changed after the content has been created

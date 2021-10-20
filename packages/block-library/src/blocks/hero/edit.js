@@ -1,6 +1,8 @@
-import { __ } from '@wordpress/i18n';
-import { Fragment, useEffect, useCallback } from '@wordpress/element';
-import { select, useSelect } from '@wordpress/data';
+import classnames from "classnames";
+import { __ } from "@wordpress/i18n";
+import { useEffect, useCallback } from "@wordpress/element";
+import { select, useSelect } from "@wordpress/data";
+import { useBlockProps } from "@wordpress/block-editor";
 
 /**
  * Internal dependencies
@@ -10,13 +12,14 @@ import {
 	ControlsSection,
 	ControlsTab,
 	ToggleGroup,
-} from '@novablocks/block-editor';
+} from "@novablocks/block-editor";
 
-import { withControlsVisibility } from './components';
-import heroAttributes from './attributes';
+import { getAlignmentClassnames, getColorSignalClassnames } from "@novablocks/utils";
 
-import HeroPreview from './preview';
-import BlockControls from './block-controls';
+import { withControlsVisibility } from "./components";
+import heroAttributes from "./attributes";
+import HeroPreview from "./preview";
+import BlockControls from "./block-controls";
 
 const HeroEdit = ( props ) => {
 
@@ -27,7 +30,7 @@ const HeroEdit = ( props ) => {
   } = props;
 
   const index = useSelect( select => {
-    const { getBlocks, getSelectedBlockClientId } = select( 'core/block-editor' );
+    const { getBlocks, getSelectedBlockClientId } = select( "core/block-editor" );
     const heroBlocks = getBlocks().filter( block => block.name === 'novablocks/hero' );
     return heroBlocks.findIndex( block => block.clientId === getSelectedBlockClientId() );
   } );
@@ -78,8 +81,25 @@ const HeroEdit = ( props ) => {
 
   useEffect( updateAttributes, [] );
 
+	const { contentPadding, contentWidth, overlayFilterStyle } = attributes;
+
+  const blockProps = useBlockProps( {
+    className: classnames(
+      props.className,
+      'novablocks-hero',
+      `novablocks-u-spacing-${ contentPadding }`,
+      `novablocks-u-content-width-${ contentWidth }`,
+      `novablocks-u-background`,
+      `novablocks-u-background-${ overlayFilterStyle }`,
+      getAlignmentClassnames( attributes ),
+      getColorSignalClassnames( attributes, true ),
+      'alignfull',
+    ),
+    style: props.style,
+  } );
+
   return (
-    <Fragment>
+    <div { ...blockProps }>
       <HeroPreview { ...props } />
       <BlockControls { ...props } />
       <ControlsSection id={ 'elements-visibility' } label={ __( 'Elements Visibility' ) } group={ __( 'Input' ) }>
@@ -97,7 +117,7 @@ const HeroEdit = ( props ) => {
           </ControlsGroup>
         </ControlsTab>
       </ControlsSection>
-    </Fragment>
+    </div>
   );
 }
 

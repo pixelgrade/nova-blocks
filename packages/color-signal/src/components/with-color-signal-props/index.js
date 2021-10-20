@@ -16,20 +16,28 @@ const withColorSignalProps = OriginalComponent => {
     const [ showFunctionalColors, setShowFunctionalColors ] = useMemoryState( 'showFunctionalColors', false );
 
     const updateBlock = useCallback( ( newAttributes, useSourceOnSameVariation = false, useSourceOnSameSignal = false ) => {
-      const referenceVariation = getParentVariation( clientId );
+      // prepare attribute values to be used in computing next attributes
       const nextAttributes = Object.assign( {}, attributes, newAttributes );
       const { palette, useSourceColorAsReference } = nextAttributes;
-      const sourceIndex = getSourceIndexFromPaletteId( palette );
+
+      // find out the the reference (parent) color variation to compute signal on
+      const referenceVariation = getParentVariation( clientId );
+
+      // find out the next absolute value of the paletteVariation attribute
       const absoluteVariation = getAbsoluteColorVariation( nextAttributes );
       const nextSignal = getSignalRelativeToVariation( absoluteVariation, referenceVariation );
+      const computedVariation = computeColorSignal( referenceVariation, nextSignal, absoluteVariation );
+      const nextVariation = removeSiteVariationOffset( computedVariation );
+
+      // determine what will be the value for the useSourceColorAsReference attribute
+      const sourceIndex = getSourceIndexFromPaletteId( palette );
       const sourceVariation = addSiteVariationOffset( sourceIndex + 1 );
       const sourceSignal = getSignalRelativeToVariation( sourceVariation, referenceVariation );
       const nextSourceAsReference = useSourceColorAsReference ||
                                     ( useSourceOnSameSignal && nextSignal === sourceSignal ) ||
                                     ( useSourceOnSameVariation && absoluteVariation === sourceVariation );
-      const nextVariation = computeColorSignal( referenceVariation, nextSignal, absoluteVariation );
-      const finalVariation = removeSiteVariationOffset( nextVariation );
 
+      const finalVariation = nextSourceAsReference ? sourceVariation : nextVariation;
       const { contentColorSignal, contentPaletteVariation } = nextAttributes;
       const nextContentVariation = computeColorSignal( finalVariation, contentColorSignal, contentPaletteVariation );
 

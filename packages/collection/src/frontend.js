@@ -1,10 +1,8 @@
-import { getCardMediaPaddingTop, debounce, below } from "@novablocks/utils";
-
 import {
-	applyLayoutEngine,
-} from './layout-engine';
-
-import {
+  getCardMediaPaddingTop,
+  debounce,
+  below,
+  applyLayoutEngine,
   getAreaClassname,
   removeSmallestColumn,
   normalizeColumns,
@@ -12,9 +10,11 @@ import {
 	getGridStyle,
 	redistributeCardsInAreas,
 	isLandscape,
-} from './utils';
+} from "@novablocks/utils";
 
-const GRID_SELECTOR = '.novablocks-grid';
+import './frontend/carousel';
+
+const GRID_SELECTOR = '.nb-collection__layout--parametric';
 
 (function($, window, undefined) {
 
@@ -24,23 +24,20 @@ const GRID_SELECTOR = '.novablocks-grid';
 
   function handleGrids( selector ) {
     $( selector ).each( function( i, grid ) {
-      const $grid = $( grid );
-      const $block = $grid.closest( '.supernova, .novablocks-block' );
-      const $cards = $grid.closest( '.supernova__layout, .novablocks-collection__cards' );
+      const $grid = $( grid )
+      const $block = $grid.closest( '[data-layout-style]' );
       const $posts = $grid.children();
-      const attributes = $grid.data();
+      const attributes = $block.data();
       const cardsCount = $posts.length;
 
       let addedCards;
 
-      grid.style.setProperty( '--card-media-padding', attributes.imagePadding );
-      grid.style.setProperty( '--card-media-padding-top', getCardMediaPaddingTop( attributes.thumbnailAspectRatio ) );
-      grid.style.setProperty( '--card-media-object-fit', attributes.imageResizing === 'cropped' ? 'cover' : 'scale-down' );
+      grid.style.setProperty( '--nb-card-media-padding', attributes.imagePadding );
+      grid.style.setProperty( '--nb-card-media-padding-top', getCardMediaPaddingTop( attributes.thumbnailAspectRatio ) );
+      grid.style.setProperty( '--nb-card-media-object-fit', attributes.imageResizing === 'cropped' ? 'cover' : 'scale-down' );
 
       if ( attributes.layoutStyle !== 'parametric' ) {
-        $grid.removeClass( 'novablocks-grid' );
-        $grid.addClass( 'novablocks-collection__layout' );
-        $grid.addClass( `novablocks-grid__area--${ attributes.isLandscape ? 'landscape' : 'portrait' }` );
+        $grid.addClass( `nb-grid__area--${ attributes.isLandscape ? 'landscape' : 'portrait' }` );
         $grid.addClass( getAreaClassnameByWidthRatio( 1 / attributes.columns ) );
 
         $block.addClass( 'novablocks-block--ready' );
@@ -111,15 +108,16 @@ const GRID_SELECTOR = '.novablocks-grid';
         $grid.css( getGridStyle( compiledAttributes ) );
 
         if ( below( 'lap' ) || attributes.headerPosition === 0 ) {
-          $title.clone().addClass( 'js-collection-element-clone' ).insertBefore( $cards );
-          $subtitle.clone().addClass( 'js-collection-element-clone' ).insertBefore( $cards );
+          // @todo fix position of collection header
+          $title.clone().addClass( 'js-collection-element-clone' ).insertBefore( $grid );
+          $subtitle.clone().addClass( 'js-collection-element-clone' ).insertBefore( $grid );
         }
 
         for ( let i = 0; i < areaColumns.length; i++ ) {
           const areaColumn = areaColumns[i];
           const { areas, row, col, width, height } = areaColumn;
 
-          const $column = $( '<div class="novablocks-grid__column">' );
+          const $column = $( '<div class="nb-grid__column">' );
           $column.css( 'grid-area', `${ row } / ${ col } / span ${ height } / span ${ width }` );
           $column.attr( 'data-area', `${ row } / ${ col } / span ${ height } / span ${ width }` );
 
@@ -133,7 +131,7 @@ const GRID_SELECTOR = '.novablocks-grid';
             const $area = $( `<div class="${ areaClassName }">` );
 
             Array.from( Array( area.postsCount ).keys() ).map( i => {
-              const $gridItem = $( '<div class="novablocks-grid__item">' );
+              const $gridItem = $( '<div class="nb-grid__item">' );
               const $card = $posts.eq( addedCards - area.postsCount + i );
               const landscape = isLandscape( area, attributes );
 
@@ -143,7 +141,7 @@ const GRID_SELECTOR = '.novablocks-grid';
               $card.appendTo( $gridItem );
 
               if ( ! below( 'lap' ) && attributes.headerPosition === addedCards - area.postsCount + i + 1 ) {
-                const $header = $( '<div class="novablocks-grid__item js-collection-element-clone">' );
+                const $header = $( '<div class="nb-grid__item js-collection-element-clone">' );
                 $title.clone().appendTo( $header );
                 $subtitle.clone().appendTo( $header );
                 $header.appendTo( $area );

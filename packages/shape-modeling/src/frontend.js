@@ -20,6 +20,10 @@ $( function() {
 		const $block = $target.closest( '[data-blob-sides]' );
 		const attributes = $block.data();
 
+		if ( ! attributes ) {
+		  return;
+    }
+
     const newAttributes = Object.assign( {}, attributes, {
       blobPatternSeed: attributes.blobPatternSeed + seedOffset,
       blobMaskPatternSeed: attributes.blobMaskPatternSeed + seedOffset

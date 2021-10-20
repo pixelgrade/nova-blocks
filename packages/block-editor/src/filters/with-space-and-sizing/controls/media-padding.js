@@ -1,7 +1,10 @@
 import { RangeControl } from "@wordpress/components";
 import { __ } from '@wordpress/i18n';
 
-import { ControlsGroup } from "../../../components";
+import {
+  ControlsGroup,
+  withVisibility,
+} from "../../../components";
 
 const MediaPadding = props => {
 
@@ -27,4 +30,4 @@ const MediaPadding = props => {
   )
 }
 
-export default MediaPadding;
+export default withVisibility( 'media-padding' )( MediaPadding );

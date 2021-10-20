@@ -227,7 +227,8 @@ function novablocks_register_block_types() {
 
 	$bully_dependent_scripts = array(
 		'novablocks/hero/frontend',
-		'novablocks/slideshow/frontend'
+		'novablocks/slideshow/frontend',
+		'novablocks/supernova/frontend'
 	);
 
 	$google_maps_api_dependent_scripts = array(
@@ -300,6 +301,7 @@ function novablocks_register_block_types() {
 			 */
 			if ( $key === 'script' ) {
 				$dependencies[] = 'novablocks-color-signal/frontend';
+				$dependencies[] = 'novablocks-collection/frontend';
 				$dependencies[] = 'novablocks-media-composition/frontend';
 				$dependencies[] = 'novablocks-scrolling-effect/frontend';
 				$dependencies[] = 'novablocks-shape-modeling/frontend';
@@ -392,16 +394,14 @@ function novablocks_register_block_types() {
 				}
 			}
 
-			if ( in_array( $block, $media_composition_style_dependent_blocks ) ) {
-				$css_dependencies[] = 'novablocks-media-composition-' . $key;
-			}
-
-			if ( in_array( $block, $collection_style_dependent_blocks ) ) {
-				$css_dependencies[] = 'novablocks-collection-' . $key;
-			}
-
-			if ( in_array( $block, $components_style_dependent_blocks ) ) {
-				$css_dependencies[] = 'novablocks-components-' . $key;
+			/**
+			 * @todo moving blocks to the block.json API would allow to add this dependency
+			 * only when a block adds support for the colorSignal component
+			 */
+			if ( $key === 'style' ) {
+				$css_dependencies[] = 'novablocks-collection-style';
+				$css_dependencies[] = 'novablocks-media-composition-style';
+				$css_dependencies[] = 'novablocks-shape-modeling-style';
 			}
 
 			// Finally, register the stylesheet.

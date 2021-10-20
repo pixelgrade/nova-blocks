@@ -36,7 +36,7 @@ const Card = ( props ) => {
 			<div className="novablocks-card__layout">
 				{
 					( showMedia || placeholder ) &&
-					<div className="novablocks-card__layout-media novablocks-grid__item-media">
+					<div className="novablocks-card__layout-media nb-grid__item-media">
 						<CardMedia { ...props }>{ props.media }</CardMedia>
 					</div>
 				}
@@ -73,7 +73,7 @@ const CardTitle = ( props ) => {
 	const TitleTagName = props.titleTagName || 'h3';
 
 	return (
-		<TitleTagName className={ 'wp-block novablocks-grid__item-title novablocks-card__title' }>
+		<TitleTagName className={ 'wp-block nb-grid__item-title novablocks-card__title' }>
 			<div className="novablocks-card__title-size-modifier">
 				{ ! placeholder ? title : <TextPlaceholder/> }
 			</div>
@@ -96,7 +96,7 @@ const CardSubtitle = ( props ) => {
 	const SubtitleTagName = props.titleTagName || 'h3';
 
 	return (
-		<SubtitleTagName className={ 'wp-block novablocks-grid__item-title novablocks-card__subtitle' }>
+		<SubtitleTagName className={ 'wp-block nb-grid__item-title novablocks-card__subtitle' }>
 			<div className="novablocks-card__subtitle-size-modifier">
 				{ ! placeholder ? subtitle : <TextPlaceholder/> }
 			</div>
@@ -117,7 +117,7 @@ const CardMeta = ( props ) => {
 	}
 
 	return (
-		<div className="wp-block novablocks-grid__item-meta">
+		<div className="wp-block nb-grid__item-meta">
 			<div className="novablocks-card__meta is-style-meta">
 				<div className="novablocks-card__meta-size-modifier">
 					{ ! placeholder ? meta : <TextPlaceholder rows={ 1 } /> }
@@ -139,7 +139,7 @@ const CardContent = ( props ) => {
 		return null;
 	}
 
-	const wrapperClassName = 'wp-block novablocks-grid__item-description novablocks-card__description';
+	const wrapperClassName = 'wp-block nb-grid__item-description novablocks-card__description';
 	const fontSizeClassName = 'novablocks-card__description-size-modifier';
 
 	if ( placeholder ) {
@@ -174,7 +174,7 @@ const CardFooter = ( props ) => {
 	}
 
 	return (
-		<div className="wp-block novablocks-grid__item-buttons novablocks-card__buttons">
+		<div className="wp-block nb-grid__item-buttons novablocks-card__buttons">
 			{ ! placeholder ? buttons : <TextPlaceholder rows={ 1 } /> }
 		</div>
 	);

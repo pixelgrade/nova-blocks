@@ -7,7 +7,7 @@ const attributes = {
 
   sourceType: 'blocks',
   contentPadding: 100,
-  layoutGutter: 25,
+  layoutGutter: 50,
   cardLayout: 'horizontal',
   layoutStyle: 'classic',
   postsToShow: 1,

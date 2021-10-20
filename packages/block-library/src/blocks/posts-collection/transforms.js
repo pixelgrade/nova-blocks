@@ -1,10 +1,10 @@
 import { createBlock } from '@wordpress/blocks';
 
 export default {
-	to: [
+  to: [
     {
       type: 'block',
-      blocks: ['novablocks/supernova'],
+      blocks: [ 'novablocks/supernova' ],
       transform: function( attributes, innerBlocks ) {
 
         const commonAttributes = Object.assign( {}, attributes, {
@@ -16,5 +16,5 @@ export default {
         ] )
       },
     },
-	],
+  ],
 }

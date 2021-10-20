@@ -6,14 +6,16 @@ import classnames from 'classnames';
 /**
  * WordPress Dependencies
  */
-const { addFilter } = wp.hooks;
-const { Fragment } = wp.element;
-const { createHigherOrderComponent } = wp.compose;
+import { select } from "@wordpress/data";
+import { addFilter } from "@wordpress/hooks";
+import { Fragment } from "@wordpress/element";
+import { createHigherOrderComponent } from "@wordpress/compose";
+
+import { withControlsVisibility } from './components';
 
 const allowedBlocks = [ 'core/group' ];
 
 import Inspector from './controls';
-import {select} from "@wordpress/data";
 
 const alterSettings = ( settings ) => {
 
@@ -49,6 +51,8 @@ const alterSettings = ( settings ) => {
 
 const withControls = createHigherOrderComponent( ( BlockEdit ) => {
 
+  const NewBlockEdit = withControlsVisibility( BlockEdit );
+
   return ( props ) => {
 
     if ( 'core/group' !== props.name ) {
@@ -59,12 +63,12 @@ const withControls = createHigherOrderComponent( ( BlockEdit ) => {
 
     return (
       <Fragment>
-        <BlockEdit { ...props } />
+        <NewBlockEdit { ...props } />
         <Inspector { ...props } />
       </Fragment>
     )
   }
-} )
+} );
 
 const addEditorBlockAttributes = createHigherOrderComponent( ( BlockListBlock ) => {
 

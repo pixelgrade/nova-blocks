@@ -1,0 +1,18 @@
+{
+	"columns": {
+		"type": "number",
+		"default": 3
+	},
+	"contentPosition": {
+		"type": "string",
+		"default": "center left"
+	},
+	"layoutStyle": {
+		"type": "string",
+		"default": "classic"
+	},
+	"postsToShow": {
+		"type": "integer",
+		"default": 3
+	}
+}

@@ -1,12 +1,9 @@
 import { __ } from "@wordpress/i18n";
-import { RadioControl } from "@wordpress/components";
-import { useMemo } from "@wordpress/element";
 
 import {
-  ControlsGroup,
   ControlsSection,
   ControlsTab,
-  PresetControl
+  PresetControl,
 } from "../../../components";
 
 import presets from "./presets";
@@ -15,6 +12,7 @@ import { getRandomAttributes } from "../utils";
 import ParametricLayoutControls from "./parametric-layout-controls";
 import ClassicLayoutControls from "./classic-layout-controls";
 import CarouselLayoutControls from "./carousel-layout-controls";
+import CollectionLayoutStyleControl from "./collection-layout-style-control";
 
 const Controls = ( props ) => {
 
@@ -22,19 +20,7 @@ const Controls = ( props ) => {
     attributes: {
       layoutStyle
     },
-    setAttributes
   } = props;
-
-  const layoutStyleOptions = useMemo( () => [
-    { label: __( 'Parametric Grid', '__plugin_txtd' ), value: 'parametric' },
-    { label: __( 'Classic Grid', '__plugin_txtd' ), value: 'classic' },
-    { label: __( 'Carousel', '__plugin_txtd' ), value: 'carousel' },
-  ], [] );
-
-  const currentLayoutStyleLabel = useMemo( () => {
-    const currentLayoutStyleOption = layoutStyleOptions.find( style => style.value === layoutStyle );
-    return currentLayoutStyleOption ? currentLayoutStyleOption.label : null;
-  }, [ layoutStyle ] );
 
   return (
     <ControlsSection
@@ -53,16 +39,7 @@ const Controls = ( props ) => {
         </ControlsTab>
       }
       <ControlsTab label={ __( 'Settings' ) }>
-        <ControlsGroup title={ __( 'Collection Layout Style' ) }>
-          <RadioControl
-            selected={ layoutStyle }
-            className={ 'novablocks-collection-layout' }
-            onChange={ ( layoutStyle ) => {
-              setAttributes( { layoutStyle } );
-            } }
-            options={ layoutStyleOptions }
-          />
-        </ControlsGroup>
+        <CollectionLayoutStyleControl { ...props } />
         <ParametricLayoutControls { ...props } />
         <ClassicLayoutControls { ...props } />
         <CarouselLayoutControls { ...props } />

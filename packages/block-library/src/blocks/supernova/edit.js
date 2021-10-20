@@ -1,25 +1,19 @@
 import classnames from "classnames";
 
-import { createBlock } from '@wordpress/blocks';
-import { Fragment, useEffect } from "@wordpress/element";
 import { useBlockProps } from "@wordpress/block-editor";
-import { useSelect, useDispatch } from "@wordpress/data";
+import { Fragment } from "@wordpress/element";
 
+import { useInnerBlocksCount } from "@novablocks/block-editor";
 import { CollectionHeader } from "@novablocks/collection";
-
-import { useInnerBlocks } from "@novablocks/block-editor";
 
 import BlockControls from './block-controls';
 
-import {
-  CollectionLayout,
-  PostCard,
-  SupernovaItemPreview,
-} from './components';
+import { getAlignFromMatrix } from "@novablocks/utils";
 
 import {
+  PostsCollectionLayout,
+  NotPostsCollectionLayout,
   withControlsVisibility,
-  withPreviewAttributes
 } from './components';
 
 const SupernovaEdit = props => {
@@ -27,36 +21,20 @@ const SupernovaEdit = props => {
   const { attributes, clientId } = props;
 
   const {
-    sourceType,
-    cardLayout,
-    contentPadding,
-    layoutGutter,
-    postsToShow,
+    title,
+    subtitle,
+    contentColorSignal,
+    contentPaletteVariation,
+    ...cardAttributes
   } = attributes;
 
-  const itemsCount = useSelect( select => select( 'core/block-editor' ).getBlockCount( clientId ), [ clientId ] );
-  const { replaceInnerBlocks } = useDispatch( 'core/block-editor' );
-  const innerBlocks = useInnerBlocks( clientId );
+  Object.assign( cardAttributes, {
+    colorSignal: contentColorSignal,
+    paletteVariation: contentPaletteVariation,
+    useSourceColorAsReference: false,
+  } );
 
-  useEffect( () => {
-    const newInnerBlocks = innerBlocks.slice( 0, postsToShow );
-
-    if ( postsToShow > itemsCount ) {
-      for ( let i = 0; i < postsToShow - itemsCount; i++ ) {
-        newInnerBlocks.push( createBlock( 'novablocks/supernova-item', {
-          sourceType,
-          cardLayout,
-          contentPadding,
-          layoutGutter,
-          title: 'Title',
-          description: 'This is just an example of what a description for this card could look like',
-          buttonText: 'Button',
-        } ) );
-      }
-    }
-
-    replaceInnerBlocks( clientId, newInnerBlocks );
-  }, [ postsToShow ] );
+  useInnerBlocksCount( clientId, attributes, 'novablocks/supernova-item', cardAttributes );
 
   return (
     <Fragment>
@@ -86,16 +64,21 @@ const SupernovaPreview = props => {
     minHeightFallback
   } = attributes;
 
+  const contentAlign = getAlignFromMatrix( attributes?.contentPosition );
 
   const className = classnames(
     props.className,
     'supernova',
-    `supernova-source-type-${ sourceType }`,
-    `supernova-card-layout--${cardLayout}`,
+    `supernova--source-type-${ sourceType }`,
+    `supernova--card-layout-${ cardLayout }`,
+    {
+      'supernova--one-column': columns === 1,
+      'supernova--has-minimum-height': minHeightFallback !== 0,
+    },
     'alignfull',
-    `block-is-${align}`,
-    `${columns === 1 ? 'supernova-layout-one-column' : ''}`,
-    `${minHeightFallback !== 0 ? 'supernova-has-minimum-height' : ''}`
+    `block-is-${ align }`,
+    `supernova--valign-${ contentAlign[0] }`,
+    `supernova--halign-${ contentAlign[1] }`,
   );
 
   const blockProps = useBlockProps( {
@@ -103,80 +86,18 @@ const SupernovaPreview = props => {
     style: props.style,
   } );
 
-  const alignClassname = 'align' + align;
-
   markPostsAsDisplayed( clientId, sourceType === 'content' ? posts : [] );
 
   return (
     <div { ...blockProps }>
-        {
-          headerPosition === 0 && ( showCollectionTitle || showCollectionSubtitle ) &&
-          <div className={alignClassname}>
-            <div className="supernova-header__inner-container">
-              <CollectionHeader { ...props } />
-            </div>
-          </div>
-        }
-
-      <div className={alignClassname}>
-        <div className="supernova-content__inner-container" >
-          { sourceType === 'content' && <PostsCollectionLayout { ...props } /> }
-          { sourceType !== 'content' && <NotPostsCollectionLayout { ...props } /> }
-        </div>
+      <div className="supernova__inner-container">
+        { headerPosition === 0 && ( showCollectionTitle || showCollectionSubtitle ) && <CollectionHeader { ...props } /> }
+        { sourceType === 'content' && <PostsCollectionLayout { ...props } /> }
+        { sourceType !== 'content' && <NotPostsCollectionLayout { ...props } /> }
       </div>
     </div>
   );
 }
-
-const PostsCollectionLayout = props => {
-  const { posts, clientId } = props;
-  const innerBlocks = useInnerBlocks( clientId );
-  const attributes = Object.assign( {}, props.attributes, {
-    colorSignal: props.attributes.contentColorSignal,
-    paletteVariation: props.attributes.contentPaletteVariation,
-    useSourceColorAsReference: false
-  } );
-
-  const passedProps = Object.assign({}, props, {
-    attributes: attributes
-  } );
-
-  if ( ! Array.isArray( posts ) ) {
-    return null;
-  }
-
-  return (
-    <CollectionLayout { ...props }>
-      {
-        posts.map( ( post, index ) => {
-          const innerBlock = innerBlocks[ index ];
-
-          if ( ! innerBlock ) {
-            return null;
-          }
-
-          return (
-            <div className={ 'supernova__layout-item' }>
-              <PostCard { ...passedProps } post={ post } key={ index } />
-            </div>
-          )
-        } )
-      }
-    </CollectionLayout>
-  )
-}
-
-const NotPostsCollectionLayout = withPreviewAttributes( props => {
-  const { attributes, clientId } = props;
-  const { sourceType } = attributes;
-  const innerBlocks = useInnerBlocks( clientId );
-
-  return (
-    <CollectionLayout { ...props }>
-      { sourceType !== 'content' && innerBlocks.map( innerBlock => <SupernovaItemPreview { ...innerBlock } /> ) }
-    </CollectionLayout>
-  )
-} );
 
 export default withControlsVisibility( SupernovaEdit );
 

@@ -22,29 +22,5 @@
 	"meta": {
 		"type": "string",
 		"default": ""
-	},
-	"showMedia": {
-		"type": "boolean",
-		"default": true
-	},
-	"showTitle": {
-		"type": "boolean",
-		"default": true
-	},
-	"showSubtitle": {
-		"type": "boolean",
-		"default": false
-	},
-	"showDescription": {
-		"type": "boolean",
-		"default": true
-	},
-	"showButtons": {
-		"type": "boolean",
-		"default": true
-	},
-	"showMeta": {
-		"type": "boolean",
-		"default": false
 	}
 }

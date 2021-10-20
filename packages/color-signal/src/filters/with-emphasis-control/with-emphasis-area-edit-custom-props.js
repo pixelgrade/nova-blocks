@@ -10,7 +10,7 @@ const withEmphasisAreaEditCustomProps = createHigherOrderComponent( OriginalComp
 
     const style = props.style ? props.style : {};
 
-    let colorSignalProps = {'--nb-collection-emphasis-area': emphasisArea}
+    let colorSignalProps = {'--nb-emphasis-area': emphasisArea}
 
     Object.assign( style, colorSignalProps );
 

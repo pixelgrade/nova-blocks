@@ -10,17 +10,43 @@ const withControlsVisibility = OriginalComponent => {
     } = props;
 
     useEffect( () => {
-      const { cardLayout } = attributes;
+
+      const {
+        cardLayout,
+        layoutStyle,
+        sourceType,
+        showCollectionTitle,
+        showTitle,
+        showMedia,
+        showMeta,
+      } = attributes;
 
       setControlsVisibility( {
+        // Space and Sizing
         'minimum-container-height': cardLayout === 'stacked',
         'image-container-height': cardLayout !== 'stacked',
-        'visual-balance' : cardLayout === 'horizontal' || cardLayout ==='horizontal-reverse',
+        'visual-balance' : layoutStyle !== 'parametric' && [ 'horizontal', 'horizontal-reverse' ].includes( cardLayout ),
         'content-to-media-spacing': cardLayout !== 'stacked',
-        'media-composition-section': cardLayout !== 'stacked',
+
+        // Media Composition
+        'media-composition-section': !! showMedia && cardLayout !== 'stacked' && sourceType !== 'content',
+
+        // Shape Modeling
         'shape-modeling-section': cardLayout !== 'stacked',
+
+        // Scrolling Effect
         'scrolling-effect-section': cardLayout === 'stacked',
-        'emphasis-area': cardLayout !== 'stacked'
+
+        // Color Signal
+        'emphasis-area': cardLayout !== 'stacked',
+
+        // Card Details
+        'card-details': !! showCollectionTitle || !! showTitle || !! showMeta,
+        'card-details-content': !! showCollectionTitle || !! showTitle,
+        'collection-title-level': !! showCollectionTitle,
+        'card-title-level': !! showTitle,
+        'metadata-source': !! showMeta,
+        'metadata-position': !! showMeta,
       } );
 
     }, [ attributes ] );

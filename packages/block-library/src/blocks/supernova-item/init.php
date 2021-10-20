@@ -21,8 +21,8 @@ function novablocks_get_supernova_item_attributes() {
 		'packages/block-editor/src/filters/with-card-details/attributes.json',
 		'packages/block-editor/src/filters/with-elements-visibility/attributes.json',
 		'packages/block-editor/src/filters/with-cards-manager/attributes.json',
+		'packages/block-editor/src/filters/with-content-loader/attributes.json',
 		'packages/block-editor/src/filters/with-content-position-matrix/attributes.json',
-		'packages/block-editor/src/filters/with-latest-posts/attributes.json',
 		'packages/block-editor/src/filters/with-space-and-sizing/attributes.json',
 	) );
 
@@ -41,6 +41,6 @@ if ( ! function_exists( 'novablocks_render_supernova_item_block' ) ) {
 			$card_content = novablocks_get_card_contents( $attributes );
 		}
 
-		return novablocks_get_supernova_card_markup( $card_media, $card_content, $attributes );
+		return novablocks_get_collection_card_markup( $card_media, $card_content, $attributes );
 	}
 }

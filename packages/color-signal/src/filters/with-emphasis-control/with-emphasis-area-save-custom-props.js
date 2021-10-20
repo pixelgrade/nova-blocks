@@ -13,7 +13,7 @@ const withEmphasisAreaSaveCustomProps = ( element, blockType, attributes ) => {
       ...element.props,
       style: {
         ...element.props?.style,
-        '--nb-collection-emphasis-area': attributes.emphasisArea
+        '--nb-emphasis-area': attributes.emphasisArea
       },
     }
   } );

@@ -1,2 +1,25 @@
-@import "scss/collection/style";
 @import "scss/grid/style";
+@import "scss/collection/style";
+
+.novablocks-collection {
+  // @todo styles for emphasisArea &co similar to supernova
+  position: relative;
+  @include layout-grid;
+}
+
+.slick-slide {
+  opacity: 1 !important;
+  
+  // element on which we apply the custom transition
+  > * {
+    overflow: hidden;
+  }
+}
+
+.slick-slide--current {
+  z-index: 1100 !important;
+}
+
+.slick-slide--next {
+  z-index: 1200 !important;
+}

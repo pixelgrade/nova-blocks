@@ -1,17 +1,24 @@
-/**
- * Internal dependencies
- */
-import BlockControls from './block-controls';
-import MediaPreview from './preview';
+import classnames from "classnames";
 
 /**
  * WordPress dependencies
  */
-import { Fragment, useCallback } from '@wordpress/element';
+import { useCallback } from '@wordpress/element';
+import { useBlockProps } from "@wordpress/block-editor";
+
+/**
+ * Internal dependencies
+ */
+import { getAlignmentClassnames } from "@novablocks/utils";
+
+import { withControlsVisibility } from './components';
+import BlockControls from './block-controls';
+import MediaPreview from './preview';
 
 const MediaEdit = ( props ) => {
 
-  const { setAttributes } = props;
+  const { attributes, setAttributes } = props;
+  const { mediaPosition, verticalAlignment } = attributes;
 
 	const updateImages = useCallback( media => {
 		setAttributes( {
@@ -24,12 +31,26 @@ const MediaEdit = ( props ) => {
     updateImages
   }
 
+  const className = classnames(
+    `novablocks-media`,
+    `novablocks-u-valign-${ verticalAlignment }`,
+    `has-image-on-the-${ mediaPosition }`,
+    getAlignmentClassnames( attributes ),
+    props.className,
+    `alignfull`,
+  );
+
+  const blockProps = useBlockProps( {
+    className: className,
+    style: props.style,
+  } );
+
 	return (
-		<Fragment>
+		<div { ...blockProps }>
 			<MediaPreview { ...passedProps } />
 			<BlockControls { ...passedProps } />
-		</Fragment>
+		</div>
 	);
 };
 
-export default MediaEdit;
+export default withControlsVisibility( MediaEdit );

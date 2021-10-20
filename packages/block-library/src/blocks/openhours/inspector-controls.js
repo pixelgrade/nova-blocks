@@ -72,7 +72,7 @@ const OpenHoursInspectorControls = function( props ) {
 	return (
 
 		<Fragment>
-			<ControlsSection is={ 'setup' } label={ __( 'Setup' ) }>
+			<ControlsSection id={ 'setup' } label={ __( 'Setup' ) }>
 				<ControlsTab label={ __( 'Settings' ) }>
 					<TextareaControl
 						key={ 'openhours-schedule-controls' }

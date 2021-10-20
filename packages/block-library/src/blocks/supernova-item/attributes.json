@@ -3,17 +3,9 @@
 		"type": "boolean",
 		"default": true
 	},
-	"cardLayout": {
-		"type": "string",
-		"default": "vertical"
-	},
 	"level": {
 		"type": "number",
 		"default": 2
-	},
-	"sourceType": {
-		"type": "string",
-		"default": "content"
 	},
 	"metaAboveTitle": {
 		"type": "string",
@@ -54,9 +46,5 @@
 	"multiplePlaceholderImages": {
 		"type": "boolean",
 		"default": false
-	},
-	"cardMediaOpacity": {
-		"type": "number",
-		"default": 100
 	}
 }

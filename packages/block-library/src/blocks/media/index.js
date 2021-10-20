@@ -70,10 +70,10 @@ const overwriteAttributes = ( settings ) => {
     }
   };
 }
-
-addFilter( 'blocks.registerBlockType', 'novablocks/media/attributes-overwrite', overwriteAttributes, 20 );
+addFilter( 'blocks.registerBlockType', 'novablocks/media/attributes-overwrite', overwriteAttributes, Number.MAX_SAFE_INTEGER );
 
 registerBlockType( BLOCK_NAME, {
+  apiVersion: 2,
 	title: __( 'Media Card Constellation (Deprecated)', '__plugin_txtd' ),
 	description: __( 'Display media objects alongside short pieces of content.', '__plugin_txtd' ),
 	category: 'nova-blocks',
@@ -97,13 +97,10 @@ registerBlockType( BLOCK_NAME, {
         controls: true,
         advancedSpacing: true,
       },
+      noDataAlign: true,
     },
   },
 	edit,
 	save,
-	getEditWrapperProps() {
-		const settings = select( 'core/block-editor' ).getSettings();
-		return settings.alignWide ? { 'data-align': 'full' } : {};
-	},
 	transforms,
 } );

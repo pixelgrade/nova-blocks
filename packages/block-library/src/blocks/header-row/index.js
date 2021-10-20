@@ -33,7 +33,7 @@ const overwriteAttributes = ( settings ) => {
   };
 }
 
-addFilter( 'blocks.registerBlockType', 'novablocks/header-row/attributes-overwrite', overwriteAttributes, 20 );
+addFilter( 'blocks.registerBlockType', 'novablocks/header-row/attributes-overwrite', overwriteAttributes, Number.MAX_SAFE_INTEGER );
 
 registerBlockType( BLOCK_NAME, {
   title: __( 'Header Row', '__plugin_txtd' ),

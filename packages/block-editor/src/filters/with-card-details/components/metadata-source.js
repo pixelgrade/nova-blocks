@@ -1,7 +1,7 @@
 import { __ } from "@wordpress/i18n";
 import { SelectControl } from "@wordpress/components";
 
-import { ControlsGroup } from "../../../components";
+import { ControlsGroup, withVisibility } from "../../../components";
 
 const MetadataSource = ( props ) => {
 
@@ -52,4 +52,4 @@ const MetadataSource = ( props ) => {
   )
 };
 
-export default MetadataSource;
+export default withVisibility( 'metadata-source' )( MetadataSource );
