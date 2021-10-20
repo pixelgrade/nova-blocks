@@ -41,21 +41,24 @@ const updateColors = ( siteVariation ) => {
 }
 
 const updateScrollIndicator = () => {
-  const blocks = document.querySelectorAll( '[data-scroll-indicator]' );
-  const blocksArray = [ ...blocks ].filter( block => !! block.dataset.scrollIndicator );
+  const blocks = document.querySelectorAll( '[data-scroll-indicator-block]' );
+  const blocksArray = [ ...blocks ].filter( block => !! block.dataset.scrollIndicatorBlock );
 
   blocksArray.forEach( block => {
     const indicator = block.querySelector( '.nb-scroll-indicator' );
     const nextElement = block.nextElementSibling;
 
     if ( ! nextElement ) {
+      applySiteColorSignal( indicator );
       return;
     }
 
     const nextElementStyles = window.getComputedStyle( nextElement );
     const marginTop = nextElementStyles.getPropertyValue( 'margin-top' );
 
+
     if ( parseInt( marginTop, 10 ) !== 0 ) {
+      applySiteColorSignal( indicator );
       return;
     }
 
@@ -73,6 +76,15 @@ const updateScrollIndicator = () => {
     }
 
   } );
+}
+
+const applySiteColorSignal = ( indicator ) => {
+
+  if ( ! indicator ) {
+    return;
+  }
+
+  addClass( indicator, `sm-variation-${ getSiteColorVariation() }` );
 }
 
 /**

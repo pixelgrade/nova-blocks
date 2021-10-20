@@ -1,7 +1,7 @@
 import $ from 'jquery';
 
 const $scrollButtons = $( '.nb-scroll-indicator' ).filter( ( i, obj ) => {
-  return $( obj ).closest( '[data-scroll-indicator]' ).length;
+  return $( obj ).closest( '[data-scroll-indicator-block]' ).length;
 } );
 
 const SCROLL_BUTTON_HIDDEN_CLASS = 'nb-scroll-indicator--hidden';
@@ -16,7 +16,7 @@ const SCROLL_BUTTON_HIDDEN_CLASS = 'nb-scroll-indicator--hidden';
 
   $scrollButtons.each( ( i, obj ) => {
     const $scrollButton = $( obj );
-    const $hero = $scrollButton.closest( '[data-scroll-indicator]' );
+    const $hero = $scrollButton.closest( '[data-scroll-indicator-block]' );
     const isMiddle = $scrollButton.hasClass( '.nb-scroll-indicator--middle' );
     const heroBox = $hero.get( 0 ).getBoundingClientRect();
 
