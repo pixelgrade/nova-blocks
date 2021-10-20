@@ -71,6 +71,9 @@ registerBlockType( BLOCK_NAME, {
         altAttributes: true,
         addOverlayColorDeprecatedMethod: true,
         controls: true,
+        paletteClassname: true,
+        paletteVariationClassname: true,
+        colorSignalClassname: true,
       },
       overlayFilter: {
         attributes: true,
