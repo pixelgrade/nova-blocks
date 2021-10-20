@@ -1298,11 +1298,32 @@ if ( ! function_exists( 'novablocks_get_collection_output' ) ) {
 				<div class="<?php echo join( ' ', $layoutClasses ); ?>">
 					<?php echo $content; ?>
 				</div>
+				<?php novablocks_render_scroll_indicator( $attributes ); ?>
 			</div>
 		</div>
 
 		<?php return ob_get_clean();
 	}
+}
+
+function novablocks_render_scroll_indicator( $attributes ) {
+	$scrollIndicator = ! empty( $attributes['scrollIndicatorBlock'] );
+	$scrollIndicatorClasses = array( 'nb-scroll-indicator' );
+	$blockHeight = $attributes[ 'scrollingEffect' ] === 'doppler' ? $attributes[ 'minHeightFallback' ] * 2 : $attributes[ 'minHeightFallback' ];
+
+	if ( $blockHeight > 100 ) {
+		$scrollIndicatorClasses[] = 'nb-scroll-indicator--middle';
+	}
+
+	$scrollIndicatorClass = join( ' ', $scrollIndicatorClasses );
+
+	if ( $scrollIndicator ) { ?>
+		<div class="<?php echo $scrollIndicatorClass; ?>">
+			<svg width="160" height="50" viewBox="0 0 160 50" fill="none" xmlns="http://www.w3.org/2000/svg">
+				<path d="M0 50C55 50 45 0 80 0C115 0 105 50 160 50H0Z" />
+			</svg>
+		</div>
+	<?php }
 }
 
 function novablocks_get_collection_header_output( $attributes ) {
@@ -1882,7 +1903,7 @@ function novablocks_get_collection_card_markup( $media, $content, $attributes ) 
 	);
 
 	$data_attributes_array = array_map( 'novablocks_camel_case_to_kebab_case', array_keys( $attributes ) );
-	$blacklist = array( 'images' );
+	$blacklist = array( 'images', 'position-indicators' );
 	$data_attributes = novablocks_get_data_attributes( $data_attributes_array, $attributes, $blacklist );
 
 	ob_start(); ?>

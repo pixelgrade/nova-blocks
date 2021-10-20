@@ -21,10 +21,6 @@
 		"type": "number",
 		"default": 1
 	},
-	"scrollIndicatorBlock": {
-		"type": "boolean",
-		"default": false
-	},
 	"scrollingEffect": {
 		"type": "string",
 		"default": "static"

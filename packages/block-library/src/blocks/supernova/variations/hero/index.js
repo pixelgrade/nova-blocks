@@ -16,8 +16,8 @@ const attributes = {
   showCollectionTitle: false,
   showCollectionSubtitle: false,
 
-  contentPosition: 'bottom center',
-  cardMediaOpacity: 40,
+  contentPosition: 'center center',
+  minHeightFallback: 100,
 
   contentColorSignal: 3,
   contentPaletteVariation: 12,
@@ -29,10 +29,15 @@ const attributes = {
   scrollingEffect: 'parallax',
 }
 
+const innerBlockAttributes = Object.assign( {}, attributes, {
+  colorSignal: 3,
+  paletteVariation: 12,
+} );
+
 const innerBlocks = [
   [
     'novablocks/supernova-item',
-    attributes,
+    innerBlockAttributes,
     [
       [ 'novablocks/headline', { level: 2, className: "has-larger-font-size", fontSize: "larger" } ],
       [ 'core/separator', {} ],
@@ -49,7 +54,6 @@ const heroVariation = {
   attributes: attributes,
   innerBlocks,
   isActive: ( block, variation ) => block.variation === variation.variation,
-  scope: [ 'block', 'inserter', 'transform' ],
 };
 
 export default heroVariation;
