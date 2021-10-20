@@ -10,12 +10,14 @@ const withControlsVisibility = OriginalComponent => {
     } = props;
 
     useEffect( () => {
+
       const {
         cardLayout,
         layoutStyle,
         sourceType,
         showCollectionTitle,
         showTitle,
+        showMedia,
         showMeta,
       } = attributes;
 
@@ -27,7 +29,7 @@ const withControlsVisibility = OriginalComponent => {
         'content-to-media-spacing': cardLayout !== 'stacked',
 
         // Media Composition
-        'media-composition-section': cardLayout !== 'stacked' && sourceType !== 'content',
+        'media-composition-section': !! showMedia && cardLayout !== 'stacked' && sourceType !== 'content',
 
         // Shape Modeling
         'shape-modeling-section': cardLayout !== 'stacked',
