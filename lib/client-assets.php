@@ -416,10 +416,8 @@ function novablocks_register_block_types() {
 			$args[ $key ] = $handle;
 		}
 
-		$support = novablocks_get_theme_support();
-
 		// If the current block is supported by the theme, register it.
-		if ( in_array( $block, $support ) || true ) {
+		if ( novablocks_is_block_supported( $block ) ) {
 			// In development mode load the PHP files from src to make for easier debugging.
 			if ( NOVABLOCKS_DEVELOPMENT_MODE ) {
 				$init = trailingslashit( str_replace( 'build/block-library/blocks', 'packages/block-library/src/blocks', $blockpath ) ) . 'init.php';

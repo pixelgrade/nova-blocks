@@ -1,10 +1,10 @@
 === Nova Blocks by Pixelgrade ===
 Contributors: pixelgrade, vlad.olaru, babbardel, razvanonofrei, gorby31
 Tags: Blocks, editor, gutenberg, gutenberg blocks, page builder, block enabled, page building, block
-Requires at least: 5.2.2
-Tested up to: 5.8
+Requires at least: 5.5.0
+Tested up to: 5.8.1
 Requires PHP: 5.6.40
-Stable tag: 1.13.1
+Stable tag: 1.13.3
 License: GPL v2.0 (or later)
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -93,6 +93,12 @@ Yes! Nova Block's core features are free to use.
 3. Slideshow Me the Way block options
 
 == Changelog ==
+
+= 1.13.3 =
+* Better handling of block configuration.
+
+= 1.13.2 =
+* Fix migration to the new Matrix Alignment control
 
 = 1.13.1 =
 * Escape data attributes on blocks that were messing up layout.

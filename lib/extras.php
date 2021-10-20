@@ -3,14 +3,14 @@
 /**
  * Determine if a certain block is supported by the current theme.
  *
- * This way you can current_theme_supports() with a second parameter like so:
+ * This way you can use current_theme_supports() with a second parameter like so:
  * current_theme_supports( 'novablocks', 'hero');
  * current_theme_supports( 'novablocks', array( 'hero', 'media' ) );
  *
- * @param bool $supports
- * @param string|array $args A single block or a list of blocks to search for.
- *                           When multiple, we use AND among them, so all need to be supported.
- * @param array|bool $theme_features The list of novablocks blocks (as strings) that the current theme supports.
+ * @param bool         $supports
+ * @param string|array $args           A single block or a list of blocks to search for.
+ *                                     When multiple, we use AND among them, so all need to be supported.
+ * @param array|bool   $theme_features The list of novablocks blocks (as strings) that the current theme supports.
  *
  * @return mixed
  */
@@ -20,14 +20,14 @@ function novablocks_handle_theme_supports( $supports, $args, $theme_features ) {
 	}
 
 	if ( is_string( $args ) ) {
-		$args = array( $args );
+		$args = [ $args ];
 	}
 
 	if ( is_array( $theme_features ) ) {
 		$theme_features = reset( $theme_features );
 	}
 	if ( is_string( $theme_features ) ) {
-		$theme_features = array( $theme_features );
+		$theme_features = [ $theme_features ];
 	}
 	if ( ! is_array( $theme_features ) ) {
 		return $supports;
@@ -41,38 +41,41 @@ function novablocks_handle_theme_supports( $supports, $args, $theme_features ) {
 
 	return true;
 }
+
 add_filter( 'current_theme_supports-novablocks', 'novablocks_handle_theme_supports', 10, 3 );
 
 function novablocks_register_settings() {
 	register_setting(
 		'novablocks',
 		'novablocks_google_maps_api_key',
-		array(
+		[
 			'type'              => 'string',
 			'show_in_rest'      => true,
 			'sanitize_callback' => 'sanitize_text_field',
-		)
+		]
 	);
 }
+
 add_action( 'admin_init', 'novablocks_register_settings' );
 add_action( 'rest_api_init', 'novablocks_register_settings' );
 
 function novablocks_register_meta() {
 
 	if ( defined( 'NOVABLOCKS_USE_POST_META_ATTRIBUTES' ) && NOVABLOCKS_USE_POST_META_ATTRIBUTES ) {
-		register_meta( 'post', 'novablocks_hero_scroll_indicator', array(
+		register_meta( 'post', 'novablocks_hero_scroll_indicator', [
 			'type'         => 'boolean',
 			'single'       => true,
 			'show_in_rest' => true,
-		) );
+		] );
 
-		register_meta( 'post', 'novablocks_hero_position_indicators', array(
+		register_meta( 'post', 'novablocks_hero_position_indicators', [
 			'type'         => 'boolean',
 			'single'       => true,
 			'show_in_rest' => true,
-		) );
+		] );
 	}
 }
+
 add_action( 'init', 'novablocks_register_meta' );
 
 function novablocks_allowed_block_types( $allowed_block_types, $post ) {
@@ -80,76 +83,77 @@ function novablocks_allowed_block_types( $allowed_block_types, $post ) {
 	if ( $post->post_type === 'block_area' ) {
 
 		if ( $post->post_name === 'header' ) {
-			return array( 'novablocks/header' );
+			return [ 'novablocks/header' ];
 		}
 
 		if ( $post->post_name === 'promo-bar' ) {
-			return array( 'novablocks/announcement-bar', 'novablocks/openhours', 'core/paragraph' );
+			return [ 'novablocks/announcement-bar', 'novablocks/openhours', 'core/paragraph' ];
 		}
 	}
 
 	return $allowed_block_types;
 }
+
 add_filter( 'allowed_block_types', 'novablocks_allowed_block_types', 10, 2 );
 
 function novablocks_get_alignment_attributes() {
-	return array(
-		'horizontalAlignment' => array(
+	return [
+		'horizontalAlignment' => [
 			'type'    => 'string',
 			'default' => 'center',
-		),
-		'verticalAlignment'   => array(
+		],
+		'verticalAlignment'   => [
 			'type'    => 'string',
-			'default' => 'center'
-		),
-	);
+			'default' => 'center',
+		],
+	];
 }
 
 function novablocks_get_doppler_attributes() {
-	return array(
-		'focalPoint'             => array(
+	return [
+		'focalPoint'             => [
 			'type'    => 'object',
-			'default' => array(
+			'default' => [
 				'x' => 0.5,
-				'y' => 0.5
-			),
-		),
-		'finalFocalPoint'        => array(
+				'y' => 0.5,
+			],
+		],
+		'finalFocalPoint'        => [
 			'type'    => 'object',
-			'default' => array(
+			'default' => [
 				'x' => 0.5,
-				'y' => 0.5
-			),
-		),
-		'initialBackgroundScale' => array(
+				'y' => 0.5,
+			],
+		],
+		'initialBackgroundScale' => [
 			'type'    => 'number',
-			'default' => 1
-		),
-		'finalBackgroundScale'   => array(
+			'default' => 1,
+		],
+		'finalBackgroundScale'   => [
 			'type'    => 'number',
-			'default' => 1
-		),
-		'scrollIndicatorBlock'   => array(
+			'default' => 1,
+		],
+		'scrollIndicatorBlock'   => [
 			'type'    => 'boolean',
-			'default' => false
-		),
-		'scrollingEffect'        => array(
+			'default' => false,
+		],
+		'scrollingEffect'        => [
 			'type'    => 'string',
 			'default' => 'parallax',
-		),
-		'motionPreset'           => array(
+		],
+		'motionPreset'           => [
 			'type'    => 'string',
 			'default' => 'standard-dynamic',
-		),
-		'followThroughStart'     => array(
+		],
+		'followThroughStart'     => [
 			'type'    => 'boolean',
 			'default' => true,
-		),
-		'followThroughEnd'       => array(
+		],
+		'followThroughEnd'       => [
 			'type'    => 'boolean',
 			'default' => true,
-		),
-	);
+		],
+	];
 }
 
 function novablocks_get_alignment( $attributes ) {
@@ -158,7 +162,7 @@ function novablocks_get_alignment( $attributes ) {
 		return explode( ' ', $attributes['contentPosition'] );
 	}
 
-	$verticalAlignment = 'center';
+	$verticalAlignment   = 'center';
 	$horizontalAlignment = 'center';
 
 	if ( isset( $attributes['verticalAlignment'] ) ) {
@@ -169,14 +173,14 @@ function novablocks_get_alignment( $attributes ) {
 		$horizontalAlignment = $attributes['horizontalAlignment'];
 	}
 
-	return array(
+	return [
 		$verticalAlignment,
 		$horizontalAlignment,
-	);
+	];
 }
 
 function novablocks_get_alignment_classes( $attributes ) {
-	$classes = array();
+	$classes = [];
 
 	$alignment = novablocks_get_alignment( $attributes );
 
@@ -238,51 +242,50 @@ function novablocks_get_focal_point_style( $focalPoint ) {
 
 function novablocks_add_hero_settings( $settings ) {
 
-	$hero_settings = array(
-		'template'   => array(
-			array(
+	$hero_settings = [
+		'template' => [
+			[
 				'core/group',
-				array(),
-				array(
-					array(
+				[],
+				[
+					[
 						'novablocks/headline',
-						array(
+						[
 							'secondary' => esc_html__( 'This is a catchy', '__theme_txtd' ),
 							'primary'   => esc_html__( 'Headline', '__plugin_txtd' ),
 							'align'     => 'center',
 							'level'     => 1,
-							'fontSize'     => 'larger',
+							'fontSize'  => 'larger',
 							'className' => 'has-larger-font-size',
-						),
-					),
-					array(
+						],
+					],
+					[
 						'core/paragraph',
-						array(
-							'content' => esc_html__( 'A brilliant subtitle to explain its catchiness', '__plugin_txtd' ),
-							'align'   => 'center',
+						[
+							'content'   => esc_html__( 'A brilliant subtitle to explain its catchiness', '__plugin_txtd' ),
+							'align'     => 'center',
 							'className' => 'is-style-lead',
-						),
-					),
-					array(
+						],
+					],
+					[
 						'core/buttons',
-						array(
-							'align' => 'center',
-							'contentJustification' => 'center'
-						),
-						array(
-							array(
+						[
+							'align'                => 'center',
+							'contentJustification' => 'center',
+						],
+						[
+							[
 								'core/button',
-								array(
-									'text'  => esc_html__( 'Discover more', '__plugin_txtd' ),
-								),
-							),
-						),
-					)
-				)
-			),
-
-		),
-	);
+								[
+									'text' => esc_html__( 'Discover more', '__plugin_txtd' ),
+								],
+							],
+						],
+					],
+				],
+			],
+		],
+	];
 
 	$settings['hero'] = $hero_settings;
 
@@ -294,58 +297,59 @@ add_filter( 'novablocks_block_editor_initial_settings', 'novablocks_add_hero_set
 function novablocks_add_space_and_sizing_settings( $settings ) {
 
 	if ( empty( $settings['modules'] ) ) {
-		$settings['modules'] = array();
+		$settings['modules'] = [];
 	}
 
-	$settings['modules']['spaceAndSizing'] = array(
-		'presetOptions' => novablocks_get_space_and_sizing_presets(),
-		'advancedPresetOptions' => novablocks_get_space_and_sizing_advanced_presets()
-	);
+	$settings['modules']['spaceAndSizing'] = [
+		'presetOptions'         => novablocks_get_space_and_sizing_presets(),
+		'advancedPresetOptions' => novablocks_get_space_and_sizing_advanced_presets(),
+	];
 
 	return $settings;
 }
+
 add_filter( 'novablocks_block_editor_initial_settings', 'novablocks_add_space_and_sizing_settings', 0 );
 
 function novablocks_add_media_settings( $settings ) {
 
-	$media_settings = array(
-		'template'           => array(
-			array(
+	$media_settings = [
+		'template' => [
+			[
 				'core/heading',
-				array(
+				[
 					'content' => esc_html__( 'Shoot for the moon, Even if You Miss it', '__plugin_txtd' ),
 					'level'   => 4,
-				),
-			),
-			array(
+				],
+			],
+			[
 				'core/heading',
-				array(
+				[
 					'content' => esc_html__( 'Welcome to our planet, look and feel matters!', '__plugin_txtd' ),
 					'level'   => 2,
-				),
-			),
-			array(
+				],
+			],
+			[
 				'core/paragraph',
-				array(
+				[
 					'content' => esc_html__( "We've always defined ourselves by the ability to overcome the impossible. And we count these moments. These moments when we dare to aim higher, to break barriers, to reach for the stars, to make the unknown known.", '__plugin_txtd' ),
-				),
-			),
-			array(
+				],
+			],
+			[
 				'core/buttons',
-				array(
+				[
 					'align' => 'center',
-				),
-				array(
-					array(
+				],
+				[
+					[
 						'core/button',
-						array(
+						[
 							'text' => esc_html__( 'Discover More', '__plugin_txtd' ),
-						),
-					),
-				)
-			),
-		),
-	);
+						],
+					],
+				],
+			],
+		],
+	];
 
 	$settings['media'] = $media_settings;
 
@@ -355,125 +359,125 @@ function novablocks_add_media_settings( $settings ) {
 add_filter( 'novablocks_block_editor_initial_settings', 'novablocks_add_media_settings', 0 );
 
 function novablocks_get_space_and_sizing_presets() {
-	return array(
-		array(
+	return [
+		[
 			'label'  => 'Default Block Spacing',
 			'value'  => 'default',
-			'preset' => array(
-				'blockTopSpacing' => 0,
-				'blockBottomSpacing' => 0,
-				'emphasisTopSpacing' => 1,
+			'preset' => [
+				'blockTopSpacing'       => 0,
+				'blockBottomSpacing'    => 0,
+				'emphasisTopSpacing'    => 1,
 				'emphasisBottomSpacing' => 1,
-				'enableOverlapping' => false,
-				'verticalAlignment' => 'center',
-			),
-		),
-		array(
+				'enableOverlapping'     => false,
+				'verticalAlignment'     => 'center',
+			],
+		],
+		[
 			'label'  => 'Overlap Nearby Blocks / Bottom',
 			'value'  => 'overlap-nearby-2',
-			'preset' => array(
-				'blockTopSpacing' => 0,
-				'blockBottomSpacing' => -2,
-				'emphasisTopSpacing' => 2,
-				'emphasisBottomSpacing' => -2,
-				'enableOverlapping' => true,
-				'verticalAlignment' => 'top',
-			),
-		),
-		array(
+			'preset' => [
+				'blockTopSpacing'       => 0,
+				'blockBottomSpacing'    => - 2,
+				'emphasisTopSpacing'    => 2,
+				'emphasisBottomSpacing' => - 2,
+				'enableOverlapping'     => true,
+				'verticalAlignment'     => 'top',
+			],
+		],
+		[
 			'label'  => 'Overlap Nearby Blocks / Centered',
 			'value'  => 'overlap-nearby-1',
-			'preset' => array(
-				'blockTopSpacing' => -2,
-				'blockBottomSpacing' => -2,
-				'emphasisTopSpacing' => -2,
-				'emphasisBottomSpacing' => -2,
-				'enableOverlapping' => true,
-				'verticalAlignment' => 'center',
-			),
-		),
-		array(
+			'preset' => [
+				'blockTopSpacing'       => - 2,
+				'blockBottomSpacing'    => - 2,
+				'emphasisTopSpacing'    => - 2,
+				'emphasisBottomSpacing' => - 2,
+				'enableOverlapping'     => true,
+				'verticalAlignment'     => 'center',
+			],
+		],
+		[
 			'label'  => 'Overlap Nearby Blocks / Top',
 			'value'  => 'overlap-nearby-3',
-			'preset' => array(
-				'blockTopSpacing' => -2,
-				'blockBottomSpacing' => 0,
-				'emphasisTopSpacing' => -2,
+			'preset' => [
+				'blockTopSpacing'       => - 2,
+				'blockBottomSpacing'    => 0,
+				'emphasisTopSpacing'    => - 2,
 				'emphasisBottomSpacing' => 2,
-				'enableOverlapping' => true,
-				'verticalAlignment' => 'bottom',
-			),
-		),
-	);
+				'enableOverlapping'     => true,
+				'verticalAlignment'     => 'bottom',
+			],
+		],
+	];
 }
 
 function novablocks_get_space_and_sizing_advanced_presets() {
-	return array(
-		array(
+	return [
+		[
 			'label'  => 'Overlap 1 / Top Anchoring',
 			'value'  => 'overlap1',
-			'preset' => array(
-				'blockTopSpacing' => 0,
-				'blockBottomSpacing' => 2,
-				'emphasisTopSpacing' => -2,
-				'emphasisBottomSpacing' => -2,
-				'enableOverlapping' => true,
-				'verticalAlignment' => 'top',
-			),
-		),
-		array(
+			'preset' => [
+				'blockTopSpacing'       => 0,
+				'blockBottomSpacing'    => 2,
+				'emphasisTopSpacing'    => - 2,
+				'emphasisBottomSpacing' => - 2,
+				'enableOverlapping'     => true,
+				'verticalAlignment'     => 'top',
+			],
+		],
+		[
 			'label'  => 'Overlap 2 / Centered',
 			'value'  => 'overlap2',
-			'preset' => array(
-				'blockTopSpacing' => 1,
-				'blockBottomSpacing' => 1,
-				'emphasisTopSpacing' => -2,
-				'emphasisBottomSpacing' => -2,
-				'enableOverlapping' => true,
-				'verticalAlignment' => 'center',
-			),
-		),
-		array(
+			'preset' => [
+				'blockTopSpacing'       => 1,
+				'blockBottomSpacing'    => 1,
+				'emphasisTopSpacing'    => - 2,
+				'emphasisBottomSpacing' => - 2,
+				'enableOverlapping'     => true,
+				'verticalAlignment'     => 'center',
+			],
+		],
+		[
 			'label'  => 'Overlap 3 / Bottom Anchoring',
 			'value'  => 'overlap3',
-			'preset' => array(
-				'blockTopSpacing' => 2,
-				'blockBottomSpacing' => 0,
-				'emphasisTopSpacing' => -2,
-				'emphasisBottomSpacing' => -2,
-				'enableOverlapping' => true,
-				'verticalAlignment' => 'bottom',
-			),
-		),
-	);
+			'preset' => [
+				'blockTopSpacing'       => 2,
+				'blockBottomSpacing'    => 0,
+				'emphasisTopSpacing'    => - 2,
+				'emphasisBottomSpacing' => - 2,
+				'enableOverlapping'     => true,
+				'verticalAlignment'     => 'bottom',
+			],
+		],
+	];
 }
 
 function novablocks_add_slideshow_settings( $settings ) {
 
-	$slideshow_settings = array(
-		'minHeightOptions' => array(
-			array(
+	$slideshow_settings = [
+		'minHeightOptions' => [
+			[
 				'label' => esc_html__( 'Auto', '__plugin_txtd' ),
 				'value' => 0,
-			),
-			array(
+			],
+			[
 				'label' => esc_html__( 'Half', '__plugin_txtd' ),
 				'value' => 50,
-			),
-			array(
+			],
+			[
 				'label' => esc_html__( 'Two Thirds', '__plugin_txtd' ),
 				'value' => 66,
-			),
-			array(
+			],
+			[
 				'label' => esc_html__( 'Three Quarters', '__plugin_txtd' ),
 				'value' => 75,
-			),
-			array(
+			],
+			[
 				'label' => esc_html__( 'Full Height', '__plugin_txtd' ),
 				'value' => 100,
-			),
-		),
-	);
+			],
+		],
+	];
 
 	$settings['slideshow'] = $slideshow_settings;
 
@@ -483,9 +487,9 @@ function novablocks_add_slideshow_settings( $settings ) {
 add_filter( 'novablocks_block_editor_initial_settings', 'novablocks_add_slideshow_settings', 0 );
 
 function novablocks_add_separator_settings( $settings ) {
-	$separator_settings = array(
-		'markup' => '<hr />'
-	);
+	$separator_settings = [
+		'markup' => '<hr />',
+	];
 
 	$settings['separator'] = $separator_settings;
 
@@ -496,131 +500,131 @@ add_filter( 'novablocks_block_editor_initial_settings', 'novablocks_add_separato
 
 function novablocks_get_block_editor_settings() {
 
-	$settings = array(
+	$settings = [
 		'debug'                        => defined( 'NOVABLOCKS_DEBUG' ) && NOVABLOCKS_DEBUG,
 		'usePostMetaAttributes'        => defined( 'NOVABLOCKS_USE_POST_META_ATTRIBUTES' ) && NOVABLOCKS_USE_POST_META_ATTRIBUTES,
-		'minimumHeightOptions'         => array(
-			array(
+		'minimumHeightOptions'         => [
+			[
 				'label' => esc_html__( 'None', '__plugin_txtd' ),
 				'value' => 0,
-			),
-			array(
+			],
+			[
 				'label' => esc_html__( 'Half', '__plugin_txtd' ),
 				'value' => 50,
-			),
-			array(
+			],
+			[
 				'label' => esc_html__( 'Two Thirds', '__plugin_txtd' ),
 				'value' => 66,
-			),
-			array(
+			],
+			[
 				'label' => esc_html__( 'Three Quarters', '__plugin_txtd' ),
 				'value' => 75,
-			),
-			array(
+			],
+			[
 				'label' => esc_html__( 'Full', '__plugin_txtd' ),
 				'value' => 100,
-			),
-		),
-		'contentPaddingOptions'        => array(
-			array(
+			],
+		],
+		'contentPaddingOptions'        => [
+			[
 				'label' => esc_html__( 'Small', '__plugin_txtd' ),
 				'value' => 'small',
-			),
-			array(
+			],
+			[
 				'label' => esc_html__( 'Medium', '__plugin_txtd' ),
 				'value' => 'medium',
-			),
-			array(
+			],
+			[
 				'label' => esc_html__( 'Large', '__plugin_txtd' ),
 				'value' => 'large',
-			),
-			array(
+			],
+			[
 				'label' => esc_html__( 'Custom', '__plugin_txtd' ),
 				'value' => 'custom',
-			),
-		),
-		'contentWidthOptions'          => array(
-			array(
+			],
+		],
+		'contentWidthOptions'          => [
+			[
 				'label' => esc_html__( 'Full', '__plugin_txtd' ),
 				'value' => 'full',
-			),
-			array(
+			],
+			[
 				'label' => esc_html__( 'Large', '__plugin_txtd' ),
 				'value' => 'large',
-			),
-			array(
+			],
+			[
 				'label' => esc_html__( 'Narrow', '__plugin_txtd' ),
 				'value' => 'narrow',
-			),
-			array(
+			],
+			[
 				'label' => esc_html__( 'Custom', '__plugin_txtd' ),
 				'value' => 'custom',
-			),
-		),
-		'motionPresetOptions'          => array(
-			array(
+			],
+		],
+		'motionPresetOptions'          => [
+			[
 				'label'  => 'Standard Dynamic',
 				'value'  => 'standard-dynamic',
-				'preset' => array(
-					'focalPoint'             => array(
+				'preset' => [
+					'focalPoint'             => [
 						'x' => 0.5,
-						'y' => 0
-					),
-					'finalFocalPoint'        => array(
+						'y' => 0,
+					],
+					'finalFocalPoint'        => [
 						'x' => 0.5,
-						'y' => 1
-					),
+						'y' => 1,
+					],
 					'initialBackgroundScale' => 1.75,
 					'finalBackgroundScale'   => 1,
 					'followThroughStart'     => true,
 					'followThroughEnd'       => true,
-				),
-			),
-			array(
+				],
+			],
+			[
 				'label'  => 'Pull Focus',
 				'value'  => 'pull-focus',
-				'preset' => array(
-					'focalPoint'             => array(
+				'preset' => [
+					'focalPoint'             => [
 						'x' => 0.5,
-						'y' => 0.5
-					),
-					'finalFocalPoint'        => array(
+						'y' => 0.5,
+					],
+					'finalFocalPoint'        => [
 						'x' => 0.5,
-						'y' => 1
-					),
+						'y' => 1,
+					],
 					'initialBackgroundScale' => 1,
 					'finalBackgroundScale'   => 1.75,
 					'followThroughStart'     => true,
 					'followThroughEnd'       => true,
-				),
-			),
-			array(
+				],
+			],
+			[
 				'label'  => 'Static Reveal',
 				'value'  => 'static-reveal',
-				'preset' => array(
-					'focalPoint'             => array(
+				'preset' => [
+					'focalPoint'             => [
 						'x' => 0.5,
-						'y' => 0.5
-					),
-					'finalFocalPoint'        => array(
+						'y' => 0.5,
+					],
+					'finalFocalPoint'        => [
 						'x' => 0.5,
-						'y' => 0.5
-					),
+						'y' => 0.5,
+					],
 					'initialBackgroundScale' => 1.75,
 					'finalBackgroundScale'   => 1,
 					'followThroughStart'     => true,
 					'followThroughEnd'       => true,
-				),
-			),
-			array(
+				],
+			],
+			[
 				'label' => 'Custom',
 				'value' => 'custom',
-			),
-		),
+			],
+		],
 		'advancedGalleryPresetOptions' => novablocks_get_media_composition_markup_presets(),
 		'blobPresetOptions'            => novablocks_get_blob_presets(),
 		'theme_support'                => novablocks_get_theme_support(),
-	);
+	];
 
 	$settings = apply_filters( 'novablocks_block_editor_initial_settings', $settings );
 	$settings = apply_filters( 'novablocks_block_editor_settings', $settings );
@@ -629,345 +633,531 @@ function novablocks_get_block_editor_settings() {
 }
 
 function novablocks_get_blob_presets() {
-	return array(
-		array(
+	return [
+		[
 			'label'  => 'Rectangle',
 			'value'  => 'rectangle',
-			'preset' => array(
-				'blobsEnableMask'             => false,
-				'blobsEnableDecoration'       => false,
-			),
-		),
-		array(
+			'preset' => [
+				'blobsEnableMask'       => false,
+				'blobsEnableDecoration' => false,
+			],
+		],
+		[
 			'label'  => 'Ellipse',
 			'value'  => 'ellipse',
-			'preset' => array(
-				'blobsEnableMask'             => true,
-				'blobMaskSides'               => 4,
-				'blobMaskPatternSeed'         => 1,
-				'blobMaskComplexity'          => 0,
-				'blobMaskSmoothness'          => 100,
-				'blobMaskRotation'            => 0,
+			'preset' => [
+				'blobsEnableMask'     => true,
+				'blobMaskSides'       => 4,
+				'blobMaskPatternSeed' => 1,
+				'blobMaskComplexity'  => 0,
+				'blobMaskSmoothness'  => 100,
+				'blobMaskRotation'    => 0,
 
-				'blobsEnableDecoration'       => false,
-			),
-		),
-		array(
+				'blobsEnableDecoration' => false,
+			],
+		],
+		[
 			'label'  => 'Diamond',
 			'value'  => 'diamond',
-			'preset' => array(
-				'blobsEnableMask'             => true,
-				'blobMaskSides'               => 6,
-				'blobMaskPatternSeed'         => 1,
-				'blobMaskComplexity'          => 0,
-				'blobMaskSmoothness'          => 0,
-				'blobMaskRotation'            => 0,
+			'preset' => [
+				'blobsEnableMask'     => true,
+				'blobMaskSides'       => 6,
+				'blobMaskPatternSeed' => 1,
+				'blobMaskComplexity'  => 0,
+				'blobMaskSmoothness'  => 0,
+				'blobMaskRotation'    => 0,
 
-				'blobsEnableDecoration'       => false,
-			),
-		),
-		array(
+				'blobsEnableDecoration' => false,
+			],
+		],
+		[
 			'label'  => 'Seed',
 			'value'  => 'seed',
-			'preset' => array(
-				'blobsEnableMask'             => true,
-				'blobMaskSides'               => 5,
-				'blobMaskPatternSeed'         => 70,
-				'blobMaskComplexity'          => 100,
-				'blobMaskSmoothness'          => 100,
-				'blobMaskRotation'            => 0,
+			'preset' => [
+				'blobsEnableMask'     => true,
+				'blobMaskSides'       => 5,
+				'blobMaskPatternSeed' => 70,
+				'blobMaskComplexity'  => 100,
+				'blobMaskSmoothness'  => 100,
+				'blobMaskRotation'    => 0,
 
-				'blobsEnableDecoration'       => false,
-			),
-		),
-		array(
+				'blobsEnableDecoration' => false,
+			],
+		],
+		[
 			'label'  => 'Blob',
 			'value'  => 'blob',
-			'preset' => array(
-				'blobsEnableMask'             => true,
-				'blobMaskSides'               => 7,
-				'blobMaskPatternSeed'         => 50,
-				'blobMaskComplexity'          => 100,
-				'blobMaskSmoothness'          => 100,
-				'blobMaskRotation'            => 0,
+			'preset' => [
+				'blobsEnableMask'     => true,
+				'blobMaskSides'       => 7,
+				'blobMaskPatternSeed' => 50,
+				'blobMaskComplexity'  => 100,
+				'blobMaskSmoothness'  => 100,
+				'blobMaskRotation'    => 0,
 
-				'blobsEnableDecoration'       => false,
-			),
-		),
-		array(
+				'blobsEnableDecoration' => false,
+			],
+		],
+		[
 			'label'  => 'MX37: Stones',
 			'value'  => 'stones-37',
-			'preset' => array(
-				'blobsEnableMask'             => true,
-				'blobMaskSides'               => 3,
-				'blobMaskPatternSeed'         => 30,
-				'blobMaskComplexity'          => 100,
-				'blobMaskSmoothness'          => 60,
-				'blobMaskRotation'            => 70,
+			'preset' => [
+				'blobsEnableMask'     => true,
+				'blobMaskSides'       => 3,
+				'blobMaskPatternSeed' => 30,
+				'blobMaskComplexity'  => 100,
+				'blobMaskSmoothness'  => 60,
+				'blobMaskRotation'    => 70,
 
-				'blobsEnableDecoration'       => true,
-				'blobSides'                   => 4,
-				'blobPatternSeed'             => 30,
-				'blobComplexity'              => 90,
-				'blobSmoothness'              => 100,
-				'blobRotation'                => 70,
+				'blobsEnableDecoration' => true,
+				'blobSides'             => 4,
+				'blobPatternSeed'       => 30,
+				'blobComplexity'        => 90,
+				'blobSmoothness'        => 100,
+				'blobRotation'          => 70,
 
 				'blobsHorizontalDisplacement' => 80,
 				'blobsVerticalDisplacement'   => 60,
 				'blobsSizeBalance'            => 60,
-			),
-		),
-		array(
+			],
+		],
+		[
 			'label'  => 'MX19: Seeds',
 			'value'  => 'seeds-19',
-			'preset' => array(
-				'blobsEnableMask'             => true,
-				'blobMaskSides'               => 5,
-				'blobMaskPatternSeed'         => 90,
-				'blobMaskComplexity'          => 80,
-				'blobMaskSmoothness'          => 100,
-				'blobMaskRotation'            => 50,
+			'preset' => [
+				'blobsEnableMask'     => true,
+				'blobMaskSides'       => 5,
+				'blobMaskPatternSeed' => 90,
+				'blobMaskComplexity'  => 80,
+				'blobMaskSmoothness'  => 100,
+				'blobMaskRotation'    => 50,
 
-				'blobsEnableDecoration'       => true,
-				'blobSides'                   => 5,
-				'blobPatternSeed'             => 40,
-				'blobComplexity'              => 80,
-				'blobSmoothness'              => 100,
-				'blobRotation'                => 100,
+				'blobsEnableDecoration' => true,
+				'blobSides'             => 5,
+				'blobPatternSeed'       => 40,
+				'blobComplexity'        => 80,
+				'blobSmoothness'        => 100,
+				'blobRotation'          => 100,
 
 				'blobsHorizontalDisplacement' => 30,
 				'blobsVerticalDisplacement'   => 60,
 				'blobsSizeBalance'            => 50,
-			),
-		),
-		array(
+			],
+		],
+		[
 			'label'  => 'MX81: Ovoid',
 			'value'  => 'ovoid-81',
-			'preset' => array(
-				'blobsEnableMask'             => true,
-				'blobMaskSides'               => 6,
-				'blobMaskPatternSeed'         => 10,
-				'blobMaskComplexity'          => 100,
-				'blobMaskSmoothness'          => 100,
-				'blobMaskRotation'            => 100,
+			'preset' => [
+				'blobsEnableMask'     => true,
+				'blobMaskSides'       => 6,
+				'blobMaskPatternSeed' => 10,
+				'blobMaskComplexity'  => 100,
+				'blobMaskSmoothness'  => 100,
+				'blobMaskRotation'    => 100,
 
-				'blobsEnableDecoration'       => true,
-				'blobSides'                   => 3,
-				'blobPatternSeed'             => 50,
-				'blobComplexity'              => 100,
-				'blobSmoothness'              => 50,
-				'blobRotation'                => 40,
+				'blobsEnableDecoration' => true,
+				'blobSides'             => 3,
+				'blobPatternSeed'       => 50,
+				'blobComplexity'        => 100,
+				'blobSmoothness'        => 50,
+				'blobRotation'          => 40,
 
 				'blobsHorizontalDisplacement' => 40,
 				'blobsVerticalDisplacement'   => 30,
 				'blobsSizeBalance'            => 45,
-			),
-		),
-		array(
+			],
+		],
+		[
 			'label'  => 'MX76: Leaf',
 			'value'  => 'leaf-76',
-			'preset' => array(
-				'blobsEnableMask'             => true,
-				'blobMaskSides'               => 3,
-				'blobMaskPatternSeed'         => 100,
-				'blobMaskComplexity'          => 100,
-				'blobMaskSmoothness'          => 60,
-				'blobMaskRotation'            => 80,
+			'preset' => [
+				'blobsEnableMask'     => true,
+				'blobMaskSides'       => 3,
+				'blobMaskPatternSeed' => 100,
+				'blobMaskComplexity'  => 100,
+				'blobMaskSmoothness'  => 60,
+				'blobMaskRotation'    => 80,
 
-				'blobsEnableDecoration'       => true,
-				'blobSides'                   => 6,
-				'blobPatternSeed'             => 70,
-				'blobComplexity'              => 100,
-				'blobSmoothness'              => 100,
-				'blobRotation'                => 10,
+				'blobsEnableDecoration' => true,
+				'blobSides'             => 6,
+				'blobPatternSeed'       => 70,
+				'blobComplexity'        => 100,
+				'blobSmoothness'        => 100,
+				'blobRotation'          => 10,
 
 				'blobsHorizontalDisplacement' => 40,
 				'blobsVerticalDisplacement'   => 40,
 				'blobsSizeBalance'            => 45,
-			),
-		),
-		array(
+			],
+		],
+		[
 			'label'  => 'MX19: Ruby',
 			'value'  => 'ruby-19',
-			'preset' => array(
-				'blobsEnableMask'             => true,
-				'blobMaskSides'               => 5,
-				'blobMaskPatternSeed'         => 0,
-				'blobMaskComplexity'          => 0,
-				'blobMaskSmoothness'          => 0,
-				'blobMaskRotation'            => 10,
+			'preset' => [
+				'blobsEnableMask'     => true,
+				'blobMaskSides'       => 5,
+				'blobMaskPatternSeed' => 0,
+				'blobMaskComplexity'  => 0,
+				'blobMaskSmoothness'  => 0,
+				'blobMaskRotation'    => 10,
 
-				'blobsEnableDecoration'       => true,
-				'blobSides'                   => 5,
-				'blobPatternSeed'             => 0,
-				'blobComplexity'              => 0,
-				'blobSmoothness'              => 0,
-				'blobRotation'                => 40,
+				'blobsEnableDecoration' => true,
+				'blobSides'             => 5,
+				'blobPatternSeed'       => 0,
+				'blobComplexity'        => 0,
+				'blobSmoothness'        => 0,
+				'blobRotation'          => 40,
 
 				'blobsHorizontalDisplacement' => 40,
 				'blobsVerticalDisplacement'   => 30,
 				'blobsSizeBalance'            => 50,
-			),
-		),
-		array(
+			],
+		],
+		[
 			'label'  => 'MX41: Diagonal',
 			'value'  => 'diagonal-41',
-			'preset' => array(
-				'blobsEnableMask'             => true,
-				'blobMaskSides'               => 8,
-				'blobMaskPatternSeed'         => 0,
-				'blobMaskComplexity'          => 0,
-				'blobMaskSmoothness'          => 0,
-				'blobMaskRotation'            => 0,
+			'preset' => [
+				'blobsEnableMask'     => true,
+				'blobMaskSides'       => 8,
+				'blobMaskPatternSeed' => 0,
+				'blobMaskComplexity'  => 0,
+				'blobMaskSmoothness'  => 0,
+				'blobMaskRotation'    => 0,
 
-				'blobsEnableDecoration'       => true,
-				'blobSides'                   => 4,
-				'blobPatternSeed'             => 60,
-				'blobComplexity'              => 100,
-				'blobSmoothness'              => 0,
-				'blobRotation'                => 50,
+				'blobsEnableDecoration' => true,
+				'blobSides'             => 4,
+				'blobPatternSeed'       => 60,
+				'blobComplexity'        => 100,
+				'blobSmoothness'        => 0,
+				'blobRotation'          => 50,
 
 				'blobsHorizontalDisplacement' => 55,
 				'blobsVerticalDisplacement'   => 45,
 				'blobsSizeBalance'            => 35,
-			),
-		),
-	);
+			],
+		],
+	];
 }
 
 function novablocks_get_media_composition_markup_presets() {
-	return array(
-		array(
+	return [
+		[
 			'label'  => 'The Cloud Atlas',
 			'value'  => 'the-cloud-atlas',
-			'preset' => array(
-				'sizeContrast'  => 0,
-				'positionShift' => 0,
-				'imageRotation' => 0,
-				'elementsDistance' => 20,
+			'preset' => [
+				'sizeContrast'       => 0,
+				'positionShift'      => 0,
+				'imageRotation'      => 0,
+				'elementsDistance'   => 20,
 				'placementVariation' => 25,
-			),
-		),
-		array(
+			],
+		],
+		[
 			'label'  => 'Pride and Prejudice',
 			'value'  => 'pride-and-prejudice',
-			'preset' => array(
-				'sizeContrast'  => 60,
-				'positionShift' => 70,
-				'imageRotation' => 0,
-				'elementsDistance' => 40,
+			'preset' => [
+				'sizeContrast'       => 60,
+				'positionShift'      => 70,
+				'imageRotation'      => 0,
+				'elementsDistance'   => 40,
 				'placementVariation' => 0,
-			),
-		),
-		array(
+			],
+		],
+		[
 			'label'  => 'Brave New World',
 			'value'  => 'brave-new-world',
-			'preset' => array(
-				'sizeContrast'  => 20,
-				'positionShift' => 25,
-				'imageRotation' => 0,
-				'elementsDistance' => 20,
+			'preset' => [
+				'sizeContrast'       => 20,
+				'positionShift'      => 25,
+				'imageRotation'      => 0,
+				'elementsDistance'   => 20,
 				'placementVariation' => 50,
-			),
-		),
-		array(
+			],
+		],
+		[
 			'label'  => 'A Walk to Remember',
 			'value'  => 'a-walk-to-remember',
-			'preset' => array(
-				'sizeContrast'  => 100,
-				'positionShift' => 50,
-				'imageRotation' => 0,
-				'elementsDistance' => 20,
+			'preset' => [
+				'sizeContrast'       => 100,
+				'positionShift'      => 50,
+				'imageRotation'      => 0,
+				'elementsDistance'   => 20,
 				'placementVariation' => 25,
-			),
-		),
-		array(
+			],
+		],
+		[
 			'label'  => 'Racing in the Rain',
 			'value'  => 'racing-in-the-rain',
-			'preset' => array(
-				'sizeContrast'  => 80,
-				'positionShift' => 80,
-				'imageRotation' => 0,
-				'elementsDistance' => 40,
+			'preset' => [
+				'sizeContrast'       => 80,
+				'positionShift'      => 80,
+				'imageRotation'      => 0,
+				'elementsDistance'   => 40,
 				'placementVariation' => 25,
-			),
-		),
-		array(
+			],
+		],
+		[
 			'label'  => 'The Sun Also Rises',
 			'value'  => 'the-sun-also-rises',
-			'preset' => array(
-				'sizeContrast'  => 20,
-				'positionShift' => 75,
-				'imageRotation' => 40,
-				'elementsDistance' => 20,
+			'preset' => [
+				'sizeContrast'       => 20,
+				'positionShift'      => 75,
+				'imageRotation'      => 40,
+				'elementsDistance'   => 20,
 				'placementVariation' => 25,
-			),
-		),
-		array(
+			],
+		],
+		[
 			'label'  => 'Memoirs of a Geisha',
 			'value'  => 'memoirs-of-a-geisha',
-			'preset' => array(
-				'sizeContrast'  => 80,
-				'positionShift' => 0,
-				'imageRotation' => 0,
-				'elementsDistance' => 20,
+			'preset' => [
+				'sizeContrast'       => 80,
+				'positionShift'      => 0,
+				'imageRotation'      => 0,
+				'elementsDistance'   => 20,
 				'placementVariation' => 50,
-			),
-		),
-	);
+			],
+		],
+	];
 }
 
 function novablocks_add_scrolling_effect_options( $settings ) {
 
-	$options = array(
-		array(
+	$options = [
+		[
 			'label' => esc_html__( 'Static', '__plugin_txtd' ),
-			'value' => 'static'
-		),
-		array(
+			'value' => 'static',
+		],
+		[
 			'label' => esc_html__( 'Parallax', '__plugin_txtd' ),
-			'value' => 'parallax'
-		),
-	);
+			'value' => 'parallax',
+		],
+	];
 
-	$settings = array_merge( $settings, array(
+	$settings = array_merge( $settings, [
 		'scrollingEffectOptions' => $options,
-	) );
+	] );
 
 	return $settings;
 }
+
 add_filter( 'novablocks_block_editor_initial_settings', 'novablocks_add_scrolling_effect_options' );
 
 function novablocks_get_theme_support() {
 	$theme_support = get_theme_support( 'novablocks' );
 	$theme_support = is_array( $theme_support ) ? $theme_support[0] : false;
+	$theme_support = novablocks_normalize_theme_support( $theme_support );
 
-	$required = array(
-		'header-row',
-		'supernova',
-		'supernova-item',
-	);
+	$required = [
+		'header-row'     => [
+			'name'    => 'header-row',
+			'enabled' => true,
+		],
+		'supernova'      => [
+			'name'    => 'supernova',
+			'enabled' => true,
+		],
+		'supernova-item' => [
+			'name'    => 'supernova-item',
+			'enabled' => true,
+		],
+	];
 
-	$default = array(
-		'hero',
-		'media',
-		'slideshow',
-	);
+	$default = [
+		'hero'      => [
+			'name'    => 'hero',
+			'enabled' => true,
+		],
+		'media'     => [
+			'name'    => 'media',
+			'enabled' => true,
+		],
+		'slideshow' => [
+			'name'    => 'slideshow',
+			'enabled' => true,
+		],
+	];
 
 	if ( is_array( $theme_support ) ) {
-		$theme_support = array_unique( array_merge( $required, $default, $theme_support ), SORT_REGULAR );
+		$theme_support = novablocks_array_merge_recursive_distinct( $required, $default, $theme_support );
+		ksort( $theme_support );
 	} else {
-		$theme_support = $default;
+		$theme_support = novablocks_array_merge_recursive_distinct( $required, $default );
 	}
 
 	return $theme_support;
 }
 
+/**
+ * Merge arrays recursively and distinct
+ *
+ * Merges any number of arrays / parameters recursively, replacing
+ * entries with string keys with values from latter arrays.
+ * If the entry or the next value to be assigned is an array, then it
+ * automagically treats both arguments as an array.
+ * Numeric entries are appended, not replaced, but only if they are
+ * unique
+ *
+ * An entry can be specifically removed if in the same key entry in the right-hand arrays has a value of  null|`null`.
+ *
+ * @link   http://www.php.net/manual/en/function.array-merge-recursive.php#96201
+ *
+ * @param array ...     Variable list of arrays to recursively merge.
+ *
+ * @param array $base Initial array to merge.
+ *
+ * @return array
+ *
+ * @author Mark Roduner <mark.roduner@gmail.com>
+ */
+function novablocks_array_merge_recursive_distinct() {
+	$arrays = func_get_args();
+	$base   = array_shift( $arrays );
+	if ( ! is_array( $base ) ) {
+		$base = empty( $base ) ? [] : [ $base ];
+	}
+	foreach ( $arrays as $append ) {
+		if ( ! is_array( $append ) ) {
+			$append = [ $append ];
+		}
+		foreach ( $append as $key => $value ) {
+			if ( ! array_key_exists( $key, $base ) && ! is_numeric( $key ) ) {
+				$base[ $key ] = $value;
+				continue;
+			}
+
+			if ( array_key_exists( $key, $base ) && ( null === $value || 'null' === $value ) ) {
+				unset( $base[ $key ] );
+				continue;
+			}
+
+			if ( is_array( $value ) || ( array_key_exists( $key, $base ) && is_array( $base[ $key ] ) ) ) {
+				if ( ! isset( $base[ $key ] ) ) {
+					$base[ $key ] = [];
+				}
+				$base[ $key ] = novablocks_array_merge_recursive_distinct( $base[ $key ], $append[ $key ] );
+			} else if ( is_numeric( $key ) ) {
+				if ( ! in_array( $value, $base ) ) {
+					$base[] = $value;
+				}
+			} else {
+				$base[ $key ] = $value;
+			}
+		}
+	}
+
+	return $base;
+}
+
+/**
+ * Makes sure that the theme support is in a standard format.
+ *
+ * We want block entries with string keys (usually the block name) and array value with at least the `name` entry with the block name.
+ *
+ * @param $theme_support
+ *
+ * @return array|mixed
+ */
+function novablocks_normalize_theme_support( $theme_support ) {
+	if ( ! is_array( $theme_support ) ) {
+		return $theme_support;
+	}
+
+	$standard_theme_support = [];
+	foreach ( $theme_support as $key => $value ) {
+		if ( is_string( $value ) ) {
+			if ( ! isset( $standard_theme_support[ $value ] ) ) {
+				$standard_theme_support[ $value ] = [
+					'name'     => '',
+					'enabled'  => false,
+					'supports' => [],
+				];
+			}
+			$standard_theme_support[ $value ]['name']    = $value;
+			$standard_theme_support[ $value ]['enabled'] = true;
+			continue;
+		}
+
+		if ( 'doppler' === $key && is_array( $value ) ) {
+			// We have the old entry that defined what blocks support the Doppler effect.
+			// Add the doppler effect as a supported feature for each block in the list.
+			foreach ( $value as $doppler_block ) {
+				// Remove the `novablocks` namespace.
+				$doppler_block = str_replace( 'novablocks/', '', $doppler_block );
+				if ( ! isset( $standard_theme_support[ $doppler_block ] ) ) {
+					$standard_theme_support[ $doppler_block ] = [
+						'name'     => '',
+						'enabled'  => false,
+						'supports' => [],
+					];
+				}
+
+				$standard_theme_support[ $doppler_block ]['supports'][] = 'doppler';
+				$standard_theme_support[ $doppler_block ]['supports']   = array_unique( $standard_theme_support[ $doppler_block ]['supports'] );
+			}
+			continue;
+		}
+
+		if ( 'blobs' === $key && is_array( $value ) ) {
+			// We have the old entry that defined what blocks support the Blobs effect.
+			// Add the blobs effect as a supported feature for each block in the list.
+			foreach ( $value as $blobs_block ) {
+				// Remove the `novablocks` namespace.
+				$blobs_block = str_replace( 'novablocks/', '', $blobs_block );
+				if ( ! isset( $standard_theme_support[ $blobs_block ] ) ) {
+					$standard_theme_support[ $blobs_block ] = [
+						'name'     => '',
+						'enabled'  => false,
+						'supports' => [],
+					];
+				}
+
+				$standard_theme_support[ $blobs_block ]['supports'][] = 'blobs';
+				$standard_theme_support[ $blobs_block ]['supports']   = array_unique( $standard_theme_support[ $blobs_block ]['supports'] );
+			}
+			continue;
+		}
+
+		$standard_theme_support[ $key ] = $value;
+	}
+
+	// Filter out any entry that doesn't have a name entry.
+	$standard_theme_support = array_filter( $standard_theme_support, function ( $entry ) {
+		if ( empty( $entry['name'] ) ) {
+			return false;
+		}
+
+		return true;
+	} );
+
+	ksort( $standard_theme_support );
+
+	return $standard_theme_support;
+}
+
+function novablocks_is_block_supported( $block_name ) {
+	$support = novablocks_get_theme_support();
+	if ( ! is_array( $support ) ) {
+		return false;
+	}
+
+	foreach ( $support as $supported_block ) {
+		if ( ! empty( $supported_block['name'] )
+		     && $block_name === $supported_block['name']
+		     && ! empty( $supported_block['enabled'] ) ) {
+
+			return true;
+		}
+	}
+
+	return false;
+}
+
 function novablocks_get_attributes_from_json( $path ) {
 	$plugin_path = novablocks_get_plugin_path();
-	$filename = trailingslashit( $plugin_path ) . $path;
+	$filename    = trailingslashit( $plugin_path ) . $path;
 	if ( ! file_exists( $filename ) ) {
-		return array();
+		return [];
 	}
 
 	return json_decode( file_get_contents( $filename ), true );
@@ -980,13 +1170,14 @@ function novablocks_camel_case_to_kebab_case( $string ) {
 function novablocks_kebab_case_to_camel_case( $string ) {
 	$str = str_replace( '-', '', ucwords( $string, '-' ) );
 	$str = lcfirst( $str );
+
 	return $str;
 }
 
-function novablocks_get_data_attributes( $data_attributes_array, $attributes, $blacklist = array() ) {
-	$data_attributes = array();
-	$default_blacklist = array( 'align' );
-	$blacklist = array_merge( $default_blacklist, $blacklist );
+function novablocks_get_data_attributes( $data_attributes_array, $attributes, $blacklist = [] ) {
+	$data_attributes   = [];
+	$default_blacklist = [ 'align' ];
+	$blacklist         = array_merge( $default_blacklist, $blacklist );
 
 	foreach ( $blacklist as $blacklistAttribute ) {
 
@@ -1021,10 +1212,10 @@ function novablocks_get_data_attributes( $data_attributes_array, $attributes, $b
 
 function novablocks_get_media_composition_markup_component_attributes() {
 
-	return novablocks_merge_attributes_from_array( array(
+	return novablocks_merge_attributes_from_array( [
 		'packages/shape-modeling/src/attributes.json',
 		'packages/media-composition/src/attributes.json'
-	) );
+	] );
 
 }
 
@@ -1036,7 +1227,7 @@ function novablocks_get_media_composition_markup( $attributes ) {
 
 	ob_start();
 
-	$images = array();
+	$images = [];
 
 	if ( ! empty( $attributes['images'] ) ) {
 		$images = $attributes['images'];
@@ -1046,12 +1237,12 @@ function novablocks_get_media_composition_markup( $attributes ) {
 		$images = $attributes['gallery'];
 	}
 
-	$attributes_config = novablocks_get_media_composition_markup_component_attributes();
-	$attributes = novablocks_get_attributes_with_defaults( $attributes, $attributes_config );
+	$attributes_config     = novablocks_get_media_composition_markup_component_attributes();
+	$attributes            = novablocks_get_attributes_with_defaults( $attributes, $attributes_config );
 	$data_attributes_array = array_map( 'novablocks_camel_case_to_kebab_case', array_keys( $attributes ) );
 
 	// the images attribute outputs a lot of code which is not used in the frontend
-	$blacklist = array(
+	$blacklist = [
 		'images',
 		'gallery',
 		'color-signal',
@@ -1060,7 +1251,7 @@ function novablocks_get_media_composition_markup( $attributes ) {
 		'content-palette-variation',
 		'content-color-signal',
 		'use-source-color-as-reference'
-	);
+	];
 
 	foreach ( $blacklist as $attribute ) {
 		if ( ( $key = array_search( $attribute, $data_attributes_array ) ) !== false ) {
@@ -1070,9 +1261,9 @@ function novablocks_get_media_composition_markup( $attributes ) {
 
 	$data_attributes = novablocks_get_data_attributes( $data_attributes_array, $attributes );
 
-	$cssProps = array(
+	$cssProps = [
 		'--nb-advanced-gallery-aspect-ratio: ' . novablocks_get_card_media_padding_top( $attributes['containerHeight'] ) . '%'
-	);
+	];
 
 	$style = join( '; ', $cssProps );
 
@@ -1099,7 +1290,7 @@ function novablocks_get_media_composition_markup( $attributes ) {
 				}
 			}
 
-			$has_caption = ! empty( $image['caption'] );
+			$has_caption     = ! empty( $image['caption'] );
 			$has_description = ! empty( $attachment ) && $attachment->post_type === 'attachment' && ! empty( $attachment->post_content );
 
 			$url = '';
@@ -1162,10 +1353,10 @@ function novablocks_get_card_media_padding_top( $containerHeight ) {
 		$containerHeight *= 3;
 	}
 
-	$numerator = 1;
+	$numerator   = 1;
 	$denominator = 1;
 
-	$containerHeight = min( max( -3, $containerHeight ), 1 );
+	$containerHeight = min( max( - 3, $containerHeight ), 1 );
 
 	if ( $containerHeight > 0 ) {
 		$numerator = 1 + $containerHeight;
@@ -1360,8 +1551,12 @@ function novablocks_get_card_media_markup( $media ) {
 	} else { ?>
 		<div class="novablocks-card__media-placeholder sm-variation-2">
 			<svg width="100" height="67" viewBox="0 0 100 67" fill="none" xmlns="http://www.w3.org/2000/svg">
-				<path d="M96.722 0H3.279C1.229 0 0 1.229 0 3.279V63.115C0 65.164 1.229 66.393 3.279 66.393H96.721C98.771 66.393 99.999 65.164 99.999 63.115V3.279C100 1.229 98.771 0 96.722 0ZM4.918 6.558C4.918 5.533 5.532 4.918 6.557 4.918H93.443C94.468 4.918 95.082 5.533 95.082 6.558V59.836C95.082 60.08 95.045 60.3 94.978 60.495C88.865 54.214 68.521 33.606 64.755 33.606C60.757 33.606 39.42 56.811 35.172 61.475H31.447C33.415 59.153 36.274 55.808 39.525 52.107C34.42 47.976 29.403 44.263 27.87 44.263C25.059 44.263 11.092 56.738 5.979 61.391C5.309 61.196 4.919 60.648 4.919 59.836V6.558H4.918Z" fill="currentColor"/>
-				<path d="M38.119 16.629C42.731 16.629 46.471 20.366 46.471 24.978C46.471 29.59 42.731 33.328 38.119 33.328C33.508 33.328 29.768 29.59 29.768 24.978C29.769 20.367 33.508 16.629 38.119 16.629Z" fill="currentColor"/>
+				<path
+					d="M96.722 0H3.279C1.229 0 0 1.229 0 3.279V63.115C0 65.164 1.229 66.393 3.279 66.393H96.721C98.771 66.393 99.999 65.164 99.999 63.115V3.279C100 1.229 98.771 0 96.722 0ZM4.918 6.558C4.918 5.533 5.532 4.918 6.557 4.918H93.443C94.468 4.918 95.082 5.533 95.082 6.558V59.836C95.082 60.08 95.045 60.3 94.978 60.495C88.865 54.214 68.521 33.606 64.755 33.606C60.757 33.606 39.42 56.811 35.172 61.475H31.447C33.415 59.153 36.274 55.808 39.525 52.107C34.42 47.976 29.403 44.263 27.87 44.263C25.059 44.263 11.092 56.738 5.979 61.391C5.309 61.196 4.919 60.648 4.919 59.836V6.558H4.918Z"
+					fill="currentColor"/>
+				<path
+					d="M38.119 16.629C42.731 16.629 46.471 20.366 46.471 24.978C46.471 29.59 42.731 33.328 38.119 33.328C33.508 33.328 29.768 29.59 29.768 24.978C29.769 20.367 33.508 16.629 38.119 16.629Z"
+					fill="currentColor"/>
 			</svg>
 		</div>
 	<?php }
@@ -1390,12 +1585,12 @@ function novablocks_get_collection_card_media_markup( $media ) {
 }
 
 function novablocks_get_card_post_meta( $post, $attributes ) {
-	$primaryMeta = '<span class="novablocks-card__meta--primary">' . novablocks_get_post_card_meta( $post, $attributes[ 'primaryMetadata' ] ) . '</span>';
-	$secondaryMeta = '<span class="novablocks-card__meta--secondary">' . novablocks_get_post_card_meta( $post, $attributes[ 'secondaryMetadata' ] ) . '</span>';
-	$metaSeparator = '<span class="novablocks-card__meta-separator"></span>';
+	$primaryMeta           = '<span class="novablocks-card__meta--primary">' . novablocks_get_post_card_meta( $post, $attributes['primaryMetadata'] ) . '</span>';
+	$secondaryMeta         = '<span class="novablocks-card__meta--secondary">' . novablocks_get_post_card_meta( $post, $attributes['secondaryMetadata'] ) . '</span>';
+	$metaSeparator         = '<span class="novablocks-card__meta-separator"></span>';
 	$secondaryMetaIsOutput = $attributes['secondaryMetadata'] !== 'none';
-	$aboveTitleMeta = '';
-	$belowTitleMeta = '';
+	$aboveTitleMeta        = '';
+	$belowTitleMeta        = '';
 
 	if ( ! empty( $primaryMeta ) && ! empty( $secondaryMeta ) ) {
 		$combinedMeta = $primaryMeta;
@@ -1408,22 +1603,22 @@ function novablocks_get_card_post_meta( $post, $attributes ) {
 		$combinedMeta = empty( $primaryMeta ) ? $secondaryMeta : $primaryMeta;
 	}
 
-	if ( 'above-title' === $attributes[ 'metadataPosition' ] ) {
+	if ( 'above-title' === $attributes['metadataPosition'] ) {
 		$aboveTitleMeta = $combinedMeta;
 	}
 
-	if ( 'below-title' === $attributes[ 'metadataPosition' ] ) {
+	if ( 'below-title' === $attributes['metadataPosition'] ) {
 		$belowTitleMeta = $combinedMeta;
 	}
 
-	if ( 'split' === $attributes[ 'metadataPosition' ] ) {
+	if ( 'split' === $attributes['metadataPosition'] ) {
 		$aboveTitleMeta = $primaryMeta;
 		$belowTitleMeta = $secondaryMeta;
 	}
 
 	return array(
 		$aboveTitleMeta,
-		$belowTitleMeta
+		$belowTitleMeta,
 	);
 }
 
@@ -1442,14 +1637,14 @@ function novablocks_build_articles_query( $attributes ) {
 	$manual_mode             = isset( $attributes['loadingMode'] ) && 'manual' === $attributes['loadingMode'];
 	$prevent_duplicate_posts = isset( $attributes['preventDuplicatePosts'] ) && $attributes['preventDuplicatePosts'];
 
-	$args           = array(
+	$args = array(
 		'post_status'         => 'publish',
 		'suppress_filters'    => false,
 		'ignore_sticky_posts' => true,
 	);
 
 	if ( $prevent_duplicate_posts ) {
-		$args[ 'post__not_in' ] = $novablocks_rendered_posts_ids;
+		$args['post__not_in'] = $novablocks_rendered_posts_ids;
 	}
 
 	if ( $manual_mode && $specific_posts ) {
@@ -1467,6 +1662,7 @@ function novablocks_build_articles_query( $attributes ) {
 			$args['tag__in'] = $tags;
 		}
 	}
+
 	return $args;
 }
 
@@ -1475,11 +1671,11 @@ function novablocks_expand_categories_to_include_subcategories( $category_ids ) 
 
 	foreach ( $category_ids as $category_id ) {
 		$subcategories = get_terms( 'category', array(
-			'child_of' => $category_id
+			'child_of' => $category_id,
 		) );
 
 		$subcategories_ids = array_map( 'novablocks_array_map_terms_to_ids', $subcategories );
-		$all_category_ids = array_merge( $all_category_ids, $subcategories_ids );
+		$all_category_ids  = array_merge( $all_category_ids, $subcategories_ids );
 	}
 
 	return $all_category_ids;
@@ -1491,8 +1687,8 @@ function novablocks_array_map_terms_to_ids( $term ) {
 
 function novablocks_get_image_url( $image, $size ) {
 
-	if ( isset( $image['sizes'][ $size ][ 'url' ] ) ) {
-		return $image['sizes'][ $size ][ 'url' ];
+	if ( isset( $image['sizes'][ $size ]['url'] ) ) {
+		return $image['sizes'][ $size ]['url'];
 	}
 
 	if ( isset( $image['url'] ) ) {
@@ -1565,8 +1761,10 @@ function novablocks_rest_prepare_attachment( $response, $post, $request ) {
 	if ( ! empty( $response->data['description'] ) ) {
 		$response->data['description']['raw'] = $post->post_content;
 	}
+
 	return $response;
 }
+
 add_filter( 'rest_prepare_attachment', 'novablocks_rest_prepare_attachment', 10, 3 );
 
 function novablocks_get_categories_with_children( $request ) {
@@ -1590,17 +1788,20 @@ function novablocks_get_categories_with_children( $request ) {
 
 function novablocks_register_api_endpoints() {
 	register_rest_route( 'novablocks/v1', '/categories', array(
-		'methods' => 'GET',
-		'callback' => 'novablocks_get_categories_with_children',
+		'methods'             => 'GET',
+		'callback'            => 'novablocks_get_categories_with_children',
 		'permission_callback' => '__return_true',
 	) );
 }
+
 add_action( 'rest_api_init', 'novablocks_register_api_endpoints' );
 
 /**
  * Return the reading time in minutes for a post's content.
+ *
  * @param WP_Post|int $post
- * @param int $wpm The words per minute reading rate to take into account.
+ * @param int         $wpm The words per minute reading rate to take into account.
+ *
  * @return int
  */
 function novablocks_get_post_reading_time_in_minutes( $post, $wpm = 250 ) {
@@ -1627,8 +1828,10 @@ function novablocks_get_post_reading_time_in_minutes( $post, $wpm = 250 ) {
 
 /**
  * Calculate the reading time in minutes for a piece of content.
+ *
  * @param string $content HTML post content.
- * @param int $wpm The words per minute reading rate to take into account.
+ * @param int    $wpm     The words per minute reading rate to take into account.
+ *
  * @return int
  */
 function novablocks_get_reading_time_in_minutes( $content, $wpm = 250 ) {
@@ -1640,7 +1843,7 @@ function novablocks_get_reading_time_in_minutes( $content, $wpm = 250 ) {
 		// The starting image weight (expressed in seconds of reading time).
 		// This weight is decreasing one second with each image encountered, with a minium of 3 seconds.
 		$img_weight = 12;
-		for ( $i = 0; $i < $num_images; $i++ ) {
+		for ( $i = 0; $i < $num_images; $i ++ ) {
 			$images_time += $img_weight;
 
 			if ( $img_weight > 3 ) {
@@ -1700,12 +1903,13 @@ function novablocks_optimize_frontend_scripts_output() {
 		}
 	}
 }
+
 // We need to cover both the head and the footer scripts
 // since the block editor logic will enqueue the scripts again upon block render.
-add_action( 'wp_head', 'novablocks_optimize_frontend_scripts_output', 8 ); // The wp_print_head_scripts() is hooked at 9.
-add_action( 'login_head', 'novablocks_optimize_frontend_scripts_output', 8 ); // The wp_print_head_scripts() is hooked at 9.
-add_action( 'embed_head', 'novablocks_optimize_frontend_scripts_output', 19 ); // The wp_print_head_scripts() is hooked at 20.
-add_action( 'wp_footer', 'novablocks_optimize_frontend_scripts_output', 19 ); // The wp_print_footer_scripts() is hooked at 20.
+add_action( 'wp_head', 'novablocks_optimize_frontend_scripts_output', 8 );       // The wp_print_head_scripts() is hooked at 9.
+add_action( 'login_head', 'novablocks_optimize_frontend_scripts_output', 8 );    // The wp_print_head_scripts() is hooked at 9.
+add_action( 'embed_head', 'novablocks_optimize_frontend_scripts_output', 19 );   // The wp_print_head_scripts() is hooked at 20.
+add_action( 'wp_footer', 'novablocks_optimize_frontend_scripts_output', 19 );    // The wp_print_footer_scripts() is hooked at 20.
 add_action( 'login_footer', 'novablocks_optimize_frontend_scripts_output', 19 ); // The wp_print_footer_scripts() is hooked at 20.
 add_action( 'embed_footer', 'novablocks_optimize_frontend_scripts_output', 19 ); // The wp_print_footer_scripts() is hooked at 20.
 
@@ -1715,7 +1919,7 @@ function novablocks_block_area_has_blocks( $slug ) {
 		'post_type'   => 'block_area',
 		'post_status' => 'publish',
 		'numberposts' => 1,
-		'fields' => 'ids',
+		'fields'      => 'ids',
 	) );
 
 	if ( ! empty( $posts ) && has_blocks( reset( $posts ) ) ) {
@@ -1788,7 +1992,7 @@ function novablocks_get_content_palette_classes( $attributes ) {
 
 	$classes = array(
 		'sm-palette-' . $attributes['palette'],
-		'sm-variation-' . $contentVariation
+		'sm-variation-' . $contentVariation,
 	);
 
 	if ( ! empty( $attributes['useSourceColorAsReference'] ) ) {
@@ -1800,7 +2004,7 @@ function novablocks_get_content_palette_classes( $attributes ) {
 
 function novablocks_get_content_variation( $attributes ) {
 	$palettes_output = get_option( 'sm_advanced_palette_output', '[]' );
-	$palettes = json_decode( $palettes_output );
+	$palettes        = json_decode( $palettes_output );
 
 	$current_palette = null;
 
@@ -1818,14 +2022,15 @@ function novablocks_get_content_variation( $attributes ) {
 	}
 
 	$siteVariation = get_option( 'sm_site_color_variation', 1 );
-	$offset = $siteVariation - 1;
+	$offset        = $siteVariation - 1;
 
-	if ( $attributes[ 'useSourceColorAsReference' ] ) {
+	if ( $attributes['useSourceColorAsReference'] ) {
 		$offset = $sourceIndex;
 	}
 
-	$referenceVariation = novablocks_normalize_variation_value( $attributes['paletteVariation'] + $offset );
+	$referenceVariation   = novablocks_normalize_variation_value( $attributes['paletteVariation'] + $offset );
 	$contentSignalOptions = novablocks_get_signal_options_from_variation( $referenceVariation );
+
 	return novablocks_normalize_variation_value( $contentSignalOptions[ $attributes['contentColorSignal'] ] - $offset );
 }
 
@@ -1843,7 +2048,7 @@ function novablocks_get_content_style_class( $attributes ) {
 	return 'content-is-' . $contentStyle;
 }
 
-function novablocks_get_customizer_link( $return_url = false,  $extra_query_args = array() ) {
+function novablocks_get_customizer_link( $return_url = false, $extra_query_args = array() ) {
 	global $wp;
 
 
@@ -1870,7 +2075,7 @@ function novablocks_merge_attributes_from_array( $pathsArray ) {
 	$accumulator = [];
 
 	foreach ( $pathsArray as $path ) {
-		$attributes = novablocks_get_attributes_from_json( $path );
+		$attributes  = novablocks_get_attributes_from_json( $path );
 		$accumulator = array_merge( $accumulator, $attributes );
 	}
 
@@ -1965,9 +2170,9 @@ function novablocks_get_card_contents( $attributes ) {
 	echo novablocks_get_card_item_description( $attributes['description'], $attributes );
 	echo novablocks_get_card_item_buttons( array(
 		array(
-			'text' => $attributes[ 'buttonText' ],
-			'url' => $attributes ['buttonUrl' ],
-		)
+			'text' => $attributes['buttonText'],
+			'url'  => $attributes ['buttonUrl'],
+		),
 	), $attributes );
 
 	return ob_get_clean();
@@ -2065,7 +2270,7 @@ function novablocks_get_signal_options_from_variation( $variation ) {
 
 	$variationOptions = array();
 
-	for ( $index = 0; $index < 4; $index++ ) {
+	for ( $index = 0; $index < 4; $index ++ ) {
 		if ( $index === $blockSignal ) {
 			$variationOptions[] = $variation;
 		} else {
@@ -2073,7 +2278,7 @@ function novablocks_get_signal_options_from_variation( $variation ) {
 		}
 	}
 
-	usort( $variationOptions, function( $variation1, $variation2 ) use ( $variation ) {
+	usort( $variationOptions, function ( $variation1, $variation2 ) use ( $variation ) {
 		return abs( $variation - $variation1 ) < abs( $variation - $variation2 ) ? - 1 : 1;
 	} );
 
