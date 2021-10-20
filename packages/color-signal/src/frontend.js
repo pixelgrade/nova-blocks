@@ -56,7 +56,6 @@ const updateScrollIndicator = () => {
     const nextElementStyles = window.getComputedStyle( nextElement );
     const marginTop = nextElementStyles.getPropertyValue( 'margin-top' );
 
-
     if ( parseInt( marginTop, 10 ) !== 0 ) {
       applySiteColorSignal( indicator );
       return;
@@ -64,15 +63,15 @@ const updateScrollIndicator = () => {
 
     if ( !! indicator && !! nextElement?.dataset?.colorSignal ) {
       const attributes = nextElement.dataset;
-      const colorClasses = getColorSignalClassnames( attributes, true );
+      const classNamesToAdd = getColorSignalClassnames( attributes, true );
+      const classNamesToRemove = [ ...indicator.classList ].filter( className => {
+        return className.indexOf( 'sm-palette-' ) > -1 ||
+               className.indexOf( 'sm-variation-' ) > -1 ||
+               className.indexOf( 'sm-color-signal-' ) > -1;
+      } ).join( " " );
 
-      colorClasses.split( " " ).forEach( className => {
-        indicator.classList.add( className );
-      } );
-
-      indicator.dataset.palette = attributes.palette;
-      indicator.dataset.paletteVariation = attributes.paletteVariation;
-      indicator.dataset.useSourceColorAsReference = attributes.useSourceColorAsReference;
+      removeClass( indicator, classNamesToRemove );
+      addClass( indicator, classNamesToAdd );
     }
 
   } );

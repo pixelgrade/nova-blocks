@@ -1,14 +1,21 @@
+import classnames from "classnames";
+
 const ScrollIndicator = ( props ) => {
 
   const { attributes } = props;
-  const { scrollIndicator } = attributes;
+  const { scrollIndicatorBlock } = attributes;
 
-  if ( ! scrollIndicator ) {
+  if ( ! scrollIndicatorBlock ) {
     return null;
   }
 
+  const className = classnames(
+    `nb-scroll-indicator`,
+    props.className,
+  );
+
   return (
-    <div className="nb-scroll-indicator" />
+    <div className={ className } />
   )
 }
 

@@ -1,5 +1,5 @@
 import classnames from 'classnames';
-import { Fragment, useState } from '@wordpress/element';
+import { useState } from '@wordpress/element';
 
 import {
   RichText,

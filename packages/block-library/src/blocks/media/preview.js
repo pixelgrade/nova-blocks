@@ -7,7 +7,6 @@ import { InnerBlocks } from '@wordpress/block-editor';
 
 import { MediaCompositionPreview } from '@novablocks/media-composition';
 import { getColorSignalClassnames } from '@novablocks/utils';
-import { getContentVariationBySignal } from '@novablocks/color-signal';
 
 const MediaPreview = ( props ) => {
 
