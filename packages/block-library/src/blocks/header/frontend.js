@@ -17,7 +17,6 @@ import { addSocialMenuClass } from "./utils";
   const $firstRow = $currentHeader.find( '.novablocks-header-row' ).first();
 
   syncColorSignalClasses( $firstRow, $readingBar );
-  syncColorSignalClasses( $firstRow, $progressBar );
 
   let stickyHeaderShown = false,
     primaryRowShown = false,
