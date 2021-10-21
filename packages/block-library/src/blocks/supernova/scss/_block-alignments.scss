@@ -6,7 +6,7 @@
 .supernova {
   
   --wide-content-width: calc(100% - var(--full) * 2 + var(--nb-wrapper-sides-spacing) * 2);
-  --regular-content-width: calc(var(--wide-content-width) - var(--wds)*2 - var(--wde)*2 - var(--grid-gap) * 2);
+  --regular-content-width: calc(var(--wide-content-width) - var(--wds)*2 - var(--wde)*2 - var(--nb-sidecar-grid-gap) * 2);
   
   > .alignfull[class] {
     margin-left: 0;
@@ -21,7 +21,7 @@
 .novablocks-sidebar {
   
   .supernova {
-    --display-mode: block;
+    --nb-sidecar-display: block;
   }
   
   [class*='__inner-container'] {

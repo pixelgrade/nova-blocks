@@ -2,51 +2,64 @@
 @import 'scss/block-content-alignments';
 @import 'scss/utility';
 
-:root {
-  @include layout-settings;
-}
-
 // This is where magic starts.
 .novablocks-sidecar,
 .novablocks-content {
   position: relative;
-  @include layout-grid;
   align-items: start;
+  @include layout-grid;
 }
 
-// Under 1024px everything is shown
-// on one column, so we need to add
-// a margin top to the sidebar.
+.novablocks-sidebar,
+.novablocks-content {
+
+  @include above(lap) {
+    grid-row: 1;
+  }
+}
+
 .novablocks-sidebar {
-  
+  height: 100%;
   z-index: 2;
-  
+
+  // Default sidebar position is on the right, so it will be positioned between [ge] and block-limit-right.
+  :where(&) {
+    grid-column: ge / var(--block-limit-right);
+  }
+
+  > * {
+    z-index: 2;
+  }
+
+  // Below 1024px everything is shown on one column, so we need to add a margin top to the sidebar.
   @include below(lap) {
-    margin-top: var(--grid-gap);
+    // @todo maybe var(--element-spacing) is the proper gap to be used here
+    margin-top: var(--nb-sidecar-grid-gap);
+  }
+}
+
+.novablocks-sidebar {
+}
+
+// Apply top and bottom spacing
+// on all blocks inside content
+// and sidebar.
+.novablocks-content,
+.novablocks-sidebar {
+
+  > * {
+    @include block-spacing;
   }
 }
 
 .novablocks-content {
-  grid-column: var(--all-columns);
+  order: -1; // content should always have priority and stay on top.
+
   --block-content-end: ce;
-  
-  // Collections are coming with .alignfull,
-  // to help us with background-color.
-  // Nested in Collection Block is an inner-container
-  // which will be treated as a grid too.
-  > .novablocks-collection {
-    grid-column: var(--all-columns);
-  }
 }
 
 .novablocks-sidecar {
-  
-  grid-column: var(--all-columns) !important;
-  
-  > * {
-    grid-row: 1;
-  }
-  
+
   &--sidebar-right {
     
     > .novablocks-content {
@@ -56,7 +69,6 @@
         --block-content-end: ce;
       }
     }
-    
   }
   
   // Sidebar Left with Content on the Right.
@@ -86,47 +98,13 @@
     }
     
     .novablocks-sidebar {
-      grid-column: ws/gs;
+      grid-column: ws / gs;
     }
     
     .novablocks-sidebar:last-child {
-      grid-column: ge/we;
+      grid-column: ge / we;
     }
   }
-}
-// Default sidebar position is on the right,
-// so it will be positioned between [ge] and block-limit-right.
-.novablocks-sidebar {
-  grid-column: ge/var(--block-limit-right);
-  height: 100%;
-  
-  > * {
-    z-index: 2;
-  }
-}
-
-// Apply top and bottom spacing
-// on all blocks inside content
-// and sidebar.
-.novablocks-content,
-.novablocks-sidebar {
-  
-  > * {
-    @include block-spacing;
-  }
-}
-
-// When grid is not used (eg. under 1024px),
-// we are using flex with direction column.
-.novablocks-content,
-.novablocks-sidecar {
-  flex-direction: column;
-}
-
-// Content should always have priority
-// and stay on top.
-.novablocks-content {
-  order: -1;
 }
 
 // Make last block from Sidebar Sticky
@@ -154,22 +132,22 @@
 
 // Small Sidebar
 .novablocks-sidebar--small {
-  --minimum-sidebar-width:  var(--default-width-small-sidebar);
+  --nb-sidecar-sidebar-minimum-width:  var(--nb-sidecar-sidebar-small-width);
 }
 
 // Medium Sidebar
 .novablocks-sidebar--medium {
-  --minimum-sidebar-width:  var(--default-width-medium-sidebar);
+  --nb-sidecar-sidebar-minimum-width:  var(--nb-sidecar-sidebar-medium-width);
 }
 
 // Large Sidebar
 .novablocks-sidebar--large {
-  --minimum-sidebar-width:  var(--default-width-large-sidebar);
+  --nb-sidecar-sidebar-minimum-width:  var(--nb-sidecar-sidebar-large-width);
 }
 
 // Applying Grid on Group Block
 .wp-block-group__inner-container {
-  @include layout-grid;
+  //@include layout-grid;
 }
 
 
@@ -177,7 +155,7 @@
 .wp-block-group {
   
   .wp-block-group__inner-container {
-    --display-mode: block;
+    //--nb-sidecar-display: block;
   }
 }
 
@@ -203,18 +181,11 @@
 // but this value can be easily controlled using a Customizer control.
 
 .novablocks-content:first-of-type:last-child {
-  --default-width-offset-sidebar: calc((var(--offset-addon) * 1px - var(--grid-gap)) * 0.5);
+  --nb-sidecar-sidebar-default-width: calc((var(--offset-addon) * 1px - var(--nb-sidecar-grid-gap)) * 0.5);
   --sidebar-variable-offset-value: calc( (var(--offset-addon)/ var(--body-font-size)) * 1em );
   
   @include above(ultra) {
-    --default-width-offset-sidebar: calc( (var(--sidebar-variable-offset-value) - var(--grid-gap)) * 0.5);
-  }
-}
-
-.ignore-block {
-  
-  .novablocks-sidecar {
-    --default-width-offset-sidebar: var(--default-sidebar-width);
+    --nb-sidecar-sidebar-default-width: calc( (var(--sidebar-variable-offset-value) - var(--nb-sidecar-grid-gap)) * 0.5);
   }
 }
 

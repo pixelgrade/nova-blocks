@@ -72,7 +72,7 @@
   .novablocks-sidecar {
     
     @include above(lap) {
-      --display-mode: grid;
+      --nb-sidecar-display: grid;
     }
     
     > .novablocks-content:only-child {

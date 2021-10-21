@@ -1,4 +1,3 @@
-$grid-selector: '.block-editor-inner-blocks > .block-editor-block-list__layout';
 $align-selectors: '[data-align="full"], [data-align="wide"], [data-novablocks-alignment="pull-left"], [data-novablocks-alignment="pull-right"]';
 
 // Default Layout Grid
@@ -17,65 +16,81 @@ $align-selectors: '[data-align="full"], [data-align="wide"], [data-novablocks-al
 
 //noinspection ALL
 @mixin layout-grid {
-  display: var(--display-mode);
-  flex-direction: column;
-  
-  --default-sidebar-width: calc(var(--minimum-sidebar-width) * 0.5);
-  
-  --wds: var(--default-width-offset-sidebar, var(--default-sidebar-width));
-  --wde: var(--default-width-offset-sidebar, var(--default-sidebar-width));
-  
-  --full: calc((100vw - var(--theme-content-width-wide)) * 0.5);
-  
-  grid-template-columns: [fs] Max(0px, var(--editor-full, var(--full))) [ws] calc(var(--wds) * 2) [gs] var(--grid-gap) [cs] 1fr [gcs] calc(var(--grid-gap)/2) [cc] calc(var(--grid-gap)/2) [gce]  1fr [ce] var(--grid-gap) [ge] calc(var(--wde) * 2) [we] Max(0px, var(--editor-full, var(--full))) [fe];
+  @include layout-settings;
 
-  @include layout-reset;
+  display: grid;
 
-  > * {
+  grid-template-columns:
+    [fs] Max(var(--nb-spacing), var(--full)) // [ws]
+    [ws] calc(var(--wds) * 2) // [gs]
+    [gs] var(--nb-sidecar-grid-gap) // [cs]
+    [cs] 1fr // [gcs]
+    [gcs] calc(var(--nb-sidecar-grid-gap)/2) // [cc]
+    [cc] calc(var(--nb-sidecar-grid-gap)/2)  // [gce]
+    [gce] 1fr // [gce]
+    [ce] var(--nb-sidecar-grid-gap) // [ge]
+    [ge] calc(var(--wde) * 2) // [we]
+    [we] Max(var(--nb-spacing), var(--full)) [fe];
+
+  grid-column: fs / fe;
+
+  @include below(lap) {
+    grid-template-columns:
+      [fs] var(--nb-spacing) // [ws]
+      [ws] auto // [gs]
+      [gs] 0 // [cs]
+      [cs] 1fr // [gcs]
+      [gcs] 0 // [cc]
+      [cc] 0  // [gce]
+      [gce] 1fr // [gce]
+      [ce] 0 // [ge]
+      [ge] auto // [we]
+      [we] var(--nb-spacing) [fe];
+  }
+
+  // this rule needs to be weaker than the one above
+  :where(& > *) {
     grid-column: var(--block-content-start) / var(--block-content-end);
-    
-    &:not([class*='align']):not([data-align]) {
-      @include layout-reset;
+
+    @include below(lap) {
+      grid-column: ws / we;
     }
   }
 }
 
-@mixin layout-reset {
-  // Default position for blocks is between cs and ce.
-  --block-content-start: cs;
-  --block-content-end: ce;
-}
-
 // Default Layout Settings
-// --display-mode - Block default display mode. (eg. grid or flex)
+// --nb-sidecar-display - Block default display mode. (eg. grid or flex)
 // --sticky-element-top-spacing - Used to position the sticky block.
 // In Rosa2 this value will be equal with site header height, in this way,
 // the sticky block will not be under the header.
-// --all-columns - Used for blocks that need to span on the entire grid.
 @mixin layout-settings {
-  --default-width-small-sidebar: 230px;
-  --default-width-medium-sidebar: 300px;
-  --default-width-large-sidebar: 500px;
+  --nb-sidecar-sidebar-small-width: 230px;
+  --nb-sidecar-sidebar-medium-width: 300px;
+  --nb-sidecar-sidebar-large-width: 500px;
+  --nb-sidecar-sidebar-minimum-width: var(--nb-sidecar-sidebar-medium-width);
+  --nb-sidecar-sidebar-default-width: calc(var(--nb-sidecar-sidebar-minimum-width) * 0.5);
+
+  --nb-sidecar-display: block;
+  --nb-sidecar-grid-gap: 3em;
+
   --sticky-element-top-spacing: 0px;
-  --grid-gap: 3em;
-  --minimum-sidebar-width: var(--default-width-medium-sidebar);
-  --display-mode: block;
-  --all-columns: fs/fe;
-  
-  @include layout-reset;
+
+  --wds: var(--nb-sidecar-sidebar-default-width);
+  --wde: var(--nb-sidecar-sidebar-default-width);
+
+  --full: Max(0px, calc((100% - var(--nb-content-width-wide)) * 0.5));
+
+  // Default position for blocks is between cs and ce.
+  --block-content-start: cs;
+  --block-content-end: ce;
   
   // Default block limits are ws and we.
   --block-limit-left: ws;
   --block-limit-right: we;
   
-  // Make it grid only above 1024px.
-  @include above(lap) {
-    --display-mode: grid;
-  }
-  
   @include above(ultra) {
-    --default-width-small-sidebar: 10.5em;
-    --default-width-medium-sidebar: 13.7em;
-    --default-width-large-sidebar: 22.8em;
+    --nb-sidecar-sidebar-small-width: 10.5em;
+    --nb-sidecar-sidebar-medium-width: 13.7em;
+    --nb-sidecar-sidebar-large-width: 22.8em;
   }
 }

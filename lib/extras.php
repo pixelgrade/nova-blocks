@@ -1485,12 +1485,10 @@ if ( ! function_exists( 'novablocks_get_collection_output' ) ) {
 		<?php } ?>
 
 		<div class="<?php echo "nb-collection__body  align" . $attributes['align']; ?>">
-			<div class="nb-collection__inner-container">
-				<div class="<?php echo join( ' ', $layoutClasses ); ?>">
-					<?php echo $content; ?>
-				</div>
-				<?php novablocks_render_scroll_indicator( $attributes ); ?>
+			<div class="<?php echo join( ' ', $layoutClasses ); ?>">
+				<?php echo $content; ?>
 			</div>
+			<?php novablocks_render_scroll_indicator( $attributes ); ?>
 		</div>
 
 		<?php return ob_get_clean();

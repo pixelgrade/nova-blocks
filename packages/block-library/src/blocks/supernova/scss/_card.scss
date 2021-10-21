@@ -194,7 +194,7 @@
 .nb-collection__layout--content-width {
   
   .slick-slide {
-    --slider-content-width: calc( 100vw - ( var(--theme-wrapper-sides-spacing) + var(--full) + var(--wds) + var(--wde) + var(--grid-gap) ) * 2);
+    --slider-content-width: calc( 100vw - ( var(--theme-wrapper-sides-spacing) + var(--full) + var(--wds) + var(--wde) + var(--nb-sidecar-grid-gap) ) * 2);
     width: var(--slider-content-width) !important;
   }
 }

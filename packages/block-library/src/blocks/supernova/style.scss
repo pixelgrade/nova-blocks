@@ -8,7 +8,7 @@
 .supernova {
   --emphasis-area-width: calc( var(--nb-emphasis-area, 100) * 1% );
 
-  grid-column: var(--all-columns);
+  grid-column: fs/fe;
 
   background: none !important;
   @include block-background;

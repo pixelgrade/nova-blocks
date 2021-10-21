@@ -6,15 +6,14 @@
 
 .block-editor-block-list__layout.is-root-container {
   @include layout-grid;
-  @include layout-settings;
-  
-  --editor-full: calc((100vw - var(--theme-content-width-wide) - 2 * var(--theme-wrapper-sides-spacing) - var(--inspector-controls-width, 0px) ) * 0.5);
-  
-  --default-width-offset-sidebar: calc((var(--offset-addon) * 1px - var(--grid-gap)) * 0.5);
-  --sidebar-variable-offset-value: calc( (var(--offset-addon)/ var(--body-font-size)) * 1em );
-  
+
+  --editor-full: calc((100vw - var(--theme-content-width-wide) - 2 * var(--theme-wrapper-sides-spacing) - var(--inspector-controls-width, 0px)) * 0.5);
+
+  --nb-sidecar-sidebar-default-width: calc((var(--offset-addon) * 1px - var(--nb-sidecar-grid-gap)) * 0.5);
+  --sidebar-variable-offset-value: calc((var(--offset-addon) / var(--body-font-size)) * 1em);
+
   @include above(ultra) {
-    --default-width-offset-sidebar: calc( (var(--sidebar-variable-offset-value) - var(--grid-gap)) * 0.5);
+    --nb-sidecar-sidebar-default-width: calc((var(--sidebar-variable-offset-value) - var(--nb-sidecar-grid-gap)) * 0.5);
   }
 
   // If is Widget Editor,
@@ -25,85 +24,67 @@
     --wde: 12.5%;
   }
 
-  .novablocks-sidecar[class][class],
-  .novablocks-content[class][class] {
-    --default-width-offset-sidebar: var(--default-sidebar-width);
-  }
-  
   // Markup is different compared to front-end,
   // and because of that, the last block is
   // currently not sticky inside the editor.
   .last-block-is-sticky > :last-child {
     z-index: 1;
   }
-  
+
   > * {
     width: 100%;
 
     align-self: flex-start;
   }
-  
+
   .wp-block {
-    
+
     &[data-align=wide] {
       max-width: 100%;
       width: 100%;
     }
   }
-  
+
   [data-align="left"],
   [data-novablocks-alignment="pull-left"],
   [data-align="right"],
   [data-novablocks-alignment="pull-right"] {
     grid-row-end: span 5;
   }
-  
+
   [data-align="left"],
   [data-novablocks-alignment="pull-left"] {
     --block-content-start: ws;
     --block-content-end: gs;
   }
-  
+
   [data-align="right"],
   [data-novablocks-alignment="pull-right"] {
     --block-content-start: ge;
     --block-content-end: we;
   }
-  
+
   [data-type="novablocks/sidecar"] {
-    grid-column: var(--all-columns);
+    grid-column: fs/fe;
 
     max-width: none;
     width: 100%;
   }
-  
+
   [data-align="left"] {
-  
+
     *:not([class*='align']):not([data-novablocks-alignment]):not([data-align]) {
       --block-content-start: cs;
     }
   }
-  
+
   [data-align="right"],
   [data-align="left"] {
     height: 100%;
-    
+
     > * {
       float: none;
     }
-  }
-}
-
-.novablocks-sidecar > #{$grid-selector} {
-  
-  @include layout-grid;
-
-  > :first-child {
-    grid-column: var(--all-columns) !important;
-  }
-  
-  > * {
-    width: 100%;
   }
 }
 
@@ -112,51 +93,14 @@
 // and it will change it's grid position, according
 // to sidebar position (left or right).
 .novablocks-sidecar {
-  
-    --block-content-start: var(--block-limit-left);
-    --block-content-end: ce;
-  
-  > #{$grid-selector} {
-  
-    > * {
-      grid-row: 1;
-    }
-  
-    @include layout-grid;
-  
-    // Content
-    > :first-child {
-    
-      > .wp-block-novablocks-sidecar-area {
-      
-        > #{$grid-selector} {
-        
-          [data-type='novablocks/sidecar'] {
-            grid-column: var(--all-columns);
-          }
-        }
-      }
-    }
-  
-    // Sidebar
-    > :last-child {
-      grid-column: ge/var(--block-limit-right);
-    }
-  }
-  
+  --block-content-start: var(--block-limit-left);
+  --block-content-end: ce;
+
   &--sidebar-left {
-      --block-content-start: cs;
-      --block-content-end: var(--block-limit-right);
-  
-    > #{$grid-selector} {
-  
-      // Sidebar
-      > :last-child {
-        grid-column: var(--block-limit-left)/gs;
-      }
-    }
+    --block-content-start: cs;
+    --block-content-end: var(--block-limit-right);
   }
-  
+
   .novablocks-content,
   &--sidebar-left,
   &--sidebar-right,
@@ -165,57 +109,9 @@
   }
 }
 
-// Block Grid
-.novablocks-sidecar {
-  
-  &--complex {
-    
-    > #{$grid-selector} {
-      
-      > * {
-        grid-row: 1;
-      }
-      
-      // Sidebar Left
-      >:first-child {
-        
-        --block-content-start: cs;
-        --block-content-end: ce;
-      }
-      
-      // Content
-      >:not(:first-child):not(:last-child) {
-  
-        grid-column: var(--block-limit-left)/gs;
-      }
-      
-      // Sidebar Right
-      >:last-child {
-        grid-column: ge/var(--block-limit-right);
-      }
-    }
-  }
-}
-
 .novablocks-sidecar--sidebar-right .novablocks-sidecar--sidebar-right {
   --block-content-start: var(--block-limit-left);
   --block-content-end: ce;
-}
-
-// Show Sidecar inner areas outline
-// when the main block is selected
-[data-type='novablocks/sidecar'] {
-  &.is-selected,
-  &.is-highlighted,
-  &.is-multi-selected,
-  &.has-child-selected {
-    .novablocks-sidebar,
-    .novablocks-content {
-      > #{$grid-selector} {
-        //@include block-outline;
-      }
-    }
-  }
 }
 
 // Overwrite default focus block style
@@ -225,57 +121,23 @@
   &.is-highlighted,
   &.is-multi-selected,
   &.has-child-selected {
-    
+
     &:after {
       box-shadow: none !important;
     }
-    
-    &.is-highlighted {
-      
-      .novablocks-content,
-      .novablocks-sidebar {
-    
-        > #{$grid-selector} {
-      
-          &:after {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            grid-column: var(--block-content-start)/var(--block-content-end);
-            box-shadow: 0 0 0 2px #007cba;
-            box-shadow: 0 0 0 var(--wp-admin-border-width-focus) var(--wp-admin-theme-color);
-            border-radius: 1px;
-            outline: 2px solid transparent;
-          }
-        }
-      }
-    }
-    
   }
 }
 
 .novablocks-content {
-  
-  > #{$grid-selector} {
-    
-    @include layout-grid;
-  
-    > * {
-      width: 100%;
-    }
-  }
-  
+
   [data-type="novablocks/sidecar"] {
-    
+
     &,
     > .wp-block {
       margin: 0 !important;
     }
   }
-  
+
 }
 
 
@@ -285,12 +147,12 @@
 .novablocks-sidecar--sidebar-right {
 
   .novablocks-content {
-  
+
     [data-align="full"],
     [data-align="wide"] {
       --block-content-end: ce;
     }
-  
+
     [data-align="right"],
     [data-align="left"],
     [data-novablocks-alignment="pull-right"],
@@ -298,31 +160,19 @@
       --block-content-start: var(--block-limit-left);
       --block-content-end: ce;
     }
-  
-    /*
-     * We need to override alignments
-     * applied by layout-reset.
-     */
-    > #{$grid-selector} {
-      
-      > *:not([class*='align'])[class] {
-        --block-content-start: var(--block-limit-left);
-        --block-content-end: ce;
-      }
-    }
   }
 }
 
 // Left Sidebar
 .novablocks-sidecar--sidebar-left {
-  
+
   .novablocks-content {
-    
+
     [data-align="full"],
     [data-align="wide"] {
       --block-content-start: cs;
     }
-  
+
     [data-align="right"],
     [data-align="left"],
     [data-novablocks-alignment="pull-right"],
@@ -330,26 +180,14 @@
       --block-content-start: cs;
       --block-content-end: var(--block-limit-right)
     }
-  
-    /*
-     * We need to override alignments
-     * applied by layout-reset.
-     */
-    > #{$grid-selector} {
-    
-      > *:not([class*='align'])[class] {
-        --block-content-start: cs;
-        --block-content-end: var(--block-limit-right);
-      }
-    }
   }
 }
 
 // Two Sidebars
 .novablocks-sidecar--complex {
-  
+
   .novablocks-content[class] {
-  
+
     [data-align="full"],
     [data-align="wide"],
     [data-align='right'],
@@ -359,15 +197,15 @@
       --block-content-start: cs;
       --block-content-end: ce;
     }
-    
+
   }
 }
 
 // Sidecar in Sidecar
 .novablocks-content {
-  
+
   .novablocks-content {
-    
+
     [data-align="full"],
     [data-align="wide"],
     [data-align='right'],
@@ -377,14 +215,14 @@
       --block-content-start: cs;
       --block-content-end: ce;
     }
-   
+
   }
 }
 
 // We want Posts Collection
 // to span on all columns.
 [data-type="novablocks/posts-collection"] {
-  grid-column: var(--all-columns) !important;
+  grid-column: fs/fe !important;
 }
 
 // Remove resizable component behaviour
@@ -393,16 +231,16 @@
 [data-align="left"],
 [data-align="right"],
 .novablocks-sidebar {
-  
+
   .wp-block-image {
     margin-left: 0 !important;
     margin-right: 0 !important;
-    
+
     .components-resizable-box__container {
       width: 100% !important;
       height: 100% !important;
     }
-    
+
   }
 }
 
