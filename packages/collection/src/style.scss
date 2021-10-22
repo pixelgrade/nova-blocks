@@ -4,7 +4,7 @@
 .novablocks-collection {
   // @todo styles for emphasisArea &co similar to supernova
   position: relative;
-  @include layout-grid;
+  @include nb-content-layout-grid;
 }
 
 .slick-slide {

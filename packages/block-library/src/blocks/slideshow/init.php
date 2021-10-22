@@ -145,7 +145,7 @@ if ( ! function_exists( 'novablocks_render_slideshow_block' ) ) {
 								</div>
 	                        </div>
 	                        <div class="novablocks-slideshow__foreground novablocks-doppler__foreground novablocks-u-content-padding novablocks-u-content-align">
-                                <div class="novablocks-slideshow__inner-container novablocks-u-content-width">
+                                <div class="novablocks-slideshow__inner-container">
                                     <?php
                                     novablocks_the_media_title( $media, '<h2>', '</h2>' );
                                     novablocks_the_media_caption( $media );

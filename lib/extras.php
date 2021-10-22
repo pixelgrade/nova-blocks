@@ -197,10 +197,6 @@ function novablocks_get_block_extra_classes( $attributes ) {
 		$classes[] = 'novablocks-u-spacing-' . $attributes['contentPadding'];
 	}
 
-	if ( ! empty( $attributes['contentWidth'] ) ) {
-		$classes[] = 'novablocks-u-content-width-' . $attributes['contentWidth'];
-	}
-
 	$classes[] = 'novablocks-u-background';
 	if ( ! empty( $attributes['overlayFilterStyle'] ) ) {
 		$classes[] = 'novablocks-u-background-' . $attributes['overlayFilterStyle'];

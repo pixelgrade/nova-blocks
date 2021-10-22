@@ -7,7 +7,7 @@
 .novablocks-content {
   position: relative;
   align-items: start;
-  @include layout-grid;
+  @include nb-content-layout-grid;
 }
 
 .novablocks-sidebar,
@@ -23,7 +23,7 @@
   z-index: 2;
 
   // Default sidebar position is on the right, so it will be positioned between [ge] and block-limit-right.
-  :where(&) {
+  @include above(lap) {
     grid-column: ge / var(--block-limit-right);
   }
 
@@ -36,9 +36,6 @@
     // @todo maybe var(--element-spacing) is the proper gap to be used here
     margin-top: var(--nb-sidecar-grid-gap);
   }
-}
-
-.novablocks-sidebar {
 }
 
 // Apply top and bottom spacing
@@ -64,7 +61,7 @@
     
     > .novablocks-content {
      
-      > *:not([class*='align']) {
+      > :not([class*='align']) {
         --block-content-start: var(--block-limit-left);
         --block-content-end: ce;
       }
@@ -147,27 +144,16 @@
 
 // Applying Grid on Group Block
 .wp-block-group__inner-container {
-  //@include layout-grid;
-}
-
-
-.novablocks-sidebar,
-.wp-block-group {
-  
-  .wp-block-group__inner-container {
-    //--nb-sidecar-display: block;
-  }
+  @include nb-content-layout;
 }
 
 .novablocks-sidecar--sidebar-left {
   
   .novablocks-content {
 
-    > *:not([class*='align']):not([data-align]) {
+    > :not([class*='align'], [data-align]) {
       --block-content-end: var(--block-limit-right);
-  
     }
-    
   }
 }
 

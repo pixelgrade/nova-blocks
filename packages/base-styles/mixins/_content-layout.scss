@@ -1,4 +1,4 @@
-$align-selectors: '[data-align="full"], [data-align="wide"], [data-novablocks-alignment="pull-left"], [data-novablocks-alignment="pull-right"]';
+$align-selectors: '[data-align="full"], [data-align="wide"], [data-nb-align="pull-left"], [data-nb-align="pull-right"]';
 
 // Default Layout Grid
 // fs - full start
@@ -15,13 +15,13 @@ $align-selectors: '[data-align="full"], [data-align="wide"], [data-novablocks-al
 // The same thing applies for [cc] [ce].
 
 //noinspection ALL
-@mixin layout-grid {
+@mixin nb-content-layout-grid {
   @include layout-settings;
 
   display: grid;
-
+  grid-column: fs / fe;
   grid-template-columns:
-    [fs] Max(var(--nb-spacing), var(--full)) // [ws]
+    [fs] Max(var(--nb-wrapper-sides-spacing), var(--full)) // [ws]
     [ws] calc(var(--wds) * 2) // [gs]
     [gs] var(--nb-sidecar-grid-gap) // [cs]
     [cs] 1fr // [gcs]
@@ -30,13 +30,18 @@ $align-selectors: '[data-align="full"], [data-align="wide"], [data-novablocks-al
     [gce] 1fr // [gce]
     [ce] var(--nb-sidecar-grid-gap) // [ge]
     [ge] calc(var(--wde) * 2) // [we]
-    [we] Max(var(--nb-spacing), var(--full)) [fe];
+    [we] Max(var(--nb-wrapper-sides-spacing), var(--full)) [fe];
 
-  grid-column: fs / fe;
+  // this rule needs to be weaker than the one above
+  @at-root {
+    :where(#{&}) > * {
+      grid-column: var(--block-content-start) / var(--block-content-end);
+    }
+  }
 
   @include below(lap) {
     grid-template-columns:
-      [fs] var(--nb-spacing) // [ws]
+      [fs] var(--nb-wrapper-sides-spacing) // [ws]
       [ws] auto // [gs]
       [gs] 0 // [cs]
       [cs] 1fr // [gcs]
@@ -45,15 +50,12 @@ $align-selectors: '[data-align="full"], [data-align="wide"], [data-novablocks-al
       [gce] 1fr // [gce]
       [ce] 0 // [ge]
       [ge] auto // [we]
-      [we] var(--nb-spacing) [fe];
-  }
+      [we] var(--nb-wrapper-sides-spacing) [fe];
 
-  // this rule needs to be weaker than the one above
-  :where(& > *) {
-    grid-column: var(--block-content-start) / var(--block-content-end);
-
-    @include below(lap) {
-      grid-column: ws / we;
+    @at-root {
+      :where(#{&}) > * {
+        grid-column: ws / we;
+      }
     }
   }
 }
@@ -92,5 +94,28 @@ $align-selectors: '[data-align="full"], [data-align="wide"], [data-novablocks-al
     --nb-sidecar-sidebar-small-width: 10.5em;
     --nb-sidecar-sidebar-medium-width: 13.7em;
     --nb-sidecar-sidebar-large-width: 22.8em;
+  }
+}
+
+@mixin nb-content-layout {
+  padding-left: var(--nb-wrapper-sides-spacings);
+  padding-right: var(--nb-wrapper-sides-spacings);
+
+  > * {
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  > :not([class*="align"]) {
+    max-width: var(--nb-content-width);
+  }
+
+  > .alignwide {
+    max-width: var(--nb-content-width-wide);
+  }
+
+  > .alignfull {
+    margin-left: calc( -1 * var(--nb-wrapper-sides-spacings) );
+    margin-right: calc( -1 * var(--nb-wrapper-sides-spacings) );
   }
 }

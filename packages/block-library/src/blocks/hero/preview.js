@@ -35,7 +35,6 @@ const HeroPreview = props => {
     className: classnames( [
       "novablocks-hero__inner-container",
       "wp-block-group__inner-container",
-      "novablocks-u-content-width",
     ] ),
   }, );
 

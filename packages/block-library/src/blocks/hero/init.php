@@ -123,7 +123,7 @@ if ( ! function_exists( 'novablocks_render_hero_block' ) ) {
 				<?php } ?>
 			</div>
             <div class="novablocks-hero__foreground novablocks-doppler__foreground novablocks-u-content-padding novablocks-u-content-align" style="<?php echo esc_attr( $foregroundStyle ); ?>">
-                <div class="novablocks-hero__inner-container wp-block-group__inner-container novablocks-u-content-width" style="<?php echo esc_attr( $contentStyle ); ?>">
+                <div class="novablocks-hero__inner-container wp-block-group__inner-container" style="<?php echo esc_attr( $contentStyle ); ?>">
 					<?php if ( ! empty( $attributes['displayInnerContent'] ) ) {
 						echo $content;
 					} ?>

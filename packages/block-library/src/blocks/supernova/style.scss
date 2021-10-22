@@ -26,9 +26,7 @@
   position: relative;
 
   // apply our default grid layout and remove padding-left inherited from __inner-container
-  @include layout-grid;
-  padding-left: 0 !important;
-  padding-right: 0 !important;
+  @include nb-content-layout-grid;
 }
 
 /*

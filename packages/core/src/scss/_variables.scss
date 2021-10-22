@@ -1,8 +1,9 @@
 :root {
-  --nb-content-width-wide: 1000px;
+  --nb-content-width: 800px;
+  --nb-content-width-wide: 1200px;
 
 	--nb-spacing: 24px;
-	--nb-sides-spacings: var(--nb-spacing);
+	--nb-wrapper-sides-spacings: var(--nb-spacing);
 	--nb-media-background-direction: 90deg;
 
   --nb-wrapper-sides-spacing: var(--nb-spacing);

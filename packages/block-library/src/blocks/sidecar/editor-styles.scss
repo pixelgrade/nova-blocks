@@ -5,7 +5,7 @@
 }
 
 .block-editor-block-list__layout.is-root-container {
-  @include layout-grid;
+  @include nb-content-layout-grid;
 
   --editor-full: calc((100vw - var(--theme-content-width-wide) - 2 * var(--theme-wrapper-sides-spacing) - var(--inspector-controls-width, 0px)) * 0.5);
 
@@ -46,20 +46,20 @@
   }
 
   [data-align="left"],
-  [data-novablocks-alignment="pull-left"],
+  [data-nb-align="pull-left"],
   [data-align="right"],
-  [data-novablocks-alignment="pull-right"] {
+  [data-nb-align="pull-right"] {
     grid-row-end: span 5;
   }
 
   [data-align="left"],
-  [data-novablocks-alignment="pull-left"] {
+  [data-nb-align="pull-left"] {
     --block-content-start: ws;
     --block-content-end: gs;
   }
 
   [data-align="right"],
-  [data-novablocks-alignment="pull-right"] {
+  [data-nb-align="pull-right"] {
     --block-content-start: ge;
     --block-content-end: we;
   }
@@ -73,7 +73,7 @@
 
   [data-align="left"] {
 
-    *:not([class*='align']):not([data-novablocks-alignment]):not([data-align]) {
+    *:not([class*='align']):not([data-nb-align]):not([data-align]) {
       --block-content-start: cs;
     }
   }
@@ -155,8 +155,8 @@
 
     [data-align="right"],
     [data-align="left"],
-    [data-novablocks-alignment="pull-right"],
-    [data-novablocks-alignment="pull-left"] {
+    [data-nb-align="pull-right"],
+    [data-nb-align="pull-left"] {
       --block-content-start: var(--block-limit-left);
       --block-content-end: ce;
     }
@@ -175,8 +175,8 @@
 
     [data-align="right"],
     [data-align="left"],
-    [data-novablocks-alignment="pull-right"],
-    [data-novablocks-alignment="pull-left"] {
+    [data-nb-align="pull-right"],
+    [data-nb-align="pull-left"] {
       --block-content-start: cs;
       --block-content-end: var(--block-limit-right)
     }
@@ -192,8 +192,8 @@
     [data-align="wide"],
     [data-align='right'],
     [data-align='left'],
-    [data-novablocks-alignment="pull-left"],
-    [data-novablocks-alignment="pull-right"] {
+    [data-nb-align="pull-left"],
+    [data-nb-align="pull-right"] {
       --block-content-start: cs;
       --block-content-end: ce;
     }
@@ -210,8 +210,8 @@
     [data-align="wide"],
     [data-align='right'],
     [data-align='left'],
-    [data-novablocks-alignment="pull-left"],
-    [data-novablocks-alignment="pull-right"] {
+    [data-nb-align="pull-left"],
+    [data-nb-align="pull-right"] {
       --block-content-start: cs;
       --block-content-end: ce;
     }

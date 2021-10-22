@@ -77,8 +77,7 @@
 // The same logic is applied for alignright and pull-right.
 .alignleft,
 .pull-left,
-[data-novablocks-alignment='pull-left'] {
-    
+[data-nb-align='pull-left'] {
   --block-content-start: ws;
   --block-content-end: gs;
 
@@ -95,7 +94,7 @@
 
 .alignright,
 .pull-right,
-[data-novablocks-alignment='pull-right'] {
+[data-nb-align='pull-right'] {
   
   --block-content-start: ge;
   --block-content-end: we;

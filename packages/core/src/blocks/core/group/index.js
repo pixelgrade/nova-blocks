@@ -81,7 +81,7 @@ const addEditorBlockAttributes = createHigherOrderComponent( ( BlockListBlock ) 
 
     if ( allowedBlocks.includes( name ) && contentAlignment ) {
       customData = Object.assign( customData, {
-        'data-novablocks-alignment': contentAlignment
+        'data-nb-align': contentAlignment
       } )
     }
 
