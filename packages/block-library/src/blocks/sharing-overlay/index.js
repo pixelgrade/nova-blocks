@@ -24,7 +24,8 @@ registerBlockType( 'novablocks/sharing-overlay', {
     html: false,
     novaBlocks: {
       colorSignal: {
-        altAttributes: true
+        altAttributes: true,
+        controls: true,
       }
     }
   },

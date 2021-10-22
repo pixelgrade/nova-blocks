@@ -27,8 +27,18 @@ if ( ! function_exists( 'novablocks_render_sharing_overlay_block' ) ) {
 		$attributes_config = novablocks_get_sharing_overlay_attributes();
 		$attributes = novablocks_get_attributes_with_defaults( $attributes, $attributes_config );
 		$data_attributes_array = array_map( 'novablocks_camel_case_to_kebab_case', array_keys( $attributes ) );
-		$data_attributes = novablocks_get_data_attributes( $data_attributes_array, $attributes );
 
+		$color_data = array(
+			'palette',
+			'palette-variation',
+			'color-signal',
+			'content-palette-variation',
+			'content-color-signal',
+			'use-source-color-as-reference',
+		);
+
+		$data_attributes = novablocks_get_data_attributes( $data_attributes_array, $attributes, $color_data );
+		$color_data_attributes = novablocks_get_data_attributes( $color_data, $attributes );
 		$data_attributes[] = 'data-title="' . get_the_title() . '"';
 		$data_attributes[] = 'data-url="' . get_permalink() . '"';
 
@@ -38,9 +48,7 @@ if ( ! function_exists( 'novablocks_render_sharing_overlay_block' ) ) {
 
 		if ( ! empty( $attributes[ 'className' ] ) ) {
 			$classes[] = $attributes[ 'className' ];
-		}
-
-		?>
+		} ?>
 
 		<div class="<?php echo join( ' ', $classes ); ?>" <?php echo join( ' ', $data_attributes ); ?>>
 			<div class="wp-block-buttons">
@@ -50,7 +58,14 @@ if ( ! function_exists( 'novablocks_render_sharing_overlay_block' ) ) {
 					</button>
 				</div>
 			</div>
-			<div class="novablocks-sharing__overlay js-sharing-overlay"></div>
+			<div class="novablocks-sharing__overlay js-sharing-overlay">
+				<div class="novablocks-sharing__wrap" <?php echo join( ' ', $color_data_attributes ); ?>>
+					<div class="novablocks-sharing__container">
+						<div class="novablocks-sharing__content"></div>
+						<div class="novablocks-sharing__close"></div>
+					</div>
+				</div>
+			</div>
 		</div>
 
 		<?php return ob_get_clean();

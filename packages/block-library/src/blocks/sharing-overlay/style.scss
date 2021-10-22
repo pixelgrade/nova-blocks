@@ -28,7 +28,7 @@
 	position: absolute;
 	top: 0;
 	left: 0;
-	z-index: 100;
+	z-index: 3000;
 
 	max-width: 100%;
 
@@ -78,17 +78,28 @@
 	overflow: auto;
 }
 
-.novablocks-sharing__content {
+:is(
+  .novablocks-sharing__content,
+  .novablocks-sharing__group,
+  .novablocks-sharing__group-content
+) {
+  @include block-spacing-reset;
 
-	> * {
-		--nb-element-spacing-multiplier: 0.5;
-		@include block-spacing;
-  
-    &:not(:first-child) {
-      --nb-block-top-spacing: 1;
-      --nb-block-bottom-spacing: 0;
-    }
-	}
+  > * {
+    @include block-spacing;
+  }
+}
+
+.novablocks-sharing__content > * {
+  --nb-element-spacing-multiplier: 0.5;
+}
+
+.novablocks-sharing__group > * {
+  --nb-element-spacing-multiplier: 0.25;
+}
+
+.novablocks-sharing__group-content > * {
+  --nb-element-spacing-multiplier: 0.125;
 }
 
 .novablocks-sharing__close {
@@ -119,14 +130,6 @@
 
 .novablocks-sharing__group {
 	position: relative;
-}
-
-.novablocks-sharing__group-content {
-
-	> * {
-		--nb-element-spacing-multiplier: 0.125;
-		@include block-spacing;
-	}
 }
 
 .novablocks-sharing__notification-wrap {
@@ -175,14 +178,6 @@
 
 	+ .novablocks-sharing__notification-text {
 		margin-left: 0.66em;
-	}
-}
-
-.novablocks-sharing__group {
-
-	> * {
-		--nb-element-spacing-multiplier: 0.25;
-		@include block-spacing;
 	}
 }
 

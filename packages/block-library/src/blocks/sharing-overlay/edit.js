@@ -30,39 +30,59 @@ const SharingOverlayPreview = ( props ) => {
 
   const { attributes } = props;
 
+  const {
+    showCopy,
+    showSharePrivately,
+    showSocialIcons,
+    showShareInPerson,
+    showTwitter,
+    showFacebook,
+    showLinkedin,
+    showPinterest,
+    showWhatsapp,
+    headingLevel,
+    buttonLabel
+  } = attributes;
+
   const classNames = classnames(
     'novablocks-sharing__wrap',
     getColorSignalClassnames( attributes, true )
   );
 
+  const TitleTag = `h${ headingLevel }`;
+
   return (
     <div className={ classNames }>
       <div className="novablocks-sharing__container">
         <div className="novablocks-sharing__content">
-          <h4 className="novablocks-sharing__title">Sharing Options</h4>
-          <SharingItemsGroup title={ 'Use a link for everything' } description={ 'Copy link and paste it anywhere you want it' }>
+          <TitleTag className="novablocks-sharing__title">Sharing Options</TitleTag>
+          { showCopy && <SharingItemsGroup title={ 'Use a link for everything' } description={ 'Copy link and paste it anywhere you want it' }>
             <input className="novablocks-sharing__copy-input" type="text" value="http://rosa2.work/reservations/" readOnly="" />
             <div className="novablocks-sharing__list">
               <SharingButton icon={ 'link' } label={ 'Copy link to clipboard' } />
             </div>
-          </SharingItemsGroup>
-          <SharingItemsGroup title={ 'Share privately with friends' }>
+          </SharingItemsGroup> }
+          { showSharePrivately && <SharingItemsGroup title={ 'Share privately with friends' }>
             <div className="novablocks-sharing__list">
               <SharingButton icon={ 'email' } label={ 'Email' } />
             </div>
-          </SharingItemsGroup>
-          <SharingItemsGroup title={ 'Share publicly on social networks' }>
-            <div className="novablocks-sharing__list">
-              <SharingButton icon={ 'twitter' } label={ 'Twitter' } />
-              <SharingButton icon={ 'facebook' } label={ 'Facebook' } />
-              <SharingButton icon={ 'linkedin' } label={ 'Linkedin' } />
-            </div>
-          </SharingItemsGroup>
-          <SharingItemsGroup title={ 'Or maybe you want in person?' }>
+          </SharingItemsGroup> }
+          { showSocialIcons && ( showTwitter || showFacebook || showLinkedin ) &&
+            <SharingItemsGroup title={ 'Share publicly on social networks' }>
+              <div className="novablocks-sharing__list">
+                { showTwitter && <SharingButton icon={ 'twitter' } label={ 'Twitter' } /> }
+                { showFacebook && <SharingButton icon={ 'facebook' } label={ 'Facebook' } /> }
+                { showLinkedin && <SharingButton icon={ 'linkedin' } label={ 'Linkedin' } /> }
+                { showPinterest && <SharingButton icon={ 'share' } label={ 'Pinterest' } /> }
+                { showWhatsapp && <SharingButton icon={ 'whatsapp' } label={ 'WhatsApp' } /> }
+              </div>
+            </SharingItemsGroup>
+          }
+          { showShareInPerson && <SharingItemsGroup title={ 'Or maybe you want in person?' }>
             <div className="novablocks-sharing__list">
               <SharingButton icon={ 'printer' } label={ 'Print' } />
             </div>
-          </SharingItemsGroup>
+          </SharingItemsGroup> }
           <div className="novablocks-sharing__footer">Thanks for spreading the word!</div>
         </div>
       </div>

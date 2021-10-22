@@ -12,46 +12,39 @@ import services from './services';
 
 	$( '.novablocks-sharing' ).each( function( i, obj ) {
 		const $block = $( obj );
+		const $overlay = $block.find( '.js-sharing-overlay' ).appendTo( 'body' );
+		const attributes = $block.data();
+
+		const $wrap = $overlay.find( '.novablocks-sharing__wrap' );
+		const $content = $overlay.find( '.novablocks-sharing__content' );
 		const $openButton = $block.find( '.js-sharing-overlay-trigger' );
 		const $openButtonWrap = $openButton.closest( '.wp-block-button' );
-		const $overlay = $block.find( '.js-sharing-overlay' ).appendTo( 'body' );
-		const data = $block.data();
+    const $closeButton = $overlay.find( '.novablocks-sharing__close' );
 
-		const $wrap = $( '<div class="novablocks-sharing__wrap">' );
-		const $container = $( '<div class="novablocks-sharing__container">');
-		const $content = $( '<div class="novablocks-sharing__content">');
+    const $title = $( `<h${ attributes.headingLevel }>`, { class: 'novablocks-sharing__title' } ).text( 'Sharing Options' );
+    const $footer = $( '<div>', { class: 'novablocks-sharing__footer' } ).text( 'Thanks for spreading the word!' );
 
-		const shareIcon = getIcon( 'share' );
-		$openButton.prepend( shareIcon );
+		$openButton.prepend( getIcon( 'share' ) );
+    $closeButton.prepend( getIcon( 'cancel' ) );
 
-		$content.appendTo( $container );
-		$container.appendTo( $wrap );
-		$wrap.appendTo( $overlay );
-		$wrap.wrap( '<div class="novablocks-sharing__inner-container">' );
-
-		if ( !! data.showCopy ) {
-			$content.append( createCopyLinkGroup( data ) );
+		if ( !! attributes.showCopy ) {
+			$content.append( createCopyLinkGroup( attributes ) );
 		}
 
-		if ( !! data.showSharePrivately ) {
-			$content.append( createPrivateGroup( data ) );
+		if ( !! attributes.showSharePrivately ) {
+			$content.append( createPrivateGroup( attributes ) );
 		}
 
-		if ( !! data.showSocialIcons ) {
-			$content.append( createMarkupFromShariff( data ) );
+		if ( !! attributes.showSocialIcons ) {
+			$content.append( createMarkupFromShariff( attributes ) );
 		}
 
-		if ( !! data.showShareInPerson ) {
-			$content.append( createInPersonGroup( data ) );
+		if ( !! attributes.showShareInPerson ) {
+			$content.append( createInPersonGroup( attributes ) );
 		}
-
-		const closeIcon = getIcon( 'cancel' );
-		const $closeButton = $( '<div class="novablocks-sharing__close"></div>' ).html( closeIcon );
-		const $title = $( `<h${ data.headingLevel } class="novablocks-sharing__title">Sharing Options</h${ data.headingLevel }>` );
 
 		$title.prependTo( $content );
-		$( '<div class="novablocks-sharing__footer">Thanks for spreading the word!</div>').appendTo( $content );
-		$closeButton.appendTo( $wrap );
+    $footer.appendTo( $content );
 
 		function positionPopup() {
 			const $button = $openButtonWrap.length ? $openButtonWrap : $openButton;
