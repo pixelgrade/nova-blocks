@@ -27,6 +27,9 @@
 
   // apply our default grid layout and remove padding-left inherited from __inner-container
   @include nb-content-layout-grid;
+
+  padding-left: 0;
+  padding-right: 0;
 }
 
 /*
