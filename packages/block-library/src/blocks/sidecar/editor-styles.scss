@@ -4,9 +4,12 @@
   --inspector-controls-width: 280px;
 }
 
-.block-editor-block-list__layout.is-root-container {
+.block-editor-block-list__layout.is-root-container,
+.novablocks-content > .block-editor-inner-blocks > .block-editor-block-list__layout {
   @include nb-content-layout-grid;
+}
 
+.block-editor-block-list__layout.is-root-container {
   --editor-full: calc((100vw - var(--theme-content-width-wide) - 2 * var(--theme-wrapper-sides-spacing) - var(--inspector-controls-width, 0px)) * 0.5);
 
   --nb-sidecar-sidebar-default-width: calc((var(--offset-addon) * 1px - var(--nb-sidecar-grid-gap)) * 0.5);

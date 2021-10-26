@@ -9,7 +9,7 @@ const Controls = ( props ) => {
     setAttributes
   } = props;
 
-  function updateAlignment( nextAlign ) {
+  const updateAlignment = ( nextAlign ) => {
 
     const extraUpdatedAttributes = [ 'wide', 'full' ].includes( nextAlign )
       ? { width: undefined, height: undefined }

@@ -13,11 +13,10 @@ import { createHigherOrderComponent } from "@wordpress/compose";
 
 import { withControlsVisibility } from './components';
 
-const allowedBlocks = [ 'core/group' ];
+import Controls from './controls';
+import { getSpacingCSSProps } from "@novablocks/utils";
 
-import Inspector from './controls';
-
-const alterSettings = ( settings ) => {
+const addNovaBlocksSupport = ( settings ) => {
 
   if ( settings.name !== 'core/group' ) {
     return settings;
@@ -44,8 +43,9 @@ const alterSettings = ( settings ) => {
           colorSignalClassname: true,
         },
         spaceAndSizing: true,
+        noDataAlign: true,
       }
-    }
+    },
   };
 }
 
@@ -64,53 +64,67 @@ const withControls = createHigherOrderComponent( ( BlockEdit ) => {
     return (
       <Fragment>
         <NewBlockEdit { ...props } />
-        <Inspector { ...props } />
+        <Controls { ...props } />
       </Fragment>
     )
   }
-} );
+}, 'GroupWithControls' );
 
-const addEditorBlockAttributes = createHigherOrderComponent( ( BlockListBlock ) => {
+const withBlockEditProps = createHigherOrderComponent( ( BlockListBlock ) => {
 
   return ( props ) => {
-    const { name, attributes } = props;
-    const { contentAlignment } = attributes;
+    const { attributes } = props;
+    const { align } = attributes;
 
     let wrapperProps = props.wrapperProps;
-    let customData = {};
 
-    if ( allowedBlocks.includes( name ) && contentAlignment ) {
-      customData = Object.assign( customData, {
-        'data-nb-align': contentAlignment
-      } )
+    if ( 'core/group' !== props.name ) {
+      return <BlockListBlock { ...props } />
     }
 
     wrapperProps = {
       ...wrapperProps,
-      ...customData
+      style: {
+        ...getSpacingCSSProps( attributes )
+      },
+      className: classnames(
+        props.className,
+        `align${ align }`,
+      )
     };
 
     return <BlockListBlock { ...props } wrapperProps={ wrapperProps } />
   };
 
-}, 'addEditorBlockAttributes' );
+}, 'withBlockEditProps' );
 
-const applyFrontEndClasses = ( extraProps, blockType, attributes ) =>{
+const applyFrontEndClasses = ( extraProps, blockType, attributes ) => {
 
-  const { contentAlignment } = attributes;
+  const { align, contentAlignment } = attributes;
 
-  if ( allowedBlocks.includes( blockType.name ) ) {
-
-    if (contentAlignment !== 'pull-none' ) {
-      extraProps.className = classnames( extraProps.className, contentAlignment );
-    }
-
+  if ( 'core/group' !== blockType.name ) {
+    return extraProps;
   }
 
-  return extraProps;
+  const classNames = [
+    `align${ align }`
+  ]
+
+  if ( contentAlignment !== 'pull-none' ) {
+    classNames.push( contentAlignment );
+  }
+
+  return {
+    ...extraProps,
+    className: classnames(
+      extraProps.className,
+      ...classNames
+    )
+  };
 }
 
-addFilter( 'blocks.registerBlockType', 'novablocks/group/settings', alterSettings, 1 );
-addFilter( 'editor.BlockEdit', 'novablocks/group/content-alignment', withControls, 1 );
+addFilter( 'blocks.registerBlockType', 'novablocks/group/settings-add-nb-support', addNovaBlocksSupport, 1 );
 addFilter( 'blocks.getSaveContent.extraProps', 'novablocks/group/frontend-classes', applyFrontEndClasses, 1 );
-addFilter( 'editor.BlockListBlock', 'novablocks/group/addEditorBlockAttributes', addEditorBlockAttributes, 1 );
+
+addFilter( 'editor.BlockEdit', 'novablocks/group/with-controls', withControls, 1 );
+addFilter( 'editor.BlockListBlock', 'novablocks/group/with-block-edit-props', withBlockEditProps, 1 );

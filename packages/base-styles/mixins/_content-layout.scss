@@ -32,6 +32,17 @@ $align-selectors: '[data-align="full"], [data-align="wide"], [data-nb-align="pul
     [ge] calc(var(--wde) * 2) // [we]
     [we] Max(var(--nb-wrapper-sides-spacing), var(--full)) [fe];
 
+  // --------------
+  // overwrite [class*="__inner-container"] styles
+  padding-left: 0;
+  padding-right: 0;
+
+  > * {
+    margin-left: 0;
+    margin-right: 0;
+  }
+  // --------------
+
   // this rule needs to be weaker than the one above
   @at-root {
     :where(#{&}) > * {

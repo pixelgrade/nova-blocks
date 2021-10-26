@@ -145,11 +145,6 @@
   --nb-sidecar-sidebar-minimum-width:  var(--nb-sidecar-sidebar-large-width);
 }
 
-// Applying Grid on Group Block
-.wp-block-group__inner-container {
-  @include nb-content-layout;
-}
-
 .novablocks-sidecar--sidebar-left {
   
   .novablocks-content {
