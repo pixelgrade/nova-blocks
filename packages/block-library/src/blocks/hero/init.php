@@ -69,8 +69,9 @@ if ( ! function_exists( 'novablocks_render_hero_block' ) ) {
 
 		// Make sure the media defaults are in place.
 		$media_args = array(
-			'type' => '',
+			'type' => 'image',
 			'url' => '',
+			'alt' => '',
 			'sizes' => array()
 		);
 		$media = wp_parse_args( $media, $media_args );
@@ -94,7 +95,7 @@ if ( ! function_exists( 'novablocks_render_hero_block' ) ) {
 		<div <?php echo $id; ?>
 			class="<?php echo esc_attr( join( ' ', $classes ) ); ?>"
 			style="<?php echo esc_attr( join( '; ', $css_props ) ); ?>"
-			<?php echo join( " ", $data_attributes ); ?>
+			<?php echo join( ' ', $data_attributes ); ?>
 		>
 
 			<?php do_action( 'novablocks_hero:after_opening_tag', $attributes ); ?>
@@ -103,7 +104,6 @@ if ( ! function_exists( 'novablocks_render_hero_block' ) ) {
 				<?php
 				if ( $media['type'] === 'image' && ! empty( $media['url'] ) ) {
 					$id = attachment_url_to_postid( $media['url'] );
-
 					if ( ! empty( $id ) ) {
 						echo wp_get_attachment_image( $id, 'novablocks_huge', false, array(
 							'class' => 'novablocks-hero__media  novablocks-doppler__target',
@@ -112,18 +112,19 @@ if ( ! function_exists( 'novablocks_render_hero_block' ) ) {
 					} else { ?>
 						<img class="novablocks-hero__media  novablocks-doppler__target"
 							 src="<?php echo esc_url( $media['url'] ); ?>"
-							 style="<?php echo esc_attr( $mediaStyle ); ?>" />
+							 style="<?php echo esc_attr( $mediaStyle ); ?>"
+						     alt="<?php echo esc_attr( $media['alt'] ); ?>" />
 					<?php }
 				} ?>
 
 				<?php if ( $media['type'] === 'video' && ! empty( $media['url'] ) ) { ?>
 					<video muted autoplay loop playsinline class="novablocks-hero__media  novablocks-doppler__target"
 						   src="<?php echo esc_url( $media['url'] ); ?>"
-						   style="<?php echo esc_attr( $mediaStyle ); ?>" />
+						   style="<?php echo esc_attr( $mediaStyle ); ?>"></video>
 				<?php } ?>
 			</div>
-            <div class="novablocks-hero__foreground novablocks-doppler__foreground novablocks-u-content-padding novablocks-u-content-align" style="<?php echo esc_attr( $foregroundStyle ); ?>">
-                <div class="novablocks-hero__inner-container wp-block-group__inner-container novablocks-u-content-width" style="<?php echo esc_attr( $contentStyle ); ?>">
+            <div class="novablocks-hero__foreground novablocks-doppler__foreground novablocks-u-content-padding novablocks-u-content-align">
+                <div class="novablocks-hero__inner-container wp-block-group__inner-container novablocks-u-content-width">
 					<?php if ( ! empty( $attributes['displayInnerContent'] ) ) {
 						echo $content;
 					} ?>
