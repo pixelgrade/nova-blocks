@@ -5,7 +5,7 @@
 }
 
 .block-editor-block-list__layout.is-root-container,
-.novablocks-content > .block-editor-inner-blocks > .block-editor-block-list__layout {
+:where(.novablocks-sidecar, .novablocks-content) .block-editor-inner-blocks > .block-editor-block-list__layout {
   @include nb-content-layout-grid;
 }
 
@@ -99,16 +99,18 @@
   --block-content-start: var(--block-limit-left);
   --block-content-end: ce;
 
+  > .block-editor-inner-blocks > .block-editor-block-list__layout {
+
+    > :last-child {
+      grid-column: ge / var(--block-limit-right);
+    }
+  }
+
+  //grid-column: var(--block-limit-left)/gs;
+
   &--sidebar-left {
     --block-content-start: cs;
     --block-content-end: var(--block-limit-right);
-  }
-
-  .novablocks-content,
-  &--sidebar-left,
-  &--sidebar-right,
-  &--complex {
-    display: block;
   }
 }
 
