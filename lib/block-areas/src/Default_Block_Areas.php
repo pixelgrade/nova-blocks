@@ -2,9 +2,9 @@
 /**
  * Class WP_Rig\Block_Areas\Default_Block_Areas
  *
- * @package WP_Rig\Block_Areas
- * @license GNU General Public License v2 (or later)
  * @link    https://wordpress.org/plugins/block-areas
+ * @license GNU General Public License v2 (or later)
+ * @package WP_Rig\Block_Areas
  */
 
 namespace WP_Rig\Block_Areas;
@@ -45,7 +45,7 @@ class Default_Block_Areas {
 	public function register() {
 		add_action(
 			'admin_init',
-			function() {
+			function () {
 				$version = get_option( 'default_block_areas_version', '' );
 				if ( ! $version || version_compare( $version, self::VERSION, '<' ) ) {
 					$this->create_defaults();
@@ -63,45 +63,45 @@ class Default_Block_Areas {
 	 * @since 0.1.0
 	 */
 	private function create_defaults() {
-		$defaults = array();
+		$defaults = [];
 
 		if ( ! $this->block_areas->exists( 'promo-bar' ) ) {
 			$content = '';
 
-			$defaults[] = array(
+			$defaults[] = [
 				'post_type'             => Block_Areas_Post_Type::SLUG,
 				'post_status'           => 'publish',
 				'post_name'             => 'promo-bar',
 				'post_title'            => __( 'Promo Bar', '__plugin_txtd' ),
 				'post_content'          => $content,
 				'post_content_filtered' => '',
-			);
+			];
 		}
 
 		if ( ! $this->block_areas->exists( 'header' ) ) {
 			$content = '';
 
-			$defaults[] = array(
+			$defaults[] = [
 				'post_type'             => Block_Areas_Post_Type::SLUG,
 				'post_status'           => 'publish',
 				'post_name'             => 'header',
 				'post_title'            => __( 'Header', '__plugin_txtd' ),
 				'post_content'          => $content,
 				'post_content_filtered' => '',
-			);
+			];
 		}
 
 		if ( ! $this->block_areas->exists( 'footer' ) ) {
 			$content = '';
 
-			$defaults[] = array(
+			$defaults[] = [
 				'post_type'             => Block_Areas_Post_Type::SLUG,
 				'post_status'           => 'publish',
 				'post_name'             => 'footer',
 				'post_title'            => __( 'Footer', '__plugin_txtd' ),
 				'post_content'          => $content,
 				'post_content_filtered' => '',
-			);
+			];
 		}
 
 		foreach ( $defaults as $block_area ) {

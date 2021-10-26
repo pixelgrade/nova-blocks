@@ -2,9 +2,9 @@
 /**
  * Class WP_Rig\Block_Areas\Block_Areas
  *
- * @package WP_Rig\Block_Areas
- * @license GNU General Public License v2 (or later)
  * @link    https://wordpress.org/plugins/block-areas
+ * @license GNU General Public License v2 (or later)
+ * @package WP_Rig\Block_Areas
  */
 
 namespace WP_Rig\Block_Areas;
@@ -23,15 +23,15 @@ class Block_Areas {
 	 *
 	 * @since 0.1.0
 	 *
-	 * @global WP_Post $post Current WordPress post object.
+	 * @param string   $slug   Block area slug.
+	 * @param array    $args   {
+	 *                         Optional. Additional rendering arguments.
 	 *
-	 * @param string $slug Block area slug.
-	 * @param array  $args {
-	 *     Optional. Additional rendering arguments.
-	 *
-	 *     @type string $before Additional markup to render before the block area. Default empty string.
-	 *     @type string $after  Additional markup to render after the block area. Default empty string.
+	 * @type string    $before Additional markup to render before the block area. Default empty string.
+	 * @type string    $after  Additional markup to render after the block area. Default empty string.
 	 * }
+	 * @global WP_Post $post   Current WordPress post object.
+	 *
 	 */
 	public function render( $slug, $args = [] ) {
 		global $post;
@@ -43,10 +43,10 @@ class Block_Areas {
 
 		$args = wp_parse_args(
 			$args,
-			array(
+			[
 				'before' => '',
 				'after'  => '',
-			)
+			]
 		);
 
 		// Set up block area and render its content.
@@ -77,7 +77,7 @@ class Block_Areas {
 		$content = capital_P_dangit( $content );
 		$content = do_shortcode( $content );
 		$content = shortcode_unautop( $content );
-		if ( function_exists('wp_filter_content_tags') ) {
+		if ( function_exists( 'wp_filter_content_tags' ) ) {
 			$content = wp_filter_content_tags( $content );
 		} else {
 			$content = wp_make_content_images_responsive( $content );
@@ -93,10 +93,12 @@ class Block_Areas {
 	 * @since 0.1.0
 	 *
 	 * @param string $slug Block area slug.
+	 *
 	 * @return bool True if the block area exists, false otherwise.
 	 */
 	public function exists( $slug ) {
 		$id = $this->get_by_slug( $slug );
+
 		return ! empty( $id );
 	}
 
@@ -106,11 +108,12 @@ class Block_Areas {
 	 * @since 0.1.0
 	 *
 	 * @param string $slug Block area slug.
+	 *
 	 * @return int Block area ID, or 0 if not found.
 	 */
 	private function get_by_slug( $slug ) {
 		$posts = get_posts(
-			array(
+			[
 				'fields'                 => 'ids',
 				'posts_per_page'         => 1,
 				'post_type'              => Block_Areas_Post_Type::SLUG,
@@ -118,7 +121,7 @@ class Block_Areas {
 				'name'                   => $slug,
 				'update_post_meta_cache' => false,
 				'update_post_term_cache' => false,
-			)
+			]
 		);
 
 		if ( empty( $posts ) ) {

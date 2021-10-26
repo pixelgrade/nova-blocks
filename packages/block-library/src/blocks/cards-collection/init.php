@@ -7,7 +7,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 function novablocks_get_cards_collection_attributes() {
 
-	return novablocks_merge_attributes_from_array( array(
+	return novablocks_merge_attributes_from_array( [
 		'packages/block-library/src/blocks/cards-collection/attributes.json',
 
 		'packages/color-signal/src/attributes.json',
@@ -18,7 +18,7 @@ function novablocks_get_cards_collection_attributes() {
 		'packages/block-editor/src/filters/with-space-and-sizing/attributes.json',
 
 		'packages/block-library/src/blocks/cards-collection/attributes-overwrite.json',
-	) );
+	] );
 
 }
 
@@ -38,21 +38,21 @@ if ( ! function_exists( 'novablocks_render_cards_collection_block' ) ) {
 
 		$align = preg_split( '/\b\s+/', $attributes['contentPosition'] );
 
-		$classes = array(
+		$classes = [
 			'alignfull',
 			'supernova',
-			'supernova--source-type-' . $attributes[ 'sourceType' ],
-			'supernova--card-layout-' . $attributes[ 'cardLayout' ],
+			'supernova--source-type-' . $attributes['sourceType'],
+			'supernova--card-layout-' . $attributes['cardLayout'],
 			'supernova--valign-' . $align[0],
 			'supernova--halign-' . $align[1],
-		);
-		
+		];
+
 		ob_start(); ?>
 
 		<div
-			class="<?php echo join( ' ', $classes ); ?>"
+			class="<?php echo esc_attr( join( ' ', $classes ) ); ?>"
 			style="<?php echo join( ';', $cssProps ); ?>"
-			<?php echo join( " ", $data_attributes ); ?>
+			<?php echo join( ' ', $data_attributes ); ?>
 		>
 			<?php echo novablocks_get_collection_output( $attributes, $content ); ?>
 		</div>

@@ -8,10 +8,10 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 if ( ! function_exists( 'novablocks_get_announcement_bar_attributes' ) ) {
 	function novablocks_get_announcement_bar_attributes() {
-		return novablocks_merge_attributes_from_array( array(
-			"packages/block-library/src/blocks/announcement-bar/attributes.json",
-			"packages/color-signal/src/attributes.json",
-		) );
+		return novablocks_merge_attributes_from_array( [
+			'packages/block-library/src/blocks/announcement-bar/attributes.json',
+			'packages/color-signal/src/attributes.json',
+		] );
 	}
 }
 
@@ -19,13 +19,23 @@ if ( ! function_exists( 'novablocks_render_announcement_bar_block' ) ) {
 
 	function novablocks_render_announcement_bar_block( $attributes, $content ) {
 
-		$attributes_config = novablocks_get_announcement_bar_attributes();
-		$attributes = novablocks_get_attributes_with_defaults( $attributes, $attributes_config );
+		$attributes_config     = novablocks_get_announcement_bar_attributes();
+		$attributes            = novablocks_get_attributes_with_defaults( $attributes, $attributes_config );
 		$data_attributes_array = array_map( 'novablocks_camel_case_to_kebab_case', array_keys( $attributes ) );
-		$data_attributes = novablocks_get_data_attributes( $data_attributes_array, $attributes );
+		$data_attributes       = novablocks_get_data_attributes( $data_attributes_array, $attributes );
 
-		$classes = array( 'novablocks-announcement-bar', 'is-hidden', 'alignfull' );
+		if ( empty( $content ) && ! empty( $attributes['content'] ) ) {
+			$content = $attributes['content'];
+		}
 
+		$content = wp_kses_post( $content );
+		// Nothing to do if we have no content.
+		// Bail early.
+		if ( empty( $content ) ) {
+			return '';
+		}
+
+		$classes = [ 'novablocks-announcement-bar', 'is-hidden', 'alignfull', ];
 		if ( ! empty( $attributes['className'] ) ) {
 			$classes[] = $attributes['className'];
 		}
@@ -36,26 +46,18 @@ if ( ! function_exists( 'novablocks_render_announcement_bar_block' ) ) {
 		}
 
 		$blockPaletteClasses = novablocks_get_color_signal_classes( $attributes );
-		$classes = array_merge( $classes, $blockPaletteClasses );
+		$classes             = array_merge( $classes, $blockPaletteClasses );
 
 		ob_start();
 
-		if ( ! empty( $attributes['content'] ) || ! empty( $content ) ) {
-
 		do_action( 'novablocks_announcement_bar:before' );
-
 		?>
 
-		<div class="<?php echo join( ' ', $classes ); ?>" data-id="<?php echo $attributes['blockId'] ;?>" <?php echo join( " ", $data_attributes ); ?>>
+		<div class="<?php echo esc_attr( join( ' ', $classes ) ); ?>"
+		     data-id="<?php echo esc_attr( $attributes['blockId'] ); ?>" <?php echo join( ' ', $data_attributes ); ?>>
 			<div class="novablocks-announcement-bar__wrapper">
 				<div class="novablocks-announcement-bar__content">
-					<?php
-						if ( ! empty( $attributes['content'] ) && empty( $content ) ) {
-							echo $attributes['content'];
-						} else {
-							echo $content;
-						}
-					?>
+					<?php echo $content; ?>
 				</div>
 				<div class="novablocks-announcement-bar__close">
 					<svg width="26" height="26" viewBox="0 0 26 26">
@@ -66,7 +68,8 @@ if ( ! function_exists( 'novablocks_render_announcement_bar_block' ) ) {
 					</svg>
 				</div>
 				<?php if ( ! empty( $attributes['url'] ) ) { ?>
-					<a href="<?php echo $attributes['url']; ?>" <?php echo $target; ?> class="novablocks-announcement-bar__link"></a>
+					<a href="<?php echo esc_url( $attributes['url'] ); ?>" <?php echo $target; ?>
+					   class="novablocks-announcement-bar__link"></a>
 				<?php } ?>
 			</div>
 		</div>
@@ -74,8 +77,6 @@ if ( ! function_exists( 'novablocks_render_announcement_bar_block' ) ) {
 		<?php
 
 		do_action( 'novablocks_announcement_bar:after' );
-
-		}
 
 		return ob_get_clean();
 	}

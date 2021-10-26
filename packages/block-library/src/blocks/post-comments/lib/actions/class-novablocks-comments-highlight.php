@@ -2,9 +2,9 @@
 /**
  * NovaBlocks_Comments_Highlight Class
  *
- * @author   Pixelgrade
- * @package  NovaBlocks
  * @since    1.8.0
+ * @package  NovaBlocks
+ * @author   Pixelgrade
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -40,7 +40,10 @@ if ( ! class_exists( 'NovaBlocks_Comments_Highlight' ) ) {
 			 */
 			add_filter( 'novablocks_comment_wrapper_classes', [ $this, 'adjust_comment_wrapper_classes' ], 10, 2 );
 			add_action( 'novablocks_comments_list_comment_end', [ $this, 'output_highlighters_list' ], 10, 1 );
-			add_filter( 'novablock_comments_list_comment_extra_meta_menu_items', [ $this, 'add_extra_meta_actions' ], 10, 2 );
+			add_filter( 'novablock_comments_list_comment_extra_meta_menu_items', [
+				$this,
+				'add_extra_meta_actions',
+			], 10, 2 );
 
 			/**
 			 * Backend logic.
@@ -58,8 +61,8 @@ if ( ! class_exists( 'NovaBlocks_Comments_Highlight' ) ) {
 		/**
 		 * Change the returned CSS classes for the current comment wrapper.
 		 *
-		 * @param string[]    $classes    An array of comment classes.
-		 * @param WP_Comment  $comment The comment.
+		 * @param string[]   $classes An array of comment classes.
+		 * @param WP_Comment $comment The comment.
 		 *
 		 * @return string[]
 		 */
@@ -81,12 +84,13 @@ if ( ! class_exists( 'NovaBlocks_Comments_Highlight' ) ) {
 			if ( ! empty( $highlighters ) ) { ?>
 
 				<footer class="comment-footer-highlights">
-					<div class="comment-highlightedby-label"><?php esc_html_e( 'Highlighted by', '__plugin_txtd' ); ?></div>
+					<div
+						class="comment-highlightedby-label"><?php esc_html_e( 'Highlighted by', '__plugin_txtd' ); ?></div>
 					<ul class="comment-highlightedby-humans">
 						<?php
 						$conversation_starter_user_id = get_post_meta( $comment->comment_post_ID, 'nb_conversation_starter_user_id', true );
-						$conversation_starter_content  = get_post_meta( $comment->comment_post_ID, 'nb_conversation_starter_content', true );
-						$post = get_post( $comment->comment_post_ID );
+						$conversation_starter_content = get_post_meta( $comment->comment_post_ID, 'nb_conversation_starter_content', true );
+						$post                         = get_post( $comment->comment_post_ID );
 
 						foreach ( $highlighters as $highlighter_id ) {
 							$highlighter = get_userdata( $highlighter_id );
@@ -103,7 +107,11 @@ if ( ! class_exists( 'NovaBlocks_Comments_Highlight' ) ) {
 							}
 
 							?>
-							<li class="comment-highlightedby-human"><div class="comment-highlightedby-human-name"><?php echo $highlighter->display_name; ?></div><div class="comment-highlightedby-human-expertise"><?php echo $expertise ?></div></li>
+							<li class="comment-highlightedby-human">
+								<div
+									class="comment-highlightedby-human-name"><?php echo $highlighter->display_name; ?></div>
+								<div class="comment-highlightedby-human-expertise"><?php echo $expertise ?></div>
+							</li>
 						<?php } ?>
 					</ul>
 				</footer><!-- .comment-footer-highlights -->
@@ -121,7 +129,7 @@ if ( ! class_exists( 'NovaBlocks_Comments_Highlight' ) ) {
 		 */
 		public function add_extra_meta_actions( $menu_items, $comment ) {
 			// For regular users and non-logged in visitors, we will not display highlighting options.
-			if( ! current_user_can( 'moderate_comments' ) ) {
+			if ( ! current_user_can( 'moderate_comments' ) ) {
 				return $menu_items;
 			}
 
@@ -129,11 +137,11 @@ if ( ! class_exists( 'NovaBlocks_Comments_Highlight' ) ) {
 
 			// Put the menu item at the top of the list.
 			$menu_items = [
-					'toggle_highlight' => "<a class='comment-dropdown-item toggle-comment-highlight' href='#' " . $data_comment_id .
-					                      " data-nonce='" . wp_create_nonce( "toggle_highlight_comment" ) .
-					                      "' title='" . esc_html__( 'Toggle your highlight of this comment', '__plugin_txtd' ) . "'>" .
-					                      esc_html__( 'Toggle your highlight', '__plugin_txtd' ) . "</a>"
-	              ] + $menu_items;
+				              'toggle_highlight' => "<a class='comment-dropdown-item toggle-comment-highlight' href='#' " . $data_comment_id .
+				                                    " data-nonce='" . wp_create_nonce( "toggle_highlight_comment" ) .
+				                                    "' title='" . esc_html__( 'Toggle your highlight of this comment', '__plugin_txtd' ) . "'>" .
+				                                    esc_html__( 'Toggle your highlight', '__plugin_txtd' ) . "</a>",
+			              ] + $menu_items;
 
 			return $menu_items;
 		}
@@ -174,13 +182,17 @@ if ( ! class_exists( 'NovaBlocks_Comments_Highlight' ) ) {
 			?>
 
 			<tr>
-				<td class="first"><label for="nb_comment_highlighted_by"><strong><?php esc_html_e( 'Highlighters of this comment', '__plugin_txtd' ); ?></strong></label></td>
+				<td class="first"><label
+						for="nb_comment_highlighted_by"><strong><?php esc_html_e( 'Highlighters of this comment', '__plugin_txtd' ); ?></strong></label>
+				</td>
 				<td>
 					<fieldset>
 						<p>
 							<label>
-								<input type="checkbox" name="nb_comment_highlighted_by[]" <?php checked( false !== array_search( get_current_user_id(), $comment_highlighted_by ) ); ?> value="<?php echo esc_attr( get_current_user_id() ); ?>" autocomplete="off"/>
-								<span><?php printf( esc_html__( 'Me (%s)', '__plugin_txtd' ),  wp_get_current_user()->display_name ); ?></span>
+								<input type="checkbox"
+								       name="nb_comment_highlighted_by[]" <?php checked( false !== array_search( get_current_user_id(), $comment_highlighted_by ) ); ?>
+								       value="<?php echo esc_attr( get_current_user_id() ); ?>" autocomplete="off"/>
+								<span><?php printf( esc_html__( 'Me (%s)', '__plugin_txtd' ), wp_get_current_user()->display_name ); ?></span>
 							</label>
 						</p>
 
@@ -196,7 +208,9 @@ if ( ! class_exists( 'NovaBlocks_Comments_Highlight' ) ) {
 							} ?>
 							<p>
 								<label>
-									<input type="checkbox" name="nb_comment_highlighted_by[]" <?php checked( false !== array_search( $user_id, $comment_highlighted_by ) ); ?> value="<?php echo esc_attr( $user_id ); ?>" autocomplete="off"/>
+									<input type="checkbox"
+									       name="nb_comment_highlighted_by[]" <?php checked( false !== array_search( $user_id, $comment_highlighted_by ) ); ?>
+									       value="<?php echo esc_attr( $user_id ); ?>" autocomplete="off"/>
 									<span><?php echo $user_data->display_name; ?></span>
 								</label>
 							</p>
@@ -204,7 +218,8 @@ if ( ! class_exists( 'NovaBlocks_Comments_Highlight' ) ) {
 						} ?>
 					</fieldset>
 
-					<span class="description"><?php echo wp_kses_post( __( 'All the current highlights of this comment, plus the option to highlight yourself.<br/>Highlighters can only be <strong>registered users</strong> that have <strong>management capabilities</strong> for comments.', '__plugin_txtd' ) ); ?></span>
+					<span
+						class="description"><?php echo wp_kses_post( __( 'All the current highlights of this comment, plus the option to highlight yourself.<br/>Highlighters can only be <strong>registered users</strong> that have <strong>management capabilities</strong> for comments.', '__plugin_txtd' ) ); ?></span>
 				</td>
 			</tr>
 
@@ -214,12 +229,12 @@ if ( ! class_exists( 'NovaBlocks_Comments_Highlight' ) ) {
 		public function handle_toggle_highlight_comment() {
 			if ( empty( $_POST['comment_id'] ) ) {
 				wp_die(
-						'<p class="error">' . wp_kses_post( __( '<strong>Error:</strong> Wrong data sent.', '__plugin_txtd' ) ) . '</p>',
-						esc_html__( 'Comment Submission Failure', '__plugin_txtd' ),
-						[
-								'response'  => 403, // A forbidden request was made.
-								'back_link' => true, // Just in case we end up on the ugly submission page.
-						]
+					'<p class="error">' . wp_kses_post( __( '<strong>Error:</strong> Wrong data sent.', '__plugin_txtd' ) ) . '</p>',
+					esc_html__( 'Comment Submission Failure', '__plugin_txtd' ),
+					[
+						'response'  => 403,  // A forbidden request was made.
+						'back_link' => true, // Just in case we end up on the ugly submission page.
+					]
 				);
 			}
 
@@ -227,16 +242,16 @@ if ( ! class_exists( 'NovaBlocks_Comments_Highlight' ) ) {
 			$comment    = get_comment( $comment_id );
 
 			if ( ! $comment
-				|| ! current_user_can( 'edit_comment', $comment->comment_ID )
-				|| ! wp_verify_nonce( $_POST['nonce'], 'toggle_highlight_comment' ) ) {
+			     || ! current_user_can( 'edit_comment', $comment->comment_ID )
+			     || ! wp_verify_nonce( $_POST['nonce'], 'toggle_highlight_comment' ) ) {
 
 				wp_die(
-						'<p class="error">' . wp_kses_post( __( '<strong>Error:</strong> You don\'t have the needed credentials to highlight comments.', '__plugin_txtd' ) ) . '</p>',
-						esc_html__( 'Comment Submission Failure', '__plugin_txtd' ),
-						[
-								'response'  => 403, // A forbidden request was made.
-								'back_link' => true, // Just in case we end up on the ugly submission page.
-						]
+					'<p class="error">' . wp_kses_post( __( '<strong>Error:</strong> You don\'t have the needed credentials to highlight comments.', '__plugin_txtd' ) ) . '</p>',
+					esc_html__( 'Comment Submission Failure', '__plugin_txtd' ),
+					[
+						'response'  => 403,  // A forbidden request was made.
+						'back_link' => true, // Just in case we end up on the ugly submission page.
+					]
 				);
 			}
 
@@ -250,12 +265,12 @@ if ( ! class_exists( 'NovaBlocks_Comments_Highlight' ) ) {
 			// We will not allow self-highlighting.
 			if ( $user_id == $comment->user_id ) {
 				wp_die(
-						'<p class="error">' . wp_kses_post( __( '<strong>Error:</strong> You can\'t highlight your own comments.', '__plugin_txtd' ) ) . '</p>',
-						esc_html__( 'Comment Submission Failure', '__plugin_txtd' ),
-						[
-								'response'  => 422, // Unable to process the request.
-								'back_link' => true, // Just in case we end up on the ugly submission page.
-						]
+					'<p class="error">' . wp_kses_post( __( '<strong>Error:</strong> You can\'t highlight your own comments.', '__plugin_txtd' ) ) . '</p>',
+					esc_html__( 'Comment Submission Failure', '__plugin_txtd' ),
+					[
+						'response'  => 422,  // Unable to process the request.
+						'back_link' => true, // Just in case we end up on the ugly submission page.
+					]
 				);
 			}
 
@@ -264,24 +279,24 @@ if ( ! class_exists( 'NovaBlocks_Comments_Highlight' ) ) {
 				$result = $this->unhighlight_comment_by_user( $comment->comment_ID, $user_id );
 				if ( false === $result ) {
 					wp_die(
-							'<p class="error">' . wp_kses_post( __( '<strong>Error:</strong> Couldn\'t unhighlight this comment.', '__plugin_txtd' ) ) . '</p>',
-							esc_html__( 'Comment Submission Failure', '__plugin_txtd' ),
-							[
-									'response'  => 422, // Unable to process the request.
-									'back_link' => true, // Just in case we end up on the ugly submission page.
-							]
+						'<p class="error">' . wp_kses_post( __( '<strong>Error:</strong> Couldn\'t unhighlight this comment.', '__plugin_txtd' ) ) . '</p>',
+						esc_html__( 'Comment Submission Failure', '__plugin_txtd' ),
+						[
+							'response'  => 422,  // Unable to process the request.
+							'back_link' => true, // Just in case we end up on the ugly submission page.
+						]
 					);
 				}
 			} else {
 				$result = $this->highlight_comment_by_user( $comment->comment_ID, $user_id );
 				if ( false === $result ) {
 					wp_die(
-							'<p class="error">' . wp_kses_post( __( '<strong>Error:</strong> Couldn\'t highlight this comment.', '__plugin_txtd' ) ) . '</p>',
-							esc_html__( 'Comment Submission Failure', '__plugin_txtd' ),
-							[
-									'response'  => 422, // Unable to process the request.
-									'back_link' => true, // Just in case we end up on the ugly submission page.
-							]
+						'<p class="error">' . wp_kses_post( __( '<strong>Error:</strong> Couldn\'t highlight this comment.', '__plugin_txtd' ) ) . '</p>',
+						esc_html__( 'Comment Submission Failure', '__plugin_txtd' ),
+						[
+							'response'  => 422,  // Unable to process the request.
+							'back_link' => true, // Just in case we end up on the ugly submission page.
+						]
 					);
 				}
 			}
@@ -298,7 +313,7 @@ if ( ! class_exists( 'NovaBlocks_Comments_Highlight' ) ) {
 			 * We pass the comments list args to make sure we get the same result as in the comments list.
 			 */
 			$comments_renderer = new NovaBlocks_Comments_Renderer();
-			$comment_markup = $comments_renderer->list->get_single_comment_markup( $comment, $commentsListArgs );
+			$comment_markup    = $comments_renderer->list->get_single_comment_markup( $comment, $commentsListArgs );
 			wp_die(
 				$comment_markup,
 				esc_html__( 'Comment Submission Success', '__plugin_txtd' ),
@@ -385,7 +400,7 @@ if ( ! class_exists( 'NovaBlocks_Comments_Highlight' ) ) {
 		 *
 		 * @return NovaBlocks_Comments_Highlight Main NovaBlocks_Comments_Highlight instance
 		 */
-		public static function instance( ) {
+		public static function instance() {
 			// If the single instance hasn't been set, set it now.
 			if ( is_null( self::$_instance ) ) {
 				self::$_instance = new self();

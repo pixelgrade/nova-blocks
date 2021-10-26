@@ -2,9 +2,9 @@
 /**
  * Class WP_Rig\Block_Areas\Block_Areas_Post_Type
  *
- * @package WP_Rig\Block_Areas
- * @license GNU General Public License v2 (or later)
  * @link    https://wordpress.org/plugins/block-areas
+ * @license GNU General Public License v2 (or later)
+ * @package WP_Rig\Block_Areas
  */
 
 namespace WP_Rig\Block_Areas;
@@ -26,21 +26,21 @@ class Block_Areas_Post_Type {
 	public function register() {
 		add_action(
 			'init',
-			function() {
+			function () {
 				$this->register_post_type();
 			}
 		);
 
 		add_filter(
 			'user_has_cap',
-			function( array $allcaps ) {
+			function ( array $allcaps ) {
 				return $this->filter_post_type_user_caps( $allcaps );
 			}
 		);
 
 		add_action(
 			'admin_menu',
-			function() {
+			function () {
 				$this->fix_admin_menu_entry();
 			}
 		);
@@ -48,13 +48,13 @@ class Block_Areas_Post_Type {
 		$slug = self::SLUG;
 		add_filter(
 			"manage_{$slug}_posts_columns",
-			function( array $columns ) {
+			function ( array $columns ) {
 				return $this->filter_post_type_columns( $columns );
 			}
 		);
 		add_action(
 			"manage_{$slug}_posts_custom_column",
-			function( $column_name, $post_id ) {
+			function ( $column_name, $post_id ) {
 				$this->render_post_type_column( $column_name, $post_id );
 			},
 			10,
@@ -62,13 +62,13 @@ class Block_Areas_Post_Type {
 		);
 		add_filter(
 			"views_edit-{$slug}",
-			function( $views ) {
+			function ( $views ) {
 				echo '<p class="description">';
 				if ( current_theme_supports( 'block-areas' ) ) {
 					$theme_support = get_theme_support( 'block-areas' );
 					if ( is_array( $theme_support ) && isset( $theme_support[0] ) && is_string( $theme_support[0] ) ) {
 						$theme_support = array_map(
-							function( $slug ) {
+							function ( $slug ) {
 								return '<code>' . $slug . '</code>';
 							},
 							$theme_support
@@ -84,9 +84,10 @@ class Block_Areas_Post_Type {
 				}
 				echo wp_kses(
 					$message,
-					array( 'code' => array() )
+					[ 'code' => [], ]
 				);
 				echo '</p>';
+
 				return $views;
 			}
 		);
@@ -98,7 +99,7 @@ class Block_Areas_Post_Type {
 	 * @since 0.1.0
 	 */
 	private function register_post_type() {
-		$labels = array(
+		$labels = [
 			'name'                  => __( 'Block Areas', '__plugin_txtd' ),
 			'singular_name'         => __( 'Block Area', '__plugin_txtd' ),
 			'menu_name'             => _x( 'Block Areas', 'Admin Menu text', '__plugin_txtd' ),
@@ -118,9 +119,9 @@ class Block_Areas_Post_Type {
 			'filter_items_list'     => __( 'Filter block areas list', '__plugin_txtd' ),
 			'items_list_navigation' => __( 'Block areas list navigation', '__plugin_txtd' ),
 			'items_list'            => __( 'Block areas list', '__plugin_txtd' ),
-		);
+		];
 
-		$args = array(
+		$args = [
 			'labels'             => $labels,
 			'description'        => __( 'Block areas to include in your theme.', '__plugin_txtd' ),
 			'public'             => false,
@@ -131,16 +132,16 @@ class Block_Areas_Post_Type {
 			'show_in_admin_bar'  => false,
 			'show_in_rest'       => true,
 			'rest_base'          => 'block-areas',
-			'capability_type'    => array( 'block_area', 'block_areas' ),
+			'capability_type'    => [ 'block_area', 'block_areas', ],
 			'map_meta_cap'       => true,
-			'supports'           => array(
+			'supports'           => [
 				'title',
 				'editor',
 				'thumbnail',
 				'amp',
 				'revisions',
-			),
-		);
+			],
+		];
 
 		register_post_type( self::SLUG, $args );
 	}
@@ -152,6 +153,7 @@ class Block_Areas_Post_Type {
 	 * @since 0.1.0
 	 *
 	 * @param array $allcaps A user's capabilities.
+	 *
 	 * @return array Filtered $allcaps.
 	 */
 	private function filter_post_type_user_caps( $allcaps ) {
@@ -198,6 +200,7 @@ class Block_Areas_Post_Type {
 	 * @since 0.1.0
 	 *
 	 * @param array $columns Columns to display.
+	 *
 	 * @return array Filtered $columns.
 	 */
 	private function filter_post_type_columns( $columns ) {
@@ -205,6 +208,7 @@ class Block_Areas_Post_Type {
 		if ( isset( $columns['date'] ) ) {
 			unset( $columns['date'] );
 		}
+
 		return $columns;
 	}
 

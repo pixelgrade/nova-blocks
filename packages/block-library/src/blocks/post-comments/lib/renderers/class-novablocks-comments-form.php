@@ -233,7 +233,7 @@ if ( ! class_exists( 'NovaBlocks_Comments_Form' ) ) {
 			$moveAnchorId = 'fake-form-move-anchor_' . self::$fakeFormButtonInstances;
 
 			/** Replicate the same data attributes used for comment reply links - @see get_comment_reply_link() */
-			$data_attributes = array(
+			$data_attributes = [
 				'commentid'      => isset( $args['commentid'] ) ? $args['commentid'] : '0',
 				'postid'         => $this->post->ID,
 				// By default, we will move the form after the fake form move anchor.
@@ -242,7 +242,7 @@ if ( ! class_exists( 'NovaBlocks_Comments_Form' ) ) {
 				'respondelement' => isset( $args['respondelement'] ) ? $args['respondelement'] : 'respond',
 
 				'replyto' => $args['replyToText'],
-			);
+			];
 
 			// Handle the replyto text conversions.
 			if ( false !== strpos( $data_attributes['replyto'], '%s' ) ) {
@@ -252,13 +252,13 @@ if ( ! class_exists( 'NovaBlocks_Comments_Form' ) ) {
 					if ( empty( $comment ) ) {
 						$data_attributes['commentid'] = '0';
 						// Fallback to some safe text.
-						$data_attributes['replyto'] = $args['submitLabel'] ? $args['submitLabel'] : esc_html__( 'Add this comment', '__plugin_txtd' );
+						$data_attributes['replyto'] = ! empty( $args['submitLabel'] ) ? $args['submitLabel'] : esc_html__( 'Add this comment', '__plugin_txtd' );
 					} else {
 						$data_attributes['replyto'] = sprintf( $data_attributes['replyto'], $comment->comment_author );
 					}
 				} else {
 					// Fallback to some safe text.
-					$data_attributes['replyto'] = $args['submitLabel'] ? $args['submitLabel'] : esc_html__( 'Add this comment', '__plugin_txtd' );
+					$data_attributes['replyto'] = ! empty( $args['submitLabel'] ) ? $args['submitLabel'] : esc_html__( 'Add this comment', '__plugin_txtd' );
 				}
 			}
 

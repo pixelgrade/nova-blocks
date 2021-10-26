@@ -8,11 +8,11 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-if ( ! function_exists('novablocks_render_sidecar_area_block' ) ) {
+if ( ! function_exists( 'novablocks_render_sidecar_area_block' ) ) {
 	/**
 	 * Entry point to render the block with the given attributes, content, and context.
 	 *
-	 * @param array $attributes
+	 * @param array  $attributes
 	 * @param string $content
 	 *
 	 * @return string
@@ -20,15 +20,14 @@ if ( ! function_exists('novablocks_render_sidecar_area_block' ) ) {
 
 	function novablocks_render_sidecar_area_block( $attributes, $content ) {
 
-		if ( ! $content ) {
-			return;
+		if ( empty( $content ) ) {
+			return '';
 		}
 
 		ob_start();
 
-		$classes = array('wp-block-novablocks-sidecar-area novablocks-sidecar__container');
-
-		if ( ! empty($attributes['className' ] ) ) {
+		$classes = [ 'wp-block-novablocks-sidecar-area novablocks-sidecar__container', ];
+		if ( ! empty( $attributes['className'] ) ) {
 			$classes[] = $attributes['className'];
 		}
 
