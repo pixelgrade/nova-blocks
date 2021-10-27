@@ -6,13 +6,13 @@ import classnames from 'classnames';
 /**
  * WordPress Dependencies
  */
-const {addFilter} = wp.hooks;
-const {Fragment} = wp.element;
-const {createHigherOrderComponent} = wp.compose;
+import { addFilter } from "@wordpress/hooks";
+import { Fragment } from "@wordpress/element";
+import { createHigherOrderComponent } from "@wordpress/compose";
 
-const allowedBlocks = ['core/list'];
+const allowedBlocks = [ 'core/list' ];
 
-import Inspector from './controls';
+import Controls from './controls';
 
 const alterSettings = ( settings ) => {
 
@@ -42,7 +42,8 @@ const alterSettings = ( settings ) => {
           controls: true,
           functionalColors: false,
           paletteClassname: true,
-          paletteVariationClassname: false
+          paletteVariationClassname: false,
+          stickySourceColor: false,
         },
       }
     }
@@ -50,17 +51,19 @@ const alterSettings = ( settings ) => {
 }
 
 const withControls = createHigherOrderComponent( ( BlockEdit ) => {
+
   return ( props ) => {
 
     if ( 'core/list' !== props.name ) {
       return (
-        <BlockEdit {...props}/>
+        <BlockEdit { ...props } />
       );
     }
+
     return (
       <Fragment>
-        <BlockEdit {...props} />
-        <Inspector {...props} />
+        <BlockEdit { ...props } />
+        <Controls { ...props } />
       </Fragment>
     )
   }
