@@ -74,13 +74,13 @@ if ( ! function_exists('get_block_area_post') ) {
 
 	function get_block_area_post( $slug ) {
 
-		$block_area = get_posts( array(
+		$block_area = get_posts( [
 			'name'        => $slug,
 			'post_type'   => 'block_area',
 			'post_status' => 'publish',
 			'numberposts' => 1,
 			'fields'      => 'ids',
-		) );
+		] );
 
 		// Header Block Area ID.
 		$block_area_id = $block_area[0];
@@ -116,7 +116,7 @@ if ( ! function_exists('get_reading_bar_markup') ) {
 					<div class="wp-block-buttons">
 						<div class="wp-block-button">
 							<a class="wp-block-button__link c-reading-bar__menu-trigger  js-sticky-menu-trigger">
-								<span class="novablocks-menu__button-label"><?php esc_html_e( 'Menu', '__theme_txtd' ); ?></span>
+								<span class="novablocks-menu__button-label"><?php esc_html_e( 'Menu', '__plugin_txtd' ); ?></span>
 							</a>
 						</div>
 					</div>
@@ -128,14 +128,14 @@ if ( ! function_exists('get_reading_bar_markup') ) {
 			$next_post = get_next_post();
 			if ( ! empty( $next_post ) && ! is_wp_error( $next_post ) ): ?>
 				<div class="c-reading-bar__wrapper-title  c-reading-bar__wrapper-title--next">
-					<label class="post-title__label"><?php esc_html_e( 'Next:', '__theme_txtd' ); ?></label>
+					<label class="post-title__label"><?php esc_html_e( 'Next:', '__plugin_txtd' ); ?></label>
 					<a class="post-title__post-name" href="<?php the_permalink( $next_post ); ?>">
 						<?php echo get_the_title( $next_post ); ?>
 					</a>
 				</div><!-- .c-reading-bar__wrapper-title -->
 			<?php endif; ?>
 			<div class="c-reading-bar__wrapper-title  c-reading-bar__wrapper-title--current">
-				<label class="post-title__label"><?php esc_html_e( 'Reading:', '__theme_txtd' ); ?></label>
+				<label class="post-title__label"><?php esc_html_e( 'Reading:', '__plugin_txtd' ); ?></label>
 				<?php the_title( '<span class="post-title__post-name">', '</span>' ); ?>
 			</div><!-- .c-reading-bar__wrapper-title -->
 

@@ -10,6 +10,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 function novablocks_get_navigation_attributes() {
 	$attributes = novablocks_get_attributes_from_json( 'packages/block-library/src/blocks/navigation/attributes.json' );
+
 	return $attributes;
 }
 
@@ -17,10 +18,10 @@ if ( ! function_exists( 'novablocks_render_navigation_block' ) ) {
 
 	function novablocks_render_navigation_block( $attributes, $content ) {
 
-		$classes = array(
+		$classes = [
 			'novablocks-navigation',
 			'wp-block-novablocks-navigation',
-		);
+		];
 
 		if ( ! empty( $attributes['className'] ) ) {
 			$classes[] = $attributes['className'];
@@ -32,11 +33,11 @@ if ( ! function_exists( 'novablocks_render_navigation_block' ) ) {
 
 		<div class="<?php echo esc_attr( join( ' ', $classes ) ); ?>">
 			<?php
-				wp_nav_menu( array(
-                    'theme_location' => $attributes['slug'],
-					'container' => '',
-					'fallback_cb'    => false,
-	            ) );
+			wp_nav_menu( [
+				'theme_location' => $attributes['slug'],
+				'container'      => '',
+				'fallback_cb'    => false,
+			] );
 			?>
 		</div>
 

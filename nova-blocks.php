@@ -29,10 +29,10 @@ if ( ! defined( 'ABSPATH' ) ) {
  * Gets this plugin's directory file path.
  *
  * @since  1.0.0
+ * @return string
  * @ignore
  * @access private
  *
- * @return string
  */
 function novablocks_get_plugin_path() {
 	static $novablocks_plugin_path;
@@ -48,10 +48,10 @@ function novablocks_get_plugin_path() {
  * Gets this plugin's URL.
  *
  * @since  1.0.0
+ * @return string
  * @ignore
  * @access private
  *
- * @return string
  */
 function novablocks_get_plugin_url() {
 	static $novablocks_plugin_url;

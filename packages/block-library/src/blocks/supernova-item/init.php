@@ -10,7 +10,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 function novablocks_get_supernova_item_attributes() {
 
-	return novablocks_merge_attributes_from_array( array(
+	return novablocks_merge_attributes_from_array( [
 		'packages/block-library/src/blocks/supernova-item/attributes.json',
 
 		'packages/color-signal/src/attributes.json',
@@ -24,7 +24,7 @@ function novablocks_get_supernova_item_attributes() {
 		'packages/block-editor/src/filters/with-content-loader/attributes.json',
 		'packages/block-editor/src/filters/with-content-position-matrix/attributes.json',
 		'packages/block-editor/src/filters/with-space-and-sizing/attributes.json',
-	) );
+	] );
 
 }
 
@@ -32,12 +32,12 @@ if ( ! function_exists( 'novablocks_render_supernova_item_block' ) ) {
 
 	function novablocks_render_supernova_item_block( $attributes, $content ) {
 		$attributes_config = novablocks_get_supernova_item_attributes();
-		$attributes = novablocks_get_attributes_with_defaults( $attributes, $attributes_config );
+		$attributes        = novablocks_get_attributes_with_defaults( $attributes, $attributes_config );
 
 		$card_content = $content;
-		$card_media = novablocks_get_media_composition_markup( $attributes );
+		$card_media   = novablocks_get_media_composition_markup( $attributes );
 
-		if ( 'fields' === $attributes[ 'sourceType' ] ) {
+		if ( ! empty( $attributes['sourceType'] ) && 'fields' === $attributes['sourceType'] ) {
 			$card_content = novablocks_get_card_contents( $attributes );
 		}
 

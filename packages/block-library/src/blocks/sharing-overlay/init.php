@@ -11,12 +11,12 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 function novablocks_get_sharing_overlay_attributes() {
 
-	return novablocks_merge_attributes_from_array( array(
-		"packages/block-library/src/blocks/sharing-overlay/attributes.json",
+	return novablocks_merge_attributes_from_array( [
+		'packages/block-library/src/blocks/sharing-overlay/attributes.json',
 
-		"packages/color-signal/src/attributes.json",
-		"packages/color-signal/src/attributes-alt.json",
-	) );
+		'packages/color-signal/src/attributes.json',
+		'packages/color-signal/src/attributes-alt.json',
+	] );
 
 }
 
@@ -34,15 +34,14 @@ if ( ! function_exists( 'novablocks_render_sharing_overlay_block' ) ) {
 
 		ob_start();
 
-		$classes = array( 'novablocks-sharing' );
-
+		$classes = [ 'novablocks-sharing', ];
 		if ( ! empty( $attributes[ 'className' ] ) ) {
 			$classes[] = $attributes[ 'className' ];
 		}
 
 		?>
 
-		<div class="<?php echo join( ' ', $classes ); ?>" <?php echo join( ' ', $data_attributes ); ?>>
+		<div class="<?php echo esc_attr( join( ' ', $classes ) ); ?>" <?php echo join( ' ', $data_attributes ); ?>>
 			<div class="wp-block-buttons">
 				<div class="wp-block-button">
 					<button class="wp-block-button__link js-sharing-overlay-trigger">
@@ -54,6 +53,5 @@ if ( ! function_exists( 'novablocks_render_sharing_overlay_block' ) ) {
 		</div>
 
 		<?php return ob_get_clean();
-
 	}
 }
