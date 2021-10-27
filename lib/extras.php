@@ -2117,8 +2117,13 @@ function novablocks_get_collection_card_markup( $media, $content, $attributes ) 
 		'supernova-item__content--halign-' . $align[1],
 	];
 
+	$blacklist = [ 'images' ];
+
+	if ( $attributes['cardLayout'] !== 'stacked' || $attributes['align'] !== 'full' ) {
+		$blacklist[] = 'position-indicators';
+	}
+
 	$data_attributes_array = array_map( 'novablocks_camel_case_to_kebab_case', array_keys( $attributes ) );
-	$blacklist             = [ 'images', 'position-indicators', ];
 	$data_attributes       = novablocks_get_data_attributes( $data_attributes_array, $attributes, $blacklist );
 
 	ob_start(); ?>
