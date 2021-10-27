@@ -23,11 +23,13 @@ const ColorSignalCustomizeSlot = ( {
   }
 
   return (
-    <Slot { ...props } bubblesVirtually={ bubblesVirtually } />
+    <ControlsGroup>
+      <Slot { ...props } bubblesVirtually={ bubblesVirtually } />
+    </ControlsGroup>
   );
 }
 
-const ColorSignalCustomizeFill = ( { children, title } ) => {
+const ColorSignalCustomizeFill = ( { children } ) => {
   const { isSelected } = useBlockEditContext();
 
   if ( ! isSelected ) {
@@ -35,11 +37,7 @@ const ColorSignalCustomizeFill = ( { children, title } ) => {
   }
 
   return (
-    <Fill>
-      <ControlsGroup title={ title }>
-        { children }
-      </ControlsGroup>
-    </Fill>
+    <Fill>{ children }</Fill>
   );
 }
 

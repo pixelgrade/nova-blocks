@@ -61,6 +61,7 @@ const withColorSignalProps = OriginalComponent => {
       <OriginalComponent
         { ...props }
         updateBlock={ updateBlock }
+        stickySourceColor={ stickySourceColor }
         showFunctionalColors={ showFunctionalColors }
         setShowFunctionalColors={ setShowFunctionalColors }
       />

@@ -15,7 +15,15 @@ import ColorPalettePicker from "../color-palette-picker";
 
 const PalettePicker = ( props ) => {
 
-  const { attributes, setAttributes, clientId, settings, showFunctionalColors } = props;
+  const {
+    attributes,
+    setAttributes,
+    clientId,
+    settings,
+    showFunctionalColors,
+    stickySourceColor
+  } = props;
+
   const { palettes } = settings;
   const { palette, paletteVariation, useSourceColorAsReference } = attributes;
 
@@ -25,7 +33,7 @@ const PalettePicker = ( props ) => {
 
   const onPaletteChange = nextPalette => {
 
-    if ( nextPalette === palette ) {
+    if ( nextPalette === palette && stickySourceColor ) {
       const referenceVariation = getParentVariation( clientId );
       const sourceIndex = getSourceIndexFromPaletteId( palette );
       const { useSourceColorAsReference } = attributes;
