@@ -7,12 +7,11 @@ import { InnerBlocks } from '@wordpress/block-editor';
 
 import edit from "./edit";
 
-registerBlockType('novablocks/sidecar-area', {
-  title: __('Sidecar Area', '__plugin_txtd'),
+registerBlockType( 'novablocks/sidecar-area', {
+  apiVersion: 2,
+  title: __( 'Sidecar Area', '__plugin_txtd' ),
   category: 'nova-blocks',
-  parent: ['novablocks/sidecar'],
+  parent: [ 'novablocks/sidecar' ],
   edit,
-  save: function() {
-    return <InnerBlocks.Content />
-  },
-});
+  save: () => <InnerBlocks.Content />,
+} );

@@ -3,8 +3,7 @@
 @import 'scss/utility';
 
 // This is where magic starts.
-.novablocks-sidecar,
-.novablocks-content {
+:is(.novablocks-sidecar, .novablocks-content) {
   position: relative;
   align-items: start;
   @include nb-content-layout-grid;

@@ -9,18 +9,18 @@
     --nb-element-spacing-multiplier: var(--nb-element-spacing-level-1-multiplier);
   }
 
-  :where(#{&}) > p + p {
+  & > p + p {
     --nb-element-spacing-multiplier: calc( 0.5 * var(--nb-element-spacing-level-1-multiplier) );
   }
 }
 
 @mixin block-spacing-nested-levels-multiplier {
 
-  :where(#{&}) :where(#{&}) {
+  & & {
     --nb-element-spacing-multiplier: var(--nb-element-spacing-level-2-multiplier);
   }
 
-  :where(#{&}) :where(#{&}) :where(#{&}) {
+  & & & {
     --nb-element-spacing-multiplier: var(--nb-element-spacing-level-3-multiplier);
   }
 }

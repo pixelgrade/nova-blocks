@@ -2,11 +2,10 @@
   .entry-content,
   .wp-block-column,
   .block-editor-block-list__layout,
-  [class*="__inner-container"][class]
+  [class*="__inner-container"]
 ) {
   @include block-spacing-reset;
-  @include block-spacing-top-level-multiplier;
-  @include block-spacing-nested-levels-multiplier;
+  @include block-spacing-apply-multiplier;
 
   > * {
     @include block-spacing;

@@ -13,6 +13,7 @@ import { getSvg } from "@novablocks/block-editor";
 import attributes from "./attributes"
 
 registerBlockType( 'novablocks/sidecar', {
+  apiVersion: 2,
   title: __( 'Sidecar', '__plugin_txtd' ),
   description: __( 'Establish supporting sections that relates to the main content.', '__plugin_txtd' ),
   category: 'nova-blocks',
@@ -25,12 +26,6 @@ registerBlockType( 'novablocks/sidecar', {
     __( 'content', '__plugin_txtd' ),
     __( 'aside', '__plugin_txtd' )
   ],
-  save: function() {
-    return <InnerBlocks.Content/>
-  },
+  save: () => <InnerBlocks.Content />,
   variations,
-  getEditWrapperProps() {
-    const settings = select( 'core/block-editor' ).getSettings();
-    return settings.alignWide ? { 'data-align': 'wide' } : {};
-  },
 } );

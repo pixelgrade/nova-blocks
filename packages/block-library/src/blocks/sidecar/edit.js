@@ -3,7 +3,7 @@
  */
 import classnames from 'classnames';
 
-import { __experimentalUseInnerBlocksProps as useInnerBlocksProps } from "@wordpress/block-editor";
+import { __experimentalUseInnerBlocksProps as useInnerBlocksProps, useBlockProps } from "@wordpress/block-editor";
 
 import { useInnerBlocks } from "@novablocks/block-editor";
 
@@ -35,10 +35,12 @@ const Edit = ( props ) => {
     }
   );
 
-  const innerBlocksProps = useInnerBlocksProps( {
+  const blockProps = useBlockProps( {
     className: className,
     style: props.style,
-  }, {
+  } );
+
+  const innerBlocksProps = useInnerBlocksProps( blockProps, {
     renderAppender: false,
     templateLock: 'all',
   } );
