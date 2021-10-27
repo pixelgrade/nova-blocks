@@ -10,11 +10,11 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 function novablocks_get_advanced_gallery_attributes() {
 
-	return novablocks_merge_attributes_from_array( array(
+	return novablocks_merge_attributes_from_array( [
 		'packages/block-library/src/blocks/advanced-gallery/attributes.json',
 		'packages/media-composition/src/attributes.json',
 		'packages/block-editor/src/filters/with-space-and-sizing/attributes.json',
-	) );
+	] );
 }
 
 if ( ! function_exists( 'novablocks_render_advanced_gallery_block' ) ) {
@@ -22,14 +22,14 @@ if ( ! function_exists( 'novablocks_render_advanced_gallery_block' ) ) {
 	function novablocks_render_advanced_gallery_block( $attributes, $content ) {
 
 		$attributes_config = novablocks_get_advanced_gallery_attributes();
-		$attributes = novablocks_get_attributes_with_defaults( $attributes, $attributes_config );
+		$attributes        = novablocks_get_attributes_with_defaults( $attributes, $attributes_config );
 
 		$cssProps = array_merge(
 			novablocks_get_space_and_sizing_css( $attributes ),
 		);
 
 		$classes = array_merge(
-			array( 'novablocks-gallery' ),
+			[ 'novablocks-gallery', ],
 			novablocks_get_block_extra_classes( $attributes )
 		);
 
@@ -37,7 +37,7 @@ if ( ! function_exists( 'novablocks_render_advanced_gallery_block' ) ) {
 			$classes[] = $attributes['className'];
 		}
 
-		if ( ! empty( $attributes[ 'align' ] ) ) {
+		if ( ! empty( $attributes['align'] ) ) {
 			$classes[] = 'align' . $attributes['align'];
 		}
 

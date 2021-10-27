@@ -33,12 +33,8 @@ const Controls = withColorSignalProps( props => {
         <ControlsGroup>
           <BlockColorSignalControl { ...props } />
         </ControlsGroup>
-        <ControlsGroup>
-          <ContentColorSignalControl { ...props } />
-        </ControlsGroup>
-        <ControlsGroup>
-          <ColorSignalCustomizeControls.Slot />
-        </ControlsGroup>
+        <ContentColorSignalControl { ...props } />
+        <ColorSignalCustomizeControls.Slot />
         <PalettePicker { ...props } />
         <ColorReferenceToggleControl { ...props } />
       </ControlsTab>

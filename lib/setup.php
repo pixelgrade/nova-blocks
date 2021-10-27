@@ -7,7 +7,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 function novablocks_plugin_setup() {
 	global $wp_version;
-	$is_old_wp_version = version_compare( $wp_version, '5.3', '<' );
+	$is_old_wp_version   = version_compare( $wp_version, '5.3', '<' );
 	$is_post_meta_broken = defined( 'GUTENBERG_VERSION' ) &&
 	                       version_compare( GUTENBERG_VERSION, '6.6.0', '>=' ) &&
 	                       version_compare( GUTENBERG_VERSION, '6.7.0', '<=' );
@@ -22,10 +22,11 @@ function novablocks_plugin_setup() {
 		}
 	}
 
-	if ( ! defined('NOVABLOCKS_DEVELOPMENT_MODE' ) ) {
+	if ( ! defined( 'NOVABLOCKS_DEVELOPMENT_MODE' ) ) {
 		define( 'NOVABLOCKS_DEVELOPMENT_MODE', false );
 	}
 }
+
 // We will do this just after themes so we give them a chance to intervene.
 add_action( 'after_setup_theme', 'novablocks_plugin_setup', 20 );
 
@@ -36,6 +37,7 @@ function novablocks_add_image_sizes() {
 	add_image_size( 'novablocks_small', 768, 768, false );
 	add_image_size( 'novablocks_tiny', 480, 480, false );
 }
+
 add_action( 'after_setup_theme', 'novablocks_add_image_sizes', 20 );
 
 if ( ! function_exists( 'novablocks_body_classes' ) ) {
@@ -56,12 +58,12 @@ if ( ! function_exists( 'novablocks_add_blocks_category' ) ) {
 
 	function novablocks_add_blocks_category( $categories, $post ) {
 		return array_merge(
-			array(
-				array(
+			[
+				[
 					'slug'  => 'nova-blocks',
 					'title' => 'Nova Blocks', // do not translate
-				),
-			),
+				],
+			],
 			$categories
 		);
 	}

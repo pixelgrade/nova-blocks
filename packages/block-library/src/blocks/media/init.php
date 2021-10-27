@@ -10,7 +10,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 function novablocks_get_media_attributes() {
 
-	return novablocks_merge_attributes_from_array( array(
+	return novablocks_merge_attributes_from_array( [
 		'packages/block-library/src/blocks/media/attributes.json',
 
 		'packages/color-signal/src/attributes.json',
@@ -23,7 +23,7 @@ function novablocks_get_media_attributes() {
 		'packages/block-editor/src/filters/with-space-and-sizing/attributes.json',
 
 		'packages/block-library/src/blocks/media/attributes-overwrite.json',
-	) );
+	] );
 
 }
 
@@ -33,15 +33,15 @@ if ( ! function_exists( 'novablocks_render_media_block' ) ) {
 
 		// having no default value makes the card stretch vertically which is a desired outcome
 		$classes = array_merge(
-			array(
-				'novablocks-media'
-			),
+			[
+				'novablocks-media',
+			],
 			novablocks_get_alignment_classes( $attributes ),
 			novablocks_get_color_signal_classes( $attributes )
 		);
 
-		$attributes_config = novablocks_get_media_attributes();
-		$attributes = novablocks_get_attributes_with_defaults( $attributes, $attributes_config );
+		$attributes_config     = novablocks_get_media_attributes();
+		$attributes            = novablocks_get_attributes_with_defaults( $attributes, $attributes_config );
 		$data_attributes_array = array_map( 'novablocks_camel_case_to_kebab_case', array_keys( $attributes ) );
 
 		if ( ( $key = array_search( 'images', $data_attributes_array ) ) !== false ) {
@@ -68,9 +68,9 @@ if ( ! function_exists( 'novablocks_render_media_block' ) ) {
 			$classes[] = 'has-' . $attributes['accentColor'] . '-accent-color';
 		}
 
-		$classes[] = 'alignfull';
+		$classes[]        = 'alignfull';
 		$contentVariation = novablocks_get_content_variation( $attributes );
-		$classes[] = 'sm-variation-' . $contentVariation . '@below-tablet';
+		$classes[]        = 'sm-variation-' . $contentVariation . '@below-tablet';
 
 		if ( empty( $attributes['gallery'] ) && ! empty( $attributes['images'] ) ) {
 			$attributes['gallery'] = $attributes['images'];
@@ -78,30 +78,30 @@ if ( ! function_exists( 'novablocks_render_media_block' ) ) {
 
 		$css_props = novablocks_get_space_and_sizing_css( $attributes, true );
 
-		if ( ! empty($attributes['emphasisArea'])) {
+		if ( ! empty( $attributes['emphasisArea'] ) ) {
 
 			$css_props = array_merge(
 				$css_props,
-				array(
+				[
 					'--nb-emphasis-area: ' . $attributes['emphasisArea'],
-				)
+				]
 			);
 		}
 
-		$contentClasses = array(
+		$contentClasses = [
 			'novablocks-media__inner-container',
-			'novablocks-block__content'
-		);
+			'novablocks-block__content',
+		];
 
 		$contentPaletteClasses = novablocks_get_content_palette_classes( $attributes );
-		$contentClasses = array_merge( $contentClasses, $contentPaletteClasses );
+		$contentClasses        = array_merge( $contentClasses, $contentPaletteClasses );
 
 		ob_start(); ?>
 
-        <div
+		<div
 			class="<?php echo esc_attr( join( ' ', $classes ) ); ?>"
 			style="<?php echo esc_attr( join( '; ', $css_props ) ) ?>"
-			<?php echo join( " ", $data_attributes ); ?>
+			<?php echo join( ' ', $data_attributes ); ?>
 		>
 			<div class="wp-block-group__inner-container">
 				<div class="wp-block alignwide">
@@ -123,7 +123,7 @@ if ( ! function_exists( 'novablocks_render_media_block' ) ) {
 					</div>
 				</div>
 			</div>
-        </div>
+		</div>
 
 		<?php return ob_get_clean();
 	}

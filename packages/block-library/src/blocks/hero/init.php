@@ -10,24 +10,24 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 function novablocks_get_hero_attributes() {
 
-	return novablocks_merge_attributes_from_array( array(
-		"packages/block-library/src/blocks/hero/attributes.json",
+	return novablocks_merge_attributes_from_array( [
+		'packages/block-library/src/blocks/hero/attributes.json',
 
-		"packages/block-editor/src/components/color-controls/attributes.json",
-		"packages/block-editor/src/components/layout-controls/attributes.json",
+		'packages/block-editor/src/components/color-controls/attributes.json',
+		'packages/block-editor/src/components/layout-controls/attributes.json',
 
-		"packages/color-signal/src/attributes.json",
-		"packages/color-signal/src/attributes-alt.json",
-		"packages/scrolling-effect/src/attributes.json",
-		"packages/scrolling-effect/src/attributes-alt.json",
+		'packages/color-signal/src/attributes.json',
+		'packages/color-signal/src/attributes-alt.json',
+		'packages/scrolling-effect/src/attributes.json',
+		'packages/scrolling-effect/src/attributes-alt.json',
 
 		'packages/block-editor/src/filters/with-content-position-matrix/attributes.json',
-		"packages/block-editor/src/filters/with-overlay-filter/attributes.json",
-		"packages/block-editor/src/filters/with-space-and-sizing/attributes.json",
-		"packages/block-editor/src/filters/with-elements-visibility/attributes.json",
+		'packages/block-editor/src/filters/with-overlay-filter/attributes.json',
+		'packages/block-editor/src/filters/with-space-and-sizing/attributes.json',
+		'packages/block-editor/src/filters/with-elements-visibility/attributes.json',
 
-		"packages/block-library/src/blocks/hero/attributes-overwrite.json",
-	) );
+		'packages/block-library/src/blocks/hero/attributes-overwrite.json',
+	] );
 
 }
 
@@ -35,20 +35,20 @@ if ( ! function_exists( 'novablocks_render_hero_block' ) ) {
 
 	function novablocks_render_hero_block( $attributes, $content ) {
 
-		$attributes_config = novablocks_get_hero_attributes();
-		$attributes = novablocks_get_attributes_with_defaults( $attributes, $attributes_config );
+		$attributes_config     = novablocks_get_hero_attributes();
+		$attributes            = novablocks_get_attributes_with_defaults( $attributes, $attributes_config );
 		$data_attributes_array = array_map( 'novablocks_camel_case_to_kebab_case', array_keys( $attributes ) );
-		$blacklist = array( 'media' );
-		$data_attributes = novablocks_get_data_attributes( $data_attributes_array, $attributes, $blacklist );
+		$blacklist             = [ 'media', ];
+		$data_attributes       = novablocks_get_data_attributes( $data_attributes_array, $attributes, $blacklist );
 
 		$novablocks_settings = novablocks_get_block_editor_settings();
 
 		$classes = array_merge(
-			array(
+			[
 				'novablocks-hero',
 				'novablocks-doppler',
-				'alignfull'
-			),
+				'alignfull',
+			],
 			novablocks_get_block_extra_classes( $attributes ),
 			novablocks_get_color_signal_classes( $attributes )
 		);
@@ -68,12 +68,13 @@ if ( ! function_exists( 'novablocks_render_hero_block' ) ) {
 		}
 
 		// Make sure the media defaults are in place.
-		$media_args = array(
-			'type' => '',
-			'url' => '',
-			'sizes' => array()
-		);
-		$media = wp_parse_args( $media, $media_args );
+		$media_args = [
+			'type'  => 'image',
+			'url'   => '',
+			'alt'   => '',
+			'sizes' => [],
+		];
+		$media      = wp_parse_args( $media, $media_args );
 
 		$css_props = array_merge(
 			novablocks_get_overlay_filter_css( $attributes ),
@@ -94,7 +95,7 @@ if ( ! function_exists( 'novablocks_render_hero_block' ) ) {
 		<div <?php echo $id; ?>
 			class="<?php echo esc_attr( join( ' ', $classes ) ); ?>"
 			style="<?php echo esc_attr( join( '; ', $css_props ) ); ?>"
-			<?php echo join( " ", $data_attributes ); ?>
+			<?php echo join( ' ', $data_attributes ); ?>
 		>
 
 			<?php do_action( 'novablocks_hero:after_opening_tag', $attributes ); ?>
@@ -103,37 +104,37 @@ if ( ! function_exists( 'novablocks_render_hero_block' ) ) {
 				<?php
 				if ( $media['type'] === 'image' && ! empty( $media['url'] ) ) {
 					$id = attachment_url_to_postid( $media['url'] );
-
 					if ( ! empty( $id ) ) {
-						echo wp_get_attachment_image( $id, 'novablocks_huge', false, array(
+						echo wp_get_attachment_image( $id, 'novablocks_huge', false, [
 							'class' => 'novablocks-hero__media  novablocks-doppler__target',
-							'style' => esc_attr( $mediaStyle )
-						) );
+							'style' => esc_attr( $mediaStyle ),
+						] );
 					} else { ?>
 						<img class="novablocks-hero__media  novablocks-doppler__target"
-							 src="<?php echo esc_url( $media['url'] ); ?>"
-							 style="<?php echo esc_attr( $mediaStyle ); ?>" />
+						     src="<?php echo esc_url( $media['url'] ); ?>"
+						     style="<?php echo esc_attr( $mediaStyle ); ?>"
+						     alt="<?php echo esc_attr( $media['alt'] ); ?>"/>
 					<?php }
 				} ?>
 
 				<?php if ( $media['type'] === 'video' && ! empty( $media['url'] ) ) { ?>
 					<video muted autoplay loop playsinline class="novablocks-hero__media  novablocks-doppler__target"
-						   src="<?php echo esc_url( $media['url'] ); ?>"
-						   style="<?php echo esc_attr( $mediaStyle ); ?>" />
+					       src="<?php echo esc_url( $media['url'] ); ?>"
+					       style="<?php echo esc_attr( $mediaStyle ); ?>"></video>
 				<?php } ?>
 			</div>
-            <div class="novablocks-hero__foreground novablocks-doppler__foreground novablocks-u-content-padding novablocks-u-content-align" style="<?php echo esc_attr( $foregroundStyle ); ?>">
-                <div class="novablocks-hero__inner-container wp-block-group__inner-container" style="<?php echo esc_attr( $contentStyle ); ?>">
+			<div class="novablocks-hero__foreground novablocks-doppler__foreground novablocks-u-content-padding novablocks-u-content-align">
+				<div class="novablocks-hero__inner-container wp-block-group__inner-container">
 					<?php if ( ! empty( $attributes['displayInnerContent'] ) ) {
 						echo $content;
 					} ?>
-                </div>
+				</div>
 				<?php novablocks_render_scroll_indicator( $attributes ); ?>
-            </div>
+			</div>
 
 			<?php do_action( 'novablocks_hero:before_closing_tag', $attributes ) ?>
 
-        </div>
+		</div>
 
 		<?php do_action( 'novablocks_hero:after' );
 

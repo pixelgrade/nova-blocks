@@ -7,7 +7,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 function novablocks_get_posts_collection_attributes() {
 
-	return novablocks_merge_attributes_from_array( array(
+	return novablocks_merge_attributes_from_array( [
 		'packages/block-library/src/blocks/posts-collection/attributes.json',
 
 		'packages/color-signal/src/attributes.json',
@@ -18,8 +18,7 @@ function novablocks_get_posts_collection_attributes() {
 		'packages/block-editor/src/filters/with-content-loader/attributes.json',
 		'packages/block-editor/src/filters/with-overlay-filter/attributes.json',
 		'packages/block-editor/src/filters/with-space-and-sizing/attributes.json',
-	) );
-
+	] );
 }
 
 if ( ! function_exists( 'novablocks_render_posts_collection_block' ) ) {
@@ -33,28 +32,24 @@ if ( ! function_exists( 'novablocks_render_posts_collection_block' ) ) {
 			novablocks_get_space_and_sizing_css( $attributes )
 		);
 
-		$classes = array(
+		$classes = [
 			'novablocks-block',
 			'novablocks-collection',
 			'novablocks-collection--align-left',
 			'alignfull',
-		);
+		];
 
 		$blockPaletteClasses = novablocks_get_color_signal_classes( $attributes );
-		$classes = array_merge( $classes, $blockPaletteClasses );
-
+		$classes             = array_merge( $classes, $blockPaletteClasses );
 		if ( ! empty( $attributes['className'] ) ) {
 			$classes[] = $attributes['className'];
 		}
-
 		if ( ! empty( $attributes['layoutStyle'] ) ) {
 			$classes[] = 'novablocks-collection--' . $attributes['layoutStyle'];
 		}
-
-		if ( ! empty( $attributes['layoutStyle'] ) &&  $attributes['carouselLayout'] === 'variable' ) {
+		if ( ! empty( $attributes['layoutStyle'] ) && $attributes['carouselLayout'] === 'variable' ) {
 			$classes[] = 'novablocks-collection-carousel--variable';
 		}
-
 		$classes = array_merge(
 			$classes,
 			novablocks_get_color_classes( $attributes )
@@ -66,9 +61,9 @@ if ( ! function_exists( 'novablocks_render_posts_collection_block' ) ) {
 		ob_start(); ?>
 
 		<div
-			class="<?php echo join( ' ', $classes ); ?>"
+			class="<?php echo esc_attr( join( ' ', $classes ) ); ?>"
 			style="<?php echo join( '; ', $cssProps ) ?>"
-			<?php echo join( " ", $data_attributes ); ?>
+			<?php echo join( ' ', $data_attributes ); ?>
 		>
 			<?php echo novablocks_get_collection_output( $attributes, $content ); ?>
 		</div>

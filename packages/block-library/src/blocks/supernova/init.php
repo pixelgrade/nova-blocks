@@ -10,7 +10,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 function novablocks_get_supernova_attributes() {
 
-	return novablocks_merge_attributes_from_array( array(
+	return novablocks_merge_attributes_from_array( [
 		'packages/block-library/src/blocks/supernova/attributes.json',
 
 		'packages/media-composition/src/attributes.json',
@@ -30,7 +30,7 @@ function novablocks_get_supernova_attributes() {
 		'packages/block-editor/src/filters/with-overlay-filter/attributes.json',
 		'packages/block-editor/src/filters/with-space-and-sizing/attributes.json',
 		'packages/block-editor/src/filters/with-collection-layout/attributes.json',
-	) );
+	] );
 
 }
 
@@ -40,23 +40,22 @@ if ( ! function_exists( 'novablocks_render_supernova_block' ) ) {
 		$attributes_config     = novablocks_get_supernova_attributes();
 		$attributes            = novablocks_get_attributes_with_defaults( $attributes, $attributes_config );
 		$data_attributes_array = array_map( 'novablocks_camel_case_to_kebab_case', array_keys( $attributes ) );
-		$data_attributes       = novablocks_get_data_attributes( $data_attributes_array, $attributes );
+		$blacklist             = [ 'position-indicators' ];
+		$data_attributes       = novablocks_get_data_attributes( $data_attributes_array, $attributes, $blacklist );
 
 		$align = preg_split( '/\b\s+/', $attributes['contentPosition'] );
 
-		$classes = array(
+		$classes = [
 			'alignfull',
 			'supernova',
 			'supernova--source-type-' . $attributes['sourceType'],
 			'supernova--card-layout-' . $attributes['cardLayout'],
 			'supernova--valign-' . $align[0],
 			'supernova--halign-' . $align[1],
-		);
-
+		];
 		if ( $attributes['columns'] === 1 ) {
 			$classes[] = 'supernova--one-column';
 		}
-
 		if ( ! empty ( $attributes['align'] ) ) {
 			$classes[] = 'block-is-' . $attributes['align'];
 		}
@@ -64,29 +63,21 @@ if ( ! function_exists( 'novablocks_render_supernova_block' ) ) {
 		$blockPaletteClasses = novablocks_get_color_signal_classes( $attributes );
 		$classes             = array_merge( $classes, $blockPaletteClasses );
 
-
-		/*
-		 * @todo: Find a solution for this.
-		 * The CSS Props list is getting really big,
-		 * We should break them in different functions.
-		 */
-		$cssProps = array_merge(
-			array(
-				/*
-				 * Color Signal
-				 */
-				'--nb-emphasis-area: ' . $attributes['emphasisArea'],
-
-				/*
-				 * Media Composition
-				 */
-				'--nb-advanced-gallery-grid-gap: ' . $attributes['elementsDistance'] . 'px',
-			)
-		);
-
 		if ( $attributes['minHeightFallback'] !== 0 ) {
-			$classes[]  = 'supernova--has-minimum-height';
+			$classes[] = 'supernova--has-minimum-height';
 		}
+
+		$cssProps = [
+			/*
+			 * Color Signal
+			 */
+			'--nb-emphasis-area: ' . $attributes['emphasisArea'],
+
+			/*
+			 * Media Composition
+			 */
+			'--nb-advanced-gallery-grid-gap: ' . $attributes['elementsDistance'] . 'px',
+		];
 
 		$cssProps = array_merge(
 			$cssProps,
@@ -98,9 +89,9 @@ if ( ! function_exists( 'novablocks_render_supernova_block' ) ) {
 		ob_start(); ?>
 
 		<div
-			class="<?php echo join( ' ', $classes ); ?>"
+			class="<?php echo esc_attr( join( ' ', $classes ) ); ?>"
 			style="<?php echo join( ';', $cssProps ); ?>"
-			<?php echo join( " ", $data_attributes ); ?>
+			<?php echo join( ' ', $data_attributes ); ?>
 		>
 			<div class="supernova__inner-container">
 				<?php echo novablocks_get_collection_output( $attributes, $content ); ?>

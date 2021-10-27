@@ -58,9 +58,9 @@ if ( ! file_exists( $test_root . '/includes/phpunit6-compat.php' ) && class_exis
 }
 
 // Ensure the plugin is loaded.
-$GLOBALS['wp_tests_options'] = array(
-	'active_plugins' => array( basename( TESTS_PLUGIN_DIR ) . '/block-areas.php' ),
-);
+$GLOBALS['wp_tests_options'] = [
+	'active_plugins' => [ basename( TESTS_PLUGIN_DIR ) . '/block-areas.php', ],
+];
 
 // Load the WordPress tests environment.
 require_once $test_root . '/includes/bootstrap.php';

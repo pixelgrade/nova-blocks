@@ -1,6 +1,10 @@
 import { useCallback } from "@wordpress/element";
+
 import { useMemoryState } from "@novablocks/block-editor";
+import { useSupports } from "@novablocks/block-editor";
+
 import { getParentVariation } from "../../editor/utils";
+
 import {
   addSiteVariationOffset, computeColorSignal,
   getAbsoluteColorVariation,
@@ -14,6 +18,8 @@ const withColorSignalProps = OriginalComponent => {
 
     const { attributes, setAttributes, clientId } = props;
     const [ showFunctionalColors, setShowFunctionalColors ] = useMemoryState( 'showFunctionalColors', false );
+    const supports = useSupports( props.name );
+    const stickySourceColor = supports?.novaBlocks?.colorSignal?.stickySourceColor !== false;
 
     const updateBlock = useCallback( ( newAttributes, useSourceOnSameVariation = false, useSourceOnSameSignal = false ) => {
       // prepare attribute values to be used in computing next attributes
@@ -33,9 +39,9 @@ const withColorSignalProps = OriginalComponent => {
       const sourceIndex = getSourceIndexFromPaletteId( palette );
       const sourceVariation = addSiteVariationOffset( sourceIndex + 1 );
       const sourceSignal = getSignalRelativeToVariation( sourceVariation, referenceVariation );
-      const nextSourceAsReference = useSourceColorAsReference ||
-                                    ( useSourceOnSameSignal && nextSignal === sourceSignal ) ||
-                                    ( useSourceOnSameVariation && absoluteVariation === sourceVariation );
+      const nextSourceAsReference = stickySourceColor && ( useSourceColorAsReference ||
+                                                           ( useSourceOnSameSignal && nextSignal === sourceSignal ) ||
+                                                           ( useSourceOnSameVariation && absoluteVariation === sourceVariation ) );
 
       const finalVariation = nextSourceAsReference ? sourceVariation : nextVariation;
       const { contentColorSignal, contentPaletteVariation } = nextAttributes;
@@ -55,6 +61,7 @@ const withColorSignalProps = OriginalComponent => {
       <OriginalComponent
         { ...props }
         updateBlock={ updateBlock }
+        stickySourceColor={ stickySourceColor }
         showFunctionalColors={ showFunctionalColors }
         setShowFunctionalColors={ setShowFunctionalColors }
       />

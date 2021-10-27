@@ -10,18 +10,18 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 function novablocks_get_sidecar_attributes() {
 
-	return novablocks_merge_attributes_from_array( array(
-		"packages/block-library/src/blocks/sidecar/attributes.json",
-	) );
+	return novablocks_merge_attributes_from_array( [
+		'packages/block-library/src/blocks/sidecar/attributes.json',
+	] );
 
 }
 
-if ( ! function_exists('novablocks_render_sidecar_block' ) ) {
+if ( ! function_exists( 'novablocks_render_sidecar_block' ) ) {
 
 	/**
 	 * Entry point to render the block with the given attributes, content, and context.
 	 *
-	 * @param array $attributes
+	 * @param array  $attributes
 	 * @param string $content
 	 *
 	 * @return string
@@ -32,30 +32,24 @@ if ( ! function_exists('novablocks_render_sidecar_block' ) ) {
 		ob_start();
 
 		$attributes_config = novablocks_get_sidecar_attributes();
-		$attributes = novablocks_get_attributes_with_defaults( $attributes, $attributes_config );
+		$attributes        = novablocks_get_attributes_with_defaults( $attributes, $attributes_config );
 
-		$classes = array( 'novablocks-sidecar' );
-
+		$classes = [ 'novablocks-sidecar', ];
 		if ( ! empty( $attributes['className'] ) ) {
 			$classes[] = $attributes['className'];
 		}
-
-		if ( ! empty( $attributes['layout']  && $attributes['layout'] === 'complex' ) ) {
+		if ( ! empty( $attributes['layout'] && $attributes['layout'] === 'complex' ) ) {
 			$classes[] = 'novablocks-sidecar--complex';
 		}
-
-		if ( ! empty($attributes['sidebarPosition'] ) ) {
+		if ( ! empty( $attributes['sidebarPosition'] ) ) {
 			$classes[] = 'novablocks-sidecar--sidebar-' . $attributes['sidebarPosition'];
 		}
-
 		if ( ! empty( $attributes['sidebarWidth'] ) ) {
 			$classes[] = 'novablocks-sidebar--' . $attributes['sidebarWidth'];
 		}
-
-		if ( ! empty($attributes['lastItemIsSticky'] ) &&  $attributes['lastItemIsSticky'] === true) {
+		if ( ! empty( $attributes['lastItemIsSticky'] ) && $attributes['lastItemIsSticky'] === true ) {
 			$classes[] = 'last-block-is-sticky';
 		}
-
 		?>
 
 		<div class="<?php echo esc_attr( join( ' ', $classes ) ); ?>">
