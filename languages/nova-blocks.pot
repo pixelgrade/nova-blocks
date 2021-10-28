@@ -1,515 +1,111 @@
-# Copyright (C) 2021 Pixelgrade
-# This file is distributed under the GPLv2 or later.
+# Copyright (C) 2021 Nova Blocks
+# This file is distributed under the same license as the Nova Blocks package.
 msgid ""
 msgstr ""
-"Project-Id-Version: Nova Blocks 1.13.3\n"
-"Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/nova-blocks 2\n"
-"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
-"Language-Team: LANGUAGE <LL@li.org>\n"
+"Project-Id-Version: Nova Blocks\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2021-10-28T13:19:14+00:00\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"X-Generator: WP-CLI 2.5.0\n"
-"X-Domain: nova-blocks\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#. Plugin Name of the plugin
-msgid "Nova Blocks"
+#: lib/extras.php:255
+msgid "Headline"
 msgstr ""
 
-#. Plugin URI of the plugin
-msgid "https://github.com/pixelgrade/nova-blocks/"
+#: lib/extras.php:265
+msgid "A brilliant subtitle to explain its catchiness"
 msgstr ""
 
-#. Description of the plugin
-msgid "Nova Blocks is a collection of <strong>distinctive Gutenberg blocks</strong>, committed to making your site shine like a newborn star. It is taking a design-driven approach to help you made the right decisions and showcase your content in the best shape."
+#: lib/extras.php:280
+msgid "Discover more"
 msgstr ""
 
-#. Author of the plugin
-msgid "Pixelgrade"
+#: lib/extras.php:320
+msgid "Shoot for the moon, Even if You Miss it"
 msgstr ""
 
-#. Author URI of the plugin
-msgid "https://www.pixelgrade.com"
+#: lib/extras.php:327
+msgid "Welcome to our planet, look and feel matters!"
 msgstr ""
 
-#: build/block-library/blocks/header/init.php:95
-#: packages/block-library/src/blocks/header/init.php:95
-msgid "Menu"
+#: lib/extras.php:334
+msgid "We've always defined ourselves by the ability to overcome the impossible. And we count these moments. These moments when we dare to aim higher, to break barriers, to reach for the stars, to make the unknown known."
 msgstr ""
 
-#: build/block-library/blocks/openhours/init.php:576
-#: packages/block-library/src/blocks/openhours/init.php:576
-msgid "You haven't setup a schedule yet."
+#: lib/extras.php:346
+msgid "Discover More"
 msgstr ""
 
-#: build/block-library/blocks/post-comments/init.php:45
-#: packages/block-library/src/blocks/post-comments/init.php:45
-msgid "Link copied to your clipboard"
+#: lib/extras.php:460
+msgid "Auto"
 msgstr ""
 
-#: build/block-library/blocks/post-comments/lib/actions/class-novablocks-comments-highlight.php:84
-#: packages/block-library/src/blocks/post-comments/lib/actions/class-novablocks-comments-highlight.php:84
-msgid "Highlighted by"
+#: lib/extras.php:464, lib/extras.php:508
+msgid "Half"
 msgstr ""
 
-#: build/block-library/blocks/post-comments/lib/actions/class-novablocks-comments-highlight.php:98
-#: packages/block-library/src/blocks/post-comments/lib/actions/class-novablocks-comments-highlight.php:98
-msgid "Conversation editor"
+#: lib/extras.php:468, lib/extras.php:512
+msgid "Two Thirds"
 msgstr ""
 
-#: build/block-library/blocks/post-comments/lib/actions/class-novablocks-comments-highlight.php:100
-#: packages/block-library/src/blocks/post-comments/lib/actions/class-novablocks-comments-highlight.php:100
-msgid "Conversation starter"
+#: lib/extras.php:472, lib/extras.php:516
+msgid "Three Quarters"
 msgstr ""
 
-#: build/block-library/blocks/post-comments/lib/actions/class-novablocks-comments-highlight.php:102
-#: packages/block-library/src/blocks/post-comments/lib/actions/class-novablocks-comments-highlight.php:102
-msgid "Article author"
+#: lib/extras.php:476
+msgid "Full Height"
 msgstr ""
 
-#: build/block-library/blocks/post-comments/lib/actions/class-novablocks-comments-highlight.php:134
-#: packages/block-library/src/blocks/post-comments/lib/actions/class-novablocks-comments-highlight.php:134
-msgid "Toggle your highlight of this comment"
+#: lib/extras.php:520, lib/extras.php:544
+msgid "Full"
 msgstr ""
 
-#: build/block-library/blocks/post-comments/lib/actions/class-novablocks-comments-highlight.php:135
-#: packages/block-library/src/blocks/post-comments/lib/actions/class-novablocks-comments-highlight.php:135
-msgid "Toggle your highlight"
+#: lib/extras.php:526
+msgid "Small"
 msgstr ""
 
-#: build/block-library/blocks/post-comments/lib/actions/class-novablocks-comments-highlight.php:177
-#: packages/block-library/src/blocks/post-comments/lib/actions/class-novablocks-comments-highlight.php:177
-msgid "Highlighters of this comment"
+#: lib/extras.php:530
+msgid "Medium"
 msgstr ""
 
-#: build/block-library/blocks/post-comments/lib/actions/class-novablocks-comments-highlight.php:183
-#: packages/block-library/src/blocks/post-comments/lib/actions/class-novablocks-comments-highlight.php:183
-msgid "Me (%s)"
+#: lib/extras.php:534, lib/extras.php:548
+msgid "Large"
 msgstr ""
 
-#: build/block-library/blocks/post-comments/lib/actions/class-novablocks-comments-highlight.php:207
-#: packages/block-library/src/blocks/post-comments/lib/actions/class-novablocks-comments-highlight.php:207
-msgid "All the current highlights of this comment, plus the option to highlight yourself.<br/>Highlighters can only be <strong>registered users</strong> that have <strong>management capabilities</strong> for comments."
+#: lib/extras.php:538, lib/extras.php:556
+msgid "Custom"
 msgstr ""
 
-#: build/block-library/blocks/post-comments/lib/actions/class-novablocks-comments-highlight.php:217
-#: packages/block-library/src/blocks/post-comments/lib/actions/class-novablocks-comments-highlight.php:217
-msgid "<strong>Error:</strong> Wrong data sent."
+#: lib/extras.php:552
+msgid "Narrow"
 msgstr ""
 
-#: build/block-library/blocks/post-comments/lib/actions/class-novablocks-comments-highlight.php:218
-#: build/block-library/blocks/post-comments/lib/actions/class-novablocks-comments-highlight.php:235
-#: build/block-library/blocks/post-comments/lib/actions/class-novablocks-comments-highlight.php:254
-#: build/block-library/blocks/post-comments/lib/actions/class-novablocks-comments-highlight.php:268
-#: build/block-library/blocks/post-comments/lib/actions/class-novablocks-comments-highlight.php:280
-#: build/block-library/blocks/post-comments/lib/metas/class-novablocks-comments-meta.php:97
-#: packages/block-library/src/blocks/post-comments/lib/actions/class-novablocks-comments-highlight.php:218
-#: packages/block-library/src/blocks/post-comments/lib/actions/class-novablocks-comments-highlight.php:235
-#: packages/block-library/src/blocks/post-comments/lib/actions/class-novablocks-comments-highlight.php:254
-#: packages/block-library/src/blocks/post-comments/lib/actions/class-novablocks-comments-highlight.php:268
-#: packages/block-library/src/blocks/post-comments/lib/actions/class-novablocks-comments-highlight.php:280
-#: packages/block-library/src/blocks/post-comments/lib/metas/class-novablocks-comments-meta.php:97
-msgid "Comment Submission Failure"
+#: lib/extras.php:924
+msgid "Static"
 msgstr ""
 
-#: build/block-library/blocks/post-comments/lib/actions/class-novablocks-comments-highlight.php:234
-#: packages/block-library/src/blocks/post-comments/lib/actions/class-novablocks-comments-highlight.php:234
-msgid "<strong>Error:</strong> You don't have the needed credentials to highlight comments."
+#: lib/extras.php:928
+msgid "Parallax"
 msgstr ""
 
-#: build/block-library/blocks/post-comments/lib/actions/class-novablocks-comments-highlight.php:253
-#: packages/block-library/src/blocks/post-comments/lib/actions/class-novablocks-comments-highlight.php:253
-msgid "<strong>Error:</strong> You can't highlight your own comments."
+#: lib/extras.php:1665
+msgid "Nova Blocks Huge"
 msgstr ""
 
-#: build/block-library/blocks/post-comments/lib/actions/class-novablocks-comments-highlight.php:267
-#: packages/block-library/src/blocks/post-comments/lib/actions/class-novablocks-comments-highlight.php:267
-msgid "<strong>Error:</strong> Couldn't unhighlight this comment."
+#: lib/extras.php:1666
+msgid "Nova Blocks Large"
 msgstr ""
 
-#: build/block-library/blocks/post-comments/lib/actions/class-novablocks-comments-highlight.php:279
-#: packages/block-library/src/blocks/post-comments/lib/actions/class-novablocks-comments-highlight.php:279
-msgid "<strong>Error:</strong> Couldn't highlight this comment."
+#: lib/extras.php:1667
+msgid "Nova Blocks Medium"
 msgstr ""
 
-#: build/block-library/blocks/post-comments/lib/actions/class-novablocks-comments-highlight.php:304
-#: packages/block-library/src/blocks/post-comments/lib/actions/class-novablocks-comments-highlight.php:304
-msgid "Comment Submission Success"
+#: lib/extras.php:1668
+msgid "Nova Blocks Small"
 msgstr ""
 
-#: build/block-library/blocks/post-comments/lib/actions/class-novablocks-comments-highlight.php:404
-#: build/block-library/blocks/post-comments/lib/actions/class-novablocks-comments-highlight.php:414
-#: build/block-library/blocks/post-comments/lib/class-novablocks-comments-logic.php:263
-#: build/block-library/blocks/post-comments/lib/class-novablocks-comments-logic.php:273
-#: build/block-library/blocks/post-comments/lib/metas/class-novablocks-comments-meta.php:224
-#: build/block-library/blocks/post-comments/lib/metas/class-novablocks-comments-meta.php:234
-#: build/block-library/blocks/post-comments/lib/metas/class-novablocks-comments-post-meta.php:197
-#: build/block-library/blocks/post-comments/lib/metas/class-novablocks-comments-post-meta.php:207
-#: packages/block-library/src/blocks/post-comments/lib/actions/class-novablocks-comments-highlight.php:404
-#: packages/block-library/src/blocks/post-comments/lib/actions/class-novablocks-comments-highlight.php:414
-#: packages/block-library/src/blocks/post-comments/lib/class-novablocks-comments-logic.php:263
-#: packages/block-library/src/blocks/post-comments/lib/class-novablocks-comments-logic.php:273
-#: packages/block-library/src/blocks/post-comments/lib/metas/class-novablocks-comments-meta.php:224
-#: packages/block-library/src/blocks/post-comments/lib/metas/class-novablocks-comments-meta.php:234
-#: packages/block-library/src/blocks/post-comments/lib/metas/class-novablocks-comments-post-meta.php:197
-#: packages/block-library/src/blocks/post-comments/lib/metas/class-novablocks-comments-post-meta.php:207
-msgid "You should not do that!"
-msgstr ""
-
-#: build/block-library/blocks/post-comments/lib/class-novablocks-comments-renderer.php:90
-#: packages/block-library/src/blocks/post-comments/lib/class-novablocks-comments-renderer.php:90
-msgid "This conversation has been closed. If you have more to share, please "
-msgstr ""
-
-#: build/block-library/blocks/post-comments/lib/class-novablocks-comments-renderer.php:90
-#: packages/block-library/src/blocks/post-comments/lib/class-novablocks-comments-renderer.php:90
-msgid "contact us"
-msgstr ""
-
-#: build/block-library/blocks/post-comments/lib/metas/class-novablocks-comments-meta.php:80
-#: packages/block-library/src/blocks/post-comments/lib/metas/class-novablocks-comments-meta.php:80
-msgid "<strong>Error</strong>: You did not add your relevant background or experience."
-msgstr ""
-
-#: build/block-library/blocks/post-comments/lib/metas/class-novablocks-comments-meta.php:135
-#: packages/block-library/src/blocks/post-comments/lib/metas/class-novablocks-comments-meta.php:135
-msgid "Extra Details"
-msgstr ""
-
-#: build/block-library/blocks/post-comments/lib/metas/class-novablocks-comments-meta.php:154
-#: packages/block-library/src/blocks/post-comments/lib/metas/class-novablocks-comments-meta.php:154
-msgid "Comment extra details"
-msgstr ""
-
-#: build/block-library/blocks/post-comments/lib/metas/class-novablocks-comments-meta.php:158
-#: packages/block-library/src/blocks/post-comments/lib/metas/class-novablocks-comments-meta.php:158
-msgid "Commenter Relevant Background"
-msgstr ""
-
-#: build/block-library/blocks/post-comments/lib/metas/class-novablocks-comments-post-meta.php:67
-#: packages/block-library/src/blocks/post-comments/lib/metas/class-novablocks-comments-post-meta.php:67
-msgid "Discussion Extra Details"
-msgstr ""
-
-#: build/block-library/blocks/post-comments/lib/metas/class-novablocks-comments-post-meta.php:88
-#: packages/block-library/src/blocks/post-comments/lib/metas/class-novablocks-comments-post-meta.php:88
-msgid "Post discussion extra details"
-msgstr ""
-
-#: build/block-library/blocks/post-comments/lib/metas/class-novablocks-comments-post-meta.php:92
-#: packages/block-library/src/blocks/post-comments/lib/metas/class-novablocks-comments-post-meta.php:92
-msgid "Conversation Starter Message"
-msgstr ""
-
-#: build/block-library/blocks/post-comments/lib/metas/class-novablocks-comments-post-meta.php:95
-#: packages/block-library/src/blocks/post-comments/lib/metas/class-novablocks-comments-post-meta.php:95
-msgid "Write the content that will kick-start a meaningful conversation with and among your readers."
-msgstr ""
-
-#: build/block-library/blocks/post-comments/lib/metas/class-novablocks-comments-post-meta.php:96
-#: packages/block-library/src/blocks/post-comments/lib/metas/class-novablocks-comments-post-meta.php:96
-msgid "You can use HTML elements like <code>&lt;b&gt;</code>, <code>&lt;i&gt;</code>, <code>&lt;a&gt;</code> to put some structure or emphasis on your message. Best that you don't overdo it."
-msgstr ""
-
-#: build/block-library/blocks/post-comments/lib/metas/class-novablocks-comments-post-meta.php:97
-#: packages/block-library/src/blocks/post-comments/lib/metas/class-novablocks-comments-post-meta.php:97
-msgid "You can include the following dynamic tags: <code>%author%</code> equivalent to <code>%author_display_name%</code>, <code>%author_first_name%</code>, <code>%author_last_name%</code>, <code>%post_title%</code>, and <code>%year%</code>. These will be replaced with the corresponding value."
-msgstr ""
-
-#: build/block-library/blocks/post-comments/lib/metas/class-novablocks-comments-post-meta.php:98
-#: packages/block-library/src/blocks/post-comments/lib/metas/class-novablocks-comments-post-meta.php:98
-msgid "<b>Leave empty to hide/skip</b> the entire conversation starter section for this post."
-msgstr ""
-
-#: build/block-library/blocks/post-comments/lib/metas/class-novablocks-comments-post-meta.php:102
-#: packages/block-library/src/blocks/post-comments/lib/metas/class-novablocks-comments-post-meta.php:102
-msgid "Conversation Starter Subtitle (Optional)"
-msgstr ""
-
-#: build/block-library/blocks/post-comments/lib/metas/class-novablocks-comments-post-meta.php:105
-#: packages/block-library/src/blocks/post-comments/lib/metas/class-novablocks-comments-post-meta.php:105
-msgid "You can use the <code>%author%</code> dynamic tag like in this example: \"A question by %author%, author of this article:\""
-msgstr ""
-
-#: build/block-library/blocks/post-comments/lib/metas/class-novablocks-comments-post-meta.php:106
-#: packages/block-library/src/blocks/post-comments/lib/metas/class-novablocks-comments-post-meta.php:106
-msgid "Here are all the dynamic tags you can use: <code>%author%</code> equivalent to <code>%author_display_name%</code>, <code>%author_first_name%</code>, <code>%author_last_name%</code>, <code>%post_title%</code>, and <code>%year%</code>. These will be replaced with the corresponding value."
-msgstr ""
-
-#: build/block-library/blocks/post-comments/lib/metas/class-novablocks-comments-post-meta.php:107
-#: packages/block-library/src/blocks/post-comments/lib/metas/class-novablocks-comments-post-meta.php:107
-msgid "<b>Leave empty</b> to not show a subtitle for your conversation starter content."
-msgstr ""
-
-#: build/block-library/blocks/post-comments/lib/metas/class-novablocks-comments-post-meta.php:111
-#: packages/block-library/src/blocks/post-comments/lib/metas/class-novablocks-comments-post-meta.php:111
-msgid "Conversation Starter"
-msgstr ""
-
-#: build/block-library/blocks/post-comments/lib/metas/class-novablocks-comments-post-meta.php:122
-#: packages/block-library/src/blocks/post-comments/lib/metas/class-novablocks-comments-post-meta.php:122
-msgid "Who is doing the conversation starting? By default, it's the post author."
-msgstr ""
-
-#: build/block-library/blocks/post-comments/lib/renderers/class-novablocks-comments-form.php:62
-#: packages/block-library/src/blocks/post-comments/lib/renderers/class-novablocks-comments-form.php:62
-msgid "What's your comment or question?"
-msgstr ""
-
-#. translators %s: The current commenter name.
-#: build/block-library/blocks/post-comments/lib/renderers/class-novablocks-comments-form.php:66
-#: packages/block-library/src/blocks/post-comments/lib/renderers/class-novablocks-comments-form.php:66
-msgid "What's your comment or question, %s?"
-msgstr ""
-
-#: build/block-library/blocks/post-comments/lib/renderers/class-novablocks-comments-form.php:68
-#: packages/block-library/src/blocks/post-comments/lib/renderers/class-novablocks-comments-form.php:68
-msgid "Let's start a personal, meaningful conversation."
-msgstr ""
-
-#: build/block-library/blocks/post-comments/lib/renderers/class-novablocks-comments-form.php:70
-#: packages/block-library/src/blocks/post-comments/lib/renderers/class-novablocks-comments-form.php:70
-msgid "Share your knowledge or ask a question.."
-msgstr ""
-
-#: build/block-library/blocks/post-comments/lib/renderers/class-novablocks-comments-form.php:78
-#: packages/block-library/src/blocks/post-comments/lib/renderers/class-novablocks-comments-form.php:78
-msgid "What is your background around this topic?"
-msgstr ""
-
-#: build/block-library/blocks/post-comments/lib/renderers/class-novablocks-comments-form.php:80
-#: packages/block-library/src/blocks/post-comments/lib/renderers/class-novablocks-comments-form.php:80
-#: build/block-library/blocks/post-comments/index.js:1
-msgid "Example: Practical philosopher, therapist and writer."
-msgstr ""
-
-#: build/block-library/blocks/post-comments/lib/renderers/class-novablocks-comments-form.php:82
-#: packages/block-library/src/blocks/post-comments/lib/renderers/class-novablocks-comments-form.php:82
-msgid "Your relevant background..."
-msgstr ""
-
-#: build/block-library/blocks/post-comments/lib/renderers/class-novablocks-comments-form.php:84
-#: packages/block-library/src/blocks/post-comments/lib/renderers/class-novablocks-comments-form.php:84
-#: build/block-library/blocks/post-comments/index.js:1
-msgid "What is your name?"
-msgstr ""
-
-#: build/block-library/blocks/post-comments/lib/renderers/class-novablocks-comments-form.php:88
-#: packages/block-library/src/blocks/post-comments/lib/renderers/class-novablocks-comments-form.php:88
-msgid "Ernest Hemingway"
-msgstr ""
-
-#: build/block-library/blocks/post-comments/lib/renderers/class-novablocks-comments-form.php:90
-#: packages/block-library/src/blocks/post-comments/lib/renderers/class-novablocks-comments-form.php:90
-#: build/block-library/blocks/post-comments/index.js:1
-msgid "What is your email address?"
-msgstr ""
-
-#: build/block-library/blocks/post-comments/lib/renderers/class-novablocks-comments-form.php:92
-#: packages/block-library/src/blocks/post-comments/lib/renderers/class-novablocks-comments-form.php:92
-msgid "It will not be published or shared with others."
-msgstr ""
-
-#: build/block-library/blocks/post-comments/lib/renderers/class-novablocks-comments-form.php:94
-#: packages/block-library/src/blocks/post-comments/lib/renderers/class-novablocks-comments-form.php:94
-msgid "your@email.com"
-msgstr ""
-
-#: build/block-library/blocks/post-comments/lib/renderers/class-novablocks-comments-form.php:98
-#: packages/block-library/src/blocks/post-comments/lib/renderers/class-novablocks-comments-form.php:98
-msgid "What is your website URL?"
-msgstr ""
-
-#: build/block-library/blocks/post-comments/lib/renderers/class-novablocks-comments-form.php:102
-#: packages/block-library/src/blocks/post-comments/lib/renderers/class-novablocks-comments-form.php:102
-msgid "https://yourwonderfulsite.com"
-msgstr ""
-
-#: build/block-library/blocks/post-comments/lib/renderers/class-novablocks-comments-form.php:104
-#: packages/block-library/src/blocks/post-comments/lib/renderers/class-novablocks-comments-form.php:104
-msgid "Save my details in this browser for the next time I comment."
-msgstr ""
-
-#: build/block-library/blocks/post-comments/lib/renderers/class-novablocks-comments-form.php:107
-#: build/block-library/blocks/post-comments/lib/renderers/class-novablocks-comments-form.php:255
-#: build/block-library/blocks/post-comments/lib/renderers/class-novablocks-comments-form.php:261
-#: build/block-library/blocks/post-comments/lib/renderers/class-novablocks-comments-form.php:589
-#: packages/block-library/src/blocks/post-comments/lib/renderers/class-novablocks-comments-form.php:107
-#: packages/block-library/src/blocks/post-comments/lib/renderers/class-novablocks-comments-form.php:255
-#: packages/block-library/src/blocks/post-comments/lib/renderers/class-novablocks-comments-form.php:261
-#: packages/block-library/src/blocks/post-comments/lib/renderers/class-novablocks-comments-form.php:589
-#: build/block-library/blocks/post-comments/index.js:1
-msgid "Add this comment"
-msgstr ""
-
-#: build/block-library/blocks/post-comments/lib/renderers/class-novablocks-comments-form.php:108
-#: build/block-library/blocks/post-comments/lib/renderers/class-novablocks-comments-form.php:586
-#: packages/block-library/src/blocks/post-comments/lib/renderers/class-novablocks-comments-form.php:108
-#: packages/block-library/src/blocks/post-comments/lib/renderers/class-novablocks-comments-form.php:586
-msgid "Cancel reply"
-msgstr ""
-
-#. translators: Comment reply button text. %s: Comment author name.
-#: build/block-library/blocks/post-comments/lib/renderers/class-novablocks-comments-form.php:110
-#: build/block-library/blocks/post-comments/lib/renderers/class-novablocks-comments-list.php:84
-#: packages/block-library/src/blocks/post-comments/lib/renderers/class-novablocks-comments-form.php:110
-#: packages/block-library/src/blocks/post-comments/lib/renderers/class-novablocks-comments-list.php:84
-msgid "Reply to %s"
-msgstr ""
-
-#: build/block-library/blocks/post-comments/lib/renderers/class-novablocks-comments-header.php:56
-#: packages/block-library/src/blocks/post-comments/lib/renderers/class-novablocks-comments-header.php:56
-#: build/block-library/blocks/post-comments/index.js:1
-msgid "Conversations"
-msgstr ""
-
-#: build/block-library/blocks/post-comments/lib/renderers/class-novablocks-comments-header.php:57
-#: packages/block-library/src/blocks/post-comments/lib/renderers/class-novablocks-comments-header.php:57
-msgid "Start the conversation"
-msgstr ""
-
-#: build/block-library/blocks/post-comments/lib/renderers/class-novablocks-comments-header.php:60
-#: packages/block-library/src/blocks/post-comments/lib/renderers/class-novablocks-comments-header.php:60
-msgid "One so far"
-msgstr ""
-
-#: build/block-library/blocks/post-comments/lib/renderers/class-novablocks-comments-header.php:61
-#: packages/block-library/src/blocks/post-comments/lib/renderers/class-novablocks-comments-header.php:61
-msgid "% comments"
-msgstr ""
-
-#: build/block-library/blocks/post-comments/lib/renderers/class-novablocks-comments-list.php:81
-#: packages/block-library/src/blocks/post-comments/lib/renderers/class-novablocks-comments-list.php:81
-msgid "Reply"
-msgstr ""
-
-#. translators: Moderation message shown only to moderators.
-#: build/block-library/blocks/post-comments/lib/renderers/class-novablocks-comments-list.php:91
-#: packages/block-library/src/blocks/post-comments/lib/renderers/class-novablocks-comments-list.php:91
-msgid "⚠️ This comment is waiting for your moderation. ⚠️"
-msgstr ""
-
-#: build/block-library/blocks/post-comments/lib/renderers/class-novablocks-comments-list.php:189
-#: packages/block-library/src/blocks/post-comments/lib/renderers/class-novablocks-comments-list.php:189
-msgid "Newer Conversations"
-msgstr ""
-
-#: build/block-library/blocks/post-comments/lib/renderers/class-novablocks-comments-list.php:190
-#: packages/block-library/src/blocks/post-comments/lib/renderers/class-novablocks-comments-list.php:190
-msgid "Older Conversations"
-msgstr ""
-
-#: build/block-library/blocks/post-comments/lib/renderers/class-novablocks-comments-list.php:204
-#: packages/block-library/src/blocks/post-comments/lib/renderers/class-novablocks-comments-list.php:204
-msgid "Comments"
-msgstr ""
-
-#. translators: %s: Denotes the fact that the commenter is the author of the current post.
-#: build/block-library/blocks/post-comments/lib/renderers/class-novablocks-walker-comment.php:40
-#: build/block-library/blocks/post-comments/lib/renderers/class-novablocks-walker-comment.php:270
-#: packages/block-library/src/blocks/post-comments/lib/renderers/class-novablocks-walker-comment.php:40
-#: packages/block-library/src/blocks/post-comments/lib/renderers/class-novablocks-walker-comment.php:270
-msgid "Author"
-msgstr ""
-
-#: build/block-library/blocks/post-comments/lib/renderers/class-novablocks-walker-comment.php:57
-#: packages/block-library/src/blocks/post-comments/lib/renderers/class-novablocks-walker-comment.php:57
-msgid "This comment is only visible to you since it is awaiting moderation."
-msgstr ""
-
-#: build/block-library/blocks/post-comments/lib/renderers/class-novablocks-walker-comment.php:93
-#: build/block-library/blocks/post-comments/lib/renderers/class-novablocks-walker-comment.php:318
-#: packages/block-library/src/blocks/post-comments/lib/renderers/class-novablocks-walker-comment.php:93
-#: packages/block-library/src/blocks/post-comments/lib/renderers/class-novablocks-walker-comment.php:318
-msgid "says:"
-msgstr ""
-
-#: build/block-library/blocks/post-comments/lib/renderers/class-novablocks-walker-comment.php:104
-#: build/block-library/blocks/post-comments/lib/renderers/class-novablocks-walker-comment.php:329
-#: packages/block-library/src/blocks/post-comments/lib/renderers/class-novablocks-walker-comment.php:104
-#: packages/block-library/src/blocks/post-comments/lib/renderers/class-novablocks-walker-comment.php:329
-msgid "Relevant commenter background or experience:"
-msgstr ""
-
-#. translators: 1: Comment date, 2: Comment time.
-#: build/block-library/blocks/post-comments/lib/renderers/class-novablocks-walker-comment.php:127
-#: packages/block-library/src/blocks/post-comments/lib/renderers/class-novablocks-walker-comment.php:127
-msgid "%1$s at %2$s"
-msgstr ""
-
-#: build/block-library/blocks/post-comments/lib/renderers/class-novablocks-walker-comment.php:137
-#: build/block-library/blocks/post-comments/lib/renderers/class-novablocks-walker-comment.php:364
-#: packages/block-library/src/blocks/post-comments/lib/renderers/class-novablocks-walker-comment.php:137
-#: packages/block-library/src/blocks/post-comments/lib/renderers/class-novablocks-walker-comment.php:364
-msgid "Edit"
-msgstr ""
-
-#: build/block-library/blocks/post-comments/lib/renderers/class-novablocks-walker-comment.php:188
-#: packages/block-library/src/blocks/post-comments/lib/renderers/class-novablocks-walker-comment.php:188
-msgid "Just now"
-msgstr ""
-
-#: build/block-library/blocks/post-comments/lib/renderers/class-novablocks-walker-comment.php:191
-#: packages/block-library/src/blocks/post-comments/lib/renderers/class-novablocks-walker-comment.php:191
-msgctxt "%s = human-readable time difference"
-msgid "%s ago"
-msgstr ""
-
-#: build/block-library/blocks/post-comments/lib/renderers/class-novablocks-walker-comment.php:197
-#: packages/block-library/src/blocks/post-comments/lib/renderers/class-novablocks-walker-comment.php:197
-msgid "On %s"
-msgstr ""
-
-#. translators: %s: The label of the individual comment control for more comment actions.
-#: build/block-library/blocks/post-comments/lib/renderers/class-novablocks-walker-comment.php:214
-#: packages/block-library/src/blocks/post-comments/lib/renderers/class-novablocks-walker-comment.php:214
-msgid "More"
-msgstr ""
-
-#: build/block-library/blocks/post-comments/lib/renderers/class-novablocks-walker-comment.php:223
-#: packages/block-library/src/blocks/post-comments/lib/renderers/class-novablocks-walker-comment.php:223
-msgid "Click to copy in clipboard the URL to this comment"
-msgstr ""
-
-#: build/block-library/blocks/post-comments/lib/renderers/class-novablocks-walker-comment.php:223
-#: packages/block-library/src/blocks/post-comments/lib/renderers/class-novablocks-walker-comment.php:223
-msgid "Copy link to comment"
-msgstr ""
-
-#: build/block-library/blocks/post-comments/lib/renderers/class-novablocks-walker-comment.php:259
-#: packages/block-library/src/blocks/post-comments/lib/renderers/class-novablocks-walker-comment.php:259
-msgid "Your comment is awaiting moderation."
-msgstr ""
-
-#: build/block-library/blocks/post-comments/lib/renderers/class-novablocks-walker-comment.php:261
-#: packages/block-library/src/blocks/post-comments/lib/renderers/class-novablocks-walker-comment.php:261
-msgid "Your comment is awaiting moderation. This is a preview, your comment will be visible after it has been approved."
-msgstr ""
-
-#: build/block-library/blocks/posts-collection/init.php:35
-#: packages/block-library/src/blocks/posts-collection/init.php:35
-msgid "There are no posts to be displayed in this block. Try changing the Content Filter settings."
-msgstr ""
-
-#: build/block-library/blocks/posts-collection/init.php:122
-#: packages/block-library/src/blocks/posts-collection/init.php:122
-msgid "No Comments"
-msgstr ""
-
-#: build/block-library/blocks/posts-collection/init.php:127
-#: packages/block-library/src/blocks/posts-collection/init.php:127
-msgctxt "comments title"
-msgid "%1$s Comment"
-msgid_plural "%1$s Comments"
-msgstr[0] ""
-msgstr[1] ""
-
-#: build/block-library/blocks/posts-collection/init.php:154
-#: packages/block-library/src/blocks/posts-collection/init.php:154
-#: build/block-editor/index.js:13
-msgid "%s min read"
+#: lib/extras.php:1669
+msgid "Nova Blocks Tiny"
 msgstr ""
 
 #. translators: 1: required version, 2: currently used version
@@ -522,18 +118,17 @@ msgstr ""
 msgid "Block Areas requires at least WordPress version %1$s. Your site is currently running on WordPress %2$s."
 msgstr ""
 
-#. translators: %s: comma-separated list of slugs
-#: lib/block-areas/src/Block_Areas_Post_Type.php:77
-msgid "Your theme supports block areas with the following slugs: %s"
+#. translators: %s: command
+#: lib/block-areas/src/Block_Areas_Post_Type.php:83
+msgid "You can render these block areas in your theme using %s."
 msgstr ""
 
 #: lib/block-areas/src/Block_Areas_Post_Type.php:79
 msgid "Your theme supports block areas."
 msgstr ""
 
-#. translators: %s: command
-#: lib/block-areas/src/Block_Areas_Post_Type.php:83
-msgid "You can render these block areas in your theme using %s."
+#: lib/block-areas/src/Block_Areas_Post_Type.php:77
+msgid "Your theme supports block areas with the following slugs: %s"
 msgstr ""
 
 #: lib/block-areas/src/Block_Areas_Post_Type.php:102
@@ -623,12 +218,10 @@ msgid "Slug"
 msgstr ""
 
 #: lib/block-areas/src/Default_Block_Areas.php:75
-#: build/block-library/blocks/announcement-bar/index.js:6
 msgid "Promo Bar"
 msgstr ""
 
 #: lib/block-areas/src/Default_Block_Areas.php:88
-#: build/block-library/blocks/header/index.js:6
 msgid "Header"
 msgstr ""
 
@@ -636,1112 +229,362 @@ msgstr ""
 msgid "Footer"
 msgstr ""
 
-#: lib/extras.php:255
-#: build/block-library/blocks/headline/index.js:6
-msgid "Headline"
+#: build/block-library/blocks/header/init.php:95, packages/block-library/build/blocks/header/init.php:95, packages/block-library/build-module/blocks/header/init.php:95, packages/block-library/src/blocks/header/init.php:95
+msgid "Menu"
 msgstr ""
 
-#: lib/extras.php:265
-msgid "A brilliant subtitle to explain its catchiness"
+#: build/block-library/blocks/openhours/init.php:576, packages/block-library/build/blocks/openhours/init.php:576, packages/block-library/build-module/blocks/openhours/init.php:576, packages/block-library/src/blocks/openhours/init.php:576
+msgid "You haven't setup a schedule yet."
 msgstr ""
 
-#: lib/extras.php:280
-msgid "Discover more"
+#: build/block-library/blocks/post-comments/init.php:45, packages/block-library/build/blocks/post-comments/init.php:45, packages/block-library/build-module/blocks/post-comments/init.php:45, packages/block-library/src/blocks/post-comments/init.php:45
+msgid "Link copied to your clipboard"
 msgstr ""
 
-#: lib/extras.php:320
-msgid "Shoot for the moon, Even if You Miss it"
+#: build/block-library/blocks/posts-collection/init.php:35, packages/block-library/build/blocks/posts-collection/init.php:35, packages/block-library/build-module/blocks/posts-collection/init.php:35, packages/block-library/src/blocks/posts-collection/init.php:35
+msgid "There are no posts to be displayed in this block. Try changing the Content Filter settings."
 msgstr ""
 
-#: lib/extras.php:327
-msgid "Welcome to our planet, look and feel matters!"
+#: build/block-library/blocks/posts-collection/init.php:122, packages/block-library/build/blocks/posts-collection/init.php:122, packages/block-library/build-module/blocks/posts-collection/init.php:122, packages/block-library/src/blocks/posts-collection/init.php:122
+msgid "No Comments"
 msgstr ""
 
-#: lib/extras.php:334
-msgid "We've always defined ourselves by the ability to overcome the impossible. And we count these moments. These moments when we dare to aim higher, to break barriers, to reach for the stars, to make the unknown known."
-msgstr ""
-
-#: lib/extras.php:346
-msgid "Discover More"
-msgstr ""
-
-#: lib/extras.php:460
-msgid "Auto"
-msgstr ""
-
-#: lib/extras.php:464
-#: lib/extras.php:508
-msgid "Half"
-msgstr ""
-
-#: lib/extras.php:468
-#: lib/extras.php:512
-msgid "Two Thirds"
-msgstr ""
-
-#: lib/extras.php:472
-#: lib/extras.php:516
-msgid "Three Quarters"
-msgstr ""
-
-#: lib/extras.php:476
-msgid "Full Height"
-msgstr ""
-
-#: lib/extras.php:520
-#: lib/extras.php:544
-msgid "Full"
-msgstr ""
-
-#: lib/extras.php:526
-msgid "Small"
-msgstr ""
-
-#: lib/extras.php:530
-msgid "Medium"
-msgstr ""
-
-#: lib/extras.php:534
-#: lib/extras.php:548
-msgid "Large"
-msgstr ""
-
-#: lib/extras.php:538
-#: lib/extras.php:556
-msgid "Custom"
-msgstr ""
-
-#: lib/extras.php:552
-msgid "Narrow"
-msgstr ""
-
-#: lib/extras.php:924
-msgid "Static"
-msgstr ""
-
-#: lib/extras.php:928
-msgid "Parallax"
-msgstr ""
-
-#: lib/extras.php:1665
-msgid "Nova Blocks Huge"
-msgstr ""
-
-#: lib/extras.php:1666
-msgid "Nova Blocks Large"
-msgstr ""
-
-#: lib/extras.php:1667
-msgid "Nova Blocks Medium"
-msgstr ""
-
-#: lib/extras.php:1668
-msgid "Nova Blocks Small"
-msgstr ""
-
-#: lib/extras.php:1669
-msgid "Nova Blocks Tiny"
-msgstr ""
-
-#: build/advanced-gallery/index.js:1
-#: build/block-library/blocks/card/index.js:6
-#: build/block-library/blocks/hero/index.js:1
-#: build/block-library/blocks/slideshow/index.js:1
-msgid "Change Media"
-msgstr ""
-
-#: build/advanced-gallery/index.js:1
-msgid "Image Container Height"
-msgstr ""
-
-#: build/advanced-gallery/index.js:1
-msgid "Images Crop Style"
-msgstr ""
-
-#: build/advanced-gallery/index.js:1
-msgid "Size Contrast"
-msgstr ""
-
-#: build/advanced-gallery/index.js:1
-msgid "Position Shift"
-msgstr ""
-
-#: build/advanced-gallery/index.js:1
-msgid "Elements Distance"
-msgstr ""
-
-#: build/advanced-gallery/index.js:1
-msgid "Placement Variation"
-msgstr ""
-
-#: build/advanced-gallery/index.js:1
-msgid "Image Rotation"
-msgstr ""
-
-#: build/advanced-gallery/index.js:1
-msgid "Image Position"
-msgstr ""
-
-#: build/advanced-gallery/index.js:1
-msgid "Edit Gallery"
-msgstr ""
-
-#: build/advanced-gallery/index.js:1
-msgid "Add Video"
-msgstr ""
-
-#: build/block-editor/index.js:13
-msgid "Align Top"
-msgstr ""
-
-#: build/block-editor/index.js:13
-msgid "Align Center"
-msgstr ""
-
-#: build/block-editor/index.js:13
-msgid "Align Bottom"
-msgstr ""
-
-#: build/block-editor/index.js:13
-msgid "Posts loading type"
-msgstr ""
-
-#: build/block-editor/index.js:13
-msgid "Drag images, upload new ones or select files from your library."
-msgstr ""
-
-#: build/block-editor/index.js:13
-msgid "Static Scrolling Settings"
-msgstr ""
-
-#: build/block-editor/index.js:13
-msgid "Parallax Scrolling Settings"
-msgstr ""
-
-#: build/block-editor/index.js:13
-msgid "Start Frame"
-msgstr ""
-
-#: build/block-editor/index.js:13
-msgid "Smooth start transition"
-msgstr ""
-
-#: build/block-editor/index.js:13
-msgid "End Frame"
-msgstr ""
-
-#: build/block-editor/index.js:13
-msgid "Smooth end transition"
-msgstr ""
-
-#: build/block-editor/index.js:13
-msgid "Choose a shape preset:"
-msgstr ""
-
-#: build/block-editor/index.js:13
-msgid "Enable Shape Debug"
-msgstr ""
-
-#: build/block-editor/index.js:13
-msgid "Enable Media Shape"
-msgstr ""
-
-#: build/block-editor/index.js:13
-msgid "Enable Blob Decoration"
-msgstr ""
-
-#: build/block-editor/index.js:13
-msgid "Title Starting Size"
-msgstr ""
-
-#: build/block-editor/index.js:13
-#: build/collection/index.js:6
-msgid "Image container height"
-msgstr ""
-
-#: build/block-editor/index.js:13
-msgid "Card Media Opacity"
-msgstr ""
-
-#: build/block-editor/index.js:13
-#: build/collection/index.js:6
-msgid "Image padding"
-msgstr ""
-
-#: build/block-editor/index.js:13
-msgid "Content padding"
-msgstr ""
-
-#: build/block-editor/index.js:13
-msgid "Collection Title Heading"
-msgstr ""
-
-#: build/block-editor/index.js:13
-msgid "Card Title Heading"
-msgstr ""
-
-#: build/block-editor/index.js:13
-msgid "Additional Information"
-msgstr ""
-
-#: build/block-editor/index.js:13
-#: build/block-library/blocks/hero/index.js:1
-msgid "Set up elements for this block"
-msgstr ""
-
-#: build/block-editor/index.js:13
-msgid "Use Functional Colors"
-msgstr ""
-
-#: build/block-editor/index.js:13
-msgid "Use Source Color as Reference"
-msgstr ""
-
-#: build/block-editor/index.js:13
-msgid "Block Color Signal"
-msgstr ""
-
-#: build/block-editor/index.js:13
-msgid "Smallest"
-msgstr ""
-
-#: build/block-editor/index.js:13
-msgid "Smaller"
-msgstr ""
-
-#: build/block-editor/index.js:13
-msgid "Normal"
-msgstr ""
-
-#: build/block-editor/index.js:13
-msgid "Larger"
-msgstr ""
-
-#: build/block-editor/index.js:13
-msgid "Largest"
-msgstr ""
-
-#: build/block-editor/index.js:13
-msgid "Text Settings"
-msgstr ""
-
-#: build/block-editor/index.js:13
-msgid "Font Size"
-msgstr ""
-
-#: build/block-editor/index.js:13
-msgid "Overlay Filter Strength"
-msgstr ""
-
-#: build/block-editor/index.js:13
-msgid "Colors"
-msgstr ""
-
-#: build/block-editor/index.js:13
-msgid "Vertical Anchoring"
-msgstr ""
-
-#: build/block-editor/index.js:13
-#: build/collection/index.js:6
-msgid "Choose a layout preset:"
-msgstr ""
-
-#: build/block-editor/index.js:13
-msgid "Focal Point"
-msgstr ""
-
-#: build/block-library/blocks/advanced-gallery/index.js:1
-msgid "Gallery of the Stars"
-msgstr ""
-
-#: build/block-library/blocks/advanced-gallery/index.js:1
-msgid "Display galleries of images in unique and creative compositions."
-msgstr ""
-
-#: build/block-library/blocks/advanced-gallery/index.js:1
-#: build/block-library/blocks/card/index.js:6
-#: build/block-library/blocks/media/index.js:6
-msgid "image with text"
-msgstr ""
-
-#: build/block-library/blocks/advanced-gallery/index.js:1
-#: build/block-library/blocks/cards-collection/index.js:6
-#: build/block-library/blocks/media/index.js:6
-msgid "columns"
-msgstr ""
-
-#: build/block-library/blocks/advanced-gallery/index.js:1
-#: build/block-library/blocks/media/index.js:6
-msgid "side text"
-msgstr ""
-
-#: build/block-library/blocks/announcement-bar/index.js:6
-msgid "Announcement Bar"
-msgstr ""
-
-#: build/block-library/blocks/announcement-bar/index.js:6
-msgid "Display a featured message through a banner across the top of your site."
-msgstr ""
-
-#: build/block-library/blocks/announcement-bar/index.js:6
-msgid "Welcome Header Bar"
-msgstr ""
-
-#: build/block-library/blocks/announcement-bar/index.js:6
-msgid "Top Bar"
-msgstr ""
-
-#: build/block-library/blocks/announcement-bar/index.js:6
-msgid "Add a link to make the whole Announcement Bar clickable."
-msgstr ""
-
-#: build/block-library/blocks/announcement-bar/index.js:6
-msgid "Open in new tab"
-msgstr ""
-
-#: build/block-library/blocks/card/index.js:6
-msgid "Card"
-msgstr ""
-
-#: build/block-library/blocks/card/index.js:6
-msgid "Display related pieces of information in a flexible container visually resembling a playing card."
-msgstr ""
-
-#: build/block-library/blocks/cards-collection/index.js:6
-msgid "Cards Collection"
-msgstr ""
-
-#: build/block-library/blocks/cards-collection/index.js:6
-msgid "Display a list of related items placed within a coherent layout."
-msgstr ""
-
-#: build/block-library/blocks/cards-collection/index.js:6
-msgid "grid"
-msgstr ""
-
-#: build/block-library/blocks/cards-collection/index.js:6
-msgid "collection"
-msgstr ""
-
-#: build/block-library/blocks/cards-collection/index.js:6
-msgid "group"
-msgstr ""
-
-#: build/block-library/blocks/google-map/index.js:6
-msgid "Map of the World"
-msgstr ""
-
-#: build/block-library/blocks/google-map/index.js:6
-msgid "Display an interactive map to show the location of your venue."
-msgstr ""
-
-#: build/block-library/blocks/google-map/index.js:6
-msgid "google"
-msgstr ""
-
-#: build/block-library/blocks/google-map/index.js:6
-msgid "maps"
-msgstr ""
-
-#: build/block-library/blocks/google-map/index.js:6
-msgid "google maps"
-msgstr ""
-
-#: build/block-library/blocks/google-map/index.js:6
-msgid "location"
-msgstr ""
-
-#: build/block-library/blocks/google-map/index.js:6
-msgid "register a Google Maps API Key"
-msgstr ""
-
-#: build/block-library/blocks/google-map/index.js:6
-msgid "It seems that your Google Maps API key is INVALID. Please REFRESH the page, double check that you pasted it correctly, and that it is a valid API key. More information about how to"
-msgstr ""
-
-#: build/block-library/blocks/google-map/index.js:6
-msgid "To display the map, you need to"
-msgstr ""
-
-#: build/block-library/blocks/google-map/index.js:6
-msgid "and include it bellow."
-msgstr ""
-
-#: build/block-library/blocks/google-map/index.js:6
-msgid "Location Map of The World"
-msgstr ""
-
-#: build/block-library/blocks/google-map/index.js:6
-msgid "Paste API key here"
-msgstr ""
-
-#: build/block-library/blocks/google-map/index.js:6
-msgid "Save"
-msgstr ""
-
-#: build/block-library/blocks/google-map/index.js:6
-msgid "Show Nearby Venues"
-msgstr ""
-
-#: build/block-library/blocks/google-map/index.js:6
-msgid "Show Labels"
-msgstr ""
-
-#: build/block-library/blocks/google-map/index.js:6
-msgid "Show Controls"
-msgstr ""
-
-#: build/block-library/blocks/google-map/index.js:6
-msgid "Zoom Level"
-msgstr ""
-
-#: build/block-library/blocks/google-map/index.js:6
-msgid "Google Maps API Key"
-msgstr ""
-
-#: build/block-library/blocks/header-row/index.js:6
-msgid "Header Row"
-msgstr ""
-
-#: build/block-library/blocks/header-row/index.js:6
-msgid "Outputs header row markup."
-msgstr ""
-
-#: build/block-library/blocks/header/index.js:6
-msgid "Outputs custom header markup."
-msgstr ""
-
-#: build/block-library/blocks/header/index.js:6
-msgid "logo"
-msgstr ""
-
-#: build/block-library/blocks/header/index.js:6
-#: build/block-library/blocks/navigation/index.js:1
-msgid "menu"
-msgstr ""
-
-#: build/block-library/blocks/header/index.js:6
-msgid "Logo on the left side and one navigation menu"
-msgstr ""
-
-#: build/block-library/blocks/header/index.js:6
-msgid "Logo centered and one navigation menu on each side"
-msgstr ""
-
-#: build/block-library/blocks/header/index.js:6
-msgid "Change Layout"
-msgstr ""
-
-#: build/block-library/blocks/header/index.js:6
-#: build/block-library/blocks/sidecar/index.js:6
-msgid "Select a variation to start with."
-msgstr ""
-
-#: build/block-library/blocks/header/index.js:6
-msgid "Sticky Row Selection"
-msgstr ""
-
-#: build/block-library/blocks/header/index.js:6
-msgid "Select which row to stay fixed while scrolling."
-msgstr ""
-
-#: build/block-library/blocks/header/index.js:6
-msgid "Logo left with one menu on the right."
-msgstr ""
-
-#: build/block-library/blocks/header/index.js:6
-msgid "Logo centered with one menu on the left and one menu on the right."
-msgstr ""
-
-#: build/block-library/blocks/header/index.js:6
-msgid "Two Rows Header with centered logo and three menus."
-msgstr ""
-
-#: build/block-library/blocks/header/index.js:6
-msgid "Three Rows Header with centered logo and three menus."
-msgstr ""
-
-#: build/block-library/blocks/headline/index.js:6
-msgid "Advanced heading block with a fancier display."
-msgstr ""
-
-#: build/block-library/blocks/headline/index.js:6
-msgid "heading"
-msgstr ""
-
-#: build/block-library/blocks/headline/index.js:6
-msgid "title"
-msgstr ""
-
-#: build/block-library/blocks/headline/index.js:6
-msgid "cta"
-msgstr ""
-
-#: build/block-library/blocks/headline/index.js:6
-msgid "call to action"
-msgstr ""
-
-#: build/block-library/blocks/headline/index.js:6
-msgid "Our Story"
-msgstr ""
-
-#: build/block-library/blocks/headline/index.js:6
-msgid "Discover"
-msgstr ""
-
-#: build/block-library/blocks/headline/index.js:6
-msgid "Headline Settings"
-msgstr ""
-
-#: build/block-library/blocks/headline/index.js:6
-msgid "Level"
-msgstr ""
-
-#: build/block-library/blocks/headline/index.js:6
-msgid "Subtitle…"
-msgstr ""
-
-#: build/block-library/blocks/headline/index.js:6
-msgid "Write title…"
-msgstr ""
-
-#: build/block-library/blocks/hero/index.js:1
-msgid "Hero of the Galaxy"
-msgstr ""
-
-#: build/block-library/blocks/hero/index.js:1
-msgid "A great way to get your visitors acquainted with your content."
-msgstr ""
-
-#: build/block-library/blocks/hero/index.js:1
-#: build/block-library/blocks/slideshow/index.js:1
-msgid "cover"
-msgstr ""
-
-#: build/block-library/blocks/hero/index.js:1
-msgid "full width"
-msgstr ""
-
-#: build/block-library/blocks/hero/index.js:1
-msgid "hero image"
-msgstr ""
-
-#: build/block-library/blocks/hero/index.js:1
-msgid "cover section"
-msgstr ""
-
-#: build/block-library/blocks/hero/index.js:1
-#: build/block-library/blocks/slideshow/index.js:1
-msgid "Minimum Height"
-msgstr ""
-
-#: build/block-library/blocks/logo/index.js:1
-msgid "Logo"
-msgstr ""
-
-#: build/block-library/blocks/logo/index.js:1
-msgid "Outputs custom logo markup."
-msgstr ""
-
-#: build/block-library/blocks/logo/index.js:1
-msgid "branding"
-msgstr ""
-
-#: build/block-library/blocks/media/index.js:6
-msgid "Media Card Constellation"
-msgstr ""
-
-#: build/block-library/blocks/media/index.js:6
-msgid "Display media objects alongside short pieces of content."
-msgstr ""
-
-#: build/block-library/blocks/media/index.js:6
-msgid "Show Media on Left Side"
-msgstr ""
-
-#: build/block-library/blocks/media/index.js:6
-msgid "Show Media on Right Side"
-msgstr ""
-
-#: build/block-library/blocks/menu-food/index.js:6
-msgid "Food Menu"
-msgstr ""
-
-#: build/block-library/blocks/menu-food/index.js:6
-msgid "Display a list of food or drink items available at your venue."
-msgstr ""
-
-#: build/block-library/blocks/menu-food/index.js:6
-msgid "food menu"
-msgstr ""
-
-#: build/block-library/blocks/menu-food/index.js:6
-msgid "restaurant menu"
-msgstr ""
-
-#: build/block-library/blocks/menu-food/index.js:6
-msgid "dishes"
-msgstr ""
-
-#: build/block-library/blocks/menu-food/index.js:6
-msgid "eats"
-msgstr ""
-
-#: build/block-library/blocks/menu-food/index.js:6
-msgid "menu list"
-msgstr ""
-
-#: build/block-library/blocks/menu-food/index.js:6
-msgid "Classic"
-msgstr ""
-
-#: build/block-library/blocks/menu-food/index.js:6
-msgid "Basic"
-msgstr ""
-
-#: build/block-library/blocks/menu-food/index.js:6
-msgid "2 columns"
-msgstr ""
-
-#: build/block-library/blocks/menu-food/index.js:6
-msgid "Price"
-msgstr ""
-
-#: build/block-library/blocks/menu-food/index.js:6
-msgid "Description"
-msgstr ""
-
-#: build/block-library/blocks/menu-food/index.js:6
-msgid "Add New Menu Section"
-msgstr ""
-
-#: build/block-library/blocks/menu-food/index.js:6
-msgid "Add Menu Section"
-msgstr ""
-
-#: build/block-library/blocks/menu-food/index.js:6
-msgid "Food Menu Section"
-msgstr ""
-
-#: build/block-library/blocks/menu-food/index.js:6
-msgid "A subgrouping of the Menu."
-msgstr ""
-
-#: build/block-library/blocks/menu-food/index.js:6
-msgid "menu section"
-msgstr ""
-
-#: build/block-library/blocks/menu-food/index.js:6
-msgid "food section"
-msgstr ""
-
-#: build/block-library/blocks/menu-food/index.js:6
-msgid "list section"
-msgstr ""
-
-#: build/block-library/blocks/menu-food/index.js:6
-msgid "dishes section"
-msgstr ""
-
-#: build/block-library/blocks/menu-food/index.js:6
-msgid "Drinks"
-msgstr ""
-
-#: build/block-library/blocks/menu-food/index.js:6
-msgid "Add New Menu Item"
-msgstr ""
-
-#: build/block-library/blocks/menu-food/index.js:6
-msgid "Add Menu Item"
-msgstr ""
-
-#: build/block-library/blocks/menu-food/index.js:6
-msgid "Menu Item"
-msgstr ""
-
-#: build/block-library/blocks/menu-food/index.js:6
-msgid "A food or drink item contained in a menu or menu section."
-msgstr ""
-
-#: build/block-library/blocks/menu-food/index.js:6
-msgid "menu item"
-msgstr ""
-
-#: build/block-library/blocks/menu-food/index.js:6
-msgid "food item"
-msgstr ""
-
-#: build/block-library/blocks/menu-food/index.js:6
-msgid "dish"
-msgstr ""
-
-#: build/block-library/blocks/menu-food/index.js:6
-msgid "list item"
-msgstr ""
-
-#: build/block-library/blocks/menu-food/index.js:6
-msgid "Sweet Shrimp Salad"
-msgstr ""
-
-#: build/block-library/blocks/menu-food/index.js:6
-msgid "Tomatillo, Baja Crema, Cabbage, Fried Okra"
-msgstr ""
-
-#: build/block-library/blocks/menu-food/index.js:6
-msgid "Our top pick"
-msgstr ""
-
-#: build/block-library/blocks/menu-food/index.js:6
-msgid "Product Title"
-msgstr ""
-
-#: build/block-library/blocks/menu-food/index.js:6
-msgid "$0.00"
-msgstr ""
-
-#: build/block-library/blocks/menu-food/index.js:6
-msgid "Product Description"
-msgstr ""
-
-#: build/block-library/blocks/menu-food/index.js:6
-msgid "Highlight item"
-msgstr ""
-
-#: build/block-library/blocks/menu-food/index.js:6
-msgid "Use it if you want to highlight some of the menu items and make them stand out."
-msgstr ""
-
-#: build/block-library/blocks/menu-food/index.js:6
-msgid "On sale"
-msgstr ""
-
-#: build/block-library/blocks/navigation/index.js:1
-msgid "Space Navigation"
-msgstr ""
-
-#: build/block-library/blocks/navigation/index.js:1
-msgid "Outputs chosen navigation menu markup."
-msgstr ""
-
-#: build/block-library/blocks/navigation/index.js:1
-msgid "site menu"
-msgstr ""
-
-#: build/block-library/blocks/navigation/index.js:1
-msgid "primary"
-msgstr ""
+#: build/block-library/blocks/posts-collection/init.php:127, packages/block-library/build/blocks/posts-collection/init.php:127, packages/block-library/build-module/blocks/posts-collection/init.php:127, packages/block-library/src/blocks/posts-collection/init.php:127
+msgctxt "comments title"
+msgid "%1$s Comment"
+msgid_plural "%1$s Comments"
+msgstr[0] ""
+msgstr[1] ""
 
-#: build/block-library/blocks/navigation/index.js:1
-msgid "secondary"
+#: build/block-library/blocks/posts-collection/init.php:154, packages/block-library/build/blocks/posts-collection/init.php:154, packages/block-library/build-module/blocks/posts-collection/init.php:154, packages/block-library/src/blocks/posts-collection/init.php:154
+msgid "%s min read"
 msgstr ""
 
-#: build/block-library/blocks/openhours/index.js:1
-msgid "OpenHours"
+#: build/block-library/blocks/post-comments/lib/class-novablocks-comments-logic.php:263, build/block-library/blocks/post-comments/lib/class-novablocks-comments-logic.php:273, build/block-library/blocks/post-comments/lib/actions/class-novablocks-comments-highlight.php:404, build/block-library/blocks/post-comments/lib/actions/class-novablocks-comments-highlight.php:414, build/block-library/blocks/post-comments/lib/metas/class-novablocks-comments-meta.php:224, build/block-library/blocks/post-comments/lib/metas/class-novablocks-comments-meta.php:234, build/block-library/blocks/post-comments/lib/metas/class-novablocks-comments-post-meta.php:197, build/block-library/blocks/post-comments/lib/metas/class-novablocks-comments-post-meta.php:207, packages/block-library/build/blocks/post-comments/lib/class-novablocks-comments-logic.php:263, packages/block-library/build/blocks/post-comments/lib/class-novablocks-comments-logic.php:273, packages/block-library/build-module/blocks/post-comments/lib/class-novablocks-comments-logic.php:263, packages/block-library/build-module/blocks/post-comments/lib/class-novablocks-comments-logic.php:273, packages/block-library/src/blocks/post-comments/lib/class-novablocks-comments-logic.php:263, packages/block-library/src/blocks/post-comments/lib/class-novablocks-comments-logic.php:273, packages/block-library/build/blocks/post-comments/lib/actions/class-novablocks-comments-highlight.php:404, packages/block-library/build/blocks/post-comments/lib/actions/class-novablocks-comments-highlight.php:414, packages/block-library/build/blocks/post-comments/lib/metas/class-novablocks-comments-meta.php:224, packages/block-library/build/blocks/post-comments/lib/metas/class-novablocks-comments-meta.php:234, packages/block-library/build/blocks/post-comments/lib/metas/class-novablocks-comments-post-meta.php:197, packages/block-library/build/blocks/post-comments/lib/metas/class-novablocks-comments-post-meta.php:207, packages/block-library/build-module/blocks/post-comments/lib/actions/class-novablocks-comments-highlight.php:404, packages/block-library/build-module/blocks/post-comments/lib/actions/class-novablocks-comments-highlight.php:414, packages/block-library/build-module/blocks/post-comments/lib/metas/class-novablocks-comments-meta.php:224, packages/block-library/build-module/blocks/post-comments/lib/metas/class-novablocks-comments-meta.php:234, packages/block-library/build-module/blocks/post-comments/lib/metas/class-novablocks-comments-post-meta.php:197, packages/block-library/build-module/blocks/post-comments/lib/metas/class-novablocks-comments-post-meta.php:207, packages/block-library/src/blocks/post-comments/lib/actions/class-novablocks-comments-highlight.php:404, packages/block-library/src/blocks/post-comments/lib/actions/class-novablocks-comments-highlight.php:414, packages/block-library/src/blocks/post-comments/lib/metas/class-novablocks-comments-meta.php:224, packages/block-library/src/blocks/post-comments/lib/metas/class-novablocks-comments-meta.php:234, packages/block-library/src/blocks/post-comments/lib/metas/class-novablocks-comments-post-meta.php:197, packages/block-library/src/blocks/post-comments/lib/metas/class-novablocks-comments-post-meta.php:207
+msgid "You should not do that!"
 msgstr ""
 
-#: build/block-library/blocks/openhours/index.js:1
-msgid "Display Opening Hours for any kind of venue."
+#: build/block-library/blocks/post-comments/lib/class-novablocks-comments-renderer.php:90, packages/block-library/build/blocks/post-comments/lib/class-novablocks-comments-renderer.php:90, packages/block-library/build-module/blocks/post-comments/lib/class-novablocks-comments-renderer.php:90, packages/block-library/src/blocks/post-comments/lib/class-novablocks-comments-renderer.php:90
+msgid "This conversation has been closed. If you have more to share, please "
 msgstr ""
 
-#: build/block-library/blocks/openhours/index.js:1
-msgid "Learn more about time formatting"
+#: build/block-library/blocks/post-comments/lib/class-novablocks-comments-renderer.php:90, packages/block-library/build/blocks/post-comments/lib/class-novablocks-comments-renderer.php:90, packages/block-library/build-module/blocks/post-comments/lib/class-novablocks-comments-renderer.php:90, packages/block-library/src/blocks/post-comments/lib/class-novablocks-comments-renderer.php:90
+msgid "contact us"
 msgstr ""
 
-#: build/block-library/blocks/openhours/index.js:1
-msgid ""
-"Monday 10am - 3pm\n"
-"Tuesday to Friday 9 - 17\n"
-"Sat noon - 2am"
+#: build/block-library/blocks/post-comments/lib/actions/class-novablocks-comments-highlight.php:84, packages/block-library/build/blocks/post-comments/lib/actions/class-novablocks-comments-highlight.php:84, packages/block-library/build-module/blocks/post-comments/lib/actions/class-novablocks-comments-highlight.php:84, packages/block-library/src/blocks/post-comments/lib/actions/class-novablocks-comments-highlight.php:84
+msgid "Highlighted by"
 msgstr ""
 
-#: build/block-library/blocks/openhours/index.js:1
-msgid "Displaying the opening hours"
+#: build/block-library/blocks/post-comments/lib/actions/class-novablocks-comments-highlight.php:98, packages/block-library/build/blocks/post-comments/lib/actions/class-novablocks-comments-highlight.php:98, packages/block-library/build-module/blocks/post-comments/lib/actions/class-novablocks-comments-highlight.php:98, packages/block-library/src/blocks/post-comments/lib/actions/class-novablocks-comments-highlight.php:98
+msgid "Conversation editor"
 msgstr ""
 
-#: build/block-library/blocks/openhours/index.js:1
-msgid "It's {time} and we're Open until {today-closing-time}."
+#: build/block-library/blocks/post-comments/lib/actions/class-novablocks-comments-highlight.php:102, packages/block-library/build/blocks/post-comments/lib/actions/class-novablocks-comments-highlight.php:102, packages/block-library/build-module/blocks/post-comments/lib/actions/class-novablocks-comments-highlight.php:102, packages/block-library/src/blocks/post-comments/lib/actions/class-novablocks-comments-highlight.php:102
+msgid "Article author"
 msgstr ""
 
-#: build/block-library/blocks/openhours/index.js:1
-msgid "{time} - It's today, we're Open."
+#: build/block-library/blocks/post-comments/lib/actions/class-novablocks-comments-highlight.php:100, packages/block-library/build/blocks/post-comments/lib/actions/class-novablocks-comments-highlight.php:100, packages/block-library/build-module/blocks/post-comments/lib/actions/class-novablocks-comments-highlight.php:100, packages/block-library/src/blocks/post-comments/lib/actions/class-novablocks-comments-highlight.php:100
+msgid "Conversation starter"
 msgstr ""
 
-#: build/block-library/blocks/openhours/index.js:1
-msgid "We're closed until {next-opening-day} at {next-opening-time}."
+#: build/block-library/blocks/post-comments/lib/actions/class-novablocks-comments-highlight.php:134, packages/block-library/build/blocks/post-comments/lib/actions/class-novablocks-comments-highlight.php:134, packages/block-library/build-module/blocks/post-comments/lib/actions/class-novablocks-comments-highlight.php:134, packages/block-library/src/blocks/post-comments/lib/actions/class-novablocks-comments-highlight.php:134
+msgid "Toggle your highlight of this comment"
 msgstr ""
 
-#: build/block-library/blocks/openhours/index.js:1
-msgid "{time} - it's closed now."
+#: build/block-library/blocks/post-comments/lib/actions/class-novablocks-comments-highlight.php:135, packages/block-library/build/blocks/post-comments/lib/actions/class-novablocks-comments-highlight.php:135, packages/block-library/build-module/blocks/post-comments/lib/actions/class-novablocks-comments-highlight.php:135, packages/block-library/src/blocks/post-comments/lib/actions/class-novablocks-comments-highlight.php:135
+msgid "Toggle your highlight"
 msgstr ""
 
-#: build/block-library/blocks/openhours/index.js:1
-msgid "Compress Opening Hours"
+#: build/block-library/blocks/post-comments/lib/actions/class-novablocks-comments-highlight.php:177, packages/block-library/build/blocks/post-comments/lib/actions/class-novablocks-comments-highlight.php:177, packages/block-library/build-module/blocks/post-comments/lib/actions/class-novablocks-comments-highlight.php:177, packages/block-library/src/blocks/post-comments/lib/actions/class-novablocks-comments-highlight.php:177
+msgid "Highlighters of this comment"
 msgstr ""
 
-#: build/block-library/blocks/openhours/index.js:1
-msgid "Hide Closed Days"
+#: build/block-library/blocks/post-comments/lib/actions/class-novablocks-comments-highlight.php:183, packages/block-library/build/blocks/post-comments/lib/actions/class-novablocks-comments-highlight.php:183, packages/block-library/build-module/blocks/post-comments/lib/actions/class-novablocks-comments-highlight.php:183, packages/block-library/src/blocks/post-comments/lib/actions/class-novablocks-comments-highlight.php:183
+msgid "Me (%s)"
 msgstr ""
 
-#: build/block-library/blocks/openhours/index.js:1
-msgid "Use Short Day Name"
+#: build/block-library/blocks/post-comments/lib/actions/class-novablocks-comments-highlight.php:207, packages/block-library/build/blocks/post-comments/lib/actions/class-novablocks-comments-highlight.php:207, packages/block-library/build-module/blocks/post-comments/lib/actions/class-novablocks-comments-highlight.php:207, packages/block-library/src/blocks/post-comments/lib/actions/class-novablocks-comments-highlight.php:207
+msgid "All the current highlights of this comment, plus the option to highlight yourself.<br/>Highlighters can only be <strong>registered users</strong> that have <strong>management capabilities</strong> for comments."
 msgstr ""
 
-#: build/block-library/blocks/opentable/index.js:6
-msgid "OpenTable Reservation"
+#: build/block-library/blocks/post-comments/lib/actions/class-novablocks-comments-highlight.php:217, packages/block-library/build/blocks/post-comments/lib/actions/class-novablocks-comments-highlight.php:217, packages/block-library/build-module/blocks/post-comments/lib/actions/class-novablocks-comments-highlight.php:217, packages/block-library/src/blocks/post-comments/lib/actions/class-novablocks-comments-highlight.php:217
+msgid "<strong>Error:</strong> Wrong data sent."
 msgstr ""
 
-#: build/block-library/blocks/opentable/index.js:6
-msgid "Add OpenTable online reservation booking to your site."
+#: build/block-library/blocks/post-comments/lib/actions/class-novablocks-comments-highlight.php:218, build/block-library/blocks/post-comments/lib/actions/class-novablocks-comments-highlight.php:235, build/block-library/blocks/post-comments/lib/actions/class-novablocks-comments-highlight.php:254, build/block-library/blocks/post-comments/lib/actions/class-novablocks-comments-highlight.php:280, build/block-library/blocks/post-comments/lib/actions/class-novablocks-comments-highlight.php:268, build/block-library/blocks/post-comments/lib/metas/class-novablocks-comments-meta.php:97, packages/block-library/build/blocks/post-comments/lib/actions/class-novablocks-comments-highlight.php:218, packages/block-library/build/blocks/post-comments/lib/actions/class-novablocks-comments-highlight.php:235, packages/block-library/build/blocks/post-comments/lib/actions/class-novablocks-comments-highlight.php:254, packages/block-library/build/blocks/post-comments/lib/actions/class-novablocks-comments-highlight.php:280, packages/block-library/build/blocks/post-comments/lib/actions/class-novablocks-comments-highlight.php:268, packages/block-library/build/blocks/post-comments/lib/metas/class-novablocks-comments-meta.php:97, packages/block-library/build-module/blocks/post-comments/lib/actions/class-novablocks-comments-highlight.php:218, packages/block-library/build-module/blocks/post-comments/lib/actions/class-novablocks-comments-highlight.php:235, packages/block-library/build-module/blocks/post-comments/lib/actions/class-novablocks-comments-highlight.php:254, packages/block-library/build-module/blocks/post-comments/lib/actions/class-novablocks-comments-highlight.php:280, packages/block-library/build-module/blocks/post-comments/lib/actions/class-novablocks-comments-highlight.php:268, packages/block-library/build-module/blocks/post-comments/lib/metas/class-novablocks-comments-meta.php:97, packages/block-library/src/blocks/post-comments/lib/actions/class-novablocks-comments-highlight.php:218, packages/block-library/src/blocks/post-comments/lib/actions/class-novablocks-comments-highlight.php:235, packages/block-library/src/blocks/post-comments/lib/actions/class-novablocks-comments-highlight.php:254, packages/block-library/src/blocks/post-comments/lib/actions/class-novablocks-comments-highlight.php:280, packages/block-library/src/blocks/post-comments/lib/actions/class-novablocks-comments-highlight.php:268, packages/block-library/src/blocks/post-comments/lib/metas/class-novablocks-comments-meta.php:97
+msgid "Comment Submission Failure"
 msgstr ""
 
-#: build/block-library/blocks/opentable/index.js:6
-msgid "reservations"
+#: build/block-library/blocks/post-comments/lib/actions/class-novablocks-comments-highlight.php:234, packages/block-library/build/blocks/post-comments/lib/actions/class-novablocks-comments-highlight.php:234, packages/block-library/build-module/blocks/post-comments/lib/actions/class-novablocks-comments-highlight.php:234, packages/block-library/src/blocks/post-comments/lib/actions/class-novablocks-comments-highlight.php:234
+msgid "<strong>Error:</strong> You don't have the needed credentials to highlight comments."
 msgstr ""
 
-#: build/block-library/blocks/opentable/index.js:6
-msgid "bookings"
+#: build/block-library/blocks/post-comments/lib/actions/class-novablocks-comments-highlight.php:253, packages/block-library/build/blocks/post-comments/lib/actions/class-novablocks-comments-highlight.php:253, packages/block-library/build-module/blocks/post-comments/lib/actions/class-novablocks-comments-highlight.php:253, packages/block-library/src/blocks/post-comments/lib/actions/class-novablocks-comments-highlight.php:253
+msgid "<strong>Error:</strong> You can't highlight your own comments."
 msgstr ""
 
-#: build/block-library/blocks/opentable/index.js:6
-msgid "Layout"
+#: build/block-library/blocks/post-comments/lib/actions/class-novablocks-comments-highlight.php:279, packages/block-library/build/blocks/post-comments/lib/actions/class-novablocks-comments-highlight.php:279, packages/block-library/build-module/blocks/post-comments/lib/actions/class-novablocks-comments-highlight.php:279, packages/block-library/src/blocks/post-comments/lib/actions/class-novablocks-comments-highlight.php:279
+msgid "<strong>Error:</strong> Couldn't highlight this comment."
 msgstr ""
 
-#: build/block-library/blocks/opentable/index.js:6
-msgid "Show OpenTable Logo"
+#: build/block-library/blocks/post-comments/lib/actions/class-novablocks-comments-highlight.php:267, packages/block-library/build/blocks/post-comments/lib/actions/class-novablocks-comments-highlight.php:267, packages/block-library/build-module/blocks/post-comments/lib/actions/class-novablocks-comments-highlight.php:267, packages/block-library/src/blocks/post-comments/lib/actions/class-novablocks-comments-highlight.php:267
+msgid "<strong>Error:</strong> Couldn't unhighlight this comment."
 msgstr ""
 
-#: build/block-library/blocks/post-comments/index.js:1
-msgid "Conversation System"
+#: build/block-library/blocks/post-comments/lib/actions/class-novablocks-comments-highlight.php:304, packages/block-library/build/blocks/post-comments/lib/actions/class-novablocks-comments-highlight.php:304, packages/block-library/build-module/blocks/post-comments/lib/actions/class-novablocks-comments-highlight.php:304, packages/block-library/src/blocks/post-comments/lib/actions/class-novablocks-comments-highlight.php:304
+msgid "Comment Submission Success"
 msgstr ""
 
-#: build/block-library/blocks/post-comments/index.js:1
-msgid "Display your post comments section."
+#: build/block-library/blocks/post-comments/lib/metas/class-novablocks-comments-meta.php:80, packages/block-library/build/blocks/post-comments/lib/metas/class-novablocks-comments-meta.php:80, packages/block-library/build-module/blocks/post-comments/lib/metas/class-novablocks-comments-meta.php:80, packages/block-library/src/blocks/post-comments/lib/metas/class-novablocks-comments-meta.php:80
+msgid "<strong>Error</strong>: You did not add your relevant background or experience."
 msgstr ""
 
-#: build/block-library/blocks/post-comments/index.js:1
-msgid "What’s your comment or question?"
+#: build/block-library/blocks/post-comments/lib/metas/class-novablocks-comments-meta.php:135, packages/block-library/build/blocks/post-comments/lib/metas/class-novablocks-comments-meta.php:135, packages/block-library/build-module/blocks/post-comments/lib/metas/class-novablocks-comments-meta.php:135, packages/block-library/src/blocks/post-comments/lib/metas/class-novablocks-comments-meta.php:135
+msgid "Extra Details"
 msgstr ""
 
-#: build/block-library/blocks/post-comments/index.js:1
-msgid "Let’s start a personal and a meaningful conversation. "
+#: build/block-library/blocks/post-comments/lib/metas/class-novablocks-comments-meta.php:154, packages/block-library/build/blocks/post-comments/lib/metas/class-novablocks-comments-meta.php:154, packages/block-library/build-module/blocks/post-comments/lib/metas/class-novablocks-comments-meta.php:154, packages/block-library/src/blocks/post-comments/lib/metas/class-novablocks-comments-meta.php:154
+msgid "Comment extra details"
 msgstr ""
 
-#: build/block-library/blocks/post-comments/index.js:1
-msgid "Join the conversation, share your knowledge or ask a question..."
+#: build/block-library/blocks/post-comments/lib/metas/class-novablocks-comments-meta.php:158, packages/block-library/build/blocks/post-comments/lib/metas/class-novablocks-comments-meta.php:158, packages/block-library/build-module/blocks/post-comments/lib/metas/class-novablocks-comments-meta.php:158, packages/block-library/src/blocks/post-comments/lib/metas/class-novablocks-comments-meta.php:158
+msgid "Commenter Relevant Background"
 msgstr ""
 
-#: build/block-library/blocks/post-comments/index.js:1
-msgid "What is your expertise or qualification in this topic?"
+#: build/block-library/blocks/post-comments/lib/metas/class-novablocks-comments-post-meta.php:67, packages/block-library/build/blocks/post-comments/lib/metas/class-novablocks-comments-post-meta.php:67, packages/block-library/build-module/blocks/post-comments/lib/metas/class-novablocks-comments-post-meta.php:67, packages/block-library/src/blocks/post-comments/lib/metas/class-novablocks-comments-post-meta.php:67
+msgid "Discussion Extra Details"
 msgstr ""
 
-#: build/block-library/blocks/post-comments/index.js:1
-msgid "Your email address will not be published."
+#: build/block-library/blocks/post-comments/lib/metas/class-novablocks-comments-post-meta.php:88, packages/block-library/build/blocks/post-comments/lib/metas/class-novablocks-comments-post-meta.php:88, packages/block-library/build-module/blocks/post-comments/lib/metas/class-novablocks-comments-post-meta.php:88, packages/block-library/src/blocks/post-comments/lib/metas/class-novablocks-comments-post-meta.php:88
+msgid "Post discussion extra details"
 msgstr ""
 
-#: build/block-library/blocks/posts-collection/index.js:6
-msgid "Posts Collection"
+#: build/block-library/blocks/post-comments/lib/metas/class-novablocks-comments-post-meta.php:92, packages/block-library/build/blocks/post-comments/lib/metas/class-novablocks-comments-post-meta.php:92, packages/block-library/build-module/blocks/post-comments/lib/metas/class-novablocks-comments-post-meta.php:92, packages/block-library/src/blocks/post-comments/lib/metas/class-novablocks-comments-post-meta.php:92
+msgid "Conversation Starter Message"
 msgstr ""
 
-#: build/block-library/blocks/posts-collection/index.js:6
-msgid "Show Latest Posts"
+#: build/block-library/blocks/post-comments/lib/metas/class-novablocks-comments-post-meta.php:95, packages/block-library/build/blocks/post-comments/lib/metas/class-novablocks-comments-post-meta.php:95, packages/block-library/build-module/blocks/post-comments/lib/metas/class-novablocks-comments-post-meta.php:95, packages/block-library/src/blocks/post-comments/lib/metas/class-novablocks-comments-post-meta.php:95
+msgid "Write the content that will kick-start a meaningful conversation with and among your readers."
 msgstr ""
 
-#: build/block-library/blocks/posts-collection/index.js:6
-msgid "Posts Carousel"
+#: build/block-library/blocks/post-comments/lib/metas/class-novablocks-comments-post-meta.php:96, packages/block-library/build/blocks/post-comments/lib/metas/class-novablocks-comments-post-meta.php:96, packages/block-library/build-module/blocks/post-comments/lib/metas/class-novablocks-comments-post-meta.php:96, packages/block-library/src/blocks/post-comments/lib/metas/class-novablocks-comments-post-meta.php:96
+msgid "You can use HTML elements like <code>&lt;b&gt;</code>, <code>&lt;i&gt;</code>, <code>&lt;a&gt;</code> to put some structure or emphasis on your message. Best that you don't overdo it."
 msgstr ""
 
-#: build/block-library/blocks/posts-collection/index.js:6
-msgid "Posts Collection displayed in a carousel layout"
+#: build/block-library/blocks/post-comments/lib/metas/class-novablocks-comments-post-meta.php:97, packages/block-library/build/blocks/post-comments/lib/metas/class-novablocks-comments-post-meta.php:97, packages/block-library/build-module/blocks/post-comments/lib/metas/class-novablocks-comments-post-meta.php:97, packages/block-library/src/blocks/post-comments/lib/metas/class-novablocks-comments-post-meta.php:97
+msgid "You can include the following dynamic tags: <code>%author%</code> equivalent to <code>%author_display_name%</code>, <code>%author_first_name%</code>, <code>%author_last_name%</code>, <code>%post_title%</code>, and <code>%year%</code>. These will be replaced with the corresponding value."
 msgstr ""
 
-#: build/block-library/blocks/sharing-overlay/index.js:6
-msgid "Sharing System"
+#: build/block-library/blocks/post-comments/lib/metas/class-novablocks-comments-post-meta.php:98, packages/block-library/build/blocks/post-comments/lib/metas/class-novablocks-comments-post-meta.php:98, packages/block-library/build-module/blocks/post-comments/lib/metas/class-novablocks-comments-post-meta.php:98, packages/block-library/src/blocks/post-comments/lib/metas/class-novablocks-comments-post-meta.php:98
+msgid "<b>Leave empty to hide/skip</b> the entire conversation starter section for this post."
 msgstr ""
 
-#: build/block-library/blocks/sharing-overlay/index.js:6
-msgid "Add a button that toggles sharing overlay."
+#: build/block-library/blocks/post-comments/lib/metas/class-novablocks-comments-post-meta.php:102, packages/block-library/build/blocks/post-comments/lib/metas/class-novablocks-comments-post-meta.php:102, packages/block-library/build-module/blocks/post-comments/lib/metas/class-novablocks-comments-post-meta.php:102, packages/block-library/src/blocks/post-comments/lib/metas/class-novablocks-comments-post-meta.php:102
+msgid "Conversation Starter Subtitle (Optional)"
 msgstr ""
 
-#: build/block-library/blocks/sharing-overlay/index.js:6
-msgid "sharing"
+#: build/block-library/blocks/post-comments/lib/metas/class-novablocks-comments-post-meta.php:105, packages/block-library/build/blocks/post-comments/lib/metas/class-novablocks-comments-post-meta.php:105, packages/block-library/build-module/blocks/post-comments/lib/metas/class-novablocks-comments-post-meta.php:105, packages/block-library/src/blocks/post-comments/lib/metas/class-novablocks-comments-post-meta.php:105
+msgid "You can use the <code>%author%</code> dynamic tag like in this example: \"A question by %author%, author of this article:\""
 msgstr ""
 
-#: build/block-library/blocks/sharing-overlay/index.js:6
-msgid "Set up sections for this block"
+#: build/block-library/blocks/post-comments/lib/metas/class-novablocks-comments-post-meta.php:106, packages/block-library/build/blocks/post-comments/lib/metas/class-novablocks-comments-post-meta.php:106, packages/block-library/build-module/blocks/post-comments/lib/metas/class-novablocks-comments-post-meta.php:106, packages/block-library/src/blocks/post-comments/lib/metas/class-novablocks-comments-post-meta.php:106
+msgid "Here are all the dynamic tags you can use: <code>%author%</code> equivalent to <code>%author_display_name%</code>, <code>%author_first_name%</code>, <code>%author_last_name%</code>, <code>%post_title%</code>, and <code>%year%</code>. These will be replaced with the corresponding value."
 msgstr ""
 
-#: build/block-library/blocks/sharing-overlay/index.js:6
-msgid "Set up social icons"
+#: build/block-library/blocks/post-comments/lib/metas/class-novablocks-comments-post-meta.php:107, packages/block-library/build/blocks/post-comments/lib/metas/class-novablocks-comments-post-meta.php:107, packages/block-library/build-module/blocks/post-comments/lib/metas/class-novablocks-comments-post-meta.php:107, packages/block-library/src/blocks/post-comments/lib/metas/class-novablocks-comments-post-meta.php:107
+msgid "<b>Leave empty</b> to not show a subtitle for your conversation starter content."
 msgstr ""
 
-#: build/block-library/blocks/sidecar-area/index.js:6
-msgid "Sidecar Area"
+#: build/block-library/blocks/post-comments/lib/metas/class-novablocks-comments-post-meta.php:111, packages/block-library/build/blocks/post-comments/lib/metas/class-novablocks-comments-post-meta.php:111, packages/block-library/build-module/blocks/post-comments/lib/metas/class-novablocks-comments-post-meta.php:111, packages/block-library/src/blocks/post-comments/lib/metas/class-novablocks-comments-post-meta.php:111
+msgid "Conversation Starter"
 msgstr ""
 
-#: build/block-library/blocks/sidecar/index.js:6
-msgid "Sidecar"
+#: build/block-library/blocks/post-comments/lib/metas/class-novablocks-comments-post-meta.php:122, packages/block-library/build/blocks/post-comments/lib/metas/class-novablocks-comments-post-meta.php:122, packages/block-library/build-module/blocks/post-comments/lib/metas/class-novablocks-comments-post-meta.php:122, packages/block-library/src/blocks/post-comments/lib/metas/class-novablocks-comments-post-meta.php:122
+msgid "Who is doing the conversation starting? By default, it's the post author."
 msgstr ""
 
-#: build/block-library/blocks/sidecar/index.js:6
-msgid "Establish supporting sections that relates to the main content."
+#: build/block-library/blocks/post-comments/lib/renderers/class-novablocks-comments-form.php:62, packages/block-library/build/blocks/post-comments/lib/renderers/class-novablocks-comments-form.php:62, packages/block-library/build-module/blocks/post-comments/lib/renderers/class-novablocks-comments-form.php:62, packages/block-library/src/blocks/post-comments/lib/renderers/class-novablocks-comments-form.php:62
+msgid "What's your comment or question?"
 msgstr ""
 
-#: build/block-library/blocks/sidecar/index.js:6
-msgid "layout"
+#: build/block-library/blocks/post-comments/lib/renderers/class-novablocks-comments-form.php:66, packages/block-library/build/blocks/post-comments/lib/renderers/class-novablocks-comments-form.php:66, packages/block-library/build-module/blocks/post-comments/lib/renderers/class-novablocks-comments-form.php:66, packages/block-library/src/blocks/post-comments/lib/renderers/class-novablocks-comments-form.php:66
+msgid "What's your comment or question, %s?"
 msgstr ""
 
-#: build/block-library/blocks/sidecar/index.js:6
-msgid "sidebar"
+#: build/block-library/blocks/post-comments/lib/renderers/class-novablocks-comments-form.php:68, packages/block-library/build/blocks/post-comments/lib/renderers/class-novablocks-comments-form.php:68, packages/block-library/build-module/blocks/post-comments/lib/renderers/class-novablocks-comments-form.php:68, packages/block-library/src/blocks/post-comments/lib/renderers/class-novablocks-comments-form.php:68
+msgid "Let's start a personal, meaningful conversation."
 msgstr ""
 
-#: build/block-library/blocks/sidecar/index.js:6
-msgid "content"
+#: build/block-library/blocks/post-comments/lib/renderers/class-novablocks-comments-form.php:70, packages/block-library/build/blocks/post-comments/lib/renderers/class-novablocks-comments-form.php:70, packages/block-library/build-module/blocks/post-comments/lib/renderers/class-novablocks-comments-form.php:70, packages/block-library/src/blocks/post-comments/lib/renderers/class-novablocks-comments-form.php:70
+msgid "Share your knowledge or ask a question.."
 msgstr ""
 
-#: build/block-library/blocks/sidecar/index.js:6
-msgid "aside"
+#: build/block-library/blocks/post-comments/lib/renderers/class-novablocks-comments-form.php:78, packages/block-library/build/blocks/post-comments/lib/renderers/class-novablocks-comments-form.php:78, packages/block-library/build-module/blocks/post-comments/lib/renderers/class-novablocks-comments-form.php:78, packages/block-library/src/blocks/post-comments/lib/renderers/class-novablocks-comments-form.php:78
+msgid "What is your background around this topic?"
 msgstr ""
 
-#: build/block-library/blocks/sidecar/index.js:6
-msgid "Sidebar Left with Content on the right"
+#: build/block-library/blocks/post-comments/lib/renderers/class-novablocks-comments-form.php:80, packages/block-library/build/blocks/post-comments/lib/renderers/class-novablocks-comments-form.php:80, packages/block-library/build-module/blocks/post-comments/lib/renderers/class-novablocks-comments-form.php:80, packages/block-library/src/blocks/post-comments/lib/renderers/class-novablocks-comments-form.php:80
+msgid "Example: Practical philosopher, therapist and writer."
 msgstr ""
 
-#: build/block-library/blocks/sidecar/index.js:6
-msgid "Sidebar Right with Content on the left"
+#: build/block-library/blocks/post-comments/lib/renderers/class-novablocks-comments-form.php:82, packages/block-library/build/blocks/post-comments/lib/renderers/class-novablocks-comments-form.php:82, packages/block-library/build-module/blocks/post-comments/lib/renderers/class-novablocks-comments-form.php:82, packages/block-library/src/blocks/post-comments/lib/renderers/class-novablocks-comments-form.php:82
+msgid "Your relevant background..."
 msgstr ""
 
-#: build/block-library/blocks/sidecar/index.js:6
-msgid "Sidebar Size"
+#: build/block-library/blocks/post-comments/lib/renderers/class-novablocks-comments-form.php:84, packages/block-library/build/blocks/post-comments/lib/renderers/class-novablocks-comments-form.php:84, packages/block-library/build-module/blocks/post-comments/lib/renderers/class-novablocks-comments-form.php:84, packages/block-library/src/blocks/post-comments/lib/renderers/class-novablocks-comments-form.php:84
+msgid "What is your name?"
 msgstr ""
 
-#: build/block-library/blocks/sidecar/index.js:6
-msgid "Sidebar Position"
+#: build/block-library/blocks/post-comments/lib/renderers/class-novablocks-comments-form.php:88, packages/block-library/build/blocks/post-comments/lib/renderers/class-novablocks-comments-form.php:88, packages/block-library/build-module/blocks/post-comments/lib/renderers/class-novablocks-comments-form.php:88, packages/block-library/src/blocks/post-comments/lib/renderers/class-novablocks-comments-form.php:88
+msgid "Ernest Hemingway"
 msgstr ""
 
-#: build/block-library/blocks/sidecar/index.js:6
-msgid "Enable sticky sidebar on scroll"
+#: build/block-library/blocks/post-comments/lib/renderers/class-novablocks-comments-form.php:90, packages/block-library/build/blocks/post-comments/lib/renderers/class-novablocks-comments-form.php:90, packages/block-library/build-module/blocks/post-comments/lib/renderers/class-novablocks-comments-form.php:90, packages/block-library/src/blocks/post-comments/lib/renderers/class-novablocks-comments-form.php:90
+msgid "What is your email address?"
 msgstr ""
 
-#: build/block-library/blocks/sidecar/index.js:6
-msgid "The last item inside sidebar will be sticky on scroll."
+#: build/block-library/blocks/post-comments/lib/renderers/class-novablocks-comments-form.php:92, packages/block-library/build/blocks/post-comments/lib/renderers/class-novablocks-comments-form.php:92, packages/block-library/build-module/blocks/post-comments/lib/renderers/class-novablocks-comments-form.php:92, packages/block-library/src/blocks/post-comments/lib/renderers/class-novablocks-comments-form.php:92
+msgid "It will not be published or shared with others."
 msgstr ""
 
-#: build/block-library/blocks/sidecar/index.js:6
-msgid "All blocks inside sidebar will be static."
+#: build/block-library/blocks/post-comments/lib/renderers/class-novablocks-comments-form.php:94, packages/block-library/build/blocks/post-comments/lib/renderers/class-novablocks-comments-form.php:94, packages/block-library/build-module/blocks/post-comments/lib/renderers/class-novablocks-comments-form.php:94, packages/block-library/src/blocks/post-comments/lib/renderers/class-novablocks-comments-form.php:94
+msgid "your@email.com"
 msgstr ""
 
-#: build/block-library/blocks/sidecar/index.js:6
-msgid "Show sidebar on left side"
+#: build/block-library/blocks/post-comments/lib/renderers/class-novablocks-comments-form.php:98, packages/block-library/build/blocks/post-comments/lib/renderers/class-novablocks-comments-form.php:98, packages/block-library/build-module/blocks/post-comments/lib/renderers/class-novablocks-comments-form.php:98, packages/block-library/src/blocks/post-comments/lib/renderers/class-novablocks-comments-form.php:98
+msgid "What is your website URL?"
 msgstr ""
 
-#: build/block-library/blocks/sidecar/index.js:6
-msgid "Show sidebar on right side"
+#: build/block-library/blocks/post-comments/lib/renderers/class-novablocks-comments-form.php:102, packages/block-library/build/blocks/post-comments/lib/renderers/class-novablocks-comments-form.php:102, packages/block-library/build-module/blocks/post-comments/lib/renderers/class-novablocks-comments-form.php:102, packages/block-library/src/blocks/post-comments/lib/renderers/class-novablocks-comments-form.php:102
+msgid "https://yourwonderfulsite.com"
 msgstr ""
 
-#: build/block-library/blocks/slideshow/index.js:1
-msgid "Slideshow Me the Way"
+#: build/block-library/blocks/post-comments/lib/renderers/class-novablocks-comments-form.php:104, packages/block-library/build/blocks/post-comments/lib/renderers/class-novablocks-comments-form.php:104, packages/block-library/build-module/blocks/post-comments/lib/renderers/class-novablocks-comments-form.php:104, packages/block-library/src/blocks/post-comments/lib/renderers/class-novablocks-comments-form.php:104
+msgid "Save my details in this browser for the next time I comment."
 msgstr ""
 
-#: build/block-library/blocks/slideshow/index.js:1
-msgid "Display more than one piece of content in a single, coveted space."
+#: build/block-library/blocks/post-comments/lib/renderers/class-novablocks-comments-form.php:107, build/block-library/blocks/post-comments/lib/renderers/class-novablocks-comments-form.php:261, build/block-library/blocks/post-comments/lib/renderers/class-novablocks-comments-form.php:255, build/block-library/blocks/post-comments/lib/renderers/class-novablocks-comments-form.php:589, packages/block-library/build/blocks/post-comments/lib/renderers/class-novablocks-comments-form.php:107, packages/block-library/build/blocks/post-comments/lib/renderers/class-novablocks-comments-form.php:261, packages/block-library/build/blocks/post-comments/lib/renderers/class-novablocks-comments-form.php:255, packages/block-library/build/blocks/post-comments/lib/renderers/class-novablocks-comments-form.php:589, packages/block-library/build-module/blocks/post-comments/lib/renderers/class-novablocks-comments-form.php:107, packages/block-library/build-module/blocks/post-comments/lib/renderers/class-novablocks-comments-form.php:261, packages/block-library/build-module/blocks/post-comments/lib/renderers/class-novablocks-comments-form.php:255, packages/block-library/build-module/blocks/post-comments/lib/renderers/class-novablocks-comments-form.php:589, packages/block-library/src/blocks/post-comments/lib/renderers/class-novablocks-comments-form.php:107, packages/block-library/src/blocks/post-comments/lib/renderers/class-novablocks-comments-form.php:261, packages/block-library/src/blocks/post-comments/lib/renderers/class-novablocks-comments-form.php:255, packages/block-library/src/blocks/post-comments/lib/renderers/class-novablocks-comments-form.php:589
+msgid "Add this comment"
 msgstr ""
 
-#: build/block-library/blocks/slideshow/index.js:1
-msgid "slider"
+#: build/block-library/blocks/post-comments/lib/renderers/class-novablocks-comments-form.php:108, build/block-library/blocks/post-comments/lib/renderers/class-novablocks-comments-form.php:586, packages/block-library/build/blocks/post-comments/lib/renderers/class-novablocks-comments-form.php:108, packages/block-library/build/blocks/post-comments/lib/renderers/class-novablocks-comments-form.php:586, packages/block-library/build-module/blocks/post-comments/lib/renderers/class-novablocks-comments-form.php:108, packages/block-library/build-module/blocks/post-comments/lib/renderers/class-novablocks-comments-form.php:586, packages/block-library/src/blocks/post-comments/lib/renderers/class-novablocks-comments-form.php:108, packages/block-library/src/blocks/post-comments/lib/renderers/class-novablocks-comments-form.php:586
+msgid "Cancel reply"
 msgstr ""
 
-#: build/block-library/blocks/slideshow/index.js:1
-msgid "carousel"
+#. translators: Comment reply button text. %s: Comment author name.
+#. translators: Comment reply button text. %s: Comment author name.
+#. translators: Comment reply button text. %s: Comment author name.
+#. translators: Comment reply button text. %s: Comment author name.
+#: build/block-library/blocks/post-comments/lib/renderers/class-novablocks-comments-form.php:110, build/block-library/blocks/post-comments/lib/renderers/class-novablocks-comments-list.php:84, packages/block-library/build/blocks/post-comments/lib/renderers/class-novablocks-comments-form.php:110, packages/block-library/build/blocks/post-comments/lib/renderers/class-novablocks-comments-list.php:84, packages/block-library/build-module/blocks/post-comments/lib/renderers/class-novablocks-comments-form.php:110, packages/block-library/build-module/blocks/post-comments/lib/renderers/class-novablocks-comments-list.php:84, packages/block-library/src/blocks/post-comments/lib/renderers/class-novablocks-comments-form.php:110, packages/block-library/src/blocks/post-comments/lib/renderers/class-novablocks-comments-list.php:84
+msgid "Reply to %s"
 msgstr ""
 
-#: build/block-library/blocks/slideshow/index.js:1
-msgid "images"
+#: build/block-library/blocks/post-comments/lib/renderers/class-novablocks-comments-header.php:56, packages/block-library/build/blocks/post-comments/lib/renderers/class-novablocks-comments-header.php:56, packages/block-library/build-module/blocks/post-comments/lib/renderers/class-novablocks-comments-header.php:56, packages/block-library/src/blocks/post-comments/lib/renderers/class-novablocks-comments-header.php:56
+msgid "Conversations"
 msgstr ""
 
-#: build/collection/index.js:6
-msgid "Title Level"
+#: build/block-library/blocks/post-comments/lib/renderers/class-novablocks-comments-header.php:57, packages/block-library/build/blocks/post-comments/lib/renderers/class-novablocks-comments-header.php:57, packages/block-library/build-module/blocks/post-comments/lib/renderers/class-novablocks-comments-header.php:57, packages/block-library/src/blocks/post-comments/lib/renderers/class-novablocks-comments-header.php:57
+msgid "Start the conversation"
 msgstr ""
 
-#: build/collection/index.js:6
-msgid "Content Alignment"
+#: build/block-library/blocks/post-comments/lib/renderers/class-novablocks-comments-header.php:60, packages/block-library/build/blocks/post-comments/lib/renderers/class-novablocks-comments-header.php:60, packages/block-library/build-module/blocks/post-comments/lib/renderers/class-novablocks-comments-header.php:60, packages/block-library/src/blocks/post-comments/lib/renderers/class-novablocks-comments-header.php:60
+msgid "One so far"
 msgstr ""
 
-#: build/collection/index.js:6
-msgid "Number of Items"
+#: build/block-library/blocks/post-comments/lib/renderers/class-novablocks-comments-header.php:61, packages/block-library/build/blocks/post-comments/lib/renderers/class-novablocks-comments-header.php:61, packages/block-library/build-module/blocks/post-comments/lib/renderers/class-novablocks-comments-header.php:61, packages/block-library/src/blocks/post-comments/lib/renderers/class-novablocks-comments-header.php:61
+msgid "% comments"
 msgstr ""
 
-#: build/collection/index.js:6
-msgid "Columns"
+#: build/block-library/blocks/post-comments/lib/renderers/class-novablocks-comments-list.php:81, packages/block-library/build/blocks/post-comments/lib/renderers/class-novablocks-comments-list.php:81, packages/block-library/build-module/blocks/post-comments/lib/renderers/class-novablocks-comments-list.php:81, packages/block-library/src/blocks/post-comments/lib/renderers/class-novablocks-comments-list.php:81
+msgid "Reply"
 msgstr ""
 
-#: build/collection/index.js:6
-msgid "Rows"
+#. translators: Moderation message shown only to moderators.
+#. translators: Moderation message shown only to moderators.
+#. translators: Moderation message shown only to moderators.
+#. translators: Moderation message shown only to moderators.
+#: build/block-library/blocks/post-comments/lib/renderers/class-novablocks-comments-list.php:91, packages/block-library/build/blocks/post-comments/lib/renderers/class-novablocks-comments-list.php:91, packages/block-library/build-module/blocks/post-comments/lib/renderers/class-novablocks-comments-list.php:91, packages/block-library/src/blocks/post-comments/lib/renderers/class-novablocks-comments-list.php:91
+msgid "⚠️ This comment is waiting for your moderation. ⚠️"
 msgstr ""
 
-#: build/collection/index.js:6
-msgid "Featured Area Size"
+#: build/block-library/blocks/post-comments/lib/renderers/class-novablocks-comments-list.php:189, packages/block-library/build/blocks/post-comments/lib/renderers/class-novablocks-comments-list.php:189, packages/block-library/build-module/blocks/post-comments/lib/renderers/class-novablocks-comments-list.php:189, packages/block-library/src/blocks/post-comments/lib/renderers/class-novablocks-comments-list.php:189
+msgid "Newer Conversations"
 msgstr ""
 
-#: build/collection/index.js:6
-msgid "Featured Area Position"
+#: build/block-library/blocks/post-comments/lib/renderers/class-novablocks-comments-list.php:190, packages/block-library/build/blocks/post-comments/lib/renderers/class-novablocks-comments-list.php:190, packages/block-library/build-module/blocks/post-comments/lib/renderers/class-novablocks-comments-list.php:190, packages/block-library/src/blocks/post-comments/lib/renderers/class-novablocks-comments-list.php:190
+msgid "Older Conversations"
 msgstr ""
 
-#: build/collection/index.js:6
-msgid "Grid Areas Fragmentation"
+#: build/block-library/blocks/post-comments/lib/renderers/class-novablocks-comments-list.php:204, packages/block-library/build/blocks/post-comments/lib/renderers/class-novablocks-comments-list.php:204, packages/block-library/build-module/blocks/post-comments/lib/renderers/class-novablocks-comments-list.php:204, packages/block-library/src/blocks/post-comments/lib/renderers/class-novablocks-comments-list.php:204
+msgid "Comments"
 msgstr ""
 
-#: build/collection/index.js:6
-msgid "Grid Areas Crossing"
+#. translators: %s: Denotes the fact that the commenter is the author of the current post.
+#. translators: %s: Denotes the fact that the commenter is the author of the current post.
+#. translators: %s: Denotes the fact that the commenter is the author of the current post.
+#. translators: %s: Denotes the fact that the commenter is the author of the current post.
+#: build/block-library/blocks/post-comments/lib/renderers/class-novablocks-walker-comment.php:40, build/block-library/blocks/post-comments/lib/renderers/class-novablocks-walker-comment.php:270, packages/block-library/build/blocks/post-comments/lib/renderers/class-novablocks-walker-comment.php:40, packages/block-library/build/blocks/post-comments/lib/renderers/class-novablocks-walker-comment.php:270, packages/block-library/build-module/blocks/post-comments/lib/renderers/class-novablocks-walker-comment.php:40, packages/block-library/build-module/blocks/post-comments/lib/renderers/class-novablocks-walker-comment.php:270, packages/block-library/src/blocks/post-comments/lib/renderers/class-novablocks-walker-comment.php:40, packages/block-library/src/blocks/post-comments/lib/renderers/class-novablocks-walker-comment.php:270
+msgid "Author"
 msgstr ""
 
-#: build/collection/index.js:6
-msgid "Auto-count Items Number"
+#: build/block-library/blocks/post-comments/lib/renderers/class-novablocks-walker-comment.php:57, packages/block-library/build/blocks/post-comments/lib/renderers/class-novablocks-walker-comment.php:57, packages/block-library/build-module/blocks/post-comments/lib/renderers/class-novablocks-walker-comment.php:57, packages/block-library/src/blocks/post-comments/lib/renderers/class-novablocks-walker-comment.php:57
+msgid "This comment is only visible to you since it is awaiting moderation."
 msgstr ""
 
-#: build/collection/index.js:6
-msgid "Start of Image Variance"
+#: build/block-library/blocks/post-comments/lib/renderers/class-novablocks-walker-comment.php:93, build/block-library/blocks/post-comments/lib/renderers/class-novablocks-walker-comment.php:318, packages/block-library/build/blocks/post-comments/lib/renderers/class-novablocks-walker-comment.php:93, packages/block-library/build/blocks/post-comments/lib/renderers/class-novablocks-walker-comment.php:318, packages/block-library/build-module/blocks/post-comments/lib/renderers/class-novablocks-walker-comment.php:93, packages/block-library/build-module/blocks/post-comments/lib/renderers/class-novablocks-walker-comment.php:318, packages/block-library/src/blocks/post-comments/lib/renderers/class-novablocks-walker-comment.php:93, packages/block-library/src/blocks/post-comments/lib/renderers/class-novablocks-walker-comment.php:318
+msgid "says:"
 msgstr ""
 
-#: build/collection/index.js:6
-msgid "End of Image Variance"
+#: build/block-library/blocks/post-comments/lib/renderers/class-novablocks-walker-comment.php:104, build/block-library/blocks/post-comments/lib/renderers/class-novablocks-walker-comment.php:329, packages/block-library/build/blocks/post-comments/lib/renderers/class-novablocks-walker-comment.php:104, packages/block-library/build/blocks/post-comments/lib/renderers/class-novablocks-walker-comment.php:329, packages/block-library/build-module/blocks/post-comments/lib/renderers/class-novablocks-walker-comment.php:104, packages/block-library/build-module/blocks/post-comments/lib/renderers/class-novablocks-walker-comment.php:329, packages/block-library/src/blocks/post-comments/lib/renderers/class-novablocks-walker-comment.php:104, packages/block-library/src/blocks/post-comments/lib/renderers/class-novablocks-walker-comment.php:329
+msgid "Relevant commenter background or experience:"
 msgstr ""
 
-#: build/collection/index.js:6
-msgid "Start of Meta Fidelity"
+#. translators: 1: Comment date, 2: Comment time.
+#. translators: 1: Comment date, 2: Comment time.
+#. translators: 1: Comment date, 2: Comment time.
+#. translators: 1: Comment date, 2: Comment time.
+#: build/block-library/blocks/post-comments/lib/renderers/class-novablocks-walker-comment.php:127, packages/block-library/build/blocks/post-comments/lib/renderers/class-novablocks-walker-comment.php:127, packages/block-library/build-module/blocks/post-comments/lib/renderers/class-novablocks-walker-comment.php:127, packages/block-library/src/blocks/post-comments/lib/renderers/class-novablocks-walker-comment.php:127
+msgid "%1$s at %2$s"
 msgstr ""
 
-#: build/collection/index.js:6
-msgid "End of Meta Fidelity"
+#: build/block-library/blocks/post-comments/lib/renderers/class-novablocks-walker-comment.php:137, build/block-library/blocks/post-comments/lib/renderers/class-novablocks-walker-comment.php:364, packages/block-library/build/blocks/post-comments/lib/renderers/class-novablocks-walker-comment.php:137, packages/block-library/build/blocks/post-comments/lib/renderers/class-novablocks-walker-comment.php:364, packages/block-library/build-module/blocks/post-comments/lib/renderers/class-novablocks-walker-comment.php:137, packages/block-library/build-module/blocks/post-comments/lib/renderers/class-novablocks-walker-comment.php:364, packages/block-library/src/blocks/post-comments/lib/renderers/class-novablocks-walker-comment.php:137, packages/block-library/src/blocks/post-comments/lib/renderers/class-novablocks-walker-comment.php:364
+msgid "Edit"
 msgstr ""
 
-#: build/collection/index.js:6
-msgid "Boost Featured Area Emphasis"
+#: build/block-library/blocks/post-comments/lib/renderers/class-novablocks-walker-comment.php:197, packages/block-library/build/blocks/post-comments/lib/renderers/class-novablocks-walker-comment.php:197, packages/block-library/build-module/blocks/post-comments/lib/renderers/class-novablocks-walker-comment.php:197, packages/block-library/src/blocks/post-comments/lib/renderers/class-novablocks-walker-comment.php:197
+msgid "On %s"
 msgstr ""
 
-#: build/collection/index.js:6
-msgid "Display Sub-featured Area"
+#: build/block-library/blocks/post-comments/lib/renderers/class-novablocks-walker-comment.php:191, packages/block-library/build/blocks/post-comments/lib/renderers/class-novablocks-walker-comment.php:191, packages/block-library/build-module/blocks/post-comments/lib/renderers/class-novablocks-walker-comment.php:191, packages/block-library/src/blocks/post-comments/lib/renderers/class-novablocks-walker-comment.php:191
+msgctxt "%s = human-readable time difference"
+msgid "%s ago"
 msgstr ""
 
-#: build/collection/index.js:6
-msgid "Balance Meta and Image"
+#: build/block-library/blocks/post-comments/lib/renderers/class-novablocks-walker-comment.php:188, packages/block-library/build/blocks/post-comments/lib/renderers/class-novablocks-walker-comment.php:188, packages/block-library/build-module/blocks/post-comments/lib/renderers/class-novablocks-walker-comment.php:188, packages/block-library/src/blocks/post-comments/lib/renderers/class-novablocks-walker-comment.php:188
+msgid "Just now"
 msgstr ""
 
-#: build/collection/index.js:6
-msgid "Flip Cols and Rows"
+#. translators: %s: The label of the individual comment control for more comment actions.
+#. translators: %s: The label of the individual comment control for more comment actions.
+#. translators: %s: The label of the individual comment control for more comment actions.
+#. translators: %s: The label of the individual comment control for more comment actions.
+#: build/block-library/blocks/post-comments/lib/renderers/class-novablocks-walker-comment.php:214, packages/block-library/build/blocks/post-comments/lib/renderers/class-novablocks-walker-comment.php:214, packages/block-library/build-module/blocks/post-comments/lib/renderers/class-novablocks-walker-comment.php:214, packages/block-library/src/blocks/post-comments/lib/renderers/class-novablocks-walker-comment.php:214
+msgid "More"
 msgstr ""
 
-#: build/collection/index.js:6
-msgid "Header Placement Area"
+#: build/block-library/blocks/post-comments/lib/renderers/class-novablocks-walker-comment.php:223, packages/block-library/build/blocks/post-comments/lib/renderers/class-novablocks-walker-comment.php:223, packages/block-library/build-module/blocks/post-comments/lib/renderers/class-novablocks-walker-comment.php:223, packages/block-library/src/blocks/post-comments/lib/renderers/class-novablocks-walker-comment.php:223
+msgid "Click to copy in clipboard the URL to this comment"
 msgstr ""
 
-#: build/collection/index.js:6
-msgid "Show Pagination"
+#: build/block-library/blocks/post-comments/lib/renderers/class-novablocks-walker-comment.php:223, packages/block-library/build/blocks/post-comments/lib/renderers/class-novablocks-walker-comment.php:223, packages/block-library/build-module/blocks/post-comments/lib/renderers/class-novablocks-walker-comment.php:223, packages/block-library/src/blocks/post-comments/lib/renderers/class-novablocks-walker-comment.php:223
+msgid "Copy link to comment"
 msgstr ""
 
-#: build/collection/index.js:6
-msgid "Display Preview Scale"
+#: build/block-library/blocks/post-comments/lib/renderers/class-novablocks-walker-comment.php:261, packages/block-library/build/blocks/post-comments/lib/renderers/class-novablocks-walker-comment.php:261, packages/block-library/build-module/blocks/post-comments/lib/renderers/class-novablocks-walker-comment.php:261, packages/block-library/src/blocks/post-comments/lib/renderers/class-novablocks-walker-comment.php:261
+msgid "Your comment is awaiting moderation. This is a preview, your comment will be visible after it has been approved."
 msgstr ""
 
-#: build/collection/index.js:6
-msgid "Display Preview Mask"
+#: build/block-library/blocks/post-comments/lib/renderers/class-novablocks-walker-comment.php:259, packages/block-library/build/blocks/post-comments/lib/renderers/class-novablocks-walker-comment.php:259, packages/block-library/build-module/blocks/post-comments/lib/renderers/class-novablocks-walker-comment.php:259, packages/block-library/src/blocks/post-comments/lib/renderers/class-novablocks-walker-comment.php:259
+msgid "Your comment is awaiting moderation."
 msgstr ""
