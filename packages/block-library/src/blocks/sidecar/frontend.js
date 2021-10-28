@@ -11,7 +11,7 @@ const SIDECAR_CLASS = '.novablocks-sidecar';
 const ALIGN_CLASSES = ['alignfull', 'alignwide', 'alignleft', 'alignright'];
 const PULL_RIGHT_CLASS = '.pull-right';
 const PULL_LEFT_CLASS = '.pull-left';
-const SIDEBAR_LEFT_CLASS = 'novablocks-sidecar--sidebar-left';
+const SIDEBAR_LEFT_CLASS = 'nb-sidecar--sidebar-left';
 const HIDDEN_BLOCK_CLASS = 'novablocks-hidden-block';
 
 // There are 3 types of blocks in this system:

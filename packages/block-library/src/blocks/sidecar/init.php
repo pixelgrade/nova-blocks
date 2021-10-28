@@ -45,11 +45,11 @@ if ( ! function_exists( 'novablocks_render_sidecar_block' ) ) {
 		}
 
 		if ( ! empty( $attributes['sidebarPosition'] ) ) {
-			$classes[] = 'novablocks-sidecar--sidebar-' . $attributes['sidebarPosition'];
+			$classes[] = 'nb-sidecar--sidebar-' . $attributes['sidebarPosition'];
 		}
 
 		if ( ! empty( $attributes['sidebarWidth'] ) ) {
-			$classes[] = 'novablocks-sidebar--' . $attributes['sidebarWidth'];
+			$classes[] = 'nb-sidecar--sidebar-' . $attributes['sidebarWidth'];
 		}
 
 		if ( ! empty( $attributes['lastItemIsSticky'] ) && $attributes['lastItemIsSticky'] === true ) {

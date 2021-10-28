@@ -30,8 +30,8 @@ const Edit = ( props ) => {
 //    @todo maybe add this back at one point?
 //    props.className,
     `novablocks-sidecar`,
-    `novablocks-sidecar--sidebar-${ sidebarPosition }`,
-    `novablocks-sidebar--${ sidebarWidth }`,
+    `nb-sidecar--sidebar-${ sidebarPosition }`,
+    `nb-sidecar--sidebar-${ sidebarWidth }`,
     {
       'last-block-is-sticky': lastItemIsSticky === true,
       'novablocks-sidecar--complex': layout === 'complex'

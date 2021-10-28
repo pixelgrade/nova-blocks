@@ -21,16 +21,16 @@ $align-selectors: '[data-align="full"], [data-align="wide"], [data-nb-align="pul
   display: grid;
   grid-column: fs / fe;
   grid-template-columns:
-    [fs] Max(var(--nb-wrapper-sides-spacing), var(--full)) // [ws]
-    [ws] calc(var(--wds) * 2) // [gs]
+    [fs] var(--nb-sidecar-sides) // [ws]
+    [ws] var(--nb-sidecar-sidebar-left-width) // [gs]
     [gs] var(--nb-sidecar-grid-gap) // [cs]
     [cs] 1fr // [gcs]
     [gcs] calc(var(--nb-sidecar-grid-gap)/2) // [cc]
     [cc] calc(var(--nb-sidecar-grid-gap)/2)  // [gce]
     [gce] 1fr // [gce]
     [ce] var(--nb-sidecar-grid-gap) // [ge]
-    [ge] calc(var(--wde) * 2) // [we]
-    [we] Max(var(--nb-wrapper-sides-spacing), var(--full)) [fe];
+    [ge] var(--nb-sidecar-sidebar-right-width) // [we]
+    [we] var(--nb-sidecar-sides) [fe];
 
   // --------------
   // overwrite [class*="__inner-container"] styles
@@ -97,7 +97,8 @@ $align-selectors: '[data-align="full"], [data-align="wide"], [data-nb-align="pul
   --nb-sidecar-sidebar-medium-width: 300px;
   --nb-sidecar-sidebar-large-width: 500px;
 
-  --nb-sidecar-sidebar-minimum-width: var(--nb-sidecar-sidebar-medium-width);
+  --nb-sidecar-sidebar-left-width: var(--nb-sidecar-sidebar-medium-width);
+  --nb-sidecar-sidebar-right-width: var(--nb-sidecar-sidebar-medium-width);
 
   @include above(ultra) {
     --nb-sidecar-sidebar-small-width: 10.5em;
@@ -117,10 +118,7 @@ $align-selectors: '[data-align="full"], [data-align="wide"], [data-nb-align="pul
 
   --sticky-element-top-spacing: 0px;
 
-  --wds: calc(0.5 * var(--nb-sidecar-sidebar-minimum-width));
-  --wde: calc(0.5 * var(--nb-sidecar-sidebar-minimum-width));
-
-  --full: Max(0px, calc((100% - var(--nb-content-width-wide)) * 0.5));
+  --nb-sidecar-sides: Max(var(--nb-wrapper-sides-spacing), calc((100% - var(--nb-content-width-wide)) * 0.5));
 }
 
 @mixin nb-content-layout {

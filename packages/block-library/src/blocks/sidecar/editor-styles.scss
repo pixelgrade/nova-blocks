@@ -15,8 +15,8 @@
   // alter --wds and --wde,
   // so the sidebar will have a smaller width.
   &.edit-widgets-main-block-list {
-    --wds: 12.5%;
-    --wde: 12.5%;
+    --nb-sidecar-sidebar-left-width: 12.5%;
+    --nb-sidecar-sidebar-right-width: 12.5%;
   }
 
   // Markup is different compared to front-end,
@@ -106,7 +106,7 @@
   }
 }
 
-.novablocks-sidecar--sidebar-right .novablocks-sidecar--sidebar-right {
+.nb-sidecar--sidebar-right .nb-sidecar--sidebar-right {
   --block-content-start: var(--block-limit-left);
   --block-content-end: ce;
 }
@@ -128,7 +128,7 @@
 // Block Alignments
 
 // Right Sidebar
-.novablocks-sidecar--sidebar-right {
+.nb-sidecar--sidebar-right {
 
   .novablocks-content {
 
@@ -148,7 +148,7 @@
 }
 
 // Left Sidebar
-.novablocks-sidecar--sidebar-left {
+.nb-sidecar--sidebar-left {
 
   .novablocks-content {
 

@@ -53,13 +53,13 @@
 
   .novablocks-sidecar {
 
-    > .novablocks-content {
+    > .novablocks-content:not(:only-child) {
       --block-content-start: var(--block-limit-left);
       --block-content-end: var(--block-limit-right);
     }
   }
 
-  .novablocks-sidecar--sidebar-left {
+  .nb-sidecar--sidebar-left {
 
     > .novablocks-content {
       --block-limit-left: cs;
@@ -71,7 +71,7 @@
     }
   }
 
-  .novablocks-sidecar--sidebar-right {
+  .nb-sidecar--sidebar-right {
 
     > .novablocks-content {
       --block-limit-right: ce;
@@ -108,28 +108,11 @@
 }
 
 
-// Minimum Sidebar Width Logic
-
-// Small Sidebar
-.novablocks-sidebar--small {
-  --nb-sidecar-sidebar-minimum-width:  var(--nb-sidecar-sidebar-small-width);
-}
-
-// Medium Sidebar
-.novablocks-sidebar--medium {
-  --nb-sidecar-sidebar-minimum-width:  var(--nb-sidecar-sidebar-medium-width);
-}
-
-// Large Sidebar
-.novablocks-sidebar--large {
-  --nb-sidecar-sidebar-minimum-width:  var(--nb-sidecar-sidebar-large-width);
-}
-
-.novablocks-collection {
-  
-  // We do not want to alter font size modifier
-  // inside Nova Blocks Collections
-  .wp-block-group__inner-container[class] {
-    --font-size-modifier: 1;
+// Sidebar width overrides
+@each $size in small, medium, large {
+  @each $side in left, right {
+    .nb-sidecar--sidebar-#{$side}.nb-sidecar--sidebar-#{$size} {
+      --nb-sidecar-sidebar-#{$side}-width:  var(--nb-sidecar-sidebar-#{$size}-width);
+    }
   }
 }

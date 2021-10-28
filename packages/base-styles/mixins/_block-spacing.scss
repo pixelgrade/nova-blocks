@@ -1,27 +1,15 @@
 @mixin block-spacing-apply-multiplier {
-  @include block-spacing-top-level-multiplier;
-  @include block-spacing-nested-levels-multiplier;
-}
 
-@mixin block-spacing-top-level-multiplier {
-
-  & {
-    --nb-element-spacing-multiplier: var(--nb-element-spacing-level-1-multiplier);
+  & > * {
+    --nb-element-spacing-multiplier: calc(var(--nb-element-spacing-base) * var(--nb-element-spacing-level-1-multiplier));
   }
 
-  & > p + p {
-    --nb-element-spacing-multiplier: calc( 0.5 * var(--nb-element-spacing-level-1-multiplier) );
-  }
-}
-
-@mixin block-spacing-nested-levels-multiplier {
-
-  & & {
-    --nb-element-spacing-multiplier: var(--nb-element-spacing-level-2-multiplier);
+  & & > * {
+    --nb-element-spacing-multiplier: calc(var(--nb-element-spacing-base) * var(--nb-element-spacing-level-2-multiplier));
   }
 
-  & & & {
-    --nb-element-spacing-multiplier: var(--nb-element-spacing-level-3-multiplier);
+  & & & > * {
+    --nb-element-spacing-multiplier: calc(var(--nb-element-spacing-base) * var(--nb-element-spacing-level-3-multiplier));
   }
 }
 

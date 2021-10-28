@@ -61,8 +61,6 @@
         }
     }
 
-    --nb-element-spacing-multiplier: 1;
-
     margin-top: calc(var(--block-top-spacing) * var(--nb-spacing) * var(--nb-element-spacing-multiplier, 1));
     margin-bottom: calc(var(--block-bottom-spacing) * var(--nb-spacing) * var(--nb-element-spacing-multiplier, 1));
     padding-top: calc(var(--emphasis-top-spacing) * var(--nb-spacing) * var(--nb-element-spacing-multiplier, 1));

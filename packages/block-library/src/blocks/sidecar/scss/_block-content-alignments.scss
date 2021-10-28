@@ -149,7 +149,7 @@
 }
 
 // LEFT SIDEBAR
-.novablocks-sidecar--sidebar-left {
+.nb-sidecar--sidebar-left {
   
   .novablocks-content:not(:only-child)[class] {
   
@@ -217,7 +217,7 @@
   --block-content-start: ws;
   --block-content-end: we;
   
-  .novablocks-sidecar--sidebar-right & {
+  .nb-sidecar--sidebar-right & {
     --block-content-start: var(--block-limit-left);
     --block-content-end: ce;
   }
