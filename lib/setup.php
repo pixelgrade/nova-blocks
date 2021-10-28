@@ -49,8 +49,8 @@ if ( ! function_exists( 'novablocks_body_classes' ) ) {
 		return $classes;
 	}
 
-	add_filter( 'body_class', 'novablocks_body_class' );
 }
+add_filter( 'body_class', 'novablocks_body_class' );
 
 if ( ! function_exists( 'novablocks_add_blocks_category' ) ) {
 
@@ -66,5 +66,13 @@ if ( ! function_exists( 'novablocks_add_blocks_category' ) ) {
 		);
 	}
 
-	add_filter( 'block_categories', 'novablocks_add_blocks_category', 10, 2 );
 }
+add_filter( 'block_categories', 'novablocks_add_blocks_category', 10, 2 );
+
+if ( ! function_exists( 'novablocks_load_textdomain' ) ) {
+
+	function novablocks_load_textdomain() {
+		load_plugin_textdomain( '__plugin_txtd', false, basename( dirname( __DIR__ ) ) . '/languages' );
+	}
+}
+add_action( 'plugins_loaded', 'novablocks_load_textdomain' );
