@@ -4,6 +4,7 @@
 import { __ } from '@wordpress/i18n';
 import { RadioControl, ToggleControl, PanelBody } from '@wordpress/components';
 import { InspectorControls } from "@wordpress/block-editor";
+import { Fragment } from "@wordpress/element";
 
 import SidecarBlockControls from "./block-controls";
 

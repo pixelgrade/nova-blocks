@@ -13,14 +13,14 @@
 
 .alignwide,
 [data-align="wide"] {
-  --block-limit-left: ws;
-  --block-limit-right: we;
+  --block-content-start: ws;
+  --block-content-end: we;
 }
 
 .alignfull,
 [data-align="full"] {
-  --block-limit-left: fs;
-  --block-limit-right: fe;
+  --block-content-start: fs;
+  --block-content-end: fe;
 }
 
 // Alignment are clear intentions from user,
@@ -30,40 +30,40 @@
 // Full
 // It will span from
 // [fs] column to [fe] column.
-.alignfull,
-[data-align='full']{
-  --block-content-start: fs !important;
-  --block-content-end: fe !important;
-}
+//.alignfull,
+//[data-align='full']{
+//  --block-content-start: fs !important;
+//  --block-content-end: fe !important;
+//}
 
 // Wide
 // It will span from
 // [ws] column to [we] column.
-.alignwide,
-[data-align='wide'] {
-  --block-content-start: ws !important;
-  --block-content-end: we !important;
-}
+//.alignwide,
+//[data-align='wide'] {
+//  --block-content-start: ws !important;
+//  --block-content-end: we !important;
+//}
 
 // Stop Right
 // That means the block
 // cannot span any columns
 // on the right, so we are going to
 // stop it at the [ce] column.
-.stop-right,
-.stop-right * {
-  --block-content-end: ce !important;
-}
+//.stop-right,
+//.stop-right * {
+//  --block-content-end: ce !important;
+//}
 
 // Stop Left
 // That means the block
 // cannot span any columns
 // on the left, so we are going to
 // stop it at the [cs] column.
-.stop-left,
-.stop-left * {
-  --block-content-start: cs !important;
-}
+//.stop-left,
+//.stop-left * {
+//  --block-content-start: cs !important;
+//}
 
 // Align Left & Pull Left
 // Inside Sidecar they are treated the same.

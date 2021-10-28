@@ -4,9 +4,11 @@
 import classnames from 'classnames';
 
 import { __experimentalUseInnerBlocksProps as useInnerBlocksProps, useBlockProps } from "@wordpress/block-editor";
+import { Fragment } from "@wordpress/element";
 
 import { useInnerBlocks } from "@novablocks/block-editor";
 
+import Controls from "./inspector-controls";
 import { SidecarVariationPicker } from './components';
 //import InnerBlocksPicker from "./components/inner-blocks-picker";
 
@@ -25,7 +27,8 @@ const Edit = ( props ) => {
   const innerBlocks = useInnerBlocks( clientId );
 
   const className = classnames(
-    props.className,
+//    @todo maybe add this back at one point?
+//    props.className,
     `novablocks-sidecar`,
     `novablocks-sidecar--sidebar-${ sidebarPosition }`,
     `novablocks-sidebar--${ sidebarWidth }`,
@@ -50,7 +53,10 @@ const Edit = ( props ) => {
   }
 
   return (
-    <div { ...innerBlocksProps } />
+    <Fragment>
+      <Controls { ...props } />
+      <div { ...innerBlocksProps } />
+    </Fragment>
   );
 }
 

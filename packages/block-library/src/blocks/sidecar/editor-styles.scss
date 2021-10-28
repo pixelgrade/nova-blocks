@@ -4,20 +4,12 @@
   --inspector-controls-width: 280px;
 }
 
-.block-editor-block-list__layout.is-root-container,
-:where(.novablocks-sidecar, .novablocks-content) .block-editor-inner-blocks > .block-editor-block-list__layout {
+.block-editor-block-list__layout.is-root-container {
   @include nb-content-layout-grid;
 }
 
 .block-editor-block-list__layout.is-root-container {
   --editor-full: calc((100vw - var(--theme-content-width-wide) - 2 * var(--theme-wrapper-sides-spacing) - var(--inspector-controls-width, 0px)) * 0.5);
-
-  --nb-sidecar-sidebar-default-width: calc((var(--offset-addon) * 1px - var(--nb-sidecar-grid-gap)) * 0.5);
-  --sidebar-variable-offset-value: calc((var(--offset-addon) / var(--body-font-size)) * 1em);
-
-  @include above(ultra) {
-    --nb-sidecar-sidebar-default-width: calc((var(--sidebar-variable-offset-value) - var(--nb-sidecar-grid-gap)) * 0.5);
-  }
 
   // If is Widget Editor,
   // alter --wds and --wde,

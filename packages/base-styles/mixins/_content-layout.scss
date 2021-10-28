@@ -43,6 +43,11 @@ $align-selectors: '[data-align="full"], [data-align="wide"], [data-nb-align="pul
     max-width: none;
   }
 
+  > .alignfull {
+    margin-left: 0;
+    margin-right: 0;
+  }
+
   // overwrite default editor's styles on .editor-styles-wrapper .wp-block styles
   .editor-styles-wrapper & > .wp-block {
     margin-left: 0;
@@ -79,41 +84,43 @@ $align-selectors: '[data-align="full"], [data-align="wide"], [data-nb-align="pul
   }
 }
 
+:root {
+  // Default position for blocks is between cs and ce.
+  --block-content-start: cs;
+  --block-content-end: ce;
+
+  // Default block limits are ws and we.
+  --block-limit-left: ws;
+  --block-limit-right: we;
+
+  --nb-sidecar-sidebar-small-width: 230px;
+  --nb-sidecar-sidebar-medium-width: 300px;
+  --nb-sidecar-sidebar-large-width: 500px;
+
+  --nb-sidecar-sidebar-minimum-width: var(--nb-sidecar-sidebar-medium-width);
+
+  @include above(ultra) {
+    --nb-sidecar-sidebar-small-width: 10.5em;
+    --nb-sidecar-sidebar-medium-width: 13.7em;
+    --nb-sidecar-sidebar-large-width: 22.8em;
+  }
+}
+
 // Default Layout Settings
 // --nb-sidecar-display - Block default display mode. (eg. grid or flex)
 // --sticky-element-top-spacing - Used to position the sticky block.
 // In Rosa2 this value will be equal with site header height, in this way,
 // the sticky block will not be under the header.
 @mixin layout-settings {
-  --nb-sidecar-sidebar-small-width: 230px;
-  --nb-sidecar-sidebar-medium-width: 300px;
-  --nb-sidecar-sidebar-large-width: 500px;
-  --nb-sidecar-sidebar-minimum-width: var(--nb-sidecar-sidebar-medium-width);
-  --nb-sidecar-sidebar-default-width: calc(var(--nb-sidecar-sidebar-minimum-width) * 0.5);
-
   --nb-sidecar-display: block;
   --nb-sidecar-grid-gap: 3em;
 
   --sticky-element-top-spacing: 0px;
 
-  --wds: var(--nb-sidecar-sidebar-default-width);
-  --wde: var(--nb-sidecar-sidebar-default-width);
+  --wds: calc(0.5 * var(--nb-sidecar-sidebar-minimum-width));
+  --wde: calc(0.5 * var(--nb-sidecar-sidebar-minimum-width));
 
   --full: Max(0px, calc((100% - var(--nb-content-width-wide)) * 0.5));
-
-  // Default position for blocks is between cs and ce.
-  --block-content-start: cs;
-  --block-content-end: ce;
-  
-  // Default block limits are ws and we.
-  --block-limit-left: ws;
-  --block-limit-right: we;
-  
-  @include above(ultra) {
-    --nb-sidecar-sidebar-small-width: 10.5em;
-    --nb-sidecar-sidebar-medium-width: 13.7em;
-    --nb-sidecar-sidebar-large-width: 22.8em;
-  }
 }
 
 @mixin nb-content-layout {
