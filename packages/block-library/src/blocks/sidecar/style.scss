@@ -177,7 +177,19 @@
 .wp-block-group {
   
   .wp-block-group__inner-container {
-    --display-mode: block;
+
+    & {
+      --display-mode: block;
+    }
+
+    // Remove the Grid when a 
+    // Group is inside a Group block
+    // @todo: 
+    // keep it removed unless we could find a way 
+    // to align the inner Group grid lines (eg. using subgrid)
+    .wp-block-group & {
+      --display-mode: block;
+    }
   }
 }
 

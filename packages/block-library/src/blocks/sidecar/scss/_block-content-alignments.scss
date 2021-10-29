@@ -244,3 +244,17 @@
   --block-content-start: fs;
   --block-content-end: fe;
 }
+
+// Exceptions
+
+// Extend the Separator to full-width 
+// whenever is inside a Group block.
+// Blocks: Separator
+.wp-block-group {
+  .wp-block-separator {
+    // grid-column: 1/-1;
+    // Not needed as long as we remove the display: grid
+    // when a Group is inside a Group
+    // See sidecar/style.scss 
+  }
+}
