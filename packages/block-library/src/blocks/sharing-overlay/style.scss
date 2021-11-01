@@ -38,8 +38,8 @@
 }
 
 .novablocks-sharing__wrap {
-	background-color: var(--nb-bg-color);
-	color: var(--nb-fg1-color);
+	// background-color: var(--nb-bg-color);
+	// color: var(--nb-fg1-color);
 
 	position: relative;
 
@@ -74,7 +74,7 @@
 	position: relative;
 	max-height: 100%;
 
-	padding: calc( var(--nb-sharing-overlay-spacing) * 1.5 );
+	padding: calc( var(--nb-spacing) / 2 );
 	overflow: auto;
 }
 
@@ -91,11 +91,11 @@
 }
 
 .novablocks-sharing__content > * {
-  --nb-element-spacing-multiplier: 0.5;
+  --nb-element-spacing-multiplier: 0.4;
 }
 
 .novablocks-sharing__group > * {
-  --nb-element-spacing-multiplier: 0.25;
+  --nb-element-spacing-multiplier: 0.15;
 }
 
 .novablocks-sharing__group-content > * {
@@ -170,6 +170,7 @@
 }
 
 .novablocks-sharing__notification-icon {
+	color: #00cab6; // @todo: replace it with accent color from functional green
 
 	svg {
 		display: block;
@@ -205,6 +206,30 @@
 	padding: calc( var(--nb-sharing-overlay-spacing) * 3 / 4 );
 }
 
+.novablocks-sharing__copy-input {
+	font-size: 0.8em;	
+	--sm-current-fg1-color: var(--sm-bg-color-6); 		// input color
+	--sm-current-bg-color: 	var(--sm-fg2-color-6); 		// input background
+	--sm-current-fg2-color: var(--sm-fg2-color-6); 		// for --theme-input-colored-shadow
+
+	&:not(:focus), &:not(:hover) {
+		--opacity-color: var(--sm-fg2-color-6); 					// for --theme-input-overlay-shadow
+	}
+
+	// "Copy link to clipboard" button 
+	+ div .novablocks-sharing__link[class][class] {
+		color: var(--sm-fg1-color-5);
+
+		&:before { background: var(--sm-bg-color-5); }
+
+		&:hover {
+			color: var(--sm-fg1-color-7);
+
+			&:before { background: var(--sm-bg-color-7); }
+		}
+	}
+}
+
 .novablocks-sharing__link {
 	display: flex;
 	align-items: center;
@@ -213,6 +238,10 @@
   &[class][class] {
     color: var(--nb-fg1-color);
     text-decoration: none;
+
+    &:hover {
+    	color: var(--nb-input-hover-color);
+    }
   }
 
 	@include novablocks-sharing-link-hover;
@@ -228,10 +257,10 @@
 	display: flex;
 	justify-content: center;
 	align-items: center;
-	flex: 0 0 1.25em;
+	flex: 0 0 1.5em;
 
 	svg {
-		width: 1.25em;
-		height: 1.25em;
+		width: 1em;
+		height: 1em;
 	}
 }
