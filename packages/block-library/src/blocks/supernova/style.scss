@@ -8,8 +8,6 @@
 .supernova {
   --emphasis-area-width: calc( var(--nb-emphasis-area, 100) * 1% );
 
-  grid-column: fs/fe;
-
   background: none !important;
   @include block-background;
 
@@ -21,10 +19,15 @@
   }
 }
 
+.supernova,
+.supernova__inner-container {
+  @include nb-content-layout-grid;
+}
+
 .supernova__inner-container[class] {
   // stack above block background
-  position: relative;
-  @include nb-content-layout-grid;
+  //position: relative;
+  //@include nb-content-layout-grid;
 }
 
 /*

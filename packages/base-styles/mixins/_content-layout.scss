@@ -34,8 +34,10 @@ $align-selectors: '[data-align="full"], [data-align="wide"], [data-nb-align="pul
 
   // --------------
   // overwrite [class*="__inner-container"] styles
-  padding-left: 0;
-  padding-right: 0;
+  &[class*="__inner-container"] {
+    padding-left: 0;
+    padding-right: 0;
+  }
 
   // force grid items take up all the available horizontal space
   > * {
@@ -80,6 +82,12 @@ $align-selectors: '[data-align="full"], [data-align="wide"], [data-nb-align="pul
       :where(#{&}) > * {
         grid-column: ws / we;
       }
+    }
+  }
+
+  .novablocks-sidebar & {
+    @include above(lap) {
+      display: block;
     }
   }
 }
