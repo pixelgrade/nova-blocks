@@ -15,24 +15,6 @@
 // and to avoid chaining more classes,
 // we are using !important, because this is important.
 
-// Full
-// It will span from
-// [fs] column to [fe] column.
-.alignfull,
-[data-align='full']{
-  --block-content-start: fs;
-  --block-content-end: fe;
-}
-
-// Wide
-// It will span from
-// [ws] column to [we] column.
-.alignwide,
-[data-align="wide"] {
-  --block-content-start: ws;
-  --block-content-end: we;
-}
-
 // Stop Right
 // That means the block
 // cannot span any columns
@@ -109,14 +91,14 @@
 
 // ALIGNMENTS
 
-.novablocks-content {
+.nb-sidecar-area--content {
   position: relative;
 }
 
 // RIGHT SIDEBAR
 .novablocks-sidecar {
   
-  .novablocks-content:not(:only-child) {
+  .nb-sidecar-area--content:not(:only-child) {
   
     .pull-left,
     .pull-right,
@@ -125,11 +107,11 @@
       @include grid-item-position('right');
       
       &[class*='stop'] {
-        --block-content-start: var(--block-limit-left);
+        --block-content-start: var(--block-wide-start);
         --block-content-end: ce;
   
         + *:not([class*='align']) {
-          --block-content-start: var(--block-limit-left);
+          --block-content-start: var(--block-wide-start);
         }
       }
     }
@@ -139,7 +121,7 @@
 // LEFT SIDEBAR
 .nb-sidecar--sidebar-left {
   
-  .novablocks-content:not(:only-child)[class] {
+  .nb-sidecar-area--content:not(:only-child)[class] {
   
     .pull-left,
     .pull-right,
@@ -149,18 +131,18 @@
   
       + *:not([class*='align']) {
         --block-content-start: cs;
-        --block-content-end: var(--block-limit-right);
+        --block-content-end: var(--block-wide-end);
       }
       
       &[class*='stop'] {
         --block-content-start: cs;
-        --block-content-end: var(--block-limit-right);
+        --block-content-end: var(--block-wide-end);
       }
     }
   }
 }
 
-.novablocks-content {
+.nb-sidecar-area--content {
   
   // Usually we are using some padding left and right
   // to make sure that our site container is not
@@ -183,7 +165,7 @@
 }
 
 
-.novablocks-sidebar {
+.nb-sidecar-area--sidebar {
   
   // We do not need negative margins for
   // alignfull items inside the Sidebar.
@@ -201,16 +183,6 @@
   }
 }
 
-.block-is-wide {
-  --block-content-start: ws;
-  --block-content-end: we;
-  
-  .nb-sidecar--sidebar-right & {
-    --block-content-start: var(--block-limit-left);
-    --block-content-end: ce;
-  }
-}
-
 [data-align="full"] {
   width: 100%;
 }
@@ -219,14 +191,4 @@
 [data-align="none"] {
   --block-content-start: cs;
   --block-content-end: ce;
-}
-
-.block-is-wide {
-  --block-content-start: ws;
-  --block-content-end: we;
-}
-
-.block-is-full {
-  --block-content-start: fs;
-  --block-content-end: fe;
 }

@@ -36,10 +36,6 @@ if ( ! function_exists( 'novablocks_render_sidecar_block' ) ) {
 
 		$classes = [ 'novablocks-sidecar' ];
 
-		if ( ! empty( $attributes['className'] ) ) {
-			$classes[] = $attributes['className'];
-		}
-
 		if ( ! empty( $attributes['layout'] && $attributes['layout'] === 'complex' ) ) {
 			$classes[] = 'novablocks-sidecar--complex';
 		}

@@ -1517,13 +1517,13 @@ function novablocks_get_collection_header_output( $attributes ) {
 	$output = '';
 
 	if ( ! empty( $attributes['showCollectionTitle'] ) && ! empty( $attributes['title'] ) ) {
-		$output .= '<' . $titleTag . ' class="novablocks-collection__title wp-block">';
+		$output .= '<' . $titleTag . ' class="novablocks-collection__title wp-block alignfull">';
 		$output .= $attributes['title'];
 		$output .= '</' . $titleTag . '>';
 	}
 
 	if ( ! empty( $attributes['showCollectionSubtitle'] ) && ! empty( $attributes['subtitle'] ) ) {
-		$output .= '<p class="novablocks-collection__subtitle wp-block is-style-lead">' . $attributes['subtitle'] . '</p>';
+		$output .= '<p class="novablocks-collection__subtitle wp-block is-style-lead alignfull">' . $attributes['subtitle'] . '</p>';
 	}
 
 	return $output;

@@ -53,11 +53,9 @@ if ( ! function_exists( 'novablocks_render_supernova_block' ) ) {
 			'supernova--valign-' . $align[0],
 			'supernova--halign-' . $align[1],
 		];
+
 		if ( $attributes['columns'] === 1 ) {
 			$classes[] = 'supernova--one-column';
-		}
-		if ( ! empty ( $attributes['align'] ) ) {
-			$classes[] = 'block-is-' . $attributes['align'];
 		}
 
 		$blockPaletteClasses = novablocks_get_color_signal_classes( $attributes );

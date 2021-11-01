@@ -75,7 +75,7 @@
       --nb-sidecar-display: grid;
     }
     
-    > .novablocks-content:only-child {
+    > .nb-sidecar-area--content:only-child {
 
       > *:not([class*='align']) {
         --block-content-start: cs;

@@ -1,7 +1,6 @@
 @import 'scss/card';
 @import 'scss/collection';
 @import 'scss/carousel';
-@import 'scss/block-alignments';
 @import 'scss/block-background';
 @import 'scss/content-alignments';
 
@@ -22,12 +21,6 @@
 .supernova,
 .supernova__inner-container {
   @include nb-content-layout-grid;
-}
-
-.supernova__inner-container[class] {
-  // stack above block background
-  //position: relative;
-  //@include nb-content-layout-grid;
 }
 
 /*

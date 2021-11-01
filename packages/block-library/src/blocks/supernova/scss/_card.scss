@@ -205,13 +205,13 @@
 
 .supernova-item__link {
   position: absolute;
-  
   top: 0;
   right: 0;
   bottom: 0;
   left: 0;
   
   display: block;
+  max-width: none !important;
   margin: 0 !important;
 }
 

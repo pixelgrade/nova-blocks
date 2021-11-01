@@ -21,33 +21,36 @@ $align-selectors: '[data-align="full"], [data-align="wide"], [data-nb-align="pul
   display: grid;
   grid-column: fs / fe;
   grid-template-columns:
-    [fs] var(--nb-sidecar-sides) // [ws]
-    [ws] var(--nb-sidecar-sidebar-left-width) // [gs]
-    [gs] var(--nb-sidecar-grid-gap) // [cs]
-    [cs] 1fr // [gcs]
-    [gcs] calc(var(--nb-sidecar-grid-gap)/2) // [cc]
-    [cc] calc(var(--nb-sidecar-grid-gap)/2)  // [gce]
-    [gce] 1fr // [gce]
-    [ce] var(--nb-sidecar-grid-gap) // [ge]
-    [ge] var(--nb-sidecar-sidebar-right-width) // [we]
-    [we] var(--nb-sidecar-sides) [fe];
+    [fs] var(--nb-sidecar-sides)
+    [ws] var(--nb-sidecar-sidebar-left-width)
+    [frs] 1fr
+    [gs] var(--nb-sidecar-sidebar-left-gap)
+    [cs] var(--nb-sidecar-content-left)
+    [gcs] calc(var(--nb-sidecar-grid-gap) / 2)
+    [cc] calc(var(--nb-sidecar-grid-gap) / 2)
+    [gce] var(--nb-sidecar-content-right)
+    [ce] var(--nb-sidecar-sidebar-right-gap)
+    [ge] 1fr
+    [fre] var(--nb-sidecar-sidebar-right-width)
+    [we] var(--nb-sidecar-sides)
+    [fe];
 
   // --------------
   // overwrite [class*="__inner-container"] styles
   &[class*="__inner-container"] {
     padding-left: 0;
     padding-right: 0;
+
+    > .alignfull {
+      margin-left: 0;
+      margin-right: 0;
+    }
   }
 
   // force grid items take up all the available horizontal space
   > * {
     width: 100%;
     max-width: none;
-  }
-
-  > .alignfull {
-    margin-left: 0;
-    margin-right: 0;
   }
 
   // overwrite default editor's styles on .editor-styles-wrapper .wp-block styles
@@ -58,10 +61,19 @@ $align-selectors: '[data-align="full"], [data-align="wide"], [data-nb-align="pul
   // --------------
 
   // this rule needs to be weaker than the one above
+  // @todo SASS has some troubles with :where, rendering this for each selector in &
+
   @at-root {
-    // @todo SASS has some troubles with :where, rendering this for each selector in &
     :where(#{&}) > * {
       grid-column: var(--block-content-start) / var(--block-content-end);
+    }
+
+    :where(#{&}) > .alignwide {
+      grid-column: var(--block-wide-start) / var(--block-wide-end);
+    }
+
+    :where(#{&}) > .alignfull {
+      grid-column: var(--block-full-start) / var(--block-full-end);
     }
   }
 
@@ -85,7 +97,7 @@ $align-selectors: '[data-align="full"], [data-align="wide"], [data-nb-align="pul
     }
   }
 
-  .novablocks-sidebar & {
+  .nb-sidecar-area--sidebar & {
     @include above(lap) {
       display: block;
     }
@@ -98,21 +110,20 @@ $align-selectors: '[data-align="full"], [data-align="wide"], [data-nb-align="pul
   --block-content-end: ce;
 
   // Default block limits are ws and we.
-  --block-limit-left: ws;
-  --block-limit-right: we;
+  --block-wide-start: ws;
+  --block-wide-end: we;
 
-  --nb-sidecar-sidebar-small-width: 230px;
-  --nb-sidecar-sidebar-medium-width: 300px;
-  --nb-sidecar-sidebar-large-width: 500px;
+  // Default block limits are ws and we.
+  --block-full-start: fs;
+  --block-full-end: fe;
 
-  --nb-sidecar-sidebar-left-width: var(--nb-sidecar-sidebar-medium-width);
-  --nb-sidecar-sidebar-right-width: var(--nb-sidecar-sidebar-medium-width);
+  --nb-sidecar-sidebar-small-width: min(288px, 20%);
+  --nb-sidecar-sidebar-medium-width: min(360px, 25%);
+  --nb-sidecar-sidebar-large-width: min(576px, 40%);
 
-  @include above(ultra) {
-    --nb-sidecar-sidebar-small-width: 10.5em;
-    --nb-sidecar-sidebar-medium-width: 13.7em;
-    --nb-sidecar-sidebar-large-width: 22.8em;
-  }
+  // the unit is needed in order for the calc functions to work
+  --nb-sidecar-sidebar-left-width: var(--nb-sidecar-sidebar-small-width);
+  --nb-sidecar-sidebar-right-width: var(--nb-sidecar-sidebar-small-width);
 }
 
 // Default Layout Settings
@@ -126,7 +137,13 @@ $align-selectors: '[data-align="full"], [data-align="wide"], [data-nb-align="pul
 
   --sticky-element-top-spacing: 0px;
 
-  --nb-sidecar-sides: Max(var(--nb-wrapper-sides-spacing), calc((100% - var(--nb-content-width-wide)) * 0.5));
+  --nb-sidecar-sides: max(var(--nb-wrapper-sides-spacing), calc((100% - var(--nb-content-width-wide)) * 0.5));
+  --nb-sidecar-sidebar-left-gap: clamp(0px, var(--nb-sidecar-sidebar-left-width) * 999, var(--nb-sidecar-grid-gap));
+  --nb-sidecar-sidebar-right-gap: clamp(0px, var(--nb-sidecar-sidebar-right-width) * 999, var(--nb-sidecar-grid-gap));
+
+  --nb-sidecar-content-half: calc(var(--nb-content-width) * 0.5 - var(--nb-sidecar-grid-gap) * 0.5);
+  --nb-sidecar-content-left: calc(50% - var(--nb-sidecar-sides) - var(--nb-sidecar-sidebar-left-width) - var(--nb-sidecar-sidebar-left-gap) - var(--nb-sidecar-grid-gap) * 0.5);
+  --nb-sidecar-content-right: calc(50% - var(--nb-sidecar-sides) - var(--nb-sidecar-sidebar-right-width) - var(--nb-sidecar-sidebar-right-gap) - var(--nb-sidecar-grid-gap) * 0.5);
 }
 
 @mixin nb-content-layout {
@@ -138,7 +155,7 @@ $align-selectors: '[data-align="full"], [data-align="wide"], [data-nb-align="pul
     margin-right: auto;
   }
 
-  > :not([class*="align"]) {
+  > :not(.alignwide, .alignfull) {
     max-width: var(--nb-content-width);
   }
 

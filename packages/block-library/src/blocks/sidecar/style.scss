@@ -3,21 +3,25 @@
 @import 'scss/utility';
 
 // This is where magic starts.
-:is(.novablocks-sidecar, .novablocks-content) {
+:is(.novablocks-sidecar, .nb-sidecar-area--content) {
   position: relative;
   align-items: start;
   @include nb-content-layout-grid;
 }
 
-.novablocks-sidebar,
-.novablocks-content {
+.nb-sidecar-area {
+  @include block-spacing-reset;
+
+  > * {
+    @include block-spacing;
+  }
 
   @include above(lap) {
     grid-row: 1;
   }
 }
 
-.novablocks-sidebar {
+.nb-sidecar-area--sidebar {
   height: 100%;
   z-index: 2;
 
@@ -35,16 +39,7 @@
 // Apply top and bottom spacing
 // on all blocks inside content
 // and sidebar.
-.novablocks-content,
-.novablocks-sidebar {
-  @include block-spacing-reset;
-
-  > * {
-    @include block-spacing;
-  }
-}
-
-.novablocks-content {
+.nb-sidecar-area--content {
   order: -1;
 }
 
@@ -53,19 +48,19 @@
 
   .novablocks-sidecar {
 
-    > .novablocks-content:not(:only-child) {
-      --block-content-start: var(--block-limit-left);
-      --block-content-end: var(--block-limit-right);
+    > .nb-sidecar-area--content:not(:only-child) {
+      --block-content-start: var(--block-wide-start);
+      --block-content-end: var(--block-wide-end);
     }
   }
 
   .nb-sidecar--sidebar-left {
 
-    > .novablocks-content {
-      --block-limit-left: cs;
+    > .nb-sidecar-area--content {
+      --block-wide-start: cs;
     }
 
-    > .novablocks-sidebar {
+    > .nb-sidecar-area--sidebar {
       --block-content-start: ws;
       --block-content-end: gs;
     }
@@ -73,11 +68,11 @@
 
   .nb-sidecar--sidebar-right {
 
-    > .novablocks-content {
-      --block-limit-right: ce;
+    > .nb-sidecar-area--content {
+      --block-wide-end: ce;
     }
 
-    > .novablocks-sidebar {
+    > .nb-sidecar-area--sidebar {
       --block-content-start: ge;
       --block-content-end: we;
     }
@@ -87,7 +82,7 @@
 // Make last block from Sidebar Sticky
 .last-block-is-sticky {
   
-  .novablocks-sidebar {
+  .nb-sidecar-area--sidebar {
     
     >:last-child {
       position: sticky;

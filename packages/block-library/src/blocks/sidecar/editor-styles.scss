@@ -26,90 +26,90 @@
     z-index: 1;
   }
 
-  > * {
-    width: 100%;
-
-    align-self: flex-start;
-  }
-
-  .wp-block {
-
-    &[data-align=wide] {
-      max-width: 100%;
-      width: 100%;
-    }
-  }
-
-  [data-align="left"],
-  [data-nb-align="pull-left"],
-  [data-align="right"],
-  [data-nb-align="pull-right"] {
-    grid-row-end: span 5;
-  }
-
-  [data-align="left"],
-  [data-nb-align="pull-left"] {
-    --block-content-start: ws;
-    --block-content-end: gs;
-  }
-
-  [data-align="right"],
-  [data-nb-align="pull-right"] {
-    --block-content-start: ge;
-    --block-content-end: we;
-  }
-
-  [data-type="novablocks/sidecar"] {
-    grid-column: fs/fe;
-
-    max-width: none;
-    width: 100%;
-  }
-
-  [data-align="left"] {
-
-    *:not([class*='align']):not([data-nb-align]):not([data-align]) {
-      --block-content-start: cs;
-    }
-  }
-
-  [data-align="right"],
-  [data-align="left"] {
-    height: 100%;
-
-    > * {
-      float: none;
-    }
-  }
+//  > * {
+//    width: 100%;
+//
+//    align-self: flex-start;
+//  }
+//
+//  .wp-block {
+//
+//    &[data-align=wide] {
+//      max-width: 100%;
+//      width: 100%;
+//    }
+//  }
+//
+//  [data-align="left"],
+//  [data-nb-align="pull-left"],
+//  [data-align="right"],
+//  [data-nb-align="pull-right"] {
+//    grid-row-end: span 5;
+//  }
+//
+//  [data-align="left"],
+//  [data-nb-align="pull-left"] {
+//    --block-content-start: ws;
+//    --block-content-end: gs;
+//  }
+//
+//  [data-align="right"],
+//  [data-nb-align="pull-right"] {
+//    --block-content-start: ge;
+//    --block-content-end: we;
+//  }
+//
+//  [data-type="novablocks/sidecar"] {
+//    grid-column: fs/fe;
+//
+//    max-width: none;
+//    width: 100%;
+//  }
+//
+//  [data-align="left"] {
+//
+//    *:not([class*='align']):not([data-nb-align]):not([data-align]) {
+//      --block-content-start: cs;
+//    }
+//  }
+//
+//  [data-align="right"],
+//  [data-align="left"] {
+//    height: 100%;
+//
+//    > * {
+//      float: none;
+//    }
+//  }
 }
 
-// The default layout is Content Left with Sidebar Right.
-// Content will always be the first child of layout block,
-// and it will change it's grid position, according
-// to sidebar position (left or right).
-.novablocks-sidecar {
-  --block-content-start: var(--block-limit-left);
-  --block-content-end: ce;
-
-  > .block-editor-inner-blocks > .block-editor-block-list__layout {
-
-    > :last-child {
-      grid-column: ge / var(--block-limit-right);
-    }
-  }
-
-  //grid-column: var(--block-limit-left)/gs;
-
-  &--sidebar-left {
-    --block-content-start: cs;
-    --block-content-end: var(--block-limit-right);
-  }
-}
-
-.nb-sidecar--sidebar-right .nb-sidecar--sidebar-right {
-  --block-content-start: var(--block-limit-left);
-  --block-content-end: ce;
-}
+//// The default layout is Content Left with Sidebar Right.
+//// Content will always be the first child of layout block,
+//// and it will change it's grid position, according
+//// to sidebar position (left or right).
+//.novablocks-sidecar {
+//  --block-content-start: var(--block-wide-start);
+//  --block-content-end: ce;
+//
+//  > .block-editor-inner-blocks > .block-editor-block-list__layout {
+//
+//    > :last-child {
+//      grid-column: ge / var(--block-wide-end);
+//    }
+//  }
+//
+//  //grid-column: var(--block-wide-start)/gs;
+//
+//  &--sidebar-left {
+//    --block-content-start: cs;
+//    --block-content-end: var(--block-wide-end);
+//  }
+//}
+//
+//.nb-sidecar--sidebar-right .nb-sidecar--sidebar-right {
+//  --block-content-start: var(--block-wide-start);
+//  --block-content-end: ce;
+//}
 
 // Overwrite default focus block style
 // and apply them around grid columns.
@@ -130,7 +130,7 @@
 // Right Sidebar
 .nb-sidecar--sidebar-right {
 
-  .novablocks-content {
+  .nb-sidecar-area--content {
 
     [data-align="full"],
     [data-align="wide"] {
@@ -141,7 +141,7 @@
     [data-align="left"],
     [data-nb-align="pull-right"],
     [data-nb-align="pull-left"] {
-      --block-content-start: var(--block-limit-left);
+      --block-content-start: var(--theme-spacing-larger);
       --block-content-end: ce;
     }
   }
@@ -150,7 +150,7 @@
 // Left Sidebar
 .nb-sidecar--sidebar-left {
 
-  .novablocks-content {
+  .nb-sidecar-area--content {
 
     [data-align="full"],
     [data-align="wide"] {
@@ -162,7 +162,7 @@
     [data-nb-align="pull-right"],
     [data-nb-align="pull-left"] {
       --block-content-start: cs;
-      --block-content-end: var(--block-limit-right)
+      --block-content-end: var(--block-wide-end)
     }
   }
 }
@@ -170,7 +170,7 @@
 // Two Sidebars
 .novablocks-sidecar--complex {
 
-  .novablocks-content[class] {
+  .nb-sidecar-area--content[class] {
 
     [data-align="full"],
     [data-align="wide"],
@@ -186,9 +186,9 @@
 }
 
 // Sidecar in Sidecar
-.novablocks-content {
+.nb-sidecar-area--content {
 
-  .novablocks-content {
+  .nb-sidecar-area--content {
 
     [data-align="full"],
     [data-align="wide"],
@@ -214,7 +214,7 @@
 
 [data-align="left"],
 [data-align="right"],
-.novablocks-sidebar {
+.nb-sidecar-area--sidebar {
 
   .wp-block-image {
     margin-left: 0 !important;
@@ -233,11 +233,11 @@
   margin-top: 0 !important;
 }
 
-.last-block-is-sticky .novablocks-sidebar > :last-child {
+.last-block-is-sticky .nb-sidecar-area--sidebar > :last-child {
   position: static;
 }
 
-.novablocks-sidebar {
+.nb-sidecar-area--sidebar {
 
   .block-editor-inner-blocks {
     margin-top: 0;

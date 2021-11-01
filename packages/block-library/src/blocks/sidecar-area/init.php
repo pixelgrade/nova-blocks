@@ -37,12 +37,7 @@ if ( ! function_exists( 'novablocks_render_sidecar_area_block' ) ) {
 		$classes = [
 			'nb-sidecar-area',
 			'nb-sidecar-area--' . $attributes['areaName'],
-			'novablocks-' . $attributes['areaName'], // fallback only
 		];
-
-		if ( ! empty( $attributes['className'] ) ) {
-			$classes[] = $attributes['className'];
-		}
 
 		?>
 

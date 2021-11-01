@@ -24,6 +24,8 @@ const SidecarAreaEdit = function( props ) {
 
   const className = classnames(
     props.className,
+    'nb-sidecar-area',
+    `nb-sidecar-area--${ attributes.areaName }`,
     {
       'last-block-is-sticky': lastItemIsSticky === true
     }
