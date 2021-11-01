@@ -38,8 +38,6 @@
 }
 
 .novablocks-sharing__wrap {
-	// background-color: var(--nb-bg-color);
-	// color: var(--nb-fg1-color);
 
 	position: relative;
 
@@ -208,26 +206,6 @@
 
 .novablocks-sharing__copy-input {
 	font-size: 0.8em;	
-	--sm-current-fg1-color: var(--sm-bg-color-6); 		// input color
-	--sm-current-bg-color: 	var(--sm-fg2-color-6); 		// input background
-	--sm-current-fg2-color: var(--sm-fg2-color-6); 		// for --theme-input-colored-shadow
-
-	&:not(:focus), &:not(:hover) {
-		--opacity-color: var(--sm-fg2-color-6); 					// for --theme-input-overlay-shadow
-	}
-
-	// "Copy link to clipboard" button 
-	+ div .novablocks-sharing__link[class][class] {
-		color: var(--sm-fg1-color-5);
-
-		&:before { background: var(--sm-bg-color-5); }
-
-		&:hover {
-			color: var(--sm-fg1-color-7);
-
-			&:before { background: var(--sm-bg-color-7); }
-		}
-	}
 }
 
 .novablocks-sharing__link {
@@ -238,10 +216,6 @@
   &[class][class] {
     color: var(--nb-fg1-color);
     text-decoration: none;
-
-    &:hover {
-    	color: var(--nb-input-hover-color);
-    }
   }
 
 	@include novablocks-sharing-link-hover;

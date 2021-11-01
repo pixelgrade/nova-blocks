@@ -11,14 +11,16 @@
     left: 0;
     z-index: -1;
 
-    background: var(--nb-bg-color);
+    opacity: 0.15;
+    background: var(--nb-fg1-color);
+    
     transition: var(--nb-transition);
-    transition-property: background-color;
+    transition-property: background-color, opacity; 
     transition-duration: .15s;
-    opacity: 1;
   }
 
   &:hover:before {
-    background: var(--nb-bg-hover-color);
+    opacity: 0.3;
+    background: var(--nb-accent-color);
   }
 }
