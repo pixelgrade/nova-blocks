@@ -11,14 +11,14 @@
     left: 0;
     z-index: -1;
 
-    background: var(--nb-fg1-color);
+    background: var(--nb-bg-color);
     transition: var(--nb-transition);
     transition-property: background-color;
     transition-duration: .15s;
-    opacity: 0.1;
+    opacity: 1;
   }
 
   &:hover:before {
-    background: var(--nb-bg-color);
+    background: var(--nb-bg-hover-color);
   }
 }

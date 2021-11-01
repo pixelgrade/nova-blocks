@@ -25,10 +25,12 @@
 }
 
 * {
-  --nb-bg-color: var(--sm-current-bg-color, #FFFFFF);
+  --nb-bg-color: var(--sm-bg-color-12, #FFFFFF);
   --nb-accent-color: var(--sm-current-accent-color, #203AB6);
   --nb-fg1-color: var(--sm-current-fg1-color, #272743);
   --nb-fg2-color: var(--sm-current-fg2-color, #000043);
+  --nb-bg-hover-color: var(--sm-bg-color-2, #000000);
+  --nb-input-hover-color: var(--sm-fg1-color-2, #FFFFFF);
 }
 
 .novablocks-media,
