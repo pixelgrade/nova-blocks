@@ -1464,24 +1464,33 @@ if ( ! function_exists( 'novablocks_get_collection_output' ) ) {
 
 		$collection_header = novablocks_get_collection_header_output( $attributes );
 
-		$layoutClasses = [
+		$layout_classes = [
 			'nb-collection__layout',
 			'nb-collection__layout--' . $attributes['layoutStyle'],
 			'nb-collection__layout--' . $attributes['carouselLayout'] . '-width',
 		];
 
+		$header_classes = [
+			'nb-collection__header',
+			'align' . $attributes['align'],
+		];
+
+		if ( ! empty( $attributes['showCollectionSubtitle'] ) && ! empty( $attributes['subtitle'] ) ) {
+			$header_classes[] = 'nb-collection__header--has-description';
+		}
+
 		ob_start(); ?>
 
 		<?php if ( ! empty( $collection_header ) ) { ?>
-			<div class="<?php echo "nb-collection__header  align" . esc_attr( $attributes['align'] ); ?>">
+			<div class="<?php echo join( " ", $header_classes ); ?>">
 				<div class="nb-collection__inner-container">
 					<?php echo $collection_header ?>
 				</div>
 			</div>
 		<?php } ?>
 
-		<div class="<?php echo "nb-collection__body  align" . esc_attr( $attributes['align'] ); ?>">
-			<div class="<?php echo esc_attr( join( ' ', $layoutClasses ) ); ?>">
+		<div class="<?php echo "nb-collection__body  align" . $attributes['align'] ?>">
+			<div class="<?php echo esc_attr( join( ' ', $layout_classes ) ); ?>">
 				<?php echo $content; ?>
 			</div>
 			<?php novablocks_render_scroll_indicator( $attributes ); ?>
@@ -1517,13 +1526,13 @@ function novablocks_get_collection_header_output( $attributes ) {
 	$output = '';
 
 	if ( ! empty( $attributes['showCollectionTitle'] ) && ! empty( $attributes['title'] ) ) {
-		$output .= '<' . $titleTag . ' class="novablocks-collection__title wp-block alignfull">';
+		$output .= '<' . $titleTag . ' class="nb-collection__title wp-block alignfull">';
 		$output .= $attributes['title'];
 		$output .= '</' . $titleTag . '>';
 	}
 
 	if ( ! empty( $attributes['showCollectionSubtitle'] ) && ! empty( $attributes['subtitle'] ) ) {
-		$output .= '<p class="novablocks-collection__subtitle wp-block is-style-lead alignfull">' . $attributes['subtitle'] . '</p>';
+		$output .= '<p class="nb-collection__subtitle wp-block is-style-lead alignfull">' . $attributes['subtitle'] . '</p>';
 	}
 
 	return $output;

@@ -19,7 +19,7 @@ const CollectionTitle = ( props ) => {
   return (
     <RichText
       tagName={ `h${ collectionTitleLevel }` }
-      className={ `novablocks-collection__title` }
+      className={ `nb-collection__title` }
       value={ title }
       placeholder={ __( 'Collection title', '__plugin_txtd' ) }
       onChange={ title => {
