@@ -39,9 +39,4 @@
   .wp-block-columns
 ) {
   --nb-spacing-base: 2;
-
-  > *,
-  & & {
-    --nb-spacing-base: 1;
-  }
 }
