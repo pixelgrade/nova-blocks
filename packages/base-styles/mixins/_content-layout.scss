@@ -156,11 +156,11 @@ $align-selectors: '[data-align="full"], [data-align="wide"], [data-nb-align="pul
     max-width: var(--nb-content-width);
   }
 
-  > .alignwide {
+  > :is(.alignwide, [data-align="wide"]) {
     max-width: var(--nb-content-width-wide);
   }
 
-  > .alignfull {
+  > :is(.alignfull, [data-align="full"]) {
     max-width: none;
     margin-left: calc( -1 * var(--nb-wrapper-sides-spacings) );
     margin-right: calc( -1 * var(--nb-wrapper-sides-spacings) );
