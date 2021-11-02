@@ -36,8 +36,8 @@ $align-selectors: '[data-align="full"], [data-align="wide"], [data-nb-align="pul
     [fe];
 
   // --------------
-  // overwrite [class*="__inner-container"] styles
-  &[class*="__inner-container"] {
+  // overwrite [class*="__inner-container"][class] styles
+  &[class][class] {
     padding-left: 0;
     padding-right: 0;
 
