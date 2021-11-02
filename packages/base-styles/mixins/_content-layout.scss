@@ -153,9 +153,6 @@ $align-selectors: '[data-align="full"], [data-align="wide"], [data-nb-align="pul
   > * {
     margin-left: auto;
     margin-right: auto;
-  }
-
-  > :not(.alignwide, .alignfull) {
     max-width: var(--nb-content-width);
   }
 
@@ -164,6 +161,7 @@ $align-selectors: '[data-align="full"], [data-align="wide"], [data-nb-align="pul
   }
 
   > .alignfull {
+    max-width: none;
     margin-left: calc( -1 * var(--nb-wrapper-sides-spacings) );
     margin-right: calc( -1 * var(--nb-wrapper-sides-spacings) );
   }

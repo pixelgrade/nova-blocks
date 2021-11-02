@@ -9,7 +9,7 @@ const withCustomAlignmentControls = createHigherOrderComponent( OriginalComponen
 
     const supports = useSupports( props.name );
 
-    if ( !supports?.novaBlocks?.noDataAlign ) {
+    if ( ! supports?.novaBlocks?.noDataAlign ) {
       return <OriginalComponent { ...props } />
     }
 

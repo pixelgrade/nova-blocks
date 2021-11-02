@@ -1,6 +1,6 @@
 import { __ } from "@wordpress/i18n";
 
-import { ControlsSection, ControlsTab } from "../../../components";
+import { ControlsSection, ControlsTab, withVisibility } from "../../../components";
 
 import SpaceAndSizingPresets from './space-and-sizing-presets';
 
@@ -24,11 +24,7 @@ const SpaceAndSizingControls = ( props ) => {
       <ControlsTab label={ __( 'Presets' ) }>
         <SpaceAndSizingPresets { ...props } />
       </ControlsTab>
-      <ControlsTab label={ __( 'Customize', '__plugin_txtd' ) }>
-        <CardSpacingCustomize key={ 'card-spacing-customize' } { ...props } />
-        <ImageContainerHeightCustomize key={ 'image-container-customize' } { ...props } />
-        <VisualBalanceCustomize key={ 'visual-balance-customize' } { ...props } />
-      </ControlsTab>
+      <SpaceAndSizingCustomize { ...props } />
       <ControlsTab label={ __( 'Settings', '__plugin_txtd' ) }>
         <CardSpacingSettings key={ 'card-spacing-settings' } { ...props } />
         <MinimumContainerHeight id={ 'minimum-container-height' } key={ 'minimum-container-height' } { ...props } />
@@ -41,5 +37,15 @@ const SpaceAndSizingControls = ( props ) => {
     </ControlsSection>
   )
 }
+
+const SpaceAndSizingCustomize = withVisibility( 'space-and-sizing-customize' )( props => {
+  return (
+    <ControlsTab label={ __( 'Customize', '__plugin_txtd' ) }>
+      <CardSpacingCustomize key={ 'card-spacing-customize' } { ...props } />
+      <ImageContainerHeightCustomize key={ 'image-container-customize' } { ...props } />
+      <VisualBalanceCustomize key={ 'visual-balance-customize' } { ...props } />
+    </ControlsTab>
+  )
+} );
 
 export default SpaceAndSizingControls;

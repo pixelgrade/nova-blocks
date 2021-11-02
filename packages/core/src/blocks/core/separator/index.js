@@ -1,49 +1,42 @@
-import classnames from 'classnames';
 
-import { createHigherOrderComponent } from '@wordpress/compose';
 import { addFilter } from '@wordpress/hooks';
+import { useBlockProps } from "@wordpress/block-editor";
+import { select } from "@wordpress/data";
 
-export const addSeparatorFilters = ( settings ) => {
+import edit from './edit';
 
-  const separatorMarkup = settings?.separator?.markup;
+const addNovablocksSupport = ( settings ) => {
 
-	const Separator = ( props ) => {
+  if ( settings.name !== 'core/separator' ) {
+    return settings;
+  }
 
-	  const useBlockProps = wp.blockEditor.useBlockProps;
-    const className = classnames(
-      'wp-block-separator',
-      props.className
-    );
+  return {
+    ...settings,
+    attributes: {
+      ...settings.attributes,
+      align: {
+        type: "string",
+        default: "none",
+      }
+    },
+    supports: {
+      ...settings.supports,
+      novaBlocks: {
+        spaceAndSizing: true,
+        noDataAlign: true
+      },
+    },
+    edit,
+    save: () => {
+      const blockProps = useBlockProps.save();
+      const settings = select( 'novablocks' ).getSettings();
 
-	  if ( typeof useBlockProps !== "undefined" ) {
-      const blockProps = useBlockProps( {
-        className: className,
-      } );
-
-      return <div { ...blockProps } dangerouslySetInnerHTML={ { __html: separatorMarkup } } />
+      return (
+        <div { ...blockProps } dangerouslySetInnerHTML={ { __html: settings?.separator?.markup } }/>
+      )
     }
+  }
+}
 
-    return <div className={ className } dangerouslySetInnerHTML={ { __html: separatorMarkup } } />
-	};
-
-	const replaceSeparatorEdit = createHigherOrderComponent( ( BlockEdit ) => {
-		return ( props ) => {
-			if ( 'core/separator' === props.name ) {
-				return <Separator className={ props.attributes.className } />;
-			} else {
-				return <BlockEdit { ...props } />;
-			}
-		}
-	}, "replaceSeparatorEdit" );
-
-	const replaceSeparatorSave = ( element, blockType, attributes ) => {
-		if ( 'core/separator' === blockType.name ) {
-      return <div className={ `wp-block-separator ${ attributes.className }` } dangerouslySetInnerHTML={ { __html: separatorMarkup } } />
-		}
-
-    return element;
-	};
-
-	addFilter( 'editor.BlockEdit', 'nova-theme/separator', replaceSeparatorEdit );
-	addFilter( 'blocks.getSaveElement', 'nova-theme/separator', replaceSeparatorSave );
-};
+addFilter( 'blocks.registerBlockType', 'novablocks/separator/add-novablocks-support', addNovablocksSupport, 1 )

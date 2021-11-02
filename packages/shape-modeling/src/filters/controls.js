@@ -3,7 +3,8 @@ import { __ } from '@wordpress/i18n';
 import {
   ControlsSection,
   ControlsTab,
-  PresetControl, withVisibility
+  PresetControl,
+  withVisibility
 } from "@novablocks/block-editor";
 
 import {

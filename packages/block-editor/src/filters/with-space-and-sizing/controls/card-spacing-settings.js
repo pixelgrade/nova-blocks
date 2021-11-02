@@ -1,61 +1,88 @@
 import { __ } from "@wordpress/i18n";
 import { RangeControl } from "@wordpress/components";
-import { ControlsGroup } from "../../../components";
+
+import { ControlsGroup, withVisibility } from "../../../components";
 import { useSupports } from "../../../hooks";
 
-const CardSpacing = props => {
-
-  const {
-    attributes,
-    setAttributes,
-  } = props;
-
-  const {
-    blockTopSpacing,
-    blockBottomSpacing,
-    emphasisTopSpacing,
-    emphasisBottomSpacing,
-  } = attributes;
+const BlockSpacing = props => {
 
   const supports = useSupports( props.name );
 
-  const BLOCK_SPACING_MIN_VALUE = - 3;
-  const BLOCK_SPACING_MAX_VALUE = 3;
-  const CONTENT_SPACING_MIN_VALUE = supports?.novaBlocks?.spaceAndSizing?.advancedSpacing ? - 3 : 0;
-  const CONTENT_SPACING_MAX_VALUE = 3;
+  const newProps = Object.assign( {}, props, {
+    blockSpacingMin: -3,
+    blockSpacingMax: 3,
+    contentSpacingMin: supports?.novaBlocks?.spaceAndSizing?.advancedSpacing ? - 3 : 0,
+    contentSpacingMax: 3,
+  } );
 
   return (
     <ControlsGroup title={ __( 'Block Spacing' ) }>
-      <RangeControl
-        value={ blockTopSpacing }
-        onChange={ ( blockTopSpacing ) => setAttributes( { blockTopSpacing } ) }
-        label={ __( 'Block Top Spacing' ) }
-        min={ BLOCK_SPACING_MIN_VALUE }
-        max={ BLOCK_SPACING_MAX_VALUE }
-      />
-      <RangeControl
-        value={ blockBottomSpacing }
-        onChange={ ( blockBottomSpacing ) => setAttributes( { blockBottomSpacing } ) }
-        label={ __( 'Block Bottom Spacing' ) }
-        min={ BLOCK_SPACING_MIN_VALUE }
-        max={ BLOCK_SPACING_MAX_VALUE }
-      />
-      <RangeControl
-        value={ emphasisTopSpacing }
-        onChange={ ( emphasisTopSpacing ) => setAttributes( { emphasisTopSpacing } ) }
-        label={ __( 'Content Top Spacing' ) }
-        min={ CONTENT_SPACING_MIN_VALUE }
-        max={ CONTENT_SPACING_MAX_VALUE }
-      />
-      <RangeControl
-        value={ emphasisBottomSpacing }
-        onChange={ ( emphasisBottomSpacing ) => setAttributes( { emphasisBottomSpacing } ) }
-        label={ __( 'Content Bottom Spacing' ) }
-        min={ CONTENT_SPACING_MIN_VALUE }
-        max={ CONTENT_SPACING_MAX_VALUE }
-      />
+      <BlockTopSpacing { ...newProps } />
+      <BlockBottomSpacing { ...newProps } />
+      <ContentTopSpacing { ...newProps } />
+      <ContentBottomSpacing { ...newProps } />
     </ControlsGroup>
   )
 }
 
-export default CardSpacing;
+const BlockTopSpacing = withVisibility( 'block-top-spacing' )( props => {
+  const { attributes, setAttributes, blockSpacingMin, blockSpacingMax } = props;
+  const { blockTopSpacing } = attributes;
+
+  return (
+    <RangeControl
+      value={ blockTopSpacing }
+      onChange={ ( blockTopSpacing ) => setAttributes( { blockTopSpacing } ) }
+      label={ __( 'Block Top Spacing' ) }
+      min={ blockSpacingMin }
+      max={ blockSpacingMax }
+    />
+  )
+} );
+
+const BlockBottomSpacing = withVisibility( 'block-bottom-spacing' )( props => {
+  const { attributes, setAttributes, blockSpacingMin, blockSpacingMax } = props;
+  const { blockBottomSpacing } = attributes;
+
+  return (
+    <RangeControl
+      value={ blockBottomSpacing }
+      onChange={ ( blockBottomSpacing ) => setAttributes( { blockBottomSpacing } ) }
+      label={ __( 'Block Bottom Spacing' ) }
+      min={ blockSpacingMin }
+      max={ blockSpacingMax }
+    />
+  )
+} );
+
+const ContentTopSpacing = withVisibility( 'content-top-spacing' )( props => {
+  const { attributes, setAttributes, contentSpacingMin, contentSpacingMax } = props;
+  const { emphasisTopSpacing } = attributes;
+
+  return (
+    <RangeControl
+      value={ emphasisTopSpacing }
+      onChange={ ( emphasisTopSpacing ) => setAttributes( { emphasisTopSpacing } ) }
+      label={ __( 'Content Top Spacing' ) }
+      min={ contentSpacingMin }
+      max={ contentSpacingMax }
+    />
+  )
+} );
+
+const ContentBottomSpacing = withVisibility( 'content-bottom-spacing' )( props => {
+  const { attributes, setAttributes, contentSpacingMin, contentSpacingMax } = props;
+  const { emphasisBottomSpacing } = attributes;
+
+  return (
+    <RangeControl
+      value={ emphasisBottomSpacing }
+      onChange={ ( emphasisBottomSpacing ) => setAttributes( { emphasisBottomSpacing } ) }
+      label={ __( 'Content Bottom Spacing' ) }
+      min={ contentSpacingMin }
+      max={ contentSpacingMax }
+    />
+  )
+} );
+
+export default withVisibility( 'block-spacing' )( BlockSpacing );
