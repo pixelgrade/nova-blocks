@@ -1,3 +1,4 @@
+import classnames from 'classnames';
 
 import { addFilter } from '@wordpress/hooks';
 import { useBlockProps } from "@wordpress/block-editor";
@@ -28,15 +29,22 @@ const addNovablocksSupport = ( settings ) => {
       },
     },
     edit,
-    save: () => {
-      const blockProps = useBlockProps.save();
+    save: ( { attributes } ) => {
+      const { align } = attributes;
+      const className = classnames(
+        'wp-block-separator',
+        `align${ align }`,
+      );
       const settings = select( 'novablocks' ).getSettings();
+      const blockProps = useBlockProps.save( {
+        className: className
+      } );
 
       return (
-        <div { ...blockProps } dangerouslySetInnerHTML={ { __html: settings?.separator?.markup } }/>
+        <div { ...blockProps } dangerouslySetInnerHTML={ { __html: settings?.separator?.markup } } />
       )
     }
   }
 }
 
-addFilter( 'blocks.registerBlockType', 'novablocks/separator/add-novablocks-support', addNovablocksSupport, 1 )
+addFilter( 'blocks.registerBlockType', 'novablocks/separator/add-novablocks-support', addNovablocksSupport, 1 );

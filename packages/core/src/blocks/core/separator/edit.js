@@ -9,8 +9,6 @@ const SeparatorEdit = ( props ) => {
   const { attributes, settings } = props;
   const { align } = attributes;
 
-  const separatorMarkup = settings?.separator?.markup;
-
   const className = classnames(
     'wp-block-separator',
     `align${ align }`,
@@ -22,7 +20,9 @@ const SeparatorEdit = ( props ) => {
     style: props.style
   } );
 
-  return <div { ...blockProps } dangerouslySetInnerHTML={ { __html: separatorMarkup } } />
+  return (
+    <div { ...blockProps } dangerouslySetInnerHTML={ { __html: settings?.separator?.markup } } />
+  );
 };
 
 export default withControlsVisibility( SeparatorEdit );
