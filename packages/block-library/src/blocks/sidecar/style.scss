@@ -10,11 +10,7 @@
 }
 
 .nb-sidecar-area {
-  @include block-spacing-reset;
-
-  > * {
-    @include block-spacing;
-  }
+  @include block-spacing-container;
 
   @include above(lap) {
     grid-row: 1;

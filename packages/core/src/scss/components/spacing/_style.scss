@@ -4,10 +4,6 @@ html :is(
   .block-editor-block-list__layout,
   [class*="__inner-container"]
 ) {
-  @include block-spacing-reset;
+  @include block-spacing-container;
   @include block-spacing-apply-multiplier;
-
-  > * {
-    @include block-spacing;
-  }
 }

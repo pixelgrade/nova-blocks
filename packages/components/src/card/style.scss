@@ -1,7 +1,7 @@
 .novablocks-card {
 	@include clearfix;
   overflow: hidden;
-  --nb-element-spacing-multiplier: var(--nb-element-spacing-level-3-multiplier);
+  --nb-spacing-multiplier: var(--nb-spacing-level-3-multiplier);
 
 	.wp-block-buttons[class] {
 		float: none;
@@ -33,7 +33,7 @@
 	overflow: hidden;
 
 	> .nb-grid__item-buttons {
-		--nb-element-spacing-multiplier: 1;
+		--nb-spacing-multiplier: 1;
 	}
 }
 

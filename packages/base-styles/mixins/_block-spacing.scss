@@ -1,36 +1,35 @@
 @mixin block-spacing-apply-multiplier {
 
-  & > * {
-    --nb-element-spacing-multiplier: calc(var(--nb-element-spacing-base) * var(--nb-element-spacing-level-1-multiplier));
-  }
-
   & & > * {
-    --nb-element-spacing-multiplier: calc(var(--nb-element-spacing-base) * var(--nb-element-spacing-level-2-multiplier));
+    --nb-spacing-current-multiplier: var(--nb-spacing-level-2-multiplier);
   }
 
   & & & > * {
-    --nb-element-spacing-multiplier: calc(var(--nb-element-spacing-base) * var(--nb-element-spacing-level-3-multiplier));
+    --nb-spacing-current-multiplier: var(--nb-spacing-level-3-multiplier);
   }
 }
 
-@mixin block-spacing-reset {
+@mixin block-spacing {
+  margin-top: calc(var(--nb-block-top-spacing) * var(--nb-spacing) * var(--nb-spacing-multiplier));
+  margin-bottom: calc(var(--nb-block-bottom-spacing) * var(--nb-spacing) * var(--nb-spacing-multiplier));
+  padding-top: calc(var(--nb-emphasis-top-spacing) * var(--nb-spacing) * var(--nb-spacing-multiplier));
+  padding-bottom: calc(var(--nb-emphasis-bottom-spacing) * var(--nb-spacing) * var(--nb-spacing-multiplier));
+}
+
+@mixin block-spacing-container {
 
   > * {
     --nb-block-top-spacing: 1;
     --nb-block-bottom-spacing: 0;
     --nb-emphasis-top-spacing: 0;
     --nb-emphasis-bottom-spacing: 0;
+    --nb-spacing-multiplier: calc(var(--nb-spacing-base) * var(--nb-spacing-current-multiplier));
+
+    @include block-spacing;
   }
 
   > :first-child {
     --nb-block-top-spacing: 0;
   }
-}
-
-@mixin block-spacing {
-  margin-top: calc(var(--nb-block-top-spacing) * var(--nb-spacing) * var(--nb-element-spacing-multiplier));
-  margin-bottom: calc(var(--nb-block-bottom-spacing) * var(--nb-spacing) * var(--nb-element-spacing-multiplier));
-  padding-top: calc(var(--nb-emphasis-top-spacing) * var(--nb-spacing) * var(--nb-element-spacing-multiplier));
-  padding-bottom: calc(var(--nb-emphasis-bottom-spacing) * var(--nb-spacing) * var(--nb-element-spacing-multiplier));
 }
 

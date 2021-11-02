@@ -93,10 +93,10 @@
   
     .comment-list {
       @include block-spacing;
-      --nb-element-spacing-multiplier: .75;
+      --nb-spacing-multiplier: .75;
   
       @include above(tablet) {
-        --nb-element-spacing-multiplier: 1;
+        --nb-spacing-multiplier: 1;
       }
   
       .no-avatar {
@@ -137,20 +137,20 @@
       > *,
       > * > * {
         @include block-spacing;
-        --nb-element-spacing-multiplier: 0.75;
+        --nb-spacing-multiplier: 0.75;
       }
   
       .comment-form-comment,
       .field-description,
       input[type="checkbox"] + label {
-        --nb-element-spacing-multiplier: 0;
+        --nb-spacing-multiplier: 0;
       }
   
       .field-description {
   
         + *,
         label + :not(.field-description) {
-          --nb-element-spacing-multiplier: 0.175;
+          --nb-spacing-multiplier: 0.175;
   
         }
       }
@@ -417,7 +417,7 @@
     .comment-content,
     .comment-footer-meta {
       @include block-spacing;
-      --nb-element-spacing-multiplier: 0.5;
+      --nb-spacing-multiplier: 0.5;
     }
   
     .comment-author-info {

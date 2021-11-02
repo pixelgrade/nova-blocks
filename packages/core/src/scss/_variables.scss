@@ -12,11 +12,11 @@
 	--nb-transition-easing: ease;
 	--nb-transition: all var(--nb-transition-duration) var(--nb-transition-easing);
 
-  --nb-element-spacing-multiplier: 1;
-  --nb-element-spacing-base: 1;
-	--nb-element-spacing-level-1-multiplier: 1;
-	--nb-element-spacing-level-2-multiplier: 0.5;
-	--nb-element-spacing-level-3-multiplier: 0.25;
+  --nb-spacing-base: 1;
+	--nb-spacing-level-1-multiplier: 1;
+	--nb-spacing-level-2-multiplier: 0.5;
+	--nb-spacing-level-3-multiplier: 0.25;
+  --nb-spacing-current-multiplier: var(--nb-spacing-level-1-multiplier);
 
 	--nb-block-content-box-shadow:
 		0 32px 128px rgba(42, 54, 52, 0.1),
@@ -31,10 +31,17 @@
   --nb-fg2-color: var(--sm-current-fg2-color, #000043);
 }
 
-.novablocks-media,
-.novablocks-hero,
-.novablocks-slideshow,
-.wp-block-group,
-.wp-block-columns {
-  --nb-element-spacing-base: 2;
+:is(
+  .novablocks-media,
+  .novablocks-hero,
+  .novablocks-slideshow,
+  .wp-block-group,
+  .wp-block-columns
+) {
+  --nb-spacing-base: 2;
+
+  > *,
+  & & {
+    --nb-spacing-base: 1;
+  }
 }
