@@ -1,17 +1,16 @@
 /**
  * WordPress dependencies
  */
-const { __ } = wp.i18n;
-const { Component } = wp.element;
-
-const { RadioControl } = wp.components;
+import { __ } from "@wordpress/i18n";
+import { Component } from "@wordpress/element";
+import { RadioControl } from "@wordpress/components";
 
 import {
   ControlsTab,
   ControlsSection
 } from "@novablocks/block-editor";
 
-class Inspector extends Component {
+class Controls extends Component {
 
   render() {
     const {
@@ -30,7 +29,7 @@ class Inspector extends Component {
       { label: 'None', value: 'pull-none' }
     ]
 
-    if (CAN_BE_PULLED) {
+    if ( CAN_BE_PULLED ) {
 
       DEFAULT_CONTENT_ALIGNMENT.push(
         { label: 'Pull Left', value: 'pull-left' },
@@ -57,4 +56,4 @@ class Inspector extends Component {
   }
 }
 
-export default Inspector;
+export default Controls;

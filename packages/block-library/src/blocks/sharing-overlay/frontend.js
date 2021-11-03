@@ -12,46 +12,39 @@ import services from './services';
 
 	$( '.novablocks-sharing' ).each( function( i, obj ) {
 		const $block = $( obj );
+		const $overlay = $block.find( '.js-sharing-overlay' ).appendTo( 'body' );
+		const attributes = $block.data();
+
+		const $wrap = $overlay.find( '.novablocks-sharing__wrap' );
+		const $content = $overlay.find( '.novablocks-sharing__content' );
 		const $openButton = $block.find( '.js-sharing-overlay-trigger' );
 		const $openButtonWrap = $openButton.closest( '.wp-block-button' );
-		const $overlay = $block.find( '.js-sharing-overlay' ).appendTo( 'body' );
-		const data = $block.data();
+    const $closeButton = $overlay.find( '.novablocks-sharing__close' );
 
-		const $wrap = $( '<div class="novablocks-sharing__wrap">' );
-		const $container = $( '<div class="novablocks-sharing__container">');
-		const $content = $( '<div class="novablocks-sharing__content">');
+    const $title = $( `<h${ attributes.headingLevel }>`, { class: 'novablocks-sharing__title' } ).text( 'Sharing Options' );
+    const $footer = $( '<div>', { class: 'novablocks-sharing__footer' } ).text( 'Thanks for spreading the word!' );
 
-		const shareIcon = getIcon( 'share' );
-		$openButton.prepend( shareIcon );
+		$openButton.prepend( getIcon( 'share' ) );
+    $closeButton.prepend( getIcon( 'cancel' ) );
 
-		$content.appendTo( $container );
-		$container.appendTo( $wrap );
-		$wrap.appendTo( $overlay );
-		$wrap.wrap( '<div class="novablocks-sharing__inner-container">' );
-
-		if ( !! data.showCopy ) {
-			$content.append( createCopyLinkGroup( data ) );
+		if ( !! attributes.showCopy ) {
+			$content.append( createCopyLinkGroup( attributes ) );
 		}
 
-		if ( !! data.showSharePrivately ) {
-			$content.append( createPrivateGroup( data ) );
+		if ( !! attributes.showSharePrivately ) {
+			$content.append( createPrivateGroup( attributes ) );
 		}
 
-		if ( !! data.showSocialIcons ) {
-			$content.append( createMarkupFromShariff( data ) );
+		if ( !! attributes.showSocialIcons ) {
+			$content.append( createMarkupFromShariff( attributes ) );
 		}
 
-		if ( !! data.showShareInPerson ) {
-			$content.append( createInPersonGroup( data ) );
+		if ( !! attributes.showShareInPerson ) {
+			$content.append( createInPersonGroup( attributes ) );
 		}
-
-		const closeIcon = getIcon( 'cancel' );
-		const $closeButton = $( '<div class="novablocks-sharing__close"></div>' ).html( closeIcon );
-		const $title = $( `<h${ data.headingLevel } class="novablocks-sharing__title">Sharing Options</h${ data.headingLevel }>` );
 
 		$title.prependTo( $content );
-		$( '<div class="novablocks-sharing__footer">Thanks for spreading the word!</div>').appendTo( $content );
-		$closeButton.appendTo( $wrap );
+    $footer.appendTo( $content );
 
 		function positionPopup() {
 			const $button = $openButtonWrap.length ? $openButtonWrap : $openButton;
@@ -234,8 +227,8 @@ import services from './services';
 	function createContentFromLinks( items ) {
 		const $list = $( '<div class="novablocks-sharing__list">' );
 
-		items.forEach( ( { label, url, callback, icon } ) => {
-			const $link = createLink( label, url, icon );
+		items.forEach( ( { label, url, callback, icon, classes } ) => {
+			const $link = createLink( label, url, icon, classes );
 
 			if ( typeof callback === 'function' ) {
 				$link.on( 'click', function(e) {
@@ -251,8 +244,8 @@ import services from './services';
 		return $list;
 	}
 
-	function createLink( label, url, iconName = 'share' ) {
-		const $link = $( '<a class="novablocks-sharing__link" />' ).attr( 'href', url );
+	function createLink( label, url, iconName = 'share', classes ) {
+		const $link = $( '<a class="novablocks-sharing__link" />' ).attr( 'href', url ).addClass(classes);
 		const $label = $( '<div class="novablocks-sharing__link-label" />' ).text( label );
 		const $icon = $( '<div class="novablocks-sharing__link-icon" />' );
 
@@ -269,9 +262,9 @@ import services from './services';
 
 	function createCopyLinkGroup( attributes ) {
 		const groupTitle = 'Use a link for everything';
-		const groupDescription = 'Copy link and paste it anywhere you want it';
+		const groupDescription = 'Copy link and paste it anywhere you want it.';
 
-		const $input = $( `<input class="novablocks-sharing__copy-input" type="text" value="${ window.location.href }" readonly />` );
+		const $input = $( `<input class="novablocks-sharing__copy-input sm-palette-1 sm-variation-1" type="text" value="${ window.location.href }" readonly />` );
 		const $notification = $( '<div class="novablocks-sharing__notification-wrap">' );
 		const $notificationContent = $( '<div class="novablocks-sharing__notification">' );
 		const $notificationText = $( '<span class="novablocks-sharing__notification-text">Link copied to your clipboard</span>' );
@@ -284,6 +277,7 @@ import services from './services';
 			label: 'Copy link to clipboard',
 			url: '#',
 			icon: 'link',
+			classes: 'sm-palette-2 sm-variation-1 sm-palette--shifted',
 			callback: () => {
 				const visibleClassName = 'novablocks-sharing__notification--visible';
 				const input = $input.get(0);

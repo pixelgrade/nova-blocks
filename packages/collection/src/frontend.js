@@ -44,8 +44,8 @@ const GRID_SELECTOR = '.nb-collection__layout--parametric';
         return;
       }
 
-      const $title = $block.find( '.novablocks-collection__title' ).detach();
-      const $subtitle = $block.find( '.novablocks-collection__subtitle' ).detach();
+      const $title = $block.find( '.nb-collection__title' ).detach();
+      const $subtitle = $block.find( '.nb-collection__subtitle' ).detach();
       const onResize = debounce( recreateLayout, 100 );
 
       createLayout();

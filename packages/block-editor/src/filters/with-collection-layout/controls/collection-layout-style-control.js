@@ -18,7 +18,7 @@ const CollectionLayoutStyleControl = withVisibility( 'collection-layout-style' )
     <ControlsGroup title={ __( 'Collection Layout Style' ) }>
       <RadioControl
         selected={ layoutStyle }
-        className={ 'novablocks-collection-layout' }
+        className={ 'nb-collection-layout' }
         onChange={ ( layoutStyle ) => {
           setAttributes( { layoutStyle } );
         } }

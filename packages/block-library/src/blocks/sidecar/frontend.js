@@ -5,13 +5,13 @@ const SIDECARS = document.querySelectorAll( '.novablocks-sidecar:not(.ignore-blo
 const IS_EDITOR = document.getElementsByTagName( 'body' )[0].classList.contains( 'block-editor-page' );
 const BREAK_LEFT_CLASS = 'stop-left';
 const BREAK_RIGHT_CLASS = 'stop-right';
-const CONTENT_CLASS = '.novablocks-content';
-const SIDEBAR_CLASS = '.novablocks-sidebar';
+const CONTENT_CLASS = '.nb-sidecar-area--content';
+const SIDEBAR_CLASS = '.nb-sidecar-area--sidebar';
 const SIDECAR_CLASS = '.novablocks-sidecar';
 const ALIGN_CLASSES = ['alignfull', 'alignwide', 'alignleft', 'alignright'];
 const PULL_RIGHT_CLASS = '.pull-right';
 const PULL_LEFT_CLASS = '.pull-left';
-const SIDEBAR_LEFT_CLASS = 'novablocks-sidecar--sidebar-left';
+const SIDEBAR_LEFT_CLASS = 'nb-sidecar--sidebar-left';
 const HIDDEN_BLOCK_CLASS = 'novablocks-hidden-block';
 
 // There are 3 types of blocks in this system:
@@ -162,7 +162,7 @@ function sidecarTransformationsInCustomizer() {
 function moveImageClassesToBlock() {
 
   // Select all Block Images inside Content.
-  let blockImages = Array.from( document.querySelectorAll( ".novablocks-content > .wp-block-image:not([class*='align'])" ) );
+  let blockImages = Array.from( document.querySelectorAll( ".nb-sidecar-area--content > .wp-block-image:not([class*='align'])" ) );
 
   blockImages.forEach( block => {
 
@@ -208,7 +208,7 @@ const handleOverlappingOnScroll = () => {
 
     const children = Array.from( sidecar.children );
 
-    const content = children.filter( child => child.classList.contains( 'novablocks-content' ) );
+    const content = children.filter( child => child.classList.contains( 'nb-sidecar-area--content' ) );
 
     if ( content.length ) {
 
@@ -236,7 +236,7 @@ const handleOverlappingOnScroll = () => {
       contentBlocksArray = contentBlocksArray.concat( Array.from( filteredItems ) );
     }
 
-    const sidebar = children.filter( child => child.classList.contains( 'novablocks-sidebar' ) );
+    const sidebar = children.filter( child => child.classList.contains( 'nb-sidecar-area--sidebar' ) );
 
     if ( sidebar.length ) {
       const sidebarBlocks = sidebar[0].children;

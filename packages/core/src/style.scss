@@ -5,12 +5,20 @@
 @import 'scss/components/layout/style';
 @import 'scss/components/spacing/style';
 
-@import 'scss/blocks/group/style';
-
 $slick-arrow-color: var(--sm-current-fg1-color);
 
 @import 'scss/vendor/slick';
 @import 'scss/vendor/slick-theme';
+
+// Applying Grid on Group Block
+[class*="__inner-container"][class] {
+  @include nb-content-layout;
+
+  [class*='align-pull'] & {
+    padding-left: 0;
+    padding-right: 0;
+  }
+}
 
 .admin-bar {
   --admin-bar-height: 32px;
@@ -62,7 +70,7 @@ $slick-arrow-color: var(--sm-current-fg1-color);
 		}
 	}
   
-  .novablocks-collection--classic {
+  .nb-collection--classic {
     
     @include below(mobile) {
       

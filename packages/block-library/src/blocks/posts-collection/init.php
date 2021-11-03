@@ -34,8 +34,8 @@ if ( ! function_exists( 'novablocks_render_posts_collection_block' ) ) {
 
 		$classes = [
 			'novablocks-block',
-			'novablocks-collection',
-			'novablocks-collection--align-left',
+			'nb-collection',
+			'nb-collection--align-left',
 			'alignfull',
 		];
 
@@ -45,10 +45,10 @@ if ( ! function_exists( 'novablocks_render_posts_collection_block' ) ) {
 			$classes[] = $attributes['className'];
 		}
 		if ( ! empty( $attributes['layoutStyle'] ) ) {
-			$classes[] = 'novablocks-collection--' . $attributes['layoutStyle'];
+			$classes[] = 'nb-collection--' . $attributes['layoutStyle'];
 		}
 		if ( ! empty( $attributes['layoutStyle'] ) && $attributes['carouselLayout'] === 'variable' ) {
-			$classes[] = 'novablocks-collection-carousel--variable';
+			$classes[] = 'nb-collection-carousel--variable';
 		}
 		$classes = array_merge(
 			$classes,

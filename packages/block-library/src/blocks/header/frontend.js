@@ -96,11 +96,14 @@ import { addSocialMenuClass } from "./utils";
     // have a better starting point,
     // for reading progress bar.
 
-    let $entryContent = $( '.entry-content' ),
-      ignoredElements = ['.article-header', '.post-navigation', '.novablocks-conversations' ],
+    let $contentArea = $( '.content-area' ),
+      ignoredElements = [ '.article-header', '.post-navigation', '.novablocks-conversations' ],
       ignoredElementsHeight = 0,
-      articleHeaderHeight = $( '.article-header' ).outerHeight(),
       max = 0;
+
+    if ( ! $contentArea.length ) {
+      return;
+    }
 
     // We want to know all ignored elements combined height,
     // so we can remove it from entry-content height.
@@ -115,10 +118,10 @@ import { addSocialMenuClass } from "./utils";
     $( window ).on( 'scroll', function() {
 
       let scrollPosition = $( window ).scrollTop(),
-        startPosition = $entryContent.offset().top;
+        startPosition = $contentArea.offset().top;
 
       if ( scrollPosition > startPosition ) {
-        max = $entryContent.outerHeight() - $entryContent.offset().top - ignoredElementsHeight;
+        max = $contentArea.outerHeight() - $contentArea.offset().top - ignoredElementsHeight;
         $progressBar.attr( 'max', max ).css( 'opacity', 0 );
         $progressBar.css( 'opacity', 0.95 ).attr( 'value', scrollPosition - startPosition );
       } else {
@@ -131,10 +134,11 @@ import { addSocialMenuClass } from "./utils";
   // Show Current or Next Article
   // based on scroll position.
   function readingHeaderInit() {
-    let $window = $( window ),
-        $title = $('.entry-title');
+    const $window = $( window );
+    const $title = $( '.entry-title' );
+    const $contentArea = $( '.content-area' );
 
-    if ( below('lap') || ! isArticle ) {
+    if ( below('lap') || ! isArticle || ! $contentArea.length ) {
       return;
     }
 
@@ -144,9 +148,8 @@ import { addSocialMenuClass } from "./utils";
         lastScroll = 0,
         latestScroll = 0,
         scrollDirection = 'up',
-        $content = $( '.entry-content' ),
-        contentOffset = $content.offset().top,
-        contentHeight = $content.outerHeight(),
+        contentOffset = $contentArea.offset().top,
+        contentHeight = $contentArea.outerHeight(),
         windowHeight = $window.height(),
         offSet = 0,
         scrollTop = 0,

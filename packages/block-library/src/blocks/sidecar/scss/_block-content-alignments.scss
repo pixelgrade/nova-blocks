@@ -11,39 +11,9 @@
 // 4) Alignleft & Pull Left - This align will pull element outside
 // of the content on the left side.
 
-.alignwide,
-[data-align="wide"] {
-  --block-limit-left: ws;
-  --block-limit-right: we;
-}
-
-.alignfull,
-[data-align="full"] {
-  --block-limit-left: fs;
-  --block-limit-right: fe;
-}
-
 // Alignment are clear intentions from user,
 // and to avoid chaining more classes,
 // we are using !important, because this is important.
-
-// Full
-// It will span from
-// [fs] column to [fe] column.
-.alignfull,
-[data-align='full']{
-  --block-content-start: fs !important;
-  --block-content-end: fe !important;
-}
-
-// Wide
-// It will span from
-// [ws] column to [we] column.
-.alignwide,
-[data-align='wide'] {
-  --block-content-start: ws !important;
-  --block-content-end: we !important;
-}
 
 // Stop Right
 // That means the block
@@ -77,8 +47,7 @@
 // The same logic is applied for alignright and pull-right.
 .alignleft,
 .pull-left,
-[data-novablocks-alignment='pull-left'] {
-    
+[data-nb-align='pull-left'] {
   --block-content-start: ws;
   --block-content-end: gs;
 
@@ -95,7 +64,7 @@
 
 .alignright,
 .pull-right,
-[data-novablocks-alignment='pull-right'] {
+[data-nb-align='pull-right'] {
   
   --block-content-start: ge;
   --block-content-end: we;
@@ -122,14 +91,14 @@
 
 // ALIGNMENTS
 
-.novablocks-content {
+.nb-sidecar-area--content {
   position: relative;
 }
 
 // RIGHT SIDEBAR
 .novablocks-sidecar {
   
-  .novablocks-content:not(:only-child) {
+  .nb-sidecar-area--content:not(:only-child) {
   
     .pull-left,
     .pull-right,
@@ -138,11 +107,11 @@
       @include grid-item-position('right');
       
       &[class*='stop'] {
-        --block-content-start: var(--block-limit-left);
+        --block-content-start: var(--block-wide-start);
         --block-content-end: ce;
   
         + *:not([class*='align']) {
-          --block-content-start: var(--block-limit-left);
+          --block-content-start: var(--block-wide-start);
         }
       }
     }
@@ -150,9 +119,9 @@
 }
 
 // LEFT SIDEBAR
-.novablocks-sidecar--sidebar-left {
+.nb-sidecar--sidebar-left {
   
-  .novablocks-content:not(:only-child)[class] {
+  .nb-sidecar-area--content:not(:only-child)[class] {
   
     .pull-left,
     .pull-right,
@@ -162,18 +131,18 @@
   
       + *:not([class*='align']) {
         --block-content-start: cs;
-        --block-content-end: var(--block-limit-right);
+        --block-content-end: var(--block-wide-end);
       }
       
       &[class*='stop'] {
         --block-content-start: cs;
-        --block-content-end: var(--block-limit-right);
+        --block-content-end: var(--block-wide-end);
       }
     }
   }
 }
 
-.novablocks-content {
+.nb-sidecar-area--content {
   
   // Usually we are using some padding left and right
   // to make sure that our site container is not
@@ -181,10 +150,9 @@
   // Given the fact that we want full items to span on the entire screen,
   // we are going to apply negative margin to achieve that.
   .alignfull {
-    margin-left: calc(-1 * var(--nb-container-spacings));
-    margin-right: calc(-1 * var(--nb-container-spacings));
     
     @include above(lap) {
+
       &.stop-left {
         margin-left: 0;
       }
@@ -197,7 +165,7 @@
 }
 
 
-.novablocks-sidebar {
+.nb-sidecar-area--sidebar {
   
   // We do not need negative margins for
   // alignfull items inside the Sidebar.
@@ -209,19 +177,9 @@
 
 .novablocks-sidecar:not(.ignore-block) {
   
-  .novablocks-collection {
+  .nb-collection {
     margin-left: 0;
     margin-right: 0;
-  }
-}
-
-.block-is-wide {
-  --block-content-start: ws;
-  --block-content-end: we;
-  
-  .novablocks-sidecar--sidebar-right & {
-    --block-content-start: var(--block-limit-left);
-    --block-content-end: ce;
   }
 }
 
@@ -233,14 +191,4 @@
 [data-align="none"] {
   --block-content-start: cs;
   --block-content-end: ce;
-}
-
-.block-is-wide {
-  --block-content-start: ws;
-  --block-content-end: we;
-}
-
-.block-is-full {
-  --block-content-start: fs;
-  --block-content-end: fe;
 }

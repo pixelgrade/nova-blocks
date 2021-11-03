@@ -3,9 +3,6 @@
 		"type": "string",
 		"default": "medium"
 	},
-	"layout": {
-		"type": "string"
-	},
 	"sidebarPosition": {
 		"type": "string",
 		"default": "right"

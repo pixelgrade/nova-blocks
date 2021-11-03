@@ -17,12 +17,10 @@ const CollectionBody = ( props ) => {
 
   return (
     <div className={ `nb-collection__body  align${ align }` }>
-      <div className={ `nb-collection__inner-container` }>
-        <CollectionLayout { ...props }>
-          { props.children }
-        </CollectionLayout>
-        <ScrollIndicator { ...props } className={ contentClassNames } />
-      </div>
+      <CollectionLayout { ...props }>
+        { props.children }
+      </CollectionLayout>
+      <ScrollIndicator { ...props } className={ contentClassNames } />
     </div>
   );
 }

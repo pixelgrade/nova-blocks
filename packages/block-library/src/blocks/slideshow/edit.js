@@ -66,7 +66,6 @@ const Edit = ( props ) => {
       `novablocks-u-valign-${ verticalAlignment }`,
       `novablocks-u-halign-${ horizontalAlignment }`,
       `novablocks-u-spacing-${ contentPadding }`,
-      `novablocks-u-content-width-${ contentWidth }`,
       getColorSignalClassnames( attributes, true ),
       'alignfull',
       'is-ready',

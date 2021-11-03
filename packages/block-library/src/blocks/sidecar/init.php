@@ -34,19 +34,20 @@ if ( ! function_exists( 'novablocks_render_sidecar_block' ) ) {
 		$attributes_config = novablocks_get_sidecar_attributes();
 		$attributes        = novablocks_get_attributes_with_defaults( $attributes, $attributes_config );
 
-		$classes = [ 'novablocks-sidecar', ];
-		if ( ! empty( $attributes['className'] ) ) {
-			$classes[] = $attributes['className'];
-		}
+		$classes = [ 'novablocks-sidecar' ];
+
 		if ( ! empty( $attributes['layout'] ) && $attributes['layout'] === 'complex' ) {
 			$classes[] = 'novablocks-sidecar--complex';
 		}
+
 		if ( ! empty( $attributes['sidebarPosition'] ) ) {
-			$classes[] = 'novablocks-sidecar--sidebar-' . $attributes['sidebarPosition'];
+			$classes[] = 'nb-sidecar--sidebar-' . $attributes['sidebarPosition'];
 		}
+
 		if ( ! empty( $attributes['sidebarWidth'] ) ) {
-			$classes[] = 'novablocks-sidebar--' . $attributes['sidebarWidth'];
+			$classes[] = 'nb-sidecar--sidebar-' . $attributes['sidebarWidth'];
 		}
+
 		if ( ! empty( $attributes['lastItemIsSticky'] ) && $attributes['lastItemIsSticky'] === true ) {
 			$classes[] = 'last-block-is-sticky';
 		}

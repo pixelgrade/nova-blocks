@@ -1,27 +1,9 @@
-import { createHigherOrderComponent } from "@wordpress/compose";
 import { addFilter } from "@wordpress/hooks";
-import { Fragment } from "@wordpress/element";
-import { useSupports } from "../../hooks";
-import Controls from './controls';
 
-const withContentAlignmentControls = createHigherOrderComponent( OriginalComponent => {
+import withCustomAlignmentControls from "./with-custom-alignment-controls";
+import withWrapperPropsRemoved from "./with-wrapper-props-removed";
+import withAlignSettingsRemoved from "./with-align-settings-removed";
 
-  return( props ) => {
-
-    const supports = useSupports( props.name );
-
-    if ( ! supports?.novaBlocks?.noDataAlign ) {
-      return <OriginalComponent { ...props } />
-    }
-
-    return (
-      <Fragment>
-        <Controls { ...props } />
-        <OriginalComponent { ...props } />
-      </Fragment>
-    )
-
-  };
-}, 'withContentAlignmentControls');
-
-addFilter( 'editor.BlockEdit', 'novablocks/with-custom-alignment-controls', withContentAlignmentControls );
+addFilter( 'editor.BlockEdit', 'novablocks/with-custom-alignment-controls', withCustomAlignmentControls );
+addFilter( 'editor.BlockListBlock', 'novablocks/with-no-data-align', withWrapperPropsRemoved );
+addFilter( 'blocks.registerBlockType', 'novablocks/remove-align-settings', withAlignSettingsRemoved, Number.MAX_SAFE_INTEGER );

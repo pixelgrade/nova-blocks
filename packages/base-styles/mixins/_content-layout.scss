@@ -1,0 +1,168 @@
+$align-selectors: '[data-align="full"], [data-align="wide"], [data-nb-align="pull-left"], [data-nb-align="pull-right"]';
+
+// Default Layout Grid
+// fs - full start
+// ws - wide start
+// cs - content start
+// ce - content end
+// cc - content center
+// we - wide end
+// fe - full end
+// gs - gap start
+// ge - gap end
+// gcs - gap content start
+// gce - gap content end
+// The same thing applies for [cc] [ce].
+
+//noinspection ALL
+@mixin nb-content-layout-grid {
+  @include layout-settings;
+
+  display: grid;
+  grid-column: fs / fe;
+  grid-template-columns:
+    [fs] var(--nb-sidecar-sides)
+    [ws] var(--nb-sidecar-sidebar-left-width)
+    [frs] 1fr
+    [gs] var(--nb-sidecar-sidebar-left-gap)
+    [cs] var(--nb-sidecar-content-left)
+    [gcs] calc(var(--nb-sidecar-grid-gap) / 2)
+    [cc] calc(var(--nb-sidecar-grid-gap) / 2)
+    [gce] var(--nb-sidecar-content-right)
+    [ce] var(--nb-sidecar-sidebar-right-gap)
+    [ge] 1fr
+    [fre] var(--nb-sidecar-sidebar-right-width)
+    [we] var(--nb-sidecar-sides)
+    [fe];
+
+  // --------------
+  // overwrite [class*="__inner-container"][class] styles
+  &[class][class] {
+    padding-left: 0;
+    padding-right: 0;
+
+    > .alignfull {
+      margin-left: 0;
+      margin-right: 0;
+    }
+  }
+
+  // force grid items take up all the available horizontal space
+  > * {
+    width: 100%;
+    max-width: none;
+  }
+
+  // overwrite default editor's styles on .editor-styles-wrapper .wp-block styles
+  .editor-styles-wrapper & > .wp-block {
+    margin-left: 0;
+    margin-right: 0;
+  }
+  // --------------
+
+  // this rule needs to be weaker than the one above
+  // @todo SASS has some troubles with :where, rendering this for each selector in &
+
+  @at-root {
+    :where(#{&}) > * {
+      grid-column: var(--block-content-start) / var(--block-content-end);
+    }
+
+    :where(#{&}) > .alignwide {
+      grid-column: var(--block-wide-start) / var(--block-wide-end);
+    }
+
+    :where(#{&}) > .alignfull {
+      grid-column: var(--block-full-start) / var(--block-full-end);
+    }
+  }
+
+  @include below(lap) {
+    grid-template-columns:
+      [fs] var(--nb-wrapper-sides-spacing) // [ws]
+      [ws] auto // [gs]
+      [gs] 0 // [cs]
+      [cs] 1fr // [gcs]
+      [gcs] 0 // [cc]
+      [cc] 0  // [gce]
+      [gce] 1fr // [gce]
+      [ce] 0 // [ge]
+      [ge] auto // [we]
+      [we] var(--nb-wrapper-sides-spacing) [fe];
+
+    @at-root {
+      :where(#{&}) > * {
+        grid-column: ws / we;
+      }
+    }
+  }
+
+  .nb-sidecar-area--sidebar & {
+    @include above(lap) {
+      display: block;
+    }
+  }
+}
+
+:root {
+  // Default position for blocks is between cs and ce.
+  --block-content-start: cs;
+  --block-content-end: ce;
+
+  // Default block limits are ws and we.
+  --block-wide-start: ws;
+  --block-wide-end: we;
+
+  // Default block limits are ws and we.
+  --block-full-start: fs;
+  --block-full-end: fe;
+
+  --nb-sidecar-sidebar-small-width: min(288px, 20%);
+  --nb-sidecar-sidebar-medium-width: min(360px, 25%);
+  --nb-sidecar-sidebar-large-width: min(576px, 40%);
+
+  // the unit is needed in order for the calc functions to work
+  --nb-sidecar-sidebar-left-width: var(--nb-sidecar-sidebar-small-width);
+  --nb-sidecar-sidebar-right-width: var(--nb-sidecar-sidebar-small-width);
+}
+
+// Default Layout Settings
+// --nb-sidecar-display - Block default display mode. (eg. grid or flex)
+// --sticky-element-top-spacing - Used to position the sticky block.
+// In Rosa2 this value will be equal with site header height, in this way,
+// the sticky block will not be under the header.
+@mixin layout-settings {
+  --nb-sidecar-display: block;
+  --nb-sidecar-grid-gap: 3em;
+
+  --sticky-element-top-spacing: 0px;
+
+  --nb-sidecar-sides: max(var(--nb-wrapper-sides-spacing), calc((100% - var(--nb-content-width-wide)) * 0.5));
+  --nb-sidecar-sidebar-left-gap: clamp(0px, var(--nb-sidecar-sidebar-left-width) * 999, var(--nb-sidecar-grid-gap));
+  --nb-sidecar-sidebar-right-gap: clamp(0px, var(--nb-sidecar-sidebar-right-width) * 999, var(--nb-sidecar-grid-gap));
+
+  --nb-sidecar-content-half: calc(var(--nb-content-width) * 0.5 - var(--nb-sidecar-grid-gap) * 0.5);
+  --nb-sidecar-content-left: calc(50% - var(--nb-sidecar-sides) - var(--nb-sidecar-sidebar-left-width) - var(--nb-sidecar-sidebar-left-gap) - var(--nb-sidecar-grid-gap) * 0.5);
+  --nb-sidecar-content-right: calc(50% - var(--nb-sidecar-sides) - var(--nb-sidecar-sidebar-right-width) - var(--nb-sidecar-sidebar-right-gap) - var(--nb-sidecar-grid-gap) * 0.5);
+}
+
+@mixin nb-content-layout {
+  padding-left: var(--nb-wrapper-sides-spacings);
+  padding-right: var(--nb-wrapper-sides-spacings);
+
+  > * {
+    margin-left: auto;
+    margin-right: auto;
+    max-width: var(--nb-content-width);
+  }
+
+  > :is(.alignwide, [data-align="wide"]) {
+    max-width: var(--nb-content-width-wide);
+  }
+
+  > :is(.alignfull, [data-align="full"]) {
+    max-width: none;
+    margin-left: calc( -1 * var(--nb-wrapper-sides-spacings) );
+    margin-right: calc( -1 * var(--nb-wrapper-sides-spacings) );
+  }
+}

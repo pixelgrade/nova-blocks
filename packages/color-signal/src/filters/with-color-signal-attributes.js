@@ -3,7 +3,9 @@ import altAttributes from "../attributes-alt.json";
 
 const withColorSignalAttributes = ( settings, name ) => {
 
-  if ( ! settings?.supports?.novaBlocks?.colorSignal ) {
+  const colorSignalSupport = settings?.supports?.novaBlocks?.colorSignal;
+
+  if ( colorSignalSupport !== true && colorSignalSupport?.attributes !== true ) {
     return settings;
   }
 

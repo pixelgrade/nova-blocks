@@ -46,7 +46,6 @@ const HeroEdit = ( props ) => {
       props.className,
       'novablocks-hero',
       `novablocks-u-spacing-${ contentPadding }`,
-      `novablocks-u-content-width-${ contentWidth }`,
       `novablocks-u-background`,
       `novablocks-u-background-${ overlayFilterStyle }`,
       getAlignmentClassnames( attributes ),

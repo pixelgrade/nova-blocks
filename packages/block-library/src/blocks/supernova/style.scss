@@ -1,14 +1,11 @@
 @import 'scss/card';
 @import 'scss/collection';
 @import 'scss/carousel';
-@import 'scss/block-alignments';
 @import 'scss/block-background';
 @import 'scss/content-alignments';
 
 .supernova {
   --emphasis-area-width: calc( var(--nb-emphasis-area, 100) * 1% );
-
-  grid-column: var(--all-columns);
 
   background: none !important;
   @include block-background;
@@ -21,14 +18,9 @@
   }
 }
 
+.supernova,
 .supernova__inner-container {
-  // stack above block background
-  position: relative;
-
-  // apply our default grid layout and remove padding-left inherited from __inner-container
-  @include layout-grid;
-  padding-left: 0 !important;
-  padding-right: 0 !important;
+  @include nb-content-layout-grid;
 }
 
 /*

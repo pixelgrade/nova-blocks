@@ -58,7 +58,7 @@ registerBlockType( 'novablocks/announcement-bar', {
   supports: {
 	  html: false,
     novaBlocks: {
-	    colorSignal: {
+      colorSignal: {
         attributes: true,
         controls: true,
         functionalColors: true,

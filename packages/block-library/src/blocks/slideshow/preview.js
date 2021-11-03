@@ -65,7 +65,7 @@ const SlideshowPreview = class extends Component {
 								<SlideshowBackground { ...this.props } />
 								<div className="novablocks-slideshow__foreground novablocks-doppler__foreground novablocks-u-content-padding novablocks-u-content-align">
 									<div
-										className="novablocks-slideshow__inner-container novablocks-u-content-width"
+										className="novablocks-slideshow__inner-container"
 										dangerouslySetInnerHTML={ {
 											__html:
 												( typeof previewImage.title === 'string' && `<h2>${ previewImage.title }</h2>` || '' ) +

@@ -28,7 +28,7 @@
 	position: absolute;
 	top: 0;
 	left: 0;
-	z-index: 100;
+	z-index: 3000;
 
 	max-width: 100%;
 
@@ -38,8 +38,6 @@
 }
 
 .novablocks-sharing__wrap {
-	background-color: var(--nb-bg-color);
-	color: var(--nb-fg1-color);
 
 	position: relative;
 
@@ -74,21 +72,28 @@
 	position: relative;
 	max-height: 100%;
 
-	padding: calc( var(--nb-sharing-overlay-spacing) * 1.5 );
+	padding: calc( var(--nb-spacing) / 2 );
 	overflow: auto;
 }
 
-.novablocks-sharing__content {
+:is(
+  .novablocks-sharing__content,
+  .novablocks-sharing__group,
+  .novablocks-sharing__group-content
+) {
+  @include block-spacing-container;
+}
 
-	> * {
-		--nb-element-spacing-multiplier: 0.5;
-		@include block-spacing;
-  
-    &:not(:first-child) {
-      --nb-block-top-spacing: 1;
-      --nb-block-bottom-spacing: 0;
-    }
-	}
+.novablocks-sharing__content > * {
+  --nb-spacing-multiplier: 0.4;
+}
+
+.novablocks-sharing__group > * {
+  --nb-spacing-multiplier: 0.15;
+}
+
+.novablocks-sharing__group-content > * {
+  --nb-spacing-multiplier: 0.125;
 }
 
 .novablocks-sharing__close {
@@ -119,14 +124,6 @@
 
 .novablocks-sharing__group {
 	position: relative;
-}
-
-.novablocks-sharing__group-content {
-
-	> * {
-		--nb-element-spacing-multiplier: 0.125;
-		@include block-spacing;
-	}
 }
 
 .novablocks-sharing__notification-wrap {
@@ -167,6 +164,7 @@
 }
 
 .novablocks-sharing__notification-icon {
+	color: #00cab6; // @todo: replace it with accent color from functional green
 
 	svg {
 		display: block;
@@ -178,16 +176,8 @@
 	}
 }
 
-.novablocks-sharing__group {
-
-	> * {
-		--nb-element-spacing-multiplier: 0.25;
-		@include block-spacing;
-	}
-}
-
 .novablocks-sharing__group-description[class] {
-	--nb-element-spacing-multiplier: 0;
+	--nb-spacing-multiplier: 0;
 }
 
 .novablocks-sharing__list {
@@ -208,6 +198,10 @@
 .novablocks-sharing__link,
 .novablocks-sharing__copy-input {
 	padding: calc( var(--nb-sharing-overlay-spacing) * 3 / 4 );
+}
+
+.novablocks-sharing__copy-input {
+	font-size: 0.8em;	
 }
 
 .novablocks-sharing__link {
@@ -233,10 +227,10 @@
 	display: flex;
 	justify-content: center;
 	align-items: center;
-	flex: 0 0 1.25em;
+	flex: 0 0 1.5em;
 
 	svg {
-		width: 1.25em;
-		height: 1.25em;
+		width: 1em;
+		height: 1em;
 	}
 }
