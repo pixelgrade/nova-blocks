@@ -21,18 +21,14 @@ const ALLOWED_BLOCKS = [ 'novablocks/card' ];
 
 const CardsCollectionEdit = ( props ) => {
 
-	const {
-    clientId,
-    attributes,
-    className,
-	} = props;
-
-  const align = getAlignFromMatrix( attributes?.contentPosition );
+	const { attributes, clientId } = props;
+  const contentAlign = getAlignFromMatrix( attributes?.contentPosition );
 
   const contentClassName = classnames(
-    className,
-    `supernova-item__content--valign-${ align[0] }`,
-    `supernova-item__content--halign-${ align[1] }`,
+    `alignfull`,
+    `supernova-item__content--valign-${ contentAlign[0] }`,
+    `supernova-item__content--halign-${ contentAlign[1] }`,
+    props.className,
   );
 
   const blockProps = useBlockProps( {
@@ -41,7 +37,10 @@ const CardsCollectionEdit = ( props ) => {
   } );
 
   const innerBlocksProps = useInnerBlocksProps( {
-    className: 'nb-collection__layout nb-collection__layout--classic',
+    className: classnames(
+      'nb-collection__layout',
+      'nb-collection__layout--classic',
+    )
   }, {
     allowedBlocks: ALLOWED_BLOCKS,
     renderAppender: false,

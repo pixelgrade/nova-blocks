@@ -37,34 +37,34 @@ const CardEdit = ( props ) => {
 
 	const className = classnames(
 	  props.className,
-    'novablocks-card',
-    'novablocks-card--fixed-media-aspect-ratio',
-    'novablocks-card--portrait',
+    'nb-card',
+    'nb-card--fixed-media-aspect-ratio',
+    'nb-card--portrait',
     'novablocks-block__content',
   );
 
   const align = getAlignFromMatrix( attributes?.contentPosition );
 
   const contentClassName = classnames(
-    `novablocks-card__layout-content`,
+    `nb-card__layout-content`,
     `supernova-item__content--valign-${ align[0] }`,
     `supernova-item__content--halign-${ align[1] }`,
   );
 
 	return (
 		<div className={ className }>
-			<div className="novablocks-card__layout">
+			<div className="nb-card__layout">
 				{
 					showMedia &&
-					<div className="novablocks-card__layout-media nb-grid__item-media">
+					<div className="nb-card__layout-media nb-grid__item-media">
 						<MediaUpload
 							type="image"
 							value={ !! media && media.id }
 							onSelect={ ( media ) => setAttributes( { media } ) }
 							render={ ( { open } ) => (
-								<div className={ `novablocks-card__media-wrap` } onClick={ open }>
-									<div className={ `novablocks-card__media` }>
-										<div className={ `novablocks-card__media-edit novablocks-change-media-overlay` }>
+								<div className={ `nb-card__media-wrap` } onClick={ open }>
+									<div className={ `nb-card__media` }>
+										<div className={ `nb-card__media-edit novablocks-change-media-overlay` }>
 											<span>{ __( 'Change Media', '__plugin_txtd' ) }</span>
 										</div>
 										<CardMedia { ...props } />
@@ -77,11 +77,11 @@ const CardEdit = ( props ) => {
 				{
 					( showMeta || showTitle || showSubtitle || showDescription || showButtons ) &&
 					<div className={contentClassName}>
-            <div className={ `novablocks-card__inner-container ${ getColorSignalClassnames( attributes, true ) }` }>
+            <div className={ `nb-card__inner-container ${ getColorSignalClassnames( attributes, true ) }` }>
               {
                 showMeta &&
                 <RichText
-                  className={ `novablocks-card__meta block-editor-block-list__block is-style-meta` }
+                  className={ `nb-card__meta block-editor-block-list__block is-style-meta` }
                   tagName={ 'p' }
                   value={ meta }
                   onChange={ meta => { setAttributes( { meta } ) } }
@@ -92,7 +92,7 @@ const CardEdit = ( props ) => {
               {
                 showTitle &&
                 <RichText
-                  className={ `novablocks-card__title block-editor-block-list__block` }
+                  className={ `nb-card__title block-editor-block-list__block` }
                   tagName={ `h${ level + 1 }` }
                   value={ title }
                   onChange={ title => { setAttributes( { title } ) } }
@@ -103,7 +103,7 @@ const CardEdit = ( props ) => {
               {
                 showSubtitle &&
                 <RichText
-                  className={ `novablocks-card__subtitle block-editor-block-list__block` }
+                  className={ `nb-card__subtitle block-editor-block-list__block` }
                   tagName={ `h${ level + 2 }` }
                   value={ subtitle }
                   onChange={ subtitle => { setAttributes( { subtitle } ) } }
@@ -114,7 +114,7 @@ const CardEdit = ( props ) => {
               {
                 showDescription &&
                 <RichText
-                  className={ `novablocks-card__description block-editor-block-list__block` }
+                  className={ `nb-card__description block-editor-block-list__block` }
                   tagName={ 'p' }
                   value={ description }
                   onChange={ description => { setAttributes( { description } ) } }
@@ -123,7 +123,7 @@ const CardEdit = ( props ) => {
               }
               {
                 showButtons &&
-                <div className={ `novablocks-card__buttons block-editor-block-list__block` }>
+                <div className={ `nb-card__buttons block-editor-block-list__block` }>
                   <InnerBlocks
                     allowedBlocks={ [ 'core/buttons' ] }
                     renderAppender={ false }

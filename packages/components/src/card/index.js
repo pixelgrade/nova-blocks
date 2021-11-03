@@ -21,29 +21,29 @@ const Card = ( props ) => {
 	} = props;
 
 	const className = classnames(
-		'novablocks-card',
-		`novablocks-card--${ isLandscape ? 'landscape' : 'portrait' }`,
+		'nb-card',
+		`nb-card--${ isLandscape ? 'landscape' : 'portrait' }`,
 		`novablocks-block__content`,
 		{
-			'novablocks-card--placeholder': placeholder,
-			'novablocks-card--fixed-media-aspect-ratio': hasFixedAspectRatio
+			'nb-card--placeholder': placeholder,
+			'nb-card--fixed-media-aspect-ratio': hasFixedAspectRatio
 		},
     props.className
 	);
 
 	return (
 		<div className={ className }>
-			<div className="novablocks-card__layout">
+			<div className="nb-card__layout">
 				{
 					( showMedia || placeholder ) &&
-					<div className="novablocks-card__layout-media nb-grid__item-media">
+					<div className="nb-card__layout-media nb-grid__item-media">
 						<CardMedia { ...props }>{ props.media }</CardMedia>
 					</div>
 				}
 				{
 					( showMeta || showTitle || showSubtitle || showContent || showButtons || placeholder ) &&
-					<div className="novablocks-card__layout-content">
-            <div className="novablocks-card__inner-container">
+					<div className="nb-card__layout-content">
+            <div className="nb-card__inner-container">
               <CardMeta { ...props } meta={ metaAboveTitle } />
               <CardTitle { ...props } />
               <CardMeta { ...props } meta={ metaBelowTitle } />
@@ -73,10 +73,8 @@ const CardTitle = ( props ) => {
 	const TitleTagName = props.titleTagName || 'h3';
 
 	return (
-		<TitleTagName className={ 'wp-block nb-grid__item-title novablocks-card__title' }>
-			<div className="novablocks-card__title-size-modifier">
-				{ ! placeholder ? title : <TextPlaceholder/> }
-			</div>
+		<TitleTagName className={ 'wp-block nb-grid__item-title nb-card__title' }>
+      { ! placeholder ? title : <TextPlaceholder/> }
 		</TitleTagName>
 	);
 };
@@ -96,10 +94,8 @@ const CardSubtitle = ( props ) => {
 	const SubtitleTagName = props.titleTagName || 'h3';
 
 	return (
-		<SubtitleTagName className={ 'wp-block nb-grid__item-title novablocks-card__subtitle' }>
-			<div className="novablocks-card__subtitle-size-modifier">
-				{ ! placeholder ? subtitle : <TextPlaceholder/> }
-			</div>
+		<SubtitleTagName className={ 'wp-block nb-grid__item-title nb-card__subtitle' }>
+      { ! placeholder ? subtitle : <TextPlaceholder/> }
 		</SubtitleTagName>
 	);
 };
@@ -118,10 +114,8 @@ const CardMeta = ( props ) => {
 
 	return (
 		<div className="wp-block nb-grid__item-meta">
-			<div className="novablocks-card__meta is-style-meta">
-				<div className="novablocks-card__meta-size-modifier">
-					{ ! placeholder ? meta : <TextPlaceholder rows={ 1 } /> }
-				</div>
+			<div className="nb-card__meta is-style-meta">
+        { ! placeholder ? meta : <TextPlaceholder rows={ 1 } /> }
 			</div>
 		</div>
 	)
@@ -139,24 +133,19 @@ const CardContent = ( props ) => {
 		return null;
 	}
 
-	const wrapperClassName = 'wp-block nb-grid__item-description novablocks-card__description';
-	const fontSizeClassName = 'novablocks-card__description-size-modifier';
+	const wrapperClassName = 'wp-block nb-grid__item-description nb-card__description';
 
 	if ( placeholder ) {
 		return (
 			<div className={ wrapperClassName }>
-				<div className={ fontSizeClassName }>
-					<TextPlaceholder rows={ 3 } />
-				</div>
+        <TextPlaceholder rows={ 3 } />
 			</div>
 		);
 	}
 
 	return (
 		<p className={ wrapperClassName }>
-			<span className={ fontSizeClassName }>
-        <RawHTML>{ content }</RawHTML>
-			</span>
+      <RawHTML>{ content }</RawHTML>
 		</p>
 	);
 };
@@ -174,7 +163,7 @@ const CardFooter = ( props ) => {
 	}
 
 	return (
-		<div className="wp-block nb-grid__item-buttons novablocks-card__buttons">
+		<div className="wp-block nb-grid__item-buttons nb-card__buttons">
 			{ ! placeholder ? buttons : <TextPlaceholder rows={ 1 } /> }
 		</div>
 	);
@@ -183,9 +172,9 @@ const CardFooter = ( props ) => {
 const CardMedia = ( { children, placeholder } ) => {
 
 	const mediaClasses = classnames(
-		'novablocks-card__media',
+		'nb-card__media',
 		{
-			'novablocks-card__media--placeholder': !! placeholder
+			'nb-card__media--placeholder': !! placeholder
 		}
 	);
 
@@ -193,12 +182,12 @@ const CardMedia = ( { children, placeholder } ) => {
 
 	if ( ! children && ! placeholder ) {
 		content = (
-			<div className={ 'novablocks-card__media-placeholder' } />
+			<div className={ 'nb-card__media-placeholder' } />
 		);
 	}
 
 	return (
-		<div className="novablocks-card__media-wrap">
+		<div className="nb-card__media-wrap">
 			<div className={ mediaClasses }>
 				{ content }
 			</div>

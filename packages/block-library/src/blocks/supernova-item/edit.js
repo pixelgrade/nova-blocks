@@ -105,77 +105,67 @@ const SuperNovaItemContent = ( props ) => {
       <div className={ containerClassname }>
         {
           showMeta &&
-          <div className={ `novablocks-card__meta block-editor-block-list__block is-style-meta` }>
-            <RichText
-              className={ `novablocks-card__meta-size-modifier` }
-              placeholder={ `Meta` }
-              tagName={ 'div' }
-              value={ metaAboveTitle }
-              onChange={ metaAboveTitle => {
-                setAttributes( { metaAboveTitle } )
-              } }
-              allowedFormats={ [] }
-            />
-          </div>
+          <RichText
+            className={ `nb-card__meta block-editor-block-list__block is-style-meta` }
+            placeholder={ `Meta` }
+            tagName={ 'div' }
+            value={ metaAboveTitle }
+            onChange={ metaAboveTitle => {
+              setAttributes( { metaAboveTitle } )
+            } }
+            allowedFormats={ [] }
+          />
         }
         {
           showTitle &&
-          <TitleTagName className={ `novablocks-card__title block-editor-block-list__block` }>
-            <RichText
-              className={ `novablocks-card__title-size-modifier` }
-              placeholder={ `Title` }
-              tagName={ 'div' }
-              value={ title }
-              onChange={ title => {
-                setAttributes( { title } )
-              } }
-              allowedFormats={ [] }
-            />
-          </TitleTagName>
+          <RichText
+            className={ `nb-card__title block-editor-block-list__block` }
+            placeholder={ `Title` }
+            tagName={ TitleTagName }
+            value={ title }
+            onChange={ title => {
+              setAttributes( { title } )
+            } }
+            allowedFormats={ [] }
+          />
         }
         {
           showSubtitle &&
-          <SubTitleTagName className={ `novablocks-card__subtitle block-editor-block-list__block` }>
-            <RichText
-              className={ `novablocks-card__subtitle-size-modifier` }
-              placeholder={ `Subtitle` }
-              tagName={ 'span' }
-              value={ subtitle }
-              onChange={ subtitle => {
-                setAttributes( { subtitle } )
-              } }
-              allowedFormats={ [] }
-            />
-          </SubTitleTagName>
+          <RichText
+            className={ `nb-card__subtitle block-editor-block-list__block` }
+            placeholder={ `Subtitle` }
+            tagName={ SubTitleTagName }
+            value={ subtitle }
+            onChange={ subtitle => {
+              setAttributes( { subtitle } )
+            } }
+            allowedFormats={ [] }
+          />
         }
         {
           showMeta &&
-          <div className={ 'novablocks-card__meta block-editor-block-list__block is-style-meta' }>
-            <RichText
-              className={ `novablocks-card__meta-size-modifier` }
-              placeholder={ `Meta` }
-              tagName={ 'p' }
-              value={ metaBelowTitle }
-              onChange={ metaBelowTitle => {
-                setAttributes( { metaBelowTitle } )
-              } }
-              allowedFormats={ [] }
-            />
-          </div>
+          <RichText
+            className={ 'nb-card__meta block-editor-block-list__block is-style-meta' }
+            placeholder={ `Meta` }
+            tagName={ 'p' }
+            value={ metaBelowTitle }
+            onChange={ metaBelowTitle => {
+              setAttributes( { metaBelowTitle } )
+            } }
+            allowedFormats={ [] }
+          />
         }
         {
           showDescription &&
-          <p className={ `novablocks-card__description block-editor-block-list__block` }>
             <RichText
-              className={ `novablocks-card__description-size-modifier` }
+              className={ `nb-card__description block-editor-block-list__block` }
               placeholder={ `Content` }
-              tagName={ 'span' }
+              tagName={ 'p' }
               value={ description }
               onChange={ description => {
                 setAttributes( { description } )
               } }
             />
-          </p>
         }
         {
           showButtons &&

@@ -135,8 +135,8 @@ const GRID_SELECTOR = '.nb-collection__layout--parametric';
               const $card = $posts.eq( addedCards - area.postsCount + i );
               const landscape = isLandscape( area, attributes );
 
-              $card.toggleClass( 'novablocks-card--landscape', !! landscape );
-              $card.toggleClass( 'novablocks-card--portrait', ! landscape );
+              $card.toggleClass( 'nb-card--landscape', !! landscape );
+              $card.toggleClass( 'nb-card--portrait', ! landscape );
 
               $card.appendTo( $gridItem );
 
@@ -166,8 +166,8 @@ const GRID_SELECTOR = '.nb-collection__layout--parametric';
           gridTemplateRowss: '',
         } );
 
-        $posts.removeClass( 'novablocks-card--portrait' );
-        $posts.removeClass( 'novablocks-card--landscape' );
+        $posts.removeClass( 'nb-card--portrait' );
+        $posts.removeClass( 'nb-card--landscape' );
 
         createLayout();
       }

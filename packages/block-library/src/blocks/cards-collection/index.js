@@ -91,6 +91,7 @@ const withCardsCollectionDeprecated = ( settings ) => {
 addFilter( 'blocks.registerBlockType', 'novablocks/cards-collection/deprecated', withCardsCollectionDeprecated, Number.MAX_SAFE_INTEGER );
 
 registerBlockType( BLOCK_NAME, {
+  apiVersion: 2,
 	title: __( 'Cards Collection (Deprecated)', '__plugin_txtd' ),
 	description: __( 'Display a list of related items placed within a coherent layout.', '__plugin_txtd' ),
 	category: 'nova-blocks',
@@ -108,7 +109,6 @@ registerBlockType( BLOCK_NAME, {
       spaceAndSizing: true,
       elementsVisibility: true,
       collectionLayout: true,
-      noDataAlign: true,
       contentPosition: {
         attributes: true,
         controls: true,

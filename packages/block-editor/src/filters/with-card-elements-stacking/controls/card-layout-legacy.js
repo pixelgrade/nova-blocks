@@ -12,7 +12,7 @@ const CardLayoutLegacy = ( props ) => {
   return (
     <RadioControl
       selected={ isLandscape ? 'landscape' : 'portrait' }
-      className={ 'novablocks-card-layout' }
+      className={ 'nb-card-layout' }
       onChange={ ( value ) => {
         setAttributes( { isLandscape: value === 'landscape' } );
       } }

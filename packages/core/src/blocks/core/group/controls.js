@@ -41,9 +41,9 @@ class Controls extends Component {
     <ControlsSection id={ 'layout' } label={ __( 'Layout' ) }>
       <ControlsTab label={ __( 'Alignments' ) }>
         <RadioControl
-          key={ 'novablocks-card-layout-controls' }
+          key={ 'nb-card-layout-controls' }
           selected={ contentAlignment }
-          className={ 'novablocks-card-layout' }
+          className={ 'nb-card-layout' }
           onChange={ ( newAlignment ) => {
             setAttributes( { contentAlignment: newAlignment } );
           } }

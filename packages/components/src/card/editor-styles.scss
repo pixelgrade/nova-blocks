@@ -1,10 +1,10 @@
-.novablocks-card__media-edit {
+.nb-card__media-edit {
 	opacity: 0;
 }
 
-.novablocks-card__media-edit,
-.novablocks-card__media-image,
-.novablocks-card__media-placeholder {
+.nb-card__media-edit,
+.nb-card__media-image,
+.nb-card__media-placeholder {
 
 	&[class] {
 		transition: var(--nb-transition);
@@ -15,24 +15,24 @@
 
 [data-type="novablocks/cards-collection"] {
 
-	.novablocks-card__media {
+	.nb-card__media {
 
 		&:hover {
 			cursor: pointer;
 
-			.novablocks-card__media-edit {
+			.nb-card__media-edit {
 				opacity: 1;
 			}
 
-			.novablocks-card__media-image,
-			.novablocks-card__media-placeholder {
+			.nb-card__media-image,
+			.nb-card__media-placeholder {
 				opacity: 0.7;
 			}
 		}
 	}
 }
 
-.novablocks-card__buttons {
+.nb-card__buttons {
 
 	.block-list-appender {
 		display: none;

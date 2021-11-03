@@ -39,7 +39,7 @@ $slick-arrow-color: var(--sm-current-fg1-color);
   @include cover;
 }
 
-.novablocks-card__layout {
+.nb-card__layout {
 	--card-layout-gap: calc(var(--nb-card-spacing-modifier, 0.5) * var(--nb-spacing));
 
 	display: flex;
@@ -53,18 +53,18 @@ $slick-arrow-color: var(--sm-current-fg1-color);
 	}
 }
 
-.novablocks-card--landscape {
+.nb-card--landscape {
 
-	.novablocks-card__layout {
+	.nb-card__layout {
 		flex-direction: row;
 
-		> .novablocks-card__layout-media {
+		> .nb-card__layout-media {
 			flex-grow: 0;
 			flex-shrink: 0;
 			flex-basis: var(--card-image-width, 50%);
 		}
 
-		> .novablocks-card__layout-content {
+		> .nb-card__layout-content {
 			align-self: center;
 			flex: 1 1 0;
 		}
@@ -74,7 +74,7 @@ $slick-arrow-color: var(--sm-current-fg1-color);
     
     @include below(mobile) {
       
-      .novablocks-card__description {
+      .nb-card__description {
         display: none;
       }
     }

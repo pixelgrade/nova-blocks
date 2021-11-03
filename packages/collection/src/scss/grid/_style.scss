@@ -1,143 +1,129 @@
-.nb-collection__layout--parametric {
-  
-  // When Parametric Grid is used,
-  // we are going to ignore some options
-  // from Elements Visibility section,
-  // and adjust elements visibility based on area
-  // sizes and ratio.
-  .nb-grid__area--portrait {
-    
-    &.nb-grid__area--width-xl {
-      --nb-card-title-font-size-modifier: 1.8;
+// When Parametric Grid is used,
+// we are going to ignore some options
+// from Elements Visibility section,
+// and adjust elements visibility based on area
+// sizes and ratio.
+.nb-grid__area--portrait {
+
+  &.nb-grid__area--width-xl {
+
+    .nb-grid__item-title {
+      --font-size-modifier: 1.8;
     }
-    
-    &.nb-grid__area--width-l {
-      --nb-card-title-font-size-modifier: 1.6;
-    }
-    
-    &.nb-grid__area--width-m {
-      --nb-card-title-font-size-modifier: 1.4;
-    }
-    
-    &.nb-grid__area--width-s {
-      --nb-card-title-font-size-modifier: 1;
-    }
-    
-    
-    &.nb-grid__area--width-xs {
-      --grid-item-content-display: none;
-      --grid-item-buttons-display: none;
-      
-      @include above(tablet) {
-        --nb-card-spacing-modifier: 0.25;
-        --nb-card-meta-font-size-modifier: 0.8;
-        --nb-card-title-font-size-modifier: 0.6;
-        
-        .novablocks-card__inner-container {
-          --nb-spacing-multiplier: 0.25;
-        }
-      }
-    }
-  }
-  
-  .nb-grid__area--landscape {
-    
-    &.nb-grid__area--width-full {
-      --nb-card-title-font-size-modifier: 1.6;
-    }
-    
-    &.nb-grid__area--width-xl {
-      --nb-card-title-font-size-modifier: 1.4;
-    }
-    
-    &.nb-grid__area--width-l {
-      --nb-card-title-font-size-modifier: 1;
-    }
-    
-    &.nb-grid__area--width-m {
-      
-      @include above(tablet) {
-        --nb-card-title-font-size-modifier: 0.8;
-      }
-    }
-    
-    &.nb-grid__area--width-s {
-      --grid-item-content-display: none;
-      --grid-item-buttons-display: none;
-      
-      --nb-card-title-font-size-modifier: 0.8;
-      
-      @include above(tablet) {
-        --nb-card-spacing-modifier: 0.25;
-        --nb-card-meta-font-size-modifier: 0.8;
-        --nb-card-title-font-size-modifier: 0.6;
-      }
-    }
-    
-    &.nb-grid__area--width-xs {
-      --grid-item-content-display: none;
-      --grid-item-buttons-display: none;
-      
-      --nb-card-title-font-size-modifier: 0.8;
-      
-      @include above(tablet) {
-        --nb-card-spacing-modifier: 0.25;
-        --nb-card-meta-font-size-modifier: 0.6;
-        --nb-card-title-font-size-modifier: 0.5;
-        --nb-card-content-font-size-modifier: 0.6;
-      }
-    }
-  }
-  
-  .nb-grid__item-media {
-    display: var(--grid-item-media-display, block);
-  }
-  
-  .nb-grid__item-description {
-    display: var(--grid-item-content-display, block);
-  }
-  
-  .nb-grid__item-title {
-    display: var(--grid-item-title-display, block);
-  }
-  
-  .nb-grid__item-subtitle {
-    display: var(--grid-item-subtitle-display, block);
-  }
-  
-  .nb-grid__item-description {
-    display: var(--grid-item-content-display, block);
-  }
-  
-  .nb-grid__item-buttons {
-    display: var(--grid-item-buttons-display, block);
-  }
-  
-  .nb-grid__item-meta {
-    display: var(--grid-item-meta-display, block);
-  }
-  
-  // We are also resizing fonts,
-  // based on grid area size and ratio.
-  .novablocks-card__title-size-modifier {
-    font-size: calc( var(--nb-card-title-font-size-modifier, 1) * 1em );
-    line-height: var(--nb-card-title-line-height-modifier, var(--current-line-height, 1.5));
-  }
-  
-  .novablocks-card__meta-size-modifier {
-    font-size: calc( var(--nb-card-meta-font-size-modifier, 1) * 1em );
-    line-height: var(--nb-card-meta-line-height-modifier, var(--current-line-height, 1.5));
   }
 
-  .novablocks-card__description-size-modifier {
-    font-size: calc( var(--nb-card-content-font-size-modifier, 1) * 1em );
-    line-height: var(--nb-card-content-line-height-modifier, var(--current-line-height, 1.5));
+  &.nb-grid__area--width-l {
+
+    .nb-grid__item-title {
+      --font-size-modifier: 1.6;
+    }
   }
-  
-  .novablocks-card__buttons-size-modifier {
-    font-size: calc( var(--nb-card-buttons-font-size-modifier, 1) * 1em );
-    line-height: var(--nb-card-buttons-line-height-modifier, var(--current-line-height, 1.5));
+
+  &.nb-grid__area--width-m {
+
+    .nb-grid__item-title {
+      --font-size-modifier: 1.4;
+    }
   }
+
+  &.nb-grid__area--width-xs {
+    --grid-item-content-display: none;
+    --grid-item-buttons-display: none;
+
+    @include above(tablet) {
+      --font-size-modifier: 0.8;
+      --nb-card-spacing-modifier: 0.25;
+
+      .nb-grid__item-title,
+      .nb-grid__item-subtitle {
+        --font-size-modifier: 0.6;
+      }
+    }
+  }
+}
+
+.nb-grid__area--landscape {
+
+  &.nb-grid__area--width-full {
+
+    .nb-grid__item-title {
+      --font-size-modifier: 1.6;
+    }
+  }
+
+  &.nb-grid__area--width-xl {
+
+    .nb-grid__item-title {
+      --font-size-modifier: 1.4;
+    }
+  }
+
+  &.nb-grid__area--width-m {
+
+    @include above(tablet) {
+      --font-size-modifier: 0.8;
+    }
+  }
+
+  &.nb-grid__area--width-s {
+    --grid-item-content-display: none;
+    --grid-item-buttons-display: none;
+
+    --font-size-modifier: 0.8;
+
+    @include above(tablet) {
+      --nb-card-spacing-modifier: 0.25;
+
+      .nb-grid__item-title,
+      .nb-grid__item-subtitle {
+        --font-size-modifier: 0.6;
+      }
+    }
+  }
+
+  &.nb-grid__area--width-xs {
+    --grid-item-content-display: none;
+    --grid-item-buttons-display: none;
+
+    --font-size-modifier: 0.8;
+
+    @include above(tablet) {
+      --font-size-modifier: 0.6;
+      --nb-card-spacing-modifier: 0.25;
+
+      .nb-grid__item-title {
+        --font-size-modifier: 0.5;
+      }
+    }
+  }
+}
+
+.nb-grid__item-media {
+  display: var(--grid-item-media-display, block);
+}
+
+.nb-grid__item-description {
+  display: var(--grid-item-content-display, block);
+}
+
+.nb-grid__item-title {
+  display: var(--grid-item-title-display, block);
+}
+
+.nb-grid__item-subtitle {
+  display: var(--grid-item-subtitle-display, block);
+}
+
+.nb-grid__item-description {
+  display: var(--grid-item-content-display, block);
+}
+
+.nb-grid__item-buttons {
+  display: var(--grid-item-buttons-display, block);
+}
+
+.nb-grid__item-meta {
+  display: var(--grid-item-meta-display, block);
 }
 
 .nb-grid {
@@ -145,19 +131,6 @@
 
 	.nb-grid__item {
 		--theme-content-width-normal: 100%;
-	}
-}
-
-.block-is-basic.content-is-highlighted,
-
-.block-is-moderate.content-is-moderate,
-.block-is-moderate.content-is-highlighted,
-
-.block-is-highlighted.content-is-moderate,
-.block-is-highlighted.content-is-highlighted {
-
-	@include above(tablet) {
-		//--nb-grid-spacing-modifier: 0.5;
 	}
 }
 

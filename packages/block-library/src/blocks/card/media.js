@@ -16,15 +16,15 @@ const CardMedia = ( props ) => {
     return (
       <Fragment>
         { media.type !== 'video' &&
-          <img className={ `novablocks-card__media-image` } src={ mediaURL } alt={ media?.alt } /> }
+          <img className={ `nb-card__media-image` } src={ mediaURL } alt={ media?.alt } /> }
         { media.type === 'video' &&
-          <video muted autoPlay loop playsInline className={ `novablocks-card__media-image` } src={ media?.url } /> }
+          <video muted autoPlay loop playsInline className={ `nb-card__media-image` } src={ media?.url } /> }
       </Fragment>
     )
   }
 
   return (
-    <div className={ `novablocks-card__media-placeholder` }>
+    <div className={ `nb-card__media-placeholder` }>
       { getSvg( placeholderSvg ) }
     </div>
   );

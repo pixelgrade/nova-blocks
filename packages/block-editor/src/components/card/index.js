@@ -2,7 +2,10 @@ import classnames from 'classnames';
 
 import { Children } from '@wordpress/element';
 
-import { getAlignFromMatrix } from "@novablocks/utils";
+import {
+  getAlignFromMatrix,
+  getAreaClassnameByWidthRatio
+} from "@novablocks/utils";
 
 //import { withDoppler } from "../../../../filters";
 
@@ -15,14 +18,26 @@ export const Card = ( props ) => {
     attributes: {
       cardLayout,
       thumbnailAspectRatioString,
+      layoutStyle,
+      columns,
     },
   } = props;
 
-  const classNames = classnames(
+  const defaultClassNames = classnames(
     `supernova-item`,
     `supernova-item--layout-${ cardLayout }`,
     `supernova-item--aspect-ratio-${ thumbnailAspectRatioString }`,
   );
+
+  const isLandscape = [ 'horizontal', 'horizontal-reverse' ].includes( cardLayout );
+
+  const extraClassNames = classnames(
+    defaultClassNames,
+    `nb-grid__area--${ isLandscape ? 'landscape' : 'portrait' }`,
+    getAreaClassnameByWidthRatio( 1 / columns )
+  )
+
+  const classNames = layoutStyle !== 'parametric' ? extraClassNames : defaultClassNames;
 
   const children = Children.toArray( props.children );
   const mediaChildren = children.filter( child => child.type === CardMediaWrapper )

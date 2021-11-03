@@ -5,9 +5,7 @@ export const CardButton = ( props ) => {
   return (
     <div className="wp-block-button is-style-text">
       <div className="wp-block-button__link">
-        <div className="novablocks-card__buttons-size-modifier">
-          { props.children }
-        </div>
+        { props.children }
       </div>
     </div>
    )
@@ -37,10 +35,8 @@ export const CardTitle = withVisibilityAndPlaceholder( ( props ) => {
   const TitleTagName = props.titleTagName || 'h3';
 
   return (
-    <TitleTagName className={ 'wp-block nb-grid__item-title novablocks-card__title' }>
-      <span className="novablocks-card__title-size-modifier">
-        { ! placeholder ? children : <TextPlaceholder/> }
-      </span>
+    <TitleTagName className={ 'wp-block nb-grid__item-title nb-card__title' }>
+      { ! placeholder ? children : <TextPlaceholder/> }
     </TitleTagName>
   );
 } );
@@ -57,10 +53,8 @@ export const CardMeta = withVisibilityAndPlaceholder( ( props ) => {
   }
 
   return (
-    <div className="nb-grid__item-meta novablocks-card__meta is-style-meta">
-      <div className="novablocks-card__meta-size-modifier">
-        { ! placeholder ? children : <TextPlaceholder rows={ 1 } /> }
-      </div>
+    <div className="nb-grid__item-meta nb-card__meta is-style-meta">
+      { ! placeholder ? children : <TextPlaceholder rows={ 1 } /> }
     </div>
   )
 } );
@@ -72,14 +66,11 @@ export const CardDescription = withVisibilityAndPlaceholder( ( props ) => {
     children,
   } = props;
 
-  const wrapperClassName = 'wp-block nb-grid__item-description novablocks-card__description';
-  const fontSizeClassName = 'novablocks-card__description-size-modifier';
+  const wrapperClassName = 'wp-block nb-grid__item-description nb-card__description';
 
   return (
     <p className={ wrapperClassName }>
-      <span className={ fontSizeClassName }>
-        { ! placeholder ? children : <TextPlaceholder rows={ 3 } /> }
-      </span>
+      { ! placeholder ? children : <TextPlaceholder rows={ 3 } /> }
     </p>
   );
 } );
@@ -92,10 +83,8 @@ export const CardFooter = withVisibilityAndPlaceholder( ( props ) => {
   } = props;
 
   return (
-    <div className="wp-block nb-grid__item-buttons novablocks-card__buttons">
-      <div className="novablocks-card__buttons-size-modifier">
-        { ! placeholder ? children : <TextPlaceholder rows={ 1 } /> }
-      </div>
+    <div className="wp-block nb-grid__item-buttons nb-card__buttons">
+      { ! placeholder ? children : <TextPlaceholder rows={ 1 } /> }
     </div>
   );
 } );

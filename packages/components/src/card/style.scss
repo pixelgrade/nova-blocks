@@ -1,4 +1,4 @@
-.novablocks-card {
+.nb-card {
 	@include clearfix;
   overflow: hidden;
   --nb-spacing-multiplier: var(--nb-spacing-level-3-multiplier);
@@ -11,12 +11,12 @@
 		@include clearfix;
 	}
 
-  a:not(.novablocks-card__link) {
+  a:not(.nb-card__link) {
     position: relative;
     z-index: 20;
   }
 
-  a.novablocks-card__link {
+  a.nb-card__link {
     position: absolute;
     top: 0;
     right: 0;
@@ -29,7 +29,7 @@
   }
 }
 
-.novablocks-card__layout-content {
+.nb-card__layout-content {
 	overflow: hidden;
 
 	> .nb-grid__item-buttons {
@@ -37,37 +37,37 @@
 	}
 }
 
-.novablocks-card__inner-container[class][class] {
+.nb-card__inner-container[class][class] {
   padding: calc( var(--nb-spacing) * var(--nb-card-content-padding, 0) / 100 );
 }
 
-.novablocks-card__media-wrap {
+.nb-card__media-wrap {
 	max-width: none !important;
 	padding: calc( var(--nb-spacing) * var(--nb-card-media-padding, 0) / 100 );
 
 	transition: var(--nb-transition);
 	transition-property: margin, padding;
 
-	.novablocks-card--placeholder & {
-		animation: novablocks-card-media-placeholder-pulse 1s infinite;
+	.nb-card--placeholder & {
+		animation: nb-card-media-placeholder-pulse 1s infinite;
 	}
 }
 
-.novablocks-card__media-image {
+.nb-card__media-image {
 	display: block;
 	width: 100%;
 }
 
-.novablocks-card--fixed-media-aspect-ratio {
+.nb-card--fixed-media-aspect-ratio {
 
-	.novablocks-card__media {
+	.nb-card__media {
 		position: relative;
 		padding-top: var(--nb-card-media-padding-top, 100%);
 		overflow: hidden;
 	}
 
-	.novablocks-card__media-placeholder,
-	.novablocks-card__media-image {
+	.nb-card__media-placeholder,
+	.nb-card__media-image {
 		position: absolute;
 		top: 0;
 		left: 0;
@@ -75,12 +75,12 @@
 		height: 100%;
 	}
 
-	.novablocks-card__media-image {
+	.nb-card__media-image {
 		object-fit: var(--nb-card-media-object-fit, cover);
 	}
 }
 
-.novablocks-card__media-placeholder {
+.nb-card__media-placeholder {
 	display: flex;
 	align-items: center;
 	justify-content: center;
@@ -92,13 +92,13 @@
 	}
 }
 
-@keyframes novablocks-card-media-placeholder-pulse {
+@keyframes nb-card-media-placeholder-pulse {
 	0% { opacity: 1 }
 	50% { opacity: 0.5 }
 	100% { opacity: 1 }
 }
 
-.novablocks-card__subtitle {
+.nb-card__subtitle {
 
 	a {
 		text-decoration: inherit;

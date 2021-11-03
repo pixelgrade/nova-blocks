@@ -38,9 +38,9 @@ if ( ! function_exists( 'novablocks_render_card_block' ) ) {
 		$subtitleTag = 'h' . ( $hlevel + 2 );
 
 		$classes = [
-			'novablocks-card',
-			'novablocks-card--fixed-media-aspect-ratio',
-			'novablocks-card--portrait',
+			'nb-card',
+			'nb-card--fixed-media-aspect-ratio',
+			'nb-card--portrait',
 			'novablocks-block__content',
 		];
 
@@ -59,38 +59,38 @@ if ( ! function_exists( 'novablocks_render_card_block' ) ) {
 
 		<div <?php echo join( ' ', $data_attributes ); ?>>
 			<div class="<?php echo esc_attr( join( ' ', $classes ) ); ?>">
-				<div class="novablocks-card__layout">
-					<div class="novablocks-card__layout-media">
+				<div class="nb-card__layout">
+					<div class="nb-card__layout-media">
 						<?php if ( ! empty( $attributes['showMedia'] ) && ! empty( $attributes['media'] ) ) { ?>
-							<div class="novablocks-card__media-wrap">
-								<div class="novablocks-card__media">
+							<div class="nb-card__media-wrap">
+								<div class="nb-card__media">
 									<?php echo novablocks_get_card_media_markup( $attributes['media'] ); ?>
 								</div>
 							</div>
 						<?php } ?>
 					</div>
-					<div class="novablocks-card__layout-content">
-						<div class="novablocks-card__inner-container">
+					<div class="nb-card__layout-content">
+						<div class="nb-card__inner-container">
 							<?php if ( ! empty( $attributes['showMeta'] ) && ! empty( $attributes['meta'] ) ) { ?>
 								<div
-									class="novablocks-card__meta is-style-meta"><?php echo $attributes['meta']; ?></div>
+									class="nb-card__meta is-style-meta"><?php echo $attributes['meta']; ?></div>
 							<?php }
 
 							if ( ! empty( $attributes['showTitle'] ) && ! empty( $attributes['title'] ) ) {
-								echo '<' . $titleTag . ' class="novablocks-card__title">' . $attributes['title'] . '</' . $titleTag . '>';
+								echo '<' . $titleTag . ' class="nb-card__title">' . $attributes['title'] . '</' . $titleTag . '>';
 							}
 
 							if ( ! empty( $attributes['showSubtitle'] ) && ! empty( $attributes['subtitle'] ) ) {
-								echo '<' . $subtitleTag . ' class="novablocks-card__subtitle">' . $attributes['subtitle'] . '</' . $subtitleTag . '>';
+								echo '<' . $subtitleTag . ' class="nb-card__subtitle">' . $attributes['subtitle'] . '</' . $subtitleTag . '>';
 							}
 
 							if ( ! empty( $attributes['showDescription'] ) && ! empty( $attributes['description'] ) ) { ?>
 								<div
-									class="novablocks-card__description"><?php echo $attributes['description']; ?></div>
+									class="nb-card__description"><?php echo $attributes['description']; ?></div>
 							<?php }
 
 							if ( ! empty( $attributes['showButtons'] ) && ! empty( $content ) ) { ?>
-								<div class="novablocks-card__buttons">
+								<div class="nb-card__buttons">
 									<?php echo wp_kses_post( $content ); ?>
 								</div>
 							<?php } ?>

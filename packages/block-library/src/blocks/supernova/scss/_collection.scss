@@ -4,7 +4,7 @@
 
 .nb-collection__layout--fixed-width {
   .supernova-item:not(.supernova-item--aspect-ratio-auto) {
-    .novablocks-card__media-image {
+    .nb-card__media-image {
       @include image-cover;
     }
   }
