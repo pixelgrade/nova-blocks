@@ -44,7 +44,7 @@ ul.menu,
 
       background-color: currentColor;
 
-			margin-left: 0.75em;
+			margin-left: var(--navigation-item-sub-elements-spacing);
       opacity: .5;
     }
 	}

@@ -36,7 +36,7 @@ if ( ! function_exists( 'novablocks_render_sidecar_block' ) ) {
 
 		$classes = [ 'novablocks-sidecar' ];
 
-		if ( ! empty( $attributes['layout'] && $attributes['layout'] === 'complex' ) ) {
+		if ( ! empty( $attributes['layout'] ) && $attributes['layout'] === 'complex' ) {
 			$classes[] = 'novablocks-sidecar--complex';
 		}
 
@@ -51,7 +51,6 @@ if ( ! function_exists( 'novablocks_render_sidecar_block' ) ) {
 		if ( ! empty( $attributes['lastItemIsSticky'] ) && $attributes['lastItemIsSticky'] === true ) {
 			$classes[] = 'last-block-is-sticky';
 		}
-
 		?>
 
 		<div class="<?php echo esc_attr( join( ' ', $classes ) ); ?>">

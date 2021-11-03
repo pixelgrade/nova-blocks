@@ -34,11 +34,13 @@ if ( ! function_exists( 'novablocks_render_sidecar_area_block' ) ) {
 
 		ob_start();
 
-		$classes = [
-			'nb-sidecar-area',
-			'nb-sidecar-area--' . $attributes['areaName'],
-			$attributes['className']
-		];
+		$classes = [ 'nb-sidecar-area', ];
+		if ( ! empty( $attributes['areaName'] ) ) {
+			$classes[] = 'nb-sidecar-area--' . $attributes['areaName'];
+		}
+		if ( ! empty( $attributes['className'] ) ) {
+			$classes[] = $attributes['className'];
+		}
 
 		?>
 
