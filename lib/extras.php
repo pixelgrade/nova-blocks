@@ -2095,6 +2095,11 @@ function novablocks_merge_attributes_from_array( $pathsArray ) {
 
 function novablocks_get_collection_card_markup( $media, $content, $attributes ) {
 
+	// Make sure that the defaults are in place.
+	$attributes = wp_parse_args( $attributes, [
+		'cardMediaOpacity' => 100,
+	] );
+
 	$cardClasses = [
 		'supernova-item',
 		'supernova-item--layout-' . $attributes['cardLayout'],
