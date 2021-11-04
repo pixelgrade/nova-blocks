@@ -1,130 +1,4 @@
-// When Parametric Grid is used,
-// we are going to ignore some options
-// from Elements Visibility section,
-// and adjust elements visibility based on area
-// sizes and ratio.
-.nb-grid__area--portrait {
-
-  &.nb-grid__area--width-xl {
-
-    .nb-grid__item-title {
-      --font-size-modifier: 1.8;
-    }
-  }
-
-  &.nb-grid__area--width-l {
-
-    .nb-grid__item-title {
-      --font-size-modifier: 1.6;
-    }
-  }
-
-  &.nb-grid__area--width-m {
-
-    .nb-grid__item-title {
-      --font-size-modifier: 1.4;
-    }
-  }
-
-  &.nb-grid__area--width-xs {
-    --grid-item-content-display: none;
-    --grid-item-buttons-display: none;
-
-    @include above(tablet) {
-      --font-size-modifier: 0.8;
-      --nb-card-spacing-modifier: 0.25;
-
-      .nb-grid__item-title,
-      .nb-grid__item-subtitle {
-        --font-size-modifier: 0.6;
-      }
-    }
-  }
-}
-
-.nb-grid__area--landscape {
-
-  &.nb-grid__area--width-full {
-
-    .nb-grid__item-title {
-      --font-size-modifier: 1.6;
-    }
-  }
-
-  &.nb-grid__area--width-xl {
-
-    .nb-grid__item-title {
-      --font-size-modifier: 1.4;
-    }
-  }
-
-  &.nb-grid__area--width-m {
-
-    @include above(tablet) {
-      --font-size-modifier: 0.8;
-    }
-  }
-
-  &.nb-grid__area--width-s {
-    --grid-item-content-display: none;
-    --grid-item-buttons-display: none;
-
-    --font-size-modifier: 0.8;
-
-    @include above(tablet) {
-      --nb-card-spacing-modifier: 0.25;
-
-      .nb-grid__item-title,
-      .nb-grid__item-subtitle {
-        --font-size-modifier: 0.6;
-      }
-    }
-  }
-
-  &.nb-grid__area--width-xs {
-    --grid-item-content-display: none;
-    --grid-item-buttons-display: none;
-
-    --font-size-modifier: 0.8;
-
-    @include above(tablet) {
-      --font-size-modifier: 0.6;
-      --nb-card-spacing-modifier: 0.25;
-
-      .nb-grid__item-title {
-        --font-size-modifier: 0.5;
-      }
-    }
-  }
-}
-
-.nb-grid__item-media {
-  display: var(--grid-item-media-display, block);
-}
-
-.nb-grid__item-description {
-  display: var(--grid-item-content-display, block);
-}
-
-.nb-grid__item-title {
-  display: var(--grid-item-title-display, block);
-}
-
-.nb-grid__item-subtitle {
-  display: var(--grid-item-subtitle-display, block);
-}
-
-.nb-grid__item-description {
-  display: var(--grid-item-content-display, block);
-}
-
-.nb-grid__item-buttons {
-  display: var(--grid-item-buttons-display, block);
-}
-
-.nb-grid__item-meta {
-  display: var(--grid-item-meta-display, block);
-}
+@import "parametric-layout-modifiers";
 
 .nb-grid {
 	grid-gap: var(--nb-grid-spacing);
@@ -137,30 +11,6 @@
 .nb-grid__area + .nb-grid__area,
 .nb-grid__area > * + * {
 	margin-top: var(--nb-grid-spacing);
-}
-
-.nb-grid--mask {
-
-	.nb-grid__debug {
-		display: block;
-	}
-
-	.nb-grid__area {
-		border: 2px dashed var(--nb-purple);
-	}
-
-	.nb-grid__item {
-		border: 2px dashed var(--nb-green);
-
-		.novablocks-block__content {
-			opacity: 0;
-		}
-	}
-}
-
-.nb-grid--scaled {
-	transform: scale(0.5);
-	transform-origin: 50% 0;
 }
 
 .nb-grid__area {
@@ -183,7 +33,26 @@
 	padding: 10px;
 }
 
-.nb-grid__area--width-s,
-.nb-grid__area--width-xs {
-	--card-image-width: 40%;
+.nb-grid--scaled {
+	transform: scale(0.5);
+	transform-origin: 50% 0;
+}
+
+.nb-grid--mask {
+
+	.nb-grid__debug {
+		display: block;
+	}
+
+	.nb-grid__area {
+		border: 2px dashed var(--nb-purple);
+	}
+
+	.nb-grid__item {
+		border: 2px dashed var(--nb-green);
+
+		.novablocks-block__content {
+			opacity: 0;
+		}
+	}
 }

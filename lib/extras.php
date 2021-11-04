@@ -2221,7 +2221,7 @@ function novablocks_get_card_item_meta( $metaValue, $attributes ) {
 	ob_start();
 
 	if ( ! empty( $attributes['showMeta'] ) && ! empty( $metaValue ) ) { ?>
-		<p class="nb-grid__item-meta nb-card__meta is-style-meta">
+		<p class="nb-card__meta is-style-meta">
 			<?php echo $metaValue; ?>
 		</p>
 	<?php }
@@ -2235,7 +2235,7 @@ function novablocks_get_card_item_title( $title, $attributes ) {
 	ob_start();
 
 	if ( ! empty( $title ) && ! empty( $attributes['showTitle'] ) ) {
-		echo '<' . $titleTag . ' class="nb-grid__item-title nb-card__title">';
+		echo '<' . $titleTag . ' class="nb-card__title">';
 		echo $title;
 		echo '</' . $titleTag . '>';
 	}
@@ -2249,7 +2249,7 @@ function novablocks_get_card_item_subtitle( $subtitle, $attributes ) {
 	ob_start();
 
 	if ( ! empty( $subtitle ) && ! empty( $attributes['showSubtitle'] ) ) {
-		echo '<' . $subtitleTag . ' class="nb-grid__item-subtitle nb-card__title">';
+		echo '<' . $subtitleTag . ' class="nb-card__subtitle">';
 		echo $subtitle;
 		echo '</' . $subtitleTag . '>';
 	}
@@ -2261,7 +2261,7 @@ function novablocks_get_card_item_description( $description, $attributes ) {
 	ob_start();
 
 	if ( ! empty( $description ) && ! empty( $attributes['showDescription'] ) ) { ?>
-		<p class="nb-grid__item-description nb-card__description">
+		<p class="nb-card__description">
 			<?php echo $description; ?>
 		</p>
 	<?php }
@@ -2292,7 +2292,7 @@ function novablocks_get_card_item_buttons( $buttons, $attributes ) {
 	ob_start();
 
 	if ( ! empty( $attributes['showButtons'] ) && ! empty( $buttons_markup ) ) { ?>
-		<div class="nb-grid__item-buttons nb-card__buttons">
+		<div class="nb-card__buttons">
 			<?php echo $buttons_markup; ?>
 		</div>
 	<?php }

@@ -1,0 +1,127 @@
+// When Parametric Grid is used,
+// we are going to ignore some options
+// from Elements Visibility section,
+// and adjust elements visibility based on area
+// sizes and ratio.
+.nb-collection__layout--parametric {
+
+  .nb-grid__area--portrait {
+
+    &.nb-grid__area--width-xl {
+
+      .nb-card__title {
+        --font-size-modifier: 1.8;
+      }
+    }
+
+    &.nb-grid__area--width-l {
+
+      .nb-card__title {
+        --font-size-modifier: 1.6;
+      }
+    }
+
+    &.nb-grid__area--width-m {
+
+      .nb-card__title {
+        --font-size-modifier: 1.4;
+      }
+    }
+
+    &.nb-grid__area--width-xs {
+      --grid-item-content-display: none;
+      --grid-item-buttons-display: none;
+
+      @include above(tablet) {
+        --font-size-modifier: 0.8;
+        --nb-card-spacing-modifier: 0.25;
+
+        .nb-card__title,
+        .nb-card__subtitle {
+          --font-size-modifier: 0.6;
+        }
+      }
+    }
+  }
+
+  .nb-grid__area--landscape {
+
+    &.nb-grid__area--width-full {
+
+      .nb-card__title {
+        --font-size-modifier: 1.6;
+      }
+    }
+
+    &.nb-grid__area--width-xl {
+
+      .nb-card__title {
+        --font-size-modifier: 1.4;
+      }
+    }
+
+    &.nb-grid__area--width-m {
+
+      @include above(tablet) {
+        --font-size-modifier: 0.8;
+      }
+    }
+
+    &.nb-grid__area--width-s,
+    &.nb-grid__area--width-xs {
+      --card-image-width: 40%;
+    }
+
+    &.nb-grid__area--width-s {
+      --grid-item-content-display: none;
+      --grid-item-buttons-display: none;
+
+      --font-size-modifier: 0.8;
+
+      @include above(tablet) {
+        --nb-card-spacing-modifier: 0.25;
+
+        .nb-card__title,
+        .nb-card__subtitle {
+          --font-size-modifier: 0.6;
+        }
+      }
+    }
+
+    &.nb-grid__area--width-xs {
+      --grid-item-content-display: none;
+      --grid-item-buttons-display: none;
+
+      --font-size-modifier: 0.8;
+
+      @include above(tablet) {
+        --font-size-modifier: 0.6;
+        --nb-card-spacing-modifier: 0.25;
+
+        .nb-card__title {
+          --font-size-modifier: 0.5;
+        }
+      }
+    }
+  }
+
+  .nb-card__title {
+    display: var(--grid-item-title-display, block);
+  }
+
+  .nb-card__subtitle {
+    display: var(--grid-item-subtitle-display, block);
+  }
+
+  .nb-card__description {
+    display: var(--grid-item-content-display, block);
+  }
+
+  .nb-card__buttons {
+    display: var(--grid-item-buttons-display, block);
+  }
+
+  .nb-card__meta {
+    display: var(--grid-item-meta-display, block);
+  }
+}

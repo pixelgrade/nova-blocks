@@ -35,7 +35,7 @@ export const CardTitle = withVisibilityAndPlaceholder( ( props ) => {
   const TitleTagName = props.titleTagName || 'h3';
 
   return (
-    <TitleTagName className={ 'wp-block nb-grid__item-title nb-card__title' }>
+    <TitleTagName className={ 'nb-card__title' }>
       { ! placeholder ? children : <TextPlaceholder/> }
     </TitleTagName>
   );
@@ -53,7 +53,7 @@ export const CardMeta = withVisibilityAndPlaceholder( ( props ) => {
   }
 
   return (
-    <div className="nb-grid__item-meta nb-card__meta is-style-meta">
+    <div className="nb-card__meta is-style-meta">
       { ! placeholder ? children : <TextPlaceholder rows={ 1 } /> }
     </div>
   )
@@ -66,7 +66,7 @@ export const CardDescription = withVisibilityAndPlaceholder( ( props ) => {
     children,
   } = props;
 
-  const wrapperClassName = 'wp-block nb-grid__item-description nb-card__description';
+  const wrapperClassName = 'nb-card__description';
 
   return (
     <p className={ wrapperClassName }>
@@ -83,7 +83,7 @@ export const CardFooter = withVisibilityAndPlaceholder( ( props ) => {
   } = props;
 
   return (
-    <div className="wp-block nb-grid__item-buttons nb-card__buttons">
+    <div className="nb-card__buttons">
       { ! placeholder ? children : <TextPlaceholder rows={ 1 } /> }
     </div>
   );
