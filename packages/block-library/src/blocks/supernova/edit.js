@@ -71,8 +71,8 @@ const SupernovaPreview = props => {
     'supernova',
     `supernova--source-type-${ sourceType }`,
     `supernova--card-layout-${ cardLayout }`,
+    `supernova--${ columns }-columns`,
     {
-      'supernova--one-column': columns === 1,
       'supernova--has-minimum-height': minHeightFallback !== 0,
     },
     'alignfull',
