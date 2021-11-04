@@ -73,7 +73,6 @@
 
       @include above(tablet) {
         --font-size-modifier: 0.8;
-        --nb-card-spacing-modifier: 0.25;
 
         .nb-card__title,
         .nb-card__subtitle {
@@ -118,7 +117,6 @@
       --font-size-modifier: 0.8;
 
       @include above(tablet) {
-        --nb-card-spacing-modifier: 0.25;
 
         .nb-card__title,
         .nb-card__subtitle {
@@ -135,7 +133,6 @@
 
       @include above(tablet) {
         --font-size-modifier: 0.6;
-        --nb-card-spacing-modifier: 0.25;
 
         .nb-card__title {
           --font-size-modifier: 0.5;
