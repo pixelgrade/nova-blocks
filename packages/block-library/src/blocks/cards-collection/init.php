@@ -47,6 +47,11 @@ if ( ! function_exists( 'novablocks_render_cards_collection_block' ) ) {
 			'supernova--halign-' . $align[1],
 		];
 
+		$classes = array_merge(
+			novablocks_get_grid_area_fallback_classnames( $attributes ),
+			$classes
+		);
+
 		ob_start(); ?>
 
 		<div

@@ -2086,6 +2086,32 @@ function novablocks_merge_attributes_from_array( $pathsArray ) {
 	return $accumulator;
 }
 
+function novablocks_get_grid_area_fallback_classnames( $attributes ) {
+	$classes = [];
+
+	if ( $attributes[ 'layoutStyle' ] !== 'parametric' && ! empty( $attributes[ 'columns' ] ) ) {
+		$cardLayout = 'portrait';
+
+		if ( in_array( $attributes[ 'cardLayout' ], [ 'horizontal', 'horizontal-reverse' ] ) ) {
+			$cardLayout = 'landscape';
+		}
+
+		$classes[] = 'nb-grid__area--' . $cardLayout;
+		$classes[] = novablocks_get_area_classname_by_width_ratio( 1 / $attributes[ 'columns' ] );
+	}
+
+	return $classes;
+}
+
+function novablocks_get_area_classname_by_width_ratio( $ratio ) {
+	if ( $ratio < 0.3 ) return 'nb-grid__area--width-xs';
+	if ( $ratio < 0.5 ) return 'nb-grid__area--width-s';
+	if ( $ratio < 0.66 ) return 'nb-grid__area--width-m';
+	if ( $ratio < 0.8 ) return 'nb-grid__area--width-l';
+	if ( $ratio < 0.95 ) return 'nb-grid__area--width-xl';
+
+	return 'nb-grid__area--width-full';
+}
 
 function novablocks_get_collection_card_markup( $media, $content, $attributes ) {
 
