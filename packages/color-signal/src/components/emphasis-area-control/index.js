@@ -1,3 +1,4 @@
+import { __ } from "@wordpress/i18n";
 import { RangeControl } from "@wordpress/components";
 import { ControlsGroup, withVisibility } from "@novablocks/block-editor";
 
