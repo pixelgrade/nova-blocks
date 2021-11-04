@@ -29,7 +29,8 @@ if ( ! function_exists( 'novablocks_render_cards_collection_block' ) ) {
 		$attributes_config     = novablocks_get_cards_collection_attributes();
 		$attributes            = novablocks_get_attributes_with_defaults( $attributes, $attributes_config );
 		$data_attributes_array = array_map( 'novablocks_camel_case_to_kebab_case', array_keys( $attributes ) );
-		$data_attributes       = novablocks_get_data_attributes( $data_attributes_array, $attributes );
+		$blacklist 			   = [ 'position-indicators' ];
+		$data_attributes       = novablocks_get_data_attributes( $data_attributes_array, $attributes, $blacklist );
 
 		$cssProps = array_merge(
 			novablocks_get_space_and_sizing_css( $attributes ),
