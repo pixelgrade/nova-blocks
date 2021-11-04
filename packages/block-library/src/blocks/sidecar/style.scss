@@ -3,7 +3,7 @@
 @import 'scss/utility';
 
 // This is where magic starts.
-:is(.novablocks-sidecar, .nb-sidecar-area--content) {
+:is(.nb-sidecar, .nb-sidecar-area--content) {
   position: relative;
   align-items: start;
   @include nb-content-layout-grid;
@@ -42,7 +42,7 @@
 // Default sidebar position is on the right, so it will be positioned between [ge] and block-limit-right.
 @include above(lap) {
 
-  .novablocks-sidecar {
+  .nb-sidecar {
 
     > .nb-sidecar-area--content:not(:only-child) {
       --block-content-start: var(--block-wide-start);

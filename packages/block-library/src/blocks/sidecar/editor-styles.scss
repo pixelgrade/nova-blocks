@@ -87,7 +87,7 @@
 //// Content will always be the first child of layout block,
 //// and it will change it's grid position, according
 //// to sidebar position (left or right).
-//.novablocks-sidecar {
+//.nb-sidecar {
 //  --block-content-start: var(--block-wide-start);
 //  --block-content-end: ce;
 //
@@ -168,7 +168,7 @@
 }
 
 // Two Sidebars
-.novablocks-sidecar--complex {
+.nb-sidecar--complex {
 
   .nb-sidecar-area--content[class] {
 

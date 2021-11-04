@@ -1,13 +1,13 @@
 import { debounce, below } from "@novablocks/utils";
 
-const SIDECARS = document.querySelectorAll( '.novablocks-sidecar:not(.ignore-block)' );
+const SIDECARS = document.querySelectorAll( '.nb-sidecar:not(.ignore-block)' );
 
 const IS_EDITOR = document.getElementsByTagName( 'body' )[0].classList.contains( 'block-editor-page' );
 const BREAK_LEFT_CLASS = 'stop-left';
 const BREAK_RIGHT_CLASS = 'stop-right';
 const CONTENT_CLASS = '.nb-sidecar-area--content';
 const SIDEBAR_CLASS = '.nb-sidecar-area--sidebar';
-const SIDECAR_CLASS = '.novablocks-sidecar';
+const SIDECAR_CLASS = '.nb-sidecar';
 const ALIGN_CLASSES = ['alignfull', 'alignwide', 'alignleft', 'alignright'];
 const PULL_RIGHT_CLASS = '.pull-right';
 const PULL_LEFT_CLASS = '.pull-left';

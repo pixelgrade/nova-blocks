@@ -29,12 +29,12 @@ const Edit = ( props ) => {
   const className = classnames(
 //    @todo maybe add this back at one point?
 //    props.className,
-    `novablocks-sidecar`,
+    `nb-sidecar`,
     `nb-sidecar--sidebar-${ sidebarPosition }`,
     `nb-sidecar--sidebar-${ sidebarWidth }`,
     {
       'last-block-is-sticky': lastItemIsSticky === true,
-      'novablocks-sidecar--complex': layout === 'complex'
+      'nb-sidecar--complex': layout === 'complex'
     }
   );
 
