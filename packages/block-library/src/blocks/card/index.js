@@ -57,6 +57,7 @@ const overwriteAttributes = ( settings ) => {
 addFilter( 'blocks.registerBlockType', 'novablocks/card-attributes-overwrite', overwriteAttributes, Number.MAX_SAFE_INTEGER );
 
 registerBlockType( BLOCK_NAME, {
+  apiVersion: 2,
 	title: __( 'Card', '__plugin_txtd' ),
 	description: __( 'Display related pieces of information in a flexible container visually resembling a playing card.', '__plugin_txtd' ),
 	category: 'nova-blocks',

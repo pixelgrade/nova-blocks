@@ -53,8 +53,10 @@ const CardsCollectionEdit = ( props ) => {
 
   return (
     <div { ...blockProps }>
-      <CollectionHeader { ...props } />
-      <CollectionBody { ...props } { ...innerBlocksProps } />
+      <div className="supernova__inner-container">
+        <CollectionHeader { ...props } />
+        <CollectionBody { ...props } { ...innerBlocksProps } />
+      </div>
 		</div>
 	);
 };

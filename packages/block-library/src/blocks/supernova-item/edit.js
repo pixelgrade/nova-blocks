@@ -88,83 +88,70 @@ const SuperNovaItemContent = ( props ) => {
   const TitleTagName = `h${ cardTitleLevel }`;
   const SubTitleTagName = `h${ cardTitleLevel + 1 }`;
 
-  const containerClassname = classnames(
-    `supernova-item__inner-container`,
-    getColorSignalClassnames( attributes, true )
-  );
-
-  const innerBlocksProps = useInnerBlocksProps( {
+  const newProps = {
     className: classnames(
       'supernova-item__inner-container',
       getColorSignalClassnames( attributes, true )
     )
-  } );
+  };
+
+  const innerBlocksProps = useInnerBlocksProps( newProps );
 
   if ( sourceType === 'fields' ) {
     return (
-      <div className={ containerClassname }>
+      <div { ...newProps }>
         {
           showMeta &&
           <RichText
-            className={ `nb-card__meta block-editor-block-list__block is-style-meta` }
+            className={ `nb-card__meta is-style-meta` }
             placeholder={ `Meta` }
-            tagName={ 'div' }
+            tagName={ 'p' }
             value={ metaAboveTitle }
-            onChange={ metaAboveTitle => {
-              setAttributes( { metaAboveTitle } )
-            } }
+            onChange={ metaAboveTitle => { setAttributes( { metaAboveTitle } ) } }
             allowedFormats={ [] }
           />
         }
         {
           showTitle &&
           <RichText
-            className={ `nb-card__title block-editor-block-list__block` }
+            className={ `nb-card__title` }
             placeholder={ `Title` }
             tagName={ TitleTagName }
             value={ title }
-            onChange={ title => {
-              setAttributes( { title } )
-            } }
+            onChange={ title => { setAttributes( { title } ) } }
             allowedFormats={ [] }
           />
         }
         {
           showSubtitle &&
           <RichText
-            className={ `nb-card__subtitle block-editor-block-list__block` }
+            className={ `nb-card__subtitle` }
             placeholder={ `Subtitle` }
             tagName={ SubTitleTagName }
             value={ subtitle }
-            onChange={ subtitle => {
-              setAttributes( { subtitle } )
-            } }
+            onChange={ subtitle => { setAttributes( { subtitle } ) } }
             allowedFormats={ [] }
           />
         }
         {
           showMeta &&
           <RichText
-            className={ 'nb-card__meta block-editor-block-list__block is-style-meta' }
+            className={ 'nb-card__meta is-style-meta' }
             placeholder={ `Meta` }
             tagName={ 'p' }
             value={ metaBelowTitle }
-            onChange={ metaBelowTitle => {
-              setAttributes( { metaBelowTitle } )
-            } }
+            onChange={ metaBelowTitle => { setAttributes( { metaBelowTitle } ) } }
             allowedFormats={ [] }
           />
         }
         {
           showDescription &&
             <RichText
-              className={ `nb-card__description block-editor-block-list__block` }
+              className={ `nb-card__description` }
               placeholder={ `Content` }
               tagName={ 'p' }
               value={ description }
-              onChange={ description => {
-                setAttributes( { description } )
-              } }
+              onChange={ description => { setAttributes( { description } ) } }
             />
         }
         {
@@ -174,21 +161,15 @@ const SuperNovaItemContent = ( props ) => {
               placeholder={ `Button` }
               tagName={ 'span' }
               value={ buttonText }
-              onChange={ buttonText => {
-                setAttributes( { buttonText } )
-              } }
+              onChange={ buttonText => { setAttributes( { buttonText } ) } }
               allowedFormats={ [] }
-              unstableOnFocus={ () => {
-                setShowPopover( true )
-              } }
-              onBlur={ () => {
-                setShowPopover( false )
-              } }
+              unstableOnFocus={ () => { setShowPopover( true ) } }
+              onBlur={ () => { setShowPopover( false ) } }
             />
             { showPopover &&
               <Popover position="bottom center">
                 <LinkControl
-                  className="wp-block-navigation-link__inline-link-input"
+                  className={ 'wp-block-navigation-link__inline-link-input' }
                   value={ {
                     url: buttonUrl,
                     opensInNewTab: buttonOpensInNewTab

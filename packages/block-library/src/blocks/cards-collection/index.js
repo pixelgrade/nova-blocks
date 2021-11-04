@@ -1,3 +1,5 @@
+import { isUndefined } from "lodash";
+
 /**
  * WordPress dependencies
  */
@@ -5,7 +7,6 @@ import { __ } from '@wordpress/i18n';
 import { registerBlockType } from '@wordpress/blocks';
 import { InnerBlocks } from '@wordpress/block-editor';
 import { addFilter } from '@wordpress/hooks';
-import {isUndefined} from "lodash";
 
 /**
  * Internal dependencies
@@ -52,13 +53,15 @@ const withCardsCollectionDeprecated = ( settings ) => {
           return attributes.columns !== innerBlocks.length || attributes.postsToShow !== innerBlocks.length;
         },
         migrate( attributes, innerBlocks ) {
-          return [ Object.assign( {}, attributes, {
-            columns: innerBlocks.length,
-            postsToShow: innerBlocks.length,
-          } ), innerBlocks ]
+          return [
+            Object.assign( {}, attributes, {
+              columns: innerBlocks.length,
+              postsToShow: innerBlocks.length,
+            } ), innerBlocks
+          ]
         },
         save() {
-          return <InnerBlocks.Content />;
+          return <InnerBlocks.Content/>;
         },
       },
       {
@@ -78,7 +81,7 @@ const withCardsCollectionDeprecated = ( settings ) => {
 
           return [
             Object.assign( {}, attributes, {
-              contentPosition: `center ${contentAlign}`
+              contentPosition: `center ${ contentAlign }`
             } )
           ];
 
@@ -92,16 +95,17 @@ addFilter( 'blocks.registerBlockType', 'novablocks/cards-collection/deprecated',
 
 registerBlockType( BLOCK_NAME, {
   apiVersion: 2,
-	title: __( 'Cards Collection (Deprecated)', '__plugin_txtd' ),
-	description: __( 'Display a list of related items placed within a coherent layout.', '__plugin_txtd' ),
-	category: 'nova-blocks',
+  title: __( 'Cards Collection (Deprecated)', '__plugin_txtd' ),
+  description: __( 'Display a list of related items placed within a coherent layout.', '__plugin_txtd' ),
+  category: 'nova-blocks',
   attributes,
   icon: getSvg( iconSvg ),
-	keywords: [
-	  __( 'grid', '__plugin_txtd' ),
+  keywords: [
+    __( 'grid', '__plugin_txtd' ),
     __( 'columns', '__plugin_txtd' ),
     __( 'collection', '__plugin_txtd' ),
-    __( 'group', '__plugin_txtd' ) ],
+    __( 'group', '__plugin_txtd' )
+  ],
   supports: {
     html: false,
     novaBlocks: {
@@ -114,17 +118,12 @@ registerBlockType( BLOCK_NAME, {
         controls: true,
         deprecated: true
       },
+      noDataAlign: true,
     },
   },
-	edit,
-	save() {
-		return <InnerBlocks.Content />;
-	},
+  edit,
+  save: () => <InnerBlocks.Content/>,
   transforms,
-  getEditWrapperProps() {
-    const settings = wp.data.select( 'core/block-editor' ).getSettings();
-    return settings.alignWide ? { 'data-align': 'full' } : {};
-  },
 } );
 
 addFilter( 'editor.BlockEdit', 'novablocks/cards-collection/with-set-children-attributes', withSetChildrenAttributes, Number.MAX_SAFE_INTEGER );

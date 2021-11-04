@@ -1,5 +1,11 @@
 .nb-collection__layout {
   --nb-grid-spacing: calc(var(--nb-spacing) * var(--nb-grid-spacing-modifier) * 0.02);
+
+  // this selector needs to be specific since the parametric grid layout
+  // moves layout-items inside nb-grid-area where proper spacing needs to occur
+  > .nb-collection__layout-item[class] {
+    margin: 0;
+  }
 }
 
 .nb-collection__layout--fixed-width {
@@ -42,35 +48,22 @@
   }
 }
 
-@mixin with-editor-layout-selectors {
-
-  &:not(.nb-collection__layout--edit),
-  &.nb-collection__layout--edit > .block-editor-inner-blocks > .block-editor-block-list__layout {
-    @content;
-  }
-}
-
 .nb-collection__layout--classic,
 .nb-collection__layout--parametric {
   --nb-collection-columns: var(--nb-collection-columns-count);
   --nb-collection-columns-below-tablet: 1;
-  
+
+  display: grid;
+  grid-gap: var(--nb-grid-spacing);
+  grid-template-columns: repeat(var(--nb-collection-columns, 1), 1fr);
+
+  > * {
+    width: 100%;
+    margin: 0;
+  }
+
   @include below(tablet) {
     --nb-collection-columns: var(--nb-collection-columns-below-tablet, 1);
   }
 
-  @include with-editor-layout-selectors {
-    display: grid;
-    grid-gap: var(--nb-grid-spacing);
-    grid-template-columns: repeat(var(--nb-collection-columns, 1), 1fr);
-
-    > * {
-      width: 100%;
-      margin: 0;
-    }
-  }
-}
-
-.nb-collection__layout--parametric {
-  --parametric-gap: var(--nb-grid-spacing);
 }

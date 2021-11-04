@@ -18,7 +18,7 @@ const CollectionSubtitle = ( props ) => {
   return (
     <RichText
       tagName={ 'p' }
-      className={ 'nb-collection__subtitle is-style-lead' }
+      className={ 'nb-collection__subtitle is-style-lead alignfull' }
       value={ subtitle }
       placeholder={ __( 'Collection subtitle', '__plugin_txtd' ) }
       onChange={ subtitle => {

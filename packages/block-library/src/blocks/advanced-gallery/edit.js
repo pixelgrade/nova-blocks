@@ -11,7 +11,7 @@ const Edit = ( props ) => {
 
 	return (
 		<div className={ className }>
-      <CardMediaWrapper {...props}>
+      <CardMediaWrapper { ...props }>
 			  <MediaComposition { ...props } />
       </CardMediaWrapper>
 		</div>

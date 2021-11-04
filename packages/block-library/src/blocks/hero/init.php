@@ -41,8 +41,6 @@ if ( ! function_exists( 'novablocks_render_hero_block' ) ) {
 		$blacklist             = [ 'media', ];
 		$data_attributes       = novablocks_get_data_attributes( $data_attributes_array, $attributes, $blacklist );
 
-		$novablocks_settings = novablocks_get_block_editor_settings();
-
 		$classes = array_merge(
 			[
 				'novablocks-hero',
