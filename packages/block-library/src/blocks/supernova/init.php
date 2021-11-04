@@ -45,45 +45,29 @@ if ( ! function_exists( 'novablocks_render_supernova_block' ) ) {
 
 		$align = preg_split( '/\b\s+/', $attributes['contentPosition'] );
 
-		$classes = [
-			'alignfull',
+		if ( $attributes['columns'] === 1 ) {
+			$classes[] = 'supernova--one-column';
+		}
+
+		$classes = array_merge( [
 			'supernova',
 			'supernova--source-type-' . $attributes['sourceType'],
 			'supernova--card-layout-' . $attributes['cardLayout'],
 			'supernova--valign-' . $align[0],
 			'supernova--halign-' . $align[1],
-		];
-
-		if ( $attributes['columns'] === 1 ) {
-			$classes[] = 'supernova--one-column';
-		}
-
-		$classes = array_merge(
-			novablocks_get_grid_area_fallback_classnames( $attributes ),
-			$classes
+			'alignfull',
+		],
+			novablocks_get_color_signal_classes( $attributes ),
+			novablocks_get_grid_area_fallback_classnames( $attributes )
 		);
-
-		$blockPaletteClasses = novablocks_get_color_signal_classes( $attributes );
-		$classes             = array_merge( $classes, $blockPaletteClasses );
 
 		if ( $attributes['minHeightFallback'] !== 0 ) {
 			$classes[] = 'supernova--has-minimum-height';
 		}
 
-		$cssProps = [
-			/*
-			 * Color Signal
-			 */
-			'--nb-emphasis-area: ' . $attributes['emphasisArea'],
-
-			/*
-			 * Media Composition
-			 */
-			'--nb-advanced-gallery-grid-gap: ' . $attributes['elementsDistance'] . 'px',
-		];
-
 		$cssProps = array_merge(
-			$cssProps,
+			novablocks_get_media_composition_css( $attributes ),
+			novablocks_get_color_signal_css( $attributes ),
 			novablocks_get_overlay_filter_css( $attributes ),
 			novablocks_get_space_and_sizing_css( $attributes ),
 			novablocks_get_collection_layout_css( $attributes ),

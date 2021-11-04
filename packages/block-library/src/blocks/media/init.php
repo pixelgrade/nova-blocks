@@ -76,17 +76,10 @@ if ( ! function_exists( 'novablocks_render_media_block' ) ) {
 			$attributes['gallery'] = $attributes['images'];
 		}
 
-		$css_props = novablocks_get_space_and_sizing_css( $attributes, true );
-
-		if ( ! empty( $attributes['emphasisArea'] ) ) {
-
-			$css_props = array_merge(
-				$css_props,
-				[
-					'--nb-emphasis-area: ' . $attributes['emphasisArea'],
-				]
-			);
-		}
+		$css_props = array_merge(
+			novablocks_get_color_signal_css( $attributes ),
+			novablocks_get_space_and_sizing_css( $attributes, true ),
+		);
 
 		$contentClasses = [
 			'novablocks-media__inner-container',

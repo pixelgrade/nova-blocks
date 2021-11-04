@@ -11,3 +11,4 @@ export { default as ContentColorGradeControl } from "./content-color-grade-contr
 export { default as ColorSignalCustomizeControls} from "./color-signal-slot-fill";
 
 export { default as withColorSignalProps } from "./with-color-signal-props";
+export { default as EmphasisAreaControl } from "./emphasis-area-control";

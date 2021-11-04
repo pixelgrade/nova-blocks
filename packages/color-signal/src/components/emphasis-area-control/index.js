@@ -1,9 +1,4 @@
-import { __ } from "@wordpress/i18n";
-import { RangeControl } from "@wordpress/components";
-
-import { withVisibility } from "@novablocks/block-editor";
-
-import { ColorSignalCustomizeControls } from "../../components";
+import { ControlsGroup, withVisibility } from "@novablocks/block-editor";
 
 const EmphasisAreaControl = props => {
 
@@ -11,7 +6,7 @@ const EmphasisAreaControl = props => {
   const { emphasisArea } = attributes;
 
   return (
-    <ColorSignalCustomizeControls>
+    <ControlsGroup>
       <RangeControl
         value={ emphasisArea }
         onChange={ ( emphasisArea ) => setAttributes( { emphasisArea } ) }
@@ -20,7 +15,7 @@ const EmphasisAreaControl = props => {
         max={ 100 }
         step={ 5 }
       />
-    </ColorSignalCustomizeControls>
+    </ControlsGroup>
   )
 }
 

@@ -13,12 +13,12 @@ export const getRandomAttributes = () => {
 	};
 };
 
-export const getGridStyle = ( attributes ) => {
+export const getMediaCompositionCSSProps = ( attributes ) => {
 
   const { elementsDistance } = attributes;
 
 	return {
-		'--nb-advanced-gallery-grid-gap': `${ elementsDistance }px`
+		'--nb-media-composition-gap': `${ elementsDistance }px`
 	}
 };
 

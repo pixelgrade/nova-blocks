@@ -24,10 +24,10 @@
 	right: 0;
 	bottom: 0;
 
-	--nb-advanced-gallery-grid-gap: 10px;
+	--nb-media-composition-gap: 10px;
 
-	margin-top: calc(-1 * var(--nb-advanced-gallery-grid-gap));
-	margin-left: calc(-1 * var(--nb-advanced-gallery-grid-gap));
+	margin-top: calc(-1 * var(--nb-media-composition-gap));
+	margin-left: calc(-1 * var(--nb-media-composition-gap));
 
 	& + & {
 		margin-top: 0;
@@ -35,8 +35,8 @@
 }
 
 .novablocks-media-composition__grid-item {
-	margin-top: var(--nb-advanced-gallery-grid-gap);
-	margin-left: var(--nb-advanced-gallery-grid-gap);
+	margin-top: var(--nb-media-composition-gap);
+	margin-left: var(--nb-media-composition-gap);
 
 	display: flex;
 	flex-direction: column;

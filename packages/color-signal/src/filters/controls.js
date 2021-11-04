@@ -17,6 +17,7 @@ import {
   ContentColorGradeControl,
   ColorSignalCustomizeControls,
   withColorSignalProps,
+  EmphasisAreaControl,
 } from "../components";
 
 const Controls = withColorSignalProps( props => {
@@ -34,6 +35,7 @@ const Controls = withColorSignalProps( props => {
           <BlockColorSignalControl { ...props } />
         </ControlsGroup>
         <ContentColorSignalControl { ...props } />
+        <EmphasisAreaControl { ...props } />
         <ColorSignalCustomizeControls.Slot />
         <PalettePicker { ...props } />
         <ColorReferenceToggleControl { ...props } />
@@ -49,5 +51,7 @@ const Controls = withColorSignalProps( props => {
     </ControlsSection>
   )
 } );
+
+
 
 export default Controls;

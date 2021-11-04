@@ -10,7 +10,7 @@ import {
 } from "./index";
 
 import {
-  getGridStyle,
+  getMediaCompositionCSSProps,
   GridItemCollection
 } from "../utils";
 
@@ -38,15 +38,11 @@ const MediaCompositionPreview = ( props ) => {
 	});
 
 	const gridItemsCollection = new GridItemCollection( gallery, attributes );
-	const gridStyle = getGridStyle( attributes );
+	const gridStyle = getMediaCompositionCSSProps( attributes );
 
 	if ( !! isSafari ) {
 		Object.assign( gridStyle, { height } );
 	}
-
-	const galleryStyle = {
-    '--nb-advanced-gallery-aspect-ratio': getCardMediaPaddingTop( attributes.containerHeight )
-  }
 
 	return (
 		<MediaUpload
@@ -56,7 +52,7 @@ const MediaCompositionPreview = ( props ) => {
 			onSelect={ onSelectImages }
 			value={ galleryValue }
 			render={ ( { open } ) => (
-				<div className={ 'novablocks-media-composition' } ref={ ref } style={ galleryStyle }>
+				<div className={ 'novablocks-media-composition' } ref={ ref }>
 					<div className={ `novablocks-media-composition__media-edit novablocks-change-media-overlay` } onClick={ open }>
 						<span>{ __( 'Change Media', '__plugin_txtd' ) }</span>
 					</div>

@@ -2,8 +2,6 @@ import { addFilter } from "@wordpress/hooks";
 
 import "./update-blocks";
 
-import "./filters/with-emphasis-control";
-
 import withColorSignalAttributes from "./filters/with-color-signal-attributes";
 import withColorSignalsDeprecated from "./filters/with-color-signal-deprecated";
 import withColorSignal from "./filters/with-color-signal";

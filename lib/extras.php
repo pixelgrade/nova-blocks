@@ -1257,15 +1257,9 @@ function novablocks_get_media_composition_markup( $attributes ) {
 
 	$data_attributes = novablocks_get_data_attributes( $data_attributes_array, $attributes );
 
-	$cssProps = [
-		'--nb-advanced-gallery-aspect-ratio: ' . novablocks_get_card_media_padding_top( $attributes['containerHeight'] ) . '%',
-	];
-
-	$style = join( '; ', $cssProps );
-
 	if ( ! empty( $images ) && is_array( $images ) ) {
 
-		echo '<div class="novablocks-media-composition" style="' . $style . '" ' . join( ' ', $data_attributes ) . '>';
+		echo '<div class="novablocks-media-composition" ' . join( ' ', $data_attributes ) . '>';
 		echo '<div class="novablocks-media-composition__grid">';
 
 		foreach ( $images as $index => $image ) {
@@ -1397,6 +1391,18 @@ function novablocks_get_space_and_sizing_css( $attributes, $advanced = false ) {
 		novablocks_get_sizing_css( $attributes ),
 	);
 }
+
+function novablocks_get_media_composition_css( $attributes ) {
+	return [
+		'--nb-media-composition-gap: ' . $attributes['elementsDistance'] . 'px'
+	];
+}
+
+function novablocks_get_color_signal_css( $attributes ) {
+	return [
+		'--nb-emphasis-area: ' . $attributes['emphasisArea']
+	];
+};
 
 function novablocks_get_overlay_filter_css( $attributes ) {
 	return [

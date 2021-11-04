@@ -1,7 +1,7 @@
 import $ from 'jquery';
 
 import {
-  getGridStyle,
+  getMediaCompositionCSSProps,
   safariHeightFix,
   GridItemCollection
 } from './utils';
@@ -28,7 +28,7 @@ $( function() {
 
 		if ( $grid.length ) {
 
-			const gridStyle = getGridStyle( attributes );
+			const gridStyle = getMediaCompositionCSSProps( attributes );
 
 			$grid.css( gridStyle );
 
