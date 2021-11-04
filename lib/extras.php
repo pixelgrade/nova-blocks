@@ -1412,7 +1412,7 @@ function novablocks_get_overlay_filter_css( $attributes ) {
 
 function novablocks_get_sizing_css( $attributes ) {
 	return [
-		'--nb-collection-gutter-multiplier: ' . $attributes['layoutGutter'] / 100,
+		'--nb-card-layout-gap-modifier: ' . $attributes['layoutGutter'] / 100,
 		'--nb-card-content-padding-multiplier: ' . $attributes['contentPadding'] / 100,
 		'--nb-card-media-padding-multiplier: ' . $attributes['imagePadding'] / 100,
 		'--nb-card-media-padding-top: ' . novablocks_get_card_media_padding_top( $attributes['thumbnailAspectRatio'] ) . '%',
