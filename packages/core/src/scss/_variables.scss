@@ -41,3 +41,9 @@
 ) {
   --nb-spacing-base: 2;
 }
+
+:is(
+  .supernova__inner-container
+) {
+  --nb-spacing-base: 1;
+}
