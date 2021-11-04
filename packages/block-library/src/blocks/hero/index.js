@@ -68,7 +68,6 @@ registerBlockType( BLOCK_NAME, {
     novaBlocks: {
       colorSignal: {
         attributes: true,
-        altAttributes: true,
         addOverlayColorDeprecatedMethod: true,
         controls: true,
         paletteClassname: true,
@@ -87,7 +86,6 @@ registerBlockType( BLOCK_NAME, {
       customDefaults: true,
       scrollingEffect: {
         attributes: true,
-        altAttributes: true,
         controls: true,
         customWrapper: true,
         doppler: true

@@ -1,5 +1,4 @@
 import attributes from "../attributes.json";
-import altAttributes from "../attributes-alt.json";
 
 const withDopplerAttributes = ( settings ) => {
 
@@ -14,7 +13,6 @@ const withDopplerAttributes = ( settings ) => {
     attributes: {
       ...settings.attributes,
       ...attributes,
-      ...( !! dopplerSupport?.altAttributes ? altAttributes : {} )
     }
   };
 }

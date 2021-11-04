@@ -1,18 +1,38 @@
 /**
- * Internal dependencies
- */
-import iconSvg from './sharing-overlay-block.svg';
-import attributes from './attributes';
-import edit from './edit';
-
-/**
  * WordPress dependencies
  */
 import { __ } from '@wordpress/i18n';
 import { registerBlockType } from '@wordpress/blocks';
 import { getSvg } from "@novablocks/block-editor";
+import { addFilter } from "@wordpress/hooks";
 
-registerBlockType( 'novablocks/sharing-overlay', {
+/**
+ * Internal dependencies
+ */
+import iconSvg from './sharing-overlay-block.svg';
+import edit from './edit';
+import attributes from './attributes';
+import attributesOverwrite from "./attributes-overwrite.json";
+
+const BLOCK_NAME = 'novablocks/sharing-overlay';
+
+const overwriteAttributes = ( settings ) => {
+
+  if ( settings.name !== BLOCK_NAME ) {
+    return settings;
+  }
+
+  return {
+    ...settings,
+    attributes: {
+      ...settings.attributes,
+      ...attributesOverwrite
+    }
+  };
+}
+addFilter( 'blocks.registerBlockType', 'novablocks/sharing-overlay/attributes-overwrite', overwriteAttributes, Number.MAX_SAFE_INTEGER );
+
+registerBlockType( BLOCK_NAME, {
 	title: __( 'Sharing System', '__plugin_txtd' ),
 	description: __( 'Add a button that toggles sharing overlay.', '__plugin_txtd' ),
 	category: 'nova-blocks',
@@ -24,7 +44,6 @@ registerBlockType( 'novablocks/sharing-overlay', {
     html: false,
     novaBlocks: {
       colorSignal: {
-        altAttributes: true,
         controls: true,
       }
     }

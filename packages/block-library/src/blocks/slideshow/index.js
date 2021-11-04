@@ -1,3 +1,9 @@
+/**
+ * WordPress dependencies
+ */
+import { __ } from '@wordpress/i18n';
+import { registerBlockType } from '@wordpress/blocks';
+import { addFilter } from "@wordpress/hooks";
 import { select } from '@wordpress/data';
 
 /**
@@ -17,18 +23,13 @@ import {
 import iconSvg from './slideshow-block.svg';
 import edit from './edit';
 import save from './save';
-import transforms from './transforms';
 import attributes from "./attributes";
+import attributesOverwrite from "./attributes-overwrite.json";
 
-// Load deprecated file
+import transforms from './transforms';
 import './deprecated';
 
-
-/**
- * WordPress dependencies
- */
-import { __ } from '@wordpress/i18n';
-import { registerBlockType } from '@wordpress/blocks';
+const BLOCK_NAME = 'novablocks/slideshow';
 
 async function getNewDefaults() {
 	const placeholderImages = await getPlaceholderImages();
@@ -46,9 +47,25 @@ async function getNewDefaults() {
   };
 }
 
-generateDefaults( 'novablocks/slideshow', getNewDefaults );
+generateDefaults( BLOCK_NAME, getNewDefaults );
 
-registerBlockType( 'novablocks/slideshow', {
+const overwriteAttributes = ( settings ) => {
+
+  if ( settings.name !== BLOCK_NAME ) {
+    return settings;
+  }
+
+  return {
+    ...settings,
+    attributes: {
+      ...settings.attributes,
+      ...attributesOverwrite
+    }
+  };
+}
+addFilter( 'blocks.registerBlockType', 'novablocks/slideshow/attributes-overwrite', overwriteAttributes, Number.MAX_SAFE_INTEGER );
+
+registerBlockType( BLOCK_NAME, {
   apiVersion: 2,
 	title: __( 'Slideshow Me the Way (Deprecated)', '__plugin_txtd' ),
 	description: __( 'Display more than one piece of content in a single, coveted space.', '__plugin_txtd' ),
@@ -67,7 +84,6 @@ registerBlockType( 'novablocks/slideshow', {
     novaBlocks: {
       colorSignal: {
         attributes: true,
-        altAttributes: true,
         addOverlayColorDeprecatedMethod: true,
         controls: true,
       },
@@ -82,7 +98,6 @@ registerBlockType( 'novablocks/slideshow', {
       customDefaults: true,
       scrollingEffect: {
         attributes: true,
-        altAttributes: true,
         controls: true,
         customWrapper: true,
       },

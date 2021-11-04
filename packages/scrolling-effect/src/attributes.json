@@ -1,4 +1,8 @@
 {
+	"scrollingEffect": {
+		"type": "string",
+		"default": "static"
+	},
 	"focalPoint": {
 		"type": "object",
 		"default": {
@@ -20,10 +24,6 @@
 	"finalBackgroundScale": {
 		"type": "number",
 		"default": 1
-	},
-	"scrollingEffect": {
-		"type": "string",
-		"default": "static"
 	},
 	"motionPreset": {
 		"type": "string",

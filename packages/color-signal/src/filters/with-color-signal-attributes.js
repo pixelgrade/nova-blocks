@@ -1,5 +1,4 @@
 import attributes from "../attributes.json";
-import altAttributes from "../attributes-alt.json";
 
 const withColorSignalAttributes = ( settings, name ) => {
 
@@ -14,7 +13,6 @@ const withColorSignalAttributes = ( settings, name ) => {
     attributes: {
       ...settings.attributes,
       ...attributes,
-      ...( !! settings?.supports?.novaBlocks?.colorSignal?.altAttributes ? altAttributes : {} )
     }
   };
 }
