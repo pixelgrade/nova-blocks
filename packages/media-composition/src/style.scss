@@ -55,12 +55,12 @@
 
 	padding-top: calc(0.125 * var(--nb-spacing));
 
-	.show-captions-on-hover & {
-		position: absolute;
-		top: 100%;
-		left: 0;
-		width: 100%;
-
+	// Block with Additional CSS class "show-captions-on-hover"
+	// @todo: add the CSS class in the frontend to be consistent with editor;
+	// now it's showing as a [data-class-name] attribute in the frontend
+	// and as a regular CSS class in the editor
+	.show-captions-on-hover &,
+	[data-class-name="show-captions-on-hover"] & {
 		opacity: 0;
 		pointer-events: none;
 		transition: var(--nb-transition);
@@ -68,7 +68,8 @@
 		transition-property: opacity;
 	}
 
-	.show-captions-on-hover .novablocks-media-composition__grid-item:hover & {
+	.show-captions-on-hover .novablocks-media-composition__grid-item:hover &,
+	[data-class-name="show-captions-on-hover"] .novablocks-media-composition__grid-item:hover & {
 		opacity: 1;
 		pointer-events: auto;
 	}
