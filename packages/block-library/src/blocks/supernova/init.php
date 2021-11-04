@@ -45,10 +45,6 @@ if ( ! function_exists( 'novablocks_render_supernova_block' ) ) {
 
 		$align = preg_split( '/\b\s+/', $attributes['contentPosition'] );
 
-		if ( $attributes['columns'] === 1 ) {
-			$classes[] = 'supernova--one-column';
-		}
-
 		$classes = array_merge( [
 			'supernova',
 			'supernova--source-type-' . $attributes['sourceType'],
@@ -60,6 +56,10 @@ if ( ! function_exists( 'novablocks_render_supernova_block' ) ) {
 			novablocks_get_color_signal_classes( $attributes ),
 			novablocks_get_grid_area_fallback_classnames( $attributes )
 		);
+
+		if ( $attributes['columns'] === 1 ) {
+			$classes[] = 'supernova--one-column';
+		}
 
 		if ( $attributes['minHeightFallback'] !== 0 ) {
 			$classes[] = 'supernova--has-minimum-height';
