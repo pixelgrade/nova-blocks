@@ -3,6 +3,45 @@
 // from Elements Visibility section,
 // and adjust elements visibility based on area
 // sizes and ratio.
+
+
+
+.nb-collection__layout--classic {
+
+  @include above(tablet) {
+
+    :is(.supernova-item--layout-vertical, .supernova-item--layout-vertical-reverse, .supernova-item--layout-stacked) {
+
+      :is(.supernova--3-columns, .supernova--4-columns) & {
+        --nb-spacing-base: 0.5;
+
+        .nb-card__description {
+          --font-size-modifier: 0.75
+        }
+      }
+    }
+
+    :is(.supernova-item--layout-horizontal, .supernova-item--layout-horizontal-reverse) {
+
+      .supernova--2-columns & {
+        --nb-spacing-base: 0.5;
+
+        .nb-card__description {
+          --font-size-modifier: 0.75
+        }
+      }
+
+      :is(.supernova--3-columns, .supernova--4-columns)  & {
+        --nb-spacing-base: 0.5;
+
+        .nb-card__description {
+          --font-size-modifier: 0.66
+        }
+      }
+    }
+  }
+}
+
 .nb-collection__layout--parametric {
 
   .nb-grid__area--portrait {

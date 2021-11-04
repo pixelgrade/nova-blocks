@@ -1,3 +1,4 @@
+import { RangeControl } from "@wordpress/components";
 import { ControlsGroup, withVisibility } from "@novablocks/block-editor";
 
 const EmphasisAreaControl = props => {
