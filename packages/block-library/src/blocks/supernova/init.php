@@ -13,23 +13,19 @@ function novablocks_get_supernova_attributes() {
 	return novablocks_merge_attributes_from_array( [
 		'packages/block-library/src/blocks/supernova/attributes.json',
 
-		'packages/media-composition/src/attributes.json',
-
 		'packages/color-signal/src/attributes.json',
-		'packages/color-signal/src/filters/with-emphasis-control/attributes.json',
+		'packages/media-composition/src/attributes.json',
 		'packages/scrolling-effect/src/attributes.json',
 		'packages/shape-modeling/src/attributes.json',
 
 		'packages/block-editor/src/filters/with-card-details/attributes.json',
 		'packages/block-editor/src/filters/with-card-elements-stacking/attributes.json',
-		'packages/block-editor/src/filters/with-cards-manager/attributes.json',
+		'packages/block-editor/src/filters/with-collection-layout/attributes.json',
+		'packages/block-editor/src/filters/with-content-loader/attributes.json',
 		'packages/block-editor/src/filters/with-content-position-matrix/attributes.json',
 		'packages/block-editor/src/filters/with-elements-visibility/attributes.json',
-		'packages/block-editor/src/filters/with-emphasis-control/attributes.json',
-		'packages/block-editor/src/filters/with-content-loader/attributes.json',
 		'packages/block-editor/src/filters/with-overlay-filter/attributes.json',
 		'packages/block-editor/src/filters/with-space-and-sizing/attributes.json',
-		'packages/block-editor/src/filters/with-collection-layout/attributes.json',
 	] );
 
 }

@@ -2143,14 +2143,20 @@ function novablocks_get_collection_card_markup( $media, $content, $attributes ) 
 		'supernova-item__inner-container',
 	], novablocks_get_color_signal_classes( $attributes ) );
 
-	$blacklist = [ 'images', 'media' ];
+	$data_attributes_array = array(
+		'palette',
+		'palette-variation',
+		'color-signal',
+		'content-palette-variation',
+		'content-color-signal',
+		'use-source-color-as-reference'
+	);
 
-	if ( $attributes['cardLayout'] !== 'stacked' || $attributes['align'] !== 'full' ) {
-		$blacklist[] = 'position-indicators';
+	if ( $attributes['columns'] === 1 && $attributes['cardLayout'] === 'stacked' ) {
+		$data_attributes_array[] = 'position-indicators';
 	}
 
-	$data_attributes_array = array_map( 'novablocks_camel_case_to_kebab_case', array_keys( $attributes ) );
-	$data_attributes       = novablocks_get_data_attributes( $data_attributes_array, $attributes, $blacklist );
+	$data_attributes = novablocks_get_data_attributes( $data_attributes_array, $attributes );
 
 	ob_start(); ?>
 

@@ -19,7 +19,6 @@ function novablocks_get_media_attributes() {
 
 		'packages/block-editor/src/filters/with-card-details/attributes.json',
 		'packages/block-editor/src/filters/with-content-position-matrix/attributes.json',
-		'packages/block-editor/src/filters/with-emphasis-control/attributes.json',
 		'packages/block-editor/src/filters/with-space-and-sizing/attributes.json',
 
 		'packages/block-library/src/blocks/media/attributes-overwrite.json',

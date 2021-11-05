@@ -35,6 +35,6 @@ $slick-arrow-color: var(--sm-current-fg1-color);
 	-webkit-mask-image: -webkit-linear-gradient(0deg, white 0, white 100%);
 }
 
-.supernova-item__media-aspect-ratio > * {
+.supernova-item__media-aspect-ratio[class] > * {
   @include cover;
 }

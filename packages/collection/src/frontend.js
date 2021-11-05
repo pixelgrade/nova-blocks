@@ -44,8 +44,8 @@ const GRID_SELECTOR = '.nb-collection__layout--parametric';
         return;
       }
 
-      const $title = $block.find( '.nb-collection__title' ).detach();
-      const $subtitle = $block.find( '.nb-collection__subtitle' ).detach();
+      const $header = $block.find( '.nb-collection__header' ).detach();
+      const $body = $block.find( '.nb-collection__body' );
       const onResize = debounce( recreateLayout, 100 );
 
       createLayout();
@@ -108,9 +108,7 @@ const GRID_SELECTOR = '.nb-collection__layout--parametric';
         $grid.css( getGridStyle( compiledAttributes ) );
 
         if ( below( 'lap' ) || attributes.headerPosition === 0 ) {
-          // @todo fix position of collection header
-          $title.clone().addClass( 'js-collection-element-clone' ).insertBefore( $grid );
-          $subtitle.clone().addClass( 'js-collection-element-clone' ).insertBefore( $grid );
+          $header.clone().addClass( 'js-collection-element-clone' ).insertBefore( $body );
         }
 
         for ( let i = 0; i < areaColumns.length; i++ ) {
@@ -141,10 +139,9 @@ const GRID_SELECTOR = '.nb-collection__layout--parametric';
               $card.appendTo( $gridItem );
 
               if ( ! below( 'lap' ) && attributes.headerPosition === addedCards - area.postsCount + i + 1 ) {
-                const $header = $( '<div class="nb-grid__item js-collection-element-clone">' );
-                $title.clone().appendTo( $header );
-                $subtitle.clone().appendTo( $header );
-                $header.appendTo( $area );
+                const $wrapper = $( '<div class="nb-grid__item js-collection-element-clone">' );
+                $header.clone().appendTo( $wrapper );
+                $wrapper.appendTo( $area );
               }
 
               $gridItem.appendTo( $area );

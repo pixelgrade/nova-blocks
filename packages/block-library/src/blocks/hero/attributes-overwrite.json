@@ -18,5 +18,9 @@
 	"scrollingEffect": {
 		"type": "string",
 		"default": "parallax"
+	},
+	"blockTopSpacing": {
+		"type": "number",
+		"default": 0
 	}
 }
