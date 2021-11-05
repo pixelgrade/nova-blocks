@@ -45,7 +45,7 @@ const updateScrollIndicator = () => {
   const blocksArray = [ ...blocks ].filter( block => !! block.dataset.scrollIndicatorBlock );
 
   blocksArray.forEach( block => {
-    const indicator = block.querySelector( '.nb-scroll-indicator' );
+    const indicator = block.querySelector( '.nb-scroll-indicator:not(.nb-scroll-indicator--middle)' );
     const nextElement = block.nextElementSibling;
 
     if ( ! nextElement ) {

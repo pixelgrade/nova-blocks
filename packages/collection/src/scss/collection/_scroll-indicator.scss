@@ -42,7 +42,29 @@
 .nb-scroll-indicator:not(.nb-scroll-indicator--middle) {
   width: 160px;
   height: 50px;
+
+  top: 100%;
+  color: var(--nb-bg-color);
+  background: none;
+
+  z-index: 1;
+
+  &:after {
+    color: var(--nb-fg2-color);
+  }
   
   margin-left: auto;
   margin-right: auto;
+}
+
+.nb-scroll-indicator--middle {
+
+  &[class] {
+    background-color: transparent;
+    color: inherit;
+  }
+
+  svg {
+    opacity: 0;
+  }
 }
