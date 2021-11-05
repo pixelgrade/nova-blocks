@@ -1499,7 +1499,6 @@ if ( ! function_exists( 'novablocks_get_collection_output' ) ) {
 			<div class="<?php echo esc_attr( join( ' ', $layout_classes ) ); ?>">
 				<?php echo $content; ?>
 			</div>
-			<?php novablocks_render_scroll_indicator( $attributes ); ?>
 		</div>
 
 		<?php return ob_get_clean();
@@ -2129,6 +2128,8 @@ function novablocks_get_collection_card_markup( $media, $content, $attributes ) 
 	$cardClasses = [
 		'supernova-item',
 		'supernova-item--layout-' . $attributes['cardLayout'],
+		'supernova-item--scrolling-effect-' . $attributes['scrollingEffect'],
+		'supernova-item--aspect-ratio-' . $attributes[ 'thumbnailAspectRatioString' ],
 	];
 
 	$align = preg_split( '/\b\s+/', $attributes['contentPosition'] );
@@ -2177,6 +2178,7 @@ function novablocks_get_collection_card_markup( $media, $content, $attributes ) 
 				<div class="<?php echo esc_attr( join( ' ', $contentClasses ) ); ?>">
 					<div class="<?php echo esc_attr( join( ' ', $innerContainerClasses ) ); ?>" <?php echo join( ' ', $data_attributes ); ?>>
 						<?php echo $content; ?>
+						<?php novablocks_render_scroll_indicator( $attributes ); ?>
 					</div>
 				</div>
 			<?php } ?>

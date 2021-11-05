@@ -10,11 +10,18 @@
   background: none !important;
   @include block-background;
 
-  &.supernova--has-minimum-height:not([data-scrolling-effect="doppler"]) {
-  
-    .supernova-item__media-aspect-ratio {
-      --nb-card-media-padding-top: var(--nb-minimum-container-height);
-    }
+}
+
+.supernova-item.supernova-item--layout-stacked {
+  --nb-block-minimum-height: calc(var(--nb-minimum-container-height) - var(--admin-bar-height, 0px));
+  min-height: var(--nb-block-minimum-height);
+
+  &.supernova-item--scrolling-effect-doppler {
+    --nb-block-minimum-height: calc(2 * var(--nb-minimum-container-height) - var(--admin-bar-height, 0px));
+  }
+
+  .supernova-item__content {
+    min-height: calc(var(--nb-minimum-container-height) - var(--admin-bar-height, 0px));
   }
 }
 
@@ -28,12 +35,12 @@
  * Until we find a solution for that,
  * we are going to use !important for our style.
  */
-.supernova-item:not([class*='stacked']) {
+.supernova-item:not(.supernova-item--layout-stacked) {
   display: flex !important;
 }
 
 .supernova-item--layout-stacked {
-  display: grid !important;
+  display: block !important;
 }
 
 .nb-collection__inner-container {

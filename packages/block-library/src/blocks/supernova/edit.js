@@ -72,9 +72,6 @@ const SupernovaPreview = props => {
     `supernova--source-type-${ sourceType }`,
     `supernova--card-layout-${ cardLayout }`,
     `supernova--${ columns }-columns`,
-    {
-      'supernova--has-minimum-height': minHeightFallback !== 0,
-    },
     'alignfull',
     `block-is-${ align }`,
     `supernova--valign-${ contentAlign[0] }`,

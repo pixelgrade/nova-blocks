@@ -20,12 +20,14 @@ export const Card = ( props ) => {
       thumbnailAspectRatioString,
       layoutStyle,
       columns,
+      scrollingEffect,
     },
   } = props;
 
   const defaultClassNames = classnames(
     `supernova-item`,
     `supernova-item--layout-${ cardLayout }`,
+    `supernova-item--scrolling-effect-${ scrollingEffect }`,
     `supernova-item--aspect-ratio-${ thumbnailAspectRatioString }`,
   );
 

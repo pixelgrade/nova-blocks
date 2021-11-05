@@ -54,10 +54,6 @@ if ( ! function_exists( 'novablocks_render_supernova_block' ) ) {
 			novablocks_get_grid_area_fallback_classnames( $attributes )
 		);
 
-		if ( $attributes['minHeightFallback'] !== 0 ) {
-			$classes[] = 'supernova--has-minimum-height';
-		}
-
 		$cssProps = array_merge(
 			novablocks_get_media_composition_css( $attributes ),
 			novablocks_get_color_signal_css( $attributes ),
