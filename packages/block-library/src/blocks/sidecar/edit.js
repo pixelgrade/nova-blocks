@@ -34,7 +34,6 @@ const Edit = ( props ) => {
     `nb-sidecar--sidebar-${ sidebarWidth }`,
     {
       'last-block-is-sticky': lastItemIsSticky === true,
-      'nb-sidecar--complex': layout === 'complex'
     }
   );
 

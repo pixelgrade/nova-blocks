@@ -1,16 +1,17 @@
 import { debounce, below } from "@novablocks/utils";
 
-const SIDECARS = document.querySelectorAll( '.nb-sidecar:not(.ignore-block)' );
+const getContentBlocksArray = () => {
+  const selector = '.nb-sidecar-area--content > :is( .alignfull, .alignwide, .alignleft, .alignright )';
+  const nodelist = document.querySelectorAll( selector );
+  return Array.from( nodelist );
+}
 
-const IS_EDITOR = document.getElementsByTagName( 'body' )[0].classList.contains( 'block-editor-page' );
-const BREAK_LEFT_CLASS = 'stop-left';
-const BREAK_RIGHT_CLASS = 'stop-right';
-const CONTENT_CLASS = '.nb-sidecar-area--content';
-const SIDEBAR_CLASS = '.nb-sidecar-area--sidebar';
-const SIDECAR_CLASS = '.nb-sidecar';
-const ALIGN_CLASSES = ['alignfull', 'alignwide', 'alignleft', 'alignright'];
-const PULL_RIGHT_CLASS = '.pull-right';
-const PULL_LEFT_CLASS = '.pull-left';
+const SIDECARS = document.querySelectorAll( '.nb-sidecar:not(.ignore-block)' );
+const contentBlocks = getContentBlocksArray();
+
+const IS_EDITOR = document.getElementsByTagName( 'body' )[ 0 ].classList.contains( 'block-editor-page' );
+const BREAK_LEFT_CLASS = 'break-align-left';
+const BREAK_RIGHT_CLASS = 'break-align-right';
 const SIDEBAR_LEFT_CLASS = 'nb-sidecar--sidebar-left';
 const HIDDEN_BLOCK_CLASS = 'novablocks-hidden-block';
 
@@ -21,65 +22,64 @@ const HIDDEN_BLOCK_CLASS = 'novablocks-hidden-block';
 // However, there are cases when a pulled block
 // can overlap with a content block and this is the
 // reason why we treat them differently.
-
 const handleSidecarTransformations = function() {
+  cleanupBreakClasses();
 
   // We don't need stop classes on mobiles.
   if ( below( 'lap' ) ) {
     return;
   }
 
-  SIDECARS.forEach( sidecar => {
+  contentBlocks.forEach( block => {
+    const sidebarBlocks = getRelevantSidebarBlocks( block );
+    const leftSidebarBlocks = sidebarBlocks.filter( obj => obj.side === 'left' ).map( obj => obj.element );
+    const rightSidebarBlocks = sidebarBlocks.filter( obj => obj.side === 'right' ).map( obj => obj.element );
 
-    let content = sidecar.querySelector( CONTENT_CLASS ),
-        sidebar = sidecar.querySelector( SIDEBAR_CLASS );
-
-    if ( sidebar === null) {
-      return;
+    if ( ! leftSidebarBlocks.some( sidebarBlock => wouldOverlap( sidebarBlock, block ) ) ) {
+      block.classList.add( BREAK_LEFT_CLASS );
     }
 
-    let  pulledBlocks = document.querySelectorAll("[class*='pull-']"),
-        contentBlocks = content.children,
-        sidebarBlocks = sidebar.children,
-
-        pulledBlocksArray = Array.from(pulledBlocks),
-        contentBlocksArray = Array.from(contentBlocks),
-        sidebarBlocksArray = Array.from(sidebarBlocks),
-        alignedBlocks = contentBlocksArray.filter ( (block) => ALIGN_CLASSES.some( CLASS => block.classList.contains(CLASS) && ! block.classList.contains( SIDECAR_CLASS ) )),
-        breakingBlocks = alignedBlocks.concat(pulledBlocksArray),
-
-        SIDEBAR_IS_LEFT = content.parentElement.classList.contains( SIDEBAR_LEFT_CLASS ),
-
-        // Overlapping between content blocks and sidebar blocks.
-        overlappingBlocks = generateOverlappingBlocks( breakingBlocks, sidebarBlocksArray );
-
-    addStopClasses( overlappingBlocks, SIDEBAR_IS_LEFT );
-  } )
+    if ( ! rightSidebarBlocks.some( sidebarBlock => wouldOverlap( sidebarBlock, block ) ) ) {
+      block.classList.add( BREAK_RIGHT_CLASS );
+    }
+  } );
 }
 
-const addStopClasses = ( overlappingBlocks, SIDEBAR_IS_LEFT ) => {
-
-  overlappingBlocks.forEach( block => {
-
-    let noCollisionClass = SIDEBAR_IS_LEFT ? BREAK_LEFT_CLASS : BREAK_RIGHT_CLASS;
-
-    if ( block.classList.contains( PULL_RIGHT_CLASS ) ) {
-      noCollisionClass = BREAK_RIGHT_CLASS;
-    }
-
-    if ( block.classList.contains( PULL_LEFT_CLASS ) ) {
-      noCollisionClass = BREAK_LEFT_CLASS;
-    }
-
-      block.classList.add( noCollisionClass );
-  } )
+const cleanupBreakClasses = () => {
+  const breakSelector = `${ BREAK_LEFT_CLASS }, ${ BREAK_RIGHT_CLASS }`;
+  const breakNodeList = document.querySelectorAll( breakSelector );
+  const breakElementsArray = Array.from( breakNodeList );
+  breakElementsArray.forEach( element => element.classList.remove( BREAK_LEFT_CLASS, BREAK_RIGHT_CLASS ) );
 }
 
-const debouncedSidecarTransformations = debounce(handleSidecarTransformations, 200)
+const getRelevantSidebarBlocks = ( block, sidebarBlocks = [] ) => {
+  const sidecar = block.closest( '.nb-sidecar' );
+
+  if ( ! sidecar ) {
+    return sidebarBlocks;
+  }
+
+  const sidebar = Array.from( sidecar.children ).filter( child => child.classList.contains( 'nb-sidecar-area--sidebar' ) );
+
+  if ( ! sidebar.length ) {
+    return sidebarBlocks;
+  }
+
+  const newSidebarBlocks = Array.from( sidebar[0].children ).map( element => {
+    return {
+      element,
+      side: sidecar.classList.contains( SIDEBAR_LEFT_CLASS ) ? 'left' : 'right'
+    }
+  } );
+
+  return getRelevantSidebarBlocks( sidecar.parentNode, sidebarBlocks.concat( newSidebarBlocks ) );
+}
+
+const debouncedSidecarTransformations = debounce( handleSidecarTransformations, 200 )
 
 // Helper function to check
 // if two elements are overlapping
-function doesOverlap( elem, collider ) {
+function wouldOverlap( elem, collider ) {
 
   const elemBox = elem.getBoundingClientRect();
   const colliderBox = collider.getBoundingClientRect();
@@ -87,46 +87,18 @@ function doesOverlap( elem, collider ) {
   const overlap = colliderBox.top + colliderBox.height <= elemBox.top ||
                   colliderBox.top >= elemBox.top + elemBox.height;
 
-  return ! overlap;
+  return !overlap;
 }
 
 // Helper function to check if two boxes
-// are overlapping. This is different compared to doesOverlap()
+// are overlapping. This is different compared to wouldOverlap()
 // because in this case height is not important.
 function doBoxesOverlap( box1, box2 ) {
 
-  return ! ( box1.right < box2.left ||
-          box1.left > box2.right ||
-          box1.bottom < box2.top ||
-          box1.top > box2.bottom );
-}
-
-// Helper function to generate overlapping blocks,
-// based on two areas
-// We will create an array with
-// blocks from primaryArea that are overlapping with
-// blocks from secondaryArea.
-
-function generateOverlappingBlocks(primaryArea, secondaryArea) {
-
-  let array = []
-
-  primaryArea.forEach( primaryAreaBlock => {
-
-    secondaryArea.forEach( secondaryAreaBlock => {
-
-      // Avoid useless iterations.
-      if ( array.includes( primaryAreaBlock ) ) {
-        return;
-      }
-
-      if ( doesOverlap(primaryAreaBlock, secondaryAreaBlock)) {
-        array.push(primaryAreaBlock);
-      }
-    })
-  })
-
-  return array;
+  return !( box1.right < box2.left ||
+            box1.left > box2.right ||
+            box1.bottom < box2.top ||
+            box1.top > box2.bottom );
 }
 
 // We want to listen to Content Width setting
@@ -202,7 +174,7 @@ const handleOverlappingOnScroll = () => {
   SIDECARS.forEach( sidecar => {
 
     // If option for sticky block is not enabled we should stop.
-    if ( ! sidecar.classList.contains( 'last-block-is-sticky' ) ) {
+    if ( !sidecar.classList.contains( 'last-block-is-sticky' ) ) {
       return;
     }
 
@@ -212,8 +184,8 @@ const handleOverlappingOnScroll = () => {
 
     if ( content.length ) {
 
-      let contentBlocks = content[0].children;
-      let contentItemsArray = Array.from(contentBlocks);
+      let contentBlocks = content[ 0 ].children;
+      let contentItemsArray = Array.from( contentBlocks );
 
       /*
        * We don't want to consider Supernova as overlapping block,
@@ -223,15 +195,15 @@ const handleOverlappingOnScroll = () => {
       contentItemsArray.forEach( block => {
         if ( block.classList.contains( 'supernova' ) ) {
           const supernovaInsideBlocks = block.children;
-          contentBlocksArray = contentBlocksArray.concat( Array.from(supernovaInsideBlocks) );
+          contentBlocksArray = contentBlocksArray.concat( Array.from( supernovaInsideBlocks ) );
         }
-      })
+      } )
 
       /*
        * Filter initial array of blocks
        * and remove Supernova from that array.
        */
-      const filteredItems = contentItemsArray.filter ( block => ! block.classList.contains('supernova'));
+      const filteredItems = contentItemsArray.filter( block => !block.classList.contains( 'supernova' ) );
 
       contentBlocksArray = contentBlocksArray.concat( Array.from( filteredItems ) );
     }
@@ -239,7 +211,7 @@ const handleOverlappingOnScroll = () => {
     const sidebar = children.filter( child => child.classList.contains( 'nb-sidecar-area--sidebar' ) );
 
     if ( sidebar.length ) {
-      const sidebarBlocks = sidebar[0].children;
+      const sidebarBlocks = sidebar[ 0 ].children;
       const partialSidebarBlocksArray = Array.from( sidebarBlocks );
 
       if ( partialSidebarBlocksArray.length ) {
@@ -249,7 +221,7 @@ const handleOverlappingOnScroll = () => {
 
   } );
 
-  if ( ! sidebarBlocksArray.length ) {
+  if ( !sidebarBlocksArray.length ) {
     return;
   }
 
@@ -258,7 +230,7 @@ const handleOverlappingOnScroll = () => {
   updateBoxDataset( allBlocksArray );
 
   let scrollY = window.scrollY,
-    lastScrollY = -1;
+    lastScrollY = - 1;
 
   window.addEventListener( 'scroll', () => {
     scrollY = window.scrollY;
@@ -302,14 +274,14 @@ const updateBoxDataset = ( blocks ) => {
   } );
 }
 
-if ( ! IS_EDITOR ) {
+if ( !IS_EDITOR ) {
 
   window.addEventListener( 'DOMContentLoaded', () => {
     moveImageClassesToBlock();
     handleSidecarTransformations();
     sidecarTransformationsInCustomizer();
     handleOverlappingOnScroll();
-  });
+  } );
 
-  window.addEventListener('resize', debouncedSidecarTransformations );
+  window.addEventListener( 'resize', debouncedSidecarTransformations );
 }

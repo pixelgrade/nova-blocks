@@ -34,6 +34,16 @@
   order: -1;
 }
 
+.break-align-left {
+  --block-wide-start: ws;
+  --block-full-start: fs;
+}
+
+.break-align-right {
+  --block-wide-end: we;
+  --block-full-end: fe;
+}
+
 // Default sidebar position is on the right, so it will be positioned between [ge] and block-limit-right.
 @include above(lap) {
 
@@ -49,6 +59,7 @@
 
     > .nb-sidecar-area--content {
       --block-wide-start: cs;
+      --block-full-start: cs;
     }
 
     > .nb-sidecar-area--sidebar {
@@ -61,6 +72,7 @@
 
     > .nb-sidecar-area--content {
       --block-wide-end: ce;
+      --block-full-end: ce;
     }
 
     > .nb-sidecar-area--sidebar {

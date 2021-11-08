@@ -12,23 +12,19 @@ const SidecarAreaEdit = function( props ) {
     isSelected
   } = props;
 
-  const { lastItemIsSticky } = attributes;
   const parentClientId = useSelect( select => select( 'core/block-editor' ).getBlockRootClientId( clientId ), [ clientId ] );
   const { selectBlock, clearSelectedBlock } = useDispatch( 'core/editor' );
 
-//  if ( isSelected ) {
-//    clearSelectedBlock().then( () => {
-//      selectBlock( parentClientId );
-//    } );
-//  }
+  if ( isSelected ) {
+    clearSelectedBlock().then( () => {
+      selectBlock( parentClientId );
+    } );
+  }
 
   const className = classnames(
     props.className,
     'nb-sidecar-area',
-    `nb-sidecar-area--${ attributes.areaName }`,
-    {
-      'last-block-is-sticky': lastItemIsSticky === true
-    }
+    `nb-sidecar-area--${ attributes.areaName }`
   )
 
   const blockProps = useBlockProps( {
