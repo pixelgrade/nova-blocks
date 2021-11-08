@@ -19,11 +19,6 @@
 
 .nb-sidecar-area--sidebar {
   height: 100%;
-  z-index: 2;
-
-  > * {
-    z-index: 2;
-  }
 
   // Below 1024px everything is shown on one column, so we need to add a margin top to the sidebar.
   @include below(lap) {

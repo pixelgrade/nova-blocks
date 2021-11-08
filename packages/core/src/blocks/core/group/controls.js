@@ -2,7 +2,6 @@
  * WordPress dependencies
  */
 import { __ } from "@wordpress/i18n";
-import { Component } from "@wordpress/element";
 import { RadioControl } from "@wordpress/components";
 
 import {
@@ -10,34 +9,33 @@ import {
   ControlsSection
 } from "@novablocks/block-editor";
 
-class Controls extends Component {
+const Controls = ( props ) => {
 
-  render() {
-    const {
-      attributes,
-      setAttributes
-    } = this.props;
+  const {
+    attributes,
+    setAttributes
+  } = props;
 
-    const {
-      contentAlignment,
-      align
-    } = attributes;
+  const {
+    contentAlignment,
+    align
+  } = attributes;
 
-    const CAN_BE_PULLED = align === undefined;
+  const CAN_BE_PULLED = align === undefined;
 
-    let DEFAULT_CONTENT_ALIGNMENT =[
-      { label: 'None', value: 'pull-none' }
-    ]
+  let DEFAULT_CONTENT_ALIGNMENT = [
+    { label: 'None', value: 'pull-none' }
+  ]
 
-    if ( CAN_BE_PULLED ) {
+  if ( CAN_BE_PULLED ) {
 
-      DEFAULT_CONTENT_ALIGNMENT.push(
-        { label: 'Pull Left', value: 'pull-left' },
-        { label: 'Pull Right', value: 'pull-right' },
-      )
-    }
+    DEFAULT_CONTENT_ALIGNMENT.push(
+      { label: 'Pull Left', value: 'pull-left' },
+      { label: 'Pull Right', value: 'pull-right' },
+    )
+  }
 
-    return (
+  return (
     <ControlsSection id={ 'layout' } label={ __( 'Layout' ) }>
       <ControlsTab label={ __( 'Alignments' ) }>
         <RadioControl
@@ -52,8 +50,7 @@ class Controls extends Component {
 
       </ControlsTab>
     </ControlsSection>
-    )
-  }
+  )
 }
 
 export default Controls;

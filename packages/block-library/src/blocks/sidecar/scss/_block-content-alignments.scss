@@ -47,7 +47,8 @@
 // The same logic is applied for alignright and pull-right.
 .alignleft,
 .pull-left,
-[data-nb-align='pull-left'] {
+[data-align="right"],
+[data-nb-align="pull-left"] {
   --block-content-start: ws;
   --block-content-end: gs;
 
@@ -64,8 +65,8 @@
 
 .alignright,
 .pull-right,
-[data-nb-align='pull-right'] {
-  
+[data-align="right"],
+[data-nb-align="pull-right"] {
   --block-content-start: ge;
   --block-content-end: we;
 
@@ -82,21 +83,24 @@
 // To avoid unneeded white space,
 // aligned and pulled items will
 // span on 5 rows.
-.alignright,
 .alignleft,
+.alignright,
+.pull-left,
 .pull-right,
-.pull-left {
+[data-align="left"],
+[data-align="right"],
+[data-nb-align="pull-right"],
+[data-nb-align="pull-left"] {
   grid-row-end: span 5;
 }
 
 // ALIGNMENTS
-
 .nb-sidecar-area--content {
   position: relative;
 }
 
 // RIGHT SIDEBAR
-.nb-sidecar {
+.nb-sidecar--sidebar-right {
   
   .nb-sidecar-area--content:not(:only-child) {
   
@@ -109,10 +113,10 @@
       &[class*='stop'] {
         --block-content-start: var(--block-wide-start);
         --block-content-end: ce;
-  
-        + *:not([class*='align']) {
-          --block-content-start: var(--block-wide-start);
-        }
+      }
+
+      + *:not([class*='align']) {
+        --block-content-start: var(--block-wide-start);
       }
     }
   }
@@ -121,20 +125,20 @@
 // LEFT SIDEBAR
 .nb-sidecar--sidebar-left {
   
-  .nb-sidecar-area--content:not(:only-child)[class] {
+  .nb-sidecar-area--content:not(:only-child) {
   
     .pull-left,
     .pull-right,
     .alignleft,
     .alignright {
       @include grid-item-position('left');
-  
-      + *:not([class*='align']) {
+
+      &[class*='stop'] {
         --block-content-start: cs;
         --block-content-end: var(--block-wide-end);
       }
-      
-      &[class*='stop'] {
+
+      + *:not([class*='align']) {
         --block-content-start: cs;
         --block-content-end: var(--block-wide-end);
       }
@@ -149,7 +153,8 @@
   // touching the margins of the browser.
   // Given the fact that we want full items to span on the entire screen,
   // we are going to apply negative margin to achieve that.
-  .alignfull {
+  .alignfull,
+  [data-align="full"] {
     
     @include above(lap) {
 
@@ -169,7 +174,8 @@
   
   // We do not need negative margins for
   // alignfull items inside the Sidebar.
-  .alignfull {
+  .alignfull,
+  [data-align="full"] {
     margin-left: 0;
     margin-right: 0;
   }
@@ -181,10 +187,6 @@
     margin-left: 0;
     margin-right: 0;
   }
-}
-
-[data-align="full"] {
-  width: 100%;
 }
 
 .alignnone,

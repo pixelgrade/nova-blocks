@@ -22,9 +22,13 @@ $slick-arrow-color: var(--sm-current-fg1-color);
 
 .wp-block-group {
 
+  // groups that have a set color signal (different text and background color)
+  // and have no emphasis top or bottom spacing need to have some padding
+  // by multiplying with -1 and then adding 1 we make sure that
+  // we only add padding when these values are smaller than 1
   .wp-block-group__inner-container {
-    padding-top: calc((1 + (-1 * var(--nb-emphasis-top-spacing)) )*var(--nb-wrapper-sides-spacings));
-    padding-bottom: calc((1 + (-1 * var(--nb-emphasis-bottom-spacing)) )*var(--nb-wrapper-sides-spacings) );
+    padding-top: calc((1 + (-1 * var(--nb-emphasis-top-spacing))) * var(--nb-wrapper-sides-spacings));
+    padding-bottom: calc((1 + (-1 * var(--nb-emphasis-bottom-spacing))) * var(--nb-wrapper-sides-spacings));
   }
 
   &.sm-color-signal-0 .wp-block-group__inner-container {

@@ -74,7 +74,7 @@ const withBlockEditProps = createHigherOrderComponent( ( BlockListBlock ) => {
 
   return ( props ) => {
     const { attributes } = props;
-    const { align } = attributes;
+    const { align, contentAlignment } = attributes;
 
     let wrapperProps = props.wrapperProps;
 
@@ -89,6 +89,7 @@ const withBlockEditProps = createHigherOrderComponent( ( BlockListBlock ) => {
       },
       className: classnames(
         props.className,
+        contentAlignment,
         `align${ align }`,
       )
     };

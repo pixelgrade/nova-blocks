@@ -25,95 +25,12 @@
   .last-block-is-sticky > :last-child {
     z-index: 1;
   }
-
-//  > * {
-//    width: 100%;
-//
-//    align-self: flex-start;
-//  }
-//
-//  .wp-block {
-//
-//    &[data-align=wide] {
-//      max-width: 100%;
-//      width: 100%;
-//    }
-//  }
-//
-//  [data-align="left"],
-//  [data-nb-align="pull-left"],
-//  [data-align="right"],
-//  [data-nb-align="pull-right"] {
-//    grid-row-end: span 5;
-//  }
-//
-//  [data-align="left"],
-//  [data-nb-align="pull-left"] {
-//    --block-content-start: ws;
-//    --block-content-end: gs;
-//  }
-//
-//  [data-align="right"],
-//  [data-nb-align="pull-right"] {
-//    --block-content-start: ge;
-//    --block-content-end: we;
-//  }
-//
-//  [data-type="novablocks/sidecar"] {
-//    grid-column: fs/fe;
-//
-//    max-width: none;
-//    width: 100%;
-//  }
-//
-//  [data-align="left"] {
-//
-//    *:not([class*='align']):not([data-nb-align]):not([data-align]) {
-//      --block-content-start: cs;
-//    }
-//  }
-//
-//  [data-align="right"],
-//  [data-align="left"] {
-//    height: 100%;
-//
-//    > * {
-//      float: none;
-//    }
-//  }
 }
-
-//// The default layout is Content Left with Sidebar Right.
-//// Content will always be the first child of layout block,
-//// and it will change it's grid position, according
-//// to sidebar position (left or right).
-//.nb-sidecar {
-//  --block-content-start: var(--block-wide-start);
-//  --block-content-end: ce;
-//
-//  > .block-editor-inner-blocks > .block-editor-block-list__layout {
-//
-//    > :last-child {
-//      grid-column: ge / var(--block-wide-end);
-//    }
-//  }
-//
-//  //grid-column: var(--block-wide-start)/gs;
-//
-//  &--sidebar-left {
-//    --block-content-start: cs;
-//    --block-content-end: var(--block-wide-end);
-//  }
-//}
-//
-//.nb-sidecar--sidebar-right .nb-sidecar--sidebar-right {
-//  --block-content-start: var(--block-wide-start);
-//  --block-content-end: ce;
-//}
 
 // Overwrite default focus block style
 // and apply them around grid columns.
 [data-type='novablocks/sidecar-area'] {
+
   &.is-selected,
   &.is-highlighted,
   &.is-multi-selected,
@@ -125,93 +42,8 @@
   }
 }
 
-// Block Alignments
-
-// Right Sidebar
-.nb-sidecar--sidebar-right {
-
-  .nb-sidecar-area--content {
-
-    [data-align="full"],
-    [data-align="wide"] {
-      --block-content-end: ce;
-    }
-
-    [data-align="right"],
-    [data-align="left"],
-    [data-nb-align="pull-right"],
-    [data-nb-align="pull-left"] {
-      --block-content-start: var(--theme-spacing-larger);
-      --block-content-end: ce;
-    }
-  }
-}
-
-// Left Sidebar
-.nb-sidecar--sidebar-left {
-
-  .nb-sidecar-area--content {
-
-    [data-align="full"],
-    [data-align="wide"] {
-      --block-content-start: cs;
-    }
-
-    [data-align="right"],
-    [data-align="left"],
-    [data-nb-align="pull-right"],
-    [data-nb-align="pull-left"] {
-      --block-content-start: cs;
-      --block-content-end: var(--block-wide-end)
-    }
-  }
-}
-
-// Two Sidebars
-.nb-sidecar--complex {
-
-  .nb-sidecar-area--content[class] {
-
-    [data-align="full"],
-    [data-align="wide"],
-    [data-align='right'],
-    [data-align='left'],
-    [data-nb-align="pull-left"],
-    [data-nb-align="pull-right"] {
-      --block-content-start: cs;
-      --block-content-end: ce;
-    }
-
-  }
-}
-
-// Sidecar in Sidecar
-.nb-sidecar-area--content {
-
-  .nb-sidecar-area--content {
-
-    [data-align="full"],
-    [data-align="wide"],
-    [data-align='right'],
-    [data-align='left'],
-    [data-nb-align="pull-left"],
-    [data-nb-align="pull-right"] {
-      --block-content-start: cs;
-      --block-content-end: ce;
-    }
-
-  }
-}
-
-// We want Posts Collection
-// to span on all columns.
-[data-type="novablocks/posts-collection"] {
-  grid-column: fs/fe !important;
-}
-
 // Remove resizable component behaviour
 // for Image Block.
-
 [data-align="left"],
 [data-align="right"],
 .nb-sidecar-area--sidebar {
@@ -228,21 +60,10 @@
   }
 }
 
-[data-type="novablocks/sidecar-area"] {
-  z-index: 1;
-  margin-top: 0 !important;
-}
-
 .last-block-is-sticky .nb-sidecar-area--sidebar > :last-child {
   position: static;
 }
 
-.nb-sidecar-area--sidebar {
-
-  .block-editor-inner-blocks {
-    margin-top: 0;
-  }
-}
 
 // This will apply only on new Widget Editor,
 // available in WordPress 5.8

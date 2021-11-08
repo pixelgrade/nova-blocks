@@ -53,6 +53,7 @@ $align-selectors: '[data-align="full"], [data-align="wide"], [data-nb-align="pul
     max-width: none;
   }
 
+  // wp-block comes with a set max-width of 840px
   > .wp-block {
     max-width: none;
   }
