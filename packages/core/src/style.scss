@@ -20,6 +20,18 @@ $slick-arrow-color: var(--sm-current-fg1-color);
   }
 }
 
+.wp-block-group {
+
+  .wp-block-group__inner-container {
+    padding-top: calc((1 + (-1 * var(--nb-emphasis-top-spacing)) )*var(--nb-wrapper-sides-spacings));
+    padding-bottom: calc((1 + (-1 * var(--nb-emphasis-bottom-spacing)) )*var(--nb-wrapper-sides-spacings) );
+  }
+
+  &.sm-color-signal-0 .wp-block-group__inner-container {
+    padding: 0;
+  }
+}
+
 .admin-bar {
   --admin-bar-height: 32px;
   --admin-bar-offset: 0;

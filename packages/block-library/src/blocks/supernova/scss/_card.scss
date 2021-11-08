@@ -119,8 +119,9 @@
 
   &:before {
     content: "";
-    padding-top: var(--nb-card-media-padding-top, 100%);
     display: block;
+    padding-top: var(--nb-card-media-padding-top, 100%);
+    pointer-events: none;
   }
 }
 
@@ -160,18 +161,21 @@
     .slick-track > * {
       flex-basis: 1px;
     }
-    
-    .supernova-item__media,
-    .novablocks-doppler__mask {
+
+    .supernova-item__media-aspect-ratio > * {
       position: static;
+    }
+    
+    .supernova-item__media {
       width: auto;
       height: 20em;
       max-width: none;
     }
     
     .supernova-item__media-aspect-ratio:before {
-      position: absolute;
+      content: none;
     }
+
     // !!! TEMPORARY
     // @todo: should remove this, so doppler can work.
     .supernova-item__media-doppler {

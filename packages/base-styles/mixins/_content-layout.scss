@@ -53,6 +53,10 @@ $align-selectors: '[data-align="full"], [data-align="wide"], [data-nb-align="pul
     max-width: none;
   }
 
+  > .wp-block {
+    max-width: none;
+  }
+
   // overwrite default editor's styles on .editor-styles-wrapper .wp-block styles
   .editor-styles-wrapper & > .wp-block {
     margin-left: 0;
