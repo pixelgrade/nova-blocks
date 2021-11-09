@@ -83,7 +83,7 @@ registerBlockType( 'novablocks/supernova', {
         controls: true,
         advancedSpacing: true,
       },
-      noDataAlign: true
+      customAlign: true
     },
     color: {
       __experimentalDuotone: 'img',

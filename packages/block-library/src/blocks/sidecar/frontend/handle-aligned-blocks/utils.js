@@ -4,15 +4,18 @@ export const getContentBlocksArray = () => {
   return Array.from( nodelist );
 }
 
-export const wouldOverlap = ( elem, collider ) => {
+export const wouldOverlap = ( el1, el2 ) => {
+  const el1Box = el1.getBoundingClientRect();
+  const el2Box = el2.getBoundingClientRect();
 
-  const elemBox = elem.getBoundingClientRect();
-  const colliderBox = collider.getBoundingClientRect();
+  const el1Style = getComputedStyle( el1 );
+  const el2Style = getComputedStyle( el2 );
 
-  const overlap = colliderBox.top + colliderBox.height <= elemBox.top ||
-                  colliderBox.top >= elemBox.top + elemBox.height;
+  const el1MarginBottom = Math.max( parseInt( el1Style.marginBottom ), parseInt( el2Style.marginTop ) );
+  const el2MarginBottom = Math.max( parseInt( el2Style.marginBottom ), parseInt( el1Style.marginTop ) );
 
-  return !overlap;
+  return !( el2Box.bottom + el2MarginBottom <= el1Box.top ||
+            el2Box.top >= el1Box.bottom + el1MarginBottom );
 }
 
 export const getAdjacentSidebarBlocks = ( block, sidebarBlocks = [] ) => {

@@ -1,31 +1,21 @@
 import { BlockControls, BlockAlignmentControl } from '@wordpress/block-editor';
+import { useSupports } from "../../index";
 
 const Controls = ( props ) => {
 
-  const {
-    attributes: {
-      align,
-    },
-    setAttributes
-  } = props;
+  const { attributes, setAttributes } = props;
+  const { align } = attributes;
 
-  const updateAlignment = ( nextAlign ) => {
-
-    const extraUpdatedAttributes = [ 'wide', 'full' ].includes( nextAlign )
-      ? { width: undefined, height: undefined }
-      : {};
-    setAttributes( {
-      ...extraUpdatedAttributes,
-      align: nextAlign ? nextAlign : 'none'
-    } );
-  }
+  const supports = useSupports( props.name );
 
   return (
     <BlockControls group="block">
       <BlockAlignmentControl
         value={ align }
-        onChange={ updateAlignment }
-        controls={ [ 'wide', 'full' ] }
+        onChange={ ( nextAlign ) => {
+          setAttributes( { align: nextAlign ? nextAlign : 'none' } );
+        } }
+        controls={ supports.novaBlocks.align }
       />
     </BlockControls>
   )

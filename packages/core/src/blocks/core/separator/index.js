@@ -25,7 +25,7 @@ const addNovablocksSupport = ( settings ) => {
       ...settings.supports,
       novaBlocks: {
         spaceAndSizing: true,
-        noDataAlign: true
+        customAlign: true
       },
     },
     edit,

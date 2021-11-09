@@ -19,17 +19,26 @@ const cleanupBreakClasses = () => {
   breakElementsArray.forEach( element => element.classList.remove( BREAK_LEFT_CLASS, BREAK_RIGHT_CLASS ) );
 }
 
+const getAlignedSiblings = ( block, classname ) => {
+  const siblings = Array.from( block.parentElement.children ).filter( sibling => sibling !== block );
+  return siblings.filter( sibling => { return sibling.classList.contains( classname ) } );
+}
+
 const maybeAddBreakClasses = () => {
   contentBlocks.forEach( block => {
     const sidebarBlocks = getAdjacentSidebarBlocks( block );
+    const leftAlignedBlocks = getAlignedSiblings( block, 'alignleft' );
+    const rightAlignedBlocks = getAlignedSiblings( block, 'alignright' );
     const leftSidebarBlocks = sidebarBlocks.filter( obj => obj.side === 'left' ).map( obj => obj.element );
     const rightSidebarBlocks = sidebarBlocks.filter( obj => obj.side === 'right' ).map( obj => obj.element );
+    const leftAlignedElements = leftAlignedBlocks.concat( leftSidebarBlocks );
+    const rightAlignedElements = rightAlignedBlocks.concat( rightSidebarBlocks );
 
-    if ( ! leftSidebarBlocks.some( sidebarBlock => wouldOverlap( sidebarBlock, block ) ) ) {
+    if ( ! leftAlignedElements.some( alignedElement => wouldOverlap( alignedElement, block ) ) ) {
       block.classList.add( BREAK_LEFT_CLASS );
     }
 
-    if ( ! rightSidebarBlocks.some( sidebarBlock => wouldOverlap( sidebarBlock, block ) ) ) {
+    if ( ! rightAlignedElements.some( alignedElement => wouldOverlap( alignedElement, block ) ) ) {
       block.classList.add( BREAK_RIGHT_CLASS );
     }
   } );

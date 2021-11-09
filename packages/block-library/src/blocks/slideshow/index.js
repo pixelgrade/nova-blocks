@@ -102,7 +102,7 @@ registerBlockType( BLOCK_NAME, {
         customWrapper: true,
       },
       spaceAndSizing: true,
-      noDataAlign: true,
+      customAlign: true,
       elementsVisibility: {
         attributes: true,
       }

@@ -2,7 +2,6 @@ export { default as useApiFetch } from './use-api-fetch';
 export { default as useAnimationFrame } from './use-animation-frame';
 export { default as useEffectDebugger } from './use-effect-debugger';
 export { default as useInnerBlocks } from './use-inner-blocks';
-// @todo maybe find a better name
 export { default as useInnerBlocksCount } from './use-inner-blocks-count';
 export { default as useMemoryState } from './use-memory-state';
 export { default as useOnScroll } from './use-on-scroll';

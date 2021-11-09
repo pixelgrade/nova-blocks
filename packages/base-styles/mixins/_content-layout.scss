@@ -74,11 +74,35 @@ $align-selectors: '[data-align="full"], [data-align="wide"], [data-nb-align="pul
     }
 
     :where(#{&}) > .alignwide {
-      grid-column: var(--block-wide-start) / var(--block-wide-end);
+
+      &.break-align-left {
+        grid-column-start: var(--block-wide-start);
+      }
+
+      &.break-align-right {
+        grid-column-end: var(--block-wide-end);
+      }
     }
 
     :where(#{&}) > .alignfull {
-      grid-column: var(--block-full-start) / var(--block-full-end);
+
+      &.break-align-left {
+        grid-column-start: var(--block-full-start);
+      }
+
+      &.break-align-right {
+        grid-column-end: var(--block-full-end);
+      }
+    }
+
+    :where(#{&}) > .alignleft {
+      --block-content-start: ws;
+      --block-content-end: gs;
+    }
+
+    :where(#{&}) > .alignright {
+      --block-content-start: ge;
+      --block-content-end: we;
     }
   }
 

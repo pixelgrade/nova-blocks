@@ -1,6 +1,4 @@
-import { below } from "@novablocks/utils";
-
-import { doBoxesOverlap } from "./utils";
+import { doOverlap } from "./utils";
 
 const HIDDEN_BLOCK_CLASS = 'novablocks-hidden-block';
 
@@ -12,9 +10,7 @@ export const toggleOverlappingClassname = ( overlappingSets ) => {
     const [ stickyElement, blocks ] = overlappingSet;
 
     const overlap = blocks.some( block => {
-      const stickyBox = stickyElement.getBoundingClientRect();
-      const blockBox = block.getBoundingClientRect();
-      return doBoxesOverlap( blockBox, stickyBox );
+      return doOverlap( stickyElement, block );
     } );
 
     return ( { stickyElement, overlap } );

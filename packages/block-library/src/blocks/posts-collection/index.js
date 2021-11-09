@@ -37,7 +37,7 @@ registerBlockType( 'novablocks/posts-collection', {
       contentLoader: true,
       overlayFilter: true,
       spaceAndSizing: true,
-      noDataAlign: true,
+      customAlign: true,
     },
   },
 	edit,
