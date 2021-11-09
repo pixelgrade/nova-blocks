@@ -3,10 +3,12 @@
 @import 'scss/utility';
 
 // This is where magic starts.
-:is(.nb-sidecar, .nb-sidecar-area--content) {
-  position: relative;
-  align-items: start;
+.nb-sidecar {
   @include nb-content-layout-grid;
+}
+
+.nb-sidecar-area--content {
+  @include nb-content-layout-grid( true );
 }
 
 .nb-sidecar-area {
