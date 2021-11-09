@@ -1394,15 +1394,17 @@ function novablocks_get_space_and_sizing_css( $attributes, $advanced = false ) {
 
 function novablocks_get_media_composition_css( $attributes ) {
 	return [
-		'--nb-media-composition-gap: ' . $attributes['elementsDistance'] . 'px'
+		'--nb-media-composition-gap: ' . $attributes['elementsDistance'] . 'px',
 	];
 }
 
 function novablocks_get_color_signal_css( $attributes ) {
 	return [
-		'--nb-emphasis-area: ' . $attributes['emphasisArea']
+		'--nb-emphasis-area: ' . $attributes['emphasisArea'],
 	];
-};
+}
+
+;
 
 function novablocks_get_overlay_filter_css( $attributes ) {
 	return [
@@ -1508,7 +1510,10 @@ if ( ! function_exists( 'novablocks_get_collection_output' ) ) {
 function novablocks_render_scroll_indicator( $attributes ) {
 	$scrollIndicator        = ! empty( $attributes['scrollIndicatorBlock'] );
 	$scrollIndicatorClasses = [ 'nb-scroll-indicator', ];
-	$blockHeight            = $attributes['scrollingEffect'] === 'doppler' ? $attributes['minHeightFallback'] * 2 : $attributes['minHeightFallback'];
+	$blockHeight            =
+		( ! empty( $attributes['scrollingEffect'] ) && $attributes['scrollingEffect'] === 'doppler' )
+			? $attributes['minHeightFallback'] * 2
+			: $attributes['minHeightFallback'];
 
 	if ( $blockHeight > 100 ) {
 		$scrollIndicatorClasses[] = 'nb-scroll-indicator--middle';
@@ -2094,26 +2099,38 @@ function novablocks_merge_attributes_from_array( $pathsArray ) {
 function novablocks_get_grid_area_fallback_classnames( $attributes ) {
 	$classes = [];
 
-	if ( $attributes[ 'layoutStyle' ] !== 'parametric' && ! empty( $attributes[ 'columns' ] ) ) {
+	if ( ! empty( $attributes['columns'] ) && $attributes['layoutStyle'] !== 'parametric' ) {
 		$cardLayout = 'portrait';
 
-		if ( in_array( $attributes[ 'cardLayout' ], [ 'horizontal', 'horizontal-reverse' ] ) ) {
+		if ( ! empty( $attributes['cardLayout'] )
+		     && in_array( $attributes['cardLayout'], [ 'horizontal', 'horizontal-reverse' ] ) ) {
+
 			$cardLayout = 'landscape';
 		}
 
 		$classes[] = 'nb-grid__area--' . $cardLayout;
-		$classes[] = novablocks_get_area_classname_by_width_ratio( 1 / $attributes[ 'columns' ] );
+		$classes[] = novablocks_get_area_classname_by_width_ratio( 1 / $attributes['columns'] );
 	}
 
 	return $classes;
 }
 
 function novablocks_get_area_classname_by_width_ratio( $ratio ) {
-	if ( $ratio < 0.3 ) return 'nb-grid__area--width-xs';
-	if ( $ratio < 0.5 ) return 'nb-grid__area--width-s';
-	if ( $ratio < 0.66 ) return 'nb-grid__area--width-m';
-	if ( $ratio < 0.8 ) return 'nb-grid__area--width-l';
-	if ( $ratio < 0.95 ) return 'nb-grid__area--width-xl';
+	if ( $ratio < 0.3 ) {
+		return 'nb-grid__area--width-xs';
+	}
+	if ( $ratio < 0.5 ) {
+		return 'nb-grid__area--width-s';
+	}
+	if ( $ratio < 0.66 ) {
+		return 'nb-grid__area--width-m';
+	}
+	if ( $ratio < 0.8 ) {
+		return 'nb-grid__area--width-l';
+	}
+	if ( $ratio < 0.95 ) {
+		return 'nb-grid__area--width-xl';
+	}
 
 	return 'nb-grid__area--width-full';
 }
@@ -2125,20 +2142,28 @@ function novablocks_get_collection_card_markup( $media, $content, $attributes ) 
 		'cardMediaOpacity' => 100,
 	] );
 
-	$cardClasses = [
-		'supernova-item',
-		'supernova-item--layout-' . $attributes['cardLayout'],
-		'supernova-item--scrolling-effect-' . $attributes['scrollingEffect'],
-		'supernova-item--aspect-ratio-' . $attributes[ 'thumbnailAspectRatioString' ],
-	];
+	$cardClasses = [ 'supernova-item', ];
+	if ( ! empty( $attributes['cardLayout'] ) ) {
+		$cardClasses[] = 'supernova-item--layout-' . $attributes['cardLayout'];
+	}
+	if ( ! empty( $attributes['scrollingEffect'] ) ) {
+		$cardClasses[] = 'supernova-item--scrolling-effect-' . $attributes['scrollingEffect'];
+	}
+	if ( ! empty( $attributes['thumbnailAspectRatioString'] ) ) {
+		$cardClasses[] = 'supernova-item--aspect-ratio-' . $attributes['thumbnailAspectRatioString'];
+	}
 
-	$align = preg_split( '/\b\s+/', $attributes['contentPosition'] );
+	$contentClasses = [ 'supernova-item__content', ];
 
-	$contentClasses = [
-		'supernova-item__content',
-		'supernova-item__content--valign-' . $align[0],
-		'supernova-item__content--halign-' . $align[1],
-	];
+	if ( ! empty( $attributes['contentPosition'] ) ) {
+		$align = preg_split( '/\b\s+/', $attributes['contentPosition'] );
+		if ( ! empty( $align[0] ) ) {
+			$contentClasses[] = 'supernova-item__content--valign-' . $align[0];
+		}
+		if ( ! empty( $align[1] ) ) {
+			$contentClasses[] = 'supernova-item__content--halign-' . $align[1];
+		}
+	}
 
 	$innerContainerClasses = array_merge( [
 		'supernova-item__inner-container',
@@ -2150,10 +2175,12 @@ function novablocks_get_collection_card_markup( $media, $content, $attributes ) 
 		'color-signal',
 		'content-palette-variation',
 		'content-color-signal',
-		'use-source-color-as-reference'
+		'use-source-color-as-reference',
 	);
 
-	if ( $attributes['columns'] === 1 && $attributes['cardLayout'] === 'stacked' ) {
+	if ( ! empty( $attributes['columns']) && $attributes['columns'] === 1
+	     && ! empty( $attributes['cardLayout'] ) && $attributes['cardLayout'] === 'stacked' ) {
+
 		$data_attributes_array[] = 'position-indicators';
 	}
 
@@ -2176,7 +2203,8 @@ function novablocks_get_collection_card_markup( $media, $content, $attributes ) 
 			<?php } ?>
 			<?php if ( novablocks_show_card_contents( $attributes ) && ! empty( $content ) ) { ?>
 				<div class="<?php echo esc_attr( join( ' ', $contentClasses ) ); ?>">
-					<div class="<?php echo esc_attr( join( ' ', $innerContainerClasses ) ); ?>" <?php echo join( ' ', $data_attributes ); ?>>
+					<div
+						class="<?php echo esc_attr( join( ' ', $innerContainerClasses ) ); ?>" <?php echo join( ' ', $data_attributes ); ?>>
 						<?php echo $content; ?>
 						<?php novablocks_render_scroll_indicator( $attributes ); ?>
 					</div>
