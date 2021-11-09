@@ -83,17 +83,15 @@
 }
 
 // Make last block from Sidebar Sticky
-.last-block-is-sticky {
+.nb-sidecar--sticky-sidebar.nb-sidecar--sidebar-ready {
   
   .nb-sidecar-area--sidebar {
     
-    >:last-child {
+    > :last-child {
       position: sticky;
       top: var(--sticky-element-top-spacing, 0);
-      margin-bottom: 1em;
-      
-      transition: var(--nb-transition);
-      transition-property: opacity;
+
+      transition: .1s opacity ease-out;
 
       @include above(lap) {
 

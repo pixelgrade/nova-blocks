@@ -123,7 +123,7 @@ if ( ! function_exists( 'novablocks_render_header_block' ) ) {
 		// when the layout used is on at least two rows.
 		if ( ! empty( $sticky_row_block ) && ! $header_is_simple ) { ?>
 			<div
-				class="novablocks-header novablocks-header--secondary novablocks-header-sticky novablocks-header--sticky">
+				class="novablocks-header novablocks-header--secondary novablocks-header--sticky">
 				<?php
 
 				// On all pages except articles,

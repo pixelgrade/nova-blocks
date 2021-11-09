@@ -49,7 +49,7 @@ if ( ! function_exists( 'novablocks_render_sidecar_block' ) ) {
 		}
 
 		if ( ! empty( $attributes['lastItemIsSticky'] ) && $attributes['lastItemIsSticky'] === true ) {
-			$classes[] = 'last-block-is-sticky';
+			$classes[] = 'nb-sidecar--sticky-sidebar';
 		}
 		?>
 

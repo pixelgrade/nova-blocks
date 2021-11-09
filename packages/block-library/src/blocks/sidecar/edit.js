@@ -33,7 +33,7 @@ const Edit = ( props ) => {
     `nb-sidecar--sidebar-${ sidebarPosition }`,
     `nb-sidecar--sidebar-${ sidebarWidth }`,
     {
-      'last-block-is-sticky': lastItemIsSticky === true,
+      'nb-sidecar--sticky-sidebar': lastItemIsSticky === true,
     }
   );
 

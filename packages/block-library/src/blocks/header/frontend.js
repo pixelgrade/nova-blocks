@@ -24,7 +24,7 @@ import { addSocialMenuClass } from "./utils";
 
   $( window ).on( 'scroll', showStickyHeaderOnScroll );
   $( window ).on( 'scroll', makeHeaderStickyOnScroll );
-  $stickyMenuTrigger.on('click', onClickStickyMenu );
+  $stickyMenuTrigger.on( 'click', onClickStickyMenu );
 
   $( document ).ready( function( $ ) {
     progressBarInit();

@@ -18,13 +18,6 @@
     --nb-sidecar-sidebar-left-width: 12.5%;
     --nb-sidecar-sidebar-right-width: 12.5%;
   }
-
-  // Markup is different compared to front-end,
-  // and because of that, the last block is
-  // currently not sticky inside the editor.
-  .last-block-is-sticky > :last-child {
-    z-index: 1;
-  }
 }
 
 // Overwrite default focus block style
@@ -60,7 +53,7 @@
   }
 }
 
-.last-block-is-sticky .nb-sidecar-area--sidebar > :last-child {
+.nb-sidecar--sticky-sidebar.nb-sidecar--sidebar-ready .nb-sidecar-area--sidebar > :last-child {
   position: static;
 }
 
