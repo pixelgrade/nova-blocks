@@ -8,7 +8,7 @@ const HIDDEN_BLOCK_CLASS = 'novablocks-hidden-block';
 // behaviour on scroll.
 export const toggleOverlappingClassname = ( overlappingSets ) => {
 
-  overlappingSets.forEach( overlappingSet => {
+  const stickyElements = overlappingSets.map( overlappingSet => {
     const [ stickyElement, blocks ] = overlappingSet;
 
     const overlap = blocks.some( block => {
@@ -17,13 +17,19 @@ export const toggleOverlappingClassname = ( overlappingSets ) => {
       return doBoxesOverlap( blockBox, stickyBox );
     } );
 
+    return ( { stickyElement, overlap } );
+  } )
+
+  stickyElements.forEach( ( { stickyElement, overlap } ) => {
+
     if ( overlap ) {
       stickyElement.classList.add( HIDDEN_BLOCK_CLASS );
     } else {
       stickyElement.classList.remove( HIDDEN_BLOCK_CLASS );
     }
 
-  } )
+  } );
+
 }
 
 export const getOverlappingSets = () => {

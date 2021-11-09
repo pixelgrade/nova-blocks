@@ -1,5 +1,5 @@
 import { below } from "@novablocks/utils";
-import { addSocialMenuClass } from "./utils";
+import { addSocialMenuClass, syncColorSignalClasses } from "./utils";
 
 ( function( $, window, undefined ) {
 
@@ -16,22 +16,53 @@ import { addSocialMenuClass } from "./utils";
   const $readingBar = $currentHeader.find( '.js-reading-bar' )
   const $firstRow = $currentHeader.find( '.novablocks-header-row' ).first();
 
-  syncColorSignalClasses( $firstRow, $readingBar );
+  syncColorSignalClasses( $firstRow.get(0), $readingBar.get(0) );
 
-  let stickyHeaderShown = false,
-    primaryRowShown = false,
-    $elementWithOverflow = $currentHeader;
+  let stickyHeaderShown = false;
+  let primaryRowShown = false;
+  let $elementWithOverflow = $currentHeader;
 
-  $( window ).on( 'scroll', showStickyHeaderOnScroll );
-  $( window ).on( 'scroll', makeHeaderStickyOnScroll );
+  $( window ).on( 'scroll', function() {
+    requestAnimationFrame( showStickyHeaderOnScroll );
+  } );
+
   $stickyMenuTrigger.on( 'click', onClickStickyMenu );
 
-  $( document ).ready( function( $ ) {
+  let scrollY = window.scrollY;
+  let lastScrollY = -1;
+
+  window.addEventListener( 'scroll', () => {
+    scrollY = window.scrollY;
+  } );
+
+  $( document ).ready( function() {
     progressBarInit();
     readingHeaderInit();
     showStickyHeaderOnScroll();
-    makeHeaderStickyOnScroll();
+
+    function updateLoop() {
+      if ( lastScrollY !== scrollY ) {
+        makeHeaderStickyOnScroll( scrollY );
+      }
+
+      lastScrollY = scrollY;
+
+      requestAnimationFrame( updateLoop )
+    }
+
+    requestAnimationFrame( updateLoop );
   } );
+
+  // We are using this function when
+  // header layout is simple (one-row).
+  function makeHeaderStickyOnScroll( scrollY ) {
+    const mainHeaderIsSticky = scrollY > 1;
+
+    if ( mainHeaderShouldBeSticky && mainHeaderIsSticky !== stickyHeaderShown ) {
+      $siteHeader.toggleClass( 'novablocks-header--sticky', mainHeaderIsSticky );
+      stickyHeaderShown = mainHeaderIsSticky;
+    }
+  }
 
   // This function will add .social-menu-item class
   // on menu-items if it's needed.
@@ -65,19 +96,6 @@ import { addSocialMenuClass } from "./utils";
     if ( isSticky !== stickyHeaderShown ) {
       $stickyHeader.toggleClass( 'is-visible', isSticky );
       stickyHeaderShown = isSticky;
-    }
-  }
-
-  // We are using this function when
-  // header layout is simple (one-row).
-  function makeHeaderStickyOnScroll() {
-
-    let windowScrollY = window.scrollY,
-        mainHeaderIsSticky = windowScrollY > 1;
-
-    if ( mainHeaderShouldBeSticky && mainHeaderIsSticky !== stickyHeaderShown ) {
-      $siteHeader.toggleClass( 'novablocks-header--sticky', mainHeaderIsSticky );
-      stickyHeaderShown = mainHeaderIsSticky;
     }
   }
 
@@ -208,23 +226,3 @@ import { addSocialMenuClass } from "./utils";
   }
 
 } )( jQuery, window );
-
-function syncColorSignalClasses( $from, $to ) {
-
-  if ( $to.length && $from.length ) {
-    const to = $to.get( 0 );
-    const from = $from.get( 0 );
-
-    to.classList.forEach( className => {
-      if ( className.indexOf( 'sm-' ) > -1 ) {
-        to.classList.remove( className );
-      }
-    } );
-
-    from.classList.forEach( className => {
-      if ( className.indexOf( 'sm-' ) > -1 ) {
-        to.classList.add( className );
-      }
-    } );
-  }
-}

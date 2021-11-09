@@ -89,9 +89,9 @@
     
     > :last-child {
       position: sticky;
-      top: var(--sticky-element-top-spacing, 0);
+      top: var(--nb-sidecar-sticky-top, var(--nb-spacing));
 
-      transition: .1s opacity ease-out;
+      transition: .2s opacity ease-out;
 
       @include above(lap) {
 
@@ -108,7 +108,7 @@
 @each $size in small, medium, large {
   @each $side in left, right {
     .nb-sidecar--sidebar-#{$side}.nb-sidecar--sidebar-#{$size} {
-      --nb-sidecar-sidebar-#{$side}-width:  var(--nb-sidecar-sidebar-#{$size}-width);
+      --nb-sidecar-sidebar-#{$side}-width: var(--nb-sidecar-sidebar-#{$size}-width);
     }
   }
 }

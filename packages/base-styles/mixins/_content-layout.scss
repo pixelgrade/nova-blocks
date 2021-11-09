@@ -133,14 +133,11 @@ $align-selectors: '[data-align="full"], [data-align="wide"], [data-nb-align="pul
 
 // Default Layout Settings
 // --nb-sidecar-display - Block default display mode. (eg. grid or flex)
-// --sticky-element-top-spacing - Used to position the sticky block.
 // In Rosa2 this value will be equal with site header height, in this way,
 // the sticky block will not be under the header.
 @mixin layout-settings {
   --nb-sidecar-display: block;
   --nb-sidecar-grid-gap: 3em;
-
-  --sticky-element-top-spacing: 0px;
 
   --nb-sidecar-sides: max(var(--nb-wrapper-sides-spacing), calc((100% - var(--nb-content-width-wide)) * 0.5));
   --nb-sidecar-sidebar-left-gap: clamp(0px, var(--nb-sidecar-sidebar-left-width) * 999, var(--nb-sidecar-grid-gap));

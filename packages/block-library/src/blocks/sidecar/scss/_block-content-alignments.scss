@@ -16,16 +16,13 @@
 // span on 5 rows.
 .alignleft,
 .alignright,
-.pull-left,
-.pull-right,
 [data-align="left"],
-[data-align="right"],
-[data-nb-align="pull-right"],
-[data-nb-align="pull-left"] {
+[data-align="right"] {
   grid-row-end: span 5;
 }
 
 // ALIGNMENTS
 .nb-sidecar-area--content {
   position: relative;
+  z-index: 10;
 }
