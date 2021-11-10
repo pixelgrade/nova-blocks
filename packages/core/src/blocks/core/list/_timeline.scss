@@ -1,0 +1,43 @@
+// TIMELINE
+// We are creating this line using
+// :before pseudo-element on ol.
+.is-style-timeline {
+
+  &, ul, ol {
+    position: relative;
+
+    &:before {
+      content: '';
+
+      position: absolute;
+      top: calc(var(--nb-list-bullet-size) * 0.5);
+      bottom: calc(var(--nb-list-bullet-size) * 0.5);
+      left: calc(var(--nb-list-bullet-size) * 0.5);
+
+      width: var(--nb-list-timeline-weight);
+
+      background-color: var(--nb-list-connection-color);
+      transform: translateX(-50%);
+    }
+  }
+
+  // The line used for TIMELINE has
+  // the same height as the whole list,
+  // but we want it to finish after the latest marker.
+  // To do that, we are updating the position
+  // for the latest item in list. By doing that,
+  // we can apply a box-shadow on that item,
+  // which will cover the last part of timeline divider.
+  li:last-child {
+    box-shadow: var(--nb-bg-color) calc(var(--nb-list-spacing) * -1) 0 0 0;
+  }
+
+  &:where(.list-no-marker) {
+
+    &:before {
+      top: 0;
+      left: 0;
+      bottom: 0;
+    }
+  }
+}

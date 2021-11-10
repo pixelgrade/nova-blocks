@@ -1,0 +1,88 @@
+// OL
+// We are resetting default styles,
+// and are using a custom list number styling,
+// based on counter-increment and counter-reset.
+ol.nb-list {
+  position: relative;
+  counter-reset: li var(--nb-list-start-at, 0);
+
+  --list-stype: decimal-leading-zero;
+
+  // Reversed List
+  &[reversed] {
+
+    // We need to reset counter,
+    // so it will start from it's maximum value.
+    // Maximum value(--nb-list-items-count) is equal
+    // with how many items are in the list + 1.
+    // We are adding +1, because on first list item,
+    // the counter will get +1 or -1.
+    counter-reset: li var(--reversed-start-at-value, var(--nb-list-items-count));
+
+    &[start] {
+      --reversed-start-at-value: calc( var(--nb-list-start-at) + 2);
+    }
+
+    // We are decrementing counter only for list items
+    // that are direct child of ol. By doing that,
+    // we are sure that nested lists will always reset
+    // to default value.
+    > li {
+
+      &:after {
+        counter-increment: li -1;
+      }
+    }
+  }
+
+  // For these SIGNALS, we don't need
+  // counter to be preceded by 0.
+  &.sm-color-signal-2,
+  &.sm-color-signal-3 {
+    --list-stype: decimal;
+  }
+
+  // We are incrementing counter only for list items
+  // that are direct child of ol. By doing that,
+  // we are sure that nested lists will always reset
+  // to default value.
+  > li {
+
+    &:after {
+      counter-increment: li;
+    }
+
+    // By doing that, we are sure that
+    // nested lists counter will always use
+    // it's initial value.
+    ol {
+      counter-reset: li 0;
+
+      > li {
+
+        &:after {
+          counter-increment: li;
+        }
+      }
+    }
+  }
+
+  li {
+    position: relative;
+
+    // List number
+    // Currently we can manage only lists from 1 to 99,
+    // and this type of list is the only one where it's
+    // marker is not aligned to left.
+    // We are aligning the marker to center, because
+    // we need to know where to position the line
+    // used for timeline.
+    &:after {
+      content: counter(li, var(--list-stype));
+
+      color: var(--nb-list-bullet-color);
+      background-color: transparent;
+      text-align: center;
+    }
+  }
+}
