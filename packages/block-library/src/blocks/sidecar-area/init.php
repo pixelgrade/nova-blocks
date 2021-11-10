@@ -32,12 +32,20 @@ if ( ! function_exists( 'novablocks_render_sidecar_area_block' ) ) {
 			return '';
 		}
 
+		$attributes_config = novablocks_get_sidecar_area_attributes();
+		$attributes        = novablocks_get_attributes_with_defaults( $attributes, $attributes_config );
+
 		ob_start();
 
-		$classes = [ 'nb-sidecar-area', ];
-		if ( ! empty( $attributes['areaName'] ) ) {
-			$classes[] = 'nb-sidecar-area--' . $attributes['areaName'];
+		$classes = [
+			'nb-sidecar-area',
+			'nb-sidecar-area--' . $attributes['areaName']
+		];
+
+		if ( $attributes[ 'areaName' ] === 'content' ) {
+			$classes[] = 'nb-conditional-align';
 		}
+
 		if ( ! empty( $attributes['className'] ) ) {
 			$classes[] = $attributes['className'];
 		}

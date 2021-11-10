@@ -19,7 +19,7 @@ const Controls = ( props ) => {
       <ControlsSection id={ 'display' } label={ __( 'Display' ) }>
         <ControlsTab label={ __( 'Settings' ) }>
           <MarkerSettings { ...props } />
-          <ListItemsConnection { ...props } />
+          <ListItemsConnectionControl { ...props } />
         </ControlsTab>
       </ControlsSection>
   )
@@ -53,7 +53,7 @@ const MarkerSettings = ( props ) => {
   )
 }
 
-const ListItemsConnection = ( props ) => {
+const ListItemsConnectionControl = ( props ) => {
 
   const { attributes, setAttributes } = props;
   const { listConnection } = attributes;

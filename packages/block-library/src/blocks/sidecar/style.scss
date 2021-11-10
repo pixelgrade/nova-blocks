@@ -3,12 +3,9 @@
 @import 'scss/utility';
 
 // This is where magic starts.
-.nb-sidecar {
-  @include nb-content-layout-grid;
-}
-
+.nb-sidecar,
 .nb-sidecar-area--content {
-  @include nb-content-layout-grid( true );
+  @include nb-content-layout-grid;
 }
 
 .nb-sidecar-area {

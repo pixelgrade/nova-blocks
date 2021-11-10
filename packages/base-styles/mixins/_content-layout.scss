@@ -15,7 +15,7 @@ $align-selectors: '[data-align="full"], [data-align="wide"], [data-nb-align="pul
 // The same thing applies for [cc] [ce].
 
 //noinspection ALL
-@mixin nb-content-layout-grid( $is_sidecar: false ) {
+@mixin nb-content-layout-grid {
   @include layout-settings;
 
   display: grid;
@@ -74,8 +74,9 @@ $align-selectors: '[data-align="full"], [data-align="wide"], [data-nb-align="pul
     }
 
     :where(#{&}) > .alignwide {
+      grid-column: var(--block-wide-start) / var(--block-wide-end);
 
-      @if $is_sidecar {
+      .nb-conditional-align & {
 
         &.break-align-left {
           grid-column-start: var(--block-wide-start);
@@ -84,15 +85,13 @@ $align-selectors: '[data-align="full"], [data-align="wide"], [data-nb-align="pul
         &.break-align-right {
           grid-column-end: var(--block-wide-end);
         }
-
-      } @else {
-          grid-column: var(--block-wide-start) / var(--block-wide-end);
       }
     }
 
     :where(#{&}) > .alignfull {
+      grid-column: var(--block-full-start) / var(--block-full-end);
 
-      @if $is_sidecar {
+      .nb-conditional-align & {
 
         &.break-align-left {
           grid-column-start: var(--block-full-start);
@@ -101,9 +100,6 @@ $align-selectors: '[data-align="full"], [data-align="wide"], [data-nb-align="pul
         &.break-align-right {
           grid-column-end: var(--block-full-end);
         }
-
-      } @else {
-        grid-column: var(--block-full-start) / var(--block-full-end);
       }
     }
 
