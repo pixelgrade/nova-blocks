@@ -78,10 +78,13 @@ $checkbox-svg-path: '../../packages/icons/src/svgs/tick.svg';
 }
 
 .nb-list:is(ul.list-bullet-style) {
-  --nb-list-bullet-size: 0.75em;
+
+  li:before {
+    transform: scale(0.5);
+  }
 
   li:after {
-    transform: scale(0.4);
+    transform: scale(0.25);
   }
 }
 
