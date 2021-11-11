@@ -1,33 +1,8 @@
-@mixin block-spacing-apply-multiplier {
-
-  & & > * {
-    --nb-spacing-current-level-multiplier: var(--nb-spacing-level-2-multiplier);
-  }
-
-  & & & > * {
-    --nb-spacing-current-level-multiplier: var(--nb-spacing-level-3-multiplier);
-  }
-
-  & & & & > * {
-    --nb-spacing-current-level-multiplier: var(--nb-spacing-level-4-multiplier);
-  }
-}
-
-:is(%block-spacing-apply-multiplier) {
-  @include block-spacing-apply-multiplier;
-}
-
-
-
 @mixin block-spacing {
   margin-top: calc(var(--nb-block-top-spacing) * var(--nb-current-spacing));
   margin-bottom: calc(var(--nb-block-bottom-spacing) * var(--nb-current-spacing));
   padding-top: calc(var(--nb-emphasis-top-spacing) * var(--nb-current-spacing));
   padding-bottom: calc(var(--nb-emphasis-bottom-spacing) * var(--nb-current-spacing));
-}
-
-:is(%block-spacing) {
-  @include block-spacing;
 }
 
 
@@ -47,8 +22,3 @@
     --nb-block-top-spacing: 0;
   }
 }
-
-:is(%block-spacing-container) {
-  @include block-spacing-container;
-}
-

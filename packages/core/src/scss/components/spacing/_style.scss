@@ -1,9 +1,23 @@
-[class*="__inner-container"],
-.entry-content,
-.wp-block-column,
-.block-editor-block-list__layout,
-.nb-sidecar-area,
-.widget {
-  @extend %block-spacing-container;
-  @extend %block-spacing-apply-multiplier;
+:is(
+  [class*="__inner-container"],
+  .entry-content,
+  .wp-block-column,
+  .block-editor-block-list__layout,
+  .nb-sidecar-area,
+  .widget,
+  ul, ol, dl
+) {
+  @include block-spacing-container;
+
+  & & > * {
+    --nb-spacing-current-level-multiplier: var(--nb-spacing-level-2-multiplier);
+  }
+
+  & & & > * {
+    --nb-spacing-current-level-multiplier: var(--nb-spacing-level-3-multiplier);
+  }
+
+  & & & & > * {
+    --nb-spacing-current-level-multiplier: var(--nb-spacing-level-4-multiplier);
+  }
 }

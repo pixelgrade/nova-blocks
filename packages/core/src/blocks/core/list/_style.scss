@@ -3,10 +3,6 @@ $icon-svg-path: '../../packages/icons/src/svgs/tick.svg';
 @import "colors";
 @import "ordered";
 
-ul, ol, dl {
-  @extend %block-spacing-apply-multiplier;
-}
-
 .nb-list {
   --nb-list-timeline-weight: 2px;
   --nb-list-divider-weight: 1px;

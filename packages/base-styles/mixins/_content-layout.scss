@@ -1,4 +1,14 @@
-$align-selectors: '[data-align="full"], [data-align="wide"], [data-nb-align="pull-left"], [data-nb-align="pull-right"]';
+// Default Layout Settings
+// In Rosa2 this value will be equal with site header height, in this way,
+// the sticky block will not be under the header.
+@mixin nb-layout-settings {
+  --nb-sidecar-sidebar-left-gap: clamp(0px, var(--nb-sidecar-sidebar-left-width) * 999, var(--nb-sidecar-gap));
+  --nb-sidecar-sidebar-right-gap: clamp(0px, var(--nb-sidecar-sidebar-right-width) * 999, var(--nb-sidecar-gap));
+
+  --nb-sidecar-content-left: calc(50% - var(--nb-sidecar-sides) - var(--nb-sidecar-sidebar-left-width) - var(--nb-sidecar-sidebar-left-gap) - var(--nb-sidecar-gap) * 0.5);
+  --nb-sidecar-content-right: calc(50% - var(--nb-sidecar-sides) - var(--nb-sidecar-sidebar-right-width) - var(--nb-sidecar-sidebar-right-gap) - var(--nb-sidecar-gap) * 0.5);
+}
+
 
 // Default Layout Grid
 // fs - full start
@@ -16,7 +26,7 @@ $align-selectors: '[data-align="full"], [data-align="wide"], [data-nb-align="pul
 
 //noinspection ALL
 @mixin nb-content-layout-grid {
-  @include layout-settings;
+  @include nb-layout-settings;
 
   display: grid;
   grid-column: fs / fe;
@@ -26,8 +36,8 @@ $align-selectors: '[data-align="full"], [data-align="wide"], [data-nb-align="pul
     [frs] 1fr
     [gs] var(--nb-sidecar-sidebar-left-gap)
     [cs] var(--nb-sidecar-content-left)
-    [gcs] calc(var(--nb-sidecar-grid-gap) / 2)
-    [cc] calc(var(--nb-sidecar-grid-gap) / 2)
+    [gcs] calc(var(--nb-sidecar-gap) / 2)
+    [cc] calc(var(--nb-sidecar-gap) / 2)
     [gce] var(--nb-sidecar-content-right)
     [ce] var(--nb-sidecar-sidebar-right-gap)
     [ge] 1fr
@@ -103,12 +113,16 @@ $align-selectors: '[data-align="full"], [data-align="wide"], [data-nb-align="pul
       }
     }
 
-    :where(#{&}) > .alignleft {
+    :where(#{&}) > :is(.alignleft, [data-align="left"], .alignright, [data-align="right"]) {
+        grid-row-end: span 5;
+    }
+
+    :where(#{&}) > :is(.alignleft, [data-align="left"]) {
       --block-content-start: ws;
       --block-content-end: gs;
     }
 
-    :where(#{&}) > .alignright {
+    :where(#{&}) > :is(.alignright, [data-align="right"]) {
       --block-content-start: ge;
       --block-content-end: we;
     }
@@ -116,7 +130,7 @@ $align-selectors: '[data-align="full"], [data-align="wide"], [data-nb-align="pul
 
   @include below(lap) {
     grid-template-columns:
-      [fs] var(--nb-wrapper-sides-spacing) // [ws]
+      [fs] var(--nb-wrapper-sides-spacings) // [ws]
       [ws] auto // [gs]
       [gs] 0 // [cs]
       [cs] 1fr // [gcs]
@@ -125,7 +139,7 @@ $align-selectors: '[data-align="full"], [data-align="wide"], [data-nb-align="pul
       [gce] 1fr // [gce]
       [ce] 0 // [ge]
       [ge] auto // [we]
-      [we] var(--nb-wrapper-sides-spacing) [fe];
+      [we] var(--nb-wrapper-sides-spacings) [fe];
 
     @at-root {
       :where(#{&}) > * {
@@ -141,45 +155,6 @@ $align-selectors: '[data-align="full"], [data-align="wide"], [data-nb-align="pul
   }
 }
 
-:root {
-  // Default position for blocks is between cs and ce.
-  --block-content-start: cs;
-  --block-content-end: ce;
-
-  // Default block limits are ws and we.
-  --block-wide-start: ws;
-  --block-wide-end: we;
-
-  // Default block limits are ws and we.
-  --block-full-start: fs;
-  --block-full-end: fe;
-
-  --nb-sidecar-sidebar-small-width: min(288px, 20%);
-  --nb-sidecar-sidebar-medium-width: min(360px, 25%);
-  --nb-sidecar-sidebar-large-width: min(576px, 40%);
-
-  // the unit is needed in order for the calc functions to work
-  --nb-sidecar-sidebar-left-width: var(--nb-sidecar-sidebar-small-width);
-  --nb-sidecar-sidebar-right-width: var(--nb-sidecar-sidebar-small-width);
-}
-
-// Default Layout Settings
-// --nb-sidecar-display - Block default display mode. (eg. grid or flex)
-// In Rosa2 this value will be equal with site header height, in this way,
-// the sticky block will not be under the header.
-@mixin layout-settings {
-  --nb-sidecar-display: block;
-  --nb-sidecar-grid-gap: 3em;
-
-  --nb-sidecar-sides: max(var(--nb-wrapper-sides-spacing), calc((100% - var(--nb-content-width-wide)) * 0.5));
-  --nb-sidecar-sidebar-left-gap: clamp(0px, var(--nb-sidecar-sidebar-left-width) * 999, var(--nb-sidecar-grid-gap));
-  --nb-sidecar-sidebar-right-gap: clamp(0px, var(--nb-sidecar-sidebar-right-width) * 999, var(--nb-sidecar-grid-gap));
-
-  --nb-sidecar-content-half: calc(var(--nb-content-width) * 0.5 - var(--nb-sidecar-grid-gap) * 0.5);
-  --nb-sidecar-content-left: calc(50% - var(--nb-sidecar-sides) - var(--nb-sidecar-sidebar-left-width) - var(--nb-sidecar-sidebar-left-gap) - var(--nb-sidecar-grid-gap) * 0.5);
-  --nb-sidecar-content-right: calc(50% - var(--nb-sidecar-sides) - var(--nb-sidecar-sidebar-right-width) - var(--nb-sidecar-sidebar-right-gap) - var(--nb-sidecar-grid-gap) * 0.5);
-}
-
 @mixin nb-content-layout {
   padding-left: var(--nb-wrapper-sides-spacings);
   padding-right: var(--nb-wrapper-sides-spacings);
@@ -191,7 +166,7 @@ $align-selectors: '[data-align="full"], [data-align="wide"], [data-nb-align="pul
   }
 
   > :is(.alignwide, [data-align="wide"]) {
-    max-width: var(--nb-content-width-wide);
+    max-width: var(--nb-container-width);
   }
 
   > :is(.alignfull, [data-align="full"]) {
