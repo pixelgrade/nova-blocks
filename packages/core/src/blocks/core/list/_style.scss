@@ -17,9 +17,6 @@ ul, ol, dl {
   --nb-list-decoration-gap: 0.5em;
   --nb-list-spacing: calc(var(--nb-list-bullet-size) + var(--nb-list-decoration-gap));
 
-  li {
-  }
-
   &, * {
     list-style: none;
   }
