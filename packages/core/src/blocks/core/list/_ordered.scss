@@ -5,41 +5,37 @@
 ol.nb-list {
   position: relative;
   counter-reset: li var(--nb-list-start-at, 0);
+  font-variant-numeric: tabular-nums lining-nums;
 
-  --list-stype: decimal-leading-zero;
-
-  // Reversed List
-  &[reversed] {
-
-    // We need to reset counter,
-    // so it will start from it's maximum value.
-    // Maximum value(--nb-list-items-count) is equal
-    // with how many items are in the list + 1.
-    // We are adding +1, because on first list item,
-    // the counter will get +1 or -1.
-    counter-reset: li var(--reversed-start-at-value, var(--nb-list-items-count));
-
-    &[start] {
-      --reversed-start-at-value: calc( var(--nb-list-start-at) + 2);
-    }
-
-    // We are decrementing counter only for list items
-    // that are direct child of ol. By doing that,
-    // we are sure that nested lists will always reset
-    // to default value.
-    > li {
-
-      &:after {
-        counter-increment: li -1;
-      }
-    }
-  }
+  --nb-list-bullet-size: 2ch;
+  --nb-list-counter-style: decimal-leading-zero;
 
   // For these SIGNALS, we don't need
   // counter to be preceded by 0.
-  &.sm-color-signal-2,
-  &.sm-color-signal-3 {
-    --list-stype: decimal;
+  &:is(.sm-color-signal-2, .sm-color-signal-3) {
+    --nb-list-counter-style: decimal;
+  }
+
+  li {
+    position: relative;
+
+    // List number
+    // Currently we can manage only lists from 1 to 99,
+    // and this type of list is the only one where it's
+    // marker is not aligned to left.
+    // We are aligning the marker to center, because
+    // we need to know where to position the line
+    // used for timeline.
+    &:after {
+      content: counter(li, var(--nb-list-counter-style));
+
+      color: var(--nb-list-bullet-color);
+      background-color: transparent;
+    }
+  }
+
+  &:is(.sm-color-signal-2, .sm-color-signal-3) li:after {
+    text-align: center;
   }
 
   // We are incrementing counter only for list items
@@ -67,22 +63,30 @@ ol.nb-list {
     }
   }
 
-  li {
-    position: relative;
+  // Reversed List
+  &[reversed] {
 
-    // List number
-    // Currently we can manage only lists from 1 to 99,
-    // and this type of list is the only one where it's
-    // marker is not aligned to left.
-    // We are aligning the marker to center, because
-    // we need to know where to position the line
-    // used for timeline.
-    &:after {
-      content: counter(li, var(--list-stype));
+    // We need to reset counter,
+    // so it will start from it's maximum value.
+    // Maximum value(--nb-list-items-count) is equal
+    // with how many items are in the list + 1.
+    // We are adding +1, because on first list item,
+    // the counter will get +1 or -1.
+    counter-reset: li var(--reversed-start-at-value, var(--nb-list-items-count));
 
-      color: var(--nb-list-bullet-color);
-      background-color: transparent;
-      text-align: center;
+    &[start] {
+      --reversed-start-at-value: calc(var(--nb-list-start-at) + 2);
+    }
+
+    // We are decrementing counter only for list items
+    // that are direct child of ol. By doing that,
+    // we are sure that nested lists will always reset
+    // to default value.
+    > li {
+
+      &:after {
+        counter-increment: li -1;
+      }
     }
   }
 }

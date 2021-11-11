@@ -16,7 +16,8 @@
 	--nb-spacing-level-1-multiplier: 1;
 	--nb-spacing-level-2-multiplier: 0.5;
 	--nb-spacing-level-3-multiplier: 0.25;
-  --nb-spacing-current-multiplier: var(--nb-spacing-level-1-multiplier);
+	--nb-spacing-level-4-multiplier: 0.125;
+  --nb-spacing-current-level-multiplier: var(--nb-spacing-level-1-multiplier);
 
 	--nb-block-content-box-shadow:
 		0 32px 128px rgba(42, 54, 52, 0.1),
@@ -29,6 +30,9 @@
   --nb-accent-color: var(--sm-current-accent-color, #203AB6);
   --nb-fg1-color: var(--sm-current-fg1-color, #272743);
   --nb-fg2-color: var(--sm-current-fg2-color, #000043);
+
+  --nb-spacing-current-multiplier: calc(var(--nb-spacing-base) * var(--nb-spacing-current-level-multiplier));
+  --nb-current-spacing: calc(var(--nb-spacing) * var(--nb-spacing-current-multiplier));
 }
 
 :is(

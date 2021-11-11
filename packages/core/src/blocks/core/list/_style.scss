@@ -1,52 +1,62 @@
-$checkbox-svg-path: '../../packages/icons/src/svgs/tick.svg';
+$icon-svg-path: '../../packages/icons/src/svgs/tick.svg';
 
 @import "colors";
 @import "ordered";
 
+ul, ol, dl {
+  @extend %block-spacing-apply-multiplier;
+}
+
 .nb-list {
   --nb-list-timeline-weight: 2px;
   --nb-list-divider-weight: 1px;
-
   --nb-list-bullet-size: 1.5em;
   --nb-list-bullet-addon: 0em;
   --nb-list-bullet-spacing: 0.4em;
+  --nb-list-line-height: 1.5em;
+  --nb-list-decoration-gap: 0.5em;
+  --nb-list-spacing: calc(var(--nb-list-bullet-size) + var(--nb-list-decoration-gap));
 
-  --nb-list-spacing: 2em;
-  --nb-list-item-spacing: 1em;
+  li {
+  }
 
   &, * {
     list-style: none;
   }
 
-  li + li {
-    margin-top: var(--nb-list-item-spacing);
+  ul, ol, dl, li:not(:first-child) {
+    margin-top: var(--nb-current-spacing);
   }
 
-  &:where(.list-bullet-style, .list-checkmark-style) li {
-    position: relative;
+  &:where(.list-bullet-style, .list-checkmark-style) {
 
-    &:before,
-    &:after {
-      content: "";
+    li {
+      position: relative;
 
-      position: absolute;
-      top: 0;
-      left: calc(-1 * var(--nb-list-spacing));
+      &:before,
+      &:after {
+        content: "";
 
-      display: block;
-      width: var(--nb-list-bullet-size);
-      height: var(--nb-list-bullet-size);
+        position: absolute;
+        top: calc(var(--nb-list-line-height) * 0.5 - var(--nb-list-bullet-size) * 0.5);
+        left: calc(-1 * var(--nb-list-spacing));
 
-      border-radius: 50%;
-    }
+        display: block;
+        width: var(--nb-list-bullet-size);
+        height: var(--nb-list-bullet-size);
+        line-height: var(--nb-list-bullet-size);
 
-    &:before {
-      background-color: var(--nb-list-bullet-bg-color);
-      box-shadow: 0 0 0 4px var(--nb-bg-color);
-    }
+        border-radius: 50%;
+      }
 
-    &:after {
-      background-color: var(--nb-list-bullet-color);
+      &:after {
+        background-color: var(--nb-list-bullet-color);
+      }
+
+      &:before {
+        background-color: var(--nb-list-bullet-bg-color);
+        box-shadow: 0 0 0 4px var(--nb-bg-color);
+      }
     }
   }
 
@@ -69,39 +79,83 @@ $checkbox-svg-path: '../../packages/icons/src/svgs/tick.svg';
   }
 }
 
-.nb-list.is-style-divider {
+.nb-list:is(.is-style-divider) {
 
   li:not(:last-child) {
     border-bottom: var(--nb-list-divider-weight) solid var(--nb-list-connection-color);
-    padding-bottom: var(--nb-list-item-spacing);
+    padding-bottom: var(--nb-current-spacing);
+  }
+}
+
+.nb-list:is(.is-style-timeline) {
+
+  &, ul, ol {
+    position: relative;
+
+    &:before {
+      content: '';
+
+      position: absolute;
+      top: calc(var(--nb-list-line-height) * 0.5);
+      bottom: calc(var(--nb-list-line-height) * 0.5);
+      left: calc(var(--nb-list-bullet-size) * 0.5);
+
+      width: var(--nb-list-timeline-weight);
+
+      background-color: var(--nb-list-connection-color);
+      transform: translateX(-50%);
+      opacity: 0.25;
+    }
+  }
+
+  // We use box shadow to cover up the bottom part of the divider
+  li:last-child {
+    box-shadow: var(--nb-bg-color) calc(var(--nb-list-spacing) * -1) 0 0 0;
+  }
+
+  &:where(.list-no-marker) {
+    --nb-list-bullet-size: var(--nb-list-timeline-weight);
+
+    &:before {
+      top: 0;
+      bottom: 0;
+    }
   }
 }
 
 .nb-list:is(ul.list-bullet-style) {
+  --nb-list-bullet-size: 0.3em;
 
-  li:before {
-    transform: scale(0.5);
-  }
+  &:is(.sm-color-signal-2, .sm-color-signal-3) {
+    --nb-list-bullet-size: 0.75em;
 
-  li:after {
-    transform: scale(0.25);
+    li:after {
+      transform: scale(0.4);
+    }
   }
 }
 
 
-
-// STYLES
-@import "timeline";
-
 .nb-list:is(ul.list-checkmark-style) {
+  --nb-list-bullet-size: 0.75em;
 
   li {
 
     &:after {
-      mask: url($checkbox-svg-path) no-repeat 50% 50%;
+      mask: url($icon-svg-path) no-repeat 50% 50%;
       mask-size: contain;
       mask-position: center;
-      transform: scale(0.5);
+    }
+  }
+
+  &:is(.sm-color-signal-2, .sm-color-signal-3) {
+    --nb-list-bullet-size: 1.5em;
+
+    li {
+
+      &:after {
+        transform: scale(0.5);
+      }
     }
   }
 }
