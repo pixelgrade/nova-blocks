@@ -7,7 +7,6 @@ ol.nb-list {
   counter-reset: li var(--nb-list-start-at, 0);
   font-variant-numeric: tabular-nums lining-nums;
 
-  --nb-list-bullet-size: 2ch;
   --nb-list-counter-style: decimal-leading-zero;
 
   // For these SIGNALS, we don't need
@@ -32,6 +31,10 @@ ol.nb-list {
       color: var(--nb-list-bullet-color);
       background-color: transparent;
     }
+  }
+
+  &:is(.sm-color-signal-0, .sm-color-signal-1) {
+    --nb-list-bullet-size: 2ch;
   }
 
   &:is(.sm-color-signal-2, .sm-color-signal-3) li:after {
