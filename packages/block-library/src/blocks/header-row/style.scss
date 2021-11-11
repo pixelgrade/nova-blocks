@@ -61,10 +61,10 @@
         }
     }
 
-    margin-top: calc(var(--block-top-spacing) * var(--nb-spacing) * var(--nb-spacing-multiplier, 1));
-    margin-bottom: calc(var(--block-bottom-spacing) * var(--nb-spacing) * var(--nb-spacing-multiplier, 1));
-    padding-top: calc(var(--emphasis-top-spacing) * var(--nb-spacing) * var(--nb-spacing-multiplier, 1));
-    padding-bottom: calc(var(--emphasis-bottom-spacing) * var(--nb-spacing) * var(--nb-spacing-multiplier, 1));
+    margin-top: calc(var(--block-top-spacing) * var(--nb-current-spacing));
+    margin-bottom: calc(var(--block-bottom-spacing) * var(--nb-current-spacing));
+    padding-top: calc(var(--emphasis-top-spacing) * var(--nb-current-spacing));
+    padding-bottom: calc(var(--emphasis-bottom-spacing) * var(--nb-current-spacing));
 
     @include navigation-block-layout-common-styles;
   }

@@ -16,12 +16,11 @@
 }
 
 .nb-sidecar-area--sidebar {
+  position: relative;
   height: 100%;
 
-  // Below 1024px everything is shown on one column, so we need to add a margin top to the sidebar.
   @include below(lap) {
-    // @todo maybe var(--element-spacing) is the proper gap to be used here
-    margin-top: var(--nb-sidecar-grid-gap);
+    margin-top: var(--nb-current-spacing);
   }
 }
 

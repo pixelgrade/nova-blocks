@@ -2,7 +2,8 @@
 .entry-content,
 .wp-block-column,
 .block-editor-block-list__layout,
-.nb-sidecar-area {
+.nb-sidecar-area,
+.widget {
   @extend %block-spacing-container;
   @extend %block-spacing-apply-multiplier;
 }

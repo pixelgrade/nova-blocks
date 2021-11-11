@@ -85,15 +85,15 @@
 }
 
 .novablocks-sharing__content > * {
-  --nb-spacing-multiplier: 0.4;
+  --nb-spacing-current-multiplier: 0.4;
 }
 
 .novablocks-sharing__group > * {
-  --nb-spacing-multiplier: 0.15;
+  --nb-spacing-current-multiplier: 0.15;
 }
 
 .novablocks-sharing__group-content > * {
-  --nb-spacing-multiplier: 0.125;
+  --nb-spacing-current-multiplier: 0.125;
 }
 
 .novablocks-sharing__close {
@@ -177,7 +177,7 @@
 }
 
 .novablocks-sharing__group-description[class] {
-	--nb-spacing-multiplier: 0;
+	--nb-spacing-current-multiplier: 0;
 }
 
 .novablocks-sharing__list {

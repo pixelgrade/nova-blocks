@@ -27,8 +27,6 @@ const Edit = ( props ) => {
   const innerBlocks = useInnerBlocks( clientId );
 
   const className = classnames(
-//    @todo maybe add this back at one point?
-//    props.className,
     `nb-sidecar`,
     `nb-sidecar--sidebar-${ sidebarPosition }`,
     `nb-sidecar--sidebar-${ sidebarWidth }`,
@@ -38,7 +36,6 @@ const Edit = ( props ) => {
   );
 
   const blockProps = useBlockProps( {
-    className: className,
     style: props.style,
   } );
 
@@ -54,7 +51,7 @@ const Edit = ( props ) => {
   return (
     <Fragment>
       <Controls { ...props } />
-      <div { ...innerBlocksProps } />
+      <div { ...innerBlocksProps } className={ className } />
     </Fragment>
   );
 }

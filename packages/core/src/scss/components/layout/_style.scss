@@ -6,15 +6,15 @@
 
 .novablocks-u-content-padding {
 
-  --nb-spacing-multiplier: 2;
+  --nb-spacing-current-multiplier: 2;
 
-  --nb-content-padding-top: calc( var(--nb-emphasis-top-spacing) * var(--nb-spacing) * var(--nb-spacing-multiplier));
-  --nb-content-padding-bottom: calc( var(--nb-emphasis-bottom-spacing) * var(--nb-spacing) * var(--nb-spacing-multiplier));
+  --nb-content-padding-top: calc( var(--nb-emphasis-top-spacing) * var(--nb-current-spacing));
+  --nb-content-padding-bottom: calc( var(--nb-emphasis-bottom-spacing) * var(--nb-current-spacing));
   
   padding-top: var(--nb-content-padding-top);
   padding-bottom: var(--nb-content-padding-bottom);
   
   > * {
-    --nb-spacing-multiplier: 1;
+    --nb-spacing-current-multiplier: 1;
   }
 }

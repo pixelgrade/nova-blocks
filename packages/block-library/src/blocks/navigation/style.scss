@@ -4,10 +4,10 @@ $arrow-down-svg-path: './arrow-down.svg';
 
   ul.menu,
   .menu > ul {
-    margin-left: calc( -1 * var(--nb-navigation-item-spacing) * var(--nb-spacing-multiplier) );
+    margin-left: calc( -1 * var(--nb-navigation-item-spacing));
 
     > li {
-      margin-left: calc( var(--nb-navigation-item-spacing) * var(--nb-spacing-multiplier) );
+      margin-left: var(--nb-navigation-item-spacing);
     }
   }
 }

@@ -21,7 +21,7 @@ trix-toolbar {
 
   &[id] {
     @include block-spacing;
-    --nb-spacing-multiplier: .175;
+    --nb-spacing-current-multiplier: .175;
     --nb-block-top-spacing: 1;
   }
 
