@@ -1,7 +1,7 @@
 import { getSnapClassname, maybeSnapFocalPoint } from "@novablocks/utils";
 import { FocalPointPicker, PanelBody, RangeControl, ToggleControl } from "@wordpress/components";
 import { __ } from "@wordpress/i18n";
-import { getParallaxFocalPointImage } from './utils';
+import { getFocalPointImage } from '../utils';
 import { useMemo } from "@wordpress/element";
 
 const EndFramePanel = ( props ) => {
@@ -9,6 +9,7 @@ const EndFramePanel = ( props ) => {
   const {
     attributes,
     setAttributes,
+    focalPointImage
   } = props;
 
   const {
@@ -20,7 +21,15 @@ const EndFramePanel = ( props ) => {
     scrollingEffect,
   } = attributes;
 
-  const parallaxFocalPointImage = useMemo( () => getParallaxFocalPointImage( media ), [ media ] );
+  const parallaxFocalPointImage = useMemo( () => {
+
+    if ( focalPointImage ) {
+      return focalPointImage;
+    }
+
+    return getFocalPointImage( media );
+
+  }, [ focalPointImage, media ] );
 
   if ( scrollingEffect !== 'doppler' ) {
     return null;

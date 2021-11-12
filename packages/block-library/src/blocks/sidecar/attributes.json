@@ -1,11 +1,11 @@
 {
 	"sidebarWidth": {
 		"type": "string",
-		"default": "medium"
+		"default": "small"
 	},
 	"sidebarPosition": {
 		"type": "string",
-		"default": "right"
+		"default": "none"
 	},
 	"lastItemIsSticky": {
 		"type": "boolean",

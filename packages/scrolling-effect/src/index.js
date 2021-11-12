@@ -11,4 +11,4 @@ addFilter( 'editor.BlockEdit', 'novablocks/with-scrolling-effect-wrapper', withS
 export { default as withScrollingEffect } from "./filters/with-scrolling-effect-provider";
 export { default as useScrollingEffect } from "./hooks/use-scrolling-effect";
 
-export * from'./utils';
+export * from './utils';

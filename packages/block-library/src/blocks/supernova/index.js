@@ -5,11 +5,13 @@ import { __ } from '@wordpress/i18n';
 import { registerBlockType } from '@wordpress/blocks';
 import { InnerBlocks } from "@wordpress/block-editor";
 import { addFilter } from "@wordpress/hooks";
+import { useMemo } from "@wordpress/element";
 
 /**
  * Internal dependencies
  */
-import { getSvg } from '@novablocks/block-editor';
+import { getSvg, useInnerBlocks } from '@novablocks/block-editor';
+import { getFocalPointImage } from "@novablocks/scrolling-effect";
 
 import edit from './edit';
 import variations from './variations';
@@ -97,4 +99,35 @@ registerBlockType( 'novablocks/supernova', {
   },
 } );
 
+const withFocalPointImageFromChildren = ( BlockEdit ) => {
+
+  return ( props ) => {
+
+    const { clientId } = props;
+
+    const innerBlocks = useInnerBlocks( clientId );
+
+    const newProps = useMemo( () => {
+      if ( innerBlocks.length ) {
+        const { attributes } = innerBlocks[0];
+        const { images } = attributes;
+
+        if ( images?.length ) {
+          return Object.assign( {}, props, {
+            focalPointImage: getFocalPointImage( images[0] )
+          } )
+        }
+      }
+
+      return props;
+
+    }, [ props ] );
+
+    return (
+      <BlockEdit { ...newProps } />
+    )
+  }
+}
+
 addFilter( 'editor.BlockEdit', 'novablocks/supernova/with-set-children-attributes', withSetChildrenAttributes, Number.MAX_SAFE_INTEGER );
+addFilter( 'editor.BlockEdit', 'novablocks/supernova/with-focal-point-image', withFocalPointImageFromChildren, Number.MAX_SAFE_INTEGER );
