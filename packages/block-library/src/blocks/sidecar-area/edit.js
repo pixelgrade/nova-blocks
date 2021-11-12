@@ -1,30 +1,17 @@
 import classnames from 'classnames';
 
+import { useSelectParent } from '@novablocks/block-editor';
 import { InnerBlocks, useBlockProps } from '@wordpress/block-editor';
-import { useDispatch, useSelect } from '@wordpress/data';
+
 const useInnerBlocksProps = wp.blockEditor.useInnerBlocksProps || wp.blockEditor.__experimentalUseInnerBlocksProps;
 
 const SidecarAreaEdit = function( props ) {
-
-  const {
-    attributes,
-    clientId,
-    isSelected
-  } = props;
-
-  const parentClientId = useSelect( select => select( 'core/block-editor' ).getBlockRootClientId( clientId ), [ clientId ] );
-  const { selectBlock, clearSelectedBlock } = useDispatch( 'core/editor' );
-
-  if ( isSelected ) {
-    clearSelectedBlock().then( () => {
-      selectBlock( parentClientId );
-    } );
-  }
+  useSelectParent( props );
 
   const className = classnames(
     props.className,
     'nb-sidecar-area',
-    `nb-sidecar-area--${ attributes.areaName }`
+    `nb-sidecar-area--${ props.attributes.areaName }`
   )
 
   const blockProps = useBlockProps( {

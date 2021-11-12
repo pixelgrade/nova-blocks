@@ -61,7 +61,6 @@ const SupernovaPreview = props => {
     showCollectionSubtitle,
     sourceType,
     cardLayout,
-    minHeightFallback
   } = attributes;
 
   const contentAlign = getAlignFromMatrix( attributes?.contentPosition );

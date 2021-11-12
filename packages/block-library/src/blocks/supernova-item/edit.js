@@ -22,10 +22,12 @@ const SuperNovaItemEdit = props => {
   const { attributes } = props;
   const { showMedia } = attributes;
 
-  const blockProps = useBlockProps();
+  const blockProps = useBlockProps( {
+    className: 'nb-collection__layout-item'
+  });
 
   return (
-    <div { ...blockProps } className={ 'nb-collection__layout-item' }>
+    <div { ...blockProps }>
       <Card { ...props }>
         { showMedia &&
           <CardMediaWrapper { ...props }>

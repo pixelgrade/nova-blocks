@@ -22,6 +22,10 @@ $slick-arrow-color: var(--sm-current-fg1-color);
   }
 }
 
+.wp-block {
+  max-width: none;
+}
+
 .wp-block-group {
 
   // groups that have a set color signal (different text and background color)

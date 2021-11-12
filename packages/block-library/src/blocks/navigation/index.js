@@ -1,20 +1,15 @@
 /**
- * Internal dependencies
- */
-import iconSvg from './navigation-block.svg';
-import attributes from "./attributes";
-
-/**
  * WordPress dependencies
  */
 import { __ } from '@wordpress/i18n';
 import { registerBlockType } from '@wordpress/blocks';
-import { getSvg } from "@novablocks/block-editor";
 
-import { dispatch, select } from "@wordpress/data";
-
-const { getBlockRootClientId } = select( 'core/block-editor' );
-const { selectBlock, clearSelectedBlock } = dispatch( 'core/editor' );
+/**
+ * Internal dependencies
+ */
+import { getSvg, useSelectParent } from "@novablocks/block-editor";
+import iconSvg from './navigation-block.svg';
+import attributes from "./attributes";
 
 registerBlockType( 'novablocks/navigation', {
 	title: __( 'Space Navigation', '__plugin_txtd' ),
@@ -29,19 +24,7 @@ registerBlockType( 'novablocks/navigation', {
     html: false
   },
 	edit: function( props ) {
-
-    const {
-      clientId,
-      isSelected
-    } = props;
-
-    const parentClientId = getBlockRootClientId(clientId);
-
-    if ( isSelected ) {
-      clearSelectedBlock().then(() => {
-        selectBlock( parentClientId );
-      });
-    }
+    useSelectParent( props );
 
 		return (
 			<wp.serverSideRender

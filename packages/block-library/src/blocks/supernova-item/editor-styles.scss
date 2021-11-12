@@ -2,11 +2,11 @@
   &.is-selected,
   .supernova.is-selected & {
     @include advanced-gallery-overlay-styles;
-}
+  }
 }
 
 .supernova-item__content {
-  
+
   > * {
     width: 100%;
   }
