@@ -1,5 +1,8 @@
-[data-type="novablocks/supernova-item"].is-selected {
-  @include advanced-gallery-overlay-styles;
+.supernova-item:not(.supernova-item--layout-stacked) {
+  &.is-selected,
+  .supernova.is-selected & {
+    @include advanced-gallery-overlay-styles;
+}
 }
 
 .supernova-item__content {
