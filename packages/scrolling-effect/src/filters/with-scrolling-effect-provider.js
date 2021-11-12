@@ -17,22 +17,16 @@ const withDopplerProvider = createHigherOrderComponent( WrappedComponent => {
     const containerRef = useRef( null );
     const [ contextValue, setContextValue ] = useState( {} );
 
-    const { attributes, isScrolling } = props;
+    const { attributes } = props;
     const scrollContainer = useScrollContainer();
-    const [ setScrollContainerNode, scrollContainerResizeEntry ] = useResizeObserver();
     const scrollContainerBox = useScrollContainerBox( scrollContainer );
-
-    useEffect( () => {
-      setScrollContainerNode( scrollContainer );
-    }, [ scrollContainer ] )
 
     const [ setContainerNode, containerResizeEntry ] = useResizeObserver();
     const [ containerBox, setContainerBox ] = useState( null );
 
-    const onScroll = useCallback( event => {
+    const onScroll = useCallback( () => {
       if ( containerRef.current ) {
-        const box = containerRef.current.getBoundingClientRect();
-        setContainerBox( box );
+        setContainerBox( containerRef.current.getBoundingClientRect() );
       }
     }, [ containerRef ] );
 
@@ -45,7 +39,6 @@ const withDopplerProvider = createHigherOrderComponent( WrappedComponent => {
     }, [ containerRef ] );
 
     useEffect( () => {
-      const box = containerResizeEntry.contentRect;
       setContainerBox( containerResizeEntry.contentRect );
     }, [ containerResizeEntry ] );
 
@@ -72,7 +65,7 @@ const withDopplerProvider = createHigherOrderComponent( WrappedComponent => {
         setContextValue( newContextValue );
       }
 
-    }, [ containerBox, scrollContainerBox, attributes ] );
+    }, [ containerBox, scrollContainerBox, attributes, containerRef, scrollContainer ] );
 
     return (
       <div className={ `novablocks-doppler__mask novablocks-doppler__wrapper` } ref={ containerRef }>

@@ -7,8 +7,6 @@ import {
   getAreaClassnameByWidthRatio
 } from "@novablocks/utils";
 
-//import { withDoppler } from "../../../../filters";
-
 export * from './contents';
 
 export const Card = ( props ) => {
@@ -74,14 +72,6 @@ export const CardContentWrapper = ( props ) => {
     </div>
   )
 }
-
-//const CardMediaContentWithDoppler = withDoppler( ( props ) => {
-//  return (
-//    <div className={ `supernova-item__media-doppler novablocks-doppler__target` } style={ props?.doppler?.style }>
-//      <CardMediaContent { ...props } />
-//    </div>
-//  )
-//} );
 
 export const CardMediaWrapper = ( props ) => {
 

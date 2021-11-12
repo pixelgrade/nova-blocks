@@ -29,7 +29,7 @@ const SuperNovaItemEdit = props => {
       <Card { ...props }>
         { showMedia &&
           <CardMediaWrapper { ...props }>
-            <CardMedia { ...props } />
+            <CardMediaWithScrollingEffect { ...props } />
           </CardMediaWrapper>
         }
         <SuperNovaItemContent { ...props } />
@@ -45,7 +45,6 @@ const CardMedia = ( props ) => {
   );
 }
 
-// @todo at some point preview should be available in specific conditions
 const CardMediaWithScrollingEffect = withScrollingEffect( ( props ) => {
   const scrollingEffect = useScrollingEffect();
 
