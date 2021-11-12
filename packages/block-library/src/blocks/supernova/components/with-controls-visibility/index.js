@@ -1,3 +1,4 @@
+import { useInnerBlocks } from "@novablocks/block-editor";
 import { useEffect } from "@wordpress/element";
 
 const withControlsVisibility = OriginalComponent => {
@@ -6,8 +7,12 @@ const withControlsVisibility = OriginalComponent => {
 
     const {
       attributes,
-      setControlsVisibility
+      setControlsVisibility,
+      clientId
     } = props;
+
+    const innerBlocks = useInnerBlocks( clientId );
+    const hasMediaComposition = innerBlocks.some( block => block.attributes.images?.length > 1 );
 
     useEffect( () => {
 
@@ -29,7 +34,7 @@ const withControlsVisibility = OriginalComponent => {
         'content-to-media-spacing': cardLayout !== 'stacked',
 
         // Media Composition
-        'media-composition-section': !! showMedia && sourceType !== 'content',
+        'media-composition-section': hasMediaComposition && !! showMedia && sourceType !== 'content',
 
         // Shape Modeling
         'shape-modeling-section': cardLayout !== 'stacked',
