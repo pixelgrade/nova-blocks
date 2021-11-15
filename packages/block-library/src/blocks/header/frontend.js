@@ -130,7 +130,10 @@ import { addSocialMenuClass, syncColorSignalClasses } from "./utils";
       let element = $( block ),
           elementHeight = element.outerHeight();
 
-      ignoredElementsHeight += elementHeight;
+          // Check if the element actually exist in page
+          if(elementHeight) {
+            ignoredElementsHeight += elementHeight;
+          }
     } )
 
     $( window ).on( 'scroll', function() {
