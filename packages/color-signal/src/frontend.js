@@ -114,8 +114,7 @@ const updateAllBlocksSignal = ( siteVariation ) => {
  */
 const updateBlockSignal = ( block, parentVariation ) => {
   const attributes = block.dataset;
-  const { useSourceColorAsReference } = attributes;
-  const palette = parseInt( attributes?.palette, 10 );
+  const { palette, useSourceColorAsReference } = attributes;
   const colorSignal = parseInt( attributes?.colorSignal, 10 );
   const innerBlocks = Array.from( block.children );
 
