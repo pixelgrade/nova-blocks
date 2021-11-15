@@ -133,7 +133,7 @@
 @each $size in small, medium, large {
   @each $side in left, right {
     .nb-sidecar--sidebar-#{$side}.nb-sidecar--sidebar-#{$size} {
-      --nb-sidecar-sidebar-#{$side}-width: var(--nb-sidecar-sidebar-#{$size}-width);
+      --nb-sidecar-sidebar-#{$side}-width: min( var(--nb-sidecar-sidebar-#{$side}-max-width), var(--nb-sidecar-sidebar-#{$size}-width) );
     }
   }
 }

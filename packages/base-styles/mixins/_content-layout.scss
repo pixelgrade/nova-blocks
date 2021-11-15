@@ -2,11 +2,12 @@
 // In Rosa2 this value will be equal with site header height, in this way,
 // the sticky block will not be under the header.
 @mixin nb-layout-settings {
-  --nb-sidecar-sidebar-left-gap: clamp(0px, var(--nb-sidecar-sidebar-left-width) * 999, var(--nb-sidecar-gap));
-  --nb-sidecar-sidebar-right-gap: clamp(0px, var(--nb-sidecar-sidebar-right-width) * 999, var(--nb-sidecar-gap));
 
-  --nb-sidecar-content-left: calc(50% - var(--nb-sidecar-sides) - var(--nb-sidecar-sidebar-left-width) - var(--nb-sidecar-sidebar-left-gap) - var(--nb-sidecar-gap) * 0.5);
-  --nb-sidecar-content-right: calc(50% - var(--nb-sidecar-sides) - var(--nb-sidecar-sidebar-right-width) - var(--nb-sidecar-sidebar-right-gap) - var(--nb-sidecar-gap) * 0.5);
+  @each $side in left, right {
+    --nb-sidecar-sidebar-#{$side}-gap: clamp(0px, var(--nb-sidecar-sidebar-#{$side}-width) * 999, var(--nb-sidecar-gap));
+    --nb-sidecar-sidebar-#{$side}-max-width: calc(var(--nb-container-width) * 0.5 - var(--nb-sidecar-gap) * 1.5);
+    --nb-sidecar-content-#{$side}: calc(50% - var(--nb-sidecar-sides) - var(--nb-sidecar-sidebar-#{$side}-width) - var(--nb-sidecar-sidebar-#{$side}-gap) - var(--nb-sidecar-gap) * 0.5);
+  }
 }
 
 
