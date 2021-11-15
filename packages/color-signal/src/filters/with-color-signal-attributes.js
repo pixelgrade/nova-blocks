@@ -1,6 +1,6 @@
 import attributes from "../attributes.json";
 
-const withColorSignalAttributes = ( settings, name ) => {
+const withColorSignalAttributes = ( settings ) => {
 
   const colorSignalSupport = settings?.supports?.novaBlocks?.colorSignal;
 

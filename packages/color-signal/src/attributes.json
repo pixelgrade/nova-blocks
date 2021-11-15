@@ -1,7 +1,7 @@
 {
 	"palette": {
-		"type": "number",
-		"default": 1
+		"type": "string",
+		"default": "1"
 	},
 	"paletteVariation": {
 		"type": "number",
