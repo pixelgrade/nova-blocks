@@ -1,8 +1,7 @@
 import { __ } from "@wordpress/i18n";
 import { useEffect, useState } from "@wordpress/element";
-import { __experimentalUseInnerBlocksProps as useInnerBlocksProps } from "@wordpress/block-editor";
 
-//import VARIATIONS from '../../variations';
+const useInnerBlocksProps = wp.blockEditor.useInnerBlocksProps || wp.blockEditor.__experimentalUseInnerBlocksProps;
 
 const VARIATIONS = [
   {

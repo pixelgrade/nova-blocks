@@ -3,8 +3,8 @@
  */
 import classnames from 'classnames';
 
-import { __experimentalUseInnerBlocksProps as useInnerBlocksProps, useBlockProps } from "@wordpress/block-editor";
 import { Fragment } from "@wordpress/element";
+const useInnerBlocksProps = wp.blockEditor.useInnerBlocksProps || wp.blockEditor.__experimentalUseInnerBlocksProps;
 
 import { useInnerBlocks } from "@novablocks/block-editor";
 
