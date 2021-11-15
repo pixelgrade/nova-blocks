@@ -16,7 +16,6 @@ const Edit = ( props ) => {
 
   const {
     attributes: {
-      layout,
       sidebarWidth,
       sidebarPosition,
       lastItemIsSticky

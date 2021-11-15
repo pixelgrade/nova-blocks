@@ -37,7 +37,7 @@ $slick-arrow-color: var(--sm-current-fg1-color);
     padding-bottom: calc((1 + (-1 * var(--nb-emphasis-bottom-spacing))) * var(--nb-wrapper-sides-spacings));
   }
 
-  &.sm-color-signal-0 .wp-block-group__inner-container {
+  &.sm-color-signal-0:not(.alignfull) .wp-block-group__inner-container {
     padding: 0;
   }
 }
