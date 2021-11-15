@@ -1,11 +1,58 @@
-.c-reading-progress {
-  position: absolute;
+/*------------------------------------*\
+  #COMPONENT - Reading Progress Bar
+\*------------------------------------*/
+
+:root {
+  // Design System tokens
+  --theme-reading-progress-width: 3px; // use '0' to remove it
+  --theme-reading-progress-color: var(--sm-current-accent-color);
+}
+
+
+
+// ------ #MIXINS
+@mixin progress-bar-style-below {
   left: 0;
   bottom: 0;
+}
+
+@mixin progress-bar-style-above {
+  left: 0;
+  top: 0;
+  bottom: auto;
+}
+
+// Work in Progress
+@mixin progress-bar-style-overlay {
+  .c-reading-progress {
+    left: 0;
+    top: 0;
+    bottom: auto;
+    height: 100%;
+
+    opacity: 0.3 !important;
+  }
+
+  .c-reading-bar {
+    z-index: 12 !important;
+  }
+
+  .site-header--reading .c-reading-bar {
+    background: transparent !important;
+  }
+}
+
+
+
+// ------ #PROGRESS BAR STYLING
+.c-reading-progress {
+  @include progress-bar-style-below;
+  position: absolute;
   z-index: 11;
+
   
   width: 100%;
-  height: 3px;
+  height: var(--theme-reading-progress-width);
   
   border: none;
   appearance: none;
@@ -16,17 +63,40 @@
   }
 }
 
-.c-reading-progress::-webkit-progress-bar {
-  background-color: transparent;
-}
+  .c-reading-progress::-webkit-progress-bar {
+    background-color: transparent;
+  }
 
-.c-reading-progress::-webkit-progress-value {
-  background-color: currentColor;
-}
+  .c-reading-progress::-webkit-progress-value {
+    background-color: var(--theme-reading-progress-color);
+  }
 
-.c-reading-progress::-moz-progress-bar {
-  background-color: currentColor;
-}
+  .c-reading-progress::-moz-progress-bar {
+    background-color: var(--theme-reading-progress-color);
+  }
+
+  // Change the .c-reading-progress bar color based on .c-reading-bar Color Signal
+  // @todo: find a way to apply the Color Signal classes to .c-reading-progress too
+  .c-reading-bar.sm-dark + .c-reading-progress {
+    --theme-reading-progress-color: var(--sm-current-bg-color);
+  }
+
+
+
+
+
+// ------ #ALTERNATIVE STYLES
+ // @include progress-bar-style-overlay;
+
+// @todo: for options below, add a global 
+// control option to change those styles
+.c-reading-progress[data-progress-bar-style-="below"] {}
+.c-reading-progress[data-progress-bar-style-="overlay"] {}
+
+
+
+
+
 
 .c-reading-bar {
   position: absolute;
@@ -42,7 +112,7 @@
   justify-content: space-between;
   align-items: center;
 
-  transition: 0.35s transform ease;
+  transition: 0.5s transform ease;
   will-change: transform;
   
   transform: translateY(-100%);
@@ -63,6 +133,8 @@
   @include below(lap) {
     display: none;
   }
+
+
 }
 
 .novablocks-header-row {
@@ -70,7 +142,7 @@
   .wp-block {
     
     &[class][class][class][class][class][class] {
-      transition: all .25s ease;
+      transition: all .3s ease;
       transition-property: all;
     }
   }
