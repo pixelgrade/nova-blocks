@@ -1,5 +1,6 @@
 import { __ } from "@wordpress/i18n";
 import { RangeControl } from "@wordpress/components";
+import { useSelect } from "@wordpress/data";
 
 import { ControlsGroup, withVisibility } from "../../../components";
 import { useSupports } from "../../../hooks";
@@ -26,8 +27,9 @@ const BlockSpacing = props => {
 }
 
 const BlockTopSpacing = withVisibility( 'block-top-spacing' )( props => {
-  const { attributes, setAttributes, blockSpacingMin, blockSpacingMax } = props;
+  const { attributes, setAttributes, blockSpacingMin, blockSpacingMax, clientId } = props;
   const { blockTopSpacing } = attributes;
+  const clientIds = useSelect( 'core/block-editor' ).getClientIdsWithDescendants();
 
   return (
     <RangeControl
@@ -36,6 +38,7 @@ const BlockTopSpacing = withVisibility( 'block-top-spacing' )( props => {
       label={ __( 'Block Top Spacing' ) }
       min={ blockSpacingMin }
       max={ blockSpacingMax }
+      disabled={ clientIds[0] === clientId }
     />
   )
 } );
