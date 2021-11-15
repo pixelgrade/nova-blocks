@@ -1,6 +1,6 @@
 // Default Layout Settings
-// In Rosa2 this value will be equal with site header height, in this way,
-// the sticky block will not be under the header.
+// In Anima this value will be equal with site header height. 
+// In this way, the sticky block will not be under the header.
 @mixin nb-layout-settings {
 
   @each $side in left, right {
