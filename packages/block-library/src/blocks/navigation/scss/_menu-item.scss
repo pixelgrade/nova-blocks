@@ -1,19 +1,15 @@
-.menu-item {
-
-  margin-top: 0;
+.menu-item[class] {
+  --dropdown-icon-size: 0.55em;
 
   position: relative;
-  --dropdown-icon-size: 0.55em;
+  margin-top: 0;
 
   .menu-description {
     display: block;
     order: 2;
 
-    font-size: 0.75em;
-    color: var(--current-dark-primary);
+    --font-size-modifier: 0.75;
     opacity: .5;
-    line-height: 1.5;
-    font-weight: 400;
 
     padding-right: var(--dropdown-icon-size);
 

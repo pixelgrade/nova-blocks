@@ -1,12 +1,5 @@
 .nb-collection__layout--carousel {
 
-  /*
-   * Carousel Settings
-   */
-  --nb-carousel-arrow-width: 2px;
-  --nb-carousel-arrow-color: #555555;
-  --nb-carousel-arrow-bg: #ffffff;
-  
   .nb-collection__layout-item,
   .supernova-item {
     height: 100%;
@@ -91,11 +84,8 @@
     top: 50%;
     z-index: 1000;
 
-    width: 22px;
-    height: 24px;
-
-    background: var(--nb-carousel-arrow-bg);
-    border-radius: 3px;
+    width: 50px;
+    height: 50px;
 
     &:before {
       content: '';
@@ -105,28 +95,8 @@
       top: 50%;
       left: 50%;
 
-      width: 8px;
-      height: 8px;
-    }
-  }
-
-  .slick-prev {
-    left: var(--nb-wrapper-sides-spacings);
-
-    &:before {
-      border-top: var(--nb-carousel-arrow-width) solid var(--nb-carousel-arrow-color);
-      border-left: var(--nb-carousel-arrow-width) solid var(--nb-carousel-arrow-color);
-      transform: translate(-30%, -50%) rotate(-45deg);
-    }
-  }
-
-  .slick-next {
-    right: var(--nb-wrapper-sides-spacings);
-
-    &:before {
-      border-top: var(--nb-carousel-arrow-width) solid var(--nb-carousel-arrow-color);
-      border-right: var(--nb-carousel-arrow-width) solid var(--nb-carousel-arrow-color);
-      transform: translate(-70%, -50%) rotate(45deg);
+      width: 32px;
+      height: 32px;
     }
   }
   
@@ -134,8 +104,8 @@
   .slick-arrow {
     z-index: 2000;
   }
-  
 }
+
 
 /*
  * Supernova does not have collection
@@ -160,6 +130,11 @@
 
   .supernova-item__inner-container {
     margin-bottom: calc(2 * var(--nb-spacing) + var(--current-font-size) * var(--current-line-height));
+
+    .supernova--card-layout-stacked & {
+      margin-left: calc(var(--nb-spacing) + 50px);
+      margin-right: calc(var(--nb-spacing) + 50px);
+    }
   }
 }
 

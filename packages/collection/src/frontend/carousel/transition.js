@@ -23,13 +23,28 @@ const transition = ( $current, $next, sign = 1 ) => {
       $current.addClass( 'slick-slide--current' );
       $next.addClass( 'slick-slide--next' );
       next.style.position = 'relative';
-      nextFg.style.position = 'relative';
+
+      if ( nextFg ) {
+        nextFg.style.position = 'relative';
+      }
     },
     progress: function( elements, percentComplete, remaining, tweenValue, activeCall ) {
-        next.style.left = `${ slideWidth * tweenValue * sign }px`;
-        nextFg.style.left = `${ ( - slideWidth ) * tweenValue * sign }px`;
-        nextBg.style.left = `${ ( move - slideWidth ) * tweenValue * sign }px`;
-        currentBg.style.left = `${ ( - move ) * ( 1 - tweenValue ) * sign }px`;
+
+        if ( next ) {
+          next.style.left = `${ slideWidth * tweenValue * sign }px`;
+        }
+
+        if ( nextFg ) {
+          nextFg.style.left = `${ ( - slideWidth ) * tweenValue * sign }px`;
+        }
+
+        if ( nextBg ) {
+          nextBg.style.left = `${ ( move - slideWidth ) * tweenValue * sign }px`;
+        }
+
+        if ( currentBg ) {
+          currentBg.style.left = `${ ( - move ) * ( 1 - tweenValue ) * sign }px`;
+        }
     },
     complete: function() {
       $current.removeClass( 'slick-slide--current' );

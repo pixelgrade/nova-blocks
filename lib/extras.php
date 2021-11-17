@@ -1233,28 +1233,11 @@ function novablocks_get_media_composition_markup( $attributes ) {
 		$images = $attributes['gallery'];
 	}
 
-	$attributes_config     = novablocks_get_media_composition_markup_component_attributes();
-	$attributes            = novablocks_get_attributes_with_defaults( $attributes, $attributes_config );
+	$attributes_config = novablocks_merge_attributes_from_array( [
+		'packages/media-composition/src/attributes.json',
+	] );
+
 	$data_attributes_array = array_map( 'novablocks_camel_case_to_kebab_case', array_keys( $attributes_config ) );
-
-	// the images attribute outputs a lot of code which is not used in the frontend
-	$blacklist = [
-		'images',
-		'gallery',
-		'color-signal',
-		'palette',
-		'palette-variation',
-		'content-palette-variation',
-		'content-color-signal',
-		'use-source-color-as-reference',
-	];
-
-	foreach ( $blacklist as $attribute ) {
-		if ( ( $key = array_search( $attribute, $data_attributes_array ) ) !== false ) {
-			unset( $data_attributes_array[ $key ] );
-		}
-	}
-
 	$data_attributes = novablocks_get_data_attributes( $data_attributes_array, $attributes );
 
 	if ( ! empty( $images ) && is_array( $images ) ) {

@@ -15,11 +15,6 @@ $slick-arrow-color: var(--sm-current-fg1-color);
 // Applying Grid on Group Block
 [class*="__inner-container"][class] {
   @include nb-content-layout;
-
-  [class*='align-pull'] & {
-    padding-left: 0;
-    padding-right: 0;
-  }
 }
 
 .wp-block {
