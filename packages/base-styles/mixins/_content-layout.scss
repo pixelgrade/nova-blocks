@@ -83,12 +83,10 @@
       grid-column: var(--block-content-start) / var(--block-content-end);
     }
 
-    :where(#{&}) > :is(.alignwide, [data-align="wide"]) {
-      grid-column: var(--block-wide-start) / var(--block-wide-end);
-    }
-
-    :where(#{&}) > :is(.alignfull, [data-align="full"]) {
-      grid-column: var(--block-full-start) / var(--block-full-end);
+    @each $align in left, right, wide, full {
+      :where(#{&}) > :is(.align#{$align}, [data-align="#{$align}"]) {
+        grid-column: var(--block-#{$align}-start) / var(--block-#{$align}-end);
+      }
     }
   }
 

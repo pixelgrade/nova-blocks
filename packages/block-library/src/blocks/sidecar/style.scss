@@ -14,6 +14,18 @@
   --block-full-start: fs;
   --block-full-end: fe;
 
+  --block-left-start: var(--block-content-start);
+  --block-left-end: var(--block-content-end);
+  --block-right-start: var(--block-content-start);
+  --block-right-end: var(--block-content-end);
+
+  @include above(lap) {
+    --block-left-start: ws;
+    --block-left-end: gs;
+    --block-right-start: ge;
+    --block-right-end: we;
+  }
+
   --nb-sidecar-gap: calc(var(--nb-spacing) * 2);
   --nb-sidecar-sidebar-small-width: min(288px, 20%);
   --nb-sidecar-sidebar-medium-width: min(360px, 25%);
@@ -62,18 +74,10 @@
       }
     }
 
-    :where(#{&}) > :is(.alignleft, [data-align="left"], .alignright, [data-align="right"]) {
+
+    :where(#{&}) > :is(.alignleft, [data-align="left"]).break-align-left,
+    :where(#{&}) > :is(.alignright, [data-align="right"]).break-align-right {
       grid-row-end: span 5;
-    }
-
-    :where(#{&}) > :is(.alignleft, [data-align="left"]) {
-      --block-content-start: ws;
-      --block-content-end: gs;
-    }
-
-    :where(#{&}) > :is(.alignright, [data-align="right"]) {
-      --block-content-start: ge;
-      --block-content-end: we;
     }
   }
 }
@@ -123,6 +127,8 @@
   }
 
   .nb-sidecar--sidebar-left {
+    --block-left-start: var(--block-content-start);
+    --block-left-end: var(--block-content-end);
 
     > .nb-sidecar-area--content {
       --block-wide-start: cs;
@@ -136,6 +142,8 @@
   }
 
   .nb-sidecar--sidebar-right {
+    --block-right-start: var(--block-content-start);
+    --block-right-end: var(--block-content-end);
 
     > .nb-sidecar-area--content {
       --block-wide-end: ce;
@@ -151,9 +159,9 @@
 
 // Make last block from Sidebar Sticky
 .nb-sidecar--sticky-sidebar.nb-sidecar--sidebar-ready {
-  
+
   .nb-sidecar-area--sidebar {
-    
+
     > :last-child {
       position: sticky;
       top: var(--nb-sidecar-sticky-top, var(--nb-spacing));
@@ -175,7 +183,7 @@
 @each $size in small, medium, large {
   @each $side in left, right {
     .nb-sidecar--sidebar-#{$side}.nb-sidecar--sidebar-#{$size} {
-      --nb-sidecar-sidebar-#{$side}-width: min( var(--nb-sidecar-sidebar-#{$side}-max-width), var(--nb-sidecar-sidebar-#{$size}-width) );
+      --nb-sidecar-sidebar-#{$side}-width: min(var(--nb-sidecar-sidebar-#{$side}-max-width), var(--nb-sidecar-sidebar-#{$size}-width));
     }
   }
 }
