@@ -17,19 +17,21 @@
   &--valign-bottom:after {
     flex-grow: 0;
   }
+}
   
-  @each $align in left, center, right {
-    &--halign-#{ $align } {
-      text-align: $align;
-    }
+@each $align in left, center, right {
+  .supernova--halign-#{ $align } {
+    text-align: $align;
   }
 }
 
-.supernova {
-  
-  @each $align in left, center, right {
-    &--halign-#{ $align } {
-      text-align: $align;
-    }
+.supernova-item__inner-container[class] > * {
+
+  .supernova--halign-left & {
+    margin-left: 0;
+  }
+
+  .supernova--halign-right & {
+    margin-right: 0;
   }
 }
