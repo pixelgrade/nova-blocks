@@ -71,10 +71,9 @@ const SupernovaPreview = props => {
     `supernova--source-type-${ sourceType }`,
     `supernova--card-layout-${ cardLayout }`,
     `supernova--${ columns }-columns`,
-    'alignfull',
-    `block-is-${ align }`,
     `supernova--valign-${ contentAlign[0] }`,
     `supernova--halign-${ contentAlign[1] }`,
+    'alignfull'
   );
 
   const blockProps = useBlockProps( {

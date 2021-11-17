@@ -42,10 +42,6 @@ if ( ! function_exists( 'novablocks_render_sidecar_area_block' ) ) {
 			'nb-sidecar-area--' . $attributes['areaName']
 		];
 
-		if ( $attributes[ 'areaName' ] === 'content' ) {
-			$classes[] = 'nb-conditional-align';
-		}
-
 		if ( ! empty( $attributes['className'] ) ) {
 			$classes[] = $attributes['className'];
 		}

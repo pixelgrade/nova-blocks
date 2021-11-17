@@ -129,9 +129,9 @@
 .nb-collection__layout--carousel {
 
   .supernova-item__inner-container {
-    margin-bottom: calc(2 * var(--nb-spacing) + var(--current-font-size) * var(--current-line-height));
 
     .supernova--card-layout-stacked & {
+      margin-bottom: calc(2 * var(--nb-spacing) + var(--current-font-size) * var(--current-line-height));
       margin-left: calc(var(--nb-spacing) + 50px);
       margin-right: calc(var(--nb-spacing) + 50px);
     }

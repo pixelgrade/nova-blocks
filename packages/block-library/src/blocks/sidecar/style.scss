@@ -31,9 +31,51 @@
 }
 
 // This is where magic starts.
-.nb-sidecar,
-.nb-sidecar-area--content {
+:is(.nb-sidecar, .nb-sidecar-area--content) {
   @include nb-content-layout-grid;
+
+  @at-root {
+
+    :where(#{&}) > * {
+      grid-column: var(--block-content-start) / var(--block-content-end);
+    }
+
+    :where(#{&}) > :is(.alignwide, [data-align="wide"]) {
+
+      &.break-align-left {
+        grid-column-start: var(--block-wide-start);
+      }
+
+      &.break-align-right {
+        grid-column-end: var(--block-wide-end);
+      }
+    }
+
+    :where(#{&}) > :is(.alignfull, [data-align="full"]) {
+
+      &.break-align-left {
+        grid-column-start: var(--block-full-start);
+      }
+
+      &.break-align-right {
+        grid-column-end: var(--block-full-end);
+      }
+    }
+
+    :where(#{&}) > :is(.alignleft, [data-align="left"], .alignright, [data-align="right"]) {
+      grid-row-end: span 5;
+    }
+
+    :where(#{&}) > :is(.alignleft, [data-align="left"]) {
+      --block-content-start: ws;
+      --block-content-end: gs;
+    }
+
+    :where(#{&}) > :is(.alignright, [data-align="right"]) {
+      --block-content-start: ge;
+      --block-content-end: we;
+    }
+  }
 }
 
 .nb-sidecar-area {
