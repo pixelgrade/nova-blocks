@@ -1,3 +1,5 @@
+
+// Block Spacing
 [class]:is(
   [class*="__inner-container"],
   .entry-content,
@@ -9,15 +11,61 @@
 ) {
   @include block-spacing-container;
 
-  & & > * {
+}
+
+
+
+// Block Spacing Multipliers
+[class]:is(
+  [class*="__inner-container"],
+  .entry-content,
+  .wp-block-column,
+  .block-editor-block-list__layout,
+  .widget,
+  .nb-list
+) {
+
+  // Use cases
+  &:not(.supernova__inner-container) & > * {
+    --nb-spacing-current-level-multiplier: var(--nb-spacing-level-2-multiplier);
+  }
+
+  // Use cases
+  // 1) A paragraph of a Sidecar inside another Sidecar
+  &:not(.supernova__inner-container) &:not(.wp-block-group__inner-container) & > * {
+    --nb-spacing-current-level-multiplier: var(--nb-spacing-level-3-multiplier);
+  }
+
+  // Use cases
+  & & & & > * {
+    --nb-spacing-current-level-multiplier: var(--nb-spacing-level-4-multiplier);
+  }
+}
+
+
+
+// Specifics: Sidecar block
+[class]:is(.nb-sidecar-area) {
+  & .nb-sidecar-area--sidebar > * {
     --nb-spacing-current-level-multiplier: var(--nb-spacing-level-2-multiplier);
   }
 
   & & & > * {
-    --nb-spacing-current-level-multiplier: var(--nb-spacing-level-3-multiplier);
+    --nb-spacing-current-level-multiplier: var(--nb-spacing-level-2-multiplier);
   }
 
   & & & & > * {
-    --nb-spacing-current-level-multiplier: var(--nb-spacing-level-4-multiplier);
+    --nb-spacing-current-level-multiplier: var(--nb-spacing-level-3-multiplier);
+  }
+}
+
+// Specifics: Supernova block
+[class]:is(.supernova__inner-container) {
+
+  :is(
+    .wp-block-group,
+    .wp-block-columns
+    ) > * {
+      --nb-spacing-current-level-multiplier: var(--nb-spacing-level-1-multiplier);
   }
 }

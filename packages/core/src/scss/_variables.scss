@@ -8,10 +8,11 @@
 	--nb-transition-easing: ease;
 	--nb-transition: all var(--nb-transition-duration) var(--nb-transition-easing);
 
+  // Vertical spacing decrease with the level of blocks nesting. 
   --nb-spacing-base: 1;
 	--nb-spacing-level-1-multiplier: 1;
-	--nb-spacing-level-2-multiplier: 0.5;
-	--nb-spacing-level-3-multiplier: 0.25;
+	--nb-spacing-level-2-multiplier: 0.75;
+	--nb-spacing-level-3-multiplier: 0.5;
 	--nb-spacing-level-4-multiplier: 0.125;
   --nb-spacing-current-level-multiplier: var(--nb-spacing-level-1-multiplier);
 
@@ -31,15 +32,41 @@
   --nb-current-spacing: calc(var(--nb-spacing) * var(--nb-spacing-current-multiplier));
 }
 
+@mixin spacing-base-from-2-to-1 {
+    --nb-spacing-base: calc(var(--nb-spacing-level-1-multiplier) / var(--nb-spacing-level-2-multiplier));
+}
+
+@mixin spacing-base-from-3-to-1 {
+      --nb-spacing-base: calc(var(--nb-spacing-level-1-multiplier) * var(--nb-spacing-level-2-multiplier) / var(--nb-spacing-level-3-multiplier));
+}
+
+
+// Elements inside the blocks below reset their spacing level back to 1
 :is(
   .supernova,
   .novablocks-media,
   .novablocks-hero,
   .novablocks-slideshow,
+
   .wp-block-group,
   .wp-block-columns
 ) {
-  --nb-spacing-base: 2;
+  // @include spacing-base-from-2-to-1();
+}
+
+:is(
+  .supernova,
+  .novablocks-media,
+  .novablocks-hero,
+  .novablocks-slideshow
+) { 
+
+  :is(
+  .wp-block-group,
+  .wp-block-columns
+  ) {
+    // @include spacing-base-from-3-to-1();
+  }
 }
 
 :is(
@@ -47,3 +74,5 @@
 ) {
   --nb-spacing-base: 1;
 }
+
+
