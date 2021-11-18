@@ -46,39 +46,36 @@
 :is(.nb-sidecar, .nb-sidecar-area--content) {
   @include nb-content-layout-grid;
 
-  @at-root {
+  > * {
+    grid-column: var(--block-content-start) / var(--block-content-end);
+  }
 
-    :where(#{&}) > * {
-      grid-column: var(--block-content-start) / var(--block-content-end);
+  > :where(.alignwide, [data-align="wide"]) {
+
+    &.break-align-left {
+      grid-column-start: var(--block-wide-start);
     }
 
-    :where(#{&}) > :is(.alignwide, [data-align="wide"]) {
+    &.break-align-right {
+      grid-column-end: var(--block-wide-end);
+    }
+  }
 
-      &.break-align-left {
-        grid-column-start: var(--block-wide-start);
-      }
+  > :where(.alignfull, [data-align="full"]) {
 
-      &.break-align-right {
-        grid-column-end: var(--block-wide-end);
-      }
+    &.break-align-left {
+      grid-column-start: var(--block-full-start);
     }
 
-    :where(#{&}) > :is(.alignfull, [data-align="full"]) {
-
-      &.break-align-left {
-        grid-column-start: var(--block-full-start);
-      }
-
-      &.break-align-right {
-        grid-column-end: var(--block-full-end);
-      }
+    &.break-align-right {
+      grid-column-end: var(--block-full-end);
     }
+  }
 
 
-    :where(#{&}) > :is(.alignleft, [data-align="left"]).break-align-left,
-    :where(#{&}) > :is(.alignright, [data-align="right"]).break-align-right {
-      grid-row-end: span 5;
-    }
+  > :where(.alignleft, [data-align="left"]).break-align-left,
+  > :where(.alignright, [data-align="right"]).break-align-right {
+    grid-row-end: span 5;
   }
 }
 

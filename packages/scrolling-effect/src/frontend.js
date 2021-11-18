@@ -1,5 +1,5 @@
 import $ from 'jquery';
-import { hasTouchScreen } from "@novablocks/utils";
+import { hasTouchScreen, IS_EDITOR } from "@novablocks/utils";
 import { getProps, getState, getStylesFromProps } from "./utils";
 
 const getScrollContainerHeight = () => {
@@ -21,7 +21,11 @@ const getConfig = ( container ) => {
 
 $( function() {
 
-	let frameRendered = false;
+  if ( IS_EDITOR ) {
+    return;
+  }
+
+  let frameRendered = false;
 	let $blocks = $( '.novablocks-doppler__wrapper' );
 
 	$blocks.each( function( i, container ) {

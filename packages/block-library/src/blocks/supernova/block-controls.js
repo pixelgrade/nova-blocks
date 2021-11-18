@@ -4,7 +4,7 @@ import { Button, Toolbar } from '@wordpress/components';
 
 import { getIconSvg } from "@novablocks/block-editor";
 
-import { needsPreview } from "./utils";
+import { needsPreview } from "@novablocks/utils";
 
 const Controls = ( props ) => {
 

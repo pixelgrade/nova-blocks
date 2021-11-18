@@ -1,5 +1,7 @@
 import classnames from 'classnames';
+
 import { useState } from '@wordpress/element';
+import { Popover } from '@wordpress/components';
 
 import {
   RichText,
@@ -7,14 +9,12 @@ import {
   useBlockProps,
 } from '@wordpress/block-editor';
 
-import { useScrollingEffect, withScrollingEffect } from '@novablocks/scrolling-effect';
-
 const useInnerBlocksProps = wp.blockEditor.useInnerBlocksProps || wp.blockEditor.__experimentalUseInnerBlocksProps;
 
-import { Popover } from '@wordpress/components';
+import { useScrollingEffect, withScrollingEffect } from '@novablocks/scrolling-effect';
 
 import { MediaCompositionPreview } from "@novablocks/media-composition";
-import { Card, CardButton, CardMediaWrapper } from "@novablocks/block-editor";
+import { Card, CardButton, CardMediaWrapper, withPreviewAttributes } from "@novablocks/block-editor";
 import { getColorSignalClassnames } from "@novablocks/utils";
 
 const SuperNovaItemEdit = props => {
@@ -195,4 +195,4 @@ const SuperNovaItemContent = ( props ) => {
   );
 }
 
-export default SuperNovaItemEdit;
+export default withPreviewAttributes( SuperNovaItemEdit );

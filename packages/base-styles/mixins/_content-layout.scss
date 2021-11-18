@@ -31,7 +31,9 @@
   @include nb-layout-settings;
 
   display: grid;
-  grid-column: fs / fe;
+  // a grid inside another will only work if they're overlapping perfectly
+  // so we don't to tweak selectors specificiy when we know for sure this needs to span from [fs] to [fe]
+  grid-column: fs / fe !important;
   grid-template-columns:
     [fs] var(--nb-sidecar-sides)
     [ws] var(--nb-sidecar-sidebar-left-width)
@@ -77,16 +79,13 @@
   }
   // --------------
 
-  @at-root {
+  > * {
+    grid-column: var(--block-content-start) / var(--block-content-end);
+  }
 
-    :where(#{&}) > * {
-      grid-column: var(--block-content-start) / var(--block-content-end);
-    }
-
-    @each $align in left, right, wide, full {
-      :where(#{&}) > :is(.align#{$align}, [data-align="#{$align}"]) {
-        grid-column: var(--block-#{$align}-start) / var(--block-#{$align}-end);
-      }
+  @each $align in left, right, wide, full {
+    > :where(.align#{$align}, [data-align="#{$align}"]) {
+      grid-column: var(--block-#{$align}-start) / var(--block-#{$align}-end);
     }
   }
 

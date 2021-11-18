@@ -1,5 +1,5 @@
-import { useInnerBlocks } from "@novablocks/block-editor";
-import { SupernovaItemPreview, SupernovaLayout, withPreviewAttributes } from "../index";
+import { useInnerBlocks, withPreviewAttributes } from "@novablocks/block-editor";
+import { SupernovaItemPreview, SupernovaLayout } from "../index";
 
 const NotPostsCollectionLayout = withPreviewAttributes( props => {
   const { clientId } = props;
