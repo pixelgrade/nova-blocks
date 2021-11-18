@@ -165,13 +165,17 @@
     .supernova-item__media-aspect-ratio > * {
       position: static;
     }
-    
+
     .supernova-item__media {
       width: auto;
       height: 20em;
       max-width: none;
     }
-    
+
+    .slick-initialized .supernova-item__media {
+      height: auto;
+    }
+
     .supernova-item__media-aspect-ratio:before {
       content: none;
     }

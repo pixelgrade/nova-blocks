@@ -31,15 +31,9 @@
    * Pagination
    */
   .slick-dots {
-    
-    margin-top: var(--nb-spacing);
-    margin-bottom: 0;
-    
-    padding-bottom: var(--nb-spacing);
+    padding-top: var(--nb-spacing);
     padding-left: 0;
-    
-    background: none !important;
-  
+
     button {
 
       /*
@@ -123,6 +117,7 @@
   .slick-dots {
     position: absolute;
     bottom: 0;
+    padding-bottom: var(--nb-spacing);
   }
 }
 
