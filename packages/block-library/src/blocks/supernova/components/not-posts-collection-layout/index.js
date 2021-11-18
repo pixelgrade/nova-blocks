@@ -1,15 +1,48 @@
-import { useInnerBlocks, withPreviewAttributes } from "@novablocks/block-editor";
-import { SupernovaItemPreview, SupernovaLayout } from "../index";
+import { Fragment } from "@wordpress/element";
 
-const NotPostsCollectionLayout = withPreviewAttributes( props => {
+import { useInnerBlocks, withPreviewAttributes } from "@novablocks/block-editor";
+import { CollectionBody } from "@novablocks/collection";
+
+import { SupernovaItemPreview } from "../index";
+
+const useInnerBlocksProps = wp.blockEditor.useInnerBlocksProps || wp.blockEditor.__experimentalUseInnerBlocksProps;
+
+const CardsCollectionLayout = withPreviewAttributes( props => {
+  const { attributes } = props;
+  const { preview } = attributes;
+
+  return (
+    <Fragment>
+      { ! preview && <CardsCollectionEdit { ...props } /> }
+      { preview && <CardsCollectionPreview { ...props } /> }
+    </Fragment>
+  )
+} );
+
+const CardsCollectionPreview = ( props ) => {
   const { clientId } = props;
   const innerBlocks = useInnerBlocks( clientId );
 
   return (
-    <SupernovaLayout { ...props }>
+    <CollectionBody { ...props }>
       { innerBlocks.map( innerBlock => <SupernovaItemPreview { ...innerBlock } /> ) }
-    </SupernovaLayout>
+    </CollectionBody>
   )
-} );
+}
 
-export default NotPostsCollectionLayout;
+const CardsCollectionEdit = ( props ) => {
+
+  const innerBlocksProps = useInnerBlocksProps( {
+    className: 'nb-collection__body alignfull',
+  }, {
+    allowedBlocks: [ 'novablocks/supernova-item' ],
+    renderAppender: false,
+    templateInsertUpdatesSelection: false
+  } );
+
+  return (
+    <div { ...innerBlocksProps } />
+  )
+}
+
+export default CardsCollectionLayout;

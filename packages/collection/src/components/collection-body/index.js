@@ -17,9 +17,7 @@ const CollectionBody = ( props ) => {
 
   return (
     <div className={ `nb-collection__body  align${ align }` }>
-      <CollectionLayout { ...props }>
-        { props.children }
-      </CollectionLayout>
+      <CollectionLayout { ...props } />
       <ScrollIndicator { ...props } className={ contentClassNames } />
     </div>
   );

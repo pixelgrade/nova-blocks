@@ -12,7 +12,7 @@ import { getAlignFromMatrix } from "@novablocks/utils";
 
 import {
   PostsCollectionLayout,
-  NotPostsCollectionLayout,
+  CardsCollectionLayout,
   withControlsVisibility,
 } from './components';
 
@@ -88,7 +88,7 @@ const SupernovaPreview = props => {
       <div className="supernova__inner-container">
         { headerPosition === 0 && ( showCollectionTitle || showCollectionSubtitle ) && <CollectionHeader { ...props } /> }
         { sourceType === 'content' && <PostsCollectionLayout { ...props } /> }
-        { sourceType !== 'content' && <NotPostsCollectionLayout { ...props } /> }
+        { sourceType !== 'content' && <CardsCollectionLayout { ...props } /> }
       </div>
     </div>
   );

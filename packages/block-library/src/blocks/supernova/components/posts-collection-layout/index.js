@@ -1,5 +1,6 @@
 import { useInnerBlocks } from "@novablocks/block-editor";
-import { PostCard, SupernovaLayout } from "../index";
+import { CollectionBody } from "@novablocks/collection";
+import { PostCard } from "../index";
 
 const PostsCollectionLayout = props => {
   const { posts, clientId } = props;
@@ -19,7 +20,7 @@ const PostsCollectionLayout = props => {
   }
 
   return (
-    <SupernovaLayout { ...props }>
+    <CollectionBody { ...props }>
       {
         posts.map( ( post, index ) => {
           const innerBlock = innerBlocks[ index ];
@@ -35,7 +36,7 @@ const PostsCollectionLayout = props => {
           )
         } )
       }
-    </SupernovaLayout>
+    </CollectionBody>
   )
 }
 
