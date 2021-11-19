@@ -13,7 +13,9 @@ $icon-svg-path: '../../packages/icons/src/svgs/tick.svg';
   --nb-list-decoration-gap: 0.5em;
   --nb-list-spacing: calc(var(--nb-list-bullet-size) + var(--nb-list-decoration-gap));
 
-  &[class] {
+  @include block-spacing-modifier(0.5);
+
+  &[class][class] {
     padding-left: 0;
   }
 
@@ -21,7 +23,7 @@ $icon-svg-path: '../../packages/icons/src/svgs/tick.svg';
     list-style: none;
   }
 
-  ul, ol, dl, li:not(:first-child) {
+  :is(ul, ol, dl, li:not(:first-child), .increased.specificity) {
     margin-top: var(--nb-current-spacing);
   }
 
