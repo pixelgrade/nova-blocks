@@ -15,10 +15,11 @@ export const getSpacingCSSProps = ( attributes ) => {
     layoutGutter,
     minHeightFallback,
     thumbnailAspectRatio,
+    spacingModifier,
   } = attributes;
 
-  const emphasisTopSpacingValue = verticalAlignment === 'top' ? Math.abs(emphasisTopSpacing) : emphasisTopSpacing,
-    emphasisBottomSpacingValue = verticalAlignment === 'bottom' ? Math.abs(emphasisBottomSpacing) : emphasisBottomSpacing;
+  const emphasisTopSpacingValue = verticalAlignment === 'top' ? Math.abs(emphasisTopSpacing) : emphasisTopSpacing;
+  const emphasisBottomSpacingValue = verticalAlignment === 'bottom' ? Math.abs(emphasisBottomSpacing) : emphasisBottomSpacing;
 
   return {
     '--nb-emphasis-top-spacing': emphasisTopSpacingValue + '',
@@ -33,5 +34,6 @@ export const getSpacingCSSProps = ( attributes ) => {
     '--nb-card-media-padding-multiplier': imagePadding / 100,
     '--nb-card-layout-gap-modifier': layoutGutter / 100,
     '--nb-minimum-container-height': minHeightFallback + 'vh',
+    '--nb-spacing-modifier': spacingModifier + '',
   }
 }

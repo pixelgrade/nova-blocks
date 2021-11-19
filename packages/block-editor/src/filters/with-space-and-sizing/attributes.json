@@ -62,5 +62,9 @@
 	"layoutGutter": {
 		"type": "number",
 		"default": 0
+	},
+	"spacingModifier": {
+		"type": "number",
+		"default": 1
 	}
 }

@@ -1,5 +1,6 @@
 export { default as useApiFetch } from './use-api-fetch';
 export { default as useAnimationFrame } from './use-animation-frame';
+export { default as useBlockTopSpacingIsDisabled } from './use-block-top-spacing-is-disabled';
 export { default as useEffectDebugger } from './use-effect-debugger';
 export { default as useInnerBlocks } from './use-inner-blocks';
 export { default as useInnerBlocksCount } from './use-inner-blocks-count';

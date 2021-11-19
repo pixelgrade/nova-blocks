@@ -1404,6 +1404,7 @@ function novablocks_get_sizing_css( $attributes ) {
 		'--nb-card-media-object-fit: ' . ( $attributes['imageResizing'] === 'cropped' ? 'cover' : 'scale-down' ),
 		'--nb-minimum-container-height: ' . $attributes['minHeightFallback'] . 'vh',
 		'--nb-card-content-area-width: ' . $attributes['contentAreaWidth'] . '%',
+		'--nb-spacing-modifier: ' . $attributes['spacingModifier'] . ''
 	];
 }
 

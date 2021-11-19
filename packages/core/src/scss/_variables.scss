@@ -10,11 +10,8 @@
 
   // Vertical spacing decrease with the level of blocks nesting. 
   --nb-spacing-base: 1;
-	--nb-spacing-level-1-multiplier: 1;
-	--nb-spacing-level-2-multiplier: 0.75;
-	--nb-spacing-level-3-multiplier: 0.5;
-	--nb-spacing-level-4-multiplier: 0.125;
-  --nb-spacing-current-level-multiplier: var(--nb-spacing-level-1-multiplier);
+  --nb-spacing-modifier: 1;
+  --nb-spacing-current-multiplier: 1;
 
 	--nb-block-content-box-shadow:
 		0 32px 128px rgba(42, 54, 52, 0.1),
@@ -27,52 +24,4 @@
   --nb-accent-color: var(--sm-current-accent-color, #203AB6);
   --nb-fg1-color: var(--sm-current-fg1-color, #272743);
   --nb-fg2-color: var(--sm-current-fg2-color, #000043);
-
-  --nb-spacing-current-multiplier: calc(var(--nb-spacing-base) * var(--nb-spacing-current-level-multiplier));
-  --nb-current-spacing: calc(var(--nb-spacing) * var(--nb-spacing-current-multiplier));
 }
-
-@mixin spacing-base-from-2-to-1 {
-    --nb-spacing-base: calc(var(--nb-spacing-level-1-multiplier) / var(--nb-spacing-level-2-multiplier));
-}
-
-@mixin spacing-base-from-3-to-1 {
-      --nb-spacing-base: calc(var(--nb-spacing-level-1-multiplier) * var(--nb-spacing-level-2-multiplier) / var(--nb-spacing-level-3-multiplier));
-}
-
-
-// Elements inside the blocks below reset their spacing level back to 1
-:is(
-  .supernova,
-  .novablocks-media,
-  .novablocks-hero,
-  .novablocks-slideshow,
-
-  .wp-block-group,
-  .wp-block-columns
-) {
-  // @include spacing-base-from-2-to-1();
-}
-
-:is(
-  .supernova,
-  .novablocks-media,
-  .novablocks-hero,
-  .novablocks-slideshow
-) { 
-
-  :is(
-  .wp-block-group,
-  .wp-block-columns
-  ) {
-    // @include spacing-base-from-3-to-1();
-  }
-}
-
-:is(
-  .supernova__inner-container
-) {
-  --nb-spacing-base: 1;
-}
-
-
