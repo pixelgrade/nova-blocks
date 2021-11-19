@@ -1,6 +1,6 @@
 /**
- * BLOCKS SPACING
- * Set the default spacing for Blocks
+ * GENERAL BLOCKS SPACING
+ * Apply the default spacing to all elements inside the container below.
  */
 
 [class]:is(
@@ -13,7 +13,22 @@
   .nb-list,
 ) {
   @include block-spacing-container;
+  
+  /**
+   * HEADINGS SPACING
+   * Headings should be in closer proximity to the paragraph they introduce.
+   */
+  :is(h1, h2, h3, h4, h5, h6) {
+    --nb-block-top-spacing: 1.25;
 
+    + :is(p) {
+      --nb-block-top-spacing: 0.5;
+    }
+
+    + :is(h1, h2, h3, h4, h5, h6) {
+      --nb-block-top-spacing: 0.25;
+    }
+  }
 }
 
 
