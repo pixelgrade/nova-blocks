@@ -23,8 +23,6 @@ const useBlockTopSpacingIsDisabled = ( clientId ) => {
 
   }, [ clientId, rootBlocks ] );
 
-  console.log( isDisabled );
-
   return isDisabled;
 }
 
