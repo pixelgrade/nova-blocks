@@ -5,18 +5,21 @@
   padding-bottom: calc(var(--nb-emphasis-bottom-spacing) * var(--nb-current-spacing));
 }
 
+@mixin block-spacing-modifier {
+  --nb-spacing-base: calc(var(--nb-spacing-current-multiplier) * var(--nb-spacing-modifier));
 
+  > * {
+    --nb-spacing-current-multiplier: var(--nb-spacing-base);
+  }
+}
 
 @mixin block-spacing-container {
-  --nb-spacing-base: calc(var(--nb-spacing-current-multiplier) * var(--nb-spacing-modifier));
 
   > * {
     --nb-block-top-spacing: 1;
     --nb-block-bottom-spacing: 0;
     --nb-emphasis-top-spacing: 0;
     --nb-emphasis-bottom-spacing: 0;
-
-    --nb-spacing-current-multiplier: var(--nb-spacing-base);
     --nb-current-spacing: calc(var(--nb-spacing) * var(--nb-spacing-current-multiplier));
 
     @include block-spacing;

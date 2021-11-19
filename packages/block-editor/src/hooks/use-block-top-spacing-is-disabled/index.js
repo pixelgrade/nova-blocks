@@ -1,12 +1,11 @@
 import { useSelect } from "@wordpress/data";
-import { useCallback } from "@wordpress/element";
+import { useMemo } from "@wordpress/element";
 
 const useBlockTopSpacingIsDisabled = ( clientId ) => {
   const { getBlockParents, getBlock, getClientIdsWithDescendants } = useSelect( 'core/block-editor' );
   const parents = getBlockParents( clientId ).slice();
   const rootBlocks = getClientIdsWithDescendants();
-
-  return useCallback( () => {
+  const isDisabled = useMemo( () => {
 
     if ( parents.length ) {
       const { innerBlocks } = getBlock( parents[ parents.length - 1 ] );
@@ -20,7 +19,13 @@ const useBlockTopSpacingIsDisabled = ( clientId ) => {
       return true;
     }
 
+    return false;
+
   }, [ clientId, rootBlocks ] );
+
+  console.log( isDisabled );
+
+  return isDisabled;
 }
 
 export default useBlockTopSpacingIsDisabled;
