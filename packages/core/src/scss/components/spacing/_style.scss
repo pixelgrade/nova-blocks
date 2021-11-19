@@ -1,5 +1,8 @@
+/**
+ * BLOCKS SPACING
+ * Set the default spacing for Blocks
+ */
 
-// Block Spacing
 [class]:is(
   [class*="__inner-container"],
   .entry-content,
@@ -15,6 +18,63 @@
 
 
 
+
+
+/**
+ * SPACING LEVELS
+ *
+ * LEVEL 1
+ * 1) Elements inside the Body of a page
+ * 2) Elements of a Group inside Root or Supernova
+ * 3) Elements of a Column inside Root or Supernova
+ * 4) Elements inside a Hero or Media Card (Supernova) 
+ *
+ * LEVEL 2
+ * 1) Elements of a Group placed inside another Group
+ * 2) Elements inside a small or medium Sidebar
+ * 3) Elements of a Column block inside a Media Card (Supernova), Footer 
+ * 4) Elements of a Group block inside a Media Card (Supernova), Footer 
+ *
+ * LEVEL 3
+ * 1) Elements inside a 3 columns Cards Collection
+ *
+ * LEVEL 4
+ * 1) Elements inside a 4 columns Cards Collection
+ * 
+ */
+
+
+/**
+ * [class*="__inner-container"] selectors:
+ * 
+ * HEADER
+ *  .novablocks-header__inner-container
+ *    header-row
+ *      .novablocks-header-row__inner-container
+ * 
+ * SIDECAR
+ *  .nb-sidecar-area
+ *    CONTENT (Pages)
+ *    
+ *    article-header
+ *      .wp-block-group__inner-container
+
+ * GROUP
+ *  .wp-block-group__inner-container
+ * 
+ * SUPERNOVA 
+ *  .supernova__inner-container
+ *    .supernova-item__inner-container
+ * 
+ * FOOTER
+ *  .site-footer__inner-container
+ *
+ */ 
+
+
+
+
+
 // Block Spacing Multipliers
 [class]:is(
   [class*="__inner-container"],
@@ -25,18 +85,14 @@
   .nb-list
 ) {
 
-  // Use cases
   &:not(.supernova__inner-container) & > * {
     --nb-spacing-current-level-multiplier: var(--nb-spacing-level-2-multiplier);
   }
 
-  // Use cases
-  // 1) A paragraph of a Sidecar inside another Sidecar
   &:not(.supernova__inner-container) &:not(.wp-block-group__inner-container) & > * {
     --nb-spacing-current-level-multiplier: var(--nb-spacing-level-3-multiplier);
   }
 
-  // Use cases
   & & & & > * {
     --nb-spacing-current-level-multiplier: var(--nb-spacing-level-4-multiplier);
   }
@@ -50,6 +106,7 @@
     --nb-spacing-current-level-multiplier: var(--nb-spacing-level-2-multiplier);
   }
 
+  // When there are two Sidecars, why the CONTENT is by-default Level 2 ?
   & & & > * {
     --nb-spacing-current-level-multiplier: var(--nb-spacing-level-2-multiplier);
   }
