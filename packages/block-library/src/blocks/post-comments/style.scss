@@ -93,10 +93,10 @@
   
     .comment-list {
       @include block-spacing;
-      --nb-spacing-current-multiplier: .75;
+      --nb-block-top-spacing: .75;
   
       @include above(tablet) {
-        --nb-spacing-current-multiplier: 1;
+        --nb-block-top-spacing: 1;
       }
   
       .no-avatar {
@@ -137,21 +137,25 @@
       > *,
       > * > * {
         @include block-spacing;
-        --nb-spacing-current-multiplier: 0.75;
+        --nb-block-top-spacing: 0.75;
       }
   
       .comment-form-comment,
       .field-description,
       input[type="checkbox"] + label {
-        --nb-spacing-current-multiplier: 0;
+        --nb-block-top-spacing: 0;
       }
   
       .field-description {
   
         + *,
         label + :not(.field-description) {
-          --nb-spacing-current-multiplier: 0.175;
+          --nb-block-top-spacing: 0.175;
   
+        }
+
+        &:empty {
+          display: none;
         }
       }
     }
@@ -417,7 +421,7 @@
     .comment-content,
     .comment-footer-meta {
       @include block-spacing;
-      --nb-spacing-current-multiplier: 0.5;
+      --nb-block-top-spacing: 0.35;
     }
   
     .comment-author-info {
@@ -685,8 +689,11 @@
   }
   
   .comment-awaiting-moderation {
-    font-style: italic;
-    opacity: 0.5;
+    --font-size-modifier:0.88;
+    opacity: 0.6;
+
+    @include block-spacing;
+    --nb-block-top-spacing: 0.25;
   }
   
   @include below(tablet) {
@@ -874,6 +881,10 @@
         transition: transform .2s ease;
       }
     }
+
+    .dropdown-label {
+
+    }
   
     @include above(tablet) {
       position: relative;
@@ -892,6 +903,10 @@
   
       .dots {
         display: none;
+      }
+
+      &:hover {
+        opacity: 1;
       }
     }
   
@@ -1002,10 +1017,11 @@
     color: currentColor;
     border-color: currentColor;
     text-align: left;
+    cursor: pointer;
   }
   
   // 1. Form that has not been expanded yet should be hidden
-  // 2. Expanded form should hide fake input
+  // 2. Expanded form should hide the fake input button
   
   .novablocks-conversations__form:not(.expanded),
   .novablocks-conversations__form.expanded + .fake-form-placeholder {
