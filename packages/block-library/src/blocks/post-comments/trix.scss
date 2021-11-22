@@ -21,8 +21,7 @@ trix-toolbar {
 
   &[id] {
     @include block-spacing;
-    --nb-spacing-current-multiplier: .175;
-    --nb-block-top-spacing: 1;
+    --nb-block-top-spacing: .175;
   }
 
   background-color: var(--trix-input-bg-color);
