@@ -71,7 +71,7 @@
     }
   }
 
-  > .wp-block-group:not(.break-align-left, .break-align-right) > .wp-block-group__inner-container > * {
+  > .wp-block-group:not(.break-align-left):not(.break-align-right) > .wp-block-group__inner-container > * {
     max-width: none;
   }
 
