@@ -13,7 +13,7 @@ $slick-arrow-color: var(--sm-current-fg1-color);
 @import 'scss/vendor/slick-theme';
 
 // Applying Grid on Group Block
-[class*="__inner-container"][class] {
+[class*="__inner-container"] {
   @include nb-content-layout;
 }
 

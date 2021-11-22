@@ -49,15 +49,20 @@
     [we] var(--nb-sidecar-sides)
     [fe];
 
-  // --------------
-  // overwrite [class*="__inner-container"][class] styles
-  &[class][class] {
-    padding-left: 0;
-    padding-right: 0;
+  // horizontally align images that can't be pulled to center
+  > .wp-block-image {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
 
-    > .alignfull {
-      margin-left: 0;
-      margin-right: 0;
+  // classis editor styles have custom styles for aligned images
+  > :where(.wp-block)[data-align=left],
+  > :where(.wp-block)[data-align=right] {
+    height: auto;
+
+    > .wp-block-image {
+      margin: 0;
     }
   }
 
@@ -83,7 +88,7 @@
     grid-column: var(--block-content-start) / var(--block-content-end);
   }
 
-  @each $align in left, right, wide, full {
+  @each $align in wide, full {
     > :where(.align#{$align}, [data-align="#{$align}"]) {
       grid-column: var(--block-#{$align}-start) / var(--block-#{$align}-end);
     }

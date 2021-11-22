@@ -42,13 +42,12 @@
   @include nb-layout-settings;
 }
 
-// This is where magic starts.
 :is(.nb-sidecar, .nb-sidecar-area--content) {
   @include nb-content-layout-grid;
+}
 
-  > * {
-    grid-column: var(--block-content-start) / var(--block-content-end);
-  }
+// This is where magic starts.
+.nb-sidecar-area--content {
 
   > :where(.alignwide, [data-align="wide"]) {
 
@@ -72,10 +71,21 @@
     }
   }
 
+  > .wp-block-group:not(.break-align-left, .break-align-right) > .wp-block-group__inner-container > * {
+    max-width: none;
+  }
 
   > :where(.alignleft, [data-align="left"]).break-align-left,
   > :where(.alignright, [data-align="right"]).break-align-right {
     grid-row-end: span 5;
+  }
+
+  > :where(.alignleft, [data-align="left"]).break-align-left {
+    grid-column: var(--block-left-start) / var(--block-left-end);
+  }
+
+  > :where(.alignright, [data-align="right"]).break-align-right {
+    grid-column: var(--block-right-start) / var(--block-right-end);
   }
 }
 
@@ -124,10 +134,9 @@
   }
 
   .nb-sidecar--sidebar-left {
-    --block-left-start: var(--block-content-start);
-    --block-left-end: var(--block-content-end);
 
     > .nb-sidecar-area--content {
+
       --block-wide-start: cs;
       --block-full-start: cs;
     }
@@ -139,8 +148,6 @@
   }
 
   .nb-sidecar--sidebar-right {
-    --block-right-start: var(--block-content-start);
-    --block-right-end: var(--block-content-end);
 
     > .nb-sidecar-area--content {
       --block-wide-end: ce;
