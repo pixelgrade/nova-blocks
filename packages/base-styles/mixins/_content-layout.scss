@@ -88,12 +88,6 @@
     grid-column: var(--block-content-start) / var(--block-content-end);
   }
 
-  @each $align in wide, full {
-    > :where(.align#{$align}, [data-align="#{$align}"]) {
-      grid-column: var(--block-#{$align}-start) / var(--block-#{$align}-end);
-    }
-  }
-
   @include below(lap) {
     grid-template-columns:
       [fs] var(--nb-wrapper-sides-spacings) // [ws]
