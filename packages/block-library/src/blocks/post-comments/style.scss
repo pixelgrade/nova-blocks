@@ -44,19 +44,15 @@
       }
   
       label {
-        // font-size: var(--label-font-size);
   
-        &:not([for="wp-comment-cookies-consent"]) {
+        &:not([for="wp-comment-cookies-consent"]):not(.comment-dropdown-toggle) {
           font-weight: bold;
         }
       }
   
       .field-description {
         display: block;
-  
-        // font-size: var(--field-description-font-size);
         color: var(--field-description-color);
-  
         opacity: .5;
       }
     }
@@ -197,6 +193,10 @@
       max-width: 100%;
       height: auto;
       border-radius: 50%;
+
+      @include above(tablet) {
+        border-radius: 40%;
+      }
     }
   
     .form-grid {
@@ -391,11 +391,14 @@
     }
   
     // layout
-    .comment-author-info,
+    .comment-author-info {
+      grid-column: 2 / span 1;
+    }
+
     .comment-content,
     .comment-footer-meta,
     .comment-footer-highlights {
-      grid-column: 2 / span 1;
+      grid-column: 2 / span 2;
     }
   
     .comment-author-avatar {
@@ -459,7 +462,7 @@
       transform: translateZ(0);
   
       display: inline-block;
-      padding: .3em .75em;
+      padding: .25em .75em;
   
       color: var(--nb-bg-color);
   
@@ -980,11 +983,6 @@
   
   .novablocks-conversation__starter-message {
     grid-area: content;
-    // font-size: 19px;
-  
-    @include above(tablet) {
-      // font-size: 23px;
-    }
   }
   
   .novablocks-conversation__starter-avatar {
