@@ -71,7 +71,7 @@ if ( ! class_exists( 'NovaBlocks_Walker_Comment' ) ) {
 			<<?php echo $tag; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- static output ?> id="comment-<?php comment_ID(); ?>" <?php comment_class( $comment_classes, $comment ); ?>>
 			<div class="<?php echo esc_attr( $comment_wrapper_classes ); ?>" id="wrapper-comment-<?php comment_ID(); ?>">
 				<article class="comment-body">
-					<footer class="comment-meta">
+					<header class="comment-meta">
 						<?php
 						if ( 0 !== $args['avatar_size'] && ! empty( $avatar ) ) { ?>
 						<div class="comment-author-avatar vcard">
