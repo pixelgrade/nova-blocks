@@ -8,7 +8,7 @@ const withWrapperPropsRemoved = createHigherOrderComponent( OriginalComponent =>
     const supports = useSupports( props.name );
     const { dataAlign, ...newWrapperProps } = props?.wrapperProps || {};
 
-    if ( !supports?.novaBlocks?.customAlign ) {
+    if ( ! supports?.novaBlocks?.customAlign ) {
       return <OriginalComponent { ...props } />
     }
 

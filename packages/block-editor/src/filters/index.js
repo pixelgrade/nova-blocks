@@ -11,7 +11,7 @@ import "./with-font-size-picker"; // @todo maybe rely on supports API
 import "./with-on-select-images";
 import "./with-random-defaults";
 import './with-settings';
-import './with-content-alignment';
+import './with-custom-align';
 
 import "./with-card-elements-stacking";
 import "./with-collection-layout";

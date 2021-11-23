@@ -5,12 +5,14 @@
 
 [class]:is(
   [class*="__inner-container"],
-  .entry-content,
   .wp-block-column,
   .block-editor-block-list__layout,
-  .nb-sidecar-area,
   .widget,
   .nb-list,
+  .nb-sidecar,
+  .nb-sidecar-area,
+  .nb-content-layout-grid,
+  .nb-block-spacing-container,
 ) {
   @include block-spacing-container;
 }

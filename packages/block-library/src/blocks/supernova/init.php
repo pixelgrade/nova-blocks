@@ -48,6 +48,7 @@ if ( ! function_exists( 'novablocks_render_supernova_block' ) ) {
 			'supernova--' . $attributes['columns'] . '-columns',
 			'supernova--valign-' . $align[0],
 			'supernova--halign-' . $align[1],
+			'nb-content-layout-grid',
 			'alignfull',
 		],
 			novablocks_get_color_signal_classes( $attributes ),
@@ -69,9 +70,7 @@ if ( ! function_exists( 'novablocks_render_supernova_block' ) ) {
 			style="<?php echo join( ';', $cssProps ); ?>"
 			<?php echo join( ' ', $data_attributes ); ?>
 		>
-			<div class="supernova__inner-container">
-				<?php echo novablocks_get_collection_output( $attributes, $content ); ?>
-			</div>
+			<?php echo novablocks_get_collection_output( $attributes, $content ); ?>
 		</div>
 
 		<?php return ob_get_clean();

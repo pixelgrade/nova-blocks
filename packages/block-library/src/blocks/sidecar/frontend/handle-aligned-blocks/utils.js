@@ -1,5 +1,5 @@
 export const getContentBlocksArray = () => {
-  const selector = '.nb-sidecar-area--content > :is( .alignfull, .alignwide, .alignleft, .alignright )';
+  const selector = '.nb-content-layout-grid > :is( .alignfull, .alignwide, .alignleft, .alignright )';
   const nodelist = document.querySelectorAll( selector );
   return Array.from( nodelist );
 }

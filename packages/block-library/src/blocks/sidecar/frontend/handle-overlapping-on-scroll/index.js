@@ -34,7 +34,7 @@ export const getOverlappingSets = () => {
   return sidebars.reduce( ( acc, sidebar ) => {
     const sidecar = sidebar.parentElement;
     const stickyElement = sidebar.lastElementChild;
-    const blockSelector = '.nb-sidecar-area--content > :is(.alignfull, .alignwide, .alignleft, .alignright)';
+    const blockSelector = '.nb-content-layout-grid > :is(.alignfull, .alignwide, .alignleft, .alignright)';
     const blocks = Array.from( sidecar.querySelectorAll( blockSelector ) );
 
     return [ ...acc, [ stickyElement, blocks ] ];

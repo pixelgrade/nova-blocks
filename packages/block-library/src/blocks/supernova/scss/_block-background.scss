@@ -1,17 +1,17 @@
 @mixin block-background {
   position: relative;
+  --emphasis-area-width: calc( var(--nb-emphasis-area, 100) * 1% );
 
   &:before {
     content: '';
     
     position: absolute;
     top: 0;
+    right: 0;
+    bottom: 0;
     left: 0;
-    
-    height: 100%;
-    width: 100%;
-    
-    grid-column: var(--custom-limit-left) / var(--custom-limit-right);
+
+    grid-column: var(--block-full-start) / var(--block-full-end);
     
     background: linear-gradient(
         90deg,

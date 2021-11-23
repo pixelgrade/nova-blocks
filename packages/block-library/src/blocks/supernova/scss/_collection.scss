@@ -1,3 +1,31 @@
+.supernova {
+
+  // if it has some sort of color contrast
+  &[class*="sm-color-signal"]:not(.sm-color-signal-0) {
+
+    // and doesn't look like a hero area
+    &:not(.supernova--card-layout-stacked.supernova--1-columns.alignfull) {
+
+      // and is inside a sidecar area
+      .nb-sidecar-area & {
+
+        // add padding to the collections inside it
+        .nb-collection {
+
+          // only if they don't break outside the layout
+          &:not(.break-align-left) {
+            padding-left: var(--nb-wrapper-sides-spacings);
+          }
+
+          &:not(.break-align-right) {
+            padding-right: var(--nb-wrapper-sides-spacings);
+          }
+        }
+      }
+    }
+  }
+}
+
 .nb-collection__layout {
   --nb-grid-spacing: calc(var(--nb-spacing) * var(--nb-grid-spacing-modifier) * 0.02);
 

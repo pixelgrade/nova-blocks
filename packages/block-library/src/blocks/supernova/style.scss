@@ -5,11 +5,8 @@
 @import 'scss/content-alignments';
 
 .supernova {
-  --emphasis-area-width: calc( var(--nb-emphasis-area, 100) * 1% );
-
   background: none !important;
   @include block-background;
-
 }
 
 .supernova-item.supernova-item--layout-stacked {
@@ -25,8 +22,11 @@
   }
 }
 
-.supernova,
-.supernova__inner-container {
+:is(
+  .nb-content-layout-grid,
+  .nb-sidecar,
+  .nb-sidecar-area--content
+) {
   @include nb-content-layout-grid;
 }
 

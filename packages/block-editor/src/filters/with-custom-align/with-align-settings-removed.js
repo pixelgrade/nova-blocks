@@ -5,13 +5,15 @@ const withAlignSettingsRemoved = ( settings ) => {
   }
 
   const { getEditWrapperProps, ...newSettings } = settings;
-  const { align, ...newSupports } = settings.supports;
+  const { align, alignWide, ...newSupports } = settings.supports;
 
 
   return {
     ...newSettings,
     supports: {
       ...newSupports,
+      align: false,
+      alignWide: false,
       novaBlocks: {
         ...settings.supports.novaBlocks,
         align,

@@ -1462,29 +1462,38 @@ if ( ! function_exists( 'novablocks_get_collection_output' ) ) {
 			'nb-collection__layout--' . $attributes['carouselLayout'] . '-width',
 		];
 
-		$header_classes = [
-			'nb-collection__header',
-			'align' . $attributes['align'],
-		];
-
 		if ( ! empty( $attributes['showCollectionSubtitle'] ) && ! empty( $attributes['subtitle'] ) ) {
 			$header_classes[] = 'nb-collection__header--has-description';
 		}
 
+		if ( empty( $collection_header ) && empty( $content ) ) {
+			return '';
+		}
+
+		$collection_classes = [
+			'nb-collection',
+			'align' . $attributes['align'],
+			'nb-block-spacing-container'
+		];
+
 		ob_start(); ?>
 
-		<?php if ( ! empty( $collection_header ) ) { ?>
-			<div class="<?php echo join( " ", $header_classes ); ?>">
-				<div class="nb-collection__inner-container">
-					<?php echo $collection_header ?>
+		<div class="<?php echo join( " ", $collection_classes ); ?>">
+
+			<?php if ( ! empty( $collection_header ) ) { ?>
+				<div class="nb-collection__header">
+					<div class="nb-collection__inner-container">
+						<?php echo $collection_header ?>
+					</div>
+				</div>
+			<?php } ?>
+
+			<div class="nb-collection__body">
+				<div class="<?php echo esc_attr( join( ' ', $layout_classes ) ); ?>">
+					<?php echo $content; ?>
 				</div>
 			</div>
-		<?php } ?>
 
-		<div class="<?php echo "nb-collection__body  align" . $attributes['align'] ?>">
-			<div class="<?php echo esc_attr( join( ' ', $layout_classes ) ); ?>">
-				<?php echo $content; ?>
-			</div>
 		</div>
 
 		<?php return ob_get_clean();

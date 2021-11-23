@@ -15,6 +15,16 @@ $slick-arrow-color: var(--sm-current-fg1-color);
 // Applying Grid on Group Block
 [class*="__inner-container"] {
   @include nb-content-layout;
+
+  .sm-color-signal-0:not(.alignfull):not([data-align="full"]) > & {
+    padding-left: 0;
+    padding-right: 0;
+
+    > :is(.alignfull, [data-align="full"]) {
+      margin-left: 0;
+      margin-right: 0;
+    }
+  }
 }
 
 .wp-block {
@@ -30,10 +40,6 @@ $slick-arrow-color: var(--sm-current-fg1-color);
   .wp-block-group__inner-container {
     padding-top: calc((1 + (-1 * var(--nb-emphasis-top-spacing))) * var(--nb-wrapper-sides-spacings));
     padding-bottom: calc((1 + (-1 * var(--nb-emphasis-bottom-spacing))) * var(--nb-wrapper-sides-spacings));
-  }
-
-  &.sm-color-signal-0:not(.alignfull) .wp-block-group__inner-container {
-    padding: 0;
   }
 }
 

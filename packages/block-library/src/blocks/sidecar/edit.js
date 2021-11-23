@@ -26,10 +26,10 @@ const Edit = ( props ) => {
   const innerBlocks = useInnerBlocks( clientId );
 
   const className = classnames(
-    `nb-sidecar`,
+    'nb-sidecar',
     `nb-sidecar--sidebar-${ sidebarPosition }`,
     `nb-sidecar--sidebar-${ sidebarWidth }`,
-    `alignfull`,
+    'nb-content-layout-grid',
     {
       'nb-sidecar--sticky-sidebar': lastItemIsSticky === true,
     }
