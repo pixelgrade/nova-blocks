@@ -27,6 +27,15 @@ $slick-arrow-color: var(--sm-current-fg1-color);
   }
 }
 
+:is(
+  .nb-content-layout-grid,
+  .nb-sidecar,
+  .nb-sidecar-area--content
+) {
+  @include nb-content-layout-grid;
+}
+
+
 .wp-block {
   max-width: none;
 }

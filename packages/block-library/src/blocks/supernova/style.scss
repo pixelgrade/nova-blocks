@@ -22,14 +22,6 @@
   }
 }
 
-:is(
-  .nb-content-layout-grid,
-  .nb-sidecar,
-  .nb-sidecar-area--content
-) {
-  @include nb-content-layout-grid;
-}
-
 /*
  * Currently Slick is applying display: inline-block.
  * Until we find a solution for that,
