@@ -40,12 +40,13 @@ if ( ! function_exists( 'novablocks_render_cards_collection_block' ) ) {
 		$align = preg_split( '/\b\s+/', $attributes['contentPosition'] );
 
 		$classes = [
-			'alignfull',
 			'supernova',
 			'supernova--source-type-' . $attributes['sourceType'],
 			'supernova--card-layout-' . $attributes['cardLayout'],
 			'supernova--valign-' . $align[0],
 			'supernova--halign-' . $align[1],
+			'nb-content-layout-grid',
+			'alignfull',
 		];
 
 		$classes = array_merge(
