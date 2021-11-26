@@ -19,7 +19,7 @@
   @include block-spacing-modifier;
 }
 
-:is(h1, h2, h3, h4, h5, h6, .increased.specificity) {
+:is(h1, h2, h3, h4, h5, h6, .specificity.x2) {
 
   &:not(:first-child) {
     --nb-block-top-spacing: 1.25;
@@ -29,7 +29,7 @@
     --nb-block-top-spacing: 0.5;
   }
 
-  + :is(h1, h2, h3, h4, h5, h6) {
+  + :is(h1, h2, h3, h4, h5, h6, .specificity.x2) {
     --nb-block-top-spacing: 0.25;
   }
 }
