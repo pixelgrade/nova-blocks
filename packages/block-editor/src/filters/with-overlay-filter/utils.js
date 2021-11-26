@@ -26,17 +26,31 @@ export const generateDuotonePresetsFromPalettes = ( palettes ) => {
     shadowIndex = clamp( shadowIndex, 0, 11 );
 
     palettes.forEach( ( palette1 ) => {
+
+      let colors1 = palette1.colors.slice();
+
+      if ( Array.isArray( palette1.variations ) ) {
+        colors1 = palette1.variations.map( variation => variation.background );
+      }
+
       palettes.forEach( ( palette2 ) => {
+
         if ( palette2.id === palette1.id ) {
           return;
         }
 
-        const highlightsColor = palette1.colors[highlightIndex]["value"];
-        const shadowsColor = palette2.colors[shadowIndex]["value"];
+        let colors2 = palette2.colors.slice();
+
+        if ( Array.isArray( palette2.variations ) ) {
+          colors2 = palette2.variations.map( variation => variation.background );
+        }
+
+        const highlightsColor = colors1[ highlightIndex ][ "value" ];
+        const shadowsColor = colors2[ shadowIndex ][ "value" ];
 
         presets.push( {
-          name: `${palette2.label}(${shadowIndex}) and ${palette1.label}(${highlightIndex})`,
-          colors: [shadowsColor, highlightsColor],
+          name: `${ palette2.label }(${ shadowIndex }) and ${ palette1.label }(${ highlightIndex })`,
+          colors: [ shadowsColor, highlightsColor ],
         } );
       } );
     } );

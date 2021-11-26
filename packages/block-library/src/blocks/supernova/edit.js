@@ -66,7 +66,6 @@ const SupernovaPreview = props => {
   const contentAlign = getAlignFromMatrix( attributes?.contentPosition );
 
   const className = classnames(
-    props.className,
     'supernova',
     `supernova--source-type-${ sourceType }`,
     `supernova--card-layout-${ cardLayout }`,
@@ -74,6 +73,7 @@ const SupernovaPreview = props => {
     `supernova--valign-${ contentAlign[0] }`,
     `supernova--halign-${ contentAlign[1] }`,
     'nb-content-layout-grid',
+    props.className,
     'alignfull'
   );
 

@@ -20,15 +20,20 @@ import { withControlsVisibility } from "./components";
 const ALLOWED_BLOCKS = [ 'novablocks/card' ];
 
 const CardsCollectionEdit = ( props ) => {
-
 	const { attributes, clientId } = props;
+  const { columns } = attributes;
   const contentAlign = getAlignFromMatrix( attributes?.contentPosition );
 
   const contentClassName = classnames(
-    `alignfull`,
-    `supernova-item__content--valign-${ contentAlign[0] }`,
-    `supernova-item__content--halign-${ contentAlign[1] }`,
+    'supernova',
+    `supernova--source-type-fields`,
+    `supernova--card-layout-vertical`,
+    `supernova--${ columns }-columns`,
+    `supernova--valign-${ contentAlign[0] }`,
+    `supernova--halign-${ contentAlign[1] }`,
+    'nb-content-layout-grid',
     props.className,
+    `alignfull`,
   );
 
   const blockProps = useBlockProps( {
