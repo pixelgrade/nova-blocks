@@ -34,23 +34,17 @@ if ( ! function_exists( 'novablocks_render_sidecar_block' ) ) {
 		$attributes_config = novablocks_get_sidecar_attributes();
 		$attributes        = novablocks_get_attributes_with_defaults( $attributes, $attributes_config );
 
-		$classes = [ 'nb-sidecar' ];
+		$classes = [
+			'nb-sidecar',
+			'nb-sidecar--sidebar-' . $attributes['sidebarPosition'],
+			'nb-sidecar--sidebar-' . $attributes['sidebarWidth'],
+			'nb-content-layout-grid',
+		];
 
-		if ( ! empty( $attributes['layout'] ) && $attributes['layout'] === 'complex' ) {
-			$classes[] = 'nb-sidecar--complex';
-		}
-
-		if ( ! empty( $attributes['sidebarPosition'] ) ) {
-			$classes[] = 'nb-sidecar--sidebar-' . $attributes['sidebarPosition'];
-		}
-
-		if ( ! empty( $attributes['sidebarWidth'] ) ) {
-			$classes[] = 'nb-sidecar--sidebar-' . $attributes['sidebarWidth'];
-		}
-
-		if ( ! empty( $attributes['lastItemIsSticky'] ) && $attributes['lastItemIsSticky'] === true ) {
+		if ( ! empty( $attributes['lastItemIsSticky'] ) ) {
 			$classes[] = 'nb-sidecar--sticky-sidebar';
 		}
+
 		?>
 
 		<div class="<?php echo esc_attr( join( ' ', $classes ) ); ?>">

@@ -5,11 +5,8 @@
 @import 'scss/content-alignments';
 
 .supernova {
-  --emphasis-area-width: calc( var(--nb-emphasis-area, 100) * 1% );
-
   background: none !important;
   @include block-background;
-
 }
 
 .supernova-item.supernova-item--layout-stacked {
@@ -23,11 +20,6 @@
   .supernova-item__content {
     min-height: calc(var(--nb-minimum-container-height) - var(--admin-bar-height, 0px));
   }
-}
-
-.supernova,
-.supernova__inner-container {
-  @include nb-content-layout-grid;
 }
 
 /*

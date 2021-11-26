@@ -3,7 +3,7 @@ import { useSupports } from "../../hooks";
 import { Fragment } from "@wordpress/element";
 import Controls from "./controls";
 
-const withCustomAlignmentControls = createHigherOrderComponent( OriginalComponent => {
+const withCustomAlignControls = createHigherOrderComponent( OriginalComponent => {
 
   return ( props ) => {
 
@@ -23,4 +23,4 @@ const withCustomAlignmentControls = createHigherOrderComponent( OriginalComponen
   };
 }, 'withCustomAlignmentControls' );
 
-export default withCustomAlignmentControls;
+export default withCustomAlignControls;

@@ -1,13 +1,6 @@
 @import "scss/grid/style";
 @import "scss/collection/style";
 
-.nb-collection {
-  // @todo styles for emphasisArea &co similar to supernova
-
-  position: relative;
-  @include nb-content-layout-grid;
-}
-
 .slick-slide {
   opacity: 1 !important;
   

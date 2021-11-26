@@ -42,12 +42,8 @@
   @include nb-layout-settings;
 }
 
-:is(.nb-sidecar, .nb-sidecar-area--content) {
-  @include nb-content-layout-grid;
-}
-
 // This is where magic starts.
-.nb-sidecar-area--content {
+.nb-content-layout-grid {
 
   > :where(.alignwide, [data-align="wide"]) {
 
@@ -93,16 +89,13 @@
 
   @include above(lap) {
     grid-row: 1;
+    --nb-block-top-spacing: 0 !important;
   }
 }
 
 .nb-sidecar-area--sidebar {
   position: relative;
   height: 100%;
-
-  @include below(lap) {
-    margin-top: var(--nb-current-spacing);
-  }
 }
 
 // Apply top and bottom spacing
@@ -136,7 +129,6 @@
   .nb-sidecar--sidebar-left {
 
     > .nb-sidecar-area--content {
-
       --block-wide-start: cs;
       --block-full-start: cs;
     }

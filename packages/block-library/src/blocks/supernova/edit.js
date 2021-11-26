@@ -73,6 +73,7 @@ const SupernovaPreview = props => {
     `supernova--${ columns }-columns`,
     `supernova--valign-${ contentAlign[0] }`,
     `supernova--halign-${ contentAlign[1] }`,
+    'nb-content-layout-grid',
     'alignfull'
   );
 
@@ -85,11 +86,9 @@ const SupernovaPreview = props => {
 
   return (
     <div { ...blockProps }>
-      <div className="supernova__inner-container">
-        { headerPosition === 0 && ( showCollectionTitle || showCollectionSubtitle ) && <CollectionHeader { ...props } /> }
-        { sourceType === 'content' && <PostsCollectionLayout { ...props } /> }
-        { sourceType !== 'content' && <CardsCollectionLayout { ...props } /> }
-      </div>
+      { headerPosition === 0 && ( showCollectionTitle || showCollectionSubtitle ) && <CollectionHeader { ...props } /> }
+      { sourceType === 'content' && <PostsCollectionLayout { ...props } /> }
+      { sourceType !== 'content' && <CardsCollectionLayout { ...props } /> }
     </div>
   );
 }

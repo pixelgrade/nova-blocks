@@ -11,7 +11,7 @@ const SidecarAreaEdit = function( props ) {
   const className = classnames(
     props.className,
     'nb-sidecar-area',
-    `nb-sidecar-area--${ props.attributes.areaName }`
+    `nb-sidecar-area--${ props.attributes.areaName }`,
   )
 
   const blockProps = useBlockProps( {

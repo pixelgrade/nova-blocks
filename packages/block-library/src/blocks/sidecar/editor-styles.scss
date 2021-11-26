@@ -7,19 +7,8 @@
 .block-editor-block-list__layout.is-root-container {
   @include nb-content-layout-grid;
 
-  > :is(.alignwide, [data-align="wide"]) {
-    grid-column-start: var(--block-wide-start);
-    grid-column-end: var(--block-wide-end);
-  }
-
-  > :is(.alignfull, [data-align="full"]) {
-    grid-column-start: var(--block-full-start);
-    grid-column-end: var(--block-full-end);
-  }
-
   > :is(.alignleft, [data-align="left"]),
   > :is(.alignright, [data-align="right"]) {
-    grid-row-end: span 5;
 
     .components-resizable-box__container {
       max-width: 100% !important;
@@ -32,13 +21,34 @@
       max-width: 100%;
     }
   }
+}
 
-  > :where(.alignleft, [data-align="left"]) {
-    grid-column: var(--block-left-start) / var(--block-left-end);
-  }
+.block-editor-block-list__layout.is-root-container {
+  @at-root {
+    :is(#{&}, #{&} > .nb-content-layout-grid) {
+      > :is(.alignwide, [data-align="wide"]) {
+        grid-column-start: var(--block-wide-start);
+        grid-column-end: var(--block-wide-end);
+      }
 
-  > :where(.alignright, [data-align="right"]) {
-    grid-column: var(--block-right-start) / var(--block-right-end);
+      > :is(.alignfull, [data-align="full"]) {
+        grid-column-start: var(--block-full-start);
+        grid-column-end: var(--block-full-end);
+      }
+
+      > :is(.alignleft, [data-align="left"]),
+      > :is(.alignright, [data-align="right"]) {
+        grid-row-end: span 5;
+      }
+
+      > :where(.alignleft, [data-align="left"]) {
+        grid-column: var(--block-left-start) / var(--block-left-end);
+      }
+
+      > :where(.alignright, [data-align="right"]) {
+        grid-column: var(--block-right-start) / var(--block-right-end);
+      }
+    }
   }
 }
 

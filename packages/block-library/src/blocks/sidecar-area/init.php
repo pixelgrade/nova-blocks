@@ -39,11 +39,11 @@ if ( ! function_exists( 'novablocks_render_sidecar_area_block' ) ) {
 
 		$classes = [
 			'nb-sidecar-area',
-			'nb-sidecar-area--' . $attributes['areaName']
+			'nb-sidecar-area--' . $attributes['areaName'],
 		];
 
-		if ( ! empty( $attributes['className'] ) ) {
-			$classes[] = $attributes['className'];
+		if ( $attributes['areaName'] === 'content' ) {
+			$classes[] = 'nb-content-layout-grid';
 		}
 
 		?>
