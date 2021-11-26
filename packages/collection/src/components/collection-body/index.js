@@ -4,7 +4,6 @@ import { CollectionLayout } from '../index';
 import { ScrollIndicator } from '../index';
 
 const CollectionBody = ( props ) => {
-
   const { attributes } = props;
   const { align } = attributes;
 

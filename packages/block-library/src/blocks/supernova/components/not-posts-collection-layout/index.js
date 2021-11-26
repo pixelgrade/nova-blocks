@@ -41,9 +41,7 @@ const CardsCollectionEdit = ( props ) => {
   } );
 
   return (
-    <CollectionBody { ...props }>
-      <div { ...innerBlocksProps } />
-    </CollectionBody>
+    <CollectionBody { ...props } { ...innerBlocksProps } />
   )
 }
 
