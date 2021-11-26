@@ -2,15 +2,14 @@
 @import 'scss/utility';
 
 :root {
-  // Default position for blocks is between cs and ce.
+  // Default position for blocks is between CS (content-start) and CE (content-end).
   --block-content-start: cs;
   --block-content-end: ce;
 
-  // Default block limits are ws and we.
+  // Default block limits are WS (wide-start) and WE (wide-end).
   --block-wide-start: ws;
   --block-wide-end: we;
 
-  // Default block limits are ws and we.
   --block-full-start: fs;
   --block-full-end: fe;
 
