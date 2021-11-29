@@ -201,16 +201,39 @@
   height: 100%;
 }
 
-.supernova-item__link {
-  position: absolute;
-  top: 0;
-  right: 0;
-  bottom: 0;
-  left: 0;
+// Link added over the card content
+a.supernova-item__link {
+  &-overlay {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    
+    display: block;
+    max-width: none !important;
+    margin: 0 !important;
+  }
+
+  &-inline {
+
+  }
+}
+
+
+
+// ------ #CARD ELEMENTS
+// Controlled using the Elements Visibility option
+.nb-card__title {
   
-  display: block;
-  max-width: none !important;
-  margin: 0 !important;
+}
+
+.nb-card__subtitle {
+  
+}
+
+.nb-card__description {
+  
 }
 
 .nb-card__buttons {
@@ -218,23 +241,24 @@
   z-index: 1;
 }
 
-.nb-card__meta-separator {
-  
-  display: inline-block;
-  vertical-align: middle;
- 
-  width: 2em;
-  
-  margin-left: 0.25em;
-  margin-right: 0.25em;
-  
-  box-sizing: content-box;
-  
-  &:after {
-    content: "";
-    display: block;
-    width: 100%;
-    height: 0.075em;
-    background: currentColor;
+.nb-card__meta {
+  &-separator {
+    display: inline-block;
+    vertical-align: middle;
+   
+    width: 2em;
+    
+    margin-left: 0.25em;
+    margin-right: 0.25em;
+    
+    box-sizing: content-box;
+    
+    &:after {
+      content: "";
+      display: block;
+      width: 100%;
+      height: 0.075em;
+      background: currentColor;
+    }
   }
 }

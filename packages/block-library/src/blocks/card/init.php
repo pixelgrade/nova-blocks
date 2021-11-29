@@ -34,7 +34,7 @@ if ( ! function_exists( 'novablocks_render_card_block' ) ) {
 			echo '<div class="nb-card__meta is-style-meta">' . $attributes['meta'] . '</div>';
 		}
 
-		echo novablocks_get_card_item_title( $attributes['title'], $attributes );
+		echo novablocks_get_card_item_title( $attributes['title'], $attributes, $post );
 		echo novablocks_get_card_item_subtitle( $attributes['subtitle'], $attributes );
 		echo novablocks_get_card_item_description( $attributes['description'], $attributes );
 
