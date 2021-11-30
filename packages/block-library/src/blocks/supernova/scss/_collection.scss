@@ -26,6 +26,18 @@
   }
 }
 
+.nb-collection {
+  .nb-collection__header {
+
+  }
+
+  .nb-collection__body[class] {
+    // Override Spacing Modifier option
+    // --nb-spacing-current-multiplier: 1; // cannot use this as it applies to all inner elements
+    margin-top: calc(var(--nb-block-top-spacing) * calc(var(--nb-spacing) * 1));
+  }
+}
+
 .nb-collection__layout {
   --nb-grid-spacing: calc(var(--nb-spacing) * var(--nb-grid-spacing-modifier) * 0.02);
 

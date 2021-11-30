@@ -10,24 +10,32 @@
 
   @include above(tablet) {
 
+    // Layout
+    // - Vertical
+    // - Vertical Reverse
+    // - Stacked
     :is(.supernova-item--layout-vertical, .supernova-item--layout-vertical-reverse, .supernova-item--layout-stacked) {
 
       :is(.supernova--3-columns, .supernova--4-columns) & {
-        --nb-spacing-base: 0.5;
+        // --nb-spacing-base: 0.5; // removed as it hard-coded the spacing on the Editor
+        // --nb-spacing-current-multiplier: 0.5;
 
         .nb-card__description {
-          --font-size-modifier: 0.75
+          --font-size-modifier: 0.85
         }
       }
     }
 
+    // Layout
+    // - Horizontal
+    // - Horizontal Reverse
     :is(.supernova-item--layout-horizontal, .supernova-item--layout-horizontal-reverse) {
 
       .supernova--2-columns & {
         --nb-spacing-base: 0.5;
 
         .nb-card__description {
-          --font-size-modifier: 0.75
+          --font-size-modifier: 0.85
         }
       }
 
@@ -35,7 +43,7 @@
         --nb-spacing-base: 0.5;
 
         .nb-card__description {
-          --font-size-modifier: 0.66
+          --font-size-modifier: 0.75
         }
       }
     }
