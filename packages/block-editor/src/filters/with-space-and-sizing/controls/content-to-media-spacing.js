@@ -13,13 +13,13 @@ const ContentToMediaSpacing = props => {
   const { layoutGutter } = attributes;
 
   return (
-    <ControlsGroup title={ __( 'Content to Media Spacing / Layout Gutter', '__plugin_txtd' ) }>
+    <ControlsGroup title={ __( 'Content to Media Spacing', '__plugin_txtd' ) }>
       <RangeControl
         value={ layoutGutter }
         onChange={ ( layoutGutter ) => setAttributes( { layoutGutter } ) }
         min={ 0 }
         max={ 100 }
-        step={ 5 }
+        step={ 25 }
       />
     </ControlsGroup>
   )
