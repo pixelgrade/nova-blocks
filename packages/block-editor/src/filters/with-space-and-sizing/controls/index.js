@@ -49,9 +49,9 @@ const BlockSpacingModifier = withVisibility( 'spacing-modifier' )( props => {
       <RangeControl
         value={ spacingModifier }
         onChange={ ( spacingModifier ) => setAttributes( { spacingModifier } ) }
-        min={ 0.25 }
-        max={ 4 }
-        step={ 0.25 }
+        min={ 0 }
+        max={ 2 }
+        step={ 0.5 }
       />
     </ControlsGroup>
   )
