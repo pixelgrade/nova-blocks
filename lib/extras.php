@@ -1541,31 +1541,6 @@ function novablocks_get_collection_header_output( $attributes ) {
 	return $output;
 }
 
-function novablocks_get_card_media_markup( $media ) {
-
-	$media_args = [
-		'type'  => 'image',
-		'url'   => '',
-		'alt'   => '',
-		'sizes' => [],
-	];
-	$media      = wp_parse_args( $media, $media_args );
-
-	ob_start();
-
-	if ( ! empty( $media['url'] ) ) {
-		if ( isset( $media['type'] ) && $media['type'] === 'video' ) {
-			echo '<video class="supernova-item__media" muted autoplay loop playsinline src="' . esc_url( $media['url'] ) . '"></video>';
-		} else {
-			echo '<img class="supernova-item__media" src="' . esc_url( novablocks_get_image_url( $media, 'novablocks_medium' ) ) . '" alt="' . esc_attr( $media['alt'] ) . '" />';
-		}
-	} else { ?>
-		<div class="supernova-item__media supernova-item__media--placeholder"></div>
-	<?php }
-
-	return ob_get_clean();
-}
-
 function novablocks_get_collection_card_media_markup( $media ) {
 
 	$media_args = [
@@ -2128,7 +2103,7 @@ function novablocks_get_area_classname_by_width_ratio( $ratio ) {
 	return 'nb-grid__area--width-full';
 }
 
-function novablocks_get_collection_card_markup( $media, $content, $attributes, $post ) {
+function novablocks_get_collection_card_markup( $media, $content, $attributes ) {
 
 	// Make sure that the defaults are in place.
 	$attributes = wp_parse_args( $attributes, [
@@ -2190,17 +2165,7 @@ function novablocks_get_collection_card_markup( $media, $content, $attributes, $
 	<div class="nb-collection__layout-item">
 		<div class="<?php echo esc_attr( join( ' ', $cardClasses ) ); ?>" <?php echo join( ' ', $data_attributes ); ?>>
 			<?php if ( ! empty( $media ) && ! empty( $attributes['showMedia'] ) ) { ?>
-				<div class="supernova-item__media-wrapper">
-					<?php echo novablocks_get_card_item_link( get_permalink( $post ), $attributes, 'open' ); ?>
-					<div class="supernova-item__media-aspect-ratio">
-						<div class="novablocks-doppler__mask novablocks-doppler__wrapper">
-							<div class="supernova-item__media-doppler novablocks-doppler__target">
-								<?php echo $media; ?>
-							</div>
-						</div>
-					</div>
-					<?php echo novablocks_get_card_item_link( get_permalink( $post ), $attributes, 'close' ); ?>
-				</div>
+				<?php echo $media; ?>
 			<?php } ?>
 			<?php if ( novablocks_show_card_contents( $attributes ) && ! empty( $content ) ) { ?>
 				<div class="<?php echo esc_attr( join( ' ', $contentClasses ) ); ?>">
@@ -2219,19 +2184,46 @@ function novablocks_get_collection_card_markup( $media, $content, $attributes, $
 
 function novablocks_get_collection_card_markup_from_post( $post, $attributes ) {
 	$media_url = get_the_post_thumbnail_url( $post );
-
-	$media_markup = novablocks_get_collection_card_media_markup( [
+	$media = novablocks_get_collection_card_media_markup( [
 		'type' => 'image',
 		'url'  => $media_url,
 	] );
 
-	$content_markup = novablocks_get_post_card_contents( $post, $attributes );
+	$media_markup = novablocks_get_collection_card_media_markup_wrapped( $media, get_permalink( $post ) );
+
+	$content = novablocks_get_post_card_contents( $post, $attributes );
 
 	$attributes['colorSignal']               = $attributes['contentColorSignal'];
 	$attributes['paletteVariation']          = $attributes['contentPaletteVariation'];
 	$attributes['useSourceColorAsReference'] = false;
 
-	return novablocks_get_collection_card_markup( $media_markup, $content_markup, $attributes, $post );
+	return novablocks_get_collection_card_markup( $media_markup, $content, $attributes );
+}
+
+function novablocks_get_collection_card_media_markup_wrapped( $media, $link = false ) {
+	ob_start();
+
+	if ( ! empty( $link ) ) {
+		echo '<a class="supernova-item__media-wrapper" href="' . esc_url( $link ) . '">';
+	} else {
+		echo '<div class="supernova-item__media-wrapper">';
+	} ?>
+
+		<div class="supernova-item__media-aspect-ratio">
+			<div class="novablocks-doppler__mask novablocks-doppler__wrapper">
+				<div class="supernova-item__media-doppler novablocks-doppler__target">
+					<?php echo $media; ?>
+				</div>
+			</div>
+		</div>
+
+	<?php if ( ! empty( $link ) ) {
+		echo '</a>';
+	} else {
+		echo '</div>';
+	}
+
+	return ob_get_clean();
 }
 
 function novablocks_get_card_contents( $attributes ) {
