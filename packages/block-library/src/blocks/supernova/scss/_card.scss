@@ -333,13 +333,11 @@ a.supernova-item__link {
 }
 
 // ------ #CARD HOVER EFFECT
-.supernova-item__media-wrapper {
-  a.supernova-item__link {
-    transition: all 0.3s ease;
-    
-    &:hover {
-      opacity: 0.85;
-    }
+a.supernova-item__media-wrapper {
+  transition: all 0.3s ease;
+  
+  &:hover {
+    opacity: 0.85;
   }
 }
 
