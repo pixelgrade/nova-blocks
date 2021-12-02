@@ -82,14 +82,9 @@ const CardContents = ( props ) => {
     return null;
   }
 
-  const containerClassName = classnames(
-    'supernova-item__inner-container',
-    getColorSignalClassnames( attributes, true )
-  );
-
   return (
     <div className={ contentWrapperClassName }>
-      <div className={ containerClassName }>
+      <div className={ 'supernova-item__inner-container' }>
         {
           showMeta &&
           <RichText

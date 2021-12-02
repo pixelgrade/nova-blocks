@@ -4,7 +4,7 @@ import { useBlockProps } from "@wordpress/block-editor";
 import { Fragment } from "@wordpress/element";
 
 import { useInnerBlocksCount } from "@novablocks/block-editor";
-import { CollectionHeader } from "@novablocks/collection";
+import { Collection, CollectionHeader } from "@novablocks/collection";
 
 import BlockControls from './block-controls';
 
@@ -86,9 +86,11 @@ const SupernovaPreview = props => {
 
   return (
     <div { ...blockProps }>
-      { headerPosition === 0 && ( showCollectionTitle || showCollectionSubtitle ) && <CollectionHeader { ...props } /> }
-      { sourceType === 'content' && <PostsCollectionLayout { ...props } /> }
-      { sourceType !== 'content' && <CardsCollectionLayout { ...props } /> }
+      <Collection { ...props }>
+        { headerPosition === 0 && ( showCollectionTitle || showCollectionSubtitle ) && <CollectionHeader { ...props } /> }
+        { sourceType === 'content' && <PostsCollectionLayout { ...props } /> }
+        { sourceType !== 'content' && <CardsCollectionLayout { ...props } /> }
+      </Collection>
     </div>
   );
 }

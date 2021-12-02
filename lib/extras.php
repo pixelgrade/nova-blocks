@@ -2136,31 +2136,37 @@ function novablocks_get_collection_card_markup( $media, $content, $attributes, $
 	] );
 
 	$cardClasses = [ 'supernova-item', ];
+
 	if ( ! empty( $attributes['cardLayout'] ) ) {
 		$cardClasses[] = 'supernova-item--layout-' . $attributes['cardLayout'];
 	}
+
 	if ( ! empty( $attributes['scrollingEffect'] ) ) {
 		$cardClasses[] = 'supernova-item--scrolling-effect-' . $attributes['scrollingEffect'];
 	}
+
 	if ( ! empty( $attributes['thumbnailAspectRatioString'] ) ) {
 		$cardClasses[] = 'supernova-item--aspect-ratio-' . $attributes['thumbnailAspectRatioString'];
 	}
+
+	$cardClasses = array_merge(
+		$cardClasses,
+		novablocks_get_color_signal_classes( $attributes )
+	);
 
 	$contentClasses = [ 'supernova-item__content', ];
 
 	if ( ! empty( $attributes['contentPosition'] ) ) {
 		$align = preg_split( '/\b\s+/', $attributes['contentPosition'] );
+
 		if ( ! empty( $align[0] ) ) {
 			$contentClasses[] = 'supernova-item__content--valign-' . $align[0];
 		}
+
 		if ( ! empty( $align[1] ) ) {
 			$contentClasses[] = 'supernova-item__content--halign-' . $align[1];
 		}
 	}
-
-	$innerContainerClasses = array_merge( [
-		'supernova-item__inner-container',
-	], novablocks_get_color_signal_classes( $attributes ) );
 
 	$data_attributes_array = array(
 		'palette',
@@ -2182,7 +2188,7 @@ function novablocks_get_collection_card_markup( $media, $content, $attributes, $
 	ob_start(); ?>
 
 	<div class="nb-collection__layout-item">
-		<div class="<?php echo esc_attr( join( ' ', $cardClasses ) ); ?>">
+		<div class="<?php echo esc_attr( join( ' ', $cardClasses ) ); ?>" <?php echo join( ' ', $data_attributes ); ?>>
 			<?php if ( ! empty( $media ) && ! empty( $attributes['showMedia'] ) ) { ?>
 				<div class="supernova-item__media-wrapper">
 					<?php echo novablocks_get_card_item_link( get_permalink( $post ), $attributes, 'open' ); ?>
@@ -2198,8 +2204,7 @@ function novablocks_get_collection_card_markup( $media, $content, $attributes, $
 			<?php } ?>
 			<?php if ( novablocks_show_card_contents( $attributes ) && ! empty( $content ) ) { ?>
 				<div class="<?php echo esc_attr( join( ' ', $contentClasses ) ); ?>">
-					<div
-						class="<?php echo esc_attr( join( ' ', $innerContainerClasses ) ); ?>" <?php echo join( ' ', $data_attributes ); ?>>
+					<div class="supernova-item__inner-container">
 						<?php echo $content; ?>
 						<?php novablocks_render_scroll_indicator( $attributes ); ?>
 					</div>

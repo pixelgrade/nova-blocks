@@ -27,3 +27,14 @@ export const getColorSignalClassnames = ( attributes, supports ) => {
 
   return newClassnames.join( " " );
 }
+
+export const getContentColorsSignalClassnames = ( attributes, supports ) => {
+
+  const newAttributes = Object.assign( {}, attributes, {
+    colorSignal: attributes.contentColorSignal,
+    paletteVariation: attributes.contentPaletteVariation,
+    useSourceColorAsReference: false,
+  } );
+
+  return getColorSignalClassnames( newAttributes, supports );
+}

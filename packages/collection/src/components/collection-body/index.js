@@ -1,4 +1,4 @@
-import { getColorSignalClassnames } from "@novablocks/color-signal";
+import { getColorSignalClassnames } from "@novablocks/utils";
 
 import { CollectionLayout } from '../index';
 import { ScrollIndicator } from '../index';

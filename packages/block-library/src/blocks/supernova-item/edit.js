@@ -90,10 +90,7 @@ const SuperNovaItemContent = ( props ) => {
   const SubTitleTagName = `h${ cardTitleLevel + 1 }`;
 
   const newProps = {
-    className: classnames(
-      'supernova-item__inner-container',
-      getColorSignalClassnames( attributes, true )
-    )
+    className: 'supernova-item__inner-container'
   };
 
   const innerBlocksProps = useInnerBlocksProps( newProps );

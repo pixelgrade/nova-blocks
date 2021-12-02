@@ -1,6 +1,7 @@
 import { __ } from '@wordpress/i18n';
 
 import {
+  Collection,
   CollectionHeader,
   CollectionBody,
 } from "@novablocks/collection";
@@ -29,8 +30,10 @@ const Edit = ( props ) => {
 
   return (
     <div { ...blockProps }>
-      <CollectionHeader { ...props } />
-      <PostsCollection { ...props } />
+      <Collection { ...props }>
+        <CollectionHeader { ...props } />
+        <PostsCollection { ...props } />
+      </Collection>
     </div>
   )
 };

@@ -12,7 +12,7 @@ const useInnerBlocksProps = wp.blockEditor.useInnerBlocksProps || wp.blockEditor
  * Internal dependencies
  */
 import { useInnerBlocksCount } from "@novablocks/block-editor";
-import { CollectionBody, CollectionHeader } from "@novablocks/collection";
+import { Collection, CollectionBody, CollectionHeader } from "@novablocks/collection";
 import { getAlignFromMatrix } from "@novablocks/utils";
 
 import { withControlsVisibility } from "./components";
@@ -58,8 +58,10 @@ const CardsCollectionEdit = ( props ) => {
 
   return (
     <div { ...blockProps }>
-      <CollectionHeader { ...props } />
-      <CollectionBody { ...props } { ...innerBlocksProps } />
+      <Collection { ...props }>
+        <CollectionHeader { ...props } />
+        <CollectionBody { ...props } { ...innerBlocksProps } />
+      </Collection>
 		</div>
 	);
 };

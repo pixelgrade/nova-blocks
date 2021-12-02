@@ -1,3 +1,4 @@
+export { default as Collection } from './collection';
 export { default as CollectionTitle } from './collection-title';
 export { default as CollectionSubtitle } from './collection-subtitle';
 export { default as CollectionHeader } from './collection-header';

@@ -32,9 +32,7 @@ const CardsCollectionPreview = ( props ) => {
 
 const CardsCollectionEdit = ( props ) => {
 
-  const innerBlocksProps = useInnerBlocksProps( {
-    className: 'nb-collection__body alignfull',
-  }, {
+  const innerBlocksProps = useInnerBlocksProps( {}, {
     allowedBlocks: [ 'novablocks/supernova-item' ],
     renderAppender: false,
     templateInsertUpdatesSelection: false

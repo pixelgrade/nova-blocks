@@ -2,6 +2,8 @@ import classnames from 'classnames';
 
 import { Children } from '@wordpress/element';
 
+import { getColorSignalClassnames } from "@novablocks/utils";
+
 import {
   getAlignFromMatrix,
   getAreaClassnameByWidthRatio
@@ -11,22 +13,22 @@ export * from './contents';
 
 export const Card = ( props ) => {
 
+  const { media, attributes } = props;
+
   const {
-    media,
-    attributes: {
-      cardLayout,
-      thumbnailAspectRatioString,
-      layoutStyle,
-      columns,
-      scrollingEffect,
-    },
-  } = props;
+    cardLayout,
+    thumbnailAspectRatioString,
+    layoutStyle,
+    columns,
+    scrollingEffect,
+  } = attributes;
 
   const defaultClassNames = classnames(
     `supernova-item`,
     `supernova-item--layout-${ cardLayout }`,
     `supernova-item--scrolling-effect-${ scrollingEffect }`,
     `supernova-item--aspect-ratio-${ thumbnailAspectRatioString }`,
+    getColorSignalClassnames( attributes, true )
   );
 
   const isLandscape = [ 'horizontal', 'horizontal-reverse' ].includes( cardLayout );

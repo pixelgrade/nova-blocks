@@ -74,11 +74,6 @@ export const PostCard = withMedia( props => {
 
   const Media = props.Media || PostCardMedia;
 
-  const contentWrapperClassname = classnames(
-    'supernova-item__inner-container',
-    getColorSignalClassnames( attributes, true )
-  );
-
   return (
     <Card { ...props }>
       {
@@ -87,7 +82,7 @@ export const PostCard = withMedia( props => {
           <Media { ...props } />
         </CardMediaWrapper>
       }
-      <div className={ contentWrapperClassname }>
+      <div className={ 'supernova-item__inner-container' }>
         <CardMeta show={ showMeta }>{ metaAboveTitle }</CardMeta>
         <CardTitle show={ showTitle }>{ post.title.raw }</CardTitle>
         <CardMeta show={ showMeta }>{ metaBelowTitle }</CardMeta>

@@ -19,17 +19,12 @@ const SupernovaItemPreview = props => {
   const className = getColorSignalClassnames( attributes, true );
   const { style, ...otherProps } = props;
 
-  const contentWrapperClassname = classnames(
-    'supernova-item__inner-container',
-    getColorSignalClassnames( attributes, true )
-  );
-
   return (
     <Card { ...otherProps } className={ className }>
       { showMedia && <CardMediaWrapper { ...props }>
         <MediaCompositionPreview { ...props } />
       </CardMediaWrapper> }
-      <div className={ contentWrapperClassname }>
+      <div className={ 'supernova-item__inner-container' }>
         { sourceType === 'fields' && <CardFieldsPreview { ...props } /> }
         { sourceType === 'blocks' && <InnerBlocksPreview { ...props } /> }
       </div>
