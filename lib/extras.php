@@ -2338,18 +2338,19 @@ function novablocks_get_card_item_buttons( $buttons, $attributes ) {
 	return ob_get_clean();
 }
 
-function novablocks_get_card_item_link( $url, $attributes, $tag_direction = false) {
+function novablocks_get_card_item_link( $url, $attributes, $tag_direction = false ) {
 	ob_start();
 
-	if ( ! empty( $attributes['sourceType'] ) && 'content' === $attributes['sourceType'] ) { 
+	if ( ! empty( $attributes['sourceType'] ) && 'content' === $attributes['sourceType'] ) {
 		if ( ! $tag_direction ) { ?>
 			<a href="<?php echo esc_url( $url ); ?>" class="supernova-item__link"></a>
-		<?php } else if ( $tag_direction == 'open') { ?>
+		<?php } else if ( $tag_direction == 'open' ) { ?>
 			<a href="<?php echo esc_url( $url ); ?>" class="supernova-item__link">
-		<?php } else if ($tag_direction == 'close') { ?>
+		<?php } else if ( $tag_direction == 'close' ) { ?>
 			</a>
 		<?php }
 	}
+
 	return ob_get_clean();
 }
 

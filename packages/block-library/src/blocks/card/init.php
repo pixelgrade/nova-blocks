@@ -46,6 +46,6 @@ if ( ! function_exists( 'novablocks_render_card_block' ) ) {
 
 		$card_content = ob_get_clean();
 
-		return novablocks_get_collection_card_markup( $card_media, $card_content, $attributes );
+		return novablocks_get_collection_card_markup( $card_media, $card_content, $attributes, $post );
 	}
 }
