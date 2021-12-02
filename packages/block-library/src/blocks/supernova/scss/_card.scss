@@ -284,7 +284,7 @@ a.supernova-item__link {
 \*------------------------------------*/
 // All elements inside a Card are controlled using 
 // the Elements Visibility option
-.supernova-item__inner-container > *[class][class][class]:first-child {
+.supernova-item .supernova-item__inner-container > *[class][class][class][class]:first-child {
   --nb-block-top-spacing: 0;
 } 
 
