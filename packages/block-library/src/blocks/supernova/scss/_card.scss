@@ -1,3 +1,7 @@
+/*------------------------------------*\
+  #SUPERNOVA CARD ITEM
+\*------------------------------------*/
+
 .supernova {
   --nb-card-layout-gap: calc( var(--nb-current-spacing) * 2 * var(--nb-card-layout-gap-modifier, 0) );
   --nb-card-content-padding: calc( var(--nb-current-spacing) * 2 * var(--nb-card-content-padding-multiplier, 0) );
@@ -18,6 +22,10 @@
   & &__inner-container[class] {
     padding: var(--nb-card-content-padding, 0);
   }
+
+  // Make all cards equal height
+  height: 100%;
+  .supernova-item__content { flex-grow: 0; }
 }
 
 .supernova-item__media[class] {
@@ -132,16 +140,6 @@
   padding: var(--nb-card-media-padding, 0);
 }
 
-// ELEMENTS STACKING: VERTICAL
-.supernova-item {
-  &.supernova-item--layout-vertical {
-
-    // Equal height cards
-    height: 100%;
-    .supernova-item__content { flex-grow: 0; }
-  }
-}
-
 .supernova-item__media-wrapper {
   img,
   video {
@@ -163,22 +161,45 @@
 
 
 
-// ------ #ELEMENTS STACKING: VERTICAL
-// Remove the padding-top when there is a Media + Content 
-// so the spacing between Media and Content is controlled only
-// through the `Content to Media Spacing` option.
-.supernova-item {
-  &.supernova-item--layout-vertical {
 
-    .supernova-item__media-wrapper:not(:last-child) {
-      padding-bottom: 0;
+
+// ------ #ELEMENTS STACKING SPACING
+// Remove the padding between Media and Content
+// so the spacing between them is controlled only
+// through the `Content to Media Spacing` option.
+// 
+// 
+
+@mixin remove-spacing-media-to-content($wrapper, $content) {
+   .supernova-item__media-wrapper:not(:last-child) {
+      padding-#{$wrapper}: 0;
     }
 
     .supernova-item__media-wrapper + .supernova-item__content .supernova-item__inner-container[class] {
-      padding-top: 0;
+      padding-#{$content}: 0;
     }
+}
+
+.supernova-item {
+  &.supernova-item--layout-vertical {
+    @include remove-spacing-media-to-content(bottom, top);
+  }
+
+  &.supernova-item--layout-vertical-reverse {
+    @include remove-spacing-media-to-content(top, bottom);
+  }
+
+  &.supernova-item--layout-horizontal {
+    @include remove-spacing-media-to-content(right, left);
+  }
+
+  &.supernova-item--layout-horizontal-reverse {
+    @include remove-spacing-media-to-content(left, right);
   }
 }
+
+
+
 
 
 /*
@@ -258,9 +279,11 @@ a.supernova-item__link {
 }
 
 
-
-// ------ #CARD CONTENT ELEMENTS
-// Controlled using the Elements Visibility option
+/*------------------------------------*\
+  #CARD CONTENT ELEMENTS
+\*------------------------------------*/
+// All elements inside a Card are controlled using 
+// the Elements Visibility option
 .supernova-item__inner-container > *[class][class][class]:first-child {
   --nb-block-top-spacing: 0;
 } 
