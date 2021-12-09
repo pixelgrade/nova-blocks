@@ -1,7 +1,11 @@
 const Collection = ( props ) => {
+  const { attributes } = props;
+  const { align } = attributes;
 
   return (
-    <div className={ 'nb-collection nb-block-spacing-container alignwide' }>{ props.children }</div>
+    <div className={ `nb-collection align${ align } nb-block-spacing-container` }>
+      { props.children }
+    </div>
   )
 }
 
