@@ -54,19 +54,20 @@ if ( ! function_exists( 'novablocks_body_classes' ) ) {
 	add_filter( 'body_class', 'novablocks_body_class' );
 }
 
-if ( ! function_exists( 'novablocks_add_blocks_category' ) ) {
+if ( ! function_exists( 'novablocks_add_blocks_category' ) && class_exists( 'WP_Block_Editor_Context' ) ) {
 
-	function novablocks_add_blocks_category( $categories, $post ) {
-		return array_merge(
-			[
-				[
-					'slug'  => 'nova-blocks',
-					'title' => 'Nova Blocks', // do not translate
-				],
-			],
-			$categories
+	function novablocks_add_blocks_category( $block_categories, $editor_context ) {
+		array_push(
+			$block_categories,
+			array(
+				'slug'  => 'nova-blocks',
+				'title' => 'Nova Blocks', // do not translate
+				'icon'  => null,
+			)
 		);
+
+		return $block_categories;
 	}
 
-	add_filter( 'block_categories', 'novablocks_add_blocks_category', 10, 2 );
+	add_filter( 'block_categories_all', 'novablocks_add_blocks_category', 10, 2 );
 }

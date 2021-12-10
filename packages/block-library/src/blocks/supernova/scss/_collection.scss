@@ -1,3 +1,7 @@
+/*------------------------------------*\
+  #SUPERNOVA COLLECTION
+\*------------------------------------*/
+
 .supernova {
 
   // if it has some sort of color contrast
@@ -104,3 +108,37 @@
   }
 
 }
+
+
+
+// ------ #CARDS COLLECTION SEPARATORS
+
+// @todo: for the card separator styling below, add a 
+// block control option to change the visibility
+
+// @todo: find a way to take into consideration the case when cards 
+// stack vertically and add separators below/above them
+
+// :root {
+//   --nb-collection-separator-weight: 1px;
+//   --nb-collection-separator-color: var(--sm-current-fg2-color);
+// }
+
+// .nb-collection__layout {
+//   > .nb-collection__layout-item[class]:not(:first-child) {
+//     position: relative;
+
+//     @include above(tablet) {
+//       &:before {
+//         content: "";
+//         position: absolute;
+//         top: 0;
+//         bottom: 0;
+//         left: calc( -1 * ((var(--nb-grid-spacing) + var(--nb-collection-separator-weight)) / 2);
+//         width: var(--nb-collection-separator-weight);
+//         background: var(--nb-collection-separator-color);
+//         opacity: 0.15;
+//       }
+//     }
+//   }
+// }
