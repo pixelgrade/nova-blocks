@@ -30,7 +30,7 @@ export const generateDuotonePresetsFromPalettes = ( palettes ) => {
       let colors1 = palette1.colors.slice();
 
       if ( Array.isArray( palette1.variations ) ) {
-        colors1 = palette1.variations.map( variation => variation.background );
+        colors1 = palette1.variations.map( variation => variation.bg );
       }
 
       palettes.forEach( ( palette2 ) => {
@@ -42,11 +42,11 @@ export const generateDuotonePresetsFromPalettes = ( palettes ) => {
         let colors2 = palette2.colors.slice();
 
         if ( Array.isArray( palette2.variations ) ) {
-          colors2 = palette2.variations.map( variation => variation.background );
+          colors2 = palette2.variations.map( variation => variation.bg );
         }
 
-        const highlightsColor = colors1[ highlightIndex ][ "value" ];
-        const shadowsColor = colors2[ shadowIndex ][ "value" ];
+        const highlightsColor = colors1[ highlightIndex ];
+        const shadowsColor = colors2[ shadowIndex ];
 
         presets.push( {
           name: `${ palette2.label }(${ shadowIndex }) and ${ palette1.label }(${ highlightIndex })`,
