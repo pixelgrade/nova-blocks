@@ -14,6 +14,7 @@ const ContentColorGradeControl = props => {
   } = props;
 
   const {
+    palette,
     contentPaletteVariation,
     contentColorSignal,
   } = attributes;
@@ -23,7 +24,7 @@ const ContentColorGradeControl = props => {
 
   const onColorGradeChange = useCallback( nextContentPaletteVariation => {
     const absoluteVariation = getAbsoluteColorVariation( attributes );
-    const nextContentColorSignal = getSignalRelativeToVariation( nextContentPaletteVariation, absoluteVariation );
+    const nextContentColorSignal = getSignalRelativeToVariation( nextContentPaletteVariation, absoluteVariation, palette );
 
     setAttributes( {
       contentColorSignal: nextContentColorSignal,

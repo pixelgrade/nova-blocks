@@ -31,21 +31,21 @@ const withColorSignalProps = OriginalComponent => {
 
       // find out the next absolute value of the paletteVariation attribute
       const absoluteVariation = getAbsoluteColorVariation( nextAttributes );
-      const nextSignal = getSignalRelativeToVariation( absoluteVariation, referenceVariation );
-      const computedVariation = computeColorSignal( referenceVariation, nextSignal, absoluteVariation );
+      const nextSignal = getSignalRelativeToVariation( absoluteVariation, referenceVariation, palette );
+      const computedVariation = computeColorSignal( referenceVariation, nextSignal, palette, absoluteVariation );
       const nextVariation = removeSiteVariationOffset( computedVariation );
 
       // determine what will be the value for the useSourceColorAsReference attribute
       const sourceIndex = getSourceIndexFromPaletteId( palette );
       const sourceVariation = addSiteVariationOffset( sourceIndex + 1 );
-      const sourceSignal = getSignalRelativeToVariation( sourceVariation, referenceVariation );
+      const sourceSignal = getSignalRelativeToVariation( sourceVariation, referenceVariation, palette );
       const nextSourceAsReference = stickySourceColor && ( useSourceColorAsReference ||
                                                            ( useSourceOnSameSignal && nextSignal === sourceSignal ) ||
                                                            ( useSourceOnSameVariation && absoluteVariation === sourceVariation ) );
 
       const finalVariation = nextSourceAsReference ? sourceVariation : nextVariation;
       const { contentColorSignal, contentPaletteVariation } = nextAttributes;
-      const nextContentVariation = computeColorSignal( finalVariation, contentColorSignal, contentPaletteVariation );
+      const nextContentVariation = computeColorSignal( finalVariation, contentColorSignal, palette, contentPaletteVariation );
 
       setAttributes( {
         palette: palette,

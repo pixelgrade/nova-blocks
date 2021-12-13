@@ -28,7 +28,7 @@ export const updateBlockSignal = ( block, parentVariation ) => {
   }
 
   const absoluteVariation = getAbsoluteColorVariation( attributes );
-  const nextVariation = computeColorSignal( parentVariation, colorSignal, absoluteVariation );
+  const nextVariation = computeColorSignal( parentVariation, colorSignal, palette, absoluteVariation );
   const finalVariation = useSourceColorAsReference ? 1 : removeSiteVariationOffset( nextVariation );
   const sourceIndex = getSourceIndexFromPaletteId( palette );
   const finalAbsoluteVariation = useSourceColorAsReference ? addSiteVariationOffset( sourceIndex + 1 ) : finalVariation;

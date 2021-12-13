@@ -42,7 +42,7 @@ const updateBlock = ( block ) => {
   if ( supports?.novaBlocks?.colorSignal ) {
     const { updateBlockAttributes } = dispatch( 'core/block-editor' );
     const { attributes, clientId } = block;
-    const { colorSignal, paletteVariation, useSourceColorAsReference } = attributes;
+    const { colorSignal, palette, paletteVariation, useSourceColorAsReference } = attributes;
 
     const { getBlockParents, getBlock } = select( 'core/block-editor' );
     const parents = getBlockParents( clientId ).slice();
@@ -79,9 +79,9 @@ const updateBlock = ( block ) => {
 
     const parentVariation = getParentVariation( clientId );
     const absoluteVariation = getAbsoluteColorVariation( attributes );
-    const nextVariation = computeColorSignal( parentVariation, colorSignal, absoluteVariation );
+    const nextVariation = computeColorSignal( parentVariation, colorSignal, palette, absoluteVariation );
 
-    const nextColorSignal = useSourceColorAsReference ? getSignalRelativeToVariation( absoluteVariation, parentVariation ) : colorSignal;
+    const nextColorSignal = useSourceColorAsReference ? getSignalRelativeToVariation( absoluteVariation, parentVariation, palette ) : colorSignal;
     const finalVariation = useSourceColorAsReference ? 1 : removeSiteVariationOffset( nextVariation );
 
     // dispatch new attributes only if the new paletteVariation value differs from the current one

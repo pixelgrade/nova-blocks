@@ -5,7 +5,12 @@ import { SignalControl } from "@novablocks/block-editor";
 
 import { getParentVariation } from "../../editor/utils";
 
-import { computeColorSignal, getAbsoluteColorVariation, removeSiteVariationOffset } from "../../utils";
+import {
+  computeColorSignal,
+  getAbsoluteColorVariation,
+  getMaxSignal,
+  removeSiteVariationOffset
+} from "../../utils";
 
 const BlockColorSignal = props => {
 
@@ -16,13 +21,14 @@ const BlockColorSignal = props => {
   } = props;
 
   const {
-    colorSignal
+    colorSignal,
+    palette,
   } = attributes;
 
   const onSignalChange = useCallback( nextSignal => {
     const referenceVariation = getParentVariation( clientId );
     const absoluteVariation = getAbsoluteColorVariation( attributes );
-    const nextVariation = computeColorSignal( referenceVariation, nextSignal, absoluteVariation );
+    const nextVariation = computeColorSignal( referenceVariation, nextSignal, palette, absoluteVariation );
     const finalVariation = removeSiteVariationOffset( nextVariation );
 
     updateBlock( {
@@ -30,10 +36,10 @@ const BlockColorSignal = props => {
       useSourceColorAsReference: false,
     }, true, true );
 
-  }, [ updateBlock ] );
+  }, [ palette, updateBlock ] );
 
   return (
-    <SignalControl { ...props } label={ __( 'Block Color Signal', '__plugin_txtd' ) } signal={ colorSignal } onChange={ onSignalChange } />
+    <SignalControl { ...props } max={ getMaxSignal( palette ) } label={ __( 'Block Color Signal', '__plugin_txtd' ) } signal={ colorSignal } onChange={ onSignalChange } />
   )
 }
 

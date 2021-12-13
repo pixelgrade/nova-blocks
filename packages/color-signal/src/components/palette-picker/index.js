@@ -40,7 +40,7 @@ const PalettePicker = ( props ) => {
       const nextSourceColorAsReference = ! useSourceColorAsReference;
       const absoluteVariation = sourceIndex + 1;
       const nextVariation = nextSourceColorAsReference ? 1 : absoluteVariation;
-      const nextSignal = getSignalRelativeToVariation( addSiteVariationOffset( absoluteVariation ), referenceVariation );
+      const nextSignal = getSignalRelativeToVariation( addSiteVariationOffset( absoluteVariation ), referenceVariation, palette );
 
       setAttributes( {
         useSourceColorAsReference: nextSourceColorAsReference,

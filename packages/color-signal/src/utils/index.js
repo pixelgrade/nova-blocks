@@ -52,20 +52,55 @@ export const getAbsoluteColorVariation = ( attributes ) => {
   return addSiteVariationOffset( absoluteVariation );
 }
 
-export const getVariationFromSignal = ( signal ) => {
-  let variation = 1;
+export const getMaxSignal = ( paletteId ) => {
+  const signals = getSignals( paletteId );
 
-  if ( signal === 1 ) {
-    variation = 3;
+  return signals.length - 1;
+}
+
+export const getSignals = ( paletteId ) => {
+  const config = window?.styleManager?.colorsConfig;
+  const palette = config.find( palette => `${ palette.id }` === `${ paletteId }` );
+  const colors = palette?.colors;
+  const variations = palette?.variations;
+
+  if ( ! palette || ! variations ) {
+    return getDefaultSignals();
   }
 
-  if ( signal === 2 ) {
-    variation = 8;
+  const signalsCount = Math.min( colors.length, 4 );
+  const colorGroups = [];
+  const chunk = colors.length / signalsCount;
+
+  for ( let i = 0; i < signalsCount; i++ ) {
+    const start = chunk * i;
+    const end = chunk * ( i + 1 );
+    colorGroups.push( colors.slice( start, end ) );
   }
 
-  if ( signal === 3 ) {
-    variation = 11;
-  }
+  const signals = [];
+  const backgrounds = variations.map( v => v.bg.toLowerCase() );
+
+  colorGroups.forEach( group => {
+    const firstColor = group[0];
+    const lastColor = group[ group.length - 1 ];
+    const start = backgrounds.indexOf( firstColor.toLowerCase() );
+    const end = backgrounds.lastIndexOf( lastColor.toLowerCase() );
+    const middle = Math.floor( start * 0.5 + end * 0.5 );
+
+    signals.push( middle + 1 );
+  } );
+
+  return signals;
+}
+
+export const getDefaultSignals = () => {
+  return [1, 3, 8, 11];
+}
+
+export const getVariationFromSignal = ( signal, paletteId ) => {
+  const signals = getSignals( paletteId );
+  const variation = signals[ Math.min( signal, signals.length - 1 ) ];
 
   return removeSiteVariationOffset( variation );
 }
@@ -76,8 +111,8 @@ export const getVariationFromSignal = ( signal ) => {
  * @param reference the block's parent variation or any given reference variation for that matter
  * @returns {*}
  */
-export const getSignalRelativeToVariation = ( compared, reference ) => {
-  const variationOptions = getSignalOptionsFromVariation( reference );
+export const getSignalRelativeToVariation = ( compared, reference, paletteId ) => {
+  const variationOptions = getSignalOptionsFromVariation( reference, paletteId );
 
   return variationOptions.reduce( ( prev, curr, index, arr ) => {
     return ( Math.abs(curr - compared ) < Math.abs( arr[prev] - compared ) ? index : prev );
@@ -90,8 +125,8 @@ export const getSignalRelativeToVariation = ( compared, reference ) => {
  * @param variation
  * @returns {*[]}
  */
-export const getSignalOptionsFromVariation = ( variation ) => {
-  const variationOptions = Array.from( Array( 4 ).keys() ).map( index => getVariationFromSignal( index ) );
+export const getSignalOptionsFromVariation = ( variation, paletteId ) => {
+  const variationOptions = getSignals( paletteId );
 
   variationOptions.sort( ( variation1, variation2 ) => {
     return Math.abs( variation - variation1 ) < Math.abs( variation - variation2 ) ? -1 : 1;
@@ -100,21 +135,6 @@ export const getSignalOptionsFromVariation = ( variation ) => {
   variationOptions[0] = variation;
 
   return variationOptions;
-}
-
-/**
- * Shorthand to calculate the colorSignal of child elements for blocks that have support for contentColorSignal
- * @param attributes
- * @returns {*}
- */
-export const getContentVariationBySignal = ( attributes ) => {
-
-  const {
-    contentColorSignal,
-    paletteVariation,
-  } = attributes;
-
-  return computeColorSignal( paletteVariation, contentColorSignal );
 }
 
 /**
@@ -127,18 +147,20 @@ export const getContentVariationBySignal = ( attributes ) => {
  * @param paletteVariation the block's current paletteVariation attribute's value
  * @returns {*}
  */
-export const computeColorSignal = ( reference, colorSignal, paletteVariation = false ) => {
-  const signalOptions = getSignalOptionsFromVariation( reference );
+export const computeColorSignal = ( reference, colorSignal, paletteId, paletteVariation = false ) => {
+  const signalOptions = getSignalOptionsFromVariation( reference, paletteId );
 
   if ( Number.isInteger( paletteVariation ) ) {
-    const currentSignal = getSignalRelativeToVariation( paletteVariation, reference );
+    const currentSignal = getSignalRelativeToVariation( paletteVariation, reference, paletteId );
 
     if ( currentSignal === colorSignal ) {
       return paletteVariation;
     }
   }
 
-  return signalOptions[ colorSignal ];
+  const finalColorSignal = Math.min( signalOptions.length - 1, colorSignal );
+
+  return signalOptions[ finalColorSignal ];
 }
 
 /**

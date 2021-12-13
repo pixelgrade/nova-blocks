@@ -93,7 +93,7 @@ const ColorGradesControl = ( props ) => {
           <div className={ "nb-palette__signal-previews" } style={ { display: "flex" } }>
             { variations.map( currentVariation => {
               const current = addSiteVariationOffset( currentVariation );
-              const signal = getSignalRelativeToVariation( current, parentVariation );
+              const signal = getSignalRelativeToVariation( current, parentVariation, palette );
 
               return (
                 <div className="nb-palette__signal-preview-wrap">

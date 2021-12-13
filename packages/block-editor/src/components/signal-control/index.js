@@ -11,6 +11,7 @@ const defaultLabels = [
 const SignalControl = ( props ) => {
 
   const { label, signal } = props;
+  const maxSignal = props.max || 3;
   const onChange = props.onChange || (() => {});
   const labels = props.labels || defaultLabels;
 
@@ -52,7 +53,7 @@ const SignalControl = ( props ) => {
               </Button>
               <Button
                 isSecondary
-                disabled={ signal === 3 }
+                disabled={ signal === maxSignal }
                 onClick={ () => {
                   onChange( signal + 1 );
                 } }>
