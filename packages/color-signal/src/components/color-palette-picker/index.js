@@ -17,7 +17,7 @@ const ColorPalettePicker = ( props ) => {
       <div className="color-palette-picker__palettes">
         { myPalettes.map( thisPalette => {
           const colors = thisPalette.source || [];
-          const isSelected = selected === thisPalette.id;
+          const isSelected = `${ selected }` === `${ thisPalette.id }`;
           const colorClassnames = classnames(
             "color-palette-picker__color",
             {
