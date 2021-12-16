@@ -153,10 +153,10 @@
       opacity: .5;
     }
   
-    .comment-reply-link,
+    :is(.comment-reply-link,
     .comment-edit-link,
     .comment-link,
-    [id="cancel-comment-reply-link"] {
+    [id="cancel-comment-reply-link"]) {
       transition: opacity .15s ease-out;
   
       &:not(:hover) {
@@ -402,8 +402,9 @@
     }
   
     .comment-author-avatar {
-      grid-row-start: 1;
+      grid-row: 1 / span 2;
       grid-column: 1 / span 1;
+      align-self: start;
     }
   
     .comment-author-info {
@@ -412,12 +413,12 @@
     }
   
     // spacing
-    .comment-author-avatar,
+    :is(.comment-author-avatar,
     .comment-author-info,
     .comment-content,
-    .comment-footer-meta {
+    .comment-footer-meta) {
       @include block-spacing;
-      --nb-block-top-spacing: 0.35;
+      --nb-block-top-spacing: 0.25;
     }
   
     .comment-author-info {
