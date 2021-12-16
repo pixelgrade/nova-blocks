@@ -2152,9 +2152,9 @@ function novablocks_get_collection_card_markup( $media, $content, $attributes ) 
 		'use-source-color-as-reference',
 	);
 
-	if ( ! empty( $attributes['columns']) && $attributes['columns'] === 1
-	     && ! empty( $attributes['cardLayout'] ) && $attributes['cardLayout'] === 'stacked' ) {
-
+	if ( $attributes['columns'] === 1 &&
+		 $attributes['cardLayout'] === 'stacked' &&
+		 $attributes['layoutStyle'] !== 'carousel' ) {
 		$data_attributes_array[] = 'position-indicators';
 	}
 
