@@ -1,6 +1,8 @@
 export { default as AutocompleteTokenField } from "./autocomplete-tokenfield";
 export { default as BlockVerticalAlignmentToolbar } from "./block-vertical-alignment-toolbar";
 export { default as ControlsGroup } from './controls-group';
+export { default as ColorPicker } from './color-picker';
+export { default as DuotonePicker } from './duotone-picker';
 export { default as CardFieldsPreview } from './card-fields-preview';
 export { default as HeadingLevelIcon } from "./heading-level-icon";
 export { default as HeadingToolbar } from "./heading-toolbar";

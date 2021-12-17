@@ -1,17 +1,19 @@
 import { __ } from '@wordpress/i18n';
-import { useEffect, useMemo } from "@wordpress/element";
+import { Fragment, useEffect, useMemo } from "@wordpress/element";
 
 import {
   RadioControl,
   RangeControl,
-  DuotonePicker,
 } from '@wordpress/components';
 
 import { isFunctionalPalette } from "@novablocks/utils";
 
 import {
+  ControlsGroup,
   ControlsSection,
-  ControlsTab
+  ControlsTab,
+  ColorPicker,
+  DuotonePicker
 } from '../../components';
 
 import { useSupports } from "../../hooks";
@@ -32,7 +34,7 @@ const OverlayFilterControls = ( props ) => {
     <ControlsSection id={ 'overlay-filter' } label={ __( 'Overlay Filter' ) } group={ __( 'Modules' ) } order={ 40 }>
       <ControlsTab label={ __( 'Settings' ) }>
         <OverlayType { ...props } />
-        <DuotoneSelect { ...props } />
+        <CustomDuotonePicker { ...props } />
         <RangeControl
           label={ __( 'Overlay Filter Strength', '__plugin_txtd' ) }
           value={ overlayFilterStrength }
@@ -100,42 +102,42 @@ const OverlayType = ( props ) => {
   )
 }
 
-const DuotoneSelect = ( props ) => {
+const CustomDuotonePicker = ( props ) => {
 
-  const {
-    attributes,
-    setAttributes,
-  } = props;
+  // only paletteId and variationIndex are relevant
+  // because hex value can differ after palettes alterations
+  const [ from, setFrom ] = useState( props.from );
+  const [ to, setTo ] = useState( props.to );
 
-  const {
-    style,
-    overlayFilterType,
-  } = attributes;
+  const options = DUOTONE_PALETTES.map( ( duotone, index ) => {
+    return {
+      data: duotone,
+      value: index,
+      colors: [ duotone.from.hex, duotone.to.hex ]
+    }
+  } );
 
-  const supports = useSupports( props.name );
-  const BLOCK_SUPPORT_DUOTONE = supports?.novaBlocks?.overlayFilter?.duotone;
 
-  if ( ! BLOCK_SUPPORT_DUOTONE || overlayFilterType !== 'duotone' ) {
-    return null;
-  }
+  const colorOptions = COLOR_PALETTES.map( ( color, index ) => {
+    return {
+      data: color,
+      value: index,
+      colors: [ color.hex ]
+    }
+  } )
 
   return (
-    <DuotonePicker
-      colorPalette={ COLOR_PALETTES }
-      duotonePalette={ DUOTONE_PALETTES }
-      value={ style?.color?.duotone }
-      onChange={ ( newDuotone ) => {
-        const newStyle = {
-          ...style,
-          color: {
-            ...style?.color,
-            duotone: newDuotone,
-          },
-        };
-        setAttributes( { style: newStyle } );
-      } }
-      disableCustomColors={ true }
-    />
+    <Fragment>
+      <ControlsGroup title={ __( 'Duotone Presets', '__plugin_txtd' ) }>
+        <DuotonePicker options={ options } onChange={ value => {} } />
+      </ControlsGroup>
+      <ControlsGroup title={ __( 'Shadows', '__plugin_txtd' ) }>
+        <ColorPicker options={ colorOptions } onChange={ value => {} } />
+      </ControlsGroup>
+      <ControlsGroup title={ __( 'Highlights', '__plugin_txtd' ) }>
+        <ColorPicker options={ colorOptions } onChange={ value => {} } />
+      </ControlsGroup>
+    </Fragment>
   )
 }
 
