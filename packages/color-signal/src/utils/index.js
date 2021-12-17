@@ -1,3 +1,5 @@
+import { getSignals } from "@novablocks/utils";
+
 export { getColorSignalClassnames } from "@novablocks/utils";
 
 // Helper function to get current Palette Config,
@@ -52,51 +54,7 @@ export const getAbsoluteColorVariation = ( attributes ) => {
   return addSiteVariationOffset( absoluteVariation );
 }
 
-export const getMaxSignal = ( paletteId ) => {
-  const signals = getSignals( paletteId );
 
-  return signals.length - 1;
-}
-
-export const getSignals = ( paletteId ) => {
-  const config = window?.styleManager?.colorsConfig;
-  const palette = config.find( palette => `${ palette.id }` === `${ paletteId }` );
-  const colors = palette?.colors;
-  const variations = palette?.variations;
-
-  if ( ! palette || ! variations ) {
-    return getDefaultSignals();
-  }
-
-  const signalsCount = Math.min( colors.length, 4 );
-  const colorGroups = [];
-  const chunk = colors.length / signalsCount;
-
-  for ( let i = 0; i < signalsCount; i++ ) {
-    const start = chunk * i;
-    const end = chunk * ( i + 1 );
-    colorGroups.push( colors.slice( start, end ) );
-  }
-
-  const signals = [];
-  const backgrounds = variations.map( v => v.bg.toLowerCase() );
-
-  colorGroups.forEach( group => {
-    const firstColor = group[0];
-    const lastColor = group[ group.length - 1 ];
-    const start = backgrounds.indexOf( firstColor.toLowerCase() );
-    const end = backgrounds.lastIndexOf( lastColor.toLowerCase() );
-    const middle = Math.floor( start * 0.5 + end * 0.5 );
-
-    signals.push( middle + 1 );
-  } );
-
-  return signals;
-}
-
-export const getDefaultSignals = () => {
-  return [1, 3, 8, 11];
-}
 
 export const getVariationFromSignal = ( signal, paletteId ) => {
   const signals = getSignals( paletteId );
@@ -198,4 +156,10 @@ export const removeSiteVariationOffset = ( variation ) => {
 
 export const normalizeVariationValue = ( value ) => {
   return ( value + 11 ) % 12 + 1;
+}
+
+export const getMaxSignal = ( paletteId ) => {
+  const signals = getSignals( paletteId );
+
+  return signals.length - 1;
 }

@@ -1,56 +1,35 @@
+import { getSignals } from "@novablocks/utils";
+
 /**
  * Returns a Duotone Presets Array.
  * @param palettes
  * @returns {array}
  */
 export const generateDuotonePresetsFromPalettes = ( palettes ) => {
-  // First number is used for highlights.
-  // Second number is used for shadows.
-  // Since JavaScript arrays are zero-indexed,
-  // Color Grades Indexes are  0 - 11.
-  // Example:
-  // [6,9] will be equivalent of [7,10].
-  const duotones = [
-    // Staff Picks
-    [6, 9],
-    [6, 10],
-    [7, 10],
-    [7, 11],
-    [8, 11],
-  ];
 
   const presets = [];
 
-  duotones.forEach( ( [highlightIndex, shadowIndex] ) => {
-    highlightIndex = clamp( highlightIndex, 0, 11 );
-    shadowIndex = clamp( shadowIndex, 0, 11 );
+  palettes.forEach( palette1 => {
+    const signals1 = getSignals( palette1.id );
 
-    palettes.forEach( ( palette1 ) => {
+    palettes.filter( palette2 => palette1.id !== palette2.id ).forEach( palette2 => {
+      const signals2 = getSignals( palette2.id );
 
-      let colors1 = palette1.colors.slice();
+      signals1.forEach( ( signal1, index1 ) => {
+        signals2.forEach( ( signal2, index2 ) => {
 
-      if ( Array.isArray( palette1.variations ) ) {
-        colors1 = palette1.variations.map( variation => variation.bg );
-      }
+          const color1 = palette1.variations[ signal1 - 1 ].bg;
+          const color2 = palette2.variations[ signal2 - 1 ].bg;
 
-      palettes.forEach( ( palette2 ) => {
+          if ( color1 !== color2 &&
+               index1 > index2 &&
+               Math.abs( index1 - index2 ) > 0 ) {
 
-        if ( palette2.id === palette1.id ) {
-          return;
-        }
-
-        let colors2 = palette2.colors.slice();
-
-        if ( Array.isArray( palette2.variations ) ) {
-          colors2 = palette2.variations.map( variation => variation.bg );
-        }
-
-        const highlightsColor = colors1[ highlightIndex ];
-        const shadowsColor = colors2[ shadowIndex ];
-
-        presets.push( {
-          name: `${ palette2.label }(${ shadowIndex }) and ${ palette1.label }(${ highlightIndex })`,
-          colors: [ shadowsColor, highlightsColor ],
+            presets.push( {
+              name: `${ palette1.label } - ${ signal1 - 1 } and ${ palette2.label } - ${ signal2 - 1 }`,
+              colors: [ color1, color2 ],
+            } );
+          }
         } );
       } );
     } );
@@ -66,21 +45,20 @@ export const generateDuotonePresetsFromPalettes = ( palettes ) => {
  */
 
 export const generateColorPalettes = ( palettes ) => {
-  let colorItem = {};
   const colorPalette = [];
 
-  palettes.forEach( ( palette, index ) => {
-    let colors = palette.colors;
-    let colorLabel = palette.label;
+  palettes.forEach( palette => {
+    const signals = getSignals( palette.id );
+    const label = palette.label;
 
-    colors.forEach( ( color, colorIndex ) => {
-      colorItem = {
-        color: color.value,
-        name: `${colorLabel} - Color-${colorIndex}`,
-        slug: `${colorLabel.toLowerCase().replace( /\s/g, "-" )}-color-${index}`,
-      };
+    signals.forEach( ( signal, index ) => {
+      const color = palette.variations[ signal - 1 ].bg;
 
-      colorPalette.push( colorItem );
+      colorPalette.push( {
+        color: color,
+        name: `${ label } - ${ signal - 1 }`,
+        slug: `${ label.toLowerCase().replace( /\s/g, "-" ) }-color-${ signal - 1 }`,
+      } );
     } );
   } );
 

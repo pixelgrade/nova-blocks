@@ -38,3 +38,43 @@ export const getContentColorsSignalClassnames = ( attributes, supports ) => {
 
   return getColorSignalClassnames( newAttributes, supports );
 }
+
+export const getSignals = ( paletteId ) => {
+  const config = window?.styleManager?.colorsConfig;
+  const palette = config.find( palette => `${ palette.id }` === `${ paletteId }` );
+  const colors = palette?.colors.slice();
+  const variations = palette?.variations.slice();
+
+  if ( ! palette || ! variations ) {
+    return getDefaultSignals();
+  }
+
+  const signalsCount = Math.min( colors.length, 4 );
+  const colorGroups = [];
+  const chunk = colors.length / signalsCount;
+
+  for ( let i = 0; i < signalsCount; i++ ) {
+    const start = chunk * i;
+    const end = chunk * ( i + 1 );
+    colorGroups.push( colors.slice( start, end ) );
+  }
+
+  const signals = [];
+  const backgrounds = variations.map( v => v.bg.toLowerCase() );
+
+  colorGroups.forEach( group => {
+    const firstColor = group[0];
+    const lastColor = group[ group.length - 1 ];
+    const start = backgrounds.indexOf( firstColor.toLowerCase() );
+    const end = backgrounds.lastIndexOf( lastColor.toLowerCase() );
+    const middle = Math.floor( start * 0.5 + end * 0.5 );
+
+    signals.push( middle + 1 );
+  } );
+
+  return signals;
+}
+
+export const getDefaultSignals = () => {
+  return [1, 3, 8, 11];
+}

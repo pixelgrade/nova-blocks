@@ -21,8 +21,7 @@ import { generateDuotonePresetsFromPalettes, generateColorPalettes } from "./uti
 const PALETTES = styleManager.palettes;
 const FILTERED_PALETTES = PALETTES.filter( palette => ! isFunctionalPalette( palette ) );
 const DUOTONE_PALETTES = generateDuotonePresetsFromPalettes( FILTERED_PALETTES );
-
-const COLOR_PALETTES = generateColorPalettes(FILTERED_PALETTES);
+const COLOR_PALETTES = generateColorPalettes( FILTERED_PALETTES );
 
 const OverlayFilterControls = ( props ) => {
 
