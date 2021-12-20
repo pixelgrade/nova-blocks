@@ -1,5 +1,6 @@
 export * from './collection-layout';
 export * from './debounce';
+export * from './duotone';
 export * from './has-touch-screen';
 export * from './is-mobile-device';
 export * from './random';

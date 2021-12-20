@@ -68,7 +68,7 @@ registerBlockType( 'novablocks/supernova', {
       overlayFilter: {
         attributes: true,
         controls: true,
-        duotone: true
+        duotone: '.blob-mix__media'
       },
       scrollingEffect: {
         attributes: true,
@@ -88,7 +88,6 @@ registerBlockType( 'novablocks/supernova', {
       customAlign: true
     },
     color: {
-      __experimentalDuotone: 'img',
       text: false,
       background: false
     }

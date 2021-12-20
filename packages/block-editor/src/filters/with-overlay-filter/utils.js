@@ -27,7 +27,16 @@ export const generateDuotonePresetsFromPalettes = ( palettes ) => {
 
             presets.push( {
               name: `${ palette1.label } - ${ signal1 - 1 } and ${ palette2.label } - ${ signal2 - 1 }`,
-              colors: [ color1, color2 ],
+              from: {
+                paletteId: palette1.id,
+                variationIndex: signal1,
+                hex: color1
+              },
+              to: {
+                paletteId: palette2.id,
+                variationIndex: signal2,
+                hex: color2
+              },
             } );
           }
         } );
@@ -55,9 +64,9 @@ export const generateColorPalettes = ( palettes ) => {
       const color = palette.variations[ signal - 1 ].bg;
 
       colorPalette.push( {
-        color: color,
-        name: `${ label } - ${ signal - 1 }`,
-        slug: `${ label.toLowerCase().replace( /\s/g, "-" ) }-color-${ signal - 1 }`,
+        paletteId: palette.id,
+        variationIndex: signal,
+        hex: color,
       } );
     } );
   } );

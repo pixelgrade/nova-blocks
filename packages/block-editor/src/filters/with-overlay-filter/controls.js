@@ -1,17 +1,19 @@
 import { __ } from '@wordpress/i18n';
-import { useEffect, useMemo } from "@wordpress/element";
+import { Fragment, useEffect, useMemo } from "@wordpress/element";
 
 import {
   RadioControl,
   RangeControl,
-  DuotonePicker,
 } from '@wordpress/components';
 
-import { isFunctionalPalette } from "@novablocks/utils";
+import { getDuotoneFilterSvg, isFunctionalPalette } from "@novablocks/utils";
 
 import {
+  ControlsGroup,
   ControlsSection,
-  ControlsTab
+  ControlsTab,
+  ColorPicker,
+  DuotonePicker
 } from '../../components';
 
 import { useSupports } from "../../hooks";
@@ -32,7 +34,7 @@ const OverlayFilterControls = ( props ) => {
     <ControlsSection id={ 'overlay-filter' } label={ __( 'Overlay Filter' ) } group={ __( 'Modules' ) } order={ 40 }>
       <ControlsTab label={ __( 'Settings' ) }>
         <OverlayType { ...props } />
-        <DuotoneSelect { ...props } />
+        <CustomDuotonePicker { ...props } />
         <RangeControl
           label={ __( 'Overlay Filter Strength', '__plugin_txtd' ) }
           value={ overlayFilterStrength }
@@ -77,19 +79,7 @@ const OverlayType = ( props ) => {
       selected={ overlayFilterType }
       onChange={
         ( nextFilterStyle ) => {
-          const newAttributes = { overlayFilterType: nextFilterStyle };
-
-          // We need to clear Duotone values.
-          if ( nextFilterStyle === 'unitone' ) {
-            Object.assign( newAttributes, {
-              style: {
-                ...style,
-                color: {}
-              }
-            } );
-          }
-
-          setAttributes( newAttributes );
+          setAttributes( { overlayFilterType: nextFilterStyle } );
         }
       }
       options={ [
@@ -100,42 +90,78 @@ const OverlayType = ( props ) => {
   )
 }
 
-const DuotoneSelect = ( props ) => {
+const CustomDuotonePicker = ( props ) => {
 
-  const {
-    attributes,
-    setAttributes,
-  } = props;
+  // only paletteId and variationIndex are relevant
+  // because hex value can differ after palettes alterations
+  const { attributes, setAttributes, clientId } = props;
+  const { overlayFilterDuotoneConfig } = attributes;
+  const from = overlayFilterDuotoneConfig?.from;
+  const to = overlayFilterDuotoneConfig?.to;
 
-  const {
-    style,
-    overlayFilterType,
-  } = attributes;
+  const options = DUOTONE_PALETTES.map( ( duotone, index ) => {
+    return {
+      data: duotone,
+      value: index,
+      colors: [ duotone.from.hex, duotone.to.hex ]
+    }
+  } );
 
-  const supports = useSupports( props.name );
-  const BLOCK_SUPPORT_DUOTONE = supports?.novaBlocks?.overlayFilter?.duotone;
+  const colorOptions = COLOR_PALETTES.map( ( color, index ) => {
+    return {
+      data: color,
+      value: index,
+      colors: [ color.hex ]
+    }
+  } )
 
-  if ( ! BLOCK_SUPPORT_DUOTONE || overlayFilterType !== 'duotone' ) {
-    return null;
-  }
+  const duotoneValue = from && to && options.findIndex( option => {
+    return option.data.from.paletteId === from.paletteId &&
+           option.data.from.variationIndex === from.variationIndex &&
+           option.data.to.paletteId === to.paletteId &&
+           option.data.to.variationIndex === to.variationIndex;
+  } );
+
+  const fromValue = from && colorOptions.findIndex( color => {
+    return color.data.paletteId === from.paletteId &&
+           color.data.variationIndex === from.variationIndex;
+  } );
+
+  const toValue = to && colorOptions.findIndex( color => {
+    return color.data.paletteId === to.paletteId &&
+           color.data.variationIndex === to.variationIndex
+  } );
+
+
 
   return (
-    <DuotonePicker
-      colorPalette={ COLOR_PALETTES }
-      duotonePalette={ DUOTONE_PALETTES }
-      value={ style?.color?.duotone }
-      onChange={ ( newDuotone ) => {
-        const newStyle = {
-          ...style,
-          color: {
-            ...style?.color,
-            duotone: newDuotone,
-          },
-        };
-        setAttributes( { style: newStyle } );
-      } }
-      disableCustomColors={ true }
-    />
+    <Fragment>
+      <ControlsGroup title={ __( 'Duotone Presets', '__plugin_txtd' ) }>
+        <DuotonePicker selected={ duotoneValue } options={ options } onChange={ value => {
+          setAttributes( { overlayFilterDuotoneConfig: options[value].data } );
+        } } />
+      </ControlsGroup>
+      <ControlsGroup title={ __( 'Shadows', '__plugin_txtd' ) }>
+        <ColorPicker selected={ toValue } options={ colorOptions } onChange={ value => {
+          setAttributes( {
+            overlayFilterDuotoneConfig: {
+              ...overlayFilterDuotoneConfig,
+              to: options[value].data.to
+            }
+          } );
+        } } />
+      </ControlsGroup>
+      <ControlsGroup title={ __( 'Highlights', '__plugin_txtd' ) }>
+        <ColorPicker selected={ fromValue } options={ colorOptions } onChange={ value => {
+          setAttributes( {
+            overlayFilterDuotoneConfig: {
+              ...overlayFilterDuotoneConfig,
+              from: options[value].data.from
+            }
+          } );
+        } } />
+      </ControlsGroup>
+    </Fragment>
   )
 }
 

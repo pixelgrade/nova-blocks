@@ -1,4 +1,8 @@
-import { ControlsGroup } from "@novablocks/block-editor";
+import {
+  ColorPicker,
+  ControlsGroup,
+} from "@novablocks/block-editor";
+
 import { isFunctionalPalette } from "@novablocks/utils";
 
 import {
@@ -10,8 +14,6 @@ import {
   getSignalRelativeToVariation,
   getSourceIndexFromPaletteId,
 } from "../../utils";
-
-import ColorPalettePicker from "../color-palette-picker";
 
 const PalettePicker = ( props ) => {
 
@@ -57,14 +59,26 @@ const PalettePicker = ( props ) => {
     }
   }
 
+  const options = visiblePalettes.map( palette => {
+
+    return {
+      value: palette.id,
+      data: palette,
+      colors: palette.source.slice(0, 1)
+    }
+  } )
+
   return (
     <ControlsGroup>
-      <ColorPalettePicker
+      <ColorPicker
         label={ 'Color Palette' }
-        myPalettes={ visiblePalettes }
-        onChange={ onPaletteChange }
+        options={ options }
+        onChange={ value => {
+          const palette = visiblePalettes.find( palette => palette.id === value );
+          onPaletteChange( palette );
+        } }
         favorite={ paletteVariation === 1 && useSourceColorAsReference }
-        selected={ palette }
+        selected={ palette.id }
         { ...props } />
     </ControlsGroup>
   )

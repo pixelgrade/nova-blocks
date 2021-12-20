@@ -3,6 +3,10 @@
 		"type": "string",
 		"default": "unitone"
 	},
+	"overlayFilterDuotoneConfig": {
+		"type": "object",
+		"default": {}
+	},
 	"overlayFilterStrength": {
 		"type": "number",
 		"default": 0
