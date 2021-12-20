@@ -32,7 +32,6 @@ const getHexFromConfig = ( config ) => {
     const id = `novablocks-duotone-${ duotoneIncrement }`;
     duotoneIncrement = duotoneIncrement + 1;
     $obj.addClass( id );
-    console.log( [ fromHex, toHex ] );
     const $style = $( '<style>' ).html( `.${ id } .blob-mix__media { filter: url( #${ id } ); }` );
     const svgMarkup = getDuotoneFilterSvg( [ fromHex, toHex ], id );
     const $svg = $( svgMarkup );
