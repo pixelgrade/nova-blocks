@@ -38,13 +38,13 @@
 }
 
 .novablocks-sharing__wrap {
+  position: relative;
 
-	position: relative;
+  width: 25em;
+  max-width: 100%;
 
-	width: 25em;
-	max-width: 100%;
-
-	border-radius: 1em;
+  border-radius: 1em;
+  background-color: var(--nb-bg-color);
 
 	a {
 		color: inherit;
@@ -201,7 +201,7 @@
 }
 
 .novablocks-sharing__copy-input {
-	font-size: 0.8em;	
+	font-size: 0.8em;
 }
 
 .novablocks-sharing__link {
