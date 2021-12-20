@@ -19,6 +19,7 @@
 	},
 	"devDependencies": {
 		"@wordpress/api-fetch": "^3.21.5",
-		"@wordpress/data": "^4.26.6"
+		"@wordpress/data": "^4.26.6",
+		"colord": "^2.9.2"
 	}
 }
