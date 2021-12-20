@@ -158,3 +158,21 @@ $icon-svg-path: '../../packages/icons/src/svgs/tick.svg';
     }
   }
 }
+
+/**
+ * Default lists styling
+ *
+ * Use it for lists that are not part of the .nb-list block
+ */
+
+$lists_containers: ".wp-block-column, .nb-sidecar-area, .comment-content, trix-editor";
+
+:is(#{$lists_containers}) {
+  > :is(ul,ol):not([class]) {
+    padding-left: 1.1em;
+
+    @include block-spacing-container;
+    @include block-spacing-modifier(0.5);
+  }
+}
+

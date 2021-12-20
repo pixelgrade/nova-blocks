@@ -103,6 +103,10 @@ trix-editor {
     border-left: 2px solid currentColor;
     font-style: italic;
   }
+
+  > * {
+    --nb-spacing-current-multiplier: 0.25;
+  }
 }
 
 @include below(tablet) {

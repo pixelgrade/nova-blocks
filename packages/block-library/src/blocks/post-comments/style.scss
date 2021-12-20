@@ -72,6 +72,12 @@
   
     .comment-content {
       --font-size-modifier: 0.9;
+      
+      @include block-spacing-container;
+
+      > * {
+        --nb-spacing-current-multiplier: 0.25;
+      }
   
       blockquote {
         padding-left: 1em;
