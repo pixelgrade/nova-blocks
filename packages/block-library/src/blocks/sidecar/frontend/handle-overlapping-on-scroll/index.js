@@ -36,8 +36,17 @@ export const getOverlappingSets = () => {
     const stickyElement = sidebar.lastElementChild;
     const blockSelector = '.nb-content-layout-grid > :is(.alignfull, .alignwide, .alignleft, .alignright)';
     const blocks = Array.from( sidecar.querySelectorAll( blockSelector ) );
+    const filteredBlocks = [];
 
-    return [ ...acc, [ stickyElement, blocks ] ];
+    blocks.forEach( ( block, index) => {
+      if ( block.classList.contains( 'supernova' ) ) {
+        filteredBlocks.push( ...Array.from( block.children ) );
+      } else {
+        filteredBlocks.push( block );
+      }
+    } );
+
+    return [ ...acc, [ stickyElement, filteredBlocks ] ];
   }, [] );
 }
 
