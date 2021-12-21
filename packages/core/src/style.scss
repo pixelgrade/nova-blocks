@@ -16,7 +16,13 @@ $slick-arrow-color: var(--sm-current-fg1-color);
 [class*="__inner-container"] {
   @include nb-content-layout;
 
-  .sm-color-signal-0:not(.alignfull):not([data-align="full"]) > & {
+  > .nb-sidecar {
+    max-width: none;
+    margin-left: calc( -1 * var(--nb-wrapper-sides-spacings) );
+    margin-right: calc( -1 * var(--nb-wrapper-sides-spacings) );
+  }
+
+  .sm-color-signal-0:not(.alignfull, [data-align="full"]) > & {
     padding-left: 0;
     padding-right: 0;
 
@@ -34,7 +40,6 @@ $slick-arrow-color: var(--sm-current-fg1-color);
 ) {
   @include nb-content-layout-grid;
 }
-
 
 .wp-block {
   max-width: none;
