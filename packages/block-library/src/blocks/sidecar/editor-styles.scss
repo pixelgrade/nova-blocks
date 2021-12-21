@@ -5,7 +5,6 @@
 }
 
 .block-editor-block-list__layout.is-root-container {
-  @include nb-content-layout-grid;
 
   > :is(.alignleft, [data-align="left"]),
   > :is(.alignright, [data-align="right"]) {
@@ -24,8 +23,15 @@
 }
 
 .block-editor-block-list__layout.is-root-container {
+
   @at-root {
-    :is(#{&}, #{&} > .nb-content-layout-grid) {
+
+    :is(#{&}, #{&} > .supernova) {
+      @include nb-content-layout-grid;
+    }
+
+    :is(#{&}, #{&} > .nb-content-layout-grid, #{&} > .supernova) {
+
       > :is(.alignwide, [data-align="wide"]) {
         grid-column-start: var(--block-wide-start);
         grid-column-end: var(--block-wide-end);

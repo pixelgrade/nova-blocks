@@ -74,8 +74,8 @@ const PalettePicker = ( props ) => {
         label={ 'Color Palette' }
         options={ options }
         onChange={ value => {
-          const palette = visiblePalettes.find( palette => palette.id === value );
-          onPaletteChange( palette );
+          const palette = visiblePalettes.find( palette => `${ palette.id }` === value );
+          onPaletteChange( palette.id );
         } }
         favorite={ paletteVariation === 1 && useSourceColorAsReference }
         selected={ palette }
