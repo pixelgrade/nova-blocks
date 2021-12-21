@@ -22,7 +22,7 @@ $slick-arrow-color: var(--sm-current-fg1-color);
     margin-right: calc( -1 * var(--nb-wrapper-sides-spacings) );
   }
 
-  .sm-color-signal-0:not(.alignfull, [data-align="full"]) > & {
+  .sm-color-signal-0:not(.alignfull):not([data-align="full"]) > & {
     padding-left: 0;
     padding-right: 0;
 
@@ -36,7 +36,8 @@ $slick-arrow-color: var(--sm-current-fg1-color);
 :is(
   .nb-content-layout-grid,
   .nb-sidecar,
-  .nb-sidecar-area--content
+  .nb-sidecar-area--content,
+  .nb-sidecar-area--content > .supernova
 ) {
   @include nb-content-layout-grid;
 }

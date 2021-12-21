@@ -62,7 +62,7 @@ const PalettePicker = ( props ) => {
   const options = visiblePalettes.map( palette => {
 
     return {
-      value: palette.id,
+      value: `${ palette.id }`,
       data: palette,
       colors: palette.source.slice(0, 1)
     }
@@ -78,8 +78,9 @@ const PalettePicker = ( props ) => {
           onPaletteChange( palette );
         } }
         favorite={ paletteVariation === 1 && useSourceColorAsReference }
-        selected={ palette.id }
-        { ...props } />
+        selected={ palette }
+        { ...props }
+      />
     </ControlsGroup>
   )
 }

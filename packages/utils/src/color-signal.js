@@ -43,12 +43,12 @@ export const getSignals = ( paletteId ) => {
   const config = window?.styleManager?.colorsConfig;
   const palette = config.find( palette => `${ palette.id }` === `${ paletteId }` );
   const colors = palette?.colors.slice();
-  const variations = palette?.variations.slice();
 
-  if ( ! palette || ! variations ) {
+  if ( ! palette || ! palette?.variations ) {
     return getDefaultSignals();
   }
 
+  const variations = palette.variations.slice();
   const signalsCount = Math.min( colors.length, 4 );
   const colorGroups = [];
   const chunk = colors.length / signalsCount;

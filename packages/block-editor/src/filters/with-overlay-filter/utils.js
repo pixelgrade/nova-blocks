@@ -6,8 +6,11 @@ import { getSignals } from "@novablocks/utils";
  * @returns {array}
  */
 export const generateDuotonePresetsFromPalettes = ( palettes ) => {
-
   const presets = [];
+
+  if ( ! palettes.length || ! Array.isArray( palettes[0].variations ) ) {
+    return presets;
+  }
 
   palettes.forEach( palette1 => {
     const signals1 = getSignals( palette1.id );
@@ -55,6 +58,10 @@ export const generateDuotonePresetsFromPalettes = ( palettes ) => {
 
 export const generateColorPalettes = ( palettes ) => {
   const colorPalette = [];
+
+  if ( ! palettes.length || ! Array.isArray( palettes[0].variations ) ) {
+    return colorPalette;
+  }
 
   palettes.forEach( palette => {
     const signals = getSignals( palette.id );
