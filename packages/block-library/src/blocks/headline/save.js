@@ -12,25 +12,26 @@ import {
 
 export default function save( props ) {
 
-	const {
-		attributes,
-	} = props;
+	const { attributes } = props;
 
 	const {
 		align,
+		level,
 		primary,
 		secondary,
-		level,
+    textAlign,
 	} = attributes;
 
 	const TagName = `h${level}`;
 
-	const className = classnames( 'c-headline', {
-		[ `has-text-align-${ align }` ]: align,
-	} );
+  const className = classnames(
+    'c-headline',
+    `has-text-align-${ textAlign }`,
+    `align${ align }`
+  );
 
 	return (
-		<TagName className={ className ? className : undefined }>
+		<TagName className={ className }>
 			<RichText.Content className="c-headline__secondary" value={ secondary } tagName="span" />
 			{ ` ` }
 			<RichText.Content className="c-headline__primary" value={ primary } tagName="span" />

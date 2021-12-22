@@ -15,12 +15,18 @@ import save from './save';
 import transforms from './transforms';
 
 registerBlockType( 'novablocks/headline', {
+  apiVersion: 2,
 	title: __( 'Headline', '__plugin_txtd' ),
 	description: __( 'Advanced heading block with a fancier display.', '__plugin_txtd' ),
 	category: 'nova-blocks',
 	icon: getSvg( iconSvg ),
 	// Additional search terms
 	keywords: [ __( 'heading', '__plugin_txtd' ), __( 'title', '__plugin_txtd' ), __( 'cta', '__plugin_txtd' ), __( 'call to action', '__plugin_txtd' ) ],
+  supports: {
+    novaBlocks: {
+      customAlign: true
+    }
+  },
 	attributes: {
 		primary: {
 			type: "string",
@@ -34,6 +40,10 @@ registerBlockType( 'novablocks/headline', {
 			type: "number",
 			default: 2
 		},
+    textAlign: {
+      type: "string",
+      default: "left"
+    }
 	},
 	save,
 	edit,
