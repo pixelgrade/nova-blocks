@@ -44,7 +44,7 @@
 // This is where magic starts.
 .nb-content-layout-grid {
 
-  > :where(.alignwide, [data-align="wide"]) {
+  > :is(.alignwide, [data-align="wide"]) {
 
     &.break-align-left {
       grid-column-start: var(--block-wide-start);
@@ -55,7 +55,7 @@
     }
   }
 
-  > :where(.alignfull, [data-align="full"]) {
+  > :is(.alignfull, [data-align="full"]) {
 
     &.break-align-left {
       grid-column-start: var(--block-full-start);
@@ -70,16 +70,16 @@
     max-width: none;
   }
 
-  > :where(.alignleft, [data-align="left"]).break-align-left,
-  > :where(.alignright, [data-align="right"]).break-align-right {
+  > :is(.alignleft, [data-align="left"]).break-align-left,
+  > :is(.alignright, [data-align="right"]).break-align-right {
     grid-row-end: span 5;
   }
 
-  > :where(.alignleft, [data-align="left"]).break-align-left {
+  > :is(.alignleft, [data-align="left"]).break-align-left {
     grid-column: var(--block-left-start) / var(--block-left-end);
   }
 
-  > :where(.alignright, [data-align="right"]).break-align-right {
+  > :is(.alignright, [data-align="right"]).break-align-right {
     grid-column: var(--block-right-start) / var(--block-right-end);
   }
 }
