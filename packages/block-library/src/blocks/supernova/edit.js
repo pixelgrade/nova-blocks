@@ -73,6 +73,7 @@ const SupernovaPreview = props => {
     `supernova--valign-${ contentAlign[0] }`,
     `supernova--halign-${ contentAlign[1] }`,
     props.className,
+    'nb-content-layout-grid',
     'alignfull'
   );
 

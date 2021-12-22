@@ -95,9 +95,13 @@ const CustomDuotonePicker = ( props ) => {
   // only paletteId and variationIndex are relevant
   // because hex value can differ after palettes alterations
   const { attributes, setAttributes, clientId } = props;
-  const { overlayFilterDuotoneConfig } = attributes;
+  const { overlayFilterType, overlayFilterDuotoneConfig } = attributes;
   const from = overlayFilterDuotoneConfig?.from;
   const to = overlayFilterDuotoneConfig?.to;
+
+  if ( overlayFilterType !== 'duotone' ) {
+    return null;
+  }
 
   const options = DUOTONE_PALETTES.map( ( duotone, index ) => {
     return {
@@ -133,7 +137,6 @@ const CustomDuotonePicker = ( props ) => {
   } );
 
 
-
   return (
     <Fragment>
       <ControlsGroup title={ __( 'Duotone Presets', '__plugin_txtd' ) }>
@@ -146,7 +149,7 @@ const CustomDuotonePicker = ( props ) => {
           setAttributes( {
             overlayFilterDuotoneConfig: {
               ...overlayFilterDuotoneConfig,
-              to: options[value].data.to
+              to: colorOptions[value].data
             }
           } );
         } } />
@@ -156,7 +159,7 @@ const CustomDuotonePicker = ( props ) => {
           setAttributes( {
             overlayFilterDuotoneConfig: {
               ...overlayFilterDuotoneConfig,
-              from: options[value].data.from
+              from: colorOptions[value].data
             }
           } );
         } } />

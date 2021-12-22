@@ -36,7 +36,7 @@ $slick-arrow-color: var(--sm-current-fg1-color);
 :is(
   .nb-content-layout-grid,
   .nb-sidecar,
-  .nb-sidecar-area--content,
+  .nb-sidecar-area--content:not(.supernova),
   .nb-sidecar-area--content > .supernova
 ) {
   @include nb-content-layout-grid;
