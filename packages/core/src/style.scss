@@ -48,6 +48,10 @@ $slick-arrow-color: var(--sm-current-fg1-color);
 
 .wp-block-group {
 
+  &:not([class*="sm-color-signal"]) > .wp-block-group__inner-container {
+    padding: 0;
+  }
+
   // groups that have a set color signal (different text and background color)
   // and have no emphasis top or bottom spacing need to have some padding
   // by multiplying with -1 and then adding 1 we make sure that
