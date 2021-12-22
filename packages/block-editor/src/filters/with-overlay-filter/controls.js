@@ -33,16 +33,20 @@ const OverlayFilterControls = ( props ) => {
   return (
     <ControlsSection id={ 'overlay-filter' } label={ __( 'Overlay Filter' ) } group={ __( 'Modules' ) } order={ 40 }>
       <ControlsTab label={ __( 'Settings' ) }>
-        <OverlayType { ...props } />
+        <ControlsGroup>
+          <OverlayType { ...props } />
+        </ControlsGroup>
         <CustomDuotonePicker { ...props } />
-        <RangeControl
-          label={ __( 'Overlay Filter Strength', '__plugin_txtd' ) }
-          value={ overlayFilterStrength }
-          onChange={ ( nextOverlayFilterStrength ) => setAttributes( { overlayFilterStrength: nextOverlayFilterStrength } ) }
-          min={ 0 }
-          max={ 90 }
-          step={ 10 }
-        />
+        <ControlsGroup>
+          <RangeControl
+            label={ __( 'Overlay Filter Strength', '__plugin_txtd' ) }
+            value={ overlayFilterStrength }
+            onChange={ ( nextOverlayFilterStrength ) => setAttributes( { overlayFilterStrength: nextOverlayFilterStrength } ) }
+            min={ 0 }
+            max={ 90 }
+            step={ 10 }
+          />
+        </ControlsGroup>
       </ControlsTab>
     </ControlsSection>
   );
