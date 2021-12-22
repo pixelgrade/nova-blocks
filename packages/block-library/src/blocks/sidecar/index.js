@@ -10,7 +10,8 @@ import edit from './edit';
 import variations from './variations';
 import iconSvg from './sidecar.svg';
 import { getSvg } from "@novablocks/block-editor";
-import attributes from "./attributes"
+import attributes from "./attributes";
+import transforms from './transforms';
 
 registerBlockType( 'novablocks/sidecar', {
   apiVersion: 2,
@@ -27,5 +28,6 @@ registerBlockType( 'novablocks/sidecar', {
     __( 'aside', '__plugin_txtd' )
   ],
   save: () => <InnerBlocks.Content />,
+  transforms,
   variations,
 } );

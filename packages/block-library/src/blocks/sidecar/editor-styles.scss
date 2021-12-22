@@ -22,15 +22,12 @@
   }
 }
 
-.block-editor-block-list__layout.is-root-container {
+.is-root-container {
 
   @at-root {
 
-    :is(#{&}, #{&} > .supernova) {
-      @include nb-content-layout-grid;
-    }
-
-    :is(#{&}, #{&} > .nb-content-layout-grid, #{&} > .supernova) {
+    &,
+    :is(#{&}, .nb-content-layout-grid, .nb-sidecar, .nb-sidecar-area--content) > .supernova {
 
       > :is(.alignwide, [data-align="wide"]) {
         grid-column-start: var(--block-wide-start);
