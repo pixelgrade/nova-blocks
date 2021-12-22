@@ -10,26 +10,36 @@ import {
   removeSiteVariationOffset,
 } from "./utils";
 
-const getBlockList = () => select( 'core/editor' ).getBlocks();
+( () => {
 
-let blockList = getBlockList();
+  const editor = select( 'core/editor' );
 
-/**
- * Subscribe to any changes to the block list in order to update each block's final palette variation value
- * based on their and their parent's colorSignal attribute value
- */
-subscribe( () => {
-  const newBlockList = getBlockList();
-  const blockListChanged = newBlockList !== blockList;
-  blockList = newBlockList;
-
-  if ( blockListChanged ) {
-    // You can trigger here any behavior when the block list in the post changes.
-    blockList.forEach( ( block ) => {
-      updateBlock( block );
-    } );
+  if ( ! editor ) {
+    return;
   }
-} );
+
+  const getBlockList = () => editor.getBlocks();
+
+  let blockList = getBlockList();
+
+  /**
+   * Subscribe to any changes to the block list in order to update each block's final palette variation value
+   * based on their and their parent's colorSignal attribute value
+   */
+  subscribe( () => {
+    const newBlockList = getBlockList();
+    const blockListChanged = newBlockList !== blockList;
+    blockList = newBlockList;
+
+    if ( blockListChanged ) {
+      // You can trigger here any behavior when the block list in the post changes.
+      blockList.forEach( ( block ) => {
+        updateBlock( block );
+      } );
+    }
+  } );
+
+} )();
 
 /**
  * Update block's paletteVariation attribute value based on their and their parent's colorSignal attribute value
