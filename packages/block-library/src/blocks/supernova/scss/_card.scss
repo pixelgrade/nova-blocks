@@ -102,28 +102,6 @@
   }
 }
 
-.supernova-item--layout-horizontal,
-.supernova-item--layout-horizontal-reverse {
-
-  @include above(tablet) {
-    margin-top: calc( var(--block-top-spacing) * var(--nb-spacing) );
-    margin-bottom: calc( var(--block-bottom-spacing) * var(--nb-spacing) );
-
-    padding-top: calc( -1 * var(--emphasis-top-spacing) * var(--nb-spacing) );
-    padding-bottom: calc( -1 * var(--emphasis-bottom-spacing) * var(--nb-spacing) );
-
-    .supernova-item__media-wrapper {
-      margin-top: calc( var(--emphasis-top-spacing) * var(--nb-spacing) );
-      margin-bottom: calc( var(--emphasis-bottom-spacing) * var(--nb-spacing) );
-    }
-
-    .supernova-item__content {
-      padding-top: calc( var(--emphasis-top-spacing) * var(--nb-spacing) );
-      padding-bottom: calc( var(--emphasis-bottom-spacing) * var(--nb-spacing) );
-    }
-  }
-}
-
 .supernova-item__media-wrapper > *,
 .supernova-item--layout-stacked .supernova-item__media-aspect-ratio {
   height: 100%;
@@ -174,8 +152,6 @@
 // Remove the padding between Media and Content
 // so the spacing between them is controlled only
 // through the `Content to Media Spacing` option.
-// 
-// 
 
 @mixin remove-spacing-media-to-content($wrapper, $content) {
    .supernova-item__media-wrapper:not(:last-child) {
@@ -187,21 +163,25 @@
     }
 }
 
-.supernova-item {
-  &.supernova-item--layout-vertical {
-    @include remove-spacing-media-to-content(bottom, top);
-  }
+@include above(tablet) {
 
-  &.supernova-item--layout-vertical-reverse {
-    @include remove-spacing-media-to-content(top, bottom);
-  }
+  .supernova-item {
 
-  &.supernova-item--layout-horizontal {
-    @include remove-spacing-media-to-content(right, left);
-  }
+    &.supernova-item--layout-vertical {
+      @include remove-spacing-media-to-content(bottom, top);
+    }
 
-  &.supernova-item--layout-horizontal-reverse {
-    @include remove-spacing-media-to-content(left, right);
+    &.supernova-item--layout-vertical-reverse {
+      @include remove-spacing-media-to-content(top, bottom);
+    }
+
+    &.supernova-item--layout-horizontal {
+      @include remove-spacing-media-to-content(right, left);
+    }
+
+    &.supernova-item--layout-horizontal-reverse {
+      @include remove-spacing-media-to-content(left, right);
+    }
   }
 }
 
