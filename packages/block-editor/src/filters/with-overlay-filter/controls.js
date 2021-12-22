@@ -148,7 +148,7 @@ const CustomDuotonePicker = ( props ) => {
           setAttributes( { overlayFilterDuotoneConfig: options[value].data } );
         } } />
       </ControlsGroup>
-      <ControlsGroup title={ __( 'Shadows', '__plugin_txtd' ) }>
+      <ControlsGroup title={ __( 'Highlights', '__plugin_txtd' ) }>
         <ColorPicker selected={ toValue } options={ colorOptions } onChange={ value => {
           setAttributes( {
             overlayFilterDuotoneConfig: {
@@ -158,7 +158,7 @@ const CustomDuotonePicker = ( props ) => {
           } );
         } } />
       </ControlsGroup>
-      <ControlsGroup title={ __( 'Highlights', '__plugin_txtd' ) }>
+      <ControlsGroup title={ __( 'Shadows', '__plugin_txtd' ) }>
         <ColorPicker selected={ fromValue } options={ colorOptions } onChange={ value => {
           setAttributes( {
             overlayFilterDuotoneConfig: {
