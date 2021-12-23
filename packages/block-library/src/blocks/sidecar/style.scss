@@ -144,11 +144,15 @@
     > .nb-sidecar-area--content {
       --block-wide-end: ce;
       --block-full-end: ce;
+
+      --block-left-end: var(--block-content-end);
     }
 
     > .nb-sidecar-area--sidebar {
       --block-content-start: ge;
       --block-content-end: we;
+
+      --block-right-start: var(--block-content-start);
     }
   }
 }
