@@ -73,6 +73,7 @@
   > :is(.alignleft, [data-align="left"]).break-align-left,
   > :is(.alignright, [data-align="right"]).break-align-right {
     grid-row-end: span 5;
+    align-self: flex-start;
   }
 
   > :is(.alignleft, [data-align="left"]).break-align-left {
