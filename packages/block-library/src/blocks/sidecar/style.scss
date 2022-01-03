@@ -3,8 +3,8 @@
 
 :root {
   // Default position for blocks is between CS (content-start) and CE (content-end).
-  --block-content-start: cs;
-  --block-content-end: ce;
+  --block-content-start: ws;
+  --block-content-end: we;
 
   // Default block limits are WS (wide-start) and WE (wide-end).
   --block-wide-start: ws;
@@ -13,16 +13,14 @@
   --block-full-start: fs;
   --block-full-end: fe;
 
-  --block-left-start: var(--block-content-start);
-  --block-left-end: var(--block-content-end);
-  --block-right-start: var(--block-content-start);
-  --block-right-end: var(--block-content-end);
+  --block-left-start: ws;
+  --block-left-end: gs;
+  --block-right-start: ge;
+  --block-right-end: we;
 
   @include above(lap) {
-    --block-left-start: ws;
-    --block-left-end: gs;
-    --block-right-start: ge;
-    --block-right-end: we;
+    --block-content-start: cs;
+    --block-content-end: ce;
   }
 
   --nb-sidecar-gap: calc(var(--nb-spacing) * 2);
@@ -85,14 +83,20 @@
   // Align: LEFT
   > :is(.alignleft, [data-align="left"]).break-align-left {
     grid-column: var(--block-left-start) / var(--block-left-end);
+
+    + :not(:is(.alignright, [data-align="right"])) {
+      grid-column-start: cs; // ???
+    }
   }
 
   // Align: RIGHT
   > :is(.alignright, [data-align="right"]).break-align-right {
     grid-column: var(--block-right-start) / var(--block-right-end);
+
+    + :not(:is(.alignleft, [data-align="left"])) {
+      grid-column-end: ce; // ???
+    }
   }
-
-
 
   // NONBREAKABLE ALIGNED BLOCKS
   // 
@@ -107,28 +111,26 @@
   // that have a *height* equal or smaller to the paragraph after it.
 
   @include above(lap) {
-    > :is(.alignleft, [data-align="left"], .x2.specificity) {
-      grid-column-end: frs;
-
-      + *:not(:is(.alignright)) {
-        grid-column-start: cs;
-      }
-    }
 
     // Sidecar inside Sidecar
-    .nb-sidecar .nb-sidecar .nb-sidecar & > :is(.alignleft, [data-align="left"], .x2.specificity) {
-      grid-column-end: gcs;
+    :is(.nb-sidecar--sidebar-left .nb-sidecar--sidebar-right,
+    .nb-sidecar--sidebar-right .nb-sidecar--sidebar-left) & {
+      grid-auto-flow: dense;
 
-      + *:not(:is(.alignright)) {
-        grid-column-start: cc;
+      > :is(.alignleft, [data-align="left"], .x2.specificity) {
+        grid-column-end: gcs;
+
+        + :not(:is(.alignright, [data-align="right"])) {
+          grid-column-start: cc;
+        }
       }
-    }
 
-    > :is(.alignright, [data-align="right"], .x2.specificity) {
-      // grid-column-start: cc;
+      > :is(.alignright, [data-align="right"], .x2.specificity) {
+        grid-column-start: gce;
 
-      + *:not(:is(.alignleft)) {
-        // grid-column-end: gcs;
+        + :not(:is(.alignleft, [data-align="left"])) {
+          grid-column-end: cc;
+        }
       }
     }
   }
@@ -193,15 +195,13 @@
     > .nb-sidecar-area--content {
       --block-wide-end: ce;
       --block-full-end: ce;
-
-      --block-left-end: var(--block-content-end);
+      //--block-left-end: var(--block-content-end);
     }
 
     > .nb-sidecar-area--sidebar {
       --block-content-start: ge;
       --block-content-end: we;
-
-      --block-right-start: var(--block-content-start);
+      //--block-right-start: var(--block-content-start);
     }
   }
 }

@@ -12,6 +12,9 @@ const SidecarAreaEdit = function( props ) {
     props.className,
     'nb-sidecar-area',
     `nb-sidecar-area--${ props.attributes.areaName }`,
+    {
+      'nb-content-layout-grid': props.attributes.areaName === 'content'
+    }
   )
 
   const blockProps = useBlockProps( {
