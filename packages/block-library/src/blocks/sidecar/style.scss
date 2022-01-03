@@ -98,6 +98,8 @@
     }
   }
 
+
+
   // NONBREAKABLE ALIGNED BLOCKS
   // 
   // Left or right-aligned blocks inside a Sidecar [content] area with 
@@ -114,10 +116,12 @@
 
     // Sidecar inside Sidecar
     :is(.nb-sidecar--sidebar-left .nb-sidecar--sidebar-right,
-    .nb-sidecar--sidebar-right .nb-sidecar--sidebar-left) & {
-      grid-auto-flow: dense;
+        .nb-sidecar--sidebar-right .nb-sidecar--sidebar-left) & {
+      // Removed 'dense' option as it makes multiple blocks 
+      // aligned left/right to jump on top of the grid column
+      // grid-auto-flow: dense; 
 
-      > :is(.alignleft, [data-align="left"], .x2.specificity) {
+      > :is(.alignleft, [data-align="left"], .x2.specificity):not(.break-align-left) {
         grid-column-end: gcs;
 
         + :not(:is(.alignright, [data-align="right"])) {
@@ -125,7 +129,7 @@
         }
       }
 
-      > :is(.alignright, [data-align="right"], .x2.specificity) {
+      > :is(.alignright, [data-align="right"], .x2.specificity):not(.break-align-right) {
         grid-column-start: gce;
 
         + :not(:is(.alignleft, [data-align="left"])) {
