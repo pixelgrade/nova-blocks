@@ -5,11 +5,11 @@ import { IS_EDITOR } from "@novablocks/utils";
 
 if ( ! IS_EDITOR ) {
 
-  handleAlignedBlocks();
-  handleOverlappingOnScroll();
-
   window.addEventListener( 'DOMContentLoaded', () => {
     moveImageClassesToBlock();
   } );
+
+  handleAlignedBlocks();
+  handleOverlappingOnScroll();
 
 }

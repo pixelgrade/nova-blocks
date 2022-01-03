@@ -8,7 +8,6 @@ import {
   wouldOverlap,
 } from "./utils";
 
-const contentBlocks = getContentBlocksArray();
 const BREAK_LEFT_CLASS = 'break-align-left';
 const BREAK_RIGHT_CLASS = 'break-align-right';
 
@@ -25,6 +24,8 @@ const getAlignedSiblings = ( block, classname ) => {
 }
 
 const maybeAddBreakClasses = () => {
+  const contentBlocks = getContentBlocksArray();
+
   contentBlocks.forEach( block => {
     const sidebarBlocks = getAdjacentSidebarBlocks( block );
     const leftAlignedBlocks = getAlignedSiblings( block, 'alignleft' );
