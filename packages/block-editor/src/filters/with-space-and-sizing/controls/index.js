@@ -25,7 +25,11 @@ const SpaceAndSizingControls = ( props ) => {
       <ControlsTab label={ __( 'Presets' ) }>
         <SpaceAndSizingPresets { ...props } />
       </ControlsTab>
-      <SpaceAndSizingCustomize { ...props } />
+      <ControlsTab label={ __( 'Customize', '__plugin_txtd' ) }>
+        <CardSpacingCustomize key={ 'card-spacing-customize' } { ...props } />
+        <ImageContainerHeightCustomize key={ 'image-container-customize' } { ...props } />
+        <VisualBalanceCustomize key={ 'visual-balance-customize' } { ...props } />
+      </ControlsTab>
       <ControlsTab label={ __( 'Settings', '__plugin_txtd' ) }>
         <CardSpacingSettings key={ 'card-spacing-settings' } { ...props } />
         <BlockSpacingModifier key={ 'spacing-modifier' } { ...props } />
@@ -54,16 +58,6 @@ const BlockSpacingModifier = withVisibility( 'spacing-modifier' )( props => {
         step={ 0.5 }
       />
     </ControlsGroup>
-  )
-} );
-
-const SpaceAndSizingCustomize = withVisibility( 'space-and-sizing-customize' )( props => {
-  return (
-    <ControlsTab label={ __( 'Customize', '__plugin_txtd' ) }>
-      <CardSpacingCustomize key={ 'card-spacing-customize' } { ...props } />
-      <ImageContainerHeightCustomize key={ 'image-container-customize' } { ...props } />
-      <VisualBalanceCustomize key={ 'visual-balance-customize' } { ...props } />
-    </ControlsTab>
   )
 } );
 

@@ -40,23 +40,16 @@ const Controls = withColorSignalProps( props => {
         <PalettePicker { ...props } />
         <ColorReferenceToggleControl { ...props } />
       </ControlsTab>
-      <ColorSignalSettingsTab { ...props } />
+      <ControlsTab label={ __( 'Settings' ) }>
+        <PalettePicker { ...props } />
+        <ControlsGroup>
+          <BlockColorGradeControl { ...props } />
+          <ContentColorGradeControl { ...props } />
+        </ControlsGroup>
+        <MiscellaneousControls { ...props } />
+      </ControlsTab>
     </ControlsSection>
   )
 } );
-
-const ColorSignalSettingsTab = withVisibility( 'color-signal-settings' )( props => {
-  return (
-    <ControlsTab label={ __( 'Settings' ) }>
-      <PalettePicker { ...props } />
-      <ControlsGroup>
-        <BlockColorGradeControl { ...props } />
-        <ContentColorGradeControl { ...props } />
-      </ControlsGroup>
-      <MiscellaneousControls { ...props } />
-    </ControlsTab>
-  )
-} );
-
 
 export default Controls;

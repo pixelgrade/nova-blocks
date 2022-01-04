@@ -12,7 +12,6 @@ const withControlsVisibility = OriginalComponent => {
     useEffect( () => {
 
       setControlsVisibility( {
-        'space-and-sizing-customize': false,
         'content-top-spacing': false,
         'content-bottom-spacing': false,
         'minimum-container-height': false,

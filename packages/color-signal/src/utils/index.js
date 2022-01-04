@@ -72,9 +72,16 @@ export const getVariationFromSignal = ( signal, paletteId ) => {
 export const getSignalRelativeToVariation = ( compared, reference, paletteId ) => {
   const variationOptions = getSignalOptionsFromVariation( reference, paletteId );
 
-  return variationOptions.reduce( ( prev, curr, index, arr ) => {
+  const signal = variationOptions.reduce( ( prev, curr, index, arr ) => {
     return ( Math.abs(curr - compared ) < Math.abs( arr[prev] - compared ) ? index : prev );
   }, 0 );
+
+  // try to use signal 0 only when compared and reference are equal
+  if ( signal === 0 ) {
+    return compared === reference ? 0 : 1;
+  }
+
+  return signal;
 }
 
 /**
