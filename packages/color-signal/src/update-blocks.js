@@ -78,6 +78,7 @@ const updateBlock = ( block ) => {
           updateBlockAttributes( clientId, {
             colorSignal: contentColorSignal,
             paletteVariation: contentPaletteVariation,
+            useSourceColorAsReference: false,
           } );
         }
 

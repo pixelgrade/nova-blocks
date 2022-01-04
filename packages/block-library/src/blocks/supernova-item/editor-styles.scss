@@ -1,3 +1,10 @@
+.supernova-item--layout-stacked {
+
+  .novablocks-change-media-overlay {
+    display: none;
+  }
+}
+
 .supernova-item:not(.supernova-item--layout-stacked) {
 
   &.is-selected,

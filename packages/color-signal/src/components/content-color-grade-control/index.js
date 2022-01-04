@@ -15,6 +15,7 @@ const ContentColorGradeControl = props => {
 
   const {
     palette,
+    paletteVariation,
     contentPaletteVariation,
     contentColorSignal,
   } = attributes;
@@ -44,6 +45,7 @@ const ContentColorGradeControl = props => {
                         signal={ contentColorSignal }
                         useReference={ false }
                         onChange={ onColorGradeChange }
+                        parentVariation={ paletteVariation }
     />
   )
 }

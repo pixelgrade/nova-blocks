@@ -2,18 +2,22 @@ import { __ } from "@wordpress/i18n";
 import { useCallback } from "@wordpress/element";
 
 import { ColorGradesControl } from "../index";
+import { getParentVariation } from "../../editor/utils";
 
 const BlockColorGradeControl = props => {
 
   const {
     attributes,
     updateBlock,
+    clientId,
   } = props;
 
   const {
     paletteVariation,
     colorSignal
   } = attributes;
+
+  const parentVariation = getParentVariation( clientId );
 
   const onPaletteVariationChange = useCallback( nextVariation => {
 
@@ -31,6 +35,7 @@ const BlockColorGradeControl = props => {
                         signal={ colorSignal }
                         useReference={ true }
                         onChange={ onPaletteVariationChange }
+                        parentVariation={ parentVariation }
     />
   )
 }
