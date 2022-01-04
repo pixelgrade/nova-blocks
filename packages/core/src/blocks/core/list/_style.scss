@@ -61,7 +61,7 @@ $icon-svg-path: '../../packages/icons/src/svgs/tick.svg';
 
   ul, ol,
   &:is(.list-bullet-style, .list-checkmark-style):not(.is-style-divider),
-  &:is(.is-style-timeline) {
+  &:is(.is-style-timeline)[class] {
     padding-left: var(--nb-list-spacing);
   }
 

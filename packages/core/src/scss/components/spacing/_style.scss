@@ -17,6 +17,10 @@
   @include block-spacing-container;
 }
 
+.wp-block-column[class] {
+  --nb-block-top-spacing: 0;
+}
+
 [style*="--nb-spacing-modifier"] {
   @include block-spacing-modifier;
 }
