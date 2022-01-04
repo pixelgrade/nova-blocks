@@ -4,7 +4,7 @@ import {
   ControlsGroup,
   ControlsSection,
   ControlsTab,
-  Notice,
+  Notice, withVisibility,
 } from "@novablocks/block-editor";
 
 import {
@@ -40,18 +40,23 @@ const Controls = withColorSignalProps( props => {
         <PalettePicker { ...props } />
         <ColorReferenceToggleControl { ...props } />
       </ControlsTab>
-      <ControlsTab label={ __( 'Settings' ) }>
-        <PalettePicker { ...props } />
-        <ControlsGroup>
-          <BlockColorGradeControl { ...props } />
-          <ContentColorGradeControl { ...props } />
-        </ControlsGroup>
-        <MiscellaneousControls { ...props } />
-      </ControlsTab>
+      <ColorSignalSettingsTab { ...props } />
     </ControlsSection>
   )
 } );
 
+const ColorSignalSettingsTab = withVisibility( 'color-signal-settings' )( props => {
+  return (
+    <ControlsTab label={ __( 'Settings' ) }>
+      <PalettePicker { ...props } />
+      <ControlsGroup>
+        <BlockColorGradeControl { ...props } />
+        <ContentColorGradeControl { ...props } />
+      </ControlsGroup>
+      <MiscellaneousControls { ...props } />
+    </ControlsTab>
+  )
+} );
 
 
 export default Controls;

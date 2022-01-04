@@ -1,7 +1,4 @@
-import {
-  ColorPicker,
-  ControlsGroup,
-} from "@novablocks/block-editor";
+import { ColorPicker, ControlsGroup, withVisibility } from "@novablocks/block-editor";
 
 import { isFunctionalPalette } from "@novablocks/utils";
 
@@ -85,4 +82,4 @@ const PalettePicker = ( props ) => {
   )
 }
 
-export default PalettePicker;
+export default withVisibility( 'palette-picker' )( PalettePicker );
