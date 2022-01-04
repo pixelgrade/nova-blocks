@@ -17,16 +17,20 @@ const attributes = {
   showCollectionSubtitle: false,
 
   contentPosition: 'center center',
-  minHeightFallback: 100,
+  minHeightFallback: 66,
 
   contentColorSignal: 3,
   contentPaletteVariation: 12,
-  overlayFilterStrength: 70,
+  overlayFilterStrength: 30,
 
   align: 'full',
+
+  blockTopSpacing: 0,
+  blockBottomSpacing: 1,
   emphasisTopSpacing: 0,
   emphasisBottomSpacing: 0,
-  scrollingEffect: 'parallax',
+
+  scrollingEffect: 'static',
 }
 
 const innerBlockAttributes = Object.assign( {}, attributes, {
@@ -39,9 +43,9 @@ const innerBlocks = [
     'novablocks/supernova-item',
     innerBlockAttributes,
     [
-      [ 'novablocks/headline', { level: 2, className: "has-larger-font-size", fontSize: "larger" } ],
-      [ 'core/separator', {} ],
-      [ 'core/paragraph', { content: 'We have always defined ourselves by the ability to overcome the impossible. And we count these moments. These moments when we dare to aim higher, to break barriers, to make the unknown known.' } ],
+      [ 'core/heading', { level: 1, content: 'This is a catchy title' } ],
+      [ 'core/paragraph', { content: 'A brilliant subtitle to explain its catchiness', className: "is-style-lead" } ],
+      [ 'core/button', { text: 'Discover more' } ],
     ]
   ]
 ];

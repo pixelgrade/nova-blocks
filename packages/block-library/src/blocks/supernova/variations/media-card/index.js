@@ -6,22 +6,35 @@ const attributes = {
   variation: 'media-card',
 
   sourceType: 'blocks',
-  contentPadding: 100,
-  layoutGutter: 50,
+
+  contentPadding: 0,
+  layoutGutter: 100,
+  
   cardLayout: 'horizontal',
+
   layoutStyle: 'classic',
   postsToShow: 1,
   columns: 1,
+  
   showCollectionTitle: false,
   showCollectionSubtitle: false,
-  contentPosition: 'center center',
+  
+  contentPosition: 'center left',
   cardMediaOpacity: 100,
+
+  align: 'wide',  
+
+  blockTopSpacing: 0,
+  blockBottomSpacing: 1,
+  emphasisTopSpacing: 0,
+  emphasisBottomSpacing: 0,
 };
 
 const innerBlocks = [
-  [ 'novablocks/headline', { level: 2, className: "has-larger-font-size", textAlign: 'center', fontSize: "larger" } ],
-  [ 'core/separator', {} ],
-  [ 'core/paragraph', { content: 'We have always defined ourselves by the ability to overcome the impossible. And we count these moments. These moments when we dare to aim higher, to break barriers, to make the unknown known.' } ],
+  [ 'core/heading', { level: 5, content: 'Shoot for the moon, Even if You Miss.' } ],
+  [ 'core/heading', { level: 1, content: 'A catchy title' } ],
+  [ 'core/paragraph', { content: 'A brilliant description to explain its catchiness. We have always defined ourselves by the ability to overcome the impossible. And we count these moments. These moments when we dare to aim higher, to break barriers, to make the unknown known.' } ],
+  [ 'core/button', { text: 'Discover more' } ],
 ];
 
 const mediaCard = {
