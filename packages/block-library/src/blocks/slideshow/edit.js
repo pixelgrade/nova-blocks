@@ -53,6 +53,7 @@ const Edit = ( props ) => {
     contentPadding,
     contentPosition,
     contentWidth,
+    scrollingEffect,
   } = attributes;
 
   const alignment = contentPosition.split( " " );
@@ -63,6 +64,7 @@ const Edit = ( props ) => {
     className: classnames(
       props.className,
       'novablocks-slideshow',
+      `novablocks-slideshow--scrolling-effect-${ scrollingEffect }`,
       `novablocks-u-valign-${ verticalAlignment }`,
       `novablocks-u-halign-${ horizontalAlignment }`,
       `novablocks-u-spacing-${ contentPadding }`,

@@ -27,11 +27,11 @@
 .novablocks-hero {
   --nb-block-minimum-height: calc(var(--nb-minimum-container-height) - var(--admin-bar-height, 0px));
   min-height: var(--nb-block-minimum-height);
+}
 
-  &[data-scrolling-effect="doppler"] {
-	  align-items: flex-start;
-    --nb-block-minimum-height: calc(2 * var(--nb-minimum-container-height) - var(--admin-bar-height, 0px));
-  }
+.novablocks-hero--scrolling-effect-doppler {
+  align-items: flex-start;
+  --nb-block-minimum-height: calc(2 * var(--nb-minimum-container-height) - var(--admin-bar-height, 0px));
 }
 
 .novablocks-hero__foreground {

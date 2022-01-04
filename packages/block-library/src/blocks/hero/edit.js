@@ -39,12 +39,13 @@ const HeroEdit = ( props ) => {
     }
   ];
 
-	const { contentPadding, contentWidth, overlayFilterStyle } = attributes;
+	const { contentPadding, contentWidth, overlayFilterStyle, scrollingEffect } = attributes;
 
   const blockProps = useBlockProps( {
     className: classnames(
       props.className,
       'novablocks-hero',
+      `novablocks-hero--scrolling-effect-${ scrollingEffect }`,
       `novablocks-u-spacing-${ contentPadding }`,
       `novablocks-u-background`,
       `novablocks-u-background-${ overlayFilterStyle }`,

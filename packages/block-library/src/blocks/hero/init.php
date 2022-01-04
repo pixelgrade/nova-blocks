@@ -44,6 +44,7 @@ if ( ! function_exists( 'novablocks_render_hero_block' ) ) {
 		$classes = array_merge(
 			[
 				'novablocks-hero',
+				'novablocks-hero--scrolling-effect-' . $attributes['scrollingEffect'],
 				'novablocks-doppler',
 				'alignfull',
 			],

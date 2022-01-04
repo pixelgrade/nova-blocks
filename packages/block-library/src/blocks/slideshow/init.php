@@ -47,6 +47,7 @@ if ( ! function_exists( 'novablocks_render_slideshow_block' ) ) {
 		$classes = array_merge(
 			[
 				'novablocks-slideshow',
+				'novablocks-slideshow--scrolling-effect-' . $attributes['scrollingEffect'],
 				'novablocks-doppler',
 				'alignfull',
 			],
