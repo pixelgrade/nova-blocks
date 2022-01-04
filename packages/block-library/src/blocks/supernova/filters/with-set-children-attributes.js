@@ -2,6 +2,7 @@ import { useCallback } from "@wordpress/element";
 import { useDispatch, useSelect } from "@wordpress/data";
 
 import { getChildAttributes } from "../utils";
+import { getAlignFromMatrix } from "@novablocks/utils";
 
 const withSetChildrenAttributes = OriginalComponent => {
 
@@ -18,6 +19,16 @@ const withSetChildrenAttributes = OriginalComponent => {
       if ( Array.isArray( innerBlocks ) ) {
         innerBlocks.filter( block => block.name === 'novablocks/supernova-item' ).forEach( block => {
           updateBlockAttributes( block.clientId, newAttributes );
+
+          const contentBlocks = getBlock( block.clientId ).innerBlocks;
+
+          if ( Array.isArray( contentBlocks ) ) {
+            contentBlocks.filter( block => block.name === 'novablocks/headline' ).forEach( block => {
+              const contentAlign = getAlignFromMatrix( attributes?.contentPosition );
+
+              updateBlockAttributes( block.clientId, { textAlign: contentAlign[1] } );
+            } )
+          }
         } );
       }
     }, [ clientId ] );

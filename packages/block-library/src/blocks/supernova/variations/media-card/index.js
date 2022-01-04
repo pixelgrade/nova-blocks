@@ -19,7 +19,7 @@ const attributes = {
 };
 
 const innerBlocks = [
-  [ 'novablocks/headline', { level: 2, className: "has-larger-font-size", fontSize: "larger" } ],
+  [ 'novablocks/headline', { level: 2, className: "has-larger-font-size", textAlign: 'center', fontSize: "larger" } ],
   [ 'core/separator', {} ],
   [ 'core/paragraph', { content: 'We have always defined ourselves by the ability to overcome the impossible. And we count these moments. These moments when we dare to aim higher, to break barriers, to make the unknown known.' } ],
 ];
