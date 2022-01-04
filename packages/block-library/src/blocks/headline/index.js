@@ -23,6 +23,7 @@ registerBlockType( 'novablocks/headline', {
 	// Additional search terms
 	keywords: [ __( 'heading', '__plugin_txtd' ), __( 'title', '__plugin_txtd' ), __( 'cta', '__plugin_txtd' ), __( 'call to action', '__plugin_txtd' ) ],
   supports: {
+    align: [ 'wide', 'full' ],
     novaBlocks: {
       customAlign: true
     }
