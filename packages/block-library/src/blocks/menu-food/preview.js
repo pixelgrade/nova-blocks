@@ -79,11 +79,10 @@ const FoodMenuPreview = function( props ) {
 
 			<Button
 				className="components-button block-editor-button-block-appender nova-blocks-appender"
-				label={__( 'Add New Menu Section', '__plugin_txtd' )}
-				icon="insert"
+				label={__( 'Add New Section', '__plugin_txtd' )}
 				onClick={addFoodMenuSection}
 				>
-				{ __( 'Add Menu Section', '__plugin_txtd' ) }
+				{ __( 'Add Section', '__plugin_txtd' ) }
 			</Button>
 		</div>
 	);
