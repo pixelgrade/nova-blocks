@@ -10,13 +10,13 @@ import { getDuotoneFilterSvg } from "@novablocks/utils";
 
 const DuotoneFilter = ( props ) => {
   const { attributes, clientId } = props;
-  const { overlayFilterDuotoneConfig } = attributes;
+  const { overlayFilterDuotoneConfig, overlayFilterType } = attributes;
   const from = overlayFilterDuotoneConfig?.from;
   const to = overlayFilterDuotoneConfig?.to;
   const element = useContext( BlockList.__unstableElementContext );
   const id = `novablocks-duotone-${ clientId }`;
 
-  if ( ! from || ! to ) {
+  if ( ! from || ! to || overlayFilterType !== 'duotone' ) {
     return null;
   }
 
