@@ -43,7 +43,7 @@ registerBlockType( 'novablocks/headline', {
 		},
     textAlign: {
       type: "string",
-      default: "left"
+      default: "center"
     }
 	},
 	save,
