@@ -26,7 +26,10 @@
     @include block-spacing;
   }
 
-  > :first-child {
-    --nb-block-top-spacing: 0;
+  // Set the first element vertical-align with the top of the container
+  // Exceptions: set certain HTML tags to skip being classified as first-child (eg. <style>)
+  > :first-child,
+  :is(noscript, style) + * {
+    --nb-block-top-spacing: 0; 
   }
 }
