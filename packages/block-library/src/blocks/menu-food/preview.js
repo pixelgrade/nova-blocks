@@ -6,9 +6,11 @@ import classnames from 'classnames';
 import { __ } from '@wordpress/i18n';
 import { InnerBlocks } from '@wordpress/block-editor';
 import { createBlock } from '@wordpress/blocks';
-
 import { Button } from '@wordpress/components';
 import { useDispatch, useSelect } from '@wordpress/data';
+import { useMemo, useCallback } from '@wordpress/element';
+
+import { useInnerBlocks } from "@novablocks/block-editor";
 
 const ALLOWED_BLOCKS = ['novablocks/menu-food-section'];
 const TEMPLATE = [
@@ -42,50 +44,52 @@ const TEMPLATE = [
 ];
 
 const FoodMenuPreview = function( props ) {
-	const {
-		attributes: {
-			enableTwoColumns,
-			showPrices,
-			showDescription
-		},
-		clientId,
-		className,
-	} = props;
+  const {
+    attributes: {
+      enableTwoColumns,
+      showPrices,
+      showDescription
+    },
+    clientId,
+    className,
+  } = props;
 
-	const addFoodMenuSection = () => {
-		const block = createBlock( 'novablocks/menu-food-section' );
-		const index = useSelect( select => select( 'core/block-editor' ).getBlocksByClientId( clientId )[0].innerBlocks.length, [ clientId ] );
-		const { insertBlock } = useDispatch( 'core/block-editor' );
+  const innerBlocks = useInnerBlocks( clientId );
+  const index = useMemo( () => innerBlocks.length, [ innerBlocks ] );
+  const { insertBlock } = useDispatch( 'core/block-editor' );
 
-		insertBlock( block, index, clientId );
-	};
+  const addFoodMenuSection = useCallback( () => {
+    const block = createBlock( 'novablocks/menu-food-section' );
 
-	const classNames = classnames(
-		className,
-		`nova-food-menu`,
-		{
-			'nova-food-menu--layout' : enableTwoColumns === true,
-			'price--is-hidden' : showPrices === false
-		}
-	);
+    insertBlock( block, index, clientId );
+  }, [ index ] );
 
-	return (
-		<div className={classNames}>
-			<InnerBlocks
-				allowedBlocks={ALLOWED_BLOCKS}
-				template={TEMPLATE}
-				renderAppender={false}
-			/>
+  const classNames = classnames(
+    className,
+    `nova-food-menu`,
+    {
+      'nova-food-menu--layout': enableTwoColumns === true,
+      'price--is-hidden': showPrices === false
+    }
+  );
 
-			<Button
-				className="components-button block-editor-button-block-appender nova-blocks-appender"
-				label={__( 'Add New Section', '__plugin_txtd' )}
-				onClick={addFoodMenuSection}
-				>
-				{ __( 'Add Section', '__plugin_txtd' ) }
-			</Button>
-		</div>
-	);
+  return (
+    <div className={ classNames }>
+      <InnerBlocks
+        allowedBlocks={ ALLOWED_BLOCKS }
+        template={ TEMPLATE }
+        renderAppender={ false }
+      />
+
+      <Button
+        className="components-button block-editor-button-block-appender nova-blocks-appender"
+        label={ __( 'Add New Section', '__plugin_txtd' ) }
+        onClick={ addFoodMenuSection }
+      >
+        { __( 'Add Section', '__plugin_txtd' ) }
+      </Button>
+    </div>
+  );
 };
 
 export default FoodMenuPreview;
