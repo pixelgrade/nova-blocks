@@ -44,7 +44,7 @@
   max-width: 100%;
 
   border-radius: 1em;
-  background-color: var(--nb-bg-color);
+  background-color: var(--sm-current-bg-color, var(--nb-bg-color));
 
 	a {
 		color: inherit;
@@ -210,7 +210,7 @@
 
   // reset possible link styles
   &[class][class] {
-    color: var(--nb-fg1-color);
+    color: var(--sm-current-fg1-color, var(--nb-fg1-color));
     text-decoration: none;
   }
 

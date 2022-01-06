@@ -1,17 +1,17 @@
   :root {
     --avatar-column-size: 45px;
     --comments-grid-gap: 10px;
-    --component-accent-color: var(--nb-accent-color);
+    --component-accent-color: var(--sm-current-accent-color, var(--nb-accent-color));
     --nb-conversations-width: 48em;
     --field-description-color: #000;
     --conversations-bg-color: #E4E3E4;
     --conversations-reply-bg-color: #CDCCCD;
-    --comment-author-color: var(--nb-accent-color);
-    --comment-links-color: var(--nb-accent-color);
+    --comment-author-color: var(--sm-current-accent-color, var(--nb-accent-color));
+    --comment-links-color: var(--sm-current-accent-color, var(--nb-accent-color));
     --comment-highlighted-color: #FFF2CE;
-    --label-bg-color: var(--nb-fg1-color);
+    --label-bg-color: var(--sm-current-fg1-color, var(--nb-fg1-color));
     --label-bg-opacity: 0.4;
-    --label-highlighted-bg-color: var(--nb-accent-color);
+    --label-highlighted-bg-color: var(--sm-current-accent-color, var(--nb-accent-color));
     --label-highlighted-bg-opacity: 1;
     --label-border-radius: 999em;
   
@@ -471,7 +471,7 @@
       display: inline-block;
       padding: .25em .75em;
   
-      color: var(--nb-bg-color);
+      color: var(--sm-current-bg-color, var(--nb-bg-color));
   
       &:before {
         content: "";
@@ -762,8 +762,8 @@
     z-index: 100;
     
     span {
-      background: var(--nb-bg-color);
-      color: var(--nb-fg1-color);
+      background: var(--sm-current-bg-color, var(--nb-bg-color));
+      color: var(--sm-current-fg1-color, var(--nb-fg1-color));
       padding: 10px;
       border-radius: 0 10px;
       
@@ -819,7 +819,7 @@
     display: flex;
     flex-direction: column;
   
-    background: var(--nb-bg-color);
+    background: var(--sm-current-bg-color, var(--nb-bg-color));
     min-width: 200px;
     padding: .5em .75em;
   

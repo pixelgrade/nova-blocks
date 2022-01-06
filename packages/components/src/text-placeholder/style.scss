@@ -7,7 +7,7 @@
 	--nb-text-placeholder-margin: calc((var(--nb-text-placeholder-line-height) - 1) * 0.5em);
 	position: relative;
 	height: 0.8em;
-  background: var(--nb-fg1-color);
+  background: var(--sm-current-fg1-color, var(--nb-fg1-color));
 
 	border: 0 solid transparent;
 	border-top-width: var(--nb-text-placeholder-margin);
@@ -23,7 +23,7 @@
 		bottom: 0;
 		left: 0;
 
-		background-image: linear-gradient(90deg, transparent 0%, var(--nb-bg-color) 50%, transparent 100%);
+		background-image: linear-gradient(90deg, transparent 0%, var(--sm-current-bg-color, var(--nb-bg-color)) 50%, transparent 100%);
 		background-size: var(--nb-text-placeholder-shine-width) 100%;
 		background-repeat: no-repeat;
 		display: block;

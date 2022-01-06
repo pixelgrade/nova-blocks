@@ -12,7 +12,7 @@
     z-index: -1;
 
     opacity: 0.15;
-    background: var(--nb-fg1-color);
+    background: var(--sm-current-fg1-color, var(--nb-fg1-color));
     
     transition: var(--nb-transition);
     transition-property: background-color, opacity; 
@@ -21,6 +21,6 @@
 
   &:hover:before {
     opacity: 0.3;
-    background: var(--nb-accent-color);
+    background: var(--sm-current-accent-color, var(--nb-accent-color));
   }
 }

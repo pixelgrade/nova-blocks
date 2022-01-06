@@ -31,7 +31,7 @@
 .supernova-item__media-wrapper {
 
   .blob-mix__mask {
-    background-color: var(--nb-bg-color);
+    background-color: var(--sm-current-bg-color, var(--nb-bg-color));
   }
 }
 

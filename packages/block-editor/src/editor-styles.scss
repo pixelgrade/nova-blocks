@@ -62,7 +62,7 @@
       width: 1em;
       height: 100%;
 
-      background: var(--nb-accent-color);
+      background: var(--sm-current-accent-color, var(--nb-accent-color));
     }
 
     &:after {

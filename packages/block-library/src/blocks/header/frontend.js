@@ -47,7 +47,7 @@ import { addSocialMenuClass, syncColorSignalClasses } from "./utils";
 
       lastScrollY = scrollY;
 
-      requestAnimationFrame( updateLoop )
+      requestAnimationFrame( updateLoop );
     }
 
     requestAnimationFrame( updateLoop );

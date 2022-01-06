@@ -34,7 +34,7 @@
     z-index: -1;
 
     display: block;
-    background-color: var(--nb-bg-color, transparent);
+    background-color: var(--sm-current-bg-color, var(--nb-bg-color));
     pointer-events: none;
 
     transition: var(--nb-transition);

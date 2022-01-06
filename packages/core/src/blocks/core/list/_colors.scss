@@ -7,16 +7,16 @@
   // SIGNAL NONE
   // Bullet, checkmark or number will
   // match text color.
-  --nb-list-bullet-color: var(--nb-fg1-color);
-  --nb-list-bullet-bg-color: var(--nb-bg-color);
+  --nb-list-bullet-color: var(--sm-current-fg1-color, var(--nb-fg1-color));
+  --nb-list-bullet-bg-color: var(--sm-current-bg-color, var(--nb-bg-color));
   --nb-list-bullet-outline: 0.2em;
-  --nb-list-connection-color: var(--nb-accent-color);
+  --nb-list-connection-color: var(--sm-current-accent-color, var(--nb-accent-color));
 
   // SIGNAL LOW
   // Bullet, checkmark or number will
   // use accent color.
   &.sm-color-signal-1 {
-    --nb-list-bullet-color: var(--nb-accent-color);
+    --nb-list-bullet-color: var(--sm-current-accent-color, var(--nb-accent-color));
   }
 
   // SIGNAL MEDIUM
@@ -24,8 +24,8 @@
   // use current background color,
   // while it's background will use text color.
   &.sm-color-signal-2 {
-    --nb-list-bullet-color: var(--nb-bg-color);
-    --nb-list-bullet-bg-color: var(--nb-fg1-color);
+    --nb-list-bullet-color: var(--sm-current-bg-color, var(--nb-bg-color));
+    --nb-list-bullet-bg-color: var(--sm-current-fg1-color, var(--nb-fg1-color));
     --nb-list-bullet-outline: 0.4em;
   }
 
@@ -34,8 +34,8 @@
   // use current background color,
   // while it's background will use accent color.
   &.sm-color-signal-3 {
-    --nb-list-bullet-color: var(--nb-bg-color);
-    --nb-list-bullet-bg-color: var(--nb-accent-color);
+    --nb-list-bullet-color: var(--sm-current-bg-color, var(--nb-bg-color));
+    --nb-list-bullet-bg-color: var(--sm-current-accent-color, var(--nb-accent-color));
     --nb-list-bullet-outline: 0.4em;
   }
 }

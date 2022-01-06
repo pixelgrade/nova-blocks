@@ -15,8 +15,8 @@
     
     background: linear-gradient(
         90deg,
-        var(--nb-bg-color) 0,
-        var(--nb-bg-color) var(--emphasis-area-width),
+        var(--sm-current-bg-color, var(--nb-bg-color)) 0,
+        var(--sm-current-bg-color, var(--nb-bg-color)) var(--emphasis-area-width),
         transparent var(--emphasis-area-width)
     );
   }

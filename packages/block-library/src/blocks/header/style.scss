@@ -26,7 +26,7 @@
   }
 
   &.novablocks-header--scrolled {
-    color: var(--nb-fg2-color);
+    color: var(--sm-current-fg2-color, var(--nb-fg2-color));
   }
 }
 

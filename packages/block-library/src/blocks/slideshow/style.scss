@@ -30,7 +30,7 @@
 }
 
 .novablocks-slideshow__background {
-  background-color: var(--nb-bg-color);
+  background-color: var(--sm-current-bg-color, var(--nb-bg-color));
 }
 
 .novablocks-slideshow__background,

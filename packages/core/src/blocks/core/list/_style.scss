@@ -54,7 +54,7 @@ $icon-svg-path: '../../packages/icons/src/svgs/tick.svg';
 
       &:before {
         background-color: var(--nb-list-bullet-bg-color);
-        box-shadow: 0 0 0 4px var(--nb-bg-color);
+        box-shadow: 0 0 0 4px var(--sm-current-bg-color, var(--nb-bg-color));
       }
     }
   }
@@ -109,7 +109,7 @@ $icon-svg-path: '../../packages/icons/src/svgs/tick.svg';
 
   // We use box shadow to cover up the bottom part of the divider
   li:last-child {
-    box-shadow: var(--nb-bg-color) calc(var(--nb-list-spacing) * -1) calc(var(--nb-list-line-height) * 0.5) 0 0;
+    box-shadow: var(--sm-current-bg-color, var(--nb-bg-color)) calc(var(--nb-list-spacing) * -1) calc(var(--nb-list-line-height) * 0.5) 0 0;
   }
 
   &:where(.list-no-marker) {

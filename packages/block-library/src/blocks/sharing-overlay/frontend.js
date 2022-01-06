@@ -80,7 +80,8 @@ import services from './services';
 			} );
 		}
 
-		$( window ).on( 'resize', debounce( positionPopup, 100 ) );
+    const onResize = debounce( positionPopup, 100 );
+		$( window ).on( 'resize', onResize );
 
 		$openButton.on( 'click', function() {
 			$overlay.addClass( 'is-visible' );

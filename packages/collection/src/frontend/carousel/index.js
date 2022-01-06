@@ -8,9 +8,9 @@ import { onBeforeSlideChange } from './utils';
     const $carousel = $( slider );
     const $block = $carousel.closest( '[data-layout-style="carousel"]' );
     const attributes = $block.data();
-    const PALETTE_CLASS = `sm-palette-${attributes.palette}`;
-    const PALETTE_VARIATION_CLASS = `sm-variation-${attributes.contentPaletteVariation}`;
-    const CONTENT_SIGNAL_CLASS = `sm-color-signal-${attributes.contentColorSignal}`;
+    const PALETTE_CLASS = `sm-palette-${ attributes.palette }`;
+    const PALETTE_VARIATION_CLASS = `sm-variation-${ attributes.contentPaletteVariation }`;
+    const CONTENT_SIGNAL_CLASS = `sm-color-signal-${ attributes.contentColorSignal }`;
 
     const SLICK_OPTIONS = {
 //      rows: 0,
@@ -19,8 +19,8 @@ import { onBeforeSlideChange } from './utils';
       dots: attributes.showPagination === 1,
       dotsClass: `slick-dots ${PALETTE_CLASS} ${PALETTE_VARIATION_CLASS} ${CONTENT_SIGNAL_CLASS}`,
       arrows: attributes.showArrows === 1,
-      prevArrow: `<button class="slick-prev ${PALETTE_CLASS} ${PALETTE_VARIATION_CLASS} ${CONTENT_SIGNAL_CLASS}" aria-label="Previous" type="button">Previous</button>`,
-      nextArrow: `<button class="slick-next ${PALETTE_CLASS} ${PALETTE_VARIATION_CLASS} ${CONTENT_SIGNAL_CLASS}" aria-label="Next" type="button">Next</button>`,
+      prevArrow: `<button class="slick-prev ${ PALETTE_CLASS } ${ PALETTE_VARIATION_CLASS } ${ CONTENT_SIGNAL_CLASS }" aria-label="Previous" type="button">Previous</button>`,
+      nextArrow: `<button class="slick-next ${ PALETTE_CLASS } ${ PALETTE_VARIATION_CLASS } ${ CONTENT_SIGNAL_CLASS }" aria-label="Next" type="button">Next</button>`,
       variableWidth: attributes.carouselLayout === 'variable' || attributes.carouselLayout === 'content',
       infinite: true,
       responsive: [

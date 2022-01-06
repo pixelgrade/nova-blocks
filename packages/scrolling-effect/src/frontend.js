@@ -1,5 +1,5 @@
 import $ from 'jquery';
-import { hasTouchScreen, IS_EDITOR } from "@novablocks/utils";
+import { debounce, hasTouchScreen, IS_EDITOR } from "@novablocks/utils";
 import { getProps, getState, getStylesFromProps } from "./utils";
 
 const getScrollContainerHeight = () => {
@@ -25,13 +25,14 @@ $( function() {
     return;
   }
 
+  const $window = $( window );
   let frameRendered = false;
 	let $blocks = $( '.novablocks-doppler__wrapper' );
 
 	$blocks.each( function( i, container ) {
 		const $container = $( container );
 		const $block = $container.closest( '[data-scrolling-effect]' );
-		const attributes = $block.data();
+    const attributes = $block.data();
 
 		if ( ! attributes ) {
 		  return;
@@ -45,8 +46,10 @@ $( function() {
 		} );
 
 		const $parallax = $container.find( '.novablocks-doppler__target' );
+    const $foreground = $container.find( '.novablocks-doppler__foreground' );
 
 		$container.data( 'parallax', $parallax );
+    $container.data( 'foreground', $foreground );
 
 		function parallaxUpdateState() {
 			const newConfig = Object.assign( {}, config, getConfig( container ) );
@@ -57,10 +60,12 @@ $( function() {
 			frameRendered = false;
 		}
 
-		$( window ).on( 'scroll', parallaxUpdateState );
-		$( window ).on( 'resize', parallaxUpdateState );
+    const debouncedUpdateState = debounce( parallaxUpdateState, 100 );
 
-		$container.on( 'update', parallaxUpdateState );
+		$window.on( 'scroll', parallaxUpdateState );
+		$window.on( 'resize', debouncedUpdateState );
+
+		$container.on( 'update', debouncedUpdateState );
 
     parallaxUpdateState();
 	} );
@@ -79,7 +84,7 @@ $( function() {
         }
 
 				const $background = $container.data( 'parallax' );
-				const $foreground = $background.find( '.novablocks-doppler__foreground' );
+				const $foreground = $container.data( 'foreground' );
 				const state = $container.data( 'state' );
 				const config = $container.data( 'config' );
 				const cfg = Object.assign( {}, state, config );
@@ -96,7 +101,7 @@ $( function() {
 
 				let styles = getStylesFromProps( props );
 
-				$container.data( 'parallax' ).css( styles );
+        $background.css( styles );
 			} );
 			frameRendered = true;
 		}

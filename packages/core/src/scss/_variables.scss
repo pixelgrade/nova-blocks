@@ -17,11 +17,9 @@
 		0 32px 128px rgba(42, 54, 52, 0.1),
 		0 16px 64px rgba(42, 54, 52, 0.1),
 		0 8px 16px rgba(42, 54, 52, 0.1);
-}
 
-* {
-  --nb-bg-color: var(--sm-current-bg-color, #FFFFFF);
-  --nb-accent-color: var(--sm-current-accent-color, #203AB6);
-  --nb-fg1-color: var(--sm-current-fg1-color, #272743);
-  --nb-fg2-color: var(--sm-current-fg2-color, #000043);
+  --nb-bg-color: #FFFFFF;
+  --nb-accent-color: #203AB6;
+  --nb-fg1-color: #272743;
+  --nb-fg2-color: #000043;
 }

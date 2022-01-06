@@ -24,7 +24,7 @@
 	.picker__day--selected:hover,
 	.picker__day--infocus:hover,
 	.picker__day--outfocus:hover {
-		border-color: var(--nb-fg1-color);
+		border-color: var(--sm-current-fg1-color, var(--nb-fg1-color));
 	}
 
 	.picker__day {
@@ -41,10 +41,10 @@
 	}
 
 	.picker__close {
-		color: var(--nb-fg1-color);
+		color: var(--sm-current-fg1-color, var(--nb-fg1-color));
 
 		&:hover {
-			color: var(--nb-fg2-color);
+			color: var(--sm-current-fg2-color, var(--nb-fg2-color));
 		}
 	}
 
@@ -53,7 +53,7 @@
 		transition: border-color 0.15s cubic-bezier(0, 0, 0.58, 1);
 
 		&:hover {
-			border-color: var(--nb-fg1-color);
+			border-color: var(--sm-current-fg1-color, var(--nb-fg1-color));
 		}
 	}
 
@@ -148,7 +148,7 @@
 		width: 100%;
 
 		.ot-dtp-picker-selector[class][class] {
-			border: 1px solid var(--nb-fg1-color);
+			border: 1px solid var(--sm-current-fg1-color, var(--nb-fg1-color));
 		}
 
 		.ot-title {
@@ -181,13 +181,13 @@
 		}
 
 		.ot-button {
-			background-color: var(--sm-button-background-color, var(--nb-accent-color));
-			color: var(--nb-bg-color);
+			background-color: var(--sm-button-background-color, var(--sm-current-accent-color, var(--nb-accent-color)));
+			color: var(--sm-current-bg-color, var(--nb-bg-color));
 			border-radius: 0;
-			border-color: var(--nb-accent-color);
+			border-color: var(--sm-current-accent-color, var(--nb-accent-color));
 
 			&:hover {
-				background-color: var(--nb-fg1-color);
+				background-color: var(--sm-current-fg1-color, var(--nb-fg1-color));
 			}
 		}
 
@@ -203,13 +203,13 @@
 	}
 
 	&.novablocks-opentable__standard[class] {
-		background-color: var(--nb-bg-color);
-		color: var(--nb-fg1-color);
+		background-color: var(--sm-current-bg-color, var(--nb-bg-color));
+		color: var(--sm-current-fg1-color, var(--nb-fg1-color));
 
 		.ot-dtp-picker-selector .ot-dtp-picker-selector-link {
 			padding-left: var(--nb-spacing);
 
-			color: var(--nb-fg1-color);
+			color: var(--sm-current-fg1-color, var(--nb-fg1-color));
 			border-bottom: 2px solid currentColor;
 		}
 
@@ -231,8 +231,8 @@
 		}
 
 		.ot-button {
-			background-color: var(--nb-fg1-color);
-			color: var(--nb-bg-color);
+			background-color: var(--sm-current-fg1-color, var(--nb-fg1-color));
+			color: var(--sm-current-bg-color, var(--nb-bg-color));
 
 			padding: 20px 0;
 		}

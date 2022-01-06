@@ -75,11 +75,13 @@ export const resetAlignedBlocks = () => {
 
 export const handleAlignedBlocks = () => {
 
+  const onResize = debounce( resetAlignedBlocks, 200 );
+
   window.addEventListener( 'DOMContentLoaded', () => {
     resetAlignedBlocks();
     handleCustomizerChanges();
   } );
 
-  window.addEventListener( 'resize', debounce( resetAlignedBlocks, 200 ) );
+  window.addEventListener( 'resize', onResize );
 
 }
