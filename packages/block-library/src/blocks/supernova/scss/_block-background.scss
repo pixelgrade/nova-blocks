@@ -1,6 +1,7 @@
 @mixin block-background {
   position: relative;
   --emphasis-area-width: calc( var(--nb-emphasis-area, 100) * 1% );
+  --emphasis-area-gradient-direction: -90deg;
 
   &:before {
     content: '';
@@ -14,7 +15,7 @@
     grid-column: var(--block-full-start) / var(--block-full-end);
     
     background: linear-gradient(
-        90deg,
+        var(--emphasis-area-gradient-direction),
         var(--sm-current-bg-color, var(--nb-bg-color)) 0,
         var(--sm-current-bg-color, var(--nb-bg-color)) var(--emphasis-area-width),
         transparent var(--emphasis-area-width)

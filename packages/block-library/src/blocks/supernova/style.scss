@@ -7,6 +7,10 @@
 .supernova {
   background: none !important;
   @include block-background;
+
+  &.supernova--card-layout-horizontal-reverse {
+    --emphasis-area-gradient-direction: 90deg;
+  }
 }
 
 .supernova-item.supernova-item--layout-stacked {
