@@ -31,4 +31,4 @@ const VisualBalance = props => {
   )
 }
 
-export default withVisibility('visual-balance')(VisualBalance);
+export default withVisibility( 'visual-balance', false )( VisualBalance );

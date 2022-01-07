@@ -25,4 +25,4 @@ const ContentToMediaSpacing = props => {
   )
 }
 
-export default withVisibility('content-to-media-spacing')(ContentToMediaSpacing);
+export default withVisibility( 'content-to-media-spacing', false )( ContentToMediaSpacing );

@@ -62,4 +62,4 @@ const getBalanceAttributes = ( { balanceEmphasis, balanceFocalPoint } ) => {
   }
 };
 
-export default withVisibility( 'visual-balance' )( VisualBalanceCustomize );
+export default withVisibility( 'visual-balance', false )( VisualBalanceCustomize );

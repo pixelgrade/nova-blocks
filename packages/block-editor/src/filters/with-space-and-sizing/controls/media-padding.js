@@ -30,4 +30,4 @@ const MediaPadding = props => {
   )
 }
 
-export default withVisibility( 'media-padding' )( MediaPadding );
+export default withVisibility( 'media-padding', false )( MediaPadding );

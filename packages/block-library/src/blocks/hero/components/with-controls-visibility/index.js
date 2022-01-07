@@ -13,11 +13,6 @@ const withControlsVisibility = OriginalComponent => {
 
       setControlsVisibility( {
         'emphasis-area': false,
-        'image-container-height': false,
-        'visual-balance': false,
-        'content-padding': false,
-        'media-padding': false,
-        'content-to-media-spacing': false,
       } );
 
     }, [ attributes ] );

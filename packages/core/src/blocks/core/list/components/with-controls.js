@@ -5,8 +5,7 @@ import Controls from "./controls";
 
 export const withControls = createHigherOrderComponent( ( BlockEdit ) => {
 
-  return ( props ) => {
-
+  const EnhancedBlockEdit = ( props ) => {
     const { setControlsVisibility } = props;
 
     useEffect( () => {
@@ -17,6 +16,13 @@ export const withControls = createHigherOrderComponent( ( BlockEdit ) => {
       } );
     }, [] );
 
+    return (
+      <BlockEdit { ...props } />
+    )
+  }
+
+  return ( props ) => {
+
     if ( 'core/list' !== props.name ) {
       return (
         <BlockEdit { ...props } />
@@ -25,7 +31,7 @@ export const withControls = createHigherOrderComponent( ( BlockEdit ) => {
 
     return (
       <Fragment>
-        <BlockEdit { ...props } />
+        <EnhancedBlockEdit { ...props } />
         <Controls { ...props } />
       </Fragment>
     )

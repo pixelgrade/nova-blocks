@@ -12,7 +12,9 @@ const withControlsVisibility = createHigherOrderComponent( OriginalComponent => 
 
     return (
       <ControlsVisibilityContext.Provider value={ context }>
-        <OriginalComponent { ...props } setControlsVisibility={ setContext } />
+        <OriginalComponent { ...props } setControlsVisibility={ ( newContext ) => {
+          setContext( Object.assign( {}, context, newContext ) );
+        } } />
       </ControlsVisibilityContext.Provider>
     )
   };

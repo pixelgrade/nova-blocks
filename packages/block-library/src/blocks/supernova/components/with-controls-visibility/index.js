@@ -32,6 +32,8 @@ const withControlsVisibility = OriginalComponent => {
         'image-container-height': cardLayout !== 'stacked',
         'visual-balance' : layoutStyle !== 'parametric' && [ 'horizontal', 'horizontal-reverse' ].includes( cardLayout ),
         'content-to-media-spacing': cardLayout !== 'stacked',
+        'content-padding': true,
+        'media-padding': true,
 
         // Media Composition
         'media-composition-section': hasMediaComposition && !! showMedia && sourceType !== 'content',

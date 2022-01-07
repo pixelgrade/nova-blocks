@@ -31,4 +31,4 @@ const MinimumContainerHeight = props => {
   )
 }
 
-export default withVisibility( 'minimum-container-height' )( MinimumContainerHeight );
+export default withVisibility( 'minimum-container-height', false )( MinimumContainerHeight );

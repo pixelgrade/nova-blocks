@@ -11,7 +11,6 @@ import { useBlockProps } from "@wordpress/block-editor";
  */
 import { getAlignmentClassnames } from "@novablocks/utils";
 
-import { withControlsVisibility } from './components';
 import BlockControls from './block-controls';
 import MediaPreview from './preview';
 
@@ -53,4 +52,4 @@ const MediaEdit = ( props ) => {
 	);
 };
 
-export default withControlsVisibility( MediaEdit );
+export default MediaEdit;

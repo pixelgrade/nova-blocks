@@ -14,12 +14,6 @@ const withControlsVisibility = OriginalComponent => {
       setControlsVisibility( {
         'content-top-spacing': false,
         'content-bottom-spacing': false,
-        'minimum-container-height': false,
-        'image-container-height': false,
-        'visual-balance': false,
-        'content-padding': false,
-        'media-padding': false,
-        'content-to-media-spacing': false,
       } );
 
     }, [ attributes ] );

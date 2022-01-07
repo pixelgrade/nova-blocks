@@ -62,4 +62,4 @@ const ImageContainerHeightSettings = ( props ) => {
   )
 }
 
-export default withVisibility( 'image-container-height' )( ImageContainerHeightSettings );
+export default withVisibility( 'image-container-height', false )( ImageContainerHeightSettings );

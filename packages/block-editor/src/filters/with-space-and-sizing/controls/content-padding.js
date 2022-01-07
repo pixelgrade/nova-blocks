@@ -30,4 +30,4 @@ const ContentPadding = props => {
   )
 }
 
-export default withVisibility( 'content-padding' )( ContentPadding );
+export default withVisibility( 'content-padding', false )( ContentPadding );
