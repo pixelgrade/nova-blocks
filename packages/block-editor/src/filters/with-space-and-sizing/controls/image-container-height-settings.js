@@ -33,7 +33,7 @@ const ImageContainerHeightSettings = ( props ) => {
       {
         thumbnailAspectRatioString !== 'auto' &&
           <RangeControl
-            label={ __( 'Image container height', '__plugin_txtd' ) }
+            label={ __( 'Media Aspect Ratio', '__plugin_txtd' ) }
             value={ thumbnailAspectRatio }
             onChange={ thumbnailAspectRatio => {
               setAttributes( {
@@ -62,4 +62,4 @@ const ImageContainerHeightSettings = ( props ) => {
   )
 }
 
-export default withVisibility( 'image-container-height', false )( ImageContainerHeightSettings );
+export default withVisibility( 'media-aspect-ratio', false )( ImageContainerHeightSettings );

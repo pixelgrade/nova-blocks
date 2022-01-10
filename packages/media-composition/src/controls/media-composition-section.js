@@ -162,8 +162,8 @@ const ImageResizingControls = ( props ) => {
   return (
     <Fragment>
       <RangeControl
-        key={ 'advanced-gallery-image-container-height' }
-        label={ __( 'Image Container Height', '__plugin_txtd' ) }
+        key={ 'advanced-gallery-media-aspect-ratio' }
+        label={ __( 'Media Aspect Ratio', '__plugin_txtd' ) }
         value={ containerHeight }
         onChange={ containerHeight => setAttributes( { containerHeight } ) }
         min={ 0 }

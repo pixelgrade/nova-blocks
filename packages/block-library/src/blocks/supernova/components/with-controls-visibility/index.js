@@ -30,8 +30,8 @@ const withControlsVisibility = OriginalComponent => {
       setControlsVisibility( {
         // Space and Sizing
         'minimum-container-height': cardLayout === 'stacked',
-        'media-height': carouselLayout === 'variable',
-        'image-container-height': cardLayout !== 'stacked' && carouselLayout !== 'variable',
+        'media-container-height': carouselLayout === 'variable',
+        'media-aspect-ratio': cardLayout !== 'stacked' && carouselLayout !== 'variable',
         'visual-balance' : layoutStyle !== 'parametric' && [ 'horizontal', 'horizontal-reverse' ].includes( cardLayout ),
         'content-to-media-spacing': cardLayout !== 'stacked',
         'content-padding': true,

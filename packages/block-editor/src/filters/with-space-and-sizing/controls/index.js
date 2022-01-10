@@ -34,8 +34,8 @@ const SpaceAndSizingControls = ( props ) => {
         <CardSpacingSettings key={ 'card-spacing-settings' } { ...props } />
         <BlockSpacingModifier key={ 'spacing-modifier' } { ...props } />
         <MinimumContainerHeight id={ 'minimum-container-height' } key={ 'minimum-container-height' } { ...props } />
-        <MediaHeight key={ 'media-height' } { ...props } />
-        <ImageContainerHeightSettings id={ 'image-container-height' } key={ 'image-container-height-settings' } { ...props } />
+        <MediaHeight key={ 'media-container-height' } { ...props } />
+        <ImageContainerHeightSettings id={ 'media-aspect-ratio' } key={ 'media-aspect-ratio-settings' } { ...props } />
         <VisualBalance id={ 'visual-balance' } key={ 'visual-balance' } { ...props } />
         <ContentPadding id={ 'content-padding' } key={ 'content-padding' } { ...props } />
         <MediaPadding id={ 'media-padding' } key={ 'media-padding' } { ...props } />
@@ -45,17 +45,16 @@ const SpaceAndSizingControls = ( props ) => {
   )
 }
 
-const MediaHeight = withVisibility( 'media-height', false )( props => {
+const MediaHeight = withVisibility( 'media-container-height', false )( props => {
 
   const { attributes, setAttributes } = props;
-  const { mediaHeight } = attributes;
+  const { mediaContainerHeight } = attributes;
 
   return (
-    <ControlsGroup>
+    <ControlsGroup title={ __( 'Media Container Height', '__plugin_txtd' ) }>
       <RangeControl
-        label={ __( 'Media height', '__plugin_txtd' ) }
-        value={ mediaHeight }
-        onChange={ mediaHeight => { setAttributes( { mediaHeight } ) } }
+        value={ mediaContainerHeight }
+        onChange={ mediaContainerHeight => { setAttributes( { mediaContainerHeight } ) } }
         min={ 0 }
         max={ 100 }
         step={ 5 }

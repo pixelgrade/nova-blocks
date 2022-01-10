@@ -52,4 +52,4 @@ const ImageContainerHeightCustomize = ( props ) => {
   )
 }
 
-export default withVisibility( 'image-container-height', false )( ImageContainerHeightCustomize );
+export default withVisibility( 'media-aspect-ratio', false )( ImageContainerHeightCustomize );

@@ -1,5 +1,5 @@
 {
-	"mediaHeight": {
+	"mediaContainerHeight": {
 		"type": "number",
 		"default": 50
 	},

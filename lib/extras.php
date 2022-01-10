@@ -1400,7 +1400,7 @@ function novablocks_get_sizing_css( $attributes ) {
 		'--nb-card-layout-gap-modifier: ' . $attributes['layoutGutter'] / 100,
 		'--nb-card-content-padding-multiplier: ' . $attributes['contentPadding'] / 100,
 		'--nb-card-media-padding-multiplier: ' . $attributes['imagePadding'] / 100,
-		'--nb-card-media-height: ' . $attributes['mediaHeight'],
+		'--nb-card-media-container-height: ' . $attributes['mediaContainerHeight'],
 		'--nb-card-media-padding-top: ' . novablocks_get_card_media_padding_top( $attributes['thumbnailAspectRatio'] ) . '%',
 		'--nb-card-media-object-fit: ' . ( $attributes['imageResizing'] === 'cropped' ? 'cover' : 'scale-down' ),
 		'--nb-minimum-container-height: ' . $attributes['minHeightFallback'] . 'vh',
