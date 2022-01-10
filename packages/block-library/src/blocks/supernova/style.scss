@@ -8,8 +8,8 @@
   background: none !important;
   @include block-background;
 
-  &.supernova--card-layout-horizontal-reverse {
-    --emphasis-area-gradient-direction: 90deg;
+  &.supernova--card-layout-horizontal {
+    --emphasis-area-gradient-direction: -90deg;
   }
 }
 

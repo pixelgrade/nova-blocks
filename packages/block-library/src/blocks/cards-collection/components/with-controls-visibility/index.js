@@ -13,7 +13,6 @@ const withControlsVisibility = OriginalComponent => {
 
       setControlsVisibility( {
         'collection-layout-style': false,
-        'emphasis-area': false,
       } );
 
     }, [ attributes ] );

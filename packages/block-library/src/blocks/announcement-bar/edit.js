@@ -8,22 +8,6 @@ import { __ } from "@wordpress/i18n";
 const ALLOWED_BLOCKS = [ 'novablocks/openhours', 'core/paragraph' ];
 const ANNOUNCEMENT_BAR_TEMPLATE = [ [ 'novablocks/openhours', { openHoursStyle: 'status',  } ] ];
 
-const withControlsVisibility = OriginalComponent => {
-
-  return props => {
-
-    const { setControlsVisibility } = props;
-
-    useEffect( () => {
-      setControlsVisibility( {
-        'emphasis-area': false,
-      } );
-    }, [] );
-
-    return <OriginalComponent { ...props } />
-  }
-}
-
 const Edit = ( props ) => {
 
   const {
@@ -78,4 +62,4 @@ const Edit = ( props ) => {
   )
 }
 
-export default withControlsVisibility( Edit );
+export default Edit;

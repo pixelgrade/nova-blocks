@@ -10,7 +10,6 @@ export const withControls = createHigherOrderComponent( ( BlockEdit ) => {
 
     useEffect( () => {
       setControlsVisibility( {
-        'emphasis-area': false,
         'color-signal-settings': false,
         'palette-picker': false,
       } );

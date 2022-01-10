@@ -211,7 +211,7 @@
 
     .supernova-item__media {
       width: auto;
-      height: 20em;
+      height: calc( 10em + 20em * var(--nb-card-media-height, 50) / 100 );
       max-width: none;
     }
 

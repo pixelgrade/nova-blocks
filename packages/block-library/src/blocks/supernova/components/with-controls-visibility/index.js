@@ -18,6 +18,7 @@ const withControlsVisibility = OriginalComponent => {
 
       const {
         cardLayout,
+        carouselLayout,
         layoutStyle,
         sourceType,
         showCollectionTitle,
@@ -29,7 +30,8 @@ const withControlsVisibility = OriginalComponent => {
       setControlsVisibility( {
         // Space and Sizing
         'minimum-container-height': cardLayout === 'stacked',
-        'image-container-height': cardLayout !== 'stacked',
+        'media-height': carouselLayout === 'variable',
+        'image-container-height': cardLayout !== 'stacked' && carouselLayout !== 'variable',
         'visual-balance' : layoutStyle !== 'parametric' && [ 'horizontal', 'horizontal-reverse' ].includes( cardLayout ),
         'content-to-media-spacing': cardLayout !== 'stacked',
         'content-padding': true,
@@ -45,7 +47,7 @@ const withControlsVisibility = OriginalComponent => {
         'scrolling-effect-section': cardLayout === 'stacked',
 
         // Color Signal
-        'emphasis-area': cardLayout !== 'stacked',
+        'emphasis-area': [ 'horizontal', 'horizontal-reverse' ].includes( cardLayout ),
 
         // Card Details
         'card-details': !! showCollectionTitle || !! showTitle || !! showMeta,

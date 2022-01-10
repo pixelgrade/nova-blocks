@@ -21,4 +21,4 @@ const EmphasisAreaControl = props => {
   )
 }
 
-export default withVisibility( 'emphasis-area' )( EmphasisAreaControl );
+export default withVisibility( 'emphasis-area', false )( EmphasisAreaControl );

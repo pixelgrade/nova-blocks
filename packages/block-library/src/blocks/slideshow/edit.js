@@ -15,7 +15,6 @@ import { getColorSignalClassnames } from "@novablocks/utils";
 import SlideshowPreview from './preview';
 import InspectorControls from './inspector-controls';
 import BlockControls from './block-controls';
-import { withControlsVisibility } from './components';
 
 const Edit = ( props ) => {
 
@@ -89,4 +88,4 @@ const Edit = ( props ) => {
   );
 }
 
-export default withControlsVisibility( Edit );
+export default Edit;

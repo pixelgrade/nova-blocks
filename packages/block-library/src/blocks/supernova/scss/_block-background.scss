@@ -1,7 +1,7 @@
 @mixin block-background {
   position: relative;
   --emphasis-area-width: calc( var(--nb-emphasis-area, 100) * 1% );
-  --emphasis-area-gradient-direction: -90deg;
+  --emphasis-area-gradient-direction: 90deg;
 
   &:before {
     content: '';

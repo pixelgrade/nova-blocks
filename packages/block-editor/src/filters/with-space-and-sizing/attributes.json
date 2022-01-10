@@ -1,4 +1,8 @@
 {
+	"mediaHeight": {
+		"type": "number",
+		"default": 50
+	},
 	"thumbnailAspectRatioString": {
 		"type": "string",
 		"default": "landscape"

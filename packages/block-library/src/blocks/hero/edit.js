@@ -15,7 +15,6 @@ import {
 
 import { getAlignmentClassnames } from "@novablocks/utils";
 
-import { withControlsVisibility } from "./components";
 import HeroPreview from "./preview";
 import BlockControls from "./block-controls";
 
@@ -78,4 +77,4 @@ const HeroEdit = ( props ) => {
   );
 }
 
-export default withControlsVisibility( HeroEdit );
+export default HeroEdit;
