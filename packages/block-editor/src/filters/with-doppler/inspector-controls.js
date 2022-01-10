@@ -55,8 +55,8 @@ const ScrollingEffectPanel = ( props ) => {
   const scrollingEffectOptions = [ ...settings.scrollingEffectOptions ];
 
   // Find the theme_support block details.
-  const found = Object.keys(theme_support).find( key => theme_support[key].name === name );
-  if ( !! found && ( theme_support[found].supports.includes( 'doppler' ) ) ) {
+  const found = Object.keys( theme_support ).find( key => `novablocks/${ key }` === name );
+  if ( !! found && ( theme_support[ found ].supports.includes( 'doppler' ) ) ) {
     scrollingEffectOptions.push( {
       label: __( 'Doppler by Pixelgrade ®' ),
       value: 'doppler'
