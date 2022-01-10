@@ -93,8 +93,16 @@
 
 .supernova-item--layout-stacked {
 
-  .supernova-item__media-wrapper {
-    @include cover;
+  .nb-collection__layout.nb-collection__layout--variable-width & {
+    .supernova-item__content {
+      @include cover;
+    }
+  }
+
+  .nb-collection__layout:not(.nb-collection__layout--variable-width) & {
+    .supernova-item__media-wrapper {
+      @include cover;
+    }
   }
 
   &.supernova-item--style-basic .supernova-item__inner-container {

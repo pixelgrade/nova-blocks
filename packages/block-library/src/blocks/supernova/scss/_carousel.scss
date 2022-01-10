@@ -112,24 +112,18 @@
  * Pagination is true,
  * and Number of Items per Row is set to 1.
  */
-.supernova--card-layout-stacked {
+.supernova--card-layout-stacked.supernova--1-columns.alignfull {
+
+  .supernova-item__inner-container {
+    margin-bottom: calc(2 * var(--nb-spacing) + var(--current-font-size) * var(--current-line-height));
+    margin-left: calc(var(--nb-spacing) + 50px);
+    margin-right: calc(var(--nb-spacing) + 50px);
+  }
   
   .slick-dots {
     position: absolute;
     bottom: 0;
     padding-bottom: var(--nb-spacing);
-  }
-}
-
-.nb-collection__layout--carousel {
-
-  .supernova-item__inner-container {
-
-    .supernova--card-layout-stacked & {
-      margin-bottom: calc(2 * var(--nb-spacing) + var(--current-font-size) * var(--current-line-height));
-      margin-left: calc(var(--nb-spacing) + 50px);
-      margin-right: calc(var(--nb-spacing) + 50px);
-    }
   }
 }
 
