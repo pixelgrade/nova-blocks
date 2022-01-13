@@ -16,12 +16,6 @@ $slick-arrow-color: var(--sm-current-fg1-color);
 [class*="__inner-container"] {
   @include nb-content-layout;
 
-  > .nb-sidecar {
-    max-width: none;
-    margin-left: calc( -1 * var(--nb-wrapper-sides-spacings) );
-    margin-right: calc( -1 * var(--nb-wrapper-sides-spacings) );
-  }
-
   .sm-color-signal-0:not(.alignfull):not([data-align="full"]) > & {
     padding-left: 0;
     padding-right: 0;
@@ -30,6 +24,20 @@ $slick-arrow-color: var(--sm-current-fg1-color);
       margin-left: 0;
       margin-right: 0;
     }
+  }
+}
+
+.nb-sidecar {
+
+  [class*="__inner-container"] > & {
+    max-width: none;
+    margin-left: calc(-1 * var(--nb-wrapper-sides-spacings));
+    margin-right: calc(-1 * var(--nb-wrapper-sides-spacings));
+  }
+
+  .supernova-item__inner-container > & {
+    margin-left: calc(-1 * var(--nb-card-content-padding, 0));
+    margin-right: calc(-1 * var(--nb-card-content-padding, 0));
   }
 }
 
