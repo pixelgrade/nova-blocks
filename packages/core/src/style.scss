@@ -35,7 +35,7 @@ $slick-arrow-color: var(--sm-current-fg1-color);
     margin-right: calc(-1 * var(--nb-wrapper-sides-spacings));
   }
 
-  .supernova-item__inner-container > & {
+  .supernova-item__inner-container[class] > & {
     margin-left: calc(-1 * var(--nb-card-content-padding, 0));
     margin-right: calc(-1 * var(--nb-card-content-padding, 0));
   }
