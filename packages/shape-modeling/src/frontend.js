@@ -1,6 +1,6 @@
 import $ from 'jquery';
 
-import { getColorSignalClassnames } from "@novablocks/utils";
+import { getColorSignalClassnames, IS_EDITOR, IS_CUSTOMIZER } from "@novablocks/utils";
 
 import {
 	generatePath,
@@ -12,7 +12,11 @@ import {
 
 $( function() {
 
-//  .js-shape-modeling-target
+  if ( IS_EDITOR || IS_CUSTOMIZER ) {
+    return;
+  }
+
+  //  .js-shape-modeling-target
   $( '[data-shape-modeling-target]' ).each( ( i, target ) => {
     const $target = $( target );
     const seedOffsetData = $target.data( 'shape-modeling-shape-offset' );

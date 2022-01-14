@@ -1,6 +1,17 @@
+import $ from 'jquery';
+import { IS_CUSTOMIZER, IS_EDITOR } from "@novablocks/utils";
 import { onBeforeSlideChange } from './utils';
 
-( function( $, window, undefined ) {
+// on document ready
+$( () => {
+  initializeCarousels();
+} );
+
+const initializeCarousels = () => {
+
+  if ( IS_EDITOR || IS_CUSTOMIZER ) {
+    return;
+  }
 
   const $carousels = $( '.nb-collection__layout--carousel' );
 
@@ -57,5 +68,4 @@ import { onBeforeSlideChange } from './utils';
 
   } );
 
-} )( jQuery, window )
-
+}

@@ -1,5 +1,5 @@
 import $ from 'jquery';
-import { debounce, hasTouchScreen, IS_EDITOR } from "@novablocks/utils";
+import { debounce, hasTouchScreen, IS_EDITOR, IS_CUSTOMIZER } from "@novablocks/utils";
 import { getProps, getState, getStylesFromProps } from "./utils";
 
 const getScrollContainerHeight = () => {
@@ -21,7 +21,7 @@ const getConfig = ( container ) => {
 
 $( function() {
 
-  if ( IS_EDITOR ) {
+  if ( IS_EDITOR || IS_CUSTOMIZER ) {
     return;
   }
 
@@ -45,13 +45,13 @@ $( function() {
 			config: config,
 		} );
 
-		const $parallax = $container.find( '.novablocks-doppler__target' );
+		const $background = $container.find( '.novablocks-doppler__target' );
     const $foreground = $container.find( '.novablocks-doppler__foreground' );
 
-		$container.data( 'parallax', $parallax );
+		$container.data( 'parallax', $background );
     $container.data( 'foreground', $foreground );
 
-		function parallaxUpdateState() {
+    function parallaxUpdateState() {
 			const newConfig = Object.assign( {}, config, getConfig( container ) );
 			const state = getState( newConfig, attributes );
 
@@ -83,8 +83,9 @@ $( function() {
           return;
         }
 
-				const $background = $container.data( 'parallax' );
-				const $foreground = $container.data( 'foreground' );
+        const $background = $container.find( '.novablocks-doppler__target' );
+        const $foreground = $container.find( '.novablocks-doppler__foreground' );
+
 				const state = $container.data( 'state' );
 				const config = $container.data( 'config' );
 				const cfg = Object.assign( {}, state, config );

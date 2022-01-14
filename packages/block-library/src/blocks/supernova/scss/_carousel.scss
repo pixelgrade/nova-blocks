@@ -1,13 +1,13 @@
 .nb-collection__layout--carousel {
 
-  .nb-collection__layout-item,
-  .supernova-item {
-    height: 100%;
-  }
-
   .slick-track {
     display: flex;
     align-items: stretch;
+  }
+
+  .nb-collection__layout-item,
+  .supernova-item {
+    height: 100%;
   }
 
   .slick-slide {
@@ -15,10 +15,10 @@
     height: auto;
 
     > div {
+      height: 100%;
 
-      &,
-      & > .supernova-item {
-        height: 100%;
+      > .nb-collection__layout-item {
+        display: block !important;
       }
     }
   }
