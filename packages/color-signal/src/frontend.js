@@ -27,12 +27,6 @@ const updateColors = ( siteVariation ) => {
   updateScrollIndicator();
 }
 
-const applySiteColorSignal = ( indicator ) => {
-  if ( indicator ) {
-    addClass( indicator, `sm-variation-${ getSiteColorVariation() }` );
-  }
-}
-
 ready( () => {
 
   if ( IS_EDITOR ) {

@@ -1,4 +1,5 @@
 import { addClass, getColorSignalClassnames, removeClass } from "@novablocks/utils";
+import { getSiteColorVariation } from "../utils";
 
 export const updateScrollIndicator = () => {
   const blocks = document.querySelectorAll( '[data-scroll-indicator-block]' );
@@ -35,4 +36,10 @@ export const updateScrollIndicator = () => {
     }
 
   } );
+}
+
+const applySiteColorSignal = ( indicator ) => {
+  if ( indicator ) {
+    addClass( indicator, `sm-variation-${ getSiteColorVariation() }` );
+  }
 }
