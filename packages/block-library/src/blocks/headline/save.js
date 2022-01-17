@@ -20,14 +20,16 @@ export default function save( props ) {
 		primary,
 		secondary,
     textAlign,
+    fontSize,
 	} = attributes;
 
-	const TagName = `h${level}`;
+  const TagName = `h${ level }`;
 
   const className = classnames(
     'c-headline',
     `has-text-align-${ textAlign }`,
-    `align${ align }`
+    `align${ align }`,
+    attributes.className,
   );
 
 	return (

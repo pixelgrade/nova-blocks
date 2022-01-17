@@ -41,6 +41,10 @@ registerBlockType( 'novablocks/headline', {
 			type: "number",
 			default: 2
 		},
+    align: {
+      type: "string",
+      default: "none",
+    },
     textAlign: {
       type: "string",
       default: "center"
