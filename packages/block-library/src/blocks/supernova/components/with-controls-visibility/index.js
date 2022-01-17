@@ -31,11 +31,11 @@ const withControlsVisibility = OriginalComponent => {
         // Space and Sizing
         'minimum-container-height': cardLayout === 'stacked',
         'media-container-height': carouselLayout === 'variable',
-        'media-aspect-ratio': cardLayout !== 'stacked' && carouselLayout !== 'variable',
+        'media-aspect-ratio': cardLayout !== 'stacked' && carouselLayout !== 'variable' && showMedia,
         'visual-balance' : layoutStyle !== 'parametric' && [ 'horizontal', 'horizontal-reverse' ].includes( cardLayout ),
-        'content-to-media-spacing': cardLayout !== 'stacked',
         'content-padding': true,
-        'media-padding': true,
+        'media-padding': showMedia,
+        'content-to-media-spacing': cardLayout !== 'stacked' && showMedia,
 
         // Media Composition
         'media-composition-section': hasMediaComposition && !! showMedia && sourceType !== 'content',

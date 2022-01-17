@@ -14,9 +14,13 @@ import {
 	ToolbarButton,
 } from '@wordpress/components';
 
+import {
+  withVisibility
+} from '@novablocks/block-editor';
+
 const ALLOWED_MEDIA_TYPES = [ 'image', 'video' ];
 
-const AdvancedGalleryChangeMediaToolbar = ( props ) => {
+const AdvancedGalleryChangeMediaToolbar = withVisibility( 'media-composition-block-controls' )( props => {
 
 	const {
 		onSelectImages,
@@ -64,7 +68,7 @@ const AdvancedGalleryChangeMediaToolbar = ( props ) => {
       />
     </Toolbar>
 	);
-};
+} );
 
 const AdvancedGalleryBlockControls = ( props ) => {
 

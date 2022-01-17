@@ -1,6 +1,6 @@
 import classnames from 'classnames';
 
-import { useState } from '@wordpress/element';
+import { useEffect, useState } from '@wordpress/element';
 import { Popover } from '@wordpress/components';
 
 import {
@@ -19,8 +19,15 @@ import { getColorSignalClassnames } from "@novablocks/utils";
 
 const SuperNovaItemEdit = props => {
 
-  const { attributes } = props;
+  const { attributes, setControlsVisibility } = props;
   const { showMedia } = attributes;
+
+  useEffect( () => {
+    setControlsVisibility( {
+      // Media Composition
+      'media-composition-block-controls': showMedia
+    } );
+  }, [ showMedia ] );
 
   const blockProps = useBlockProps( {
     className: 'nb-collection__layout-item'
