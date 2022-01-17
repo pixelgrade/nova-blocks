@@ -25,7 +25,7 @@ const DuotoneFilter = ( props ) => {
         <style> .${ id } .blob-mix__media { filter: url( #${ id } ); }</style>
     `;
 
-  return createPortal( <div dangerouslySetInnerHTML={ { __html: svgMarkup } } />, element );
+  return element ? createPortal( <div dangerouslySetInnerHTML={ { __html: svgMarkup } } />, element ) : null;
 }
 
 const withOverlayFilterControls = createHigherOrderComponent( OriginalComponent => {
