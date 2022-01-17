@@ -71,6 +71,8 @@ const CardContents = ( props ) => {
   } = attributes;
 
   const align = getAlignFromMatrix( attributes?.contentPosition );
+  const cardTitleFontSize = attributes.cardTitleFontSize || 'normal';
+  const titleClassName = `has-${ cardTitleFontSize }-font-size`;
 
   const contentWrapperClassName = classnames(
     `supernova-item__content`,
@@ -99,7 +101,7 @@ const CardContents = ( props ) => {
         {
           showTitle &&
           <RichText
-            className={ `nb-card__title` }
+            className={ `nb-card__title ${ titleClassName }` }
             tagName={ `h${ level + 1 }` }
             value={ title }
             onChange={ title => { setAttributes( { title } ) } }

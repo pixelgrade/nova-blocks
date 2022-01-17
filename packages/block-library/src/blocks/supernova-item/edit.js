@@ -90,10 +90,12 @@ const SuperNovaItemContent = ( props ) => {
     displayInnerContent,
 
     cardTitleLevel,
+    cardTitleFontSize,
   } = attributes;
 
   const [ showPopover, setShowPopover ] = useState( false );
   const TitleTagName = `h${ cardTitleLevel }`;
+  const titleClassName = `has-${ cardTitleFontSize }-font-size`;
   const SubTitleTagName = `h${ cardTitleLevel + 1 }`;
 
   const newProps = {
@@ -119,7 +121,7 @@ const SuperNovaItemContent = ( props ) => {
         {
           showTitle &&
           <RichText
-            className={ `nb-card__title` }
+            className={ `nb-card__title ${ titleClassName }` }
             placeholder={ `Title` }
             tagName={ TitleTagName }
             value={ title }

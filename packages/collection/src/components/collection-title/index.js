@@ -8,6 +8,7 @@ const CollectionTitle = ( props ) => {
       showCollectionTitle,
       title,
       collectionTitleLevel,
+      collectionTitleFontSize,
     },
     setAttributes,
   } = props;
@@ -19,7 +20,7 @@ const CollectionTitle = ( props ) => {
   return (
     <RichText
       tagName={ `h${ collectionTitleLevel }` }
-      className={ `nb-collection__title alignfull` }
+      className={ `nb-collection__title has-${ collectionTitleFontSize }-font-size alignfull` }
       value={ title }
       placeholder={ __( 'Collection title', '__plugin_txtd' ) }
       onChange={ title => {

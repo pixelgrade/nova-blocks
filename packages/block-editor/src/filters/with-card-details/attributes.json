@@ -7,9 +7,17 @@
 		"type": "number",
 		"default": 3
 	},
+	"cardTitleFontSize": {
+		"type": "string",
+		"default": "normal"
+	},
 	"collectionTitleLevel": {
 		"type": "number",
 		"default": 2
+	},
+	"collectionTitleFontSize": {
+		"type": "string",
+		"default": "normal"
 	},
 	"metadataPosition": {
 		"type": "string",
