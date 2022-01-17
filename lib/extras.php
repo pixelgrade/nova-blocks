@@ -1526,11 +1526,12 @@ function novablocks_render_scroll_indicator( $attributes ) {
 
 function novablocks_get_collection_header_output( $attributes ) {
 	$titleTag = 'h' . $attributes['collectionTitleLevel'];
+	$fontSizeModifier = 'has-' . $attributes['collectionTitleFontSize'] . '-font-size';
 
 	$output = '';
 
 	if ( ! empty( $attributes['showCollectionTitle'] ) && ! empty( $attributes['title'] ) ) {
-		$output .= '<' . $titleTag . ' class="nb-collection__title wp-block alignfull">';
+		$output .= '<' . $titleTag . ' class="nb-collection__title wp-block alignfull ' . $fontSizeModifier . '">';
 		$output .= $attributes['title'];
 		$output .= '</' . $titleTag . '>';
 	}
@@ -2260,11 +2261,12 @@ function novablocks_get_card_item_meta( $metaValue, $attributes ) {
 
 function novablocks_get_card_item_title( $title, $attributes, $post ) {
 	$titleTag = 'h' . $attributes['cardTitleLevel'];
+	$fontSizeModifier = 'has-' . $attributes['cardTitleFontSize'] . '-font-size';
 
 	ob_start();
 
 	if ( ! empty( $title ) && ! empty( $attributes['showTitle'] ) ) {
-		echo '<' . $titleTag . ' class="nb-card__title">';
+		echo '<' . $titleTag . ' class="nb-card__title ' . $fontSizeModifier . '">';
 		echo novablocks_get_card_item_link( get_permalink( $post ), $attributes, 'open' );
 		echo $title;
 		echo novablocks_get_card_item_link( get_permalink( $post ), $attributes, 'close' );
