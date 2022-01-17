@@ -85,7 +85,7 @@
     grid-column: var(--block-left-start) / var(--block-left-end);
 
     + :not(:is(.alignright, [data-align="right"])) {
-      grid-column-start: cs; // ???
+      grid-column-start: cs; // shouldn't it be var(--block-content-start) ?
     }
   }
 
@@ -94,7 +94,7 @@
     grid-column: var(--block-right-start) / var(--block-right-end);
 
     + :not(:is(.alignleft, [data-align="left"])) {
-      grid-column-end: ce; // ???
+      grid-column-end: ce; // shouldn't it be var(--block-content-end) ?
     }
   }
 
