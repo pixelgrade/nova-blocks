@@ -9,13 +9,23 @@ const getScrollContainerHeight = () => {
 
 const getConfig = ( container ) => {
 
+  const containerBox = {
+    width: container.offsetWidth,
+    height: container.offsetHeight,
+    top: container.offsetTop,
+    left: container.offsetLeft
+  };
+
+  containerBox.right = containerBox.left + containerBox.width;
+  containerBox.bottom = containerBox.top + containerBox.height;
+
   return {
     scrollContainerBox: {
       top: 0,
       left: 0,
       height: getScrollContainerHeight()
     },
-    containerBox: container.getBoundingClientRect(),
+    containerBox: containerBox,
   }
 }
 
