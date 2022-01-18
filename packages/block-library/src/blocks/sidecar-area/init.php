@@ -26,7 +26,7 @@ if ( ! function_exists( 'novablocks_render_sidecar_area_block' ) ) {
 	 * @return string
 	 */
 
-	function novablocks_render_sidecar_area_block( $attributes, $content ) {
+	function novablocks_render_sidecar_area_block( array $attributes, string $content ): string {
 
 		if ( empty( $content ) ) {
 			return '';
@@ -34,8 +34,6 @@ if ( ! function_exists( 'novablocks_render_sidecar_area_block' ) ) {
 
 		$attributes_config = novablocks_get_sidecar_area_attributes();
 		$attributes        = novablocks_get_attributes_with_defaults( $attributes, $attributes_config );
-
-		ob_start();
 
 		$classes = [
 			'nb-sidecar-area',
@@ -46,12 +44,6 @@ if ( ! function_exists( 'novablocks_render_sidecar_area_block' ) ) {
 			$classes[] = 'nb-content-layout-grid';
 		}
 
-		?>
-
-		<div class="<?php echo esc_attr( join( ' ', $classes ) ); ?>">
-			<?php echo $content ?>
-		</div>
-
-		<?php return ob_get_clean();
+		return '<div class="' . esc_attr( join( ' ', $classes ) ) . '">' . $content . '</div>';
 	}
 }

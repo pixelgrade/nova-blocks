@@ -15,7 +15,7 @@ if ( ! defined( 'ABSPATH' ) ) {
  */
 if ( ! function_exists( 'novablocks_add_blocks_category_deprecated' ) && ! class_exists( 'WP_Block_Editor_Context' ) ) {
 
-	function novablocks_add_blocks_category_deprecated( $categories, $post ) {
+	function novablocks_add_blocks_category_deprecated( $categories, $post ): array {
 		return array_merge(
 			[
 				[

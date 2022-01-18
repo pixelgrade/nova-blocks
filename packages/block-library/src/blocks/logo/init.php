@@ -9,9 +9,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 function novablocks_get_logo_attributes() {
-	$attributes = novablocks_get_attributes_from_json( 'packages/block-library/src/blocks/logo/attributes.json' );
-
-	return $attributes;
+	return novablocks_get_attributes_from_json( 'packages/block-library/src/blocks/logo/attributes.json' );
 }
 
 if ( ! function_exists( 'novablocks_render_logo_block' ) ) {

@@ -5,10 +5,13 @@ if ( ! function_exists('get_header_row_block' ) ) {
 	/**
 	 * Get the Header Row based on attributes.
 	 *
+	 * @param $row_type
+	 * @param $row_type_value
+	 *
 	 * @return array
 	 */
 
-	function get_header_row_block( $row_type, $row_type_value ) {
+	function get_header_row_block( $row_type, $row_type_value ): array {
 
 		$post = get_block_area_post( 'header' );
 
@@ -44,10 +47,10 @@ if ( ! function_exists('header_block_updated') ) {
 	/**
 	 * Check if Header Blocks is using Header Rows.
 	 *
-	 * @return boolean
+	 * @return bool
 	 */
 
-	function header_block_updated() {
+	function header_block_updated(): bool {
 
 		$post = get_block_area_post( 'header' );
 
@@ -69,10 +72,10 @@ if ( ! function_exists('get_block_area_post') ) {
 	 *
 	 * @param string $slug
 	 *
-	 * @return object;
+	 * @return object
 	 */
 
-	function get_block_area_post( $slug ) {
+	function get_block_area_post( string $slug ) {
 
 		$block_area = get_posts( [
 			'name'        => $slug,
@@ -86,27 +89,25 @@ if ( ! function_exists('get_block_area_post') ) {
 		$block_area_id = $block_area[0];
 
 		// Header Block Area Post.
-		$post = get_post( $block_area_id );
-
-		return $post;
+		return get_post( $block_area_id );
 	}
 }
 
-if ( ! function_exists('get_reading_bar_markup') ) {
+if ( ! function_exists('render_reading_bar') ) {
 
 	/**
 	 * Render Reading Bar and Reading Progress
 	 */
 
-	function get_reading_bar_markup() {
+	function render_reading_bar(): string {
 
 		// We want to show Reading Bar
 		// only on Posts.
 		if ( ! is_singular('post') ) {
-			return;
+			return '';
 		}
 
-		?>
+		ob_start(); ?>
 		<!--Reading Bar-->
 		<div class="c-reading-bar  js-reading-bar  u-header-sides-spacing">
 
@@ -147,5 +148,8 @@ if ( ! function_exists('get_reading_bar_markup') ) {
 
 		<!--Reading Progress Bar-->
 		<progress class="c-reading-progress  js-reading-progress"></progress>
-	<?php }
+		<?php
+
+		return ob_get_clean();
+	}
 }

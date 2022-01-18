@@ -27,9 +27,7 @@ if ( ! function_exists( 'novablocks_render_sidecar_block' ) ) {
 	 * @return string
 	 */
 
-	function novablocks_render_sidecar_block( $attributes, $content ) {
-
-		ob_start();
+	function novablocks_render_sidecar_block( array $attributes, string $content ): string {
 
 		$attributes_config = novablocks_get_sidecar_attributes();
 		$attributes        = novablocks_get_attributes_with_defaults( $attributes, $attributes_config );
@@ -45,12 +43,6 @@ if ( ! function_exists( 'novablocks_render_sidecar_block' ) ) {
 			$classes[] = 'nb-sidecar--sticky-sidebar';
 		}
 
-		?>
-
-		<div class="<?php echo esc_attr( join( ' ', $classes ) ); ?>">
-			<?php echo $content ?>
-		</div>
-
-		<?php return ob_get_clean();
+		return '<div class="' . esc_attr( join( ' ', $classes ) ) . '">' . $content . '</div>';
 	}
 }

@@ -72,11 +72,11 @@ if ( ! class_exists( 'NovaBlocks_Comments_Renderer' ) ) {
 		/**
 		 * Instantiate a comments global renderer.
 		 *
-		 * @param WP_Post|int|null $post    Optional. The post who's comments to render. Defaults to the current post.
+		 * @param WP_Post|int|null $post    Optional. The post whose comments to render. Defaults to the current post.
 		 * @param array            $args    Optional. The arguments to consider when rendering.
 		 * @param string           $content Optional. The content to use when rendering.
 		 */
-		public function __construct( $post = null, $args = [], $content = '' ) {
+		public function __construct( $post = null, array $args = [], string $content = '' ) {
 			$this->post = get_post( $post, OBJECT );
 
 			// Make sure defaults are in place.
@@ -147,7 +147,7 @@ if ( ! class_exists( 'NovaBlocks_Comments_Renderer' ) ) {
 		 *
 		 * @return string The rendered component's markup. An empty string if the render failed.
 		 */
-		public function render( $component, $args = [], $before = '', $after = '' ) {
+		public function render( string $component, array $args = [], string $before = '', string $after = '' ): string {
 			$component_output = '';
 
 			if ( ! empty( $this->$component ) && is_object( $this->$component ) && method_exists( $this->$component, 'render' ) ) {
@@ -168,7 +168,7 @@ if ( ! class_exists( 'NovaBlocks_Comments_Renderer' ) ) {
 		 *
 		 * @return array
 		 */
-		protected function parse_args( $args ) {
+		protected function parse_args( array $args ): array {
 			// Handle the arguments by merging them with the existing ones.
 			return wp_parse_args( $args, $this->args );
 		}
@@ -180,7 +180,7 @@ if ( ! class_exists( 'NovaBlocks_Comments_Renderer' ) ) {
 		 *
 		 * @return mixed|null The argument value if present, null otherwise.
 		 */
-		public function get_arg( $arg ) {
+		public function get_arg( string $arg ) {
 			if ( isset( $this->args[ $arg ] ) ) {
 				return $this->args[ $arg ];
 			}

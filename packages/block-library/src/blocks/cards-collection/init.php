@@ -40,7 +40,7 @@ if ( ! function_exists( 'novablocks_render_cards_collection_block' ) ) {
 
 		$cssProps = array_merge(
 			novablocks_get_space_and_sizing_css( $attributes ),
-			novablocks_get_collection_layout_css( $attributes ),
+			novablocks_get_collection_layout_css( $attributes )
 		);
 
 		$align = preg_split( '/\b\s+/', $attributes['contentPosition'] );

@@ -2,10 +2,10 @@
 Contributors: pixelgrade, vlad.olaru, babbardel, razvanonofrei, gorby31
 Tags: Blocks, editor, gutenberg, gutenberg blocks, page builder, block enabled, page building, block
 Requires at least: 5.5.0
-Tested up to: 5.8.1
-Requires PHP: 5.6.40
+Tested up to: 5.8.3
 Stable tag: 1.13.3
-License: GPL v2.0 (or later)
+Requires PHP: 7.1
+License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
 A collection of distinctive Gutenberg blocks, committed to making your site shine like a newborn star.

@@ -6,10 +6,14 @@
  * Version: 2.0.0-alpha+20102021
  * Author: Pixelgrade
  * Author URI: https://www.pixelgrade.com
- * Text Domain: __plugin_txtd
- * Tested up to: 5.8.1
- * Requires PHP: 5.6.40
  * License: GPLv2 or later
+ * License URI: http://www.gnu.org/licenses/gpl-2.0.txt
+ * Text Domain: __plugin_txtd
+ * Requires at least: 5.5.0
+ * Tested up to: 5.8.3
+ * Requires PHP: 7.1
+ * GitHub Plugin URI: pixelgrade/nova-blocks
+ * Release Asset: true
  *
  * Nova Blocks is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -34,7 +38,7 @@ if ( ! defined( 'ABSPATH' ) ) {
  * @access private
  *
  */
-function novablocks_get_plugin_path() {
+function novablocks_get_plugin_path(): string {
 	static $novablocks_plugin_path;
 
 	if ( empty( $novablocks_plugin_path ) ) {
@@ -53,7 +57,7 @@ function novablocks_get_plugin_path() {
  * @access private
  *
  */
-function novablocks_get_plugin_url() {
+function novablocks_get_plugin_url(): string {
 	static $novablocks_plugin_url;
 
 	if ( empty( $novablocks_plugin_url ) ) {

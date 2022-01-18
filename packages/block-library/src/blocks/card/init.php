@@ -21,7 +21,7 @@ function novablocks_get_card_attributes() {
 
 if ( ! function_exists( 'novablocks_render_card_block' ) ) {
 
-	function novablocks_render_card_block( $attributes, $content ) {
+	function novablocks_render_card_block( array $attributes, string $content ): string {
 
 		$attributes_config = novablocks_get_card_attributes();
 		$attributes        = novablocks_get_attributes_with_defaults( $attributes, $attributes_config );
@@ -33,7 +33,7 @@ if ( ! function_exists( 'novablocks_render_card_block' ) ) {
 			echo '<div class="nb-card__meta is-style-meta">' . $attributes['meta'] . '</div>';
 		}
 
-		echo novablocks_get_card_item_title( $attributes['title'], $attributes, $post );
+		echo novablocks_get_card_item_title( $attributes['title'], $attributes );
 		echo novablocks_get_card_item_subtitle( $attributes['subtitle'], $attributes );
 		echo novablocks_get_card_item_description( $attributes['description'], $attributes );
 

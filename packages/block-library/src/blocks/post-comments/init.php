@@ -18,13 +18,13 @@ if ( ! function_exists ('novablocks_render_post_comments_block' ) ) {
 	/**
 	 * Entry point to render the block with the given attributes, content, and context.
 	 *
-	 * @param array $attributes
-	 * @param string $content
+	 * @param array    $attributes
+	 * @param string   $content
 	 * @param WP_Block $block
 	 *
 	 * @return string
 	 */
-	function novablocks_render_post_comments_block( $attributes, $content, $block ) {
+	function novablocks_render_post_comments_block( array $attributes, string $content, WP_Block $block ): string {
 		// Bail if we don't have a post ID.
 		if ( empty( $block->context[ 'postId' ] ) ) {
 			return '';
@@ -58,16 +58,8 @@ if ( ! function_exists ('novablocks_render_post_comments_block' ) ) {
 		     && $post->comment_count == 0 ) {
 
 			if ( ! empty( $post_comments_renderer->get_arg( 'commentsClosedMessage' ) ) ) {
-				ob_start(); ?>
-
-				<p class="comments-closed comments-closed__no-comments"><?php echo $post_comments_renderer->get_arg( 'commentsClosedMessage' ); ?></p>
-
-				<?php
-				$output = ob_get_clean();
-				// If we had output, wrap it in the $before and $after.
-				if ( ! empty( trim( $output ) ) ) {
-					$output = $before . $output . $after;
-				}
+				$output = '<p class="comments-closed comments-closed__no-comments">' . $post_comments_renderer->get_arg( 'commentsClosedMessage' ) . '</p>';
+				$output = $before . $output . $after;
 			}
 
 			return trim( $output );
@@ -114,13 +106,13 @@ if ( ! function_exists ('novablocks_replace_content_tags' ) ) {
 	/**
 	 * Replace any content tags present in the content.
 	 *
-	 * @param string $content
-	 * @param int    $post_id
-	 * @param int    $user_id
+	 * @param string   $content
+	 * @param int|null $post_id
+	 * @param int|null $user_id
 	 *
 	 * @return string
 	 */
-	function novablocks_replace_content_tags( $content, $post_id = null, $user_id = null ) {
+	function novablocks_replace_content_tags( string $content, int $post_id = null, int $user_id = null ): string {
 		$original_content = $content;
 
 		// Allow others to alter the content before we do our work
@@ -152,7 +144,7 @@ if ( ! function_exists ('novablocks_replace_content_tags' ) ) {
 					$user_id = $current_post->post_author;
 				} else {
 					global $authordata;
-					$user_id = isset( $authordata->ID ) ? $authordata->ID : false;
+					$user_id = $authordata->ID ?? false;
 				}
 			}
 

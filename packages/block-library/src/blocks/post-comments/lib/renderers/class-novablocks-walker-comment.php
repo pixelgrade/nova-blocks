@@ -107,7 +107,7 @@ if ( ! class_exists( 'NovaBlocks_Walker_Comment' ) ) {
 						</div><!-- .comment-author-info -->
 
 						<?php $this->the_comment_extra_meta_actions( $comment, $depth, $args ); ?>
-					</footer><!-- .comment-meta -->
+					</header><!-- .comment-meta -->
 
 					<div class="comment-content">
 
@@ -251,7 +251,7 @@ if ( ! class_exists( 'NovaBlocks_Walker_Comment' ) ) {
 		 * @param int        $depth   Depth of the current comment.
 		 * @param array      $args    An array of arguments.
 		 */
-		protected function comment( $comment, $args, $depth ) {
+		protected function comment( $comment, $depth, $args ) {
 			$tag = ( 'div' === $args['style'] ) ? 'div' : 'li';
 			$add_below = 'comment';
 

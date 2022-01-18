@@ -56,7 +56,7 @@ if ( ! class_exists( 'NovaBlocks_Comments_Meta' ) ) {
 		 *
 		 * @return array
 		 */
-		public function verify_comment_meta_data( $commentdata ) {
+		public function verify_comment_meta_data( array $commentdata ): array {
 			// We only do the checks on the frontend, not in the WordPress Dashboard.
 			if ( current_user_can( 'moderate_comments' ) && is_admin() ) {
 				return $commentdata;
@@ -145,7 +145,7 @@ if ( ! class_exists( 'NovaBlocks_Comments_Meta' ) ) {
 		 *
 		 * @param WP_Comment $comment
 		 */
-		public function comment_meta_box_fields( $comment ) {
+		public function comment_meta_box_fields( WP_Comment $comment ) {
 			// Safety first.
 			wp_nonce_field( 'nb_save_metabox_fields', 'nb_comment_extra_details', false );
 			?>
@@ -176,7 +176,7 @@ if ( ! class_exists( 'NovaBlocks_Comments_Meta' ) ) {
 		 *
 		 * @param int $comment_id
 		 */
-		public function save_metabox_fields( $comment_id ) {
+		public function save_metabox_fields( int $comment_id ) {
 			if ( ! isset( $_POST['nb_comment_extra_details'] ) || ! wp_verify_nonce( $_POST['nb_comment_extra_details'], 'nb_save_metabox_fields' ) ) {
 				return;
 			}
