@@ -12,9 +12,9 @@
  *                                     When multiple, we use AND among them, so all need to be supported.
  * @param array|bool   $theme_features The list of novablocks blocks (as strings) that the current theme supports.
  *
- * @return mixed
+ * @return bool
  */
-function novablocks_handle_theme_supports( $supports, $args, $theme_features ) {
+function novablocks_handle_theme_supports( $supports, $args, $theme_features ): bool {
 	if ( empty( $args ) || empty( $theme_features ) ) {
 		return $supports;
 	}
@@ -78,7 +78,7 @@ function novablocks_register_meta() {
 
 add_action( 'init', 'novablocks_register_meta' );
 
-function novablocks_allowed_block_types( $allowed_block_types, $post ) {
+function novablocks_allowed_block_types( array $allowed_block_types, WP_Post $post ): array {
 
 	if ( $post->post_type === 'block_area' ) {
 
@@ -96,7 +96,7 @@ function novablocks_allowed_block_types( $allowed_block_types, $post ) {
 
 add_filter( 'allowed_block_types', 'novablocks_allowed_block_types', 10, 2 );
 
-function novablocks_get_alignment_attributes() {
+function novablocks_get_alignment_attributes(): array {
 	return [
 		'horizontalAlignment' => [
 			'type'    => 'string',
@@ -109,7 +109,7 @@ function novablocks_get_alignment_attributes() {
 	];
 }
 
-function novablocks_get_doppler_attributes() {
+function novablocks_get_doppler_attributes(): array {
 	return [
 		'focalPoint'             => [
 			'type'    => 'object',
@@ -156,7 +156,7 @@ function novablocks_get_doppler_attributes() {
 	];
 }
 
-function novablocks_get_alignment( $attributes ) {
+function novablocks_get_alignment( array $attributes ): array {
 
 	if ( ! empty( $attributes['contentPosition'] ) ) {
 		return explode( ' ', $attributes['contentPosition'] );
@@ -179,7 +179,7 @@ function novablocks_get_alignment( $attributes ) {
 	];
 }
 
-function novablocks_get_alignment_classes( $attributes ) {
+function novablocks_get_alignment_classes( array $attributes ): array {
 	$classes = [];
 
 	$alignment = novablocks_get_alignment( $attributes );
@@ -190,7 +190,7 @@ function novablocks_get_alignment_classes( $attributes ) {
 	return $classes;
 }
 
-function novablocks_get_block_extra_classes( $attributes ) {
+function novablocks_get_block_extra_classes( array $attributes ): array {
 	$classes = novablocks_get_alignment_classes( $attributes );
 
 	if ( ! empty( $attributes['contentPadding'] ) ) {
@@ -209,16 +209,16 @@ function novablocks_get_collection_attributes() {
 	return novablocks_get_attributes_from_json( 'packages/collection/src/collection-attributes.json' );
 }
 
-function novablocks_get_attributes_with_defaults( $attributes, $attributes_config ) {
+function novablocks_get_attributes_with_defaults( array $attributes, array $attributes_config ): array {
 
 	foreach ( $attributes_config as $key => $value ) {
 
 		if ( ! isset( $attributes[ $key ] ) ) {
 
-			if ( isset( $attributes_config[ $key ]['source'] ) && $attributes_config[ $key ]['source'] === 'meta' ) {
-				$attributes[ $key ] = get_post_meta( get_the_ID(), $attributes_config[ $key ]['meta'], true );
-			} elseif ( isset( $attributes_config[ $key ]['default'] ) ) {
-				$attributes[ $key ] = $attributes_config[ $key ]['default'];
+			if ( isset( $value['source'] ) && $value['source'] === 'meta' ) {
+				$attributes[ $key ] = get_post_meta( get_the_ID(), $value['meta'], true );
+			} elseif ( isset( $value['default'] ) ) {
+				$attributes[ $key ] = $value['default'];
 			} else {
 				// Put some value since some might use it. We should not get here, but do our best if we do.
 				$attributes[ $key ] = '';
@@ -229,14 +229,14 @@ function novablocks_get_attributes_with_defaults( $attributes, $attributes_confi
 	return $attributes;
 }
 
-function novablocks_get_focal_point_style( $focalPoint ) {
+function novablocks_get_focal_point_style( array $focalPoint ): string {
 	$focalPointX = intval( $focalPoint['x'] * 10000 ) / 100 . '%';
 	$focalPointY = intval( $focalPoint['y'] * 10000 ) / 100 . '%';
 
 	return 'object-position: ' . $focalPointX . ' ' . $focalPointY . ';';
 }
 
-function novablocks_add_hero_settings( $settings ) {
+function novablocks_add_hero_settings( array $settings ): array {
 
 	$hero_settings = [
 		'template' => [
@@ -290,7 +290,7 @@ function novablocks_add_hero_settings( $settings ) {
 
 add_filter( 'novablocks_block_editor_initial_settings', 'novablocks_add_hero_settings', 0 );
 
-function novablocks_add_space_and_sizing_settings( $settings ) {
+function novablocks_add_space_and_sizing_settings( array $settings ): array {
 
 	if ( empty( $settings['modules'] ) ) {
 		$settings['modules'] = [];
@@ -306,7 +306,7 @@ function novablocks_add_space_and_sizing_settings( $settings ) {
 
 add_filter( 'novablocks_block_editor_initial_settings', 'novablocks_add_space_and_sizing_settings', 0 );
 
-function novablocks_add_media_settings( $settings ) {
+function novablocks_add_media_settings( array $settings ): array {
 
 	$media_settings = [
 		'template' => [
@@ -354,7 +354,7 @@ function novablocks_add_media_settings( $settings ) {
 
 add_filter( 'novablocks_block_editor_initial_settings', 'novablocks_add_media_settings', 0 );
 
-function novablocks_get_space_and_sizing_presets() {
+function novablocks_get_space_and_sizing_presets(): array {
 	return [
 		[
 			'label'  => esc_html__( 'Default Block Spacing', '__plugin_txtd' ),
@@ -407,7 +407,7 @@ function novablocks_get_space_and_sizing_presets() {
 	];
 }
 
-function novablocks_get_space_and_sizing_advanced_presets() {
+function novablocks_get_space_and_sizing_advanced_presets(): array {
 	return [
 		[
 			'label'  => esc_html__( 'Overlap 1 / Top Anchoring', '__plugin_txtd' ),
@@ -448,7 +448,7 @@ function novablocks_get_space_and_sizing_advanced_presets() {
 	];
 }
 
-function novablocks_add_slideshow_settings( $settings ) {
+function novablocks_add_slideshow_settings( array $settings ): array {
 
 	$slideshow_settings = [
 		'minHeightOptions' => [
@@ -482,7 +482,7 @@ function novablocks_add_slideshow_settings( $settings ) {
 
 add_filter( 'novablocks_block_editor_initial_settings', 'novablocks_add_slideshow_settings', 0 );
 
-function novablocks_add_separator_settings( $settings ) {
+function novablocks_add_separator_settings( array $settings ): array {
 	$separator_settings = [
 		'markup' => '<hr />',
 	];
@@ -494,7 +494,7 @@ function novablocks_add_separator_settings( $settings ) {
 
 add_filter( 'novablocks_block_editor_initial_settings', 'novablocks_add_separator_settings', 0 );
 
-function novablocks_get_block_editor_settings() {
+function novablocks_get_block_editor_settings(): array {
 
 	$settings = [
 		'debug'                        => defined( 'NOVABLOCKS_DEBUG' ) && NOVABLOCKS_DEBUG,
@@ -628,7 +628,7 @@ function novablocks_get_block_editor_settings() {
 	return $settings;
 }
 
-function novablocks_get_blob_presets() {
+function novablocks_get_blob_presets(): array {
 	return [
 		[
 			'label'  => 'Rectangle',
@@ -835,7 +835,7 @@ function novablocks_get_blob_presets() {
 	];
 }
 
-function novablocks_get_media_composition_markup_presets() {
+function novablocks_get_media_composition_markup_presets(): array {
 	return [
 		[
 			'label'  => 'The Cloud Atlas',
@@ -917,7 +917,7 @@ function novablocks_get_media_composition_markup_presets() {
 	];
 }
 
-function novablocks_add_scrolling_effect_options( $settings ) {
+function novablocks_add_scrolling_effect_options( array $settings ): array {
 
 	$options = [
 		[
@@ -930,16 +930,14 @@ function novablocks_add_scrolling_effect_options( $settings ) {
 		],
 	];
 
-	$settings = array_merge( $settings, [
+	return array_merge( $settings, [
 		'scrollingEffectOptions' => $options,
 	] );
-
-	return $settings;
 }
 
 add_filter( 'novablocks_block_editor_initial_settings', 'novablocks_add_scrolling_effect_options' );
 
-function novablocks_get_theme_support() {
+function novablocks_get_theme_support(): array {
 	$theme_support = get_theme_support( 'novablocks' );
 	$theme_support = is_array( $theme_support ) ? $theme_support[0] : false;
 	$theme_support = novablocks_normalize_theme_support( $theme_support );
@@ -1006,7 +1004,7 @@ function novablocks_get_theme_support() {
  *
  * @author Mark Roduner <mark.roduner@gmail.com>
  */
-function novablocks_array_merge_recursive_distinct() {
+function novablocks_array_merge_recursive_distinct(): array {
 	$arrays = func_get_args();
 	$base   = array_shift( $arrays );
 	if ( ! is_array( $base ) ) {
@@ -1031,7 +1029,7 @@ function novablocks_array_merge_recursive_distinct() {
 				if ( ! isset( $base[ $key ] ) ) {
 					$base[ $key ] = [];
 				}
-				$base[ $key ] = novablocks_array_merge_recursive_distinct( $base[ $key ], $append[ $key ] );
+				$base[ $key ] = novablocks_array_merge_recursive_distinct( $base[ $key ], $value );
 			} else if ( is_numeric( $key ) ) {
 				if ( ! in_array( $value, $base ) ) {
 					$base[] = $value;
@@ -1131,11 +1129,8 @@ function novablocks_normalize_theme_support( $theme_support ) {
 	return $standard_theme_support;
 }
 
-function novablocks_is_block_supported( $block_name ) {
+function novablocks_is_block_supported( string $block_name ): bool {
 	$support = novablocks_get_theme_support();
-	if ( ! is_array( $support ) ) {
-		return false;
-	}
 
 	foreach ( $support as $supported_block ) {
 		if ( ! empty( $supported_block['name'] )
@@ -1159,18 +1154,17 @@ function novablocks_get_attributes_from_json( $path ) {
 	return json_decode( file_get_contents( $filename ), true );
 }
 
-function novablocks_camel_case_to_kebab_case( $string ) {
+function novablocks_camel_case_to_kebab_case( string $string ): string {
 	return strtolower( preg_replace( '%([A-Z])([a-z])%', '-\1\2', $string ) );
 }
 
-function novablocks_kebab_case_to_camel_case( $string ) {
+function novablocks_kebab_case_to_camel_case( string $string ): string {
 	$str = str_replace( '-', '', ucwords( $string, '-' ) );
-	$str = lcfirst( $str );
 
-	return $str;
+	return lcfirst( $str );
 }
 
-function novablocks_get_data_attributes( $data_attributes_array, $attributes, $blacklist = [] ) {
+function novablocks_get_data_attributes( array $data_attributes_array, array $attributes, array $blacklist = [] ): array {
 	$data_attributes   = [];
 	$default_blacklist = [ 'align' ];
 	$blacklist         = array_merge( $default_blacklist, $blacklist );
@@ -1206,7 +1200,7 @@ function novablocks_get_data_attributes( $data_attributes_array, $attributes, $b
 	return $data_attributes;
 }
 
-function novablocks_get_media_composition_markup_component_attributes() {
+function novablocks_get_media_composition_markup_component_attributes(): array {
 
 	return novablocks_merge_attributes_from_array( [
 		'packages/shape-modeling/src/attributes.json',
@@ -1215,22 +1209,24 @@ function novablocks_get_media_composition_markup_component_attributes() {
 
 }
 
-function novablocks_render_media_composition( $attributes ) {
+function novablocks_render_media_composition( array $attributes ) {
 	echo novablocks_get_media_composition_markup( $attributes );
 }
 
-function novablocks_get_media_composition_markup( $attributes ) {
+function novablocks_get_media_composition_markup( array $attributes ): string {
 
-	ob_start();
+	$output = '';
 
 	$images = [];
-
 	if ( ! empty( $attributes['images'] ) ) {
 		$images = $attributes['images'];
 	}
-
 	if ( ! empty( $attributes['gallery'] ) ) {
 		$images = $attributes['gallery'];
+	}
+
+	if ( empty( $images ) || ! is_array( $images ) ) {
+		return $output;
 	}
 
 	$attributes_config = novablocks_merge_attributes_from_array( [
@@ -1240,83 +1236,80 @@ function novablocks_get_media_composition_markup( $attributes ) {
 	$data_attributes_array = array_map( 'novablocks_camel_case_to_kebab_case', array_keys( $attributes_config ) );
 	$data_attributes = novablocks_get_data_attributes( $data_attributes_array, $attributes );
 
-	if ( ! empty( $images ) && is_array( $images ) ) {
+	$output .= '<div class="novablocks-media-composition" ' . join( ' ', $data_attributes ) . '>';
+	$output .= '<div class="novablocks-media-composition__grid">';
 
-		echo '<div class="novablocks-media-composition" ' . join( ' ', $data_attributes ) . '>';
-		echo '<div class="novablocks-media-composition__grid">';
+	foreach ( $images as $index => $image ) {
 
-		foreach ( $images as $index => $image ) {
+		if ( is_string( $image ) ) {
+			$image = json_decode( $image );
+		}
 
-			if ( is_string( $image ) ) {
-				$image = json_decode( $image );
-			}
+		if ( ! empty( $image ) ) {
+			$image = ( array ) $image;
+		}
 
-			if ( ! empty( $image ) ) {
-				$image = ( array ) $image;
-			}
+		$attachment = false;
+		if ( is_numeric( $image['id'] ) && intval( $image['id'] ) > 0 ) {
+			$attachment = get_post( $image['id'] );
 
-			if ( is_numeric( $image['id'] ) && intval( $image['id'] ) > 0 ) {
-				$attachment = get_post( $image['id'] );
-
-				if ( ! empty( $attachment ) && $attachment->post_type === 'attachment' ) {
-					$attachment_src = wp_get_attachment_image_src( $image['id'], 'novablocks_large' );
-				}
-			}
-
-			$has_caption     = ! empty( $image['caption'] );
-			$has_description = ! empty( $attachment ) && $attachment->post_type === 'attachment' && ! empty( $attachment->post_content );
-
-			$url = '';
-
-			if ( ! empty( $attachment_src ) ) {
-				$url = $attachment_src[0];
-			}
-
-			// fallback for import
-			if ( empty( $url ) ) {
-				$url = novablocks_get_image_url( $image, 'novablocks_large' );
-			}
-
-			if ( ! empty( $url ) ) {
-				echo '<div class="novablocks-media-composition__grid-item">';
-				echo '<div class="novablocks-media-composition__grid-item-media">';
-
-				$data_attrs = 'data-shape-modeling-target data-shape-modeling-shape-offset="' . $index . '"';
-
-				if ( isset( $image['type'] ) && $image['type'] === 'video' ) {
-					echo '<video class="novablocks-media-composition__image" ' . $data_attrs . ' muted autoplay loop playsinline src="' . esc_url( $image['url'] ) . '"/>';
-				} else {
-					echo '<img class="novablocks-media-composition__image" ' . $data_attrs . ' src="' . $url . '" />';
-				}
-
-				echo '</div>';
-
-				if ( $has_caption || $has_description ) {
-
-					echo '<div class="novablocks-media-composition__grid-item-info">';
-
-					if ( $has_caption ) {
-						echo '<div class="novablocks-media-composition__grid-item-caption">' . $image['caption'] . '</div>';
-					}
-
-					if ( $has_description ) {
-						echo '<div class="novablocks-media-composition__grid-item-description">' . $attachment->post_content . '</div>';
-					}
-
-					echo '</div>';
-
-				}
-
-				echo '</div>';
+			if ( ! empty( $attachment ) && $attachment->post_type === 'attachment' ) {
+				$attachment_src = wp_get_attachment_image_src( $image['id'], 'novablocks_large' );
 			}
 		}
 
-		echo '</div>';
-		echo '</div>';
+		$has_caption     = ! empty( $image['caption'] );
+		$has_description = ! empty( $attachment ) && $attachment->post_type === 'attachment' && ! empty( $attachment->post_content );
 
+		$url = '';
+
+		if ( ! empty( $attachment_src ) ) {
+			$url = $attachment_src[0];
+		}
+
+		// Fallback for import.
+		if ( empty( $url ) ) {
+			$url = novablocks_get_image_url( $image, 'novablocks_large' );
+		}
+
+		if ( ! empty( $url ) ) {
+			$output .= '<div class="novablocks-media-composition__grid-item">';
+			$output .= '<div class="novablocks-media-composition__grid-item-media">';
+
+			$data_attrs = 'data-shape-modeling-target data-shape-modeling-shape-offset="' . esc_attr( $index ) . '"';
+
+			if ( isset( $image['type'] ) && $image['type'] === 'video' ) {
+				$output .= '<video class="novablocks-media-composition__image" ' . $data_attrs . ' muted autoplay loop playsinline src="' . esc_url( $image['url'] ) . '"/>';
+			} else {
+				$output .= '<img class="novablocks-media-composition__image" ' . $data_attrs . ' src="' . $url . '" />';
+			}
+
+			$output .= '</div>';
+
+			if ( $has_caption || $has_description ) {
+
+				$output .= '<div class="novablocks-media-composition__grid-item-info">';
+
+				if ( $has_caption ) {
+					$output .= '<div class="novablocks-media-composition__grid-item-caption">' . $image['caption'] . '</div>';
+				}
+
+				if ( $has_description ) {
+					$output .= '<div class="novablocks-media-composition__grid-item-description">' . $attachment->post_content . '</div>';
+				}
+
+				$output .= '</div>';
+
+			}
+
+			$output .= '</div>';
+		}
 	}
 
-	return ob_get_clean();
+	$output .= '</div>';
+	$output .= '</div>';
+
+	return $output;
 }
 
 function novablocks_get_card_media_padding_top( $containerHeight ) {
@@ -1342,7 +1335,7 @@ function novablocks_get_card_media_padding_top( $containerHeight ) {
 	return ( $numerator * 100 / $denominator );
 }
 
-function novablocks_get_color_classes( $attributes ) {
+function novablocks_get_color_classes( array $attributes ): array {
 
 	$classes = [];
 
@@ -1361,7 +1354,7 @@ function novablocks_get_color_classes( $attributes ) {
 	return $classes;
 }
 
-function novablocks_get_space_and_sizing_css( $attributes, $advanced = false ) {
+function novablocks_get_space_and_sizing_css( array $attributes, $advanced = false ): array {
 
 	$spacing_props = novablocks_get_spacing_css( $attributes );
 
@@ -1371,31 +1364,29 @@ function novablocks_get_space_and_sizing_css( $attributes, $advanced = false ) {
 
 	return array_merge(
 		$spacing_props,
-		novablocks_get_sizing_css( $attributes ),
+		novablocks_get_sizing_css( $attributes )
 	);
 }
 
-function novablocks_get_media_composition_css( $attributes ) {
+function novablocks_get_media_composition_css( array $attributes ): array {
 	return [
 		'--nb-media-composition-gap: ' . $attributes['elementsDistance'] . 'px',
 	];
 }
 
-function novablocks_get_color_signal_css( $attributes ) {
+function novablocks_get_color_signal_css( array $attributes ): array {
 	return [
 		'--nb-emphasis-area: ' . $attributes['emphasisArea'],
 	];
 }
 
-;
-
-function novablocks_get_overlay_filter_css( $attributes ) {
+function novablocks_get_overlay_filter_css( array $attributes ): array {
 	return [
 		'--nb-overlay-filter-strength: ' . $attributes['overlayFilterStrength'] / 100,
 	];
 }
 
-function novablocks_get_sizing_css( $attributes ) {
+function novablocks_get_sizing_css( array $attributes ): array {
 	return [
 		'--nb-card-layout-gap-modifier: ' . $attributes['layoutGutter'] / 100,
 		'--nb-card-content-padding-multiplier: ' . $attributes['contentPadding'] / 100,
@@ -1405,18 +1396,18 @@ function novablocks_get_sizing_css( $attributes ) {
 		'--nb-card-media-object-fit: ' . ( $attributes['imageResizing'] === 'cropped' ? 'cover' : 'scale-down' ),
 		'--nb-minimum-container-height: ' . $attributes['minHeightFallback'] . 'vh',
 		'--nb-card-content-area-width: ' . $attributes['contentAreaWidth'] . '%',
-		'--nb-spacing-modifier: ' . $attributes['spacingModifier'] . ''
+		'--nb-spacing-modifier: ' . $attributes['spacingModifier']
 	];
 }
 
-function novablocks_get_collection_layout_css( $attributes ) {
+function novablocks_get_collection_layout_css( array $attributes ): array {
 	return [
 		'--nb-collection-columns-count: ' . $attributes['columns'],
 		'--nb-grid-spacing-modifier: ' . $attributes['gridGap'],
 	];
 }
 
-function novablocks_get_spacing_css( $attributes ) {
+function novablocks_get_spacing_css( array $attributes ): array {
 
 	$blockTopSpacing       = $attributes['blockTopSpacing'];
 	$blockBottomSpacing    = $attributes['blockBottomSpacing'];
@@ -1431,8 +1422,8 @@ function novablocks_get_spacing_css( $attributes ) {
 	];
 }
 
-function novablocks_get_spacing_advanced_css( $attributes ) {
-	$verticalAlignment = isset( $attributes['verticalAlignment'] ) ? $attributes['verticalAlignment'] : 'center';
+function novablocks_get_spacing_advanced_css( array $attributes ): array {
+	$verticalAlignment = $attributes['verticalAlignment'] ?? 'center';
 
 	$blockTopSpacing       = $attributes['blockTopSpacing'];
 	$blockBottomSpacing    = $attributes['blockBottomSpacing'];
@@ -1449,7 +1440,7 @@ function novablocks_get_spacing_advanced_css( $attributes ) {
 
 if ( ! function_exists( 'novablocks_get_collection_output' ) ) {
 
-	function novablocks_get_collection_output( $attributes, $content ) {
+	function novablocks_get_collection_output( array $attributes, $content ): string {
 
 		if ( 'content' === $attributes['sourceType'] ) {
 			$content = novablocks_get_posts_collection_cards_markup( $attributes );
@@ -1457,19 +1448,15 @@ if ( ! function_exists( 'novablocks_get_collection_output' ) ) {
 
 		$collection_header = novablocks_get_collection_header_output( $attributes );
 
+		if ( empty( $collection_header ) && empty( $content ) ) {
+			return '';
+		}
+
 		$layout_classes = [
 			'nb-collection__layout',
 			'nb-collection__layout--' . $attributes['layoutStyle'],
 			'nb-collection__layout--' . $attributes['carouselLayout'] . '-width',
 		];
-
-		if ( ! empty( $attributes['showCollectionSubtitle'] ) && ! empty( $attributes['subtitle'] ) ) {
-			$header_classes[] = 'nb-collection__header--has-description';
-		}
-
-		if ( empty( $collection_header ) && empty( $content ) ) {
-			return '';
-		}
 
 		$collection_classes = [
 			'nb-collection',
@@ -1477,32 +1464,31 @@ if ( ! function_exists( 'novablocks_get_collection_output' ) ) {
 			'nb-block-spacing-container'
 		];
 
-		ob_start(); ?>
+		$output = '<div class="' . esc_attr( join( ' ', $collection_classes ) ) .'">
 
-		<div class="<?php echo join( " ", $collection_classes ); ?>">
-
-			<?php if ( ! empty( $collection_header ) ) { ?>
-				<div class="nb-collection__header">
-					<div class="nb-collection__inner-container">
-						<?php echo $collection_header ?>
-					</div>
-				</div>
-			<?php } ?>
-
-			<div class="nb-collection__body">
-				<div class="<?php echo esc_attr( join( ' ', $layout_classes ) ); ?>">
-					<?php echo $content; ?>
+			<div class="nb-collection__header">
+				<div class="nb-collection__inner-container">
+					' . $collection_header . '
 				</div>
 			</div>
 
-		</div>
+			<div class="nb-collection__body">
+				<div class="' . esc_attr( join( ' ', $layout_classes ) ) . '">
+					' . $content . '
+				</div>
+			</div>
 
-		<?php return ob_get_clean();
+		</div>';
+
+		return $output;
 	}
 }
 
-function novablocks_render_scroll_indicator( $attributes ) {
-	$scrollIndicator        = ! empty( $attributes['scrollIndicatorBlock'] );
+function novablocks_render_scroll_indicator( array $attributes ) {
+	if ( empty( $attributes['scrollIndicatorBlock'] ) ) {
+		return;
+	}
+
 	$scrollIndicatorClasses = [ 'nb-scroll-indicator', ];
 	$blockHeight            =
 		( ! empty( $attributes['scrollingEffect'] ) && $attributes['scrollingEffect'] === 'doppler' )
@@ -1512,19 +1498,16 @@ function novablocks_render_scroll_indicator( $attributes ) {
 	if ( $blockHeight > 100 ) {
 		$scrollIndicatorClasses[] = 'nb-scroll-indicator--middle';
 	}
-
-	$scrollIndicatorClass = join( ' ', $scrollIndicatorClasses );
-
-	if ( $scrollIndicator ) { ?>
-		<div class="<?php echo $scrollIndicatorClass; ?>">
-			<svg width="160" height="50" viewBox="0 0 160 50" fill="none" xmlns="http://www.w3.org/2000/svg">
-				<path d="M0 50C55 50 45 0 80 0C115 0 105 50 160 50H0Z"/>
-			</svg>
-		</div>
-	<?php }
+	?>
+	<div class="<?php echo esc_attr( join( ' ', $scrollIndicatorClasses ) ); ?>">
+		<svg width="160" height="50" viewBox="0 0 160 50" fill="none" xmlns="http://www.w3.org/2000/svg">
+			<path d="M0 50C55 50 45 0 80 0C115 0 105 50 160 50H0Z"/>
+		</svg>
+	</div>
+	<?php
 }
 
-function novablocks_get_collection_header_output( $attributes ) {
+function novablocks_get_collection_header_output( array $attributes ): string {
 	$titleTag = 'h' . $attributes['collectionTitleLevel'];
 	$fontSizeModifier = 'has-' . $attributes['collectionTitleFontSize'] . '-font-size';
 
@@ -1543,7 +1526,7 @@ function novablocks_get_collection_header_output( $attributes ) {
 	return $output;
 }
 
-function novablocks_get_collection_card_media_markup( $media ) {
+function novablocks_get_collection_card_media_markup( array $media ): string {
 
 	$media_args = [
 		'type'  => 'image',
@@ -1553,22 +1536,28 @@ function novablocks_get_collection_card_media_markup( $media ) {
 	];
 	$media      = wp_parse_args( $media, $media_args );
 
-	ob_start();
+	$output = '';
 
 	if ( ! empty( $media['url'] ) ) {
 		if ( isset( $media['type'] ) && $media['type'] === 'video' ) {
-			echo '<video class="supernova-item__media" data-shape-modeling-target muted autoplay loop playsinline src="' . esc_url( $media['url'] ) . '"></video>';
+			$output .= '<video class="supernova-item__media" data-shape-modeling-target muted autoplay loop playsinline src="' . esc_url( $media['url'] ) . '"></video>';
 		} else {
-			echo '<img class="supernova-item__media" data-shape-modeling-target src="' . esc_url( novablocks_get_image_url( $media, 'novablocks_medium' ) ) . '" alt="' . esc_attr( $media['alt'] ) . '" />';
+			$output .= '<img class="supernova-item__media" data-shape-modeling-target src="' . esc_url( novablocks_get_image_url( $media, 'novablocks_medium' ) ) . '" alt="' . esc_attr( $media['alt'] ) . '" />';
 		}
 	} else { ?>
-		<div class="supernova-item__media supernova-item__media--placeholder" data-shape-modeling-target></div>
+		$output .= '<div class="supernova-item__media supernova-item__media--placeholder" data-shape-modeling-target></div>';
 	<?php }
 
-	return ob_get_clean();
+	return $output;
 }
 
-function novablocks_get_card_post_meta( $post, $attributes ) {
+/**
+ * @param       $post
+ * @param array $attributes
+ *
+ * @return string[]
+ */
+function novablocks_get_card_post_meta( $post, array $attributes ): array {
 	$primaryMeta           = '<span class="nb-card__meta--primary">' . novablocks_get_post_card_meta( $post, $attributes['primaryMetadata'] ) . '</span>';
 	$secondaryMeta         = '<span class="nb-card__meta--secondary">' . novablocks_get_post_card_meta( $post, $attributes['secondaryMetadata'] ) . '</span>';
 	$metaSeparator         = '<span class="nb-card__meta-separator"></span>';
@@ -1606,17 +1595,17 @@ function novablocks_get_card_post_meta( $post, $attributes ) {
 	];
 }
 
-function novablocks_build_articles_query( $attributes ) {
+function novablocks_build_articles_query( array $attributes ): array {
 	global $novablocks_rendered_posts_ids;
 
 	if ( ! $novablocks_rendered_posts_ids ) {
 		$novablocks_rendered_posts_ids = [];
 	}
 
-	$authors                 = isset( $attributes['authors'] ) ? $attributes['authors'] : [];
-	$categories              = isset( $attributes['categories'] ) ? $attributes['categories'] : [];
-	$tags                    = isset( $attributes['tags'] ) ? $attributes['tags'] : [];
-	$specific_posts          = isset( $attributes['specificPosts'] ) ? $attributes['specificPosts'] : [];
+	$authors                 = $attributes['authors'] ?? [];
+	$categories              = $attributes['categories'] ?? [];
+	$tags                    = $attributes['tags'] ?? [];
+	$specific_posts          = $attributes['specificPosts'] ?? [];
 	$posts_to_show           = isset( $attributes['postsToShow'] ) ? intval( $attributes['postsToShow'] ) : 3;
 	$manual_mode             = isset( $attributes['loadingMode'] ) && 'manual' === $attributes['loadingMode'];
 	$prevent_duplicate_posts = isset( $attributes['preventDuplicatePosts'] ) && $attributes['preventDuplicatePosts'];
@@ -1669,7 +1658,7 @@ function novablocks_array_map_terms_to_ids( $term ) {
 	return $term->term_id;
 }
 
-function novablocks_get_image_url( $image, $size ) {
+function novablocks_get_image_url( array $image, $size ): string {
 
 	if ( isset( $image['sizes'][ $size ]['url'] ) ) {
 		return $image['sizes'][ $size ]['url'];
@@ -1682,24 +1671,28 @@ function novablocks_get_image_url( $image, $size ) {
 	return '';
 }
 
-function novablocks_get_media_title( $media ) {
+/**
+ * @param array $media
+ *
+ * @return string
+ */
+function novablocks_get_media_title( array $media ): string {
+	if ( empty( $media['title'] ) ) {
+		return '';
+	}
 
-	if ( ! empty( $media['title'] ) ) {
+	if ( is_string( $media['title'] ) ) {
+		return $media['title'];
+	}
 
-		if ( is_string( $media['title'] ) ) {
-			return $media['title'];
-		}
-
-		if ( isset( $media['title']['rendered'] ) ) {
-			return wp_filter_nohtml_kses( $media['title']['rendered'] );
-		}
-
+	if ( isset( $media['title']['rendered'] ) ) {
+		return wp_filter_nohtml_kses( $media['title']['rendered'] );
 	}
 
 	return '';
 }
 
-function novablocks_the_media_title( $media, $before = '', $after = '', $echo = true ) {
+function novablocks_the_media_title( $media, $before = '', $after = '', $echo = true ): string {
 	$title = novablocks_get_media_title( $media );
 
 	if ( strlen( $title ) == 0 ) {
@@ -1715,7 +1708,7 @@ function novablocks_the_media_title( $media, $before = '', $after = '', $echo = 
 	return $title;
 }
 
-function novablocks_get_media_caption( $media ) {
+function novablocks_get_media_caption( $media ): string {
 
 	if ( ! empty( $media['caption'] ) ) {
 		return wp_kses_post( $media['caption'] );
@@ -1731,7 +1724,7 @@ function novablocks_the_media_caption( $media ) {
 
 add_filter( 'image_size_names_choose', 'novablocks_custom_image_sizes' );
 
-function novablocks_custom_image_sizes( $sizes ) {
+function novablocks_custom_image_sizes( array $sizes ): array {
 	return array_merge( $sizes, [
 		'novablocks_huge'   => esc_html__( 'Nova Blocks Huge', '__plugin_txtd' ),
 		'novablocks_large'  => esc_html__( 'Nova Blocks Large', '__plugin_txtd' ),
@@ -1788,7 +1781,7 @@ add_action( 'rest_api_init', 'novablocks_register_api_endpoints' );
  *
  * @return int
  */
-function novablocks_get_post_reading_time_in_minutes( $post, $wpm = 250 ) {
+function novablocks_get_post_reading_time_in_minutes( $post, int $wpm = 250 ): int {
 	$post = get_post( $post );
 
 	if ( ! ( $post instanceof WP_Post ) ) {
@@ -1818,7 +1811,7 @@ function novablocks_get_post_reading_time_in_minutes( $post, $wpm = 250 ) {
  *
  * @return int
  */
-function novablocks_get_reading_time_in_minutes( $content, $wpm = 250 ) {
+function novablocks_get_reading_time_in_minutes( string $content, int $wpm = 250 ): int {
 	// Calculate the time in seconds for the images in the content.
 	$images_time = 0;
 	if ( preg_match_all( '/<img\s[^>]+>/', $content, $matches ) ) {
@@ -1897,7 +1890,7 @@ add_action( 'wp_footer', 'novablocks_optimize_frontend_scripts_output', 19 );   
 add_action( 'login_footer', 'novablocks_optimize_frontend_scripts_output', 19 ); // The wp_print_footer_scripts() is hooked at 20.
 add_action( 'embed_footer', 'novablocks_optimize_frontend_scripts_output', 19 ); // The wp_print_footer_scripts() is hooked at 20.
 
-function novablocks_block_area_has_blocks( $slug ) {
+function novablocks_block_area_has_blocks( string $slug ): bool {
 	$posts = get_posts( [
 		'name'        => $slug,
 		'post_type'   => 'block_area',
@@ -1925,13 +1918,13 @@ function novablocks_block_area_has_blocks( $slug ) {
  * @param string $object_name Name of the variable that will contain the data.
  * @param array  $l10n        Array of data to localize.
  *
- * @return bool True on success, false on failure.
+ * @return string
  */
 
-function novablocks_get_localize_to_window_script( $object_name, $l10n ) {
+function novablocks_get_localize_to_window_script( string $object_name, array $l10n ): string {
 	$script = "window.$object_name = window.$object_name || parent.$object_name || {};\n";
 
-	foreach ( (array) $l10n as $key => $value ) {
+	foreach ( $l10n as $key => $value ) {
 		if ( is_scalar( $value ) ) {
 			$value = html_entity_decode( (string) $value, ENT_QUOTES, 'UTF-8' );
 		}
@@ -1942,7 +1935,7 @@ function novablocks_get_localize_to_window_script( $object_name, $l10n ) {
 	return $script;
 }
 
-function novablocks_get_color_signal_classes( $attributes, $outputSignal = false ) {
+function novablocks_get_color_signal_classes( array $attributes ): array {
 	$classes = [];
 
 	$classes[] = 'sm-palette-' . $attributes['palette'];
@@ -1955,7 +1948,7 @@ function novablocks_get_color_signal_classes( $attributes, $outputSignal = false
 	return $classes;
 }
 
-function novablocks_get_color_signal_data_attributes( $attributes ) {
+function novablocks_get_color_signal_data_attributes( array $attributes ): string {
 
 	$data_attributes = [
 		'data-palette="' . $attributes['palette'] . '"',
@@ -1967,11 +1960,11 @@ function novablocks_get_color_signal_data_attributes( $attributes ) {
 	return join( ' ', $data_attributes );
 }
 
-function novablocks_normalize_variation_value( $variation ) {
+function novablocks_normalize_variation_value( $variation ): int {
 	return ( $variation + 11 ) % 12 + 1;
 }
 
-function novablocks_get_content_palette_classes( $attributes ) {
+function novablocks_get_content_palette_classes( $attributes ): array {
 	$contentVariation = novablocks_get_content_variation( $attributes );
 
 	$classes = [
@@ -1986,7 +1979,7 @@ function novablocks_get_content_palette_classes( $attributes ) {
 	return $classes;
 }
 
-function novablocks_get_content_variation( $attributes ) {
+function novablocks_get_content_variation( $attributes ): int {
 	$palettes_output = get_option( 'sm_advanced_palette_output', '[]' );
 	$palettes        = json_decode( $palettes_output );
 
@@ -2018,7 +2011,7 @@ function novablocks_get_content_variation( $attributes ) {
 	return novablocks_normalize_variation_value( $contentSignalOptions[ $attributes['contentColorSignal'] ] - $offset );
 }
 
-function novablocks_get_content_style_class( $attributes ) {
+function novablocks_get_content_style_class( array $attributes ): string {
 	$contentStyle = 'moderate';
 
 	if ( ! empty( $attributes['contentStyle'] ) ) {
@@ -2032,7 +2025,7 @@ function novablocks_get_content_style_class( $attributes ) {
 	return 'content-is-' . $contentStyle;
 }
 
-function novablocks_get_customizer_link( $return_url = false, $extra_query_args = [] ) {
+function novablocks_get_customizer_link( $return_url = false, $extra_query_args = [] ): string {
 	global $wp;
 
 
@@ -2055,7 +2048,7 @@ function novablocks_get_customizer_link( $return_url = false, $extra_query_args 
 	return $link;
 }
 
-function novablocks_merge_attributes_from_array( $pathsArray ) {
+function novablocks_merge_attributes_from_array( array $pathsArray ): array {
 	$accumulator = [];
 
 	foreach ( $pathsArray as $path ) {
@@ -2066,26 +2059,27 @@ function novablocks_merge_attributes_from_array( $pathsArray ) {
 	return $accumulator;
 }
 
-function novablocks_get_grid_area_fallback_classnames( $attributes ) {
+function novablocks_get_grid_area_fallback_classnames( $attributes ): array {
+	if ( empty( $attributes['columns'] ) || $attributes['layoutStyle'] === 'parametric' ) {
+		return [];
+	}
+
 	$classes = [];
 
-	if ( ! empty( $attributes['columns'] ) && $attributes['layoutStyle'] !== 'parametric' ) {
-		$cardLayout = 'portrait';
+	$cardLayout = 'portrait';
+	if ( ! empty( $attributes['cardLayout'] )
+	     && in_array( $attributes['cardLayout'], [ 'horizontal', 'horizontal-reverse' ] ) ) {
 
-		if ( ! empty( $attributes['cardLayout'] )
-		     && in_array( $attributes['cardLayout'], [ 'horizontal', 'horizontal-reverse' ] ) ) {
-
-			$cardLayout = 'landscape';
-		}
-
-		$classes[] = 'nb-grid__area--' . $cardLayout;
-		$classes[] = novablocks_get_area_classname_by_width_ratio( 1 / $attributes['columns'] );
+		$cardLayout = 'landscape';
 	}
+
+	$classes[] = 'nb-grid__area--' . $cardLayout;
+	$classes[] = novablocks_get_area_classname_by_width_ratio( 1 / $attributes['columns'] );
 
 	return $classes;
 }
 
-function novablocks_get_area_classname_by_width_ratio( $ratio ) {
+function novablocks_get_area_classname_by_width_ratio( $ratio ): string {
 	if ( $ratio < 0.3 ) {
 		return 'nb-grid__area--width-xs';
 	}
@@ -2105,7 +2099,7 @@ function novablocks_get_area_classname_by_width_ratio( $ratio ) {
 	return 'nb-grid__area--width-full';
 }
 
-function novablocks_get_collection_card_markup( $media, $content, $attributes ) {
+function novablocks_get_collection_card_markup( $media, $content, array $attributes ): string {
 
 	// Make sure that the defaults are in place.
 	$attributes = wp_parse_args( $attributes, [
@@ -2184,7 +2178,7 @@ function novablocks_get_collection_card_markup( $media, $content, $attributes ) 
 	return ob_get_clean();
 }
 
-function novablocks_get_collection_card_markup_from_post( $post, $attributes ) {
+function novablocks_get_collection_card_markup_from_post( $post, array $attributes ): string {
 	$media_url = get_the_post_thumbnail_url( $post );
 	$media = novablocks_get_collection_card_media_markup( [
 		'type' => 'image',
@@ -2202,154 +2196,155 @@ function novablocks_get_collection_card_markup_from_post( $post, $attributes ) {
 	return novablocks_get_collection_card_markup( $media_markup, $content, $attributes );
 }
 
-function novablocks_get_collection_card_media_markup_wrapped( $media, $link = false ) {
-	ob_start();
+function novablocks_get_collection_card_media_markup_wrapped( $media, $link = false ): string {
+	$output = '';
 
 	if ( ! empty( $link ) ) {
-		echo '<a class="supernova-item__media-wrapper" href="' . esc_url( $link ) . '">';
+		$output .= '<a class="supernova-item__media-wrapper" href="' . esc_url( $link ) . '">';
 	} else {
-		echo '<div class="supernova-item__media-wrapper">';
-	} ?>
+		$output .= '<div class="supernova-item__media-wrapper">';
+	}
 
-		<div class="supernova-item__media-aspect-ratio">
+	$output .= '<div class="supernova-item__media-aspect-ratio">
 			<div class="novablocks-doppler__mask novablocks-doppler__wrapper">
-				<div class="supernova-item__media-doppler novablocks-doppler__target">
-					<?php echo $media; ?>
-				</div>
+				<div class="supernova-item__media-doppler novablocks-doppler__target"> ' . $media . '</div>
 			</div>
-		</div>
+		</div>';
 
-	<?php if ( ! empty( $link ) ) {
+	if ( ! empty( $link ) ) {
 		echo '</a>';
 	} else {
 		echo '</div>';
 	}
 
-	return ob_get_clean();
+	return $output;
 }
 
-function novablocks_get_card_contents( $attributes ) {
+function novablocks_get_card_contents( array $attributes ): string {
 
-	ob_start();
+	$output = '';
 
-	echo novablocks_get_card_item_meta( $attributes['metaAboveTitle'], $attributes );
-	echo novablocks_get_card_item_title( $attributes['title'], $attributes, $post );
-	echo novablocks_get_card_item_subtitle( $attributes['subtitle'], $attributes );
-	echo novablocks_get_card_item_meta( $attributes['metaBelowTitle'], $attributes );
-	echo novablocks_get_card_item_description( $attributes['description'], $attributes );
-	echo novablocks_get_card_item_buttons( [
+	$output .= novablocks_get_card_item_meta( $attributes['metaAboveTitle'], $attributes );
+	$output .= novablocks_get_card_item_title( $attributes['title'], $attributes );
+	$output .= novablocks_get_card_item_subtitle( $attributes['subtitle'], $attributes );
+	$output .= novablocks_get_card_item_meta( $attributes['metaBelowTitle'], $attributes );
+	$output .= novablocks_get_card_item_description( $attributes['description'], $attributes );
+	$output .= novablocks_get_card_item_buttons( [
 		[
 			'text' => $attributes['buttonText'],
 			'url'  => $attributes ['buttonUrl'],
 		],
 	], $attributes );
 
-	return ob_get_clean();
+	return $output;
 }
 
-function novablocks_get_card_item_meta( $metaValue, $attributes ) {
-	ob_start();
+function novablocks_get_card_item_meta( $metaValue, array $attributes ): string {
+	$metaValue = (string) $metaValue;
+	if ( empty( $attributes['showMeta'] ) || ! strlen( $metaValue ) ) {
+		return '';
+	}
 
-	if ( ! empty( $attributes['showMeta'] ) && ! empty( $metaValue ) ) { ?>
-		<p class="nb-card__meta is-style-meta">
-			<?php echo $metaValue; ?>
-		</p>
-	<?php }
-
-	return ob_get_clean();
+	return '<p class="nb-card__meta is-style-meta">' . $metaValue . '</p>';
 }
 
-function novablocks_get_card_item_title( $title, $attributes, $post ) {
+function novablocks_get_card_item_title( string $title, array $attributes, $post = null ): string {
+	// Bail if we don't have a title or we should not show it.
+	if ( empty( $title ) || empty( $attributes['showTitle'] ) ) {
+		return '';
+	}
+
 	$titleTag = 'h' . $attributes['cardTitleLevel'];
 	$fontSizeModifier = 'has-' . $attributes['cardTitleFontSize'] . '-font-size';
 
-	ob_start();
-
-	if ( ! empty( $title ) && ! empty( $attributes['showTitle'] ) ) {
-		echo '<' . $titleTag . ' class="nb-card__title ' . $fontSizeModifier . '">';
-		echo novablocks_get_card_item_link( get_permalink( $post ), $attributes, 'open' );
-		echo $title;
-		echo novablocks_get_card_item_link( get_permalink( $post ), $attributes, 'close' );
-		echo '</' . $titleTag . '>';
+	// Default to the current, global post if not provided.
+	if ( empty( $post ) ) {
+		$post = get_post();
 	}
 
-	return ob_get_clean();
+	$output = '<' . $titleTag . ' class="nb-card__title ' . $fontSizeModifier . '">';
+	$output .= novablocks_get_card_item_link( get_permalink( $post ), $attributes, 'open' );
+	$output .= $title;
+	$output .= novablocks_get_card_item_link( get_permalink( $post ), $attributes, 'close' );
+	$output .= '</' . $titleTag . '>';
+
+	return $output;
 }
 
-function novablocks_get_card_item_subtitle( $subtitle, $attributes ) {
+function novablocks_get_card_item_subtitle( string $subtitle, array $attributes ): string {
+	if ( empty( $subtitle ) || empty( $attributes['showSubtitle'] ) ) {
+		return '';
+	}
+
 	$subtitleTag = 'h' . ( ( int ) $attributes['cardTitleLevel'] + 1 );
 
-	ob_start();
+	return '<' . $subtitleTag . ' class="nb-card__subtitle">' . $subtitle . '</' . $subtitleTag . '>';
+}
 
-	if ( ! empty( $subtitle ) && ! empty( $attributes['showSubtitle'] ) ) {
-		echo '<' . $subtitleTag . ' class="nb-card__subtitle">';
-		echo $subtitle;
-		echo '</' . $subtitleTag . '>';
+function novablocks_get_card_item_description( string $description, array $attributes ): string {
+	if ( empty( $description ) || empty( $attributes['showDescription'] ) ) {
+		return '';
 	}
 
-	return ob_get_clean();
+	return '<p class="nb-card__description">' . $description . '</p>';
 }
 
-function novablocks_get_card_item_description( $description, $attributes ) {
-	ob_start();
+function novablocks_get_card_item_buttons( array $buttons, array $attributes ): string {
+	if ( empty( $attributes['showButtons'] ) || empty( $buttons ) ) {
+		return '';
+	}
 
-	if ( ! empty( $description ) && ! empty( $attributes['showDescription'] ) ) { ?>
-		<p class="nb-card__description">
-			<?php echo $description; ?>
-		</p>
-	<?php }
-
-	return ob_get_clean();
-}
-
-function novablocks_get_card_item_buttons( $buttons, $attributes ) {
-
-	$buttons_markup = '';
-
-	if ( ! empty( $buttons ) ) {
-		ob_start();
-
-		foreach ( $buttons as $button ) {
-			if ( ! empty ( $button['text'] ) ) { ?>
-				<div class="wp-block-button is-style-text">
-					<a class="wp-block-button__link" href="<?php echo esc_url( $button['url'] ); ?>">
-						<?php echo $button['text']; ?>
-					</a>
-				</div>
-			<?php }
+	$output = '';
+	foreach ( $buttons as $button ) {
+		if ( empty ( $button['text'] ) ) {
+			continue;
 		}
 
-		$buttons_markup = trim( ob_get_clean() );
+		$output .= '<div class="wp-block-button is-style-text">
+			<a class="wp-block-button__link" href="' . esc_url( $button['url'] ) . '">' . $button['text'] .'</a>
+		</div>';
 	}
 
-	ob_start();
-
-	if ( ! empty( $attributes['showButtons'] ) && ! empty( $buttons_markup ) ) { ?>
-		<div class="nb-card__buttons">
-			<?php echo $buttons_markup; ?>
-		</div>
-	<?php }
-
-	return ob_get_clean();
-}
-
-function novablocks_get_card_item_link( $url, $attributes, $tag_direction = false ) {
-	ob_start();
-
-	if ( ! empty( $attributes['sourceType'] ) && 'content' === $attributes['sourceType'] ) {
-		if ( ! $tag_direction ) { ?>
-			<a href="<?php echo esc_url( $url ); ?>" class="supernova-item__link"></a>
-		<?php } else if ( $tag_direction == 'open' ) { ?>
-			<a href="<?php echo esc_url( $url ); ?>" class="supernova-item__link">
-		<?php } else if ( $tag_direction == 'close' ) { ?>
-			</a>
-		<?php }
+	$output = trim( $output );
+	if ( empty( $output ) ) {
+		return '';
 	}
 
-	return ob_get_clean();
+	// Wrap the buttons.
+	return '<div class="nb-card__buttons">' . $output . '</div>';
 }
 
-function novablocks_get_signal_options_from_variation( $variation ) {
+/**
+ * @param string $url
+ * @param array  $attributes
+ * @param 'open'|'close'|false $tag_direction
+ *
+ * @return string
+ */
+function novablocks_get_card_item_link( string $url, array $attributes, $tag_direction = false ): string {
+	if ( empty( $attributes['sourceType'] ) || 'content' !== $attributes['sourceType'] ) {
+		return '';
+	}
+
+	$output = '';
+
+	if ( ! $tag_direction ) {
+		$output = '<a href="' . esc_url( $url ) . '" class="supernova-item__link"></a>';
+	} else if ( $tag_direction == 'open' ) {
+		$output = '<a href="' . esc_url( $url ) .'" class="supernova-item__link">';
+	} else if ( $tag_direction == 'close' ) {
+		$output = '</a>';
+	}
+
+	return $output;
+}
+
+/**
+ * @param $variation
+ *
+ * @return array
+ */
+function novablocks_get_signal_options_from_variation( $variation ): array {
 	$blockSignal = novablocks_get_signal_from_variation( $variation );
 
 	$variationOptions = [];
@@ -2369,7 +2364,12 @@ function novablocks_get_signal_options_from_variation( $variation ) {
 	return $variationOptions;
 }
 
-function novablocks_get_signal_from_variation( $variation ) {
+/**
+ * @param int $variation
+ *
+ * @return int
+ */
+function novablocks_get_signal_from_variation( int $variation ): int {
 
 	if ( $variation === 1 ) {
 		return 0;
@@ -2386,7 +2386,12 @@ function novablocks_get_signal_from_variation( $variation ) {
 	return 3;
 }
 
-function novablocks_get_variation_from_signal( $signal ) {
+/**
+ * @param int $signal
+ *
+ * @return int
+ */
+function novablocks_get_variation_from_signal( int $signal ): int {
 
 	if ( $signal === 1 ) {
 		return 3;
@@ -2403,10 +2408,10 @@ function novablocks_get_variation_from_signal( $signal ) {
 	return 1;
 }
 
-function novablocks_get_posts_collection_cards_markup( $attributes ) {
+function novablocks_get_posts_collection_cards_markup( array $attributes ): string {
 	global $novablocks_rendered_posts_ids;
 
-	ob_start();
+	$output = '';
 
 	$args  = novablocks_build_articles_query( $attributes );
 	$posts = get_posts( $args );
@@ -2414,13 +2419,13 @@ function novablocks_get_posts_collection_cards_markup( $attributes ) {
 	foreach ( $posts as $post ) {
 		array_push( $novablocks_rendered_posts_ids, $post->ID );
 		$card_markup = novablocks_get_collection_card_markup_from_post( $post, $attributes );
-		echo apply_filters( 'novablocks_get_collection_card_markup', $card_markup, $post, $attributes );
+		$output .= apply_filters( 'novablocks_get_collection_card_markup', $card_markup, $post, $attributes );
 	}
 
-	return ob_get_clean();
+	return $output;
 }
 
-function novablocks_show_card_contents( $attributes ) {
+function novablocks_show_card_contents( array $attributes ): bool {
 	return ! empty( $attributes['showMeta'] ) ||
 	       ! empty( $attributes['showTitle'] ) ||
 	       ! empty( $attributes['showSubtitle'] ) ||
@@ -2514,7 +2519,7 @@ function novablocks_get_post_card_meta( $post, $meta ) {
 	return '';
 }
 
-function novablocks_get_tag_name( $tag ) {
+function novablocks_get_tag_name( WP_Term $tag ): string {
 	return $tag->name;
 }
 
@@ -2542,7 +2547,7 @@ function novablocks_get_tag_name( $tag ) {
  * Food Menu..............Restaurants
  * FAQs...................Lists of questions and answers
  *
- * 
+ *
  * #BLOG
  * Posts..................Blog articles
  *
@@ -2811,12 +2816,12 @@ function novablocks_register_block_patterns() {
 							<!-- /wp:novablocks/supernova -->',
 			'categories'  => array( 'novablocks/location' )
 		)
-	);	
+	);
 
 
 
 	/*------------------------------------*\
-	  FEATURES 
+	  FEATURES
 	\*------------------------------------*/
 
 	register_block_pattern(
@@ -2838,7 +2843,7 @@ function novablocks_register_block_patterns() {
 
 
 	/*------------------------------------*\
-	  TEAM 
+	  TEAM
 	\*------------------------------------*/
 
 	register_block_pattern(
@@ -2887,7 +2892,7 @@ function novablocks_register_block_patterns() {
 
 
 	/*------------------------------------*\
-	  POSTS 
+	  POSTS
 	\*------------------------------------*/
 
 	register_block_pattern(
@@ -2904,7 +2909,7 @@ function novablocks_register_block_patterns() {
 							<!-- /wp:novablocks/supernova -->',
 			'categories'  => array( 'novablocks/posts' )
 		)
-	);	
+	);
 
 	register_block_pattern(
 		'novablocks/posts-2',
@@ -2923,7 +2928,7 @@ function novablocks_register_block_patterns() {
 			'categories'  => array( 'novablocks/posts' )
 		)
 	);
-	
+
 	register_block_pattern(
 		'novablocks/posts-3',
 		array(
@@ -2964,15 +2969,15 @@ function novablocks_register_block_patterns() {
 
 
 	/*------------------------------------*\
-	  TESTIMONIALS 
+	  TESTIMONIALS
 	\*------------------------------------*/
-	
+
 	register_block_pattern(
 		'novablocks/testimonials-1',
 		array(
 			'title'       => __( 'Testimonials 1', '__plugin_txtd' ),
 			'description' => _x( 'Three testimonials on one row.', 'Block pattern description', '__plugin_txtd' ),
-			'content'     => '<!-- wp:novablocks/supernova {"variation":"media-card","title":"Find out why our customers think it’s better with us","collectionTitleLevel":3,"level":3,"cardTitleLevel":4,"sourceType":"blocks","postsToShow":3,"showCollectionSubtitle":false,"showMedia":false,"showTitle":false,"showSubtitle":false,"showButtons":false,"showMeta":true,"contentPosition":"top center","layoutStyle":"classic","columns":3,"thumbnailAspectRatioString":"portrait","thumbnailAspectRatio":55,"imagePadding":50,"contentPadding":50,"blockTopSpacing":0,"contentAreaWidth":70,"layoutGutter":50} -->
+			'content'     => '<!-- wp:novablocks/supernova {"variation":"media-card","title":"Find out why our customers think it’s better with us","collectionTitleLevel":3,"level":3,"cardTitleLevel":4,"sourceType":"blocks","postsToShow":3,"showCollectionSubtitle":false,"showMedia":false,"showTitle":false,"showSubtitle":false,"showButtons":false,"showMeta":true,"contentPosition":"top center","layoutStyle":"classic","columns":3,"thumbnailAspectRatioString":"portrait","thumbnailAspectRatio":55,"imagePadding":50,"contentPadding":50,"blockTopSpacing":0,"contentAreaWidth":70,"layoutGutter":50} -->
 							<!-- wp:novablocks/supernova-item {"level":3,"description":"“I love helping other founders. Now I can write their first check and have a bigger stake in their success.”\u003cbr\u003eQuinn Slack · Sourcegraph","defaultsGenerated":true,"cardTitleLevel":4,"collectionTitleLevel":3,"sourceType":"blocks","postsToShow":3,"showCollectionSubtitle":false,"showMedia":false,"showTitle":false,"showSubtitle":false,"showButtons":false,"showMeta":true,"contentPosition":"top center","layoutStyle":"classic","columns":3,"thumbnailAspectRatioString":"portrait","thumbnailAspectRatio":55,"imagePadding":50,"contentPadding":50,"blockTopSpacing":0,"contentAreaWidth":70,"layoutGutter":50,"images":[{"sizes":{"thumbnail":{"height":150,"width":150,"url":"http://nova.local/wp-content/uploads/2021/10/lena-team-3-150x150.jpg","orientation":"landscape"},"medium":{"height":300,"width":239,"url":"http://nova.local/wp-content/uploads/2021/10/lena-team-3-239x300.jpg","orientation":"portrait"},"large":{"height":1024,"width":817,"url":"http://nova.local/wp-content/uploads/2021/10/lena-team-3-817x1024.jpg","orientation":"portrait"},"novablocks_large":{"height":1366,"width":1089,"url":"http://nova.local/wp-content/uploads/2021/10/lena-team-3-1089x1366.jpg","orientation":"portrait"},"novablocks_medium":{"height":1024,"width":817,"url":"http://nova.local/wp-content/uploads/2021/10/lena-team-3-817x1024.jpg","orientation":"portrait"},"novablocks_small":{"height":768,"width":612,"url":"http://nova.local/wp-content/uploads/2021/10/lena-team-3-612x768.jpg","orientation":"portrait"},"novablocks_tiny":{"height":480,"width":383,"url":"http://nova.local/wp-content/uploads/2021/10/lena-team-3-383x480.jpg","orientation":"portrait"},"full":{"url":"http://nova.local/wp-content/uploads/2021/10/lena-team-3.jpg","height":1708,"width":1362,"orientation":"portrait"}},"mime":"image/jpeg","type":"image","subtype":"jpeg","id":2541,"url":"http://nova.local/wp-content/uploads/2021/10/lena-team-3.jpg","alt":"","link":"http://nova.local/lena-team-3/","caption":"","description":""}],"stylePreset":"just-my-style","sizeContrast":40,"positionShift":30,"elementsDistance":40,"placementVariation":50} -->
 							<!-- wp:pullquote -->
 							<figure class="wp-block-pullquote has-normal-font-size"><blockquote><p><mark style="background-color:rgba(0, 0, 0, 0)" class="has-inline-color has-black-color">★★★★★</mark></p><p>“As a visual person, I couldn’t resist Pixelgrade’s design oriented products. Their <mark style="background-color:#abb8c3" class="has-inline-color">unique aesthetics</mark> make them really special and stand out from the crowd.”</p><cite>Linda Zadelaar, Architect from Netherlands</cite></blockquote></figure>
@@ -2981,7 +2986,7 @@ function novablocks_register_block_patterns() {
 
 							<!-- wp:novablocks/supernova-item {"level":3,"defaultsGenerated":true,"cardTitleLevel":4,"collectionTitleLevel":3,"sourceType":"blocks","postsToShow":3,"showCollectionSubtitle":false,"showMedia":false,"showTitle":false,"showSubtitle":false,"showButtons":false,"showMeta":true,"contentPosition":"top center","layoutStyle":"classic","columns":3,"thumbnailAspectRatioString":"portrait","thumbnailAspectRatio":55,"imagePadding":50,"contentPadding":50,"blockTopSpacing":0,"contentAreaWidth":70,"layoutGutter":50,"images":[{"sizes":{"thumbnail":{"height":150,"width":150,"url":"http://nova.local/wp-content/uploads/2021/10/lena-team-6-sm-150x150.jpg","orientation":"landscape"},"medium":{"height":300,"width":239,"url":"http://nova.local/wp-content/uploads/2021/10/lena-team-6-sm-239x300.jpg","orientation":"portrait"},"novablocks_small":{"height":768,"width":612,"url":"http://nova.local/wp-content/uploads/2021/10/lena-team-6-sm-612x768.jpg","orientation":"portrait"},"novablocks_tiny":{"height":480,"width":383,"url":"http://nova.local/wp-content/uploads/2021/10/lena-team-6-sm-383x480.jpg","orientation":"portrait"},"full":{"url":"http://nova.local/wp-content/uploads/2021/10/lena-team-6-sm.jpg","height":784,"width":625,"orientation":"portrait"}},"mime":"image/jpeg","type":"image","subtype":"jpeg","id":2544,"url":"http://nova.local/wp-content/uploads/2021/10/lena-team-6-sm.jpg","alt":"","link":"http://nova.local/lena-team-6-sm/","caption":"","description":""}],"stylePreset":"just-my-style","sizeContrast":20,"positionShift":20,"elementsDistance":0} -->
 							<!-- wp:pullquote -->
-							<figure class="wp-block-pullquote has-normal-font-size"><blockquote><p><mark style="background-color:rgba(0, 0, 0, 0)" class="has-inline-color has-black-color">★★★★★</mark></p><p>"The products are well built, beautiful, easy to use and look professional. The <mark style="background-color:#abb8c3" class="has-inline-color">editing mode</mark> is very nice, there are so many options to choose, you can change everything as you want.”</p><cite>Alexander Krziwanie, Designer from Germany</cite></blockquote></figure>
+							<figure class="wp-block-pullquote has-normal-font-size"><blockquote><p><mark style="background-color:rgba(0, 0, 0, 0)" class="has-inline-color has-black-color">★★★★★</mark></p><p>"The products are well built, beautiful, easy to use and look professional. The <mark style="background-color:#abb8c3" class="has-inline-color">editing mode</mark> is very nice, there are so many options to choose, you can change everything as you want.”</p><cite>Alexander Krziwanie, Designer from Germany</cite></blockquote></figure>
 							<!-- /wp:pullquote -->
 							<!-- /wp:novablocks/supernova-item -->
 
@@ -3009,7 +3014,7 @@ function novablocks_register_block_patterns() {
 							<!-- /wp:novablocks/supernova -->',
 			'categories'  => array( 'novablocks/testimonials' )
 		)
-	);	
+	);
 
 	register_block_pattern(
 		'novablocks/testimonials-3',
@@ -3047,7 +3052,7 @@ function novablocks_register_block_patterns() {
 							<!-- /wp:paragraph -->
 
 							<!-- wp:paragraph -->
-							<p class="has-normal-font-size"><strong>– <em>Celine‌ ‌Halioua, Sourcepoint</em></strong></p>
+							<p class="has-normal-font-size"><strong>– <em>Celine Halioua, Sourcepoint</em></strong></p>
 							<!-- /wp:paragraph -->
 							<!-- /wp:novablocks/supernova-item -->
 							<!-- /wp:novablocks/supernova -->',
