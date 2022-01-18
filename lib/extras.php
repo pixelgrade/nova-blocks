@@ -2221,9 +2221,9 @@ function novablocks_get_collection_card_media_markup_wrapped( $media, $link = fa
 		</div>';
 
 	if ( ! empty( $link ) ) {
-		echo '</a>';
+		$output .= '</a>';
 	} else {
-		echo '</div>';
+		$output .= '</div>';
 	}
 
 	return $output;
