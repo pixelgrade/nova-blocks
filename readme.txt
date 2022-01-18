@@ -1,7 +1,7 @@
 === Nova Blocks by Pixelgrade ===
 Contributors: pixelgrade, vlad.olaru, babbardel, razvanonofrei, gorby31
 Tags: Blocks, editor, gutenberg, gutenberg blocks, page builder, block enabled, page building, block
-Requires at least: 5.5.0
+Requires at least: 5.8.0
 Tested up to: 5.8.3
 Stable tag: 1.13.3
 Requires PHP: 7.1
