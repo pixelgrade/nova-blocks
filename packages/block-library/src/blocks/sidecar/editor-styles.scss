@@ -1,9 +1,5 @@
 @import 'scss/mixins';
 
-.is-sidebar-opened {
-  --inspector-controls-width: 280px;
-}
-
 .block-editor-block-list__layout.is-root-container {
 
   > :is(.alignleft, [data-align="left"]),
@@ -23,7 +19,6 @@
 }
 
 .block-editor-block-list__layout.is-root-container {
-  --editor-full: calc((100vw - var(--theme-content-width-wide) - 2 * var(--theme-wrapper-sides-spacing) - var(--inspector-controls-width, 0px)) * 0.5);
 
   // If is Widget Editor,
   // alter --wds and --wde,
@@ -32,6 +27,11 @@
     --nb-sidecar-sidebar-left-width: 12.5%;
     --nb-sidecar-sidebar-right-width: 12.5%;
   }
+}
+
+// disable grid layout inside customizer sidebar
+.customize-control .is-root-container[class] {
+  display: block;
 }
 
 // Overwrite default focus block style
@@ -51,14 +51,4 @@
 
 .nb-sidecar--sticky-sidebar.nb-sidecar--sidebar-ready .nb-sidecar-area--sidebar > :last-child {
   position: static;
-}
-
-
-// This will apply only on new Widget Editor,
-// available in WordPress 5.8
-.interface-interface-skeleton__secondary-sidebar + .interface-interface-skeleton__content {
-
-  .edit-widgets-main-block-list {
-    --inspector-controls-width: 175px;
-  }
 }
