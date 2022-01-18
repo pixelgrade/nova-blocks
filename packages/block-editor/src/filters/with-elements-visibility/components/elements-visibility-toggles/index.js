@@ -17,6 +17,8 @@ const ElementsVisibilityToggles = ( props ) => {
   } = props;
 
   const {
+    align,
+    columns,
     cardLayout,
     layoutStyle,
     postsToShow,
@@ -30,9 +32,10 @@ const ElementsVisibilityToggles = ( props ) => {
 
   // Card is stacked when cardLayout has been set to stacked.
   const CARD_IS_STACKED = cardLayout === 'stacked';
+
   // A block is considered hero when cardLayout is stacked,
   // and the postsToShow is equal with 1.
-  const IS_HERO = CARD_IS_STACKED && postsToShow === 1;
+  const IS_HERO = cardLayout === 'stacked' && columns === 1 && align === 'full';
 
   const blockToggles = [];
 
