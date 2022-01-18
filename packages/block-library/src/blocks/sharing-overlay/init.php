@@ -28,14 +28,14 @@ if ( ! function_exists( 'novablocks_render_sharing_overlay_block' ) ) {
 		$attributes = novablocks_get_attributes_with_defaults( $attributes, $attributes_config );
 		$data_attributes_array = array_map( 'novablocks_camel_case_to_kebab_case', array_keys( $attributes ) );
 
-		$color_data = array(
+		$color_data = [
 			'palette',
 			'palette-variation',
 			'color-signal',
 			'content-palette-variation',
 			'content-color-signal',
 			'use-source-color-as-reference',
-		);
+		];
 
 		$data_attributes = novablocks_get_data_attributes( $data_attributes_array, $attributes, $color_data );
 		$color_data_attributes = novablocks_get_data_attributes( $color_data, $attributes );
