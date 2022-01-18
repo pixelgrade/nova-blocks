@@ -22,3 +22,5 @@ wp.novaBlocks = new novaBlocks();
 import "./blocks/core/group";
 import "./blocks/core/list";
 import "./blocks/core/separator";
+
+import "./recover-blocks-plugin";
