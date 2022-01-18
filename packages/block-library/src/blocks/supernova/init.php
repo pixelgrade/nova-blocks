@@ -37,6 +37,13 @@ if ( ! function_exists( 'novablocks_render_supernova_block' ) ) {
 		$attributes            = novablocks_get_attributes_with_defaults( $attributes, $attributes_config );
 		$data_attributes_array = array_map( 'novablocks_camel_case_to_kebab_case', array_keys( $attributes ) );
 		$blacklist             = [ 'position-indicators' ];
+
+		if ( $attributes['columns'] === 1 &&
+			 $attributes['cardLayout'] === 'stacked' &&
+			 $attributes['layoutStyle'] === 'carousel' ) {
+			$blacklist = [];
+		}
+
 		$data_attributes       = novablocks_get_data_attributes( $data_attributes_array, $attributes, $blacklist );
 
 		$align = preg_split( '/\b\s+/', $attributes['contentPosition'] );
