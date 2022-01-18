@@ -60,7 +60,7 @@ if ( ! function_exists( 'novablocks_render_supernova_block' ) ) {
 			novablocks_get_color_signal_css( $attributes ),
 			novablocks_get_overlay_filter_css( $attributes ),
 			novablocks_get_space_and_sizing_css( $attributes ),
-			novablocks_get_collection_layout_css( $attributes ),
+			novablocks_get_collection_layout_css( $attributes )
 		);
 
 		ob_start(); ?>

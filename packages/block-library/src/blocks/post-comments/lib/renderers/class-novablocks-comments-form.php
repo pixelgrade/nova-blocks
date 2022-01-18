@@ -47,7 +47,7 @@ if ( ! class_exists( 'NovaBlocks_Comments_Form' ) ) {
 		 * @param WP_Post|int|null $post Optional. The post who's comments to render. Defaults to the current post.
 		 * @param array            $args Optional. The arguments to consider when rendering.
 		 */
-		public function __construct( $post = null, $args = [] ) {
+		public function __construct( $post = null, array $args = [] ) {
 			$this->post = get_post( $post, OBJECT );
 
 			// Make sure defaults are in place.
@@ -119,7 +119,7 @@ if ( ! class_exists( 'NovaBlocks_Comments_Form' ) ) {
 		 *
 		 * @return string
 		 */
-		public function render( $args = [] ) {
+		public function render( array $args = [] ): string {
 			// Render nothing without a proper post.
 			if ( empty( $this->post ) ) {
 				return '';
@@ -198,7 +198,7 @@ if ( ! class_exists( 'NovaBlocks_Comments_Form' ) ) {
 		 *
 		 * @return bool
 		 */
-		protected function localize_form_args_for_reply( $args ) {
+		protected function localize_form_args_for_reply( array $args ): bool {
 
 			return wp_add_inline_script( 'comment-reply',
 				novablocks_get_localize_to_window_script( 'addComment',
@@ -216,7 +216,7 @@ if ( ! class_exists( 'NovaBlocks_Comments_Form' ) ) {
 		 *                    You can customize the data attributes of the button, placeholder text, etc.
 		 *                    By default, the comment form instance args will be used.
 		 */
-		public function the_form_button( $args = [] ) {
+		public function the_form_button( array $args = [] ) {
 			// Render nothing without a proper post.
 			if ( empty( $this->post ) ) {
 				return;
@@ -234,12 +234,12 @@ if ( ! class_exists( 'NovaBlocks_Comments_Form' ) ) {
 
 			/** Replicate the same data attributes used for comment reply links - @see get_comment_reply_link() */
 			$data_attributes = [
-				'commentid'      => isset( $args['commentid'] ) ? $args['commentid'] : '0',
+				'commentid'      => $args['commentid'] ?? '0',
 				'postid'         => $this->post->ID,
 				// By default, we will move the form after the fake form move anchor.
-				'belowelement'   => isset( $args['belowelement'] ) ? $args['belowelement'] : $moveAnchorId,
+				'belowelement'   => $args['belowelement'] ?? $moveAnchorId,
 				// By default we will use the #respond ID.
-				'respondelement' => isset( $args['respondelement'] ) ? $args['respondelement'] : 'respond',
+				'respondelement' => $args['respondelement'] ?? 'respond',
 
 				'replyto' => $args['replyToText'],
 			];
@@ -267,7 +267,7 @@ if ( ! class_exists( 'NovaBlocks_Comments_Form' ) ) {
 
 			$data_attributes_string = '';
 			foreach ( $data_attributes as $name => $value ) {
-				$data_attributes_string .= " data-${name}=\"" . $value . '"';
+				$data_attributes_string .= " data-$name=\"" . $value . '"';
 			}
 			$data_attributes_string = trim( $data_attributes_string );
 
@@ -317,11 +317,11 @@ if ( ! class_exists( 'NovaBlocks_Comments_Form' ) ) {
 		 *
 		 * @return array
 		 */
-		protected function parse_args( $args ) {
+		protected function parse_args( array $args ): array {
 			return wp_parse_args( $args, $this->args );
 		}
 
-		public function adjust_comment_form_default_fields( $fields ) {
+		public function adjust_comment_form_default_fields( array $fields ): array {
 			$attributes = $this->args;
 
 			$commenter = wp_get_current_commenter();
@@ -583,10 +583,10 @@ if ( ! class_exists( 'NovaBlocks_Comments_Form' ) ) {
 			$defaults['cancel_reply_before'] = '';
 			$defaults['cancel_reply_after']  = '';
 
-			$defaults['cancel_reply_link'] = $args['cancelReplyLabel'] ? $args['cancelReplyLabel'] : esc_html__( 'Cancel reply', '__plugin_txtd' );
+			$defaults['cancel_reply_link'] = $args['cancelReplyLabel'] ?: esc_html__( 'Cancel reply', '__plugin_txtd' );
 
 			// Change the submit button
-			$defaults['label_submit']  = $args['submitLabel'] ? $args['submitLabel'] : esc_html__( 'Add this comment', '__plugin_txtd' );
+			$defaults['label_submit']  = $args['submitLabel'] ?: esc_html__( 'Add this comment', '__plugin_txtd' );
 			$defaults['id_submit']     = 'comment-form-submit';
 			$defaults['submit_button'] = '<button name="%1$s" type="submit" id="%2$s" class="%3$s">%4$s</button>';
 

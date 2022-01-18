@@ -10,7 +10,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 require_once dirname( __FILE__ ) . '/extras.php';
 
-function novablocks_get_header_attributes() {
+function novablocks_get_header_attributes(): array {
 
 	return novablocks_merge_attributes_from_array( [
 		'packages/block-library/src/blocks/header/attributes.json',
@@ -30,7 +30,7 @@ if ( ! function_exists( 'novablocks_render_header_block' ) ) {
 	 * @return string
 	 */
 
-	function novablocks_render_header_block( $attributes, $content ) {
+	function novablocks_render_header_block( array $attributes, string $content ): string {
 		global $novablocks_responsive_navigation_outputted;
 
 		ob_start();
@@ -109,11 +109,11 @@ if ( ! function_exists( 'novablocks_render_header_block' ) ) {
 			if ( ! header_block_updated() ) {
 				$content = do_blocks( $header_row_markup_start . $content . $header_row_markup_end );
 			}
-			echo $content;
-			?>
 
-			<?php if ( $header_is_simple ) {
-				echo get_reading_bar_markup();
+			echo $content;
+
+			if ( $header_is_simple ) {
+				echo render_reading_bar();
 			} ?>
 		</header>
 
@@ -140,17 +140,14 @@ if ( ! function_exists( 'novablocks_render_header_block' ) ) {
 
 				// On articles always show primary row,
 				// reading bar and reading progress.
-				if ( is_single() && ! is_attachment() ) { ?>
-
-					<?php
+				if ( is_single() && ! is_attachment() ) {
 					echo render_block( $primary_row_block );
-					echo get_reading_bar_markup();
-					?>
-				<?php } ?>
+					echo render_reading_bar();
+					} ?>
 			</div>
-		<?php } ?>
+		<?php }
 
-		<?php do_action( 'novablocks_header:after' );
+		do_action( 'novablocks_header:after' );
 
 		return ob_get_clean();
 	}

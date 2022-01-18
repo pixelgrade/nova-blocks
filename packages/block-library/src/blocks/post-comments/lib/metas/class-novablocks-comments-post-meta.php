@@ -75,7 +75,7 @@ if ( ! class_exists( 'NovaBlocks_Comments_Post_Meta' ) ) {
 		 *
 		 * @param WP_Post $post
 		 */
-		public function posts_discussion_metabox_fields( $post ) {
+		public function posts_discussion_metabox_fields( WP_Post $post ) {
 			$conversation_starter_content = get_post_meta( $post->ID, 'nb_conversation_starter_content', true );
 			$conversation_starter_subtitle = get_post_meta( $post->ID, 'nb_conversation_starter_subtitle', true );
 			$conversation_starter_user_ID = get_post_meta( $post->ID, 'nb_conversation_starter_user_id', true );

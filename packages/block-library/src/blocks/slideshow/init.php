@@ -8,20 +8,20 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-function novablocks_get_slideshow_attributes() {
+function novablocks_get_slideshow_attributes(): array {
 
 	return novablocks_merge_attributes_from_array( [
 		'packages/block-library/src/blocks/slideshow/attributes.json',
 
-		"packages/color-signal/src/attributes.json",
-		"packages/color-signal/src/attributes-alt.json",
-		"packages/scrolling-effect/src/attributes.json",
-		"packages/scrolling-effect/src/attributes-alt.json",
+		'packages/color-signal/src/attributes.json',
+		'packages/color-signal/src/attributes-alt.json',
+		'packages/scrolling-effect/src/attributes.json',
+		'packages/scrolling-effect/src/attributes-alt.json',
 
 		'packages/block-editor/src/filters/with-content-position-matrix/attributes.json',
-		"packages/block-editor/src/filters/with-overlay-filter/attributes.json",
-		"packages/block-editor/src/filters/with-space-and-sizing/attributes.json",
-		"packages/block-editor/src/filters/with-elements-visibility/attributes.json",
+		'packages/block-editor/src/filters/with-overlay-filter/attributes.json',
+		'packages/block-editor/src/filters/with-space-and-sizing/attributes.json',
+		'packages/block-editor/src/filters/with-elements-visibility/attributes.json',
 	] );
 
 }
@@ -100,8 +100,7 @@ if ( ! function_exists( 'novablocks_render_slideshow_block' ) ) {
 
 					$slideClasses = [
 						'novablocks-slideshow__slide',
-					];
-					?>
+					]; ?>
 
 					<div class="<?php echo esc_attr( join( ' ', $slideClasses ) ); ?>">
 						<div class="novablocks-slideshow__slide-wrap">

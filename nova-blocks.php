@@ -38,7 +38,7 @@ if ( ! defined( 'ABSPATH' ) ) {
  * @access private
  *
  */
-function novablocks_get_plugin_path() {
+function novablocks_get_plugin_path(): string {
 	static $novablocks_plugin_path;
 
 	if ( empty( $novablocks_plugin_path ) ) {
@@ -57,7 +57,7 @@ function novablocks_get_plugin_path() {
  * @access private
  *
  */
-function novablocks_get_plugin_url() {
+function novablocks_get_plugin_url(): string {
 	static $novablocks_plugin_url;
 
 	if ( empty( $novablocks_plugin_url ) ) {

@@ -37,10 +37,10 @@ if ( ! class_exists( 'NovaBlocks_Comments_Starter' ) ) {
 		/**
 		 * Instantiate a comments (conversation) starter renderer.
 		 *
-		 * @param WP_Post|int|null $post    Optional. The post who's comments header to render. Defaults to the current post.
-		 * @param array            $args    Optional. The arguments to consider when rendering.
+		 * @param WP_Post|int|null $post Optional. The post who's comments header to render. Defaults to the current post.
+		 * @param array            $args Optional. The arguments to consider when rendering.
 		 */
-		public function __construct( $post = null, $args = [] ) {
+		public function __construct( $post = null, array $args = [] ) {
 			$this->post = get_post( $post, OBJECT );
 
 			// Make sure defaults are in place.
@@ -52,11 +52,11 @@ if ( ! class_exists( 'NovaBlocks_Comments_Starter' ) ) {
 		/**
 		 * Entry point to render the comments header.
 		 *
-		 * @param array  $args    Optional.
+		 * @param array $args Optional.
 		 *
 		 * @return string
 		 */
-		public function render( $args = [] ) {
+		public function render( array $args = [] ): string {
 			// Render nothing without a proper post.
 			if ( empty( $this->post ) ) {
 				return '';
@@ -148,10 +148,8 @@ if ( ! class_exists( 'NovaBlocks_Comments_Starter' ) ) {
 		 *
 		 * @return array
 		 */
-		protected function parse_args( $args ) {
-			$args = wp_parse_args( $args, $this->args );
-
-			return $args;
+		protected function parse_args( array $args ): array {
+			return wp_parse_args( $args, $this->args );
 		}
 	}
 }

@@ -66,7 +66,7 @@ if ( ! class_exists( 'NovaBlocks_Comments_Highlight' ) ) {
 		 *
 		 * @return string[]
 		 */
-		public function adjust_comment_wrapper_classes( $classes, $comment ) {
+		public function adjust_comment_wrapper_classes( array $classes, WP_Comment $comment ): array {
 			if ( $this->is_comment_highlighted( $comment->comment_ID ) ) {
 				$classes[] = 'comment-highlighted';
 			}
@@ -79,7 +79,7 @@ if ( ! class_exists( 'NovaBlocks_Comments_Highlight' ) ) {
 		 *
 		 * @param WP_Comment $comment Comment to display.
 		 */
-		public function output_highlighters_list( $comment ) {
+		public function output_highlighters_list( WP_Comment $comment ) {
 			$highlighters = $this->get_users_who_highlighted_comment( $comment->comment_ID );
 			if ( ! empty( $highlighters ) ) { ?>
 
@@ -127,7 +127,7 @@ if ( ! class_exists( 'NovaBlocks_Comments_Highlight' ) ) {
 		 *
 		 * @return string[]
 		 */
-		public function add_extra_meta_actions( $menu_items, $comment ) {
+		public function add_extra_meta_actions( array $menu_items, WP_Comment $comment ): array {
 			// For regular users and non-logged in visitors, we will not display highlighting options.
 			if ( ! current_user_can( 'moderate_comments' ) ) {
 				return $menu_items;
@@ -136,14 +136,12 @@ if ( ! class_exists( 'NovaBlocks_Comments_Highlight' ) ) {
 			$data_comment_id = ' data-comment_id=' . esc_attr( $comment->comment_ID );
 
 			// Put the menu item at the top of the list.
-			$menu_items = [
-				              'toggle_highlight' => "<a class='comment-dropdown-item toggle-comment-highlight' href='#' " . $data_comment_id .
-				                                    " data-nonce='" . wp_create_nonce( "toggle_highlight_comment" ) .
-				                                    "' title='" . esc_html__( 'Toggle your highlight of this comment', '__plugin_txtd' ) . "'>" .
-				                                    esc_html__( 'Toggle your highlight', '__plugin_txtd' ) . "</a>",
-			              ] + $menu_items;
-
-			return $menu_items;
+			return [
+	              'toggle_highlight' => "<a class='comment-dropdown-item toggle-comment-highlight' href='#' " . $data_comment_id .
+	                                    " data-nonce='" . wp_create_nonce( 'toggle_highlight_comment' ) .
+	                                    "' title='" . esc_html__( 'Toggle your highlight of this comment', '__plugin_txtd' ) . "'>" .
+	                                    esc_html__( 'Toggle your highlight', '__plugin_txtd' ) . '</a>',
+              ] + $menu_items;
 		}
 
 		/**
@@ -151,7 +149,7 @@ if ( ! class_exists( 'NovaBlocks_Comments_Highlight' ) ) {
 		 *
 		 * @param int $comment_id
 		 */
-		public function save_comment_meta_data( $comment_id ) {
+		public function save_comment_meta_data( int $comment_id ) {
 			if ( empty( $_POST['nb_comment_highlighted_by'] ) ) {
 				$new_value = [];
 			} else {
@@ -177,7 +175,7 @@ if ( ! class_exists( 'NovaBlocks_Comments_Highlight' ) ) {
 		 *
 		 * @param WP_Comment $comment
 		 */
-		public function comment_meta_box_fields( $comment ) {
+		public function comment_meta_box_fields( WP_Comment $comment ) {
 			$comment_highlighted_by = $this->get_users_who_highlighted_comment( $comment->comment_ID );
 			?>
 

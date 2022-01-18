@@ -64,7 +64,7 @@ class NovaBlocks_OpenHours_Helper {
 		// Create the initial array containing all the days of the week
 		if ( ! $compress_hours && ! $hide_closed_days ) {
 			for ( $i = 1; $i <= 7; $i ++ ) {
-				$dow              = date( $day_format, strtotime( "Sunday +{$i} days" ) );
+				$dow              = date( $day_format, strtotime( "Sunday +$i days" ) );
 				$schedule[ $dow ] = $closed_label;
 			}
 		}
@@ -86,7 +86,7 @@ class NovaBlocks_OpenHours_Helper {
 					$end   = $this->_parse_hours( preg_replace( '/^\+/', '', $timeframe['open'][0]['end'] ), $hours_format );
 
 
-					$day_key = date( $day_format, strtotime( "Sunday +{$day} days" ) );
+					$day_key = date( $day_format, strtotime( "Sunday +$day days" ) );
 					// Add the open time interval
 					switch ( $day ) {
 						case 1:
@@ -121,9 +121,8 @@ class NovaBlocks_OpenHours_Helper {
 	 */
 	public function _parse_hours( $hour, $format = null ) {
 		$timestamp = strtotime( $hour );
-		$date      = gmdate( $format, $timestamp );
 
-		return $date;
+		return gmdate( $format, $timestamp );
 	}
 
 	/**
@@ -133,12 +132,12 @@ class NovaBlocks_OpenHours_Helper {
 	 * Returns the time for a specific filter
 	 */
 	public function get_shortcode_time( $attributes, $filter = null, $time_format = 'g:i A' ) {
-		$dw = date( "N", current_time( 'timestamp' ) );
+		$dw = date( 'N', current_time( 'timestamp' ) );
 
 		// call the is_open function
 		$this->is_open( $attributes );
 
-		$next_day        = date( "N", current_time( 'timestamp' ) + 24 * 3600 );
+		$next_day        = date( 'N', current_time( 'timestamp' ) + 24 * 3600 );
 		$overview_option = $attributes['parsedText'];
 
 		if ( ! $overview_option ) {
@@ -153,7 +152,7 @@ class NovaBlocks_OpenHours_Helper {
 				$response = current_time( $time_format );
 				break;
 			case 'today':
-				$response = ucfirst( date_i18n( 'l', strtotime( "Sunday + {$dw} days" ) ) );
+				$response = ucfirst( date_i18n( 'l', strtotime( "Sunday + $dw days" ) ) );
 				break;
 			case 'today-opening-time':
 				$today_interval = $this->_get_interval( $schedule, $this->current_day );
@@ -333,7 +332,7 @@ class NovaBlocks_OpenHours_Helper {
 
 		if ( ! empty ( $non_consecutive_days ) ) {
 			foreach ( $non_consecutive_days as $ncd ) {
-				$parsed_day              = date( $day_format, strtotime( "Sunday +{$ncd} days" ) );
+				$parsed_day              = date( $day_format, strtotime( "Sunday +$ncd days" ) );
 				$response[ $parsed_day ] = $start . ' - ' . $end;
 			}
 
@@ -361,7 +360,7 @@ class NovaBlocks_OpenHours_Helper {
 			$i        = 0;
 
 			foreach ( $closed_days as $closed_day ) {
-				$parsed_day = date( $day_format, strtotime( "Sunday +{$closed_day} days" ) );
+				$parsed_day = date( $day_format, strtotime( "Sunday +$closed_day days" ) );
 				if ( ++ $i !== $num_days ) {
 					$key .= $parsed_day . ', ';
 				} else {
@@ -433,10 +432,12 @@ class NovaBlocks_OpenHours_Helper {
 	}
 
 	/**
-	 * @param $today
+	 * Gets the next open day.
 	 *
-	 * @return bool|mixed
-	 * Gets the next open day
+	 * @param $today
+	 * @param $attributes
+	 *
+	 * @return array
 	 */
 	public function get_next_open_day( $today, $attributes ) {
 		$today    = (int) $today;
