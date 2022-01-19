@@ -13,7 +13,8 @@ import {
 } from '@wordpress/components';
 
 const ToggleGroup = ( props ) => {
-	const { toggles, onChange } = props;
+	const { toggles } = props;
+  const onChange = typeof props.onChange === 'function' ? props.onChange : () => {};
 	const [ refMap ] = useState( () => new WeakMap() );
 
 	const enabledToggles = toggles.filter( toggle => !! toggle.value );
@@ -48,7 +49,13 @@ const ToggleGroup = ( props ) => {
 										  <ToggleControl
 											  label={ item.label }
 											  checked={ !! item.value }
-											  onChange={ ( value ) => { onChange( { [item.attribute]: value } ) } }
+                        onChange={ ( value ) => {
+                          if ( typeof item.onChange === 'function' ) {
+                            item.onChange( value );
+                          } else {
+                            onChange( value );
+                          }
+                        } }
 										  />
 									  </div>
 								  </div>
@@ -69,7 +76,13 @@ const ToggleGroup = ( props ) => {
 											  <ToggleControl
 												  label={ item.label }
 												  checked={ !! item.value }
-												  onChange={ ( value ) => { onChange( { [item.attribute]: value } ) } }
+												  onChange={ ( value ) => {
+                            if ( typeof item.onChange === 'function' ) {
+                              item.onChange( value );
+                            } else {
+                              onChange( value );
+                            }
+                          } }
 											  />
 										  </div>
 									  </div>

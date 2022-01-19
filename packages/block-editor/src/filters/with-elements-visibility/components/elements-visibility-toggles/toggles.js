@@ -46,7 +46,8 @@ const contentToggles = [
 const heroToggles = [
   {
     label: __( 'Position Indicators', '__plugin_txtd' ),
-    attribute: 'positionIndicators'
+    attribute: 'novablocks_hero_position_indicators',
+    type: 'meta'
   }, {
     label: __( 'Scroll Indicator', '__plugin_txtd' ),
     attribute: 'scrollIndicatorBlock'

@@ -31,12 +31,6 @@
 		"type": "boolean",
 		"default": false
 	},
-	"positionIndicators": {
-		"type": "boolean",
-		"source": "meta",
-		"meta": "novablocks_hero_position_indicators",
-		"default": true
-	},
 	"scrollIndicatorBlock": {
 		"type": "boolean",
 		"default": false
