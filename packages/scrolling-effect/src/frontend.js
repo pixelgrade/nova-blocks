@@ -71,7 +71,7 @@ $( function() {
 
 		const $background = $container.find( '.novablocks-doppler__target' );
 
-		$container.data( 'parallax', $background );
+		$container.data( 'target', $background );
 
     function parallaxUpdateState() {
 			const newConfig = Object.assign( {}, config, getConfig( container ) );
@@ -103,8 +103,6 @@ $( function() {
         return;
       }
 
-      const $background = $container.find( '.novablocks-doppler__target' );
-
       const state = $container.data( 'state' );
       const config = $container.data( 'config' );
       const cfg = Object.assign( {}, state, config );
@@ -112,10 +110,16 @@ $( function() {
       const props = getProps( cfg, attributes, fixed );
       const styles = getStylesFromProps( props );
 
-      $background.css( styles );
+      $container.data( 'styles', styles );
     } );
 
-		requestAnimationFrame( parallaxUpdateLoop );
+    $blocks.each( function( i, container ) {
+      const $container = $( container );
+      const $background = $container.data( 'target' );
+      $background.css( $container.data( 'styles' ) );
+    } );
+
+    requestAnimationFrame( parallaxUpdateLoop );
 	}
 
 	requestAnimationFrame( parallaxUpdateLoop );
