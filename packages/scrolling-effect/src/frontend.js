@@ -30,6 +30,19 @@ const getConfig = ( container ) => {
   }
 }
 
+const isTricky = ( start ) => {
+
+  for ( let element = start; element && element !== document; element = element.parentNode ) {
+    const style = getComputedStyle( element );
+
+    if ( style.transform && style.transform !== 'none' ) {
+      return true;
+    }
+  }
+
+  return false;
+}
+
 $( function() {
 
   if ( IS_EDITOR || IS_CUSTOMIZER ) {
@@ -100,21 +113,16 @@ $( function() {
 				const state = $container.data( 'state' );
 				const config = $container.data( 'config' );
 				const cfg = Object.assign( {}, state, config );
-				const props = getProps( cfg, attributes, true );
+        const fixed = ! isTricky( container );
+				const props = getProps( cfg, attributes, fixed );
 
 				$foreground.css( 'transform', `translate3d(0,${ -props.moveY * props.parallaxAmount }px,0)` );
-
-				// because of fixed positioning
-				props.moveY = -1 * props.moveY;
-
-				if ( 0 < props.progress && props.progress < 1 ) {
-					props.parallaxAmount = 1 - props.parallaxAmount;
-				}
 
 				let styles = getStylesFromProps( props );
 
         $background.css( styles );
 			} );
+
 			frameRendered = true;
 		}
 		requestAnimationFrame( parallaxUpdateLoop );
