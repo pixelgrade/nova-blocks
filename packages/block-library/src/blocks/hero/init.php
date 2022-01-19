@@ -122,7 +122,7 @@ if ( ! function_exists( 'novablocks_render_hero_block' ) ) {
 					       style="<?php echo esc_attr( $mediaStyle ); ?>"></video>
 				<?php } ?>
 			</div>
-			<div class="novablocks-hero__foreground novablocks-doppler__foreground novablocks-u-content-padding novablocks-u-content-align">
+			<div class="novablocks-hero__foreground novablocks-u-content-padding novablocks-u-content-align">
 				<div class="novablocks-hero__inner-container wp-block-group__inner-container">
 					<?php if ( ! empty( $attributes['displayInnerContent'] ) ) {
 						echo $content;
