@@ -1,5 +1,5 @@
 import { createHigherOrderComponent } from "@wordpress/compose";
-import { getDuotoneFilterSvg, getOverlayFilterCSSProps } from "@novablocks/utils";
+import { getOverlayFilterCSSProps } from "@novablocks/utils";
 import { useSupports } from "../../hooks";
 
 const withOverlayFilterEditCustomProps = createHigherOrderComponent( OriginalComponent => {

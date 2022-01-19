@@ -6,7 +6,7 @@ import {
   RangeControl,
 } from '@wordpress/components';
 
-import { getDuotoneFilterSvg, isFunctionalPalette } from "@novablocks/utils";
+import { isFunctionalPalette } from "@novablocks/utils";
 
 import {
   ControlsGroup,

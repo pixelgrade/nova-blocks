@@ -306,9 +306,9 @@ function novablocks_register_block_types() {
 				$dependencies[] = 'novablocks-scrolling-effect/frontend';
 			}
 
+			// The basename is the script's filename without the extension.
 			$basename = substr( $script, 0, - 3 );
 			$handle   = 'novablocks/' . $block;
-
 			if ( 'frontend' === $basename ) {
 				$handle = 'novablocks/' . $block . '/frontend';
 			}
