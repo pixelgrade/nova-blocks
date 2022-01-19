@@ -2148,14 +2148,14 @@ function novablocks_get_collection_card_markup( $media, $content, array $attribu
 		}
 	}
 
-	$data_attributes_array = array(
+	$data_attributes_array = [
 		'palette',
 		'palette-variation',
 		'color-signal',
 		'content-palette-variation',
 		'content-color-signal',
 		'use-source-color-as-reference',
-	);
+	];
 
 	if ( $attributes['columns'] === 1 &&
 		 $attributes['cardLayout'] === 'stacked' &&
@@ -2573,32 +2573,32 @@ function novablocks_register_block_patterns() {
 
 	register_block_pattern_category(
 		'novablocks/features',
-		array( 'label' => __( 'Features', '__plugin_txtd' ) )
+		[ 'label' => __( 'Features', '__plugin_txtd' ) ]
 	);
 
 	register_block_pattern_category(
 		'novablocks/headlines',
-		array( 'label' => __( 'Headlines', '__plugin_txtd' ) )
+		[ 'label' => __( 'Headlines', '__plugin_txtd' ) ]
 	);
 
 	register_block_pattern_category(
 		'novablocks/testimonials',
-		array( 'label' => __( 'Testimonials', '__plugin_txtd' ) )
+		[ 'label' => __( 'Testimonials', '__plugin_txtd' ) ]
 	);
 
 	register_block_pattern_category(
 		'novablocks/team',
-		array( 'label' => __( 'Team', '__plugin_txtd' ) )
+		[ 'label' => __( 'Team', '__plugin_txtd' ) ]
 	);
 
 	register_block_pattern_category(
 		'novablocks/location',
-		array( 'label' => __( 'Location', '__plugin_txtd' ) )
+		[ 'label' => __( 'Location', '__plugin_txtd' ) ]
 	);
 
 	register_block_pattern_category(
 		'novablocks/posts',
-		array( 'label' => __( 'Posts Collection', '__plugin_txtd' ) )
+		[ 'label' => __( 'Posts Collection', '__plugin_txtd' ) ]
 	);
 
 
@@ -2610,7 +2610,7 @@ function novablocks_register_block_patterns() {
 
 	register_block_pattern(
 		'novablocks/headline-1',
-		array(
+		[
 			'title'       => __( 'Feature with Testimonial', '__plugin_txtd' ),
 			'description' => _x( '...', 'Block pattern description', '__plugin_txtd' ),
 			'content'     => '<!-- wp:novablocks/supernova {"variation":"media-card","sourceType":"blocks","postsToShow":1,"showCollectionTitle":false,"showCollectionSubtitle":false,"contentPosition":"center left","cardLayout":"horizontal-reverse","layoutStyle":"classic","thumbnailAspectRatio":40,"blockTopSpacing":0,"blockBottomSpacing":1,"emphasisBottomSpacing":1,"contentAreaWidth":45,"layoutGutter":100} -->
@@ -2653,13 +2653,13 @@ function novablocks_register_block_patterns() {
 							<!-- /wp:pullquote -->
 							<!-- /wp:novablocks/supernova-item -->
 							<!-- /wp:novablocks/supernova -->',
-			'categories'  => array( 'novablocks/headlines' )
-		)
+			'categories'  => [ 'novablocks/headlines' ]
+		]
 	);
 
 	register_block_pattern(
 		'novablocks/headline-2',
-		array(
+		[
 			'title'       => __( 'Simple Feature', '__plugin_txtd' ),
 			'description' => _x( '...', 'Block pattern description', '__plugin_txtd' ),
 			'content'     => '<!-- wp:novablocks/supernova {"variation":"media-card","sourceType":"blocks","postsToShow":1,"showCollectionTitle":false,"showCollectionSubtitle":false,"contentPosition":"center left","cardLayout":"horizontal","layoutStyle":"classic","thumbnailAspectRatio":40,"contentPadding":50,"blockTopSpacing":0,"blockBottomSpacing":1,"emphasisBottomSpacing":1,"contentAreaWidth":45,"layoutGutter":100,"objectPosition":30} -->
@@ -2683,13 +2683,13 @@ function novablocks_register_block_patterns() {
 						<!-- /wp:buttons -->
 						<!-- /wp:novablocks/supernova-item -->
 						<!-- /wp:novablocks/supernova -->',
-			'categories'  => array( 'novablocks/headlines' )
-		)
+			'categories'  => [ 'novablocks/headlines' ]
+		]
 	);
 
 	register_block_pattern(
 		'novablocks/headline-84',
-		array(
+		[
 			'title'       => __( 'Portfolio Intro', '__plugin_txtd' ),
 			'description' => _x( '...', 'Block pattern description', '__plugin_txtd' ),
 			'content'     => '<!-- wp:novablocks/supernova {"variation":"hero","align":"full","sourceType":"blocks","postsToShow":1,"showCollectionTitle":false,"showCollectionSubtitle":false,"showMedia":false,"contentPosition":"top left","cardLayout":"stacked","layoutStyle":"classic","overlayFilterStrength":30,"contentPadding":100,"blockTopSpacing":0,"blockBottomSpacing":1,"emphasisTopSpacing":1,"emphasisBottomSpacing":1} -->
@@ -2727,8 +2727,8 @@ function novablocks_register_block_patterns() {
 						<!-- /wp:novablocks/sidecar -->
 						<!-- /wp:novablocks/supernova-item -->
 						<!-- /wp:novablocks/supernova -->',
-			'categories'  => array( 'novablocks/headlines' )
-		)
+			'categories'  => [ 'novablocks/headlines' ]
+		]
 	);
 
 
@@ -2739,7 +2739,7 @@ function novablocks_register_block_patterns() {
 
 	register_block_pattern(
 		'novablocks/location-1',
-		array(
+		[
 			'title'       => __( 'Multiple offices', '__plugin_txtd' ),
 			'description' => _x( '...', 'Block pattern description', '__plugin_txtd' ),
 			'content'     => '<!-- wp:novablocks/supernova {"variation":"cards-collection","title":"Locations","subtitle":"Mies Inc. \u0026amp; Co has agencies in London, New York and Berlin. Our team consists of experienced architects who develop the projects.","collectionTitleLevel":3,"level":3,"cardTitleLevel":4,"sourceType":"blocks","postsToShow":4,"showCollectionTitle":false,"showCollectionSubtitle":false,"showMedia":false,"showSubtitle":false,"showButtons":false,"contentPosition":"top left","layoutStyle":"classic","columns":4,"gridGap":80,"thumbnailAspectRatioString":"portrait","thumbnailAspectRatio":65,"blockTopSpacing":0,"emphasisTopSpacing":1,"emphasisBottomSpacing":1,"layoutGutter":25} -->
@@ -2823,8 +2823,8 @@ function novablocks_register_block_patterns() {
 							<!-- /wp:buttons -->
 							<!-- /wp:novablocks/supernova-item -->
 							<!-- /wp:novablocks/supernova -->',
-			'categories'  => array( 'novablocks/location' )
-		)
+			'categories'  => [ 'novablocks/location' ]
+		]
 	);
 
 
@@ -2835,7 +2835,7 @@ function novablocks_register_block_patterns() {
 
 	register_block_pattern(
 		'novablocks/features-1',
-		array(
+		[
 			'title'       => __( 'Features 1', '__plugin_txtd' ),
 			'description' => _x( 'Three features on one row.', 'Block pattern description', '__plugin_txtd' ),
 			'content'     => '<!-- wp:novablocks/supernova {"variation":"posts-collection","title":"List of features","subtitle":"Description","style":{"color":{}},"cardTitleLevel":4,"sourceType":"fields","postsToShow":3,"loadingMode":"manual","specificPosts":["3212"],"preventDuplicatePosts":false,"showSubtitle":false,"showButtons":false,"layoutStyle":"classic","columns":3,"thumbnailAspectRatio":25,"imageResizing":"original","imagePadding":50,"contentPadding":50,"blockTopSpacing":0,"emphasisTopSpacing":1,"emphasisBottomSpacing":1,"layoutGutter":50,"spacingModifier":0.5,"palette":1} -->
@@ -2845,8 +2845,8 @@ function novablocks_register_block_patterns() {
 
 							<!-- wp:novablocks/supernova-item {"title":"Care for the Earth’s resources","description":"Products that have a low associated carbon footprint and packaged in materials that can be recycled.","buttonText":"Link","defaultsGenerated":true,"cardTitleLevel":4,"sourceType":"fields","postsToShow":3,"loadingMode":"manual","specificPosts":["3212"],"preventDuplicatePosts":false,"showSubtitle":false,"showButtons":false,"layoutStyle":"classic","columns":3,"thumbnailAspectRatio":25,"imageResizing":"original","imagePadding":50,"contentPadding":50,"blockTopSpacing":0,"emphasisTopSpacing":1,"emphasisBottomSpacing":1,"layoutGutter":50,"spacingModifier":0.5,"images":[{"sizes":{"thumbnail":{"height":150,"width":150,"url":"http://nova.local/wp-content/uploads/2021/10/icon-feature-3-150x150.png","orientation":"landscape"},"medium":{"height":300,"width":300,"url":"http://nova.local/wp-content/uploads/2021/10/icon-feature-3-300x300.png","orientation":"landscape"},"full":{"url":"http://nova.local/wp-content/uploads/2021/10/icon-feature-3.png","height":324,"width":324,"orientation":"landscape"}},"mime":"image/png","type":"image","subtype":"png","id":2534,"url":"http://nova.local/wp-content/uploads/2021/10/icon-feature-3.png","alt":"","link":"http://nova.local/icon-feature-3/","caption":"","description":""}],"stylePreset":"just-my-style","sizeContrast":20,"positionShift":35,"palette":1} /-->
 							<!-- /wp:novablocks/supernova -->',
-			'categories'  => array( 'novablocks/features' )
-		)
+			'categories'  => [ 'novablocks/features' ]
+		]
 	);
 
 
@@ -2857,7 +2857,7 @@ function novablocks_register_block_patterns() {
 
 	register_block_pattern(
 		'novablocks/team-1',
-		array(
+		[
 			'title'       => __( 'Meet the team', '__plugin_txtd' ),
 			'description' => _x( '...', 'Block pattern description', '__plugin_txtd' ),
 			'content'     => '<!-- wp:novablocks/supernova {"variation":"cards-collection","title":"Meet the team","subtitle":"Our team consists of experienced architects who develop the projects starting with a sketch and following it up to complete implementation of intended ideas.","collectionTitleLevel":3,"level":3,"cardTitleLevel":4,"sourceType":"fields","postsToShow":4,"showDescription":false,"showButtons":false,"contentPosition":"top left","layoutStyle":"classic","columns":4,"gridGap":80,"thumbnailAspectRatioString":"portrait","thumbnailAspectRatio":65,"blockTopSpacing":0,"emphasisTopSpacing":1,"emphasisBottomSpacing":1,"layoutGutter":25,"spacingModifier":0.5} -->
@@ -2894,8 +2894,8 @@ function novablocks_register_block_patterns() {
 
 							<!-- wp:novablocks/supernova-item {"level":3,"title":"Operations","subtitle":"Interior Manager – Partner","description":"Emily Long, Business\u003cbr\u003eLouise Perez\u003cbr\u003eRyan Butler\u003cbr\u003eJeffrey Henderson","defaultsGenerated":true,"cardTitleLevel":4,"collectionTitleLevel":3,"sourceType":"fields","postsToShow":4,"showCollectionTitle":false,"showCollectionSubtitle":false,"showMedia":false,"showSubtitle":false,"showButtons":false,"contentPosition":"top left","layoutStyle":"classic","columns":4,"gridGap":80,"thumbnailAspectRatioString":"portrait","thumbnailAspectRatio":65,"blockTopSpacing":0,"emphasisTopSpacing":1,"emphasisBottomSpacing":1,"layoutGutter":25,"spacingModifier":0.5,"images":[{"sizes":{"thumbnail":{"height":150,"width":150,"url":"https://trial.pixelgrade.com/tosca/wp-content/uploads/sites/3/2022/01/team4-150x150.jpeg","orientation":"landscape"},"medium":{"height":300,"width":240,"url":"https://trial.pixelgrade.com/tosca/wp-content/uploads/sites/3/2022/01/team4-240x300.jpeg","orientation":"portrait"},"novablocks_tiny":{"height":480,"width":384,"url":"https://trial.pixelgrade.com/tosca/wp-content/uploads/sites/3/2022/01/team4-384x480.jpeg","orientation":"portrait"},"full":{"url":"https://trial.pixelgrade.com/tosca/wp-content/uploads/sites/3/2022/01/team4.jpeg","height":500,"width":400,"orientation":"portrait"}},"mime":"image/jpeg","type":"image","subtype":"jpeg","id":3762,"url":"https://trial.pixelgrade.com/tosca/wp-content/uploads/sites/3/2022/01/team4.jpeg","alt":"","link":"https://trial.pixelgrade.com/tosca/block-patterns/people/team4/","caption":"","description":""}],"stylePreset":"just-my-style","sizeContrast":100,"positionShift":90,"elementsDistance":60,"placementVariation":100} /-->
 							<!-- /wp:novablocks/supernova -->',
-			'categories'  => array( 'novablocks/team' )
-		)
+			'categories'  => [ 'novablocks/team' ]
+		]
 	);
 
 
@@ -2906,7 +2906,7 @@ function novablocks_register_block_patterns() {
 
 	register_block_pattern(
 		'novablocks/posts-1',
-		array(
+		[
 			'title'       => __( 'Classic Grid', '__plugin_txtd' ),
 			'description' => _x( '...', 'Block pattern description', '__plugin_txtd' ),
 			'content'     => '<!-- wp:novablocks/supernova {"variation":"posts-collection","title":"Latest articles","postsToShow":3,"specificPosts":[],"preventDuplicatePosts":false,"showMeta":true,"contentPosition":"center left","layoutStyle":"classic","columns":3,"blockTopSpacing":0,"blockBottomSpacing":1,"emphasisTopSpacing":1,"emphasisBottomSpacing":1,"layoutGutter":20} -->
@@ -2916,13 +2916,13 @@ function novablocks_register_block_patterns() {
 
 							<!-- wp:novablocks/supernova-item {"defaultsGenerated":true,"postsToShow":3,"specificPosts":[],"preventDuplicatePosts":false,"showMeta":true,"contentPosition":"center left","layoutStyle":"classic","columns":3,"blockTopSpacing":0,"blockBottomSpacing":1,"emphasisTopSpacing":1,"emphasisBottomSpacing":1,"layoutGutter":20,"images":[{"id":"2UpMepuEeak","url":"https://images.unsplash.com/photo-1552688455-b6faba3c8631?crop=entropy\u0026cs=tinysrgb\u0026fit=max\u0026fm=jpg\u0026ixid=MnwxMzk4NzV8MHwxfGNvbGxlY3Rpb258OXwxMDYwNjAxNXx8fHx8Mnx8MTYzODE4MDg2Nw\u0026ixlib=rb-1.2.1\u0026q=80\u0026w=1080","type":"image","width":6000,"height":4000,"sizes":{"full":{"url":"https://images.unsplash.com/photo-1552688455-b6faba3c8631?crop=entropy\u0026cs=srgb\u0026fm=jpg\u0026ixid=MnwxMzk4NzV8MHwxfGNvbGxlY3Rpb258OXwxMDYwNjAxNXx8fHx8Mnx8MTYzODE4MDg2Nw\u0026ixlib=rb-1.2.1\u0026q=85","width":6000,"height":4000},"large":{"url":"https://images.unsplash.com/photo-1552688455-b6faba3c8631?crop=entropy\u0026cs=tinysrgb\u0026fit=max\u0026fm=jpg\u0026ixid=MnwxMzk4NzV8MHwxfGNvbGxlY3Rpb258OXwxMDYwNjAxNXx8fHx8Mnx8MTYzODE4MDg2Nw\u0026ixlib=rb-1.2.1\u0026q=80\u0026w=1080"},"medium":{"url":"https://images.unsplash.com/photo-1552688455-b6faba3c8631?crop=entropy\u0026cs=tinysrgb\u0026fit=max\u0026fm=jpg\u0026ixid=MnwxMzk4NzV8MHwxfGNvbGxlY3Rpb258OXwxMDYwNjAxNXx8fHx8Mnx8MTYzODE4MDg2Nw\u0026ixlib=rb-1.2.1\u0026q=80\u0026w=400"},"thumbnail":{"url":"https://images.unsplash.com/photo-1552688455-b6faba3c8631?crop=entropy\u0026cs=tinysrgb\u0026fit=max\u0026fm=jpg\u0026ixid=MnwxMzk4NzV8MHwxfGNvbGxlY3Rpb258OXwxMDYwNjAxNXx8fHx8Mnx8MTYzODE4MDg2Nw\u0026ixlib=rb-1.2.1\u0026q=80\u0026w=200"},"novablocks_huge":{"url":"https://images.unsplash.com/photo-1552688455-b6faba3c8631?crop=entropy\u0026cs=tinysrgb\u0026fit=max\u0026fm=jpg\u0026ixid=MnwxMzk4NzV8MHwxfGNvbGxlY3Rpb258OXwxMDYwNjAxNXx8fHx8Mnx8MTYzODE4MDg2Nw\u0026ixlib=rb-1.2.1\u0026q=80\u0026w=1080"},"novablocks_large":{"url":"https://images.unsplash.com/photo-1552688455-b6faba3c8631?crop=entropy\u0026cs=tinysrgb\u0026fit=max\u0026fm=jpg\u0026ixid=MnwxMzk4NzV8MHwxfGNvbGxlY3Rpb258OXwxMDYwNjAxNXx8fHx8Mnx8MTYzODE4MDg2Nw\u0026ixlib=rb-1.2.1\u0026q=80\u0026w=1080"},"novablocks_medium":{"url":"https://images.unsplash.com/photo-1552688455-b6faba3c8631?crop=entropy\u0026cs=tinysrgb\u0026fit=max\u0026fm=jpg\u0026ixid=MnwxMzk4NzV8MHwxfGNvbGxlY3Rpb258OXwxMDYwNjAxNXx8fHx8Mnx8MTYzODE4MDg2Nw\u0026ixlib=rb-1.2.1\u0026q=80\u0026w=400"},"novablocks_tiny":{"url":"https://images.unsplash.com/photo-1552688455-b6faba3c8631?crop=entropy\u0026cs=tinysrgb\u0026fit=max\u0026fm=jpg\u0026ixid=MnwxMzk4NzV8MHwxfGNvbGxlY3Rpb258OXwxMDYwNjAxNXx8fHx8Mnx8MTYzODE4MDg2Nw\u0026ixlib=rb-1.2.1\u0026q=80\u0026w=200"}}}],"stylePreset":"just-my-style","sizeContrast":80,"positionShift":20,"elementsDistance":80,"placementVariation":75} /-->
 							<!-- /wp:novablocks/supernova -->',
-			'categories'  => array( 'novablocks/posts' )
-		)
+			'categories'  => [ 'novablocks/posts' ]
+		]
 	);
 
 	register_block_pattern(
 		'novablocks/posts-2',
-		array(
+		[
 			'title'       => __( 'Horizontal Cards', '__plugin_txtd' ),
 			'description' => _x( '...', 'Block pattern description', '__plugin_txtd' ),
 			'content'     => '<!-- wp:novablocks/supernova {"variation":"posts-collection","title":"Horizontal Cards","postsToShow":4,"specificPosts":["2829","1819"],"preventDuplicatePosts":false,"showCollectionTitle":false,"showCollectionSubtitle":false,"showMeta":true,"contentPosition":"center left","cardLayout":"horizontal","layoutStyle":"classic","columns":2,"thumbnailAspectRatioString":"portrait","thumbnailAspectRatio":55,"blockTopSpacing":0,"blockBottomSpacing":1,"contentAreaWidth":60,"layoutGutter":50} -->
@@ -2934,13 +2934,13 @@ function novablocks_register_block_patterns() {
 
 							<!-- wp:novablocks/supernova-item {"defaultsGenerated":true,"postsToShow":4,"specificPosts":["2829","1819"],"preventDuplicatePosts":false,"showCollectionTitle":false,"showCollectionSubtitle":false,"showMeta":true,"contentPosition":"center left","cardLayout":"horizontal","layoutStyle":"classic","columns":2,"thumbnailAspectRatioString":"portrait","thumbnailAspectRatio":55,"blockTopSpacing":0,"blockBottomSpacing":1,"contentAreaWidth":60,"layoutGutter":50,"images":[{"id":"Z3g8miECz9s","url":"https://images.unsplash.com/photo-1550353149-c124059ac8c4?crop=entropy\u0026cs=tinysrgb\u0026fit=max\u0026fm=jpg\u0026ixid=MnwxMzk4NzV8MHwxfGNvbGxlY3Rpb258MnwxMDYwNjAxNXx8fHx8Mnx8MTY0MTM4MTIzNQ\u0026ixlib=rb-1.2.1\u0026q=80\u0026w=1080","type":"image","width":5821,"height":3881,"sizes":{"full":{"url":"https://images.unsplash.com/photo-1550353149-c124059ac8c4?crop=entropy\u0026cs=srgb\u0026fm=jpg\u0026ixid=MnwxMzk4NzV8MHwxfGNvbGxlY3Rpb258MnwxMDYwNjAxNXx8fHx8Mnx8MTY0MTM4MTIzNQ\u0026ixlib=rb-1.2.1\u0026q=85","width":5821,"height":3881},"large":{"url":"https://images.unsplash.com/photo-1550353149-c124059ac8c4?crop=entropy\u0026cs=tinysrgb\u0026fit=max\u0026fm=jpg\u0026ixid=MnwxMzk4NzV8MHwxfGNvbGxlY3Rpb258MnwxMDYwNjAxNXx8fHx8Mnx8MTY0MTM4MTIzNQ\u0026ixlib=rb-1.2.1\u0026q=80\u0026w=1080"},"medium":{"url":"https://images.unsplash.com/photo-1550353149-c124059ac8c4?crop=entropy\u0026cs=tinysrgb\u0026fit=max\u0026fm=jpg\u0026ixid=MnwxMzk4NzV8MHwxfGNvbGxlY3Rpb258MnwxMDYwNjAxNXx8fHx8Mnx8MTY0MTM4MTIzNQ\u0026ixlib=rb-1.2.1\u0026q=80\u0026w=400"},"thumbnail":{"url":"https://images.unsplash.com/photo-1550353149-c124059ac8c4?crop=entropy\u0026cs=tinysrgb\u0026fit=max\u0026fm=jpg\u0026ixid=MnwxMzk4NzV8MHwxfGNvbGxlY3Rpb258MnwxMDYwNjAxNXx8fHx8Mnx8MTY0MTM4MTIzNQ\u0026ixlib=rb-1.2.1\u0026q=80\u0026w=200"},"novablocks_huge":{"url":"https://images.unsplash.com/photo-1550353149-c124059ac8c4?crop=entropy\u0026cs=tinysrgb\u0026fit=max\u0026fm=jpg\u0026ixid=MnwxMzk4NzV8MHwxfGNvbGxlY3Rpb258MnwxMDYwNjAxNXx8fHx8Mnx8MTY0MTM4MTIzNQ\u0026ixlib=rb-1.2.1\u0026q=80\u0026w=1080"},"novablocks_large":{"url":"https://images.unsplash.com/photo-1550353149-c124059ac8c4?crop=entropy\u0026cs=tinysrgb\u0026fit=max\u0026fm=jpg\u0026ixid=MnwxMzk4NzV8MHwxfGNvbGxlY3Rpb258MnwxMDYwNjAxNXx8fHx8Mnx8MTY0MTM4MTIzNQ\u0026ixlib=rb-1.2.1\u0026q=80\u0026w=1080"},"novablocks_medium":{"url":"https://images.unsplash.com/photo-1550353149-c124059ac8c4?crop=entropy\u0026cs=tinysrgb\u0026fit=max\u0026fm=jpg\u0026ixid=MnwxMzk4NzV8MHwxfGNvbGxlY3Rpb258MnwxMDYwNjAxNXx8fHx8Mnx8MTY0MTM4MTIzNQ\u0026ixlib=rb-1.2.1\u0026q=80\u0026w=400"},"novablocks_tiny":{"url":"https://images.unsplash.com/photo-1550353149-c124059ac8c4?crop=entropy\u0026cs=tinysrgb\u0026fit=max\u0026fm=jpg\u0026ixid=MnwxMzk4NzV8MHwxfGNvbGxlY3Rpb258MnwxMDYwNjAxNXx8fHx8Mnx8MTY0MTM4MTIzNQ\u0026ixlib=rb-1.2.1\u0026q=80\u0026w=200"}}}],"stylePreset":"just-my-style","sizeContrast":60,"positionShift":20,"elementsDistance":100,"placementVariation":100} /-->
 							<!-- /wp:novablocks/supernova -->',
-			'categories'  => array( 'novablocks/posts' )
-		)
+			'categories'  => [ 'novablocks/posts' ]
+		]
 	);
 
 	register_block_pattern(
 		'novablocks/posts-3',
-		array(
+		[
 			'title'       => __( 'Overlay Cards', '__plugin_txtd' ),
 			'description' => _x( '...', 'Block pattern description', '__plugin_txtd' ),
 			'content'     => '<!-- wp:novablocks/supernova {"variation":"posts-collection","title":"Horizontal Cards","style":{"color":{"duotone":["#b5c0e8","#ffffff"]}},"secondaryMetadata":"none","postsToShow":3,"loadingMode":"manual","specificPosts":["2829","1819","3212"],"preventDuplicatePosts":false,"showCollectionTitle":false,"showCollectionSubtitle":false,"showDescription":false,"showMeta":true,"cardLayout":"stacked","layoutStyle":"classic","columns":3,"gridGap":10,"overlayFilterType":"duotone","overlayFilterDuotoneConfig":{"name":"Brand Primary - 10 and Secondary - 7","from":{"paletteId":1,"variationIndex":11,"hex":"#1d293c"},"to":{"paletteId":2,"variationIndex":8,"hex":"#a24b35"}},"thumbnailAspectRatioString":"portrait","thumbnailAspectRatio":55,"contentPadding":50,"blockTopSpacing":0,"blockBottomSpacing":1,"minHeightFallback":50,"contentAreaWidth":60,"layoutGutter":50,"contentColorSignal":3,"contentPaletteVariation":11} -->
@@ -2950,13 +2950,13 @@ function novablocks_register_block_patterns() {
 
 							<!-- wp:novablocks/supernova-item {"defaultsGenerated":true,"secondaryMetadata":"none","postsToShow":3,"loadingMode":"manual","specificPosts":["2829","1819","3212"],"preventDuplicatePosts":false,"showCollectionTitle":false,"showCollectionSubtitle":false,"showDescription":false,"showMeta":true,"cardLayout":"stacked","layoutStyle":"classic","columns":3,"gridGap":10,"overlayFilterType":"duotone","overlayFilterDuotoneConfig":{"name":"Brand Primary - 10 and Secondary - 7","from":{"paletteId":1,"variationIndex":11,"hex":"#1d293c"},"to":{"paletteId":2,"variationIndex":8,"hex":"#a24b35"}},"thumbnailAspectRatioString":"portrait","thumbnailAspectRatio":55,"contentPadding":50,"blockTopSpacing":0,"blockBottomSpacing":1,"minHeightFallback":50,"contentAreaWidth":60,"layoutGutter":50,"images":[{"id":"FPm5MGSqD3w","url":"https://images.unsplash.com/photo-1530171538432-05567b463984?crop=entropy\u0026cs=tinysrgb\u0026fit=max\u0026fm=jpg\u0026ixid=MnwxMzk4NzV8MHwxfGNvbGxlY3Rpb258N3wxMDYwNjAxNXx8fHx8Mnx8MTYzODE4MDg2Nw\u0026ixlib=rb-1.2.1\u0026q=80\u0026w=1080","type":"image","width":4000,"height":6000,"sizes":{"full":{"url":"https://images.unsplash.com/photo-1530171538432-05567b463984?crop=entropy\u0026cs=srgb\u0026fm=jpg\u0026ixid=MnwxMzk4NzV8MHwxfGNvbGxlY3Rpb258N3wxMDYwNjAxNXx8fHx8Mnx8MTYzODE4MDg2Nw\u0026ixlib=rb-1.2.1\u0026q=85","width":4000,"height":6000},"large":{"url":"https://images.unsplash.com/photo-1530171538432-05567b463984?crop=entropy\u0026cs=tinysrgb\u0026fit=max\u0026fm=jpg\u0026ixid=MnwxMzk4NzV8MHwxfGNvbGxlY3Rpb258N3wxMDYwNjAxNXx8fHx8Mnx8MTYzODE4MDg2Nw\u0026ixlib=rb-1.2.1\u0026q=80\u0026w=1080"},"medium":{"url":"https://images.unsplash.com/photo-1530171538432-05567b463984?crop=entropy\u0026cs=tinysrgb\u0026fit=max\u0026fm=jpg\u0026ixid=MnwxMzk4NzV8MHwxfGNvbGxlY3Rpb258N3wxMDYwNjAxNXx8fHx8Mnx8MTYzODE4MDg2Nw\u0026ixlib=rb-1.2.1\u0026q=80\u0026w=400"},"thumbnail":{"url":"https://images.unsplash.com/photo-1530171538432-05567b463984?crop=entropy\u0026cs=tinysrgb\u0026fit=max\u0026fm=jpg\u0026ixid=MnwxMzk4NzV8MHwxfGNvbGxlY3Rpb258N3wxMDYwNjAxNXx8fHx8Mnx8MTYzODE4MDg2Nw\u0026ixlib=rb-1.2.1\u0026q=80\u0026w=200"},"novablocks_huge":{"url":"https://images.unsplash.com/photo-1530171538432-05567b463984?crop=entropy\u0026cs=tinysrgb\u0026fit=max\u0026fm=jpg\u0026ixid=MnwxMzk4NzV8MHwxfGNvbGxlY3Rpb258N3wxMDYwNjAxNXx8fHx8Mnx8MTYzODE4MDg2Nw\u0026ixlib=rb-1.2.1\u0026q=80\u0026w=1080"},"novablocks_large":{"url":"https://images.unsplash.com/photo-1530171538432-05567b463984?crop=entropy\u0026cs=tinysrgb\u0026fit=max\u0026fm=jpg\u0026ixid=MnwxMzk4NzV8MHwxfGNvbGxlY3Rpb258N3wxMDYwNjAxNXx8fHx8Mnx8MTYzODE4MDg2Nw\u0026ixlib=rb-1.2.1\u0026q=80\u0026w=1080"},"novablocks_medium":{"url":"https://images.unsplash.com/photo-1530171538432-05567b463984?crop=entropy\u0026cs=tinysrgb\u0026fit=max\u0026fm=jpg\u0026ixid=MnwxMzk4NzV8MHwxfGNvbGxlY3Rpb258N3wxMDYwNjAxNXx8fHx8Mnx8MTYzODE4MDg2Nw\u0026ixlib=rb-1.2.1\u0026q=80\u0026w=400"},"novablocks_tiny":{"url":"https://images.unsplash.com/photo-1530171538432-05567b463984?crop=entropy\u0026cs=tinysrgb\u0026fit=max\u0026fm=jpg\u0026ixid=MnwxMzk4NzV8MHwxfGNvbGxlY3Rpb258N3wxMDYwNjAxNXx8fHx8Mnx8MTYzODE4MDg2Nw\u0026ixlib=rb-1.2.1\u0026q=80\u0026w=200"}}}],"stylePreset":"just-my-style","sizeContrast":40,"positionShift":45,"elementsDistance":0,"placementVariation":50,"paletteVariation":11,"colorSignal":3} /-->
 							<!-- /wp:novablocks/supernova -->',
-			'categories'  => array( 'novablocks/posts' )
-		)
+			'categories'  => [ 'novablocks/posts' ]
+		]
 	);
 
 	register_block_pattern(
 		'novablocks/posts-4',
-		array(
+		[
 			'title'       => __( 'Parametric Grid', '__plugin_txtd' ),
 			'description' => _x( '...', 'Block pattern description', '__plugin_txtd' ),
 			'content'     => '<!-- wp:novablocks/supernova {"variation":"posts-collection","headerPosition":1,"title":"Horizontal Cards","specificPosts":["2829","1819"],"preventDuplicatePosts":false,"showCollectionTitle":false,"showCollectionSubtitle":false,"showMeta":true,"contentPosition":"center left","cardLayout":"horizontal","columns":3,"gridcolumns":5,"gridrows":5,"featuresize":3,"fragmentation":0,"hierarchycrossing":28,"imageweightleft":4,"metadetailsleft":0,"metadetailsright":7,"balancemdandiw":true,"thumbnailAspectRatio":45,"blockTopSpacing":0,"blockBottomSpacing":1,"contentAreaWidth":60,"layoutGutter":25,"containerHeight":45} -->
@@ -2972,8 +2972,8 @@ function novablocks_register_block_patterns() {
 
 							<!-- wp:novablocks/supernova-item {"defaultsGenerated":true,"specificPosts":["2829","1819"],"preventDuplicatePosts":false,"showCollectionTitle":false,"showCollectionSubtitle":false,"showMeta":true,"contentPosition":"center left","cardLayout":"horizontal","columns":3,"gridcolumns":5,"gridrows":5,"featuresize":3,"fragmentation":0,"hierarchycrossing":28,"imageweightleft":4,"metadetailsleft":0,"metadetailsright":7,"balancemdandiw":true,"headerPosition":1,"thumbnailAspectRatio":45,"blockTopSpacing":0,"blockBottomSpacing":1,"contentAreaWidth":60,"layoutGutter":25,"images":[{"id":"Z3g8miECz9s","url":"https://images.unsplash.com/photo-1550353149-c124059ac8c4?crop=entropy\u0026cs=tinysrgb\u0026fit=max\u0026fm=jpg\u0026ixid=MnwxMzk4NzV8MHwxfGNvbGxlY3Rpb258MnwxMDYwNjAxNXx8fHx8Mnx8MTY0MTM4ODU2MA\u0026ixlib=rb-1.2.1\u0026q=80\u0026w=1080","type":"image","width":5821,"height":3881,"sizes":{"full":{"url":"https://images.unsplash.com/photo-1550353149-c124059ac8c4?crop=entropy\u0026cs=srgb\u0026fm=jpg\u0026ixid=MnwxMzk4NzV8MHwxfGNvbGxlY3Rpb258MnwxMDYwNjAxNXx8fHx8Mnx8MTY0MTM4ODU2MA\u0026ixlib=rb-1.2.1\u0026q=85","width":5821,"height":3881},"large":{"url":"https://images.unsplash.com/photo-1550353149-c124059ac8c4?crop=entropy\u0026cs=tinysrgb\u0026fit=max\u0026fm=jpg\u0026ixid=MnwxMzk4NzV8MHwxfGNvbGxlY3Rpb258MnwxMDYwNjAxNXx8fHx8Mnx8MTY0MTM4ODU2MA\u0026ixlib=rb-1.2.1\u0026q=80\u0026w=1080"},"medium":{"url":"https://images.unsplash.com/photo-1550353149-c124059ac8c4?crop=entropy\u0026cs=tinysrgb\u0026fit=max\u0026fm=jpg\u0026ixid=MnwxMzk4NzV8MHwxfGNvbGxlY3Rpb258MnwxMDYwNjAxNXx8fHx8Mnx8MTY0MTM4ODU2MA\u0026ixlib=rb-1.2.1\u0026q=80\u0026w=400"},"thumbnail":{"url":"https://images.unsplash.com/photo-1550353149-c124059ac8c4?crop=entropy\u0026cs=tinysrgb\u0026fit=max\u0026fm=jpg\u0026ixid=MnwxMzk4NzV8MHwxfGNvbGxlY3Rpb258MnwxMDYwNjAxNXx8fHx8Mnx8MTY0MTM4ODU2MA\u0026ixlib=rb-1.2.1\u0026q=80\u0026w=200"},"novablocks_huge":{"url":"https://images.unsplash.com/photo-1550353149-c124059ac8c4?crop=entropy\u0026cs=tinysrgb\u0026fit=max\u0026fm=jpg\u0026ixid=MnwxMzk4NzV8MHwxfGNvbGxlY3Rpb258MnwxMDYwNjAxNXx8fHx8Mnx8MTY0MTM4ODU2MA\u0026ixlib=rb-1.2.1\u0026q=80\u0026w=1080"},"novablocks_large":{"url":"https://images.unsplash.com/photo-1550353149-c124059ac8c4?crop=entropy\u0026cs=tinysrgb\u0026fit=max\u0026fm=jpg\u0026ixid=MnwxMzk4NzV8MHwxfGNvbGxlY3Rpb258MnwxMDYwNjAxNXx8fHx8Mnx8MTY0MTM4ODU2MA\u0026ixlib=rb-1.2.1\u0026q=80\u0026w=1080"},"novablocks_medium":{"url":"https://images.unsplash.com/photo-1550353149-c124059ac8c4?crop=entropy\u0026cs=tinysrgb\u0026fit=max\u0026fm=jpg\u0026ixid=MnwxMzk4NzV8MHwxfGNvbGxlY3Rpb258MnwxMDYwNjAxNXx8fHx8Mnx8MTY0MTM4ODU2MA\u0026ixlib=rb-1.2.1\u0026q=80\u0026w=400"},"novablocks_tiny":{"url":"https://images.unsplash.com/photo-1550353149-c124059ac8c4?crop=entropy\u0026cs=tinysrgb\u0026fit=max\u0026fm=jpg\u0026ixid=MnwxMzk4NzV8MHwxfGNvbGxlY3Rpb258MnwxMDYwNjAxNXx8fHx8Mnx8MTY0MTM4ODU2MA\u0026ixlib=rb-1.2.1\u0026q=80\u0026w=200"}}}],"stylePreset":"just-my-style","sizeContrast":60,"positionShift":5,"elementsDistance":40,"placementVariation":75,"containerHeight":45} /-->
 							<!-- /wp:novablocks/supernova -->',
-			'categories'  => array( 'novablocks/posts' )
-		)
+			'categories'  => [ 'novablocks/posts' ]
+		]
 	);
 
 
@@ -2983,7 +2983,7 @@ function novablocks_register_block_patterns() {
 
 	register_block_pattern(
 		'novablocks/testimonials-1',
-		array(
+		[
 			'title'       => __( 'Testimonials 1', '__plugin_txtd' ),
 			'description' => _x( 'Three testimonials on one row.', 'Block pattern description', '__plugin_txtd' ),
 			'content'     => '<!-- wp:novablocks/supernova {"variation":"media-card","title":"Find out why our customers think it’s better with us","collectionTitleLevel":3,"level":3,"cardTitleLevel":4,"sourceType":"blocks","postsToShow":3,"showCollectionSubtitle":false,"showMedia":false,"showTitle":false,"showSubtitle":false,"showButtons":false,"showMeta":true,"contentPosition":"top center","layoutStyle":"classic","columns":3,"thumbnailAspectRatioString":"portrait","thumbnailAspectRatio":55,"imagePadding":50,"contentPadding":50,"blockTopSpacing":0,"contentAreaWidth":70,"layoutGutter":50} -->
@@ -3005,13 +3005,13 @@ function novablocks_register_block_patterns() {
 							<!-- /wp:pullquote -->
 							<!-- /wp:novablocks/supernova-item -->
 							<!-- /wp:novablocks/supernova -->',
-			'categories'  => array( 'novablocks/testimonials' )
-		)
+			'categories'  => [ 'novablocks/testimonials' ]
+		]
 	);
 
 	register_block_pattern(
 		'novablocks/testimonials-2',
-		array(
+		[
 			'title'       => __( 'Single large testimonial', '__plugin_txtd' ),
 			'description' => _x( '---', 'Block pattern description', '__plugin_txtd' ),
 			'content'     => '<!-- wp:novablocks/supernova {"variation":"media-card","sourceType":"blocks","postsToShow":1,"showCollectionTitle":false,"showCollectionSubtitle":false,"showTitle":false,"showSubtitle":false,"showButtons":false,"showMeta":true,"contentPosition":"center left","cardLayout":"horizontal-reverse","layoutStyle":"classic","thumbnailAspectRatioString":"portrait","thumbnailAspectRatio":60,"contentPadding":100,"blockTopSpacing":2,"blockBottomSpacing":2,"emphasisTopSpacing":1,"emphasisBottomSpacing":1,"contentAreaWidth":55,"layoutGutter":50,"spacingModifier":0,"blobMaskSides":7,"blobMaskPatternSeed":50,"blobMaskComplexity":100,"blobMaskSmoothness":100,"sizeContrast":100,"positionShift":40,"elementsDistance":40,"palette":1,"useSourceColorAsReference":true,"colorSignal":2,"contentPaletteVariation":9} -->
@@ -3021,13 +3021,13 @@ function novablocks_register_block_patterns() {
 							<!-- /wp:quote -->
 							<!-- /wp:novablocks/supernova-item -->
 							<!-- /wp:novablocks/supernova -->',
-			'categories'  => array( 'novablocks/testimonials' )
-		)
+			'categories'  => [ 'novablocks/testimonials' ]
+		]
 	);
 
 	register_block_pattern(
 		'novablocks/testimonials-3',
-		array(
+		[
 			'title'       => __( 'Single testimonial with logo', '__plugin_txtd' ),
 			'description' => _x( '---', 'Block pattern description', '__plugin_txtd' ),
 			'content'     => '<!-- wp:novablocks/supernova {"variation":"media-card","align":"none","sourceType":"blocks","postsToShow":1,"specificPosts":[],"authors":[],"categories":[],"tags":[],"showCollectionTitle":false,"showCollectionSubtitle":false,"showMedia":false,"showTitle":false,"showSubtitle":false,"showButtons":false,"showMeta":true,"layoutStyle":"classic","overlayFilterDuotoneConfig":{},"thumbnailAspectRatio":0,"imageResizing":"original","blockTopSpacing":0,"blockBottomSpacing":1,"emphasisTopSpacing":1,"emphasisBottomSpacing":1,"contentAreaWidth":70,"layoutGutter":50,"images":[],"focalPoint":{"x":0.5,"y":0.5},"finalFocalPoint":{"x":0.5,"y":0.5}} -->
@@ -3045,13 +3045,13 @@ function novablocks_register_block_patterns() {
 							<!-- /wp:paragraph -->
 							<!-- /wp:novablocks/supernova-item -->
 							<!-- /wp:novablocks/supernova -->',
-			'categories'  => array( 'novablocks/testimonials' )
-		)
+			'categories'  => [ 'novablocks/testimonials' ]
+		]
 	);
 
 	register_block_pattern(
 		'novablocks/testimonials-4',
-		array(
+		[
 			'title'       => __( 'Horizontal testimonial with photo blob', '__plugin_txtd' ),
 			'description' => _x( '---', 'Block pattern description', '__plugin_txtd' ),
 			'content'     => '<!-- wp:novablocks/supernova {"variation":"media-card","align":"none","sourceType":"blocks","postsToShow":1,"showCollectionTitle":false,"showCollectionSubtitle":false,"showTitle":false,"showSubtitle":false,"showButtons":false,"showMeta":true,"contentPosition":"center left","cardLayout":"horizontal","layoutStyle":"classic","contentPadding":50,"blockTopSpacing":0,"blockBottomSpacing":1,"contentAreaWidth":75,"layoutGutter":50,"spacingModifier":0,"blobsEnableMask":true,"blobPatternSeed":50,"blobComplexity":100,"blobSmoothness":50,"blobRotation":40,"blobsEnableDecoration":true,"blobMaskSides":6,"blobMaskPatternSeed":10,"blobMaskComplexity":100,"blobMaskSmoothness":100,"blobMaskRotation":100,"blobsSizeBalance":45,"blobsHorizontalDisplacement":40,"blobsVerticalDisplacement":30} -->
@@ -3065,8 +3065,8 @@ function novablocks_register_block_patterns() {
 							<!-- /wp:paragraph -->
 							<!-- /wp:novablocks/supernova-item -->
 							<!-- /wp:novablocks/supernova -->',
-			'categories'  => array( 'novablocks/testimonials' )
-		)
+			'categories'  => [ 'novablocks/testimonials' ]
+		]
 	);
 }
 

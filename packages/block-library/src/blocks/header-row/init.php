@@ -8,7 +8,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-function novablocks_get_header_row_attributes() {
+function novablocks_get_header_row_attributes(): array {
 
 	return novablocks_merge_attributes_from_array( [
 		'packages/block-library/src/blocks/header-row/attributes.json',
@@ -45,17 +45,15 @@ if ( ! function_exists( 'novablocks_render_header_row_block' ) ) {
 			'wp-block-novablocks-header-row',
 			'alignfull',
 		];
-
-		$spacingProps = novablocks_get_spacing_css( $attributes );
-		$style        = join( '; ', $spacingProps ) . '; ';
-
 		if ( ! empty( $attributes['className'] ) ) {
 			$classes[] = $attributes['className'];
 		}
 
+		$spacingProps = novablocks_get_spacing_css( $attributes );
+		$style        = join( '; ', $spacingProps ) . '; ';
+
 		$blockPaletteClasses = novablocks_get_color_signal_classes( $attributes );
 		$classes             = array_merge( $classes, $blockPaletteClasses );
-
 		?>
 
 		<div class="novablocks-header__inner-container">
@@ -73,6 +71,8 @@ if ( ! function_exists( 'novablocks_render_header_row_block' ) ) {
 			</div>
 		</div>
 
-		<?php return ob_get_clean();
+		<?php
+
+		return ob_get_clean();
 	}
 }

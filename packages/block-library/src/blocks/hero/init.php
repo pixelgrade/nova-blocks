@@ -8,7 +8,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-function novablocks_get_hero_attributes() {
+function novablocks_get_hero_attributes(): array {
 
 	return novablocks_merge_attributes_from_array( [
 		'packages/block-library/src/blocks/hero/attributes.json',
@@ -33,7 +33,7 @@ function novablocks_get_hero_attributes() {
 
 if ( ! function_exists( 'novablocks_render_hero_block' ) ) {
 
-	function novablocks_render_hero_block( $attributes, $content ) {
+	function novablocks_render_hero_block( array $attributes, string $content ): string {
 
 		$attributes_config     = novablocks_get_hero_attributes();
 		$attributes            = novablocks_get_attributes_with_defaults( $attributes, $attributes_config );
