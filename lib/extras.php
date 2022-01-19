@@ -1473,21 +1473,23 @@ if ( ! function_exists( 'novablocks_get_collection_output' ) ) {
 			'nb-block-spacing-container'
 		];
 
-		$output = '<div class="' . esc_attr( join( ' ', $collection_classes ) ) .'">
-
-			<div class="nb-collection__header">
+		$output = '';
+		$output .= '<div class="' . esc_attr( join( ' ', $collection_classes ) ) .'">';
+		
+		if ( !empty( $collection_header ) ) {
+			$output .= '<div class="nb-collection__header">
 				<div class="nb-collection__inner-container">
 					' . $collection_header . '
 				</div>
-			</div>
+			</div>';
+		}
 
-			<div class="nb-collection__body">
+		$output .= '<div class="nb-collection__body">
 				<div class="' . esc_attr( join( ' ', $layout_classes ) ) . '">
 					' . $content . '
 				</div>
-			</div>
-
-		</div>';
+			</div>';
+		$output .= '</div>';
 
 		return $output;
 	}
