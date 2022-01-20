@@ -14,7 +14,7 @@
  *
  * @return bool
  */
-function novablocks_handle_theme_supports( $supports, $args, $theme_features ): bool {
+function novablocks_handle_theme_supports( bool $supports, $args, $theme_features ): bool {
 	if ( empty( $args ) || empty( $theme_features ) ) {
 		return $supports;
 	}

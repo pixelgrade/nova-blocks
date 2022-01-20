@@ -295,8 +295,7 @@ const minimizeConfig = {
  */
 const VendorScripts = [
 	'jquery.bully',
-	'jquery.slick',
-	'jquery.velocity'
+	'jquery.slick'
 ];
 
 const VendorEntries = {};

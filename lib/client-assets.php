@@ -41,11 +41,17 @@ if ( ! function_exists( 'novablocks_register_vendor_scripts' ) ) {
 			[ 'jquery', ]
 		);
 
+		// Use the public CDN for better performance
+		// (high likelihood the file is already cached in the browser from other sites).
 		wp_register_script(
 			'novablocks-velocity',
-			novablocks_get_plugin_url() . '/dist/vendor/jquery.velocity.js',
-			[ 'jquery', ]
+			'https://cdnjs.cloudflare.com/ajax/libs/velocity/1.5.2/velocity.min.js',
+			[]
 		);
+		// Add the SRI (Subresource Integrity) hash data.
+		// Generated with https://www.srihash.org/
+		wp_script_add_data( 'novablocks-velocity', 'integrity', 'sha384-fcLDUAwcSMMfmpKMJ0dO2//SL2WJ5/kkyz/yvgtmLXBEp3GdqrQF9ahRerhdLXn+' );
+		wp_script_add_data( 'novablocks-velocity', 'crossorigin', 'anonymous' );
 
 		$google_maps_api_key = get_option( 'novablocks_google_maps_api_key', '' );
 		wp_register_script(
@@ -54,8 +60,11 @@ if ( ! function_exists( 'novablocks_register_vendor_scripts' ) ) {
 		);
 
 		// Comments related.
-		/** The Rich Text Editor from Basecamp - Trix. @see https://github.com/basecamp/trix#getting-started */
-		// We use the core of the Trix rich text editor since we are not after old browsers.
+		/** The Rich Text Editor from Basecamp - Trix.
+		 * @see https://github.com/basecamp/trix#getting-started
+		 *
+		 * We use the core of the Trix rich text editor since we are not after old browsers.
+		 */
 		wp_register_script( 'trix', trailingslashit( novablocks_get_plugin_url() ) . 'dist/vendor/trix/trix-core-1-3-1.js', [], '', true );
 		wp_register_style( 'trix', trailingslashit( novablocks_get_plugin_url() ) . 'dist/vendor/trix/trix-1-3-1.css', [], '' );
 		wp_register_style( 'trix-custom', trailingslashit( novablocks_get_plugin_url() ) . 'build/block-library/blocks/post-comments/trix.css', [ 'trix', ], '' );
@@ -105,6 +114,16 @@ if ( ! function_exists( 'novablocks_register_packages_scripts' ) ) {
 			// Determine the package directory URL.
 			$package_dir_url = trailingslashit( novablocks_get_plugin_url() ) . $package_dir_relative_path;
 
+			/**
+			 * Filters the script dependencies list before registering a package block editor script.
+			 *
+			 * @param array  $dependencies The dependencies list.
+			 * @param string $package      The Nova Blocks package name the registered script belongs to.
+			 * @param string $handle       The registered script handle.
+			 * @param string $src          The registered script src.
+			 */
+			$dependencies = apply_filters( 'novablocks_register_package_editor_script_dependencies', $dependencies, $package, $handle, $package_dir_url . 'index.js' );
+
 			wp_register_script(
 				$handle,
 				$package_dir_url . 'index.js',
@@ -123,8 +142,18 @@ if ( ! function_exists( 'novablocks_register_packages_scripts' ) ) {
 				$dependencies           = $asset_config['dependencies'] ?? [];
 				$version                = $asset_config['version'] ?? filemtime( $path );
 
+				/**
+				 * Filters the script dependencies list before registering a package frontend script.
+				 *
+				 * @param array  $dependencies The dependencies list.
+				 * @param string $package      The Nova Blocks package name the registered script belongs to.
+				 * @param string $handle       The registered script handle.
+				 * @param string $src          The registered script src.
+				 */
+				$dependencies = apply_filters( 'novablocks_register_package_frontend_script_dependencies', $dependencies, $package, $handle . '/frontend', $package_dir_url . 'frontend.js' );
+
 				wp_register_script(
-					'novablocks-' . $package . '/frontend',
+					$handle . '/frontend',
 					$package_dir_url . 'frontend.js',
 					$dependencies,
 					$version,
@@ -141,6 +170,16 @@ if ( ! function_exists( 'novablocks_register_packages_scripts' ) ) {
 			// Register styles for the current package, if the files exist.
 			$style_path = $package_dir_absolute_path . 'style.css';
 			if ( file_exists( $style_path ) ) {
+				/**
+				 * Filters the stylesheet dependencies list before registering a package frontend stylesheet.
+				 *
+				 * @param array  $dependencies The dependencies list.
+				 * @param string $package      The Nova Blocks package name the registered stylesheet belongs to.
+				 * @param string $handle       The registered stylesheet handle.
+				 * @param string $src          The registered stylesheet src.
+				 */
+				$style_dependencies = apply_filters( 'novablocks_register_package_frontend_stylesheet_dependencies', $style_dependencies, $package, $handle . '-style', $package_dir_url . 'style.css' );
+
 				wp_register_style(
 					$handle . '-style',
 					$package_dir_url . 'style.css',
@@ -152,6 +191,16 @@ if ( ! function_exists( 'novablocks_register_packages_scripts' ) ) {
 
 			$editor_styles_path = $package_dir_absolute_path . 'editor-styles.css';
 			if ( file_exists( $editor_styles_path ) ) {
+				/**
+				 * Filters the stylesheet dependencies list before registering a package editor stylesheet.
+				 *
+				 * @param array  $dependencies The dependencies list.
+				 * @param string $package      The Nova Blocks package name the registered stylesheet belongs to.
+				 * @param string $handle       The registered stylesheet handle.
+				 * @param string $src          The registered stylesheet src.
+				 */
+				$style_dependencies = apply_filters( 'novablocks_register_package_editor_stylesheet_dependencies', $style_dependencies, $package, $handle . '-editor_style', $package_dir_url . 'editor-styles.css' );
+
 				wp_register_style(
 					$handle . '-editor_style',
 					$package_dir_url . 'editor-styles.css',
@@ -499,3 +548,57 @@ function novablocks_dequeue_unused_block_assets() {
 }
 
 add_action( 'enqueue_block_assets', 'novablocks_dequeue_unused_block_assets', 99 );
+
+/**
+ * Filters a given script tag, possibly adding an `integrity` attribute.
+ *
+ * @see https://developer.wordpress.org/reference/hooks/script_loader_tag/
+ *
+ * @param string $tag    The `<script>` tag for the enqueued script.
+ * @param string $handle The script's registered handle.
+ * @param string $src    The script's source URL.
+ *
+ * @return string The original HTML tag or its augmented version.
+ */
+function novablocks_script_sri_attributes( string $tag, string $handle, string $src ): string {
+	// Only do the thing if it makes sense to do so.
+	// (It doesn't make sense for non-ssl pages or local resources on live sites,
+	// but it always makes sense to do so in debug mode.)
+	if ( ! WP_DEBUG && ( ! is_ssl() || novablocks_is_local_resource( $src ) ) ) {
+		return $tag;
+	}
+
+	if ( $integrity_hash = wp_scripts()->get_data( $handle, 'integrity' ) ) {
+		// Prevent adding attribute when already added.
+		if ( ! preg_match( '#\sintegrity(=|>|\s)#', $tag ) ) {
+			$tag = preg_replace( ':(?=></script>):', ' integrity="' . $integrity_hash . '"', $tag, 1 );
+		}
+	}
+
+	if ( $crossorigin = wp_scripts()->get_data( $handle, 'crossorigin' ) ) {
+		// Prevent adding attribute when already added.
+		if ( ! preg_match( '#\scrossorigin(=|>|\s)#', $tag ) ) {
+			$tag = preg_replace( ':(?=></script>):', ' crossorigin="' . $crossorigin . '"', $tag, 1 );
+		}
+	}
+
+	return $tag;
+}
+
+add_filter( 'script_loader_tag', 'novablocks_script_sri_attributes', 999, 3 );
+
+/**
+ * Checks a URL to determine whether or not the resource is "remote"
+ * (served by a third-party) or whether the resource is local (and
+ * is being served by the same webserver as this plugin is run on.)
+ *
+ * @param string $uri The URI of the resource to inspect.
+ *
+ * @return bool True if the resource is local, false if the resource is remote.
+ */
+function novablocks_is_local_resource( string $uri ): bool {
+	$resource_src_host = parse_url( $uri, PHP_URL_HOST );
+	$site_host         = parse_url( get_site_url(), PHP_URL_HOST );
+
+	return 0 === strpos( $resource_src_host, $site_host );
+}
