@@ -2437,11 +2437,15 @@ function novablocks_get_posts_collection_cards_markup( array $attributes ): stri
 }
 
 function novablocks_show_card_contents( array $attributes ): bool {
-	return ! empty( $attributes['showMeta'] ) ||
-	       ! empty( $attributes['showTitle'] ) ||
-	       ! empty( $attributes['showSubtitle'] ) ||
-	       ! empty( $attributes['showDescription'] ) ||
-	       ! empty( $attributes['showButtons'] );
+	$hide_hero_inner_content = $attributes['sourceType'] === 'blocks' &&
+							   empty( $attributes['displayInnerContent'] );
+
+	return ! $hide_hero_inner_content &&
+		   ( ! empty( $attributes['showMeta'] ) ||
+			 ! empty( $attributes['showTitle'] ) ||
+			 ! empty( $attributes['showSubtitle'] ) ||
+			 ! empty( $attributes['showDescription'] ) ||
+			 ! empty( $attributes['showButtons'] ) );
 }
 
 function novablocks_get_post_card_contents( $post, $attributes ) {
