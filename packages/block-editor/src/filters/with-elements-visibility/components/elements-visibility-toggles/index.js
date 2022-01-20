@@ -1,3 +1,7 @@
+import { useMemo } from '@wordpress/element';
+import { useSelect } from '@wordpress/data';
+import { useEntityProp } from '@wordpress/core-data';
+
 import { ToggleGroup } from '../../../../index';
 
 import {
@@ -16,45 +20,54 @@ const ElementsVisibilityToggles = ( props ) => {
     setAttributes
   } = props;
 
-  const {
-    align,
-    columns,
-    cardLayout,
-    layoutStyle,
-    postsToShow,
-    sourceType,
-  } = attributes;
+  const postType = useSelect( ( select ) => select( 'core/editor' ).getCurrentPostType(), [] );
+  const [ meta, setMeta ] = useEntityProp( 'postType', postType, 'meta' );
 
-  // A block is considered carousel when layoutStyle,
-  // has been set to carousel, however we may extend that,
-  // so the postsToShow is > 1.
-  const IS_CAROUSEL = layoutStyle === 'carousel';
+  const blockToggles = useMemo( () => {
 
-  // Card is stacked when cardLayout has been set to stacked.
-  const CARD_IS_STACKED = cardLayout === 'stacked';
+    const {
+      align,
+      columns,
+      cardLayout,
+      layoutStyle,
+      postsToShow,
+      sourceType,
+    } = attributes;
 
-  // A block is considered hero when cardLayout is stacked,
-  // and the postsToShow is equal with 1.
-  const IS_HERO = cardLayout === 'stacked' && columns === 1 && align === 'full';
+    const toggles = [
+      ...collectionToggles,
+      ...mediaToggles,
+    ];
 
-  const blockToggles = [];
+    // A block is considered carousel when layoutStyle,
+    // has been set to carousel, however we may extend that,
+    // so the postsToShow is > 1.
+    const IS_CAROUSEL = layoutStyle === 'carousel';
 
-  blockToggles.push( ...collectionToggles );
-  blockToggles.push( ...mediaToggles );
+    // Card is stacked when cardLayout has been set to stacked.
+    const CARD_IS_STACKED = cardLayout === 'stacked';
 
-  if ( sourceType !== "blocks" ) {
-    blockToggles.push( ...contentElementsToggle );
-  } else {
-    blockToggles.push( ...contentToggles );
-  }
+    // A block is considered hero when cardLayout is stacked,
+    // and the postsToShow is equal with 1.
+    const IS_HERO = cardLayout === 'stacked' && columns === 1 && align === 'full';
 
-  if ( IS_HERO ) {
-    blockToggles.push( ...heroToggles );
-  }
+    if ( sourceType !== "blocks" ) {
+      toggles.push( ...contentElementsToggle );
+    } else {
+      toggles.push( ...contentToggles );
+    }
 
-  if ( IS_CAROUSEL ) {
-    blockToggles.push( ...carouselToggles )
-  }
+    if ( IS_HERO ) {
+      toggles.push( ...heroToggles );
+    }
+
+    if ( IS_CAROUSEL ) {
+      toggles.push( ...carouselToggles )
+    }
+
+    return toggles.filter( toggle => toggle.type !== "meta" || !! postType );
+
+  }, [ attributes, postType ] );
 
   return (
     <ToggleGroup
@@ -62,7 +75,12 @@ const ElementsVisibilityToggles = ( props ) => {
       toggles={ blockToggles.map( toggle => {
         return {
           ...toggle,
-          value: attributes[ toggle.attribute ]
+          value: attributes[ toggle.attribute ],
+          onChange: ( newValue ) => {
+            if ( toggle.type === 'meta' && !! postType ) {
+              setMeta( { ...meta, [toggle.attribute]: newValue } )
+            }
+          }
         }
       } ) }
     />

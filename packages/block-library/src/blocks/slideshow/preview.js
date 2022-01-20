@@ -63,7 +63,7 @@ const SlideshowPreview = class extends Component {
 						<div className="novablocks-slideshow__slide">
 							{ previewImage && <Fragment>
 								<SlideshowBackground { ...this.props } />
-								<div className="novablocks-slideshow__foreground novablocks-doppler__foreground novablocks-u-content-padding novablocks-u-content-align">
+								<div className="novablocks-slideshow__foreground novablocks-u-content-padding novablocks-u-content-align">
 									<div
 										className="novablocks-slideshow__inner-container"
 										dangerouslySetInnerHTML={ {

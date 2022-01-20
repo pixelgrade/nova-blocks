@@ -31,19 +31,19 @@ const transition = ( $current, $next, sign = 1 ) => {
     progress: function( elements, percentComplete, remaining, tweenValue, activeCall ) {
 
         if ( next ) {
-          next.style.left = `${ slideWidth * tweenValue * sign }px`;
+          next.style.transform = `translate3d(${ slideWidth * tweenValue * sign }px,0,0)`;
         }
 
         if ( nextFg ) {
-          nextFg.style.left = `${ ( - slideWidth ) * tweenValue * sign }px`;
+          nextFg.style.transform = `translate3d(${ ( - slideWidth ) * tweenValue * sign }px,0,0)`;
         }
 
         if ( nextBg ) {
-          nextBg.style.left = `${ ( move - slideWidth ) * tweenValue * sign }px`;
+          nextBg.style.transform = `translate3d(${ ( move - slideWidth ) * tweenValue * sign }px,0,0)`;
         }
 
         if ( currentBg ) {
-          currentBg.style.left = `${ ( - move ) * ( 1 - tweenValue ) * sign }px`;
+          currentBg.style.transform = `translate3d(${ ( - move ) * ( 1 - tweenValue ) * sign }px,0,0)`;
         }
     },
     complete: function() {

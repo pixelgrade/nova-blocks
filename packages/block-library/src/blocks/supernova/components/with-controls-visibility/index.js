@@ -44,7 +44,7 @@ const withControlsVisibility = OriginalComponent => {
         'shape-modeling-section': cardLayout !== 'stacked',
 
         // Scrolling Effect
-        'scrolling-effect-section': cardLayout === 'stacked',
+        'scrolling-effect-section': layoutStyle !== 'carousel',
 
         // Color Signal
         'emphasis-area': [ 'horizontal', 'horizontal-reverse' ].includes( cardLayout ),

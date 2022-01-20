@@ -51,7 +51,14 @@ $( function() {
 
   const $window = $( window );
   let frameRendered = false;
-	let $blocks = $( '.novablocks-doppler__wrapper' );
+
+	const $blocks = $( '.novablocks-doppler__wrapper' ).filter( ( i, container ) => {
+    const $container = $( container );
+    const $block = $container.closest( '[data-scrolling-effect]' );
+    const attributes = $block.data();
+
+    return attributes?.scrollingEffect && attributes.scrollingEffect !== 'static';
+  } );
 
 	$blocks.each( function( i, container ) {
 		const $container = $( container );
@@ -70,10 +77,8 @@ $( function() {
 		} );
 
 		const $background = $container.find( '.novablocks-doppler__target' );
-    const $foreground = $container.find( '.novablocks-doppler__foreground' );
 
-		$container.data( 'parallax', $background );
-    $container.data( 'foreground', $foreground );
+		$container.data( 'target', $background );
 
     function parallaxUpdateState() {
 			const newConfig = Object.assign( {}, config, getConfig( container ) );
@@ -96,36 +101,32 @@ $( function() {
 
 	function parallaxUpdateLoop() {
 
-		if ( ! frameRendered ) {
+    $blocks.each( function( i, container ) {
+      const $container = $( container );
+      const $block = $container.closest( '[data-scrolling-effect]' );
+      const attributes = $block.data();
 
-			$blocks.each( function( i, container ) {
-				const $container = $( container );
-        const $block = $container.closest( '[data-scrolling-effect]' );
-        const attributes = $block.data();
+      if ( ! attributes ) {
+        return;
+      }
 
-        if ( ! attributes ) {
-          return;
-        }
+      const state = $container.data( 'state' );
+      const config = $container.data( 'config' );
+      const cfg = Object.assign( {}, state, config );
+      const fixed = ! isTricky( container );
+      const props = getProps( cfg, attributes, fixed );
+      const styles = getStylesFromProps( props );
 
-        const $background = $container.find( '.novablocks-doppler__target' );
-        const $foreground = $container.find( '.novablocks-doppler__foreground' );
+      $container.data( 'styles', styles );
+    } );
 
-				const state = $container.data( 'state' );
-				const config = $container.data( 'config' );
-				const cfg = Object.assign( {}, state, config );
-        const fixed = ! isTricky( container );
-				const props = getProps( cfg, attributes, fixed );
+    $blocks.each( function( i, container ) {
+      const $container = $( container );
+      const $background = $container.data( 'target' );
+      $background.css( $container.data( 'styles' ) );
+    } );
 
-				$foreground.css( 'transform', `translate3d(0,${ -props.moveY * props.parallaxAmount }px,0)` );
-
-				let styles = getStylesFromProps( props );
-
-        $background.css( styles );
-			} );
-
-			frameRendered = true;
-		}
-		requestAnimationFrame( parallaxUpdateLoop );
+    requestAnimationFrame( parallaxUpdateLoop );
 	}
 
 	requestAnimationFrame( parallaxUpdateLoop );
