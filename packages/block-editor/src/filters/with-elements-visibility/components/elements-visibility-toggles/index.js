@@ -79,6 +79,8 @@ const ElementsVisibilityToggles = ( props ) => {
           onChange: ( newValue ) => {
             if ( toggle.type === 'meta' && !! postType ) {
               setMeta( { ...meta, [toggle.attribute]: newValue } )
+            } else {
+              setAttributes( { [toggle.attribute]: newValue } );
             }
           }
         }

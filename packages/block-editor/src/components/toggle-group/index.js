@@ -6,6 +6,7 @@ import {
 import {
 	Fragment,
 	useState,
+  useCallback,
 } from '@wordpress/element';
 
 import {
@@ -36,6 +37,17 @@ const ToggleGroup = ( props ) => {
 	const enabledTransitions = useTransition( enabledToggles, config );
 	const disabledTransitions = useTransition( disabledToggles, config );
 
+  const getOnChangeCallback = useCallback( item => {
+    return ( value ) => {
+
+      if ( typeof item.onChange === 'function' ) {
+        item.onChange( value );
+      }
+
+      onChange( { [item.attribute]: value } );
+    }
+  }, [] );
+
 	return (
 		<div className={ 'components-toggle-group__panel' } key={ 'toggle-group-controls' }>
 			<div className={ 'components-toggle-group' }>
@@ -49,13 +61,7 @@ const ToggleGroup = ( props ) => {
 										  <ToggleControl
 											  label={ item.label }
 											  checked={ !! item.value }
-                        onChange={ ( value ) => {
-                          if ( typeof item.onChange === 'function' ) {
-                            item.onChange( value );
-                          } else {
-                            onChange( value );
-                          }
-                        } }
+                        onChange={ getOnChangeCallback( item ) }
 										  />
 									  </div>
 								  </div>
@@ -76,13 +82,7 @@ const ToggleGroup = ( props ) => {
 											  <ToggleControl
 												  label={ item.label }
 												  checked={ !! item.value }
-												  onChange={ ( value ) => {
-                            if ( typeof item.onChange === 'function' ) {
-                              item.onChange( value );
-                            } else {
-                              onChange( value );
-                            }
-                          } }
+												  onChange={ getOnChangeCallback( item ) }
 											  />
 										  </div>
 									  </div>
