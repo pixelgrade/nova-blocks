@@ -25,7 +25,6 @@ const initializeCarousels = () => {
 
     const SLICK_OPTIONS = {
 //      rows: 0,
-      useTransform: false, // to allow parallax effect inside
       slidesToShow: attributes.columns,
       dots: attributes.showPagination === 1,
       dotsClass: `slick-dots ${PALETTE_CLASS} ${PALETTE_VARIATION_CLASS} ${CONTENT_SIGNAL_CLASS}`,

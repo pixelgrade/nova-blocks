@@ -51,7 +51,14 @@ $( function() {
 
   const $window = $( window );
   let frameRendered = false;
-	let $blocks = $( '.novablocks-doppler__wrapper' );
+
+	const $blocks = $( '.novablocks-doppler__wrapper' ).filter( ( i, container ) => {
+    const $container = $( container );
+    const $block = $container.closest( '[data-scrolling-effect]' );
+    const attributes = $block.data();
+
+    return attributes?.scrollingEffect && attributes.scrollingEffect !== 'static';
+  } );
 
 	$blocks.each( function( i, container ) {
 		const $container = $( container );
