@@ -55,6 +55,7 @@ function novablocks_register_settings() {
 		]
 	);
 }
+
 add_action( 'admin_init', 'novablocks_register_settings' );
 add_action( 'rest_api_init', 'novablocks_register_settings' );
 
@@ -1169,7 +1170,7 @@ function novablocks_get_media_composition_markup( array $attributes ): string {
 	}
 
 	if ( count( $images ) === 1 ) {
-		return novablocks_get_collection_card_media_markup( $images[0] );
+		return novablocks_get_collection_card_media_markup( $images[0], $attributes );
 	}
 
 	$attributes_config = novablocks_merge_attributes_from_array( [
@@ -1357,7 +1358,7 @@ function novablocks_get_media_composition_markup( array $attributes ): string {
 							'sizes'                            => implode( ', ', $sizes ),
 						] ) . PHP_EOL;
 				} else {
-					$output .= '<img class="novablocks-media-composition__image" ' . $data_attrs . ' src="' . $url . '" alt="' . ( ! empty( $image['alt'] ) ? esc_attr( $image['alt'] ) : '' ) . '" />' . PHP_EOL;
+					$output .= '<img class="novablocks-media-composition__image" ' . $data_attrs . ' src="' . esc_url( $url ) . '" alt="' . ( ! empty( $image['alt'] ) ? esc_attr( $image['alt'] ) : '' ) . '" />' . PHP_EOL;
 				}
 			}
 
@@ -1602,7 +1603,14 @@ function novablocks_get_collection_header_output( array $attributes ): string {
 	return $output;
 }
 
-function novablocks_get_collection_card_media_markup( array $media ): string {
+/**
+ * @param array $media Details about the actual media (image/video).
+ * @param array $attributes The attributes of the block containing this media (probably supernova).
+ *
+ * @return string
+ *
+ */
+function novablocks_get_collection_card_media_markup( array $media, array $attributes ): string {
 
 	$media = wp_parse_args( $media, [
 		'type'  => 'image',
@@ -1614,19 +1622,159 @@ function novablocks_get_collection_card_media_markup( array $media ): string {
 
 	$output = '';
 
-	if ( ! empty( $media['url'] ) ) {
+	$url             = '';
+
+	$attachment       = false;
+	$attachment_image = false;
+	if ( is_numeric( $media['id'] ) && intval( $media['id'] ) > 0 ) {
+		$attachment = get_post( $media['id'] );
+
+		if ( ! empty( $attachment ) && $attachment->post_type === 'attachment' ) {
+			$attachment_image = wp_get_attachment_image_src( $media['id'], 'novablocks_big' );
+			if ( ! empty( $attachment_image[0] ) ) {
+				$url = $attachment_image[0];
+			}
+		}
+	}
+
+	// Fallback for import.
+	if ( empty( $url ) ) {
+		$url = novablocks_get_image_url( $media, 'novablocks_medium' );
+	}
+
+	if ( ! empty( $url ) ) {
 		if ( isset( $media['type'] ) && $media['type'] === 'video' ) {
 			$output .= '<video class="supernova-item__media" data-shape-modeling-target muted autoplay loop playsinline src="' . esc_url( $media['url'] ) . '"></video>';
 		} else {
-			if ( ! empty( $media['id'] ) && wp_attachment_is_image( $media['id'] ) ) {
+			if ( ! empty( $attachment ) && $attachment->post_type === 'attachment' ) {
 				// Since we have an attachment, generate a WordPress-standard image with all the bells and whistles (like srcsets).
-				$output .= wp_get_attachment_image( $media['id'], 'novablocks_large', false, [
-					'data-shape-modeling-target' => '',
-					'class'                      => 'supernova-item__media',
-					'src'                        => novablocks_get_image_url( $media, 'novablocks_medium' ),
-				] );
+				// We use a bigger image size ('novablocks_big') since we rely on srcsets for the browser to load smaller images when that is the case.
+
+				// Now try to determine some closer-to-reality sizes than the default ones (ie. full-width images).
+				$sizes = [];
+				if ( ! empty( $attachment_image ) && is_array( $attachment_image ) ) {
+					list( $attachment_image_src, $attachment_image_width, $attachment_image_height ) = $attachment_image;
+
+					// Construct the sizes list, starting with the smallest screen sizes.
+					// Please remember that all this refers to sizes from the responsive images mechanism's point-of-view.
+					// For example, "full-width images" means that we `assume` images will occupy the entire screen width,
+					// not that they will actually do so. Heuristics is everywhere here.
+
+					// 1. 768px or smaller -> Full-width images.
+					$sizes[] = '(max-width: 768px) 100vw';
+
+					// Next we will try to rely on the collection layout to do better than "everything is full-width".
+					// 2. Classic layout -> we can rely on the number of columns to do some safe guesses.
+					if ( ! empty( $attributes['layoutStyle'] )
+					     && 'classic' === $attributes['layoutStyle']
+					     && ! empty( $attributes['columns'] ) && $attributes['columns'] > 1 ) {
+
+						// All images will be 100 divided by the number of columns, in vw.
+						$column_ratio = round( 100 / $attributes['columns'] );
+
+						// But, we need to account for taller layouts that feature the image as a background.
+						if ( ! empty( $attributes['cardLayout'] ) && 'stacked' === $attributes['cardLayout'] ) {
+							if ( ! empty( $attributes['minHeightFallback'] ) && $attributes['minHeightFallback'] >= 50 ) {
+								if ( $attributes['minHeightFallback'] < 75 ) {
+									// We increase the ratio of each column.
+									$column_ratio = round( $column_ratio * 1.25 );
+								} else {
+									// This is a very tall image. Let it be since we don't want blurry images.
+									$column_ratio = 100;
+								}
+							}
+						} else {
+							// The other stacking layouts are much more forgiving in terms of image size.
+							// We don't need to do anything right now.
+						}
+
+						// We have no use for 100vw as a hint for the browser to pick an image from the srcset.
+						// (ie. it makes no sense).
+						if ( $column_ratio < 100 ) {
+							$sizes[] = '(max-width: ' . $attachment_image_width . 'px) ' . intval( $column_ratio ) . 'vw';
+						}
+					}
+					// 3. Carousel layout -> we can rely on the number of columns to do some safe guesses.
+					if ( ! empty( $attributes['layoutStyle'] )
+					     && 'carousel' === $attributes['layoutStyle']
+					     && ! empty( $attributes['columns'] ) && $attributes['columns'] > 1 ) {
+
+						// All images will be 100 divided by the number of columns, in vw.
+						$column_ratio = round( 100 / $attributes['columns'] );
+
+						// But, we need to account for taller layouts that feature the image as a background.
+						if ( ! empty( $attributes['cardLayout'] ) && 'stacked' === $attributes['cardLayout'] ) {
+							if ( ! empty( $attributes['minHeightFallback'] ) && $attributes['minHeightFallback'] >= 50 ) {
+								if ( $attributes['minHeightFallback'] < 75 ) {
+									// We increase the ratio of each column.
+									$column_ratio = round( $column_ratio * 1.25 );
+								} else {
+									// This is a very tall layout. Let it be since we don't want blurry images.
+									$column_ratio = 100;
+								}
+							}
+						} else {
+							// The other stacking layouts are much more forgiving in terms of image size.
+							// We don't need to do anything right now.
+						}
+
+						// We have no use for 100vw as a hint for the browser to pick an image from the srcset.
+						// (ie. it makes no sense).
+						if ( $column_ratio < 100 ) {
+							$sizes[] = '(max-width: ' . $attachment_image_width . 'px) ' . intval( $column_ratio ) . 'vw';
+						}
+					}
+					// 4. Parametric layout -> we don't have much to rely on, but will give it a try.
+					// We will divide the grid columns by 2 (assume each image takes 2 columns).
+					if ( ! empty( $attributes['layoutStyle'] )
+					     && 'parametric' === $attributes['layoutStyle']
+					     && ! empty( $attributes['gridcolumns'] ) && ( $attributes['gridcolumns'] / 2 ) > 2 ) {
+
+						// All images will be 100 divided by the number of columns/2, in vw.
+						$column_ratio = round( 100 / ( $attributes['gridcolumns'] / 2 ) );
+
+						// If the featured item is very large, we will increase the size.
+						if ( ! empty( $attributes['featuresize'] ) && $attributes['featuresize'] > 2 ) {
+							$column_ratio = round( 100 / ( $attributes['gridcolumns'] / $attributes['featuresize'] ) );
+						} else {
+							// We need to account for taller layouts that feature the image as a background.
+							if ( ! empty( $attributes['cardLayout'] ) && 'stacked' === $attributes['cardLayout'] ) {
+								if ( ! empty( $attributes['minHeightFallback'] ) && $attributes['minHeightFallback'] >= 50 ) {
+									if ( $attributes['minHeightFallback'] < 75 ) {
+										// We increase the ratio of each column.
+										$column_ratio = round( $column_ratio * 1.25 );
+									} else {
+										// This is a very tall layout. Let it be since we don't want blurry images.
+										$column_ratio = 100;
+									}
+								}
+							} else {
+								// The other stacking layouts are much more forgiving in terms of image size.
+								// We don't need to do anything right now.
+							}
+						}
+
+						// We have no use for 100vw as a hint for the browser to pick an image from the srcset.
+						// (ie. it makes no sense).
+						if ( $column_ratio < 100 ) {
+							$sizes[] = '(max-width: ' . $attachment_image_width . 'px) ' . intval( $column_ratio ) . 'vw';
+						}
+					}
+
+					// Finally, add the biggest image size we have.
+					$sizes[] = $attachment_image_width . 'px';
+				}
+
+				// We use the smaller `novablocks_large` image size as a fallback
+				// since we rely on srcsets that include all image sizes, even bigger ones.
+				$output .= wp_get_attachment_image( $attachment->ID, 'novablocks_large', false, [
+						'data-shape-modeling-target'       => '',
+						'class'                            => 'supernova-item__media',
+						'src'                              => $url,
+						'sizes'                            => implode( ', ', $sizes ),
+					] ) . PHP_EOL;
 			} else {
-				$output .= '<img class="supernova-item__media" data-shape-modeling-target src="' . esc_url( novablocks_get_image_url( $media, 'novablocks_medium' ) ) . '" alt="' . esc_attr( $media['alt'] ) . '" />';
+				$output .= '<img class="supernova-item__media" data-shape-modeling-target src="' . esc_url( $url ) . '" alt="' . ( ! empty( $media['alt'] ) ? esc_attr( $media['alt'] ) : '' ) . '" />' . PHP_EOL;
 			}
 		}
 	} else {
@@ -2237,6 +2385,7 @@ function novablocks_get_collection_card_markup( $media, $content, array $attribu
 	if ( $attributes['columns'] === 1 &&
 	     $attributes['cardLayout'] === 'stacked' &&
 	     $attributes['layoutStyle'] !== 'carousel' ) {
+
 		$data_attributes_array[] = 'position-indicators';
 	}
 
@@ -2246,14 +2395,16 @@ function novablocks_get_collection_card_markup( $media, $content, array $attribu
 
 	<div class="nb-collection__layout-item">
 		<div class="<?php echo esc_attr( join( ' ', $cardClasses ) ); ?>" <?php echo join( ' ', $data_attributes ); ?>>
-			<?php if ( ! empty( $media ) && ! empty( $attributes['showMedia'] ) ) { ?>
-				<?php echo $media; ?>
-			<?php } ?>
-			<?php if ( novablocks_show_card_contents( $attributes ) && ! empty( $content ) ) { ?>
+			<?php if ( ! empty( $media ) && ! empty( $attributes['showMedia'] ) ) {
+				echo $media;
+			}
+			if ( novablocks_show_card_contents( $attributes ) && ! empty( $content ) ) { ?>
 				<div class="<?php echo esc_attr( join( ' ', $contentClasses ) ); ?>">
 					<div class="supernova-item__inner-container">
-						<?php echo $content; ?>
-						<?php novablocks_render_scroll_indicator( $attributes ); ?>
+						<?php
+						echo $content;
+						novablocks_render_scroll_indicator( $attributes );
+						?>
 					</div>
 				</div>
 			<?php } ?>
@@ -2265,13 +2416,13 @@ function novablocks_get_collection_card_markup( $media, $content, array $attribu
 }
 
 function novablocks_get_collection_card_markup_from_post( $post, array $attributes ): string {
-	$media = novablocks_get_collection_card_media_markup( [
+	$media_markup = novablocks_get_collection_card_media_markup( [
 		'type' => 'image',
 		'url'  => get_the_post_thumbnail_url( $post ),
 		'id'   => get_post_thumbnail_id( $post ),
-	] );
+	], $attributes );
 
-	$media_markup = novablocks_get_collection_card_media_markup_wrapped( $media, get_permalink( $post ) );
+	$media_markup = novablocks_get_collection_card_media_markup_wrapped( $media_markup, get_permalink( $post ) );
 
 	$content = novablocks_get_post_card_contents( $post, $attributes );
 
@@ -2499,13 +2650,16 @@ function novablocks_get_posts_collection_cards_markup( array $attributes ): stri
 
 	$output = '';
 
-	$args  = novablocks_build_articles_query( $attributes );
-	$posts = get_posts( $args );
-
+	$posts = get_posts( novablocks_build_articles_query( $attributes ) );
 	foreach ( $posts as $post ) {
-		array_push( $novablocks_rendered_posts_ids, $post->ID );
 		$card_markup = novablocks_get_collection_card_markup_from_post( $post, $attributes );
-		$output      .= apply_filters( 'novablocks_get_collection_card_markup', $card_markup, $post, $attributes );
+		$markup      = apply_filters( 'novablocks_get_collection_card_markup', $card_markup, $post, $attributes );
+
+		if ( ! empty( $markup ) ) {
+			$output .= $markup;
+			// Only remember posts that were actually rendered.
+			array_push( $novablocks_rendered_posts_ids, $post->ID );
+		}
 	}
 
 	return $output;

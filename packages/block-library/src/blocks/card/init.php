@@ -25,7 +25,7 @@ if ( ! function_exists( 'novablocks_render_card_block' ) ) {
 
 		$attributes_config = novablocks_get_card_attributes();
 		$attributes        = novablocks_get_attributes_with_defaults( $attributes, $attributes_config );
-		$card_media        = novablocks_get_collection_card_media_markup( $attributes['media'] );
+		$card_media        = novablocks_get_collection_card_media_markup( $attributes['media'], $attributes );
 
 		ob_start();
 
