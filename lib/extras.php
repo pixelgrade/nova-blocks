@@ -55,7 +55,6 @@ function novablocks_register_settings() {
 		]
 	);
 }
-
 add_action( 'admin_init', 'novablocks_register_settings' );
 add_action( 'rest_api_init', 'novablocks_register_settings' );
 

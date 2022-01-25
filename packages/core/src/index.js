@@ -14,7 +14,6 @@ export class novaBlocks {
 		  icon: getSvg( iconSvg )
 		} );
 	}
-
 }
 
 wp.novaBlocks = new novaBlocks();
