@@ -1174,7 +1174,7 @@ function novablocks_get_media_composition_markup( array $attributes ): string {
 	] );
 
 	$data_attributes_array = array_map( 'novablocks_camel_case_to_kebab_case', array_keys( $attributes_config ) );
-	$data_attributes       = novablocks_get_data_attributes( $data_attributes_array, $attributes, ['images'] );
+	$data_attributes       = novablocks_get_data_attributes( $data_attributes_array, $attributes, [ 'images' ] );
 
 	$output .= '<div class="novablocks-media-composition" ' . join( ' ', $data_attributes ) . '>';
 	$output .= '<div class="novablocks-media-composition__grid">';
@@ -1192,14 +1192,15 @@ function novablocks_get_media_composition_markup( array $attributes ): string {
 		$url             = '';
 		$has_description = false;
 
-		$attachment = false;
+		$attachment       = false;
+		$attachment_image = false;
 		if ( is_numeric( $image['id'] ) && intval( $image['id'] ) > 0 ) {
 			$attachment = get_post( $image['id'] );
 
 			if ( ! empty( $attachment ) && $attachment->post_type === 'attachment' ) {
-				$attachment_src = wp_get_attachment_image_src( $image['id'], 'novablocks_big' );
-				if ( ! empty( $attachment_src[0] ) ) {
-					$url = $attachment_src[0];
+				$attachment_image = wp_get_attachment_image_src( $image['id'], 'novablocks_big' );
+				if ( ! empty( $attachment_image[0] ) ) {
+					$url = $attachment_image[0];
 				}
 
 				if ( ! empty( $attachment->post_content ) ) {
@@ -1217,28 +1218,147 @@ function novablocks_get_media_composition_markup( array $attributes ): string {
 
 		if ( ! empty( $url ) ) {
 			$output .= '<div class="novablocks-media-composition__grid-item">';
-			$output .= '<div class="novablocks-media-composition__grid-item-media">';
+			$output .= '<div class="novablocks-media-composition__grid-item-media">' . PHP_EOL;
 
 			$data_attrs = 'data-shape-modeling-target data-shape-modeling-shape-offset="' . esc_attr( $index ) . '"';
 
 			if ( isset( $image['type'] ) && $image['type'] === 'video' ) {
-				$output .= '<video class="novablocks-media-composition__image" ' . $data_attrs . ' muted autoplay loop playsinline src="' . esc_url( $image['url'] ) . '"/>';
+				$output .= '<video class="novablocks-media-composition__image" ' . $data_attrs . ' muted autoplay loop playsinline src="' . esc_url( $image['url'] ) . '"/>' . PHP_EOL;
 			} else {
 				if ( ! empty( $attachment ) && $attachment->post_type === 'attachment' ) {
 					// Since we have an attachment, generate a WordPress-standard image with all the bells and whistles (like srcsets).
-					// We use a bigger image size since we rely on srcsets for the browser to load smaller images when that is the case.
-					$output .= wp_get_attachment_image( $attachment->ID, 'novablocks_big', false, [
-						'data-shape-modeling-target'       => '',
-						'data-shape-modeling-shape-offset' => $index,
-						'class'                            => 'novablocks-media-composition__image',
-						'src'                              => $url,
-					] );
+					// We use a bigger image size ('novablocks_big') since we rely on srcsets for the browser to load smaller images when that is the case.
+
+					// Now try to determine some closer-to-reality sizes than the default ones (ie. full-width images).
+					$sizes = [];
+					if ( ! empty( $attachment_image ) && is_array( $attachment_image ) ) {
+						list( $attachment_image_src, $attachment_image_width, $attachment_image_height ) = $attachment_image;
+
+						// Construct the sizes list, starting with the smallest screen sizes.
+						// Please remember that all this refers to sizes from the responsive images mechanism's point-of-view.
+						// For example, "full-width images" means that we `assume` images will occupy the entire screen width,
+						// not that they will actually do so. Heuristics is everywhere here.
+
+						// 1. 768px or smaller -> Full-width images.
+						$sizes[] = '(max-width: 768px) 100vw';
+
+						// Next we will try to rely on the collection layout to do better than "everything is full-width".
+						// 2. Classic layout -> we can rely on the number of columns to do some safe guesses.
+						if ( ! empty( $attributes['layoutStyle'] )
+						     && 'classic' === $attributes['layoutStyle']
+						     && ! empty( $attributes['columns'] ) && $attributes['columns'] > 1 ) {
+
+							// All images will be 100 divided by the number of columns, in vw.
+							$column_ratio = round( 100 / $attributes['columns'] );
+
+							// But, we need to account for taller layouts that feature the image as a background.
+							if ( ! empty( $attributes['cardLayout'] ) && 'stacked' === $attributes['cardLayout'] ) {
+								if ( ! empty( $attributes['minHeightFallback'] ) && $attributes['minHeightFallback'] >= 50 ) {
+									if ( $attributes['minHeightFallback'] < 75 ) {
+										// We increase the ratio of each column.
+										$column_ratio = round( $column_ratio * 1.25 );
+									} else {
+										// This is a very tall image. Let it be since we don't want blurry images.
+										$column_ratio = 100;
+									}
+								}
+							} else {
+								// The other stacking layouts are much more forgiving in terms of image size.
+								// We don't need to do anything right now.
+							}
+
+							// We have no use for 100vw as a hint for the browser to pick an image from the srcset.
+							// (ie. it makes no sense).
+							if ( $column_ratio < 100 ) {
+								$sizes[] = '(max-width: ' . $attachment_image_width . 'px) ' . intval( $column_ratio ) . 'vw';
+							}
+						}
+						// 3. Carousel layout -> we can rely on the number of columns to do some safe guesses.
+						if ( ! empty( $attributes['layoutStyle'] )
+						     && 'carousel' === $attributes['layoutStyle']
+						     && ! empty( $attributes['columns'] ) && $attributes['columns'] > 1 ) {
+
+							// All images will be 100 divided by the number of columns, in vw.
+							$column_ratio = round( 100 / $attributes['columns'] );
+
+							// But, we need to account for taller layouts that feature the image as a background.
+							if ( ! empty( $attributes['cardLayout'] ) && 'stacked' === $attributes['cardLayout'] ) {
+								if ( ! empty( $attributes['minHeightFallback'] ) && $attributes['minHeightFallback'] >= 50 ) {
+									if ( $attributes['minHeightFallback'] < 75 ) {
+										// We increase the ratio of each column.
+										$column_ratio = round( $column_ratio * 1.25 );
+									} else {
+										// This is a very tall layout. Let it be since we don't want blurry images.
+										$column_ratio = 100;
+									}
+								}
+							} else {
+								// The other stacking layouts are much more forgiving in terms of image size.
+								// We don't need to do anything right now.
+							}
+
+							// We have no use for 100vw as a hint for the browser to pick an image from the srcset.
+							// (ie. it makes no sense).
+							if ( $column_ratio < 100 ) {
+								$sizes[] = '(max-width: ' . $attachment_image_width . 'px) ' . intval( $column_ratio ) . 'vw';
+							}
+						}
+						// 4. Parametric layout -> we don't have much to rely on, but will give it a try.
+						// We will divide the grid columns by 2 (assume each image takes 2 columns).
+						if ( ! empty( $attributes['layoutStyle'] )
+						     && 'parametric' === $attributes['layoutStyle']
+						     && ! empty( $attributes['gridcolumns'] ) && ( $attributes['gridcolumns'] / 2 ) > 2 ) {
+
+							// All images will be 100 divided by the number of columns/2, in vw.
+							$column_ratio = round( 100 / ( $attributes['gridcolumns'] / 2 ) );
+
+							// If the featured item is very large, we will increase the size.
+							if ( ! empty( $attributes['featuresize'] ) && $attributes['featuresize'] > 2 ) {
+								$column_ratio = round( 100 / ( $attributes['gridcolumns'] / $attributes['featuresize'] ) );
+							} else {
+								// We need to account for taller layouts that feature the image as a background.
+								if ( ! empty( $attributes['cardLayout'] ) && 'stacked' === $attributes['cardLayout'] ) {
+									if ( ! empty( $attributes['minHeightFallback'] ) && $attributes['minHeightFallback'] >= 50 ) {
+										if ( $attributes['minHeightFallback'] < 75 ) {
+											// We increase the ratio of each column.
+											$column_ratio = round( $column_ratio * 1.25 );
+										} else {
+											// This is a very tall layout. Let it be since we don't want blurry images.
+											$column_ratio = 100;
+										}
+									}
+								} else {
+									// The other stacking layouts are much more forgiving in terms of image size.
+									// We don't need to do anything right now.
+								}
+							}
+
+							// We have no use for 100vw as a hint for the browser to pick an image from the srcset.
+							// (ie. it makes no sense).
+							if ( $column_ratio < 100 ) {
+								$sizes[] = '(max-width: ' . $attachment_image_width . 'px) ' . intval( $column_ratio ) . 'vw';
+							}
+						}
+
+						// Finally, add the biggest image size we have.
+						$sizes[] = $attachment_image_width . 'px';
+					}
+
+					// We use the smaller `novablocks_large` image size as a fallback
+					// since we rely on srcsets that include all image sizes, even bigger ones.
+					$output .= wp_get_attachment_image( $attachment->ID, 'novablocks_large', false, [
+							'data-shape-modeling-target'       => '',
+							'data-shape-modeling-shape-offset' => $index,
+							'class'                            => 'novablocks-media-composition__image',
+							'src'                              => $url,
+							'sizes'                            => implode( ', ', $sizes ),
+						] ) . PHP_EOL;
 				} else {
-					$output .= '<img class="novablocks-media-composition__image" ' . $data_attrs . ' src="' . $url . '" alt="' . ( ! empty( $image['alt'] ) ? esc_attr( $image['alt'] ) : '' ) . '" />';
+					$output .= '<img class="novablocks-media-composition__image" ' . $data_attrs . ' src="' . $url . '" alt="' . ( ! empty( $image['alt'] ) ? esc_attr( $image['alt'] ) : '' ) . '" />' . PHP_EOL;
 				}
 			}
 
-			$output .= '</div>';
+			$output .= '</div>' . PHP_EOL;
 
 			if ( $has_caption || $has_description ) {
 				$output .= '<div class="novablocks-media-composition__grid-item-info">';

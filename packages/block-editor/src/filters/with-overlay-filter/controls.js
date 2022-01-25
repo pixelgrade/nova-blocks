@@ -20,7 +20,7 @@ import { useSupports } from "../../hooks";
 
 import { generateDuotonePresetsFromPalettes, generateColorPalettes } from "./utils";
 
-const PALETTES = styleManager.palettes;
+const PALETTES = styleManager.colorsConfig;
 const FILTERED_PALETTES = PALETTES.filter( palette => ! isFunctionalPalette( palette ) );
 const DUOTONE_PALETTES = generateDuotonePresetsFromPalettes( FILTERED_PALETTES );
 const COLOR_PALETTES = generateColorPalettes( FILTERED_PALETTES );
@@ -143,12 +143,12 @@ const CustomDuotonePicker = ( props ) => {
 
   return (
     <Fragment>
-      <ControlsGroup title={ __( 'Duotone Presets', '__plugin_txtd' ) }>
+      <ControlsGroup title={ __( 'Duotone Presets', '__plugin_txtd' ) } key={'duotone-presets'}>
         <DuotonePicker selected={ duotoneValue } options={ options } onChange={ value => {
           setAttributes( { overlayFilterDuotoneConfig: options[value].data } );
         } } />
       </ControlsGroup>
-      <ControlsGroup title={ __( 'Highlights', '__plugin_txtd' ) }>
+      <ControlsGroup title={ __( 'Highlights', '__plugin_txtd' ) } key={'highlights'}>
         <ColorPicker selected={ toValue } options={ colorOptions } onChange={ value => {
           setAttributes( {
             overlayFilterDuotoneConfig: {
@@ -158,7 +158,7 @@ const CustomDuotonePicker = ( props ) => {
           } );
         } } />
       </ControlsGroup>
-      <ControlsGroup title={ __( 'Shadows', '__plugin_txtd' ) }>
+      <ControlsGroup title={ __( 'Shadows', '__plugin_txtd' ) } key={'shadows'}>
         <ColorPicker selected={ fromValue } options={ colorOptions } onChange={ value => {
           setAttributes( {
             overlayFilterDuotoneConfig: {

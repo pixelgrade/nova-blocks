@@ -29,7 +29,7 @@ export const getSiteColorVariation = () => {
 };
 
 export const getPaletteConfig = ( palette ) => {
-  const palettes = window?.styleManager?.palettes;
+  const palettes = window?.styleManager?.colorsConfig;
 
   if ( ! Array.isArray( palettes ) || ! palettes.length ) {
     return { sourceIndex: 6 }
