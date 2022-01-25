@@ -1174,7 +1174,7 @@ function novablocks_get_media_composition_markup( array $attributes ): string {
 	] );
 
 	$data_attributes_array = array_map( 'novablocks_camel_case_to_kebab_case', array_keys( $attributes_config ) );
-	$data_attributes       = novablocks_get_data_attributes( $data_attributes_array, $attributes );
+	$data_attributes       = novablocks_get_data_attributes( $data_attributes_array, $attributes, ['images'] );
 
 	$output .= '<div class="novablocks-media-composition" ' . join( ' ', $data_attributes ) . '>';
 	$output .= '<div class="novablocks-media-composition__grid">';
@@ -1197,7 +1197,7 @@ function novablocks_get_media_composition_markup( array $attributes ): string {
 			$attachment = get_post( $image['id'] );
 
 			if ( ! empty( $attachment ) && $attachment->post_type === 'attachment' ) {
-				$attachment_src = wp_get_attachment_image_src( $image['id'], 'novablocks_large' );
+				$attachment_src = wp_get_attachment_image_src( $image['id'], 'novablocks_big' );
 				if ( ! empty( $attachment_src[0] ) ) {
 					$url = $attachment_src[0];
 				}
@@ -1226,12 +1226,13 @@ function novablocks_get_media_composition_markup( array $attributes ): string {
 			} else {
 				if ( ! empty( $attachment ) && $attachment->post_type === 'attachment' ) {
 					// Since we have an attachment, generate a WordPress-standard image with all the bells and whistles (like srcsets).
-					$output .= wp_get_attachment_image( $attachment->ID, 'novablocks_large', false, [
-						'data-shape-modeling-target' => '',
+					// We use a bigger image size since we rely on srcsets for the browser to load smaller images when that is the case.
+					$output .= wp_get_attachment_image( $attachment->ID, 'novablocks_big', false, [
+						'data-shape-modeling-target'       => '',
 						'data-shape-modeling-shape-offset' => $index,
-						'class' => 'novablocks-media-composition__image',
-						'src' => $url,
-					]);
+						'class'                            => 'novablocks-media-composition__image',
+						'src'                              => $url,
+					] );
 				} else {
 					$output .= '<img class="novablocks-media-composition__image" ' . $data_attrs . ' src="' . $url . '" alt="' . ( ! empty( $image['alt'] ) ? esc_attr( $image['alt'] ) : '' ) . '" />';
 				}
@@ -1480,13 +1481,13 @@ function novablocks_get_collection_header_output( array $attributes ): string {
 
 function novablocks_get_collection_card_media_markup( array $media ): string {
 
-	$media_args = [
+	$media = wp_parse_args( $media, [
 		'type'  => 'image',
 		'url'   => '',
 		'alt'   => '',
 		'sizes' => [],
-	];
-	$media      = wp_parse_args( $media, $media_args );
+		'id'    => false,
+	] );
 
 	$output = '';
 
@@ -1494,7 +1495,16 @@ function novablocks_get_collection_card_media_markup( array $media ): string {
 		if ( isset( $media['type'] ) && $media['type'] === 'video' ) {
 			$output .= '<video class="supernova-item__media" data-shape-modeling-target muted autoplay loop playsinline src="' . esc_url( $media['url'] ) . '"></video>';
 		} else {
-			$output .= '<img class="supernova-item__media" data-shape-modeling-target src="' . esc_url( novablocks_get_image_url( $media, 'novablocks_medium' ) ) . '" alt="' . esc_attr( $media['alt'] ) . '" />';
+			if ( ! empty( $media['id'] ) && wp_attachment_is_image( $media['id'] ) ) {
+				// Since we have an attachment, generate a WordPress-standard image with all the bells and whistles (like srcsets).
+				$output .= wp_get_attachment_image( $media['id'], 'novablocks_large', false, [
+					'data-shape-modeling-target' => '',
+					'class'                      => 'supernova-item__media',
+					'src'                        => novablocks_get_image_url( $media, 'novablocks_medium' ),
+				] );
+			} else {
+				$output .= '<img class="supernova-item__media" data-shape-modeling-target src="' . esc_url( novablocks_get_image_url( $media, 'novablocks_medium' ) ) . '" alt="' . esc_attr( $media['alt'] ) . '" />';
+			}
 		}
 	} else {
 		$output .= '<div class="supernova-item__media supernova-item__media--placeholder" data-shape-modeling-target></div>';
@@ -2132,10 +2142,10 @@ function novablocks_get_collection_card_markup( $media, $content, array $attribu
 }
 
 function novablocks_get_collection_card_markup_from_post( $post, array $attributes ): string {
-	$media_url = get_the_post_thumbnail_url( $post );
-	$media     = novablocks_get_collection_card_media_markup( [
+	$media = novablocks_get_collection_card_media_markup( [
 		'type' => 'image',
-		'url'  => $media_url,
+		'url'  => get_the_post_thumbnail_url( $post ),
+		'id'   => get_post_thumbnail_id( $post ),
 	] );
 
 	$media_markup = novablocks_get_collection_card_media_markup_wrapped( $media, get_permalink( $post ) );

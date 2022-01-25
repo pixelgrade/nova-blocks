@@ -11,7 +11,7 @@ import { getColorSignalClassnames } from '@novablocks/utils';
 
 const grabStylesheet = ( url ) => {
   return url && `<link rel="stylesheet" href="${ url }" type="text/css"/>` || '';
-}
+};
 
 class OpenTablePreview extends Component {
 

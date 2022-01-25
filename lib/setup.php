@@ -32,6 +32,7 @@ add_action( 'after_setup_theme', 'novablocks_plugin_setup', 20 );
 
 function novablocks_add_image_sizes() {
 	add_image_size( 'novablocks_huge', 3840, 3840, false );
+	add_image_size( 'novablocks_big', 1920, 1920, false );
 	add_image_size( 'novablocks_large', 1366, 1366, false );
 	add_image_size( 'novablocks_medium', 1024, 1024, false );
 	add_image_size( 'novablocks_small', 768, 768, false );

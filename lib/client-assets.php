@@ -215,8 +215,8 @@ if ( ! function_exists( 'novablocks_register_packages_scripts' ) ) {
 		$sm_palettes_value = get_option( 'sm_advanced_palette_output', '[]' );
 		$palettes          = json_decode( $sm_palettes_value );
 
-		if ( empty( $palettes ) && function_exists( 'get_fallback_palettes' ) ) {
-			$palettes = get_fallback_palettes();
+		if ( empty( $palettes ) && function_exists( 'sm_get_fallback_palettes' ) ) {
+			$palettes = sm_get_fallback_palettes();
 		}
 
 		if ( ! empty( $palettes ) ) {
