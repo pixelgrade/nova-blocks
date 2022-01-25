@@ -55,7 +55,6 @@ function novablocks_register_settings() {
 		]
 	);
 }
-
 add_action( 'admin_init', 'novablocks_register_settings' );
 add_action( 'rest_api_init', 'novablocks_register_settings' );
 
@@ -1167,6 +1166,10 @@ function novablocks_get_media_composition_markup( array $attributes ): string {
 
 	if ( empty( $images ) || ! is_array( $images ) ) {
 		return $output;
+	}
+
+	if ( count( $images ) === 1 ) {
+		return novablocks_get_collection_card_media_markup( $images[0] );
 	}
 
 	$attributes_config = novablocks_merge_attributes_from_array( [
