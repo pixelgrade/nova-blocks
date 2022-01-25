@@ -86,6 +86,6 @@ const Edit = ( props ) => {
       <BlockControls { ...newProps } />
     </div>
   );
-}
+};
 
 export default Edit;

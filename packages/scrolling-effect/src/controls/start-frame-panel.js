@@ -51,7 +51,7 @@ const StartFramePanel = ( props ) => {
     `novablocks-focal-point-picker--${ scrollingEffect }`,
     `novablocks-focal-point-picker--start`,
     getSnapClassname( focalPoint )
-  ]
+  ];
 
   let className = classNames.join( ' ' );
 
@@ -104,6 +104,6 @@ const StartFramePanel = ( props ) => {
       }
     </PanelBody>
   )
-}
+};
 
 export default StartFramePanel;

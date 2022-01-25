@@ -24,6 +24,6 @@ const MediaCompositionPlaceholder = props => {
 			onSelect={ onSelectImages }
 		/>
 	)
-}
+};
 
 export default MediaCompositionPlaceholder;

@@ -13,12 +13,12 @@ const useAnimationFrame = callback => {
     }
     previousTimeRef.current = time;
     requestRef.current = requestAnimationFrame( animate );
-  }
+  };
 
   useEffect( () => {
     requestRef.current = requestAnimationFrame( animate );
     return () => cancelAnimationFrame( requestRef.current );
   }, [] ); // Make sure the effect runs only once
-}
+};
 
 export default useAnimationFrame;

@@ -15,6 +15,6 @@ const withElementsVisibilityAttributes = ( block ) => {
       ...attributes
     }
   };
-}
+};
 
 export default withElementsVisibilityAttributes;

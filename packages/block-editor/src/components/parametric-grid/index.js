@@ -54,6 +54,6 @@ const ParametricGrid = ( props ) => {
       }
     </div>
   )
-}
+};
 
 export default ParametricGrid;

@@ -31,7 +31,7 @@ const overwriteAttributes = ( settings ) => {
       ...attributesOverwrite
     }
   };
-}
+};
 
 addFilter( 'blocks.registerBlockType', 'novablocks/header-row/attributes-overwrite', overwriteAttributes, Number.MAX_SAFE_INTEGER );
 

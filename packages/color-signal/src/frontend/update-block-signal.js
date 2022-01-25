@@ -51,7 +51,7 @@ export const updateBlockSignal = ( block, parentVariation ) => {
   innerBlocks.forEach( innerBlock => {
     updateBlockSignal( innerBlock, finalAbsoluteVariation );
   } );
-}
+};
 
 /**
  *  * If the Palette Basis Offset value has been changed after the content has been created
@@ -73,4 +73,4 @@ export const updateAllBlocksSignal = ( siteVariation ) => {
     updateBlockSignal( block, siteVariation );
   } );
 
-}
+};

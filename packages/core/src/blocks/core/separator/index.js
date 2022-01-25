@@ -45,6 +45,6 @@ const addNovablocksSupport = ( settings ) => {
       )
     }
   }
-}
+};
 
 addFilter( 'blocks.registerBlockType', 'novablocks/separator/add-novablocks-support', addNovablocksSupport, 1 );

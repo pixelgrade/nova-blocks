@@ -9,7 +9,7 @@
  */
 window.addComment = (function (window) {
   // Avoid scope lookups on commonly used variables.
-  let document = window.document
+  let document = window.document;
 
   // Settings.
   let config = {
@@ -27,7 +27,7 @@ window.addComment = (function (window) {
     commentFormSubmitId: 'comment-form-submit',
     replyingFlagClass: 'user-is-replying',
     focusOnFieldId: 'comment',
-  }
+  };
 
   // If we have global settings, merge them with the defaults.
   if (typeof window.addComment !== 'undefined' && typeof window.addComment.config !== 'undefined') {
@@ -35,31 +35,31 @@ window.addComment = (function (window) {
   }
 
   // Cross browser MutationObserver.
-  let MutationObserver = window.MutationObserver || window.WebKitMutationObserver || window.MozMutationObserver
+  let MutationObserver = window.MutationObserver || window.WebKitMutationObserver || window.MozMutationObserver;
 
   // Check browser cuts the mustard.
-  let cutsTheMustard = 'querySelector' in document && 'addEventListener' in window
+  let cutsTheMustard = 'querySelector' in document && 'addEventListener' in window;
 
   /*
    * Check browser supports dataset.
    * !! sets the variable to true if the property exists.
    */
-  let supportsDataset = !!document.documentElement.dataset
+  let supportsDataset = !!document.documentElement.dataset;
 
   // For holding the comments wrapper element.
-  let commentsWrapperElement
+  let commentsWrapperElement;
 
   // For holding the cancel element.
-  let cancelElement
+  let cancelElement;
 
   // For holding the comment form element.
-  let commentFormElement
+  let commentFormElement;
 
   // The respond element.
-  let respondElement
+  let respondElement;
 
   // The mutation observer.
-  let observer
+  let observer;
 
   if (cutsTheMustard && document.readyState !== 'loading') {
     ready()
@@ -74,7 +74,7 @@ window.addComment = (function (window) {
    */
   function ready () {
     // Initialise the events.
-    init()
+    init();
 
     // Set up a MutationObserver to check for comments loaded late.
     observeChanges()
@@ -99,9 +99,9 @@ window.addComment = (function (window) {
     }
 
     // Get required elements.
-    commentsWrapperElement = getElementById(config.commentsWrapperId)
-    cancelElement = getElementById(config.cancelReplyId)
-    commentFormElement = getElementById(config.commentFormId)
+    commentsWrapperElement = getElementById(config.commentsWrapperId);
+    cancelElement = getElementById(config.cancelReplyId);
+    commentFormElement = getElementById(config.commentFormId);
 
     // No cancel element, no replies.
     if (!cancelElement) {
@@ -113,33 +113,33 @@ window.addComment = (function (window) {
       context = commentsWrapperElement
     }
 
-    cancelElement.addEventListener('touchstart', cancelEvent)
-    cancelElement.addEventListener('click', cancelEvent)
+    cancelElement.addEventListener('touchstart', cancelEvent);
+    cancelElement.addEventListener('click', cancelEvent);
 
     // Submit the comment form when the user types [Ctrl] or [Cmd] + [Enter].
     let submitFormHandler = function (e) {
       if ((e.metaKey || e.ctrlKey) && e.keyCode === 13) {
-        commentFormElement.removeEventListener('keydown', submitFormHandler)
-        e.preventDefault()
+        commentFormElement.removeEventListener('keydown', submitFormHandler);
+        e.preventDefault();
         // The submit button ID is 'submit' so we can't call commentFormElement.submit(). Click it instead.
-        commentFormElement.submit.click()
+        commentFormElement.submit.click();
         return false
       }
-    }
+    };
 
     if (commentFormElement) {
       commentFormElement.addEventListener('keydown', submitFormHandler)
     }
 
-    let links = []
-    links = links.concat(Array.from(replyLinks(context)))
-    links = links.concat(Array.from(openFormButtons(context)))
+    let links = [];
+    links = links.concat(Array.from(replyLinks(context)));
+    links = links.concat(Array.from(openFormButtons(context)));
 
-    let element
+    let element;
     for (let i = 0, l = links.length; i < l; i++) {
-      element = links[i]
+      element = links[i];
 
-      element.addEventListener('touchstart', clickEvent)
+      element.addEventListener('touchstart', clickEvent);
       element.addEventListener('click', clickEvent)
     }
   }
@@ -157,9 +157,9 @@ window.addComment = (function (window) {
     let observerOptions = {
       childList: true,
       subtree: true
-    }
+    };
 
-    observer = new MutationObserver(handleChanges)
+    observer = new MutationObserver(handleChanges);
     observer.observe(document.body, observerOptions)
   }
 
@@ -171,12 +171,12 @@ window.addComment = (function (window) {
    * @param {Array} mutationRecords Array of MutationRecord objects.
    */
   function handleChanges (mutationRecords) {
-    let i = mutationRecords.length
+    let i = mutationRecords.length;
 
     while (i--) {
       // Call init() once if any record in this set adds nodes.
       if (mutationRecords[i].addedNodes.length) {
-        init()
+        init();
         return
       }
     }
@@ -219,7 +219,7 @@ window.addComment = (function (window) {
    * @return {HTMLCollection|NodeList|Array}
    */
   function getElementsByClass (selectorClass, context) {
-    let allElements
+    let allElements;
 
     // childNodes is a handy check to ensure the context is a HTMLElement.
     if (!context || !context.childNodes) {
@@ -245,15 +245,15 @@ window.addComment = (function (window) {
    * @param {Event} event The calling event.
    */
   function clickEvent (event) {
-    let replyNode = getElementById(config.commentReplyTitleId)
-    let defaultReplyHeading = replyNode && replyNode.firstChild.textContent
+    let replyNode = getElementById(config.commentReplyTitleId);
+    let defaultReplyHeading = replyNode && replyNode.firstChild.textContent;
     let replyLink = this,
       commId = getDataAttribute(replyLink, 'belowelement'),
       parentId = getDataAttribute(replyLink, 'commentid'),
       respondId = getDataAttribute(replyLink, 'respondelement'),
       postId = getDataAttribute(replyLink, 'postid'),
       replyTo = getDataAttribute(replyLink, 'replyto') || defaultReplyHeading,
-      follow
+      follow;
 
     if (!commId || !respondId || !postId) {
       /*
@@ -267,7 +267,7 @@ window.addComment = (function (window) {
      * Third party comments systems can hook into this function via the global scope,
      * therefore the click event needs to reference the global scope.
      */
-    follow = window.addComment.moveForm(commId, parentId, respondId, postId, replyTo)
+    follow = window.addComment.moveForm(commId, parentId, respondId, postId, replyTo);
     if (false === follow) {
       event.preventDefault()
     }
@@ -281,27 +281,27 @@ window.addComment = (function (window) {
    * @param {Event} event The calling event.
    */
   function cancelEvent (event) {
-    let cancelLink = this
-    let temporaryFormId = config.temporaryFormId
-    let temporaryElement = getElementById(temporaryFormId)
+    let cancelLink = this;
+    let temporaryFormId = config.temporaryFormId;
+    let temporaryElement = getElementById(temporaryFormId);
 
     if (!temporaryElement || !respondElement) {
       // Conditions for cancel link fail.
       return
     }
 
-    getElementById(config.parentIdFieldId).value = '0'
+    getElementById(config.parentIdFieldId).value = '0';
 
     // Move the respond form back in place of the temporary element.
-    let headingText = temporaryElement.textContent
-    temporaryElement.parentNode.replaceChild(respondElement, temporaryElement)
-    cancelLink.style.display = 'none'
+    let headingText = temporaryElement.textContent;
+    temporaryElement.parentNode.replaceChild(respondElement, temporaryElement);
+    cancelLink.style.display = 'none';
     // Remove the "flag" (class) on the comments wrapper.
-    commentsWrapperElement.classList.remove(config.replyingFlagClass)
+    commentsWrapperElement.classList.remove(config.replyingFlagClass);
 
-    let replyHeadingElement = getElementById(config.commentReplyTitleId)
-    let replyHeadingTextNode = replyHeadingElement && replyHeadingElement.firstChild
-    let replyLinkToParent = replyHeadingTextNode && replyHeadingTextNode.nextSibling
+    let replyHeadingElement = getElementById(config.commentReplyTitleId);
+    let replyHeadingTextNode = replyHeadingElement && replyHeadingElement.firstChild;
+    let replyLinkToParent = replyHeadingTextNode && replyHeadingTextNode.nextSibling;
 
     if (replyHeadingTextNode && replyHeadingTextNode.nodeType === Node.TEXT_NODE && headingText) {
       if (replyLinkToParent && 'A' === replyLinkToParent.nodeName && replyLinkToParent.id !== config.cancelReplyId) {
@@ -311,7 +311,7 @@ window.addComment = (function (window) {
       replyHeadingTextNode.textContent = headingText
     } else {
       // We will use the replyTo for the submit button text.
-      let submitButton = getElementById(config.commentFormSubmitId)
+      let submitButton = getElementById(config.commentFormSubmitId);
       if (submitButton) {
         submitButton.textContent = headingText
       }
@@ -368,17 +368,17 @@ window.addComment = (function (window) {
    */
   function moveForm (addBelowId, commentId, respondId, postId, replyTo) {
     // Get elements based on their IDs.
-    let addBelowElement = getElementById(addBelowId)
-    respondElement = getElementById(respondId)
+    let addBelowElement = getElementById(addBelowId);
+    respondElement = getElementById(respondId);
 
     // Get the hidden fields.
-    let parentIdField = getElementById(config.parentIdFieldId)
-    let postIdField = getElementById(config.postIdFieldId)
-    let element
+    let parentIdField = getElementById(config.parentIdFieldId);
+    let postIdField = getElementById(config.postIdFieldId);
+    let element;
 
-    let replyHeading = getElementById(config.commentReplyTitleId)
-    let replyHeadingTextNode = replyHeading && replyHeading.firstChild
-    let replyLinkToParent = replyHeadingTextNode && replyHeadingTextNode.nextSibling
+    let replyHeading = getElementById(config.commentReplyTitleId);
+    let replyHeadingTextNode = replyHeading && replyHeading.firstChild;
+    let replyLinkToParent = replyHeadingTextNode && replyHeadingTextNode.nextSibling;
 
     if (!addBelowElement || !respondElement || !parentIdField) {
       // Missing key elements, fail.
@@ -389,21 +389,21 @@ window.addComment = (function (window) {
       replyTo = replyHeadingTextNode && replyHeadingTextNode.textContent
     }
 
-    addPlaceHolder(respondElement)
+    addPlaceHolder(respondElement);
 
     // Set the value of the post.
     if (postId && postIdField) {
       postIdField.value = postId
     }
 
-    parentIdField.value = commentId
+    parentIdField.value = commentId;
 
     // Show the cancel link if the commentId is not zero.
     if (commentId && '0' !== commentId) {
       cancelElement.style.display = ''
     }
     // Insert the form in the new location.
-    addBelowElement.parentNode.insertBefore(respondElement, addBelowElement.nextSibling)
+    addBelowElement.parentNode.insertBefore(respondElement, addBelowElement.nextSibling);
     respondElement.classList.add('expanded');
 
     // Handle reply related textual changes like heading or button text.
@@ -415,7 +415,7 @@ window.addComment = (function (window) {
       replyHeadingTextNode.textContent = replyTo
     } else {
       // We will use the replyTo for the submit button text.
-      let submitButton = getElementById(config.commentFormSubmitId)
+      let submitButton = getElementById(config.commentFormSubmitId);
       if (submitButton) {
         submitButton.textContent = replyTo
       }
@@ -427,7 +427,7 @@ window.addComment = (function (window) {
      */
     cancelElement.onclick = function () {
       return false
-    }
+    };
 
     // Try to focus on the configured field.
     let focusElement = getElementById(config.focusOnFieldId);
@@ -442,7 +442,7 @@ window.addComment = (function (window) {
     // Focus on the first field in the comment form.
     try {
       for (let i = 0; i < commentFormElement.elements.length; i++) {
-        element = commentFormElement.elements[i]
+        element = commentFormElement.elements[i];
         if ('button' === element.type) {
           // We don't want to focus on buttons.
           continue;
@@ -454,7 +454,7 @@ window.addComment = (function (window) {
           continue
         }
 
-        element.focus()
+        element.focus();
         // Stop after the first focusable element.
         break
       }
@@ -506,13 +506,13 @@ window.addComment = (function (window) {
    * @param {HTMLelement} respondElement the #respond element holding comment form.
    */
   function addPlaceHolder (respondElement) {
-    let temporaryFormId = config.temporaryFormId
-    let temporaryElement = getElementById(temporaryFormId)
-    let replyElement = getElementById(config.commentReplyTitleId)
-    let initialHeadingText = replyElement ? replyElement.firstChild.textContent : ''
+    let temporaryFormId = config.temporaryFormId;
+    let temporaryElement = getElementById(temporaryFormId);
+    let replyElement = getElementById(config.commentReplyTitleId);
+    let initialHeadingText = replyElement ? replyElement.firstChild.textContent : '';
     if (!replyElement) {
       // We need to search for the submit button since that appears to be our means of contextul text, not the reply heading.
-      let submitButton = getElementById(config.commentFormSubmitId)
+      let submitButton = getElementById(config.commentFormSubmitId);
       if (submitButton) {
         initialHeadingText = submitButton.textContent
       }
@@ -520,15 +520,15 @@ window.addComment = (function (window) {
 
     if (temporaryElement) {
       // The element already exists - we want to move it.
-      respondElement.parentNode.insertBefore(temporaryElement, respondElement)
+      respondElement.parentNode.insertBefore(temporaryElement, respondElement);
       return
     }
 
-    temporaryElement = document.createElement('div')
-    temporaryElement.id = temporaryFormId
-    temporaryElement.style.display = 'none'
-    temporaryElement.textContent = initialHeadingText
-    respondElement.parentNode.insertBefore(temporaryElement, respondElement)
+    temporaryElement = document.createElement('div');
+    temporaryElement.id = temporaryFormId;
+    temporaryElement.style.display = 'none';
+    temporaryElement.textContent = initialHeadingText;
+    respondElement.parentNode.insertBefore(temporaryElement, respondElement);
 
     // Add the "flag" (class) on the comments wrapper.
     commentsWrapperElement.classList.add(config.replyingFlagClass)
@@ -538,4 +538,4 @@ window.addComment = (function (window) {
     init: init,
     moveForm: moveForm
   }
-})(window)
+})(window);

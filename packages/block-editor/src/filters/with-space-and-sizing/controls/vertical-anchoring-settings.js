@@ -28,6 +28,6 @@ const VerticalAnchoringSettings = ( props ) => {
       </PanelRow>
     </ControlsGroup>
   )
-}
+};
 
 export default VerticalAnchoringSettings;

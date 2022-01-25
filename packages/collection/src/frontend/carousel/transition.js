@@ -51,6 +51,6 @@ const transition = ( $current, $next, sign = 1 ) => {
       $next.removeClass( 'slick-slide--next' );
     }
   } );
-}
+};
 
 export default transition;

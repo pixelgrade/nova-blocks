@@ -24,6 +24,6 @@ const CardLayout = ( props ) => {
       onChange={ cardLayout => { setAttributes( { cardLayout } ) } }
     />
   )
-}
+};
 
 export default CardLayout;

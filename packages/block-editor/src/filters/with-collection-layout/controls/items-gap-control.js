@@ -22,6 +22,6 @@ const ItemsGapControl = ( props ) => {
       step={ 5 }
     />
   )
-}
+};
 
 export default ItemsGapControl;

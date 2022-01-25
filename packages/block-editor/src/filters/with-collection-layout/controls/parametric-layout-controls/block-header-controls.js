@@ -51,7 +51,7 @@ const BlockHeaderControls = ( props ) => {
       </div>
     </ControlsGroup>
   )
-}
+};
 
 const getAttributesByHeaderColumn = ( attributes ) => {
 

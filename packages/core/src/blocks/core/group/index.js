@@ -40,7 +40,7 @@ const addNovaBlocksSupport = ( settings ) => {
       }
     },
   };
-}
+};
 
 const withBlockEditProps = createHigherOrderComponent( ( BlockListBlock ) => {
 
@@ -87,7 +87,7 @@ const applyFrontEndClasses = ( extraProps, blockType, attributes ) => {
       `align${ align }`
     )
   };
-}
+};
 
 addFilter( 'blocks.registerBlockType', 'novablocks/group/settings-add-nb-support', addNovaBlocksSupport, 1 );
 addFilter( 'blocks.getSaveContent.extraProps', 'novablocks/group/frontend-classes', applyFrontEndClasses );

@@ -29,6 +29,6 @@ const MinimumContainerHeight = props => {
       />
     </ControlsGroup>
   )
-}
+};
 
 export default withVisibility( 'minimum-container-height', false )( MinimumContainerHeight );

@@ -28,7 +28,7 @@ const MediaEdit = ( props ) => {
 	const passedProps = {
 	  ...props,
     updateImages
-  }
+  };
 
   const className = classnames(
     `novablocks-media`,

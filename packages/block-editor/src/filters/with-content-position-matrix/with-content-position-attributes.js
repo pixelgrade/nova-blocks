@@ -15,6 +15,6 @@ const withContentPositionAttributes = ( block ) => {
       ...attributes
     }
   }
-}
+};
 
 export default withContentPositionAttributes;

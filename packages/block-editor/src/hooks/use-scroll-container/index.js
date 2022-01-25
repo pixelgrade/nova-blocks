@@ -9,6 +9,6 @@ const useScrollContainer = () => {
   }, [] );
 
   return scrollContainer;
-}
+};
 
 export default useScrollContainer;

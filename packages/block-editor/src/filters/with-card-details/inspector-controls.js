@@ -42,7 +42,7 @@ const InspectorControls = ( props ) => {
       </ControlsTab>
     </ControlsSection>
   )
-}
+};
 
 export const CardDetailsContent = withVisibility( 'card-details-content' )( props => {
   return (

@@ -24,7 +24,7 @@ const BlockSpacing = props => {
       <ContentBottomSpacing { ...newProps } />
     </ControlsGroup>
   )
-}
+};
 
 const BlockTopSpacing = withVisibility( 'block-top-spacing' )( props => {
   const { attributes, setAttributes, blockSpacingMin, blockSpacingMax, clientId } = props;

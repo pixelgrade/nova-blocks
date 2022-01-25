@@ -23,6 +23,6 @@ const ContentToMediaSpacing = props => {
       />
     </ControlsGroup>
   )
-}
+};
 
 export default withVisibility( 'content-to-media-spacing', false )( ContentToMediaSpacing );

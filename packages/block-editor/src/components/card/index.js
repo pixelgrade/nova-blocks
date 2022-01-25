@@ -37,12 +37,12 @@ export const Card = ( props ) => {
     defaultClassNames,
     `nb-grid__area--${ isLandscape ? 'landscape' : 'portrait' }`,
     getAreaClassnameByWidthRatio( 1 / columns )
-  )
+  );
 
   const classNames = layoutStyle !== 'parametric' ? extraClassNames : defaultClassNames;
 
   const children = Children.toArray( props.children );
-  const mediaChildren = children.filter( child => child.type === CardMediaWrapper )
+  const mediaChildren = children.filter( child => child.type === CardMediaWrapper );
   const passedChildren = children.filter( child => child.type !== CardMediaWrapper && child.type !== CardContentWrapper );
 
   return (
@@ -54,7 +54,7 @@ export const Card = ( props ) => {
       </CardContentWrapper>
     </div>
   );
-}
+};
 
 export const CardContentWrapper = ( props ) => {
 
@@ -73,7 +73,7 @@ export const CardContentWrapper = ( props ) => {
       { props.children }
     </div>
   )
-}
+};
 
 export const CardMediaWrapper = ( props ) => {
 
@@ -84,4 +84,4 @@ export const CardMediaWrapper = ( props ) => {
       </div>
     </div>
   );
-}
+};

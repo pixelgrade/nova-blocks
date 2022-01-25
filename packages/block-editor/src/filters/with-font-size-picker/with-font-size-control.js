@@ -44,7 +44,7 @@ const withFontSizePicker = ( WrappedComponent ) => {
       </Fragment>
     )
   }
-}
+};
 
 export const withFontSizeControl = createHigherOrderComponent( OriginalComponent => {
 

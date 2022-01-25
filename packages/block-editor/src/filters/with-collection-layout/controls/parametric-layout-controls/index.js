@@ -28,7 +28,7 @@ const ParametricLayoutControls = ( props ) => {
     ...props,
     areaColumns,
     headerOptimalPositions,
-  }
+  };
 
   return (
     <Fragment>

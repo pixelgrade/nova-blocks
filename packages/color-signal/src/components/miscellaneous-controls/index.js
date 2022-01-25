@@ -21,6 +21,6 @@ const MiscellaneousControls = ( props ) => {
       <ColorReferenceToggleControl { ...props } />
     </Fragment>
   )
-}
+};
 
 export default MiscellaneousControls;

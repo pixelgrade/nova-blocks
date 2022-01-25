@@ -10,6 +10,6 @@ const variations = [
       carouselLayout: 'variable'
     }
   }
-]
+];
 
 export default variations;

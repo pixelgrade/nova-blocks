@@ -59,6 +59,6 @@ const ManualControls = ( props ) => {
 			help={ __( 'Begin typing post title, click autocomplete result to select.' ) }
 		/>
 	)
-}
+};
 
 export default ManualControls;

@@ -7,12 +7,12 @@ const getSvg = ( svg ) => {
     )
   }
   return '';
-}
+};
 
 const getIconSvg = ( iconName ) => {
   const svg = library[ iconName ];
   return getSvg( svg );
-}
+};
 
 export {
   getSvg,

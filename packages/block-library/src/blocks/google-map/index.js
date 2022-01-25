@@ -30,7 +30,7 @@ const overwriteAttributes = ( settings ) => {
       ...attributesOverwrite
     }
   };
-}
+};
 addFilter( 'blocks.registerBlockType', 'novablocks/google-map/attributes-overwrite', overwriteAttributes, Number.MAX_SAFE_INTEGER );
 
 registerBlockType( BLOCK_NAME, {

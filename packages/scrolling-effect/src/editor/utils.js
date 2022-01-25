@@ -43,7 +43,7 @@ export const createBlockObservers = ( container, callback ) => {
   } );
 
   return observers;
-}
+};
 
 
 

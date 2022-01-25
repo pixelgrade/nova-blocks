@@ -14,7 +14,7 @@ const attributes = {
   layoutGutter: 10,
 
   postsToShow: CARDS_COUNT,
-}
+};
 
 const postsCollection = {
   name: __( 'Posts Collection', '__plugin_txtd' ),
@@ -24,6 +24,6 @@ const postsCollection = {
   attributes,
   innerBlocks: Array.from( Array( CARDS_COUNT ) ).map( () => [ 'novablocks/supernova-item', attributes ] ),
   isActive: ( block, variation ) => block.variation === variation.variation
-}
+};
 
 export default postsCollection;

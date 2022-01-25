@@ -22,6 +22,6 @@ const CardLayoutLegacy = ( props ) => {
       ] }
     />
   )
-}
+};
 
 export default CardLayoutLegacy;

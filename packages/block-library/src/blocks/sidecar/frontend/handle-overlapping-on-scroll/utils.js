@@ -19,4 +19,4 @@ export const doOverlap = ( el1, el2 ) => {
             el2Box.right + el2MarginRight <= el1Box.left ||
             el2Box.left >= el1Box.right + el1MarginRight );
 
-}
+};

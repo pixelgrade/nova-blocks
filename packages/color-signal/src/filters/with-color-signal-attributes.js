@@ -15,6 +15,6 @@ const withColorSignalAttributes = ( settings ) => {
       ...attributes,
     }
   };
-}
+};
 
 export default withColorSignalAttributes;

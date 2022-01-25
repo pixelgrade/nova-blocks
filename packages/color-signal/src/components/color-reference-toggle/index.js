@@ -28,6 +28,6 @@ const ColorReferenceToggleControl = ( props ) => {
       />
     </ControlsGroup>
   )
-}
+};
 
 export default ColorReferenceToggleControl;

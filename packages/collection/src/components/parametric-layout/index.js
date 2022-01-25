@@ -15,6 +15,6 @@ const ParametricLayout = props => {
       { ...props }
     />
   )
-}
+};
 
 export default ParametricLayout;

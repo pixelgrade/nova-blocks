@@ -21,6 +21,6 @@ const getChildAttributes = attributes => {
 
   return newAttributes;
 
-}
+};
 
 export default getChildAttributes;

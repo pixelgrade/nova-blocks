@@ -15,7 +15,7 @@ const SidecarAreaEdit = function( props ) {
     {
       'nb-content-layout-grid': props.attributes.areaName === 'content'
     }
-  )
+  );
 
   const blockProps = useBlockProps( {
     className: className,
@@ -30,6 +30,6 @@ const SidecarAreaEdit = function( props ) {
   return (
     <div { ...innerBlocksProps } />
   )
-}
+};
 
 export default SidecarAreaEdit;

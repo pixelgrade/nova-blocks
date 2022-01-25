@@ -18,15 +18,15 @@ const SliderArrow = ( props ) => {
   const PALETTE_VARIATION_CLASS = `sm-variation-${ contentPaletteVariation }`;
   const CONTENT_SIGNAL_CLASS = `sm-color-signal-${ contentColorSignal }`;
 
-  let BUTTON_LABEL = isNext ? 'Next' : 'Previous'
-  let BUTTON_DIRECTION_CLASS = isNext ? 'slick-next' : 'slick-prev'
+  let BUTTON_LABEL = isNext ? 'Next' : 'Previous';
+  let BUTTON_DIRECTION_CLASS = isNext ? 'slick-next' : 'slick-prev';
 
   return (
     <button
       className={ `slick-arrow ${ BUTTON_DIRECTION_CLASS } ${ PALETTE_CLASS } ${ PALETTE_VARIATION_CLASS } ${ CONTENT_SIGNAL_CLASS }` }
       aria-label={ BUTTON_LABEL } onClick={ onClick }>{ BUTTON_LABEL }</button>
   )
-}
+};
 
 const generateDotsClasses = ( props ) => {
 
@@ -43,7 +43,7 @@ const generateDotsClasses = ( props ) => {
   const CONTENT_SIGNAL_CLASS = `sm-color-signal-${ contentColorSignal }`;
 
   return `slick-dots ${ PALETTE_CLASS } ${ PALETTE_VARIATION_CLASS } ${ CONTENT_SIGNAL_CLASS }`
-}
+};
 
 const CarouselLayout = ( props ) => {
 
@@ -73,6 +73,6 @@ const CarouselLayout = ( props ) => {
   return (
     <Slider { ...settings } className={ props.className }>{ props.children }</Slider>
   );
-}
+};
 
 export default CarouselLayout;

@@ -17,4 +17,4 @@ export const withSaveExtraProps = ( extraProps, blockType, attributes ) => {
       ...getListStyle( attributes )
     }
   };
-}
+};

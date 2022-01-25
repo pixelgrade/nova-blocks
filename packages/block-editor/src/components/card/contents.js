@@ -9,7 +9,7 @@ export const CardButton = ( props ) => {
       </div>
     </div>
    )
-}
+};
 
 const withVisibilityAndPlaceholder = ( WrappedComponent ) => {
 
@@ -23,7 +23,7 @@ const withVisibilityAndPlaceholder = ( WrappedComponent ) => {
 
     return <WrappedComponent { ...props } />
   }
-}
+};
 
 export const CardTitle = withVisibilityAndPlaceholder( ( props ) => {
 

@@ -11,6 +11,6 @@ const PostCard = ( props ) => {
   return (
     <DefaultPostCard { ...props } Media={ Media } />
   )
-}
+};
 
 export default PostCard;

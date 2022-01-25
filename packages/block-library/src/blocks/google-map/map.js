@@ -191,6 +191,6 @@ const MapWrapper = ( Map ) => {
 			</div>
 		);
 	}
-}
+};
 
 export default MapWrapper( Map );

@@ -54,6 +54,6 @@ const Edit = ( props ) => {
       <div { ...innerBlocksProps } className={ className } />
     </Fragment>
   );
-}
+};
 
 export default Edit;

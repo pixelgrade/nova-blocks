@@ -33,6 +33,6 @@ const slideshow = {
   attributes,
   innerBlocks: Array.from( Array( CARDS_COUNT ) ).map( () => [ 'novablocks/supernova-item', attributes ] ),
   isActive: ( block, variation ) => block.variation === variation.variation
-}
+};
 
 export default slideshow;

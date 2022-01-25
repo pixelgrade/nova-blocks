@@ -19,6 +19,6 @@ const EmphasisAreaControl = props => {
       />
     </ControlsGroup>
   )
-}
+};
 
 export default withVisibility( 'emphasis-area', false )( EmphasisAreaControl );

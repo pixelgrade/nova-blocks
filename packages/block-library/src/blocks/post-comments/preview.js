@@ -8,7 +8,7 @@ const ALLOWED_BLOCKS = ['novablocks/post-comments-list', 'novablocks/post-commen
 let TEMPLATE =[
 	['novablocks/post-comments-form'],
 	['novablocks/post-comments-list']
-]
+];
 
 const PostCommentsPreview = function( props ) {
 	const {
@@ -74,7 +74,7 @@ const PostCommentsPreview = function( props ) {
 			</div>
 		</div>
 	);
-}
+};
 
 function PostCommentsDisplay( { postId } ) {
 	return useSelect(

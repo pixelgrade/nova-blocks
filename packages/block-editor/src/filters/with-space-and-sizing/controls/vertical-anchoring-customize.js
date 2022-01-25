@@ -31,6 +31,6 @@ const VerticalAnchoringCustomize = ( props ) => {
       />
     </PanelRow>
   )
-}
+};
 
 export default VerticalAnchoringCustomize;

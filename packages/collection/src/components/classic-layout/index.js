@@ -4,6 +4,6 @@ const ClassicLayout = ( props ) => {
       { props.children }
     </div>
   );
-}
+};
 
 export default ClassicLayout;

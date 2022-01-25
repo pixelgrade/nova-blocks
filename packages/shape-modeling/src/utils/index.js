@@ -19,7 +19,7 @@ export const getRatioArray = ( sides, patternSeed ) => {
 
     return (Math.floor(pseudoRandomGenerator.random() * (options.max - options.min + 1) + options.min)) / 10;
   })
-}
+};
 
 export const getPointsArray = ( attributes ) => {
 	const { sides, rotation, complexity, patternSeed } = attributes;
@@ -162,7 +162,7 @@ export const getDefaultBounds = () => {
 		xRatio: 1,
 		yRatio: 1,
 	}
-}
+};
 
 export const initializeBounds = () => {
 	return {
@@ -171,7 +171,7 @@ export const initializeBounds = () => {
 		xMin: BLOB_RADIUS,
 		yMin: BLOB_RADIUS,
 	}
-}
+};
 
 export const getBoundsFromCurves = ( points ) => {
 

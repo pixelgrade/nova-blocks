@@ -17,6 +17,6 @@ const ScrollIndicator = ( props ) => {
   return (
     <div className={ className } />
   )
-}
+};
 
 export default ScrollIndicator;

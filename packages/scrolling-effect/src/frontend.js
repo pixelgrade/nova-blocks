@@ -28,7 +28,7 @@ const getConfig = ( container ) => {
       y: containerRect.y
     },
   }
-}
+};
 
 const isTricky = ( start ) => {
 
@@ -41,7 +41,7 @@ const isTricky = ( start ) => {
   }
 
   return false;
-}
+};
 
 $( function() {
 

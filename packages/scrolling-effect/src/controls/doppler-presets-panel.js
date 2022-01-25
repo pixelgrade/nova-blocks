@@ -40,6 +40,6 @@ const DopplerPresetsPanel = ( props ) => {
 
     </PanelBody>
   )
-}
+};
 
 export default DopplerPresetsPanel;

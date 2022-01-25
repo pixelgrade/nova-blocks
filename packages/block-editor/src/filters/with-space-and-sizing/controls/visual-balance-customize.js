@@ -49,7 +49,7 @@ const VisualBalanceCustomize = ( props ) => {
       </div>
     </ControlsGroup>
   )
-}
+};
 
 const getBalanceAttributes = ( { balanceEmphasis, balanceFocalPoint } ) => {
   const width = balanceEmphasis * ( CONTENT_AREA_MAX_WIDTH - CONTENT_AREA_MID_VALUE ) / 100 + CONTENT_AREA_MID_VALUE;

@@ -50,7 +50,7 @@ const OverlayFilterControls = ( props ) => {
       </ControlsTab>
     </ControlsSection>
   );
-}
+};
 
 const OverlayType = ( props ) => {
 
@@ -92,7 +92,7 @@ const OverlayType = ( props ) => {
       ] }
     />
   )
-}
+};
 
 const CustomDuotonePicker = ( props ) => {
 
@@ -121,7 +121,7 @@ const CustomDuotonePicker = ( props ) => {
       value: index,
       colors: [ color.hex ]
     }
-  } )
+  } );
 
   const duotoneValue = from && to && options.findIndex( option => {
     return option.data.from.paletteId === from.paletteId &&
@@ -170,6 +170,6 @@ const CustomDuotonePicker = ( props ) => {
       </ControlsGroup>
     </Fragment>
   )
-}
+};
 
 export default OverlayFilterControls;

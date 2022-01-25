@@ -19,6 +19,6 @@ const Controls = ( props ) => {
       </ControlsTab>
     </ControlsSection>
   );
-}
+};
 
 export default Controls;

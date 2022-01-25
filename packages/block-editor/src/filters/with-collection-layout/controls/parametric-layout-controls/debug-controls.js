@@ -33,6 +33,6 @@ const DebugControls = ( props ) => {
     </ControlsGroup>
 
   );
-}
+};
 
 export default DebugControls;

@@ -58,7 +58,7 @@ const ActiveSectionTabs = ( props ) => {
       setActiveTabLabel( tabs[0].props.label );
     }
 
-  }, [ existingTab ] )
+  }, [ existingTab ] );
 
 	const activeTabIndex = tabs.findIndex( tab => tab.props.label === activeTabLabel );
 	const activeTab = tabs[ activeTabIndex ];

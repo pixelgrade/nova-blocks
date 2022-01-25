@@ -17,7 +17,7 @@ const withCollectionLayoutEditCustomProps = createHigherOrderComponent( Original
       let collectionLayoutProps = {
         '--nb-collection-columns-count': columns,
         '--nb-grid-spacing-modifier': gridGap
-      }
+      };
 
       Object.assign( style, collectionLayoutProps );
     }

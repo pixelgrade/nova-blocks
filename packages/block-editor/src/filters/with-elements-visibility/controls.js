@@ -15,7 +15,7 @@ const ElementsDisplaySection = ( props ) => {
       </ControlsTab>
     </ControlsSection>
   );
-}
+};
 
 
 

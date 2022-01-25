@@ -7,6 +7,6 @@ const Collection = ( props ) => {
       { props.children }
     </div>
   )
-}
+};
 
 export default Collection;

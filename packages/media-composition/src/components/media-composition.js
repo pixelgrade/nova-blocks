@@ -18,6 +18,6 @@ const MediaComposition = props => {
       <MediaCompositionSection { ...props } />
     </Fragment>
   )
-}
+};
 
 export default MediaComposition;

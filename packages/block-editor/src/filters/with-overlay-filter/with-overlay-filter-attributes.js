@@ -15,6 +15,6 @@ const withOverlayFilterAttributes = ( settings ) => {
       ...attributes
     }
   };
-}
+};
 
 export default withOverlayFilterAttributes;

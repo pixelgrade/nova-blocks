@@ -19,7 +19,7 @@ const SidecarVariationPicker = ( props ) => {
       variations: getBlockVariations( name ),
       defaultVariation: getDefaultBlockVariation( name )
     }
-  }, [ name ] )
+  }, [ name ] );
 
   const { replaceInnerBlocks } = useDispatch( 'core/block-editor' );
 
@@ -38,7 +38,7 @@ const SidecarVariationPicker = ( props ) => {
         createBlocksFromInnerBlocksTemplate( nextVariation.innerBlocks )
       );
     }
-  }
+  };
 
   return (
     <BlockVariationPicker
@@ -50,6 +50,6 @@ const SidecarVariationPicker = ( props ) => {
       allowSkip
     />
   )
-}
+};
 
 export default SidecarVariationPicker;

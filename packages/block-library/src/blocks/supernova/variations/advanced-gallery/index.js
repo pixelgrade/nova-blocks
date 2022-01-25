@@ -36,6 +36,6 @@ const advancedGallery = {
     [ 'novablocks/supernova-item', { ...attributes, multiplePlaceholderImages: true } ]
   ],
   isActive: ( block, variation ) => block.variation === variation.variation
-}
+};
 
 export default advancedGallery;

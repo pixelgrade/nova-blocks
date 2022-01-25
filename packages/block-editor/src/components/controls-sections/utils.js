@@ -13,7 +13,7 @@ export const mergeChildrenProps = ( children1, children2 ) => {
 	let children2Array = Array.isArray( children2 ) ? children2 : [ children2 ];
 
 	return children1Array.concat( children2Array );
-}
+};
 
 export const getSectionsFromFills = ( fills ) => {
 	const sections = [];

@@ -22,6 +22,6 @@ const PostsCountControl = ( props ) => {
       step={ 1 }
     />
   );
-}
+};
 
 export default PostsCountControl;

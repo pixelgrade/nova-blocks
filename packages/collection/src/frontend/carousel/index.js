@@ -46,7 +46,7 @@ const initializeCarousels = () => {
           }
         },
       ]
-    }
+    };
 
     if ( attributes.cardLayout === 'stacked' &&
          attributes.columns === 1 &&
@@ -56,7 +56,7 @@ const initializeCarousels = () => {
         // for simpler reveal transitions between slides
         fade: true,
         speed: 1000,
-      } )
+      } );
 
       $carousel.on( 'beforeChange', onBeforeSlideChange );
     }
@@ -67,4 +67,4 @@ const initializeCarousels = () => {
 
   } );
 
-}
+};

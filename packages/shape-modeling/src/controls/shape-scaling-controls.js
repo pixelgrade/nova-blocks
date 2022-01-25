@@ -48,6 +48,6 @@ const ShapeScalingControls = props => {
       />
     </ControlsGroup>
   )
-}
+};
 
 export default ShapeScalingControls;

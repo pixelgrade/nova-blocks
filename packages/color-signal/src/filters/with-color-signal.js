@@ -15,7 +15,7 @@ const withColorSignal = createHigherOrderComponent( OriginalComponent => {
 
     const colorSignal = {
       utils,
-    }
+    };
 
     return (
       <OriginalComponent { ...props } colorSignal={ colorSignal }/>

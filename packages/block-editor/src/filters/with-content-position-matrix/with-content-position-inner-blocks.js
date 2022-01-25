@@ -27,7 +27,7 @@ const alignBlockChildren = ( clientId, horizontalAlignment ) => {
       contentJustification: horizontalAlignment,
     } );
   } );
-}
+};
 
 const withContentPositionInnerBlocks = createHigherOrderComponent( OriginalComponent => {
 
@@ -51,7 +51,7 @@ const withContentPositionInnerBlocks = createHigherOrderComponent( OriginalCompo
       }
 
       setAttributes( attributes );
-    }
+    };
 
     return <OriginalComponent {...props} setAttributes={newSetAttributes}/>
   }

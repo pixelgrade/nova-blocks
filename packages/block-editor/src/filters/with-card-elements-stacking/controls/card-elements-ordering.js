@@ -9,6 +9,6 @@ const CardElementsOrdering = ( props ) => {
 
     </ControlsGroup>
   )
-}
+};
 
 export default CardElementsOrdering;

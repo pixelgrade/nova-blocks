@@ -15,6 +15,6 @@ const useTraceUpdate = props => {
     }
     prev.current = props;
   } );
-}
+};
 
 export default useTraceUpdate;

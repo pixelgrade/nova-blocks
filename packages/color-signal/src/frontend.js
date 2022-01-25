@@ -25,7 +25,7 @@ import { updateScrollIndicator } from "./frontend/update-scroll-indicator";
 const updateColors = ( siteVariation ) => {
   updateAllBlocksSignal( siteVariation );
   updateScrollIndicator();
-}
+};
 
 ready( () => {
 

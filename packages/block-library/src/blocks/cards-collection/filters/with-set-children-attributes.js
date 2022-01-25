@@ -29,6 +29,6 @@ const withSetChildrenAttributes = OriginalComponent => {
       } } />
     )
   }
-}
+};
 
 export default withSetChildrenAttributes;

@@ -8,6 +8,6 @@ const InnerBlocksPreview = props => {
   return (
     innerBlocks.map( innerBlock => getSaveElement( innerBlock.name, innerBlock.attributes, innerBlock.innerBlocks ) )
   )
-}
+};
 
 export default InnerBlocksPreview;

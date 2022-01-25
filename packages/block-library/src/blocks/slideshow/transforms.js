@@ -42,7 +42,7 @@ export default {
             description: caption,
             showTitle: true,
             showDescription: true,
-          } )
+          } );
 
           return createBlock( 'novablocks/supernova-item', cardAttributes );
         } );

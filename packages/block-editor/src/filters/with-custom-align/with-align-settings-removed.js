@@ -20,6 +20,6 @@ const withAlignSettingsRemoved = ( settings ) => {
       }
     },
   };
-}
+};
 
 export default withAlignSettingsRemoved;

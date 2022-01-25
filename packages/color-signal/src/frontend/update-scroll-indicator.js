@@ -36,10 +36,10 @@ export const updateScrollIndicator = () => {
     }
 
   } );
-}
+};
 
 const applySiteColorSignal = ( indicator ) => {
   if ( indicator ) {
     addClass( indicator, `sm-variation-${ getSiteColorVariation() }` );
   }
-}
+};

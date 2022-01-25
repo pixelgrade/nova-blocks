@@ -38,6 +38,6 @@ const PostsCollectionLayout = props => {
       }
     </CollectionBody>
   )
-}
+};
 
 export default PostsCollectionLayout;

@@ -108,6 +108,6 @@ const ColorGradesControl = ( props ) => {
       </div>
     </div>
   );
-}
+};
 
 export default ColorGradesControl;

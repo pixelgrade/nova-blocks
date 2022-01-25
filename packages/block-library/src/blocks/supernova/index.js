@@ -31,7 +31,7 @@ const withVariations = settings => {
     ...settings,
     variations,
   }
-}
+};
 
 // We're doing this through a filter that should run last, to make sure all attributes needed for these variations
 // are already added to the block's settings. Also, the filter needs to be added before the block is actually registered
@@ -126,7 +126,7 @@ const withFocalPointImageFromChildren = ( BlockEdit ) => {
       <BlockEdit { ...newProps } />
     )
   }
-}
+};
 
 addFilter( 'editor.BlockEdit', 'novablocks/supernova/with-set-children-attributes', withSetChildrenAttributes, Number.MAX_SAFE_INTEGER );
 addFilter( 'editor.BlockEdit', 'novablocks/supernova/with-focal-point-image', withFocalPointImageFromChildren, Number.MAX_SAFE_INTEGER );

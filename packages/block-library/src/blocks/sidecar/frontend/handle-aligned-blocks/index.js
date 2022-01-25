@@ -16,12 +16,12 @@ const cleanupBreakClasses = () => {
   const breakNodeList = document.querySelectorAll( breakSelector );
   const breakElementsArray = Array.from( breakNodeList );
   breakElementsArray.forEach( element => element.classList.remove( BREAK_LEFT_CLASS, BREAK_RIGHT_CLASS ) );
-}
+};
 
 const getAlignedSiblings = ( block, classname ) => {
   const siblings = Array.from( block.parentElement.children ).filter( sibling => sibling !== block );
   return siblings.filter( sibling => { return sibling.classList.contains( classname ) } );
-}
+};
 
 const maybeAddBreakClasses = () => {
   const contentBlocks = getContentBlocksArray();
@@ -43,7 +43,7 @@ const maybeAddBreakClasses = () => {
       block.classList.add( BREAK_RIGHT_CLASS );
     }
   } );
-}
+};
 
 // We want to listen to Content Width setting
 // change inside Customizer Preview,
@@ -71,7 +71,7 @@ export const resetAlignedBlocks = () => {
   makeSidebarsNotReady();
   maybeAddBreakClasses();
   makeSidebarsReady();
-}
+};
 
 export const handleAlignedBlocks = () => {
 
@@ -84,4 +84,4 @@ export const handleAlignedBlocks = () => {
 
   window.addEventListener( 'resize', onResize );
 
-}
+};

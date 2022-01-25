@@ -21,4 +21,4 @@ export const withFontSizeAttributes = ( block ) => {
   } );
 
   return block;
-}
+};

@@ -12,7 +12,7 @@ const withColorSignalSaveDataAttributes = ( element, blockType, attributes ) => 
     'data-palette': attributes?.palette,
     'data-palette-variation': attributes?.paletteVariation,
     'data-color-signal': attributes?.colorSignal,
-  }
+  };
 
   if ( attributes.useSourceColorAsReference ) {
     Object.assign( newProps, {
@@ -26,6 +26,6 @@ const withColorSignalSaveDataAttributes = ( element, blockType, attributes ) => 
       ...newProps,
     }
   } );
-}
+};
 
 export default withColorSignalSaveDataAttributes;

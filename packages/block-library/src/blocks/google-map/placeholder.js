@@ -34,7 +34,7 @@ class MapPlaceholder extends Component {
 	render() {
 
 		const { apiKeyInstructions } = this.props;
-		const icon = <div className="editor-block-icon block-editor-block-icon">{ icons.map }</div>
+		const icon = <div className="editor-block-icon block-editor-block-icon">{ icons.map }</div>;
 
 		return (
 			<Placeholder

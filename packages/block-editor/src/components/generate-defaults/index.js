@@ -39,6 +39,6 @@ const generateDefaults = ( blockType, getNewDefaults ) => {
 			}
 		} );
 	} );
-}
+};
 
 export default generateDefaults;

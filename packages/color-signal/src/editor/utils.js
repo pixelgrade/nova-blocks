@@ -29,4 +29,4 @@ export const getParentVariation = ( clientId ) => {
 
   // return the Palette Basis Offset value
   return getSiteColorVariation();
-}
+};

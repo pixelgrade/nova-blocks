@@ -87,6 +87,6 @@ const ElementsVisibilityToggles = ( props ) => {
       } ) }
     />
   )
-}
+};
 
 export default ElementsVisibilityToggles;

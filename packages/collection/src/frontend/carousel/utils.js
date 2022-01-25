@@ -9,7 +9,7 @@ export const hasFixedBackground = ( $slide ) => {
   }
 
   return fixed;
-}
+};
 
 export const onBeforeSlideChange = ( event, slick, currentSlide, nextSlide ) => {
   const $currentSlide = $( slick.$slides[ currentSlide ] );
@@ -17,7 +17,7 @@ export const onBeforeSlideChange = ( event, slick, currentSlide, nextSlide ) => 
   const direction = getDirection( slick, currentSlide, nextSlide );
 
   transition( $currentSlide, $nextSlide, direction );
-}
+};
 
 export const getDirection = ( slick, currentSlide, nextSlide ) => {
 
@@ -34,4 +34,4 @@ export const getDirection = ( slick, currentSlide, nextSlide ) => {
   }
 
   return 1;
-}
+};

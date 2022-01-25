@@ -33,23 +33,23 @@ function novablocks_get_supernova_attributes(): array {
 if ( ! function_exists( 'novablocks_render_supernova_block' ) ) {
 
 	function novablocks_render_supernova_block( array $attributes, string $content ): string {
-		$attributes_config     = novablocks_get_supernova_attributes();
-		$attributes            = novablocks_get_attributes_with_defaults( $attributes, $attributes_config );
+		$attributes_config = novablocks_get_supernova_attributes();
+		$attributes        = novablocks_get_attributes_with_defaults( $attributes, $attributes_config );
 
-		if ( $attributes[ 'layoutStyle' ] === 'carousel' ) {
-			$attributes[ 'scrollingEffect' ] = 'static';
+		if ( $attributes['layoutStyle'] === 'carousel' ) {
+			$attributes['scrollingEffect'] = 'static';
 		}
 
 		$data_attributes_array = array_map( 'novablocks_camel_case_to_kebab_case', array_keys( $attributes ) );
 		$blacklist             = [ 'position-indicators' ];
 
 		if ( $attributes['columns'] === 1 &&
-			 $attributes['cardLayout'] === 'stacked' &&
-			 $attributes['layoutStyle'] === 'carousel' ) {
+		     $attributes['cardLayout'] === 'stacked' &&
+		     $attributes['layoutStyle'] === 'carousel' ) {
 			$blacklist = [];
 		}
 
-		$data_attributes       = novablocks_get_data_attributes( $data_attributes_array, $attributes, $blacklist );
+		$data_attributes = novablocks_get_data_attributes( $data_attributes_array, $attributes, $blacklist );
 
 		$align = preg_split( '/\b\s+/', $attributes['contentPosition'] );
 
@@ -75,17 +75,9 @@ if ( ! function_exists( 'novablocks_render_supernova_block' ) ) {
 			novablocks_get_collection_layout_css( $attributes )
 		);
 
-		ob_start(); ?>
-
-		<div
-			class="<?php echo esc_attr( join( ' ', $classes ) ); ?>"
-			style="<?php echo join( ';', $cssProps ); ?>"
-			<?php echo join( ' ', $data_attributes ); ?>
-		>
-			<?php echo novablocks_get_collection_output( $attributes, $content ); ?>
-		</div>
-
-		<?php
-		return ob_get_clean();
+		return '<div class="' . esc_attr( join( ' ', $classes ) ) . '" style="' . join( ';', $cssProps ) . '"
+			' . join( ' ', $data_attributes ) . '>
+			' . novablocks_get_collection_output( $attributes, $content ) . '
+		</div>';
 	}
 }

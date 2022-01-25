@@ -30,6 +30,6 @@ const withColorSignalsDeprecated = ( settings, name ) => {
       }
     ].concat( settings.deprecated ),
   } );
-}
+};
 
 export default withColorSignalsDeprecated;

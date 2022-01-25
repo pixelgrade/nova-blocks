@@ -30,6 +30,6 @@ const SupernovaItemPreview = props => {
       </div>
     </Card>
   )
-}
+};
 
 export default SupernovaItemPreview;

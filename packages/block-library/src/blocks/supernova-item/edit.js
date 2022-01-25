@@ -52,7 +52,7 @@ const CardMedia = ( props ) => {
   return (
     <MediaCompositionPreview { ...props } />
   );
-}
+};
 
 const CardMediaWithScrollingEffect = withScrollingEffect( ( props ) => {
   const scrollingEffect = useScrollingEffect();
@@ -199,6 +199,6 @@ const SuperNovaItemContent = ( props ) => {
   return (
     displayInnerContent && <div { ...innerBlocksProps } />
   );
-}
+};
 
 export default withPreviewAttributes( SuperNovaItemEdit );

@@ -20,6 +20,6 @@ const CollectionBody = ( props ) => {
       <ScrollIndicator { ...props } className={ contentClassNames } />
     </div>
   );
-}
+};
 
 export default CollectionBody;

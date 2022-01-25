@@ -5,4 +5,4 @@ export const getOverlayFilterCSSProps = ( attributes ) => {
   return {
     '--nb-overlay-filter-strength': overlayFilterStrength / 100
   }
-}
+};

@@ -8,14 +8,14 @@ const collectionToggles = [
     label: __( 'Collection Subtitle', '__plugin_txtd' ),
     attribute: 'showCollectionSubtitle',
   },
-]
+];
 
 const mediaToggles = [
   {
     label: __( 'Media', '__plugin_txtd' ),
     attribute: 'showMedia',
   }
-]
+];
 
 const contentElementsToggle = [
   {
@@ -34,7 +34,7 @@ const contentElementsToggle = [
     label: __( 'Meta', '__plugin_txtd' ),
     attribute: 'showMeta',
   }
-]
+];
 
 const contentToggles = [
   {
@@ -52,7 +52,7 @@ const heroToggles = [
     label: __( 'Scroll Indicator', '__plugin_txtd' ),
     attribute: 'scrollIndicatorBlock'
   }
-]
+];
 
 const carouselToggles = [
   {
@@ -63,7 +63,7 @@ const carouselToggles = [
     label: __( 'Arrows', '__plugin_txtd' ),
     attribute: 'showArrows'
   }
-]
+];
 
 export {
   carouselToggles,

@@ -93,6 +93,6 @@ const EndFramePanel = ( props ) => {
       />
     </PanelBody>
   )
-}
+};
 
 export default EndFramePanel;

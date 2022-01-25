@@ -62,7 +62,7 @@ export const getMeta = ( props ) => {
     metaAboveTitle,
     metaBelowTitle
   }
-}
+};
 
 export const getMetadata = ( post, meta ) => {
 

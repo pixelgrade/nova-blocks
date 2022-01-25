@@ -36,6 +36,6 @@ const CollectionTitleLevel = props => {
       } } />
     </Fragment>
   )
-}
+};
 
 export default withVisibility( 'collection-title-level' )( CollectionTitleLevel );

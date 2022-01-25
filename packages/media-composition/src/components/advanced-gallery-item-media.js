@@ -15,6 +15,6 @@ const AdvancedGalleryItemMedia = ( props ) => {
         <video muted autoPlay loop playsInline className={ `novablocks-media-composition__image` } style={ styles } src={ image.url } /> }
     </Fragment>
   )
-}
+};
 
 export default withShapeModelingDecoration( AdvancedGalleryItemMedia );

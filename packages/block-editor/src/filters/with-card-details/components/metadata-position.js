@@ -28,6 +28,6 @@ const MetadataPosition = props => {
       />
     </ControlsGroup>
   )
-}
+};
 
 export default withVisibility( 'metadata-position' )( MetadataPosition );

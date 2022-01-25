@@ -34,6 +34,6 @@ const withContentPositionDeprecated = ( settings ) => {
       }
     ].concat( settings.deprecated ),
   } );
-}
+};
 
 export default withContentPositionDeprecated;

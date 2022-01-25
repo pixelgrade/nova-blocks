@@ -105,7 +105,7 @@ const updateBlock = ( block ) => {
   }
 
   updateInnerBlocks( block );
-}
+};
 
 const updateInnerBlocks = ( block ) => {
 
@@ -115,4 +115,4 @@ const updateInnerBlocks = ( block ) => {
       updateBlock( innerBlock );
     } )
   }
-}
+};

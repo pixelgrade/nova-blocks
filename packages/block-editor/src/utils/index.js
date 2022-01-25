@@ -8,16 +8,16 @@ export const setAttributesToInnerBlocks = ( clientId, attributes ) => {
   innerBlocks.forEach( block => {
     updateBlockAttributes( block.clientId, attributes );
   } );
-}
+};
 
 export const getEditorScrollContainer = () => {
   return document.querySelector( '.edit-post-layout__content' ) ||
          document.querySelector( '.edit-post-editor-regions__content' ) ||
          document.querySelector( '.block-editor-editor-skeleton__content' ) ||
          document.querySelector( '.interface-interface-skeleton__content' );
-}
+};
 
 export const getSupports = ( blockType ) => {
   return select( 'core/blocks' ).getBlockType( blockType ).supports;
-}
+};
 

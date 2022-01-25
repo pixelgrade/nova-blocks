@@ -36,7 +36,7 @@ const overwriteAttributes = ( settings ) => {
       ...attributesOverwrite
     }
   };
-}
+};
 addFilter( 'blocks.registerBlockType', 'novablocks/cards-collection-overwrite', overwriteAttributes, Number.MAX_SAFE_INTEGER );
 
 const withCardsCollectionDeprecated = ( settings ) => {
@@ -90,7 +90,7 @@ const withCardsCollectionDeprecated = ( settings ) => {
       }
     ],
   } );
-}
+};
 addFilter( 'blocks.registerBlockType', 'novablocks/cards-collection/deprecated', withCardsCollectionDeprecated, Number.MAX_SAFE_INTEGER );
 
 registerBlockType( BLOCK_NAME, {

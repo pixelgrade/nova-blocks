@@ -53,6 +53,6 @@ const CardSpacingCustomize = ( props ) => {
       </div>
     </ControlsGroup>
   )
-}
+};
 
 export default CardSpacingCustomize;

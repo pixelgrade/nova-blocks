@@ -15,7 +15,7 @@ const getSupernovaItemAttributesFromButtons = ( block ) => {
   }
 
   return {}
-}
+};
 
 export default {
   to: [
@@ -41,7 +41,7 @@ export default {
             defaultsGenerated: true,
             ...passedAttributes,
             ...getSupernovaItemAttributesFromButtons( block )
-          } )
+          } );
 
           return createBlock( 'novablocks/supernova-item', innerBlockAttributes );
         } );

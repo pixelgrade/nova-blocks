@@ -12,7 +12,7 @@ const SectionsListItem = ( props ) => {
 	} = props;
 
 	return <div key={ kebabCase( label ) } className={ 'novablocks-sections__button' } onClick={ () => { onClick( label ) } }>{ label }</div>
-}
+};
 
 const SectionsList = ( props ) => {
 
@@ -45,6 +45,6 @@ const SectionsList = ( props ) => {
 			}
 		</div>
 	)
-}
+};
 
 export { SectionsList, SectionsListItem };

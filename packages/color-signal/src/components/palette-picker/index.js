@@ -54,7 +54,7 @@ const PalettePicker = ( props ) => {
       } );
 
     }
-  }
+  };
 
   const options = visiblePalettes.map( palette => {
 
@@ -63,7 +63,7 @@ const PalettePicker = ( props ) => {
       data: palette,
       colors: palette.source.slice(0, 1)
     }
-  } )
+  } );
 
   return (
     <ControlsGroup>
@@ -80,6 +80,6 @@ const PalettePicker = ( props ) => {
       />
     </ControlsGroup>
   )
-}
+};
 
 export default withVisibility( 'palette-picker' )( PalettePicker );

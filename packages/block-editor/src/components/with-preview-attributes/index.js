@@ -14,7 +14,7 @@ const withPreviewAttributes = createHigherOrderComponent( WrappedComponent => {
       }
 
       props.setAttribtues( attributes );
-    }
+    };
 
     const attributes = getPreviewAttributes( props.attributes );
 
@@ -22,7 +22,7 @@ const withPreviewAttributes = createHigherOrderComponent( WrappedComponent => {
       ...props,
       attributes,
       setAttribtues
-    }
+    };
 
     return (
       <WrappedComponent { ...newProps } />

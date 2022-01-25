@@ -15,6 +15,6 @@ const withCollectionLayoutAttributes = ( block ) => {
       ...attributes
     }
   };
-}
+};
 
 export default withCollectionLayoutAttributes;

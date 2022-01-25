@@ -182,6 +182,6 @@ const ImageResizingControls = ( props ) => {
       />
     </Fragment>
   )
-}
+};
 
 export default withVisibility( 'media-composition-section' )( MediaCompositionControls );

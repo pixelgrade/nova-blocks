@@ -18,7 +18,7 @@ export const withControls = createHigherOrderComponent( ( BlockEdit ) => {
     return (
       <BlockEdit { ...props } />
     )
-  }
+  };
 
   return ( props ) => {
 

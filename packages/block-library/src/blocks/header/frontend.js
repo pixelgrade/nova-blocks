@@ -13,7 +13,7 @@ import { addSocialMenuClass, syncColorSignalClasses } from "./utils";
         $progressBar = $( '.js-reading-progress' ),
         $stickyRow = isArticle ? $primaryRow : $siteHeader.find( '.novablocks-header-row[data-sticky=true]' );
 
-  const $readingBar = $currentHeader.find( '.js-reading-bar' )
+  const $readingBar = $currentHeader.find( '.js-reading-bar' );
   const $firstRow = $currentHeader.find( '.novablocks-header-row' ).first();
 
   syncColorSignalClasses( $firstRow.get(0), $readingBar.get(0) );
@@ -134,7 +134,7 @@ import { addSocialMenuClass, syncColorSignalClasses } from "./utils";
           if(elementHeight) {
             ignoredElementsHeight += elementHeight;
           }
-    } )
+    } );
 
     $( window ).on( 'scroll', function() {
 

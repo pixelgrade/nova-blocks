@@ -7,7 +7,7 @@ import { getListClassname, getListStyle } from "../utils";
 export const withBlockEditProps = createHigherOrderComponent( ( BlockListBlock ) => {
 
   return ( props ) => {
-    const { name, attributes } = props
+    const { name, attributes } = props;
 
     if ( name !== 'core/list' ) {
       return (
@@ -28,7 +28,7 @@ export const withBlockEditProps = createHigherOrderComponent( ( BlockListBlock )
           ...getListStyle( attributes )
         }
       }
-    }
+    };
 
     return <BlockListBlock { ...newProps } />
   };

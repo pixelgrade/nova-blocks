@@ -26,7 +26,7 @@ export const getColorSignalClassnames = ( attributes, supports ) => {
   }
 
   return newClassnames.join( " " );
-}
+};
 
 export const getContentColorsSignalClassnames = ( attributes, supports ) => {
 
@@ -37,7 +37,7 @@ export const getContentColorsSignalClassnames = ( attributes, supports ) => {
   } );
 
   return getColorSignalClassnames( newAttributes, supports );
-}
+};
 
 export const getSignals = ( paletteId ) => {
   const config = window?.styleManager?.colorsConfig;
@@ -73,8 +73,8 @@ export const getSignals = ( paletteId ) => {
   } );
 
   return signals;
-}
+};
 
 export const getDefaultSignals = () => {
   return [1, 3, 8, 11];
-}
+};

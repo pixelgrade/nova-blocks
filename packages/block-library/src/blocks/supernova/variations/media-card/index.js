@@ -9,20 +9,20 @@ const attributes = {
 
   contentPadding: 0,
   layoutGutter: 100,
-  
+
   cardLayout: 'horizontal',
 
   layoutStyle: 'classic',
   postsToShow: 1,
   columns: 1,
-  
+
   showCollectionTitle: false,
   showCollectionSubtitle: false,
-  
+
   contentPosition: 'center left',
   cardMediaOpacity: 100,
 
-  align: 'wide',  
+  align: 'wide',
 
   blockTopSpacing: 0,
   blockBottomSpacing: 1,
@@ -46,6 +46,6 @@ const mediaCard = {
   innerBlocks: [ [ 'novablocks/supernova-item', attributes, innerBlocks ] ],
   isActive: ( block, variation ) => block.variation === variation.variation
 
-}
+};
 
 export default mediaCard;

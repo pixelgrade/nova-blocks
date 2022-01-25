@@ -22,6 +22,6 @@ const CollectionLayout = ( props ) => {
       { layoutStyle === 'parametric' && <ParametricLayout { ...passedProps } /> }
     </Fragment>
   )
-}
+};
 
 export default CollectionLayout;

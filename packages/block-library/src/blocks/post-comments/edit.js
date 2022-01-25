@@ -16,6 +16,6 @@ const PostCommentsEdit = function(props) {
 			<Preview {...props} />
 		</Fragment>
 	)
-}
+};
 
 export default PostCommentsEdit;

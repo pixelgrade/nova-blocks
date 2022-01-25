@@ -60,7 +60,7 @@ const withDopplerProvider = createHigherOrderComponent( WrappedComponent => {
           state: dopplerState,
           container: containerRef.current,
           scrollContainer: scrollContainer
-        }
+        };
 
         setContextValue( newContextValue );
       }

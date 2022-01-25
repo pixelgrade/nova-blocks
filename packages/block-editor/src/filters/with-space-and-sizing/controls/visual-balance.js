@@ -29,6 +29,6 @@ const VisualBalance = props => {
       />
     </ControlsGroup>
   )
-}
+};
 
 export default withVisibility( 'visual-balance', false )( VisualBalance );

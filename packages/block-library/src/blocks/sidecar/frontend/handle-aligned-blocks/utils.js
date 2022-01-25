@@ -2,7 +2,7 @@ export const getContentBlocksArray = () => {
   const selector = '.nb-content-layout-grid > :is( .alignfull, .alignwide, .alignleft, .alignright )';
   const nodelist = document.querySelectorAll( selector );
   return Array.from( nodelist );
-}
+};
 
 export const wouldOverlap = ( el1, el2 ) => {
   const el1Box = el1.getBoundingClientRect();
@@ -16,7 +16,7 @@ export const wouldOverlap = ( el1, el2 ) => {
 
   return !( el2Box.bottom + el2MarginBottom <= el1Box.top ||
             el2Box.top >= el1Box.bottom + el1MarginBottom );
-}
+};
 
 export const getAdjacentSidebarBlocks = ( block, sidebarBlocks = [] ) => {
   const sidecar = block.closest( '.nb-sidecar' );
@@ -39,18 +39,18 @@ export const getAdjacentSidebarBlocks = ( block, sidebarBlocks = [] ) => {
   } );
 
   return getAdjacentSidebarBlocks( sidecar.parentNode, sidebarBlocks.concat( newSidebarBlocks ) );
-}
+};
 
 export const makeSidebarsNotReady = () => {
   const sidebars = Array.from( document.querySelectorAll( '.nb-sidecar--sidebar-ready' ) );
   sidebars.forEach( sidebar => {
     sidebar.classList.remove( 'nb-sidecar--sidebar-ready' );
   } );
-}
+};
 
 export const makeSidebarsReady = () => {
   const sidebars = Array.from( document.querySelectorAll( '.nb-sidecar--sticky-sidebar' ) );
   sidebars.forEach( sidebar => {
     sidebar.classList.add( 'nb-sidecar--sidebar-ready' );
   } );
-}
+};

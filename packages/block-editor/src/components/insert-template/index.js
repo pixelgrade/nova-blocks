@@ -42,6 +42,6 @@ const insertTemplate = ( blockType, template ) => {
 			}
 		} );
 	} );
-}
+};
 
 export default insertTemplate;

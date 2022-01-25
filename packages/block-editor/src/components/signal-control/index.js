@@ -65,6 +65,6 @@ const SignalControl = ( props ) => {
       </div>
     </div>
   );
-}
+};
 
 export default SignalControl;

@@ -28,6 +28,6 @@ const MediaPadding = props => {
       />
     </ControlsGroup>
   )
-}
+};
 
 export default withVisibility( 'media-padding', false )( MediaPadding );

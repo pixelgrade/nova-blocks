@@ -15,6 +15,6 @@ const withVisibility = ( id, defaultValue = true ) => {
       return null;
     }
   }
-}
+};
 
 export default withVisibility;

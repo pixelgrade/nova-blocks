@@ -11,7 +11,7 @@ const blockAttributes = {
     default: 'full'
   },
 
-}
+};
 
 const deprecated = [
   {

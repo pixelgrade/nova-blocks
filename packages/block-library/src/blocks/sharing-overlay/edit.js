@@ -24,7 +24,7 @@ const SharingEdit = ( props ) => {
       <Controls { ...props } />
     </Fragment>
   )
-}
+};
 
 const SharingOverlayPreview = ( props ) => {
 
@@ -91,7 +91,7 @@ const SharingOverlayPreview = ( props ) => {
       </div>
     </div>
   )
-}
+};
 
 const SharingItemsGroup = ( props ) => {
 
@@ -116,7 +116,7 @@ const SharingItemsGroup = ( props ) => {
       }
     </div>
   );
-}
+};
 
 const SharingButton = ( props ) => {
 
@@ -135,6 +135,6 @@ const SharingButton = ( props ) => {
       </a>
     </div>
   )
-}
+};
 
 export default SharingEdit;

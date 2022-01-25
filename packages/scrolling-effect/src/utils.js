@@ -24,14 +24,14 @@ export const getIntermediateFocalPoint = function( focalPoint1, focalPoint2, pro
 		x: parseFloat( focalPoint1.x ) + ( parseFloat( focalPoint2.x ) - parseFloat( focalPoint1.x ) ) * progress,
 		y: parseFloat( focalPoint1.y ) + ( parseFloat( focalPoint2.y ) - parseFloat( focalPoint1.y ) ) * progress,
 	}
-}
+};
 
 export const getStyles = function( config, attributes ) {
 
 	const props = getProps( config, attributes );
 
 	return getStylesFromProps( props );
-}
+};
 
 export const getStylesFromProps = function( props ) {
 
@@ -60,7 +60,7 @@ export const getStylesFromProps = function( props ) {
 		objectPosition: focalPoint.x * 100 + '% ' + focalPoint.y * 100 + '%',
 		transformOrigin: focalPoint.x * 100 + '% 50%',
 	};
-}
+};
 
 function getIntermediateValue( initialValue, finalValue, progress ) {
 	return initialValue + ( finalValue - initialValue ) * progress;
@@ -213,7 +213,7 @@ export const getProps = function( config, attributes, fixed ) {
 		scale: newScale,
 		focalPoint: newFocalPoint,
 	};
-}
+};
 
 export const getState = function( config, attributes ) {
 
@@ -289,4 +289,4 @@ export const getFocalPointImage = ( media ) => {
   }
 
   return parallaxFocalPointImage;
-}
+};

@@ -49,7 +49,7 @@ const CardEdit = ( props ) => {
 			</Card>
 		</div>
 	);
-}
+};
 
 const CardContents = ( props ) => {
 
@@ -147,6 +147,6 @@ const CardContents = ( props ) => {
       </div>
     </div>
   )
-}
+};
 
 export default CardEdit;

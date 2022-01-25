@@ -26,7 +26,7 @@ const DuotoneFilter = ( props ) => {
     `;
 
   return element ? createPortal( <div dangerouslySetInnerHTML={ { __html: svgMarkup } } />, element ) : null;
-}
+};
 
 const withOverlayFilterControls = createHigherOrderComponent( OriginalComponent => {
 

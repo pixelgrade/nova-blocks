@@ -193,7 +193,7 @@ export const getAreaClassname = ( area, attributes, widthRatioMultiplier = 1 ) =
     getAreaClassnameByAspectRatio( area, attributes )
   ]);
 
-}
+};
 
 export const removeSmallestColumn = ( areaColumns ) => {
 
@@ -215,7 +215,7 @@ export const removeSmallestColumn = ( areaColumns ) => {
   }
 
   areaColumns.splice( indexToRemove, 1 );
-}
+};
 
 export const normalizeColumns = ( areaColumns, attributes ) => {
   moveColumnsToLeft( areaColumns );
@@ -228,7 +228,7 @@ export const normalizeColumns = ( areaColumns, attributes ) => {
       area.width = areaColumn.width;
     } )
   } )
-}
+};
 
 export const moveColumnsToLeft = ( areaColumns ) => {
 
@@ -254,7 +254,7 @@ export const moveColumnsToLeft = ( areaColumns ) => {
 
     areaColumn.col = areaColumn.col - spaceLeft;
   } );
-}
+};
 
 export const growColumnsToRight = ( areaColumns, attributes ) => {
   const { gridcolumns } = attributes;
@@ -281,7 +281,7 @@ export const growColumnsToRight = ( areaColumns, attributes ) => {
 
     areaColumn.width = areaColumn.width + spaceRight;
   } );
-}
+};
 
 export const moveColumnsToTop = ( areaColumns ) => {
 
@@ -307,4 +307,4 @@ export const moveColumnsToTop = ( areaColumns ) => {
 
     areaColumn.row = areaColumn.row - spaceTop;
   } );
-}
+};

@@ -15,6 +15,6 @@ const withColorSignalSaveClassnames = ( extraProps, blockType, attributes ) => {
       newClassnames
     )
   }
-}
+};
 
 export default withColorSignalSaveClassnames;

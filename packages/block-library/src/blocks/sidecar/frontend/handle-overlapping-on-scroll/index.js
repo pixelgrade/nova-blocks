@@ -14,7 +14,7 @@ export const toggleOverlappingClassname = ( overlappingSets ) => {
     } );
 
     return ( { stickyElement, overlap } );
-  } )
+  } );
 
   stickyElements.forEach( ( { stickyElement, overlap } ) => {
 
@@ -26,7 +26,7 @@ export const toggleOverlappingClassname = ( overlappingSets ) => {
 
   } );
 
-}
+};
 
 export const getOverlappingSets = () => {
   const sidebars = Array.from( document.querySelectorAll( '.nb-sidecar--sticky-sidebar > .nb-sidecar-area--sidebar' ) );
@@ -48,7 +48,7 @@ export const getOverlappingSets = () => {
 
     return [ ...acc, [ stickyElement, filteredBlocks ] ];
   }, [] );
-}
+};
 
 // We are comparing sticky block top and bottom
 // with all content blocks, and if overlaps on scroll,
@@ -74,9 +74,9 @@ export const handleOverlappingOnScroll = () => {
       lastScrollY = scrollY;
 
       requestAnimationFrame( updateLoop );
-    }
+    };
 
     requestAnimationFrame( updateLoop );
   } );
 
-}
+};

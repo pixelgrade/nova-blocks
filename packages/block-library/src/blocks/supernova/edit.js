@@ -42,7 +42,7 @@ const SupernovaEdit = props => {
       <BlockControls { ...props } />
     </Fragment>
   )
-}
+};
 
 const SupernovaPreview = props => {
 
@@ -93,7 +93,7 @@ const SupernovaPreview = props => {
       </Collection>
     </div>
   );
-}
+};
 
 export default withControlsVisibility( SupernovaEdit );
 

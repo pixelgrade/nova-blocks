@@ -110,7 +110,7 @@ export const areAttributesDirty = ( attributes, compileAttributes ) => {
 	}
 
 	return dirty;
-}
+};
 
 export const getControlsDirtyClasses = ( isDirty ) => {
 	const classes = [ 'novablocks-controls-wrap' ];
@@ -171,7 +171,7 @@ export const titleCase = ( str ) => {
 	}
 	// Directly return the joined string
 	return splitStr.join( ' ' );
-}
+};
 
 export const isAnyPartOfElementInViewport = (element) => {
 	const rect = element.getBoundingClientRect();
@@ -184,7 +184,7 @@ export const isAnyPartOfElementInViewport = (element) => {
 	const horInView = (rect.left <= windowWidth) && ((rect.left + rect.width) >= 0);
 
 	return (vertInView && horInView);
-}
+};
 
 
 
@@ -198,7 +198,7 @@ export const capitalizeFirstLetter = ( string ) => {
   }
 
   return string.charAt( 0 ).toUpperCase() + string.slice( 1 )
-}
+};
 
 
 
@@ -214,7 +214,7 @@ export const getAlignmentClassnames = ( attributes ) => {
   const horizontalAlignment = alignment[1];
 
   return `novablocks-u-valign-${ verticalAlignment } novablocks-u-halign-${ horizontalAlignment }`;
-}
+};
 
 export const getLevelAttributes = ( attributes ) => {
   const { level } = attributes;
@@ -224,7 +224,7 @@ export const getLevelAttributes = ( attributes ) => {
     collectionTitleLevel: level,
     cardTitleLevel: level + 1
   }
-}
+};
 
 export const getAspectRatioAttributes = ( attributes ) => {
   let {
@@ -244,7 +244,7 @@ export const getAspectRatioAttributes = ( attributes ) => {
     thumbnailAspectRatio,
     thumbnailAspectRatioString,
   }
-}
+};
 
 export const getPaddingTopFromContainerHeight = ( containerHeight ) => {
   let height = containerHeight / 50 - 1;
@@ -262,7 +262,7 @@ export const getPaddingTopFromContainerHeight = ( containerHeight ) => {
   }
 
   return numerator * 100 / denominator;
-}
+};
 
 export const getAlignFromMatrix = ( alignMatrixValue ) => {
 
@@ -273,7 +273,7 @@ export const getAlignFromMatrix = ( alignMatrixValue ) => {
   const align = alignMatrixValue.split( /\b\s+/ );
 
   return [ align[0], align[1] || 'center' ];
-}
+};
 
 
 
@@ -291,7 +291,7 @@ export const arrayRotate = (arr, count, reverse) => {
   }
 
   return arr;
-}
+};
 
 export const ready = ( fn ) => {
   if ( document.readyState != 'loading' ) {
@@ -299,7 +299,7 @@ export const ready = ( fn ) => {
   } else {
     document.addEventListener( 'DOMContentLoaded', fn );
   }
-}
+};
 
 export const addClass = ( element, classes ) => {
   const classesArray = classes.split( /\s+/ ).filter( x => x.trim().length );
@@ -307,7 +307,7 @@ export const addClass = ( element, classes ) => {
   if ( classesArray.length ) {
     element.classList.add( ...classesArray );
   }
-}
+};
 
 export const removeClass = ( element, classes ) => {
   const classesArray = classes.split(/\s+/).filter( x => x.trim().length );
@@ -315,11 +315,11 @@ export const removeClass = ( element, classes ) => {
   if ( classesArray.length ) {
     element.classList.remove( ...classesArray );
   }
-}
+};
 
 export const hasClass = ( element, className ) => {
   return element.classList.contains( className );
-}
+};
 
 export const clamp = ( number, min, max ) => {
   return Math.min( Math.max( min, number ), max )
@@ -328,7 +328,7 @@ export const clamp = ( number, min, max ) => {
 export const isFunctionalPalette = palette => {
   const id = palette.id + '';
   return id.charAt(0) === '_';
-}
+};
 
 export const IS_EDITOR = document.body.classList.contains( 'block-editor-page' );
 export const IS_CUSTOMIZER = document.body.classList.contains( 'wp-customizer' );
@@ -351,10 +351,10 @@ export const getPreviewAttributes = ( attributes ) => {
     cardLayout: 'horizontal',
     cardMediaOpacity: 100,
   } );
-}
+};
 
 export const needsPreview = ( attributes ) => {
   return [ "parametric", "carousel" ].includes( attributes.layoutStyle ) && attributes.sourceType !== "content";
-}
+};
 
 

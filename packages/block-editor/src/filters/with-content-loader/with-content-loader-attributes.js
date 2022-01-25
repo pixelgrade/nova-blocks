@@ -15,6 +15,6 @@ const withContentLoaderAttributes = settings => {
       ...attributes,
     }
   };
-}
+};
 
 export default withContentLoaderAttributes;

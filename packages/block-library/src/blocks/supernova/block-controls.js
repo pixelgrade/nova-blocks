@@ -30,6 +30,6 @@ const Controls = ( props ) => {
       </Toolbar>
     </BlockControls>
   )
-}
+};
 
 export default Controls;

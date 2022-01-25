@@ -118,6 +118,6 @@ const ShapeModelingCustomizeTab = props => {
       <ShapeSwapButton { ...props } />
     </ControlsTab>
   )
-}
+};
 
 export default ShapeModelingCustomizeTab;

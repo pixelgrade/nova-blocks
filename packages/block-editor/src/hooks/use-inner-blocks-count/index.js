@@ -21,6 +21,6 @@ const useInnerBlocksCount = ( clientId, attributes, innerBlockName, innerBlockAt
 
     replaceInnerBlocks( clientId, newInnerBlocks );
   }, [ attributes ] );
-}
+};
 
 export default useInnerBlocksCount;

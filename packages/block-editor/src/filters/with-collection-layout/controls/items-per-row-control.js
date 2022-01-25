@@ -21,6 +21,6 @@ const ItemsPerRowControl = ( props ) => {
       max={ 4 }
     />
   )
-}
+};
 
 export default ItemsPerRowControl;

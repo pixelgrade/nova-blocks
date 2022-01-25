@@ -26,4 +26,4 @@ export const moveImageClassesToBlock = () => {
     image.classList.remove( ...classList );
   } );
 
-}
+};

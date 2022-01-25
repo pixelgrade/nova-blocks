@@ -48,6 +48,6 @@ const ItemsCountControls = ( props ) => {
       />
     </ControlsGroup>
   )
-}
+};
 
 export default ItemsCountControls;

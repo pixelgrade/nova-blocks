@@ -15,6 +15,6 @@ const useOnScroll = ( element, onScroll ) => {
       }
     )
   }, [ element ] );
-}
+};
 
 export default useOnScroll;

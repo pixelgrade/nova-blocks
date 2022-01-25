@@ -15,6 +15,6 @@ const withDopplerAttributes = ( settings ) => {
       ...attributes,
     }
   };
-}
+};
 
 export default withDopplerAttributes;

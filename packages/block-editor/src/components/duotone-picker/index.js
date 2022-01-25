@@ -12,6 +12,6 @@ const CustomDuotoneSelect = ( props ) => {
       { ...props }
     />
   )
-}
+};
 
 export default CustomDuotoneSelect;

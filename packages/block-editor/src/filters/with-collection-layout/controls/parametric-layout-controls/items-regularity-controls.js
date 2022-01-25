@@ -65,6 +65,6 @@ const ItemsRegularityControls = props => {
       />
     </ControlsGroup>
   )
-}
+};
 
 export default ItemsRegularityControls;

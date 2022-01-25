@@ -8,7 +8,7 @@ export const getListClassname = ( attributes ) => {
     listStyle,
     listConnection
   )
-}
+};
 
 export const getListStyle = ( attributes ) => {
   const { values, start } = attributes;
@@ -21,4 +21,4 @@ export const getListStyle = ( attributes ) => {
   style[ '--nb-list-items-count' ] = `${ listCount + 1 }`;
 
   return style;
-}
+};

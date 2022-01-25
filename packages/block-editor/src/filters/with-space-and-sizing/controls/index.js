@@ -43,7 +43,7 @@ const SpaceAndSizingControls = ( props ) => {
       </ControlsTab>
     </ControlsSection>
   )
-}
+};
 
 const MediaHeight = withVisibility( 'media-container-height', false )( props => {
 

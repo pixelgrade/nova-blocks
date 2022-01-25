@@ -17,6 +17,6 @@ const FunctionalColorsToggleControl = ( props ) => {
       onChange={ value => { setShowFunctionalColors( value ) } }
     />
   )
-}
+};
 
 export default FunctionalColorsToggleControl;

@@ -44,6 +44,6 @@ const GridAnatomyControls = ( props ) => {
       <ItemsGapControls { ...props } />
     </ControlsGroup>
   )
-}
+};
 
 export default GridAnatomyControls;

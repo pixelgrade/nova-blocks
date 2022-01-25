@@ -28,5 +28,5 @@ const withDefaultsGeneratedDeprecated = ( settings ) => {
     ...settings,
     deprecated
   }
-}
+};
 addFilter( 'blocks.registerBlockType', 'novablocks/hero-defaults-generated-deprecated', withDefaultsGeneratedDeprecated );

@@ -35,6 +35,6 @@ const CardTitleLevel = props => {
       } } />
     </Fragment>
   )
-}
+};
 
 export default withVisibility( 'card-title-level' )( CardTitleLevel );

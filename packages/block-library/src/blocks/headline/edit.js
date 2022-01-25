@@ -45,7 +45,7 @@ const Controls = ( props ) => {
       </InspectorControls>
     </Fragment>
   )
-}
+};
 
 export default function HeadlineEdit( props ) {
 

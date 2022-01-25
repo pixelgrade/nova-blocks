@@ -14,7 +14,7 @@ const getHexFromConfig = ( config ) => {
   }
 
   return false;
-}
+};
 
 (() => {
   let duotoneIncrement = 0;

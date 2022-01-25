@@ -50,6 +50,6 @@ const ImageContainerHeightCustomize = ( props ) => {
 
     </ControlsGroup>
   )
-}
+};
 
 export default withVisibility( 'media-aspect-ratio', false )( ImageContainerHeightCustomize );

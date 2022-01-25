@@ -67,6 +67,6 @@ const PostsCollection = props => {
       }
     </CollectionBody>
   )
-}
+};
 
 export default Edit;

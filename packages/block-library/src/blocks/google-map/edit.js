@@ -42,7 +42,7 @@ class Edit extends Component {
 			savedApiKey: '',
 			apiKey: '',
 			gmAuthFailure: ( typeof window.googlemaps_authfailure === 'undefined' ) ? false : !!window.googlemaps_authfailure,
-		}
+		};
 
 		this.onChangeMarkers = this.onChangeMarkers.bind( this );
 		this.onGoogleMapsAuthFailure = this.onGoogleMapsAuthFailure.bind( this );

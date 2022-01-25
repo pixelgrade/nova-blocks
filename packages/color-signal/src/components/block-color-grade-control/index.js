@@ -38,6 +38,6 @@ const BlockColorGradeControl = props => {
                         parentVariation={ parentVariation }
     />
   )
-}
+};
 
 export default BlockColorGradeControl;

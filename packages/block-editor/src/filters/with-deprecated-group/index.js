@@ -39,7 +39,7 @@ function addDeprecatedGroup( settings, name ) {
           }
 
           return false;
-        } )
+        } );
 
         return [
           Object.assign( {}, attributes, newAttributes ),

@@ -34,6 +34,6 @@ const SpaceAndSizingPresets = ( props ) => {
       { ...props }
     />
   )
-}
+};
 
 export default SpaceAndSizingPresets;

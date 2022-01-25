@@ -23,7 +23,7 @@ const Controls = ( props ) => {
         </ControlsTab>
       </ControlsSection>
   )
-}
+};
 
 const MarkerSettings = ( props ) => {
 
@@ -51,7 +51,7 @@ const MarkerSettings = ( props ) => {
       />
     </ControlsGroup>
   )
-}
+};
 
 const ListItemsConnectionControl = ( props ) => {
 
@@ -75,6 +75,6 @@ const ListItemsConnectionControl = ( props ) => {
       />
     </ControlsGroup>
   )
-}
+};
 
 export default Controls;

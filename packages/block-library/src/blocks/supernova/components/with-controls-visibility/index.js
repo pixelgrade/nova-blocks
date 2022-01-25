@@ -62,6 +62,6 @@ const withControlsVisibility = OriginalComponent => {
 
     return <OriginalComponent { ...props } />
   }
-}
+};
 
 export default withControlsVisibility;

@@ -12,12 +12,12 @@ const slideshowAddDeprecated = ( settings, name ) => {
 
   const deprecated = [
     migrateContentPadding( attributes )
-  ]
+  ];
 
   return {
     ...settings,
     deprecated
   }
-}
+};
 
 addFilter( 'blocks.registerBlockType', 'novablocks/slideshow-add-deprecated', slideshowAddDeprecated, 20 );

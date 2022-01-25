@@ -38,4 +38,4 @@ export const getSpacingCSSProps = ( attributes ) => {
     '--nb-minimum-container-height': minHeightFallback + 'vh',
     '--nb-spacing-modifier': spacingModifier + '',
   }
-}
+};

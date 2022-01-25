@@ -29,11 +29,11 @@ $( () => {
   }
 
   handleGrids( GRID_SELECTOR );
-} )
+} );
 
 function handleGrids( selector ) {
   $( selector ).each( function( i, grid ) {
-    const $grid = $( grid )
+    const $grid = $( grid );
     const $block = $grid.closest( '[data-layout-style]' );
     const $posts = $grid.children();
     const attributes = $block.data();

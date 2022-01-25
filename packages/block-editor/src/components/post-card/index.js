@@ -50,7 +50,7 @@ export const PostCardMedia = ( props ) => {
   return (
     <img className={ `supernova-item__media` } src={ media.url } width={ media.width } height={ media.height }/>
   )
-}
+};
 
 export const PostCard = withMedia( props => {
 

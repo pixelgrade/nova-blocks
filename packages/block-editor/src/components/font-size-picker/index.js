@@ -20,7 +20,7 @@ const FontSizePicker = props => {
       { ...props }
     />
   )
-}
+};
 
 FontSizePicker.DEFAULT_FONT_SIZE = DEFAULT_FONT_SIZE;
 FontSizePicker.FONT_SIZE_OPTIONS = FONT_SIZE_OPTIONS;

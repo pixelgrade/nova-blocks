@@ -306,7 +306,7 @@ export const applyLayoutEngine = state => {
       do {
         nthMatrix[ i ][ j ] = currentNth;
         j ++;
-      } while ( widthMatrix[ state.featureposition ] === widthMatrix[ j ] )
+      } while ( widthMatrix[ state.featureposition ] === widthMatrix[ j ] );
 
       i ++;
     }
@@ -326,7 +326,7 @@ export const applyLayoutEngine = state => {
           imageWeightMatrix[ i ][ j ] = Math.round( imageWeightMatrix[ i ][ j ] * 0.66 );
 
           j ++;
-        } while ( widthMatrix[ state.featureposition ] === widthMatrix[ j ] )
+        } while ( widthMatrix[ state.featureposition ] === widthMatrix[ j ] );
 
         i ++;
       }
@@ -353,7 +353,7 @@ export const applyLayoutEngine = state => {
         do {
           nthMatrix[ i ][ j ] = currentNth;
           j ++;
-        } while ( widthMatrix[ currentColumnStartCol ] === widthMatrix[ j ] )
+        } while ( widthMatrix[ currentColumnStartCol ] === widthMatrix[ j ] );
 
         i ++;
       }

@@ -15,6 +15,6 @@ const withCardElementsStackingAttributes = ( block ) => {
       ...attributes
     }
   };
-}
+};
 
 export default withCardElementsStackingAttributes;

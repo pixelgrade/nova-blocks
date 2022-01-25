@@ -15,7 +15,7 @@ const withColorSignalEditCustomProps = createHigherOrderComponent( OriginalCompo
 
       let colorSignal = {
         '--nb-emphasis-area': emphasisArea
-      }
+      };
 
       Object.assign( style, colorSignal );
     }

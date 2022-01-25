@@ -31,6 +31,6 @@ const CardFieldsPreview = ( props ) => {
       </CardFooter>
     </Fragment>
   )
-}
+};
 
 export default CardFieldsPreview;

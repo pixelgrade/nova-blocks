@@ -16,7 +16,7 @@ export const addSocialMenuClass = function() {
       }
     } );
   }
-}
+};
 
 export const syncColorSignalClasses = ( from, to ) => {
 
@@ -34,4 +34,4 @@ export const syncColorSignalClasses = ( from, to ) => {
       }
     } );
   }
-}
+};

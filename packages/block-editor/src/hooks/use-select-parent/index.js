@@ -15,6 +15,6 @@ const useSelectParent = ( props ) => {
     }
 
   }, [ isSelected ] );
-}
+};
 
 export default useSelectParent;

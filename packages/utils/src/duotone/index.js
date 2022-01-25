@@ -12,7 +12,7 @@ export const getValuesFromColors = ( colors = [] ) => {
   } );
 
   return values;
-}
+};
 
 export const getDuotoneFilterSvg = ( colors, id ) => {
   const values = getValuesFromColors( colors );
@@ -48,4 +48,4 @@ export const getDuotoneFilterSvg = ( colors, id ) => {
       </defs>
     </svg>`
   )
-}
+};

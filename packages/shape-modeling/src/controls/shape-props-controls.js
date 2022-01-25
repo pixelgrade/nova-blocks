@@ -35,7 +35,7 @@ const ShapePropsToggle = props => {
       onChange={ () => setAttributes( { [ enableAttribute ]: !enabled } ) }
     />
   )
-}
+};
 
 const ShapePropsControls = props => {
 
@@ -126,6 +126,6 @@ const ShapePropsControls = props => {
       </div>
     </Fragment>
   )
-}
+};
 
 export default ShapeControls;

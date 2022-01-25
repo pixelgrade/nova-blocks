@@ -19,6 +19,6 @@ const Controls = ( props ) => {
       />
     </BlockControls>
   )
-}
+};
 
 export default Controls;

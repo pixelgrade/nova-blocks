@@ -28,6 +28,6 @@ const ContentPadding = props => {
       />
     </ControlsGroup>
   )
-}
+};
 
 export default withVisibility( 'content-padding', false )( ContentPadding );

@@ -53,7 +53,7 @@ const overwriteAttributes = ( settings ) => {
       ...attributesOverwrite
     }
   };
-}
+};
 addFilter( 'blocks.registerBlockType', 'novablocks/card-attributes-overwrite', overwriteAttributes, Number.MAX_SAFE_INTEGER );
 
 registerBlockType( BLOCK_NAME, {

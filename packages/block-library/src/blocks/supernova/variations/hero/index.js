@@ -31,7 +31,7 @@ const attributes = {
   emphasisBottomSpacing: 0,
 
   scrollingEffect: 'static',
-}
+};
 
 const innerBlockAttributes = Object.assign( {}, attributes, {
   colorSignal: 3,

@@ -48,7 +48,7 @@ const alterAttributes = ( settings ) => {
       ...attributesColorSignal
     }
   };
-}
+};
 
 addFilter( 'blocks.registerBlockType', 'novablocks/opentable/color-signal-attributes-overwrite', alterAttributes, 20 );
 

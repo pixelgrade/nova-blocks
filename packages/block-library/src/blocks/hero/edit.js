@@ -75,6 +75,6 @@ const HeroEdit = ( props ) => {
       </ControlsSection>
     </div>
   );
-}
+};
 
 export default HeroEdit;

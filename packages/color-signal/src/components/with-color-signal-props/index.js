@@ -69,6 +69,6 @@ const withColorSignalProps = OriginalComponent => {
       />
     )
   }
-}
+};
 
 export default withColorSignalProps;

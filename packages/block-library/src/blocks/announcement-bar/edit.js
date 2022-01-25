@@ -60,6 +60,6 @@ const Edit = ( props ) => {
 
     </Fragment>
   )
-}
+};
 
 export default Edit;

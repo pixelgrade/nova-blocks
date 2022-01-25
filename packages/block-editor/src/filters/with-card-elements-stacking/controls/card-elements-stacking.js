@@ -18,6 +18,6 @@ const CardElementsStacking = ( props ) => {
       }
     </ControlsGroup>
   )
-}
+};
 
 export default CardElementsStacking;

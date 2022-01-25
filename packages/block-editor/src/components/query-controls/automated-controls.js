@@ -52,7 +52,7 @@ const fetchCategorySuggestions = ( search ) => {
 			label: decodeEntities( category.name ) || __( '(no title)' ),
 		} ) );
 	} );
-}
+};
 
 const fetchSavedCategories = ( categoryIDs ) => {
 	return apiFetch( {
@@ -67,7 +67,7 @@ const fetchSavedCategories = ( categoryIDs ) => {
 			label: decodeEntities( category.name ) || __( '(no title)' ),
 		} ) );
 	} );
-}
+};
 
 const expandCategories = ( categoryIDs ) => {
 	return apiFetch( {
@@ -75,7 +75,7 @@ const expandCategories = ( categoryIDs ) => {
 			ids: categoryIDs
 		} ),
 	} )
-}
+};
 
 const fetchTagSuggestions = ( search ) => {
 	return apiFetch( {
@@ -92,7 +92,7 @@ const fetchTagSuggestions = ( search ) => {
 			label: decodeEntities( tag.name ) || __( '(no title)' ),
 		} ) );
 	} );
-}
+};
 
 const fetchSavedTags = ( tagIDs ) => {
 	return apiFetch( {

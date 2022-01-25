@@ -65,6 +65,6 @@ const SidecarInspectorControls = ( props ) => {
       </PanelBody>
     </InspectorControls>
   )
-}
+};
 
 export default SidecarInspectorControls;

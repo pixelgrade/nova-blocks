@@ -28,7 +28,7 @@ const CardsCollectionPreview = ( props ) => {
       { innerBlocks.map( innerBlock => <SupernovaItemPreview { ...innerBlock } /> ) }
     </CollectionBody>
   )
-}
+};
 
 const CardsCollectionEdit = ( props ) => {
 
@@ -41,6 +41,6 @@ const CardsCollectionEdit = ( props ) => {
   return (
     <CollectionBody { ...props } { ...innerBlocksProps } />
   )
-}
+};
 
 export default CardsCollectionLayout;

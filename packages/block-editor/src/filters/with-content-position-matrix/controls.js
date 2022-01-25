@@ -30,7 +30,7 @@ const Controls = ( props ) => {
       />
     </BlockControls>
   )
-}
+};
 
 const ControlsFallback = ( props ) => {
 
@@ -56,6 +56,6 @@ const ControlsFallback = ( props ) => {
       />
     </BlockControls>
   )
-}
+};
 
 export default Controls;

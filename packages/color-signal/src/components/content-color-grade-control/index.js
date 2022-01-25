@@ -48,6 +48,6 @@ const ContentColorGradeControl = props => {
                         parentVariation={ paletteVariation }
     />
   )
-}
+};
 
 export default ContentColorGradeControl;

@@ -15,6 +15,6 @@ const withSpaceAndSizingAttributes = ( block ) => {
       ...attributes
     }
   };
-}
+};
 
 export default withSpaceAndSizingAttributes;

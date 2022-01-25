@@ -9,4 +9,4 @@ const useMeta = name => {
     setMeta( { ...meta, [ name ]: newValue } );
   }, [] );
   return [ metaFieldValue, setMetaFieldValue ];
-}
+};

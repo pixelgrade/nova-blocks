@@ -19,7 +19,7 @@ const useScrollContainerBox = ( element ) => {
     if ( !! element ) {
       setBox( element.getBoundingClientRect() );
     }
-  }, [ entry ] )
+  }, [ entry ] );
 
   useEffect( () => {
 
@@ -37,6 +37,6 @@ const useScrollContainerBox = ( element ) => {
   }, [] );
 
   return box;
-}
+};
 
 export default useScrollContainerBox;

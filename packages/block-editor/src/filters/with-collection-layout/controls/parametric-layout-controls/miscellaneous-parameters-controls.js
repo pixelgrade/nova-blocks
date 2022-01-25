@@ -49,6 +49,6 @@ const MiscellaneousParametersControls = ( props ) => {
       />
     </ControlsGroup>
   )
-}
+};
 
 export default MiscellaneousParametersControls;

@@ -52,6 +52,6 @@ const InnerBlocksPicker = ( props ) => {
   return (
     <div { ...innerBlocksProps } />
   );
-}
+};
 
 export default InnerBlocksPicker;

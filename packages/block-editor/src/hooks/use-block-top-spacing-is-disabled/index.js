@@ -24,6 +24,6 @@ const useBlockTopSpacingIsDisabled = ( clientId ) => {
   }, [ clientId, rootBlocks ] );
 
   return isDisabled;
-}
+};
 
 export default useBlockTopSpacingIsDisabled;

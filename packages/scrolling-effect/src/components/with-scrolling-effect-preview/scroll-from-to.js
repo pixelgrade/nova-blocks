@@ -26,6 +26,6 @@ const scrollFromTo = ( scrollContainer, start, end, easing = x => x, speed = 100
       onEnd();
     }
   }, duration );
-}
+};
 
 export default scrollFromTo;

@@ -20,4 +20,4 @@ export const replaceActiveFontSize = ( className, fontSize, nextFontSize ) => {
   const nextClassName = 'has-' + nextFontSize + '-font-size';
 
   return className ? className + ' ' + nextClassName : nextClassName;
-}
+};

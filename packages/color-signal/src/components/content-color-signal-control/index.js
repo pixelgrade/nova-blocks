@@ -43,6 +43,6 @@ const ContentColorSignalControl = ( props ) => {
                      } } />
     </ControlsGroup>
   )
-}
+};
 
 export default ContentColorSignalControl;

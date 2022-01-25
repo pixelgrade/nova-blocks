@@ -14,7 +14,7 @@ const getRandomAttributes = () => {
     blobsVerticalDisplacement: getRandomBetween( 3, 7 ) * 10,
     blobsSizeBalance: getRandomBetween( 4, 6 ) * 10,
   }
-}
+};
 
 const getRandomShapeAttributes = ( prefix ) => {
   const sides = getRandomBetween( 4, 7 );

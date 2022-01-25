@@ -90,6 +90,6 @@ const BreakingTheGridControls = ( props ) => {
       />
     </ControlsGroup>
   )
-}
+};
 
 export default BreakingTheGridControls;
