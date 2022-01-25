@@ -1168,6 +1168,10 @@ function novablocks_get_media_composition_markup( array $attributes ): string {
 		return $output;
 	}
 
+	if ( count( $images ) === 1 ) {
+		return novablocks_get_collection_card_media_markup( $images[0] );
+	}
+
 	$attributes_config = novablocks_merge_attributes_from_array( [
 		'packages/media-composition/src/attributes.json',
 	] );
