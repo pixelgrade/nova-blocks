@@ -52,8 +52,8 @@ const CardMedia = ( props ) => {
   const { attributes } = props;
   const { images } = attributes;
 
-  if ( Array.isArray( images ) && images.length === 1 ) {
-    const media = images[0];
+  if ( Array.isArray( images ) && 1 === images.length ) {
+    const media = normalizeMedia( images[0] );
 
     return (
       <img className={ `supernova-item__media` } src={ media.url } width={ media.width } height={ media.height } />
@@ -63,6 +63,18 @@ const CardMedia = ( props ) => {
   return (
     <MediaCompositionPreview { ...props } />
   );
+};
+
+const normalizeMedia = ( mediaObject ) => {
+  // We will refrain from using the full image size to avoid overloading the editor window.
+  // The `novablocks_large` image size is sufficient, if present.
+
+  return {
+    type: mediaObject?.type,
+    width: mediaObject?.sizes?.novablocks_large?.width || mediaObject?.width,
+    height: mediaObject?.sizes?.novablocks_large?.height || mediaObject.height,
+    url: mediaObject?.sizes?.novablocks_large?.url || mediaObject?.url,
+  }
 };
 
 const CardMediaWithScrollingEffect = withScrollingEffect( ( props ) => {
