@@ -175,7 +175,7 @@
 
 @include above(tablet) {
 
-  .supernova-item {
+  .nb-collection__layout:not(.nb-collection__layout--parametric) .supernova-item {
 
     &.supernova-item--layout-vertical {
       @include remove-spacing-media-to-content(bottom, top);
@@ -191,6 +191,17 @@
 
     &.supernova-item--layout-horizontal-reverse {
       @include remove-spacing-media-to-content(left, right);
+    }
+  }
+
+  .nb-collection__layout.nb-collection__layout--parametric {
+
+    .nb-grid__area--landscape .supernova-item {
+      @include remove-spacing-media-to-content(right, left);
+    }
+
+    .nb-grid__area--portrait .supernova-item {
+      @include remove-spacing-media-to-content(bottom, top);
     }
   }
 }
