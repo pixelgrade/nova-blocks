@@ -72,7 +72,7 @@ const PalettePicker = ( props ) => {
         options={ options }
         onChange={ value => {
           const palette = visiblePalettes.find( palette => `${ palette.id }` === value );
-          onPaletteChange( palette.id );
+          onPaletteChange( `${ palette.id }` );
         } }
         favorite={ paletteVariation === 1 && useSourceColorAsReference }
         selected={ palette }
