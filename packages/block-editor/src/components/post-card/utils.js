@@ -100,11 +100,13 @@ export const getMetadata = ( post, meta ) => {
 };
 
 export const sanitizeMediaResponse = ( mediaObject ) => {
+  // We will refrain from using the full image size to avoid overloading the editor window.
+  // The `novablocks_large` image size is sufficient, if present.
 
   return {
     type: mediaObject?.media_type,
-    width: mediaObject?.media_details?.width,
-    height: mediaObject?.media_details?.height,
-    url: mediaObject?.source_url,
+    width: mediaObject?.media_details?.sizes?.novablocks_large?.width || mediaObject?.media_details?.width,
+    height: mediaObject?.media_details?.sizes?.novablocks_large?.height || mediaObject?.media_details?.height,
+    url: mediaObject?.media_details?.sizes?.novablocks_large?.source_url || mediaObject?.source_url,
   }
 };
