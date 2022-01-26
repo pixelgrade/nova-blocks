@@ -12,7 +12,6 @@ const withControlsVisibility = OriginalComponent => {
     } = props;
 
     const innerBlocks = useInnerBlocks( clientId );
-    const hasMediaComposition = innerBlocks.some( block => block.attributes.images?.length > 1 );
 
     useEffect( () => {
 
@@ -26,6 +25,8 @@ const withControlsVisibility = OriginalComponent => {
         showMedia,
         showMeta,
       } = attributes;
+
+      const hasMediaComposition = innerBlocks.some( block => block.attributes.images?.length > 1 );
 
       setControlsVisibility( {
         // Space and Sizing
@@ -58,7 +59,7 @@ const withControlsVisibility = OriginalComponent => {
         'metadata-position': !! showMeta,
       } );
 
-    }, [ attributes ] );
+    }, [ attributes, innerBlocks ] );
 
     return <OriginalComponent { ...props } />
   }
