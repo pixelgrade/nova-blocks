@@ -41,10 +41,6 @@ function handleGrids( selector ) {
 
     let addedCards;
 
-    grid.style.setProperty( '--nb-card-media-padding', attributes.imagePadding );
-    grid.style.setProperty( '--nb-card-media-padding-top', getCardMediaPaddingTop( attributes.thumbnailAspectRatio ) );
-    grid.style.setProperty( '--nb-card-media-object-fit', attributes.imageResizing === 'cropped' ? 'cover' : 'scale-down' );
-
     if ( attributes.layoutStyle !== 'parametric' ) {
       $grid.addClass( `nb-grid__area--${ attributes.isLandscape ? 'landscape' : 'portrait' }` );
       $grid.addClass( getAreaClassnameByWidthRatio( 1 / attributes.columns ) );
