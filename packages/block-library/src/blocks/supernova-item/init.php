@@ -36,12 +36,14 @@ if ( ! function_exists( 'novablocks_render_supernova_item_block' ) ) {
 		$attributes_config = novablocks_get_supernova_item_attributes();
 		$attributes        = novablocks_get_attributes_with_defaults( $attributes, $attributes_config );
 
-		$media   = novablocks_get_media_composition_markup( $attributes );
-		$media_markup = novablocks_get_collection_card_media_markup_wrapped( $media );
-
 		if ( ! empty( $attributes['sourceType'] ) && 'fields' === $attributes['sourceType'] ) {
 			$card_content = novablocks_get_card_contents( $attributes );
 		}
+
+		$media   = novablocks_get_media_composition_markup( $attributes, [
+			'companionContent' => ( novablocks_show_card_contents( $attributes ) && ! empty( $card_content ) )
+		] );
+		$media_markup = novablocks_get_collection_card_media_markup_wrapped( $media );
 
 		return novablocks_get_collection_card_markup( $media_markup, $card_content, $attributes );
 	}
