@@ -1541,9 +1541,14 @@ if ( ! function_exists( 'novablocks_get_collection_output' ) ) {
 		];
 
 		$output = '<div class="' . esc_attr( join( ' ', $collection_classes ) ) . '">';
+		$collection_header_class = 'nb-collection__header';
+
+		if ( ! empty( $attributes['showCollectionSubtitle'] ) && ! empty( $attributes['subtitle'] ) ) {
+			$collection_header_class .= ' nb-collection__header--has-description';
+		}
 
 		if ( ! empty( $collection_header ) ) {
-			$output .= '<div class="nb-collection__header">
+			$output .= '<div class="' . $collection_header_class . '">
 				<div class="nb-collection__inner-container">
 					' . $collection_header . '
 				</div>
