@@ -80,6 +80,8 @@ if ( ! class_exists( 'NovaBlocks_Comments_Post_Meta' ) ) {
 			$conversation_starter_subtitle = get_post_meta( $post->ID, 'nb_conversation_starter_subtitle', true );
 			$conversation_starter_user_ID = get_post_meta( $post->ID, 'nb_conversation_starter_user_id', true );
 
+			$post_type_object = get_post_type_object( $post->post_type );
+
 			// Safety first.
 			wp_nonce_field( 'nb_save_post_discussion_extras', 'nb_post_discussion_extra_details', false );
 			?>
@@ -112,7 +114,7 @@ if ( ! class_exists( 'NovaBlocks_Comments_Post_Meta' ) ) {
 						<td>
 							<?php wp_dropdown_users(
 									apply_filters( 'novablocks_comments_post_conversation_starter_dropdown_users_args', [
-										'who'              => 'authors',
+										'capability'       => array( $post_type_object->cap->edit_posts ),
 										'name'             => 'nb_conversation_starter_user_id',
 										'selected'         => empty( $conversation_starter_user_ID ) ? $post->post_author : $conversation_starter_user_ID,
 										'include_selected' => true,
