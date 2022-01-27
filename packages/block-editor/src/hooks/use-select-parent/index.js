@@ -1,7 +1,7 @@
 import { useDispatch, useSelect } from "@wordpress/data";
 import { useEffect } from "@wordpress/element";
 
-const useSelectParent = ( props ) => {
+const useSelectParent = ( props, condition ) => {
   const { clientId, isSelected } = props;
   const { selectBlock, clearSelectedBlock } = useDispatch( 'core/editor' );
   const parents = useSelect( select => select( 'core/block-editor' ).getBlockParents( clientId ).slice(), [ clientId ] );
@@ -9,12 +9,14 @@ const useSelectParent = ( props ) => {
   return useEffect( () => {
 
     if ( isSelected && parents.length ) {
-      clearSelectedBlock().then( () => {
-        selectBlock( parents[ parents.length - 1 ] );
-      } );
+      if ( typeof condition === "undefined" || !! condition ) {
+        clearSelectedBlock().then( () => {
+          selectBlock( parents[ parents.length - 1 ] );
+        } );
+      }
     }
 
-  }, [ isSelected ] );
+  }, [ isSelected, condition ] );
 };
 
 export default useSelectParent;

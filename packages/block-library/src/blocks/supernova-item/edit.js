@@ -1,7 +1,8 @@
 import classnames from 'classnames';
 
-import { useEffect, useState } from '@wordpress/element';
+import { useEffect, useMemo, useState } from '@wordpress/element';
 import { Popover } from '@wordpress/components';
+import { useSelect } from '@wordpress/data';
 
 import {
   RichText,
@@ -14,13 +15,36 @@ const useInnerBlocksProps = wp.blockEditor.useInnerBlocksProps || wp.blockEditor
 import { useScrollingEffect, withScrollingEffect } from '@novablocks/scrolling-effect';
 
 import { MediaCompositionPreview } from "@novablocks/media-composition";
-import { Card, CardButton, CardMediaWrapper, withPreviewAttributes } from "@novablocks/block-editor";
+import {
+  Card,
+  CardButton,
+  CardMediaWrapper,
+  useInnerBlocks,
+  useSelectParent,
+  withPreviewAttributes
+} from "@novablocks/block-editor";
 import { getColorSignalClassnames } from "@novablocks/utils";
 
 const SuperNovaItemEdit = props => {
 
-  const { attributes, setControlsVisibility } = props;
+  const { attributes, setControlsVisibility, clientId } = props;
   const { showMedia } = attributes;
+  const parent = useSelect( select =>{
+    const { getBlockParents } = select( 'core/block-editor' );
+    const parents = getBlockParents( clientId ).slice();
+
+    if ( parents.length ) {
+      return parents[ parents.length - 1 ];
+    }
+
+    return null;
+  }, [ clientId ] );
+  const innerBlocks = useInnerBlocks( parent );
+  const selectParentCondition = useMemo( () => {
+    return innerBlocks.length === 1;
+  }, [ innerBlocks ] );
+
+  useSelectParent( props, selectParentCondition );
 
   useEffect( () => {
     setControlsVisibility( {
