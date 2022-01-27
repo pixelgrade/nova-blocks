@@ -1,7 +1,6 @@
 /**
  * Internal dependencies
  */
-import { select } from "@wordpress/data";
 import { getSvg } from "@novablocks/block-editor";
 
 /**

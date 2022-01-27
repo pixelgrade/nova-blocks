@@ -1,7 +1,3 @@
-import classnames from "classnames";
-
-import { Fragment } from "@wordpress/element";
-
 import {
   Card,
   CardFieldsPreview,

@@ -8,7 +8,7 @@ import { RichText } from '@wordpress/block-editor';
 import { InnerBlocks, MediaUpload, useBlockProps } from '@wordpress/block-editor';
 
 import { Card, CardMediaWrapper } from "@novablocks/block-editor";
-import { getAlignFromMatrix, getColorSignalClassnames } from "@novablocks/utils";
+import { getAlignFromMatrix } from "@novablocks/utils";
 
 import CardMedia from './media';
 
