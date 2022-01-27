@@ -22,7 +22,7 @@ const DuotoneFilter = ( props ) => {
 
   const svgMarkup = `
         ${ getDuotoneFilterSvg( [ from.hex, to.hex ], id ) }
-        <style> .${ id } .blob-mix__media { filter: url( #${ id } ); }</style>
+        <style> .${ id } .supernova-item__media-wrapper :is(img, video) { filter: url( #${ id } ); }</style>
     `;
 
   return element ? createPortal( <div dangerouslySetInnerHTML={ { __html: svgMarkup } } />, element ) : null;
