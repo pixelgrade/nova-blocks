@@ -29,8 +29,8 @@ const Edit = ( props ) => {
   return (
     <div { ...blockProps }>
       <Collection { ...props }>
-        <CollectionHeader { ...props } />
-        <PostsCollection { ...props } />
+        <CollectionHeader { ...props } key={ 'header' } />
+        <PostsCollection { ...props } key={ 'posts' } />
       </Collection>
     </div>
   )
@@ -55,7 +55,7 @@ const PostsCollection = props => {
   }
 
   return (
-    <CollectionBody { ...passedProps }>
+    <CollectionBody { ...passedProps } >
       {
         posts.map( post => {
           return (

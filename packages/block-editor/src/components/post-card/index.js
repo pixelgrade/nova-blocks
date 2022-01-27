@@ -1,5 +1,3 @@
-import classnames from 'classnames';
-
 import { __ } from "@wordpress/i18n";
 import { withSelect } from "@wordpress/data";
 import { __unstableStripHTML as stripHTML } from '@wordpress/dom';
@@ -13,8 +11,6 @@ import {
   CardButton,
   CardMediaWrapper,
 } from "../index";
-
-import { getColorSignalClassnames } from "@novablocks/utils";
 
 import { getMeta, sanitizeMediaResponse } from './utils';
 
@@ -75,20 +71,20 @@ export const PostCard = withMedia( props => {
   const Media = props.Media || PostCardMedia;
 
   return (
-    <Card { ...props }>
+    <Card { ...props } key={'card_post_' + post.id}>
       {
         showMedia &&
-        <CardMediaWrapper { ...props }>
-          <Media { ...props } />
+        <CardMediaWrapper { ...props } key={'card_post_mediawrapper_' + post.id}>
+          <Media { ...props } key={'card_post_media_' + post.id}/>
         </CardMediaWrapper>
       }
-      <div className={ 'supernova-item__inner-container' }>
-        <CardMeta show={ showMeta }>{ metaAboveTitle }</CardMeta>
-        <CardTitle show={ showTitle }>{ post.title.raw }</CardTitle>
-        <CardMeta show={ showMeta }>{ metaBelowTitle }</CardMeta>
-        <CardDescription show={ showDescription }>{ stripHTML( post.excerpt.rendered ) }</CardDescription>
-        <CardFooter show={ showButtons }>
-          <CardButton>{ __( 'Read More' ) }</CardButton>
+      <div className={ 'supernova-item__inner-container' } key={'card_post_innercontainer_' + post.id}>
+        <CardMeta show={ showMeta } key={'card_post_metaabovetitle_' + post.id}>{ metaAboveTitle }</CardMeta>
+        <CardTitle show={ showTitle } key={'card_post_title_' + post.id}>{ post.title.raw }</CardTitle>
+        <CardMeta show={ showMeta } key={'card_post_metabelowtitle_' + post.id}>{ metaBelowTitle }</CardMeta>
+        <CardDescription show={ showDescription } key={'card_post_description_' + post.id}>{ stripHTML( post.excerpt.rendered ) }</CardDescription>
+        <CardFooter show={ showButtons } key={'card_post_footer_' + post.id}>
+          <CardButton key={'card_post_footer_button_' + post.id}>{ __( 'Read More' ) }</CardButton>
         </CardFooter>
       </div>
     </Card>

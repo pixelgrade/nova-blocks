@@ -8,8 +8,9 @@ import { withShapeModelingDecoration } from "@novablocks/shape-modeling";
 const Media = withShapeModelingDecoration( DefaultPostCardMedia );
 
 const PostCard = ( props ) => {
+  const { post } = props;
   return (
-    <DefaultPostCard { ...props } Media={ Media } />
+    <DefaultPostCard { ...props } Media={ Media } key={'default_post_card_post_' + post.id}/>
   )
 };
 

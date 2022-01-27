@@ -5,7 +5,6 @@ import { ScrollIndicator } from '../index';
 
 const CollectionBody = ( props ) => {
   const { attributes } = props;
-  const { align } = attributes;
 
   const contentClassNames = getColorSignalClassnames( {
     palette: attributes.palette,
@@ -16,8 +15,8 @@ const CollectionBody = ( props ) => {
 
   return (
     <div className={ `nb-collection__body` }>
-      <CollectionLayout { ...props } />
-      <ScrollIndicator { ...props } className={ contentClassNames } />
+      <CollectionLayout { ...props } key={'layout'}/>
+      <ScrollIndicator { ...props } className={ contentClassNames } key={'scroll'}/>
     </div>
   );
 };

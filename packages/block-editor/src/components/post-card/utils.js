@@ -1,6 +1,5 @@
 import {
-  Fragment,
-  RawHTML
+  Fragment
 } from "@wordpress/element";
 
 import {
@@ -36,9 +35,9 @@ export const getMeta = ( props ) => {
   if ( primaryMeta && secondaryMeta ) {
     combinedMeta = (
       <Fragment>
-        <span className={'nb-card__meta--primary'}>{ primaryMeta }</span>
-        <span className={'nb-card__meta-separator'}></span>
-        <span className={'nb-card__meta--secondary'}>{ secondaryMeta }</span>
+        <span className={'nb-card__meta--primary'} key={'card_meta_primary_post_' + post.id}>{ primaryMeta }</span>
+        <span className={'nb-card__meta-separator'} key={'card_meta_separator_post_' + post.id}></span>
+        <span className={'nb-card__meta--secondary'} key={'card_meta_secondary_post_' + post.id}>{ secondaryMeta }</span>
       </Fragment>
     );
   } else {

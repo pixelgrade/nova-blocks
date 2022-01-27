@@ -58,9 +58,9 @@ const CardsCollectionEdit = ( props ) => {
 
   return (
     <div { ...blockProps }>
-      <Collection { ...props }>
-        <CollectionHeader { ...props } />
-        <CollectionBody { ...props } { ...innerBlocksProps } />
+      <Collection { ...props } key={ 'collection' }>
+        <CollectionHeader { ...props } key={ 'header' } />
+        <CollectionBody { ...props } { ...innerBlocksProps } key={ 'body' }/>
       </Collection>
 		</div>
 	);

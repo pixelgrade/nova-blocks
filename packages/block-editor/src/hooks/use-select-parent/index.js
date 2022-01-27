@@ -3,7 +3,7 @@ import { useEffect } from "@wordpress/element";
 
 const useSelectParent = ( props, condition ) => {
   const { clientId, isSelected } = props;
-  const { selectBlock, clearSelectedBlock } = useDispatch( 'core/editor' );
+  const { selectBlock, clearSelectedBlock } = useDispatch( 'core/block-editor' );
   const parents = useSelect( select => select( 'core/block-editor' ).getBlockParents( clientId ).slice(), [ clientId ] );
 
   return useEffect( () => {
