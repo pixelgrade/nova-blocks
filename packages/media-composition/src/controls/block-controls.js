@@ -20,7 +20,7 @@ import {
 
 const ALLOWED_MEDIA_TYPES = [ 'image', 'video' ];
 
-const AdvancedGalleryChangeMediaToolbar = withVisibility( 'media-composition-block-controls' )( props => {
+export const AdvancedGalleryChangeMediaToolbar = withVisibility( 'media-composition-block-controls' )( props => {
 
 	const {
 		onSelectImages,

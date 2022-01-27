@@ -57,6 +57,9 @@ const withControlsVisibility = OriginalComponent => {
         'card-title-level': !! showTitle,
         'metadata-source': !! showMeta,
         'metadata-position': !! showMeta,
+
+        // Media Composition
+        'media-composition-block-controls': innerBlocks.length === 1 && showMedia
       } );
 
     }, [ attributes, innerBlocks ] );
