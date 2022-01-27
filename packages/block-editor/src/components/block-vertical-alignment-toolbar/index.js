@@ -49,6 +49,7 @@ export function BlockVerticalAlignmentToolbar( { isCollapsed, value, onChange, c
 
   return (
     <Toolbar
+      label={ __( 'Vertical Alignment', '__plugin_txtd' ) }
       isCollapsed={ isCollapsed }
       icon={ activeAlignment ? activeAlignment.icon : defaultAlignmentControl.icon }
       controls={

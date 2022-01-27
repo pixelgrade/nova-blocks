@@ -12,6 +12,17 @@ const withSetChildrenAttributes = OriginalComponent => {
     const { updateBlockAttributes } = useDispatch( 'core/block-editor' );
     const { getBlock } = useSelect( select => select( 'core/block-editor' ) );
 
+    const normalizeAttributes = useCallback( attributes => {
+      const { cardLayout } = attributes;
+
+      // if the card layout is being changed
+      if ( typeof cardLayout !== "undefined" && cardLayout !== 'stacked' ) {
+        attributes.minHeightFallback = 0;
+      }
+
+      return attributes;
+    }, [] )
+
     const setChildrenAttributes = useCallback( attributes => {
       const { innerBlocks } = getBlock( clientId );
       const newAttributes = getChildAttributes( attributes );
@@ -35,8 +46,9 @@ const withSetChildrenAttributes = OriginalComponent => {
 
     return (
       <OriginalComponent { ...props } setAttributes={ attributes => {
-        props.setAttributes( attributes );
-        setChildrenAttributes( attributes );
+        const normalizedAttributes = normalizeAttributes( attributes );
+        props.setAttributes( normalizedAttributes );
+        setChildrenAttributes( normalizedAttributes );
       } } />
     )
   }

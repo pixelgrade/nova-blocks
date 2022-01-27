@@ -35,7 +35,7 @@ const SlideshowBlockControls = function( props ) {
 
 	return (
 		<BlockControls>
-			<Toolbar>
+			<Toolbar label={ __( 'Change Media', '__plugin_txtd' ) }>
 				<MediaUpload
 					accept="image/*"
 					addToGallery={ hasImages }

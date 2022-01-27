@@ -20,7 +20,7 @@ import {
 
 const ALLOWED_MEDIA_TYPES = [ 'image', 'video' ];
 
-const AdvancedGalleryChangeMediaToolbar = withVisibility( 'media-composition-block-controls' )( props => {
+export const AdvancedGalleryChangeMediaToolbar = withVisibility( 'media-composition-block-controls' )( props => {
 
 	const {
 		onSelectImages,
@@ -31,7 +31,7 @@ const AdvancedGalleryChangeMediaToolbar = withVisibility( 'media-composition-blo
 	const galleryValue = gallery.map( ( image ) => image.id );
 
 	return (
-    <Toolbar>
+    <Toolbar label={ __( 'Change Media', '__plugin_txtd' ) }>
       <Dropdown
         position="bottom right"
         contentClassName="block-editor-media-replace-flow__options"
