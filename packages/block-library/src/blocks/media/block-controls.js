@@ -36,6 +36,7 @@ const MediaBlockControls = function( props ) {
 	return (
 		<BlockControls>
 			<Toolbar
+        label={ __( 'Orientation', '__plugin_txtd' ) }
 				controls={ Object.keys( MEDIA_ALIGNMENTS_CONTROLS ).map( ( control ) => {
 					return {
 						...MEDIA_ALIGNMENTS_CONTROLS[ control ],

@@ -163,7 +163,7 @@ class Edit extends Component {
 			return (
 				<Fragment>
           <BlockControls>
-            <Toolbar>
+            <Toolbar label={ __( 'Change Layout', '__plugin_txtd' ) }>
               <IconButton
                 className="components-icon-button components-toolbar__control"
                 label={ __( 'Change Layout', '__plugin_txtd' ) }
