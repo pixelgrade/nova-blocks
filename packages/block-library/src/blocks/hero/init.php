@@ -33,7 +33,21 @@ function novablocks_get_hero_attributes(): array {
 
 if ( ! function_exists( 'novablocks_render_hero_block' ) ) {
 
-	function novablocks_render_hero_block( array $attributes, string $content ): string {
+	/**
+	 * Entry point to render the block with the given attributes, content, and context.
+	 *
+	 * @see \WP_Block::render()
+	 *
+	 * @param array    $attributes
+	 * @param string   $content
+	 * @param WP_Block $block
+	 *
+	 * @return string
+	 */
+	function novablocks_render_hero_block( array $attributes, string $content, WP_Block $block ): string {
+
+		// Maybe enqueue frontend-only scripts.
+		novablocks_maybe_enqueue_block_frontend_scripts( $block );
 
 		$attributes_config     = novablocks_get_hero_attributes();
 		$attributes            = novablocks_get_attributes_with_defaults( $attributes, $attributes_config );

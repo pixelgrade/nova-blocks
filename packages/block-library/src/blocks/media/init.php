@@ -28,7 +28,21 @@ function novablocks_get_media_attributes() {
 
 if ( ! function_exists( 'novablocks_render_media_block' ) ) {
 
-	function novablocks_render_media_block( $attributes, $content ) {
+	/**
+	 * Entry point to render the block with the given attributes, content, and context.
+	 *
+	 * @see \WP_Block::render()
+	 *
+	 * @param array    $attributes
+	 * @param string   $content
+	 * @param WP_Block $block
+	 *
+	 * @return false|string
+	 */
+	function novablocks_render_media_block( array $attributes, string $content, WP_Block $block ) {
+
+		// Maybe enqueue frontend-only scripts.
+		novablocks_maybe_enqueue_block_frontend_scripts( $block );
 
 		// having no default value makes the card stretch vertically which is a desired outcome
 		$classes = array_merge(

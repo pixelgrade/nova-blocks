@@ -24,14 +24,20 @@ if ( ! function_exists( 'novablocks_render_header_block' ) ) {
 	/**
 	 * Entry point to render the block with the given attributes, content, and context.
 	 *
-	 * @param array  $attributes
-	 * @param string $content
+	 * @see \WP_Block::render()
+	 *
+	 * @param array    $attributes
+	 * @param string   $content
+	 * @param WP_Block $block
 	 *
 	 * @return string
 	 */
 
-	function novablocks_render_header_block( array $attributes, string $content ): string {
+	function novablocks_render_header_block( array $attributes, string $content, WP_Block $block ): string {
 		global $novablocks_responsive_navigation_outputted;
+
+		// Maybe enqueue frontend-only scripts.
+		novablocks_maybe_enqueue_block_frontend_scripts( $block );
 
 		ob_start();
 

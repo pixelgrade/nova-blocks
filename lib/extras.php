@@ -2140,6 +2140,19 @@ function novablocks_optimize_frontend_scripts_output() {
 	}
 }
 
+/**
+ * Handle the enqueue of frontend-only scripts since the core won't enqueue them for us for dynamic blocks.
+ *
+ * @see \WP_Block::render()
+ *
+ * @param WP_Block $block
+ */
+function novablocks_maybe_enqueue_block_frontend_scripts( WP_Block $block ) {
+	if ( ! empty( $block->block_type->view_script ) ) {
+		wp_enqueue_script( $block->block_type->view_script );
+	}
+}
+
 // We need to cover both the head and the footer scripts
 // since the block editor logic will enqueue the scripts again upon block render.
 add_action( 'wp_head', 'novablocks_optimize_frontend_scripts_output', 8 );       // The wp_print_head_scripts() is hooked at 9.

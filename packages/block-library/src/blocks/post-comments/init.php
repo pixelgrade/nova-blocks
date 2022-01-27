@@ -18,6 +18,8 @@ if ( ! function_exists ('novablocks_render_post_comments_block' ) ) {
 	/**
 	 * Entry point to render the block with the given attributes, content, and context.
 	 *
+	 * @see \WP_Block::render()
+	 *
 	 * @param array    $attributes
 	 * @param string   $content
 	 * @param WP_Block $block
@@ -33,6 +35,9 @@ if ( ! function_exists ('novablocks_render_post_comments_block' ) ) {
 		if ( ! apply_filters( 'novablocks_comments_block_should_render', true, $block->context[ 'postId' ], $attributes, $block ) ) {
 			return '';
 		}
+
+		// Maybe enqueue frontend-only scripts.
+		novablocks_maybe_enqueue_block_frontend_scripts( $block );
 
 		$post_comments_renderer = new NovaBlocks_Comments_Renderer( $block->context[ 'postId' ], $attributes, $content );
 

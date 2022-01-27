@@ -17,7 +17,21 @@ if ( ! function_exists( 'novablocks_get_announcement_bar_attributes' ) ) {
 
 if ( ! function_exists( 'novablocks_render_announcement_bar_block' ) ) {
 
-	function novablocks_render_announcement_bar_block( $attributes, $content ) {
+	/**
+	 * Entry point to render the block with the given attributes, content, and context.
+	 *
+	 * @see \WP_Block::render()
+	 *
+	 * @param array    $attributes
+	 * @param string   $content
+	 * @param WP_Block $block
+	 *
+	 * @return false|string
+	 */
+	function novablocks_render_announcement_bar_block( array $attributes, string $content, WP_Block $block ) {
+
+		// Maybe enqueue frontend-only scripts.
+		novablocks_maybe_enqueue_block_frontend_scripts( $block );
 
 		$attributes_config     = novablocks_get_announcement_bar_attributes();
 		$attributes            = novablocks_get_attributes_with_defaults( $attributes, $attributes_config );
