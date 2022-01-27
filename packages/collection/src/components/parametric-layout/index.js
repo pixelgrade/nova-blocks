@@ -13,6 +13,7 @@ const ParametricLayout = props => {
       getContent={ getContent }
       cardsCount={ children.length }
       { ...props }
+      key={'parametric_grid'}
     />
   )
 };

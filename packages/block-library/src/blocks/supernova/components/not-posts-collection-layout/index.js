@@ -24,22 +24,24 @@ const CardsCollectionPreview = ( props ) => {
   const innerBlocks = useInnerBlocks( clientId );
 
   return (
-    <CollectionBody { ...props }>
-      { innerBlocks.map( innerBlock => <SupernovaItemPreview { ...innerBlock } /> ) }
+    <CollectionBody { ...props } key={'body'}>
+      { innerBlocks.map( ( innerBlock, index ) => <SupernovaItemPreview { ...innerBlock } key={ clientId + '_body_block_' + index } /> ) }
     </CollectionBody>
   )
 };
 
 const CardsCollectionEdit = ( props ) => {
 
-  const innerBlocksProps = useInnerBlocksProps( {}, {
+  // We don't want the ref since we should not pass it to the component.
+  // (avoid warning).
+  const {ref, ...innerBlocksProps} = useInnerBlocksProps( {}, {
     allowedBlocks: [ 'novablocks/supernova-item' ],
     renderAppender: false,
     templateInsertUpdatesSelection: false
   } );
 
   return (
-    <CollectionBody { ...props } { ...innerBlocksProps } />
+    <CollectionBody { ...props } { ...innerBlocksProps } key={'body'} />
   )
 };
 

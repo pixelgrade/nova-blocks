@@ -17,9 +17,9 @@ const CollectionLayout = ( props ) => {
 
   return (
     <Fragment>
-      { layoutStyle === 'classic' && <ClassicLayout { ...passedProps } /> }
-      { layoutStyle === 'carousel' && <CarouselLayout { ...passedProps } /> }
-      { layoutStyle === 'parametric' && <ParametricLayout { ...passedProps } /> }
+      { layoutStyle === 'classic' && <ClassicLayout { ...passedProps } key={'classic_layout'} /> }
+      { layoutStyle === 'carousel' && <CarouselLayout { ...passedProps } key={'carousel_layout'} /> }
+      { layoutStyle === 'parametric' && <ParametricLayout { ...passedProps } key={'parametric_layout'} /> }
     </Fragment>
   )
 };

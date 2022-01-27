@@ -14,8 +14,8 @@ const CollectionHeader = ( props ) => {
   return (
     <div className={ `nb-collection__header  align${ align }` }>
       <div className={ `nb-collection__inner-container` }>
-        <CollectionTitle { ...props } />
-        <CollectionSubtitle { ...props } />
+        <CollectionTitle { ...props } key={'title'}/>
+        <CollectionSubtitle { ...props } key={'subtitle'}/>
       </div>
     </div>
   )

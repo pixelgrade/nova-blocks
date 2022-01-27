@@ -21,9 +21,9 @@ const ParametricGrid = ( props ) => {
   redistributeCardsInAreas( areaColumns, cardsCount, attributes );
 
   return (
-    <div className={ className } style={ getGridStyle( attributes ) }>
+    <div className={ className } style={ getGridStyle( attributes ) } key={'parametric_grid'}>
       {
-        !! areaColumns && areaColumns.map( areaColumn => {
+        !! areaColumns && areaColumns.map( (areaColumn, columnIndex) => {
           let { areas, row, col, width, height } = areaColumn;
 
           const areaColumnStyle = {
@@ -34,12 +34,12 @@ const ParametricGrid = ( props ) => {
           };
 
           return (
-            <div className={ `nb-grid__column` } style={ areaColumnStyle }>
-              { areas.map( area => {
+            <div className={ `nb-grid__column` } style={ areaColumnStyle } key={'column_' + columnIndex}>
+              { areas.map( ( area, areaIndex ) => {
                 addedCards += area.postsCount;
 
                 return !! area.postsCount && (
-                  <div className={ getParametricLayoutAreaClassName( area, attributes ) }>
+                  <div className={ getParametricLayoutAreaClassName( area, attributes ) } key={'area_' + areaIndex}>
                     {/*<AreaDebug area={ area } />*/}
                     { Array.from( Array( area.postsCount ).keys() ).map( i => {
                       const landscape = isLandscape( area, attributes );

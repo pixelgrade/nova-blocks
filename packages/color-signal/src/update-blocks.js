@@ -12,7 +12,7 @@ import {
 
 ( () => {
 
-  const editor = select( 'core/editor' );
+  const editor = select( 'core/block-editor' );
 
   if ( ! editor ) {
     return;

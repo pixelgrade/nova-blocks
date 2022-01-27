@@ -20,7 +20,7 @@ const PostsCollectionLayout = props => {
   }
 
   return (
-    <CollectionBody { ...props }>
+    <CollectionBody { ...props } key={ 'body' } >
       {
         posts.map( ( post, index ) => {
           const innerBlock = innerBlocks[ index ];
@@ -31,7 +31,7 @@ const PostsCollectionLayout = props => {
 
           return (
             <div className={ 'nb-collection__layout-item' }>
-              <PostCard { ...passedProps } post={ post } key={ index } />
+              <PostCard { ...passedProps } post={ post } key={ 'post_card_post_' + post.id } />
             </div>
           )
         } )

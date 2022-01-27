@@ -44,9 +44,9 @@ const SupernovaEdit = props => {
 
   return (
     <Fragment>
-      <SupernovaPreview { ...props } />
-      <BlockControls { ...props } />
-      <ChangeMediaBlockControls { ...props } />
+      <SupernovaPreview { ...props } key={ 'preview' } />
+      <BlockControls { ...props } key={ 'block-controls' } />
+      <ChangeMediaBlockControls { ...props } key={ 'media-composition-block-controls' } />
     </Fragment>
   )
 };
@@ -121,10 +121,10 @@ const SupernovaPreview = props => {
 
   return (
     <div { ...blockProps }>
-      <Collection { ...props }>
-        { headerPosition === 0 && ( showCollectionTitle || showCollectionSubtitle ) && <CollectionHeader { ...props } /> }
-        { sourceType === 'content' && <PostsCollectionLayout { ...props } /> }
-        { sourceType !== 'content' && <CardsCollectionLayout { ...props } /> }
+      <Collection { ...props } key={'collection_' + clientId}>
+        { headerPosition === 0 && ( showCollectionTitle || showCollectionSubtitle ) && <CollectionHeader { ...props } key={'collection_header_' + clientId} /> }
+        { sourceType === 'content' && <PostsCollectionLayout { ...props } key={'posts_collection_layout_' + clientId} /> }
+        { sourceType !== 'content' && <CardsCollectionLayout { ...props } key={'cards_collection_layout_' + clientId} /> }
       </Collection>
     </div>
   );
