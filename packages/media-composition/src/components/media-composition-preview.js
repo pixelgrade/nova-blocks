@@ -2,7 +2,7 @@ import { __ } from '@wordpress/i18n';
 import { MediaUpload } from '@wordpress/block-editor';
 import { useState, useEffect, useRef } from '@wordpress/element';
 
-import { getCardMediaPaddingTop, isSafari } from "@novablocks/utils";
+import { isSafari } from "@novablocks/utils";
 
 import {
   AdvancedGalleryItem,

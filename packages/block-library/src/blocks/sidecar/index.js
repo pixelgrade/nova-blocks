@@ -4,7 +4,6 @@
 import { __ } from '@wordpress/i18n';
 import { registerBlockType } from '@wordpress/blocks';
 import { InnerBlocks } from '@wordpress/block-editor';
-import { select } from '@wordpress/data';
 
 import edit from './edit';
 import variations from './variations';

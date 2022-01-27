@@ -1,6 +1,6 @@
 import classnames from 'classnames';
 
-import { Fragment, useEffect } from "@wordpress/element";
+import { Fragment } from "@wordpress/element";
 import { InnerBlocks, URLInput } from "@wordpress/block-editor";
 import { BaseControl, ToggleControl } from "@wordpress/components";
 import { __ } from "@wordpress/i18n";

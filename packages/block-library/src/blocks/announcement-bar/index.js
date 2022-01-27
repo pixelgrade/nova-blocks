@@ -1,22 +1,14 @@
 /**
  * External dependencies
  */
-import classnames from "classnames";
 
 /**
  * WordPress dependencies
  */
 import { __ } from '@wordpress/i18n';
 import { registerBlockType } from '@wordpress/blocks';
-import { Fragment } from '@wordpress/element';
 
 import {
-	BaseControl,
-	ToggleControl
- } from '@wordpress/components';
-
-import {
-  URLInput,
   InnerBlocks
 } from '@wordpress/block-editor';
 

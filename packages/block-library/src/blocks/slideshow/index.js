@@ -4,7 +4,6 @@
 import { __ } from '@wordpress/i18n';
 import { registerBlockType } from '@wordpress/blocks';
 import { addFilter } from "@wordpress/hooks";
-import { select } from '@wordpress/data';
 
 /**
  * Internal dependencies

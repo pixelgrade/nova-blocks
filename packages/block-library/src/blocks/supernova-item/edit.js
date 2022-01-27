@@ -1,5 +1,3 @@
-import classnames from 'classnames';
-
 import { useEffect, useMemo, useState } from '@wordpress/element';
 import { Popover } from '@wordpress/components';
 import { useSelect } from '@wordpress/data';
@@ -23,7 +21,6 @@ import {
   useSelectParent,
   withPreviewAttributes
 } from "@novablocks/block-editor";
-import { getColorSignalClassnames } from "@novablocks/utils";
 
 const SuperNovaItemEdit = props => {
 
