@@ -24,8 +24,8 @@ const CardsCollectionPreview = ( props ) => {
   const innerBlocks = useInnerBlocks( clientId );
 
   return (
-    <CollectionBody { ...props } key={'body'}>
-      { innerBlocks.map( ( innerBlock, index ) => <SupernovaItemPreview { ...innerBlock } key={ clientId + '_body_block_' + index } /> ) }
+    <CollectionBody { ...props } key={ 'body' }>
+      { innerBlocks.map( innerBlock => <SupernovaItemPreview { ...innerBlock } key={ innerBlock.clientId } /> ) }
     </CollectionBody>
   )
 };
