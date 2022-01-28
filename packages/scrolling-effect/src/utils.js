@@ -19,7 +19,7 @@ export const getIntermediateFocalPoint = function( focalPoint1, focalPoint2, pro
 	if ( ! focalPoint2 ) {
 		return focalPoint1;
 	}
-
+  
 	return {
 		x: parseFloat( focalPoint1.x ) + ( parseFloat( focalPoint2.x ) - parseFloat( focalPoint1.x ) ) * progress,
 		y: parseFloat( focalPoint1.y ) + ( parseFloat( focalPoint2.y ) - parseFloat( focalPoint1.y ) ) * progress,

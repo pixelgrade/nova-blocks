@@ -236,34 +236,56 @@ export const getBlobTransform = ( scale, horizontalDisplacement, verticalDisplac
 
 export const getBlobStyles = ( attributes ) => {
 
-	const {
-		blobsEnableDecoration,
-		blobsSizeBalance,
-		blobsHorizontalDisplacement,
-		blobsVerticalDisplacement,
-	} = attributes;
-
-	const xOffset = blobsEnableDecoration ? blobsHorizontalDisplacement : 50;
-	const yOffset = blobsEnableDecoration ? blobsVerticalDisplacement : 50;
-	const scaleRatio = blobsEnableDecoration ? blobsSizeBalance : 50;
-
-	const xScale = 1 - Math.abs( 50 - xOffset ) / 100;
-	const yScale = 1 - Math.abs( 50 - yOffset ) / 100;
-	const scale = Math.min( xScale, yScale );
-
-	const scaleDiff = 0.4 * ( 50 - scaleRatio ) / 50;
-	let mediaScale = scale - scaleDiff;
-	let decorationScale = scale + scaleDiff;
-	const maxScale = Math.max( mediaScale, decorationScale, 1 );
-	mediaScale /= maxScale;
-	decorationScale /= maxScale;
-
+  const { decorationScale, xOffset, yOffset } = getBlobScalingProps( attributes );
 
 	return {
-		'--blob-mix-media-transform': getBlobTransform( mediaScale, xOffset, yOffset ),
 		'--blob-mix-decoration-transform': getBlobTransform( decorationScale, 100 - xOffset, 100 - yOffset ),
 	}
 };
+
+export const getBlobMediaStyles = ( attributes ) => {
+
+  const { mediaScale, xOffset, yOffset } = getBlobScalingProps( attributes );
+
+  return {
+    width: `${ mediaScale * 100 }%`,
+    height: `${ mediaScale * 100 }%`,
+    top: `${ ( 1 - mediaScale ) * yOffset }%`,
+    left: `${ ( 1 - mediaScale ) * xOffset }%`,
+  }
+}
+
+export const getBlobScalingProps = ( attributes ) => {
+
+  const {
+    blobsEnableDecoration,
+    blobsSizeBalance,
+    blobsHorizontalDisplacement,
+    blobsVerticalDisplacement,
+  } = attributes;
+
+  const xOffset = blobsEnableDecoration ? blobsHorizontalDisplacement : 50;
+  const yOffset = blobsEnableDecoration ? blobsVerticalDisplacement : 50;
+  const scaleRatio = blobsEnableDecoration ? blobsSizeBalance : 50;
+
+  const xScale = 1 - Math.abs( 50 - xOffset ) / 100;
+  const yScale = 1 - Math.abs( 50 - yOffset ) / 100;
+  const scale = Math.min( xScale, yScale );
+
+  const scaleDiff = 0.4 * ( 50 - scaleRatio ) / 50;
+  let mediaScale = scale - scaleDiff;
+  let decorationScale = scale + scaleDiff;
+  const maxScale = Math.max( mediaScale, decorationScale, 1 );
+  mediaScale /= maxScale;
+  decorationScale /= maxScale;
+
+  return {
+    mediaScale,
+    decorationScale,
+    xOffset,
+    yOffset
+  }
+}
 
 export const getBlobMaskStyles = ( path, viewBox = '0 0 20 20' ) => {
 	const svgString = `<svg viewBox='${ viewBox }' preserveAspectRatio='none' xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink' version='1.1'><path d='${ path }'></path></svg>`;

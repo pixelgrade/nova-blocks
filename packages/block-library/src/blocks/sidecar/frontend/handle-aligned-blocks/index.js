@@ -57,7 +57,7 @@ function handleCustomizerChanges() {
     'sm_spacing_level'
   ];
 
-  if ( wp.customize !== undefined ) {
+  if ( !! window?.wp?.customize ) {
     options.forEach( option => {
       wp.customize( option, setting => {
         setting.bind( debounce( handleAlignedBlocks, 200 ) );

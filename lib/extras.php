@@ -1180,7 +1180,7 @@ function novablocks_get_media_composition_markup( array $attributes, array $cont
 	$data_attributes_array = array_map( 'novablocks_camel_case_to_kebab_case', array_keys( $attributes_config ) );
 	$data_attributes       = novablocks_get_data_attributes( $data_attributes_array, $attributes, [ 'images' ] );
 
-	$output .= '<div class="novablocks-media-composition" ' . join( ' ', $data_attributes ) . '>';
+	$output .= '<div class="novablocks-media-composition novablocks-doppler__target" ' . join( ' ', $data_attributes ) . '>';
 	$output .= '<div class="novablocks-media-composition__grid">';
 
 	foreach ( $images as $index => $image ) {
@@ -1647,7 +1647,7 @@ function novablocks_get_collection_card_media_markup( array $media, array $attri
 
 	if ( ! empty( $url ) ) {
 		if ( isset( $media['type'] ) && $media['type'] === 'video' ) {
-			$output .= '<video class="supernova-item__media" data-shape-modeling-target muted autoplay loop playsinline src="' . esc_url( $media['url'] ) . '"></video>';
+			$output .= '<video class="supernova-item__media novablocks-doppler__target" data-shape-modeling-target muted autoplay loop playsinline src="' . esc_url( $media['url'] ) . '"></video>';
 		} else {
 			if ( ! empty( $attachment ) && $attachment->post_type === 'attachment' ) {
 				// Since we have an attachment, generate a WordPress-standard image with all the bells and whistles (like srcsets).
@@ -1795,11 +1795,11 @@ function novablocks_get_collection_card_media_markup( array $media, array $attri
 				// since we rely on srcsets that include all image sizes, even bigger ones.
 				$output .= wp_get_attachment_image( $attachment->ID, 'novablocks_large', false, [
 						'data-shape-modeling-target' => '',
-						'class'                      => 'supernova-item__media',
+						'class'                      => 'supernova-item__media novablocks-doppler__target',
 						'sizes'                      => ! empty( $sizes ) ? implode( ', ', $sizes ) : false,
 					] ) . PHP_EOL;
 			} else {
-				$output .= '<img class="supernova-item__media" data-shape-modeling-target src="' . esc_url( $url ) . '" alt="' . ( ! empty( $media['alt'] ) ? esc_attr( $media['alt'] ) : '' ) . '" />' . PHP_EOL;
+				$output .= '<img class="supernova-item__media novablocks-doppler__target" data-shape-modeling-target src="' . esc_url( $url ) . '" alt="' . ( ! empty( $media['alt'] ) ? esc_attr( $media['alt'] ) : '' ) . '" />' . PHP_EOL;
 			}
 		}
 	} else {
@@ -2484,7 +2484,7 @@ function novablocks_get_collection_card_media_markup_wrapped( $media, $link = fa
 
 	$output .= '<div class="supernova-item__media-aspect-ratio">
 			<div class="novablocks-doppler__mask novablocks-doppler__wrapper">
-				<div class="supernova-item__media-doppler novablocks-doppler__target"> ' . $media . '</div>
+				<div class="supernova-item__media-doppler"> ' . $media . '</div>
 			</div>
 		</div>';
 

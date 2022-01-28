@@ -32,7 +32,7 @@ const getConfig = ( container ) => {
 
 const isTricky = ( start ) => {
 
-  for ( let element = start; element && element !== document; element = element.parentNode ) {
+  for ( let element = start.parentNode; element && element !== document; element = element.parentNode ) {
     const style = getComputedStyle( element );
 
     if ( style.transform && style.transform !== 'none' ) {
@@ -113,7 +113,9 @@ $( function() {
       const state = $container.data( 'state' );
       const config = $container.data( 'config' );
       const cfg = Object.assign( {}, state, config );
-      const fixed = ! isTricky( container );
+      const $background = $container.data( 'target' );
+      const element = $background.get( 0 );
+      const fixed = ! isTricky( element );
       const props = getProps( cfg, attributes, fixed );
       const styles = getStylesFromProps( props );
 

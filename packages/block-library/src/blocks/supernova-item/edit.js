@@ -21,6 +21,7 @@ import {
   useSelectParent,
   withPreviewAttributes
 } from "@novablocks/block-editor";
+import { withShapeModelingDecoration } from "@novablocks/shape-modeling";
 
 const SuperNovaItemEdit = props => {
 
@@ -59,7 +60,7 @@ const SuperNovaItemEdit = props => {
       <Card { ...props }>
         { showMedia &&
           <CardMediaWrapper { ...props }>
-            <CardMediaWithScrollingEffect { ...props } />
+            <CardMedia { ...props } />
           </CardMediaWrapper>
         }
         <SuperNovaItemContent { ...props } />
@@ -68,23 +69,34 @@ const SuperNovaItemEdit = props => {
   )
 };
 
-const CardMedia = ( props ) => {
+const CardMedia = withScrollingEffect( props => {
 
   const { attributes } = props;
   const { images } = attributes;
+  const scrollingEffect = useScrollingEffect();
 
   if ( Array.isArray( images ) && 1 === images.length ) {
-    const media = normalizeMedia( images[0] );
-
-    return (
-      <img className={ `supernova-item__media` } src={ media.url } width={ media.width } height={ media.height } />
-    )
+    <CardMediaWithShapeDecoration { ...props } />
   }
 
   return (
-    <MediaCompositionPreview { ...props } />
+    <div style={ scrollingEffect?.style }>
+      <MediaCompositionPreview { ...props } />
+    </div>
   );
-};
+} );
+
+const CardMediaWithShapeDecoration = withShapeModelingDecoration( props => {
+  const { attributes } = props;
+  const { images } = attributes;
+  const media = normalizeMedia( images[ 0 ] );
+  const scrollingEffect = useScrollingEffect();
+
+  return (
+      <img className={ `supernova-item__media` } src={ media.url } width={ media.width } height={ media.height }
+           style={ scrollingEffect?.style } />
+  )
+} )
 
 const normalizeMedia = ( mediaObject ) => {
   // We will refrain from using the full image size to avoid overloading the editor window.
@@ -97,16 +109,6 @@ const normalizeMedia = ( mediaObject ) => {
     url: mediaObject?.sizes?.novablocks_large?.url || mediaObject?.url,
   }
 };
-
-const CardMediaWithScrollingEffect = withScrollingEffect( ( props ) => {
-  const scrollingEffect = useScrollingEffect();
-
-  return (
-    <div style={ scrollingEffect?.style }>
-      <CardMedia { ...props } />
-    </div>
-  )
-} );
 
 const SuperNovaItemContent = ( props ) => {
 

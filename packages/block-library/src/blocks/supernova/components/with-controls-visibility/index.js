@@ -41,9 +41,6 @@ const withControlsVisibility = OriginalComponent => {
         // Media Composition
         'media-composition-section': hasMediaComposition && !! showMedia && sourceType !== 'content',
 
-        // Shape Modeling
-        'shape-modeling-section': cardLayout !== 'stacked',
-
         // Scrolling Effect
         'scrolling-effect-section': layoutStyle !== 'carousel',
 

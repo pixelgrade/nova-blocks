@@ -7,6 +7,7 @@ import {
 	getBlobAttsFromAttributes,
 	getBlobMaskStyles,
 	getBlobStyles,
+  getBlobMediaStyles,
 	getBlobViewBox
 } from "./utils";
 
@@ -16,7 +17,6 @@ $( function() {
     return;
   }
 
-  //  .js-shape-modeling-target
   $( '[data-shape-modeling-target]' ).each( ( i, target ) => {
     const $target = $( target );
     const seedOffsetData = $target.data( 'shape-modeling-shape-offset' );
@@ -34,6 +34,10 @@ $( function() {
     } );
 
     const { blobsEnableMask, blobsEnableDecoration } = attributes;
+
+    if ( ! blobsEnableMask && ! blobsEnableDecoration ) {
+      return;
+    }
 
     const blobAtts = getBlobAttsFromAttributes( newAttributes, 'blob' );
     const svgPath = generatePath( blobAtts );
@@ -54,7 +58,7 @@ $( function() {
     $target.wrap( '<div class="' + blobMaskClassname + '">' );
 
     const $blobMix = $target.closest( '.blob-mix' );
-    const $blobMixMedia = $target.closest( '.blob-mix__media' );
+    const $blobMixMedia = $target.closest( '.blob-mix__media' ).css( getBlobMediaStyles( attributes ) );
     const $blobMixMask = $target.closest( '.blob-mix__mask' );
 
     const $svg = $( '<svg class="blob-mix__decoration" viewBox="0 0 20 20" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg" version="1.1">' );
