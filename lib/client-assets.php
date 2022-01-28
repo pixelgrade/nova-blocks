@@ -338,7 +338,7 @@ function novablocks_register_block_types() {
 			$dependencies           = $asset_config['dependencies'] ?? [];
 			$version                = $asset_config['version'] ?? filemtime( $script_path );
 
-			// All editor scripts need the core script present.
+			// All editor scripts need the core scripts present.
 			if ( $key === 'editor_script' ) {
 				$dependencies[] = 'novablocks-core';
 				$dependencies[] = 'novablocks-color-signal';
@@ -379,10 +379,11 @@ function novablocks_register_block_types() {
 				$dependencies[] = 'novablocks-bully';
 			}
 
-			$google_maps_api_key = get_option( 'novablocks_google_maps_api_key', '' );
-
-			if ( $google_maps_api_key !== '' && in_array( $handle, $google_maps_api_dependent_scripts ) ) {
-				$dependencies[] = 'google-maps';
+			if ( in_array( $handle, $google_maps_api_dependent_scripts ) ) {
+				$google_maps_api_key = get_option( 'novablocks_google_maps_api_key', '' );
+				if ( ! empty( $google_maps_api_key ) ) {
+					$dependencies[] = 'google-maps';
+				}
 			}
 
 			// Actually register the script.
@@ -514,13 +515,11 @@ if ( ! function_exists( 'novablocks_enqueue_packages_scripts' ) ) {
 		// For now, we will always enqueue the core scripts and styles.
 		wp_enqueue_style( 'novablocks-core-style' );
 
-		if ( ! is_admin() ) {
-			wp_enqueue_script( 'novablocks-core/frontend' );
-		}
-
 		if ( novablocks_is_gutenberg() ) {
 			wp_enqueue_script( 'novablocks-core' );
 			wp_enqueue_style( 'novablocks-core-editor_style' );
+		} else {
+			wp_enqueue_script( 'novablocks-core/frontend' );
 		}
 	}
 }
