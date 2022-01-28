@@ -2148,6 +2148,10 @@ function novablocks_optimize_frontend_scripts_output() {
  * @param WP_Block $block
  */
 function novablocks_maybe_enqueue_block_frontend_scripts( WP_Block $block ) {
+	if ( is_admin() || novablocks_is_gutenberg() ) {
+		return;
+	}
+
 	if ( ! empty( $block->block_type->view_script ) ) {
 		wp_enqueue_script( $block->block_type->view_script );
 	}
