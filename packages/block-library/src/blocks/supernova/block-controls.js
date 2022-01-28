@@ -20,7 +20,7 @@ const Controls = ( props ) => {
 
   return (
     <BlockControls>
-      <Toolbar label={ __( 'Preview', '__plugin_txtd' ) }>
+      <Toolbar group={ 'block' }>
         <Button
           className="components-icon-button components-toolbar__control"
           icon={ getIconSvg( 'swap' ) }

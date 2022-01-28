@@ -30,7 +30,7 @@ const HeroBlockControls = function( props ) {
 
 	return (
 		<BlockControls>
-			<Toolbar label={ __( 'Change Media', '__plugin_txtd' ) }>
+			<Toolbar group={ 'block' }>
 				<MediaUpload
 					allowedTypes={ ALLOWED_MEDIA_TYPES }
 					onSelect={ ( media ) => setAttributes( { media } ) }

@@ -31,7 +31,7 @@ export const AdvancedGalleryChangeMediaToolbar = withVisibility( 'media-composit
 	const galleryValue = gallery.map( ( image ) => image.id );
 
 	return (
-    <Toolbar label={ __( 'Change Media', '__plugin_txtd' ) }>
+    <Toolbar group={ 'block' }>
       <Dropdown
         position="bottom right"
         contentClassName="block-editor-media-replace-flow__options"
