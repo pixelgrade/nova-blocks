@@ -6,23 +6,20 @@
   }
 }
 
-.supernova {
-  --block-top-spacing: var(--nb-block-top-spacing, 0);
-  --block-bottom-spacing: var(--nb-block-bottom-spacing, 0);
-  --emphasis-top-spacing: var(--nb-emphasis-top-spacing, 0);
-  --emphasis-bottom-spacing: var(--nb-emphasis-bottom-spacing, 0);
-
-  //&[class][class] {
-  //  padding-top: calc( max(var(--emphasis-top-spacing), -1 * var(--emphasis-top-spacing)) * var(--nb-spacing));
-  //  padding-bottom: calc( max(var(--emphasis-bottom-spacing), -1 * var(--emphasis-bottom-spacing)) * var(--nb-spacing));
-  //}
-
-  .nb-collection__header[class] {
-    padding-bottom: calc( -1 * var(--emphasis-top-spacing) * var(--nb-spacing));
-  }
+/*
+ * Currently Slick is applying display: inline-block.
+ * Until we find a solution for that,
+ * we are going to use !important for our style.
+ */
+.supernova-item:not(.supernova-item--layout-stacked) {
+  display: flex !important;
 }
 
-:is( .supernova--card-layout-horizontal, .supernova--card-layout-horizontal-reverse ) {
+.supernova-item--layout-stacked {
+  display: block !important;
+}
+
+:is(.supernova--card-layout-horizontal, .supernova--card-layout-horizontal-reverse) {
   margin-top: calc(var(--block-top-spacing) * var(--nb-spacing));
   margin-bottom: calc(var(--block-bottom-spacing) * var(--nb-spacing));
 
@@ -54,5 +51,16 @@
       padding-top: calc( var(--nb-spacing) * 0.5 );
       padding-bottom: calc( var(--nb-spacing) * 0.5 );
     }
+  }
+}
+
+.supernova--card-layout-stacked.supernova--1-columns.alignfull {
+
+  // For this use case the supernova item container could have the same layout as the sidecar block
+  // However we need to remove any horizontal padding set with the Content Padding control
+  .supernova-item__inner-container {
+    @include nb-content-layout-grid;
+    padding-left: 0;
+    padding-right: 0;
   }
 }
