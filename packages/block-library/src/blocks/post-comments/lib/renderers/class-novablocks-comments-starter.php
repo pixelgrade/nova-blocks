@@ -80,6 +80,10 @@ if ( ! class_exists( 'NovaBlocks_Comments_Starter' ) ) {
 
 			$conversation_starter_user_id = get_post_meta( $this->post->ID, 'nb_conversation_starter_user_id', true );
 
+			if ( empty( $conversation_starter_user_id ) ) {
+				return '';
+			}
+
 			$conversation_starter_content = get_post_meta( $this->post->ID, 'nb_conversation_starter_content', true );
 			// Replace any content tags present.
 			$conversation_starter_content = novablocks_replace_content_tags( $conversation_starter_content, $this->post->ID, $conversation_starter_user_id );
