@@ -5,6 +5,7 @@ const BACKGROUND_SELECTOR = '.supernova-item__media-wrapper';
 
 const transition = ( $current, $next, sign = 1 ) => {
   const slideWidth = $current.outerWidth();
+
   const move = 300;
 
   const next = $next.children().get( 0 );
@@ -28,7 +29,7 @@ const transition = ( $current, $next, sign = 1 ) => {
         nextFg.style.position = 'relative';
       }
     },
-    progress: function( elements, percentComplete, remaining, tweenValue, activeCall ) {
+    progress: function( elements, complete, remaining, start, tweenValue ) {
 
         if ( next ) {
           next.style.transform = `translate3d(${ slideWidth * tweenValue * sign }px,0,0)`;
