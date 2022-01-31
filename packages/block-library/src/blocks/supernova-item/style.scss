@@ -56,11 +56,14 @@
 
 .supernova--card-layout-stacked.supernova--1-columns.alignfull {
 
-  // For this use case the supernova item container could have the same layout as the sidecar block
-  // However we need to remove any horizontal padding set with the Content Padding control
-  .supernova-item__inner-container {
-    @include nb-content-layout-grid;
-    padding-left: 0;
-    padding-right: 0;
+  .nb-collection__layout:not(.nb-collection__layout--parametric) {
+
+    // For this use case the supernova item container could have the same layout as the sidecar block
+    // However we need to remove any horizontal padding set with the Content Padding control
+    .supernova-item__inner-container {
+      @include nb-content-layout-grid;
+      padding-left: 0;
+      padding-right: 0;
+    }
   }
 }
