@@ -94,6 +94,7 @@ const SupernovaPreview = props => {
     headerPosition,
     showCollectionTitle,
     showCollectionSubtitle,
+    showPagination,
     sourceType,
     cardLayout,
   } = attributes;
@@ -107,6 +108,7 @@ const SupernovaPreview = props => {
     `supernova--${ columns }-columns`,
     `supernova--valign-${ contentAlign[0] }`,
     `supernova--halign-${ contentAlign[1] }`,
+    { 'supernova--show-pagination': showPagination },
     props.className,
     'nb-content-layout-grid',
     'alignfull'

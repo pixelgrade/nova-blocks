@@ -82,6 +82,10 @@ if ( ! function_exists( 'novablocks_render_supernova_block' ) ) {
 			novablocks_get_grid_area_fallback_classnames( $attributes )
 		);
 
+		if ( $attributes['showPagination'] ) {
+			$classes[] = 'supernova--show-pagination';
+		}
+
 		$cssProps = array_merge(
 			novablocks_get_media_composition_css( $attributes ),
 			novablocks_get_color_signal_css( $attributes ),

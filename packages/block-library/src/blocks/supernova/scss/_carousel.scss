@@ -110,7 +110,7 @@
  */
 .supernova--card-layout-stacked.supernova--1-columns.alignfull {
 
-  &[data-show-pagination] .nb-collection__layout--carousel .supernova-item__inner-container {
+  &.supernova--show-pagination .nb-collection__layout--carousel .supernova-item__inner-container {
     margin-bottom: calc(2 * var(--nb-spacing) + var(--current-font-size) * var(--current-line-height));
   }
 
