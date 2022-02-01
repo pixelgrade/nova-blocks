@@ -258,6 +258,7 @@ $slick-arrow-background-opacity-hover: 0.6 !default;
 }
 
 
+
 /**
  * PAGINATION
  *
@@ -284,20 +285,22 @@ $slick-arrow-background-opacity-hover: 0.6 !default;
       // We are using !important for the moment,
       // because in Anima, button styles are applied
       // using a selector with IDS.
-      margin: 0 calc(var(--nb-spacing) * 0.5);
+      margin: 0 calc(var(--nb-spacing) / 3);
       padding: 0 !important;
       border: 0 !important;
-      border-bottom: 1px solid transparent !important;
+      border-bottom: 2px solid transparent !important;
 
       color: inherit !important;
       background: none !important;
       outline: 0;
 
+      // --font-size-modifier: 0.9;
+      
+
       transition: opacity .15s ease;
       cursor: pointer;
 
-      &:hover,
-      &:focus {
+      &:hover {
         outline: none;
         opacity: .6;
 
@@ -327,6 +330,13 @@ $slick-arrow-background-opacity-hover: 0.6 !default;
 /*------------------------------------*\
   #CAROUSEL - Exceptions
 \*------------------------------------*/
+
+// ARROWS POSITIONING
+// 
+// 1. Overlay Slideshow
+// 2. Below Content
+// 3. Above Content
+
 
 // These styles are applied when *Collection Layout* option is set to 'Carousel',
 // *Card Layout* is 'Stacked', *Pagination* is 'true', and *Number of Items per Row* is set to '1'.

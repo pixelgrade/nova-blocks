@@ -24,7 +24,7 @@ const initializeCarousels = () => {
     const CONTENT_SIGNAL_CLASS = `sm-color-signal-${ attributes.contentColorSignal }`;
 
     const SLICK_OPTIONS = {
-//      rows: 0,
+//    rows: 0,
       slidesToShow: attributes.columns,
       dots: attributes.showPagination === 1,
       dotsClass: `slick-dots ${PALETTE_CLASS} ${PALETTE_VARIATION_CLASS} ${CONTENT_SIGNAL_CLASS}`,
@@ -32,6 +32,11 @@ const initializeCarousels = () => {
       prevArrow: `<button class="slick-prev ${ PALETTE_CLASS } ${ PALETTE_VARIATION_CLASS } ${ CONTENT_SIGNAL_CLASS }" aria-label="Previous" type="button">Previous</button>`,
       nextArrow: `<button class="slick-next ${ PALETTE_CLASS } ${ PALETTE_VARIATION_CLASS } ${ CONTENT_SIGNAL_CLASS }" aria-label="Next" type="button">Next</button>`,
       variableWidth: attributes.carouselLayout === 'variable' || attributes.carouselLayout === 'content',
+      customPaging: function(slider, i) {
+        const index = i + 1;
+        const sIndex = index <= 9 ? `<span>0</span>${index}` : index;
+        return $('<button type="button" />').html( sIndex );
+      },
       infinite: true,
       responsive: [
         {
@@ -42,7 +47,7 @@ const initializeCarousels = () => {
             infinite: true,
             slidesToShow: 1,
             variableWidth: false,
-            centerPadding: '30px',
+            centerPadding: '30px'
           }
         },
       ]
