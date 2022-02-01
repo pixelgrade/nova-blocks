@@ -8,11 +8,6 @@
 @import 'blocks/core/list/style';
 @import 'blocks/core/separator/style';
 
-$slick-arrow-color: var(--sm-current-fg1-color);
-
-@import 'scss/vendor/slick';
-@import 'scss/vendor/slick-theme';
-
 *, *:before, *:after {
   box-sizing: border-box;
 }
