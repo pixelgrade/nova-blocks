@@ -331,15 +331,11 @@ $slick-arrow-background-opacity-hover: 0.6 !default;
 // These styles are applied when *Collection Layout* option is set to 'Carousel',
 // *Card Layout* is 'Stacked', *Pagination* is 'true', and *Number of Items per Row* is set to '1'.
 .supernova--card-layout-stacked.supernova--1-columns.alignfull {
+  &[data-show-pagination] .nb-collection__layout--carousel .supernova-item__inner-container {
+    margin-bottom: calc(2 * var(--nb-spacing) + var(--current-font-size) * var(--current-line-height));
+  }
+    
   .nb-collection__layout--carousel {
-    // .supernova-item__inner-container {
-    //   margin-left: calc(var(--nb-spacing) + 50px);
-    //   margin-right: calc(var(--nb-spacing) + 50px);
-    // }
-
-    &[data-show-pagination] {
-      margin-bottom: calc(2 * var(--nb-spacing) + var(--current-font-size) * var(--current-line-height));
-    }
 
     .slick-dots {
       position: absolute;
