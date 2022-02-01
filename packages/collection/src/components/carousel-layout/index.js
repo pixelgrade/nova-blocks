@@ -1,4 +1,6 @@
+import $ from 'jquery';
 import Slider from "react-slick";
+
 
 const SliderArrow = ( props ) => {
 
@@ -64,6 +66,12 @@ const CarouselLayout = ( props ) => {
     variableWidth: carouselLayout === 'variable' || carouselLayout === 'content',
     prevArrow: <SliderArrow { ...props } />,
     nextArrow: <SliderArrow isNext={ true } { ...props }  />,
+    infinite: true,
+    // customPaging: function(slider, i) {
+    //   const index = i + 1;
+    //   const sIndex = index <= 9 ? `<span>0</span>${index}` : index;
+    //   return $('<button type="button" />').html( sIndex );
+    // },
   };
 
   if ( carouselLayout !== 'variable' && carouselLayout !== 'content' ) {

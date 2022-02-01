@@ -145,6 +145,11 @@ $slick-arrow-background-opacity-hover: 0.6 !default;
   }
 }
 
+// Remove default color signal background
+:is(.slick-arrow, .slick-dots, .specificity.x2) {
+  background: transparent;
+}
+
 
 
 
@@ -169,10 +174,9 @@ $slick-arrow-background-opacity-hover: 0.6 !default;
   border: none;
   outline: none;
 
-  font-size: 0px;
+  font-size: 0px !important;
   line-height: 0px;
 
-  background: transparent;
   color: transparent;
   transform: translate(0, -50%);
   cursor: pointer;
@@ -233,7 +237,7 @@ $slick-arrow-background-opacity-hover: 0.6 !default;
     border: 0;
     border-radius: 50%;
 
-    background-color: red;
+    background-color: black;
     opacity: $slick-arrow-background-opacity-default;
 
     transition: opacity 0.15s ease-in;
