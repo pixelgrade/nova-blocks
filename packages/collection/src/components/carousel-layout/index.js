@@ -67,6 +67,7 @@ const CarouselLayout = ( props ) => {
     prevArrow: <SliderArrow { ...props } />,
     nextArrow: <SliderArrow isNext={ true } { ...props }  />,
     infinite: true,
+    // Not working yet
     // customPaging: function(slider, i) {
     //   const index = i + 1;
     //   const sIndex = index <= 9 ? `<span>0</span>${index}` : index;
