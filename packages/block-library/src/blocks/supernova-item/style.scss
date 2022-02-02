@@ -62,8 +62,14 @@
     // However we need to remove any horizontal padding set with the Content Padding control
     .supernova-item__inner-container {
       @include nb-content-layout-grid;
+
       padding-left: 0;
       padding-right: 0;
+
+      > .nb-sidecar {
+        margin-left: 0;
+        margin-right: 0;
+      }
     }
   }
 }
