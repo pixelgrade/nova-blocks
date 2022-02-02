@@ -34,7 +34,6 @@
 		"@novablocks/block-library": "file:packages/block-library",
 		"@novablocks/collection": "file:packages/collection",
 		"@novablocks/color-signal": "file:packages/color-signal",
-		"@novablocks/components": "file:packages/components",
 		"@novablocks/core": "file:packages/core",
 		"@novablocks/easings": "file:packages/easings",
 		"@novablocks/icons": "file:packages/icons",

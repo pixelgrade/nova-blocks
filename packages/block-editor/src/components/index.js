@@ -13,6 +13,7 @@ export { default as ParametricGrid } from "./parametric-grid";
 export { default as PresetControl } from "./preset-control";
 export { default as QueryControls } from "./query-controls";
 export { default as SignalControl } from "./signal-control";
+export { default as TextPlaceholder } from './text-placeholder';
 export { default as ToggleGroup } from "./toggle-group";
 export { default as withVisibility } from "./with-visibility";
 export { default as withPreviewAttributes } from "./with-preview-attributes";

@@ -72,5 +72,3 @@ if ( ! function_exists( 'novablocks_add_blocks_category' ) && class_exists( 'WP_
 
 	add_filter( 'block_categories_all', 'novablocks_add_blocks_category', 10, 2 );
 }
-
-add_filter( 'should_load_separate_core_block_assets', '__return_true' );

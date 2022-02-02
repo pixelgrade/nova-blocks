@@ -61,7 +61,7 @@
     flex-direction: column-reverse;
   }
 
-  &--parametric .nb-grid__area--landscape .supernova-item,
+  &--parametric .nb-grid__area--landscape .supernova-item:not(.supernova-item--layout-stacked),
   &:not(&--parametric) .supernova-item--layout-horizontal,
   &:not(&--parametric) .supernova-item--layout-horizontal-reverse {
     flex-direction: row;
@@ -196,11 +196,11 @@
 
   .nb-collection__layout.nb-collection__layout--parametric {
 
-    .nb-grid__area--landscape .supernova-item {
+    .nb-grid__area--landscape .supernova-item:not(.supernova-item--layout-stacked) {
       @include remove-spacing-media-to-content(right, left);
     }
 
-    .nb-grid__area--portrait .supernova-item {
+    .nb-grid__area--portrait .supernova-item:not(.supernova-item--layout-stacked) {
       @include remove-spacing-media-to-content(bottom, top);
     }
   }
@@ -325,6 +325,7 @@ a.supernova-item__link {
 }
 
 .nb-card__meta {
+
   &-separator {
     display: inline-block;
     vertical-align: middle;

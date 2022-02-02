@@ -1,4 +1,4 @@
-import { TextPlaceholder } from "@novablocks/components";
+import { TextPlaceholder } from "../../components";
 
 export const CardButton = ( props ) => {
 
