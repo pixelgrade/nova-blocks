@@ -1,6 +1,9 @@
+import classnames from "classnames";
 import { addFilter } from "@wordpress/hooks";
+import { createHigherOrderComponent } from "@wordpress/compose";
+import { getColorSignalClassnames, getSpacingCSSProps } from "@novablocks/utils";
 
-export const withAlteredSettings = ( settings ) => {
+const withAlteredSettings = ( settings ) => {
 
   if ( settings.name !== 'core/media-text' ) {
     return settings;
@@ -16,4 +19,4 @@ export const withAlteredSettings = ( settings ) => {
   }
 };
 
-addFilter( 'blocks.registerBlockType', 'novablocks/media-text/settings', withAlteredSettings, 20 );
+addFilter( 'blocks.registerBlockType', 'novablocks/media-text/settings', withAlteredSettings, 1 );
