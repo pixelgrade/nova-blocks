@@ -477,15 +477,13 @@ function novablocks_register_block_types() {
 
 		// If the current block is supported by the theme, register it.
 		if ( novablocks_is_block_supported( $block ) ) {
-			// In development mode load the PHP files from src to make for easier debugging.
+			// In development mode load the files from src to make for easier debugging.
 			if ( NOVABLOCKS_DEVELOPMENT_MODE ) {
-				$init = trailingslashit( str_replace( 'build/block-library/blocks', 'packages/block-library/src/blocks', $blockpath ) ) . 'init.php';
-			} else {
-				$init = trailingslashit( $blockpath ) . 'init.php';
+				$blockpath = str_replace( 'build/block-library/blocks', 'packages/block-library/src/blocks', $blockpath );
 			}
 
-			if ( file_exists( $init ) ) {
-				require_once $init;
+			if ( file_exists( trailingslashit( $blockpath ) . 'init.php' ) ) {
+				require_once trailingslashit( $blockpath ) . 'init.php';
 			}
 
 			// The render callback for this block should be present in the init.php file.
@@ -500,9 +498,16 @@ function novablocks_register_block_types() {
 				$args['attributes'] = call_user_func( $get_attributes );
 			}
 
-			register_block_type( 'novablocks/' . $block, array_merge( $args, [
-				'uses_context' => [ 'postId', 'postType', ],
-			] ) );
+			if ( file_exists( trailingslashit( $blockpath ) . 'block.json' ) ) {
+				register_block_type_from_metadata(
+					$blockpath,
+					$args
+				);
+			} else {
+				register_block_type( 'novablocks/' . $block, array_merge( $args, [
+					'uses_context' => [ 'postId', 'postType', ],
+				] ) );
+			}
 		}
 	}
 }

@@ -1,0 +1,21 @@
+{
+	"apiVersion": 2,
+	"name": "novablocks/supernova",
+	"title": "Supernova",
+	"category": "nova-blocks",
+	"description": "A super duper block.",
+	"textdomain": "default",
+	"attributes": {},
+	"usesContext": [
+		"postId",
+		"postType",
+		"queryId",
+		"query",
+		"queryContext",
+		"displayLayout",
+		"templateSlug"
+	],
+	"supports": {
+		"html": false
+	}
+}

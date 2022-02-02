@@ -1514,10 +1514,10 @@ function novablocks_get_spacing_advanced_css( array $attributes ): array {
 
 if ( ! function_exists( 'novablocks_get_collection_output' ) ) {
 
-	function novablocks_get_collection_output( array $attributes, $content ): string {
+	function novablocks_get_collection_output( array $attributes, $content, $block ): string {
 
 		if ( 'content' === $attributes['sourceType'] ) {
-			$content = novablocks_get_posts_collection_cards_markup( $attributes );
+			$content = novablocks_get_posts_collection_cards_markup( $attributes, $content, $block );
 		}
 
 		$collection_header = novablocks_get_collection_header_output( $attributes );
@@ -1853,48 +1853,65 @@ function novablocks_get_card_post_meta( $post, array $attributes ): array {
 	];
 }
 
-function novablocks_build_articles_query( array $attributes ): array {
+function novablocks_build_articles_query( array $attributes, $block ): array {
 	global $novablocks_rendered_posts_ids;
 
 	if ( ! $novablocks_rendered_posts_ids ) {
 		$novablocks_rendered_posts_ids = [];
 	}
 
+	$prevent_duplicate_posts = isset( $attributes['preventDuplicatePosts'] ) && $attributes['preventDuplicatePosts'];
 	$authors                 = $attributes['authors'] ?? [];
 	$categories              = $attributes['categories'] ?? [];
 	$tags                    = $attributes['tags'] ?? [];
-	$specific_posts          = $attributes['specificPosts'] ?? [];
-	$posts_to_show           = isset( $attributes['postsToShow'] ) ? intval( $attributes['postsToShow'] ) : 3;
 	$manual_mode             = isset( $attributes['loadingMode'] ) && 'manual' === $attributes['loadingMode'];
-	$prevent_duplicate_posts = isset( $attributes['preventDuplicatePosts'] ) && $attributes['preventDuplicatePosts'];
+	$specific_posts          = $attributes['specificPosts'] ?? [];
 
-	$args = [
+	$query_args = [
 		'post_status'         => 'publish',
 		'suppress_filters'    => false,
 		'ignore_sticky_posts' => true,
 	];
 
 	if ( $prevent_duplicate_posts ) {
-		$args['post__not_in'] = $novablocks_rendered_posts_ids;
+		$query_args['post__not_in'] = $novablocks_rendered_posts_ids;
 	}
 
 	if ( $manual_mode && $specific_posts ) {
-		$args['post__in'] = $specific_posts;
-		$args['orderby']  = 'post__in';
-	} else {
-		$args['posts_per_page'] = $posts_to_show;
+		$query_args['post__in'] = $specific_posts;
+		$query_args['orderby']  = 'post__in';
+	} else if ( ! $manual_mode ) {
+		$page_key = isset( $block->context['queryId'] ) ? 'query-' . $block->context['queryId'] . '-page' : 'query-page';
+		$page     = empty( $_GET[ $page_key ] ) ? 1 : (int) $_GET[ $page_key ];
+
+		$query_args = array_merge( $query_args, build_query_vars_from_query_block( $block, $page ) );
+		// Override the custom query with the global query if needed.
+		$use_global_query = ( isset( $block->context['query']['inherit'] ) && $block->context['query']['inherit'] );
+		if ( $use_global_query ) {
+			global $wp_query;
+			if ( $wp_query && isset( $wp_query->query_vars ) && is_array( $wp_query->query_vars ) ) {
+				// Unset `offset` because if is set, $wp_query overrides/ignores the paged parameter and breaks pagination.
+				unset( $query_args['offset'] );
+				$query_args = wp_parse_args( $wp_query->query_vars, $query_args );
+
+				if ( empty( $query_args['post_type'] ) && is_singular() ) {
+					$query_args['post_type'] = get_post_type( get_the_ID() );
+				}
+			}
+		}
+
 		if ( $authors && count( $authors ) ) {
-			$args['author__in'] = $authors;
+			$query_args['author__in'] = $authors;
 		}
 		if ( $categories && count( $categories ) ) {
-			$args['category__in'] = novablocks_expand_categories_to_include_subcategories( $categories );
+			$query_args['category__in'] = novablocks_expand_categories_to_include_subcategories( $categories );
 		}
 		if ( $tags && count( $tags ) ) {
-			$args['tag__in'] = $tags;
+			$query_args['tag__in'] = $tags;
 		}
 	}
 
-	return $args;
+	return $query_args;
 }
 
 function novablocks_expand_categories_to_include_subcategories( $category_ids ) {
@@ -2689,13 +2706,23 @@ function novablocks_get_variation_from_signal( int $signal ): int {
 	return 1;
 }
 
-function novablocks_get_posts_collection_cards_markup( array $attributes ): string {
+function novablocks_get_posts_collection_cards_markup( array $attributes, $content, $block ): string {
 	global $novablocks_rendered_posts_ids;
 
 	$output = '';
 
-	$posts = get_posts( novablocks_build_articles_query( $attributes ) );
-	foreach ( $posts as $post ) {
+	$query = new WP_Query( novablocks_build_articles_query( $attributes, $block ) );
+
+	if ( ! $query->have_posts() ) {
+		return $output;
+	}
+
+	$posts_to_show = isset( $attributes['postsToShow'] ) ? intval( $attributes['postsToShow'] ) : 3;
+
+	$posts_shown = 0;
+	while ( $query->have_posts() && $posts_shown < $posts_to_show ) {
+		$post = $query->next_post();
+
 		$card_markup = novablocks_get_collection_card_markup_from_post( $post, $attributes );
 		$markup      = apply_filters( 'novablocks_get_collection_card_markup', $card_markup, $post, $attributes );
 
@@ -2703,6 +2730,8 @@ function novablocks_get_posts_collection_cards_markup( array $attributes ): stri
 			$output .= $markup;
 			// Only remember posts that were actually rendered.
 			array_push( $novablocks_rendered_posts_ids, $post->ID );
+
+			$posts_shown++;
 		}
 	}
 

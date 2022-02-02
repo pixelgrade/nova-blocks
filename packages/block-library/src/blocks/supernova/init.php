@@ -92,7 +92,7 @@ if ( ! function_exists( 'novablocks_render_supernova_block' ) ) {
 
 		return '<div class="' . esc_attr( join( ' ', $classes ) ) . '" style="' . join( ';', $cssProps ) . '"
 			' . join( ' ', $data_attributes ) . '>
-			' . novablocks_get_collection_output( $attributes, $content ) . '
+			' . novablocks_get_collection_output( $attributes, $content, $block ) . '
 		</div>';
 	}
 }
