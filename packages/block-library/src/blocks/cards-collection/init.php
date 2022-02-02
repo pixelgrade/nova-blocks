@@ -75,7 +75,7 @@ if ( ! function_exists( 'novablocks_render_cards_collection_block' ) ) {
 			style="<?php echo join( ';', $cssProps ); ?>"
 			<?php echo join( ' ', $data_attributes ); ?>
 		>
-			<?php echo novablocks_get_collection_output( $attributes, $content ); ?>
+			<?php echo novablocks_get_collection_output( $attributes, $content, $block ); ?>
 		</div>
 
 		<?php return ob_get_clean();
