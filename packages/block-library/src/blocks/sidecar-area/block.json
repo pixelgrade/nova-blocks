@@ -17,5 +17,8 @@
 	"textdomain": "nova-blocks",
 	"attributes": {},
 	"usesContext": [],
-	"supports": {}
+	"supports": {
+		"html": false,
+		"reusable": false
+	}
 }
