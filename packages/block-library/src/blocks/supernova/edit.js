@@ -4,7 +4,7 @@ import { useBlockProps } from "@wordpress/block-editor";
 import { useDispatch } from "@wordpress/data";
 import { Fragment, useCallback, useMemo } from "@wordpress/element";
 
-import { useInnerBlocksCount, useInnerBlocks, normalizeImages } from "@novablocks/block-editor";
+import { useInnerBlocksCount, useInnerBlocks, useInnerBlocksLock, normalizeImages } from "@novablocks/block-editor";
 import { Collection, CollectionHeader } from "@novablocks/collection";
 import { BlockControls as MediaCompositionBlockControls } from "@novablocks/media-composition";
 
@@ -29,6 +29,7 @@ const SupernovaEdit = props => {
       subtitle,
       contentColorSignal,
       contentPaletteVariation,
+      sourceType,
       ...cardAttributes
     } = attributes;
 
@@ -41,6 +42,15 @@ const SupernovaEdit = props => {
   }, [ attributes ] );
 
   useInnerBlocksCount( clientId, attributes, 'novablocks/supernova-item', cardAttributes );
+
+  // Either lock or unlock supernova-items, depending on the content source.
+  if ( 'content' === attributes.sourceType ) {
+    // If we use a query to get posts, the inner supernova-items need to be locked.
+    useInnerBlocksLock( clientId, { remove: true, move: true }, attributes, 'novablocks/supernova-item' );
+  } else {
+    // @todo Maybe we should just always lock supernova-items since we have controls for number of items?
+    useInnerBlocksLock( clientId, { remove: false, move: false }, attributes, 'novablocks/supernova-item' );
+  }
 
   return (
     <Fragment>
@@ -77,7 +87,7 @@ const ChangeMediaBlockControls = ( props ) => {
   return (
     <MediaCompositionBlockControls { ...passedProps } />
   )
-}
+};
 
 const SupernovaPreview = props => {
 

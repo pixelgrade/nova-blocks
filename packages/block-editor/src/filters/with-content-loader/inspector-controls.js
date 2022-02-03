@@ -1,7 +1,5 @@
 import { __ } from "@wordpress/i18n";
-import { createBlock } from "@wordpress/blocks";
 import { SelectControl } from "@wordpress/components";
-import { useSelect, useDispatch } from "@wordpress/data";
 import { ControlsSection, ControlsTab, QueryControls } from "../../components";
 
 const Controls = ( props ) => {
@@ -23,7 +21,8 @@ const Controls = ( props ) => {
     sourceType
   } = attributes;
 
-  const loadPosts = sourceType === 'content';
+  // Determine if we should be using posts from a query.
+  const loadPosts = ('content' === sourceType);
 
   return (
     <ControlsSection id={ 'content-loader' } label={ __( 'Content Loader' ) } group={ __( 'Input' ) } order={ 10 }>
@@ -33,9 +32,9 @@ const Controls = ( props ) => {
           label={ __( 'Source Type', '__plugin_txtd' ) }
           value={ sourceType }
           options={ [
-            { label: 'Content', value: 'content' },
-            { label: 'Blocks', value: 'blocks' },
-            { label: 'Fields', value: 'fields' },
+            { label: 'Posts query', value: 'content' },
+            { label: 'Custom Blocks', value: 'blocks' },
+            { label: 'Blocks with pre-defined fields', value: 'fields' },
           ] }
           onChange={ sourceType => {
             setAttributes( { sourceType } );

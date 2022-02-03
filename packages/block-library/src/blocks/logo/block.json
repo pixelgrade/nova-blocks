@@ -1,0 +1,16 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/block.json",
+	"apiVersion": 2,
+	"name": "novablocks/logo",
+	"parent": [ "novablocks/header-row" ],
+	"title": "Site Logo",
+	"category": "nova-blocks",
+	"description": "Display your site's logo.",
+	"keywords": ["branding"],
+	"textdomain": "nova-blocks",
+	"attributes": {},
+	"usesContext": [],
+	"supports": {
+		"html": false
+	}
+}

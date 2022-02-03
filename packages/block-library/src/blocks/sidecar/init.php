@@ -48,6 +48,16 @@ if ( ! function_exists( 'novablocks_render_sidecar_block' ) ) {
 			$classes[] = 'nb-sidecar--sticky-sidebar';
 		}
 
-		return '<div class="' . esc_attr( join( ' ', $classes ) ) . '">' . $content . '</div>';
+		$tag = 'div';
+		if ( ! empty( $attributes['tagName'] ) && in_array( $attributes['tagName'], ['header', 'main', 'section', 'article', 'aside', 'footer'] ) ) {
+			$tag = esc_attr( $attributes['tagName'] );
+		}
+
+		$id = '';
+		if ( ! empty( $attributes['anchor'] ) ) {
+			$id = ' id="' .  esc_attr( $attributes['anchor'] ). '" ';
+		}
+
+		return '<' . $tag . $id . ' class="' . esc_attr( join( ' ', $classes ) ) . '">' . $content . '</' . $tag .'>';
 	}
 }

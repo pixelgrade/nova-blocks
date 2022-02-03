@@ -10,5 +10,17 @@
 	"lastItemIsSticky": {
 		"type": "boolean",
 		"default": false
+	},
+	"tagName": {
+		"type": "string",
+		"default": "div"
+	},
+	"anchor": {
+		"type": "string",
+		"default": ""
+	},
+	"templateLock": {
+		"type": [ "string", "boolean" ],
+		"enum": [ "all", "insert", false ]
 	}
 }

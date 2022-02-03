@@ -4,6 +4,7 @@ export { default as useBlockTopSpacingIsDisabled } from './use-block-top-spacing
 export { default as useEffectDebugger } from './use-effect-debugger';
 export { default as useInnerBlocks } from './use-inner-blocks';
 export { default as useInnerBlocksCount } from './use-inner-blocks-count';
+export { default as useInnerBlocksLock } from './use-inner-blocks-lock';
 export { default as useMemoryState } from './use-memory-state';
 export { default as useOnScroll } from './use-on-scroll';
 export { default as useResizeObserver } from './use-resize-observer';

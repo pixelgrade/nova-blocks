@@ -4,8 +4,9 @@
 	"name": "novablocks/supernova",
 	"title": "Supernova",
 	"category": "nova-blocks",
-	"description": "A super duper block.",
-	"textdomain": "default",
+	"description": "Create amazing layouts from your posts or static content.",
+	"keywords": ["posts", "grid", "layout", "query", "parametric"],
+	"textdomain": "nova-blocks",
 	"attributes": {},
 	"usesContext": [
 		"postId",
@@ -17,6 +18,52 @@
 		"templateSlug"
 	],
 	"supports": {
-		"html": false
+		"html": false,
+		"novaBlocks": {
+			"cardElementsStacking": {
+				"attributes": true,
+				"controls": true
+			},
+			"collectionLayout": {
+				"attributes": true,
+				"controls": true
+			},
+			"colorSignal": true,
+			"contentPosition": {
+				"attributes": true,
+				"controls": true
+			},
+			"elementsVisibility": true,
+			"contentLoader": true,
+			"mediaComposition": {
+				"attributes": true,
+				"controls": true
+			},
+			"overlayFilter": {
+				"attributes": true,
+				"controls": true,
+				"duotone": ".blob-mix__media"
+			},
+			"scrollingEffect": {
+				"attributes": true,
+				"controls": true,
+				"customWrapper": true,
+				"doppler": true
+			},
+			"shapeModeling": {
+				"attributes": true,
+				"controls": true
+			},
+			"spaceAndSizing": {
+				"attributes": true,
+				"controls": true,
+				"advancedSpacing": true
+			},
+			"customAlign": true
+		},
+		"color": {
+			"text": false,
+			"background": false
+		}
 	}
 }

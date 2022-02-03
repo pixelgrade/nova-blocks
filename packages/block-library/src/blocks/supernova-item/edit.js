@@ -96,7 +96,7 @@ const CardMediaWithShapeDecoration = withShapeModelingDecoration( props => {
       <img className={ `supernova-item__media` } src={ media.url } width={ media.width } height={ media.height }
            style={ scrollingEffect?.style } />
   )
-} )
+} );
 
 const normalizeMedia = ( mediaObject ) => {
   // We will refrain from using the full image size to avoid overloading the editor window.

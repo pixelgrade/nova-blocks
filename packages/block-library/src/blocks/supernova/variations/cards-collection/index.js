@@ -34,7 +34,7 @@ const cardsCollection = {
   description: __( 'Display a list of related items placed within a coherent layout.', '__plugin_txtd' ),
   icon: getSvg( iconSvg ),
   attributes,
-  innerBlocks: Array.from( Array( 3 ) ).map( () => [ 'novablocks/supernova-item', innerBlockAttributes ] ),
+  innerBlocks: Array.from( Array( CARDS_COUNT ) ).map( () => [ 'novablocks/supernova-item', innerBlockAttributes ] ),
   isActive: ( block, variation ) => block.variation === variation.variation
 };
 
