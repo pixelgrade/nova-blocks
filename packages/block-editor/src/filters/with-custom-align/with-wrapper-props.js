@@ -1,16 +1,26 @@
+import classnames from "classnames";
 import { createHigherOrderComponent } from "@wordpress/compose";
 import { useSupports } from "../../hooks";
 
 const withWrapperPropsRemoved = createHigherOrderComponent( OriginalComponent => {
 
   return ( props ) => {
-
     const supports = useSupports( props.name );
-    const { dataAlign, ...newWrapperProps } = props?.wrapperProps || {};
+    const wrapperProps = props.wrapperProps ?? {};
+    const { dataAlign, ...newWrapperProps } = wrapperProps;
+    const { attributes } = props;
+    const { align } = attributes;
 
     if ( ! supports?.novaBlocks?.customAlign ) {
       return <OriginalComponent { ...props } />
     }
+
+    Object.assign( newWrapperProps, {
+      className: classnames(
+        wrapperProps?.className,
+        `align${ align }`,
+      )
+    } );
 
     return (
       <OriginalComponent { ...props } wrapperProps={ newWrapperProps } />

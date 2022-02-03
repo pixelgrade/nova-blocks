@@ -63,7 +63,6 @@ const withBlockEditProps = createHigherOrderComponent( ( BlockListBlock ) => {
       className: classnames(
         wrapperProps?.className,
         getColorSignalClassnames( attributes, true ),
-        `align${ align }`,
       )
     };
 
@@ -72,23 +71,6 @@ const withBlockEditProps = createHigherOrderComponent( ( BlockListBlock ) => {
 
 }, 'withBlockEditProps' );
 
-const applyFrontEndClasses = ( extraProps, blockType, attributes ) => {
-
-  const { align } = attributes;
-
-  if ( 'core/group' !== blockType.name ) {
-    return extraProps;
-  }
-
-  return {
-    ...extraProps,
-    className: classnames(
-      extraProps.className,
-      `align${ align }`
-    )
-  };
-};
 
 addFilter( 'blocks.registerBlockType', 'novablocks/group/settings-add-nb-support', addNovaBlocksSupport, 1 );
-addFilter( 'blocks.getSaveContent.extraProps', 'novablocks/group/frontend-classes', applyFrontEndClasses );
 addFilter( 'editor.BlockListBlock', 'novablocks/group/with-block-edit-props', withBlockEditProps );

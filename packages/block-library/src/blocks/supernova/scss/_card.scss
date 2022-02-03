@@ -26,8 +26,13 @@
   }
 
   // Make all cards equal height
-  height: 100%;
-  .supernova-item__content { flex-grow: 0; }
+  .nb-collection__layout:not(.nb-collection__layout--parametric) & {
+    height: 100%;
+  }
+
+  .supernova-item__content {
+    flex-grow: 0;
+  }
 }
 
 .supernova-item__media-wrapper {

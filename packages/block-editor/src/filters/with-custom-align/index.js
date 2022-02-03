@@ -1,9 +1,11 @@
 import { addFilter } from "@wordpress/hooks";
 
-import withCustomAlignControls from "./with-custom-align-controls";
-import withWrapperPropsRemoved from "./with-wrapper-props-removed";
-import withAlignSettingsRemoved from "./with-align-settings-removed";
+import withControls from "./with-controls";
+import withWrapperProps from "./with-wrapper-props";
+import withSettings from "./with-settings";
+import withSaveProps from "./with-save-props";
 
-addFilter( 'editor.BlockEdit', 'novablocks/with-custom-align-controls', withCustomAlignControls );
-addFilter( 'editor.BlockListBlock', 'novablocks/with-no-data-align', withWrapperPropsRemoved );
-addFilter( 'blocks.registerBlockType', 'novablocks/remove-align-settings', withAlignSettingsRemoved, Number.MAX_SAFE_INTEGER );
+addFilter( 'editor.BlockEdit', 'novablocks/custom-align/controls', withControls );
+addFilter( 'editor.BlockListBlock', 'novablocks/custom-align/wrapper-props', withWrapperProps );
+addFilter( 'blocks.registerBlockType', 'novablocks/custom-align/alter-settings', withSettings, Number.MAX_SAFE_INTEGER );
+addFilter( 'blocks.getSaveContent.extraProps', 'novablocks/custom-align/save-props', withSaveProps );
