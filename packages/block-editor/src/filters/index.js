@@ -8,6 +8,7 @@ import "./with-controls-sections";
 import "./with-controls-visibility";
 import "./with-deprecated-group";
 import "./with-font-size-picker"; // @todo maybe rely on supports API
+import "./with-include-post-id";
 import "./with-on-select-images";
 import "./with-random-defaults";
 import './with-settings';
