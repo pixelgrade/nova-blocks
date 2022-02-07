@@ -26,9 +26,10 @@ const Controls = ( props ) => {
     <ControlsSection
       id={ 'collection-layout' }
       label={ __( 'Collection Layout', '__plugin_txtd' ) }
-      group={ __( 'Block Anatomy', '__plugin_txtd' ) }>
+      group={ __( 'Block Anatomy', '__plugin_txtd' ) }
+      order={ 20 }>
       {
-        layoutStyle === 'parametric' &&
+        'parametric' === layoutStyle &&
         <ControlsTab label={ __( 'Presets' ) }>
           <PresetControl
             label={ __( 'Choose a layout preset:', '__plugin_txtd' ) }

@@ -1,7 +1,5 @@
 import { __ } from "@wordpress/i18n";
-import { createBlock } from "@wordpress/blocks";
 import { SelectControl } from "@wordpress/components";
-import { useSelect, useDispatch } from "@wordpress/data";
 import { ControlsSection, ControlsTab, QueryControls } from "../../components";
 
 const Controls = ( props ) => {
@@ -20,22 +18,27 @@ const Controls = ( props ) => {
     categories,
     tags,
     preventDuplicatePosts,
-    sourceType
+    contentType
   } = attributes;
 
-  const loadPosts = sourceType === 'content';
+  // Determine if we should be using posts from a query.
+  const loadPosts = ('content' === contentType);
 
   return (
-    <ControlsSection id={ 'content-loader' } label={ __( 'Content Loader' ) } group={ __( 'Input' ) } order={ 10 }>
+    <ControlsSection
+      id={ 'content-loader' }
+      label={ __( 'Collection Content' ) }
+      group={ __( 'Block Anatomy' ) }
+      order={ 10 }>
       <ControlsTab label={ __( 'Settings' ) }>
         <SelectControl
-          key={ 'collection-source-type' }
-          label={ __( 'Source Type', '__plugin_txtd' ) }
-          value={ sourceType }
+          key={ 'collection-content-type' }
+          label={ __( 'Content Type', '__plugin_txtd' ) }
+          value={ contentType }
           options={ [
-            { label: 'Content', value: 'content' },
-            { label: 'Blocks', value: 'blocks' },
-            { label: 'Fields', value: 'fields' },
+            { label: 'Automatic Blocks', value: 'content' },
+            { label: 'Blocks with pre-defined fields', value: 'fields' },
+            { label: 'Custom Blocks', value: 'blocks' },
           ] }
           onChange={ sourceType => {
             setAttributes( { sourceType } );

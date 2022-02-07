@@ -6,7 +6,6 @@ import { getSvg } from "@novablocks/block-editor";
 /**
  * WordPress dependencies
  */
-import { __ } from '@wordpress/i18n';
 import { registerBlockType } from '@wordpress/blocks';
 import { InnerBlocks } from "@wordpress/block-editor";
 
@@ -48,52 +47,8 @@ async function getNewDefaults( block ) {
 generateDefaults( 'novablocks/supernova-item', getNewDefaults );
 
 registerBlockType( 'novablocks/supernova-item', {
-  apiVersion: 2,
-  title: __( 'Super Nova Item', '__plugin_txtd' ),
-  category: 'nova-blocks',
   icon: getSvg( iconSvg ),
   attributes,
-  supports: {
-    html: false,
-    inserter: false,
-    novaBlocks: {
-      spaceAndSizing: {
-        attributes: true,
-      },
-      cardElementsStacking: {
-        attributes: true,
-      },
-      collectionLayout: {
-        attributes: true,
-      },
-      colorSignal: {
-        attributes: true,
-      },
-      contentLoader: {
-        attributes: true,
-      },
-      contentPosition: {
-        attributes: true,
-      },
-      elementsVisibility: {
-        attributes: true,
-      },
-      mediaComposition: {
-        attributes: true,
-        blockControls: true,
-      },
-      overlayFilter: {
-        attributes: true,
-      },
-      scrollingEffect: {
-        attributes: true,
-        customWrapper: true,
-      },
-      shapeModeling: {
-        attributes: true,
-      }
-    }
-  },
   edit,
   save: function() {
     return <InnerBlocks.Content />

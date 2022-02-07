@@ -1,0 +1,15 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/block.json",
+	"apiVersion": 2,
+	"name": "novablocks/google-map",
+	"title": "Map of the World",
+	"category": "nova-blocks",
+	"description": "Display an interactive map to show the location of your venue.",
+	"keywords": ["google", "maps", "location", "pins", "gmap"],
+	"textdomain": "nova-blocks",
+	"attributes": {},
+	"usesContext": [],
+	"supports": {
+		"html": false
+	}
+}

@@ -1,0 +1,69 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/block.json",
+	"apiVersion": 2,
+	"name": "novablocks/supernova-item",
+	"parent": [
+		"novablocks/supernova"
+	],
+	"title": "Supernova Item",
+	"category": "nova-blocks",
+	"description": "Define an item of your Supernova block.",
+	"keywords": [
+		"layout",
+		"posts",
+		"grid",
+		"parametric"
+	],
+	"textdomain": "nova-blocks",
+	"attributes": {},
+	"usesContext": [
+		"postId",
+		"postType",
+		"queryId",
+		"query",
+		"queryContext",
+		"displayLayout"
+	],
+	"supports": {
+		"html": false,
+		"inserter": false,
+		"reusable": false,
+		"novaBlocks": {
+			"spaceAndSizing": {
+				"attributes": true
+			},
+			"cardElementsStacking": {
+				"attributes": true
+			},
+			"collectionLayout": {
+				"attributes": true
+			},
+			"colorSignal": {
+				"attributes": true
+			},
+			"contentLoader": {
+				"attributes": true
+			},
+			"contentPosition": {
+				"attributes": true
+			},
+			"elementsVisibility": {
+				"attributes": true
+			},
+			"mediaComposition": {
+				"attributes": true,
+				"blockControls": true
+			},
+			"overlayFilter": {
+				"attributes": true
+			},
+			"scrollingEffect": {
+				"attributes": true,
+				"customWrapper": true
+			},
+			"shapeModeling": {
+				"attributes": true
+			}
+		}
+	}
+}

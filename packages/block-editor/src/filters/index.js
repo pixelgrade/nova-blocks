@@ -8,6 +8,9 @@ import "./with-controls-sections";
 import "./with-controls-visibility";
 import "./with-deprecated-group";
 import "./with-font-size-picker"; // @todo maybe rely on supports API
+// Add post IDs control to core query block.
+// Disable for now.
+//import "./with-include-post-id";
 import "./with-on-select-images";
 import "./with-random-defaults";
 import './with-settings';

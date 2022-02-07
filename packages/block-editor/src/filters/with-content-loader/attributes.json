@@ -1,7 +1,7 @@
 {
-	"sourceType": {
+	"contentType": {
 		"type": "string",
-		"default": "content"
+		"default": "auto"
 	},
 	"postsToShow": {
 		"type": "integer",
