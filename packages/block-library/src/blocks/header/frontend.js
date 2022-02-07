@@ -1,5 +1,5 @@
 import { below } from "@novablocks/utils";
-import { addSocialMenuClass, syncColorSignalClasses } from "./utils";
+import { syncColorSignalClasses } from "./utils";
 
 ( function( $, window, undefined ) {
 
@@ -63,10 +63,6 @@ import { addSocialMenuClass, syncColorSignalClasses } from "./utils";
       stickyHeaderShown = mainHeaderIsSticky;
     }
   }
-
-  // This function will add .social-menu-item class
-  // on menu-items if it's needed.
-  addSocialMenuClass();
 
   // We are using this function to display
   // the newly created sticky header.

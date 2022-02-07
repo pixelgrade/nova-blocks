@@ -14,14 +14,11 @@ import {
 } from './components';
 
 import TEMPLATE_OPTIONS from './template-options';
-import { addSocialMenuClass } from './utils';
 
 const Edit = ( props ) => {
   const { attributes, setAttributes, clientId } = props;
   const { layout } = attributes;
   const innerBlocks = useInnerBlocks( clientId );
-
-  useLayoutEffect( addSocialMenuClass );
 
   const blockProps = useBlockProps( {
     className: classnames(
