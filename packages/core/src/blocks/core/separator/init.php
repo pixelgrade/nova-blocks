@@ -9,9 +9,20 @@ if ( ! function_exists( 'novablocks_render_separator_block' ) ) {
 		}
 
 		$attributes = $block['attrs'];
+		$classes = [
+			'wp-block-separator', 
+			'align' . $attributes['align']
+		];
+
+		if ( ! empty( $attributes['className'] ) ) {
+			$classes[] = $attributes['className']; 
+		}
+
+		$classes = join( $classes, ' ' );
+
 
 		ob_start(); ?>
-		<div class="wp-block-separator <?php echo ! empty( $attributes['className'] ) ? $attributes['className'] : ''; ?>">
+		<div class="<?php echo $classes ?>">
 			<?php
 			$novablocks_settings = novablocks_get_block_editor_settings();
 			if ( ! empty( $novablocks_settings['separator'] && ! empty( $novablocks_settings['separator']['markup'] ) ) ) {
