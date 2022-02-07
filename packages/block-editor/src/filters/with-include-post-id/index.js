@@ -5,7 +5,7 @@ import { PanelBody, TextControl } from '@wordpress/components';
 import { __ } from '@wordpress/i18n';
 
 const addIncludePosts = ( settings, name ) => {
-  if ( name !== 'core/query' ) {
+  if ( 'core/query' !== name ) {
     return settings;
   }
 
@@ -31,8 +31,8 @@ addFilter(
 );
 
 /**
- * Override the default edit UI to include a new block inspector control for
- * assigning the anchor ID, if block supports anchor.
+ * Override the default edit UI to include a new query block inspector control for
+ * limiting it to certain post IDs.
  *
  * @param {WPComponent} BlockEdit Original component.
  *
@@ -40,7 +40,7 @@ addFilter(
  */
 const withInspectorControl = createHigherOrderComponent( ( BlockEdit ) => {
   return ( props ) => {
-    if ( props.name !== 'core/query' ) {
+    if ( 'core/query' !== props.name ) {
       return <BlockEdit { ...props } />;
     }
 
