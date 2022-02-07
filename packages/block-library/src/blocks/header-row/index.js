@@ -36,6 +36,7 @@ const overwriteAttributes = ( settings ) => {
 addFilter( 'blocks.registerBlockType', 'novablocks/header-row/attributes-overwrite', overwriteAttributes, Number.MAX_SAFE_INTEGER );
 
 registerBlockType( BLOCK_NAME, {
+  apiVersion: 2,
   title: __( 'Header Row', '__plugin_txtd' ),
   description: __( 'Outputs header row markup.', '__plugin_txtd' ),
   category: 'nova-blocks',
@@ -52,14 +53,11 @@ registerBlockType( BLOCK_NAME, {
         paletteVariationClassname: true,
       },
       spaceAndSizing: true,
+      customAlign: true,
     },
   },
   edit,
   save: function() {
     return <InnerBlocks.Content/>
-  },
-  getEditWrapperProps() {
-    const settings = select( 'core/block-editor' ).getSettings();
-    return settings.alignWide ? { 'data-align': 'full' } : {};
   },
 } );

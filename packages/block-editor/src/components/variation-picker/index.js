@@ -2,8 +2,9 @@ import { __ } from "@wordpress/i18n";
 import { useDispatch, useSelect } from "@wordpress/data";
 import { createBlocksFromInnerBlocksTemplate } from "@wordpress/blocks";
 import { __experimentalBlockVariationPicker as BlockVariationPicker } from "@wordpress/block-editor";
+import { useCallback } from "@wordpress/element";
 
-const SidecarVariationPicker = ( props ) => {
+const VariationPicker = ( props ) => {
 
   const {
     setAttributes,
@@ -23,13 +24,12 @@ const SidecarVariationPicker = ( props ) => {
 
   const { replaceInnerBlocks } = useDispatch( 'core/block-editor' );
 
-  const onSelect = ( nextVariation = defaultVariation ) => {
-
-    const nextVariationName = nextVariation.name;
-    setAttributes( { layout: nextVariationName } );
+  const onSelectVariation = useCallback( nextVariation => {
+    const nextAttributes = { layout: nextVariation.name };
 
     if ( nextVariation.attributes ) {
-      setAttributes( nextVariation.attributes );
+      Object.assign( nextAttributes, nextVariation.attributes );
+      setAttributes( nextAttributes );
     }
 
     if ( nextVariation.innerBlocks ) {
@@ -38,7 +38,8 @@ const SidecarVariationPicker = ( props ) => {
         createBlocksFromInnerBlocksTemplate( nextVariation.innerBlocks )
       );
     }
-  };
+
+  }, [] );
 
   return (
     <BlockVariationPicker
@@ -46,10 +47,10 @@ const SidecarVariationPicker = ( props ) => {
       label={ blockType?.title }
       instructions={ __( 'Select a variation to start with.', '__plugin_txtd' ) }
       variations={ variations }
-      onSelect={ onSelect }
+      onSelect={ onSelectVariation }
       allowSkip
     />
   )
 };
 
-export default SidecarVariationPicker;
+export default VariationPicker;

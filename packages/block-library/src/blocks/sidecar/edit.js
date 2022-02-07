@@ -7,10 +7,9 @@ import { Fragment } from "@wordpress/element";
 import { useBlockProps } from "@wordpress/block-editor";
 const useInnerBlocksProps = wp.blockEditor.useInnerBlocksProps || wp.blockEditor.__experimentalUseInnerBlocksProps;
 
-import { useInnerBlocks } from "@novablocks/block-editor";
+import { useInnerBlocks, VariationPicker } from "@novablocks/block-editor";
 
 import Controls from "./inspector-controls";
-import { SidecarVariationPicker } from './components';
 
 const Edit = ( props ) => {
 

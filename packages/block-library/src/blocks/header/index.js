@@ -18,7 +18,8 @@ import deprecated from './deprecated';
 import attributes from './attributes.json';
 
 registerBlockType( 'novablocks/header', {
-	title: __( 'Header', '__plugin_txtd' ),
+  apiVersion: 2,
+  title: __( 'Header', '__plugin_txtd' ),
 	description: __( 'Outputs custom header markup.', '__plugin_txtd' ),
 	category: 'nova-blocks',
 	icon: getSvg( iconSvg ),
@@ -41,11 +42,5 @@ registerBlockType( 'novablocks/header', {
   deprecated,
   attributes,
 	edit,
-	save: function() {
-		return <InnerBlocks.Content />
-	},
-  getEditWrapperProps() {
-    const settings = select( 'core/block-editor' ).getSettings();
-    return settings.alignWide ? { 'data-align': 'full' } : {};
-  }
+	save: () => <InnerBlocks.Content />,
 } );

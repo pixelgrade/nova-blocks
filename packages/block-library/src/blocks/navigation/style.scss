@@ -13,6 +13,7 @@ $arrow-down-svg-path: './arrow-down.svg';
 }
 
 .novablocks-navigation {
+  --navigation-item-sub-elements-spacing: 7px;
   --nb-navigation-item-padding-y: .75em;
   @include navigation-links-spacing;
 

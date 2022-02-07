@@ -50,6 +50,7 @@ if ( ! function_exists( 'novablocks_render_header_row_block' ) ) {
 			'wp-block-novablocks-header-row',
 			'alignfull',
 		];
+
 		if ( ! empty( $attributes['className'] ) ) {
 			$classes[] = $attributes['className'];
 		}

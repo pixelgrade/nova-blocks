@@ -539,7 +539,7 @@ function novablocks_dequeue_unused_block_assets() {
 	foreach ( glob( novablocks_get_plugin_path() . 'build/block-library/blocks/*' ) as $blockpath ) {
 		$block = basename( $blockpath );
 
-		if ( novablocks_block_area_has_blocks( 'header' ) && ( $block === 'header' || $block === 'navigation' ) ) {
+		if ( novablocks_block_area_has_blocks( 'header' ) && in_array( $block, [ 'header', 'header-row', 'navigation', 'logo' ] ) ) {
 			continue;
 		}
 
