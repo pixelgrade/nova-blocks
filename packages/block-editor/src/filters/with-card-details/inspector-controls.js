@@ -18,7 +18,7 @@ const InspectorControls = ( props ) => {
   const { level } = attributes;
 
   return (
-    <ControlsSection id={ 'card-layout' } label={ __( 'Card Details' ) }>
+    <ControlsSection id={ 'card-layout' } label={ __( 'Card Elements Details' ) }>
       <ControlsTab label={ __( 'Customize' ) }>
         <div className={ getControlsClasses( attributes, getLevelAttributes ) }>
           <PanelRow>

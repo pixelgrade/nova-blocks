@@ -18,23 +18,27 @@ const Controls = ( props ) => {
     categories,
     tags,
     preventDuplicatePosts,
-    sourceType
+    contentType
   } = attributes;
 
   // Determine if we should be using posts from a query.
-  const loadPosts = ('content' === sourceType);
+  const loadPosts = ('content' === contentType);
 
   return (
-    <ControlsSection id={ 'content-loader' } label={ __( 'Content Loader' ) } group={ __( 'Input' ) } order={ 10 }>
+    <ControlsSection
+      id={ 'content-loader' }
+      label={ __( 'Collection Content' ) }
+      group={ __( 'Block Anatomy' ) }
+      order={ 10 }>
       <ControlsTab label={ __( 'Settings' ) }>
         <SelectControl
-          key={ 'collection-source-type' }
-          label={ __( 'Source Type', '__plugin_txtd' ) }
-          value={ sourceType }
+          key={ 'collection-content-type' }
+          label={ __( 'Content Type', '__plugin_txtd' ) }
+          value={ contentType }
           options={ [
-            { label: 'Posts query', value: 'content' },
-            { label: 'Custom Blocks', value: 'blocks' },
+            { label: 'Automatic Blocks', value: 'content' },
             { label: 'Blocks with pre-defined fields', value: 'fields' },
+            { label: 'Custom Blocks', value: 'blocks' },
           ] }
           onChange={ sourceType => {
             setAttributes( { sourceType } );
