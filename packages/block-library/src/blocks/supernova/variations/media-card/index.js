@@ -5,7 +5,7 @@ import iconSvg from "./media-card-block-icon.svg";
 const attributes = {
   variation: 'media-card',
 
-  sourceType: 'blocks',
+  contentType: 'custom',
 
   contentPadding: 0,
   layoutGutter: 100,

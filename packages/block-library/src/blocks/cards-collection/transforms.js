@@ -26,7 +26,7 @@ export default {
 
         const commonAttributes = {
           ...attributes,
-          sourceType: 'fields',
+          contentType: 'fields',
         };
 
         const collectionAttributes = Object.assign( {}, commonAttributes, {

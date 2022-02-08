@@ -19,30 +19,30 @@ const withControlsVisibility = OriginalComponent => {
         cardLayout,
         carouselLayout,
         layoutStyle,
-        sourceType,
+        contentType,
         showCollectionTitle,
         showTitle,
         showMedia,
         showMeta,
       } = attributes;
 
-      const hasMediaComposition = innerBlocks.some( block => block.attributes.images?.length > 1 );
+      const hasMediaComposition = innerBlocks.some( block => 1 < block.attributes.images?.length );
 
       setControlsVisibility( {
         // Space and Sizing
-        'minimum-container-height': cardLayout === 'stacked',
-        'media-container-height': carouselLayout === 'variable',
-        'media-aspect-ratio': cardLayout !== 'stacked' && carouselLayout !== 'variable' && showMedia,
-        'visual-balance' : layoutStyle !== 'parametric' && [ 'horizontal', 'horizontal-reverse' ].includes( cardLayout ),
+        'minimum-container-height': 'stacked' === cardLayout,
+        'media-container-height': 'variable' === carouselLayout,
+        'media-aspect-ratio': 'stacked' !== cardLayout && 'variable' !== carouselLayout && showMedia,
+        'visual-balance' : 'parametric' !== layoutStyle && [ 'horizontal', 'horizontal-reverse' ].includes( cardLayout ),
         'content-padding': true,
         'media-padding': showMedia,
-        'content-to-media-spacing': cardLayout !== 'stacked' && showMedia,
+        'content-to-media-spacing': 'stacked' !== cardLayout && showMedia,
 
         // Media Composition
-        'media-composition-section': hasMediaComposition && !! showMedia && sourceType !== 'content',
+        'media-composition-section': hasMediaComposition && !! showMedia && 'auto' !== contentType,
 
         // Scrolling Effect
-        'scrolling-effect-section': layoutStyle !== 'carousel',
+        'scrolling-effect-section': 'carousel' !== layoutStyle,
 
         // Color Signal
         'emphasis-area': [ 'horizontal', 'horizontal-reverse' ].includes( cardLayout ),
@@ -56,7 +56,7 @@ const withControlsVisibility = OriginalComponent => {
         'metadata-position': !! showMeta,
 
         // Media Composition
-        'media-composition-block-controls': innerBlocks.length === 1 && showMedia
+        'media-composition-block-controls': 1 === innerBlocks.length && showMedia
       } );
 
     }, [ attributes, innerBlocks ] );

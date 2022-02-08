@@ -2,9 +2,9 @@ import { __ } from '@wordpress/i18n';
 
 import { ControlsGroup, ControlsSection, ControlsTab } from '../../components';
 
-import { ElementsVisibilityToggles } from './components';
+import { CardElementsVisibilityToggles } from './components';
 
-const ElementsDisplaySection = ( props ) => {
+const CardElementsDisplaySection = ( props ) => {
 
   return (
     <ControlsSection
@@ -13,12 +13,12 @@ const ElementsDisplaySection = ( props ) => {
       group={__( 'Block Anatomy' )}
       order={50}>
       <ControlsTab label={__( 'Settings' )}>
-        <ControlsGroup title={__( 'Set up elements for this block', '__plugin_txtd' )}>
-          <ElementsVisibilityToggles {...props} />
+        <ControlsGroup title={__( 'Setup what content elements to show for each card.', '__plugin_txtd' )}>
+          <CardElementsVisibilityToggles {...props} />
         </ControlsGroup>
       </ControlsTab>
     </ControlsSection>
   );
 };
 
-export default ElementsDisplaySection;
+export default CardElementsDisplaySection;

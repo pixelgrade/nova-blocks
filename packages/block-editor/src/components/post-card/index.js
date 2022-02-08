@@ -44,7 +44,7 @@ export const PostCardMedia = ( props ) => {
   }
 
   return (
-    <img className={ `supernova-item__media` } src={ media.url } width={ media.width } height={ media.height } />
+    <img className={ `supernova-item__media` } src={ media.url } width={ media.width } height={ media.height } alt={media?.alt} />
   )
 };
 
@@ -80,11 +80,11 @@ export const PostCard = withMedia( props => {
       }
       <div className={ 'supernova-item__inner-container' } key={'card_post_innercontainer_' + post.id}>
         <CardMeta show={ showMeta } key={'card_post_metaabovetitle_' + post.id}>{ metaAboveTitle }</CardMeta>
-        <CardTitle show={ showTitle } key={'card_post_title_' + post.id}>{ post.title.raw }</CardTitle>
+        <CardTitle show={ showTitle } key={'card_post_title_' + post.id}>{ post?.title?.raw || '' }</CardTitle>
         <CardMeta show={ showMeta } key={'card_post_metabelowtitle_' + post.id}>{ metaBelowTitle }</CardMeta>
-        <CardDescription show={ showDescription } key={'card_post_description_' + post.id}>{ stripHTML( post.excerpt.rendered ) }</CardDescription>
+        <CardDescription show={ showDescription } key={'card_post_description_' + post.id}>{ stripHTML( post?.excerpt?.rendered || '' ) }</CardDescription>
         <CardFooter show={ showButtons } key={'card_post_footer_' + post.id}>
-          <CardButton key={'card_post_footer_button_' + post.id}>{ __( 'Read More' ) }</CardButton>
+          <CardButton key={'card_post_footer_button_' + post.id}>{ __( 'Read More', '__plugin_txtd' ) }</CardButton>
         </CardFooter>
       </div>
     </Card>

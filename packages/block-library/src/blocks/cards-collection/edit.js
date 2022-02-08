@@ -21,12 +21,12 @@ const ALLOWED_BLOCKS = [ 'novablocks/card' ];
 
 const CardsCollectionEdit = ( props ) => {
 	const { attributes, clientId } = props;
-  const { cardLayout, columns, sourceType } = attributes;
+  const { cardLayout, columns, contentType } = attributes;
   const contentAlign = getAlignFromMatrix( attributes?.contentPosition );
 
   const contentClassName = classnames(
     'supernova',
-    `supernova--source-type-${ sourceType }`,
+    `supernova--content-type-${ contentType }`,
     `supernova--card-layout-${ cardLayout }`,
     `supernova--${ columns }-columns`,
     `supernova--valign-${ contentAlign[0] }`,

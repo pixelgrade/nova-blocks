@@ -15,7 +15,7 @@ export default {
 
           layoutStyle: 'carousel',
           postsToShow: galleryImages.length,
-          sourceType: 'fields',
+          contentType: 'fields',
 
           cardLayout: 'stacked',
 

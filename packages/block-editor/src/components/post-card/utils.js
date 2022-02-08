@@ -44,17 +44,19 @@ export const getMeta = ( props ) => {
     combinedMeta = primaryMeta || secondaryMeta;
   }
 
-  if ( metadataPosition === 'above-title' ) {
-    metaAboveTitle = combinedMeta;
-  }
-
-  if ( metadataPosition === 'below-title' ) {
-    metaBelowTitle = combinedMeta;
-  }
-
-  if ( metadataPosition === 'split' ) {
-    metaAboveTitle = primaryMeta;
-    metaBelowTitle = secondaryMeta;
+  switch ( metadataPosition ) {
+    case 'above-title':
+      metaAboveTitle = combinedMeta;
+      break;
+    case 'below-title':
+      metaBelowTitle = combinedMeta;
+      break;
+    case 'split':
+      metaAboveTitle = primaryMeta;
+      metaBelowTitle = secondaryMeta;
+      break;
+    default:
+      break;
   }
 
   return {
@@ -65,37 +67,28 @@ export const getMeta = ( props ) => {
 
 export const getMetadata = ( post, meta ) => {
 
-  if ( meta === 'author' ) {
-    return post?.author && <Author id={ post.author } />
+  switch ( meta ) {
+    case 'author':
+      return post?.author && <Author userId={ post.author } />;
+    case 'category':
+      return !! post?.categories?.length && <Category termId={ post.categories[0] } />;
+    case 'comments':
+      return !!post?.id && <Comments postId={ post.id } />;
+    case 'date':
+      const dateFormat = __experimentalGetSettings().formats.date;
+
+      return !!post?.date_gmt && (
+        <time dateTime={ format( 'c', post.date_gmt ) }>
+          { dateI18n( dateFormat, post.date_gmt ) }
+        </time>
+      );
+    case 'tags':
+      return !! post?.tags?.length && <Tags termIds={ post.tags } />;
+    case 'reading-time':
+      return <ReadingTime post={ post } />;
+    default:
+      return null;
   }
-
-  if ( meta === 'category' ) {
-    return !! post?.categories?.length && <Category id={ post.categories[0] } />
-  }
-
-  if ( meta === 'comments' ) {
-    return <Comments postId={ post.id } />
-  }
-
-  if ( meta === 'date' ) {
-    const dateFormat = __experimentalGetSettings().formats.date;
-
-    return (
-      <time dateTime={ format( 'c', post.date_gmt ) }>
-        { dateI18n( dateFormat, post.date_gmt ) }
-      </time>
-    )
-  }
-
-  if ( meta === 'tags' ) {
-    return !! post?.tags?.length && <Tags tags={ post.tags } />
-  }
-
-  if ( meta === 'reading-time' ) {
-    return <ReadingTime post={ post } />
-  }
-
-  return null;
 };
 
 export const sanitizeMediaResponse = ( mediaObject ) => {
@@ -107,5 +100,6 @@ export const sanitizeMediaResponse = ( mediaObject ) => {
     width: mediaObject?.media_details?.sizes?.novablocks_large?.width || mediaObject?.media_details?.width,
     height: mediaObject?.media_details?.sizes?.novablocks_large?.height || mediaObject?.media_details?.height,
     url: mediaObject?.media_details?.sizes?.novablocks_large?.source_url || mediaObject?.source_url,
+    alt: mediaObject?.media_details?.alt || mediaObject?.alt || '',
   }
 };

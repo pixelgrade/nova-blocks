@@ -4,13 +4,13 @@ import { Fragment } from "@wordpress/element";
 import { useSupports } from "../../hooks";
 import InspectorControls from "./inspector-controls";
 
-const withContentLoaderControls = createHigherOrderComponent( OriginalComponent => {
+const withCollectionContentControls = createHigherOrderComponent( OriginalComponent => {
 
   return ( props ) => {
 
     const supports = useSupports( props.name );
 
-    if ( supports?.novaBlocks?.contentLoader !== true && supports?.novaBlocks?.contentLoader?.controls !== true ) {
+    if ( true !== supports?.novaBlocks?.collectionContent && true !== supports?.novaBlocks?.collectionContent?.controls ) {
       return (
         <OriginalComponent { ...props } />
       )
@@ -23,6 +23,6 @@ const withContentLoaderControls = createHigherOrderComponent( OriginalComponent 
       </Fragment>
     )
   }
-}, 'withContentLoaderControls' );
+}, 'withCollectionContentControls' );
 
-export default withContentLoaderControls;
+export default withCollectionContentControls;

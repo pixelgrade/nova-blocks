@@ -9,7 +9,7 @@ const withCollectionLayoutControls = createHigherOrderComponent( OriginalCompone
 
     const supports = useSupports( props.name );
 
-    if ( supports?.novaBlocks?.collectionLayout !== true && supports?.novaBlocks?.collectionLayout?.controls !== true ) {
+    if ( true !== supports?.novaBlocks?.collectionLayout && true !== supports?.novaBlocks?.collectionLayout?.controls ) {
       return <OriginalComponent { ...props } />
     }
 

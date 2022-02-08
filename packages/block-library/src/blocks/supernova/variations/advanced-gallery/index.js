@@ -5,7 +5,7 @@ import iconSvg from "./advanced-gallery-block-icon.svg";
 const attributes = {
   variation: 'advanced-gallery',
 
-  sourceType: 'fields',
+  contentType: 'fields',
   layoutStyle: 'classic',
   contentPadding: 0,
   layoutGutter: 0,

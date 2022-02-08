@@ -19,7 +19,7 @@ export default {
 
           layoutStyle: 'classic',
           postsToShow: 1,
-          sourceType: 'blocks',
+          contentType: 'custom',
 
           cardLayout: 'stacked',
 

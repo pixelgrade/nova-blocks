@@ -7,7 +7,7 @@ const CARDS_COUNT = 3;
 const attributes = {
   variation: 'cards-collection',
 
-  sourceType: 'fields',
+  contentType: 'fields',
   layoutStyle: 'classic',
 
   emphasisTopSpacing: 1,

@@ -1,6 +1,8 @@
-import { useInnerBlocks } from "@novablocks/block-editor";
-import { CollectionBody } from "@novablocks/collection";
-import { PostCard } from "../index";
+import { Spinner } from '@wordpress/components';
+import { __ } from '@wordpress/i18n';
+import { useInnerBlocks } from '@novablocks/block-editor';
+import { CollectionBody } from '@novablocks/collection';
+import { PostCard } from '../index';
 
 const PostsCollectionLayout = props => {
   const { posts, clientId } = props;
@@ -11,33 +13,32 @@ const PostsCollectionLayout = props => {
     useSourceColorAsReference: false
   } );
 
-  const passedProps = Object.assign({}, props, {
+  const passedProps = Object.assign( {}, props, {
     attributes: attributes
   } );
 
-  if ( ! Array.isArray( posts ) ) {
-    return null;
-  }
-
   return (
-    <CollectionBody { ...props } key={ 'body' } >
-      {
-        posts.map( ( post, index ) => {
-          const innerBlock = innerBlocks[ index ];
+    <CollectionBody {...props} key={'body'}>
+      {!posts
+        ? <Spinner/>
+        : !posts.length
+          ? <p> {__( 'No posts to display.', '__plugin_txtd' )}</p>
+          : posts.map( ( post, index ) => {
+            const innerBlock = innerBlocks[index];
 
-          if ( ! innerBlock ) {
-            return null;
-          }
+            if ( !innerBlock ) {
+              return null;
+            }
 
-          return (
-            <div className={ 'nb-collection__layout-item' }>
-              <PostCard { ...passedProps } post={ post } key={ 'post_card_post_' + post.id } />
-            </div>
-          )
-        } )
+            return (
+              <div className={'nb-collection__layout-item'}>
+                <PostCard {...passedProps} post={post} key={'post_card_post_' + post.id}/>
+              </div>
+            );
+          } )
       }
     </CollectionBody>
-  )
+  );
 };
 
 export default PostsCollectionLayout;

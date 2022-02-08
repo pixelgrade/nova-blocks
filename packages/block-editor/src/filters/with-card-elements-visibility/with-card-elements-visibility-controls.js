@@ -3,13 +3,13 @@ import { Fragment } from "@wordpress/element";
 import Controls from "./controls";
 import { useSupports } from "../../hooks";
 
-const withElementsVisibilityControls = createHigherOrderComponent( OriginalComponent => {
+const withCardElementsVisibilityControls = createHigherOrderComponent( OriginalComponent => {
 
   return ( props ) => {
 
     const supports = useSupports( props.name );
 
-    if ( supports?.novaBlocks?.elementsVisibility !== true && supports?.novaBlocks?.elementsVisibility?.controls !== true ) {
+    if ( true !== supports?.novaBlocks?.cardElementsVisibility && true !== supports?.novaBlocks?.cardElementsVisibility?.controls ) {
       return <OriginalComponent { ...props } />
     }
 
@@ -22,4 +22,4 @@ const withElementsVisibilityControls = createHigherOrderComponent( OriginalCompo
   };
 }, 'withElementsVisibilityControls' );
 
-export default withElementsVisibilityControls;
+export default withCardElementsVisibilityControls;

@@ -7,7 +7,7 @@ const CARDS_COUNT = 6;
 const attributes = {
   variation: 'posts-collection',
 
-  sourceType: 'content',
+  contentType: 'auto',
   layoutStyle: 'parametric',
   contentPosition: 'center left',
   contentPadding: 0,

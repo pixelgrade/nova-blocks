@@ -35,7 +35,7 @@ export default {
 
         const commonAttributes = Object.assign( {}, attributes, {
           layoutStyle: 'classic',
-          sourceType: 'blocks',
+          contentType: 'custom',
           postsToShow: 1,
           columns: 1,
           cardLayout: mediaPosition === 'left' ? 'horizontal' : 'horizontal-reverse',

@@ -55,7 +55,7 @@ if ( ! function_exists( 'novablocks_render_cards_collection_block' ) ) {
 
 		$classes = [
 			'supernova',
-			'supernova--source-type-' . $attributes['sourceType'],
+			'supernova--content-type-' . $attributes['contentType'],
 			'supernova--card-layout-' . $attributes['cardLayout'],
 			'supernova--valign-' . $align[0],
 			'supernova--halign-' . $align[1],

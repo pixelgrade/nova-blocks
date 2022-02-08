@@ -5,7 +5,7 @@ import iconSvg from "./hero-block-icon.svg";
 const attributes = {
   variation: 'hero',
 
-  sourceType: 'blocks',
+  contentType: 'custom',
   layoutStyle: 'classic',
   contentPadding: 100,
   cardLayout: 'stacked',

@@ -1,0 +1,10 @@
+{
+	"contentType": {
+		"type": "string",
+		"default": "auto"
+	},
+	"preventDuplicatePosts": {
+		"type": "boolean",
+		"default": false
+	}
+}

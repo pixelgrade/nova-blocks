@@ -11,6 +11,7 @@ import {
 const useInnerBlocksProps = wp.blockEditor.useInnerBlocksProps || wp.blockEditor.__experimentalUseInnerBlocksProps;
 
 import { useScrollingEffect, withScrollingEffect } from '@novablocks/scrolling-effect';
+import { normalizeMedia } from '@novablocks/utils';
 
 import { MediaCompositionPreview } from "@novablocks/media-composition";
 import {
@@ -39,7 +40,7 @@ const SuperNovaItemEdit = props => {
   }, [ clientId ] );
   const innerBlocks = useInnerBlocks( parent );
   const selectParentCondition = useMemo( () => {
-    return innerBlocks.length === 1;
+    return 1 === innerBlocks.length;
   }, [ innerBlocks ] );
 
   useSelectParent( props, selectParentCondition );
@@ -94,21 +95,9 @@ const CardMediaWithShapeDecoration = withShapeModelingDecoration( props => {
 
   return (
       <img className={ `supernova-item__media` } src={ media.url } width={ media.width } height={ media.height }
-           style={ scrollingEffect?.style } />
+           style={ scrollingEffect?.style } alt={ media.alt } />
   )
 } );
-
-const normalizeMedia = ( mediaObject ) => {
-  // We will refrain from using the full image size to avoid overloading the editor window.
-  // The `novablocks_large` image size is sufficient, if present.
-
-  return {
-    type: mediaObject?.type,
-    width: mediaObject?.sizes?.novablocks_large?.width || mediaObject?.width,
-    height: mediaObject?.sizes?.novablocks_large?.height || mediaObject.height,
-    url: mediaObject?.sizes?.novablocks_large?.url || mediaObject?.url,
-  }
-};
 
 const SuperNovaItemContent = ( props ) => {
 
@@ -118,7 +107,7 @@ const SuperNovaItemContent = ( props ) => {
   } = props;
 
   const {
-    sourceType,
+    contentType,
     metaAboveTitle,
     metaBelowTitle,
     title,
@@ -150,7 +139,7 @@ const SuperNovaItemContent = ( props ) => {
 
   const innerBlocksProps = useInnerBlocksProps( newProps );
 
-  if ( sourceType === 'fields' ) {
+  if ( 'fields' === contentType ) {
     return (
       <div { ...newProps }>
         {

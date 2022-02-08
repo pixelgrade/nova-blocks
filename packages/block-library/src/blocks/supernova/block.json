@@ -9,18 +9,29 @@
 	"textdomain": "nova-blocks",
 	"attributes": {},
 	"usesContext": [
-		"postId",
-		"postType",
 		"queryId",
 		"query",
 		"queryContext",
-		"displayLayout",
 		"templateSlug"
 	],
 	"supports": {
 		"html": false,
 		"novaBlocks": {
-			"cardElementsStacking": {
+			"colorSignal": {
+				"attributes": true,
+				"controls": true
+			},
+			"spaceAndSizing": {
+				"attributes": true,
+				"controls": true,
+				"advancedSpacing": true
+			},
+			"customAlign": true,
+			"contentPosition": {
+				"attributes": true,
+				"controls": true
+			},
+			"collectionContent": {
 				"attributes": true,
 				"controls": true
 			},
@@ -28,13 +39,15 @@
 				"attributes": true,
 				"controls": true
 			},
-			"colorSignal": true,
-			"contentPosition": {
+			"cardElementsVisibility": {
 				"attributes": true,
 				"controls": true
 			},
-			"elementsVisibility": true,
-			"contentLoader": true,
+			"cardElementsStacking": {
+				"attributes": true,
+				"controls": true
+			},
+
 			"mediaComposition": {
 				"attributes": true,
 				"controls": true
@@ -53,13 +66,7 @@
 			"shapeModeling": {
 				"attributes": true,
 				"controls": true
-			},
-			"spaceAndSizing": {
-				"attributes": true,
-				"controls": true,
-				"advancedSpacing": true
-			},
-			"customAlign": true
+			}
 		},
 		"color": {
 			"text": false,

@@ -29,25 +29,25 @@
 		"inserter": false,
 		"reusable": false,
 		"novaBlocks": {
-			"spaceAndSizing": {
-				"attributes": true
-			},
-			"cardElementsStacking": {
-				"attributes": true
-			},
-			"collectionLayout": {
-				"attributes": true
-			},
 			"colorSignal": {
 				"attributes": true
 			},
-			"contentLoader": {
+			"spaceAndSizing": {
 				"attributes": true
 			},
 			"contentPosition": {
 				"attributes": true
 			},
-			"elementsVisibility": {
+			"collectionContent": {
+				"attributes": true
+			},
+			"collectionLayout": {
+				"attributes": true
+			},
+			"cardElementsVisibility": {
+				"attributes": true
+			},
+			"cardElementsStacking": {
 				"attributes": true
 			},
 			"mediaComposition": {

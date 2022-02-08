@@ -10,10 +10,10 @@ import {
   contentElementsToggle,
   contentToggles,
   heroToggles,
-  mediaToggles,
-} from "./toggles";
+  mediaToggles
+} from './toggles';
 
-const ElementsVisibilityToggles = ( props ) => {
+const CardElementsVisibilityToggles = ( props ) => {
 
   const {
     attributes,
@@ -30,8 +30,7 @@ const ElementsVisibilityToggles = ( props ) => {
       columns,
       cardLayout,
       layoutStyle,
-      postsToShow,
-      sourceType,
+      contentType,
     } = attributes;
 
     const toggles = [
@@ -42,16 +41,16 @@ const ElementsVisibilityToggles = ( props ) => {
     // A block is considered carousel when layoutStyle,
     // has been set to carousel, however we may extend that,
     // so the postsToShow is > 1.
-    const IS_CAROUSEL = layoutStyle === 'carousel';
+    const IS_CAROUSEL = 'carousel' === layoutStyle;
 
     // Card is stacked when cardLayout has been set to stacked.
-    const CARD_IS_STACKED = cardLayout === 'stacked';
+    const CARD_IS_STACKED = 'stacked' === cardLayout;
 
     // A block is considered hero when cardLayout is stacked,
     // and the postsToShow is equal with 1.
-    const IS_HERO = cardLayout === 'stacked' && columns === 1 && align === 'full';
+    const IS_HERO = 'stacked' === cardLayout && 1 === columns && 'full' === align;
 
-    if ( sourceType !== "blocks" ) {
+    if ( 'custom' !== contentType ) {
       toggles.push( ...contentElementsToggle );
     } else {
       toggles.push( ...contentToggles );
@@ -65,7 +64,7 @@ const ElementsVisibilityToggles = ( props ) => {
       toggles.push( ...carouselToggles )
     }
 
-    return toggles.filter( toggle => toggle.type !== "meta" || !! postType );
+    return toggles.filter( toggle => "meta" !== toggle.type || !! postType );
 
   }, [ attributes, postType ] );
 
@@ -77,7 +76,7 @@ const ElementsVisibilityToggles = ( props ) => {
           ...toggle,
           value: attributes[ toggle.attribute ],
           onChange: ( newValue ) => {
-            if ( toggle.type === 'meta' && !! postType ) {
+            if ( 'meta' === toggle.type && !! postType ) {
               setMeta( { ...meta, [toggle.attribute]: newValue } )
             } else {
               setAttributes( { [toggle.attribute]: newValue } );
@@ -89,4 +88,4 @@ const ElementsVisibilityToggles = ( props ) => {
   )
 };
 
-export default ElementsVisibilityToggles;
+export default CardElementsVisibilityToggles;

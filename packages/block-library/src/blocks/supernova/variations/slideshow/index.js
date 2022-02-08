@@ -8,7 +8,7 @@ const attributes = {
   variation: 'slideshow',
 
   align: 'full',
-  sourceType: 'content',
+  contentType: 'auto',
   layoutStyle: 'carousel',
   contentPadding: 100,
 

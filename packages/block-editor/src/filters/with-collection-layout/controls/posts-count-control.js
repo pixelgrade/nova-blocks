@@ -1,4 +1,3 @@
-import { dispatch, select } from "@wordpress/data";
 import { __ } from "@wordpress/i18n";
 import { RangeControl } from '@wordpress/components';
 

@@ -6,12 +6,12 @@ import {
 } from '@novablocks/block-editor';
 
 import { MediaCompositionPreview } from '@novablocks/media-composition';
-import { getColorSignalClassnames } from '@novablocks/utils';
+import { getColorSignalClassnames, normalizeMedia } from '@novablocks/utils';
 
 const SupernovaItemPreview = props => {
 
   const { attributes } = props;
-  const { showMedia, sourceType } = attributes;
+  const { showMedia, contentType } = attributes;
   const className = getColorSignalClassnames( attributes, true );
   const { style, ...otherProps } = props;
 
@@ -22,8 +22,8 @@ const SupernovaItemPreview = props => {
           <MediaCompositionOrFirstMedia {...props} />
         </CardMediaWrapper>}
       <div className={'supernova-item__inner-container'}>
-        {sourceType === 'fields' && <CardFieldsPreview {...props} key={'card_fields'}/>}
-        {sourceType === 'blocks' && <InnerBlocksPreview {...props} key={'inner_blocks'}/>}
+        {'fields' === contentType && <CardFieldsPreview {...props} key={'card_fields'}/>}
+        {'custom' === contentType && <InnerBlocksPreview {...props} key={'inner_blocks'}/>}
       </div>
     </Card>
   );
@@ -37,29 +37,17 @@ const MediaCompositionOrFirstMedia = props => {
     return null;
   }
 
-  if ( Array.isArray( images ) && images.length === 1 ) {
+  if ( Array.isArray( images ) && 1 === images.length ) {
     const media = normalizeMedia( images[0] );
 
     return (
-      <img className={`supernova-item__media`} src={media.url} width={media.width} height={media.height}/>
+      <img className={`supernova-item__media`} src={media.url} width={media.width} height={media.height} alt={media.alt}/>
     );
   }
 
   return (
     <MediaCompositionPreview {...props} />
   );
-};
-
-const normalizeMedia = ( mediaObject ) => {
-  // We will refrain from using the full image size to avoid overloading the editor window.
-  // The `novablocks_large` image size is sufficient, if present.
-
-  return {
-    type: mediaObject?.type,
-    width: mediaObject?.sizes?.novablocks_large?.width || mediaObject?.width,
-    height: mediaObject?.sizes?.novablocks_large?.height || mediaObject.height,
-    url: mediaObject?.sizes?.novablocks_large?.url || mediaObject?.url,
-  };
 };
 
 export default SupernovaItemPreview;

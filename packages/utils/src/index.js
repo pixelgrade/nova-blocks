@@ -7,6 +7,7 @@ export * from './random';
 export * from './space-and-sizing';
 export * from './overlay-filter';
 export * from './color-signal';
+export * from './media';
 
 export const range = function( min, max ) {
 	const array = [];
@@ -354,7 +355,7 @@ export const getPreviewAttributes = ( attributes ) => {
 };
 
 export const needsPreview = ( attributes ) => {
-  return [ "parametric", "carousel" ].includes( attributes.layoutStyle ) && attributes.sourceType !== "content";
+  return [ "parametric", "carousel" ].includes( attributes.layoutStyle ) && "auto" !== attributes.contentType;
 };
 
 

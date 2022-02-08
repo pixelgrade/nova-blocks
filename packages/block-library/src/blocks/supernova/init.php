@@ -21,7 +21,7 @@ function novablocks_get_supernova_attributes(): array {
 		'packages/block-editor/src/filters/with-card-details/attributes.json',
 		'packages/block-editor/src/filters/with-card-elements-stacking/attributes.json',
 		'packages/block-editor/src/filters/with-collection-layout/attributes.json',
-		'packages/block-editor/src/filters/with-content-loader/attributes.json',
+		'packages/block-editor/src/filters/with-collection-content/attributes.json',
 		'packages/block-editor/src/filters/with-content-position-matrix/attributes.json',
 		'packages/block-editor/src/filters/with-elements-visibility/attributes.json',
 		'packages/block-editor/src/filters/with-overlay-filter/attributes.json',
@@ -70,7 +70,7 @@ if ( ! function_exists( 'novablocks_render_supernova_block' ) ) {
 
 		$classes = array_merge( [
 			'supernova',
-			'supernova--source-type-' . $attributes['sourceType'],
+			'supernova--content-type-' . $attributes['contentType'],
 			'supernova--card-layout-' . $attributes['cardLayout'],
 			'supernova--' . $attributes['columns'] . '-columns',
 			'supernova--valign-' . $align[0],

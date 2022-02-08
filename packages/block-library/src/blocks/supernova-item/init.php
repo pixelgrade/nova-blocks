@@ -21,7 +21,7 @@ function novablocks_get_supernova_item_attributes(): array {
 		'packages/block-editor/src/filters/with-card-details/attributes.json',
 		'packages/block-editor/src/filters/with-card-elements-stacking/attributes.json',
 		'packages/block-editor/src/filters/with-collection-layout/attributes.json',
-		'packages/block-editor/src/filters/with-content-loader/attributes.json',
+		'packages/block-editor/src/filters/with-collection-content/attributes.json',
 		'packages/block-editor/src/filters/with-content-position-matrix/attributes.json',
 		'packages/block-editor/src/filters/with-elements-visibility/attributes.json',
 		'packages/block-editor/src/filters/with-overlay-filter/attributes.json',
@@ -51,7 +51,7 @@ if ( ! function_exists( 'novablocks_render_supernova_item_block' ) ) {
 		$attributes_config = novablocks_get_supernova_item_attributes();
 		$attributes        = novablocks_get_attributes_with_defaults( $attributes, $attributes_config );
 
-		if ( ! empty( $attributes['sourceType'] ) && 'fields' === $attributes['sourceType'] ) {
+		if ( ! empty( $attributes['contentType'] ) && 'fields' === $attributes['contentType'] ) {
 			$card_content = novablocks_get_card_contents( $attributes );
 		}
 
