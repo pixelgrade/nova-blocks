@@ -1,6 +1,6 @@
 import { createHigherOrderComponent } from '@wordpress/compose';
 import { addFilter } from '@wordpress/hooks';
-import { Component } from '@wordpress/element';
+import { useEffect } from '@wordpress/element';
 
 const enableBlockIdAttributeOnBlocks = [ 'novablocks/announcement-bar' ];
 
@@ -25,23 +25,15 @@ addFilter( 'blocks.registerBlockType', 'novablocks/with-block-id-attribute', wit
 
 const withBlockId = createHigherOrderComponent( ( BlockEdit ) => {
 
-	return class BetterBlockEdit extends Component {
-		constructor() {
-			super( ...arguments );
-		}
+  return props => {
+    const { clientId, setAttributes } = props;
 
-		componentDidMount() {
-			if ( enableBlockIdAttributeOnBlocks.includes( this.props.name ) ) {
-				this.props.setAttributes( {
-					blockId: this.props.clientId
-				} );
-			}
-		}
+    useEffect( () => {
+      setAttributes( { blockId: clientId } );
+    }, [ clientId ] );
 
-		render() {
-			return <BlockEdit { ...this.props } />;
-		}
-	}
+    return <BlockEdit { ...props } />
+  }
 
 }, "withBlockId" );
 
