@@ -8,11 +8,13 @@ const ACCENT_COLORS = [ 'rgb(142,101,192)', 'rgb(0,202,182)', 'rgb(222,22,81)' ]
 import { __ } from '@wordpress/i18n';
 
 import {
-	useEffect,
+  useEffect,
+  useLayoutEffect,
   useMemo,
-	Component,
-	createRef,
- } from '@wordpress/element';
+  Component,
+} from '@wordpress/element';
+
+import { useResizeObserver } from "../../index";
 
 const getTabAccentColor = ( label ) => {
 
@@ -64,7 +66,7 @@ const ActiveSectionTabs = ( props ) => {
 	const activeTab = tabs[ activeTabIndex ];
 	const accentColor = getTabAccentColor( activeTabLabel );
 
-	useEffect( updateHeight, [ activeTabLabel ] );
+	useLayoutEffect( updateHeight, [ activeTabLabel ] );
 
 	return (
 		<div className={ `novablocks-section__controls` } style={ { '--nb-section-controls-accent': accentColor } }>
@@ -96,39 +98,17 @@ const ActiveSectionTabs = ( props ) => {
 	)
 };
 
-class TabContent extends Component {
+const TabContent = ( props ) => {
+  const { activeTab, updateHeight } = props;
+  const [ ref, entry ] = useResizeObserver();
 
-	constructor() {
-		super( ...arguments );
+  useLayoutEffect( updateHeight, [ entry ] );
 
-		this.resizeObserver = null;
-		this.resizeElement = createRef();
-	}
-
-	componentDidMount() {
-		this.resizeObserver = new ResizeObserver( entries => {
-			this.props.updateHeight();
-		} );
-
-		this.resizeObserver.observe( this.resizeElement.current );
-	}
-
-	componentWillUnmount() {
-		if ( this.resizeObserver ) {
-			this.resizeObserver.disconnect();
-		}
-	}
-
-	render() {
-
-		const { activeTab } = this.props;
-
-		return (
-			<div className={ 'novablocks-sections__tab-content' } ref={ this.resizeElement }>
-				{ !! activeTab && activeTab.props.children }
-			</div>
-		)
-	}
+  return (
+    <div className={ 'novablocks-sections__tab-content' } ref={ ref }>
+      { !! activeTab && activeTab.props.children }
+    </div>
+  );
 }
 
 export { ActiveSectionTabs };
