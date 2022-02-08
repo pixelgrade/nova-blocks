@@ -2,6 +2,8 @@
  * WordPress dependencies
  */
 import { registerBlockType } from '@wordpress/blocks';
+import { useBlockProps } from '@wordpress/block-editor';
+import ServerSideRender from '@wordpress/server-side-render';
 
 /**
  * Internal dependencies
@@ -20,11 +22,15 @@ registerBlockType( 'novablocks/logo', {
   edit: function( props ) {
     useSelectParent( props );
 
+    const blockProps = useBlockProps();
+
     return (
-      <wp.serverSideRender
-        block="novablocks/logo"
-        attributes={ props.attributes }
-      />
+      <div { ...blockProps }>
+        <ServerSideRender
+          block="novablocks/logo"
+          attributes={ props.attributes }
+        />
+      </div>
     )
   },
 } );

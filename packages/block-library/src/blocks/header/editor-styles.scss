@@ -4,10 +4,6 @@
   --enable-social-icons: 1;
 }
 
-.wp-block[data-type='novablocks/header'] {
-
-	.editor-block-list__layout {
-		display: flex;
-		align-items: center;
-	}
+.novablocks-header[class] {
+  position: relative;
 }

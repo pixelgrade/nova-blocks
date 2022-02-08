@@ -38,11 +38,5 @@ addFilter( 'blocks.registerBlockType', 'novablocks/header-row/attributes-overwri
 registerBlockType( BLOCK_NAME, {
   icon: getSvg( iconSvg ),
   edit,
-  save: function() {
-    return <InnerBlocks.Content/>
-  },
-  getEditWrapperProps() {
-    const settings = select( 'core/block-editor' ).getSettings();
-    return settings.alignWide ? { 'data-align': 'full' } : {};
-  },
+  save: () => <InnerBlocks.Content/>,
 } );

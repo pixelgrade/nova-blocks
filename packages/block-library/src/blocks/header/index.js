@@ -22,11 +22,5 @@ registerBlockType( 'novablocks/header', {
   deprecated,
   attributes,
 	edit,
-	save: function() {
-		return <InnerBlocks.Content />
-	},
-  getEditWrapperProps() {
-    const settings = select( 'core/block-editor' ).getSettings();
-    return settings.alignWide ? { 'data-align': 'full' } : {};
-  }
+	save: () => <InnerBlocks.Content />,
 } );

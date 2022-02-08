@@ -2,9 +2,7 @@
 	"$schema": "https://schemas.wp.org/trunk/block.json",
 	"apiVersion": 2,
 	"name": "novablocks/header-row",
-	"parent": [
-		"novablocks/header"
-	],
+	"parent": [ "novablocks/header" ],
 	"title": "Header Row",
 	"category": "nova-blocks",
 	"description": "Organize a single row in your site's header.",
@@ -22,7 +20,8 @@
 				"paletteClassname": true,
 				"paletteVariationClassname": true
 			},
-			"spaceAndSizing": true
+			"spaceAndSizing": true,
+			"customAlign": true
 		}
 	}
 }
