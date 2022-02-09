@@ -46,7 +46,7 @@ if ( ! function_exists( 'novablocks_register_vendor_scripts' ) ) {
 		wp_register_script(
 			'novablocks-velocity',
 			'https://cdnjs.cloudflare.com/ajax/libs/velocity/1.5.2/velocity.min.js',
-			[]
+			[ 'jquery', ]
 		);
 		// Add the SRI (Subresource Integrity) hash data.
 		// Generated with https://www.srihash.org/
@@ -142,6 +142,10 @@ if ( ! function_exists( 'novablocks_register_packages_scripts' ) ) {
 				$dependencies           = $asset_config['dependencies'] ?? [];
 				$version                = $asset_config['version'] ?? filemtime( $path );
 
+				if ( in_array( $package, [ 'collection' ] ) ) {
+					$dependencies[] = 'novablocks-velocity';
+				}
+
 				/**
 				 * Filters the script dependencies list before registering a package frontend script.
 				 *
@@ -150,6 +154,7 @@ if ( ! function_exists( 'novablocks_register_packages_scripts' ) ) {
 				 * @param string $handle       The registered script handle.
 				 * @param string $src          The registered script src.
 				 */
+
 				$dependencies = apply_filters( 'novablocks_register_package_frontend_script_dependencies', $dependencies, $package, $handle . '/frontend', $package_dir_url . 'frontend.js' );
 
 				wp_register_script(
