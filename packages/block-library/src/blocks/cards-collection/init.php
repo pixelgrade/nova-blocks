@@ -12,7 +12,7 @@ function novablocks_get_cards_collection_attributes() {
 
 		'packages/color-signal/src/attributes.json',
 
-		'packages/block-editor/src/filters/with-elements-visibility/attributes.json',
+		'packages/block-editor/src/filters/with-card-elements-visibility/attributes.json',
 		'packages/block-editor/src/filters/with-card-details/attributes.json',
 		'packages/block-editor/src/filters/with-collection-layout/attributes.json',
 		'packages/block-editor/src/filters/with-space-and-sizing/attributes.json',
