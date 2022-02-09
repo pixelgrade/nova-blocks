@@ -20,6 +20,10 @@ const withSetChildrenAttributes = OriginalComponent => {
         attributes.minHeightFallback = 0;
       }
 
+      if ( typeof cardLayout !== "undefined" && ! [ 'horizontal', 'horizontal-reverse' ].includes( cardLayout ) ) {
+        attributes.emphasisArea = 100;
+      }
+
       return attributes;
     }, [] )
 
