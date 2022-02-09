@@ -1485,8 +1485,8 @@ function novablocks_get_spacing_css( array $attributes ): array {
 
 	$blockTopSpacing       = $attributes['blockTopSpacing'];
 	$blockBottomSpacing    = $attributes['blockBottomSpacing'];
-	$emphasisTopSpacing    = $attributes['emphasisTopSpacing'];
-	$emphasisBottomSpacing = $attributes['emphasisBottomSpacing'];
+	$emphasisTopSpacing    = $attributes['emphasisTopSpacing'] ?? 0;
+	$emphasisBottomSpacing = $attributes['emphasisBottomSpacing'] ?? 0;
 
 	return [
 		'--nb-block-top-spacing: ' . $blockTopSpacing,

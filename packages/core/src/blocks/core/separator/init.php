@@ -9,6 +9,10 @@ if ( ! function_exists( 'novablocks_render_separator_block' ) ) {
 		}
 
 		$attributes = $block['attrs'];
+
+		$spacingProps   = novablocks_get_spacing_css( $attributes );
+		$style = join( '; ', $spacingProps ) . '; ';
+
 		$classes = [
 			'wp-block-separator', 
 			'align' . $attributes['align']
@@ -22,7 +26,7 @@ if ( ! function_exists( 'novablocks_render_separator_block' ) ) {
 
 
 		ob_start(); ?>
-		<div class="<?php echo $classes ?>">
+		<div class="<?php echo $classes ?>" style="<?php echo esc_attr( $style ); ?>">
 			<?php
 			$novablocks_settings = novablocks_get_block_editor_settings();
 			if ( ! empty( $novablocks_settings['separator'] && ! empty( $novablocks_settings['separator']['markup'] ) ) ) {
