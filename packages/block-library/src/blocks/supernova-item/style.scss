@@ -1,5 +1,8 @@
 .supernova-item {
-  background-color: var(--sm-current-bg-color);
+
+  .supernova--card-layout-stacked .nb-collection__layout--carousel & {
+    background-color: var(--sm-current-bg-color);
+  }
 
   .wp-block-button {
     display: block;
