@@ -1,4 +1,3 @@
-import { useApiFetch } from "../../../index";
 import { useEffect, useState } from '@wordpress/element';
 import apiFetch from '@wordpress/api-fetch';
 import { addQueryArgs } from '@wordpress/url';

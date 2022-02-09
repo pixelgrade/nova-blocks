@@ -38,7 +38,7 @@ const innerBlocks = [
 ];
 
 const mediaCard = {
-  name: __( 'Media Card Constellation', '__plugin_txtd' ),
+  name: 'novablocks/supernova/media-card',
   title: __( 'Media Card Constellation', '__plugin_txtd' ),
   description: __( 'Display media objects alongside short pieces of content.', '__plugin_txtd' ),
   icon: getSvg( iconSvg ),

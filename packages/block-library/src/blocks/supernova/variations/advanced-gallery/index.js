@@ -1,6 +1,12 @@
+/**
+ * WordPress dependencies
+ */
 import { __ } from "@wordpress/i18n";
-import { getSvg } from "@novablocks/block-editor";
-import iconSvg from "./advanced-gallery-block-icon.svg";
+
+/**
+ * Internal dependencies
+ */
+import { advancedGallery as icon } from '../icons';
 
 const attributes = {
   variation: 'advanced-gallery',
@@ -27,10 +33,10 @@ const attributes = {
 };
 
 const advancedGallery = {
-  name: __( 'Advanced Gallery', '__plugin_txtd' ),
+  name: 'novablocks/supernova/advanced-gallery',
   title: __( 'Advanced Gallery', '__plugin_txtd' ),
   description: __( 'Display galleries of images in unique and creative compositions.', '__plugin_txtd' ),
-  icon: getSvg( iconSvg ),
+  icon: icon,
   attributes,
   innerBlocks: [
     [ 'novablocks/supernova-item', { ...attributes, multiplePlaceholderImages: true } ]

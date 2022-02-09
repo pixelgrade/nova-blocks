@@ -14,15 +14,40 @@ import { getFocalPointImage } from "@novablocks/scrolling-effect";
 
 import edit from './edit';
 import variations from './variations';
+import queryVariations from './query-variations';
 import iconSvg from './supernova-block.svg';
 
 import attributes from './attributes';
 
 import { withSetChildrenAttributes } from "./filters";
 
+const withQueryVariations = settings => {
+
+  if ( 'core/query' !== settings.name ) {
+    return settings;
+  }
+
+  if ( ! settings.variations ) {
+    settings.variations = [];
+  }
+
+  queryVariations.forEach( queryVariation => {
+    settings.variations.push(queryVariation)
+  });
+
+  return settings;
+};
+
+addFilter(
+  'blocks.registerBlockType',
+  'novablocks/supernova/with-query-variations',
+  withQueryVariations,
+  Number.MAX_SAFE_INTEGER
+);
+
 const withVariations = settings => {
 
-  if ( settings.name !== 'novablocks/supernova' ) {
+  if ( 'novablocks/supernova' !== settings.name ) {
     return settings;
   }
 
@@ -34,7 +59,12 @@ const withVariations = settings => {
 
 // We're doing this through a filter that should run last, to make sure all attributes needed for these variations
 // are already added to the block's settings. Also, the filter needs to be added before the block is actually registered
-addFilter( 'blocks.registerBlockType', 'novablocks/supernova/with-variations', withVariations, Number.MAX_SAFE_INTEGER );
+addFilter(
+  'blocks.registerBlockType',
+  'novablocks/supernova/with-variations',
+  withVariations,
+  Number.MAX_SAFE_INTEGER
+);
 
 registerBlockType( 'novablocks/supernova', {
   icon: getSvg( iconSvg ),
@@ -75,5 +105,15 @@ const withFocalPointImageFromChildren = ( BlockEdit ) => {
   }
 };
 
-addFilter( 'editor.BlockEdit', 'novablocks/supernova/with-set-children-attributes', withSetChildrenAttributes, Number.MAX_SAFE_INTEGER );
-addFilter( 'editor.BlockEdit', 'novablocks/supernova/with-focal-point-image', withFocalPointImageFromChildren, Number.MAX_SAFE_INTEGER );
+addFilter(
+  'editor.BlockEdit',
+  'novablocks/supernova/with-set-children-attributes',
+  withSetChildrenAttributes,
+  Number.MAX_SAFE_INTEGER
+);
+addFilter(
+  'editor.BlockEdit',
+  'novablocks/supernova/with-focal-point-image',
+  withFocalPointImageFromChildren,
+  Number.MAX_SAFE_INTEGER
+);

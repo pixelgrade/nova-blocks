@@ -1,4 +1,11 @@
+/**
+ * WordPress dependencies
+ */
 import { __ } from "@wordpress/i18n";
+
+/**
+ * Internal dependencies
+ */
 import { getSvg } from "@novablocks/block-editor";
 import iconSvg from "./cards-collection-icon.svg";
 
@@ -29,7 +36,7 @@ const innerBlockAttributes = Object.assign( {}, attributes, {
 } );
 
 const cardsCollection = {
-  name: __( 'Cards Collection', '__plugin_txtd' ),
+  name: 'novablocks/supernova/cards-collection',
   title: __( 'Cards Collection', '__plugin_txtd' ),
   description: __( 'Display a list of related items placed within a coherent layout.', '__plugin_txtd' ),
   icon: getSvg( iconSvg ),

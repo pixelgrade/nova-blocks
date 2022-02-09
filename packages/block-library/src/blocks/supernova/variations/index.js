@@ -1,17 +1,13 @@
-import hero from './hero';
-import postsCollection from './posts-collection';
-import mediaCard from './media-card';
-import slideshow from './slideshow';
-import cardsCollection from './cards-collection';
 import advancedGallery from './advanced-gallery';
+import cardsCollection from './cards-collection';
+import hero from './hero';
+import mediaCard from './media-card';
 
 const variations = [
-  postsCollection,
-  slideshow,
+  advancedGallery,
+  cardsCollection,
   hero,
   mediaCard,
-  cardsCollection,
-  advancedGallery
 ];
 
 export default variations;
