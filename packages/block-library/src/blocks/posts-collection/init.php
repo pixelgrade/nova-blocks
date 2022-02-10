@@ -14,7 +14,7 @@ function novablocks_get_posts_collection_attributes() {
 
 		'packages/block-editor/src/filters/with-card-details/attributes.json',
 		'packages/block-editor/src/filters/with-collection-layout/attributes.json',
-		'packages/block-editor/src/filters/with-elements-visibility/attributes.json',
+		'packages/block-editor/src/filters/with-card-elements-visibility/attributes.json',
 		'packages/block-editor/src/filters/with-content-loader/attributes.json',
 		'packages/block-editor/src/filters/with-overlay-filter/attributes.json',
 		'packages/block-editor/src/filters/with-space-and-sizing/attributes.json',

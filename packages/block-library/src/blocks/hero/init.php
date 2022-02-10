@@ -24,7 +24,7 @@ function novablocks_get_hero_attributes(): array {
 		'packages/block-editor/src/filters/with-content-position-matrix/attributes.json',
 		'packages/block-editor/src/filters/with-overlay-filter/attributes.json',
 		'packages/block-editor/src/filters/with-space-and-sizing/attributes.json',
-		'packages/block-editor/src/filters/with-elements-visibility/attributes.json',
+		'packages/block-editor/src/filters/with-card-elements-visibility/attributes.json',
 
 		'packages/block-library/src/blocks/hero/attributes-overwrite.json',
 	] );

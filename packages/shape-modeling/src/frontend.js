@@ -35,10 +35,6 @@ $( function() {
 
     const { blobsEnableMask, blobsEnableDecoration } = attributes;
 
-    if ( ! blobsEnableMask && ! blobsEnableDecoration ) {
-      return;
-    }
-
     const blobAtts = getBlobAttsFromAttributes( newAttributes, 'blob' );
     const svgPath = generatePath( blobAtts );
 

@@ -23,7 +23,7 @@ function novablocks_get_supernova_item_attributes(): array {
 		'packages/block-editor/src/filters/with-collection-layout/attributes.json',
 		'packages/block-editor/src/filters/with-collection-content/attributes.json',
 		'packages/block-editor/src/filters/with-content-position-matrix/attributes.json',
-		'packages/block-editor/src/filters/with-elements-visibility/attributes.json',
+		'packages/block-editor/src/filters/with-card-elements-visibility/attributes.json',
 		'packages/block-editor/src/filters/with-overlay-filter/attributes.json',
 		'packages/block-editor/src/filters/with-space-and-sizing/attributes.json',
 	] );
