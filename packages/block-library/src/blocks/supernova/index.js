@@ -27,9 +27,8 @@ const withQueryVariations = settings => {
     return settings;
   }
 
-  if ( ! settings.variations ) {
-    settings.variations = [];
-  }
+  // Start fresh, removing core variations.
+  settings.variations = [];
 
   queryVariations.forEach( queryVariation => {
     settings.variations.push(queryVariation)

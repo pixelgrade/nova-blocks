@@ -1,9 +1,12 @@
-import postsCollection from './posts-collection';
-import slideshow from './slideshow';
+import { postsCollectionQuery } from './posts-collection';
+import { slideshowQuery } from './slideshow';
+import { parametricCollection, slideshowCollection } from './block-scoped';
 
 const queryVariations = [
-  postsCollection,
-  slideshow,
+  postsCollectionQuery,
+  slideshowQuery,
+  parametricCollection,
+  slideshowCollection,
 ];
 
 export default queryVariations;

@@ -47,7 +47,7 @@ const innerSupernovaItemAttributes = {
   }
 };
 
-const postsCollection = {
+export const postsCollectionQuery = {
   name: 'novablocks/supernova/query-posts-collection',
   title: __( 'Posts Collection', '__plugin_txtd' ),
   description: __( 'Display a queried set of posts in a beautiful, consistent manner.', '__plugin_txtd' ),
@@ -64,5 +64,3 @@ const postsCollection = {
   isActive: ( block, variation ) => block.variation === variation.variation,
   scope: [ 'inserter' ],
 };
-
-export default postsCollection;

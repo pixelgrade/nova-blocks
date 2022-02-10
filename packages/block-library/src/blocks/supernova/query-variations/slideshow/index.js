@@ -6,8 +6,7 @@ import { __ } from "@wordpress/i18n";
 /**
  * Internal dependencies
  */
-import { getSvg } from "@novablocks/block-editor";
-import iconSvg from "./slideshow-block-icon.svg";
+import { slideshowCollection as icon } from '../icons';
 
 const CARDS_COUNT = 3;
 
@@ -57,11 +56,11 @@ const innerSupernovaItemAttributes = {
   }
 };
 
-const slideshow = {
+export const slideshowQuery = {
   name: 'novablocks/supernova/query-slideshow',
   title: __( 'Slideshow me the Way', '__plugin_txtd' ),
   description: __( 'Display a queried set of posts in a single, coveted space.', '__plugin_txtd' ),
-  icon: getSvg( iconSvg ),
+  icon: icon,
   attributes,
   innerBlocks: [
     [
@@ -74,5 +73,3 @@ const slideshow = {
   isActive: ( block, variation ) => block.variation === variation.variation,
   scope: [ 'inserter' ],
 };
-
-export default slideshow;
