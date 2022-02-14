@@ -8,15 +8,15 @@
 }
 
 .novablocks-header[class] {
-  position: absolute;
+  //position: absolute;
   width: 100%;
 }
 
 .novablocks-header--sticky[class] {
   --header-background-opacity: 0.95;
 
-  position: fixed;
-  top: 0;
+  //position: fixed;
+  //top: 0;
 }
 
 .novablocks-header--mobile {
@@ -43,7 +43,7 @@
     transition: var(--theme-transition);
     transition-property: opacity;
 
-    will-change: transform;
+    //will-change: transform;
   }
 
   .novablocks-header__inner-container {
