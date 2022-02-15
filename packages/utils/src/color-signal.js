@@ -78,3 +78,54 @@ export const getSignals = ( paletteId ) => {
 export const getDefaultSignals = () => {
   return [1, 3, 8, 11];
 };
+
+export const syncColorSignalClasses = ( from, to ) => {
+
+  if ( to && from ) {
+
+    to.classList.forEach( className => {
+      if ( className.indexOf( 'sm-' ) > -1 ) {
+        to.classList.remove( className );
+      }
+    } );
+
+    from.classList.forEach( className => {
+      if ( className.indexOf( 'sm-' ) > -1 ) {
+        to.classList.add( className );
+      }
+    } );
+  }
+};
+
+export const getColorSetClasses = ( element ) => {
+  const classAttr = element?.getAttribute( 'class' );
+
+  if ( ! classAttr ) {
+    return [];
+  }
+
+  const classes = classAttr.split( /\s+/ );
+
+  return classes.filter( classname => {
+    return classname.search( 'sm-palette-' ) !== - 1 ||
+           classname.search( 'sm-variation-' ) !== - 1;
+  } );
+};
+
+export const toggleClasses = ( element, classesToAdd = '' ) => {
+
+  const prefixes = [
+    'sm-palette-',
+    'sm-variation-',
+    'sm-color-signal-'
+  ];
+
+  const classesToRemove = Array.from( element.classList ).filter( classname => {
+    return prefixes.some( prefix => classname.indexOf( prefix ) > -1 );
+  } );
+
+  element.classList.remove( ...classesToRemove );
+
+  addClass( element, classesToAdd );
+};
+

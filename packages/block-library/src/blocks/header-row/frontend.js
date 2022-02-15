@@ -8,6 +8,7 @@ const headerRows = Array.from( document.querySelectorAll( '.novablocks-header-ro
 const adminbar = document.getElementById( 'wpadminbar' );
 
 headerRows.forEach( headerRow => {
+  return;
   const attributes = headerRow.dataset;
 
   if ( attributes.isSticky ) {

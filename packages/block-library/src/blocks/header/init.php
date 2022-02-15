@@ -59,25 +59,6 @@ if ( ! function_exists( 'novablocks_render_header_block' ) ) {
 		$blockPaletteClasses = novablocks_get_color_signal_classes( $attributes );
 		$classes             = array_merge( $classes, $blockPaletteClasses );
 
-		// Logo Center and Logo Left layout are considered as simple,
-		// because they are on only one row.
-		$header_is_simple = ( $attributes['layout'] === 'logo-left' ) || ( $attributes['layout'] === 'logo-center' );
-
-		// Get Sticky Row Block.
-		$sticky_row_block = get_header_row_block( 'isSticky', true );
-
-		// Get Primary Row Block to use it on hover if it's the case.
-		$primary_row_block = get_header_row_block( 'isPrimary', true );
-
-		// We need that class to style header block,
-		// if the user didn't hit save yet.
-		if ( ! header_block_updated() ) {
-			$classes[] = 'novablocks-header--is-old';
-		}
-
-		$header_row_markup_start = '<!-- wp:novablocks/header-row {"name":"primary", label="Primary Navigation" isPrimary":true,"className":"novablocks-header-row--primary"} -->';
-		$header_row_markup_end   = '<!-- /wp:novablocks/header-row -->';
-
 		$toggleClasses = [
 			'c-menu-toggle',
 		];
@@ -105,53 +86,19 @@ if ( ! function_exists( 'novablocks_render_header_block' ) ) {
 
 		?>
 
-		<header id="masthead"
-		        class="<?php echo esc_attr( join( ' ', $classes ) ); ?>"
+		<div class="<?php echo esc_attr( join( ' ', $classes ) ); ?>"
 			<?php echo join( ' ', $data_attributes ); ?>
 			<?php echo ( $header_is_simple && ! empty( $sticky_row_block ) ) ? 'data-sticky="true"' : ''; ?>
 		>
 			<?php
 
-			if ( ! header_block_updated() ) {
-				$content = do_blocks( $header_row_markup_start . $content . $header_row_markup_end );
-			}
-
 			echo $content;
+			echo render_reading_bar();
 
-			if ( $header_is_simple ) {
-				echo render_reading_bar();
-			} ?>
-		</header>
+			?>
+		</div>
 
 		<?php
-
-		// We will output the sticky header mark-up only
-		// when the layout used is on at least two rows.
-		if ( ! empty( $sticky_row_block ) && ! $header_is_simple ) { ?>
-			<div
-				class="novablocks-header novablocks-header--secondary novablocks-header--sticky">
-				<?php
-
-				// On all pages except articles,
-				// show sticky row and primary row,
-				// if primary is not sticky.
-				if ( ! is_single() ) {
-
-					echo render_block( $sticky_row_block );
-
-					if ( empty( $sticky_row_block['attrs']['isPrimary'] ) ) {
-						echo render_block( $primary_row_block );
-					}
-				}
-
-				// On articles always show primary row,
-				// reading bar and reading progress.
-				if ( is_single() && ! is_attachment() ) {
-					echo render_block( $primary_row_block );
-					echo render_reading_bar();
-					} ?>
-			</div>
-		<?php }
 
 		do_action( 'novablocks_header:after' );
 

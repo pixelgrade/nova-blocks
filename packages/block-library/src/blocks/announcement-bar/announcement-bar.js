@@ -1,40 +1,32 @@
+import { hasClass, removeClass } from "@novablocks/utils";
 import Cookies from 'js-cookie';
 
 export default class AnnouncementBar {
 
 	constructor( element, args ) {
 		this.element = element;
-		this.pieces = this.getPieces();
-		this.id = jQuery( element ).data( 'id' );
-		this.cookieName = 'novablocks-announcement-' + this.id + '-disabled';
+		this.close = element.querySelector( '.novablocks-announcement-bar__close' );
+		this.cookieName = 'novablocks-announcement-' + element.dataset.id + '-disabled';
+    this.onClose = this.onClose.bind( this );
 
 		const disabled = Cookies.get( this.cookieName );
-		const loggedIn = jQuery( 'body' ).hasClass( 'logged-in' );
+		const loggedIn = hasClass( document.body, 'logged-in' );
 
 		if ( disabled && ! loggedIn ) {
 			return;
 		}
 
-		this.pieces.element.removeClass( 'is-hidden' );
+    removeClass( element, 'is-hidden' );
 		this.bindEvents();
 	}
 
-	getPieces() {
-		const $element = jQuery( this.element );
-
-		return {
-			element: $element,
-			close: $element.find( '.novablocks-announcement-bar__close' ),
-		}
-	}
-
 	bindEvents() {
-		this.pieces.close.on( 'click', this.onClose.bind( this ) );
+    this.close.addEventListener( 'click', this.onClose );
 	}
 
 	onClose() {
 		const { cookieName } = this;
-		this.pieces.element.addClass( 'is-hidden' );
+		addClass( this.element, 'is-hidden' );
 		Cookies.set( cookieName, true, { expires: 365 } );
 	}
 }

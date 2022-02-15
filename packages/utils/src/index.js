@@ -251,6 +251,55 @@ export const hasClass = ( element, className ) => {
   return element.classList.contains( className );
 };
 
+export const toggleClass = ( element, className, condition ) => {
+
+  if ( typeof condition !== "undefined" ) {
+    if ( !! condition ) {
+      addClass( element, className );
+    } else {
+      removeClass( element, className );
+    }
+    return;
+  }
+
+  if ( hasClass( element, className ) ) {
+    removeClass( element, className );
+  } else {
+    addClass( element, className );
+  }
+}
+
+export const getFirstChild = ( element ) => {
+  var firstChild = element.firstChild;
+
+  while ( firstChild != null && firstChild.nodeType === 3 ) { // skip TextNodes
+    firstChild = firstChild.nextSibling;
+  }
+
+  return firstChild;
+}
+
+export function setAndResetElementStyles ( element, props = {} ) {
+
+  const $element = $( element );
+
+  $element.css( props );
+
+  Object.keys( props ).forEach( key => {
+    props[key] = '';
+  } );
+
+  if ( window.requestIdleCallback ) {
+    window.requestIdleCallback( () => {
+      $element.css( props );
+    } );
+  } else {
+    setTimeout( () => {
+      $element.css( props );
+    }, 0 );
+  }
+}
+
 export const clamp = ( number, min, max ) => {
   return Math.min( Math.max( min, number ), max )
 };
@@ -297,8 +346,8 @@ export const onScrollRAF = ( callback ) => {
 
   const tick = () => {
     if ( lastScrollY !== scrollY ) {
+      callback( scrollY, lastScrollY );
       lastScrollY = scrollY;
-      callback( scrollY );
     }
     requestAnimationFrame( tick );
   }
