@@ -24,21 +24,6 @@ export const initializeReadingBar = ( header ) => {
       showingNext = showNext;
     }
 
-    // toggle overflow
-//    if ( above( 'lap' ) ) {
-//      if ( showSomething ) {
-//        // overflow hidden allows animation between header states
-//        header.style.overflow = 'hidden';
-//      } else {
-//        // allow overflow when menu is displayed for submenus to be visible
-//        setTimeout( () => {
-//          header.style.overflow = '';
-//        }, 100 )
-//      }
-//    } else {
-//      header.style.overflow = '';
-//    }
-
     // update progress
     const progress = clamp( ( newScrollY - min ) / ( max - min ), 0, 1 );
 

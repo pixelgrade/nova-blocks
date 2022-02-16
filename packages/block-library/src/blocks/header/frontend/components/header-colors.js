@@ -7,8 +7,6 @@ class HeaderColors {
     this.initialColorsSource = initialColorsSource ? initialColorsSource : element;
     this.transparentColorsSource = transparentColorsSource ? transparentColorsSource : this.getFirstUsefulBlock();
 
-    console.log( element, this.initialColorsSource, this.transparentColorsSource );
-
     this.initializeColors();
   }
 
@@ -72,7 +70,6 @@ class HeaderColors {
 
   toggleColors( isTransparent ) {
     toggleClasses( this.element, isTransparent ? this.transparentColorClasses : this.initialColorClasses );
-    console.log( this.element, isTransparent, this.transparentColorClasses, this.initialColorClasses );
 //    toggleLightClasses( this.element );
   }
 }
