@@ -281,22 +281,24 @@ export const getFirstChild = ( element ) => {
 
 export function setAndResetElementStyles ( element, props = {} ) {
 
-  const $element = $( element );
+  const setProps = () => {
+    Object.keys( props ).forEach( key => {
+      element.style[key] = props[key];
+    } );
+  }
 
-  $element.css( props );
+  const resetProps = () => {
+    Object.keys( props ).forEach( key => {
+      element.style[key] = '';
+    } );
+  }
 
-  Object.keys( props ).forEach( key => {
-    props[key] = '';
-  } );
+  setProps();
 
   if ( window.requestIdleCallback ) {
-    window.requestIdleCallback( () => {
-      $element.css( props );
-    } );
+    window.requestIdleCallback( resetProps );
   } else {
-    setTimeout( () => {
-      $element.css( props );
-    }, 0 );
+    setTimeout( resetProps, 0 );
   }
 }
 
@@ -337,17 +339,24 @@ export const needsPreview = ( attributes ) => {
 };
 
 export const onScrollRAF = ( callback ) => {
-  let scrollY = window.scrollY;
+  let scrollY = window.pageYOffset;
   let lastScrollY = -1;
+  let frameRendered = false;
 
   window.addEventListener( 'scroll', () => {
-    scrollY = window.scrollY;
+    scrollY = window.pageYOffset;
+    frameRendered = false;
+  } );
+
+  window.addEventListener( 'resize', () => {
+    frameRendered = false;
   } );
 
   const tick = () => {
-    if ( lastScrollY !== scrollY ) {
+    if ( ! frameRendered ) {
       callback( scrollY, lastScrollY );
       lastScrollY = scrollY;
+      frameRendered = true;
     }
     requestAnimationFrame( tick );
   }

@@ -2,6 +2,9 @@
 @import 'scss/menu-toggle';
 @import 'scss/reading-bar';
 
+@import 'scss/header-mobile';
+@import 'scss/header-secondary';
+
 :root {
   --icons-size-multiplier: 1.3;
   --icons-horizontal-spacing-reducer: 2;
@@ -29,8 +32,6 @@
     color: var(--sm-current-fg2-color, var(--nb-fg2-color));
   }
 }
-
-@import "scss/header-secondary";
 
 @include above(lap) {
 
@@ -65,10 +66,76 @@
 @import 'scss/mobile';
 @import 'scss/mobile-transitions';
 
-.novablocks-header-background {
+:where(.novablocks-header-background) {
   @include header-background;
 }
 
-.novablocks-header-shadow {
+:where(.novablocks-header-shadow) {
   @include header-shadow;
 }
+
+//.novablocks-header--main:not(.novablocks-header--sticky) {
+//
+//  @include above(lap) {
+//    // @todo:
+//    // In case the Header is a single sticky row, there is a slight
+//    // jerkiness when start scrolling and the "position" is changed
+//    // from "absolute" to "fixed".
+//    //
+//    // The "position: fixed" seem solve this issue, but it's not working
+//    // when there are multiple rows inside the Header.
+//    position: absolute !important;
+//    top: 0 !important;
+//  }
+//
+//  @include below(lap) {
+//    margin-top: 0 !important;
+//  }
+//}
+
+.novablocks-header:not(.novablocks-header--ready) {
+  opacity: 0;
+  --header-background-opacity: 0;
+}
+
+// hide all header and header-row backgrounds when header is transparent
+.novablocks-header.novablocks-header--transparent:not(.novablocks-header--sticky) {
+
+  @include above(lap) {
+    --header-background-opacity: 0;
+  }
+}
+
+.novablocks-header--mobile {
+
+  &.novablocks-header--transparent {
+
+    &:before {
+      --header-background-opacity: 0;
+    }
+  }
+
+  &:not(.novablocks-header--transparent) {
+    --header-background-opacity: 0.95;
+  }
+}
+
+
+.novablocks-header--sticky:not(.novablocks-header--main) {
+
+  @include above(lap) {
+    margin-top: 0 !important;
+  }
+}
+
+//.novablocks-header--sticky.novablocks-header--main {
+//  position: fixed !important;
+//  top: 0 !important;
+//
+//  @include above(lap) {
+//    &:before {
+//      --header-background-opacity: 0;
+//    }
+//  }
+//}
+

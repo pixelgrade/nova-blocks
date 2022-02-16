@@ -178,7 +178,8 @@ ul.menu,
     color: var(--sm-current-fg2-color, var(--nb-fg2-color));
 
     border-radius: 0.1875em;
-    box-shadow: 0 0.25em 2em rgba(0, 0, 0, 0.1), 0 0.125em 0.25em rgba(0, 0, 0, 0.1);
+    filter: drop-shadow(0 0.25em 2em rgba(0, 0, 0, 0.1));
+    //box-shadow: 0 0.25em 2em rgba(0, 0, 0, 0.1), 0 0.125em 0.25em rgba(0, 0, 0, 0.1);
 
     transition: var(--nb-transition);
     transition-property: opacity, transform;

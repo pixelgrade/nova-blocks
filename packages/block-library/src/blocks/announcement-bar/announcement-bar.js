@@ -1,4 +1,4 @@
-import { hasClass, removeClass } from "@novablocks/utils";
+import { addClass, hasClass, removeClass } from "@novablocks/utils";
 import Cookies from 'js-cookie';
 
 export default class AnnouncementBar {

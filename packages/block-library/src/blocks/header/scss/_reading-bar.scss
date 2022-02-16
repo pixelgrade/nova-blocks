@@ -89,16 +89,10 @@
 .c-reading-progress[data-progress-bar-style-="below"] {}
 .c-reading-progress[data-progress-bar-style-="overlay"] {}
 
-
-
-
-
-
 .c-reading-bar {
   position: absolute;
   top: 0;
   left: 0;
-  
   z-index: 10;
   
   height: 100%;
@@ -108,7 +102,9 @@
   justify-content: space-between;
   align-items: center;
 
-  transition: 0.5s transform ease;
+  opacity: 0;
+  transition: 0.5s ease;
+  transition-property: opacity, transform;
   will-change: transform;
   
   transform: translateY(-100%);
@@ -125,12 +121,14 @@
     transform: translateY(0);
     pointer-events: auto;
   }
-  
+}
+
+.c-reading-bar,
+.c-reading-progress {
+
   @include below(lap) {
     display: none;
   }
-
-
 }
 
 .novablocks-header-row {
@@ -153,13 +151,15 @@
 .site-header--reading {
   
   .c-reading-bar {
+    opacity: 1;
     transform: translateY(0);
     pointer-events: auto;
   }
   
   .novablocks-header-row__inner-container {
-    
+
     > .wp-block {
+      opacity: 0;
       transform: translateY(100%);
       pointer-events: none;
     }

@@ -1,4 +1,4 @@
-import { clamp, onScrollRAF, removeClass, syncColorSignalClasses, toggleClass } from "@novablocks/utils";
+import { above, clamp, onScrollRAF, removeClass, syncColorSignalClasses, toggleClass } from "@novablocks/utils";
 
 export const initializeReadingBar = ( header ) => {
   bindMenuLabelClick( header );
@@ -15,25 +15,29 @@ export const initializeReadingBar = ( header ) => {
     const showNext = showSomething && ! showReading;
 
     if ( showingReading !== showReading ) {
-      toggleClass( header, 'site-header--reading', showReading );
+      toggleClass( header, 'site-header--reading', showReading && above( 'lap' ) );
       showingReading = showReading;
     }
 
     if ( showingNext !== showNext ) {
-      toggleClass( header, 'site-header--next', showNext );
+      toggleClass( header, 'site-header--next', showNext && above( 'lap' ) );
       showingNext = showNext;
     }
 
     // toggle overflow
-    if ( showSomething ) {
-      // overflow hidden allows animation between header states
-      header.style.overflow = 'hidden';
-    } else {
-      // allow overflow when menu is displayed for submenus to be visible
-      setTimeout( () => {
-        header.style.overflow = '';
-      }, 100 )
-    }
+//    if ( above( 'lap' ) ) {
+//      if ( showSomething ) {
+//        // overflow hidden allows animation between header states
+//        header.style.overflow = 'hidden';
+//      } else {
+//        // allow overflow when menu is displayed for submenus to be visible
+//        setTimeout( () => {
+//          header.style.overflow = '';
+//        }, 100 )
+//      }
+//    } else {
+//      header.style.overflow = '';
+//    }
 
     // update progress
     const progress = clamp( ( newScrollY - min ) / ( max - min ), 0, 1 );

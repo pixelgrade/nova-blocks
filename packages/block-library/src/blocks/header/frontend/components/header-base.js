@@ -1,61 +1,72 @@
-import { addClass } from '@novablocks/utils';
-
-//import globalService from '../../globalService';
+import { addClass, debounce, onScrollRAF } from '@novablocks/utils';
 
 class HeaderBase {
 
-  constructor( options ) {
+  constructor() {
     this.staticDistance = 0;
     this.stickyDistance = 0;
-    this.options = options || {};
+    this.isSticky = false;
   }
 
   initialize() {
     addClass( this.element, 'novablocks-header--ready' );
-
-//    globalService.registerRender( this.render.bind( this ) );
-//    globalService.registerOnDeouncedResize( this.onResize.bind( this ) );
+    onScrollRAF( this.maybeUpdateStickyStyles.bind( this ) );
+    const debouncedOnResize = debounce( this.onResize.bind( this ), 100 );
+    window.addEventListener( 'resize', debouncedOnResize );
   }
 
   onResize() {
+    this.element.style.removeProperty( 'position' );
+    this.element.style.removeProperty( 'top' );
     this.box = this.element.getBoundingClientRect();
 
-    if ( typeof this.options.onResize === 'function' ) {
-      this.options.onResize();
-    }
+    this.adminBar = document.querySelector( '#wpadminbar' );
+    this.adminBarHeight = this.adminBar.offsetHeight;
+    const adminBarStyle = window.getComputedStyle( this.adminBar );
+    this.adminBarFixed = adminBarStyle.getPropertyValue( 'position' ) === 'fixed';
+    this.staticDistance = window.pageYOffset + this.box.top;
+    this.stickyDistance = this.adminBarFixed ? this.adminBarHeight : 0;
   }
 
   getHeight() {
     return this?.box?.height;
   }
 
-  render( forceUpdate ) {
-    this.maybeUpdateStickyStyles( forceUpdate );
-  }
-
-  maybeUpdateStickyStyles( forceUpdate ) {
-    const { scrollY } = globalService.getProps();
+  maybeUpdateStickyStyles( scrollY ) {
     const shouldBeSticky = scrollY > this.staticDistance - this.stickyDistance;
 
-    if ( this.shouldBeSticky === shouldBeSticky && !forceUpdate ) {
+    if ( this.shouldBeSticky === shouldBeSticky ) {
       return;
     }
 
     this.shouldBeSticky = shouldBeSticky;
-    this.updateStickyStyles();
+    this.updateStickyStyles?.call( this );
   }
 
-  updateStickyStyles() {
-    this.applyStickyStyles( this.element );
+  updateStickyStyles( scrollY ) {
+    this.applyStickyStyles( this.element, scrollY );
+//    HeaderBase.prototype.updateStickyStyles.call( this );
+//
+//    if ( this.shouldToggleColors ) {
+//      this.toggleRowsColors( !this.shouldBeSticky );
+//    }
+
+//    this.element.style.marginTop = `${ this.staticDistance }px`;
+//
+//    if ( this.secondaryHeader ) {
+//      this.secondaryHeader.style.top = `${ this.staticDistance }px`;
+//    }
   }
 
-  applyStickyStyles( element ) {
+  applyStickyStyles( element, scrollY ) {
+    const target = element ?? this.element;
+
     if ( this.shouldBeSticky ) {
-      element.style.position = 'fixed';
-      element.style.top = `${ this.stickyDistance }px`;
+      target.style.position = 'fixed';
+      target.style.top = `${ this.stickyDistance }px`;
     } else {
-      element.style.position = '';
-      element.style.top = '';
+      target.style.position = 'absolute';
+      target.style.top = `${ this.staticDistance }px`;
     }
   }
 }

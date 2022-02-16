@@ -1,6 +1,7 @@
 @include below(lap) {
 
-  .novablocks-header--main {
+  .novablocks-header--main[class] {
+    @include apply-variation(6);
 
     &.novablocks-header-background:before {
       position: fixed;
@@ -11,11 +12,8 @@
     display: none;
     overflow-y: auto;
 
-    position: fixed;
-    top: 0;
-    bottom: 0;
     left: 0;
-    z-index: 2001;
+    z-index: 2100;
 
     .c-menu-toggle__checkbox ~ & {
       display: block;

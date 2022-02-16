@@ -1,3 +1,5 @@
+import { addClass } from './index';
+
 /**
  *
  * @param attributes block's attributes

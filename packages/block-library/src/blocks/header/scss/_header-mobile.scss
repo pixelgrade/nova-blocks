@@ -1,0 +1,155 @@
+/*------------------------------------*\
+  #MOBILE HEADER
+\*------------------------------------*/
+
+.novablocks-header--mobile {
+  z-index: 2000;
+
+  width: 100%;
+  min-height: 60px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  padding: var(--theme-spacing-fluid-smaller) var(--theme-wrapper-sides-spacing);
+
+  --shadow-color: rgba(0, 0, 0, 0.25);
+  --shadow-y-offset: 4px;
+  --shadow-blur: 4px;
+
+  &:not([style*='fixed'])[class] {
+    --header-background-opacity: 0;
+  }
+
+  .menu-item--cart {
+    display: flex;
+
+    position: absolute;
+    top: 50%;
+    right: calc( var(--theme-wrapper-sides-spacing) + 0em );
+
+    transform: translateY(-50%);
+
+    > a {
+      color: currentColor;
+      transition: color .3s ease;
+    }
+
+    // Hide menu cart label (if visible)
+    .menu-item__label {
+      display: none;
+    }
+  }
+}
+
+@include above(lap) {
+
+  .novablocks-header__inner-container {
+    padding-top: 0 !important;
+  }
+
+  .novablocks-header--mobile {
+    display: none;
+  }
+}
+
+
+
+/**
+ * Adjust the desktop Header for Mobile
+ */
+@include below(lap) {
+
+  .novablocks-header--main {
+    margin-top: 0 !important;
+  }
+
+  .novablocks-header--main:before {
+    --header-background-opacity: 0.97;
+  }
+
+  .novablocks-header--main .site-branding {
+    display: none !important;
+  }
+
+  .menu-item--cart,
+  .menu-item--dark-mode,
+  .menu-item--search {
+
+    .novablocks-header--main .menu:not(.menu--buttons) & {
+      display: none !important;
+    }
+
+  }
+
+  .novablocks-navigation {
+
+    .sub-menu {
+      margin-left: calc(var(--theme-wrapper-sides-spacing) * -1);
+      margin-right: calc(var(--theme-wrapper-sides-spacing) * -1);
+
+      > li {
+        padding-left: var(--theme-wrapper-sides-spacing);
+        padding-right: var(--theme-wrapper-sides-spacing);
+      }
+    }
+
+    > ul > li[class*="current"] {
+      color: var(--nb-fg1-color);
+    }
+  }
+
+  .novablocks-header__inner-container,
+  .novablocks-header__buttons-menu {
+
+    .c-menu-toggle__checkbox:checked ~ .novablocks-header & {
+      opacity: 1;
+      transition: opacity .3s ease .3s; // .novablocks-header has a 0.4s entry transition
+    }
+
+    .c-menu-toggle__checkbox:not(:checked) ~ .novablocks-header & {
+      opacity: 0;
+      transition: opacity .2s ease 0s;
+    }
+  }
+}
+
+.novablocks-header__buttons-menu {
+  position: absolute;
+  top: 0;
+  right: 0;
+
+  .menu {
+    display: flex;
+    align-items: center;
+  }
+
+  @include above( lap ) {
+
+    &[class] {
+      display: none;
+    }
+  }
+
+  a {
+    display: block;
+    color: inherit;
+  }
+
+  .menu--buttons {
+    list-style: none;
+
+    li {
+      position: relative;
+
+      &[class][class] {
+        margin-top: 0;
+      }
+
+      &:not(:first-child) {
+        margin-left: 1em;
+      }
+    }
+  }
+}

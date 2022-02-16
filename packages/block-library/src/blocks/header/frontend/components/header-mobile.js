@@ -1,4 +1,4 @@
-import { addClass, removeClass, getColorSetClasses } from '@novablocks/utils';
+import { below, addClass, removeClass, getColorSetClasses } from '@novablocks/utils';
 
 import HeaderBase from './header-base';
 import HeaderColors from './header-colors';
@@ -25,15 +25,10 @@ class HeaderMobile extends HeaderBase {
     } );
 
     this.headerClasses = getColorSetClasses( this.parent.element ).join( ' ' );
-
-    this.colors = new HeaderColors( this.element, logoRow?.element );
-    this.menuToggleColors = new HeaderColors( this.menuToggle.element, logoRow?.element );
+    this.colors = new HeaderColors( this.element, logoRow?.element, this.parent.adjacentElement );
+    this.menuToggleColors = new HeaderColors( this.menuToggle.element, logoRow?.element, this.parent.adjacentElement );
 
     HeaderBase.prototype.initialize.call( this );
-  }
-
-  render( forceUpdate ) {
-    HeaderBase.prototype.render.call( this, forceUpdate );
   }
 
   initializeMenuToggle() {
@@ -90,15 +85,22 @@ class HeaderMobile extends HeaderBase {
   }
 
   updateStickyStyles() {
-    HeaderBase.prototype.updateStickyStyles.call( this );
-    this.applyStickyStyles( this.menuToggle.element );
-    this.colors.toggleColors( !this.shouldBeSticky );
-    this.updateToggleClasses();
+
+    if ( below( 'lap' ) ) {
+      this.applyStickyStyles( this.element );
+      this.applyStickyStyles( this.parent.element );
+      this.applyStickyStyles( this.menuToggle.element );
+      this.colors.toggleColors( !this.shouldBeSticky );
+      this.updateToggleClasses();
+    }
+
   }
 
   onResize() {
     HeaderBase.prototype.onResize.call( this );
     this.update();
+    const scrollY = window.pageYOffset;
+    this.updateStickyStyles( scrollY );
   }
 
   update() {
@@ -123,7 +125,6 @@ class HeaderMobile extends HeaderBase {
       removeClass( this.menuToggle.element, this.headerClasses );
       this.menuToggleColors.toggleColors( !this.shouldBeSticky );
     }
-
   }
 
   copyElementFromParent( selector ) {

@@ -1,59 +1,53 @@
-import { addClass, setAndResetElementStyles } from '@novablocks/utils';
+import { mqService, above, below, addClass, removeClass, hasClass, toggleClass, setAndResetElementStyles } from '@novablocks/utils';
 
 //import GlobalService from '../../globalService';
 //import mqService from '../../mqService';
-import HeaderBase from './header-base';
-import HeaderMobile from './header-mobile';
-import HeaderRow from './header-row';
+import HeaderBase from "./header-base";
+import HeaderMobile from "./header-mobile";
+import HeaderRow from "./header-row";
+import HeaderColors from "./header-colors";
+import HeaderSticky from "./header-sticky";
+import { initializeReadingBar } from "./initialize-reading-bar";
 
 class Header extends HeaderBase {
 
-  constructor( element, options ) {
-    super( options );
+  constructor( element ) {
+    super();
 
     if ( ! element ) {
       return;
     }
 
-    this.onUpdate = options.onUpdate;
     this.element = element;
+    this.adjacentElement = this.getAdjacentElement( element );
+    this.paddingTopTargets = this.findPaddingTopTargets( this.adjacentElement );
+
     this.rows = this.getHeaderRows();
+    this.isSimple = [ 'logo-left', 'logo-center' ].includes( element.dataset.layout );
 
     this.shouldToggleColors = !! this.element.dataset.sticky;
 
     this.mobileHeader = new HeaderMobile( this );
-    this.secondaryHeader = this.getSecondaryHeader();
 
-    this.initialize();
-    this.toggleRowsColors( true );
+    if ( ! this.isSimple ) {
+      this.stickyHeader = new HeaderSticky( this.element );
+    }
 
-    addClass( this.element, 'novablocks-header--transparent' );
-
-    if ( this.secondaryHeader ) {
-      addClass( this.secondaryHeader, 'novablocks-header--ready' );
+    if ( this.isSimple ) {
+      initializeReadingBar( this.element );
     }
 
     this.onResize();
-  }
+    this.initialize();
 
-//  initialize() {
-//    HeaderBase.prototype.initialize.call( this );
-//
-//    this.timeline = this.getIntroTimeline();
-//    this.timeline.play();
-//  }
+    this.toggleRowsColors( true );
 
-  render( forceUpdate ) {
-    HeaderBase.prototype.render.call( this, forceUpdate );
-
-    if ( typeof this.onUpdate === 'function' ) {
-      this.onUpdate();
-    }
+    addClass( this.element, 'novablocks-header--transparent' );
   }
 
   getHeight() {
 
-    if ( !!mqService.below.lap ) {
+    if ( below( 'lap' ) ) {
       return this.mobileHeader.getHeight();
     }
 
@@ -61,12 +55,18 @@ class Header extends HeaderBase {
   }
 
   onResize() {
-    HeaderBase.prototype.onResize.call( this );
-    setAndResetElementStyles( this.element, { transition: 'none' } );
-  }
+    const scrollY = window.pageYOffset;
 
-  getSecondaryHeader() {
-    return document.querySelector( '.novablocks-header--secondary' );
+    if ( above( 'lap' ) ) {
+      HeaderBase.prototype.onResize.call( this );
+
+      this.element.style.position = 'absolute';
+      this.element.style.top = `${ this.staticDistance }px`;
+    }
+
+    this.paddingTopTargets.forEach( target => { target.style.paddingTop = `${ this.getHeight() }px` } );
+
+    this.updateStickyStyles( scrollY );
   }
 
   getHeaderRows() {
@@ -74,30 +74,68 @@ class Header extends HeaderBase {
 
     if ( rows ) {
       return Array.from( rows ).map( element => {
-        return new HeaderRow( element );
+        return new HeaderColors( element, element, this.adjacentElement );
       } );
     }
 
     return [];
   }
 
+  getAdjacentElement( element ) {
+    const next = element.nextElementSibling;
+
+    if ( ! next ) {
+      return this.getAdjacentElement( element.parentElement );
+    }
+
+    return this.findProperElement( next );
+  }
+
+  findProperElement( element ) {
+
+    if ( element.matches( 'main, .wp-block-group, .wp-block-post-content' ) ) {
+      return this.findProperElement( element.firstElementChild );
+    }
+
+    return element;
+  }
+
+  findPaddingTopTargets( element ) {
+
+    if ( hasClass( element, 'supernova' ) ) {
+      const attributes = element.dataset;
+      const header = element.querySelector( '.nb-collection__header' );
+      const hasImagePadding = parseInt( attributes.imagePadding, 10 ) !== 0;
+      const isStacked = attributes.cardLayout === 'stacked';
+      const isCarousel = attributes.layoutStyle === 'carousel';
+
+      if ( ! header && ! hasImagePadding && isStacked ) {
+        const containers = Array.from( element.querySelectorAll( '.supernova-item__inner-container' ) )
+
+        if ( isCarousel ) {
+          return containers;
+        }
+
+        return containers.slice( 0, 1 );
+      }
+
+    }
+
+    return [ element ];
+  }
+
   toggleRowsColors( isTransparent ) {
     this.rows.forEach( row => {
-      row.colors.toggleColors( isTransparent );
+      row.toggleColors( isTransparent );
     } );
   }
 
-  updateStickyStyles() {
-    HeaderBase.prototype.updateStickyStyles.call( this );
+  applyStickyStyles( element, scrollY ) {
 
-    if ( this.shouldToggleColors ) {
-      this.toggleRowsColors( !this.shouldBeSticky );
-    }
-
-    this.element.style.marginTop = `${this.staticDistance}px`;
-
-    if ( this.secondaryHeader ) {
-      this.secondaryHeader.style.top = `${ this.staticDistance }px`;
+    if ( this.isSimple && above( 'lap' ) ) {
+      HeaderBase.prototype.applyStickyStyles.call( this, element, scrollY );
+      toggleClass( this.element, 'novablocks-header--transparent', ! this.shouldBeSticky );
+      this.toggleRowsColors( ! this.shouldBeSticky );
     }
   }
 
