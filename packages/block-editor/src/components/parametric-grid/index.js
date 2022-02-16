@@ -34,12 +34,12 @@ const ParametricGrid = ( props ) => {
           };
 
           return (
-            <div className={ `nb-grid__column` } style={ areaColumnStyle } key={'column_' + columnIndex}>
+            <div className={ `nb-grid__column` } style={ areaColumnStyle } key={'parametric_grid_column_' + columnIndex}>
               { areas.map( ( area, areaIndex ) => {
                 addedCards += area.postsCount;
 
                 return !! area.postsCount && (
-                  <div className={ getParametricLayoutAreaClassName( area, attributes ) } key={'area_' + areaIndex}>
+                  <div className={ getParametricLayoutAreaClassName( area, attributes ) } key={'parametric_grid_column_' + columnIndex + '_area_' + areaIndex}>
                     {/*<AreaDebug area={ area } />*/}
                     { Array.from( Array( area.postsCount ).keys() ).map( i => {
                       const landscape = isLandscape( area, attributes );

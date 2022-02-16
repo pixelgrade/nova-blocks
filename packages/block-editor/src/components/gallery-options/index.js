@@ -76,7 +76,7 @@ class GalleryPreview extends Component {
 					}
 
 					return (
-						<li key={ index } onClick={ () => { onSelectImage( index ); } }>
+						<li key={ 'gallery_image_' + index } onClick={ () => { onSelectImage( index ); } }>
 							<div className={ classes.join( ' ' ) }>
 								<img src={ thumbnail } alt="" />
 							</div>

@@ -58,7 +58,7 @@ const MediaCompositionPreview = ( props ) => {
 					</div>
 					<div className={ `novablocks-media-composition__grid` } style={ gridStyle }>
 						{ gridItemsCollection.gridItems.map( ( item, index ) => (
-							<AdvancedGalleryItem gridItem={ item } key={ index } index={ index } { ...props } />
+							<AdvancedGalleryItem gridItem={ item } key={ 'gallery_item_' + index } index={ index } { ...props } />
 						) ) }
 					</div>
 				</div>

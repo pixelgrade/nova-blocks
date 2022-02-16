@@ -40,7 +40,9 @@ const CardsCollectionPreview = ( props ) => {
 
   return (
     <CollectionBody { ...props } key={ 'body' }>
-      { innerBlocks.map( innerBlock => <SupernovaItemPreview { ...innerBlock } key={ innerBlock.clientId } /> ) }
+      { innerBlocks.map( innerBlock =>
+        <SupernovaItemPreview { ...innerBlock } key={ 'collection_item_preview_' + innerBlock.clientId } /> )
+      }
     </CollectionBody>
   )
 };

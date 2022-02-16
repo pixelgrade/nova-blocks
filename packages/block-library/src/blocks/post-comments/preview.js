@@ -82,7 +82,7 @@ function PostCommentsDisplay( { postId } ) {
 
 			return comments && comments.length
 				? comments.map( ( comment ) => (
-					<div className="comment" key={ comment.id }>
+					<div className="comment" key={ 'comment_' + comment.id }>
 						<div className="comment-body comment-grid">
 							<div className="comment-content">
 								<div className="comment-author-avatar vcard">

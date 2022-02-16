@@ -87,7 +87,7 @@ const ActiveSectionTabs = ( props ) => {
 							};
 
 							return (
-								<div className={ className } onClick={ onClick } key={ index }>{ label }</div>
+								<div className={ className } onClick={ onClick } key={ 'section_tab_' + index }>{ label }</div>
 							);
 						} )
 					}
@@ -109,6 +109,6 @@ const TabContent = ( props ) => {
       { !! activeTab && activeTab.props.children }
     </div>
   );
-}
+};
 
 export { ActiveSectionTabs };

@@ -86,7 +86,7 @@ const Drawers = ( ownProps ) => {
 						const orderedDrawers = orderBy( drawers, drawer => drawer.props.order || 100, ['asc'] );
 
 						return (
-							<div className={ `novablocks-drawers__list` } key={ `drawer-list-${ drawerListIndex }` }>
+							<div className={ `novablocks-drawers__list` } key={ `drawer_list_${ drawerListIndex }` }>
 								{ title && <div className={ `novablocks-drawers__list-title` }>{ title }</div> }
 								{
 									orderedDrawers.map( ( orderedDrawer, drawerIndex ) => {
@@ -95,7 +95,7 @@ const Drawers = ( ownProps ) => {
 
 										return (
 											<Drawer { ...props }
-												key={ `drawer-${ drawerListIndex }-${ drawerIndex }` }
+												key={ `drawer_${ drawerListIndex }-${ drawerIndex }` }
 												onClick={ () => {
 													setLastActiveDrawerId( id );
 													setOpen( true );
@@ -119,7 +119,7 @@ const Drawers = ( ownProps ) => {
 						);
 
 						return (
-							<div key={ `drawer-panel-${ drawerPanel.props.id }` } className={ className } ref={ ref => ref && refMap.set( drawerPanel, ref ) }>
+							<div key={ `drawer_panel_${ drawerPanel.props.id }` } className={ className } ref={ ref => ref && refMap.set( drawerPanel, ref ) }>
 								<DrawerWithProps { ...drawerPanel.props } isActive={ lastActiveDrawerId === drawerPanel.props.id } goBack={ () => {
 									setOpen( false );
 									onClose();

@@ -19,7 +19,7 @@ const ColorPicker = ( props ) => {
   return (
     <div className="components-base-control color-palette-picker">
       <div className="color-palette-picker__palettes">
-        { options.map( option => {
+        { options.map( (option, index) => {
           const { value, data, colors } = option;
           const gradientId = uuidv4();
           const isSelected = `${ selected }` === `${ value }`;
@@ -31,7 +31,7 @@ const ColorPicker = ( props ) => {
           );
 
           return (
-            <button key={ value } className={ colorClassnames } style={ { color: colors[0] } } onClick={ () => {
+            <button key={ 'color_palette_picker_palette_' + index } className={ colorClassnames } style={ { color: colors[0] } } onClick={ () => {
               onChange( value );
             } }>
               <svg className="color-palette-picker__color-svg" width="48" height="48" viewBox="0 0 48 48">
@@ -44,7 +44,7 @@ const ColorPicker = ( props ) => {
                       };
 
                       return (
-                        <Fragment key={index}>
+                        <Fragment key={ 'color_palette_picker_palette_color_' + index}>
                           <stop offset={ `${ index * 100 / colors.length }%` } style={ style } />
                           <stop offset={ `${ ( index + 1 ) * 100 / colors.length }%` } style={ style } />
                         </Fragment>

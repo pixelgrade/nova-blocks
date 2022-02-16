@@ -32,14 +32,18 @@ const SectionsList = ( props ) => {
 				<Cube />
 			</div>
 			<div className={ 'novablocks-sections__buttons' }>
-				{ blockSections.map( ( section, index ) => <SectionsListItem key={ index } label={ section.props.label } onClick={ onSectionClick } /> ) }
+				{ blockSections.map( ( section, index ) =>
+          <SectionsListItem key={ 'block_section_button_' + index } label={ section.props.label } onClick={ onSectionClick } /> )
+        }
 			</div>
 			{
 				!! modules.length &&
 				<Fragment>
 					<div className="novablocks-sections__title">{ __( 'Modules' ) }</div>
 					<div className={ 'novablocks-sections__buttons' }>
-						{ modules.map( ( section, index ) => <SectionsListItem key={ index } label={ section.props.label } onClick={ onSectionClick } /> ) }
+						{ modules.map( ( section, index ) =>
+              <SectionsListItem key={ 'module_section_button_' + index } label={ section.props.label } onClick={ onSectionClick } /> )
+            }
 					</div>
 				</Fragment>
 			}
