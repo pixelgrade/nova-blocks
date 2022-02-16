@@ -1,22 +1,13 @@
 import {
   ready,
-  addClass,
-  removeClass,
   IS_EDITOR,
 } from "@novablocks/utils";
 
 import {
-  computeColorSignal,
-  getAbsoluteColorVariation,
   getSiteColorVariation,
-  getSourceIndexFromPaletteId,
-  addSiteVariationOffset,
-  removeSiteVariationOffset,
-  getColorSignalClassnames,
 } from "./utils";
 
 import {
-  updateBlockSignal,
   updateAllBlocksSignal,
 } from "./frontend/update-block-signal";
 

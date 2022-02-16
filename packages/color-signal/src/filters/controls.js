@@ -4,7 +4,7 @@ import {
   ControlsGroup,
   ControlsSection,
   ControlsTab,
-  Notice, withVisibility,
+  Notice,
 } from "@novablocks/block-editor";
 
 import {
