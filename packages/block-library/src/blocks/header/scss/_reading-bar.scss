@@ -37,7 +37,7 @@
     z-index: 12 !important;
   }
 
-  .site-header--reading .c-reading-bar {
+  .novablocks-header--reading .c-reading-bar {
     background: transparent !important;
   }
 }
@@ -117,7 +117,7 @@
     background: none;
   }
   
-  .site-header--reading & {
+  .novablocks-header--reading & {
     transform: translateY(0);
     pointer-events: auto;
   }
@@ -147,8 +147,8 @@
   margin-right: 0 !important;
 }
 
-.site-header--next,
-.site-header--reading {
+.novablocks-header--next,
+.novablocks-header--reading {
   
   .c-reading-bar {
     opacity: 1;
@@ -170,7 +170,7 @@
   transition: all 0.35s ease;
 }
 
-.site-header--next {
+.novablocks-header--next {
   
   .c-reading-bar__wrapper-title--current {
     opacity: 0;
@@ -244,7 +244,7 @@
   }
 }
 
-.site-header--next .c-reading-bar__wrapper-title--next {
+.novablocks-header--next .c-reading-bar__wrapper-title--next {
   z-index: 10;
   pointer-events: auto;
 }

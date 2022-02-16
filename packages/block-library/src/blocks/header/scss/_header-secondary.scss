@@ -51,7 +51,7 @@
     display: none;
   }
 
-  &:not(.site-header--reading):not(.site-header--next):hover .novablocks-header-row[data-is-primary] {
+  &:not(.novablocks-header--reading):not(.novablocks-header--next):hover .novablocks-header-row[data-is-primary] {
     display: block;
   }
 }
