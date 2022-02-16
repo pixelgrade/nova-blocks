@@ -21,11 +21,11 @@ const ShapeScalingControls = props => {
   }
 
   return (
-    <ControlsGroup title={ __( 'Scaling' ) }>
+    <ControlsGroup title={ __( 'Scaling', '__plugin_txtd' ) }>
       <RangeControl
         value={ blobsHorizontalDisplacement }
         onChange={ ( blobsHorizontalDisplacement ) => { setAttributes( { blobsHorizontalDisplacement } ) } }
-        label={ __( 'Horizontal Displacement' ) }
+        label={ __( 'Horizontal Displacement', '__plugin_txtd' ) }
         min={ 0 }
         max={ 100 }
         step={ 5 }
@@ -33,7 +33,7 @@ const ShapeScalingControls = props => {
       <RangeControl
         value={ blobsVerticalDisplacement }
         onChange={ ( blobsVerticalDisplacement ) => { setAttributes( { blobsVerticalDisplacement } ) } }
-        label={ __( 'Vertical Displacement' ) }
+        label={ __( 'Vertical Displacement', '__plugin_txtd' ) }
         min={ 0 }
         max={ 100 }
         step={ 5 }
@@ -41,7 +41,7 @@ const ShapeScalingControls = props => {
       <RangeControl
         value={ blobsSizeBalance }
         onChange={ ( blobsSizeBalance ) => { setAttributes( { blobsSizeBalance } ) } }
-        label={ __( 'Size Balance' ) }
+        label={ __( 'Size Balance', '__plugin_txtd' ) }
         min={ 20 }
         max={ 80 }
         step={ 5 }

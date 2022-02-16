@@ -43,17 +43,17 @@ const MediaCompositionControls = props => {
   return (
     <ControlsSection
       id={ 'media-composition' }
-      label={ __( 'Media Composition' ) }
-      group={ __( 'Modules' ) }
+      label={ __( 'Media Composition', '__plugin_txtd' ) }
+      group={ __( 'Modules', '__plugin_txtd' ) }
       order={ 10 }
       key={ 'media-composition-controls-section' }>
 
-      <ControlsTab label={ __( 'Presets' ) }>
+      <ControlsTab label={ __( 'Presets', '__plugin_txtd' ) }>
         <Notice
           key={ 'advanced-gallery-quick-start' }
           id={ 'novablocks-media-composition-quick-start' }
-          content={ <p><strong>Quick start:</strong> Set up your gallery layout using the presets list below and use the Customize tab to fine-tune the details</p> }
-          dismissLabel={ '✔ Ok, I got it!' }
+          content={ <p><strong>{__('Quick start:', '__plugin_txtd')}</strong> {__( 'Set up your gallery layout using the presets list below and use the Customize tab to fine-tune the details.', '__plugin_txtd' )}</p> }
+          dismissLabel={ __( '✔ Ok, I got it!', '__plugin_txtd' ) }
         />
         <PresetControl
           key={ 'advanced-gallery-style-preset' }
@@ -63,7 +63,7 @@ const MediaCompositionControls = props => {
         />
       </ControlsTab>
 
-      <ControlsTab label={ __( 'Customize' ) }>
+      <ControlsTab label={ __( 'Customize', '__plugin_txtd' ) }>
         <RangeControl
           key={ 'advanced-gallery-crop-style' }
           label={ __( 'Images Crop Style', '__plugin_txtd' ) }
@@ -77,8 +77,8 @@ const MediaCompositionControls = props => {
         />
       </ControlsTab>
 
-      <ControlsTab label={ __( 'Settings' ) }>
-        <ControlsGroup title={ __( 'Gallery' ) }>
+      <ControlsTab label={ __( 'Settings', '__plugin_txtd' ) }>
+        <ControlsGroup title={ __( 'Gallery', '__plugin_txtd' ) }>
           <RangeControl
             key={ 'advanced-gallery-size-contrast' }
             label={ __( 'Size Contrast', '__plugin_txtd' ) }
@@ -125,7 +125,7 @@ const MediaCompositionControls = props => {
             step={ 10 }
           />
         </ControlsGroup>
-        <ControlsGroup title={ __( 'Display' ) }>
+        <ControlsGroup title={ __( 'Display', '__plugin_txtd' ) }>
           <ImageResizingControls { ...props } />
           <RangeControl
             key={ 'advanced-gallery-image-position' }
@@ -177,12 +177,12 @@ const ImageResizingControls = ( props ) => {
       />
       <RadioControl
         key={ 'advanced-gallery-image-resizing' }
-        label={ 'Image Resizing' }
+        label={ __( 'Image Resizing', '__plugin_txtd' ) }
         selected={ imageResizing }
         onChange={ imageResizing => setAttributes( { imageResizing } ) }
         options={ [
-          { label: 'Stretch to fill the container', value: 'cropped' },
-          { label: 'Shrink to fit (no crop)', value: 'original' },
+          { label: __( 'Stretch to fill the container', '__plugin_txtd' ), value: 'cropped' },
+          { label: __( 'Shrink to fit (no crop)', '__plugin_txtd' ), value: 'original' },
         ] }
       />
     </Fragment>

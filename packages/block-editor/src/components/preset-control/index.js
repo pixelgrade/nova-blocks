@@ -72,7 +72,7 @@ const PresetControl = ( props ) => {
 						onClick={ () => {
 							setAttributes( randomizeAttributes() )
 						} }>
-						{ __( '💡 Surprise me!' ) }
+						{ __( '💡 Surprise me!', '__plugin_txtd' ) }
 					</Button>
 				</div>
 			}

@@ -5,7 +5,7 @@ import { ControlsGroup } from "../../../components";
 const CardElementsOrdering = ( props ) => {
 
   return (
-    <ControlsGroup title={ __( 'Card Elements Ordering' ) }>
+    <ControlsGroup title={ __( 'Card Elements Ordering', '__plugin_txtd' ) }>
 
     </ControlsGroup>
   )

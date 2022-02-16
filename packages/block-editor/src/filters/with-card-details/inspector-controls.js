@@ -18,8 +18,8 @@ const InspectorControls = ( props ) => {
   const { level } = attributes;
 
   return (
-    <ControlsSection id={ 'card-layout' } label={ __( 'Card Elements Details' ) }>
-      <ControlsTab label={ __( 'Customize' ) }>
+    <ControlsSection id={ 'card-layout' } label={ __( 'Card Elements Details', '__plugin_txtd' ) }>
+      <ControlsTab label={ __( 'Customize', '__plugin_txtd' ) }>
         <div className={ getControlsClasses( attributes, getLevelAttributes ) }>
           <PanelRow>
             <span>{ __( 'Title Starting Size', '__plugin_txtd' ) }</span>
@@ -35,7 +35,7 @@ const InspectorControls = ( props ) => {
           </PanelRow>
         </div>
       </ControlsTab>
-      <ControlsTab label={ __( 'Settings' ) }>
+      <ControlsTab label={ __( 'Settings', '__plugin_txtd' ) }>
         <CardDetailsContent { ...props } />
         <MetadataSource { ...props } />
         <MetadataPosition { ...props } />
@@ -46,7 +46,7 @@ const InspectorControls = ( props ) => {
 
 export const CardDetailsContent = withVisibility( 'card-details-content' )( props => {
   return (
-    <ControlsGroup title={ __( 'Content' ) }>
+    <ControlsGroup title={ __( 'Content', '__plugin_txtd' ) }>
       <CollectionTitleLevel { ...props } />
       <CardTitleLevel { ...props } />
     </ControlsGroup>

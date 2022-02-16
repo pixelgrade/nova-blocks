@@ -25,14 +25,18 @@ const ScrollingEffectPanel = ( props ) => {
 
   if ( supports?.novaBlocks?.scrollingEffect === true || supports?.novaBlocks?.scrollingEffect?.doppler === true ) {
     scrollingEffectOptions.push( {
-      label: __( 'Doppler by Pixelgrade ®' ),
+      label: __( 'Doppler by Pixelgrade ®', '__plugin_txtd' ),
       value: 'doppler'
     } );
   }
 
   return (
-    <ControlsSection id={ 'scrolling-effect' } label={ __( 'Scrolling Effect' ) } group={ __( 'Modules' ) } order={ 20 }>
-      <ControlsTab label={ __( 'Customize' ) }>
+    <ControlsSection
+      id={ 'scrolling-effect' }
+      label={ __( 'Scrolling Effect', '__plugin_txtd' ) }
+      group={ __( 'Modules', '__plugin_txtd' ) }
+      order={ 20 }>
+      <ControlsTab label={ __( 'Customize', '__plugin_txtd' ) }>
         <RadioControl
           key={ 'novablocks-scrolling-effect' }
           selected={ scrollingEffect }

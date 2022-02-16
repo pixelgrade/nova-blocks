@@ -103,11 +103,11 @@ const ShapeModelingCustomizeTab = props => {
   } = attributes;
 
   return (
-    <ControlsTab label={ __( 'Customize' ) }>
+    <ControlsTab label={ __( 'Customize', '__plugin_txtd' ) }>
       <div className={ getControlsClasses( attributes, getShapeStyleAttributes ) }>
         <RadioControl
           key={ 'blobs-mixing-style' }
-          label={ 'Shape Usage Style' }
+          label={ 'Shape Usage Style', '__plugin_txtd' }
           selected={ blobsMixStyle }
           onChange={ blobsMixStyle => {
             setAttributes( getShapeStyleAttributes( { ...attributes, blobsMixStyle } ) );

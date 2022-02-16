@@ -27,7 +27,7 @@ const BlockHeaderControls = ( props ) => {
   }
 
   return (
-    <ControlsGroup title={ __( 'Block Header' ) }>
+    <ControlsGroup title={ __( 'Block Header', '__plugin_txtd' ) }>
       <RangeControl
         label={ __( `Header Placement Area`, '__plugin_txtd' ) }
         value={ headerPosition }
@@ -44,7 +44,7 @@ const BlockHeaderControls = ( props ) => {
             const newAttributes = getAttributesByHeaderColumn( { ...attributes, headerColumn } );
             setAttributes( newAttributes );
           } }
-          label={ __( 'Header Item Location' ) }
+          label={ __( 'Header Item Location', '__plugin_txtd' ) }
           min={ 0 }
           max={ headerOptimalPositions.length - 1 }
         />

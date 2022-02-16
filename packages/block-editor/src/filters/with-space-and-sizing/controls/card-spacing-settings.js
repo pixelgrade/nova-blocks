@@ -17,7 +17,7 @@ const BlockSpacing = props => {
   } );
 
   return (
-    <ControlsGroup title={ __( 'Block Spacing' ) }>
+    <ControlsGroup title={ __( 'Block Spacing', '__plugin_txtd' ) }>
       <BlockTopSpacing { ...newProps } />
       <BlockBottomSpacing { ...newProps } />
       <ContentTopSpacing { ...newProps } />
@@ -36,7 +36,7 @@ const BlockTopSpacing = withVisibility( 'block-top-spacing' )( props => {
     <RangeControl
       value={ blockTopSpacing }
       onChange={ ( blockTopSpacing ) => setAttributes( { blockTopSpacing } ) }
-      label={ __( 'Block Top Spacing' ) }
+      label={ __( 'Block Top Spacing', '__plugin_txtd' ) }
       min={ blockSpacingMin }
       max={ blockSpacingMax }
       disabled={ isDisabled }
@@ -52,7 +52,7 @@ const BlockBottomSpacing = withVisibility( 'block-bottom-spacing' )( props => {
     <RangeControl
       value={ blockBottomSpacing }
       onChange={ ( blockBottomSpacing ) => setAttributes( { blockBottomSpacing } ) }
-      label={ __( 'Block Bottom Spacing' ) }
+      label={ __( 'Block Bottom Spacing', '__plugin_txtd' ) }
       min={ blockSpacingMin }
       max={ blockSpacingMax }
     />
@@ -67,7 +67,7 @@ const ContentTopSpacing = withVisibility( 'content-top-spacing' )( props => {
     <RangeControl
       value={ emphasisTopSpacing }
       onChange={ ( emphasisTopSpacing ) => setAttributes( { emphasisTopSpacing } ) }
-      label={ __( 'Content Top Spacing' ) }
+      label={ __( 'Content Top Spacing', '__plugin_txtd' ) }
       min={ contentSpacingMin }
       max={ contentSpacingMax }
     />
@@ -82,7 +82,7 @@ const ContentBottomSpacing = withVisibility( 'content-bottom-spacing' )( props =
     <RangeControl
       value={ emphasisBottomSpacing }
       onChange={ ( emphasisBottomSpacing ) => setAttributes( { emphasisBottomSpacing } ) }
-      label={ __( 'Content Bottom Spacing' ) }
+      label={ __( 'Content Bottom Spacing', '__plugin_txtd' ) }
       min={ contentSpacingMin }
       max={ contentSpacingMax }
     />

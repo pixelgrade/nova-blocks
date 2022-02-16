@@ -52,11 +52,11 @@ const withInspectorControl = createHigherOrderComponent( ( BlockEdit ) => {
         <BlockEdit { ...props } />
         <InspectorControls>
           <PanelBody
-            title={ __( 'Select Posts', 'ph-blocks' ) }
+            title={ __( 'Select Posts', '__plugin_txtd' ) }
             initialOpen={ true }
           >
             <TextControl
-              label={ __( 'Posts', 'ph-blocks' ) }
+              label={ __( 'Posts',  '__plugin_txtd' ) }
               value={ include.join() }
               onChange={ ( value ) => {
                 props.setAttributes(

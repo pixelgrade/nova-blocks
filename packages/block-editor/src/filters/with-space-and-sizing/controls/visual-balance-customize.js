@@ -24,7 +24,7 @@ const VisualBalanceCustomize = ( props ) => {
   } = attributes;
 
   return (
-    <ControlsGroup title={ __( 'Emphasis by Balance' ) } key={ 'media-card-visual-balance-customize-1' }>
+    <ControlsGroup title={ __( 'Emphasis by Balance', '__plugin_txtd' ) } key={ 'media-card-visual-balance-customize-1' }>
       <div className={ getControlsClasses( attributes, getBalanceAttributes ) }>
         <RangeControl
           value={ balanceEmphasis }
@@ -42,8 +42,8 @@ const VisualBalanceCustomize = ( props ) => {
             setAttributes( getBalanceAttributes( { ...attributes, balanceFocalPoint } ) );
           } }
           options={ [
-            { label: __( 'Content Area' ), value: 'content' },
-            { label: __( 'Media / Gallery' ), value: 'media' },
+            { label: __( 'Content Area', '__plugin_txtd' ), value: 'content' },
+            { label: __( 'Media / Gallery', '__plugin_txtd' ), value: 'media' },
           ] }
         />
       </div>

@@ -30,7 +30,7 @@ const Controls = ( props ) => {
       order={ 20 }>
       {
         'parametric' === layoutStyle &&
-        <ControlsTab label={ __( 'Presets' ) }>
+        <ControlsTab label={ __( 'Presets', '__plugin_txtd' ) }>
           <PresetControl
             label={ __( 'Choose a layout preset:', '__plugin_txtd' ) }
             options={ presets }
@@ -39,7 +39,7 @@ const Controls = ( props ) => {
           />
         </ControlsTab>
       }
-      <ControlsTab label={ __( 'Settings' ) }>
+      <ControlsTab label={ __( 'Settings', '__plugin_txtd' ) }>
         <CollectionLayoutStyleControl { ...props } />
         <ParametricLayoutControls { ...props } />
         <ClassicLayoutControls { ...props } />

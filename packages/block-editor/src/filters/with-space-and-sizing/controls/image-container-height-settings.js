@@ -22,7 +22,7 @@ const ImageContainerHeightSettings = ( props ) => {
   return (
     <ControlsGroup>
       <ToggleControl
-        label={ __( 'Enable Image Container Editing' ) }
+        label={ __( 'Enable Image Container Editing', '__plugin_txtd' ) }
         checked={ thumbnailAspectRatioString !== 'auto' }
         onChange={ newValue => {
           let currentOrientation = thumbnailAspectRatio < 50 ? 'landscape' : 'portrait';
@@ -49,12 +49,12 @@ const ImageContainerHeightSettings = ( props ) => {
       {
         thumbnailAspectRatioString !== 'auto' &&
           <RadioControl
-            label={ __( 'Image resizing' ) }
+            label={ __( 'Image resizing', '__plugin_txtd' ) }
             selected={ imageResizing }
             onChange={ imageResizing => { setAttributes( { imageResizing } ) } }
             options={ [
-              { label: 'Stretch to fill the container', value: 'cropped' },
-              { label: 'Shrink to fit (no crop)', value: 'original' },
+              { label: __( 'Stretch to fill the container', '__plugin_txtd' ), value: 'cropped' },
+              { label: __( 'Shrink to fit (no crop)', '__plugin_txtd' ), value: 'original' },
             ] }
           />
       }

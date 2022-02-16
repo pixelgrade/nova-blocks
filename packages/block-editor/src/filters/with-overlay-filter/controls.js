@@ -31,8 +31,8 @@ const OverlayFilterControls = ( props ) => {
   const { overlayFilterStrength } = attributes;
 
   return (
-    <ControlsSection id={ 'overlay-filter' } label={ __( 'Overlay Filter' ) } group={ __( 'Modules' ) } order={ 40 }>
-      <ControlsTab label={ __( 'Settings' ) }>
+    <ControlsSection id={ 'overlay-filter' } label={ __( 'Overlay Filter', '__plugin_txtd' ) } group={ __( 'Modules', '__plugin_txtd' ) } order={ 40 }>
+      <ControlsTab label={ __( 'Settings', '__plugin_txtd' ) }>
         <ControlsGroup>
           <OverlayType { ...props } />
         </ControlsGroup>
@@ -87,8 +87,8 @@ const OverlayType = ( props ) => {
         }
       }
       options={ [
-        { label: __( 'Unitone' ), value: 'unitone' },
-        { label: __( 'Duotone' ), value: 'duotone' }
+        { label: __( 'Unitone', '__plugin_txtd' ), value: 'unitone' },
+        { label: __( 'Duotone', '__plugin_txtd' ), value: 'duotone' }
       ] }
     />
   )

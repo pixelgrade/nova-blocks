@@ -18,7 +18,7 @@ const MiscellaneousParametersControls = ( props ) => {
   } = attributes;
 
   return (
-    <ControlsGroup title={ __( 'Miscellanous Parameters' ) }>
+    <ControlsGroup title={ __( 'Miscellanous Parameters', '__plugin_txtd' ) }>
       <ToggleControl
         label={ __( 'Boost Featured Area Emphasis', '__plugin_txtd' ) }
         checked={ boostfeature }

@@ -29,45 +29,45 @@ const OpenTableInspectorControls = function( props ) {
 	return (
 		<Fragment>
 
-			<ControlsSection id={ 'setup' } label={ __( 'Setup' ) }>
-				<ControlsTab label={ __( 'Settings' ) }>
+			<ControlsSection id={ 'setup' } label={ __( 'Setup', '__plugin_txtd' ) }>
+				<ControlsTab label={ __( 'Settings', '__plugin_txtd' ) }>
 					<TextControl
 						key={ 'opentable-restaurant-id-controls' }
-						label={ __( 'Restaurant ID' ) }
-						placeholder={ __( '1' ) }
-						help={ __( 'You can find your restaurant ID on the OpenTable website.' ) }
+						label={ __( 'Restaurant ID', '__plugin_txtd' ) }
+						placeholder={ __( '1', '__plugin_txtd' ) }
+						help={ __( 'You can find your restaurant ID on the OpenTable website.', '__plugin_txtd' ) }
 						type="number"
 						value={ restaurantId }
 						onChange={ ( restaurantId ) => setAttributes( { restaurantId: restaurantId } ) }
 					/>
 					<SelectControl
 						key={ 'opentable-language-controls' }
-						label={ __( 'Language' ) }
+						label={ __( 'Language', '__plugin_txtd' ) }
 						value={ language }
 						options={ [
-							{ label: 'English-EN', value: 'en-US' },
-							{ label: 'Français-CA', value: 'fr-CA' },
-							{ label: 'Deutsch-DE', value: 'de-DE' },
-							{ label: 'Español-MX', value: 'es-MX' },
-							{ label: '日本語-JP', value: 'ja-JP' },
-							{ label: 'Nederlands-NL', value: 'nl-NL' },
-							{ label: 'Italiano-IT', value: 'it-IT' },
+							{ label: __( 'English-EN', '__plugin_txtd'), value: 'en-US' },
+							{ label: __( 'French-CA', '__plugin_txtd' ), value: 'fr-CA' },
+							{ label: __( 'Deutsch-DE', '__plugin_txtd' ), value: 'de-DE' },
+							{ label: __( 'Spanish-MX', '__plugin_txtd' ), value: 'es-MX' },
+							{ label: __( 'Japanese-JP', '__plugin_txtd' ), value: 'ja-JP' },
+							{ label: __( 'Dutch-NL', '__plugin_txtd' ), value: 'nl-NL' },
+							{ label: __( 'Italian-IT', '__plugin_txtd' ), value: 'it-IT' },
 						] }
 						onChange={ ( nextLanguage ) => setAttributes( { language: nextLanguage } ) }
 					/>
 				</ControlsTab>
 			</ControlsSection>
 
-			<ControlsSection id={ 'layout' } label={ __( 'Layout' ) }>
-				<ControlsTab label={ __( 'Customize' ) }>
+			<ControlsSection id={ 'layout' } label={ __( 'Layout', '__plugin_txtd' ) }>
+				<ControlsTab label={ __( 'Customize', '__plugin_txtd' ) }>
 					<RadioControl
 						key={ 'opentable-layout-controls' }
 						label={ __( 'Layout', '__plugin_txtd' ) }
 						value={ layoutForm }
 						selected={ layoutForm }
 						options={ [
-							{ label: 'Horizontal', value: 'wide' },
-							{ label: 'Vertical', value: 'standard' },
+							{ label: __( 'Horizontal', '__plugin_txtd' ), value: 'wide' },
+							{ label: __( 'Vertical', '__plugin_txtd' ), value: 'standard' },
 						] }
 						onChange={ ( nextLayout ) => setAttributes( { layoutForm: nextLayout } ) }
 					/>

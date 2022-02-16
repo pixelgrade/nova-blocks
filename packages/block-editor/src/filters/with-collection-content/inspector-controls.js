@@ -17,18 +17,18 @@ const Controls = ( props ) => {
   return (
     <ControlsSection
       id={ 'collection-content' }
-      label={ __( 'Collection Content' ) }
-      group={ __( 'Block Anatomy' ) }
+      label={ __( 'Collection Content', '__plugin_txtd' ) }
+      group={ __( 'Block Anatomy', '__plugin_txtd' ) }
       order={ 10 }>
-      <ControlsTab label={ __( 'Settings' ) }>
+      <ControlsTab label={ __( 'Settings', '__plugin_txtd' ) }>
         <SelectControl
           key={ 'collection-content-type' }
           label={ __( 'Content Type', '__plugin_txtd' ) }
           value={ contentType }
           options={ [
-            { label: 'Automatic Blocks', value: 'auto' },
-            { label: 'Blocks with pre-defined fields', value: 'fields' },
-            { label: 'Custom Blocks', value: 'custom' },
+            { label: __( 'Automatic Blocks', '__plugin_txtd' ), value: 'auto' },
+            { label: __( 'Blocks with pre-defined fields', '__plugin_txtd' ), value: 'fields' },
+            { label: __( 'Custom Blocks', '__plugin_txtd' ), value: 'custom' },
           ] }
           onChange={ contentType => {
             setAttributes( { contentType } );

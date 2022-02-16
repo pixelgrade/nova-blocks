@@ -49,8 +49,8 @@ class ButtonInspectorControls extends Component {
 
 		return (
 			<Fragment>
-				<ControlsSection id={ 'map-design' } label={ __( 'Map Design' ) }>
-					<ControlsTab label={ __( 'Customize' ) }>
+				<ControlsSection id={ 'map-design' } label={ __( 'Map Design', '__plugin_txtd' ) }>
+					<ControlsTab label={ __( 'Customize', '__plugin_txtd' ) }>
 						<MapStyleSelectControl
 							{ ...this.props }
 							key={ 'google-map-style-controls' }
@@ -69,7 +69,7 @@ class ButtonInspectorControls extends Component {
 							} }
 						/>
 					</ControlsTab>
-					<ControlsTab label={ __( 'Settings' ) }>
+					<ControlsTab label={ __( 'Settings', '__plugin_txtd' ) }>
 						<ToggleControl
 							key={ 'google-map-show-venues-control' }
 							label={ __( 'Show Nearby Venues', '__plugin_txtd' ) }
@@ -98,8 +98,8 @@ class ButtonInspectorControls extends Component {
 						/>
 					</ControlsTab>
 				</ControlsSection>
-				<ControlsSection id={ 'setup' } label={ __( 'Setup' ) }>
-					<ControlsTab label={ __( 'Settings' ) }>
+				<ControlsSection id={ 'setup' } label={ __( 'Setup', '__plugin_txtd' ) }>
+					<ControlsTab label={ __( 'Settings', '__plugin_txtd' ) }>
 						<ApiKeyPanelBody
 							key={ 'google-map-api-key-controls' }
 							{ ...this.props }

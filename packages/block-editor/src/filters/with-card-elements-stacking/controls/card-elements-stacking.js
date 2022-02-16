@@ -10,7 +10,7 @@ const CardElementsStacking = ( props ) => {
   const { name } = props;
 
   return (
-    <ControlsGroup title={ __( 'Card Elements Stacking Style' ) }>
+    <ControlsGroup title={ __( 'Card Elements Stacking Style', '__plugin_txtd' ) }>
       {
         name === 'novablocks/supernova' ?
           <CardLayout { ...props } /> :

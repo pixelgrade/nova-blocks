@@ -63,7 +63,7 @@ const ControlsSectionsComponent = ( props ) => {
 			<Drawers onOpen={ onOpen } onClose={ onClose }>
 				<DrawerListBefore>
 					<div className="novablocks-sections__header">
-						<div className="novablocks-sections__title">{ __( 'Design Customization' ) }</div>
+						<div className="novablocks-sections__title">{ __( 'Design Customization', '__plugin_txtd' ) }</div>
 						<Cube />
 					</div>
 				</DrawerListBefore>

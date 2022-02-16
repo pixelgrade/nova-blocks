@@ -18,11 +18,11 @@ import { useResizeObserver } from "../../index";
 
 const getTabAccentColor = ( label ) => {
 
-	if ( __( 'Presets' ) === label ) {
+	if ( __( 'Presets', '__plugin_txtd' ) === label ) {
 		return ACCENT_COLORS[0];
 	}
 
-	if ( __( 'Customize' ) === label ) {
+	if ( __( 'Customize', '__plugin_txtd' ) === label ) {
 		return ACCENT_COLORS[1];
 	}
 

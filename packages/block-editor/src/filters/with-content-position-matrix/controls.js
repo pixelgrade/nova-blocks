@@ -22,7 +22,7 @@ const Controls = ( props ) => {
   return (
     <BlockControls group={ "block" }>
       <BlockAlignmentMatrixControl
-        label={ __( 'Change content position' ) }
+        label={ __( 'Change content position', '__plugin_txtd' ) }
         value={ contentPosition }
         onChange={ ( nextPosition ) =>
           setAttributes( { contentPosition: nextPosition } )
@@ -48,7 +48,7 @@ const ControlsFallback = ( props ) => {
   return (
     <BlockControls group="block">
       <BlockAlignmentMatrixToolbar
-        label={ __( 'Change content position' ) }
+        label={ __( 'Change content position', '__plugin_txtd' ) }
         value={ contentPosition }
         onChange={ ( nextPosition ) =>
           setAttributes( { contentPosition: nextPosition } )

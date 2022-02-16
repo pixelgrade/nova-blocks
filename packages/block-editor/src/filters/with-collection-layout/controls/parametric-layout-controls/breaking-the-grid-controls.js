@@ -43,7 +43,7 @@ const BreakingTheGridControls = ( props ) => {
   }, [ normalizeAttributes ] );
 
   return (
-    <ControlsGroup title={ __( 'Breaking the Grid' ) }>
+    <ControlsGroup title={ __( 'Breaking the Grid', '__plugin_txtd' ) }>
       <RangeControl
         label={ __( `Featured Area Size`, '__plugin_txtd' ) }
         value={ featuresize }

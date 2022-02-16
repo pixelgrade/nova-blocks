@@ -13,7 +13,7 @@ const MetadataPosition = props => {
   } = props;
 
   return (
-    <ControlsGroup title={ __( 'Metadata Position' ) }>
+    <ControlsGroup title={ __( 'Metadata Position', '__plugin_txtd' ) }>
       <RadioControl
         key={ 'collection-image-resizing' }
         selected={ metadataPosition }
@@ -21,9 +21,9 @@ const MetadataPosition = props => {
           setAttributes( { metadataPosition } )
         } }
         options={ [
-          { label: 'Above Title', value: 'above-title' },
-          { label: 'Below Title', value: 'below-title' },
-          { label: 'Split (Above Title / Below Content)', value: 'split' },
+          { label: __( 'Above Title', '__plugin_txtd' ), value: 'above-title' },
+          { label: __( 'Below Title', '__plugin_txtd' ), value: 'below-title' },
+          { label: __( 'Split (Above Title / Below Content)', '__plugin_txtd' ), value: 'split' },
         ] }
       />
     </ControlsGroup>

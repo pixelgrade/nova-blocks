@@ -18,7 +18,7 @@ const ItemsRegularityControls = props => {
   } = attributes;
 
   return (
-    <ControlsGroup title={ __( 'Items Regularity' ) }>
+    <ControlsGroup title={ __( 'Items Regularity', '__plugin_txtd' ) }>
       <RangeControl
         label={ __( `Start of Image Variance`, '__plugin_txtd' ) }
         value={ imageweightleft }

@@ -24,7 +24,7 @@ const DebugControls = ( props ) => {
   } = props;
 
   return (
-    <ControlsGroup title={ __( 'Debug Parameters' ) }>
+    <ControlsGroup title={ __( 'Debug Parameters', '__plugin_txtd' ) }>
       <ToggleControl
         label={ __( 'Display Preview Scale', '__plugin_txtd' ) }
         checked={ toggleScale }

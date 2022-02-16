@@ -12,7 +12,7 @@ const DebugControls = props => {
   }
 
   return (
-    <ControlsGroup title={ __( 'Debug' ) }>
+    <ControlsGroup title={ __( 'Debug', '__plugin_txtd' ) }>
       <ToggleControl
         label={ __( 'Enable Shape Debug', '__plugin_txtd' ) }
         checked={ enableShapeDebug }

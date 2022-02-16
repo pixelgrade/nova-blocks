@@ -14,7 +14,7 @@ const MiscellaneousControls = ( props ) => {
   return (
     <Fragment>
       { ! disableFunctionalColors &&
-        <ControlsGroup title={ __( 'Miscellanous' ) } className={ 'novablocks-controls-group--colors-miscellanous-controls' }>
+        <ControlsGroup title={ __( 'Miscellaneous', '__plugin_txtd' ) } className={ 'novablocks-controls-group--colors-miscellanous-controls' }>
           <FunctionalColorsToggleControl { ...props } />
         </ControlsGroup>
       }

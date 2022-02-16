@@ -38,7 +38,7 @@ const HeaderInspectorControls = ( props ) => {
       value: row.clientId
     }
   });
-  
+
   const stickyRow = rows.find( block => {
     return block.attributes.isSticky;
   } );
@@ -48,17 +48,17 @@ const HeaderInspectorControls = ( props ) => {
   const customizerHeaderLink = novablocks_urls.novablocks_customizer_header_link;
 
   return (
-    <ControlsSection id={ 'layout' } label={ __( 'Layout' ) }>
-      <ControlsTab label={ __( 'Settings' ) }>
+    <ControlsSection id={ 'layout' } label={ __( 'Layout', '__plugin_txtd' ) }>
+      <ControlsTab label={ __( 'Settings', '__plugin_txtd' ) }>
         <Notice
           key={ 'header-position-quick-start' }
           id={ 'novablocks-header-position-quick-start' }
-          content={ <p><strong>Quick start:</strong> Set up your header layout using the options below and go to <a href={customizerHeaderLink}>Customizer</a> to change the logo and menu content, or fine-tune styling details. </p> }
+          content={ <p><strong>{__( 'Quick start:', '__plugin_txtd' )}</strong> Set up your header layout using the options below and go to the <a href={customizerHeaderLink}>Customizer</a> to change the logo and menu content, or fine-tune styling details. </p> }
         />
 
         <RadioControl
           key={ 'header-position-scroll' }
-          label={ 'Header Position on Scroll' }
+          label={ __( 'Header Position on Scroll', '__plugin_txtd' ) }
           selected={ !! stickyRow ? 'sticky' : 'static' }
           onChange={ value => {
             if ( value === 'sticky' ) {
@@ -69,8 +69,8 @@ const HeaderInspectorControls = ( props ) => {
             }
           }}
           options={ [
-            { label: 'Static', value: 'static' },
-            { label: 'Sticky (fixed)', value: 'sticky' },
+            { label: __( 'Static', '__plugin_txtd' ), value: 'static' },
+            { label: __( 'Sticky (fixed)', '__plugin_txtd' ), value: 'sticky' },
           ] }
         />
 

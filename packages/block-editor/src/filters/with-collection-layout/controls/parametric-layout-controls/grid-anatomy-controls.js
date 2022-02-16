@@ -18,7 +18,7 @@ const GridAnatomyControls = ( props ) => {
   } = attributes;
 
   return (
-    <ControlsGroup title={ __( 'Grid Anatomy' ) }>
+    <ControlsGroup title={ __( 'Grid Anatomy', '__plugin_txtd' ) }>
       <RangeControl
         label={ __( `Columns`, '__plugin_txtd' ) }
         value={ gridcolumns }

@@ -21,38 +21,38 @@ const SidecarInspectorControls = ( props ) => {
 
   const htmlElementMessages = {
     header: __(
-      'The <header> element should represent introductory content, typically a group of introductory or navigational aids.'
+      'The <header> element should represent introductory content, typically a group of introductory or navigational aids.', '__plugin_txtd'
     ),
     main: __(
-      'The <main> element should be used for the primary content of your document only. '
+      'The <main> element should be used for the primary content of your document only. ', '__plugin_txtd'
     ),
     section: __(
-      'The <section> element should represent a standalone portion of the document that can\'t be better represented by another element.'
+      'The <section> element should represent a standalone portion of the document that can\'t be better represented by another element.', '__plugin_txtd'
     ),
     article: __(
-      'The <article> element should represent a self contained, syndicatable portion of the document.'
+      'The <article> element should represent a self contained, syndicatable portion of the document.', '__plugin_txtd'
     ),
     aside: __(
-      'The <aside> element should represent a portion of a document whose content is only indirectly related to the document\'s main content.'
+      'The <aside> element should represent a portion of a document whose content is only indirectly related to the document\'s main content.', '__plugin_txtd'
     ),
     footer: __(
-      'The <footer> element should represent a footer for its nearest sectioning element (e.g.: <section>, <article>, <main> etc.).'
+      'The <footer> element should represent a footer for its nearest sectioning element (e.g.: <section>, <article>, <main> etc.).', '__plugin_txtd'
     ),
   };
 
   return (
     <>
       <InspectorControls>
-        <PanelBody title={__( 'Settings' )}>
+        <PanelBody title={__( 'Settings', '__plugin_txtd' )}>
           <RadioControl
             key={'sidecar-sidebar-controls'}
             label={__( 'Sidebar Size', '__plugin_txtd' )}
             selected={sidebarWidth}
             options={
               [
-                { label: 'Small', value: 'small' },
-                { label: 'Medium', value: 'medium' },
-                { label: 'Large', value: 'large' },
+                { label: __( 'Small', '__plugin_txtd' ), value: 'small' },
+                { label: __( 'Medium', '__plugin_txtd' ), value: 'medium' },
+                { label: __( 'Large', '__plugin_txtd' ), value: 'large' },
               ]
             }
             onChange={( nextSidebarWidth ) => {
@@ -66,8 +66,8 @@ const SidecarInspectorControls = ( props ) => {
             selected={sidebarPosition}
             options={
               [
-                { label: 'Show sidebar on left', value: 'left' },
-                { label: 'Show sidebar on right', value: 'right' }
+                { label: __( 'Show sidebar on left', '__plugin_txtd' ), value: 'left' },
+                { label: __( 'Show sidebar on right', '__plugin_txtd' ), value: 'right' }
               ]
             }
             onChange={( nextSidebarPosition ) => {
@@ -90,9 +90,9 @@ const SidecarInspectorControls = ( props ) => {
 
       <InspectorControls __experimentalGroup="advanced">
         <SelectControl
-          label={__( 'HTML element' )}
+          label={__( 'HTML element', '__plugin_txtd' )}
           options={[
-            { label: __( 'Default (<div>)' ), value: 'div' },
+            { label: __( 'Default (<div>)', '__plugin_txtd' ), value: 'div' },
             { label: '<header>', value: 'header' },
             { label: '<main>', value: 'main' },
             { label: '<section>', value: 'section' },

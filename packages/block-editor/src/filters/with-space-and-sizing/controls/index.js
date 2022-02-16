@@ -21,8 +21,8 @@ import ContentToMediaSpacing from "./content-to-media-spacing";
 const SpaceAndSizingControls = ( props ) => {
 
   return (
-    <ControlsSection id={ 'space-and-sizing' } label={ __( 'Space and Sizing' ) } order={ 20 }>
-      <ControlsTab label={ __( 'Presets' ) }>
+    <ControlsSection id={ 'space-and-sizing' } label={ __( 'Space and Sizing', '__plugin_txtd' ) } order={ 20 }>
+      <ControlsTab label={ __( 'Presets', '__plugin_txtd' ) }>
         <SpaceAndSizingPresets { ...props } />
       </ControlsTab>
       <ControlsTab label={ __( 'Customize', '__plugin_txtd' ) }>
@@ -68,7 +68,7 @@ const BlockSpacingModifier = withVisibility( 'spacing-modifier' )( props => {
   const { spacingModifier } = attributes;
 
   return (
-    <ControlsGroup title={ __( 'Spacing Modifier' ) }>
+    <ControlsGroup title={ __( 'Spacing Modifier', '__plugin_txtd' ) }>
       <RangeControl
         value={ spacingModifier }
         onChange={ ( spacingModifier ) => setAttributes( { spacingModifier } ) }

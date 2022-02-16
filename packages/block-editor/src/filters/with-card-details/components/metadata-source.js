@@ -19,20 +19,20 @@ const MetadataSource = ( props ) => {
   }
 
   const metaSourceOptions = [
-    { label: 'None', value: 'none' },
-    { label: 'Author', value: 'author' },
-    { label: 'Category', value: 'category' },
-    { label: 'Comments', value: 'comments' },
-    { label: 'Date', value: 'date' },
-    { label: 'Tags', value: 'tags' },
-    { label: 'Reading time', value:'reading-time'}
+    { label: __( 'None', '__plugin_txtd' ), value: 'none' },
+    { label: __( 'Author', '__plugin_txtd' ), value: 'author' },
+    { label: __( 'Category', '__plugin_txtd' ), value: 'category' },
+    { label: __( 'Comments', '__plugin_txtd' ), value: 'comments' },
+    { label: __( 'Date', '__plugin_txtd' ), value: 'date' },
+    { label: __( 'Tags', '__plugin_txtd' ), value: 'tags' },
+    { label: __( 'Reading time', '__plugin_txtd' ), value:'reading-time'}
   ];
 
   return (
     <ControlsGroup title={ __( 'Additional Information', '__plugin_txtd' ) }>
       <SelectControl
         key={ 'primary-metadata-source' }
-        label={ __( 'Primary Metadata' ) }
+        label={ __( 'Primary Metadata', '__plugin_txtd' ) }
         value={ primaryMetadata }
         onChange={ primaryMetadata => {
           setAttributes( { primaryMetadata } )
@@ -41,7 +41,7 @@ const MetadataSource = ( props ) => {
       />
       <SelectControl
         key={ 'secondary-metadata-source' }
-        label={ __( 'Secondary Metadata' ) }
+        label={ __( 'Secondary Metadata', '__plugin_txtd' ) }
         value={ secondaryMetadata }
         onChange={ secondaryMetadata => {
           setAttributes( { secondaryMetadata } )

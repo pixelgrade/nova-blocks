@@ -159,7 +159,7 @@ class Map extends Component {
 	}
 
 	render() {
-		return <div className="novablocks-map__map" id={ `novablocks-google-map-${ this.props.clientId }` } style={ this.props.doppler.style }></div>;
+		return <div className="novablocks-map__map" id={`novablocks-google-map-${this.props.clientId}`} style={this.props.doppler.style}/>;
 	}
 }
 
@@ -181,12 +181,12 @@ const MapWrapper = ( Map ) => {
 						<input
 							type="text"
 							id={ `novablocks-google-map-search-input-${ props.clientId }` }
-							placeholder={ __( 'Enter an address to drop a pin on this map' ) }
+							placeholder={ __( 'Enter an address to drop a pin on this map', '__plugin_txtd' ) }
 						/>
 					</Placeholder>
 				</div>
 				<div className="novablocks-map__map-container">
-          <Map { ...otherProps }></Map>
+          <Map {...otherProps}/>
 				</div>
 			</div>
 		);

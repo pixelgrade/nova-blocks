@@ -66,7 +66,7 @@ const ShapePropsControls = props => {
             newAttributes[ `${ prefix }Sides` ] = sides;
             setAttributes( newAttributes );
           } }
-          label={ __( 'Sides' ) }
+          label={ __( 'Sides', '__plugin_txtd' ) }
           min={ 3 }
           max={ 8 }
           step={ 1 }
@@ -80,7 +80,7 @@ const ShapePropsControls = props => {
             newAttributes[ `${ prefix }PatternSeed` ] = preset;
             setAttributes( newAttributes );
           } }
-          label={ __( 'Pattern Seed' ) }
+          label={ __( 'Pattern Seed', '__plugin_txtd' ) }
           min={ 0 }
           max={ 100 }
           step={ 10 }
@@ -93,7 +93,7 @@ const ShapePropsControls = props => {
           newAttributes[ `${ prefix }Complexity` ] = complexity;
           setAttributes( newAttributes );
         } }
-        label={ __( 'Variation' ) }
+        label={ __( 'Variation', '__plugin_txtd' ) }
         min={ 0 }
         max={ 100 }
         step={ 10 }
@@ -105,7 +105,7 @@ const ShapePropsControls = props => {
           newAttributes[ `${ prefix }Smoothness` ] = smoothness;
           setAttributes( newAttributes );
         } }
-        label={ __( 'Smoothness' ) }
+        label={ __( 'Smoothness', '__plugin_txtd' ) }
         min={ 0 }
         max={ 100 }
         step={ 10 }
@@ -118,7 +118,7 @@ const ShapePropsControls = props => {
             newAttributes[ `${ prefix }Rotation` ] = rotation;
             setAttributes( newAttributes );
           } }
-          label={ __( 'Rotation' ) }
+          label={ __( 'Rotation', '__plugin_txtd' ) }
           min={ 0 }
           max={ 100 }
           step={ 10 }

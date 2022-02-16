@@ -26,23 +26,23 @@ const CarouselLayoutControls = ( props ) => {
 
   return (
     <Fragment>
-      <ControlsGroup title={ __( 'Cards Count' ) }>
+      <ControlsGroup title={ __( 'Cards Count', '__plugin_txtd' ) }>
         <PostsCountControl { ...props } />
         { carouselLayout === 'fixed' && <ItemsPerRowControl { ...props } /> }
         <ItemsGapControls { ...props } />
       </ControlsGroup>
-      <ControlsGroup title={ __( 'Layout' ) }>
+      <ControlsGroup title={ __( 'Layout', '__plugin_txtd' ) }>
         <RadioControl
           key={ 'carousel-layout' }
-          label={ __( 'Items Layout' ) }
+          label={ __( 'Items Layout', '__plugin_txtd' ) }
           selected={ carouselLayout }
           onChange={ carouselLayout => {
             setAttributes( { carouselLayout } )
           } }
           options={ [
-            { label: 'Fixed Width', value: 'fixed' },
-            { label: 'Variable Width', value: 'variable' },
-            { label: 'Content Width', value: 'content' },
+            { label: __( 'Fixed Width', '__plugin_txtd' ), value: 'fixed' },
+            { label: __( 'Variable Width', '__plugin_txtd' ), value: 'variable' },
+            { label: __( 'Content Width', '__plugin_txtd' ), value: 'content' },
           ] }
         />
       </ControlsGroup>

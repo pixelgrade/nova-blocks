@@ -13,16 +13,16 @@ const toggles = services.map( service => {
 } );
 
 const sectionToggles = [ {
-  label: __( 'Copy Link' ),
+  label: __( 'Copy Link', '__plugin_txtd' ),
   attribute: 'showCopy'
 }, {
-  label: __( 'Share Privately' ),
+  label: __( 'Share Privately', '__plugin_txtd' ),
   attribute: 'showSharePrivately'
 }, {
-  label: __( 'Social Icons' ),
+  label: __( 'Social Icons', '__plugin_txtd' ),
   attribute: 'showSocialIcons'
 }, {
-  label: __( 'Show Print' ),
+  label: __( 'Show Print', '__plugin_txtd' ),
   attribute: 'showShareInPerson'
 } ];
 
@@ -39,8 +39,8 @@ const Controls = ( props ) => {
   } = attributes;
 
   return (
-    <ControlsSection id={ 'display' } label={ __( 'Display' ) }>
-      <ControlsTab label={ __( 'Settings' ) }>
+    <ControlsSection id={ 'display' } label={ __( 'Display', '__plugin_txtd' ) }>
+      <ControlsTab label={ __( 'Settings', '__plugin_txtd' ) }>
         <HeadingToolbar minLevel={ 2 } maxLevel={ 5 } selectedLevel={ headingLevel } onChange={ ( newLevel ) => setAttributes( { headingLevel: newLevel } ) } />
         <ControlsGroup title={ __( 'Set up sections for this block', '__plugin_txtd' ) }>
           <ToggleGroup

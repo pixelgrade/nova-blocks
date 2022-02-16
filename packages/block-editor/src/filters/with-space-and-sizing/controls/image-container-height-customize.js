@@ -18,7 +18,7 @@ const ImageContainerHeightCustomize = ( props ) => {
   } = attributes;
 
   return (
-    <ControlsGroup title={ __( 'Thumbnail Aspect Ratio' ) }>
+    <ControlsGroup title={ __( 'Thumbnail Aspect Ratio', '__plugin_txtd' ) }>
 
       <div className={ getControlsClasses( attributes, getAspectRatioAttributes ) }>
         <RadioControl
@@ -41,9 +41,9 @@ const ImageContainerHeightCustomize = ( props ) => {
             } );
           } }
           options={ [
-            { label: 'Landscape', value: 'landscape' },
-            { label: 'Portrait', value: 'portrait' },
-            { label: 'Auto', value: 'auto' },
+            { label: __( 'Landscape', '__plugin_txtd' ), value: 'landscape' },
+            { label: __( 'Portrait', '__plugin_txtd' ), value: 'portrait' },
+            { label: __( 'Auto', '__plugin_txtd' ), value: 'auto' },
           ] }
         />
       </div>

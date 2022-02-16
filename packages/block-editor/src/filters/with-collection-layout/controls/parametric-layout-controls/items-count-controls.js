@@ -27,7 +27,7 @@ const ItemsCountControls = ( props ) => {
   const tempPostsToShow = useMemo( () => attributes.tempPostsToShow || postsToShow, [ attributes ] );
 
   return (
-    <ControlsGroup title={ __( 'Items Count' ) }>
+    <ControlsGroup title={ __( 'Items Count', '__plugin_txtd' ) }>
       <div className={ getControlsClasses( attributes, ( { automaticPostsNumber, postsToShow } ) => {
         return {
           postsToShow: automaticPostsNumber ? -1 : postsToShow

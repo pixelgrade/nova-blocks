@@ -16,8 +16,8 @@ import {
 const Controls = ( props ) => {
 
   return (
-      <ControlsSection id={ 'display' } label={ __( 'Display' ) }>
-        <ControlsTab label={ __( 'Settings' ) }>
+      <ControlsSection id={ 'display' } label={ __( 'Display', '__plugin_txtd' ) }>
+        <ControlsTab label={ __( 'Settings', '__plugin_txtd' ) }>
           <MarkerSettings { ...props } />
           <ListItemsConnectionControl { ...props } />
         </ControlsTab>

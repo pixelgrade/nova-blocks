@@ -12,7 +12,7 @@ const EmphasisAreaControl = props => {
       <RangeControl
         value={ emphasisArea }
         onChange={ ( emphasisArea ) => setAttributes( { emphasisArea } ) }
-        label={ __( 'Emphasis Area' ) }
+        label={ __( 'Emphasis Area', '__plugin_txtd' ) }
         min={ 0 }
         max={ 100 }
         step={ 5 }

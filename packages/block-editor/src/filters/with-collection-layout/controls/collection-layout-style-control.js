@@ -15,7 +15,7 @@ const CollectionLayoutStyleControl = withVisibility( 'collection-layout-style' )
   const { layoutStyle } = attributes;
 
   return (
-    <ControlsGroup title={ __( 'Collection Layout Style' ) }>
+    <ControlsGroup title={ __( 'Collection Layout Style', '__plugin_txtd' ) }>
       <RadioControl
         selected={ layoutStyle }
         className={ 'nb-collection-layout' }

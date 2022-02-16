@@ -26,7 +26,7 @@ const CardSpacingCustomize = ( props ) => {
   const showVerticalAlignment = supports?.novaBlocks?.contentPosition;
 
   return (
-    <ControlsGroup title={ __( 'Emphasis by Space' ) } key={ 'space-and-sizing-customize-1' }>
+    <ControlsGroup title={ __( 'Emphasis by Space', '__plugin_txtd' ) } key={ 'space-and-sizing-customize-1' }>
       <div className={ getControlsClasses( attributes, ( atts ) => {
         return getEmphasisAttributes( atts.emphasisBySpace, atts.enableOverlapping, atts.contentPosition );
       } ) }>
@@ -42,7 +42,7 @@ const CardSpacingCustomize = ( props ) => {
         />
         <ToggleControl
           key={ 'enable-overlapping' }
-          label={ __( 'Enable Overlapping' ) }
+          label={ __( 'Enable Overlapping', '__plugin_txtd' ) }
           checked={ enableOverlapping }
           onChange={ enableOverlapping => {
             const newAttributes = getEmphasisAttributes( emphasisBySpace, enableOverlapping, contentPosition );

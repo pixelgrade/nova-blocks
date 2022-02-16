@@ -10,7 +10,7 @@ const variations = [
       ['novablocks/header-row', {
         className: 'novablocks-header-row--primary',
         name: 'primary',
-        label: 'Primary Navigation',
+        label: __( 'Primary Navigation', '__plugin_txtd' ),
         isPrimary: true,
         blockTopSpacing: 0,
         blockBottomSpacing: 0,
@@ -36,7 +36,7 @@ const variations = [
       ['novablocks/header-row', {
         className: 'novablocks-header-row--primary',
         name: 'primary',
-        label: 'Primary Navigation',
+        label: __( 'Primary Navigation', '__plugin_txtd' ),
         isPrimary: true,
         blockTopSpacing: 0,
         blockBottomSpacing: 0,
@@ -66,7 +66,7 @@ const variations = [
       ['novablocks/header-row', {
         className: 'novablocks-header-row--logo',
         name: 'logo',
-        label: 'Site identity (logo)',
+        label: __( 'Site identity (logo)', '__plugin_txtd' ),
         blockTopSpacing: 0,
         blockBottomSpacing: 0,
         emphasisTopSpacing: 2,
@@ -87,7 +87,7 @@ const variations = [
       ['novablocks/header-row', {
         className: 'novablocks-header-row--primary',
         name: 'primary',
-        label: 'Primary Navigation',
+        label: __( 'Primary Navigation', '__plugin_txtd' ),
         isPrimary: true,
         blockTopSpacing: 0,
         blockBottomSpacing: 0,
@@ -112,7 +112,7 @@ const variations = [
       ['novablocks/header-row', {
         className: 'novablocks-header-row--secondary',
         name: 'secondary',
-        label: 'Secondary Navigation',
+        label: __( 'Secondary Navigation', '__plugin_txtd' ),
         blockTopSpacing: 0,
         blockBottomSpacing: 0,
         emphasisTopSpacing: 1,
@@ -132,7 +132,7 @@ const variations = [
       ['novablocks/header-row', {
         className: 'novablocks-header-row--logo',
         name: 'logo',
-        label: 'Site identity(logo)',
+        label: __( 'Site identity(logo)', '__plugin_txtd' ),
         blockTopSpacing: 0,
         blockBottomSpacing: 0,
         emphasisTopSpacing: 3,
@@ -145,7 +145,7 @@ const variations = [
       ['novablocks/header-row', {
         className: 'novablocks-header-row--primary',
         name: 'primary',
-        label: 'Primary Navigation',
+        label: __( 'Primary Navigation', '__plugin_txtd' ),
         isPrimary: true,
         blockTopSpacing: 0,
         blockBottomSpacing: 0,

@@ -16,7 +16,7 @@ const ItemsPerRowControl = ( props ) => {
       onChange={ ( columns ) => {
         setAttributes( { columns } );
       } }
-      label={ __( 'Number of Items per Row' ) }
+      label={ __( 'Number of Items per Row', '__plugin_txtd' ) }
       min={ 1 }
       max={ 4 }
     />

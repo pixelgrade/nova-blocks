@@ -13,7 +13,7 @@ const ClassicLayoutControls = ( props ) => {
   }
 
   return (
-    <ControlsGroup title={ __( 'Cards Count' ) }>
+    <ControlsGroup title={ __( 'Cards Count', '__plugin_txtd' ) }>
       <PostsCountControl { ...props } />
       <ItemsPerRowControl { ...props } />
       <ItemsGapControls { ...props } />

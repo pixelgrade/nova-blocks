@@ -16,7 +16,7 @@ const ItemsGapControl = ( props ) => {
       onChange={ ( gridGap ) => {
         setAttributes( { gridGap } );
       } }
-      label={ __( 'Items Gap' ) }
+      label={ __( 'Items Gap', '__plugin_txtd' ) }
       min={ 0 }
       max={ 100 }
       step={ 5 }
