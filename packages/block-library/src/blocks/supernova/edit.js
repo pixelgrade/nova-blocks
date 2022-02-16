@@ -5,7 +5,7 @@ import {
 } from '@wordpress/block-editor';
 import { useDispatch, useSelect } from '@wordpress/data';
 import { store as coreStore } from '@wordpress/core-data';
-import { Fragment, useCallback, useMemo } from '@wordpress/element';
+import { Fragment, useCallback, memo, useMemo } from '@wordpress/element';
 
 import { useInnerBlocksCount, useInnerBlocks, useInnerBlocksLock, normalizeImages } from '@novablocks/block-editor';
 import { Collection, CollectionHeader } from '@novablocks/collection';
@@ -20,6 +20,87 @@ import {
   CardsCollectionLayout,
   withControlsVisibility,
 } from './components';
+
+const ChangeMediaBlockControls = ( props ) => {
+  const { clientId } = props;
+  const innerBlocks = useInnerBlocks( clientId );
+  const { updateBlockAttributes } = useDispatch( 'core/block-editor' );
+  const onSelectImages = useCallback( images => {
+    normalizeImages( images ).then( newImages => {
+      updateBlockAttributes( innerBlocks[0].clientId, { images: newImages } );
+    } );
+  } );
+
+  if ( 1 !== innerBlocks.length ) {
+    return null;
+  }
+
+  const passedProps = {
+    ...props,
+    attributes: {
+      ...props.attributes,
+      images: innerBlocks[0].attributes.images
+    },
+    onSelectImages,
+  };
+
+  return (
+    <MediaCompositionBlockControls {...passedProps} />
+  );
+};
+
+const SupernovaPreview = props => {
+
+  const {
+    attributes,
+    clientId,
+    inQuery,
+  } = props;
+
+  const {
+    columns,
+    headerPosition,
+    showCollectionTitle,
+    showCollectionSubtitle,
+    showPagination,
+    contentType,
+    cardLayout,
+  } = attributes;
+
+  const contentAlign = getAlignFromMatrix( attributes?.contentPosition );
+
+  const className = classnames(
+    'supernova',
+    `supernova--content-type-${contentType}`,
+    `supernova--card-layout-${cardLayout}`,
+    `supernova--${columns}-columns`,
+    `supernova--valign-${contentAlign[0]}`,
+    `supernova--halign-${contentAlign[1]}`,
+    { 'supernova--show-pagination': showPagination },
+    props.className,
+    'nb-content-layout-grid',
+    'alignfull'
+  );
+
+  const blockProps = useBlockProps( {
+    className: className,
+    style: props.style,
+  } );
+
+  return (
+    <div {...blockProps}>
+      <Collection {...props} key={'collection_' + clientId}>
+        {0 === headerPosition && (showCollectionTitle || showCollectionSubtitle) &&
+          <CollectionHeader {...props} key={'collection_header_' + clientId}/>}
+        {inQuery
+          ? <PostsCollectionLayout {...props} key={'posts_collection_layout_' + clientId}/>
+          : <CardsCollectionLayout {...props} key={'cards_collection_layout_' + clientId}/>}
+      </Collection>
+    </div>
+  );
+};
+
+const MemoizedSupernovaPreview = memo( SupernovaPreview );
 
 const SupernovaEdit = props => {
 
@@ -173,89 +254,10 @@ const SupernovaEdit = props => {
 
   return (
     <Fragment>
-      <SupernovaPreview {...props} posts={posts} inQuery={isDescendentOfQueryLoop} key={'preview'}/>
+      <MemoizedSupernovaPreview {...props} posts={posts} inQuery={isDescendentOfQueryLoop} key={'preview'}/>
       <BlockControls {...props} key={'block-controls'}/>
       <ChangeMediaBlockControls {...props} key={'media-composition-block-controls'}/>
     </Fragment>
-  );
-};
-
-const ChangeMediaBlockControls = ( props ) => {
-  const { clientId } = props;
-  const innerBlocks = useInnerBlocks( clientId );
-  const { updateBlockAttributes } = useDispatch( 'core/block-editor' );
-  const onSelectImages = useCallback( images => {
-    normalizeImages( images ).then( newImages => {
-      updateBlockAttributes( innerBlocks[0].clientId, { images: newImages } );
-    } );
-  } );
-
-  if ( 1 !== innerBlocks.length ) {
-    return null;
-  }
-
-  const passedProps = {
-    ...props,
-    attributes: {
-      ...props.attributes,
-      images: innerBlocks[0].attributes.images
-    },
-    onSelectImages,
-  };
-
-  return (
-    <MediaCompositionBlockControls {...passedProps} />
-  );
-};
-
-const SupernovaPreview = props => {
-
-  const {
-    attributes,
-    clientId,
-    inQuery,
-  } = props;
-
-  const {
-    columns,
-    headerPosition,
-    showCollectionTitle,
-    showCollectionSubtitle,
-    showPagination,
-    contentType,
-    cardLayout,
-  } = attributes;
-
-  const contentAlign = getAlignFromMatrix( attributes?.contentPosition );
-
-  const className = classnames(
-    'supernova',
-    `supernova--content-type-${contentType}`,
-    `supernova--card-layout-${cardLayout}`,
-    `supernova--${columns}-columns`,
-    `supernova--valign-${contentAlign[0]}`,
-    `supernova--halign-${contentAlign[1]}`,
-    { 'supernova--show-pagination': showPagination },
-    props.className,
-    'nb-content-layout-grid',
-    'alignfull'
-  );
-
-  const blockProps = useBlockProps( {
-    className: className,
-    style: props.style,
-  } );
-
-  return (
-    <div {...blockProps}>
-      <Collection {...props} key={'collection_' + clientId}>
-        {0 === headerPosition && (showCollectionTitle || showCollectionSubtitle) &&
-          <CollectionHeader {...props} key={'collection_header_' + clientId}/>}
-        {inQuery
-          ? <PostsCollectionLayout {...props} key={'posts_collection_layout_' + clientId}/>
-          : <CardsCollectionLayout {...props} key={'cards_collection_layout_' + clientId}/>}
-      </Collection>
-    </div>
   );
 };
 

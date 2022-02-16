@@ -268,7 +268,7 @@ add_action( 'init', 'novablocks_register_packages_scripts', 11 );
 function novablocks_register_block_types() {
 
 	if ( ! function_exists( 'register_block_type' ) ) {
-		// Gutenberg is not active.
+		// The block editor is not available.
 		return;
 	}
 

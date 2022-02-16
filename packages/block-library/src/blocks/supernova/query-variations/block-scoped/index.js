@@ -30,7 +30,9 @@ const attributes = {
 
 let variation, innerSupernovaAttributes, innerSupernovaItemAttributes;
 
-variation = 'novablocks-parametric-collection';
+// The name of the variation is the same as the one used in the inserter scoped variation postsCollectionQuery.
+// This way we have consistency of naming regardless of the route taken.
+variation = 'novablocks-posts-collection';
 innerSupernovaAttributes = {
   variation,
 
@@ -70,11 +72,13 @@ export const parametricCollection = {
     ],
     [ 'core/query-pagination' ],
   ],
-  isActive: ( block, variation ) => block.variation === variation.variation,
+  isActive: ( blockAttributes, variationAttributes ) => blockAttributes.variation === variationAttributes.variation,
   scope: [ 'block' ],
 };
 
-variation = 'novablocks-slideshow-collection';
+// The name of the variation is the same as the one used in the inserter scoped variation postsSlideshowQuery.
+// This way we have consistency of naming regardless of the route taken.
+variation = 'novablocks-posts-slideshow';
 innerSupernovaAttributes = {
   variation,
 
@@ -118,8 +122,7 @@ export const slideshowCollection = {
       innerSupernovaAttributes,
       Array.from( Array( CARDS_COUNT ) ).map( () => [ 'novablocks/supernova-item', innerSupernovaItemAttributes ] ),
     ],
-    [ 'core/query-pagination' ],
   ],
-  isActive: ( block, variation ) => block.variation === variation.variation,
+  isActive: ( blockAttributes, variationAttributes ) => blockAttributes.variation === variationAttributes.variation,
   scope: [ 'block' ],
 };

@@ -11,7 +11,7 @@ import { slideshowCollection as icon } from '../icons';
 const CARDS_COUNT = 3;
 
 const attributes = {
-  variation: 'novablocks-slideshow',
+  variation: 'novablocks-posts-slideshow',
   query: {
     perPage: CARDS_COUNT,
     pages: 1,
@@ -27,7 +27,7 @@ const attributes = {
 };
 
 const innerSupernovaAttributes = {
-  variation: 'novablocks-slideshow',
+  variation: 'novablocks-posts-slideshow',
 
   align: 'full',
   contentType: 'auto',
@@ -56,8 +56,8 @@ const innerSupernovaItemAttributes = {
   }
 };
 
-export const slideshowQuery = {
-  name: 'novablocks/supernova/query-slideshow',
+export const postsSlideshowQuery = {
+  name: 'novablocks/supernova/query-posts-slideshow',
   title: __( 'Slideshow me the Way', '__plugin_txtd' ),
   description: __( 'Display a queried set of posts in a single, coveted space.', '__plugin_txtd' ),
   icon: icon,
@@ -68,8 +68,7 @@ export const slideshowQuery = {
       innerSupernovaAttributes,
       Array.from( Array( CARDS_COUNT ) ).map( () => [ 'novablocks/supernova-item', innerSupernovaItemAttributes ] ),
     ],
-    [ 'core/query-pagination' ],
   ],
-  isActive: ( block, variation ) => block.variation === variation.variation,
+  isActive: ( blockAttributes, variationAttributes ) => blockAttributes.variation === variationAttributes.variation,
   scope: [ 'inserter' ],
 };

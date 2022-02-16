@@ -9,24 +9,36 @@ import { useMemo } from "@wordpress/element";
 /**
  * Internal dependencies
  */
-import { getSvg, useInnerBlocks } from '@novablocks/block-editor';
+import { useInnerBlocks } from '@novablocks/block-editor';
 import { getFocalPointImage } from "@novablocks/scrolling-effect";
 
 import edit from './edit';
 import variations from './variations';
 import queryVariations from './query-variations';
-import iconSvg from './supernova-block.svg';
+import {supernova as supernovaIcon} from './icons';
 
 import attributes from './attributes';
 
 import { withSetChildrenAttributes } from "./filters";
 
-const withQueryVariations = settings => {
+const coreQueryAlterations = settings => {
 
   if ( 'core/query' !== settings.name ) {
     return settings;
   }
 
+  // Add the variation attribute so we can know for sure what variation was used, if any.
+  settings.attributes.variation = {
+    "type": "string",
+  };
+
+  // Change what the query block supports.
+  settings.supports.align = false;
+  settings.supports.html = false;
+  settings.supports.__experimentalLayout = false;
+
+
+  // Add our own Query block variations.
   // Start fresh, removing core variations.
   settings.variations = [];
 
@@ -39,8 +51,8 @@ const withQueryVariations = settings => {
 
 addFilter(
   'blocks.registerBlockType',
-  'novablocks/supernova/with-query-variations',
-  withQueryVariations,
+  'novablocks/supernova/core-query-alterations',
+  coreQueryAlterations,
   Number.MAX_SAFE_INTEGER
 );
 
@@ -66,7 +78,7 @@ addFilter(
 );
 
 registerBlockType( 'novablocks/supernova', {
-  icon: getSvg( iconSvg ),
+  icon: supernovaIcon,
   attributes,
   edit,
   save: function() {

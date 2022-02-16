@@ -42,7 +42,8 @@ const cardsCollection = {
   icon: getSvg( iconSvg ),
   attributes,
   innerBlocks: Array.from( Array( CARDS_COUNT ) ).map( () => [ 'novablocks/supernova-item', innerBlockAttributes ] ),
-  isActive: ( block, variation ) => block.variation === variation.variation
+  isActive: ( blockAttributes, variationAttributes ) => blockAttributes.variation === variationAttributes.variation,
+  scope: [ 'inserter' ],
 };
 
 export default cardsCollection;

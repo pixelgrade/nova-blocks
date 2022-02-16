@@ -25,7 +25,7 @@ const withSetChildrenAttributes = OriginalComponent => {
       }
 
       return attributes;
-    }, [] )
+    }, [] );
 
     const setChildrenAttributes = useCallback( attributes => {
       const { innerBlocks } = getBlock( clientId );

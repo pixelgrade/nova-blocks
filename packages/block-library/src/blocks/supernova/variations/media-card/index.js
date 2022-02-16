@@ -40,12 +40,12 @@ const innerBlocks = [
 const mediaCard = {
   name: 'novablocks/supernova/media-card',
   title: __( 'Media Card Constellation', '__plugin_txtd' ),
-  description: __( 'Display media objects alongside short pieces of content.', '__plugin_txtd' ),
+  description: __( 'Display media alongside short pieces of content.', '__plugin_txtd' ),
   icon: getSvg( iconSvg ),
   attributes,
   innerBlocks: [ [ 'novablocks/supernova-item', attributes, innerBlocks ] ],
-  isActive: ( block, variation ) => block.variation === variation.variation
-
+  isActive: ( blockAttributes, variationAttributes ) => blockAttributes.variation === variationAttributes.variation,
+  scope: [ 'inserter' ],
 };
 
 export default mediaCard;

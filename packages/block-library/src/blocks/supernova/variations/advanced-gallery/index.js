@@ -41,7 +41,8 @@ const advancedGallery = {
   innerBlocks: [
     [ 'novablocks/supernova-item', { ...attributes, multiplePlaceholderImages: true } ]
   ],
-  isActive: ( block, variation ) => block.variation === variation.variation
+  isActive: ( blockAttributes, variationAttributes ) => blockAttributes.variation === variationAttributes.variation,
+  scope: [ 'inserter' ],
 };
 
 export default advancedGallery;
