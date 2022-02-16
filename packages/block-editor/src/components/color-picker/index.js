@@ -44,7 +44,7 @@ const ColorPicker = ( props ) => {
                       };
 
                       return (
-                        <Fragment>
+                        <Fragment key={index}>
                           <stop offset={ `${ index * 100 / colors.length }%` } style={ style } />
                           <stop offset={ `${ ( index + 1 ) * 100 / colors.length }%` } style={ style } />
                         </Fragment>
