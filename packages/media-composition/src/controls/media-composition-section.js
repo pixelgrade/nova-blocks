@@ -12,6 +12,7 @@ import {
   ControlsTab,
   Notice,
   PresetControl,
+  useSettings,
   withVisibility,
 } from '@novablocks/block-editor';
 
@@ -22,10 +23,9 @@ const MediaCompositionControls = props => {
 	const {
 		setAttributes,
 		attributes,
-		settings: {
-			advancedGalleryPresetOptions,
-		},
 	} = props;
+
+  const novablocksSettings = useSettings();
 
 	const {
 		// composition settings
@@ -41,7 +41,12 @@ const MediaCompositionControls = props => {
 	} = attributes;
 
   return (
-    <ControlsSection id={ 'media-composition' } label={ __( 'Media Composition' ) } group={ __( 'Modules' ) } order={ 10 } key={ 'media-composition-controls-section' }>
+    <ControlsSection
+      id={ 'media-composition' }
+      label={ __( 'Media Composition' ) }
+      group={ __( 'Modules' ) }
+      order={ 10 }
+      key={ 'media-composition-controls-section' }>
 
       <ControlsTab label={ __( 'Presets' ) }>
         <Notice
@@ -52,7 +57,7 @@ const MediaCompositionControls = props => {
         />
         <PresetControl
           key={ 'advanced-gallery-style-preset' }
-          options={ advancedGalleryPresetOptions }
+          options={ novablocksSettings.advancedGalleryPresetOptions }
           randomize={ getRandomAttributes }
           { ...props }
         />

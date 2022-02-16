@@ -1,19 +1,21 @@
 import { RadioControl } from '@wordpress/components';
 import { __ } from '@wordpress/i18n';
 
+import { useSettings } from "../../../hooks";
 import { ControlsGroup } from "../../../components";
 import withVisibility from "../../../components/with-visibility";
 
 const MinimumContainerHeight = props => {
 
+  const novablocksSettings = useSettings();
+
   const {
     attributes,
     setAttributes,
-    settings
   } = props;
 
   const {
-    minHeightFallback
+    minHeightFallback,
   } = attributes;
 
   return (
@@ -25,7 +27,7 @@ const MinimumContainerHeight = props => {
             minHeightFallback: parseFloat( minHeightFallback )
           } );
         } }
-        options={ settings?.minimumHeightOptions }
+        options={ novablocksSettings?.minimumHeightOptions }
       />
     </ControlsGroup>
   )

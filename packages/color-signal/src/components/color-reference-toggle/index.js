@@ -1,22 +1,20 @@
 import { ToggleControl } from "@wordpress/components";
 import { __ } from "@wordpress/i18n";
 
-import { ControlsGroup } from "@novablocks/block-editor";
+import { ControlsGroup, useSettings } from "@novablocks/block-editor";
 
 const ColorReferenceToggleControl = ( props ) => {
+
+  const novablocksSettings = useSettings();
+  if ( ! novablocksSettings?.debug ) {
+    return null;
+  }
 
   const {
     attributes: {
       useSourceColorAsReference
     },
-    settings: {
-      debug
-    }
   } = props;
-
-  if ( ! debug ) {
-    return null;
-  }
 
   return (
     <ControlsGroup>

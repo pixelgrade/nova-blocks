@@ -1,5 +1,5 @@
 import { createBlock } from '@wordpress/blocks';
-import { select } from '@wordpress/data';
+import { useSettings } from '@novablocks/block-editor';
 
 const blockAttributes = {
   layout: {
@@ -26,10 +26,9 @@ const deprecated = [
     },
 
     migrate( attributes, innerBlocks ) {
-      const { getSettings } = select( 'novablocks' );
-      const settings = getSettings();
+      const novablocksSettings = useSettings();
 
-      const headerShouldBeSticky = settings.customify_config.header_position.value === 'sticky';
+      const headerShouldBeSticky = novablocksSettings?.customify_config?.header_position?.value === 'sticky' || false;
 
       return [
        attributes,

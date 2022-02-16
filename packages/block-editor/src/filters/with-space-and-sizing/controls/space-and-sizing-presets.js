@@ -1,15 +1,16 @@
 import { __ } from "@wordpress/i18n";
 
 import { PresetControl } from "../../../components";
-import { useSupports } from "../../../hooks";
+import { useSettings, useSupports } from "../../../hooks";
 import { getRandomAttributes } from "../utils";
 
 const SpaceAndSizingPresets = ( props ) => {
 
+  const novablocksSettings = useSettings();
   const supports = useSupports( props.name );
 
-  const presetOptions = props?.settings?.modules?.spaceAndSizing?.presetOptions;
-  const advancedPresetOptions = props?.settings?.modules?.spaceAndSizing?.advancedPresetOptions;
+  const presetOptions = novablocksSettings?.modules?.spaceAndSizing?.presetOptions;
+  const advancedPresetOptions = novablocksSettings?.modules?.spaceAndSizing?.advancedPresetOptions;
 
   const presets = [];
 

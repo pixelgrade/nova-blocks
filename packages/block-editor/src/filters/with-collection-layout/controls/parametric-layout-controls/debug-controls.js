@@ -1,9 +1,19 @@
 import { __ } from "@wordpress/i18n";
 import { ToggleControl } from '@wordpress/components';
+import { select } from '@wordpress/data';
 
 import { ControlsGroup } from "../../../../components";
+/**
+ * Internal dependencies
+ */
+import { useSettings } from "../../../../hooks";
 
 const DebugControls = ( props ) => {
+
+  const novablocksSettings = useSettings();
+  if ( ! novablocksSettings?.debug ) {
+    return null;
+  }
 
   const {
     attributes: {
@@ -11,12 +21,7 @@ const DebugControls = ( props ) => {
       toggleMask,
     },
     setAttributes,
-    settings
   } = props;
-
-  if ( ! settings?.debug ) {
-    return null;
-  }
 
   return (
     <ControlsGroup title={ __( 'Debug Parameters' ) }>

@@ -1,7 +1,7 @@
 import { __ } from "@wordpress/i18n";
 import { RadioControl } from "@wordpress/components";
 
-import { ControlsSection, ControlsTab, useSupports } from "@novablocks/block-editor";
+import { ControlsSection, ControlsTab, useSettings, useSupports } from "@novablocks/block-editor";
 
 const ScrollingEffectPanel = ( props ) => {
 
@@ -11,17 +11,17 @@ const ScrollingEffectPanel = ( props ) => {
       scrollingEffect,
       motionPreset,
     },
-    settings,
     name,
   } = props;
 
+  const novablocksSettings = useSettings();
   const supports = useSupports( name );
 
   const {
     motionPresetOptions,
-  } = settings;
+  } = novablocksSettings;
 
-  const scrollingEffectOptions = [ ...settings.scrollingEffectOptions ];
+  const scrollingEffectOptions = [ ...novablocksSettings.scrollingEffectOptions ];
 
   if ( supports?.novaBlocks?.scrollingEffect === true || supports?.novaBlocks?.scrollingEffect?.doppler === true ) {
     scrollingEffectOptions.push( {

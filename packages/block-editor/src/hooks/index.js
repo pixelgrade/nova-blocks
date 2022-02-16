@@ -9,6 +9,7 @@ export { default as useMemoryState } from './use-memory-state';
 export { default as useOnScroll } from './use-on-scroll';
 export { default as useResizeObserver } from './use-resize-observer';
 export { default as useSupports } from './use-supports';
+export { default as useSettings } from './use-settings';
 export { default as useScrollContainer } from './use-scroll-container';
 export { default as useScrollContainerBox } from './use-scroll-container-box';
 export { default as useSelectParent } from './use-select-parent';

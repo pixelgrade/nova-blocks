@@ -1,6 +1,8 @@
 import { PanelBody, RadioControl } from "@wordpress/components";
 import PreviewScrollingButton from "./preview-scrolling-button";
 
+import { useSettings } from "@novablocks/block-editor";
+
 const DopplerPresetsPanel = ( props ) => {
 
   const {
@@ -9,14 +11,13 @@ const DopplerPresetsPanel = ( props ) => {
       scrollingEffect,
     },
     setAttributes,
-    settings: {
-      motionPresetOptions
-    },
   } = props;
 
   if ( scrollingEffect !== 'doppler' ) {
     return null;
   }
+
+  const novablocksSettings = useSettings();
 
   return (
     <PanelBody title={ `Doppler Scrolling Settings` }>
@@ -26,7 +27,7 @@ const DopplerPresetsPanel = ( props ) => {
         selected={ motionPreset }
         onChange={ ( motionPreset ) => {
           let newAttributes = { motionPreset };
-          let newOption = motionPresetOptions.find( option => motionPreset === option.value );
+          let newOption = novablocksSettings.motionPresetOptions.find( option => motionPreset === option.value );
 
           if ( newOption && newOption.preset ) {
             newAttributes = Object.assign( newOption.preset, newAttributes );
@@ -34,7 +35,7 @@ const DopplerPresetsPanel = ( props ) => {
 
           setAttributes( newAttributes );
         } }
-        options={ motionPresetOptions }
+        options={ novablocksSettings.motionPresetOptions }
       />
       <PreviewScrollingButton { ...props } />
 

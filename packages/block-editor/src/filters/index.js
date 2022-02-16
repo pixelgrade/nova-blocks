@@ -13,7 +13,6 @@ import "./with-font-size-picker"; // @todo maybe rely on supports API
 //import "./with-include-post-id";
 import "./with-on-select-images";
 import "./with-random-defaults";
-import './with-settings';
 import './with-custom-align';
 import './with-break-align-classnames';
 

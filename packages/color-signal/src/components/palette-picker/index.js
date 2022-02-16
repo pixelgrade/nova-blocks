@@ -1,4 +1,4 @@
-import { ColorPicker, ControlsGroup, withVisibility } from "@novablocks/block-editor";
+import { ColorPicker, ControlsGroup, useSettings, withVisibility } from "@novablocks/block-editor";
 
 import { isFunctionalPalette } from "@novablocks/utils";
 
@@ -18,12 +18,13 @@ const PalettePicker = ( props ) => {
     attributes,
     setAttributes,
     clientId,
-    settings,
     showFunctionalColors,
     stickySourceColor
   } = props;
 
-  const { palettes } = settings;
+  const novablocksSettings = useSettings();
+
+  const { palettes } = novablocksSettings;
   const { palette, paletteVariation, useSourceColorAsReference } = attributes;
 
   const functionalColors = palettes.filter( palette => isFunctionalPalette( palette ) );

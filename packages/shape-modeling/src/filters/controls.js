@@ -4,6 +4,7 @@ import {
   ControlsSection,
   ControlsTab,
   PresetControl,
+  useSettings,
   withVisibility
 } from "@novablocks/block-editor";
 
@@ -17,20 +18,20 @@ import { getRandomAttributes } from "../utils";
 
 const Controls = ( props ) => {
 
-	const {
-		settings: {
-			blobPresetOptions,
-		}
-	} = props;
+  const novablocksSettings = useSettings();
 
 	return (
-		<ControlsSection id={ 'shape-modeling' } label={ __( 'Shape Modeling' ) } group={ __( 'Modules' ) } order={ 30 }>
+		<ControlsSection
+      id={ 'shape-modeling' }
+      label={ __( 'Shape Modeling' ) }
+      group={ __( 'Modules' ) }
+      order={ 30 }>
 			<ControlsTab label={ __( 'Presets' ) }>
 				<p>Use this tool to generate shapes and combine them with your images to create designs that are a unique and memorable part of your brand identity.</p>
 				<PresetControl
 					key={ 'blob-style-preset' }
 					label={ __( 'Choose a shape preset:', '__plugin_txtd' ) }
-					options={ blobPresetOptions }
+					options={ novablocksSettings.blobPresetOptions }
 					randomize={ getRandomAttributes }
           { ...props }
 				/>
