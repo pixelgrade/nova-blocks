@@ -24,8 +24,7 @@ class Header extends HeaderBase {
 
     this.rows = this.getHeaderRows();
     this.isSimple = [ 'logo-left', 'logo-center' ].includes( element.dataset.layout );
-
-    this.shouldToggleColors = !! this.element.dataset.sticky;
+    this.isSticky = this.isSimple && this.rows.find( row => row.element.dataset.isSticky );
 
     this.mobileHeader = new HeaderMobile( this );
 
@@ -33,7 +32,7 @@ class Header extends HeaderBase {
       this.stickyHeader = new HeaderSticky( this.element );
     }
 
-    if ( this.isSimple ) {
+    if ( this.isSticky ) {
       initializeReadingBar( this.element );
     }
 
@@ -132,7 +131,7 @@ class Header extends HeaderBase {
 
   applyStickyStyles( element, scrollY ) {
 
-    if ( this.isSimple && above( 'lap' ) ) {
+    if ( this.isSticky && above( 'lap' ) ) {
       HeaderBase.prototype.applyStickyStyles.call( this, element, scrollY );
       toggleClass( this.element, 'novablocks-header--transparent', ! this.shouldBeSticky );
       this.toggleRowsColors( ! this.shouldBeSticky );

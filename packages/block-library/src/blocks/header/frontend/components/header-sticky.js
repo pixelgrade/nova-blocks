@@ -8,17 +8,20 @@ class HeaderSticky extends HeaderBase {
   constructor( element ) {
     super();
 
-    const header = element;
-    const stickyHeader = header.cloneNode();
+    const stickyHeader = element.cloneNode();
 
     removeClass( stickyHeader, 'novablocks-header--main' );
     addClass( stickyHeader, 'novablocks-header--secondary' );
 
-    const headerRows = Array.from( header.querySelectorAll( '.novablocks-header-row' ) );
+    const headerRows = Array.from( element.querySelectorAll( '.novablocks-header-row' ) );
     const stickyRow = headerRows.find( row => row.dataset.isSticky )?.parentNode;
     const primaryRow = headerRows.find( row => row.dataset.isPrimary )?.parentNode;
-    const readingBar = header.querySelector( '.js-reading-bar' );
-    const progressBar = header.querySelector( '.js-reading-progress' );
+    const readingBar = element.querySelector( '.js-reading-bar' );
+    const progressBar = element.querySelector( '.js-reading-progress' );
+
+    if ( ! stickyRow ) {
+      return null;
+    }
 
     this.stickyRow = stickyRow;
 
@@ -33,7 +36,7 @@ class HeaderSticky extends HeaderBase {
     readingBar && stickyHeader.appendChild( readingBar );
     progressBar && stickyHeader.appendChild( progressBar );
 
-    header.insertAdjacentElement( 'beforebegin', stickyHeader );
+    element.insertAdjacentElement( 'beforebegin', stickyHeader );
 
     this.element = stickyHeader;
 

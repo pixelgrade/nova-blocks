@@ -45,17 +45,6 @@ class HeaderBase {
 
   updateStickyStyles( scrollY ) {
     this.applyStickyStyles( this.element, scrollY );
-//    HeaderBase.prototype.updateStickyStyles.call( this );
-//
-//    if ( this.shouldToggleColors ) {
-//      this.toggleRowsColors( !this.shouldBeSticky );
-//    }
-
-//    this.element.style.marginTop = `${ this.staticDistance }px`;
-//
-//    if ( this.secondaryHeader ) {
-//      this.secondaryHeader.style.top = `${ this.staticDistance }px`;
-//    }
   }
 
   applyStickyStyles( element, scrollY ) {

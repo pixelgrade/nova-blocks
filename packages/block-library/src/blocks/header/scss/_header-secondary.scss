@@ -46,4 +46,12 @@
   @include below(lap) {
     display: none !important;
   }
+
+  .novablocks-header-row[data-is-primary] {
+    display: none;
+  }
+
+  &:not(.site-header--reading):not(.site-header--next):hover .novablocks-header-row[data-is-primary] {
+    display: block;
+  }
 }
