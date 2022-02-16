@@ -61,7 +61,7 @@ const ColorGradesControl = ( props ) => {
       </div>
       <div className="nb-palette">
         <div className="nb-palette__grades">
-          { variations.map( currentVariation => {
+          { variations.map( ( currentVariation, index ) => {
             let content = '';
 
             const isSelected = selectedVariation === currentVariation;
@@ -81,7 +81,7 @@ const ColorGradesControl = ( props ) => {
             if ( isSource ) { content = getIcon( 'star' ) }
 
             return (
-              <div className={ className } onClick={ () => { onChange( currentVariation ) } }>
+              <div className={ className } onClick={ () => { onChange( currentVariation ) } } key={'palette_grade_' + index}>
                 <div className="nb-palette__grade-surface" />
                 <div className="nb-palette__grade-icon" dangerouslySetInnerHTML={ { __html: content } } />
               </div>
@@ -91,12 +91,12 @@ const ColorGradesControl = ( props ) => {
         {
           props?.settings?.debug &&
           <div className={ "nb-palette__signal-previews" } style={ { display: "flex" } }>
-            { variations.map( currentVariation => {
+            { variations.map( ( currentVariation, index ) => {
               const current = addSiteVariationOffset( currentVariation );
               const signal = getSignalRelativeToVariation( current, parentVariation, palette );
 
               return (
-                <div className="nb-palette__signal-preview-wrap">
+                <div className="nb-palette__signal-preview-wrap" key={'palette_signal_preview_' + index}>
                   <div className="nb-palette__signal-preview-wrap__above">{ current }</div>
                   <div className={ `nb-palette__signal-preview nb-palette__signal-preview--${ signal }` } />
                   <div className="nb-palette__signal-preview-wrap__below">{ parentVariation }</div>
