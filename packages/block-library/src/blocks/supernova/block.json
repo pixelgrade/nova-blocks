@@ -14,10 +14,6 @@
 		"queryContext",
 		"templateSlug"
 	],
-	"providesContext": {
-		"queryId": "queryId",
-		"query": "query"
-	},
 	"supports": {
 		"html": false,
 		"novaBlocks": {

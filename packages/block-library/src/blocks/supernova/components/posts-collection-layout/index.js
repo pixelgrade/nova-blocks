@@ -17,6 +17,9 @@ const PostsCollectionLayout = props => {
     attributes: attributes
   } );
 
+  // We don't want to pass the posts to each PostCard, only a single post.
+  delete passedProps.posts;
+
   return (
     <CollectionBody {...props} key={'body_' + clientId}>
       {!posts
