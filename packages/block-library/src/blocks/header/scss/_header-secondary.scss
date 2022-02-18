@@ -47,7 +47,7 @@
     display: none !important;
   }
 
-  .novablocks-header-row[data-is-primary] {
+  .novablocks-header-row[data-is-primary]:not([data-is-sticky]) {
     display: none;
   }
 
