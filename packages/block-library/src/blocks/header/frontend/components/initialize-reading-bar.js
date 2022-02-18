@@ -1,6 +1,11 @@
-import { above, clamp, onScrollRAF, removeClass, syncColorSignalClasses, toggleClass } from "@novablocks/utils";
+import { above, clamp, onScrollRAF, removeClass, syncColorSignalClasses, hasClass, toggleClass } from "@novablocks/utils";
 
 export const initializeReadingBar = ( header ) => {
+
+  if ( ! hasClass( document.body, 'single-post' ) ) {
+    return;
+  }
+
   bindMenuLabelClick( header );
 
   const progressBar = header.querySelector( '.js-reading-progress' );

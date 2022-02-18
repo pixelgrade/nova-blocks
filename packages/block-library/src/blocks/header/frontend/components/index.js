@@ -1,7 +1,5 @@
 import { mqService, above, below, addClass, removeClass, hasClass, toggleClass, setAndResetElementStyles } from '@novablocks/utils';
 
-//import GlobalService from '../../globalService';
-//import mqService from '../../mqService';
 import HeaderBase from "./header-base";
 import HeaderMobile from "./header-mobile";
 import HeaderRow from "./header-row";
