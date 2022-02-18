@@ -28,5 +28,8 @@ export default class AnnouncementBar {
 		const { cookieName } = this;
 		addClass( this.element, 'is-hidden' );
 		Cookies.set( cookieName, true, { expires: 365 } );
+
+    const resize = new CustomEvent( 'resize' );
+    window.dispatchEvent( resize );
 	}
 }
