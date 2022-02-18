@@ -21,7 +21,6 @@ const BreakingTheGridControls = ( props ) => {
 
   const getMinFeatureSize = useCallback( () => 1, [] );
   const getMaxFeatureSize = useCallback( () => attributes.gridcolumns, [ attributes ] );
-  const getMinFeaturePosition = useCallback( () => 1, [] );
   const getMaxFeaturePosition = useCallback( () => attributes.gridcolumns - attributes.featuresize + 1, [ attributes ] );
   const getMinColumnsFragmentation = useCallback( () => 0, [] );
   const getMaxColumnsFragmentation = useCallback( () => {
@@ -32,7 +31,7 @@ const BreakingTheGridControls = ( props ) => {
     const atts = Object.assign( {}, attributes, newAttributes );
 
     atts.featuresize = clamp( atts.featuresize, getMinFeatureSize(), getMaxFeatureSize() );
-    atts.featureposition = clamp( atts.featureposition, getMinFeaturePosition(), getMaxFeaturePosition() );
+    atts.featureposition = clamp( atts.featureposition, 1, getMaxFeaturePosition() );
     atts.fragmentation = clamp( atts.fragmentation, getMinColumnsFragmentation(), getMaxColumnsFragmentation() );
 
     return atts;
@@ -45,7 +44,7 @@ const BreakingTheGridControls = ( props ) => {
   return (
     <ControlsGroup title={ __( 'Breaking the Grid', '__plugin_txtd' ) }>
       <RangeControl
-        label={ __( `Featured Area Size`, '__plugin_txtd' ) }
+        label={ __( 'Featured Area Size', '__plugin_txtd' ) }
         value={ featuresize }
         onChange={ featuresize => {
           if ( typeof featuresize !== "undefined" ) {
@@ -56,18 +55,18 @@ const BreakingTheGridControls = ( props ) => {
         max={ getMaxFeatureSize( attributes ) }
       />
       <RangeControl
-        label={ __( `Featured Area Position`, '__plugin_txtd' ) }
+        label={ __( 'Featured Area Position', '__plugin_txtd' ) }
         value={ featureposition }
         onChange={ featureposition => {
           if ( typeof featureposition !== "undefined" ) {
             setAttributes( { featureposition } );
           }
         } }
-        min={ getMinFeaturePosition( attributes ) }
+        min={ 1 }
         max={ getMaxFeaturePosition( attributes ) }
       />
       <RangeControl
-        label={ __( `Grid Areas Fragmentation`, '__plugin_txtd' ) }
+        label={ __( 'Grid Areas Fragmentation', '__plugin_txtd' ) }
         value={ fragmentation }
         onChange={ fragmentation => {
           if ( typeof fragmentation !== "undefined" ) {
@@ -78,7 +77,7 @@ const BreakingTheGridControls = ( props ) => {
         max={ getMaxColumnsFragmentation( attributes ) }
       />
       <RangeControl
-        label={ __( `Grid Areas Crossing`, '__plugin_txtd' ) }
+        label={ __( 'Grid Areas Crossing', '__plugin_txtd' ) }
         value={ hierarchycrossing }
         onChange={ hierarchycrossing => {
           if ( typeof hierarchycrossing !== "undefined" ) {

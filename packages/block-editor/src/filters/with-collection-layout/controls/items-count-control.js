@@ -1,12 +1,10 @@
 import { __ } from "@wordpress/i18n";
 import { RangeControl } from '@wordpress/components';
 
-const PostsCountControl = ( props ) => {
+const ItemsCountControl = ( props ) => {
 
   const {
-    attributes: {
-      postsToShow,
-    },
+    postsToShow,
     setAttributes,
   } = props;
 
@@ -23,4 +21,4 @@ const PostsCountControl = ( props ) => {
   );
 };
 
-export default PostsCountControl;
+export default ItemsCountControl;

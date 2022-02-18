@@ -6,7 +6,7 @@ import { getControlsClasses, getPostsCount } from "@novablocks/utils";
 
 import { ControlsGroup } from "../../../../components";
 
-import PostsCountControl from "../posts-count-control";
+import ItemsCountControl from "../items-count-control";
 
 const ItemsCountControls = ( props ) => {
 
@@ -22,8 +22,13 @@ const ItemsCountControls = ( props ) => {
   } = attributes;
 
   const autoPostsCount = useMemo( () => getPostsCount( areaColumns ), [ areaColumns ] );
+  if ( automaticPostsNumber && postsToShow !== autoPostsCount ) {
+    setAttributes({
+      "postsToShow": autoPostsCount,
+    });
+  }
 
-  // used to store previous values of postsToShow
+  // Used to store previous values of postsToShow.
   const tempPostsToShow = useMemo( () => attributes.tempPostsToShow || postsToShow, [ attributes ] );
 
   return (
@@ -33,7 +38,7 @@ const ItemsCountControls = ( props ) => {
           postsToShow: automaticPostsNumber ? -1 : postsToShow
         }
       } ) }>
-        <PostsCountControl { ...props } />
+        <ItemsCountControl postsToShow={automaticPostsNumber ? autoPostsCount : postsToShow} setAttributes={setAttributes} />
       </div>
       <ToggleControl
         label={__( 'Auto-count Items Number', '__plugin_txtd' )}

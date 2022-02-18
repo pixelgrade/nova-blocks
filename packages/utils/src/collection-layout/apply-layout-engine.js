@@ -13,7 +13,7 @@ export const applyLayoutEngine = state => {
   // In each matrix we will ignore index 0 since it is easier to start from 1,
   // the same way CSS grid columns and rows behave.
 
-  // The order of these operation is important!
+  // The order of these operations is important!
 
   debug ? console.log( "\nGenerating a new layout...\n\n" ) : false;
 
@@ -39,7 +39,7 @@ export const applyLayoutEngine = state => {
 
   let i, j;
 
-  // Lets start PRELIMINARY CALCULATIONS!
+  // Let's start PRELIMINARY CALCULATIONS!
 
   /*
   1. Calculate the columns width matrix.
@@ -54,7 +54,7 @@ export const applyLayoutEngine = state => {
     widthMatrix[ i ] = widthIdx;
   }
 
-  // Next, go from left to right in the columns width matrix, and fill each columns with the same unique number,
+  // Next, go from left to right in the columns-width matrix, and fill each column with the same unique number,
   // Taking into account the fragmentation.
   // And remember the positions we are int the virtual matrix without the feature.
   let frgIdx = 0;
@@ -108,7 +108,7 @@ export const applyLayoutEngine = state => {
     }
     i = end;
   }
-  // Copy the first row to all of the rest.
+  // Copy the first row to all the rest.
   for ( i = 2; i <= state.gridrows; i ++ ) {
     imageWeightMatrix[ i ] = imageWeightMatrix[ 1 ].slice(); // .slice() creates a copy of the array, not reference.
   }
@@ -149,7 +149,7 @@ export const applyLayoutEngine = state => {
     }
     i = end;
   }
-  // Copy the first row to all of the rest.
+  // Copy the first row to all the rest.
   for ( i = 2; i <= state.gridrows; i ++ ) {
     metaDetailsMatrix[ i ] = metaDetailsMatrix[ 1 ].slice(); // .slice() creates a copy of the array, not reference.
   }
@@ -191,7 +191,7 @@ export const applyLayoutEngine = state => {
         i ++;
       }
 
-      // Copy the first row to all of the rest.
+      // Copy the first row to all the rest.
       for ( i = 2; i <= state.gridrows; i ++ ) {
         metaDetailsMatrix[ i ] = metaDetailsMatrix[ 1 ].slice(); // .slice() creates a copy of the array, not reference.
       }
@@ -216,7 +216,7 @@ export const applyLayoutEngine = state => {
         i ++;
       }
 
-      // Copy the first row to all of the rest.
+      // Copy the first row to all the rest.
       for ( i = 2; i <= state.gridrows; i ++ ) {
         imageWeightMatrix[ i ] = imageWeightMatrix[ 1 ].slice(); // .slice() creates a copy of the array, not reference.
       }
@@ -462,7 +462,7 @@ export const applyLayoutEngine = state => {
   8. Finally, generate the posts list.
   */
   const areaColumns = getGroupedPostAreas( state, finalNthMatrix, finalMetaMatrix, finalImageMatrix );
-  ;
+
   moveLargestColumnToStart( areaColumns );
 
   return areaColumns;
@@ -505,21 +505,21 @@ function getGroupedPostAreas( state, nthMatrix, metaDetailsMatrix, imageWeightMa
     }
   } );
 
-  // loop through columns
+  // Loop through columns
   columns.forEach( currentColumn => {
-    // loop through "current" column's areas
+    // Loop through "current" column's areas
     currentColumn.areas.forEach( ( currentArea, i ) => {
-      // loop again through columns except the current column
+      // Loop again through columns except the current column
       columns.filter( column => column !== currentColumn ).forEach( compareColumn => {
-        // loop through the "compare" column's areas
+        // Loop through the "compare" column's areas
         compareColumn.areas.forEach( ( compareArea, j ) => {
-          // check if the areas have the same column and the same width
+          // Check if the areas have the same column and the same width
           if ( !compareArea.merged &&
                currentArea.col === compareArea.col &&
                currentArea.width === compareArea.width &&
-               // and if the two areas are continuous
+               // And if the two areas are continuous
                ( currentArea.row + currentArea.height === compareArea.row || currentArea.row === compareArea.row + compareArea.height ) ) {
-            // if so, move the compared area to the current column's areas array and update the column height
+            // If so, move the compared area to the current column's areas array and update the column height
             compareArea.merged = true;
             currentColumn.areas.push( compareArea );
             currentColumn.height += compareArea.height;
@@ -619,7 +619,7 @@ const mergeAreaNeighbours = ( row, col, nthMatrix, metaDetailsMatrix, imageWeigh
 
   while ( searching ) {
     nextNth = nthMatrix[ row + height ][ col ];
-    nextNthStart = getFirstOccurence( nextNth, nthMatrix );
+    nextNthStart = getFirstOccurrence( nextNth, nthMatrix );
     nextRow = nextNthStart.row;
     nextCol = nextNthStart.col;
 
@@ -648,7 +648,7 @@ const mergeAreaNeighbours = ( row, col, nthMatrix, metaDetailsMatrix, imageWeigh
 
   while ( searching && !state.flipcolsrows ) {
     nextNth = nthMatrix[ row ][ col + width ];
-    nextNthStart = getFirstOccurence( nextNth, nthMatrix );
+    nextNthStart = getFirstOccurrence( nextNth, nthMatrix );
     nextRow = nextNthStart.row;
     nextCol = nextNthStart.col;
 
@@ -684,7 +684,7 @@ const fillArea = ( nthMatrix, row, col, width, height ) => {
   }
 };
 
-const getFirstOccurence = ( nth, nthMatrix ) => {
+const getFirstOccurrence = ( nth, nthMatrix ) => {
   for ( let i = 0; i < nthMatrix.length; i ++ ) {
     for ( let j = 0; j < nthMatrix[ i ].length; j ++ ) {
       if ( nthMatrix[ i ][ j ] === nth ) {
@@ -700,7 +700,7 @@ const getFirstOccurence = ( nth, nthMatrix ) => {
 };
 
 const getAreaWidth = ( nth, nthMatrix ) => {
-  const { row, col } = getFirstOccurence( nth, nthMatrix );
+  const { row, col } = getFirstOccurrence( nth, nthMatrix );
   let width = 1;
 
   while ( nth === nthMatrix[ row ][ col + width ] ) {
@@ -712,7 +712,7 @@ const getAreaWidth = ( nth, nthMatrix ) => {
 
 
 const getAreaHeight = ( nth, nthMatrix ) => {
-  const { row, col } = getFirstOccurence( nth, nthMatrix );
+  const { row, col } = getFirstOccurrence( nth, nthMatrix );
   let height = 1;
 
   while ( "undefined" !== typeof nthMatrix[ row + height ] && nth === nthMatrix[ row + height ][ col ] ) {

@@ -8,39 +8,29 @@ import { createBlock } from '@wordpress/blocks';
  */
 import metadata from './block.json';
 
-const { name: EMBED_BLOCK } = metadata;
+const { name: SUPERNOVA_BLOCK } = metadata;
 
 /**
- * Default transforms for generic embeds.
+ * Transform static (content) supernova into query supernova (with posts as content).
  */
 const transforms = {
 	from: [
 		{
-			type: 'raw',
-			isMatch: ( node ) =>
-				node.nodeName === 'P' &&
-				/^\s*(https?:\/\/\S+)\s*$/i.test( node.textContent ) &&
-				node.textContent?.match( /https/gi )?.length === 1,
-			transform: ( node ) => {
-				return createBlock( EMBED_BLOCK, {
-					url: node.textContent.trim(),
-				} );
-			},
-		},
-	],
-	to: [
-		{
 			type: 'block',
-			blocks: [ 'core/paragraph' ],
-			isMatch: ( { url } ) => !! url,
-			transform: ( { url, caption } ) => {
+			blocks: [ SUPERNOVA_BLOCK ],
+			isMatch: ( attributes, block ) => {
+        return true;
+      },
+			transform: ( { url, caption }, innerBlocks ) => {
 				let value = `<a href="${ url }">${ url }</a>`;
 				if ( caption?.trim() ) {
 					value += `<br />${ caption }`;
 				}
-				return createBlock( 'core/paragraph', {
-					content: value,
-				} );
+				return createBlock(
+          'core/query',
+          {},
+          innerBlocks
+          );
 			},
 		},
 	],

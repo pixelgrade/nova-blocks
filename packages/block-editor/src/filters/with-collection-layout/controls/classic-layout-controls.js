@@ -2,7 +2,7 @@ import { __ } from "@wordpress/i18n";
 
 import { ControlsGroup } from "../../../components";
 
-import PostsCountControl from './posts-count-control';
+import ItemsCountControl from './items-count-control';
 import ItemsPerRowControl from "./items-per-row-control";
 import ItemsGapControls from "./items-gap-control";
 
@@ -14,7 +14,7 @@ const ClassicLayoutControls = ( props ) => {
 
   return (
     <ControlsGroup title={ __( 'Cards Count', '__plugin_txtd' ) }>
-      <PostsCountControl { ...props } />
+      <ItemsCountControl { ...props } />
       <ItemsPerRowControl { ...props } />
       <ItemsGapControls { ...props } />
     </ControlsGroup>

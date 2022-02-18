@@ -4,7 +4,7 @@ import { RadioControl } from '@wordpress/components';
 
 import { ControlsGroup } from "../../../components";
 
-import PostsCountControl from "./posts-count-control";
+import ItemsCountControl from "./items-count-control";
 import ItemsPerRowControl from "./items-per-row-control";
 import ItemsGapControls from "./items-gap-control";
 
@@ -26,8 +26,8 @@ const CarouselLayoutControls = ( props ) => {
 
   return (
     <Fragment>
-      <ControlsGroup title={ __( 'Cards Count', '__plugin_txtd' ) }>
-        <PostsCountControl { ...props } />
+      <ControlsGroup title={ __( 'Number of Cards and Distribution', '__plugin_txtd' ) }>
+        <ItemsCountControl { ...props } />
         { carouselLayout === 'fixed' && <ItemsPerRowControl { ...props } /> }
         <ItemsGapControls { ...props } />
       </ControlsGroup>
