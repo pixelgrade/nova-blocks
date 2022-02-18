@@ -9,7 +9,7 @@ import DebugControls from './debug-controls';
 import BlockHeaderControls from './block-header-controls';
 import BreakingTheGridControls from './breaking-the-grid-controls';
 import GridAnatomyControls from './grid-anatomy-controls';
-import ItemsCountControls from './items-count-controls';
+import ParametricItemsCountControls from './parametric-items-count-controls';
 import ItemsRegularityControls from './items-regularity-controls';
 import MiscellaneousParametersControls from './miscellaneous-parameters-controls';
 
@@ -35,7 +35,7 @@ const ParametricLayoutControls = ( props ) => {
       <DebugControls { ...newProps } />
       <GridAnatomyControls { ...newProps } />
       <BreakingTheGridControls { ...newProps } />
-      <ItemsCountControls { ...newProps } />
+      <ParametricItemsCountControls { ...newProps } />
       <ItemsRegularityControls { ...newProps } />
       <MiscellaneousParametersControls { ...newProps } />
       <BlockHeaderControls { ...newProps } />

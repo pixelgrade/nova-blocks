@@ -14,14 +14,14 @@ const { name: SUPERNOVA_BLOCK } = metadata;
  * Transform static (content) supernova into query supernova (with posts as content).
  */
 const transforms = {
-	from: [
+	to: [
 		{
 			type: 'block',
-			blocks: [ SUPERNOVA_BLOCK ],
+			blocks: [ 'core/query' ],
 			isMatch: ( attributes, block ) => {
         return true;
       },
-			transform: ( { url, caption }, innerBlocks ) => {
+			transform: ( attributes, innerBlocks ) => {
 				let value = `<a href="${ url }">${ url }</a>`;
 				if ( caption?.trim() ) {
 					value += `<br />${ caption }`;

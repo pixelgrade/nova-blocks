@@ -8,25 +8,31 @@ import { ControlsGroup } from "../../../../components";
 
 import ItemsCountControl from "../items-count-control";
 
-const ItemsCountControls = ( props ) => {
+const ParametricItemsCountControls = ( props ) => {
 
   const {
     attributes,
     setAttributes,
-    areaColumns
+    areaColumns,
   } = props;
 
   const {
-    automaticPostsNumber,
+    automaticPostsNumber = false,
     postsToShow,
   } = attributes;
 
-  const autoPostsCount = useMemo( () => getPostsCount( areaColumns ), [ areaColumns ] );
-  if ( automaticPostsNumber && postsToShow !== autoPostsCount ) {
-    setAttributes({
-      "postsToShow": autoPostsCount,
-    });
-  }
+  const autoPostsCount = useMemo( () => {
+    const postsCount = getPostsCount( areaColumns );
+
+    // Update the attributes when the autoPostCount changes.
+    if ( automaticPostsNumber && postsToShow !== postsCount ) {
+      setAttributes({
+        "postsToShow": postsCount,
+      });
+    }
+
+    return postsCount;
+  }, [ areaColumns ] );
 
   // Used to store previous values of postsToShow.
   const tempPostsToShow = useMemo( () => attributes.tempPostsToShow || postsToShow, [ attributes ] );
@@ -55,4 +61,4 @@ const ItemsCountControls = ( props ) => {
   )
 };
 
-export default ItemsCountControls;
+export default ParametricItemsCountControls;

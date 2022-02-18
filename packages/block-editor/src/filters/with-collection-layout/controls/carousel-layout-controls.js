@@ -18,6 +18,7 @@ const CarouselLayoutControls = ( props ) => {
   const {
     layoutStyle,
     carouselLayout,
+    postsToShow,
   } = attributes;
 
   if ( layoutStyle !== "carousel" ) {
@@ -27,7 +28,7 @@ const CarouselLayoutControls = ( props ) => {
   return (
     <Fragment>
       <ControlsGroup title={ __( 'Number of Cards and Distribution', '__plugin_txtd' ) }>
-        <ItemsCountControl { ...props } />
+        <ItemsCountControl postsToShow={postsToShow} setAttributes={setAttributes} />
         { carouselLayout === 'fixed' && <ItemsPerRowControl { ...props } /> }
         <ItemsGapControls { ...props } />
       </ControlsGroup>
