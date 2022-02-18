@@ -19,8 +19,10 @@
       display: block;
     }
 
-    .c-menu-toggle__checkbox:not(:checked) ~ & {
-      transform: translateX(-100%);
+    &, &:before {
+      .c-menu-toggle__checkbox:not(:checked) ~ & {
+        left: -100%;
+      }
     }
   }
 
