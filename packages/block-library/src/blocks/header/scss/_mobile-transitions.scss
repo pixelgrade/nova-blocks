@@ -1,8 +1,10 @@
 @include below(lap) {
 
   .novablocks-header {
-    transition: transform 1s ease;
-    transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1); // Fast out, slow in
+
+    &, &:before {
+      transition: left 0.4s cubic-bezier(0.4, 0, 0.2, 1); // Fast out, slow in
+    }
   }
   
   .c-menu-toggle__slice {

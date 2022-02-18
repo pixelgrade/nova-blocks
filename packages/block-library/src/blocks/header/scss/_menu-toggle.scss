@@ -2,7 +2,7 @@
   #MOBILE MENU TOGGLE
 \*------------------------------------*/
 
-@media only screen and (min-width: 1000px) {
+@include above(lap) {
 
   .c-menu-toggle__checkbox,
   .c-menu-toggle {
@@ -14,13 +14,36 @@
   position: fixed;
   top: 0;
   left: 0;
-  z-index: 2002;
+  z-index: 2300;
 
 	font-size: 1rem;
+
+  margin: 0 !important;
+  background: none !important;
+
+  .c-menu-toggle__checkbox:checked ~ & {
+    @include apply-variation(6);
+
+    .c-menu-toggle__slice--top {
+      transform: rotate(45deg);
+    }
+
+    .c-menu-toggle__slice--middle {
+      opacity: 0;
+    }
+
+    .c-menu-toggle__slice--bottom {
+      transform: rotate(-45deg);
+    }
+  }
+}
+
+.c-menu-toggle__slice {
+  transition: var(--theme-transition);
+  transition-property: transform;
 }
 
 .c-menu-toggle__wrap {
-  
   position: relative;
   
 	display: flex;

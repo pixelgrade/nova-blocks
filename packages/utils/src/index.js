@@ -8,14 +8,9 @@ export * from './space-and-sizing';
 export * from './overlay-filter';
 export * from './color-signal';
 export * from './media';
-
-export const range = function( min, max ) {
-	const array = [];
-	for ( let i = 0; i <= max - min; i++ ) {
-		array.push( i + min );
-	}
-	return array;
-};
+export * from './focal-point';
+export * from './media-query';
+export * from './array';
 
 export const isSafari = /^((?!chrome|android).)*safari/i.test(navigator.userAgent);
 
@@ -56,45 +51,6 @@ export const shuffleArray = function( array ) {
 	}
 
 	return array;
-};
-
-export const defaultSnapValues = {
-	x: [0, 0.5, 1],
-	y: [0, 0.5, 1]
-};
-
-export const maybeSnapFocalPoint = function( focalPoint, snapValues = defaultSnapValues ) {
-	let x = parseFloat( focalPoint.x );
-	let y = parseFloat( focalPoint.y );
-	let thereshold = 0.05;
-
-	snapValues.x.forEach( snapValue => {
-		if ( snapValue - thereshold < x && x < snapValue + thereshold ) {
-			x = snapValue;
-		}
-	} );
-
-	snapValues.y.forEach( snapValue => {
-		if ( snapValue - thereshold < y && y < snapValue + thereshold ) {
-			y = snapValue;
-		}
-	} );
-
-	return { x, y }
-};
-
-export const getSnapClassname = focalPoint => {
-	const classNames = [];
-
-	if ( defaultSnapValues.x.includes( parseFloat( focalPoint.x ) ) ) {
-		classNames.push( 'is-snapped-x' );
-	}
-
-	if ( defaultSnapValues.y.includes( parseFloat( focalPoint.y ) ) ) {
-		classNames.push( 'is-snapped-y' );
-	}
-
-	return classNames.join( ' ' );
 };
 
 export const getControlsClasses = ( attributes, compileAttributes ) => {
@@ -146,22 +102,7 @@ export const getCardMediaPaddingTop = ( containerHeight ) => {
 	return `${ numerator * 100 / denominator }%`;
 };
 
-const breakpoints = {
-	desktop: 1366,
-	lap: 1024,
-	tablet: 768,
-	mobile: 480,
-};
 
-export const below = ( breakpoint ) => {
-	const width = breakpoints[breakpoint];
-	return window.innerWidth < width;
-};
-
-export const above = ( breakpoint ) => {
-	const width = breakpoints[breakpoint];
-	return window.innerWidth >= width;
-};
 
 export const titleCase = ( str ) => {
 	var splitStr = str.toLowerCase().split( ' ' );
@@ -280,19 +221,7 @@ export const getAlignFromMatrix = ( alignMatrixValue ) => {
 
 
 
-export const arrayRotate = (arr, count, reverse) => {
-  count = count % arr.length;
 
-  for ( let i = 1; i <= count; i++ ) {
-    if ( reverse ) {
-      arr.unshift( arr.pop() );
-    } else {
-      arr.push( arr.shift() );
-    }
-  }
-
-  return arr;
-};
 
 export const ready = ( fn ) => {
   if ( document.readyState != 'loading' ) {
@@ -321,6 +250,57 @@ export const removeClass = ( element, classes ) => {
 export const hasClass = ( element, className ) => {
   return element.classList.contains( className );
 };
+
+export const toggleClass = ( element, className, condition ) => {
+
+  if ( typeof condition !== "undefined" ) {
+    if ( !! condition ) {
+      addClass( element, className );
+    } else {
+      removeClass( element, className );
+    }
+    return;
+  }
+
+  if ( hasClass( element, className ) ) {
+    removeClass( element, className );
+  } else {
+    addClass( element, className );
+  }
+}
+
+export const getFirstChild = ( element ) => {
+  var firstChild = element.firstChild;
+
+  while ( firstChild != null && firstChild.nodeType === 3 ) { // skip TextNodes
+    firstChild = firstChild.nextSibling;
+  }
+
+  return firstChild;
+}
+
+export function setAndResetElementStyles ( element, props = {} ) {
+
+  const setProps = () => {
+    Object.keys( props ).forEach( key => {
+      element.style[key] = props[key];
+    } );
+  }
+
+  const resetProps = () => {
+    Object.keys( props ).forEach( key => {
+      element.style[key] = '';
+    } );
+  }
+
+  setProps();
+
+  if ( window.requestIdleCallback ) {
+    window.requestIdleCallback( resetProps );
+  } else {
+    setTimeout( resetProps, 0 );
+  }
+}
 
 export const clamp = ( number, min, max ) => {
   return Math.min( Math.max( min, number ), max )
@@ -358,4 +338,29 @@ export const needsPreview = ( attributes ) => {
   return [ "parametric", "carousel" ].includes( attributes.layoutStyle ) && "auto" !== attributes.contentType;
 };
 
+export const onScrollRAF = ( callback ) => {
+  let scrollY = window.pageYOffset;
+  let lastScrollY = -1;
+  let frameRendered = false;
+
+  window.addEventListener( 'scroll', () => {
+    scrollY = window.pageYOffset;
+    frameRendered = false;
+  } );
+
+  window.addEventListener( 'resize', () => {
+    frameRendered = false;
+  } );
+
+  const tick = () => {
+    if ( ! frameRendered ) {
+      callback( scrollY, lastScrollY );
+      lastScrollY = scrollY;
+      frameRendered = true;
+    }
+    requestAnimationFrame( tick );
+  }
+
+  requestAnimationFrame( tick );
+}
 

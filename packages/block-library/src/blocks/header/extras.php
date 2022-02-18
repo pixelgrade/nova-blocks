@@ -1,47 +1,5 @@
 <?php
 
-if ( ! function_exists('get_header_row_block' ) ) {
-
-	/**
-	 * Get the Header Row based on attributes.
-	 *
-	 * @param $row_type
-	 * @param $row_type_value
-	 *
-	 * @return array
-	 */
-
-	function get_header_row_block( $row_type, $row_type_value ): array {
-
-		$post = get_block_area_post( 'header' );
-
-		$block = [];
-
-		if ( empty( $post->post_content ) || ! has_blocks( $post->post_content ) ) {
-			return $block;
-		}
-
-		// Get all blocks inside Block Area;
-		$blocks = parse_blocks( $post->post_content );
-		$header_block = reset( $blocks );
-		if ( empty( $header_block['innerBlocks'] ) ) {
-			return $block;
-		}
-
-		// Get InnerBlocks
-		foreach ( $header_block['innerBlocks'] as $inner_block ) {
-
-			// Select InnerBlock which match Sticky Row attribute.
-			// Stop at first.
-			if ( isset( $inner_block['attrs'][$row_type] ) && $inner_block['attrs'][$row_type] === $row_type_value ) {
-				return $inner_block;
-			}
-		}
-
-		return $block;
-	}
-}
-
 if ( ! function_exists('header_block_updated') ) {
 
 	/**
@@ -103,9 +61,9 @@ if ( ! function_exists('render_reading_bar') ) {
 
 		// We want to show Reading Bar
 		// only on Posts.
-		if ( ! is_singular('post') ) {
-			return '';
-		}
+//		if ( ! is_singular('post') ) {
+//			return '';
+//		}
 
 		ob_start(); ?>
 		<!--Reading Bar-->
@@ -147,7 +105,7 @@ if ( ! function_exists('render_reading_bar') ) {
 		</div><!-- .c-reading-bar -->
 
 		<!--Reading Progress Bar-->
-		<progress class="c-reading-progress  js-reading-progress"></progress>
+		<div class="c-reading-progress  js-reading-progress"></div>
 		<?php
 
 		return ob_get_clean();

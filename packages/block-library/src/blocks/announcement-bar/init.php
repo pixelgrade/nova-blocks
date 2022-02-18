@@ -49,7 +49,13 @@ if ( ! function_exists( 'novablocks_render_announcement_bar_block' ) ) {
 			return '';
 		}
 
-		$classes = [ 'novablocks-announcement-bar', 'is-hidden', 'alignfull', ];
+		$classes = [ 'novablocks-announcement-bar', 'alignfull', ];
+		$cookie_name = 'novablocks-announcement-' . $attributes['blockId'] . '-disabled';
+
+		if ( ! empty( $_COOKIE[ $cookie_name ] ) && ! is_user_logged_in() ) {
+			return '';
+		}
+
 		if ( ! empty( $attributes['className'] ) ) {
 			$classes[] = $attributes['className'];
 		}

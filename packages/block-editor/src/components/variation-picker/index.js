@@ -27,10 +27,7 @@ const VariationPicker = ( props ) => {
   const onSelectVariation = useCallback( nextVariation => {
     const nextAttributes = { layout: nextVariation.name };
 
-    if ( nextVariation.attributes ) {
-      Object.assign( nextAttributes, nextVariation.attributes );
-      setAttributes( nextAttributes );
-    }
+    setAttributes( nextAttributes );
 
     if ( nextVariation.innerBlocks ) {
       replaceInnerBlocks(

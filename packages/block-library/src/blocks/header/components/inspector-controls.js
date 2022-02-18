@@ -2,6 +2,7 @@ import {
   ControlsTab,
   ControlsSection,
   Notice,
+  useInnerBlocks
 } from "@novablocks/block-editor";
 
 import { capitalizeFirstLetter } from '@novablocks/utils';
@@ -16,10 +17,8 @@ import { useState, useCallback } from "@wordpress/element";
 
 const HeaderInspectorControls = ( props ) => {
 
-  const {
-    clientId,
-    innerBlocks
-  } = props;
+  const { clientId } = props;
+  const innerBlocks = useInnerBlocks( clientId );
 
   const { updateBlockAttributes } = useDispatch( 'core/block-editor' );
   const updateNextStickyRow = useCallback( nextStickyRowClientId => {
@@ -28,7 +27,7 @@ const HeaderInspectorControls = ( props ) => {
         isSticky: block.clientId === nextStickyRowClientId
       } )
     } )
-  }, [] );
+  }, [ innerBlocks ] );
   const header = useSelect( select => select( 'core/block-editor' ).getBlock( clientId ), [ clientId ] );
   const rows = header.innerBlocks;
 
