@@ -14,6 +14,7 @@ import { getFocalPointImage } from "@novablocks/scrolling-effect";
 
 import edit from './edit';
 import variations from './variations';
+import transforms from './transforms';
 import queryVariations from './query-variations';
 import {supernova as supernovaIcon} from './icons';
 
@@ -77,10 +78,32 @@ addFilter(
   Number.MAX_SAFE_INTEGER
 );
 
+const withTransforms = settings => {
+
+  if ( 'novablocks/supernova' !== settings.name ) {
+    return settings;
+  }
+
+  return {
+    ...settings,
+    transforms,
+  }
+};
+
+// We're doing this through a filter that should run last, to make sure all attributes needed for these variations
+// are already added to the block's settings. Also, the filter needs to be added before the block is actually registered
+// addFilter(
+//   'blocks.registerBlockType',
+//   'novablocks/supernova/with-transforms',
+//   withTransforms,
+//   Number.MAX_SAFE_INTEGER
+// );
+
 registerBlockType( 'novablocks/supernova', {
   icon: supernovaIcon,
   attributes,
   edit,
+  transforms,
   save: function() {
     return <InnerBlocks.Content />
   },

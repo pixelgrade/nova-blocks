@@ -10,6 +10,9 @@ import {
   postsCollection as parametricCollectionIcon,
   slideshowCollection as  slideshowCollectionIcon
 } from '../icons';
+import metadata from '../../block.json';
+
+const { name: SUPERNOVA_BLOCK } = metadata;
 
 const CARDS_COUNT = 5;
 
@@ -32,7 +35,7 @@ let variation, innerSupernovaAttributes, innerSupernovaItemAttributes;
 
 // The name of the variation is the same as the one used in the inserter scoped variation postsCollectionQuery.
 // This way we have consistency of naming regardless of the route taken.
-variation = 'novablocks-posts-collection';
+variation = 'novablocks-posts-parametric';
 innerSupernovaAttributes = {
   variation,
 
@@ -66,7 +69,59 @@ export const parametricCollection = {
   },
   innerBlocks: [
     [
-      'novablocks/supernova',
+      SUPERNOVA_BLOCK,
+      innerSupernovaAttributes,
+      Array.from( Array( CARDS_COUNT ) ).map( () => [ 'novablocks/supernova-item', innerSupernovaItemAttributes ] ),
+    ],
+    [ 'core/query-pagination' ],
+  ],
+  isActive: ( blockAttributes, variationAttributes ) => blockAttributes.variation === variationAttributes.variation,
+  scope: [ 'block' ],
+};
+
+// The name of the variation is the same as the one used in the inserter scoped variation postsCollectionQuery.
+// This way we have consistency of naming regardless of the route taken.
+variation = 'novablocks-posts-grid';
+innerSupernovaAttributes = {
+  variation,
+
+  showCollectionTitle: false,
+  showCollectionSubtitle: false,
+
+  contentType: 'auto',
+  layoutStyle: 'classic',
+
+  emphasisTopSpacing: 1,
+  emphasisBottomSpacing: 1,
+  layoutGutter: 10,
+
+  postsToShow: 6,
+  columns: 3,
+
+  cardLayout: 'vertical',
+  contentPosition: 'top left',
+  cardMediaOpacity: 100,
+};
+innerSupernovaItemAttributes = {
+  ...innerSupernovaAttributes,
+  // Lock inner supernova-items so they can't be removed or moved.
+  lock: {
+    remove: true,
+    move: true
+  }
+};
+
+export const gridCollection = {
+  name: 'novablocks/supernova/query-grid-collection',
+  title: __( 'Grid Layout', '__plugin_txtd' ),
+  icon: parametricCollectionIcon,
+  attributes: {
+    ...attributes,
+    variation,
+  },
+  innerBlocks: [
+    [
+      SUPERNOVA_BLOCK,
       innerSupernovaAttributes,
       Array.from( Array( CARDS_COUNT ) ).map( () => [ 'novablocks/supernova-item', innerSupernovaItemAttributes ] ),
     ],
@@ -118,7 +173,7 @@ export const slideshowCollection = {
   },
   innerBlocks: [
     [
-      'novablocks/supernova',
+      SUPERNOVA_BLOCK,
       innerSupernovaAttributes,
       Array.from( Array( CARDS_COUNT ) ).map( () => [ 'novablocks/supernova-item', innerSupernovaItemAttributes ] ),
     ],

@@ -1,5 +1,5 @@
 import { addClass, removeClass, toggleClass, onScrollRAF, clamp, ready, syncColorSignalClasses } from '@novablocks/utils';
-import { initializeReadingBar } from './frontend/initialize-reading-bar';
+// import { initializeReadingBar } from './frontend/initialize-reading-bar';
 import Header from './frontend/components/index';
 
 ready( () => {

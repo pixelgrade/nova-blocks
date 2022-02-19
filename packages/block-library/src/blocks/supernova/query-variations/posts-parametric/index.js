@@ -6,15 +6,15 @@ import { __ } from "@wordpress/i18n";
 /**
  * Internal dependencies
  */
-import { slideshowCollection as icon } from '../icons';
+import { postsCollection as icon } from '../icons';
 import metadata from '../../block.json';
 
 const { name: SUPERNOVA_BLOCK } = metadata;
 
-const CARDS_COUNT = 3;
+const CARDS_COUNT = 6;
 
 const attributes = {
-  variation: 'novablocks-posts-slideshow',
+  variation: 'novablocks-posts-parametric',
   query: {
     perPage: CARDS_COUNT,
     pages: 1,
@@ -30,26 +30,18 @@ const attributes = {
 };
 
 const innerSupernovaAttributes = {
-  variation: 'novablocks-posts-slideshow',
+  variation: 'novablocks-posts-parametric',
 
-  align: 'full',
   contentType: 'auto',
-  layoutStyle: 'carousel',
-  contentPadding: 100,
+  layoutStyle: 'parametric',
+  contentPosition: 'center left',
+  contentPadding: 0,
+  layoutGutter: 10,
 
   postsToShow: CARDS_COUNT,
-  columns: 1,
-
-  showCollectionTitle: false,
-  showCollectionSubtitle: false,
-
-  cardLayout: 'stacked',
-  contentPosition: 'center center',
-  overlayFilterStrength: 40,
-  contentColorSignal: 3,
-  contentPaletteVariation: 12,
 };
 
+// @todo Not sure why we should send Supernova attributes to each item. It is dirty!
 const innerSupernovaItemAttributes = {
   ...innerSupernovaAttributes,
   // Lock inner supernova-items so they can't be removed or moved.
@@ -59,10 +51,10 @@ const innerSupernovaItemAttributes = {
   }
 };
 
-export const postsSlideshowQuery = {
-  name: 'novablocks/supernova/query-posts-slideshow',
-  title: __( 'Slideshow me the Way', '__plugin_txtd' ),
-  description: __( 'Display a queried set of posts in a single, coveted space.', '__plugin_txtd' ),
+export const postsParametricQuery = {
+  name: 'novablocks/supernova/query-posts-parametric',
+  title: __( 'Posts Collection', '__plugin_txtd' ),
+  description: __( 'Display a queried set of posts in a beautiful, consistent manner.', '__plugin_txtd' ),
   icon: icon,
   attributes,
   innerBlocks: [
@@ -71,6 +63,7 @@ export const postsSlideshowQuery = {
       innerSupernovaAttributes,
       Array.from( Array( CARDS_COUNT ) ).map( () => [ 'novablocks/supernova-item', innerSupernovaItemAttributes ] ),
     ],
+    [ 'core/query-pagination' ],
   ],
   isActive: ( blockAttributes, variationAttributes ) => blockAttributes.variation === variationAttributes.variation,
   scope: [ 'inserter' ],

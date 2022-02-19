@@ -7,11 +7,14 @@ import { __ } from "@wordpress/i18n";
  * Internal dependencies
  */
 import { postsCollection as icon } from '../icons';
+import metadata from '../../block.json';
+
+const { name: SUPERNOVA_BLOCK } = metadata;
 
 const CARDS_COUNT = 6;
 
 const attributes = {
-  variation: 'novablocks-posts-collection',
+  variation: 'novablocks-posts-grid',
   query: {
     perPage: CARDS_COUNT,
     pages: 1,
@@ -27,15 +30,21 @@ const attributes = {
 };
 
 const innerSupernovaAttributes = {
-  variation: 'novablocks-posts-collection',
+  variation: 'novablocks-posts-grid',
 
   contentType: 'auto',
-  layoutStyle: 'parametric',
-  contentPosition: 'center left',
-  contentPadding: 0,
+  layoutStyle: 'classic',
+
+  emphasisTopSpacing: 1,
+  emphasisBottomSpacing: 1,
   layoutGutter: 10,
 
   postsToShow: CARDS_COUNT,
+  columns: 3,
+
+  cardLayout: 'vertical',
+  contentPosition: 'top left',
+  cardMediaOpacity: 100,
 };
 
 // @todo Not sure why we should send Supernova attributes to each item. It is dirty!
@@ -48,15 +57,15 @@ const innerSupernovaItemAttributes = {
   }
 };
 
-export const postsCollectionQuery = {
-  name: 'novablocks/supernova/query-posts-collection',
-  title: __( 'Posts Collection', '__plugin_txtd' ),
-  description: __( 'Display a queried set of posts in a beautiful, consistent manner.', '__plugin_txtd' ),
+export const postsGridQuery = {
+  name: 'novablocks/supernova/query-posts-grid',
+  title: __( 'Posts Grid', '__plugin_txtd' ),
+  description: __( 'Display a queried set of posts in a grid format (columns and rows).', '__plugin_txtd' ),
   icon: icon,
   attributes,
   innerBlocks: [
     [
-      'novablocks/supernova',
+      SUPERNOVA_BLOCK,
       innerSupernovaAttributes,
       Array.from( Array( CARDS_COUNT ) ).map( () => [ 'novablocks/supernova-item', innerSupernovaItemAttributes ] ),
     ],
