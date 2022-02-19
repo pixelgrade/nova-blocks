@@ -25,7 +25,7 @@ const ContentColorSignalControl = ( props ) => {
   }
 
   return (
-    <ControlsGroup>
+    <ControlsGroup key={'content_color_signal_group'}>
       <SignalControl { ...props }
                      label={ __( 'Content Area Color Signal', '__plugin_txtd' ) }
                      max={ getMaxSignal( palette ) }

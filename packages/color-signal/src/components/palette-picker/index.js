@@ -67,7 +67,7 @@ const PalettePicker = ( props ) => {
   } );
 
   return (
-    <ControlsGroup>
+    <ControlsGroup key={'block_color_signal_palette_picker'}>
       <ColorPicker
         label={ 'Color Palette' }
         options={ options }

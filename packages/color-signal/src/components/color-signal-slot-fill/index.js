@@ -23,7 +23,7 @@ const ColorSignalCustomizeSlot = ( {
   }
 
   return (
-    <ControlsGroup>
+    <ControlsGroup key={'block_color_customize_group'}>
       <Slot { ...props } bubblesVirtually={ bubblesVirtually } />
     </ControlsGroup>
   );

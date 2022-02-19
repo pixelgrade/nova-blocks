@@ -14,11 +14,15 @@ const MiscellaneousControls = ( props ) => {
   return (
     <Fragment>
       { ! disableFunctionalColors &&
-        <ControlsGroup title={ __( 'Miscellaneous', '__plugin_txtd' ) } className={ 'novablocks-controls-group--colors-miscellanous-controls' }>
+        <ControlsGroup
+          title={ __( 'Miscellaneous', '__plugin_txtd' ) }
+          className={ 'novablocks-controls-group--colors-miscellanous-controls' }
+          key={'miscellaneous_group'}
+        >
           <FunctionalColorsToggleControl { ...props } />
         </ControlsGroup>
       }
-      <ColorReferenceToggleControl { ...props } />
+      <ColorReferenceToggleControl { ...props } key={'color_reference_toggle'}/>
     </Fragment>
   )
 };

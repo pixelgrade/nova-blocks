@@ -39,7 +39,12 @@ const BlockColorSignal = props => {
   }, [ palette, updateBlock ] );
 
   return (
-    <SignalControl { ...props } max={ getMaxSignal( palette ) } label={ __( 'Block Color Signal', '__plugin_txtd' ) } signal={ colorSignal } onChange={ onSignalChange } />
+    <SignalControl
+      { ...props }
+      max={ getMaxSignal( palette ) }
+      label={ __( 'Block Color Signal', '__plugin_txtd' ) }
+      signal={ colorSignal }
+      onChange={ onSignalChange } />
   )
 };
 

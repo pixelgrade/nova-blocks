@@ -21,6 +21,7 @@ import { getRandomAttributes } from "../utils";
 const MediaCompositionControls = props => {
 
 	const {
+    clientId,
 		setAttributes,
 		attributes,
 	} = props;
@@ -46,9 +47,9 @@ const MediaCompositionControls = props => {
       label={ __( 'Media Composition', '__plugin_txtd' ) }
       group={ __( 'Modules', '__plugin_txtd' ) }
       order={ 10 }
-      key={ 'media-composition-controls-section' }>
+      key={ clientId + '_media-composition-controls-section' }>
 
-      <ControlsTab label={ __( 'Presets', '__plugin_txtd' ) }>
+      <ControlsTab label={ __( 'Presets', '__plugin_txtd' ) } key={'media_composition_presets'}>
         <Notice
           key={ 'advanced-gallery-quick-start' }
           id={ 'novablocks-media-composition-quick-start' }
@@ -63,7 +64,7 @@ const MediaCompositionControls = props => {
         />
       </ControlsTab>
 
-      <ControlsTab label={ __( 'Customize', '__plugin_txtd' ) }>
+      <ControlsTab label={ __( 'Customize', '__plugin_txtd' ) } key={'media_composition_customize'}>
         <RangeControl
           key={ 'advanced-gallery-crop-style' }
           label={ __( 'Images Crop Style', '__plugin_txtd' ) }
@@ -77,7 +78,7 @@ const MediaCompositionControls = props => {
         />
       </ControlsTab>
 
-      <ControlsTab label={ __( 'Settings', '__plugin_txtd' ) }>
+      <ControlsTab label={ __( 'Settings', '__plugin_txtd' ) } key={'media_composition_settings'}>
         <ControlsGroup title={ __( 'Gallery', '__plugin_txtd' ) }>
           <RangeControl
             key={ 'advanced-gallery-size-contrast' }

@@ -26,5 +26,9 @@
 	"collectionTitleLevel": {
 		"type": "number",
 		"default": 2
+	},
+	"contentType": {
+		"type": "string",
+		"default": "auto"
 	}
 }

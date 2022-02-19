@@ -8,7 +8,7 @@ const EmphasisAreaControl = props => {
   const { emphasisArea } = attributes;
 
   return (
-    <ControlsGroup>
+    <ControlsGroup key={'emphasis_area_group'}>
       <RangeControl
         value={ emphasisArea }
         onChange={ ( emphasisArea ) => setAttributes( { emphasisArea } ) }

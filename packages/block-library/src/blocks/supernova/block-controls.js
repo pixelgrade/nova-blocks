@@ -8,7 +8,12 @@ import { needsPreview } from "@novablocks/utils";
 
 const Controls = ( props ) => {
 
-  const { attributes, setAttributes } = props;
+  const { attributes, setAttributes, inQuery } = props;
+  // If we are in a query block, everything is automatic.
+  if (inQuery) {
+    return null;
+  }
+
   const { preview } = attributes;
 
   const editModeLabel = __( 'Exit Edit Mode', '__plugin_txtd' );
@@ -20,7 +25,7 @@ const Controls = ( props ) => {
 
   return (
     <BlockControls>
-      <Toolbar group={ 'block' }>
+      <Toolbar label={ 'Supernova' } group={ 'block' }>
         <Button
           className="components-icon-button components-toolbar__control"
           icon={ getIconSvg( 'swap' ) }

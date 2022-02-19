@@ -63,9 +63,10 @@ const SupernovaPreview = props => {
     showCollectionTitle,
     showCollectionSubtitle,
     showPagination,
-    contentType,
     cardLayout,
   } = attributes;
+
+  const contentType = inQuery ? 'auto' : 'fields';
 
   const contentAlign = getAlignFromMatrix( attributes?.contentPosition );
 
@@ -104,7 +105,19 @@ const MemoizedSupernovaPreview = memo( SupernovaPreview );
 
 const SupernovaEdit = props => {
 
-  const { attributes, context, clientId } = props;
+  const { attributes, setAttributes, context, clientId } = props;
+
+  const { queryId } = context;
+  const isDescendentOfQueryLoop = Number.isFinite( queryId );
+
+  // Make sure that the contentType attribute is set.
+  // We will leave it for now, but it might not be needed
+  // since right now it is deduced from the fact that the Supernova block is or is not inside a query block.
+  if ( isDescendentOfQueryLoop && attributes.contentType !== 'auto' ) {
+    setAttributes( { contentType: 'auto' } );
+  } else if ( ! isDescendentOfQueryLoop && attributes.contentType !== 'fields' ) {
+    setAttributes( { contentType: 'fields' } );
+  }
 
   const cardAttributes = useMemo( () => {
 
@@ -127,17 +140,14 @@ const SupernovaEdit = props => {
 
   useInnerBlocksCount( clientId, attributes, 'novablocks/supernova-item', cardAttributes );
 
-  // Either lock or unlock supernova-items, depending on the content type.
-  if ( 'auto' === attributes.contentType ) {
+  // Either lock or unlock supernova-items depending on whether we are in a query or not.
+  if ( isDescendentOfQueryLoop ) {
     // If we use a query to get posts, the inner supernova-items need to be locked.
     useInnerBlocksLock( clientId, { remove: true, move: true }, attributes, 'novablocks/supernova-item' );
   } else {
     // @todo Maybe we should just always lock supernova-items since we have controls for number of items?
     useInnerBlocksLock( clientId, { remove: false, move: false }, attributes, 'novablocks/supernova-item' );
   }
-
-  const { queryId } = context;
-  const isDescendentOfQueryLoop = Number.isFinite( queryId );
 
   let posts = false;
 
@@ -255,7 +265,7 @@ const SupernovaEdit = props => {
   return (
     <Fragment>
       <MemoizedSupernovaPreview {...props} posts={posts} inQuery={isDescendentOfQueryLoop} key={'preview'}/>
-      <BlockControls {...props} key={'block-controls'}/>
+      <BlockControls {...props} inQuery={isDescendentOfQueryLoop} key={'block-controls'}/>
       <ChangeMediaBlockControls {...props} key={'media-composition-block-controls'}/>
     </Fragment>
   );

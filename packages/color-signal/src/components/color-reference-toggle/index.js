@@ -17,7 +17,7 @@ const ColorReferenceToggleControl = ( props ) => {
   } = props;
 
   return (
-    <ControlsGroup>
+    <ControlsGroup key={'color_reference_toggle_group'}>
       <ToggleControl
         key={ 'color-set-use-source-as-reference-control' }
         label={ __( 'Use Source Color as Reference', '__plugin_txtd' ) }

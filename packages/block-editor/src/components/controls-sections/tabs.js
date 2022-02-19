@@ -1,20 +1,23 @@
+/**
+ * WordPress dependencies
+ */
 import classnames from "classnames";
-
-import { useMemoryState } from '../../index';
-import Cube from "./cube";
-
-const ACCENT_COLORS = [ 'rgb(142,101,192)', 'rgb(0,202,182)', 'rgb(222,22,81)' ];
-
-import { __ } from '@wordpress/i18n';
-
 import {
   useEffect,
   useLayoutEffect,
   useMemo,
-  Component,
 } from '@wordpress/element';
+import { cleanForSlug } from '@wordpress/url';
+import { __ } from '@wordpress/i18n';
 
+/**
+ * Internal dependencies
+ */
+import { useMemoryState } from '../../index';
+import Cube from "./cube";
 import { useResizeObserver } from "../../index";
+
+const ACCENT_COLORS = [ 'rgb(142,101,192)', 'rgb(0,202,182)', 'rgb(222,22,81)' ];
 
 const getTabAccentColor = ( label ) => {
 
@@ -87,7 +90,7 @@ const ActiveSectionTabs = ( props ) => {
 							};
 
 							return (
-								<div className={ className } onClick={ onClick } key={ 'section_tab_' + index }>{ label }</div>
+								<div className={ className } onClick={ onClick } key={ cleanForSlug(label) + '_section_tab_' + index }>{ label }</div>
 							);
 						} )
 					}
