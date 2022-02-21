@@ -119,6 +119,7 @@
 
 .supernova-item__media-aspect-ratio {
   position: relative;
+  min-height: 100%;
 
   &:before {
     content: "";
