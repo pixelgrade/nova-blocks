@@ -2839,6 +2839,13 @@ function novablocks_get_tag_name( WP_Term $tag ): string {
 	return $tag->name;
 }
 
+function novablocks_disable_block_editor_layout( $settings, $context ) {
+	$settings[ 'supportsLayout' ] = false;
+
+	return $settings;
+}
+add_filter( 'block_editor_settings_all', 'novablocks_disable_block_editor_layout', PHP_INT_MAX, 2 );
+
 
 /**
  * BLOCK PATTERNS

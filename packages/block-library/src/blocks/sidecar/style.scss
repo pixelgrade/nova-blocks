@@ -43,7 +43,12 @@
 // 
 // "Break" classes are added via JS when the aligned block and a Sidebar 
 // do not overlap, so there is space that the aligned block can fill. 
-:is(.is-root-container, .nb-content-layout-grid) {
+:is(
+  .is-root-container,
+  .wp-block-post-content,
+  .wp-block-query,
+  .nb-content-layout-grid
+  ) {
 
   // Align: WIDE
   > :is(.alignwide, [data-align="wide"]) {
