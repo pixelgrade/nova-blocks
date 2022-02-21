@@ -70,7 +70,6 @@
 
   // force grid items take up all the available horizontal space
   > *:not(.block-list-appender) {
-    width: 100%;
     max-width: none;
   }
 
@@ -114,26 +113,5 @@
     @include above(lap) {
       display: block;
     }
-  }
-}
-
-@mixin nb-content-layout {
-  padding-left: var(--nb-wrapper-sides-spacings);
-  padding-right: var(--nb-wrapper-sides-spacings);
-
-  > * {
-    margin-left: auto;
-    margin-right: auto;
-    max-width: var(--nb-content-width);
-  }
-
-  > :is(.alignwide, [data-align="wide"]) {
-    max-width: var(--nb-container-width);
-  }
-
-  > :is(.alignfull, [data-align="full"]) {
-    max-width: none;
-    margin-left: calc( -1 * var(--nb-wrapper-sides-spacings) );
-    margin-right: calc( -1 * var(--nb-wrapper-sides-spacings) );
   }
 }

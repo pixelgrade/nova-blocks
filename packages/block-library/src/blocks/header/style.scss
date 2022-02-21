@@ -11,19 +11,19 @@
 }
 
 .novablocks-header[class] {
-  //position: absolute;
   width: 100%;
+}
+
+:is(.novablocks-header, .novablocks-header--mobile, #more.specific) {
+  --nb-block-top-spacing: 0;
 }
 
 .novablocks-header--sticky[class] {
   --header-background-opacity: 0.95;
-
-  //position: fixed;
-  //top: 0;
 }
 
 .novablocks-header--mobile {
-  
+
   @include above(lap) {
     display: none;
   }
@@ -43,8 +43,6 @@
 
     transition: var(--theme-transition);
     transition-property: opacity;
-
-    //will-change: transform;
   }
 
   .novablocks-header__inner-container {
@@ -74,25 +72,6 @@
   @include header-shadow;
 }
 
-//.novablocks-header--main:not(.novablocks-header--sticky) {
-//
-//  @include above(lap) {
-//    // @todo:
-//    // In case the Header is a single sticky row, there is a slight
-//    // jerkiness when start scrolling and the "position" is changed
-//    // from "absolute" to "fixed".
-//    //
-//    // The "position: fixed" seem solve this issue, but it's not working
-//    // when there are multiple rows inside the Header.
-//    position: absolute !important;
-//    top: 0 !important;
-//  }
-//
-//  @include below(lap) {
-//    margin-top: 0 !important;
-//  }
-//}
-
 .novablocks-header:not(.novablocks-header--ready) {
   opacity: 0;
   --header-background-opacity: 0;
@@ -120,22 +99,9 @@
   }
 }
 
-
 .novablocks-header--sticky:not(.novablocks-header--main) {
 
   @include above(lap) {
     margin-top: 0 !important;
   }
 }
-
-//.novablocks-header--sticky.novablocks-header--main {
-//  position: fixed !important;
-//  top: 0 !important;
-//
-//  @include above(lap) {
-//    &:before {
-//      --header-background-opacity: 0;
-//    }
-//  }
-//}
-
