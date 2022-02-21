@@ -2709,31 +2709,50 @@ function novablocks_get_variation_from_signal( int $signal ): int {
 function novablocks_get_posts_collection_cards_markup( array $attributes, $content, $block ): string {
 	global $novablocks_rendered_posts_ids;
 
+	if ( ! $novablocks_rendered_posts_ids ) {
+		$novablocks_rendered_posts_ids = [];
+	}
+
 	$output = '';
 
-	$query = new WP_Query( novablocks_build_articles_query( $attributes, $block ) );
+	$page_key = isset( $block->context['queryId'] ) ? 'query-' . $block->context['queryId'] . '-page' : 'query-page';
+	$page     = empty( $_GET[ $page_key ] ) ? 1 : (int) $_GET[ $page_key ];
+
+	$query_args = build_query_vars_from_query_block( $block, $page );
+	// Override the custom query with the global query if needed.
+	$use_global_query = ( isset( $block->context['query']['inherit'] ) && $block->context['query']['inherit'] );
+	if ( $use_global_query ) {
+		global $wp_query;
+		if ( $wp_query && isset( $wp_query->query_vars ) && is_array( $wp_query->query_vars ) ) {
+			// Unset `offset` because if is set, $wp_query overrides/ignores the paged parameter and breaks pagination.
+			unset( $query_args['offset'] );
+			$query_args = wp_parse_args( $wp_query->query_vars, $query_args );
+
+			if ( empty( $query_args['post_type'] ) && is_singular() ) {
+				$query_args['post_type'] = get_post_type( get_the_ID() );
+			}
+		}
+	}
+
+	$query = new WP_Query( $query_args );
 
 	if ( ! $query->have_posts() ) {
 		return $output;
 	}
 
-	$posts_to_show = isset( $attributes['postsToShow'] ) ? intval( $attributes['postsToShow'] ) : 3;
-
-	$posts_shown = 0;
-	while ( $query->have_posts() && $posts_shown < $posts_to_show ) {
+	while ( $query->have_posts() ) {
 		$post = $query->next_post();
 
 		$card_markup = novablocks_get_collection_card_markup_from_post( $post, $attributes );
 		$markup      = apply_filters( 'novablocks_get_collection_card_markup', $card_markup, $post, $attributes );
-
 		if ( ! empty( $markup ) ) {
 			$output .= $markup;
 			// Only remember posts that were actually rendered.
 			array_push( $novablocks_rendered_posts_ids, $post->ID );
-
-			$posts_shown++;
 		}
 	}
+
+	wp_reset_postdata();
 
 	return $output;
 }

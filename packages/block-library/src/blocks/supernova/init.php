@@ -33,7 +33,7 @@ function novablocks_get_supernova_attributes(): array {
 if ( ! function_exists( 'novablocks_render_supernova_block' ) ) {
 
 	/**
-	 * Entry point to render the block with the given attributes, content, and context.
+	 * Entry point to render the Supernova block with the given attributes, content, and context.
 	 *
 	 * @see \WP_Block::render()
 	 *

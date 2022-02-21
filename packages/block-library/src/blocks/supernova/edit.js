@@ -138,6 +138,7 @@ const SupernovaEdit = props => {
 
   }, [ attributes ] );
 
+  // Make sure that we keep the number of inner Supernova Items in sync with the number of items.
   useInnerBlocksCount( clientId, attributes, 'novablocks/supernova-item', cardAttributes );
 
   // Either lock or unlock supernova-items depending on whether we are in a query or not.
