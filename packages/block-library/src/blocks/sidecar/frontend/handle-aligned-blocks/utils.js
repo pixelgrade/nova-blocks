@@ -1,7 +1,27 @@
+import { matches } from "@novablocks/utils";
+
 export const getContentBlocksArray = () => {
-  const selector = '.nb-content-layout-grid > :is( .alignfull, .alignwide, .alignleft, .alignright )';
-  const nodelist = document.querySelectorAll( selector );
-  return Array.from( nodelist );
+  const gridSelectors = [
+    ".wp-block-query",
+    ".wp-block-post-content",
+    ".wp-site-blocks",
+    ".wp-block-template-part",
+    ".nb-content-layout-grid",
+    ".nb-sidecar",
+    ".nb-sidecar-area--content",
+  ];
+
+  const mergedGridSelector = gridSelectors.join( ', ' );
+  const grids = Array.from( document.querySelectorAll( mergedGridSelector ) );
+
+  const alignedElements = grids.reduce( ( acc, curr ) => {
+    const currentAlignedElements = Array.from( curr.children ).filter( element => {
+      return matches( element, ".alignfull, .alignwide, .alignleft, .alignright" );
+    } );
+    return acc.concat( currentAlignedElements );
+  }, [] );
+
+  return alignedElements;
 };
 
 export const wouldOverlap = ( el1, el2 ) => {

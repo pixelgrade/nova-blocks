@@ -13,7 +13,8 @@
 }
 
 // Applying Grid on Group Block
-[class*="__inner-container"][class] {
+[class*="__inner-container"][class],
+.wp-block-group {
   @include nb-content-layout;
 
   .sm-color-signal-0:not(.alignfull):not([data-align="full"]) > & {
@@ -43,6 +44,10 @@
 
 :is(
   .is-root-container,
+  .wp-block-query,
+  .wp-block-post-content,
+  .wp-site-blocks,
+  .wp-block-template-part,
   .nb-content-layout-grid,
   .nb-sidecar,
   .nb-sidecar-area--content

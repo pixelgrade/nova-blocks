@@ -118,7 +118,6 @@ registerBlockType( BLOCK_NAME, {
         controls: true,
         deprecated: true
       },
-      customAlign: true,
     },
   },
   edit,

@@ -5,15 +5,10 @@ import { useSupports } from "../../hooks";
 const withWrapperPropsRemoved = createHigherOrderComponent( OriginalComponent => {
 
   return ( props ) => {
-    const supports = useSupports( props.name );
     const wrapperProps = props.wrapperProps ?? {};
     const { dataAlign, ...newWrapperProps } = wrapperProps;
     const { attributes } = props;
     const { align } = attributes;
-
-    if ( ! supports?.novaBlocks?.customAlign ) {
-      return <OriginalComponent { ...props } />
-    }
 
     Object.assign( newWrapperProps, {
       className: classnames(

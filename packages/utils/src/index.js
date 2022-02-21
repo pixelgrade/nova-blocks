@@ -364,3 +364,6 @@ export const onScrollRAF = ( callback ) => {
   requestAnimationFrame( tick );
 }
 
+export const matches = ( el, selector ) => {
+  return ( el.matches || el.matchesSelector || el.msMatchesSelector || el.mozMatchesSelector || el.webkitMatchesSelector || el.oMatchesSelector ).call( el, selector );
+};

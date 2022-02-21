@@ -63,7 +63,16 @@ if ( ! function_exists( 'novablocks_render_header_block' ) ) {
 			'c-menu-toggle',
 		];
 
-		$toggleClasses = array_merge( $toggleClasses, $blockPaletteClasses );
+		$toggleClasses = array_merge( $toggleClasses, $blockPaletteClasses ); ?>
+
+		<div class="<?php echo esc_attr( join( ' ', $classes ) ); ?>" <?php echo join( ' ', $data_attributes ); ?> >
+			<?php
+				echo $content;
+				echo render_reading_bar();
+			?>
+		</div>
+
+		<?php
 
 		if ( empty( $novablocks_responsive_navigation_outputted ) ) { ?>
 
@@ -77,21 +86,12 @@ if ( ! function_exists( 'novablocks_render_header_block' ) ) {
                         <b class="c-menu-toggle__slice c-menu-toggle__slice--bottom"></b>
                     </span>
                     <span
-	                    class="c-menu-toggle__label screen-reader-text"><?php esc_html_e( 'Menu', '__plugin_txtd' ); ?></span>
+						class="c-menu-toggle__label screen-reader-text"><?php esc_html_e( 'Menu', '__plugin_txtd' ); ?></span>
                 </span>
 			</label>
 
 			<?php $novablocks_responsive_navigation_outputted = true;
-		} ?>
-
-		<div class="<?php echo esc_attr( join( ' ', $classes ) ); ?>" <?php echo join( ' ', $data_attributes ); ?> >
-			<?php
-				echo $content;
-				echo render_reading_bar();
-			?>
-		</div>
-
-		<?php
+		}
 
 		do_action( 'novablocks_header:after' );
 

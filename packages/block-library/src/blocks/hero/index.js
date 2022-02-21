@@ -91,7 +91,6 @@ registerBlockType( BLOCK_NAME, {
         doppler: true
       },
       spaceAndSizing: true,
-      customAlign: true,
       elementsVisibility: {
         attributes: true,
       }

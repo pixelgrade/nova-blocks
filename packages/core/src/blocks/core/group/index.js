@@ -36,7 +36,6 @@ const addNovaBlocksSupport = ( settings ) => {
           colorSignalClassname: true,
         },
         spaceAndSizing: true,
-        customAlign: true,
       }
     },
   };
