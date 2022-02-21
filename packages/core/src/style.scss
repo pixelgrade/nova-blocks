@@ -23,6 +23,18 @@
   }
 }
 
+.wp-block-group {
+
+  // groups that have a set color signal (different text and background color)
+  // and have no emphasis top or bottom spacing need to have some padding
+  // by multiplying with -1 and then adding 1 we make sure that
+  // we only add padding when these values are smaller than 1
+  &:not(.sm-color-signal-0) {
+    padding-top: calc((1 + (-1 * var(--nb-emphasis-top-spacing))) * var(--nb-wrapper-sides-spacings));
+    padding-bottom: calc((1 + (-1 * var(--nb-emphasis-bottom-spacing))) * var(--nb-wrapper-sides-spacings));
+  }
+}
+
 [class*="__inner-container"][class] {
   .sm-color-signal-0:not(.alignfull):not([data-align="full"]) > & {
     padding-left: 0;
