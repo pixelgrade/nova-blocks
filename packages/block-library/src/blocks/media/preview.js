@@ -4,6 +4,7 @@
 import classnames from 'classnames';
 
 import { InnerBlocks } from '@wordpress/block-editor';
+import { select } from '@wordpress/data';
 
 import { MediaCompositionPreview } from '@novablocks/media-composition';
 import { getColorSignalClassnames } from '@novablocks/utils';
@@ -12,7 +13,6 @@ const MediaPreview = ( props ) => {
 
   const {
     attributes,
-    settings,
   } = props;
 
 	const {
@@ -23,6 +23,8 @@ const MediaPreview = ( props ) => {
     contentColorSignal,
     contentPaletteVariation,
 	} = attributes;
+
+  const novablocksSettings = select( 'novablocks' ).getSettings();
 
 	const passedProps = props;
 
@@ -54,7 +56,7 @@ const MediaPreview = ( props ) => {
           <div className="novablocks-media__layout">
             <div className="novablocks-media__content">
               <div className={ contentClassNames }>
-                <InnerBlocks allowedBlocks={ settings.media.allowedBlocks } />
+                <InnerBlocks allowedBlocks={ novablocksSettings.media.allowedBlocks } />
               </div>
             </div>
             <div className="novablocks-media__aside">

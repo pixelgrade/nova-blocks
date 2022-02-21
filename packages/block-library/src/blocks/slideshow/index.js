@@ -101,7 +101,7 @@ registerBlockType( BLOCK_NAME, {
         customWrapper: true,
       },
       spaceAndSizing: true,
-      elementsVisibility: {
+      cardElementsVisibility: {
         attributes: true,
       }
     },

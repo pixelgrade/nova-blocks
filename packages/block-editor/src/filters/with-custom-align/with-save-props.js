@@ -4,6 +4,10 @@ import { getSupports } from "../../utils";
 const withSaveProps = ( extraProps, blockType, attributes ) => {
   const { align } = attributes;
 
+  if (align === undefined) {
+    return extraProps;
+  }
+
   return {
     ...extraProps,
     className: classnames(

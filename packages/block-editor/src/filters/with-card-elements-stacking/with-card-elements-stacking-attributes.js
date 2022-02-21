@@ -2,9 +2,9 @@ import attributes from "./attributes.json";
 
 const withCardElementsStackingAttributes = ( block ) => {
 
-  const spacingSupports = block?.supports?.novaBlocks?.cardElementsStacking;
+  const cardElementsStackingSupports = block?.supports?.novaBlocks?.cardElementsStacking;
 
-  if ( spacingSupports !== true && spacingSupports?.attributes !== true ) {
+  if ( cardElementsStackingSupports !== true && cardElementsStackingSupports?.attributes !== true ) {
     return block;
   }
 

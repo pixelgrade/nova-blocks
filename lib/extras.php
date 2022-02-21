@@ -185,60 +185,6 @@ function novablocks_get_focal_point_style( array $focalPoint ): string {
 	return 'object-position: ' . $focalPointX . ' ' . $focalPointY . ';';
 }
 
-function novablocks_add_hero_settings( array $settings ): array {
-
-	$hero_settings = [
-		'template' => [
-			[
-				'core/group',
-				[],
-				[
-					[
-						'novablocks/headline',
-						[
-							'secondary' => esc_html__( 'This is a catchy', '__plugin_txtd' ),
-							'primary'   => esc_html__( 'Headline', '__plugin_txtd' ),
-							'align'     => 'center',
-							'level'     => 1,
-							'fontSize'  => 'larger',
-							'className' => 'has-larger-font-size',
-						],
-					],
-					[
-						'core/paragraph',
-						[
-							'content'   => esc_html__( 'A brilliant subtitle to explain its catchiness', '__plugin_txtd' ),
-							'align'     => 'center',
-							'className' => 'is-style-lead',
-						],
-					],
-					[
-						'core/buttons',
-						[
-							'align'                => 'center',
-							'contentJustification' => 'center',
-						],
-						[
-							[
-								'core/button',
-								[
-									'text' => esc_html__( 'Discover more', '__plugin_txtd' ),
-								],
-							],
-						],
-					],
-				],
-			],
-		],
-	];
-
-	$settings['hero'] = $hero_settings;
-
-	return $settings;
-}
-
-add_filter( 'novablocks_block_editor_initial_settings', 'novablocks_add_hero_settings', 0 );
-
 function novablocks_add_space_and_sizing_settings( array $settings ): array {
 
 	if ( empty( $settings['modules'] ) ) {
@@ -1871,6 +1817,7 @@ function novablocks_build_articles_query( array $attributes, $block ): array {
 		'post_status'         => 'publish',
 		'suppress_filters'    => false,
 		'ignore_sticky_posts' => true,
+		'posts_per_page' => isset( $attributes['postsToShow'] ) ? intval( $attributes['postsToShow'] ) : 3,
 	];
 
 	if ( $prevent_duplicate_posts ) {
@@ -1880,6 +1827,7 @@ function novablocks_build_articles_query( array $attributes, $block ): array {
 	if ( $manual_mode && $specific_posts ) {
 		$query_args['post__in'] = $specific_posts;
 		$query_args['orderby']  = 'post__in';
+		unset( $query_args['posts_per_page'] );
 	} else if ( ! $manual_mode ) {
 		$page_key = isset( $block->context['queryId'] ) ? 'query-' . $block->context['queryId'] . '-page' : 'query-page';
 		$page     = empty( $_GET[ $page_key ] ) ? 1 : (int) $_GET[ $page_key ];
@@ -2715,23 +2663,28 @@ function novablocks_get_posts_collection_cards_markup( array $attributes, $conte
 
 	$output = '';
 
-	$page_key = isset( $block->context['queryId'] ) ? 'query-' . $block->context['queryId'] . '-page' : 'query-page';
-	$page     = empty( $_GET[ $page_key ] ) ? 1 : (int) $_GET[ $page_key ];
+	if ( isset( $block->context['queryId'] ) ) {
 
-	$query_args = build_query_vars_from_query_block( $block, $page );
-	// Override the custom query with the global query if needed.
-	$use_global_query = ( isset( $block->context['query']['inherit'] ) && $block->context['query']['inherit'] );
-	if ( $use_global_query ) {
-		global $wp_query;
-		if ( $wp_query && isset( $wp_query->query_vars ) && is_array( $wp_query->query_vars ) ) {
-			// Unset `offset` because if is set, $wp_query overrides/ignores the paged parameter and breaks pagination.
-			unset( $query_args['offset'] );
-			$query_args = wp_parse_args( $wp_query->query_vars, $query_args );
+		$page_key = isset( $block->context['queryId'] ) ? 'query-' . $block->context['queryId'] . '-page' : 'query-page';
+		$page     = empty( $_GET[ $page_key ] ) ? 1 : (int) $_GET[ $page_key ];
 
-			if ( empty( $query_args['post_type'] ) && is_singular() ) {
-				$query_args['post_type'] = get_post_type( get_the_ID() );
+		$query_args = build_query_vars_from_query_block( $block, $page );
+		// Override the custom query with the global query if needed.
+		$use_global_query = ( isset( $block->context['query']['inherit'] ) && $block->context['query']['inherit'] );
+		if ( $use_global_query ) {
+			global $wp_query;
+			if ( $wp_query && isset( $wp_query->query_vars ) && is_array( $wp_query->query_vars ) ) {
+				// Unset `offset` because if is set, $wp_query overrides/ignores the paged parameter and breaks pagination.
+				unset( $query_args['offset'] );
+				$query_args = wp_parse_args( $wp_query->query_vars, $query_args );
+
+				if ( empty( $query_args['post_type'] ) && is_singular() ) {
+					$query_args['post_type'] = get_post_type( get_the_ID() );
+				}
 			}
 		}
+	} else {
+		$query_args = novablocks_build_articles_query( $attributes, $block );
 	}
 
 	$query = new WP_Query( $query_args );

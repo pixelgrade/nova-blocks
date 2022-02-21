@@ -31,6 +31,6 @@
 	},
 	"usesContext": [],
 	"supports": {
-		"align": [ "wide", "full" ],
+		"align": [ "wide", "full" ]
 	}
 }
