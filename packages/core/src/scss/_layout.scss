@@ -1,0 +1,145 @@
+:root {
+  // Default position for blocks is between CS (content-start) and CE (content-end).
+  --block-content-start: ws;
+  --block-content-end: we;
+
+  // Default block limits are WS (wide-start) and WE (wide-end).
+  --block-wide-start: ws;
+  --block-wide-end: we;
+
+  --block-full-start: fs;
+  --block-full-end: fe;
+
+  --block-left-start: ws;
+  --block-left-end: gs;
+  --block-right-start: ge;
+  --block-right-end: we;
+
+  @include above(lap) {
+    --block-content-start: cs;
+    --block-content-end: ce;
+  }
+
+  --nb-sidecar-gap: calc(var(--nb-spacing) * 2);
+  --nb-sidecar-sidebar-small-width: min(288px, 20%);
+  --nb-sidecar-sidebar-medium-width: min(330px, 25%);
+  --nb-sidecar-sidebar-large-width: min(576px, 40%);
+
+  // the unit is needed in order for the calc functions to work
+  --nb-sidecar-sidebar-left-width: var(--nb-sidecar-sidebar-small-width);
+  --nb-sidecar-sidebar-right-width: var(--nb-sidecar-sidebar-small-width);
+
+  --nb-container-width: 1200px;
+  --nb-content-width: calc(var(--nb-container-width) - var(--nb-sidecar-sidebar-left-width) - var(--nb-sidecar-sidebar-left-gap) - var(--nb-sidecar-sidebar-right-width) - var(--nb-sidecar-sidebar-right-gap));
+  --nb-sidecar-sides: max(var(--nb-wrapper-sides-spacings), calc((100% - var(--nb-container-width)) * 0.5));
+
+  @include nb-layout-settings;
+}
+
+// This is where the grid magic starts.
+//
+// "Break" classes are added via JS when the aligned block and a Sidebar
+// do not overlap, so there is space that the aligned block can fill.
+:is(
+  .is-root-container,
+  .wp-block-post-content,
+  .wp-block-query,
+  .wp-site-blocks,
+  .wp-block-template-part,
+  .nb-content-layout-grid
+  ) {
+
+  // Align: WIDE
+  > :is(.alignwide, [data-align="wide"]) {
+
+    &.break-align-left {
+      grid-column-start: var(--block-wide-start);
+    }
+
+    &.break-align-right {
+      grid-column-end: var(--block-wide-end);
+    }
+  }
+
+  // Align: FULL
+  > :is(.alignfull, [data-align="full"]) {
+
+    &.break-align-left {
+      grid-column-start: var(--block-full-start);
+    }
+
+    &.break-align-right {
+      grid-column-end: var(--block-full-end);
+    }
+  }
+
+  > .wp-block-group:not(.break-align-left):not(.break-align-right) > .wp-block-group__inner-container > * {
+    max-width: none;
+  }
+
+  // Align: LEFT & RIGHT
+  > :is(.alignleft, [data-align="left"]).break-align-left,
+  > :is(.alignright, [data-align="right"]).break-align-right {
+    grid-row-end: span 5;
+    align-self: flex-start;
+  }
+
+  // Align: LEFT
+  > :is(.alignleft, [data-align="left"]).break-align-left {
+    grid-column: var(--block-left-start) / var(--block-left-end);
+
+    + :not(:is(.alignright, [data-align="right"])) {
+      grid-column-start: cs; // shouldn't it be var(--block-content-start) ?
+    }
+  }
+
+  // Align: RIGHT
+  > :is(.alignright, [data-align="right"]).break-align-right {
+    grid-column: var(--block-right-start) / var(--block-right-end);
+
+    + :not(:is(.alignleft, [data-align="left"])) {
+      grid-column-end: ce; // shouldn't it be var(--block-content-end) ?
+    }
+  }
+
+
+
+  // NONBREAKABLE ALIGNED BLOCKS
+  //
+  // Left or right-aligned blocks inside a Sidecar [content] area with
+  // no left or right [sidebar] available to get out of the content area
+  //
+  // Due to the use of the CSS grid there is no support for a float-like
+  // alternative until the 'exclusions' feature is implemented.
+  // Status of the spec: https://github.com/w3c/csswg-drafts/issues/3308
+  //
+  // The current proposal is to support only left/right aligned blocks
+  // that have a *height* equal or smaller to the paragraph after it.
+
+  @include above(lap) {
+
+    // Sidecar inside Sidecar
+    :is(.nb-sidecar--sidebar-left .nb-sidecar--sidebar-right,
+        .nb-sidecar--sidebar-right .nb-sidecar--sidebar-left) & {
+      // Removed 'dense' option as it makes multiple blocks
+      // aligned left/right to jump on top of the grid column
+      // grid-auto-flow: dense;
+
+      > :is(.alignleft, [data-align="left"], .x2.specificity):not(.break-align-left) {
+        grid-column-end: gcs;
+
+        + :not(:is(.alignright, [data-align="right"])) {
+          grid-column-start: cc;
+        }
+      }
+
+      > :is(.alignright, [data-align="right"], .x2.specificity):not(.break-align-right) {
+        grid-column-start: gce;
+
+        + :not(:is(.alignleft, [data-align="left"])) {
+          grid-column-end: cc;
+        }
+      }
+    }
+  }
+}
