@@ -15,8 +15,9 @@ import { getSvg } from "@novablocks/block-editor";
 import iconSvg from '../header/header-block.svg';
 import edit from './edit';
 import attributesOverwrite from "./attributes-overwrite.json";
+import metadata from './block.json';
 
-const BLOCK_NAME = 'novablocks/header-row';
+const { name: BLOCK_NAME } = metadata;
 
 const overwriteAttributes = ( settings ) => {
 
