@@ -2,6 +2,7 @@
  * WordPress dependencies
  */
 import { createBlock, createBlocksFromInnerBlocksTemplate } from '@wordpress/blocks';
+import { select } from '@wordpress/data';
 
 /**
  * Internal dependencies
@@ -19,11 +20,19 @@ const transforms = {
 			type: 'block',
 			blocks: [ 'core/query' ],
       isMatch( attributes, block ) {
-        // We should determine if we are already wrapped by a query.
-        return true;
+        const { getBlockParents, getBlockName } = select( 'core/block-editor' );
+        const parents = getBlockParents( block.clientId );
+        // If the block has no parents, it can be transformed.
+        if (!parents.length) {
+          return true;
+        }
+
+        // If the block has a query parent, regardless where in the hierarchy, don't offer the transform.
+        return undefined === parents.find( ( parentClientId ) => getBlockName( parentClientId ) === 'core/query' );
       },
 			transform: ( attributes, innerBlocks ) => {
         // Use the same variation names as those used for query variations.
+        // This way the proper variation name and icon will be show in the block list view.
         let variation = 'novablocks-posts-grid';
         if ( attributes.layoutStyle === 'parametric' ) {
           variation = 'novablocks-posts-parametric';
