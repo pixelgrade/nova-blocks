@@ -1,12 +1,11 @@
 const withAlignSettingsRemoved = ( settings ) => {
+  const { getEditWrapperProps, ...newSettings } = settings;
 
-  if ( ! settings?.supports?.novaBlocks?.customAlign ) {
+  if ( ! settings?.align ) {
     return settings;
   }
 
-  const { getEditWrapperProps, ...newSettings } = settings;
   const { align, alignWide, ...newSupports } = settings.supports;
-
 
   return {
     ...newSettings,

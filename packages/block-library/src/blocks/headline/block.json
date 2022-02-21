@@ -32,8 +32,5 @@
 	"usesContext": [],
 	"supports": {
 		"align": [ "wide", "full" ],
-		"novaBlocks": {
-			"customAlign": true
-		}
 	}
 }

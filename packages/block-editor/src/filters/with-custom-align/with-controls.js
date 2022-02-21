@@ -7,12 +7,6 @@ const withCustomAlignControls = createHigherOrderComponent( OriginalComponent =>
 
   return ( props ) => {
 
-    const supports = useSupports( props.name );
-
-    if ( ! supports?.novaBlocks?.customAlign ) {
-      return <OriginalComponent { ...props } />
-    }
-
     return (
       <Fragment>
         <Controls { ...props } />

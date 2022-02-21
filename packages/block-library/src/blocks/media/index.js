@@ -97,7 +97,6 @@ registerBlockType( BLOCK_NAME, {
         controls: true,
         advancedSpacing: true,
       },
-      customAlign: true,
     },
   },
 	edit,

@@ -1,4 +1,6 @@
+import { useMemo } from "@wordpress/element";
 import { BlockControls, BlockAlignmentControl } from '@wordpress/block-editor';
+
 import { useSupports } from "../../index";
 
 const Controls = ( props ) => {
@@ -7,6 +9,11 @@ const Controls = ( props ) => {
   const { align } = attributes;
 
   const supports = useSupports( props.name );
+  const alignOptions = useMemo( () => supports?.novaBlocks?.align, [ supports ] );
+
+  if ( ! Array.isArray( alignOptions ) || ! alignOptions.length ) {
+    return null;
+  }
 
   return (
     <BlockControls group="block">
@@ -15,7 +22,7 @@ const Controls = ( props ) => {
         onChange={ ( nextAlign ) => {
           setAttributes( { align: nextAlign ? nextAlign : 'none' } );
         } }
-        controls={ supports.novaBlocks.align }
+        controls={ alignOptions }
       />
     </BlockControls>
   )
