@@ -30,6 +30,9 @@
   margin-bottom: 0;
   padding-top: 0;
   padding-bottom: 0;
+
+  padding-left: var(--nb-wrapper-sides-spacings);
+  padding-right: var(--nb-wrapper-sides-spacings);
 }
 
 .novablocks-header-row__inner-container[class] > .wp-block {

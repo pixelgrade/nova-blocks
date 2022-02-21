@@ -14,11 +14,21 @@
   box-sizing: border-box;
 }
 
+:is(.wp-site-blocks) {
+  padding-left: var(--nb-wrapper-sides-spacings);
+  padding-right: var(--nb-wrapper-sides-spacings);
+
+  > :is(.alignfull, [data-align="full"]) {
+    margin-left: calc(-1 * var(--nb-wrapper-sides-spacings));
+    margin-right: calc(-1 * var(--nb-wrapper-sides-spacings));
+  }
+}
+
 // Applying Grid on Group Block
 .wp-block-group,
 [class*="__inner-container"] {
-  padding-left: var(--nb-wrapper-sides-spacings);
-  padding-right: var(--nb-wrapper-sides-spacings);
+  //padding-left: var(--nb-wrapper-sides-spacings);
+  //padding-right: var(--nb-wrapper-sides-spacings);
 
   > * {
     margin-left: auto;
@@ -32,8 +42,8 @@
 
   > :is(.alignfull, [data-align="full"]) {
     max-width: none;
-    margin-left: calc(-1 * var(--nb-wrapper-sides-spacings));
-    margin-right: calc(-1 * var(--nb-wrapper-sides-spacings));
+    //margin-left: calc(-1 * var(--nb-wrapper-sides-spacings));
+    //margin-right: calc(-1 * var(--nb-wrapper-sides-spacings));
   }
 }
 
@@ -46,6 +56,8 @@
   &:not(.sm-color-signal-0) {
     padding-top: calc((1 + (-1 * var(--nb-emphasis-top-spacing))) * var(--nb-wrapper-sides-spacings));
     padding-bottom: calc((1 + (-1 * var(--nb-emphasis-bottom-spacing))) * var(--nb-wrapper-sides-spacings));
+    padding-left: var(--nb-wrapper-sides-spacings);
+    padding-right: var(--nb-wrapper-sides-spacings);
   }
 }
 

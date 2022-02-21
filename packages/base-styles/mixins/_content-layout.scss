@@ -70,7 +70,6 @@
 
   // force grid items take up all the available horizontal space
   > *:not(.block-list-appender) {
-    width: 100%;
     max-width: none;
   }
 
