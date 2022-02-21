@@ -164,7 +164,7 @@ $slick-arrow-background-opacity-hover: 0.6 !default;
 .slick-arrow {
   position: absolute;
   top: 50%;
-  z-index: 9999;
+  z-index: 1000;
 
   display: block;
   height: $slick-arrow-size;
