@@ -82,19 +82,12 @@ if ( ! function_exists( 'novablocks_render_header_block' ) ) {
 			</label>
 
 			<?php $novablocks_responsive_navigation_outputted = true;
-		}
+		} ?>
 
-		?>
-
-		<div class="<?php echo esc_attr( join( ' ', $classes ) ); ?>"
-			<?php echo join( ' ', $data_attributes ); ?>
-			<?php echo ( $header_is_simple && ! empty( $sticky_row_block ) ) ? 'data-sticky="true"' : ''; ?>
-		>
+		<div class="<?php echo esc_attr( join( ' ', $classes ) ); ?>" <?php echo join( ' ', $data_attributes ); ?> >
 			<?php
-
-			echo $content;
-			echo render_reading_bar();
-
+				echo $content;
+				echo render_reading_bar();
 			?>
 		</div>
 

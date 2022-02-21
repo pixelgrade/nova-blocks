@@ -16,7 +16,6 @@ function novablocks_get_header_row_attributes(): array {
 		'packages/block-editor/src/filters/with-space-and-sizing/attributes.json',
 		'packages/block-library/src/blocks/header-row/attributes-overwrite.json',
 	] );
-
 }
 
 if ( ! function_exists( 'novablocks_render_header_row_block' ) ) {

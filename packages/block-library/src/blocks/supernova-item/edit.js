@@ -1,3 +1,6 @@
+/**
+ * WordPress dependencies
+ */
 import { useEffect, useMemo, useState } from '@wordpress/element';
 import { Popover } from '@wordpress/components';
 import { useSelect } from '@wordpress/data';
@@ -10,6 +13,9 @@ import {
 
 const useInnerBlocksProps = wp.blockEditor.useInnerBlocksProps || wp.blockEditor.__experimentalUseInnerBlocksProps;
 
+/**
+ * Internal dependencies
+ */
 import { useScrollingEffect, withScrollingEffect } from '@novablocks/scrolling-effect';
 import { normalizeMedia } from '@novablocks/utils';
 
