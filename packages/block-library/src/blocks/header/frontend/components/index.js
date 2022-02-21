@@ -1,4 +1,14 @@
-import { mqService, above, below, addClass, removeClass, hasClass, toggleClass, setAndResetElementStyles } from '@novablocks/utils';
+import {
+  mqService,
+  above,
+  below,
+  matches,
+  addClass,
+  hasClass,
+  removeClass,
+  toggleClass,
+  setAndResetElementStyles
+} from '@novablocks/utils';
 
 import HeaderBase from "./header-base";
 import HeaderMobile from "./header-mobile";
@@ -12,7 +22,7 @@ class Header extends HeaderBase {
   constructor( element ) {
     super();
 
-    if ( ! element ) {
+    if ( !element ) {
       return;
     }
 
@@ -26,7 +36,7 @@ class Header extends HeaderBase {
 
     this.mobileHeader = new HeaderMobile( this );
 
-    if ( ! this.isSimple ) {
+    if ( !this.isSimple ) {
       this.stickyHeader = new HeaderSticky( this.element );
     }
 
@@ -61,7 +71,9 @@ class Header extends HeaderBase {
       this.element.style.top = `${ this.staticDistance }px`;
     }
 
-    this.paddingTopTargets.forEach( target => { target.style.paddingTop = `${ this.getHeight() }px` } );
+    this.paddingTopTargets.forEach( target => {
+      target.style.paddingTop = `${ this.getHeight() }px`
+    } );
 
     this.updateStickyStyles( scrollY );
   }
@@ -81,7 +93,7 @@ class Header extends HeaderBase {
   getAdjacentElement( element ) {
     const next = element.nextElementSibling;
 
-    if ( ! next ) {
+    if ( !next || matches( next, '.c-menu-toggle, .c-menu-toggle__checkbox' ) ) {
       return this.getAdjacentElement( element.parentElement );
     }
 
@@ -106,7 +118,7 @@ class Header extends HeaderBase {
       const isStacked = attributes.cardLayout === 'stacked';
       const isCarousel = attributes.layoutStyle === 'carousel';
 
-      if ( ! header && ! hasImagePadding && isStacked ) {
+      if ( !header && !hasImagePadding && isStacked ) {
         const containers = Array.from( element.querySelectorAll( '.supernova-item__inner-container' ) )
 
         if ( isCarousel ) {
@@ -131,8 +143,8 @@ class Header extends HeaderBase {
 
     if ( this.isSticky && above( 'lap' ) ) {
       HeaderBase.prototype.applyStickyStyles.call( this, element, scrollY );
-      toggleClass( this.element, 'novablocks-header--transparent', ! this.shouldBeSticky );
-      this.toggleRowsColors( ! this.shouldBeSticky );
+      toggleClass( this.element, 'novablocks-header--transparent', !this.shouldBeSticky );
+      this.toggleRowsColors( !this.shouldBeSticky );
     }
   }
 
