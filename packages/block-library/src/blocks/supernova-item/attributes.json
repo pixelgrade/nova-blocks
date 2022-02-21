@@ -50,5 +50,9 @@
 	"lock": {
 		"type": "object",
 		"default": {}
+	},
+	"contentType": {
+		"type": "string",
+		"default": "auto"
 	}
 }
