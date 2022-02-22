@@ -12,7 +12,7 @@ import iconSvg from "./cards-collection-icon.svg";
 const CARDS_COUNT = 3;
 
 const attributes = {
-  variation: 'cards-collection',
+  variation: 'novablocks-cards-collection',
 
   contentType: 'fields',
   layoutStyle: 'classic',

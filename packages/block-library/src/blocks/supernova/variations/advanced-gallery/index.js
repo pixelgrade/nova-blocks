@@ -9,7 +9,7 @@ import { __ } from "@wordpress/i18n";
 import { advancedGallery as icon } from '../icons';
 
 const attributes = {
-  variation: 'advanced-gallery',
+  variation: 'novablocks-advanced-gallery',
 
   contentType: 'fields',
   layoutStyle: 'classic',
@@ -35,7 +35,7 @@ const attributes = {
 const advancedGallery = {
   name: 'novablocks/supernova/advanced-gallery',
   title: __( 'Advanced Gallery', '__plugin_txtd' ),
-  description: __( 'Display galleries of images in unique and creative compositions.', '__plugin_txtd' ),
+  description: __( 'Display a gallery of images in a unique and creative composition.', '__plugin_txtd' ),
   icon: icon,
   attributes,
   innerBlocks: [

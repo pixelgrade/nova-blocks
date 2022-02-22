@@ -1,15 +1,16 @@
 import { createBlock, createBlocksFromInnerBlocksTemplate } from '@wordpress/blocks';
 
-export default {
+const transforms = {
   to: [
     {
       type: 'block',
-      blocks: [ 'novablocks/supernova' ],
+      blocks: [ 'core/query' ],
       isMatch( attributes, block ) {
-        // We will only allow the transform if the contentLoading is automatic.
+        // We will only allow the transform if the contentType is auto and the loading is automated,
+        // not specific posts since the core query block doesn't support specific post IDs.
         return attributes?.contentType === 'auto' && attributes?.loadingMode === 'automated';
       },
-      transform: ( attributes ) => {
+      transform: ( attributes, innerBlocks ) => {
 
         const commonAttributes = Object.assign( {}, attributes, {
           contentPosition: 'center left'
@@ -60,4 +61,6 @@ export default {
       },
     },
   ],
-}
+};
+
+export default transforms;
