@@ -566,6 +566,64 @@ function novablocks_dequeue_unused_block_assets() {
 
 add_action( 'enqueue_block_assets', 'novablocks_dequeue_unused_block_assets', 99 );
 
+function novablocks_optimize_frontend_scripts_output() {
+	// These are actually empty(ish) scripts without any effect.
+	// We let them be so we can have a consistent dependency generation logic.
+	// But we don't want them in the frontend since it would be wasteful.
+	$scripts_to_remove = [
+		'novablocks/media/frontend',
+		'novablocks/media-composition/frontend',
+		'novablocks/posts-collection/frontend',
+	];
+
+	foreach ( $scripts_to_remove as $handle ) {
+		// If the current handle isn't enqueued, skip it.
+		if ( ! wp_script_is( $handle, 'enqueued' ) ) {
+			continue;
+		}
+
+		// Search for the current handle's dependencies.
+		$wp_script = wp_scripts()->registered[ $handle ];
+		$deps      = $wp_script->deps;
+
+		// Remove the handle from the queue.
+		wp_dequeue_script( $handle );
+
+		// If it's dependencies aren't already enqueued, queue them up.
+		foreach ( $deps as $dependency ) {
+			if ( ! wp_script_is( $dependency, 'enqueued' ) ) {
+				wp_enqueue_script( $dependency );
+			}
+		}
+	}
+}
+
+/**
+ * Handle the enqueue of frontend-only scripts since the core won't enqueue them for us for dynamic blocks.
+ *
+ * @see \WP_Block::render()
+ *
+ * @param WP_Block $block
+ */
+function novablocks_maybe_enqueue_block_frontend_scripts( WP_Block $block ) {
+	if ( is_admin() || novablocks_is_gutenberg() ) {
+		return;
+	}
+
+	if ( ! empty( $block->block_type->view_script ) ) {
+		wp_enqueue_script( $block->block_type->view_script );
+	}
+}
+
+// We need to cover both the head and the footer scripts
+// since the block editor logic will enqueue the scripts again upon block render.
+add_action( 'wp_head', 'novablocks_optimize_frontend_scripts_output', 8 );       // The wp_print_head_scripts() is hooked at 9.
+add_action( 'login_head', 'novablocks_optimize_frontend_scripts_output', 8 );    // The wp_print_head_scripts() is hooked at 9.
+add_action( 'embed_head', 'novablocks_optimize_frontend_scripts_output', 19 );   // The wp_print_head_scripts() is hooked at 20.
+add_action( 'wp_footer', 'novablocks_optimize_frontend_scripts_output', 19 );    // The wp_print_footer_scripts() is hooked at 20.
+add_action( 'login_footer', 'novablocks_optimize_frontend_scripts_output', 19 ); // The wp_print_footer_scripts() is hooked at 20.
+add_action( 'embed_footer', 'novablocks_optimize_frontend_scripts_output', 19 ); // The wp_print_footer_scripts() is hooked at 20.
+
 /**
  * Filters a given script tag, possibly adding an `integrity` attribute.
  *

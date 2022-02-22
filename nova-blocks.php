@@ -69,8 +69,11 @@ function novablocks_get_plugin_url(): string {
 
 require_once dirname( __FILE__ ) . '/lib/extras.php';
 require_once dirname( __FILE__ ) . '/lib/setup.php';
+require_once dirname( __FILE__ ) . '/lib/rest-api.php';
+require_once dirname( __FILE__ ) . '/lib/theme-supports.php';
 require_once dirname( __FILE__ ) . '/lib/block-editor-settings.php';
 require_once dirname( __FILE__ ) . '/lib/block-patterns.php';
+require_once dirname( __FILE__ ) . '/lib/block-rendering.php';
 require_once dirname( __FILE__ ) . '/lib/client-assets.php';
 require_once dirname( __FILE__ ) . '/lib/deprecated.php';
 require_once dirname( __FILE__ ) . '/lib/block-areas/block-areas.php';
