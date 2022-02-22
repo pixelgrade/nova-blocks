@@ -201,54 +201,6 @@ function novablocks_add_space_and_sizing_settings( array $settings ): array {
 
 add_filter( 'novablocks_block_editor_initial_settings', 'novablocks_add_space_and_sizing_settings', 0 );
 
-function novablocks_add_media_settings( array $settings ): array {
-
-	$media_settings = [
-		'template' => [
-			[
-				'core/heading',
-				[
-					'content' => esc_html__( 'Shoot for the moon, Even if You Miss it', '__plugin_txtd' ),
-					'level'   => 4,
-				],
-			],
-			[
-				'core/heading',
-				[
-					'content' => esc_html__( 'Welcome to our planet, look and feel matters!', '__plugin_txtd' ),
-					'level'   => 2,
-				],
-			],
-			[
-				'core/paragraph',
-				[
-					'content' => esc_html__( "We've always defined ourselves by the ability to overcome the impossible. And we count these moments. These moments when we dare to aim higher, to break barriers, to reach for the stars, to make the unknown known.", '__plugin_txtd' ),
-				],
-			],
-			[
-				'core/buttons',
-				[
-					'align' => 'center',
-				],
-				[
-					[
-						'core/button',
-						[
-							'text' => esc_html__( 'Discover More', '__plugin_txtd' ),
-						],
-					],
-				],
-			],
-		],
-	];
-
-	$settings['media'] = $media_settings;
-
-	return $settings;
-}
-
-add_filter( 'novablocks_block_editor_initial_settings', 'novablocks_add_media_settings', 0 );
-
 function novablocks_get_space_and_sizing_presets(): array {
 	return [
 		[
@@ -342,40 +294,6 @@ function novablocks_get_space_and_sizing_advanced_presets(): array {
 		],
 	];
 }
-
-function novablocks_add_slideshow_settings( array $settings ): array {
-
-	$slideshow_settings = [
-		'minHeightOptions' => [
-			[
-				'label' => esc_html__( 'Auto', '__plugin_txtd' ),
-				'value' => 0,
-			],
-			[
-				'label' => esc_html__( 'Half', '__plugin_txtd' ),
-				'value' => 50,
-			],
-			[
-				'label' => esc_html__( 'Two Thirds', '__plugin_txtd' ),
-				'value' => 66,
-			],
-			[
-				'label' => esc_html__( 'Three Quarters', '__plugin_txtd' ),
-				'value' => 75,
-			],
-			[
-				'label' => esc_html__( 'Full Height', '__plugin_txtd' ),
-				'value' => 100,
-			],
-		],
-	];
-
-	$settings['slideshow'] = $slideshow_settings;
-
-	return $settings;
-}
-
-add_filter( 'novablocks_block_editor_initial_settings', 'novablocks_add_slideshow_settings', 0 );
 
 function novablocks_add_separator_settings( array $settings ): array {
 	$separator_settings = [
