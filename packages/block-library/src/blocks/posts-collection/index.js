@@ -18,6 +18,7 @@ import iconSvg from "./posts-collection-block.svg";
 import edit from "./edit";
 import transforms from "./transforms";
 import variations from "./variations";
+import "./with-content-loader";
 
 registerBlockType( 'novablocks/posts-collection', {
   apiVersion: 2,
@@ -32,10 +33,11 @@ registerBlockType( 'novablocks/posts-collection', {
     novaBlocks: {
       colorSignal: true,
       collectionLayout: true,
-      elementsVisibility: true,
       contentLoader: true,
       overlayFilter: true,
       spaceAndSizing: true,
+      cardElementsStackingSupports:true,
+      cardElementsVisibility:true,
     },
   },
 	edit,

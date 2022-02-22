@@ -41,6 +41,51 @@ function novablocks_add_image_sizes() {
 
 add_action( 'after_setup_theme', 'novablocks_add_image_sizes', 20 );
 
+function novablocks_custom_image_sizes( array $sizes ): array {
+	return array_merge( $sizes, [
+		'novablocks_huge'   => esc_html__( 'Nova Blocks Huge', '__plugin_txtd' ),
+		'novablocks_large'  => esc_html__( 'Nova Blocks Large', '__plugin_txtd' ),
+		'novablocks_medium' => esc_html__( 'Nova Blocks Medium', '__plugin_txtd' ),
+		'novablocks_small'  => esc_html__( 'Nova Blocks Small', '__plugin_txtd' ),
+		'novablocks_tiny'   => esc_html__( 'Nova Blocks Tiny', '__plugin_txtd' ),
+	] );
+}
+add_filter( 'image_size_names_choose', 'novablocks_custom_image_sizes' );
+
+function novablocks_register_settings() {
+	register_setting(
+		'novablocks',
+		'novablocks_google_maps_api_key',
+		[
+			'type'              => 'string',
+			'show_in_rest'      => true,
+			'sanitize_callback' => 'sanitize_text_field',
+		]
+	);
+}
+
+add_action( 'admin_init', 'novablocks_register_settings' );
+add_action( 'rest_api_init', 'novablocks_register_settings' );
+
+function novablocks_register_meta() {
+
+	if ( defined( 'NOVABLOCKS_USE_POST_META_ATTRIBUTES' ) && NOVABLOCKS_USE_POST_META_ATTRIBUTES ) {
+		register_meta( 'post', 'novablocks_hero_scroll_indicator', [
+			'type'         => 'boolean',
+			'single'       => true,
+			'show_in_rest' => true,
+		] );
+
+		register_meta( 'post', 'novablocks_hero_position_indicators', [
+			'type'         => 'boolean',
+			'single'       => true,
+			'show_in_rest' => true,
+		] );
+	}
+}
+
+add_action( 'init', 'novablocks_register_meta' );
+
 if ( ! function_exists( 'novablocks_body_classes' ) ) {
 
 	function novablocks_body_class( $classes ) {
@@ -72,3 +117,30 @@ if ( ! function_exists( 'novablocks_add_blocks_category' ) && class_exists( 'WP_
 
 	add_filter( 'block_categories_all', 'novablocks_add_blocks_category', 10, 2 );
 }
+
+/**
+ * @param bool|array              $allowed_block_types  Array of block type slugs, or boolean to enable/disable all.
+ *                                                      Default true (all registered block types supported).
+ * @param WP_Block_Editor_Context $block_editor_context The current block editor context.
+ *
+ * @return bool|string[]
+ */
+function novablocks_allowed_block_types( $allowed_block_types, WP_Block_Editor_Context $block_editor_context ) {
+	if ( ! empty( $block_editor_context->post ) ) {
+		$post = $block_editor_context->post;
+		if ( $post->post_type === 'block_area' ) {
+
+			if ( $post->post_name === 'header' ) {
+				return [ 'novablocks/header' ];
+			}
+
+			if ( $post->post_name === 'promo-bar' ) {
+				return [ 'novablocks/announcement-bar', 'novablocks/openhours', 'core/paragraph' ];
+			}
+		}
+	}
+
+	return $allowed_block_types;
+}
+
+add_filter( 'allowed_block_types_all', 'novablocks_allowed_block_types', 10, 2 );

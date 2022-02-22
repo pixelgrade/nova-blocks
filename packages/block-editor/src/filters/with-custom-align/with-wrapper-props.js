@@ -1,6 +1,5 @@
 import classnames from "classnames";
 import { createHigherOrderComponent } from "@wordpress/compose";
-import { useSupports } from "../../hooks";
 
 const withWrapperPropsRemoved = createHigherOrderComponent( OriginalComponent => {
 

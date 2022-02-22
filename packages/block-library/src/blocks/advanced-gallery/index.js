@@ -55,6 +55,7 @@ registerBlockType( 'novablocks/advanced-gallery', {
     novaBlocks: {
       mediaComposition: true,
       spaceAndSizing: true,
+      cardElementsStackingSupports:true,
     }
 	},
 	// Additional search terms

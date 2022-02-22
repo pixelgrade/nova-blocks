@@ -15,6 +15,10 @@ const withScrollingEffectPreview = createHigherOrderComponent( WrappedComponent 
 
     const previewScrolling = useCallback( () => {
 
+      if ( !scrollingEffect ) {
+        return;
+      }
+
       const {
         scrollContainer,
         container,

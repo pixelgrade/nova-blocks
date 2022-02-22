@@ -4,7 +4,7 @@ import classnames from "classnames";
  * WordPress dependencies
  */
 import { Fragment } from "@wordpress/element";
-import { useSelect } from '@wordpress/data';
+import { useSelect, select } from '@wordpress/data';
 
 const useInnerBlocksProps = wp.blockEditor.useInnerBlocksProps || wp.blockEditor.__experimentalUseInnerBlocksProps;
 
@@ -15,7 +15,6 @@ const HeroPreview = props => {
 	const {
 		attributes,
 		clientId,
-		settings,
 	} = props;
 
 	const {
@@ -25,11 +24,13 @@ const HeroPreview = props => {
     scrollingEffect,
 	} = attributes;
 
+  const novablocksSettings = select( 'novablocks' ).getSettings();
+
 	const heroHeight = scrollingEffect !== 'doppler' ? minHeightFallback : minHeightFallback * 2;
 	const heroBlocks = useSelect( select => select( 'core/block-editor' ).getBlocks().filter( block => block.name === 'novablocks/hero' ), [] );
 	const index = heroBlocks.findIndex( ( block ) => block.clientId === clientId );
 	const scrollIndicatorFallback = index === 0 && heroHeight >= 100;
-	const scrollIndicator = settings.usePostMetaAttributes ? scrollIndicatorBlock : scrollIndicatorFallback;
+	const scrollIndicator = novablocksSettings.usePostMetaAttributes ? scrollIndicatorBlock : scrollIndicatorFallback;
 
   const innerBlocksProps = useInnerBlocksProps( {
     className: classnames( [

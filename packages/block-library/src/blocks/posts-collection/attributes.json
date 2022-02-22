@@ -2,5 +2,49 @@
 	"align": {
 		"type": "string",
 		"default": "wide"
+	},
+	"contentType": {
+		"type": "string",
+		"default": "auto"
+	},
+	"postsToShow": {
+		"type": "integer",
+		"default": 6
+	},
+	"loadingMode": {
+		"type": "string",
+		"default": "automated"
+	},
+	"specificPosts": {
+		"type": "array",
+		"default": [],
+		"items": {
+			"type": "integer"
+		}
+	},
+	"preventDuplicatePosts": {
+		"type": "boolean",
+		"default": true
+	},
+	"authors": {
+		"type": "array",
+		"default": [],
+		"items": {
+			"type": "integer"
+		}
+	},
+	"categories": {
+		"type": "array",
+		"default": [],
+		"items": {
+			"type": "integer"
+		}
+	},
+	"tags": {
+		"type": "array",
+		"default": [],
+		"items": {
+			"type": "integer"
+		}
 	}
 }

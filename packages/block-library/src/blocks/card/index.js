@@ -72,7 +72,7 @@ registerBlockType( BLOCK_NAME, {
       colorSignal: {
         attributes: true
       },
-      elementsVisibility: {
+      cardElementsVisibility: {
         attributes: true
       },
       contentPosition: {
