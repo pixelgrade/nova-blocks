@@ -130,6 +130,7 @@ const AutomatedControls = ( props ) => {
 
 	return [
 		<ToggleControl
+      key={"prevent-duplicate-posts"}
 			label={ __( "Prevent Duplicate Posts" ) }
 			help={ __( "The posts displayed by other blocks won't show up in this block" ) }
 			checked={ preventDuplicatePosts }

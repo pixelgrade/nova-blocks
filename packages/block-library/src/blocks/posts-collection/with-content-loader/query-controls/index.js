@@ -18,6 +18,7 @@ const QueryControls = ( props ) => {
 	return [
 		enableSpecific && (
 			<RadioControl
+        key={"posts-loading-type"}
 				label={ __( 'Posts loading type', '__plugin_txtd' ) }
 				selected={ loadingMode }
 				onChange={ onLoadingModeChange }
@@ -27,8 +28,8 @@ const QueryControls = ( props ) => {
 				] }
 			/>
 		),
-		<AutomatedControls { ...props } />,
-		<ManualControls { ...props } />
+		<AutomatedControls key={"automated-controls"} { ...props } />,
+		<ManualControls key={"manual-controls"} { ...props } />
 	];
 };
 
