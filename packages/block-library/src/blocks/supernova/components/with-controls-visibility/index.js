@@ -41,7 +41,7 @@ const withControlsVisibility = OriginalComponent => {
         // Media Composition
         'media-composition-section': hasMediaComposition && !! showMedia && 'auto' !== contentType,
 
-        // Scrolling Effect
+        // Scrolling Effect section; if using carousel don't show it.
         'scrolling-effect-section': 'carousel' !== layoutStyle,
 
         // Color Signal

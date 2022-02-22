@@ -13,7 +13,7 @@ const PreviewScrollingButton = withScrollingEffectPreview( props => {
   return (
     <div>
       <Button
-        isLarge
+        islarge="true"
         isPrimary
         disabled={ !! isScrolling }
         onClick={ previewScrolling }>{ __( 'Preview Scrolling', '__plugin_txtd' ) }</Button>
