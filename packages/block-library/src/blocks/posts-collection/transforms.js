@@ -5,15 +5,19 @@ export default {
     {
       type: 'block',
       blocks: [ 'novablocks/supernova' ],
-      transform: function( attributes, innerBlocks ) {
+      transform: ( attributes ) => {
 
         const commonAttributes = Object.assign( {}, attributes, {
           contentPosition: 'center left'
         } );
 
-        return createBlock( 'novablocks/supernova', commonAttributes, [
-          createBlock( 'novablocks/supernova-item', commonAttributes )
-        ] )
+        return createBlock(
+          'novablocks/supernova',
+          commonAttributes,
+          [
+            createBlock( 'novablocks/supernova-item', commonAttributes )
+          ]
+        )
       },
     },
   ],

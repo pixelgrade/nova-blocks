@@ -1,5 +1,4 @@
 import classnames from "classnames";
-import { getSupports } from "../../utils";
 
 const withSaveProps = ( extraProps, blockType, attributes ) => {
   const { align } = attributes;
