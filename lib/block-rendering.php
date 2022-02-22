@@ -1280,7 +1280,7 @@ function novablocks_get_collection_card_markup( string $media, string $content, 
 	];
 
 	if ( $attributes['columns'] === 1 &&
-	     $attributes['cardLayout'] === 'stacked' &&
+	     ! empty( $attributes['cardLayout'] ) && $attributes['cardLayout'] === 'stacked' &&
 	     $attributes['layoutStyle'] !== 'carousel' ) {
 
 		$data_attributes_array[] = 'position-indicators';
