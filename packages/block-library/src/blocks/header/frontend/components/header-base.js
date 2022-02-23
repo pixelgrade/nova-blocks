@@ -6,6 +6,7 @@ class HeaderBase {
     this.staticDistance = 0;
     this.stickyDistance = 0;
     this.isSticky = false;
+    this.adminBar = document.querySelector( '#wpadminbar' );
   }
 
   initialize() {
@@ -20,10 +21,14 @@ class HeaderBase {
     this.element.style.removeProperty( 'top' );
     this.box = this.element.getBoundingClientRect();
 
-    this.adminBar = document.querySelector( '#wpadminbar' );
-    this.adminBarHeight = this.adminBar.offsetHeight;
-    const adminBarStyle = window.getComputedStyle( this.adminBar );
-    this.adminBarFixed = adminBarStyle.getPropertyValue( 'position' ) === 'fixed';
+    this.adminBarHeight = this.adminBar?.offsetHeight ?? 0;
+    this.adminBarFixed = false;
+
+    if ( this.adminBar ) {
+      const adminBarStyle = window.getComputedStyle( this.adminBar );
+      this.adminBarFixed = adminBarStyle.getPropertyValue( 'position' ) === 'fixed';
+    }
+
     this.staticDistance = window.pageYOffset + this.box.top;
     this.stickyDistance = this.adminBarFixed ? this.adminBarHeight : 0;
   }
