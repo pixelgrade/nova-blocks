@@ -30,7 +30,7 @@ import {
 } from "@novablocks/block-editor";
 import { withShapeModelingDecoration } from "@novablocks/shape-modeling";
 
-const SuperNovaItemEdit = props => {
+const SupernovaItemEdit = props => {
 
   const { attributes, setControlsVisibility, clientId } = props;
   const { showMedia } = attributes;
@@ -70,7 +70,7 @@ const SuperNovaItemEdit = props => {
             <CardMedia { ...props } />
           </CardMediaWrapper>
         }
-        <SuperNovaItemContent { ...props } />
+        <SupernovaItemContent { ...props } />
       </Card>
     </div>
   )
@@ -105,7 +105,7 @@ const CardMediaWithShapeDecoration = withShapeModelingDecoration( props => {
   )
 } );
 
-const SuperNovaItemContent = ( props ) => {
+const SupernovaItemContent = ( props ) => {
 
   const {
     attributes,
@@ -242,4 +242,4 @@ const SuperNovaItemContent = ( props ) => {
   );
 };
 
-export default withPreviewAttributes( SuperNovaItemEdit );
+export default withPreviewAttributes( SupernovaItemEdit );

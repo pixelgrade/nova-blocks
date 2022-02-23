@@ -27,6 +27,8 @@ const attributes = {
   cardLayout: 'vertical',
   contentPosition: 'top left',
   cardMediaOpacity: 100,
+
+  defaultsGenerated: false,
 };
 
 const innerBlockAttributes = Object.assign( {}, attributes, {
@@ -43,7 +45,7 @@ const cardsCollection = {
   attributes,
   innerBlocks: Array.from( Array( CARDS_COUNT ) ).map( () => [ 'novablocks/supernova-item', innerBlockAttributes ] ),
   isActive: ( blockAttributes, variationAttributes ) => blockAttributes.variation === variationAttributes.variation,
-  scope: [ 'inserter' ],
+  scope: [ 'inserter', 'transform' ],
 };
 
 export default cardsCollection;

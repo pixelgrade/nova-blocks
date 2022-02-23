@@ -3,7 +3,7 @@ import { getSvg } from "@novablocks/block-editor";
 import iconSvg from "./media-card-block-icon.svg";
 
 const attributes = {
-  variation: 'media-card',
+  variation: 'novablocks-media-card',
 
   contentType: 'custom',
 
@@ -28,6 +28,8 @@ const attributes = {
   blockBottomSpacing: 1,
   emphasisTopSpacing: 0,
   emphasisBottomSpacing: 0,
+
+  defaultsGenerated: false,
 };
 
 const innerBlocks = [
@@ -45,7 +47,7 @@ const mediaCard = {
   attributes,
   innerBlocks: [ [ 'novablocks/supernova-item', attributes, innerBlocks ] ],
   isActive: ( blockAttributes, variationAttributes ) => blockAttributes.variation === variationAttributes.variation,
-  scope: [ 'inserter' ],
+  scope: [ 'inserter', 'transform' ],
 };
 
 export default mediaCard;
