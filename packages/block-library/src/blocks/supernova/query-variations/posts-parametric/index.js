@@ -32,6 +32,16 @@ const attributes = {
 const innerSupernovaAttributes = {
   variation: 'novablocks-posts-parametric',
 
+  showCollectionTitle: true,
+  showCollectionSubtitle: true,
+
+  title: __('Our latest brainy posts', '__plugin_txtd' ),
+  subtitle: __('A super-duper-parametric collection of our latest brain-dumps.', '__plugin_txtd' ),
+
+  emphasisBySpace: 1,
+  emphasisTopSpacing: 1,
+  emphasisBottomSpacing: 1,
+
   contentType: 'auto',
   layoutStyle: 'parametric',
   contentPosition: 'center left',

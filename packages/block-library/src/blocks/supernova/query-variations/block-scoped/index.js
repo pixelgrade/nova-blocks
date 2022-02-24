@@ -42,6 +42,13 @@ innerSupernovaAttributes = {
   showCollectionTitle: false,
   showCollectionSubtitle: false,
 
+  title: __('Our latest brainy posts', '__plugin_txtd' ),
+  subtitle: __('A super-duper-parametric collection of our latest brain-dumps.', '__plugin_txtd' ),
+
+  emphasisBySpace: 1,
+  emphasisTopSpacing: 1,
+  emphasisBottomSpacing: 1,
+
   contentType: 'auto',
   layoutStyle: 'parametric',
   contentPosition: 'center left',
@@ -88,9 +95,13 @@ innerSupernovaAttributes = {
   showCollectionTitle: false,
   showCollectionSubtitle: false,
 
+  title: __('Fresh posts from the grid', '__plugin_txtd' ),
+  subtitle: __('A collection of our latest articles, supernova style.', '__plugin_txtd' ),
+
   contentType: 'auto',
   layoutStyle: 'classic',
 
+  emphasisBySpace: 1,
   emphasisTopSpacing: 1,
   emphasisBottomSpacing: 1,
   layoutGutter: 10,
@@ -137,16 +148,23 @@ variation = 'novablocks-posts-slideshow';
 innerSupernovaAttributes = {
   variation,
 
+  showCollectionTitle: false,
+  showCollectionSubtitle: false,
+
+  title: __('You should read these', '__plugin_txtd' ),
+  subtitle: __('A fancy slideshow with our latest posts never hurt nobody.', '__plugin_txtd' ),
+
   align: 'full',
   contentType: 'auto',
   layoutStyle: 'carousel',
   contentPadding: 100,
 
+  emphasisBySpace: 1,
+  emphasisTopSpacing: 1,
+  emphasisBottomSpacing: 1,
+
   postsToShow: CARDS_COUNT,
   columns: 1,
-
-  showCollectionTitle: false,
-  showCollectionSubtitle: false,
 
   cardLayout: 'stacked',
   contentPosition: 'center center',
