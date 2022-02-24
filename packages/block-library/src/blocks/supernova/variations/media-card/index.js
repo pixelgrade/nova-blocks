@@ -45,9 +45,15 @@ const mediaCard = {
   description: __( 'Display media alongside short pieces of content.', '__plugin_txtd' ),
   icon: getSvg( iconSvg ),
   attributes,
-  innerBlocks: [ [ 'novablocks/supernova-item', attributes, innerBlocks ] ],
+  innerBlocks: [
+    [
+      'novablocks/supernova-item',
+      attributes,
+      innerBlocks
+    ]
+  ],
   isActive: ( blockAttributes, variationAttributes ) => blockAttributes.variation === variationAttributes.variation,
-  scope: [ 'inserter', 'transform' ],
+  scope: [ 'inserter', ],
 };
 
 export default mediaCard;

@@ -73,5 +73,5 @@ export const postsSlideshowQuery = {
     ],
   ],
   isActive: ( blockAttributes, variationAttributes ) => blockAttributes.variation === variationAttributes.variation,
-  scope: [ 'inserter' ],
+  scope: [ 'inserter', ],
 };

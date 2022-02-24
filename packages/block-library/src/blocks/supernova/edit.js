@@ -116,7 +116,7 @@ const SupernovaEdit = props => {
   // since right now it is deduced from the fact that the Supernova block is or is not inside a query block.
   if ( isDescendentOfQueryLoop && attributes.contentType !== 'auto' ) {
     setAttributes( { contentType: 'auto' } );
-  } else if ( !isDescendentOfQueryLoop && [ 'fields', 'custom', ].includes( attributes.contentType ) ) {
+  } else if ( !isDescendentOfQueryLoop && ! [ 'fields', 'custom', ].includes( attributes.contentType ) ) {
     setAttributes( { contentType: 'fields' } );
   }
 

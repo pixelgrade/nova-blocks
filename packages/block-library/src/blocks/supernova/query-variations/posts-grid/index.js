@@ -72,5 +72,5 @@ export const postsGridQuery = {
     [ 'core/query-pagination' ],
   ],
   isActive: ( blockAttributes, variationAttributes ) => blockAttributes.variation === variationAttributes.variation,
-  scope: [ 'inserter' ],
+  scope: [ 'inserter', ],
 };

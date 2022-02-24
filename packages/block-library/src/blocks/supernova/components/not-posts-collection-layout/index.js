@@ -22,18 +22,6 @@ const CardsCollectionEdit = ( props ) => {
   )
 };
 
-const CardsCollectionLayout = withPreviewAttributes( props => {
-  const { attributes } = props;
-  const { preview } = attributes;
-
-  return (
-    <Fragment>
-      { ! preview && <CardsCollectionEdit { ...props } /> }
-      { preview && <CardsCollectionPreview { ...props } /> }
-    </Fragment>
-  )
-} );
-
 const CardsCollectionPreview = ( props ) => {
   const { clientId } = props;
   const innerBlocks = useInnerBlocks( clientId );
@@ -46,5 +34,19 @@ const CardsCollectionPreview = ( props ) => {
     </CollectionBody>
   )
 };
+
+const CardsCollectionLayout = withPreviewAttributes( props => {
+  const { attributes } = props;
+  const { preview } = attributes;
+
+  return (
+    <Fragment>
+      { preview
+        ? <CardsCollectionPreview { ...props } />
+        : <CardsCollectionEdit { ...props } />
+      }
+    </Fragment>
+  )
+} );
 
 export default CardsCollectionLayout;

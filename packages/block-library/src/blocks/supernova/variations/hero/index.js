@@ -60,7 +60,7 @@ const heroVariation = {
   attributes: attributes,
   innerBlocks,
   isActive: ( blockAttributes, variationAttributes ) => blockAttributes.variation === variationAttributes.variation,
-  scope: [ 'inserter', 'transform' ],
+  scope: [ 'inserter', ],
 };
 
 export default heroVariation;

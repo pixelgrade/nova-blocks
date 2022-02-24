@@ -45,7 +45,7 @@ const cardsCollection = {
   attributes,
   innerBlocks: Array.from( Array( CARDS_COUNT ) ).map( () => [ 'novablocks/supernova-item', innerBlockAttributes ] ),
   isActive: ( blockAttributes, variationAttributes ) => blockAttributes.variation === variationAttributes.variation,
-  scope: [ 'inserter', 'transform' ],
+  scope: [ 'inserter', ],
 };
 
 export default cardsCollection;
