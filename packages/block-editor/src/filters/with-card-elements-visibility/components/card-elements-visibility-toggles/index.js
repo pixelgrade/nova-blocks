@@ -48,7 +48,7 @@ const CardElementsVisibilityToggles = ( props ) => {
 
     // A block is considered hero when cardLayout is stacked,
     // and the postsToShow is equal with 1.
-    const IS_HERO = 'stacked' === cardLayout && 1 === columns && 'full' === align;
+    const IS_HERO = CARD_IS_STACKED && 1 === columns && 'full' === align;
 
     if ( 'custom' !== contentType ) {
       toggles.push( ...contentElementsToggle );

@@ -1,6 +1,7 @@
 import { PanelRow } from "@wordpress/components";
 import { __ } from "@wordpress/i18n";
 import { BlockVerticalAlignmentToolbar } from "../../../components";
+import { getEmphasisAttributes } from '../utils';
 
 const VerticalAnchoringCustomize = ( props ) => {
 
@@ -28,6 +29,7 @@ const VerticalAnchoringCustomize = ( props ) => {
           const newAttributes = getEmphasisAttributes( emphasisBySpace, enableOverlapping, `${ verticalAlignment } ${ horizontalAlignment }` );
           setAttributes( newAttributes );
         } }
+        isCollapsed={false}
       />
     </PanelRow>
   )
