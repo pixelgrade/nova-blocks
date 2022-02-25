@@ -25,6 +25,7 @@ const attributes = {
 
   showCollectionTitle: false,
   showCollectionSubtitle: false,
+  showMedia: true,
   showMeta: false,
   showTitle: false,
   showSubtitle: false,

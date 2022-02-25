@@ -2,7 +2,7 @@ import { AdvancedGalleryItemMedia } from "../components";
 
 const AdvancedGalleryItem = ( props ) => {
 
-  const { gridItem } = props;
+  const { gridItem, attributes } = props;
 
   const image = gridItem?.image;
   const imageCaption = image?.caption;
@@ -11,6 +11,10 @@ const AdvancedGalleryItem = ( props ) => {
   if ( ! image ) {
     return;
   }
+
+  const {
+    showDescription = false,
+  } = attributes;
 
   const hasCaption = typeof imageCaption === 'string' && !! imageCaption;
   const hasDescription = typeof imageDescription === 'string' && !! imageDescription;
@@ -21,7 +25,7 @@ const AdvancedGalleryItem = ( props ) => {
         <AdvancedGalleryItemMedia { ...props } seedOffset={ props?.index } />
       </div>
       {
-        ( hasCaption || hasDescription ) &&
+        ( showDescription && ( hasCaption || hasDescription ) ) &&
         <div className="novablocks-media-composition__grid-item-info">
           {
             hasCaption &&

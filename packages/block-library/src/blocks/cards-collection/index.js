@@ -111,7 +111,7 @@ registerBlockType( BLOCK_NAME, {
     novaBlocks: {
       colorSignal: true,
       spaceAndSizing: true,
-      cardElementsStackingSupports:true,
+      cardElementsStacking:true,
       cardElementsVisibility: true,
       collectionLayout: true,
       contentPosition: {

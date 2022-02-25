@@ -36,7 +36,7 @@ registerBlockType( 'novablocks/posts-collection', {
       contentLoader: true,
       overlayFilter: true,
       spaceAndSizing: true,
-      cardElementsStackingSupports:true,
+      cardElementsStacking:true,
       cardElementsVisibility:true,
     },
   },
