@@ -66,7 +66,8 @@ const SupernovaPreview = props => {
     cardLayout,
   } = attributes;
 
-  const contentType = inQuery ? 'auto' : 'fields';
+  // Overwrite the contentType if we are in a query.
+  const contentType = inQuery ? 'auto' : attributes?.contentType || 'fields';
 
   const contentAlign = getAlignFromMatrix( attributes?.contentPosition );
 
@@ -115,7 +116,7 @@ const SupernovaEdit = props => {
   // since right now it is deduced from the fact that the Supernova block is or is not inside a query block.
   if ( isDescendentOfQueryLoop && attributes.contentType !== 'auto' ) {
     setAttributes( { contentType: 'auto' } );
-  } else if ( ! isDescendentOfQueryLoop && attributes.contentType !== 'fields' ) {
+  } else if ( !isDescendentOfQueryLoop && ! [ 'fields', 'custom', ].includes( attributes.contentType ) ) {
     setAttributes( { contentType: 'fields' } );
   }
 
@@ -177,10 +178,10 @@ const SupernovaEdit = props => {
 
   ({ posts } = useSelect(
     ( select ) => {
-      if ( ! isDescendentOfQueryLoop ) {
+      if ( !isDescendentOfQueryLoop ) {
         return {
           posts: false,
-        }
+        };
       }
 
       const { getEntityRecords, getTaxonomies } = select( coreStore );

@@ -25,11 +25,14 @@ const attributes = {
 
   showCollectionTitle: false,
   showCollectionSubtitle: false,
+  showMedia: true,
   showMeta: false,
   showTitle: false,
   showSubtitle: false,
   showDescription: false,
   showButtons: false,
+
+  defaultsGenerated: false,
 };
 
 const advancedGallery = {
@@ -42,7 +45,7 @@ const advancedGallery = {
     [ 'novablocks/supernova-item', { ...attributes, multiplePlaceholderImages: true } ]
   ],
   isActive: ( blockAttributes, variationAttributes ) => blockAttributes.variation === variationAttributes.variation,
-  scope: [ 'inserter' ],
+  scope: [ 'inserter', ],
 };
 
 export default advancedGallery;

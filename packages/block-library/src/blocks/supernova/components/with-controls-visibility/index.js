@@ -38,6 +38,9 @@ const withControlsVisibility = OriginalComponent => {
         'media-padding': showMedia,
         'content-to-media-spacing': 'stacked' !== cardLayout && showMedia,
 
+        // Collection Layout
+        'collection-layout-section': !hasMediaComposition,
+
         // Media Composition
         'media-composition-section': hasMediaComposition && !! showMedia && 'auto' !== contentType,
 

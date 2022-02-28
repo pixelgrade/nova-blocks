@@ -32,9 +32,16 @@ const attributes = {
 const innerSupernovaAttributes = {
   variation: 'novablocks-posts-grid',
 
+  showCollectionTitle: true,
+  showCollectionSubtitle: true,
+
+  title: __('Fresh posts from the grid', '__plugin_txtd' ),
+  subtitle: __('A collection of our latest articles, supernova style.', '__plugin_txtd' ),
+
   contentType: 'auto',
   layoutStyle: 'classic',
 
+  emphasisBySpace: 1,
   emphasisTopSpacing: 1,
   emphasisBottomSpacing: 1,
   layoutGutter: 10,
@@ -72,5 +79,5 @@ export const postsGridQuery = {
     [ 'core/query-pagination' ],
   ],
   isActive: ( blockAttributes, variationAttributes ) => blockAttributes.variation === variationAttributes.variation,
-  scope: [ 'inserter' ],
+  scope: [ 'inserter', ],
 };

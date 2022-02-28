@@ -16,10 +16,12 @@
 	],
 	"supports": {
 		"html": false,
+		"align": ["wide", "full"],
 		"novaBlocks": {
 			"colorSignal": {
 				"attributes": true,
-				"controls": true
+				"controls": true,
+				"contentColorSignal": true
 			},
 			"spaceAndSizing": {
 				"attributes": true,

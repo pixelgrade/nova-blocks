@@ -45,7 +45,7 @@ const MediaCompositionControls = props => {
     <ControlsSection
       id={ 'media-composition' }
       label={ __( 'Media Composition', '__plugin_txtd' ) }
-      group={ __( 'Modules', '__plugin_txtd' ) }
+      group={ __( 'Block Anatomy', '__plugin_txtd' ) }
       order={ 10 }
       key={ clientId + '_media-composition-controls-section' }>
 

@@ -1,5 +1,3 @@
-import { __ } from "@wordpress/i18n";
-
 export const DEFAULT_FONT_SIZE = 'normal';
 
 export const BLOCKS_WITH_FONT_SIZE_CONTROL = [

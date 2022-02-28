@@ -7,7 +7,7 @@ import { getIconSvg } from '../get-svg';
  * WordPress dependencies
  */
 import { __ } from '@wordpress/i18n';
-import { Toolbar } from '@wordpress/components';
+import { ToolbarGroup } from '@wordpress/components';
 import { withViewportMatch } from '@wordpress/viewport';
 import { withSelect } from '@wordpress/data';
 import { compose, createHigherOrderComponent } from '@wordpress/compose';
@@ -48,7 +48,7 @@ export function BlockVerticalAlignmentToolbar( { isCollapsed, value, onChange, c
   const defaultAlignmentControl = BLOCK_ALIGNMENTS_CONTROLS[ DEFAULT_CONTROL ];
 
   return (
-    <Toolbar
+    <ToolbarGroup
       label={ __( 'Vertical Alignment', '__plugin_txtd' ) }
       iscollapsed={ isCollapsed }
       icon={ activeAlignment ? activeAlignment.icon : defaultAlignmentControl.icon }

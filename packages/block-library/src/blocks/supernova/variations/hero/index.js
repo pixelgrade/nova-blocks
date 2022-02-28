@@ -3,7 +3,7 @@ import { getSvg } from "@novablocks/block-editor";
 import iconSvg from "./hero-block-icon.svg";
 
 const attributes = {
-  variation: 'hero',
+  variation: 'novablocks-hero',
 
   contentType: 'custom',
   layoutStyle: 'classic',
@@ -31,6 +31,8 @@ const attributes = {
   emphasisBottomSpacing: 0,
 
   scrollingEffect: 'static',
+
+  defaultsGenerated: false,
 };
 
 const innerBlockAttributes = Object.assign( {}, attributes, {
@@ -58,7 +60,7 @@ const heroVariation = {
   attributes: attributes,
   innerBlocks,
   isActive: ( blockAttributes, variationAttributes ) => blockAttributes.variation === variationAttributes.variation,
-  scope: [ 'inserter' ],
+  scope: [ 'inserter', ],
 };
 
 export default heroVariation;

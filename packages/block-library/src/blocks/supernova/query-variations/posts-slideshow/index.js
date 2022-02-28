@@ -32,16 +32,23 @@ const attributes = {
 const innerSupernovaAttributes = {
   variation: 'novablocks-posts-slideshow',
 
+  showCollectionTitle: false,
+  showCollectionSubtitle: false,
+
+  title: __('You should read these', '__plugin_txtd' ),
+  subtitle: __('A fancy slideshow with our latest posts never hurt nobody.', '__plugin_txtd' ),
+
   align: 'full',
   contentType: 'auto',
   layoutStyle: 'carousel',
   contentPadding: 100,
 
+  emphasisBySpace: 1,
+  emphasisTopSpacing: 1,
+  emphasisBottomSpacing: 1,
+
   postsToShow: CARDS_COUNT,
   columns: 1,
-
-  showCollectionTitle: false,
-  showCollectionSubtitle: false,
 
   cardLayout: 'stacked',
   contentPosition: 'center center',
@@ -61,7 +68,7 @@ const innerSupernovaItemAttributes = {
 
 export const postsSlideshowQuery = {
   name: 'novablocks/supernova/query-posts-slideshow',
-  title: __( 'Slideshow me the Way', '__plugin_txtd' ),
+  title: __( 'Posts Slideshow', '__plugin_txtd' ),
   description: __( 'Display a queried set of posts in a single, coveted space.', '__plugin_txtd' ),
   icon: icon,
   attributes,
@@ -73,5 +80,5 @@ export const postsSlideshowQuery = {
     ],
   ],
   isActive: ( blockAttributes, variationAttributes ) => blockAttributes.variation === variationAttributes.variation,
-  scope: [ 'inserter' ],
+  scope: [ 'inserter', ],
 };
