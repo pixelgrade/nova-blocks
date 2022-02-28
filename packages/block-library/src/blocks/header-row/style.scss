@@ -1,5 +1,3 @@
-@import "scss/mixins";
-
 @include below(lap) {
 
   .novablocks-header-row {
@@ -55,6 +53,36 @@
   }
 
   .novablocks-header-row__inner-container[class] > .wp-block {
+    display: flex;
+    column-gap: var(--nb-navigation-item-spacing, var(--nb-spacing));
+    align-items: center;
+
+    > :first-child:not(:last-child),
+    > :last-child:not(:first-child) {
+      flex-shrink: 1;
+      flex-basis: 50%;
+    }
+
+    > :only-child,
+    > :not(:first-child):not(:last-child) {
+      flex-grow: 1;
+    }
+
+    > * {
+      --justify-content: center;
+
+      &, .menu {
+        justify-content: var(--justify-content);
+      }
+    }
+
+    > :first-child:not(:last-child) {
+      --justify-content: flex-start;
+    }
+
+    > :last-child:not(:first-child) {
+      --justify-content: flex-end;
+    }
 
     .novablocks-header--sticky & {
       --emphasis-top-spacing: 0.25;
@@ -78,7 +106,5 @@
     margin-bottom: calc(var(--block-bottom-spacing) * var(--nb-current-spacing));
     padding-top: calc(var(--emphasis-top-spacing) * var(--nb-current-spacing));
     padding-bottom: calc(var(--emphasis-bottom-spacing) * var(--nb-current-spacing));
-
-    @include navigation-block-layout-common-styles;
   }
 }

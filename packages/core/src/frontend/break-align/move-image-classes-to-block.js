@@ -1,13 +1,16 @@
+import domReady from "@wordpress/dom-ready";
+
 // Image Block Current Markup
 // <div><figure><img></img></figure</div>
-// For Image Block, the align class
+// For Image Block, the alignment class
 // is on figure element, inside the div.
 // We need that class to be on div,
 // so we are going to alter the markup.
-export const moveImageClassesToBlock = () => {
+const moveImageClassesToBlock = () => {
 
   // Select all Block Images inside Content.
-  let blockImages = Array.from( document.querySelectorAll( ".nb-sidecar-area--content > .wp-block-image:not([class*='align'])" ) );
+  let blockImagesSelector = ".nb-sidecar-area--content > .wp-block-image:not([class*='align'])";
+  let blockImages = Array.from( document.querySelectorAll( blockImagesSelector ) );
 
   blockImages.forEach( block => {
 
@@ -27,3 +30,7 @@ export const moveImageClassesToBlock = () => {
   } );
 
 };
+
+domReady( () => {
+  moveImageClassesToBlock();
+} );
