@@ -7,6 +7,10 @@ const withSetChildrenAttributes = OriginalComponent => {
 
   return props => {
 
+    if ( props.name !== 'novablocks/cards-collection' ) {
+      return <OriginalComponent { ...props } />
+    }
+
     const { clientId, setAttributes } = props;
     const { updateBlockAttributes } = useDispatch( 'core/block-editor' );
     const { getBlock } = useSelect( select => select( 'core/block-editor' ) );

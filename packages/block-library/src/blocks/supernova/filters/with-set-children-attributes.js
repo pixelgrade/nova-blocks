@@ -8,6 +8,10 @@ const withSetChildrenAttributes = OriginalComponent => {
 
   return props => {
 
+    if ( props.name !== 'novablocks/supernova' ) {
+      return <OriginalComponent { ...props } />
+    }
+
     const { clientId } = props;
     const { updateBlockAttributes } = useDispatch( 'core/block-editor' );
     const { getBlock } = useSelect( select => select( 'core/block-editor' ) );

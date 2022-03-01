@@ -41,12 +41,15 @@
  */
 function novablocks_register_block_patterns() {
 	$block_pattern_categories = [
-		'novablocks/features'     => [ 'label' => __( 'Features', '__plugin_txtd' ) ],
-		'novablocks/headlines'    => [ 'label' => __( 'Headlines', '__plugin_txtd' ) ],
-		'novablocks/testimonials' => [ 'label' => __( 'Testimonials', '__plugin_txtd' ) ],
-		'novablocks/team'         => [ 'label' => __( 'Team', '__plugin_txtd' ) ],
-		'novablocks/location'     => [ 'label' => __( 'Location', '__plugin_txtd' ) ],
-		'novablocks/posts'        => [ 'label' => __( 'Posts Collection', '__plugin_txtd' ) ],
+		'features'     => [ 'label' => __( 'Features', '__plugin_txtd' ) ],
+		'footer'       => [ 'label' => __( 'Footers', '__plugin_txtd' ) ],
+		'header'       => [ 'label' => __( 'Headers', '__plugin_txtd' ) ],
+		'headlines'    => [ 'label' => __( 'Headlines', '__plugin_txtd' ) ],
+		'testimonials' => [ 'label' => __( 'Testimonials', '__plugin_txtd' ) ],
+		'team'         => [ 'label' => __( 'Team', '__plugin_txtd' ) ],
+		'location'     => [ 'label' => __( 'Location', '__plugin_txtd' ) ],
+		'query'        => [ 'label' => __( 'Posts Collection', '__plugin_txtd' ) ],
+		'pages'        => [ 'label' => __( 'Pages', '__plugin_txtd' ) ],
 	];
 
 	/**
