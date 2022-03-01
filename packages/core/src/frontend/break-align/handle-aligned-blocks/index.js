@@ -1,3 +1,4 @@
+import domReady from "@wordpress/dom-ready";
 import { debounce } from "@novablocks/utils";
 
 import {
@@ -77,7 +78,7 @@ export const handleAlignedBlocks = () => {
 
   const onResize = debounce( resetAlignedBlocks, 200 );
 
-  window.addEventListener( 'DOMContentLoaded', () => {
+  domReady( () => {
     resetAlignedBlocks();
     handleCustomizerChanges();
   } );

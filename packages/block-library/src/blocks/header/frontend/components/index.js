@@ -102,7 +102,20 @@ class Header extends HeaderBase {
 
   findProperElement( element ) {
 
-    if ( element.matches( 'main, .wp-block-group, .wp-block-post-content' ) ) {
+    if ( element.matches( '.nb-sidecar' ) ) {
+      const children = element.children;
+      const content = Array.prototype.filter.call( children, child => {
+        return matches( child, '.nb-sidecar-area--content' );
+      } );
+
+      if ( content.length ) {
+        return this.findProperElement( content[0].firstElementChild );
+      }
+
+      return element;
+    }
+
+    if ( matches( element, 'main, .wp-block-group, .wp-block-post-content' ) ) {
       return this.findProperElement( element.firstElementChild );
     }
 
