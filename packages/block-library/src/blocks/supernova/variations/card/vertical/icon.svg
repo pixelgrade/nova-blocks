@@ -1,0 +1,9 @@
+<svg id="novablocks-hero-block-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+	<mask id="mask0" maskUnits="userSpaceOnUse" x="0" y="0" width="24" height="24" style="mask-type: alpha">
+		<rect width="24" height="24" rx="12" fill="#6565F2"/>
+	</mask>
+	<g mask="url(#mask0)">
+		<path fill-rule="evenodd" clip-rule="evenodd" d="M12 0C5.37258 0 0 5.37258 0 12C0 18.6274 5.37258 24 12 24C18.6274 24 24 18.6274 24 12C24 5.37258 18.6274 0 12 0ZM4 8.49123C4 6.01079 7.01619 4 10.7368 4H11.619C16.2477 4 20 6.50152 20 9.5873C20 12.3926 16.5888 14.6667 12.381 14.6667H11.5789C7.39321 14.6667 4 12.4045 4 9.61403V8.49123Z" fill="#6565F2"/>
+		<path d="M7 18.7143C7 19.4244 7.57563 20 8.28571 20H15.5C16.3284 20 17 19.3284 17 18.5V18.5C17 17.6716 16.3284 17 15.5 17H8.71429C7.76751 17 7 17.7675 7 18.7143V18.7143Z" fill="#FFE42E"/>
+	</g>
+</svg>

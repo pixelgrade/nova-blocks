@@ -14,7 +14,7 @@ import { getSvg } from "@novablocks/block-editor";
  * Internal dependencies
  */
 import attributes from "./attributes";
-import iconSvg from "./posts-collection-block.svg";
+import iconSvg from "./icon.svg";
 import edit from "./edit";
 import transforms from "./transforms";
 import variations from "./variations";

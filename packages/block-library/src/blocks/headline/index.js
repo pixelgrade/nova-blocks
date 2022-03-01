@@ -8,7 +8,7 @@ import { registerBlockType } from '@wordpress/blocks';
  */
 import { getSvg } from "@novablocks/block-editor";
 
-import iconSvg from './headline-block.svg';
+import iconSvg from './icon.svg';
 import edit from './edit';
 import save from './save';
 import transforms from './transforms';

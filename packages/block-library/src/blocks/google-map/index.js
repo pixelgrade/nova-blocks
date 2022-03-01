@@ -10,7 +10,7 @@ import { addFilter } from "@wordpress/hooks";
  */
 import { getSvg } from "@novablocks/block-editor";
 
-import iconSvg from './google-map-block.svg';
+import iconSvg from './icon.svg';
 import edit from "./edit";
 import attributes from "./attributes";
 import attributesOverwrite from "./attributes-overwrite.json";

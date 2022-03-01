@@ -18,7 +18,7 @@ import { getSvg } from "@novablocks/block-editor";
  */
 import deprecated from './deprecated';
 import edit from './edit';
-import iconSvg from './announcement-bar-block.svg';
+import iconSvg from './icon.svg';
 
 registerBlockType( 'novablocks/announcement-bar', {
 	icon: getSvg( iconSvg ),

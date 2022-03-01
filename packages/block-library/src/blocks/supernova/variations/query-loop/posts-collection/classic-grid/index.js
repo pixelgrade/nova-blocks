@@ -1,20 +1,19 @@
 /**
  * WordPress dependencies
  */
-import { __ } from "@wordpress/i18n";
+import { __ } from '@wordpress/i18n';
 
 /**
  * Internal dependencies
  */
-import { postsCollection as icon } from '../icons';
-import metadata from '../../block.json';
+import { postsCollection as icon } from '../../icons';
+import metadata from '../../../../block.json';
 
 const { name: SUPERNOVA_BLOCK } = metadata;
 
 const CARDS_COUNT = 6;
 
 const attributes = {
-  variation: 'novablocks-posts-parametric',
   query: {
     perPage: CARDS_COUNT,
     pages: 1,
@@ -30,25 +29,26 @@ const attributes = {
 };
 
 const innerSupernovaAttributes = {
-  variation: 'novablocks-posts-parametric',
-
   showCollectionTitle: true,
   showCollectionSubtitle: true,
 
-  title: __('Our latest brainy posts', '__plugin_txtd' ),
-  subtitle: __('A super-duper-parametric collection of our latest brain-dumps.', '__plugin_txtd' ),
+  title: __( 'Fresh posts from the grid', '__plugin_txtd' ),
+  subtitle: __( 'A collection of our latest articles.', '__plugin_txtd' ),
+
+  contentType: 'auto',
+  layoutStyle: 'classic',
 
   emphasisBySpace: 1,
   emphasisTopSpacing: 1,
   emphasisBottomSpacing: 1,
-
-  contentType: 'auto',
-  layoutStyle: 'parametric',
-  contentPosition: 'center left',
-  contentPadding: 0,
   layoutGutter: 10,
 
   postsToShow: CARDS_COUNT,
+  columns: 3,
+
+  cardLayout: 'vertical',
+  contentPosition: 'top left',
+  cardMediaOpacity: 100,
 };
 
 // @todo Not sure why we should send Supernova attributes to each item. It is dirty!
@@ -61,11 +61,12 @@ const innerSupernovaItemAttributes = {
   }
 };
 
-export const postsParametricQuery = {
-  name: 'novablocks/supernova/query-posts-parametric',
-  title: __( 'Posts Collection', '__plugin_txtd' ),
-  description: __( 'Display a queried set of posts in a beautiful, consistent manner.', '__plugin_txtd' ),
-  icon: icon,
+const classicGrid = {
+  name: 'novablocks/supernova/query-posts-classic-grid',
+  title: __( 'Query Loop → Posts Collection: Classic Grid', '__plugin_txtd' ),
+  description: __( 'Display a queried set of posts in a classic grid format (columns and rows).', '__plugin_txtd' ),
+  keywords: [ 'query', 'post', 'collection', 'layout', 'grid', 'columns', 'rows' ],
+  icon,
   attributes,
   innerBlocks: [
     [
@@ -75,6 +76,7 @@ export const postsParametricQuery = {
     ],
     [ 'core/query-pagination' ],
   ],
-  isActive: ( blockAttributes, variationAttributes ) => blockAttributes.variation === variationAttributes.variation,
-  scope: [ 'inserter', ],
+  scope: [ 'inserter', 'block' ],
 };
+
+export default classicGrid;

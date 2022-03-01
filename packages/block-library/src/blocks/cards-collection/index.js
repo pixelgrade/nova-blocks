@@ -13,7 +13,7 @@ import { addFilter } from '@wordpress/hooks';
  */
 import { getSvg } from "@novablocks/block-editor";
 
-import iconSvg from './cards-collection-block.svg';
+import iconSvg from './icon.svg';
 import edit from './edit';
 import transforms from './transforms';
 

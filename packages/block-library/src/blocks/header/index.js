@@ -10,7 +10,7 @@ import { getSvg } from "@novablocks/block-editor";
 /**
  * Internal dependencies
  */
-import iconSvg from './header-block.svg';
+import iconSvg from './icon.svg';
 import edit from './edit';
 import variations from './variations';
 import deprecated from './deprecated';

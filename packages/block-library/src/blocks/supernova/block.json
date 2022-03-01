@@ -2,10 +2,10 @@
 	"$schema": "https://schemas.wp.org/trunk/block.json",
 	"apiVersion": 2,
 	"name": "novablocks/supernova",
-	"title": "Supernova",
+	"title": "Cards Collection",
 	"category": "nova-blocks",
 	"description": "Create amazing layouts from your posts or static content.",
-	"keywords": ["posts", "grid", "layout", "query", "parametric"],
+	"keywords": ["posts", "grid", "layout", "query", "parametric", "card", "collection"],
 	"textdomain": "nova-blocks",
 	"attributes": {},
 	"usesContext": [

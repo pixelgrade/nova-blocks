@@ -1,7 +1,7 @@
 /**
  * Internal dependencies
  */
-import iconSvg from './post-comments-block.svg';
+import iconSvg from './icon.svg';
 import edit from './edit';
 
 /**

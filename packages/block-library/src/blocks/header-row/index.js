@@ -12,7 +12,7 @@ import { select } from "@wordpress/data";
  */
 import { getSvg } from "@novablocks/block-editor";
 
-import iconSvg from '../header/header-block.svg';
+import iconSvg from '../header/icon.svg';
 import edit from './edit';
 import attributesOverwrite from "./attributes-overwrite.json";
 import metadata from './block.json';

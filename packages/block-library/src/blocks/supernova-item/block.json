@@ -5,14 +5,15 @@
 	"parent": [
 		"novablocks/supernova"
 	],
-	"title": "Supernova Item",
+	"title": "Card",
 	"category": "nova-blocks",
-	"description": "Define an item of your Supernova block.",
+	"description": "Define an item in a cards collection.",
 	"keywords": [
 		"layout",
 		"posts",
 		"grid",
-		"parametric"
+		"parametric",
+		"card"
 	],
 	"textdomain": "nova-blocks",
 	"attributes": {},

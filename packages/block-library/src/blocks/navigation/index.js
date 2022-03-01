@@ -10,7 +10,7 @@ import { useLayoutEffect } from "@wordpress/element";
  */
 import { getSvg, useSelectParent } from "@novablocks/block-editor";
 
-import iconSvg from './navigation-block.svg';
+import iconSvg from './icon.svg';
 import attributes from "./attributes";
 import { addSocialMenuClass } from "./utils";
 
