@@ -1,16 +1,14 @@
 import { __ } from "@wordpress/i18n";
 import { getSvg } from "@novablocks/block-editor";
-import iconSvg from "./media-card-block-icon.svg";
+import iconSvg from "./icon.svg";
 
 const attributes = {
-  variation: 'novablocks-media-card',
-
   contentType: 'custom',
 
   contentPadding: 0,
   layoutGutter: 100,
 
-  cardLayout: 'horizontal',
+  cardLayout: 'vertical',
 
   layoutStyle: 'classic',
   postsToShow: 1,
@@ -39,10 +37,11 @@ const innerBlocks = [
   [ 'core/button', { text: 'Discover more' } ],
 ];
 
-const mediaCard = {
-  name: 'novablocks/supernova/media-card',
-  title: __( 'Media Card Constellation', '__plugin_txtd' ),
-  description: __( 'Display media alongside short pieces of content.', '__plugin_txtd' ),
+const verticalCard = {
+  name: 'novablocks/supernova/vertical-card',
+  title: __( 'Vertical Card', '__plugin_txtd' ),
+  description: __( 'Display media and short pieces of content, one after another.', '__plugin_txtd' ),
+  keywords:["card", "layout", "vertical", "panel", "column"],
   icon: getSvg( iconSvg ),
   attributes,
   innerBlocks: [
@@ -52,8 +51,7 @@ const mediaCard = {
       innerBlocks
     ]
   ],
-  isActive: ( blockAttributes, variationAttributes ) => blockAttributes.variation === variationAttributes.variation,
   scope: [ 'inserter', ],
 };
 
-export default mediaCard;
+export default verticalCard;

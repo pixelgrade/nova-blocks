@@ -189,7 +189,13 @@ const DefaultConfig = {
 			{
 				test: /\.svg$/,
 				use: [
-					'svg-sprite-loader',
+          {
+            loader: 'svg-sprite-loader',
+            options: {
+              symbolId: '[3]-svgicon',
+              symbolRegExp: 'packages\\/.*\\/?(build\\/blocks\\/[^\\/]+|build-module)(\\/svgs?)?\\/(.*)\\.svg'
+            }
+          },
 					'svgo-loader'
 				]
 			}

@@ -1,13 +1,12 @@
 import { __ } from "@wordpress/i18n";
 import { getSvg } from "@novablocks/block-editor";
-import iconSvg from "./hero-block-icon.svg";
+import iconSvg from "./icon.svg";
 
 const attributes = {
-  variation: 'novablocks-hero',
-
   contentType: 'custom',
   layoutStyle: 'classic',
   contentPadding: 100,
+
   cardLayout: 'stacked',
 
   postsToShow: 1,
@@ -52,15 +51,15 @@ const innerBlocks = [
   ]
 ];
 
-const heroVariation = {
-  name: 'novablocks/supernova/hero',
-  title: __( 'Hero of the Galaxy', '__plugin_txtd' ),
+const hero = {
+  name: 'novablocks/supernova/card/hero',
+  title: __( 'Hero Card', '__plugin_txtd' ),
   description: __( 'A great way to get your visitors acquainted with your content.', '__plugin_txtd' ),
+  keywords:["card", "layout", "hero", "full-width", "cover"],
   icon: getSvg( iconSvg ),
   attributes: attributes,
   innerBlocks,
-  isActive: ( blockAttributes, variationAttributes ) => blockAttributes.variation === variationAttributes.variation,
   scope: [ 'inserter', ],
 };
 
-export default heroVariation;
+export default hero;

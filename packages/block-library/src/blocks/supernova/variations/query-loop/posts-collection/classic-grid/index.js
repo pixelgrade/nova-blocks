@@ -6,15 +6,14 @@ import { __ } from "@wordpress/i18n";
 /**
  * Internal dependencies
  */
-import { slideshowCollection as icon } from '../icons';
-import metadata from '../../block.json';
+import { postsCollection as icon } from '../icons';
+import metadata from '../../../block.json';
 
 const { name: SUPERNOVA_BLOCK } = metadata;
 
-const CARDS_COUNT = 3;
+const CARDS_COUNT = 6;
 
 const attributes = {
-  variation: 'novablocks-posts-slideshow',
   query: {
     perPage: CARDS_COUNT,
     pages: 1,
@@ -30,33 +29,30 @@ const attributes = {
 };
 
 const innerSupernovaAttributes = {
-  variation: 'novablocks-posts-slideshow',
 
-  showCollectionTitle: false,
-  showCollectionSubtitle: false,
+  showCollectionTitle: true,
+  showCollectionSubtitle: true,
 
-  title: __('You should read these', '__plugin_txtd' ),
-  subtitle: __('A fancy slideshow with our latest posts never hurt nobody.', '__plugin_txtd' ),
+  title: __('Fresh posts from the grid', '__plugin_txtd' ),
+  subtitle: __('A collection of our latest articles.', '__plugin_txtd' ),
 
-  align: 'full',
   contentType: 'auto',
-  layoutStyle: 'carousel',
-  contentPadding: 100,
+  layoutStyle: 'classic',
 
   emphasisBySpace: 1,
   emphasisTopSpacing: 1,
   emphasisBottomSpacing: 1,
+  layoutGutter: 10,
 
   postsToShow: CARDS_COUNT,
-  columns: 1,
+  columns: 3,
 
-  cardLayout: 'stacked',
-  contentPosition: 'center center',
-  overlayFilterStrength: 40,
-  contentColorSignal: 3,
-  contentPaletteVariation: 12,
+  cardLayout: 'vertical',
+  contentPosition: 'top left',
+  cardMediaOpacity: 100,
 };
 
+// @todo Not sure why we should send Supernova attributes to each item. It is dirty!
 const innerSupernovaItemAttributes = {
   ...innerSupernovaAttributes,
   // Lock inner supernova-items so they can't be removed or moved.
@@ -66,10 +62,10 @@ const innerSupernovaItemAttributes = {
   }
 };
 
-export const postsSlideshowQuery = {
-  name: 'novablocks/supernova/query-posts-slideshow',
-  title: __( 'Posts Slideshow', '__plugin_txtd' ),
-  description: __( 'Display a queried set of posts in a single, coveted space.', '__plugin_txtd' ),
+export const postsGridQuery = {
+  name: 'novablocks/supernova/query-posts-classic-grid',
+  title: __( 'Posts Collection: Classic Grid', '__plugin_txtd' ),
+  description: __( 'Display a queried set of posts in a classic grid format (columns and rows).', '__plugin_txtd' ),
   icon: icon,
   attributes,
   innerBlocks: [
@@ -78,7 +74,7 @@ export const postsSlideshowQuery = {
       innerSupernovaAttributes,
       Array.from( Array( CARDS_COUNT ) ).map( () => [ 'novablocks/supernova-item', innerSupernovaItemAttributes ] ),
     ],
+    [ 'core/query-pagination' ],
   ],
-  isActive: ( blockAttributes, variationAttributes ) => blockAttributes.variation === variationAttributes.variation,
   scope: [ 'inserter', ],
 };
