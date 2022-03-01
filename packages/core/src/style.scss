@@ -18,7 +18,12 @@
   padding-left: var(--nb-wrapper-sides-spacings);
   padding-right: var(--nb-wrapper-sides-spacings);
 
-  > :is(.alignfull, [data-align="full"]) {
+  > :is(
+    .wp-block-template-part,
+    .nb-sidecar,
+    .alignfull,
+    [data-align="full"]
+  ) {
     margin-left: calc(-1 * var(--nb-wrapper-sides-spacings));
     margin-right: calc(-1 * var(--nb-wrapper-sides-spacings));
   }

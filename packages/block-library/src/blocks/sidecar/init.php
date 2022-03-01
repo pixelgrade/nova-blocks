@@ -36,6 +36,7 @@ if ( ! function_exists( 'novablocks_render_sidecar_block' ) ) {
 
 		$attributes_config = novablocks_get_sidecar_attributes();
 		$attributes        = novablocks_get_attributes_with_defaults( $attributes, $attributes_config );
+		$cssProps          = novablocks_get_space_and_sizing_css( $attributes );
 
 		$classes = [
 			'nb-sidecar',
@@ -58,6 +59,6 @@ if ( ! function_exists( 'novablocks_render_sidecar_block' ) ) {
 			$id = ' id="' .  esc_attr( $attributes['anchor'] ). '" ';
 		}
 
-		return '<' . $tag . $id . ' class="' . esc_attr( join( ' ', $classes ) ) . '">' . $content . '</' . $tag .'>';
+		return '<' . $tag . $id . ' class="' . esc_attr( join( ' ', $classes ) ) . '" style="' . join( '; ', $cssProps ) .'">' . $content . '</' . $tag .'>';
 	}
 }

@@ -44,7 +44,7 @@ const Edit = ( props ) => {
   } );
 
   if ( ! innerBlocks.length ) {
-    return <SidecarVariationPicker { ...props } />
+    return <VariationPicker { ...props } />
   }
 
   return (

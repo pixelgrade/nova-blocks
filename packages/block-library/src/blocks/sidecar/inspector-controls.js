@@ -4,6 +4,8 @@
 import { __ } from '@wordpress/i18n';
 import { RadioControl, ToggleControl, PanelBody, SelectControl } from '@wordpress/components';
 import { InspectorControls } from '@wordpress/block-editor';
+import { Fragment } from "@wordpress/element";
+import { ControlsSection, ControlsTab } from "@novablocks/block-editor";
 
 const SidecarInspectorControls = ( props ) => {
 
@@ -41,13 +43,13 @@ const SidecarInspectorControls = ( props ) => {
   };
 
   return (
-    <>
-      <InspectorControls>
-        <PanelBody title={__( 'Settings', '__plugin_txtd' )}>
+    <Fragment>
+      <ControlsSection id={ 'layout' } order={ 10 } label={ __( 'Layout', '__plugin_txtd' ) } key={ 'sidecar_layout' }>
+        <ControlsTab label={ __( 'Settings', '__plugin_txtd' ) }>
           <RadioControl
-            key={'sidecar-sidebar-controls'}
-            label={__( 'Sidebar Size', '__plugin_txtd' )}
-            selected={sidebarWidth}
+            key={ 'sidecar-sidebar-controls' }
+            label={ __( 'Sidebar Size', '__plugin_txtd' ) }
+            selected={ sidebarWidth }
             options={
               [
                 { label: __( 'Small', '__plugin_txtd' ), value: 'small' },
@@ -55,43 +57,46 @@ const SidecarInspectorControls = ( props ) => {
                 { label: __( 'Large', '__plugin_txtd' ), value: 'large' },
               ]
             }
-            onChange={( nextSidebarWidth ) => {
+            onChange={ ( nextSidebarWidth ) => {
               setAttributes( { sidebarWidth: nextSidebarWidth } );
-            }}
+            } }
           />
 
           <RadioControl
-            key={'sidecar-sidebar-position'}
-            label={__( 'Sidebar Position', '__plugin_txtd' )}
-            selected={sidebarPosition}
+            key={ 'sidecar-sidebar-position' }
+            label={ __( 'Sidebar Position', '__plugin_txtd' ) }
+            selected={ sidebarPosition }
             options={
               [
                 { label: __( 'Show sidebar on left', '__plugin_txtd' ), value: 'left' },
-                { label: __( 'Show sidebar on right', '__plugin_txtd' ), value: 'right' }
+                { label: __( 'Show sidebar on right', '__plugin_txtd' ), value: 'right' },
+                { label: __( 'No sidebar', '__plugin_txtd' ), value: 'none' }
               ]
             }
-            onChange={( nextSidebarPosition ) => {
+            onChange={ ( nextSidebarPosition ) => {
               setAttributes( { sidebarPosition: nextSidebarPosition } );
-            }}
+            } }
           />
 
-          <ToggleControl
-            label={__( 'Enable sticky sidebar on scroll', '__plugin_txtd' )}
-            help={
-              lastItemIsSticky
-                ? __( 'The last item inside sidebar will be sticky on scroll.', '__plugin_txtd' )
-                : __( 'All blocks inside sidebar will be static.', '__plugin_txtd' )
-            }
-            checked={lastItemIsSticky}
-            onChange={() => setAttributes( { lastItemIsSticky: !lastItemIsSticky } )}
-          />
-        </PanelBody>
-      </InspectorControls>
+          { sidebarPosition !== 'none' &&
+            <ToggleControl
+              label={ __( 'Enable sticky sidebar on scroll', '__plugin_txtd' ) }
+              help={
+                lastItemIsSticky
+                  ? __( 'The last item inside sidebar will be sticky on scroll.', '__plugin_txtd' )
+                  : __( 'All blocks inside sidebar will be static.', '__plugin_txtd' )
+              }
+              checked={ lastItemIsSticky }
+              onChange={ () => setAttributes( { lastItemIsSticky: !lastItemIsSticky } ) }
+            />
+          }
+        </ControlsTab>
+      </ControlsSection>
 
       <InspectorControls __experimentalGroup="advanced">
         <SelectControl
-          label={__( 'HTML element', '__plugin_txtd' )}
-          options={[
+          label={ __( 'HTML element', '__plugin_txtd' ) }
+          options={ [
             { label: __( 'Default (<div>)', '__plugin_txtd' ), value: 'div' },
             { label: '<header>', value: 'header' },
             { label: '<main>', value: 'main' },
@@ -99,15 +104,15 @@ const SidecarInspectorControls = ( props ) => {
             { label: '<article>', value: 'article' },
             { label: '<aside>', value: 'aside' },
             { label: '<footer>', value: 'footer' },
-          ]}
-          value={TagName}
-          onChange={( value ) =>
+          ] }
+          value={ TagName }
+          onChange={ ( value ) =>
             setAttributes( { tagName: value } )
           }
-          help={htmlElementMessages[TagName]}
+          help={ htmlElementMessages[ TagName ] }
         />
       </InspectorControls>
-    </>
+    </Fragment>
   );
 };
 

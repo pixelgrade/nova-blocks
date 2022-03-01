@@ -11,6 +11,9 @@
 	"usesContext": [],
 	"supports": {
 		"html": false,
-		"anchor": true
+		"anchor": true,
+		"novaBlocks": {
+			"spaceAndSizing": true
+		}
 	}
 }

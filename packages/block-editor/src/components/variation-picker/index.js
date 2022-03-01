@@ -24,7 +24,7 @@ const VariationPicker = ( props ) => {
 
   const { replaceInnerBlocks } = useDispatch( 'core/block-editor' );
 
-  const onSelectVariation = useCallback( nextVariation => {
+  const onSelectVariation = useCallback( ( nextVariation = defaultVariation ) => {
     const nextAttributes = { layout: nextVariation.name };
 
     setAttributes( nextAttributes );
@@ -36,7 +36,7 @@ const VariationPicker = ( props ) => {
       );
     }
 
-  }, [] );
+  }, [ defaultVariation ] );
 
   return (
     <BlockVariationPicker
