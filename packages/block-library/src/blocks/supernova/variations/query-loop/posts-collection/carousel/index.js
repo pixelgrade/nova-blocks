@@ -1,20 +1,19 @@
 /**
  * WordPress dependencies
  */
-import { __ } from "@wordpress/i18n";
+import { __ } from '@wordpress/i18n';
 
 /**
  * Internal dependencies
  */
-import { slideshowCollection as icon } from '../icons';
-import metadata from '../../../block.json';
+import { slideshowCollection as icon } from '../../icons';
+import metadata from '../../../../block.json';
 
 const { name: SUPERNOVA_BLOCK } = metadata;
 
 const CARDS_COUNT = 3;
 
 const attributes = {
-  variation: 'novablocks-posts-slideshow',
   query: {
     perPage: CARDS_COUNT,
     pages: 1,
@@ -30,13 +29,11 @@ const attributes = {
 };
 
 const innerSupernovaAttributes = {
-  variation: 'novablocks-posts-slideshow',
-
   showCollectionTitle: false,
   showCollectionSubtitle: false,
 
-  title: __('You should read these', '__plugin_txtd' ),
-  subtitle: __('A fancy slideshow with our latest posts never hurt nobody.', '__plugin_txtd' ),
+  title: __( 'You should read these', '__plugin_txtd' ),
+  subtitle: __( 'A fancy slideshow with our latest posts never hurt nobody.', '__plugin_txtd' ),
 
   align: 'full',
   contentType: 'auto',
@@ -66,11 +63,12 @@ const innerSupernovaItemAttributes = {
   }
 };
 
-export const postsSlideshowQuery = {
+const carousel = {
   name: 'novablocks/supernova/query-posts-slideshow',
-  title: __( 'Posts Slideshow', '__plugin_txtd' ),
-  description: __( 'Display a queried set of posts in a single, coveted space.', '__plugin_txtd' ),
-  icon: icon,
+  title: __( 'Query Loop → Posts Collection: Carousel', '__plugin_txtd' ),
+  description: __( 'Display a queried set of posts in a carousel layout.', '__plugin_txtd' ),
+  keywords: [ 'query', 'post', 'collection', 'layout', 'carousel', 'slideshow', 'slider', 'horizontal', 'section', ],
+  icon,
   attributes,
   innerBlocks: [
     [
@@ -79,6 +77,7 @@ export const postsSlideshowQuery = {
       Array.from( Array( CARDS_COUNT ) ).map( () => [ 'novablocks/supernova-item', innerSupernovaItemAttributes ] ),
     ],
   ],
-  isActive: ( blockAttributes, variationAttributes ) => blockAttributes.variation === variationAttributes.variation,
-  scope: [ 'inserter', ],
+  scope: [ 'inserter', 'block' ],
 };
+
+export default carousel;

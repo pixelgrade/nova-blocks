@@ -15,7 +15,7 @@ import {
 /**
  * Internal dependencies
  */
-import iconSvg from './hero-block.svg';
+import iconSvg from './icon.svg';
 import edit from './edit';
 import save from './save';
 import transforms from './transforms';

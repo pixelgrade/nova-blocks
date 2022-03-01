@@ -1,13 +1,13 @@
 /**
  * WordPress dependencies
  */
-import { __ } from "@wordpress/i18n";
+import { __ } from '@wordpress/i18n';
 
 /**
  * Internal dependencies
  */
-import { getSvg } from "@novablocks/block-editor";
-import iconSvg from "./icon.svg";
+import { getSvg } from '@novablocks/block-editor';
+import iconSvg from './icon.svg';
 
 const CARDS_COUNT = 3;
 
@@ -35,15 +35,15 @@ const innerBlockAttributes = Object.assign( {}, attributes, {
   useSourceColorAsReference: false
 } );
 
-const cardsCollectionClassicGrid = {
-  name: 'novablocks/supernova/cards-collection-classic-grid',
+const classicGrid = {
+  name: 'novablocks/supernova/cards-collection/classic-grid',
   title: __( 'Cards Collection: Classic Grid', '__plugin_txtd' ),
   description: __( 'Display a list of related items in a classic grid layout.', '__plugin_txtd' ),
-  keywords:["card", "collection", "layout", "grid", "columns", "rows"],
+  keywords: [ 'card', 'collection', 'layout', 'grid', 'columns', 'rows' ],
   icon: getSvg( iconSvg ),
   attributes,
   innerBlocks: Array.from( Array( CARDS_COUNT ) ).map( () => [ 'novablocks/supernova-item', innerBlockAttributes ] ),
   scope: [ 'inserter', ],
 };
 
-export default cardsCollectionClassicGrid;
+export default classicGrid;

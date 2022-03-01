@@ -1,20 +1,19 @@
 /**
  * WordPress dependencies
  */
-import { __ } from "@wordpress/i18n";
+import { __ } from '@wordpress/i18n';
 
 /**
  * Internal dependencies
  */
-import { postsCollection as icon } from '../icons';
-import metadata from '../../../block.json';
+import { postsCollection as icon } from '../../icons';
+import metadata from '../../../../block.json';
 
 const { name: SUPERNOVA_BLOCK } = metadata;
 
 const CARDS_COUNT = 6;
 
 const attributes = {
-  variation: 'novablocks-posts-parametric',
   query: {
     perPage: CARDS_COUNT,
     pages: 1,
@@ -30,13 +29,11 @@ const attributes = {
 };
 
 const innerSupernovaAttributes = {
-  variation: 'novablocks-posts-parametric',
-
   showCollectionTitle: true,
   showCollectionSubtitle: true,
 
-  title: __('Our latest brainy posts', '__plugin_txtd' ),
-  subtitle: __('A super-duper-parametric collection of our latest brain-dumps.', '__plugin_txtd' ),
+  title: __( 'Our latest brainy posts', '__plugin_txtd' ),
+  subtitle: __( 'A super-duper-parametric collection of our latest brain-dumps.', '__plugin_txtd' ),
 
   emphasisBySpace: 1,
   emphasisTopSpacing: 1,
@@ -61,11 +58,12 @@ const innerSupernovaItemAttributes = {
   }
 };
 
-export const postsParametricQuery = {
+const parametricGrid = {
   name: 'novablocks/supernova/query-posts-parametric',
-  title: __( 'Posts Collection', '__plugin_txtd' ),
+  title: __( 'Query Loop → Posts Collection: Parametric Grid', '__plugin_txtd' ),
   description: __( 'Display a queried set of posts in a beautiful, consistent manner.', '__plugin_txtd' ),
-  icon: icon,
+  keywords: [ 'query', 'post', 'collection', 'layout', 'grid', 'parametric', 'composition', 'columns', 'rows' ],
+  icon,
   attributes,
   innerBlocks: [
     [
@@ -75,6 +73,7 @@ export const postsParametricQuery = {
     ],
     [ 'core/query-pagination' ],
   ],
-  isActive: ( blockAttributes, variationAttributes ) => blockAttributes.variation === variationAttributes.variation,
-  scope: [ 'inserter', ],
+  scope: [ 'inserter', 'block', ],
 };
+
+export default parametricGrid;

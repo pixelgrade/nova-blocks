@@ -1,6 +1,6 @@
-import { __ } from "@wordpress/i18n";
-import { getSvg } from "@novablocks/block-editor";
-import iconSvg from "./icon.svg";
+import { __ } from '@wordpress/i18n';
+import { getSvg } from '@novablocks/block-editor';
+import iconSvg from './icon.svg';
 
 const attributes = {
   contentType: 'custom',
@@ -45,7 +45,7 @@ const innerBlocks = [
     innerBlockAttributes,
     [
       [ 'core/heading', { level: 1, content: 'This is a catchy title' } ],
-      [ 'core/paragraph', { content: 'A brilliant subtitle to explain its catchiness', className: "is-style-lead" } ],
+      [ 'core/paragraph', { content: 'A brilliant subtitle to explain its catchiness', className: 'is-style-lead' } ],
       [ 'core/button', { text: 'Discover more' } ],
     ]
   ]
@@ -55,7 +55,7 @@ const hero = {
   name: 'novablocks/supernova/card/hero',
   title: __( 'Hero Card', '__plugin_txtd' ),
   description: __( 'A great way to get your visitors acquainted with your content.', '__plugin_txtd' ),
-  keywords:["card", "layout", "hero", "full-width", "cover"],
+  keywords: [ 'card', 'layout', 'hero', 'full-width', 'cover' ],
   icon: getSvg( iconSvg ),
   attributes: attributes,
   innerBlocks,

@@ -19,7 +19,7 @@ import {
   getSvg
 } from "@novablocks/block-editor";
 
-import iconSvg from './slideshow-block.svg';
+import iconSvg from './icon.svg';
 import edit from './edit';
 import save from './save';
 import attributes from "./attributes";

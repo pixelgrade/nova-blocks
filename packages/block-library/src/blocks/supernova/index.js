@@ -15,12 +15,13 @@ import { getFocalPointImage } from "@novablocks/scrolling-effect";
 import edit from './edit';
 import variations from './variations';
 import transforms from './transforms';
-import queryVariations from './query-variations';
-import {supernova as supernovaIcon} from './icons';
+import queryVariations from './variations/query-loop';
+import iconSvg from './icon.svg';
 
 import attributes from './attributes';
 
 import { withSetChildrenAttributes } from "./filters";
+import { getSvg } from "@novablocks/block-editor";
 
 const coreQueryAlterations = settings => {
 
@@ -79,7 +80,7 @@ addFilter(
 );
 
 registerBlockType( 'novablocks/supernova', {
-  icon: supernovaIcon,
+  icon: getSvg( iconSvg ),
   attributes,
   edit,
   transforms,

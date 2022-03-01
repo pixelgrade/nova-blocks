@@ -1,3 +1,3 @@
-export { default as cardsCollectionCarousel } from './carousel';
-export { default as cardsCollectionClassicGrid } from './classic-grid';
-export { default as cardsCollectionParametricGrid } from './parametric-grid';
+export { default as postsCollectionCarousel } from './carousel';
+export { default as postsCollectionClassicGrid } from './classic-grid';
+export { default as postsCollectionParametricGrid } from './parametric-grid';

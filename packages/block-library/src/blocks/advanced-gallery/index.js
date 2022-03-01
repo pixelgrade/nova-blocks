@@ -15,7 +15,7 @@ import edit from './edit';
 import deprecated from './deprecated';
 import transforms from './transforms';
 
-import iconSvg from './advanced-gallery-block.svg';
+import iconSvg from './icon.svg';
 import attributes from './attributes';
 
 /**

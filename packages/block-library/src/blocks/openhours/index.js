@@ -1,7 +1,7 @@
 /**
  * Internal dependencies
  */
-import iconSvg from './openhours-block.svg';
+import iconSvg from './icon.svg';
 import edit from './edit';
 import attributes from "./attributes"
 

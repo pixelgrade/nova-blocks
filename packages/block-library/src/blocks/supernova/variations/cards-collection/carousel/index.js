@@ -1,7 +1,7 @@
 /**
  * WordPress dependencies
  */
-import { __ } from "@wordpress/i18n";
+import { __ } from '@wordpress/i18n';
 
 /**
  * Internal dependencies
@@ -39,15 +39,15 @@ const innerBlockAttributes = Object.assign( {}, attributes, {
   useSourceColorAsReference: false
 } );
 
-const cardsCollectionCarousel = {
-  name: 'novablocks/supernova/cards-collection-carousel',
+const carousel = {
+  name: 'novablocks/supernova/cards-collection/carousel',
   title: __( 'Cards Collection: Carousel', '__plugin_txtd' ),
   description: __( 'Display a list of related items in a carousel/slideshow layout.', '__plugin_txtd' ),
-  keywords:["card", "collection", "layout", "carousel", "slideshow", "slider", "horizontal", "section"],
+  keywords: [ 'card', 'collection', 'layout', 'carousel', 'slideshow', 'slider', 'horizontal', 'section' ],
   icon,
   attributes,
   innerBlocks: Array.from( Array( CARDS_COUNT ) ).map( () => [ 'novablocks/supernova-item', innerBlockAttributes ] ),
   scope: [ 'inserter', ],
 };
 
-export default cardsCollectionCarousel;
+export default carousel;

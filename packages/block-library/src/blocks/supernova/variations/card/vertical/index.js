@@ -1,6 +1,6 @@
-import { __ } from "@wordpress/i18n";
-import { getSvg } from "@novablocks/block-editor";
-import iconSvg from "./icon.svg";
+import { __ } from '@wordpress/i18n';
+import { getSvg } from '@novablocks/block-editor';
+import iconSvg from './icon.svg';
 
 const attributes = {
   contentType: 'custom',
@@ -37,11 +37,11 @@ const innerBlocks = [
   [ 'core/button', { text: 'Discover more' } ],
 ];
 
-const verticalCard = {
+const vertical = {
   name: 'novablocks/supernova/vertical-card',
   title: __( 'Vertical Card', '__plugin_txtd' ),
   description: __( 'Display media and short pieces of content, one after another.', '__plugin_txtd' ),
-  keywords:["card", "layout", "vertical", "panel", "column"],
+  keywords: [ 'card', 'layout', 'vertical', 'panel', 'column' ],
   icon: getSvg( iconSvg ),
   attributes,
   innerBlocks: [
@@ -54,4 +54,4 @@ const verticalCard = {
   scope: [ 'inserter', ],
 };
 
-export default verticalCard;
+export default vertical;

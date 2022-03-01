@@ -1,13 +1,13 @@
 /**
  * WordPress dependencies
  */
-import { __ } from "@wordpress/i18n";
+import { __ } from '@wordpress/i18n';
 
 /**
  * Internal dependencies
  */
-import { postsCollection as icon } from '../icons';
-import metadata from '../../../block.json';
+import { postsCollection as icon } from '../../icons';
+import metadata from '../../../../block.json';
 
 const { name: SUPERNOVA_BLOCK } = metadata;
 
@@ -29,12 +29,11 @@ const attributes = {
 };
 
 const innerSupernovaAttributes = {
-
   showCollectionTitle: true,
   showCollectionSubtitle: true,
 
-  title: __('Fresh posts from the grid', '__plugin_txtd' ),
-  subtitle: __('A collection of our latest articles.', '__plugin_txtd' ),
+  title: __( 'Fresh posts from the grid', '__plugin_txtd' ),
+  subtitle: __( 'A collection of our latest articles.', '__plugin_txtd' ),
 
   contentType: 'auto',
   layoutStyle: 'classic',
@@ -62,11 +61,12 @@ const innerSupernovaItemAttributes = {
   }
 };
 
-export const postsGridQuery = {
+const classicGrid = {
   name: 'novablocks/supernova/query-posts-classic-grid',
-  title: __( 'Posts Collection: Classic Grid', '__plugin_txtd' ),
+  title: __( 'Query Loop → Posts Collection: Classic Grid', '__plugin_txtd' ),
   description: __( 'Display a queried set of posts in a classic grid format (columns and rows).', '__plugin_txtd' ),
-  icon: icon,
+  keywords: [ 'query', 'post', 'collection', 'layout', 'grid', 'columns', 'rows' ],
+  icon,
   attributes,
   innerBlocks: [
     [
@@ -76,5 +76,7 @@ export const postsGridQuery = {
     ],
     [ 'core/query-pagination' ],
   ],
-  scope: [ 'inserter', ],
+  scope: [ 'inserter', 'block' ],
 };
+
+export default classicGrid;

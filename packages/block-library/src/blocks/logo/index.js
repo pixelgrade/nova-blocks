@@ -10,7 +10,7 @@ import ServerSideRender from '@wordpress/server-side-render';
  */
 import { getSvg, useSelectParent } from "@novablocks/block-editor";
 
-import iconSvg from './logo-block.svg';
+import iconSvg from './icon.svg';
 import attributes from "./attributes";
 
 registerBlockType( 'novablocks/logo', {

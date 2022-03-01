@@ -1,3 +1,3 @@
-export cardsCollectionCarousel from './carousel';
-export cardsCollectionClassicGrid from './classic-grid';
-export cardsCollectionParametricGrid from './parametric-grid';
+export { default as cardHero } from './hero';
+export { default as cardMedia } from './media';
+export { default as cardVertical } from './vertical';

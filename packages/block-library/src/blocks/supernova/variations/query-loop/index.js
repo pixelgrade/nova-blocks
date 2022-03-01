@@ -1,15 +1,9 @@
-import { postsParametricQuery } from './posts-parametric';
-import { postsGridQuery } from './posts-grid';
-import { postsSlideshowQuery } from './posts-slideshow';
-import { parametricCollection, gridCollection, slideshowCollection } from './block-scoped';
+import { postsCollectionCarousel, postsCollectionClassicGrid, postsCollectionParametricGrid } from './posts-collection';
 
 const queryVariations = [
-  postsParametricQuery,
-  parametricCollection,
-  postsGridQuery,
-  gridCollection,
-  postsSlideshowQuery,
-  slideshowCollection,
+  postsCollectionCarousel,
+  postsCollectionClassicGrid,
+  postsCollectionParametricGrid,
 ];
 
 export default queryVariations;

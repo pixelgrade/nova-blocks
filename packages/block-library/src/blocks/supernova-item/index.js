@@ -1,9 +1,4 @@
 /**
- * Internal dependencies
- */
-import { getSvg } from "@novablocks/block-editor";
-
-/**
  * WordPress dependencies
  */
 import { registerBlockType } from '@wordpress/blocks';
@@ -14,8 +9,12 @@ import { generateDefaults, getPlaceholderImages } from "@novablocks/block-editor
 import { getRandomAttributes } from "@novablocks/media-composition";
 
 
+/**
+ * Internal dependencies
+ */
+import { getSvg } from "@novablocks/block-editor";
 import edit from './edit';
-import iconSvg from './supernova-block.svg';
+import iconSvg from './icon.svg';
 import attributes from './attributes.json';
 
 async function getNewDefaults( block ) {

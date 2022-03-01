@@ -1,7 +1,7 @@
 /**
  * WordPress dependencies
  */
-import { Path, SVG } from '@wordpress/components';
+import { Circle, Path, SVG } from '@wordpress/components';
 
 export const advancedGallery = (
 	<SVG viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" className={'novablocks-icon'}>

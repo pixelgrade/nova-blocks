@@ -18,7 +18,7 @@ import { getRandomArrayFromArray } from "@novablocks/utils";
 
 import edit from './edit';
 import save from './save';
-import iconSvg from './card-block.svg';
+import iconSvg from './icon.svg';
 
 import attributes from "./attributes";
 import attributesOverwrite from "./attributes-overwrite.json";

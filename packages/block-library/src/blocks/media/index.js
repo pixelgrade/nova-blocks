@@ -8,7 +8,7 @@ import { addFilter } from '@wordpress/hooks';
 /**
  * Internal dependencies
  */
-import iconSvg from './media-block.svg';
+import iconSvg from './icon.svg';
 import edit from './edit';
 import save from './save';
 import transforms from './transforms';

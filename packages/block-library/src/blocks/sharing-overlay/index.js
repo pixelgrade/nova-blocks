@@ -8,7 +8,7 @@ import { addFilter } from "@wordpress/hooks";
 /**
  * Internal dependencies
  */
-import iconSvg from './sharing-overlay-block.svg';
+import iconSvg from './icon.svg';
 import edit from './edit';
 import attributes from './attributes';
 import attributesOverwrite from "./attributes-overwrite.json";

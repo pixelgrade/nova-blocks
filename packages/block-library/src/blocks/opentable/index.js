@@ -1,17 +1,16 @@
 /**
- * Internal dependencies
- */
-import iconSvg from './opentable-block.svg';
-import edit from './edit';
-import save from './save';
-
-/**
  * WordPress dependencies
  */
 import { __ } from '@wordpress/i18n';
 import { registerBlockType } from '@wordpress/blocks';
 import { addFilter } from '@wordpress/hooks';
 
+/**
+ * Internal dependencies
+ */
+import iconSvg from './icon.svg';
+import edit from './edit';
+import save from './save';
 import { getSvg } from "@novablocks/block-editor";
 
 import attributes from './attributes.json';

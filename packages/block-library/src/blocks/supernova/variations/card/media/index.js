@@ -1,6 +1,6 @@
-import { __ } from "@wordpress/i18n";
-import { getSvg } from "@novablocks/block-editor";
-import iconSvg from "./icon.svg";
+import { __ } from '@wordpress/i18n';
+import { getSvg } from '@novablocks/block-editor';
+import iconSvg from './icon.svg';
 
 const attributes = {
   contentType: 'custom',
@@ -37,11 +37,11 @@ const innerBlocks = [
   [ 'core/button', { text: 'Discover more' } ],
 ];
 
-const mediaCard = {
+const media = {
   name: 'novablocks/supernova/media-card',
   title: __( 'Media Card', '__plugin_txtd' ),
   description: __( 'Display media alongside short pieces of content.', '__plugin_txtd' ),
-  keywords:["card", "layout", "media-text", "feature", "section"],
+  keywords: [ 'card', 'layout', 'media-text', 'feature', 'section' ],
   icon: getSvg( iconSvg ),
   attributes,
   innerBlocks: [
@@ -54,4 +54,4 @@ const mediaCard = {
   scope: [ 'inserter', ],
 };
 
-export default mediaCard;
+export default media;
