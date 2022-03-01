@@ -52,6 +52,10 @@
   }
 }
 
+.wp-block-group__inner-container[class] {
+  max-width: none;
+}
+
 .wp-block-group {
 
   // groups that have a set color signal (different text and background color)
