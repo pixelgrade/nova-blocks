@@ -192,8 +192,8 @@ const DefaultConfig = {
           {
             loader: 'svg-sprite-loader',
             options: {
-              symbolId: '[3]-svgicon',
-              symbolRegExp: 'packages\\/.*\\/?(build\\/blocks\\/[^\\/]+|build-module)(\\/svgs?)?\\/(.*)\\.svg'
+              symbolId: '[1]-[2]',
+              symbolRegExp: 'packages\\/([^\\/]*)\\/[^\\/]*(?:\\/svgs?|\\/blocks)?\\/(.*)\\.svg'
             }
           },
 					'svgo-loader'
