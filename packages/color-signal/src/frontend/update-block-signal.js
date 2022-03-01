@@ -1,9 +1,13 @@
-import { addClass, removeClass } from "@novablocks/utils";
+import { colord, extend as colordExtend } from 'colord';
+import colordA11yPlugin from 'colord/plugins/a11y';
+
+import { addClass, removeClass, toggleClass } from "@novablocks/utils";
 
 import {
   addSiteVariationOffset,
   computeColorSignal,
-  getAbsoluteColorVariation, getColorSignalClassnames,
+  getAbsoluteColorVariation,
+  getColorSignalClassnames,
   getSourceIndexFromPaletteId,
   removeSiteVariationOffset
 } from "../utils";
@@ -46,12 +50,37 @@ export const updateBlockSignal = ( block, parentVariation ) => {
     colorSignal,
   }, true );
 
+  const isLight = isLightVariation( palette, finalVariation );
+
   addClass( block, newClassnames );
+  toggleClass( block, 'sm-light', isLight );
+  toggleClass( block, 'sm-dark', ! isLight );
 
   innerBlocks.forEach( innerBlock => {
     updateBlockSignal( innerBlock, finalAbsoluteVariation );
   } );
 };
+
+const isLightVariation = ( palette, variation ) => {
+  colordExtend( [ colordA11yPlugin ] );
+
+  if ( !Array.isArray( window?.styleManager?.colorsConfig ) ) {
+    return;
+  }
+
+  const currentPaletteConfig = window.styleManager.colorsConfig.find( thisPalette => {
+    return `${ thisPalette.id }` === `${ palette }`;
+  } );
+
+  if ( ! currentPaletteConfig ) {
+    return true;
+  }
+
+  const variationIndex = parseInt( variation, 10 ) - 1;
+  const hex = currentPaletteConfig.variations ? currentPaletteConfig.variations[variationIndex].bg : currentPaletteConfig.colors[variationIndex].value;
+
+  return colord( '#FFFFFF' ).contrast( hex ) < colord( '#000000' ).contrast( hex );
+}
 
 /**
  *  * If the Palette Basis Offset value has been changed after the content has been created

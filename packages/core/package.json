@@ -18,7 +18,6 @@
 		"url": "https://github.com/pixelgrade/nova-blocks/issues"
 	},
 	"dependencies": {
-		"@novablocks/components": "file:../components",
 		"@novablocks/icons": "file:../icons",
 		"@wordpress/block-editor": "^5.2.6",
 		"@wordpress/components": "^12.0.6",

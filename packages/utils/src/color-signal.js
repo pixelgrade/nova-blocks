@@ -98,36 +98,3 @@ export const syncColorSignalClasses = ( from, to ) => {
     } );
   }
 };
-
-export const getColorSetClasses = ( element ) => {
-  const classAttr = element?.getAttribute( 'class' );
-
-  if ( ! classAttr ) {
-    return [];
-  }
-
-  const classes = classAttr.split( /\s+/ );
-
-  return classes.filter( classname => {
-    return classname.search( 'sm-palette-' ) !== - 1 ||
-           classname.search( 'sm-variation-' ) !== - 1;
-  } );
-};
-
-export const toggleClasses = ( element, classesToAdd = '' ) => {
-
-  const prefixes = [
-    'sm-palette-',
-    'sm-variation-',
-    'sm-color-signal-'
-  ];
-
-  const classesToRemove = Array.from( element.classList ).filter( classname => {
-    return prefixes.some( prefix => classname.indexOf( prefix ) > -1 );
-  } );
-
-  element.classList.remove( ...classesToRemove );
-
-  addClass( element, classesToAdd );
-};
-

@@ -1,4 +1,5 @@
-import { below, addClass, removeClass, getColorSetClasses } from '@novablocks/utils';
+import { below, addClass, removeClass } from '@novablocks/utils';
+import { getColorSetClasses } from '../../utils';
 
 import HeaderBase from './header-base';
 import HeaderColors from './header-colors';
