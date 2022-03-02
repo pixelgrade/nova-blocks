@@ -82,6 +82,7 @@ if ( ! function_exists( 'novablocks_render_supernova_block' ) ) {
 			novablocks_get_grid_area_fallback_classnames( $attributes )
 		);
 
+		// This refers to the carousel pagination, not the Query Loop pagination.
 		if ( $attributes['showPagination'] ) {
 			$classes[] = 'supernova--show-pagination';
 		}
