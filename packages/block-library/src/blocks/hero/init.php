@@ -98,7 +98,7 @@ if ( ! function_exists( 'novablocks_render_hero_block' ) ) {
 
 		ob_start();
 
-		do_action( 'novablocks_hero:before' );
+		do_action( 'novablocks/hero:before' );
 
 		$id = '';
 		if ( ! empty( $attributes['anchor'] ) ) {
@@ -111,7 +111,7 @@ if ( ! function_exists( 'novablocks_render_hero_block' ) ) {
 			<?php echo join( ' ', $data_attributes ); ?>
 		>
 
-			<?php do_action( 'novablocks_hero:after_opening_tag', $attributes ); ?>
+			<?php do_action( 'novablocks/hero:after_opening_tag', $attributes ); ?>
 
 			<div class="novablocks-doppler__mask  novablocks-doppler__wrapper">
 				<?php
@@ -145,11 +145,11 @@ if ( ! function_exists( 'novablocks_render_hero_block' ) ) {
 				<?php novablocks_render_scroll_indicator( $attributes ); ?>
 			</div>
 
-			<?php do_action( 'novablocks_hero:before_closing_tag', $attributes ) ?>
+			<?php do_action( 'novablocks/hero:before_closing_tag', $attributes ) ?>
 
 		</div>
 
-		<?php do_action( 'novablocks_hero:after' );
+		<?php do_action( 'novablocks/hero:after' );
 
 		return ob_get_clean();
 	}

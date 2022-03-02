@@ -179,7 +179,7 @@ if ( ! class_exists( 'NovaBlocks_Comments_Header' ) ) {
 				$should_render = false;
 			}
 
-			return apply_filters( 'novablocks_comments_header_should_render', $should_render, $this->post, $args );
+			return apply_filters( 'novablocks/comments/header_should_render', $should_render, $this->post, $args );
 		}
 
 		protected function register_hooks() {

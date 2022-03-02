@@ -122,7 +122,7 @@ if ( ! function_exists( 'novablocks_register_packages_scripts' ) ) {
 			 * @param string $handle       The registered script handle.
 			 * @param string $src          The registered script src.
 			 */
-			$dependencies = apply_filters( 'novablocks_register_package_editor_script_dependencies', $dependencies, $package, $handle, $package_dir_url . 'index.js' );
+			$dependencies = apply_filters( 'novablocks/register_package_editor_script_dependencies', $dependencies, $package, $handle, $package_dir_url . 'index.js' );
 
 			wp_register_script(
 				$handle,
@@ -155,7 +155,7 @@ if ( ! function_exists( 'novablocks_register_packages_scripts' ) ) {
 				 * @param string $src          The registered script src.
 				 */
 
-				$dependencies = apply_filters( 'novablocks_register_package_frontend_script_dependencies', $dependencies, $package, $handle . '/frontend', $package_dir_url . 'frontend.js' );
+				$dependencies = apply_filters( 'novablocks/register_package_frontend_script_dependencies', $dependencies, $package, $handle . '/frontend', $package_dir_url . 'frontend.js' );
 
 				wp_register_script(
 					$handle . '/frontend',
@@ -183,7 +183,7 @@ if ( ! function_exists( 'novablocks_register_packages_scripts' ) ) {
 				 * @param string $handle       The registered stylesheet handle.
 				 * @param string $src          The registered stylesheet src.
 				 */
-				$style_dependencies = apply_filters( 'novablocks_register_package_frontend_stylesheet_dependencies', $style_dependencies, $package, $handle . '-style', $package_dir_url . 'style.css' );
+				$style_dependencies = apply_filters( 'novablocks/register_package_frontend_stylesheet_dependencies', $style_dependencies, $package, $handle . '-style', $package_dir_url . 'style.css' );
 
 				wp_register_style(
 					$handle . '-style',
@@ -208,7 +208,7 @@ if ( ! function_exists( 'novablocks_register_packages_scripts' ) ) {
 				 * @param string $handle       The registered stylesheet handle.
 				 * @param string $src          The registered stylesheet src.
 				 */
-				$style_dependencies = apply_filters( 'novablocks_register_package_editor_stylesheet_dependencies', $style_dependencies, $package, $handle . '-editor_style', $package_dir_url . 'editor-styles.css' );
+				$style_dependencies = apply_filters( 'novablocks/register_package_editor_stylesheet_dependencies', $style_dependencies, $package, $handle . '-editor_style', $package_dir_url . 'editor-styles.css' );
 
 				wp_register_style(
 					$handle . '-editor_style',

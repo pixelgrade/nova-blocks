@@ -159,7 +159,7 @@ function novablocks_get_block_editor_settings(): array {
 		'advancedPresetOptions' => novablocks_get_space_and_sizing_advanced_presets(),
 	];
 
-	$settings = apply_filters( 'novablocks_block_editor_initial_settings', $settings );
+	$settings = apply_filters( 'novablocks/block_editor_initial_settings', $settings );
 	$settings = apply_filters( 'novablocks_block_editor_settings', $settings );
 
 	return $settings;

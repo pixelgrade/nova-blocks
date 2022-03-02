@@ -64,7 +64,7 @@ if ( ! class_exists( 'NovaBlocks_Walker_Comment' ) ) {
 				$comment_classes[] = 'no-avatar';
 			}
 
-			$comment_wrapper_classes = apply_filters( 'novablocks_comment_wrapper_classes', [ 'comment-wrapper' ], $comment, $depth, $args );
+			$comment_wrapper_classes = apply_filters( 'novablocks/comments/comment_wrapper_classes', [ 'comment-wrapper' ], $comment, $depth, $args );
 			$comment_wrapper_classes = implode( ' ', $comment_wrapper_classes );
 			?>
 
@@ -139,7 +139,7 @@ if ( ! class_exists( 'NovaBlocks_Walker_Comment' ) ) {
 
 					</footer><!-- .comment-footer-meta -->
 
-					<?php do_action( 'novablocks_comments_list_comment_end', $comment, $depth, $args ); ?>
+					<?php do_action( 'novablocks/comments/list_comment:end', $comment, $depth, $args ); ?>
 
 				</article><!-- .comment-body -->
 			</div><!-- .comment-wrapper -->
@@ -233,7 +233,7 @@ if ( ! class_exists( 'NovaBlocks_Walker_Comment' ) ) {
 					 * @param int        $depth   Depth of the current comment.
 					 * @param array      $args    An array of arguments.
 					 */
-					$menu_items = apply_filters( 'novablock_comments_list_comment_extra_meta_menu_items', $menu_items, $comment, $depth, $args );
+					$menu_items = apply_filters( 'novablocks/comments/list_comment_extra_meta_menu_items', $menu_items, $comment, $depth, $args );
 
 					echo implode( "\n", $menu_items );
 					?>

@@ -68,7 +68,7 @@ class Block_Areas {
 		}
 
 		// Retrieve the raw post content.
-		$content = apply_filters( 'novablocks_block_areas_raw_content', $post->post_content );
+		$content = apply_filters( 'novablocks/block_areas_raw_content', $post->post_content );
 
 		// Now apply some of the default the_content filters that are safe.
 		$content = do_blocks( $content );
@@ -84,7 +84,7 @@ class Block_Areas {
 		}
 
 		// Apply one custom filter to allow others to have a say.
-		echo apply_filters( 'novablocks_block_areas_the_content', $content );
+		echo apply_filters( 'novablocks/block_areas_the_content', $content );
 	}
 
 	/**

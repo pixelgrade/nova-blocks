@@ -117,7 +117,7 @@ if ( ! class_exists( 'NovaBlocks_Comments_Meta' ) ) {
 			}
 
 			// Allow others to save whatever they may have added.
-			do_action( 'novablocks_comment_extra_details_save_metadata', $comment_id );
+			do_action( 'novablocks/comments/comment_extra_details_save_metadata', $comment_id );
 		}
 
 		/**
@@ -161,7 +161,7 @@ if ( ! class_exists( 'NovaBlocks_Comments_Meta' ) ) {
 
 						<?php
 						// Allow others to add fields here.
-						do_action( 'novablocks_comment_extra_details_fields', $comment );
+						do_action( 'novablocks/comments/comment_extra_details_fields', $comment );
 						?>
 
 					</tbody>
@@ -191,7 +191,7 @@ if ( ! class_exists( 'NovaBlocks_Comments_Meta' ) ) {
 			}
 
 			// Allow others to save whatever they may have added.
-			do_action( 'novablocks_comment_extra_details_save_fields', $comment_id );
+			do_action( 'novablocks/comments/comment_extra_details_save_fields', $comment_id );
 		}
 
 		/**

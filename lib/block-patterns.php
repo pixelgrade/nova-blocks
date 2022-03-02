@@ -53,7 +53,7 @@ function novablocks_register_block_patterns() {
 	];
 
 	/**
-	 * Filters the NovaBlocks block pattern categories.
+	 * Filters the NovaBlocks block patterns categories.
 	 *
 	 * @param array[] $block_pattern_categories {
 	 *                                          An associative array of block pattern categories, keyed by category name.
@@ -65,7 +65,7 @@ function novablocks_register_block_patterns() {
 	 *     }
 	 * }
 	 */
-	$block_pattern_categories = apply_filters( 'novablocks_block_pattern_categories', $block_pattern_categories );
+	$block_pattern_categories = apply_filters( 'novablocks/block_patterns_categories', $block_pattern_categories );
 
 	foreach ( $block_pattern_categories as $name => $properties ) {
 		if ( ! WP_Block_Pattern_Categories_Registry::get_instance()->is_registered( $name ) ) {
@@ -90,7 +90,7 @@ function novablocks_register_block_patterns() {
 	 *     }
 	 * }
 	 */
-	$block_patterns = apply_filters( 'novablocks_block_patterns', $block_patterns );
+	$block_patterns = apply_filters( 'novablocks/block_patterns', $block_patterns );
 
 	foreach ( $block_patterns as $block_pattern ) {
 		if ( empty( $block_pattern['slug'] ) || empty( $block_pattern['path'] ) || ! file_exists( $block_pattern['path'] ) ) {

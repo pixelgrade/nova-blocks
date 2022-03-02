@@ -41,7 +41,7 @@ if ( ! function_exists( 'novablocks_render_logo_block' ) ) {
 
 		ob_start();
 
-		do_action( 'novablocks_logo:before' ); ?>
+		do_action( 'novablocks/logo:before' ); ?>
 
 		<div class="<?php echo esc_attr( join( ' ', $classes ) ) ?>">
 
@@ -54,7 +54,7 @@ if ( ! function_exists( 'novablocks_render_logo_block' ) ) {
 				$logo_markup .= '</div>';
 				$logo_markup .= '</div>';
 			}
-			echo apply_filters( 'novablocks_logo_markup', $logo_markup );
+			echo apply_filters( 'novablocks/logo_markup', $logo_markup );
 
 			$blog_info   = get_bloginfo( 'name' );
 			$description = get_bloginfo( 'description', 'display' );
@@ -82,7 +82,7 @@ if ( ! function_exists( 'novablocks_render_logo_block' ) ) {
 		</div>
 
 		<?php
-		do_action( 'novablocks_logo:after' );
+		do_action( 'novablocks/logo:after' );
 
 		return ob_get_clean();
 	}

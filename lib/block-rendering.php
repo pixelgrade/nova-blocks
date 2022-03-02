@@ -980,7 +980,7 @@ function novablocks_get_post_reading_time_in_minutes( $post, int $wpm = 250 ): i
 	$content = str_replace( ']]>', ']]&gt;', $content );
 
 	// Allow others to have a say; like removing certain non-essential elements (avatars for example).
-	$content = apply_filters( 'novablocks_post_content_before_reading_time_calc', $content, $post );
+	$content = apply_filters( 'novablocks/post_content_before_reading_time_calc', $content, $post );
 
 	return novablocks_get_reading_time_in_minutes( $content, $wpm );
 }
@@ -1518,7 +1518,7 @@ function novablocks_get_posts_collection_cards_markup( array $attributes, $conte
 		$post = $query->next_post();
 
 		$card_markup = novablocks_get_collection_card_markup_from_post( $post, $attributes );
-		$markup      = apply_filters( 'novablocks_get_collection_card_markup', $card_markup, $post, $attributes );
+		$markup      = apply_filters( 'novablocks/get_collection_card_markup', $card_markup, $post, $attributes );
 		if ( ! empty( $markup ) ) {
 			$output .= $markup;
 			// Only remember posts that were actually rendered.

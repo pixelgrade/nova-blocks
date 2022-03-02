@@ -134,7 +134,7 @@ if ( ! class_exists( 'NovaBlocks_Comments_Starter' ) ) {
 				$should_render = false;
 			}
 
-			return apply_filters( 'novablocks_comments_starter_should_render', $should_render, $this->post, $args );
+			return apply_filters( 'novablocks/comments/starter_should_render', $should_render, $this->post, $args );
 		}
 
 		protected function register_hooks() {

@@ -41,7 +41,7 @@ if ( ! function_exists( 'novablocks_render_navigation_block' ) ) {
 
 		ob_start();
 
-		do_action( 'novablocks_navigation:before' ); ?>
+		do_action( 'novablocks/navigation:before' ); ?>
 
 		<div class="<?php echo esc_attr( join( ' ', $classes ) ); ?>">
 			<?php
@@ -53,7 +53,7 @@ if ( ! function_exists( 'novablocks_render_navigation_block' ) ) {
 			?>
 		</div>
 
-		<?php do_action( 'novablocks_navigation:after' );
+		<?php do_action( 'novablocks/navigation:after' );
 
 		return ob_get_clean();
 	}

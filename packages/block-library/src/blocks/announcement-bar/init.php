@@ -70,7 +70,7 @@ if ( ! function_exists( 'novablocks_render_announcement_bar_block' ) ) {
 
 		ob_start();
 
-		do_action( 'novablocks_announcement_bar:before' );
+		do_action( 'novablocks/announcement_bar:before' );
 		?>
 
 		<div class="<?php echo esc_attr( join( ' ', $classes ) ); ?>"
@@ -96,7 +96,7 @@ if ( ! function_exists( 'novablocks_render_announcement_bar_block' ) ) {
 
 		<?php
 
-		do_action( 'novablocks_announcement_bar:after' );
+		do_action( 'novablocks/announcement_bar:after' );
 
 		return ob_get_clean();
 	}

@@ -32,7 +32,7 @@ if ( ! function_exists ('novablocks_render_post_comments_block' ) ) {
 			return '';
 		}
 
-		if ( ! apply_filters( 'novablocks_comments_block_should_render', true, $block->context[ 'postId' ], $attributes, $block ) ) {
+		if ( ! apply_filters( 'novablocks/comments/block_should_render', true, $block->context[ 'postId' ], $attributes, $block ) ) {
 			return '';
 		}
 
@@ -121,7 +121,7 @@ if ( ! function_exists ('novablocks_replace_content_tags' ) ) {
 		$original_content = $content;
 
 		// Allow others to alter the content before we do our work
-		$content = apply_filters( 'novablocks_before_parse_content_tags', $content, $post_id, $user_id );
+		$content = apply_filters( 'novablocks/before_parse_content_tags', $content, $post_id, $user_id );
 
 		// Now we will replace all the supported tags with their value
 		// %year%
@@ -167,7 +167,7 @@ if ( ! function_exists ('novablocks_replace_content_tags' ) ) {
 		}
 
 		// Allow others to alter the content after we did our work
-		return apply_filters( 'novablocks_after_parse_content_tags', $content, $original_content, $post_id, $user_id );
+		return apply_filters( 'novablocks/after_parse_content_tags', $content, $original_content, $post_id, $user_id );
 	}
 }
 
