@@ -1,4 +1,27 @@
-// internal dependencies
+/**
+ * WordPress dependencies
+ */
+import {
+  Drawer,
+  Drawers,
+  DrawerList,
+  DrawerPanel,
+  DrawerListBefore,
+  DrawerListAfter
+} from "../index";
+
+import { __ } from '@wordpress/i18n';
+import { useBlockEditContext } from '@wordpress/block-editor';
+
+import {
+  Children,
+  useCallback,
+  useMemo,
+} from '@wordpress/element';
+
+/**
+ * Internal dependencies
+ */
 import { groupBy, orderBy } from 'lodash';
 import { getSectionsFromFills } from './utils';
 import { ControlsSectionsSlot, ControlsSectionsFill } from "./controls-sections-slot-fill";
@@ -6,24 +29,6 @@ import { DrawerContentSlot, DrawerContentFill } from "./drawer-content-slot-fill
 
 import Cube from './cube';
 import { ActiveSectionTabs } from "./tabs";
-
-import {
-	Drawer,
-	Drawers,
-	DrawerList,
-	DrawerPanel,
-	DrawerListBefore,
-	DrawerListAfter
-} from "../index";
-
-import { __ } from '@wordpress/i18n';
-import { useBlockEditContext } from '@wordpress/block-editor';
-
-import {
-	Children,
-  useCallback,
-  useMemo,
- } from '@wordpress/element';
 
 const ControlsSectionsComponent = ( props ) => {
 

@@ -1,5 +1,4 @@
 import { addFilter } from '@wordpress/hooks';
-import { createHigherOrderComponent } from '@wordpress/compose';
 
 const deprecatedStyles = {
   'is-style-accent': {

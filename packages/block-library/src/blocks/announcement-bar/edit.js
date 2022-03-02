@@ -1,9 +1,13 @@
+/**
+ * WordPress dependencies
+ */
 import classnames from 'classnames';
 
 import { Fragment } from "@wordpress/element";
 import { InnerBlocks, URLInput } from "@wordpress/block-editor";
 import { BaseControl, ToggleControl } from "@wordpress/components";
 import { __ } from "@wordpress/i18n";
+import { useEffect } from '@wordpress/element';
 
 const ALLOWED_BLOCKS = [ 'novablocks/openhours', 'core/paragraph' ];
 const ANNOUNCEMENT_BAR_TEMPLATE = [ [ 'novablocks/openhours', { openHoursStyle: 'status',  } ] ];
@@ -11,6 +15,7 @@ const ANNOUNCEMENT_BAR_TEMPLATE = [ [ 'novablocks/openhours', { openHoursStyle: 
 const Edit = ( props ) => {
 
   const {
+    clientId,
     className,
     attributes: {
       url,
@@ -20,6 +25,10 @@ const Edit = ( props ) => {
     isSelected,
   } = props;
 
+  // Whenever the block clientId changes, update the blockId attribute.
+  useEffect( () => {
+    setAttributes( { blockId: clientId } );
+  }, [ clientId ] );
 
   const classNames = classnames(
     className,
