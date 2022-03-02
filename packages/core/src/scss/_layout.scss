@@ -36,41 +36,50 @@
   @include nb-layout-settings;
 }
 
+.break-align-left {
+  --block-wide-start: ws;
+  --block-full-start: fs;
+}
+
+.break-align-right {
+  --block-wide-end: we;
+  --block-full-end: fe;
+}
+
 // This is where the grid magic starts.
 //
 // "Break" classes are added via JS when the aligned block and a Sidebar
 // do not overlap, so there is space that the aligned block can fill.
 :is(
-  .is-root-container,
+  .wp-block-query,
+  .wp-block-post-content,
+  .wp-block-template-part,
+  .nb-content-layout-grid,
+  .nb-sidecar,
+  .nb-sidecar-area--content
+) {
+
+  &:not(.supernova), & > .supernova {
+    @include nb-content-layout-grid;
+  }
+}
+
+
+:is(
   .wp-block-post-content,
   .wp-block-query,
-  .wp-site-blocks,
   .wp-block-template-part,
   .nb-content-layout-grid
   ) {
 
   // Align: WIDE
   > :is(.alignwide, [data-align="wide"]) {
-
-    &.break-align-left {
-      grid-column-start: var(--block-wide-start);
-    }
-
-    &.break-align-right {
-      grid-column-end: var(--block-wide-end);
-    }
+    grid-column: var(--block-wide-start) / var(--block-wide-end);
   }
 
   // Align: FULL
   > :is(.alignfull, [data-align="full"]) {
-
-    &.break-align-left {
-      grid-column-start: var(--block-full-start);
-    }
-
-    &.break-align-right {
-      grid-column-end: var(--block-full-end);
-    }
+    grid-column: var(--block-full-start) / var(--block-full-end);
   }
 
   > .wp-block-group:not(.break-align-left):not(.break-align-right) > .wp-block-group__inner-container > * {

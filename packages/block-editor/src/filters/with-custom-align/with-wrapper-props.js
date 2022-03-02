@@ -6,12 +6,7 @@ const withWrapperPropsRemoved = createHigherOrderComponent( OriginalComponent =>
   return ( props ) => {
     const wrapperProps = props.wrapperProps ?? {};
     const { dataAlign, ...newWrapperProps } = wrapperProps;
-    const { attributes } = props;
-    const { align } = attributes;
-
-    if (align === undefined) {
-      return <OriginalComponent { ...props } />;
-    }
+    const align = props.attributes?.align ?? 'none';
 
     Object.assign( newWrapperProps, {
       className: classnames(

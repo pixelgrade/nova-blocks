@@ -72,15 +72,14 @@ class HeaderMobile extends HeaderBase {
     } );
 
     if ( buttonCount ) {
-      // create a fake navigation block to inherit styles
-      // @todo hopefully find a better solution for styling
       const navigationBlock = document.createElement( 'div' );
-      const wrapper = document.createElement( 'div' );
       addClass( navigationBlock, 'wp-block-novablocks-navigation' );
-      addClass( wrapper, 'novablocks-header__buttons-menu wp-block-group__inner-container' );
+      const wrapper = document.createElement( 'div' );
+      addClass( wrapper, 'novablocks-header__buttons-menu' );
 
-      wrapper.appendChild( navigationBlock );
       navigationBlock.appendChild( this.buttonMenu );
+      wrapper.appendChild( navigationBlock );
+
       this.parent.element.appendChild( wrapper );
     }
   }

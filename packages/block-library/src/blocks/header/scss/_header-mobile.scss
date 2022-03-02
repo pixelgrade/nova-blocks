@@ -120,6 +120,9 @@
   top: 0;
   right: 0;
 
+  padding-left: var(--nb-wrapper-sides-spacings);
+  padding-right: var(--nb-wrapper-sides-spacings);
+
   .menu {
     display: flex;
     align-items: center;

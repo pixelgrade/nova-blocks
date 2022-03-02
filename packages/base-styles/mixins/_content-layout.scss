@@ -90,17 +90,17 @@
   }
 
   @include below(lap) {
-    //grid-template-columns:
-    //  [fs] var(--nb-wrapper-sides-spacings) // [ws]
-    //  [ws] auto // [gs]
-    //  [gs] 0 // [cs]
-    //  [cs] 1fr // [gcs]
-    //  [gcs] 0 // [cc]
-    //  [cc] 0  // [gce]
-    //  [gce] 1fr // [gce]
-    //  [ce] 0 // [ge]
-    //  [ge] auto // [we]
-    //  [we] var(--nb-wrapper-sides-spacings) [fe];
+    grid-template-columns:
+      [fs] var(--nb-wrapper-sides-spacings) // [ws]
+      [ws] auto // [gs]
+      [gs] 0 // [cs]
+      [cs] 1fr // [gcs]
+      [gcs] 0 // [cc]
+      [cc] 0  // [gce]
+      [gce] 1fr // [gce]
+      [ce] 0 // [ge]
+      [ge] auto // [we]
+      [we] var(--nb-wrapper-sides-spacings) [fe];
 
     @at-root {
       :where(#{&}) > * {

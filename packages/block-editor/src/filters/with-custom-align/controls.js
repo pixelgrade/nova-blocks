@@ -11,9 +11,10 @@ const Controls = ( props ) => {
   const supports = useSupports( props.name );
   const alignOptions = useMemo( () => supports?.novaBlocks?.align, [ supports ] );
 
-  if ( ! Array.isArray( alignOptions ) || ! alignOptions.length ) {
-    return null;
-  }
+  console.log( props.name, alignOptions );
+//  if ( ! Array.isArray( alignOptions ) || ! alignOptions.length ) {
+//    return null;
+//  }
 
   return (
     <BlockControls group="block">

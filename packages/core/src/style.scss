@@ -14,20 +14,20 @@
   box-sizing: border-box;
 }
 
-:is(.wp-site-blocks) {
-  padding-left: var(--nb-wrapper-sides-spacings);
-  padding-right: var(--nb-wrapper-sides-spacings);
-
-  > :is(
-    .wp-block-template-part,
-    .nb-sidecar,
-    .alignfull,
-    [data-align="full"]
-  ) {
-    margin-left: calc(-1 * var(--nb-wrapper-sides-spacings));
-    margin-right: calc(-1 * var(--nb-wrapper-sides-spacings));
-  }
-}
+//:is(.wp-site-blocks) {
+//  padding-left: var(--nb-wrapper-sides-spacings);
+//  padding-right: var(--nb-wrapper-sides-spacings);
+//
+//  > :is(
+//    .wp-block-template-part,
+//    .nb-sidecar,
+//    .alignfull,
+//    [data-align="full"]
+//  ) {
+//    margin-left: calc(-1 * var(--nb-wrapper-sides-spacings));
+//    margin-right: calc(-1 * var(--nb-wrapper-sides-spacings));
+//  }
+//}
 
 // Applying Grid on Group Block
 .wp-block-group,
@@ -93,22 +93,6 @@
   .supernova-item__inner-container[class] > & {
     margin-left: calc(-1 * var(--nb-card-content-padding, 0));
     margin-right: calc(-1 * var(--nb-card-content-padding, 0));
-  }
-}
-
-:is(
-  .is-root-container,
-  .wp-block-query,
-  .wp-block-post-content,
-  .wp-site-blocks,
-  .wp-block-template-part,
-  .nb-content-layout-grid,
-  .nb-sidecar,
-  .nb-sidecar-area--content
-) {
-
-  &:not(.supernova), & > .supernova {
-    @include nb-content-layout-grid;
   }
 }
 

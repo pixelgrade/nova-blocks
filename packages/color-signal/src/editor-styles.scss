@@ -36,6 +36,9 @@
   position: relative;
   padding: 0;
   outline: 0;
+  background: none;
+  border: 0;
+  cursor: pointer;
 
   svg {
     display: block;
@@ -80,6 +83,7 @@
 .color-palette-picker__color-svg {
   width: 54px;
   height: 54px;
+  transform: rotate(45deg);
 }
 
 .color-palette-picker__tick {
