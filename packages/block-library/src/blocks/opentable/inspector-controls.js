@@ -1,19 +1,22 @@
-import {
-	ControlsSection,
-	ControlsTab
-} from "@novablocks/block-editor";
-
 /**
  * WordPress dependencies
  */
 import { __ } from '@wordpress/i18n';
 import { Fragment } from '@wordpress/element';
 import {
-	TextControl,
-	ToggleControl,
-	RadioControl,
-	SelectControl
+  TextControl,
+  ToggleControl,
+  RadioControl,
+  SelectControl
 } from '@wordpress/components';
+
+/**
+ * Internal dependencies
+ */
+import {
+	ControlsSection,
+	ControlsTab
+} from "@novablocks/block-editor";
 
 const OpenTableInspectorControls = function( props ) {
 	const {

@@ -1,3 +1,6 @@
+/**
+ * WordPress dependencies
+ */
 import classnames from 'classnames';
 
 import {
@@ -7,11 +10,15 @@ import { useDispatch, useSelect } from '@wordpress/data';
 import { store as coreStore } from '@wordpress/core-data';
 import { Fragment, useCallback, memo, useMemo } from '@wordpress/element';
 
+/**
+ * Internal dependencies
+ */
 import { useInnerBlocksCount, useInnerBlocks, useInnerBlocksLock, normalizeImages } from '@novablocks/block-editor';
 import { Collection, CollectionHeader } from '@novablocks/collection';
 import { BlockControls as MediaCompositionBlockControls } from '@novablocks/media-composition';
 
 import BlockControls from './block-controls';
+import InspectorControls from "./inspector-controls";
 
 import { getAlignFromMatrix } from '@novablocks/utils';
 
@@ -268,6 +275,7 @@ const SupernovaEdit = props => {
     <Fragment>
       <MemoizedSupernovaPreview {...props} posts={posts} inQuery={isDescendentOfQueryLoop} key={'preview'}/>
       <BlockControls {...props} inQuery={isDescendentOfQueryLoop} key={'block-controls'}/>
+      <InspectorControls {...props} inQuery={isDescendentOfQueryLoop} key={'inspector-controls'}/>
       <ChangeMediaBlockControls {...props} key={'media-composition-block-controls'}/>
     </Fragment>
   );
