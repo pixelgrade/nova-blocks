@@ -29,6 +29,6 @@
 	},
 	"contentType": {
 		"type": "string",
-		"default": "auto"
+		"default": "fields"
 	}
 }
