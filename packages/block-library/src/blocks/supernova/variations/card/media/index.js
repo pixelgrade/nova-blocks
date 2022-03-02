@@ -1,16 +1,24 @@
+/**
+ * WordPress dependencies
+ */
 import { __ } from '@wordpress/i18n';
+
+/**
+ * Internal dependencies
+ */
 import { getSvg } from '@novablocks/block-editor';
 import iconSvg from './icon.svg';
 
 const attributes = {
-  contentType: 'custom',
+  variation: 'novablocks-card-media',
 
+  contentType: 'custom',
+  layoutStyle: 'classic',
   contentPadding: 0,
   layoutGutter: 100,
 
   cardLayout: 'horizontal',
 
-  layoutStyle: 'classic',
   postsToShow: 1,
   columns: 1,
 
@@ -51,6 +59,7 @@ const media = {
       innerBlocks
     ]
   ],
+  isActive: ( blockAttributes, variationAttributes ) => blockAttributes.variation === variationAttributes.variation,
   scope: [ 'inserter', ],
 };
 

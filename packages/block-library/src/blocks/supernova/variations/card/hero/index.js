@@ -1,8 +1,17 @@
+/**
+ * WordPress dependencies
+ */
 import { __ } from '@wordpress/i18n';
+
+/**
+ * Internal dependencies
+ */
 import { getSvg } from '@novablocks/block-editor';
 import iconSvg from './icon.svg';
 
 const attributes = {
+  variation: 'novablocks-card-hero',
+
   contentType: 'custom',
   layoutStyle: 'classic',
   contentPadding: 100,
@@ -59,6 +68,7 @@ const hero = {
   icon: getSvg( iconSvg ),
   attributes: attributes,
   innerBlocks,
+  isActive: ( blockAttributes, variationAttributes ) => blockAttributes.variation === variationAttributes.variation,
   scope: [ 'inserter', ],
 };
 
