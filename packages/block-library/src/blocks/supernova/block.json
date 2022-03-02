@@ -21,7 +21,10 @@
 			"colorSignal": {
 				"attributes": true,
 				"controls": true,
-				"contentColorSignal": true
+				"contentColorSignal": true,
+				"paletteClassname": true,
+				"paletteVariationClassname": true,
+				"colorSignalClassname": true
 			},
 			"spaceAndSizing": {
 				"attributes": true,
