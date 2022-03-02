@@ -9,7 +9,7 @@ const useInnerBlocksLock = ( clientId, lockSettings, attributes, innerBlockName 
 
   return useEffect( () => {
     innerBlocks.forEach( function ( innerBlock ) {
-      // If we have been hive a inner block name to look for, skip all others.
+      // If we have been given an inner block name to look for, skip all others.
       if ( innerBlockName && innerBlock.name !== innerBlockName ) {
         return;
       }
