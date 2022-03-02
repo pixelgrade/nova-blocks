@@ -19,7 +19,6 @@
 	},
 	"dependencies": {
 		"@novablocks/collection": "file:../collection",
-		"@novablocks/components": "file:../components",
 		"@novablocks/easings": "file:../easings",
 		"@novablocks/icons": "file:../icons",
 		"@novablocks/utils": "file:../utils",
@@ -31,6 +30,7 @@
 		"@wordpress/i18n": "^3.18.0",
 		"@wordpress/server-side-render": "^1.20.6",
 		"@wordpress/viewport": "^2.25.6",
+		"colord": "^2.9.2",
 		"js-cookie": "^2.2.1",
 		"react-slick": "^0.28.1",
 		"shariff": "^3.2.1"
