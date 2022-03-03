@@ -60,7 +60,7 @@ if ( ! class_exists( 'NovaBlocks_Comments_Post_Meta' ) ) {
 				return;
 			}
 
-			if ( true !== apply_filters( 'novablocks_comments_add_post_type_metabox', ! in_array( $post_type, $this->excluded_post_types ), $post_type ) ) {
+			if ( true !== apply_filters( 'novablocks/comments/add_post_type_metabox', ! in_array( $post_type, $this->excluded_post_types ), $post_type ) ) {
 				return;
 			}
 
@@ -113,7 +113,7 @@ if ( ! class_exists( 'NovaBlocks_Comments_Post_Meta' ) ) {
 						<td class=""><label for="nb_conversation_starter_user_id"><strong><?php esc_html_e( 'Conversation Starter', '__plugin_txtd' ); ?></strong></label></td>
 						<td>
 							<?php wp_dropdown_users(
-									apply_filters( 'novablocks_comments_post_conversation_starter_dropdown_users_args', [
+									apply_filters( 'novablocks/comments/post_conversation_starter_dropdown_users_args', [
 										'capability'       => array( $post_type_object->cap->edit_posts ),
 										'name'             => 'nb_conversation_starter_user_id',
 										'selected'         => empty( $conversation_starter_user_ID ) ? $post->post_author : $conversation_starter_user_ID,
@@ -127,7 +127,7 @@ if ( ! class_exists( 'NovaBlocks_Comments_Post_Meta' ) ) {
 
 					<?php
 					// Allow others to add fields here.
-					do_action( 'novablocks_post_discussion_extra_details_fields', $post );
+					do_action( 'novablocks/comments/post_discussion_extra_details_fields', $post );
 					?>
 
 					</tbody>

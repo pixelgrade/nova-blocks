@@ -57,7 +57,7 @@ if ( ! function_exists( 'novablocks_render_google_map_block' ) ) {
 
 		ob_start();
 
-		do_action( 'novablocks_google_maps:before' );
+		do_action( 'novablocks/google_maps:before' );
 
 		$id = '';
 		if ( ! empty( $attributes['anchor'] ) ) {
@@ -98,7 +98,7 @@ if ( ! function_exists( 'novablocks_render_google_map_block' ) ) {
 
 		<?php
 
-		do_action( 'novablocks_google_maps:after' );
+		do_action( 'novablocks/google_maps:after' );
 
 		return ob_get_clean();
 	}

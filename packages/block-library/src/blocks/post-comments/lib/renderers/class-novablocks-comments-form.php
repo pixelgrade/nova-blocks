@@ -186,7 +186,7 @@ if ( ! class_exists( 'NovaBlocks_Comments_Form' ) ) {
 				$should_render = false;
 			}
 
-			return apply_filters( 'novablocks_comments_form_should_render', $should_render, $this->post, $args );
+			return apply_filters( 'novablocks/comments/form_should_render', $should_render, $this->post, $args );
 		}
 
 		/**
@@ -262,7 +262,7 @@ if ( ! class_exists( 'NovaBlocks_Comments_Form' ) ) {
 				}
 			}
 
-			$data_attributes = apply_filters( 'novablocks_comments_the_form_button_data_attributes', $data_attributes, self::$fakeFormButtonInstances, $args );
+			$data_attributes = apply_filters( 'novablocks/comments/the_form_button_data_attributes', $data_attributes, self::$fakeFormButtonInstances, $args );
 			$data_attributes = array_map( 'esc_attr', $data_attributes );
 
 			$data_attributes_string = '';
@@ -278,7 +278,7 @@ if ( ! class_exists( 'NovaBlocks_Comments_Form' ) ) {
 				$button_classes[] = 'no-avatar';
 			}
 
-			$button_classes = apply_filters( 'novablocks_comments_the_form_button_classes', $button_classes, self::$fakeFormButtonInstances, $args );
+			$button_classes = apply_filters( 'novablocks/comments/the_form_button_classes', $button_classes, self::$fakeFormButtonInstances, $args );
 			?>
 
 			<div class="fake-form-move-anchor" id="<?php echo esc_attr( $moveAnchorId ); ?>"></div>

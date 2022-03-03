@@ -38,21 +38,21 @@ if ( ! class_exists( 'NovaBlocks_Comments_Highlight' ) ) {
 			/**
 			 * Frontend logic.
 			 */
-			add_filter( 'novablocks_comment_wrapper_classes', [ $this, 'adjust_comment_wrapper_classes' ], 10, 2 );
-			add_action( 'novablocks_comments_list_comment_end', [ $this, 'output_highlighters_list' ], 10, 1 );
-			add_filter( 'novablock_comments_list_comment_extra_meta_menu_items', [
+			add_filter( 'novablocks/comments/comment_wrapper_classes', [ $this, 'adjust_comment_wrapper_classes' ], 10, 2 );
+			add_filter( 'novablocks/comments/list_comment_extra_meta_menu_items', [
 				$this,
 				'add_extra_meta_actions',
 			], 10, 2 );
+			add_action( 'novablocks/comments/list_comment:end', [ $this, 'output_highlighters_list' ], 10, 1 );
 
 			/**
 			 * Backend logic.
 			 */
 
 			// Handle comment extra meta fields.
-			add_action( 'novablocks_comment_extra_details_fields', [ $this, 'comment_meta_box_fields' ] );
-			add_action( 'novablocks_comment_extra_details_save_metadata', [ $this, 'save_comment_meta_data' ] );
-			add_action( 'novablocks_comment_extra_details_save_fields', [ $this, 'save_comment_meta_data' ] );
+			add_action( 'novablocks/comments/comment_extra_details_fields', [ $this, 'comment_meta_box_fields' ] );
+			add_action( 'novablocks/comments/comment_extra_details_save_metadata', [ $this, 'save_comment_meta_data' ] );
+			add_action( 'novablocks/comments/comment_extra_details_save_fields', [ $this, 'save_comment_meta_data' ] );
 
 			// Handle AJAX actions.
 			add_action( 'wp_ajax_toggle_highlight_comment', [ $this, 'handle_toggle_highlight_comment' ] );

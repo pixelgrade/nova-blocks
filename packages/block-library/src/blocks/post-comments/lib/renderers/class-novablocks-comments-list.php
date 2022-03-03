@@ -136,7 +136,7 @@ if ( ! class_exists( 'NovaBlocks_Comments_List' ) ) {
 			}
 
 			// Allow others to change this.
-			$wp_list_comments_args = apply_filters( 'novablocks_wp_list_comments_args', [
+			$wp_list_comments_args = apply_filters( 'novablocks/comments/wp_list_comments_args', [
 				'walker'                       => new NovaBlocks_Walker_Comment(),
 				'max_depth'                    => $list_args['maxThreadDepth'],
 				'reverse_top_level'            => $list_args['reverseTopLevelCommentsOrder'],
@@ -222,7 +222,7 @@ if ( ! class_exists( 'NovaBlocks_Comments_List' ) ) {
 				$should_render = false;
 			}
 
-			return apply_filters( 'novablocks_comments_list_should_render', $should_render, $this->post, $args, $comments );
+			return apply_filters( 'novablocks/comments/list_should_render', $should_render, $this->post, $args, $comments );
 		}
 
 		protected function register_hooks() {
@@ -406,7 +406,7 @@ if ( ! class_exists( 'NovaBlocks_Comments_List' ) ) {
 						 * @param int The time in minutes the comment should be visible to the author.
 						 * @param WP_Comment $comment
 						 */
-						$comment_preview_time    = apply_filters( 'novablocks_comments_list_preview_time', $args['commentPreviewTime'], $comment );
+						$comment_preview_time    = apply_filters( 'novablocks/comments/list_preview_time', $args['commentPreviewTime'], $comment );
 						$comment_preview_expires = strtotime( $comment->comment_date_gmt . '+' . absint( $comment_preview_time ) . ' minute' );
 
 						if ( time() < $comment_preview_expires ) {
@@ -484,7 +484,7 @@ if ( ! class_exists( 'NovaBlocks_Comments_List' ) ) {
 			 *
 			 */
 			$comment_args = apply_filters( 'comments_template_query_args', $comment_args );
-			$comment_args = apply_filters( 'novablocks_comments_list_query_args', $comment_args );
+			$comment_args = apply_filters( 'novablocks/comments/list_query_args', $comment_args );
 
 			return $comment_args;
 		}

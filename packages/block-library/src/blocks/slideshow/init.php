@@ -85,7 +85,7 @@ if ( ! function_exists( 'novablocks_render_slideshow_block' ) ) {
 
 		ob_start();
 
-		do_action( 'novablocks_slideshow:before' );
+		do_action( 'novablocks/slideshow:before' );
 
 		$id = '';
 		if ( ! empty( $attributes['anchor'] ) ) {
@@ -98,7 +98,7 @@ if ( ! function_exists( 'novablocks_render_slideshow_block' ) ) {
 			<?php echo join( ' ', $data_attributes ); ?>
 		>
 
-			<?php do_action( 'novablocks_hero:after_opening_tag' ); ?>
+			<?php do_action( 'novablocks/hero:after_opening_tag' ); ?>
 
 			<div class="novablocks-slideshow__slider">
 				<?php foreach ( $attributes['galleryImages'] as $media ) {
@@ -170,11 +170,11 @@ if ( ! function_exists( 'novablocks_render_slideshow_block' ) ) {
 				<?php } ?>
 			</div>
 
-			<?php do_action( 'novablocks_hero:before_closing_tag' ) ?>
+			<?php do_action( 'novablocks/hero:before_closing_tag' ) ?>
 
 		</div>
 
-		<?php do_action( 'novablocks_slideshow:after' );
+		<?php do_action( 'novablocks/slideshow:after' );
 
 		return ob_get_clean();
 	}

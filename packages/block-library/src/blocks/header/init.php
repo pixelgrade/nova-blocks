@@ -41,7 +41,7 @@ if ( ! function_exists( 'novablocks_render_header_block' ) ) {
 
 		ob_start();
 
-		do_action( 'novablocks_header:before' );
+		do_action( 'novablocks/header:before' );
 
 		$attributes_config     = novablocks_get_header_attributes();
 		$attributes            = novablocks_get_attributes_with_defaults( $attributes, $attributes_config );
@@ -91,7 +91,7 @@ if ( ! function_exists( 'novablocks_render_header_block' ) ) {
 			?>
 		</div>
 
-		<?php do_action( 'novablocks_header:after' );
+		<?php do_action( 'novablocks/header:after' );
 
 		return ob_get_clean();
 	}
