@@ -73,11 +73,6 @@
     max-width: none;
   }
 
-  // wp-block comes with a set max-width of 840px
-  > .wp-block {
-    max-width: none;
-  }
-
   // overwrite default editor's styles on .editor-styles-wrapper .wp-block styles
   .editor-styles-wrapper & > .wp-block {
     margin-left: 0;
