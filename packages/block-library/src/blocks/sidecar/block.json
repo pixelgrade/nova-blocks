@@ -13,6 +13,7 @@
 		"html": false,
 		"anchor": true,
 		"novaBlocks": {
+			"colorSignal": true,
 			"spaceAndSizing": true
 		}
 	}

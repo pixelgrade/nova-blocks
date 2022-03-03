@@ -12,6 +12,7 @@ function novablocks_get_sidecar_attributes() {
 
 	return novablocks_merge_attributes_from_array( [
 		'packages/block-library/src/blocks/sidecar/attributes.json',
+		'packages/color-signal/src/attributes.json',
 		'packages/block-editor/src/filters/with-space-and-sizing/attributes.json',
 	] );
 
@@ -50,16 +51,19 @@ if ( ! function_exists( 'novablocks_render_sidecar_block' ) ) {
 			$classes[] = 'nb-sidecar--sticky-sidebar';
 		}
 
+		$data_attributes_array = array_map( 'novablocks_camel_case_to_kebab_case', array_keys( $attributes ) );
+		$data_attributes = novablocks_get_data_attributes( $data_attributes_array, $attributes );
+
 		$tag = 'div';
 		if ( ! empty( $attributes['tagName'] ) && in_array( $attributes['tagName'], ['header', 'main', 'section', 'article', 'aside', 'footer'] ) ) {
 			$tag = esc_attr( $attributes['tagName'] );
 		}
 
-		$id = '';
+		$id = ' ';
 		if ( ! empty( $attributes['anchor'] ) ) {
 			$id = ' id="' .  esc_attr( $attributes['anchor'] ). '" ';
 		}
 
-		return '<' . $tag . $id . ' class="' . esc_attr( join( ' ', $classes ) ) . '" style="' . join( '; ', $cssProps ) .'">' . $content . '</' . $tag .'>';
+		return '<' . $tag . $id . join( ' ', $data_attributes ) . ' class="' . esc_attr( join( ' ', $classes ) ) . '" style="' . join( '; ', $cssProps ) .'">' . $content . '</' . $tag .'>';
 	}
 }

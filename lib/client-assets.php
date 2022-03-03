@@ -549,10 +549,10 @@ function novablocks_dequeue_unused_block_assets() {
 		}
 
 		// has_block() will only work for singular "views", since it will not look in inner blocks or work for loops of posts.
-		if ( ! is_admin() && is_singular() && ! has_block( 'novablocks/' . $block ) ) {
-			wp_dequeue_script( 'novablocks/' . $block . '/frontend' );
-			wp_dequeue_style( 'novablocks/' . $block . '-style' );
-		}
+//		if ( ! is_admin() && is_singular() && ! has_block( 'novablocks/' . $block ) ) {
+//			wp_dequeue_script( 'novablocks/' . $block . '/frontend' );
+//			wp_dequeue_style( 'novablocks/' . $block . '-style' );
+//		}
 	}
 
 	// Also dequeue the novablocks-core.
