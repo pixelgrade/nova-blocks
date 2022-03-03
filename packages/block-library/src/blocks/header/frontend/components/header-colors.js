@@ -63,8 +63,6 @@ class HeaderColors {
     if ( this.transparentColorsSource ) {
       this.transparentColorClasses = getColorSetClasses( this.transparentColorsSource ).join( ' ' );
     }
-
-    this.transparentColorClasses = `${ this.transparentColorClasses }`;
   }
 
   toggleColors( isTransparent ) {

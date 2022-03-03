@@ -28,6 +28,7 @@ class Header extends HeaderBase {
 
     this.element = element;
     this.adjacentElement = this.getAdjacentElement( element );
+    this.colorsElement = this.findColorsElement( this.adjacentElement );
     this.paddingTopTargets = this.findPaddingTopTargets( this.adjacentElement );
 
     this.rows = this.getHeaderRows();
@@ -83,7 +84,7 @@ class Header extends HeaderBase {
 
     if ( rows ) {
       return Array.from( rows ).map( element => {
-        return new HeaderColors( element, element, this.adjacentElement );
+        return new HeaderColors( element, element, this.colorsElement );
       } );
     }
 
@@ -102,19 +103,6 @@ class Header extends HeaderBase {
 
   findProperElement( element ) {
 
-    if ( element.matches( '.nb-sidecar' ) ) {
-      const children = element.children;
-      const content = Array.prototype.filter.call( children, child => {
-        return matches( child, '.nb-sidecar-area--content' );
-      } );
-
-      if ( content.length ) {
-        return this.findProperElement( content[0].firstElementChild );
-      }
-
-      return element;
-    }
-
     if ( matches( element, 'main, .wp-block-group, .wp-block-post-content' ) ) {
       return this.findProperElement( element.firstElementChild );
     }
@@ -122,7 +110,43 @@ class Header extends HeaderBase {
     return element;
   }
 
+  findColorsElement( element ) {
+
+    if ( hasClass( element, 'nb-sidecar' ) ) {
+      const children = Array.from( element.children );
+      const content = children.filter( child => hasClass( child, 'nb-sidecar-area--content' ) );
+
+      if ( content.length ) {
+        const firstChild = content[0].firstElementChild;
+
+        if ( hasClass( firstChild, 'nb-sidecar' ) ) {
+          return this.findColorsElement( firstChild );
+        }
+      }
+    }
+
+    return element;
+  }
+
   findPaddingTopTargets( element ) {
+
+    if ( hasClass( element, 'nb-sidecar' ) ) {
+      const getChildrenTargets = ( sidecar ) => {
+        const children = Array.from( sidecar.children );
+        const content = children.filter( child => hasClass( child, 'nb-sidecar-area--content' ) );
+        const contentTargets = [];
+        const sidebarTargets = children.filter( child => hasClass( child, 'nb-sidecar-area--sidebar' ) );
+
+        if ( content.length && hasClass( content[0].firstElementChild, 'nb-sidecar' ) ) {
+          contentTargets.push( ...getChildrenTargets( content[0].firstElementChild ) );
+        } else {
+          contentTargets.push( ...content );
+        }
+
+        return [ ...contentTargets, ...sidebarTargets ];
+      }
+      return getChildrenTargets( element );
+    }
 
     if ( hasClass( element, 'supernova' ) ) {
       const attributes = element.dataset;

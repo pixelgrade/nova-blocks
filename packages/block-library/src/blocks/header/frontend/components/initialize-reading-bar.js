@@ -47,8 +47,8 @@ const bindMenuLabelClick = ( header ) => {
 }
 
 const getScrollTriggerBounds = () => {
-  const title = document.querySelector( '.entry-title' ); // @todo: too weak
-  const content = document.querySelector( '.content-area, #primary, main' ); // @todo: too weak
+  const title = document.querySelector( '.wp-block-post-title, .entry-title' );
+  const content = document.querySelector( '.wp-block-post-content, .entry-content, #primary, main' );
   const titleBottom = title ? title.offsetTop + title.offsetHeight : content.offsetTop;
   const contentBottom = content ? content.offsetTop + content.offsetHeight : document.body.scrollHeight;
 
