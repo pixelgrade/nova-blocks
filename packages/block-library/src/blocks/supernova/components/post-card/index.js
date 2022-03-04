@@ -9,8 +9,9 @@ const Media = withShapeModelingDecoration( DefaultPostCardMedia );
 
 const PostCard = ( props ) => {
   const { post } = props;
+
   return (
-    <DefaultPostCard { ...props } Media={ Media } key={'default_post_card_post_' + post.id}/>
+    <DefaultPostCard { ...props } Media={ Media } key={ 'default_post_card_post_' + post.id }/>
   )
 };
 

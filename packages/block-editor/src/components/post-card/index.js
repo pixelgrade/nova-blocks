@@ -71,11 +71,11 @@ export const PostCard = withMedia( props => {
   const Media = props.Media || PostCardMedia;
 
   return (
-    <Card { ...props } key={'card_post_' + post.id}>
+    <Card { ...props } key={ 'card_post_' + post.id }>
       {
-        showMedia &&
-        <CardMediaWrapper { ...props } key={'card_post_mediawrapper_' + post.id}>
-          <Media { ...props } key={'card_post_media_' + post.id}/>
+        showMedia && props.media &&
+        <CardMediaWrapper { ...props } key={ 'card_post_mediawrapper_' + post.id }>
+          <Media { ...props } key={ 'card_post_media_' + post.id }/>
         </CardMediaWrapper>
       }
       <div className={ 'supernova-item__inner-container' } key={'card_post_innercontainer_' + post.id}>
