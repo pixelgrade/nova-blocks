@@ -776,8 +776,6 @@ function novablocks_get_collection_card_media_markup( array $media, array $attri
 				$output .= '<img class="supernova-item__media novablocks-doppler__target" data-shape-modeling-target src="' . esc_url( $url ) . '" alt="' . ( ! empty( $media['alt'] ) ? esc_attr( $media['alt'] ) : '' ) . '" />' . PHP_EOL;
 			}
 		}
-	} else {
-		$output .= '<div class="supernova-item__media supernova-item__media--placeholder" data-shape-modeling-target></div>';
 	}
 
 	return $output;
@@ -1334,6 +1332,10 @@ function novablocks_get_collection_card_markup_from_post( $post, array $attribut
 
 function novablocks_get_collection_card_media_markup_wrapped( $media, $link = false ): string {
 	$output = '';
+
+	if ( empty( $media ) ) {
+		return $output;
+	}
 
 	if ( ! empty( $link ) ) {
 		$output .= '<a class="supernova-item__media-wrapper" href="' . esc_url( $link ) . '">';
