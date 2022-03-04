@@ -8,52 +8,25 @@
  */
 
 /**
- * BLOCK PATTERNS
- *
- * #PRESENTATION — Visual storytelling
- * Headlines..............Hero banners, website intros, slideshows, CTAs, Media Cards → Hero, Image with text, Featuring
- * Features...............A list features for a service or product
- * Team...................Lists of team members
- * Testimonials...........Reviews
- * Gallery................Portfolio
- * Video..................Presentation blocks that include videos (Hero, one and two columns)
- *
- * Lists..................Various types of lists (eg. Features, Steps)
- *
- * #UTILITY
- * Location...............Maps, contact details → a section to show customers where your business is located
- * Food Menu..............Restaurants
- * FAQs...................Lists of questions and answers
- *
- *
- * #BLOG
- * Posts..................Blog articles
- *
- * #ECOMMERCE
- * Products.............Showcasing single or collection of products
- *
- */
-
-/**
- * Registers block patterns and categories.
+ * Registers block pattern categories.
  *
  * @return void
  */
-function novablocks_register_block_patterns() {
+function novablocks_register_block_pattern_categories() {
 	$block_pattern_categories = [
-		'features'     => [ 'label' => __( 'Features', '__plugin_txtd' ) ],
-		'footer'       => [ 'label' => __( 'Footers', '__plugin_txtd' ) ],
-		'header'       => [ 'label' => __( 'Headers', '__plugin_txtd' ) ],
-		'headlines'    => [ 'label' => __( 'Headlines', '__plugin_txtd' ) ],
-		'testimonials' => [ 'label' => __( 'Testimonials', '__plugin_txtd' ) ],
-		'team'         => [ 'label' => __( 'Team', '__plugin_txtd' ) ],
-		'location'     => [ 'label' => __( 'Location', '__plugin_txtd' ) ],
-		'query'        => [ 'label' => __( 'Posts Collection', '__plugin_txtd' ) ],
-		'pages'        => [ 'label' => __( 'Pages', '__plugin_txtd' ) ],
+		'features'     => [ 'label' => _x( 'Features', 'Block pattern category', '__plugin_txtd' ) ],
+		'footer'       => [ 'label' => _x( 'Footers', 'Block pattern category', '__plugin_txtd' ) ],
+		'header'       => [ 'label' => _x( 'Headers', 'Block pattern category', '__plugin_txtd' ) ],
+		'headlines'    => [ 'label' => _x( 'Headlines', 'Block pattern category', '__plugin_txtd' ) ],
+		'testimonials' => [ 'label' => _x( 'Testimonials', 'Block pattern category', '__plugin_txtd' ) ],
+		'team'         => [ 'label' => _x( 'Team', 'Block pattern category', '__plugin_txtd' ) ],
+		'location'     => [ 'label' => _x( 'Location', 'Block pattern category', '__plugin_txtd' ) ],
+		'query'        => [ 'label' => _x( 'Posts Collection', 'Block pattern category', '__plugin_txtd' ) ],
+		'pages'        => [ 'label' => _x( 'Pages', 'Block pattern category', '__plugin_txtd' ) ],
 	];
 
 	/**
-	 * Filters the NovaBlocks block patterns categories.
+	 * Filters the NovaBlocks block pattern categories.
 	 *
 	 * @param array[] $block_pattern_categories {
 	 *                                          An associative array of block pattern categories, keyed by category name.
@@ -65,13 +38,22 @@ function novablocks_register_block_patterns() {
 	 *     }
 	 * }
 	 */
-	$block_pattern_categories = apply_filters( 'novablocks/block_patterns_categories', $block_pattern_categories );
+	$block_pattern_categories = apply_filters( 'novablocks/block_pattern_categories', $block_pattern_categories );
 
 	foreach ( $block_pattern_categories as $name => $properties ) {
 		if ( ! WP_Block_Pattern_Categories_Registry::get_instance()->is_registered( $name ) ) {
 			register_block_pattern_category( $name, $properties );
 		}
 	}
+}
+add_action( 'init', 'novablocks_register_block_pattern_categories', 12 );
+
+/**
+ * Registers block patterns.
+ *
+ * @return void
+ */
+function novablocks_register_block_patterns() {
 
 	// Find all available block patterns files.
 	$block_patterns = _novablocks_get_block_patterns_files( trailingslashit( novablocks_get_plugin_path() ) . 'lib/patterns' );
@@ -103,8 +85,7 @@ function novablocks_register_block_patterns() {
 		);
 	}
 }
-
-add_action( 'init', 'novablocks_register_block_patterns', 10 );
+add_action( 'init', 'novablocks_register_block_patterns', 14 );
 
 /**
  * Finds all block patterns in a certain directory.
