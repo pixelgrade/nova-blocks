@@ -31,11 +31,12 @@ const Edit = ( props ) => {
     'nb-content-layout-grid',
     {
       'nb-sidecar--sticky-sidebar': lastItemIsSticky === true,
-    }
+    },
   );
 
   const blockProps = useBlockProps( {
     style: props.style,
+    className: className,
   } );
 
   const innerBlocksProps = useInnerBlocksProps( blockProps, {
@@ -50,7 +51,7 @@ const Edit = ( props ) => {
   return (
     <Fragment>
       <Controls { ...props } />
-      <div { ...innerBlocksProps } className={ className } />
+      <div { ...innerBlocksProps } />
     </Fragment>
   );
 };
