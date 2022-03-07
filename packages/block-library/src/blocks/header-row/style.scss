@@ -11,16 +11,16 @@
     --nb-emphasis-top-spacing: 0 !important;
     --nb-emphasis-bottom-spacing: 0 !important;
 
-    &, * {
-      --sm-current-bg-color: inherit;
-      --sm-current-fg1-color: inherit;
-      --sm-current-fg2-color: inherit;
-      --sm-current-accent-color: inherit;
-    }
-
     .novablocks-navigation--primary {
       order: -1;
     }
+  }
+
+  :is(.novablocks-header-row, .more.specfic) {
+    --sm-current-bg-color: inherit;
+    --sm-current-fg1-color: inherit;
+    --sm-current-fg2-color: inherit;
+    --sm-current-accent-color: inherit;
   }
 
   .novablocks-header-row--primary {
