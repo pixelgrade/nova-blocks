@@ -47,7 +47,7 @@ function novablocks_register_block_patterns_categories() {
 	}
 }
 
-add_action( 'init', 'novablocks_register_block_patterns_categories', 12 );
+add_action( 'init', 'novablocks_register_block_patterns_categories', 10 );
 
 /**
  * Registers block patterns.
@@ -87,7 +87,7 @@ function novablocks_register_block_patterns() {
 	}
 }
 
-add_action( 'init', 'novablocks_register_block_patterns', 14 );
+add_action( 'init', 'novablocks_register_block_patterns', 12 );
 
 /**
  * Finds all block patterns in a certain directory.
