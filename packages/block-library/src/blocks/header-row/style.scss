@@ -4,18 +4,23 @@
     display: flex;
     flex-direction: column;
 
-    &, * {
-      --sm-current-bg-color: inherit;
-      --sm-current-fg1-color: inherit;
-      --sm-current-fg2-color: inherit;
-      --sm-current-accent-color: inherit;
-    }
-
     --header-background-opacity: 0;
+
+    --nb-block-top-spacing: 0 !important;
+    --nb-block-bottom-spacing: 0 !important;
+    --nb-emphasis-top-spacing: 0 !important;
+    --nb-emphasis-bottom-spacing: 0 !important;
 
     .novablocks-navigation--primary {
       order: -1;
     }
+  }
+
+  :is(.novablocks-header-row, .more.specfic) {
+    --sm-current-bg-color: inherit;
+    --sm-current-fg1-color: inherit;
+    --sm-current-fg2-color: inherit;
+    --sm-current-accent-color: inherit;
   }
 
   .novablocks-header-row--primary {
@@ -97,10 +102,5 @@
           flex-grow: 1;
         }
     }
-
-    margin-top: calc(var(--block-top-spacing) * var(--nb-current-spacing));
-    margin-bottom: calc(var(--block-bottom-spacing) * var(--nb-current-spacing));
-    padding-top: calc(var(--emphasis-top-spacing) * var(--nb-current-spacing));
-    padding-bottom: calc(var(--emphasis-bottom-spacing) * var(--nb-current-spacing));
   }
 }
