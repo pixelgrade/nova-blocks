@@ -4,19 +4,13 @@ import { createHigherOrderComponent } from "@wordpress/compose";
 const withWrapperPropsRemoved = createHigherOrderComponent( OriginalComponent => {
 
   return ( props ) => {
-    const wrapperProps = props.wrapperProps ?? {};
-    const { dataAlign, ...newWrapperProps } = wrapperProps;
+    const wrapperProps = Object.assign( {}, props.wrapperProps );
     const align = props.attributes?.align ?? 'none';
 
-    Object.assign( newWrapperProps, {
-      className: classnames(
-        wrapperProps?.className,
-        `align${ align }`,
-      )
-    } );
+    delete wrapperProps[ 'data-align' ];
 
     return (
-      <OriginalComponent { ...props } wrapperProps={ newWrapperProps } />
+      <OriginalComponent { ...props } wrapperProps={ wrapperProps } />
     )
 
   };
