@@ -51,6 +51,7 @@
 // "Break" classes are added via JS when the aligned block and a Sidebar
 // do not overlap, so there is space that the aligned block can fill.
 :is(
+  .is-root-container,
   .wp-block-query,
   .wp-block-post-content,
   .wp-block-template-part,

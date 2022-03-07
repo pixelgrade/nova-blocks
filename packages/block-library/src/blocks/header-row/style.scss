@@ -23,14 +23,11 @@
   }
 }
 
-.novablocks-header-row[class][class] {
+.novablocks-header-row {
   margin-top: 0;
   margin-bottom: 0;
-  padding-top: 0;
-  padding-bottom: 0;
 
-  padding-left: var(--nb-wrapper-sides-spacings);
-  padding-right: var(--nb-wrapper-sides-spacings);
+  padding: 0 var(--nb-wrapper-sides-spacings);
 }
 
 .novablocks-header-row__inner-container[class] > .wp-block {

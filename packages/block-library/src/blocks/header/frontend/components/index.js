@@ -104,7 +104,13 @@ class Header extends HeaderBase {
   findProperElement( element ) {
 
     if ( matches( element, 'main, .wp-block-group, .wp-block-post-content' ) ) {
-      return this.findProperElement( element.firstElementChild );
+      const dataset = element.dataset;
+      const variation = dataset.paletteVariation ? parseInt( dataset.paletteVariation, 10 ) : 1;
+      const isShifted = !! dataset.useSourceColorAsReference;
+
+      if ( variation === 1 && ! isShifted ) {
+        return this.findProperElement( element.firstElementChild );
+      }
     }
 
     return element;
