@@ -57,13 +57,7 @@ if ( ! function_exists('render_reading_bar') ) {
 	 * Render Reading Bar and Reading Progress
 	 */
 
-	function render_reading_bar(): string {
-
-		// We want to show Reading Bar
-		// only on Posts.
-//		if ( ! is_singular('post') ) {
-//			return '';
-//		}
+	function get_reading_bar_markup(): string {
 
 		ob_start(); ?>
 		<!--Reading Bar-->

@@ -22,7 +22,8 @@ const HeaderRowEdit = function( props ) {
       'novablocks-header-row',
       getColorSignalClassnames( attributes, true ),
       props.className,
-    )
+    ),
+    style: props.style,
   } );
 
   const fakeBlockClassname = classnames(

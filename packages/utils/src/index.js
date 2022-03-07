@@ -251,6 +251,12 @@ export const hasClass = ( element, className ) => {
   return element.classList.contains( className );
 };
 
+export const empty = ( element ) => {
+  while ( element.firstChild ) {
+    element.removeChild( element.firstChild );
+  }
+}
+
 export const toggleClass = ( element, className, condition ) => {
 
   if ( typeof condition !== "undefined" ) {

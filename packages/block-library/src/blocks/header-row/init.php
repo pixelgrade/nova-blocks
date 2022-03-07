@@ -61,17 +61,15 @@ if ( ! function_exists( 'novablocks_render_header_row_block' ) ) {
 		$classes             = array_merge( $classes, $blockPaletteClasses );
 		?>
 
-		<div class="novablocks-header__inner-container">
-			<div
-				class="<?php echo esc_attr( join( ' ', $classes ) ); ?>"
-				style="<?php echo esc_attr( $style ); ?>"
-				<?php echo join( ' ', $data_attributes ); ?>
-				<?php echo ( ! empty( $attributes['isSticky'] ) ) ? 'data-sticky="true"' : ''; ?>
-			>
-				<div class="novablocks-header-row__inner-container">
-					<div class="wp-block <?php echo 'align' . esc_attr( $attributes['align'] ); ?>">
-						<?php echo $content; ?>
-					</div>
+		<div
+			class="<?php echo esc_attr( join( ' ', $classes ) ); ?>"
+			style="<?php echo esc_attr( $style ); ?>"
+			<?php echo join( ' ', $data_attributes ); ?>
+			<?php echo ( ! empty( $attributes['isSticky'] ) ) ? 'data-sticky="true"' : ''; ?>
+		>
+			<div class="novablocks-header-row__inner-container">
+				<div class="wp-block <?php echo 'align' . esc_attr( $attributes['align'] ); ?>">
+					<?php echo $content; ?>
 				</div>
 			</div>
 		</div>

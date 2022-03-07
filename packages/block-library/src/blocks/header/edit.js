@@ -26,17 +26,19 @@ const Edit = ( props ) => {
       `novablocks-header-${ layout }`,
       props.className,
       'alignfull',
-    )
+    ),
   } );
 
-  const innerBlocksProps = useInnerBlocksProps( blockProps, { renderAppender: false } );
+  const innerBlocksProps = useInnerBlocksProps( { className: `novablocks-header__inner-container` }, { renderAppender: false } );
 
   if ( innerBlocks.length > 0 ) {
     return (
       <Fragment>
         <HeaderBlockControls { ...props } />
         <HeaderInspectorControls { ...props } />
-        <div { ...innerBlocksProps } />
+        <div { ...blockProps }>
+          <div { ...innerBlocksProps } />
+        </div>
       </Fragment>
     );
   }
