@@ -5,7 +5,7 @@
 return [
 	'title'       => __( 'Testimonials 1', '__plugin_txtd' ),
 	'description' => _x( 'Three testimonials on one row.', 'Block pattern description', '__plugin_txtd' ),
-	'categories' => [ 'novablocks/testimonials' ],
+	'categories' => [ 'testimonials' ],
 	'blockTypes' => [],
 	'content'    => '<!-- wp:novablocks/supernova {"variation":"media-card","title":"Find out why our customers think it’s better with us","collectionTitleLevel":3,"level":3,"cardTitleLevel":4,"contentType":"custom","postsToShow":3,"showCollectionSubtitle":false,"showMedia":false,"showTitle":false,"showSubtitle":false,"showButtons":false,"showMeta":true,"contentPosition":"top center","layoutStyle":"classic","columns":3,"thumbnailAspectRatioString":"portrait","thumbnailAspectRatio":55,"imagePadding":50,"contentPadding":50,"blockTopSpacing":0,"contentAreaWidth":70,"layoutGutter":50} -->
 <!-- wp:novablocks/supernova-item {"defaultsGenerated":true,"showMedia":false,"blockTopSpacing":0,"images":[],"stylePreset":"just-my-style","sizeContrast":80,"positionShift":80,"elementsDistance":0,"placementVariation":75} -->

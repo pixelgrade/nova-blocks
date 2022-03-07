@@ -8,11 +8,11 @@
  */
 
 /**
- * Registers block pattern categories.
+ * Registers block patterns categories.
  *
  * @return void
  */
-function novablocks_register_block_pattern_categories() {
+function novablocks_register_block_patterns_categories() {
 	$block_pattern_categories = [
 		'features'     => [ 'label' => _x( 'Features', 'Block pattern category', '__plugin_txtd' ) ],
 		'footer'       => [ 'label' => _x( 'Footers', 'Block pattern category', '__plugin_txtd' ) ],
@@ -26,19 +26,19 @@ function novablocks_register_block_pattern_categories() {
 	];
 
 	/**
-	 * Filters the NovaBlocks block pattern categories.
+	 * Filters the NovaBlocks block patterns categories.
 	 *
 	 * @param array[] $block_pattern_categories {
-	 *                                          An associative array of block pattern categories, keyed by category name.
+	 *                                          An associative array of block patterns categories, keyed by the category name.
 	 *
 	 * @type array[]  $properties               {
-	 *         An array of block category properties.
+	 *         An array of block patterns category properties.
 	 *
-	 * @type string   $label                    A human-readable label for the pattern category.
+	 * @type string   $label                    A human-readable label for the block patterns category.
 	 *     }
 	 * }
 	 */
-	$block_pattern_categories = apply_filters( 'novablocks/block_pattern_categories', $block_pattern_categories );
+	$block_pattern_categories = apply_filters( 'novablocks/block_patterns_categories', $block_pattern_categories );
 
 	foreach ( $block_pattern_categories as $name => $properties ) {
 		if ( ! WP_Block_Pattern_Categories_Registry::get_instance()->is_registered( $name ) ) {
@@ -46,7 +46,8 @@ function novablocks_register_block_pattern_categories() {
 		}
 	}
 }
-add_action( 'init', 'novablocks_register_block_pattern_categories', 12 );
+
+add_action( 'init', 'novablocks_register_block_patterns_categories', 10 );
 
 /**
  * Registers block patterns.
@@ -85,7 +86,8 @@ function novablocks_register_block_patterns() {
 		);
 	}
 }
-add_action( 'init', 'novablocks_register_block_patterns', 14 );
+
+add_action( 'init', 'novablocks_register_block_patterns', 12 );
 
 /**
  * Finds all block patterns in a certain directory.
