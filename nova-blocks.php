@@ -29,6 +29,8 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
+define( 'Pixelgrade\NovaBlocks\VERSION', '2.0.0-alpha+22022022' );
+
 /**
  * Gets this plugin's directory file path.
  *
