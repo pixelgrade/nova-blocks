@@ -39,7 +39,7 @@ const BlockTopSpacing = withVisibility( 'block-top-spacing' )( props => {
       label={ __( 'Block Top Spacing', '__plugin_txtd' ) }
       min={ blockSpacingMin }
       max={ blockSpacingMax }
-      disabled={ isDisabled }
+//      disabled={ isDisabled }
     />
   )
 } );
