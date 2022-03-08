@@ -25,7 +25,15 @@ export const AdvancedGalleryChangeMediaToolbar = withVisibility( 'media-composit
 	const {
 		onSelectImages,
 		attributes,
+    context,
 	} = props;
+
+  // If the parent block is in a Query Loop block, we don't want to control the media manually.
+  const queryId = context?.queryId || false;
+  const isDescendentOfQueryLoop = Number.isFinite( queryId );
+  if ( isDescendentOfQueryLoop ) {
+    return null;
+  }
 
 	const gallery = attributes?.images || [];
 	const galleryValue = gallery.map( ( image ) => image.id );
