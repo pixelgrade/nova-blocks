@@ -3,7 +3,7 @@
  * Location 1
  */
 return [
-	'title'       => __( 'Multiple offices', '__plugin_txtd' ),
+	'title'       => __( 'Plugin: Multiple offices', '__plugin_txtd' ),
 	'description' => _x( '...', 'Block pattern description', '__plugin_txtd' ),
 	'categories' => [ 'location' ],
 	'blockTypes' => [],

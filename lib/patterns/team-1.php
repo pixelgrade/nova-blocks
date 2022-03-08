@@ -3,7 +3,7 @@
  * Team 1
  */
 return [
-	'title'       => __( 'Meet the team', '__plugin_txtd' ),
+	'title'       => __( 'Plugin: Meet the team', '__plugin_txtd' ),
 	'description' => _x( '...', 'Block pattern description', '__plugin_txtd' ),
 	'categories' => [ 'team' ],
 	'blockTypes' => [],

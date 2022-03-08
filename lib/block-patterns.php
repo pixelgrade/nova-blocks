@@ -15,14 +15,15 @@
 function novablocks_register_block_patterns_categories() {
 	$block_pattern_categories = [
 		'features'     => [ 'label' => _x( 'Features', 'Block pattern category', '__plugin_txtd' ) ],
-		'footer'       => [ 'label' => _x( 'Footers', 'Block pattern category', '__plugin_txtd' ) ],
-		'header'       => [ 'label' => _x( 'Headers', 'Block pattern category', '__plugin_txtd' ) ],
 		'headlines'    => [ 'label' => _x( 'Headlines', 'Block pattern category', '__plugin_txtd' ) ],
 		'testimonials' => [ 'label' => _x( 'Testimonials', 'Block pattern category', '__plugin_txtd' ) ],
 		'team'         => [ 'label' => _x( 'Team', 'Block pattern category', '__plugin_txtd' ) ],
 		'location'     => [ 'label' => _x( 'Location', 'Block pattern category', '__plugin_txtd' ) ],
 		'query'        => [ 'label' => _x( 'Posts Collection', 'Block pattern category', '__plugin_txtd' ) ],
 		'pages'        => [ 'label' => _x( 'Pages', 'Block pattern category', '__plugin_txtd' ) ],
+
+		'header'       => [ 'label' => _x( 'Layout: Header', 'Block pattern category', '__plugin_txtd' ) ],
+		'footer'       => [ 'label' => _x( 'Layout: Footer', 'Block pattern category', '__plugin_txtd' ) ],
 	];
 
 	/**
@@ -87,7 +88,8 @@ function novablocks_register_block_patterns() {
 	}
 }
 
-add_action( 'init', 'novablocks_register_block_patterns', 12 );
+// Status: disable local Block Patterns, remaining to be used only those from the Cloud.
+// add_action( 'init', 'novablocks_register_block_patterns', 12 );
 
 /**
  * Finds all block patterns in a certain directory.

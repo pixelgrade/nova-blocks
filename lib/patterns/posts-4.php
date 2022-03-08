@@ -3,7 +3,7 @@
  * Posts 4
  */
 return [
-	'title'       => __( 'Parametric Grid', '__plugin_txtd' ),
+	'title'       => __( 'Plugin: Parametric Grid', '__plugin_txtd' ),
 	'description' => _x( '...', 'Block pattern description', '__plugin_txtd' ),
 	'categories' => [ 'posts' ],
 	'blockTypes' => [],
