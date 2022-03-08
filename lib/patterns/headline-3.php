@@ -3,7 +3,7 @@
  * Headline 3
  */
 return [
-	'title'       => __( 'Portfolio Intro', '__plugin_txtd' ),
+	'title'       => __( 'Plugin: Portfolio Intro', '__plugin_txtd' ),
 	'description' => _x( '...', 'Block pattern description', '__plugin_txtd' ),
 	'categories' => [ 'headlines' ],
 	'blockTypes' => [],

@@ -3,7 +3,7 @@
  * Testimonials 3
  */
 return [
-	'title'       => __( 'Single testimonial with logo', '__plugin_txtd' ),
+	'title'       => __( 'Plugin: Single testimonial with logo', '__plugin_txtd' ),
 	'description' => _x( '---', 'Block pattern description', '__plugin_txtd' ),
 	'categories' => [ 'testimonials' ],
 	'blockTypes' => [],

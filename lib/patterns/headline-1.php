@@ -3,7 +3,7 @@
  * Headline 1
  */
 return [
-	'title'      => __( 'Feature with Testimonial', '__plugin_txtd' ),
+	'title'      => __( 'Plugin: Feature with Testimonial', '__plugin_txtd' ),
 	'description' => _x( '...', 'Block pattern description', '__plugin_txtd' ),
 	'categories' => [ 'headlines' ],
 	'blockTypes' => [],

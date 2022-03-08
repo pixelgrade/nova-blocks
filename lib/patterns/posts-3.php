@@ -3,7 +3,7 @@
  * Posts 3
  */
 return [
-	'title'       => __( 'Overlay Cards', '__plugin_txtd' ),
+	'title'       => __( 'Plugin: Overlay Cards', '__plugin_txtd' ),
 	'description' => _x( '...', 'Block pattern description', '__plugin_txtd' ),
 	'categories' => [ 'posts' ],
 	'blockTypes' => [],

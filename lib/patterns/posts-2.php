@@ -3,7 +3,7 @@
  * Posts 2
  */
 return [
-	'title'       => __( 'Horizontal Cards', '__plugin_txtd' ),
+	'title'       => __( 'Plugin: Horizontal Cards', '__plugin_txtd' ),
 	'description' => _x( '...', 'Block pattern description', '__plugin_txtd' ),
 	'categories' => [ 'posts' ],
 	'blockTypes' => [],

@@ -3,7 +3,7 @@
  * Features 1
  */
 return [
-	'title'       => __( 'Features 1', '__plugin_txtd' ),
+	'title'       => __( 'Plugin: Features 1', '__plugin_txtd' ),
 	'description' => _x( 'Three features on one row.', 'Block pattern description', '__plugin_txtd' ),
 	'categories' => [ 'features' ],
 	'blockTypes' => [],

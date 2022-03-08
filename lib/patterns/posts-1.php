@@ -3,7 +3,7 @@
  * Posts 1
  */
 return [
-	'title'       => __( 'Classic Grid', '__plugin_txtd' ),
+	'title'       => __( 'Plugin: Classic Grid', '__plugin_txtd' ),
 	'description' => _x( '...', 'Block pattern description', '__plugin_txtd' ),
 	'categories' => [ 'posts' ],
 	'blockTypes' => [],

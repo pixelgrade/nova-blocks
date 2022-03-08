@@ -3,7 +3,7 @@
  * Testimonials 4
  */
 return [
-	'title'       => __( 'Horizontal testimonial with photo blob', '__plugin_txtd' ),
+	'title'       => __( 'Plugin: Horizontal testimonial with photo blob', '__plugin_txtd' ),
 	'description' => _x( '---', 'Block pattern description', '__plugin_txtd' ),
 	'categories' => [ 'testimonials' ],
 	'blockTypes' => [],
