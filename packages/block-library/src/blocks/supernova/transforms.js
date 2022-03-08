@@ -31,16 +31,7 @@ const transforms = {
         return undefined === parents.find( ( parentClientId ) => getBlockName( parentClientId ) === 'core/query' );
       },
 			transform: ( attributes, innerBlocks ) => {
-        // Use the same variation names as those used for query variations.
-        // This way the proper variation name and icon will be show in the block list view.
-        let variation = 'novablocks-posts-grid';
-        if ( attributes.layoutStyle === 'parametric' ) {
-          variation = 'novablocks-posts-parametric';
-        } else if ( attributes.layoutStyle === 'carrousel' ) {
-          variation = 'novablocks-posts-slideshow';
-        }
         const queryAttributes = {
-          variation,
           query: {
             perPage: attributes?.postsToShow || 6,
             pages: 1,
@@ -61,7 +52,6 @@ const transforms = {
             attributes,
             innerBlocks,
           ],
-          [ 'core/query-pagination' ],
         ];
 
 				return createBlock(
