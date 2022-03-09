@@ -6,9 +6,9 @@ import classnames from 'classnames';
 import {
   useBlockProps,
 } from '@wordpress/block-editor';
-import { useDispatch, useSelect } from '@wordpress/data';
+import { select, useDispatch, useSelect } from '@wordpress/data';
 import { store as coreStore } from '@wordpress/core-data';
-import { Fragment, useCallback, memo, useMemo } from '@wordpress/element';
+import { Fragment, useCallback, memo, useEffect, useMemo } from '@wordpress/element';
 
 /**
  * Internal dependencies
@@ -18,7 +18,7 @@ import { Collection, CollectionHeader } from '@novablocks/collection';
 import { BlockControls as MediaCompositionBlockControls } from '@novablocks/media-composition';
 
 import BlockControls from './block-controls';
-import InspectorControls from "./inspector-controls";
+import InspectorControls from './inspector-controls';
 
 import { getAlignFromMatrix } from '@novablocks/utils';
 
@@ -123,7 +123,7 @@ const SupernovaEdit = props => {
   // since right now it is deduced from the fact that the Supernova block is or is not inside a query block.
   if ( isDescendentOfQueryLoop && attributes.contentType !== 'auto' ) {
     setAttributes( { contentType: 'auto' } );
-  } else if ( !isDescendentOfQueryLoop && ! [ 'fields', 'custom', ].includes( attributes.contentType ) ) {
+  } else if ( !isDescendentOfQueryLoop && ![ 'fields', 'custom', ].includes( attributes.contentType ) ) {
     setAttributes( { contentType: 'fields' } );
   }
 
@@ -270,6 +270,49 @@ const SupernovaEdit = props => {
       taxQuery,
     ]
   ));
+
+  // If Supernova is a descendent of a Query Loop and it is the only one of its kind,
+  // sync the Query Loop's perPage and Supernova's postsToShow.
+  let syncQueryAndSupernova = false;
+  const {
+    getBlockParentsByBlockName,
+    getClientIdsOfDescendants,
+    getBlockName
+  } = select( 'core/block-editor' );
+  const parentQueryClientId = getBlockParentsByBlockName( clientId, 'core/query' );
+  if ( isDescendentOfQueryLoop ) {
+    // Now, determine if there is only one Supernova descendent of the Query Loop.
+    const parentQueryDescendantsClientIds = getClientIdsOfDescendants( [ parentQueryClientId ] );
+    const descendentSupernovas = parentQueryDescendantsClientIds.filter(
+      ( descendentClientId ) => getBlockName( descendentClientId ) === 'novablocks/supernova'
+    );
+    if ( descendentSupernovas.length === 1 && descendentSupernovas[0] === clientId ) {
+      // We can safely sync.
+      syncQueryAndSupernova = true;
+    }
+  }
+
+  // We need to hook regardless to avoid error related to varying number of hooks.
+  const { updateBlockAttributes } = useDispatch( 'core/block-editor' );
+  // First, change the Query Loop's perPage attribute when Supernova's postsToShow changes.
+  useEffect( () => {
+    if ( syncQueryAndSupernova && !!parentQueryClientId && parseInt( attributes.postsToShow ) !== parseInt( perPage ) ) {
+      updateBlockAttributes( parentQueryClientId, {
+        query: {
+          ...context.query,
+          perPage: parseInt( attributes.postsToShow ),
+        }
+      } );
+    }
+  }, [ attributes ] );
+  // Second, change the Supernova's postsToShow attribute when Query Loop's perPage changes.
+  useEffect( () => {
+    if ( syncQueryAndSupernova && !!parentQueryClientId && parseInt( attributes.postsToShow ) !== parseInt( context.query.perPage ) ) {
+      setAttributes( {
+        postsToShow: parseInt( context.query.perPage ),
+      } );
+    }
+  }, [ context ] );
 
   return (
     <Fragment>
