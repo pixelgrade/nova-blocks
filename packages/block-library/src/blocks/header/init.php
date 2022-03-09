@@ -14,9 +14,11 @@ function novablocks_get_header_attributes(): array {
 
 	return novablocks_merge_attributes_from_array( [
 		'packages/block-library/src/blocks/header/attributes.json',
+
 		'packages/color-signal/src/attributes.json',
 		'packages/block-editor/src/filters/with-space-and-sizing/attributes.json',
-		'packages/block-library/src/blocks/header/attributes-color-signal.json',
+
+		'packages/block-library/src/blocks/header/attributes-overwrite.json',
 	] );
 }
 
