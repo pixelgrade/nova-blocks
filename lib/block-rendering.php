@@ -435,17 +435,46 @@ function novablocks_get_overlay_filter_css( array $attributes ): array {
 }
 
 function novablocks_get_sizing_css( array $attributes ): array {
-	return [
-		'--nb-card-layout-gap-modifier: ' . $attributes['layoutGutter'] / 100,
-		'--nb-card-content-padding-multiplier: ' . $attributes['contentPadding'] / 100,
-		'--nb-card-media-padding-multiplier: ' . $attributes['imagePadding'] / 100,
-		'--nb-card-media-container-height: ' . $attributes['mediaContainerHeight'],
-		'--nb-card-media-padding-top: ' . novablocks_get_card_media_padding_top( $attributes['thumbnailAspectRatio'] ) . '%',
-		'--nb-card-media-object-fit: ' . ( $attributes['imageResizing'] === 'cropped' ? 'cover' : 'scale-down' ),
-		'--nb-minimum-container-height: ' . $attributes['minHeightFallback'] . 'vh',
-		'--nb-card-content-area-width: ' . $attributes['contentAreaWidth'] . '%',
-		'--nb-spacing-modifier: ' . $attributes['spacingModifier'],
-	];
+
+	$props = [];
+
+	if ( ! empty( $attributes['layoutGutter'] ) ) {
+		$props[] = '--nb-card-layout-gap-modifier: ' . $attributes['layoutGutter'] / 100;
+	}
+
+	if ( ! empty( $attributes['contentPadding'] ) ) {
+		$props[] = '--nb-card-content-padding-multiplier: ' . $attributes['contentPadding'] / 100;
+	}
+
+	if ( ! empty( $attributes['imagePadding'] ) ) {
+		$props[] = '--nb-card-media-padding-multiplier: ' . $attributes['imagePadding'] / 100;
+	}
+
+	if ( ! empty( $attributes['mediaContainerHeight'] ) ) {
+		$props[] = '--nb-card-media-container-height: ' . $attributes['mediaContainerHeight'];
+	}
+
+	if ( ! empty( $attributes['thumbnailAspectRatio'] ) ) {
+		$props[] = '--nb-card-media-padding-top: ' . novablocks_get_card_media_padding_top( $attributes['thumbnailAspectRatio'] ) . '%';
+	}
+
+	if ( ! empty( $attributes['imageResizing'] ) ) {
+		$props[] = '--nb-card-media-object-fit: ' . ( $attributes['imageResizing'] === 'cropped' ? 'cover' : 'scale-down' );
+	}
+
+	if ( ! empty( $attributes['minHeightFallback'] ) ) {
+		$props[] = '--nb-minimum-container-height: ' . $attributes['minHeightFallback'] . 'vh';
+	}
+
+	if ( ! empty( $attributes['contentAreaWidth'] ) ) {
+		$props[] = '--nb-card-content-area-width: ' . $attributes['contentAreaWidth'] . '%';
+	}
+
+	if ( ! empty( $attributes['spacingModifier'] ) ) {
+		$props[] = '--nb-spacing-modifier: ' . $attributes['spacingModifier'];
+	}
+
+	return $props;
 }
 
 function novablocks_get_collection_layout_css( array $attributes ): array {
