@@ -32,6 +32,8 @@ class HeaderBase {
 
     this.staticDistance = window.pageYOffset + this.box.top;
     this.stickyDistance = this.adminBarFixed ? this.adminBarHeight : 0;
+
+    document.documentElement.style.setProperty( '--theme-sticky-distance', `${ this.stickyDistance }px` );
   }
 
   getHeight() {

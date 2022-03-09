@@ -60,6 +60,8 @@ class HeaderSticky extends HeaderBase {
 
     this.staticDistance += this.stickyRow.offsetTop;
 
+    document.documentElement.style.setProperty( '--theme-sticky-header-height', `${ this.getHeight() }px` ) ;
+
     this.element.style.position = 'fixed';
     this.element.style.top = `${ this.stickyDistance }px`;
   }

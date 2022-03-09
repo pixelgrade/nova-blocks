@@ -61,7 +61,7 @@ if ( ! function_exists('render_reading_bar') ) {
 
 		ob_start(); ?>
 		<!--Reading Bar-->
-		<div class="c-reading-bar  js-reading-bar  u-header-sides-spacing">
+		<div class="c-reading-bar  js-reading-bar  alignfull">
 
 			<!--Menu Button-->
 			<div class="c-reading-bar__wrapper-menu-trigger">

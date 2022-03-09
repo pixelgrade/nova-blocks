@@ -1,5 +1,5 @@
 import domReady from "@wordpress/dom-ready";
-import { onScrollRAF } from "@novablocks/utils";
+import { matches, onScrollRAF } from "@novablocks/utils";
 
 import { doOverlap } from "./utils";
 
@@ -38,7 +38,9 @@ export const getOverlappingSets = () => {
     const sidecar = sidebar.parentElement;
     const stickyElement = sidebar.lastElementChild;
     const blockSelector = '.alignfull, .alignwide, .alignleft, .alignright';
-    const blocks = Array.from( sidecar.querySelectorAll( blockSelector ) );
+    const blocks = Array.from( sidecar.querySelectorAll( blockSelector ) ).filter( block => {
+      return ! matches( block, '.nb-sidecar' );
+    } );
 
     const filteredBlocks = [];
 
@@ -61,8 +63,6 @@ export const handleOverlappingOnScroll = () => {
 
   domReady( () => {
     const overlappingSets = getOverlappingSets();
-
-    console.log( overlappingSets );
 
     onScrollRAF( () => {
       toggleOverlappingClassname( overlappingSets );

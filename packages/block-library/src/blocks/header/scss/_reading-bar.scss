@@ -113,6 +113,8 @@
   padding-left: 32px;
   padding-right: 32px;
 
+  --nb-block-top-spacing: 0 !important;
+
   &[class] {
     background: none;
   }
