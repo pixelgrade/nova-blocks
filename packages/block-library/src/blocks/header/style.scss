@@ -77,7 +77,7 @@
   --header-background-opacity: 0;
 }
 
-// hide all header and header-row backgrounds when header is transparent
+// Hide all header and header-row backgrounds when Header is *transparent*
 .novablocks-header.novablocks-header--transparent:not(.novablocks-header--sticky) {
 
   @include above(lap) {
@@ -104,4 +104,28 @@
   @include above(lap) {
     margin-top: 0 !important;
   }
+}
+
+
+
+/**
+ * Badges for Menu Items
+ *
+ * Impose a few custom font rules outside of the Design System tokens.
+ * Uppercase and letter-spacing helps small font sizes (10-11px) to be legible.
+ * 
+ * @todo: uppercase it's not working well with serif typefaces and we need to 
+ * find a way to pass some exceptions based on font family
+ */
+.menu-item-label {
+    @include badge(highlighted);
+    --font-size-modifier: 0.7;
+
+    // Custom font rules
+    text-transform: uppercase;
+    font-weight: bold;
+    letter-spacing: 0.03em;
+    
+    vertical-align: middle;
+    margin-left: var(--navigation-item-sub-elements-spacing);
 }
