@@ -1,3 +1,6 @@
+import domReady from "@wordpress/dom-ready";
+import { onScrollRAF } from "@novablocks/utils";
+
 import { doOverlap } from "./utils";
 
 const HIDDEN_BLOCK_CLASS = 'novablocks-hidden-block';
@@ -34,8 +37,9 @@ export const getOverlappingSets = () => {
   return sidebars.reduce( ( acc, sidebar ) => {
     const sidecar = sidebar.parentElement;
     const stickyElement = sidebar.lastElementChild;
-    const blockSelector = '.nb-content-layout-grid > :is(.alignfull, .alignwide, .alignleft, .alignright)';
+    const blockSelector = '.alignfull, .alignwide, .alignleft, .alignright';
     const blocks = Array.from( sidecar.querySelectorAll( blockSelector ) );
+
     const filteredBlocks = [];
 
     blocks.forEach( ( block, index) => {
@@ -55,28 +59,14 @@ export const getOverlappingSets = () => {
 // we are adding a class, which we will use to add opacity.
 export const handleOverlappingOnScroll = () => {
 
-  window.addEventListener( 'DOMContentLoaded', () => {
+  domReady( () => {
     const overlappingSets = getOverlappingSets();
 
-    let scrollY = window.scrollY;
-    let lastScrollY = -1;
+    console.log( overlappingSets );
 
-    window.addEventListener( 'scroll', () => {
-      scrollY = window.scrollY;
+    onScrollRAF( () => {
+      toggleOverlappingClassname( overlappingSets );
     } );
-
-    const updateLoop = () => {
-
-      if ( lastScrollY !== scrollY ) {
-        toggleOverlappingClassname( overlappingSets );
-      }
-
-      lastScrollY = scrollY;
-
-      requestAnimationFrame( updateLoop );
-    };
-
-    requestAnimationFrame( updateLoop );
   } );
 
 };
