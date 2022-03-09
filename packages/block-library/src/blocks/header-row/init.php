@@ -54,11 +54,15 @@ if ( ! function_exists( 'novablocks_render_header_row_block' ) ) {
 			$classes[] = $attributes['className'];
 		}
 
-		$spacingProps = novablocks_get_spacing_css( $attributes );
-		$style        = join( '; ', $spacingProps ) . '; ';
+		$spacingProps = array_merge(
+			novablocks_get_spacing_css( $attributes ),
+			novablocks_get_sizing_css( $attributes )
+		);
 
+		$style               = join( '; ', $spacingProps ) . '; ';
 		$blockPaletteClasses = novablocks_get_color_signal_classes( $attributes );
 		$classes             = array_merge( $classes, $blockPaletteClasses );
+
 		?>
 
 		<div

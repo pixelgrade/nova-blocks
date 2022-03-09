@@ -22,6 +22,7 @@ const HeaderRowEdit = function( props ) {
       'novablocks-header-row',
       getColorSignalClassnames( attributes, true ),
       props.className,
+      `alignfull`
     ),
     style: props.style,
   } );

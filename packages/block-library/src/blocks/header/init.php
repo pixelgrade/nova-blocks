@@ -15,6 +15,7 @@ function novablocks_get_header_attributes(): array {
 	return novablocks_merge_attributes_from_array( [
 		'packages/block-library/src/blocks/header/attributes.json',
 		'packages/color-signal/src/attributes.json',
+		'packages/block-editor/src/filters/with-space-and-sizing/attributes.json',
 		'packages/block-library/src/blocks/header/attributes-color-signal.json',
 	] );
 }
@@ -56,6 +57,12 @@ if ( ! function_exists( 'novablocks_render_header_block' ) ) {
 			'alignfull',
 		];
 
+		$spacingProps = array_merge(
+			novablocks_get_spacing_css( $attributes ),
+			novablocks_get_sizing_css( $attributes )
+		);
+
+		$style               = join( '; ', $spacingProps ) . '; ';
 		$blockPaletteClasses = novablocks_get_color_signal_classes( $attributes );
 		$classes             = array_merge( $classes, $blockPaletteClasses );
 
@@ -84,7 +91,11 @@ if ( ! function_exists( 'novablocks_render_header_block' ) ) {
 			<?php $novablocks_responsive_navigation_outputted = true;
 		} ?>
 
-		<div class="<?php echo esc_attr( join( ' ', $classes ) ); ?>" <?php echo join( ' ', $data_attributes ); ?> >
+		<div
+			class="<?php echo esc_attr( join( ' ', $classes ) ); ?>"
+			style="<?php echo esc_attr( $style ); ?>"
+			<?php echo join( ' ', $data_attributes ); ?>
+		>
 			<div class="novablocks-header__inner-container">
 				<?php echo $content; ?>
 			</div>

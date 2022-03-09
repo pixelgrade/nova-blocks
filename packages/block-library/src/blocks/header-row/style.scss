@@ -35,7 +35,7 @@
   padding: 0 var(--nb-wrapper-sides-spacings);
 }
 
-.novablocks-header-row__inner-container[class] > .wp-block {
+.novablocks-header-row__inner-container[class] > .wp-block.alignfull {
 
   // __inner-container > .alignfull usually has negativ margins
   // but header rows need their padding on the sides

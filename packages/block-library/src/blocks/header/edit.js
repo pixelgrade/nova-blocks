@@ -27,6 +27,7 @@ const Edit = ( props ) => {
       props.className,
       'alignfull',
     ),
+    style: props.style,
   } );
 
   const innerBlocksProps = useInnerBlocksProps( { className: `novablocks-header__inner-container` }, { renderAppender: false } );

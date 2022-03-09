@@ -4,6 +4,7 @@
   --enable-social-icons: 1;
 }
 
-.novablocks-header[class] {
+:is(.novablocks-header, #more.specific) {
+  display: block;
   position: relative;
 }
