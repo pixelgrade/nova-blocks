@@ -8,10 +8,21 @@
 :root {
   --icons-size-multiplier: 1.3;
   --icons-horizontal-spacing-reducer: 2;
+  --header-vertical-spacing-reducer: 0.375; // 1 unit ~ 6px (when Spacing Modifier is set to 0.5)
 }
 
 .novablocks-header[class] {
   width: 100%;
+
+  @include above(lap) {
+    .novablocks-header-row {
+      // Size down the vertical spacing of the header rows
+      // by adding the `--header-vertical-spacing-reducer` 
+      // variable to the default formula.
+      padding-top: calc(var(--nb-emphasis-top-spacing) * var(--nb-current-spacing) * var(--header-vertical-spacing-reducer));
+      padding-bottom: calc(var(--nb-emphasis-bottom-spacing) * var(--nb-current-spacing) * var(--header-vertical-spacing-reducer));
+    }
+  }
 }
 
 :is(.novablocks-header, .novablocks-header--mobile, #more.specific) {
@@ -32,6 +43,8 @@
     color: var(--sm-current-fg2-color, var(--nb-fg2-color));
   }
 }
+
+
 
 @include above(lap) {
 
