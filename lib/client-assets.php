@@ -10,11 +10,16 @@ if ( ! defined( 'ABSPATH' ) ) {
  * @return bool
  */
 function novablocks_is_gutenberg(): bool {
+	global $pagenow;
 
 	if ( is_admin() ) {
 		$current_screen = get_current_screen();
 
 		if ( method_exists( $current_screen, 'is_block_editor' ) && $current_screen->is_block_editor() ) {
+			return true;
+		}
+
+		if ( ( $pagenow == 'themes.php' ) && ( $_GET['page'] == 'gutenberg-edit-site' ) ) {
 			return true;
 		}
 	}
