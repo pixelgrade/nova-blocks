@@ -1,11 +1,10 @@
 import { Fragment } from "@wordpress/element";
+import { useInnerBlocksProps } from "@wordpress/block-editor";
 
 import { useInnerBlocks, withPreviewAttributes } from "@novablocks/block-editor";
 import { CollectionBody } from "@novablocks/collection";
 
 import { SupernovaItemPreview } from "../index";
-
-const useInnerBlocksProps = wp.blockEditor.useInnerBlocksProps || wp.blockEditor.__experimentalUseInnerBlocksProps;
 
 const CardsCollectionEdit = ( props ) => {
 

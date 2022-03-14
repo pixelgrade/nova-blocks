@@ -9,9 +9,8 @@ import {
   RichText,
   __experimentalLinkControl as LinkControl,
   useBlockProps,
+  useInnerBlocksProps,
 } from '@wordpress/block-editor';
-
-const useInnerBlocksProps = wp.blockEditor.useInnerBlocksProps || wp.blockEditor.__experimentalUseInnerBlocksProps;
 
 /**
  * Internal dependencies

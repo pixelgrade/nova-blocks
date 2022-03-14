@@ -1,9 +1,7 @@
 import classnames from 'classnames';
 
 import { useSelectParent } from '@novablocks/block-editor';
-import { InnerBlocks, useBlockProps } from '@wordpress/block-editor';
-
-const useInnerBlocksProps = wp.blockEditor.useInnerBlocksProps || wp.blockEditor.__experimentalUseInnerBlocksProps;
+import { InnerBlocks, useBlockProps, useInnerBlocksProps } from '@wordpress/block-editor';
 
 const SidecarAreaEdit = function( props ) {
   useSelectParent( props );

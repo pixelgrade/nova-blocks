@@ -8,6 +8,7 @@ import { InnerBlocks, URLInput } from "@wordpress/block-editor";
 import { BaseControl, ToggleControl } from "@wordpress/components";
 import { __ } from "@wordpress/i18n";
 import { useEffect } from '@wordpress/element';
+import { useBlockProps, useInnerBlocksProps } from "@wordpress/block-editor";
 
 const ALLOWED_BLOCKS = [ 'novablocks/openhours', 'core/paragraph' ];
 const ANNOUNCEMENT_BAR_TEMPLATE = [ [ 'novablocks/openhours', { openHoursStyle: 'status',  } ] ];
@@ -30,19 +31,23 @@ const Edit = ( props ) => {
     setAttributes( { blockId: clientId } );
   }, [ clientId ] );
 
-  const classNames = classnames(
-    className,
-    'novablocks-announcement-bar',
-  );
+  const blockProps = useBlockProps({
+    className: classnames(
+      'novablocks-announcement-bar',
+      className,
+    )
+  });
+
+  const innerBlockProps = useInnerBlocksProps( {
+    className: 'novablocks-announcement-bar__wrapper'
+  }, {
+    allowedBlocks: ALLOWED_BLOCKS,
+    template: ANNOUNCEMENT_BAR_TEMPLATE
+  } );
 
   return (
-    <Fragment>
-      <div className={ classNames }>
-        <InnerBlocks
-          allowedBlocks={ ALLOWED_BLOCKS }
-          template={ ANNOUNCEMENT_BAR_TEMPLATE }
-        />
-      </div>
+    <div { ...blockProps }>
+      <div { ...innerBlockProps } />
       { isSelected &&
         <div className="novablocks-announcement-bar__url-field-wrapper">
           <BaseControl
@@ -53,7 +58,7 @@ const Edit = ( props ) => {
               value={ url }
               autoFocus={ false }
               onChange={ ( value ) => setAttributes( { url: value } ) }
-              disableSuggestions={ ! isSelected }
+              disableSuggestions={ !isSelected }
               isFullWidth
               hasBorder
             />
@@ -66,8 +71,7 @@ const Edit = ( props ) => {
             label={ __( 'Open in new tab', '__plugin_txtd' ) }
           />
         </div> }
-
-    </Fragment>
+    </div>
   )
 };
 

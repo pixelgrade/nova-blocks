@@ -2,10 +2,8 @@
  * WordPress dependencies
  */
 import classnames from 'classnames';
-import { InnerBlocks, useBlockProps } from '@wordpress/block-editor';
+import { InnerBlocks, useBlockProps, useInnerBlocksProps } from '@wordpress/block-editor';
 import { getColorSignalClassnames } from "@novablocks/utils";
-
-const useInnerBlocksProps = wp.blockEditor.useInnerBlocksProps ?? wp.blockEditor.__experimentalUseInnerBlocksProps;
 
 /**
  * Internal dependencies.

@@ -5,8 +5,7 @@ import classnames from "classnames";
  */
 import { Fragment } from "@wordpress/element";
 import { useSelect, select } from '@wordpress/data';
-
-const useInnerBlocksProps = wp.blockEditor.useInnerBlocksProps || wp.blockEditor.__experimentalUseInnerBlocksProps;
+import { useInnerBlocksProps } from "@wordpress/block-editor";
 
 import HeroBackground from './background';
 

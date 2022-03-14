@@ -27,6 +27,7 @@
 	},
 	"usesContext": [],
 	"supports": {
+		"align": [ "wide", "full" ],
 		"html": false,
 		"novaBlocks": {
 			"colorSignal": {

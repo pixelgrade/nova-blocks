@@ -3,7 +3,7 @@ import classnames from "classnames";
 const withSaveProps = ( extraProps, blockType, attributes ) => {
   const { align } = attributes;
 
-  if (align === undefined) {
+  if ( align === undefined ) {
     return extraProps;
   }
 

@@ -12,6 +12,17 @@
 	.components-toggle-control .components-base-control__field {
 		justify-content: center;
 	}
+
+  .wp-block-button__inline-link {
+    color: inherit;
+  }
+
+  .block-editor-url-input__input {
+    @include placeholder {
+      color: var(--nb-fg1-color);
+      opacity: 0.5;
+    }
+  }
 }
 
 .novablocks-announcement-bar {

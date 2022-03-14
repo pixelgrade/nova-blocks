@@ -9,8 +9,17 @@ const withWrapperPropsRemoved = createHigherOrderComponent( OriginalComponent =>
 
     delete wrapperProps[ 'data-align' ];
 
+    const newProps = {
+      ...props,
+      wrapperProps,
+      className: classnames(
+        props.className,
+        `align${ align }`
+      )
+    }
+
     return (
-      <OriginalComponent { ...props } wrapperProps={ wrapperProps } />
+      <OriginalComponent { ...newProps } />
     )
 
   };

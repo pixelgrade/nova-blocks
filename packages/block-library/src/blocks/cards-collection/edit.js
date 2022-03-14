@@ -3,10 +3,8 @@ import classnames from 'classnames';
 /**
  * WordPress dependencies
  */
-import { useBlockProps } from "@wordpress/block-editor";
+import { useBlockProps, useInnerBlocksProps } from "@wordpress/block-editor";
 import { select, dispatch } from "@wordpress/data";
-
-const useInnerBlocksProps = wp.blockEditor.useInnerBlocksProps || wp.blockEditor.__experimentalUseInnerBlocksProps;
 
 /**
  * Internal dependencies
