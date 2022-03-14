@@ -28,8 +28,9 @@ class Header extends HeaderBase {
 
     this.element = element;
     this.adjacentElement = this.getAdjacentElement( element );
-    this.colorsElement = this.findColorsElement( this.adjacentElement );
-    this.paddingTopTargets = this.findPaddingTopTargets( this.adjacentElement );
+    this.adjacentElementTargetChild = this.findProperElement( this.adjacentElement );
+    this.colorsElement = this.findColorsElement( this.adjacentElementTargetChild );
+    this.paddingTopTargets = this.findPaddingTopTargets( this.adjacentElementTargetChild );
 
     this.rows = this.getHeaderRows();
     this.isSimple = [ 'logo-left', 'logo-center' ].includes( element.dataset.layout );
@@ -62,6 +63,36 @@ class Header extends HeaderBase {
     return HeaderBase.prototype.getHeight.call( this );
   }
 
+  applyPaddingTopToTargets() {
+    let paddingTopCarry = 0;
+    const elementsStack = [];
+
+    for ( let element = this.adjacentElementTargetChild; element !== this.adjacentElement; element = element.parentNode ) {
+      elementsStack.push( element );
+    }
+
+    elementsStack.push( this.adjacentElement );
+
+    // cleanup previously added styles
+    elementsStack.forEach( element => {
+      element.style.paddingTop = '';
+      element.style.marginTop = '';
+    } );
+
+    elementsStack.forEach( element => {
+      const elementStyle = window.getComputedStyle( element );
+      const paddingTop = parseInt( elementStyle.getPropertyValue( 'padding-top' ), 10 );
+      const marginTop = parseInt( elementStyle.getPropertyValue( 'margin-top' ), 10 );
+      paddingTopCarry = paddingTopCarry + paddingTop + marginTop;
+      element.style.paddingTop = 0;
+      element.style.marginTop = 0;
+    } );
+
+    this.paddingTopTargets.forEach( target => {
+      target.style.paddingTop = `${ paddingTopCarry + this.getHeight() }px`
+    } );
+  }
+
   onResize() {
     const scrollY = window.pageYOffset;
 
@@ -72,9 +103,7 @@ class Header extends HeaderBase {
       this.element.style.top = `${ this.staticDistance }px`;
     }
 
-    this.paddingTopTargets.forEach( target => {
-      target.style.paddingTop = `${ this.getHeight() }px`
-    } );
+    this.applyPaddingTopToTargets();
 
     this.updateStickyStyles( scrollY );
   }
@@ -98,7 +127,7 @@ class Header extends HeaderBase {
       return this.getAdjacentElement( element.parentElement );
     }
 
-    return this.findProperElement( next );
+    return next;
   }
 
   findProperElement( element ) {
