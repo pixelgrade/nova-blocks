@@ -35,7 +35,7 @@ export const getPaletteConfig = ( palette ) => {
     return { sourceIndex: 6 }
   }
 
-  return palettes.find( paletteIterator => paletteIterator.id === palette ) || palettes[0];
+  return palettes.find( paletteIterator => `${ paletteIterator.id }` === `${ palette }` ) || palettes[0];
 };
 
 /**
