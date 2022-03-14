@@ -57,7 +57,7 @@ const HeaderInspectorControls = ( props ) => {
         <Notice
           key={ 'header-position-quick-start' }
           id={ 'novablocks-header-position-quick-start' }
-          content={ <p><strong>{__( 'Quick start:', '__plugin_txtd' )}</strong> Set up your header layout using the options below and go to the <a href={customizerHeaderLink}>Customizer</a> to change the logo and menu content, or fine-tune styling details. </p> }
+          content={ <p><strong>{__( 'Quick start:', '__plugin_txtd' )}</strong> Set up your header layout using the options below and go to the <a href={customizerHeaderLink}>Customizer</a> to change the logo and menu content. </p> }
         />
 
         <RadioControl
@@ -115,8 +115,8 @@ const HeaderOptions = ( props ) => {
         help={ __( 'Adjust the height of your logo.', '__plugin_txtd' ) }
         value={ logoHeight }
         onChange={ logoHeight => setAttributes( { logoHeight } ) }
-        min={ 0 }
-        max={ 100 }
+        min={ 20 }
+        max={ 200 }
         step={ 1 }
       />
       <RangeControl
@@ -124,8 +124,8 @@ const HeaderOptions = ( props ) => {
         help={ __( 'Adjust the height of your logo on small screens.', '__plugin_txtd' ) }
         value={ mobileLogoHeight }
         onChange={ mobileLogoHeight => setAttributes( { mobileLogoHeight } ) }
-        min={ 0 }
-        max={ 100 }
+        min={ 14 }
+        max={ 80 }
         step={ 1 }
       />
       <RangeControl

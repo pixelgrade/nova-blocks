@@ -18,7 +18,7 @@
 
 .novablocks-header[class] {
   width: 100%;
-  --nb-navigation-item-spacing: calc(var(--nb-navigation-item-spacing-setting) * var(--nb-spacing) / 100);
+  --nb-navigation-item-spacing: calc(var(--nb-navigation-item-spacing-setting) * var(--nb-spacing) * 2 / 100);
 
   .novablocks-header-row {
     --nb-wrapper-sides-spacings: calc( var(--nb-spacing) * var(--nb-header-sides-spacing-setting, 50) * 2 / 100 );
