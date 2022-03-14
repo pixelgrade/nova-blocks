@@ -68,7 +68,7 @@ const BlockSpacingModifier = withVisibility( 'spacing-modifier' )( props => {
   const { spacingModifier } = attributes;
 
   return (
-    <ControlsGroup title={ __( 'Spacing Modifier', '__plugin_txtd' ) }>
+    <ControlsGroup title={ __( 'Spacing Modifier for Inside Elements', '__plugin_txtd' ) }>
       <RangeControl
         value={ spacingModifier }
         onChange={ ( spacingModifier ) => setAttributes( { spacingModifier } ) }

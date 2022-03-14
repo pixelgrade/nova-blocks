@@ -5,6 +5,10 @@
   padding-bottom: calc(var(--nb-emphasis-bottom-spacing) * var(--nb-current-spacing));
 }
 
+
+// --nb-spacing-base:               ...
+// --nb-spacing-current-multiplier: ... 
+// --nb-spacing-modifier:           control used by the 'Spacing and Sizing' block component
 @mixin block-spacing-modifier( $spacing-modifier: 1 ) {
   --nb-spacing-modifier: #{ $spacing-modifier };
   --nb-spacing-base: calc(var(--nb-spacing-current-multiplier) * var(--nb-spacing-modifier));

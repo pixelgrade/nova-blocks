@@ -66,7 +66,7 @@ const variations = [
       ['novablocks/header-row', {
         className: 'novablocks-header-row--logo',
         name: 'logo',
-        label: __( 'Site identity (logo)', '__plugin_txtd' ),
+        label: __( 'Site Identity / Logo', '__plugin_txtd' ),
         blockTopSpacing: 0,
         blockBottomSpacing: 0,
         emphasisTopSpacing: 2,
@@ -132,7 +132,7 @@ const variations = [
       ['novablocks/header-row', {
         className: 'novablocks-header-row--logo',
         name: 'logo',
-        label: __( 'Site identity(logo)', '__plugin_txtd' ),
+        label: __( 'Site Identity / Logo', '__plugin_txtd' ),
         blockTopSpacing: 0,
         blockBottomSpacing: 0,
         emphasisTopSpacing: 3,
