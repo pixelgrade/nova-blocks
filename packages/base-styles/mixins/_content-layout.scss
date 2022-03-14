@@ -70,6 +70,7 @@
 
   // force grid items take up all the available horizontal space
   > *:not(.block-list-appender) {
+    width: 100%;
     max-width: none;
   }
 
@@ -82,6 +83,20 @@
 
   > * {
     grid-column: var(--block-content-start) / var(--block-content-end);
+  }
+
+  // Align: WIDE
+  > :is(.alignwide, [data-align="wide"]) {
+    grid-column: var(--block-wide-start) / var(--block-wide-end);
+  }
+
+  // Align: FULL
+  > :is(.alignfull, [data-align="full"]) {
+    grid-column: var(--block-full-start) / var(--block-full-end);
+  }
+
+  > .wp-block-group:not(.break-align-left):not(.break-align-right) > .wp-block-group__inner-container > * {
+    max-width: none;
   }
 
   @include below(lap) {

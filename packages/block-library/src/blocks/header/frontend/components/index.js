@@ -103,7 +103,7 @@ class Header extends HeaderBase {
 
   findProperElement( element ) {
 
-    if ( matches( element, 'main, .wp-block-group, .wp-block-post-content' ) ) {
+    if ( matches( element, 'main, .wp-block-group, .wp-block-query, .wp-block-post-content' ) ) {
       const dataset = element.dataset;
       const variation = dataset.paletteVariation ? parseInt( dataset.paletteVariation, 10 ) : 1;
       const isShifted = !! dataset.useSourceColorAsReference;
@@ -134,6 +134,15 @@ class Header extends HeaderBase {
         if ( hasClass( firstChild, 'nb-sidecar' ) ) {
           return this.findColorsElement( firstChild );
         }
+      }
+    }
+
+    if ( hasClass( element, 'supernova' ) ) {
+      const paddingTop = window.getComputedStyle( element ).getPropertyValue( 'padding-top' );
+      const paddingTopValue = parseInt( paddingTop, 10 );
+
+      if ( paddingTopValue === 0 ) {
+        return element.querySelector( '.supernova-item' );
       }
     }
 
