@@ -61,7 +61,7 @@ class HeaderColors {
     this.transparentColorClasses = this.initialColorClasses;
 
     if ( this.transparentColorsSource ) {
-      this.transparentColorClasses = getColorSetClasses( this.transparentColorsSource ).join( ' ' );
+      this.transparentColorClasses = getColorSetClasses( this.transparentColorsSource ).filter( classname => classname !== 'sm-color-signal-0' ).join( ' ' );
     }
   }
 

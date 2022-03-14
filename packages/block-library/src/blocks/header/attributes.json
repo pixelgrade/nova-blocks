@@ -6,5 +6,21 @@
 	"layout": {
 		"type": "string",
 		"default": "logo-left"
+	},
+	"logoHeight" : {
+		"type": "number",
+		"default": 22
+	},
+	"mobileLogoHeight" : {
+		"type": "number",
+		"default": 24
+	},
+	"navigationLinkSpacing" : {
+		"type": "number",
+		"default": 32
+	},
+	"headerSidesSpacing" : {
+		"type": "number",
+		"default": 50
 	}
 }

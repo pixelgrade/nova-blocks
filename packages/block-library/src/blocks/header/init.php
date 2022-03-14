@@ -61,7 +61,13 @@ if ( ! function_exists( 'novablocks_render_header_block' ) ) {
 
 		$spacingProps = array_merge(
 			novablocks_get_spacing_css( $attributes ),
-			novablocks_get_sizing_css( $attributes )
+			novablocks_get_sizing_css( $attributes ),
+			array(
+				'--nb-header-logo-height-setting: ' . $attributes[ 'logoHeight' ],
+				'--nb-mobile-header-logo-height-setting: ' . $attributes[ 'mobileLogoHeight' ],
+				'--nb-navigation-item-spacing-setting: ' . $attributes[ 'navigationLinkSpacing' ],
+				'--nb-header-sides-spacing-setting: ' . $attributes[ 'headerSidesSpacing' ]
+			)
 		);
 
 		$style               = join( '; ', $spacingProps ) . '; ';

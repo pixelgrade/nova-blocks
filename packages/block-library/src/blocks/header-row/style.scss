@@ -56,7 +56,7 @@
 
   .novablocks-header-row__inner-container[class] > .wp-block {
     display: flex;
-    column-gap: var(--nb-navigation-item-spacing, var(--nb-spacing));
+    column-gap: var(--nb-navigation-item-spacing);
     align-items: center;
 
     > :first-child:not(:last-child),

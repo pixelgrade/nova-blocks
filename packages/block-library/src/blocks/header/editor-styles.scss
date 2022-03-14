@@ -8,3 +8,8 @@
   display: block;
   position: relative;
 }
+
+.novablocks-header:not(.novablocks-header--ready) {
+  opacity: 1;
+  --header-background-opacity: 1;
+}

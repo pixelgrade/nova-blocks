@@ -1,4 +1,4 @@
-import { addClass, debounce, onScrollRAF } from '@novablocks/utils';
+import { addClass, debounce, onScrollRAF, toggleClass } from '@novablocks/utils';
 import domReady from '@wordpress/dom-ready';
 
 class HeaderBase {
@@ -57,6 +57,8 @@ class HeaderBase {
 
   applyStickyStyles( element, scrollY ) {
     const target = element ?? this.element;
+
+    toggleClass( element, 'is-sticky', this.shouldBeSticky );
 
     if ( this.shouldBeSticky ) {
       target.style.position = 'fixed';

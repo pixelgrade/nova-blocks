@@ -17,11 +17,9 @@
     color: inherit;
   }
 
-  .block-editor-url-input__input {
-    @include placeholder {
-      color: var(--nb-fg1-color);
-      opacity: 0.5;
-    }
+  @include placeholder {
+    color: var(--nb-fg1-color);
+    opacity: 0.5;
   }
 }
 

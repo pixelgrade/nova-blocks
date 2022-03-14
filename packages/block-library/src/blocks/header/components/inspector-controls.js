@@ -1,4 +1,16 @@
+/**
+ * WordPress dependencies
+ */
+import { __ } from '@wordpress/i18n';
+import { RadioControl, RangeControl } from '@wordpress/components';
+import { useSelect, useDispatch } from "@wordpress/data";
+import { useState, useCallback } from "@wordpress/element";
+
+/**
+ * Internal dependencies
+ */
 import {
+  ControlsGroup,
   ControlsTab,
   ControlsSection,
   Notice,
@@ -6,14 +18,6 @@ import {
 } from "@novablocks/block-editor";
 
 import { capitalizeFirstLetter } from '@novablocks/utils';
-
-/**
- * WordPress dependencies
- */
-import { __ } from '@wordpress/i18n';
-import { RadioControl } from '@wordpress/components';
-import { useSelect, useDispatch } from "@wordpress/data";
-import { useState, useCallback } from "@wordpress/element";
 
 const HeaderInspectorControls = ( props ) => {
 
@@ -49,6 +53,7 @@ const HeaderInspectorControls = ( props ) => {
   return (
     <ControlsSection id={ 'layout' } label={ __( 'Header Layout', '__plugin_txtd' ) } key={'header_layout'}>
       <ControlsTab label={ __( 'Settings', '__plugin_txtd' ) } key={'header_layout_settings'}>
+        <ControlsGroup>
         <Notice
           key={ 'header-position-quick-start' }
           id={ 'novablocks-header-position-quick-start' }
@@ -84,9 +89,65 @@ const HeaderInspectorControls = ( props ) => {
             updateNextStickyRow( nextStickyRowId );
           } }
           /> }
+        </ControlsGroup>
+
+        <HeaderOptions { ...props } />
+
       </ControlsTab>
     </ControlsSection>
   )
 };
+
+const HeaderOptions = ( props ) => {
+  const { attributes, setAttributes } = props;
+
+  const {
+    logoHeight,
+    mobileLogoHeight,
+    navigationLinkSpacing,
+    headerSidesSpacing
+  } = attributes;
+
+  return (
+    <ControlsGroup>
+      <RangeControl
+        label={ __( 'Logo Height', '__plugin_txtd' ) }
+        help={ __( 'Adjust the height of your logo.', '__plugin_txtd' ) }
+        value={ logoHeight }
+        onChange={ logoHeight => setAttributes( { logoHeight } ) }
+        min={ 0 }
+        max={ 100 }
+        step={ 1 }
+      />
+      <RangeControl
+        label={ __( 'Mobile Logo Height', '__plugin_txtd' ) }
+        help={ __( 'Adjust the height of your logo on small screens.', '__plugin_txtd' ) }
+        value={ mobileLogoHeight }
+        onChange={ mobileLogoHeight => setAttributes( { mobileLogoHeight } ) }
+        min={ 0 }
+        max={ 100 }
+        step={ 1 }
+      />
+      <RangeControl
+        label={ __( 'Navigation Link Spacing', '__plugin_txtd' ) }
+        help={ __( 'Adjust the spacing between individual items in your navigation.', '__plugin_txtd' ) }
+        value={ navigationLinkSpacing }
+        onChange={ navigationLinkSpacing => setAttributes( { navigationLinkSpacing } ) }
+        min={ 0 }
+        max={ 100 }
+        step={ 1 }
+      />
+      <RangeControl
+        label={ __( 'Header Sides Spacing', '__plugin_txtd' ) }
+        help={ __( 'Adjust the space separating the header and the sides of the browser.', '__plugin_txtd' ) }
+        value={ headerSidesSpacing }
+        onChange={ headerSidesSpacing => setAttributes( { headerSidesSpacing } ) }
+        min={ 0 }
+        max={ 100 }
+        step={ 1 }
+      />
+    </ControlsGroup>
+  )
+}
 
 export default HeaderInspectorControls;
