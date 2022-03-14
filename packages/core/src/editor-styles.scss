@@ -1,5 +1,15 @@
 @import 'scss/components/spacing/editor-styles';
 
+// Editor layout adjustments
+
+// Make list view panel appear on top of the block list
+// to avoid making content too narrow
+.edit-post-editor__list-view-panel {
+  position: absolute;
+  background: #FFFFFF;
+  border-right: 1px solid #E0E0E0;
+}
+
 // Quickfix block appender visibility
 .block-list-appender__toggle {
 	opacity: 1 !important;
