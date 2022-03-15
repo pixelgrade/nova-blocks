@@ -10,7 +10,7 @@
   --icons-horizontal-spacing-reducer: 2;
 }
 
-@property --header-vertical-spacing-reducer {
+@property --nb-header-vertical-spacing-multiplier {
   syntax: '<number>'; /* <- defined as type number for the transition to work */
   initial-value: 1;
   inherits: false;
@@ -24,10 +24,10 @@
     --nb-wrapper-sides-spacings: calc( var(--nb-spacing) * var(--nb-header-sides-spacing-setting, 50) * 2 / 100 );
 
     // Size down the vertical spacing of the header rows
-    // by adding the `--header-vertical-spacing-reducer`
+    // by adding the `--nb-header-vertical-spacing-multiplier`
     // variable to the default formula.
-    padding-top: calc(var(--nb-emphasis-top-spacing) * var(--nb-current-spacing) * var(--header-vertical-spacing-reducer));
-    padding-bottom: calc(var(--nb-emphasis-bottom-spacing) * var(--nb-current-spacing) * var(--header-vertical-spacing-reducer));
+    padding-top: calc(var(--nb-emphasis-top-spacing) * var(--nb-current-spacing) * var(--nb-header-vertical-spacing-multiplier));
+    padding-bottom: calc(var(--nb-emphasis-bottom-spacing) * var(--nb-current-spacing) * var(--nb-header-vertical-spacing-multiplier));
   }
 
   @include above(lap) {
@@ -35,11 +35,11 @@
     :is(.novablocks-header-row, #specific) {
       transition: var(--nb-transition);
       transition-duration: .15s;
-      transition-property: opacity, --header-vertical-spacing-reducer;
+      transition-property: opacity, --nb-header-vertical-spacing-multiplier;
     }
 
     &.is-sticky .novablocks-header-row {
-      --header-vertical-spacing-reducer: 0.375;
+      --nb-header-vertical-spacing-multiplier: var(--nb-sticky-header-spacing-multiplier, 1);
     }
   }
 }

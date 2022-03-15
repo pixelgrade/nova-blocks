@@ -7,20 +7,24 @@
 		"type": "string",
 		"default": "logo-left"
 	},
-	"logoHeight" : {
+	"logoHeight": {
 		"type": "number",
 		"default": 22
 	},
-	"mobileLogoHeight" : {
+	"mobileLogoHeight": {
 		"type": "number",
 		"default": 24
 	},
-	"navigationLinkSpacing" : {
+	"navigationLinkSpacing": {
 		"type": "number",
 		"default": 32
 	},
-	"headerSidesSpacing" : {
+	"headerSidesSpacing": {
 		"type": "number",
 		"default": 50
+	},
+	"stickyHeaderSpacingMultiplier": {
+		"type": "number",
+		"default": 0.375
 	}
 }
