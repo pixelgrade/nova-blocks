@@ -13,6 +13,10 @@
   border-right: 1px solid #E0E0E0;
 }
 
+:is(.interface-interface-skeleton__secondary-sidebar, .interface-interface-skeleton__sidebar, .specificity.x2) {
+  z-index: 92;
+}
+
 // Quickfix block appender visibility
 .block-list-appender__toggle {
 	opacity: 1 !important;
