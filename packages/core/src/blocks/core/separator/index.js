@@ -29,16 +29,11 @@ const addNovablocksSupport = ( settings ) => {
       },
     },
     edit,
-    save: ( { attributes } ) => {
+    save: ( props ) => {
+      const { className, attributes } = props;
       const { align } = attributes;
-      const className = classnames(
-        'wp-block-separator',
-        `align${ align }`,
-      );
       const settings = select( 'novablocks' ).getSettings();
-      const blockProps = useBlockProps.save( {
-        className: className
-      } );
+      const blockProps = useBlockProps.save( { className } );
 
       return (
         <div { ...blockProps } dangerouslySetInnerHTML={ { __html: settings?.separator?.markup } } />

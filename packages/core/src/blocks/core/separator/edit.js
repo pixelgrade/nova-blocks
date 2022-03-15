@@ -14,7 +14,6 @@ const SeparatorEdit = ( props ) => {
 
   const className = classnames(
     'wp-block-separator',
-    `align${ align }`,
     props.className,
   );
 

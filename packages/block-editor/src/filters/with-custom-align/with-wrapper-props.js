@@ -1,11 +1,17 @@
 import classnames from "classnames";
 import { createHigherOrderComponent } from "@wordpress/compose";
+import { useSupports } from "../../index";
 
 const withWrapperPropsRemoved = createHigherOrderComponent( OriginalComponent => {
 
   return ( props ) => {
     const wrapperProps = Object.assign( {}, props.wrapperProps );
     const align = props.attributes?.align ?? 'none';
+    const supports = useSupports( props.name );
+
+    if ( ! supports.align ) {
+      return <OriginalComponent { ...props } />
+    }
 
     delete wrapperProps[ 'data-align' ];
 
