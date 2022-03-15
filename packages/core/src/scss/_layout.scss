@@ -52,7 +52,6 @@
 // do not overlap, so there is space that the aligned block can fill.
 :is(
   .is-root-container,
-  .wp-block-query,
   .wp-block-post-content,
   .wp-block-template-part,
   [data-block-name="woocommerce/legacy-template"],
@@ -62,7 +61,7 @@
   .nb-sidecar-area--content
 ) {
 
-  &:not(.supernova), & > .supernova {
+  &:not(:is(.wp-block-query, .supernova)), & > :is(.wp-block-query, .supernova) {
     @include nb-content-layout-grid;
 
     // Align: LEFT & RIGHT
