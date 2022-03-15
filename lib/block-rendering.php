@@ -360,8 +360,8 @@ function novablocks_get_media_composition_markup( array $attributes, array $cont
 	return $output;
 }
 
-function novablocks_get_card_media_padding_top( $containerHeight ) {
-	$containerHeight = $containerHeight / 50 - 1;
+function novablocks_get_card_media_padding_top( $thumbnailAspectRatio ) {
+	$containerHeight = $thumbnailAspectRatio / 50 - 1;
 
 	if ( $containerHeight < 0 ) {
 		$containerHeight *= 3;
@@ -438,39 +438,39 @@ function novablocks_get_sizing_css( array $attributes ): array {
 
 	$props = [];
 
-	if ( ! empty( $attributes['layoutGutter'] ) ) {
+	if ( isset( $attributes['layoutGutter'] ) ) {
 		$props[] = '--nb-card-layout-gap-modifier: ' . $attributes['layoutGutter'] / 100;
 	}
 
-	if ( ! empty( $attributes['contentPadding'] ) ) {
+	if ( isset( $attributes['contentPadding'] ) ) {
 		$props[] = '--nb-card-content-padding-multiplier: ' . $attributes['contentPadding'] / 100;
 	}
 
-	if ( ! empty( $attributes['imagePadding'] ) ) {
+	if ( isset( $attributes['imagePadding'] ) ) {
 		$props[] = '--nb-card-media-padding-multiplier: ' . $attributes['imagePadding'] / 100;
 	}
 
-	if ( ! empty( $attributes['mediaContainerHeight'] ) ) {
+	if ( isset( $attributes['mediaContainerHeight'] ) ) {
 		$props[] = '--nb-card-media-container-height: ' . $attributes['mediaContainerHeight'];
 	}
 
-	if ( ! empty( $attributes['thumbnailAspectRatio'] ) ) {
+	if ( isset( $attributes['thumbnailAspectRatio'] ) ) {
 		$props[] = '--nb-card-media-padding-top: ' . novablocks_get_card_media_padding_top( $attributes['thumbnailAspectRatio'] ) . '%';
 	}
 
-	if ( ! empty( $attributes['imageResizing'] ) ) {
+	if ( isset( $attributes['imageResizing'] ) ) {
 		$props[] = '--nb-card-media-object-fit: ' . ( $attributes['imageResizing'] === 'cropped' ? 'cover' : 'scale-down' );
 	}
 
-	if ( ! empty( $attributes['minHeightFallback'] ) ) {
+	if ( isset( $attributes['minHeightFallback'] ) ) {
 		$props[] = '--nb-minimum-container-height: ' . $attributes['minHeightFallback'] . 'vh';
 	}
 
-	if ( ! empty( $attributes['contentAreaWidth'] ) ) {
+	if ( isset( $attributes['contentAreaWidth'] ) ) {
 		$props[] = '--nb-card-content-area-width: ' . $attributes['contentAreaWidth'] . '%';
 	}
 
-	if ( ! empty( $attributes['spacingModifier'] ) ) {
+	if ( isset( $attributes['spacingModifier'] ) ) {
 		$props[] = '--nb-spacing-modifier: ' . $attributes['spacingModifier'];
 	}
 

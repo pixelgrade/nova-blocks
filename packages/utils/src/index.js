@@ -79,8 +79,8 @@ export const getControlsDirtyClasses = ( isDirty ) => {
 	return classes.join( ' ' );
 };
 
-export const getCardMediaPaddingTop = ( containerHeight ) => {
-	let compiledHeight = containerHeight / 50 - 1;
+export const getCardMediaPaddingTop = ( thumbnailAspectRatio ) => {
+	let compiledHeight = thumbnailAspectRatio / 50 - 1;
 
 	if ( compiledHeight < 0 ) {
 		compiledHeight *= 2;
