@@ -5,7 +5,9 @@
 // Make list view panel appear on top of the block list
 // to avoid making content too narrow
 .edit-site-editor__list-view-panel,
-.edit-post-editor__list-view-panel {
+.edit-site-editor__inserter-panel,
+.edit-post-editor__list-view-panel,
+.edit-post-editor__inserter-panel {
   position: absolute;
   background: #FFFFFF;
   border-right: 1px solid #E0E0E0;
