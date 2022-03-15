@@ -28,14 +28,17 @@ const withVisibilityAndPlaceholder = ( WrappedComponent ) => {
 export const CardTitle = withVisibilityAndPlaceholder( ( props ) => {
 
   const {
+    attributes,
     placeholder,
-    children
+    children,
   } = props;
 
-  const TitleTagName = props.titleTagName || 'h3';
+  const TitleTagName = `h${ attributes?.cardTitleLevel }`;
+  const titleClassName = `has-${ attributes?.cardTitleFontSize }-font-size`;
 
   return (
-    <TitleTagName className={ 'nb-card__title' }>
+
+    <TitleTagName className={ `nb-card__title ${ titleClassName }` }>
       { ! placeholder ? children : <TextPlaceholder/> }
     </TitleTagName>
   );
