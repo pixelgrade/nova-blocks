@@ -17,7 +17,7 @@ import TEMPLATE_OPTIONS from './template-options';
 
 const Edit = ( props ) => {
   const { attributes, setAttributes, clientId } = props;
-  const { layout, logoHeight, mobileLogoHeight, navigationLinkSpacing, headerSidesSpacing } = attributes;
+  const { layout, logoHeight, mobileLogoHeight, navigationLinkSpacing, headerSidesSpacing, stickyHeaderSpacingMultiplier } = attributes;
   const innerBlocks = useInnerBlocks( clientId );
 
   const blockProps = useBlockProps( {
@@ -32,7 +32,8 @@ const Edit = ( props ) => {
       '--nb-header-logo-height-setting': logoHeight,
       '--nb-mobile-header-logo-height-setting': mobileLogoHeight,
       '--nb-navigation-item-spacing-setting': navigationLinkSpacing,
-      '--nb-header-sides-spacing-setting': headerSidesSpacing
+      '--nb-header-sides-spacing-setting': headerSidesSpacing,
+      '--nb-sticky-header-spacing-multiplier': stickyHeaderSpacingMultiplier,
     },
   } );
 

@@ -66,7 +66,8 @@ if ( ! function_exists( 'novablocks_render_header_block' ) ) {
 				'--nb-header-logo-height-setting: ' . $attributes[ 'logoHeight' ],
 				'--nb-mobile-header-logo-height-setting: ' . $attributes[ 'mobileLogoHeight' ],
 				'--nb-navigation-item-spacing-setting: ' . $attributes[ 'navigationLinkSpacing' ],
-				'--nb-header-sides-spacing-setting: ' . $attributes[ 'headerSidesSpacing' ]
+				'--nb-header-sides-spacing-setting: ' . $attributes[ 'headerSidesSpacing' ],
+				'--nb-sticky-header-spacing-multiplier: ' . $attributes[ 'stickyHeaderSpacingMultiplier' ],
 			)
 		);
 

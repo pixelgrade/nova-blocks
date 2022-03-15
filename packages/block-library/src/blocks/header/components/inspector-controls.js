@@ -105,7 +105,8 @@ const HeaderOptions = ( props ) => {
     logoHeight,
     mobileLogoHeight,
     navigationLinkSpacing,
-    headerSidesSpacing
+    headerSidesSpacing,
+    stickyHeaderSpacingMultiplier
   } = attributes;
 
   return (
@@ -145,6 +146,15 @@ const HeaderOptions = ( props ) => {
         min={ 0 }
         max={ 100 }
         step={ 1 }
+      />
+      <RangeControl
+        label={ __( 'Sticky Header Spacing Multiplier', '__plugin_txtd' ) }
+        help={ __( 'Adjust the vertical spacing for the sticky header on scroll.', '__plugin_txtd' ) }
+        value={ stickyHeaderSpacingMultiplier }
+        onChange={ stickyHeaderSpacingMultiplier => setAttributes( { stickyHeaderSpacingMultiplier } ) }
+        min={ 0 }
+        max={ 1 }
+        step={ 0.125 }
       />
     </ControlsGroup>
   )
