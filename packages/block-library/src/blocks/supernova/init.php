@@ -75,7 +75,7 @@ if ( ! function_exists( 'novablocks_render_supernova_block' ) ) {
 			'supernova--' . $attributes['columns'] . '-columns',
 			'supernova--valign-' . $align[0],
 			'supernova--halign-' . $align[1],
-			'align' . $attributes['align']
+			'alignfull'
 		],
 			novablocks_get_color_signal_classes( $attributes ),
 			novablocks_get_grid_area_fallback_classnames( $attributes )

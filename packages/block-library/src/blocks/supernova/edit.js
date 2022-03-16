@@ -87,6 +87,7 @@ const SupernovaPreview = props => {
     `supernova--halign-${contentAlign[1]}`,
     { 'supernova--show-pagination': showPagination },
     props.className,
+    'alignfull'
   );
 
   const blockProps = useBlockProps( {
@@ -95,13 +96,13 @@ const SupernovaPreview = props => {
   } );
 
   return (
-    <div {...blockProps}>
-      <Collection {...props} key={'collection_' + clientId}>
-        {0 === headerPosition && (showCollectionTitle || showCollectionSubtitle) &&
-          <CollectionHeader {...props} key={'collection_header_' + clientId}/>}
-        {inQuery
-          ? <PostsCollectionLayout {...props} key={'posts_collection_layout_' + clientId}/>
-          : <CardsCollectionLayout {...props} key={'cards_collection_layout_' + clientId}/>}
+    <div { ...blockProps }>
+      <Collection { ...props } key={ 'collection_' + clientId }>
+        { 0 === headerPosition && ( showCollectionTitle || showCollectionSubtitle ) &&
+          <CollectionHeader { ...props } key={ 'collection_header_' + clientId }/> }
+        { inQuery
+          ? <PostsCollectionLayout { ...props } key={ 'posts_collection_layout_' + clientId }/>
+          : <CardsCollectionLayout { ...props } key={ 'cards_collection_layout_' + clientId }/> }
       </Collection>
     </div>
   );
@@ -314,10 +315,10 @@ const SupernovaEdit = props => {
 
   return (
     <Fragment>
-      <MemoizedSupernovaPreview {...props} posts={posts} inQuery={isDescendentOfQueryLoop} key={'preview'}/>
-      <BlockControls {...props} inQuery={isDescendentOfQueryLoop} key={'block-controls'}/>
-      <InspectorControls {...props} inQuery={isDescendentOfQueryLoop} key={'inspector-controls'}/>
-      <ChangeMediaBlockControls {...props} key={'media-composition-block-controls'}/>
+      <MemoizedSupernovaPreview { ...props } posts={ posts } inQuery={ isDescendentOfQueryLoop } key={ 'preview' }/>
+      <BlockControls { ...props } inQuery={ isDescendentOfQueryLoop } key={ 'block-controls' }/>
+      <InspectorControls { ...props } inQuery={ isDescendentOfQueryLoop } key={ 'inspector-controls' }/>
+      <ChangeMediaBlockControls { ...props } key={ 'media-composition-block-controls' }/>
     </Fragment>
   );
 };

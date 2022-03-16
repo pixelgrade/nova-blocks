@@ -42,6 +42,7 @@ const Edit = ( props ) => {
   const innerBlocksProps = useInnerBlocksProps( blockProps, {
     renderAppender: false,
     templateLock: 'all',
+    allowedBlocks: [ 'novablocks/sidecar-area' ]
   } );
 
   if ( ! innerBlocks.length ) {

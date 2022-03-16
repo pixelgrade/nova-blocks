@@ -18,11 +18,12 @@
 
           // only if they don't break outside the layout
           &:not(.break-align-left) {
-            padding-left: var(--nb-wrapper-sides-spacings);
+            //@todo not working properly in FSE - try again
+            //padding-left: var(--nb-wrapper-sides-spacings);
           }
 
           &:not(.break-align-right) {
-            padding-right: var(--nb-wrapper-sides-spacings);
+            //padding-right: var(--nb-wrapper-sides-spacings);
           }
         }
       }

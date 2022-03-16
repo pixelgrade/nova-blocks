@@ -36,6 +36,18 @@
   @include nb-layout-settings;
 }
 
+.alignnone,
+.alignleft,
+.alignright,
+.alignwide,
+.alignfull,
+[data-align] {
+  --block-wide-start: cs;
+  --block-wide-end: ce;
+  --block-full-start: cs;
+  --block-full-end: ce;
+}
+
 .break-align-left {
   --block-wide-start: ws;
   --block-full-start: fs;
@@ -58,74 +70,74 @@
   [id="main"],
   .nb-content-layout-grid,
   .nb-sidecar,
-  .nb-sidecar-area--content
+  .nb-sidecar-area--content,
+  .wp-block-query,
+  .supernova
 ) {
 
-  &:not(:is(.wp-block-query, .supernova)), & > :is(.wp-block-query, .supernova) {
-    @include nb-content-layout-grid;
+  @include nb-content-layout-grid;
 
-    // Align: LEFT & RIGHT
-    > :is(.alignleft, [data-align="left"]).break-align-left,
-    > :is(.alignright, [data-align="right"]).break-align-right {
-      grid-row-end: span 5;
-      align-self: flex-start;
+  // Align: LEFT & RIGHT
+  > :is(.alignleft, [data-align="left"]).break-align-left,
+  > :is(.alignright, [data-align="right"]).break-align-right {
+    grid-row-end: span 5;
+    align-self: flex-start;
+  }
+
+  // Align: LEFT
+  > :is(.alignleft, [data-align="left"]).break-align-left {
+    grid-column: var(--block-left-start) / var(--block-left-end);
+
+    + :not(:is(.alignright, [data-align="right"])) {
+      grid-column-start: cs; // shouldn't it be var(--block-content-start) ?
     }
+  }
 
-    // Align: LEFT
-    > :is(.alignleft, [data-align="left"]).break-align-left {
-      grid-column: var(--block-left-start) / var(--block-left-end);
+  // Align: RIGHT
+  > :is(.alignright, [data-align="right"]).break-align-right {
+    grid-column: var(--block-right-start) / var(--block-right-end);
 
-      + :not(:is(.alignright, [data-align="right"])) {
-        grid-column-start: cs; // shouldn't it be var(--block-content-start) ?
-      }
+    + :not(:is(.alignleft, [data-align="left"])) {
+      grid-column-end: ce; // shouldn't it be var(--block-content-end) ?
     }
-
-    // Align: RIGHT
-    > :is(.alignright, [data-align="right"]).break-align-right {
-      grid-column: var(--block-right-start) / var(--block-right-end);
-
-      + :not(:is(.alignleft, [data-align="left"])) {
-        grid-column-end: ce; // shouldn't it be var(--block-content-end) ?
-      }
-    }
+  }
 
 
 
-    // NONBREAKABLE ALIGNED BLOCKS
-    //
-    // Left or right-aligned blocks inside a Sidecar [content] area with
-    // no left or right [sidebar] available to get out of the content area
-    //
-    // Due to the use of the CSS grid there is no support for a float-like
-    // alternative until the 'exclusions' feature is implemented.
-    // Status of the spec: https://github.com/w3c/csswg-drafts/issues/3308
-    //
-    // The current proposal is to support only left/right aligned blocks
-    // that have a *height* equal or smaller to the paragraph after it.
+  // NONBREAKABLE ALIGNED BLOCKS
+  //
+  // Left or right-aligned blocks inside a Sidecar [content] area with
+  // no left or right [sidebar] available to get out of the content area
+  //
+  // Due to the use of the CSS grid there is no support for a float-like
+  // alternative until the 'exclusions' feature is implemented.
+  // Status of the spec: https://github.com/w3c/csswg-drafts/issues/3308
+  //
+  // The current proposal is to support only left/right aligned blocks
+  // that have a *height* equal or smaller to the paragraph after it.
 
-    @include above(lap) {
+  @include above(lap) {
 
-      // Sidecar inside Sidecar
-      :is(.nb-sidecar--sidebar-left .nb-sidecar--sidebar-right,
-        .nb-sidecar--sidebar-right .nb-sidecar--sidebar-left) & {
-        // Removed 'dense' option as it makes multiple blocks
-        // aligned left/right to jump on top of the grid column
-        // grid-auto-flow: dense;
+    // Sidecar inside Sidecar
+    :is(.nb-sidecar--sidebar-left .nb-sidecar--sidebar-right,
+      .nb-sidecar--sidebar-right .nb-sidecar--sidebar-left) & {
+      // Removed 'dense' option as it makes multiple blocks
+      // aligned left/right to jump on top of the grid column
+      // grid-auto-flow: dense;
 
-        > :is(.alignleft, [data-align="left"], .x2.specificity):not(.break-align-left) {
-          grid-column-end: gcs;
+      > :is(.alignleft, [data-align="left"], .x2.specificity):not(.break-align-left) {
+        grid-column-end: gcs;
 
-          + :not(:is(.alignright, [data-align="right"])) {
-            grid-column-start: cc;
-          }
+        + :not(:is(.alignright, [data-align="right"])) {
+          grid-column-start: cc;
         }
+      }
 
-        > :is(.alignright, [data-align="right"], .x2.specificity):not(.break-align-right) {
-          grid-column-start: gce;
+      > :is(.alignright, [data-align="right"], .x2.specificity):not(.break-align-right) {
+        grid-column-start: gce;
 
-          + :not(:is(.alignleft, [data-align="left"])) {
-            grid-column-end: cc;
-          }
+        + :not(:is(.alignleft, [data-align="left"])) {
+          grid-column-end: cc;
         }
       }
     }

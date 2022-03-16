@@ -50,6 +50,7 @@
     [fre] var(--nb-sidecar-sidebar-right-width)
     [we] var(--nb-sidecar-sides)
     [fe];
+  grid-auto-rows: min-content;
 
   // horizontally align images that can't be pulled to center
   > .wp-block-image {
