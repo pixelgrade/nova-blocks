@@ -37,7 +37,12 @@ const Edit = ( props ) => {
     },
   } );
 
-  const innerBlocksProps = useInnerBlocksProps( { className: `novablocks-header__inner-container` }, { renderAppender: false } );
+  const innerBlocksProps = useInnerBlocksProps( {
+    className: `novablocks-header__inner-container`
+  }, {
+    renderAppender: false,
+    allowedBlocks: [ 'novablocks/header-row' ]
+  } );
 
   if ( ! innerBlocks.length ) {
     return <VariationPicker { ...props } />
