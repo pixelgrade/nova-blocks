@@ -160,7 +160,7 @@ class Header extends HeaderBase {
       if ( content.length ) {
         const firstChild = content[0].firstElementChild;
 
-        if ( hasClass( firstChild, 'nb-sidecar' ) ) {
+        if ( firstChild && hasClass( firstChild, 'nb-sidecar' ) ) {
           return this.findColorsElement( firstChild );
         }
       }
@@ -187,8 +187,10 @@ class Header extends HeaderBase {
         const contentTargets = [];
         const sidebarTargets = children.filter( child => hasClass( child, 'nb-sidecar-area--sidebar' ) );
 
-        if ( content.length && hasClass( content[0].firstElementChild, 'nb-sidecar' ) ) {
-          contentTargets.push( ...getChildrenTargets( content[0].firstElementChild ) );
+        const firstChild = content.length && content[0].firstElementChild;
+
+        if ( firstChild && hasClass( firstChild, 'nb-sidecar' ) ) {
+          contentTargets.push( ...getChildrenTargets( firstChild ) );
         } else {
           contentTargets.push( ...content );
         }

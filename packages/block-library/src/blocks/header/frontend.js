@@ -4,7 +4,10 @@ import Header from './frontend/components/index';
 
 ready( () => {
 
-  const header = document.querySelector( '.novablocks-header' );
-  const myHeader = new Header( header );
+  const headerElements = Array.from( document.querySelectorAll( '.novablocks-header' ) );
+
+  const headers = headerElements.map( element => {
+    return new Header( element );
+  } );
 
 } );
