@@ -31,10 +31,6 @@ if ( ! function_exists( 'novablocks_render_sidecar_area_block' ) ) {
 	 */
 	function novablocks_render_sidecar_area_block( array $attributes, string $content, WP_Block $block ): string {
 
-		if ( empty( $content ) ) {
-			return '';
-		}
-
 		// Maybe enqueue frontend-only scripts.
 		novablocks_maybe_enqueue_block_frontend_scripts( $block );
 

@@ -4,14 +4,17 @@
 import { __ } from '@wordpress/i18n';
 import { RadioControl, ToggleControl, PanelBody, SelectControl } from '@wordpress/components';
 import { InspectorControls } from '@wordpress/block-editor';
-import { Fragment } from "@wordpress/element";
-import { ControlsSection, ControlsTab } from "@novablocks/block-editor";
+import { Fragment, useRef } from "@wordpress/element";
+import { ControlsSection, ControlsTab, useInnerBlocks } from "@novablocks/block-editor";
+import { useDispatch } from "@wordpress/data";
+import { createBlock } from '@wordpress/blocks';
 
 const SidecarInspectorControls = ( props ) => {
 
   const {
     attributes,
-    setAttributes
+    setAttributes,
+    clientId,
   } = props;
 
   const {
@@ -20,6 +23,10 @@ const SidecarInspectorControls = ( props ) => {
     lastItemIsSticky,
     tagName: TagName = 'div'
   } = attributes;
+
+  const { replaceInnerBlocks } = useDispatch( 'core/block-editor' );
+  const innerBlocks = useInnerBlocks( clientId );
+  const sidebarInnerBlocks = useRef( [] );
 
   const htmlElementMessages = {
     header: __(
@@ -74,6 +81,14 @@ const SidecarInspectorControls = ( props ) => {
               ]
             }
             onChange={ ( nextSidebarPosition ) => {
+              if ( nextSidebarPosition === 'none' ) {
+                const sidebar = innerBlocks.find( block => block.attributes.areaName === 'sidebar' );
+                sidebarInnerBlocks.current = sidebar?.innerBlocks || [];
+                replaceInnerBlocks( clientId, innerBlocks.filter( block => block.attributes.areaName !== 'sidebar' ) );
+              } else {
+                const sidebar = createBlock( 'novablocks/sidecar-area', { areaName: 'sidebar' }, sidebarInnerBlocks.current );
+                replaceInnerBlocks( clientId, innerBlocks.concat( [ sidebar ] ) );
+              }
               setAttributes( { sidebarPosition: nextSidebarPosition } );
             } }
           />

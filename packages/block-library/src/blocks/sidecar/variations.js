@@ -6,7 +6,9 @@ const variations = [
     name: 'sidebar-left',
     title: __( 'Sidebar Left with Content on the right', '__plugin_txtd' ),
     icon: icons.sidebarLeft,
-    attributes: { sidebarPosition: 'left' },
+    attributes: {
+      sidebarPosition: 'left',
+    },
     innerBlocks: [
       [ 'novablocks/sidecar-area', { areaName: 'content' } ],
       [ 'novablocks/sidecar-area', { areaName: 'sidebar' } ],
@@ -16,7 +18,9 @@ const variations = [
     name: 'sidebar-right',
     title: __( 'Sidebar Right with Content on the left', '__plugin_txtd' ),
     icon: icons.sidebarRight,
-    attributes: { sidebarPosition: 'right' },
+    attributes: {
+      sidebarPosition: 'right',
+    },
     innerBlocks: [
       [ 'novablocks/sidecar-area', { areaName: 'content' } ],
       [ 'novablocks/sidecar-area', { areaName: 'sidebar' } ],
@@ -24,9 +28,12 @@ const variations = [
     scope: [ 'block' ],
   }, {
     name: 'none',
+    isDefault: true,
     title: __( 'Centered Content with no Sidebar', '__plugin_txtd' ),
     icon: icons.sidebarNone,
-    attributes: { sidebarPosition: 'none' },
+    attributes: {
+      sidebarPosition: 'none',
+    },
     innerBlocks: [
       [ 'novablocks/sidecar-area', { areaName: 'content' } ],
     ],

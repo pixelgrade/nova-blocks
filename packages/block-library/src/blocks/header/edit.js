@@ -39,19 +39,19 @@ const Edit = ( props ) => {
 
   const innerBlocksProps = useInnerBlocksProps( { className: `novablocks-header__inner-container` }, { renderAppender: false } );
 
-  if ( innerBlocks.length > 0 ) {
-    return (
-      <Fragment>
-        <HeaderBlockControls { ...props } />
-        <HeaderInspectorControls { ...props } />
-        <div { ...blockProps }>
-          <div { ...innerBlocksProps } />
-        </div>
-      </Fragment>
-    );
+  if ( ! innerBlocks.length ) {
+    return <VariationPicker { ...props } />
   }
 
-  return <VariationPicker { ...props } />
+  return (
+    <Fragment>
+      <HeaderBlockControls { ...props } />
+      <HeaderInspectorControls { ...props } />
+      <div { ...blockProps }>
+        <div { ...innerBlocksProps } />
+      </div>
+    </Fragment>
+  );
 }
 
 export default Edit;

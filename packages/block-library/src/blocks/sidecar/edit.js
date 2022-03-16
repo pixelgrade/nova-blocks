@@ -5,6 +5,7 @@ import classnames from 'classnames';
 
 import { Fragment } from "@wordpress/element";
 import { useBlockProps, useInnerBlocksProps } from "@wordpress/block-editor";
+import variations from './variations';
 
 import { useInnerBlocks, VariationPicker } from "@novablocks/block-editor";
 
