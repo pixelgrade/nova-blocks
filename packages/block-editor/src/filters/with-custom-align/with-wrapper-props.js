@@ -9,7 +9,7 @@ const withWrapperPropsRemoved = createHigherOrderComponent( OriginalComponent =>
     const align = props.attributes?.align ?? 'none';
     const supports = useSupports( props.name );
 
-    if ( ! supports.align || props.name === 'core/image' ) {
+    if ( ! supports.align && props.name !== 'core/image' ) {
       return <OriginalComponent { ...props } />
     }
 

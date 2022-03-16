@@ -5,7 +5,7 @@ const withSaveProps = ( extraProps, blockType, attributes ) => {
   const { align } = attributes;
   const supports = getSupports( blockType.name );
 
-  if ( ! supports.align || ! align ) {
+    if ( ! supports.align || ! align ) {
     return extraProps;
   }
 
