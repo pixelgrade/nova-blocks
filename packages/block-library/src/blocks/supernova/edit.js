@@ -87,8 +87,6 @@ const SupernovaPreview = props => {
     `supernova--halign-${contentAlign[1]}`,
     { 'supernova--show-pagination': showPagination },
     props.className,
-    'nb-content-layout-grid',
-    'alignfull'
   );
 
   const blockProps = useBlockProps( {

@@ -32,6 +32,8 @@
 // Applying Grid on Group Block
 // added .specificity.x2 to override figure.wp-block-gallery { margin: 0; }
 :is(.wp-block-group, [class*="__inner-container"], .specificity.x2) {
+  padding-left: var(--nb-wrapper-sides-spacings);
+  padding-right: var(--nb-wrapper-sides-spacings);
 
   > * {
     margin-left: auto;
@@ -44,7 +46,10 @@
   }
 
   > :is(.alignfull, [data-align="full"]) {
+    width: auto;
     max-width: none;
+    margin-left: calc(-1 * var(--nb-wrapper-sides-spacings));
+    margin-right: calc(-1 * var(--nb-wrapper-sides-spacings));
   }
 }
 
