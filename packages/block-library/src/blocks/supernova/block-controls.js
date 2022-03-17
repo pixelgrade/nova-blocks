@@ -15,7 +15,9 @@ const Controls = ( props ) => {
   return (
 
     <BlockControls group={ 'block' }>
-      <BlockAlignmentControl value={ align } onChange={ nextAlign => { setAttributes( { align: nextAlign } ) } } />
+      <BlockAlignmentControl value={ align } onChange={ nextAlign => {
+        setAttributes( { align: nextAlign ?? 'none' } );
+      } } />
       <PreviewModeControls { ...props } />
     </BlockControls>
   )
