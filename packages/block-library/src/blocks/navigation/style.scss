@@ -1,21 +1,15 @@
 $arrow-down-svg-path: './arrow-down.svg';
 
-@mixin navigation-links-spacing {
+.novablocks-navigation {
+  display: flex;
+  justify-content: center;
+  --navigation-item-sub-elements-spacing: 7px;
+  --nb-navigation-item-padding-y: .75em;
 
   ul.menu,
   .menu > ul {
-    margin-left: calc( -1 * var(--nb-navigation-item-spacing));
-
-    > li {
-      margin-left: var(--nb-navigation-item-spacing);
-    }
+    column-gap: var(--nb-navigation-item-spacing);
   }
-}
-
-.novablocks-navigation {
-  --navigation-item-sub-elements-spacing: 7px;
-  --nb-navigation-item-padding-y: .75em;
-  @include navigation-links-spacing;
 
   @import "scss/menu";
   @import "scss/menu-item";
