@@ -1,3 +1,5 @@
+import { matches } from "../build-module";
+
 export const BREAK_LEFT_CLASS = 'break-align-left';
 export const BREAK_RIGHT_CLASS = 'break-align-right';
 
@@ -78,4 +80,29 @@ export const wouldOverlap = ( el1, el2 ) => {
 
   return !( el2Box.bottom + el2MarginBottom <= el1Box.top ||
             el2Box.top >= el1Box.bottom + el1MarginBottom );
+};
+
+export const getContentBlocksArray = () => {
+  const gridSelectors = [
+    ".wp-block-query",
+    ".wp-block-post-content",
+    ".wp-site-blocks",
+    ".wp-block-template-part",
+    ".nb-content-layout-grid",
+    ".nb-sidecar",
+    ".nb-sidecar-area--content",
+    ".supernova",
+  ];
+
+  const mergedGridSelector = gridSelectors.join( ', ' );
+  const grids = Array.from( document.querySelectorAll( mergedGridSelector ) );
+
+  const alignedElements = grids.reduce( ( acc, curr ) => {
+    const currentAlignedElements = Array.from( curr.children ).filter( element => {
+      return matches( element, ".alignfull, .alignwide, .alignleft, .alignright" );
+    } );
+    return acc.concat( currentAlignedElements );
+  }, [] );
+
+  return alignedElements;
 };

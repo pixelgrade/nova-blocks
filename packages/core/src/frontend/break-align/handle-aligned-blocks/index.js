@@ -2,12 +2,12 @@ import domReady from "@wordpress/dom-ready";
 import { debounce } from "@novablocks/utils";
 
 import {
-  getContentBlocksArray,
   makeSidebarsNotReady,
   makeSidebarsReady,
 } from "./utils";
 
 import {
+  getContentBlocksArray,
   getAdjacentSidebarBlocks,
   maybeAddBreakClassesToElement,
   wouldOverlap,
