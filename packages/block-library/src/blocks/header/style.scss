@@ -63,7 +63,17 @@
   }
 }
 
+@include below(lap) {
 
+  .novablocks-header__inner-container {
+    display: flex;
+    flex-direction: column;
+
+    > .novablocks-header-row--primary {
+      order: -1;
+    }
+  }
+}
 
 @include above(lap) {
 

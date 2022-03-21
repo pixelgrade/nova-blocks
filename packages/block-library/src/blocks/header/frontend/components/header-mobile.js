@@ -44,6 +44,7 @@ class HeaderMobile extends HeaderBase {
   createMobileHeader() {
     this.element = document.createElement( 'div' );
     this.element.setAttribute( 'class', 'novablocks-header--mobile novablocks-header-background novablocks-header-shadow' );
+    this.element.setAttribute( 'style', this.parent.element.getAttribute( 'style' ) );
     this.copyElementFromParent( '.c-branding' );
     this.copyElementFromParent( '.menu-item--cart' );
     this.menuToggle.element.insertAdjacentElement( 'afterend', this.element );

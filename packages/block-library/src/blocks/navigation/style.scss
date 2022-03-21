@@ -1,10 +1,13 @@
 $arrow-down-svg-path: './arrow-down.svg';
 
 .novablocks-navigation {
-  display: flex;
-  justify-content: center;
   --navigation-item-sub-elements-spacing: 7px;
   --nb-navigation-item-padding-y: .75em;
+
+  @include above(lap) {
+    display: flex;
+    justify-content: center;
+  }
 
   ul.menu,
   .menu > ul {

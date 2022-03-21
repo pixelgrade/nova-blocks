@@ -35,6 +35,11 @@
   padding: 0 var(--nb-wrapper-sides-spacings);
 }
 
+:is(.novablocks-header-row__inner-container, .specificity.x2.x3.x4) {
+  padding-left: 0;
+  padding-right: 0;
+}
+
 .novablocks-header-row__inner-container[class] > .wp-block.alignfull {
 
   // __inner-container > .alignfull usually has negativ margins

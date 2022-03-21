@@ -11,6 +11,9 @@
 }
 
 .c-menu-toggle {
+  display: block !important;
+  width: auto !important;
+
   position: fixed;
   top: 0;
   left: 0;
