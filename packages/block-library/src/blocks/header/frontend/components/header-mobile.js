@@ -26,8 +26,8 @@ class HeaderMobile extends HeaderBase {
     } );
 
     this.headerClasses = getColorSetClasses( this.parent.element ).join( ' ' );
-    this.colors = new HeaderColors( this.element, logoRow?.element, this.parent.adjacentElement );
-    this.menuToggleColors = new HeaderColors( this.menuToggle.element, logoRow?.element, this.parent.adjacentElement );
+    this.colors = new HeaderColors( this.element, logoRow?.element, this.parent.colorsElement );
+    this.menuToggleColors = new HeaderColors( this.menuToggle.element, logoRow?.element, this.parent.colorsElement );
 
     HeaderBase.prototype.initialize.call( this );
   }

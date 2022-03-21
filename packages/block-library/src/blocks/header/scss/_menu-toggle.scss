@@ -11,7 +11,12 @@
 }
 
 .c-menu-toggle {
-  display: block !important;
+
+  // overwrite display flex inherited from label
+  @include below(lap) {
+    display: block !important;
+  }
+
   width: auto !important;
 
   position: fixed;
