@@ -9,7 +9,8 @@ import variations from './variations';
 
 import { useInnerBlocks, VariationPicker } from "@novablocks/block-editor";
 
-import Controls from "./inspector-controls";
+import InspectorControls from "./inspector-controls";
+import BlockControls from "./block-controls";
 
 const Edit = ( props ) => {
 
@@ -17,7 +18,9 @@ const Edit = ( props ) => {
     attributes: {
       sidebarWidth,
       sidebarPosition,
-      lastItemIsSticky
+      lastItemIsSticky,
+      contentFontSize,
+      sidebarFontSize
     },
     clientId
   } = props;
@@ -35,7 +38,11 @@ const Edit = ( props ) => {
   );
 
   const blockProps = useBlockProps( {
-    style: props.style,
+    style: {
+      ...props.style,
+      '--nb-sidecar-content-font-size-base': `var(--nb-font-size-${ contentFontSize })`,
+      '--nb-sidecar-sidebar-font-size-base': `var(--nb-font-size-${ sidebarFontSize })`,
+    },
     className: className,
   } );
 
@@ -45,13 +52,10 @@ const Edit = ( props ) => {
     allowedBlocks: [ 'novablocks/sidecar-area' ]
   } );
 
-  if ( ! innerBlocks.length ) {
-    return <VariationPicker { ...props } />
-  }
-
   return (
     <Fragment>
-      <Controls { ...props } />
+      <BlockControls { ...props } />
+      <InspectorControls { ...props } />
       <div { ...innerBlocksProps } />
     </Fragment>
   );

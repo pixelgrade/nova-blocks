@@ -1,6 +1,14 @@
 @import 'scss/mixins';
 @import 'scss/utility';
 
+:root {
+  --nb-font-size-smallest: 0.82;
+  --nb-font-size-smaller: 0.93;
+  --nb-font-size-normal: 1;
+  --nb-font-size-larger: 1.12;
+  --nb-font-size-largest: 1.18;
+}
+
 .nb-sidecar-area {
 
   @include above(lap) {

@@ -22,5 +22,13 @@
 	"templateLock": {
 		"type": [ "string", "boolean" ],
 		"enum": [ "all", "insert", false ]
+	},
+	"contentFontSize": {
+		"type": "string",
+		"default": "normal"
+	},
+	"sidebarFontSize": {
+		"type": "string",
+		"default": "normal"
 	}
 }

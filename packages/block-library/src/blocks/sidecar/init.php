@@ -40,6 +40,9 @@ if ( ! function_exists( 'novablocks_render_sidecar_block' ) ) {
 		$attributes        = novablocks_get_attributes_with_defaults( $attributes, $attributes_config );
 		$cssProps          = novablocks_get_space_and_sizing_css( $attributes );
 
+		$cssProps[] = '--nb-sidecar-content-font-size-base: var(--nb-font-size-' . $attributes['contentFontSize'] . ')';
+		$cssProps[] = '--nb-sidecar-sidebar-font-size-base: var(--nb-font-size-' . $attributes['sidebarFontSize'] . ')';
+
 		$classes = [
 			'nb-sidecar',
 			'nb-sidecar--sidebar-' . $attributes['sidebarPosition'],
