@@ -138,3 +138,10 @@ body.debug {
   }
 }
 /* END Hero Block Toolbar Popovers adjustments */
+
+// appender overlaps with wide aligned blocks
+// issue scope identified as .nb-sidecar-area
+// but we could remove .nb-sidecar selector to remove scope limit
+.nb-sidecar .block-editor-block-list__block .block-list-appender {
+  position: static;
+}

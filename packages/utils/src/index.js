@@ -11,6 +11,7 @@ export * from './media';
 export * from './focal-point';
 export * from './media-query';
 export * from './array';
+export * from './break-align';
 
 export const isSafari = /^((?!chrome|android).)*safari/i.test(navigator.userAgent);
 

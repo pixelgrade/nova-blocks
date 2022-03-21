@@ -3,7 +3,7 @@ const Collection = ( props ) => {
   const { align } = attributes;
 
   return (
-    <div className={ `nb-collection align${ align } nb-block-spacing-container break-align-left break-align-right` }>
+    <div className={ `nb-collection align${ align } nb-block-spacing-container` }>
       { props.children }
     </div>
   )
