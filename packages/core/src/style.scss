@@ -54,7 +54,7 @@
   }
 }
 
-.wp-block-group__inner-container[class] {
+:is(.wp-block-group__inner-container, .specificity.x2.x3) {
   max-width: none;
 }
 
