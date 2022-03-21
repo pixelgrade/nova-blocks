@@ -36,18 +36,6 @@
   @include nb-layout-settings;
 }
 
-.alignnone,
-.alignleft,
-.alignright,
-.alignwide,
-.alignfull,
-[data-align] {
-  --block-wide-start: cs;
-  --block-wide-end: ce;
-  --block-full-start: cs;
-  --block-full-end: ce;
-}
-
 .break-align-left {
   --block-wide-start: ws;
   --block-full-start: fs;
