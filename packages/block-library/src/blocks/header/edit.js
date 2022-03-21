@@ -1,7 +1,7 @@
 import classnames from 'classnames';
 
 import { __ } from '@wordpress/i18n';
-import { Component, Fragment, useLayoutEffect } from '@wordpress/element';
+import { Component, Fragment, useEffect, useLayoutEffect } from '@wordpress/element';
 import { InnerBlocks, useBlockProps } from '@wordpress/block-editor';
 
 const useInnerBlocksProps = wp.blockEditor.useInnerBlocksProps ?? wp.blockEditor.__experimentalUseInnerBlocksProps;
@@ -15,7 +15,27 @@ import {
 
 import TEMPLATE_OPTIONS from './template-options';
 
-const Edit = ( props ) => {
+const withControlsVisibility = Component => {
+
+  return ( props ) => {
+
+    const { setControlsVisibility } = props;
+
+    useEffect( () => {
+      setControlsVisibility( {
+        'space-and-sizing-presets': false,
+        'space-and-sizing-customize': false,
+        'block-spacing': false,
+      } );
+    }, [] );
+
+    return (
+      <Component { ...props } />
+    )
+  }
+}
+
+const Edit = withControlsVisibility( props => {
   const { attributes, setAttributes, clientId } = props;
   const { layout, logoHeight, mobileLogoHeight, navigationLinkSpacing, headerSidesSpacing, stickyHeaderSpacingMultiplier } = attributes;
   const innerBlocks = useInnerBlocks( clientId );
@@ -57,6 +77,6 @@ const Edit = ( props ) => {
       </div>
     </Fragment>
   );
-}
+} );
 
 export default Edit;

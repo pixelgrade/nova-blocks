@@ -4,13 +4,32 @@
 import classnames from 'classnames';
 import { InnerBlocks, useBlockProps, useInnerBlocksProps } from '@wordpress/block-editor';
 import { getColorSignalClassnames } from "@novablocks/utils";
+import { useEffect } from "@wordpress/element";
 
 /**
  * Internal dependencies.
  */
 const ALLOWED_BLOCKS = [ 'novablocks/logo', 'novablocks/navigation' ];
 
-const HeaderRowEdit = function( props ) {
+const withControlsVisibility = Component => {
+
+  return ( props ) => {
+
+    const { setControlsVisibility } = props;
+
+    useEffect( () => {
+      setControlsVisibility( {
+        'spacing-modifier': false,
+      } );
+    }, [] );
+
+    return (
+      <Component { ...props } />
+    )
+  }
+}
+
+const HeaderRowEdit = withControlsVisibility( props => {
 
   const { attributes } = props;
   const { align } = attributes;
@@ -42,8 +61,7 @@ const HeaderRowEdit = function( props ) {
         <div { ...innerBlockProps } className={ fakeBlockClassname } />
       </div>
     </div>
-
   );
-};
+} );
 
 export default HeaderRowEdit;

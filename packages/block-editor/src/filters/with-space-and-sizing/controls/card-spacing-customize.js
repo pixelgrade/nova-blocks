@@ -3,13 +3,13 @@ import { RangeControl, ToggleControl } from "@wordpress/components";
 
 import { getControlsClasses } from "@novablocks/utils";
 
-import { ControlsGroup } from "../../../components";
+import { ControlsGroup, withVisibility } from "../../../components";
 import { useSupports } from "../../../hooks";
 import { getEmphasisAttributes } from "../utils";
 
 import VerticalAnchoringCustomize from "./vertical-anchoring-customize";
 
-const CardSpacingCustomize = ( props ) => {
+const CardSpacingCustomize = withVisibility( 'block-spacing-customize' )( props => {
 
   const {
     attributes,
@@ -53,6 +53,6 @@ const CardSpacingCustomize = ( props ) => {
       </div>
     </ControlsGroup>
   )
-};
+} );
 
 export default CardSpacingCustomize;

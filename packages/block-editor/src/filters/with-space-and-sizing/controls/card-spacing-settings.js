@@ -5,7 +5,7 @@ import { useSelect } from "@wordpress/data";
 import { ControlsGroup, withVisibility } from "../../../components";
 import { useBlockTopSpacingIsDisabled, useSupports } from "../../../hooks";
 
-const BlockSpacing = props => {
+const BlockSpacing = withVisibility( 'block-spacing-settings' )( props => {
 
   const supports = useSupports( props.name );
 
@@ -24,7 +24,7 @@ const BlockSpacing = props => {
       <ContentBottomSpacing { ...newProps } />
     </ControlsGroup>
   )
-};
+} );
 
 const BlockTopSpacing = withVisibility( 'block-top-spacing' )( props => {
   const { attributes, setAttributes, blockSpacingMin, blockSpacingMax, clientId } = props;
