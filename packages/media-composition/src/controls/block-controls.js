@@ -9,7 +9,6 @@ import {
 	Dropdown,
 	NavigableMenu,
 	MenuItem,
-	Toolbar,
 	ToolbarGroup,
 	ToolbarButton,
 } from '@wordpress/components';
@@ -39,16 +38,14 @@ export const AdvancedGalleryChangeMediaToolbar = withVisibility( 'media-composit
 	const galleryValue = gallery.map( ( image ) => image.id );
 
 	return (
-    <Toolbar label={ __( 'Media', '__plugin_txtd' ) } group={ 'block' }>
+    <ToolbarGroup label={ __( 'Media', '__plugin_txtd' ) }>
       <Dropdown
         position="bottom right"
         contentClassName="block-editor-media-replace-flow__options"
         renderToggle={ ( { isOpen, onToggle } ) => (
-          <ToolbarGroup>
-            <ToolbarButton onClick={ onToggle } aria-expanded={ isOpen }>
-              { __( 'Change Media', '__plugin_txtd' ) }
-            </ToolbarButton>
-          </ToolbarGroup>
+          <ToolbarButton onClick={ onToggle } aria-expanded={ isOpen }>
+            { __( 'Change Media', '__plugin_txtd' ) }
+          </ToolbarButton>
         ) }
         renderContent={ ( { onClose } ) => (
           <NavigableMenu>
@@ -74,7 +71,7 @@ export const AdvancedGalleryChangeMediaToolbar = withVisibility( 'media-composit
           </NavigableMenu>
         ) }
       />
-    </Toolbar>
+    </ToolbarGroup>
 	);
 } );
 

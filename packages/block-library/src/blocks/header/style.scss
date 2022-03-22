@@ -90,17 +90,6 @@
   .novablocks-header__inner-container {
     width: 100%;
   }
-
-  .novablocks-header__content {
-
-    > .novablocks-navigation {
-
-      > .menu,
-      > .menu > ul {
-        justify-content: inherit;
-      }
-    }
-  }
 }
 
 @import 'scss/mobile';

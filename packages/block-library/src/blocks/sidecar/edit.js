@@ -52,6 +52,10 @@ const Edit = ( props ) => {
     allowedBlocks: [ 'novablocks/sidecar-area' ]
   } );
 
+  if ( ! innerBlocks.length ) {
+    return <VariationPicker { ...props } />
+  }
+
   return (
     <Fragment>
       <BlockControls { ...props } />
