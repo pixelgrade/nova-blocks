@@ -108,4 +108,10 @@
         }
     }
   }
+
+  // Overwrite navigation item spacing for non-primary rows
+  .novablocks-header[class] .novablocks-header-row:not(.novablocks-header-row--primary) {
+    --nb-navigation-item-spacing: 1.25em;
+  }
 }
+
