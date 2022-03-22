@@ -8,9 +8,10 @@
 	"keywords": ["comment", "reply", "discussion", "reaction", "contributor", "interaction", "conversation", "review", "feedback"],
 	"textdomain": "nova-blocks",
 	"attributes": {},
-	"usesContext": [],
+	"usesContext": [
+		"postId"
+	],
 	"supports": {
-		"inserter": false,
 		"html": false
 	}
 }
