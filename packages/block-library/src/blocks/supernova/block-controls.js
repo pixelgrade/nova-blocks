@@ -3,8 +3,10 @@ import { BlockAlignmentControl, BlockControls } from "@wordpress/block-editor";
 import { Button, Toolbar } from '@wordpress/components';
 
 import { getIconSvg } from "@novablocks/block-editor";
-
 import { needsPreview } from "@novablocks/utils";
+
+import PreviewModeControls from './controls/preview-mode-controls';
+import FlipMediaControls from './controls/flip-media-controls';
 
 const Controls = ( props ) => {
 
@@ -18,37 +20,12 @@ const Controls = ( props ) => {
       <BlockAlignmentControl value={ align } onChange={ nextAlign => {
         setAttributes( { align: nextAlign ?? 'none' } );
       } } />
+      <FlipMediaControls { ...props } />
       <PreviewModeControls { ...props } />
     </BlockControls>
   )
 };
 
-const PreviewModeControls = ( props ) => {
-  const { attributes, setAttributes, inQuery } = props;
-  const { preview } = attributes;
 
-  const editModeLabel = __( 'Exit Edit Mode', '__plugin_txtd' );
-  const previewModeLabel = __( 'Enter Edit Mode', '__plugin_txtd' );
-
-  if ( ! needsPreview( attributes ) ) {
-    return null;
-  }
-
-  // If we are in a query block, everything is automatic.
-  if ( inQuery ) {
-    return null;
-  }
-
-  return (
-    <Toolbar label={ 'Supernova' }>
-      <Button
-        className="components-icon-button components-toolbar__control"
-        icon={ getIconSvg( 'swap' ) }
-        onClick={ () => { setAttributes( { preview: ! preview } ) } }>
-        { preview ? previewModeLabel : editModeLabel }
-      </Button>
-    </Toolbar>
-  )
-}
 
 export default Controls;
