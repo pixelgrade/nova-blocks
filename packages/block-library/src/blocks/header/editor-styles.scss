@@ -17,67 +17,43 @@
 // Use a Custom HTML block after the Header to
 // provide custom styling for a certain block pattern.
 .novablocks-header + .wp-block-html {
-  overflow: hidden;
 
-  position: absolute;
-  right: 0.5em;
-  bottom: 0.5em;
+  &:not(.is-selected) {
+    position: absolute;
+    right: 0.5em;
+    bottom: 0.5em;
 
-  height: 0.9em;
-  width: 0.9em !important;
+    height: 0.9em;
+    width: 0.9em !important;
+    overflow: hidden;
+    margin-top: 0 !important;
 
-  margin-top: 0 !important;
+    grid-column: var(--block-full-start) / var(--block-full-end);
 
-  grid-column: var(--block-full-start)/var(--block-full-end);
+    border-radius: 100px;
 
-  border-radius: 100px;
-
-  transition: transform 0.3s;
-
-  .block-editor-plain-text {
-    width: 100%;
-    background: var(--wp-admin-theme-color-darker-10) !important;
-    border: none !important;
-  }
-
-  &:after {
-    content: "";
-    color: white;
-    font-size: 11px;
-    font-family: sans-serif;
-    font-weight: bold;
-    text-align: center;
-  }
-
-  &.is-selected {
-    overflow: visible;
-
-    position: relative;
-    right: 0;
-    bottom: 0;
-
-    height: auto;
-    width: auto !important;
-
-    grid-column: var(--block-full-start)/var(--block-full-end);
-    
-    border-radius: 0;
-    margin-top: 24px !important;
+    transition: transform 0.3s !important;
 
     .block-editor-plain-text {
-      background: none !important;
+      width: 100%;
+      border: none !important;
+      padding: 0 !important;
+      height: auto !important;
+      pointer-events: none;
     }
 
     &:after {
       content: "";
+      color: white;
+      font-size: 11px;
+      font-family: sans-serif;
+      font-weight: bold;
+      text-align: center;
+      background: var(--wp-admin-theme-color);
     }
-  }
 
-  &.is-hovered:not(.is-selected) {
-    transform: scale(1.4);
-
-    > * {
-      cursor: pointer;      
+    &.is-hovered {
+      transform: scale(1.4);
     }
   }
 }
