@@ -122,9 +122,21 @@ class Header extends HeaderBase {
 
   getAdjacentElement( element ) {
     const next = element.nextElementSibling;
+    const elementsToSkip = [
+      '.c-menu-toggle',
+      '.c-menu-toggle__checkbox',
+      'script',
+      'style',
+    ];
 
-    if ( !next || matches( next, '.c-menu-toggle, .c-menu-toggle__checkbox' ) ) {
+    const elementsToSkipSelector = elementsToSkip.join( ', ' );
+
+    if ( ! next ) {
       return this.getAdjacentElement( element.parentElement );
+    }
+
+    if ( matches( next, elementsToSkipSelector ) ) {
+      return this.getAdjacentElement( next );
     }
 
     return next;
