@@ -38,7 +38,7 @@
       transition-property: opacity, --nb-header-vertical-spacing-multiplier;
     }
 
-    &.is-sticky .novablocks-header-row {
+    &:is(.is-sticky, .novablocks-header--secondary) .novablocks-header-row {
       --nb-header-vertical-spacing-multiplier: var(--nb-sticky-header-spacing-multiplier, 1);
     }
   }
@@ -127,13 +127,6 @@
 
   &:not(.novablocks-header--transparent) {
     --header-background-opacity: 0.95;
-  }
-}
-
-.novablocks-header--sticky:not(.novablocks-header--main) {
-
-  @include above(lap) {
-    margin-top: 0 !important;
   }
 }
 
