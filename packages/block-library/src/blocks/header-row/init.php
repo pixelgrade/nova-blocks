@@ -46,9 +46,12 @@ if ( ! function_exists( 'novablocks_render_header_row_block' ) ) {
 		$classes = [
 			'nb-header-row',
 			'nb-header-background',
-			'wp-block-nb-header-row',
 			'alignfull',
 		];
+
+		if ( ! empty( $attributes['slug'] ) ) {
+			$classes[] = 'nb-header-row--' . $attributes['slug'];
+		}
 
 		if ( ! empty( $attributes['className'] ) ) {
 			$classes[] = $attributes['className'];

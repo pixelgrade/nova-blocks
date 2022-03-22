@@ -32,11 +32,16 @@ const withControlsVisibility = Component => {
 const HeaderRowEdit = withControlsVisibility( props => {
 
   const { attributes } = props;
-  const { align } = attributes;
+  const { align, slug } = attributes;
+
+
 
   const blockProps = useBlockProps( {
     className: classnames(
       'nb-header-row',
+      {
+        [ `nb-header--${ slug }` ]: !! slug
+      },
       getColorSignalClassnames( attributes, true ),
       props.className,
       `alignfull`

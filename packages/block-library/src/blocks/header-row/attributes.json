@@ -1,7 +1,7 @@
 {
-	"name": {
+	"slug": {
 		"type": "string",
-		"default": "Header Row"
+		"default": ""
 	},
 	"label": {
 		"type": "string",
