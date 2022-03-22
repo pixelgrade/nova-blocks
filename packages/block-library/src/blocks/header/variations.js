@@ -11,7 +11,7 @@ const variations = [
     },
     innerBlocks: [
       ['novablocks/header-row', {
-        className: 'novablocks-header-row--primary',
+        className: 'nb-header-row--primary',
         name: 'primary',
         label: __( 'Primary Navigation', '__plugin_txtd' ),
         isPrimary: true,
@@ -23,7 +23,7 @@ const variations = [
         [
           ['novablocks/logo'],
           [ 'novablocks/navigation', {
-            className: "novablocks-navigation novablocks-navigation--primary",
+            className: "nb-navigation nb-navigation--primary",
             slug: "primary"
           } ]
         ]
@@ -40,7 +40,7 @@ const variations = [
     },
     innerBlocks: [
       ['novablocks/header-row', {
-        className: 'novablocks-header-row--primary',
+        className: 'nb-header-row--primary',
         name: 'primary',
         label: __( 'Primary Navigation', '__plugin_txtd' ),
         isPrimary: true,
@@ -51,12 +51,12 @@ const variations = [
       },
         [
           [ 'novablocks/navigation', {
-            className: "novablocks-navigation novablocks-navigation--primary",
+            className: "nb-navigation nb-navigation--primary",
             slug: "primary"
           } ],
           ['novablocks/logo'],
           [ 'novablocks/navigation', {
-            className: "novablocks-navigation novablocks-navigation--secondary",
+            className: "nb-navigation nb-navigation--secondary",
             slug: "secondary"
           } ]
         ]
@@ -73,7 +73,7 @@ const variations = [
     },
     innerBlocks: [
       ['novablocks/header-row', {
-        className: 'novablocks-header-row--logo',
+        className: 'nb-header-row--logo',
         name: 'logo',
         label: __( 'Site Identity / Logo', '__plugin_txtd' ),
         blockTopSpacing: 0,
@@ -83,18 +83,18 @@ const variations = [
       },
         [
           [ 'novablocks/navigation', {
-            className: "novablocks-navigation novablocks-navigation--secondary",
+            className: "nb-navigation nb-navigation--secondary",
             slug: "secondary"
           } ],
           ['novablocks/logo'],
           [ 'novablocks/navigation', {
-            className: "novablocks-navigation novablocks-navigation--tertiary",
+            className: "nb-navigation nb-navigation--tertiary",
             slug: "tertiary"
           } ]
         ]
       ],
       ['novablocks/header-row', {
-        className: 'novablocks-header-row--primary',
+        className: 'nb-header-row--primary',
         name: 'primary',
         label: __( 'Primary Navigation', '__plugin_txtd' ),
         isPrimary: true,
@@ -105,7 +105,7 @@ const variations = [
       },
         [
           [ 'novablocks/navigation', {
-            className: "novablocks-navigation novablocks-navigation--primary",
+            className: "nb-navigation nb-navigation--primary",
             slug: "primary"
           } ]
         ]
@@ -122,7 +122,7 @@ const variations = [
     },
     innerBlocks:  [
       ['novablocks/header-row', {
-        className: 'novablocks-header-row--secondary',
+        className: 'nb-header-row--secondary',
         name: 'secondary',
         label: __( 'Secondary Navigation', '__plugin_txtd' ),
         blockTopSpacing: 0,
@@ -132,17 +132,17 @@ const variations = [
       },
         [
           [ 'novablocks/navigation', {
-            className: "novablocks-navigation novablocks-navigation--secondary",
+            className: "nb-navigation nb-navigation--secondary",
             slug: "secondary"
           } ],
           [ 'novablocks/navigation', {
-            className: "novablocks-navigation novablocks-navigation--tertiary",
+            className: "nb-navigation nb-navigation--tertiary",
             slug: "tertiary"
           } ]
         ]
       ],
       ['novablocks/header-row', {
-        className: 'novablocks-header-row--logo',
+        className: 'nb-header-row--logo',
         name: 'logo',
         label: __( 'Site Identity / Logo', '__plugin_txtd' ),
         blockTopSpacing: 0,
@@ -155,7 +155,7 @@ const variations = [
         ]
       ],
       ['novablocks/header-row', {
-        className: 'novablocks-header-row--primary',
+        className: 'nb-header-row--primary',
         name: 'primary',
         label: __( 'Primary Navigation', '__plugin_txtd' ),
         isPrimary: true,
@@ -166,7 +166,7 @@ const variations = [
       },
         [
           [ 'novablocks/navigation', {
-            className: "novablocks-navigation novablocks-navigation--primary",
+            className: "nb-navigation nb-navigation--primary",
             slug: "primary"
           } ],
         ]

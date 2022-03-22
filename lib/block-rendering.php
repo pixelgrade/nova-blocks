@@ -650,7 +650,7 @@ function novablocks_get_collection_card_media_markup( array $media, array $attri
 
 	if ( ! empty( $url ) ) {
 		if ( isset( $media['type'] ) && $media['type'] === 'video' ) {
-			$output .= '<video class="supernova-item__media novablocks-doppler__target" data-shape-modeling-target muted autoplay loop playsinline src="' . esc_url( $media['url'] ) . '"></video>';
+			$output .= '<video class="nb-supernova-item__media novablocks-doppler__target" data-shape-modeling-target muted autoplay loop playsinline src="' . esc_url( $media['url'] ) . '"></video>';
 		} else {
 			if ( ! empty( $attachment ) && $attachment->post_type === 'attachment' ) {
 				// Since we have an attachment, generate a WordPress-standard image with all the bells and whistles (like srcsets).
@@ -798,11 +798,11 @@ function novablocks_get_collection_card_media_markup( array $media, array $attri
 				// since we rely on srcsets that include all image sizes, even bigger ones.
 				$output .= wp_get_attachment_image( $attachment->ID, 'novablocks_large', false, [
 						'data-shape-modeling-target' => '',
-						'class'                      => 'supernova-item__media novablocks-doppler__target',
+						'class'                      => 'nb-supernova-item__media novablocks-doppler__target',
 						'sizes'                      => ! empty( $sizes ) ? implode( ', ', $sizes ) : false,
 					] ) . PHP_EOL;
 			} else {
-				$output .= '<img class="supernova-item__media novablocks-doppler__target" data-shape-modeling-target src="' . esc_url( $url ) . '" alt="' . ( ! empty( $media['alt'] ) ? esc_attr( $media['alt'] ) : '' ) . '" />' . PHP_EOL;
+				$output .= '<img class="nb-supernova-item__media novablocks-doppler__target" data-shape-modeling-target src="' . esc_url( $url ) . '" alt="' . ( ! empty( $media['alt'] ) ? esc_attr( $media['alt'] ) : '' ) . '" />' . PHP_EOL;
 			}
 		}
 	}
@@ -1264,18 +1264,18 @@ function novablocks_get_collection_card_markup( string $media, string $content, 
 		'cardMediaOpacity' => 100,
 	] );
 
-	$cardClasses = [ 'supernova-item', ];
+	$cardClasses = [ 'nb-supernova-item', ];
 
 	if ( ! empty( $attributes['cardLayout'] ) ) {
-		$cardClasses[] = 'supernova-item--layout-' . $attributes['cardLayout'];
+		$cardClasses[] = 'nb-supernova-item--layout-' . $attributes['cardLayout'];
 	}
 
 	if ( ! empty( $attributes['scrollingEffect'] ) ) {
-		$cardClasses[] = 'supernova-item--scrolling-effect-' . $attributes['scrollingEffect'];
+		$cardClasses[] = 'nb-supernova-item--scrolling-effect-' . $attributes['scrollingEffect'];
 	}
 
 	if ( ! empty( $attributes['thumbnailAspectRatioString'] ) ) {
-		$cardClasses[] = 'supernova-item--aspect-ratio-' . $attributes['thumbnailAspectRatioString'];
+		$cardClasses[] = 'nb-supernova-item--aspect-ratio-' . $attributes['thumbnailAspectRatioString'];
 	}
 
 	$cardClasses = array_merge(
@@ -1283,17 +1283,17 @@ function novablocks_get_collection_card_markup( string $media, string $content, 
 		novablocks_get_color_signal_classes( $attributes )
 	);
 
-	$contentClasses = [ 'supernova-item__content', ];
+	$contentClasses = [ 'nb-supernova-item__content', ];
 
 	if ( ! empty( $attributes['contentPosition'] ) ) {
 		$align = preg_split( '/\b\s+/', $attributes['contentPosition'] );
 
 		if ( ! empty( $align[0] ) ) {
-			$contentClasses[] = 'supernova-item__content--valign-' . $align[0];
+			$contentClasses[] = 'nb-supernova-item__content--valign-' . $align[0];
 		}
 
 		if ( ! empty( $align[1] ) ) {
-			$contentClasses[] = 'supernova-item__content--halign-' . $align[1];
+			$contentClasses[] = 'nb-supernova-item__content--halign-' . $align[1];
 		}
 	}
 
@@ -1324,7 +1324,7 @@ function novablocks_get_collection_card_markup( string $media, string $content, 
 			}
 			if ( novablocks_show_card_contents( $attributes ) && ! empty( $content ) ) { ?>
 				<div class="<?php echo esc_attr( join( ' ', $contentClasses ) ); ?>">
-					<div class="supernova-item__inner-container">
+					<div class="nb-supernova-item__inner-container">
 						<?php
 						echo $content;
 						novablocks_render_scroll_indicator( $attributes );
@@ -1367,14 +1367,14 @@ function novablocks_get_collection_card_media_markup_wrapped( $media, $link = fa
 	}
 
 	if ( ! empty( $link ) ) {
-		$output .= '<a class="supernova-item__media-wrapper" href="' . esc_url( $link ) . '">';
+		$output .= '<a class="nb-supernova-item__media-wrapper" href="' . esc_url( $link ) . '">';
 	} else {
-		$output .= '<div class="supernova-item__media-wrapper">';
+		$output .= '<div class="nb-supernova-item__media-wrapper">';
 	}
 
-	$output .= '<div class="supernova-item__media-aspect-ratio">
+	$output .= '<div class="nb-supernova-item__media-aspect-ratio">
 			<div class="novablocks-doppler__mask novablocks-doppler__wrapper">
-				<div class="supernova-item__media-doppler"> ' . $media . '</div>
+				<div class="nb-supernova-item__media-doppler"> ' . $media . '</div>
 			</div>
 		</div>';
 
@@ -1496,9 +1496,9 @@ function novablocks_get_card_item_link( string $url, array $attributes, $tag_dir
 	$output = '';
 
 	if ( ! $tag_direction ) {
-		$output = '<a href="' . esc_url( $url ) . '" class="supernova-item__link"></a>';
+		$output = '<a href="' . esc_url( $url ) . '" class="nb-supernova-item__link"></a>';
 	} else if ( $tag_direction == 'open' ) {
-		$output = '<a href="' . esc_url( $url ) . '" class="supernova-item__link">';
+		$output = '<a href="' . esc_url( $url ) . '" class="nb-supernova-item__link">';
 	} else if ( $tag_direction == 'close' ) {
 		$output = '</a>';
 	}

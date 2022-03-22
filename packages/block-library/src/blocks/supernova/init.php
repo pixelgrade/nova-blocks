@@ -69,12 +69,12 @@ if ( ! function_exists( 'novablocks_render_supernova_block' ) ) {
 		$align = preg_split( '/\b\s+/', $attributes['contentPosition'] );
 
 		$classes = array_merge( [
-			'supernova',
-			'supernova--content-type-' . $attributes['contentType'],
-			'supernova--card-layout-' . $attributes['cardLayout'],
-			'supernova--' . $attributes['columns'] . '-columns',
-			'supernova--valign-' . $align[0],
-			'supernova--halign-' . $align[1],
+			'nb-supernova',
+			'nb-supernova--content-type-' . $attributes['contentType'],
+			'nb-supernova--card-layout-' . $attributes['cardLayout'],
+			'nb-supernova--' . $attributes['columns'] . '-columns',
+			'nb-supernova--valign-' . $align[0],
+			'nb-supernova--halign-' . $align[1],
 			'alignfull'
 		],
 			novablocks_get_color_signal_classes( $attributes ),
@@ -83,7 +83,7 @@ if ( ! function_exists( 'novablocks_render_supernova_block' ) ) {
 
 		// This refers to the carousel pagination, not the Query Loop pagination.
 		if ( $attributes['showPagination'] ) {
-			$classes[] = 'supernova--show-pagination';
+			$classes[] = 'nb-supernova--show-pagination';
 		}
 
 		$cssProps = array_merge(

@@ -51,7 +51,7 @@ class Header extends HeaderBase {
 
     this.toggleRowsColors( true );
 
-    addClass( this.element, 'novablocks-header--transparent' );
+    addClass( this.element, 'nb-header--transparent' );
   }
 
   getHeight() {
@@ -109,7 +109,7 @@ class Header extends HeaderBase {
   }
 
   getHeaderRows() {
-    const rows = this.element.querySelectorAll( '.novablocks-header-row' );
+    const rows = this.element.querySelectorAll( '.nb-header-row' );
 
     if ( rows ) {
       return Array.from( rows ).map( element => {
@@ -178,12 +178,12 @@ class Header extends HeaderBase {
       }
     }
 
-    if ( hasClass( element, 'supernova' ) ) {
+    if ( hasClass( element, 'nb-supernova' ) ) {
       const paddingTop = window.getComputedStyle( element ).getPropertyValue( 'padding-top' );
       const paddingTopValue = parseInt( paddingTop, 10 );
 
       if ( paddingTopValue === 0 ) {
-        return element.querySelector( '.supernova-item' );
+        return element.querySelector( '.nb-supernova-item' );
       }
     }
 
@@ -212,7 +212,7 @@ class Header extends HeaderBase {
       return getChildrenTargets( element );
     }
 
-    if ( hasClass( element, 'supernova' ) ) {
+    if ( hasClass( element, 'nb-supernova' ) ) {
       const attributes = element.dataset;
       const header = element.querySelector( '.nb-collection__header' );
       const hasImagePadding = parseInt( attributes.imagePadding, 10 ) !== 0;
@@ -220,7 +220,7 @@ class Header extends HeaderBase {
       const isCarousel = attributes.layoutStyle === 'carousel';
 
       if ( !header && !hasImagePadding && isStacked ) {
-        const containers = Array.from( element.querySelectorAll( '.supernova-item__inner-container' ) )
+        const containers = Array.from( element.querySelectorAll( '.nb-supernova-item__inner-container' ) )
 
         if ( isCarousel ) {
           return containers;
@@ -244,7 +244,7 @@ class Header extends HeaderBase {
 
     if ( this.isSticky && above( 'lap' ) ) {
       HeaderBase.prototype.applyStickyStyles.call( this, element, scrollY );
-      toggleClass( this.element, 'novablocks-header--transparent', !this.shouldBeSticky );
+      toggleClass( this.element, 'nb-header--transparent', !this.shouldBeSticky );
       this.toggleRowsColors( !this.shouldBeSticky );
     }
   }

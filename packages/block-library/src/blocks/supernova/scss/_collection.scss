@@ -2,13 +2,13 @@
   #SUPERNOVA COLLECTION
 \*------------------------------------*/
 
-.supernova {
+.nb-supernova {
 
   // if it has some sort of color contrast
   &[class*="sm-color-signal"]:not(.sm-color-signal-0) {
 
     // and doesn't look like a hero area
-    &:not(.supernova--card-layout-stacked.supernova--1-columns.alignfull) {
+    &:not(.nb-supernova--card-layout-stacked.nb-supernova--1-columns.alignfull) {
 
       // and is inside a sidecar area
       .nb-sidecar-area & {
@@ -51,14 +51,14 @@
 }
 
 .nb-collection__layout--fixed-width {
-  .supernova-item:not(.supernova-item--aspect-ratio-auto) {
+  .nb-supernova-item:not(.nb-supernova-item--aspect-ratio-auto) {
     .nb-card__media-image {
       @include image-cover;
     }
   }
 }
 
-.supernova-item--aspect-ratio-auto {
+.nb-supernova-item--aspect-ratio-auto {
 
   .novablocks-media-composition__image {
     position: static;

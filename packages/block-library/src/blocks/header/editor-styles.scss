@@ -4,12 +4,12 @@
   --enable-social-icons: 1;
 }
 
-:is(.novablocks-header, #more.specific) {
+:is(.nb-header, #more.specific) {
   display: block;
   position: relative;
 }
 
-.novablocks-header:not(.novablocks-header--ready) {
+.nb-header:not(.nb-header--ready) {
   opacity: 1;
   --header-background-opacity: 1;
 }

@@ -42,8 +42,8 @@ const Edit = withControlsVisibility( props => {
 
   const blockProps = useBlockProps( {
     className: classnames(
-      `novablocks-header`,
-      `novablocks-header-${ layout }`,
+      `nb-header`,
+      `nb-header-${ layout }`,
       props.className,
       'alignfull',
     ),
@@ -58,7 +58,7 @@ const Edit = withControlsVisibility( props => {
   } );
 
   const innerBlocksProps = useInnerBlocksProps( {
-    className: `novablocks-header__inner-container`
+    className: `nb-header__inner-container`
   }, {
     renderAppender: false,
     allowedBlocks: [ 'novablocks/header-row' ]

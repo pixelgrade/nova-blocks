@@ -75,9 +75,9 @@ const CardContents = ( props ) => {
   const titleClassName = `has-${ cardTitleFontSize }-font-size`;
 
   const contentWrapperClassName = classnames(
-    `supernova-item__content`,
-    `supernova-item__content--valign-${ align[0] }`,
-    `supernova-item__content--halign-${ align[1] }`,
+    `nb-supernova-item__content`,
+    `nb-supernova-item__content--valign-${ align[0] }`,
+    `nb-supernova-item__content--halign-${ align[1] }`,
   );
 
   if ( ! showMeta && ! showTitle && ! showSubtitle && ! showDescription && ! showButtons ) {
@@ -86,7 +86,7 @@ const CardContents = ( props ) => {
 
   return (
     <div className={ contentWrapperClassName }>
-      <div className={ 'supernova-item__inner-container' }>
+      <div className={ 'nb-supernova-item__inner-container' }>
         {
           showMeta &&
           <RichText

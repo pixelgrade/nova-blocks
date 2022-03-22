@@ -91,7 +91,7 @@ export const getContentBlocksArray = () => {
     ".nb-content-layout-grid",
     ".nb-sidecar",
     ".nb-sidecar-area--content",
-    ".supernova",
+    ".nb-supernova",
   ];
 
   const mergedGridSelector = gridSelectors.join( ', ' );

@@ -4,29 +4,29 @@
 @import 'scss/block-background';
 @import 'scss/content-alignments';
 
-.supernova {
+.nb-supernova {
   background: none !important;
   @include block-background;
 
-  &.supernova--card-layout-horizontal {
+  &.nb-supernova--card-layout-horizontal {
     --emphasis-area-gradient-direction: -90deg;
   }
 }
 
-.supernova-item.supernova-item--layout-stacked {
+.nb-supernova-item.nb-supernova-item--layout-stacked {
   --nb-block-minimum-height: calc(var(--nb-minimum-container-height) - var(--admin-bar-height, 0px));
   min-height: var(--nb-block-minimum-height);
 
-  &.supernova-item--scrolling-effect-doppler {
+  &.nb-supernova-item--scrolling-effect-doppler {
     --nb-block-minimum-height: calc(2 * var(--nb-minimum-container-height) - var(--admin-bar-height, 0px));
   }
 
-  .supernova-item__content {
+  .nb-supernova-item__content {
     min-height: calc(var(--nb-minimum-container-height) - var(--admin-bar-height, 0px));
   }
 }
 
-.supernova {
+.nb-supernova {
   --block-top-spacing: var(--nb-block-top-spacing, 0);
   --block-bottom-spacing: var(--nb-block-bottom-spacing, 0);
   --emphasis-top-spacing: var(--nb-emphasis-top-spacing, 0);

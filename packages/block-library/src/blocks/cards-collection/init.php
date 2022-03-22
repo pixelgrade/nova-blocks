@@ -54,11 +54,11 @@ if ( ! function_exists( 'novablocks_render_cards_collection_block' ) ) {
 		$align = preg_split( '/\b\s+/', $attributes['contentPosition'] );
 
 		$classes = [
-			'supernova',
-			'supernova--content-type-' . $attributes['contentType'],
-			'supernova--card-layout-' . $attributes['cardLayout'],
-			'supernova--valign-' . $align[0],
-			'supernova--halign-' . $align[1],
+			'nb-supernova',
+			'nb-supernova--content-type-' . $attributes['contentType'],
+			'nb-supernova--card-layout-' . $attributes['cardLayout'],
+			'nb-supernova--valign-' . $align[0],
+			'nb-supernova--halign-' . $align[1],
 			'nb-content-layout-grid',
 			'alignfull',
 		];

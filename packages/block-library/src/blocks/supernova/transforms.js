@@ -12,7 +12,7 @@ import metadata from './block.json';
 const { name: SUPERNOVA_BLOCK } = metadata;
 
 /**
- * Transform static (content) supernova into query supernova (with posts as content).
+ * Transform static (content) nb-supernova into query nb-supernova (with posts as content).
  */
 const transforms = {
 	to: [

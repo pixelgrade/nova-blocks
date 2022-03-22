@@ -79,13 +79,13 @@ const SupernovaPreview = props => {
   const contentAlign = getAlignFromMatrix( attributes?.contentPosition );
 
   const className = classnames(
-    'supernova',
-    `supernova--content-type-${contentType}`,
-    `supernova--card-layout-${cardLayout}`,
-    `supernova--${columns}-columns`,
-    `supernova--valign-${contentAlign[0]}`,
-    `supernova--halign-${contentAlign[1]}`,
-    { 'supernova--show-pagination': showPagination },
+    'nb-supernova',
+    `nb-supernova--content-type-${contentType}`,
+    `nb-supernova--card-layout-${cardLayout}`,
+    `nb-supernova--${columns}-columns`,
+    `nb-supernova--valign-${contentAlign[0]}`,
+    `nb-supernova--halign-${contentAlign[1]}`,
+    { 'nb-supernova--show-pagination': showPagination },
     props.className,
     'alignfull'
   );
@@ -148,12 +148,12 @@ const SupernovaEdit = props => {
   // Make sure that we keep the number of inner Supernova Items in sync with the number of items.
   useInnerBlocksCount( clientId, attributes, 'novablocks/supernova-item', cardAttributes );
 
-  // Either lock or unlock supernova-items depending on whether we are in a query or not.
+  // Either lock or unlock nb-supernova-items depending on whether we are in a query or not.
   if ( isDescendentOfQueryLoop ) {
-    // If we use a query to get posts, the inner supernova-items need to be locked.
+    // If we use a query to get posts, the inner nb-supernova-items need to be locked.
     useInnerBlocksLock( clientId, { remove: true, move: true }, attributes, 'novablocks/supernova-item' );
   } else {
-    // @todo Maybe we should just always lock supernova-items since we have controls for number of items?
+    // @todo Maybe we should just always lock nb-supernova-items since we have controls for number of items?
     useInnerBlocksLock( clientId, { remove: false, move: false }, attributes, 'novablocks/supernova-item' );
   }
 

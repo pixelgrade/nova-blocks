@@ -20,12 +20,12 @@ export const initializeReadingBar = ( header ) => {
     const showNext = showSomething && ! showReading;
 
     if ( showingReading !== showReading ) {
-      toggleClass( header, 'novablocks-header--reading', showReading && above( 'lap' ) );
+      toggleClass( header, 'nb-header--reading', showReading && above( 'lap' ) );
       showingReading = showReading;
     }
 
     if ( showingNext !== showNext ) {
-      toggleClass( header, 'novablocks-header--next', showNext && above( 'lap' ) );
+      toggleClass( header, 'nb-header--next', showNext && above( 'lap' ) );
       showingNext = showNext;
     }
 
@@ -42,7 +42,7 @@ const bindMenuLabelClick = ( header ) => {
   const menuButton = header.querySelector( '.js-sticky-menu-trigger' );
 
   menuButton.addEventListener( 'click', () => {
-    removeClass( header, 'novablocks-header--reading novablocks-header--next' )
+    removeClass( header, 'nb-header--reading nb-header--next' )
   } );
 }
 

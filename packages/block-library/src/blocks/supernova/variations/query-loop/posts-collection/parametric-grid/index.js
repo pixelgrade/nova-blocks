@@ -51,7 +51,7 @@ const innerSupernovaAttributes = {
 // @todo Not sure why we should send Supernova attributes to each item. It is dirty!
 const innerSupernovaItemAttributes = {
   ...innerSupernovaAttributes,
-  // Lock inner supernova-items so they can't be removed or moved.
+  // Lock inner nb-supernova-items so they can't be removed or moved.
   lock: {
     remove: true,
     move: true

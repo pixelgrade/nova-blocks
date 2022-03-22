@@ -11,7 +11,7 @@ class HeaderMobile extends HeaderBase {
     super();
 
     this.parent = parent;
-    this.parentContainer = parent.element.querySelector( '.novablocks-header__inner-container' );
+    this.parentContainer = parent.element.querySelector( '.nb-header__inner-container' );
 
     this.initialize();
     this.onResize();
@@ -43,7 +43,7 @@ class HeaderMobile extends HeaderBase {
 
   createMobileHeader() {
     this.element = document.createElement( 'div' );
-    this.element.setAttribute( 'class', 'novablocks-header--mobile novablocks-header-background novablocks-header-shadow' );
+    this.element.setAttribute( 'class', 'nb-header--mobile nb-header-background nb-header-shadow' );
     this.element.setAttribute( 'style', this.parent.element.getAttribute( 'style' ) );
     this.copyElementFromParent( '.c-branding' );
     this.copyElementFromParent( '.menu-item--cart' );
@@ -74,9 +74,9 @@ class HeaderMobile extends HeaderBase {
 
     if ( buttonCount ) {
       const navigationBlock = document.createElement( 'div' );
-      addClass( navigationBlock, 'wp-block-novablocks-navigation' );
+      addClass( navigationBlock, 'wp-block-nb-navigation' );
       const wrapper = document.createElement( 'div' );
-      addClass( wrapper, 'novablocks-header__buttons-menu' );
+      addClass( wrapper, 'nb-header__buttons-menu' );
 
       navigationBlock.appendChild( this.buttonMenu );
       wrapper.appendChild( navigationBlock );

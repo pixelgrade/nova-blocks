@@ -36,7 +36,7 @@ const HeaderRowEdit = withControlsVisibility( props => {
 
   const blockProps = useBlockProps( {
     className: classnames(
-      'novablocks-header-row',
+      'nb-header-row',
       getColorSignalClassnames( attributes, true ),
       props.className,
       `alignfull`
@@ -57,7 +57,7 @@ const HeaderRowEdit = withControlsVisibility( props => {
 
   return (
     <div { ...blockProps }>
-      <div className="novablocks-header-row__inner-container">
+      <div className="nb-header-row__inner-container">
         <div { ...innerBlockProps } className={ fakeBlockClassname } />
       </div>
     </div>

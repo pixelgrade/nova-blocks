@@ -2,7 +2,7 @@
   #MOBILE HEADER
 \*------------------------------------*/
 
-.novablocks-header--mobile {
+.nb-header--mobile {
   z-index: 2000;
 
   width: 100%;
@@ -45,11 +45,11 @@
 
 @include above(lap) {
 
-  .novablocks-header__inner-container {
+  .nb-header__inner-container {
     padding-top: 0 !important;
   }
 
-  .novablocks-header--mobile {
+  .nb-header--mobile {
     display: none;
   }
 }
@@ -61,15 +61,15 @@
  */
 @include below(lap) {
 
-  .novablocks-header--main {
+  .nb-header--main {
     margin-top: 0 !important;
   }
 
-  .novablocks-header--main:before {
+  .nb-header--main:before {
     --header-background-opacity: 0.97;
   }
 
-  .novablocks-header--main .novablocks-header-row--logo {
+  .nb-header--main .nb-header-row--logo {
     display: none !important;
   }
 
@@ -77,13 +77,13 @@
   .menu-item--dark-mode,
   .menu-item--search {
 
-    .novablocks-header--main .menu:not(.menu--buttons) & {
+    .nb-header--main .menu:not(.menu--buttons) & {
       display: none !important;
     }
 
   }
 
-  .novablocks-navigation {
+  .nb-navigation {
 
     .sub-menu {
       margin-left: calc(var(--theme-wrapper-sides-spacing) * -1);
@@ -100,22 +100,22 @@
     }
   }
 
-  .novablocks-header__inner-container,
-  .novablocks-header__buttons-menu {
+  .nb-header__inner-container,
+  .nb-header__buttons-menu {
 
-    .c-menu-toggle__checkbox:checked ~ .novablocks-header & {
+    .c-menu-toggle__checkbox:checked ~ .nb-header & {
       opacity: 1;
-      transition: opacity .3s ease .3s; // .novablocks-header has a 0.4s entry transition
+      transition: opacity .3s ease .3s; // .nb-header has a 0.4s entry transition
     }
 
-    .c-menu-toggle__checkbox:not(:checked) ~ .novablocks-header & {
+    .c-menu-toggle__checkbox:not(:checked) ~ .nb-header & {
       opacity: 0;
       transition: opacity .2s ease 0s;
     }
   }
 }
 
-.novablocks-header__buttons-menu {
+.nb-header__buttons-menu {
   position: absolute;
   top: 0;
   right: 0;

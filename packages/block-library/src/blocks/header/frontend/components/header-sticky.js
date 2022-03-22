@@ -14,14 +14,14 @@ class HeaderSticky extends HeaderBase {
   initialize( element ) {
     const stickyHeader = element.cloneNode();
 
-    stickyHeader.innerHTML = '<div class="novablocks-header__inner-container"></div>';
+    stickyHeader.innerHTML = '<div class="nb-header__inner-container"></div>';
 
     const innerContainer = stickyHeader.firstChild;
 
-    removeClass( stickyHeader, 'novablocks-header--main' );
-    addClass( stickyHeader, 'novablocks-header--secondary' );
+    removeClass( stickyHeader, 'nb-header--main' );
+    addClass( stickyHeader, 'nb-header--secondary' );
 
-    const headerRows = Array.from( element.querySelectorAll( '.novablocks-header-row' ) );
+    const headerRows = Array.from( element.querySelectorAll( '.nb-header-row' ) );
     const stickyRow = headerRows.find( row => row.dataset.isSticky );
     const primaryRow = headerRows.find( row => row.dataset.isPrimary );
     const readingBar = element.querySelector( '.js-reading-bar' );

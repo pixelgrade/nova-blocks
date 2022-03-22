@@ -9,7 +9,7 @@ const TEMPLATE_OPTIONS = [
     template: [
       [ 'novablocks/logo' ],
       [ 'novablocks/navigation', {
-        className: "novablocks-navigation novablocks-navigation--primary",
+        className: "nb-navigation nb-navigation--primary",
         slug: "primary"
       } ],
     ],
@@ -20,12 +20,12 @@ const TEMPLATE_OPTIONS = [
     icon: icons.logoCenter,
     template: [
       [ 'novablocks/navigation', {
-        className: "novablocks-navigation novablocks-navigation--primary",
+        className: "nb-navigation nb-navigation--primary",
         slug: "primary"
       } ],
       [ 'novablocks/logo' ],
       [ 'novablocks/navigation', {
-        className: "novablocks-navigation novablocks-navigation--secondary",
+        className: "nb-navigation nb-navigation--secondary",
         slug: "secondary"
       } ],
     ],
