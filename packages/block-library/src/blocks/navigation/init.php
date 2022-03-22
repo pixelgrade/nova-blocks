@@ -31,9 +31,12 @@ if ( ! function_exists( 'novablocks_render_navigation_block' ) ) {
 		novablocks_maybe_enqueue_block_frontend_scripts( $block );
 
 		$classes = [
-			'novablocks-navigation',
-			'wp-block-novablocks-navigation',
+			'nb-navigation',
 		];
+
+		if ( ! empty( $attributes['slug'] ) ) {
+			$classes[] = 'nb-navigation--' . $attributes['slug'];
+		}
 
 		if ( ! empty( $attributes['className'] ) ) {
 			$classes[] = $attributes['className'];

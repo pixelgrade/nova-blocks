@@ -1,6 +1,6 @@
-.supernova-item {
+.nb-supernova-item {
 
-  .supernova--card-layout-stacked .nb-collection__layout--carousel & {
+  .nb-supernova--card-layout-stacked .nb-collection__layout--carousel & {
     background-color: var(--sm-current-bg-color);
   }
 
@@ -14,28 +14,28 @@
  * Until we find a solution for that,
  * we are going to use !important for our style.
  */
-.supernova-item:not(.supernova-item--layout-stacked) {
+.nb-supernova-item:not(.nb-supernova-item--layout-stacked) {
   display: flex !important;
 }
 
-.supernova-item--layout-stacked {
+.nb-supernova-item--layout-stacked {
   display: block !important;
 }
 
-:is(.supernova--card-layout-horizontal, .supernova--card-layout-horizontal-reverse) {
+:is(.nb-supernova--card-layout-horizontal, .nb-supernova--card-layout-horizontal-reverse) {
   margin-top: calc(var(--block-top-spacing) * var(--nb-spacing));
   margin-bottom: calc(var(--block-bottom-spacing) * var(--nb-spacing));
 
   @include above(tablet) {
 
-    .supernova-item {
+    .nb-supernova-item {
 
-      .supernova-item__media-wrapper {
+      .nb-supernova-item__media-wrapper {
         margin-top: calc( var(--emphasis-top-spacing) * var(--nb-spacing));
         margin-bottom: calc( var(--emphasis-bottom-spacing) * var(--nb-spacing));
       }
 
-      .supernova-item__content {
+      .nb-supernova-item__content {
         padding-top: calc( var(--emphasis-top-spacing) * var(--nb-spacing));
         padding-bottom: calc( var(--emphasis-bottom-spacing) * var(--nb-spacing));
       }
@@ -49,15 +49,15 @@
     --nb-emphasis-top-spacing: 0;
     --nb-emphasis-bottom-spacing: 0;
 
-    .supernova-item__media-wrapper,
-    .supernova-item__content {
+    .nb-supernova-item__media-wrapper,
+    .nb-supernova-item__content {
       padding-top: calc( var(--nb-spacing) * 0.5 );
       padding-bottom: calc( var(--nb-spacing) * 0.5 );
     }
   }
 }
 
-.supernova--1-columns:where(.supernova--card-layout-stacked, .supernova--card-layout-vertical, .supernova--card-layout-vertical-reversed) {
+.nb-supernova--1-columns:where(.nb-supernova--card-layout-stacked, .nb-supernova--card-layout-vertical, .nb-supernova--card-layout-vertical-reversed) {
 
   .nb-collection.alignfull {
 
@@ -65,7 +65,7 @@
 
       // For this use case the supernova item container could have the same layout as the sidecar block
       // However we need to remove any horizontal padding set with the Content Padding control
-      .supernova-item__inner-container {
+      .nb-supernova-item__inner-container {
         @include nb-content-layout-grid;
 
         padding-left: 0;

@@ -4,7 +4,7 @@ import {
   removeClass,
 } from "@novablocks/utils";
 
-const headerRows = Array.from( document.querySelectorAll( '.novablocks-header-row' ) );
+const headerRows = Array.from( document.querySelectorAll( '.nb-header-row' ) );
 const adminbar = document.getElementById( 'wpadminbar' );
 
 headerRows.forEach( headerRow => {
@@ -14,7 +14,7 @@ headerRows.forEach( headerRow => {
   if ( attributes.isSticky ) {
     let isSticky = false;
     const placeholder = document.createElement( 'div' );
-    addClass( placeholder, 'novablocks-header-row-placeholder' );
+    addClass( placeholder, 'nb-header-row-placeholder' );
     placeholder.style.display = 'none';
     headerRow.insertAdjacentElement( 'beforebegin', placeholder );
 
@@ -37,7 +37,7 @@ headerRows.forEach( headerRow => {
         headerRow.style.left = `${ headerRect.left }px`;
         headerRow.style.width = `${ headerRect.width }px`;
 
-        addClass( headerRow, 'novablocks-header-row--sticky' );
+        addClass( headerRow, 'nb-header-row--sticky' );
 
         placeholder.style.width = `${ headerRect.width }px`;
         placeholder.style.height = `${ headerRect.height }px`;
@@ -48,7 +48,7 @@ headerRows.forEach( headerRow => {
         headerRow.style.left = '';
         headerRow.style.width = '';
 
-        removeClass( headerRow, 'novablocks-header-row--sticky' );
+        removeClass( headerRow, 'nb-header-row--sticky' );
 
         placeholder.style.display = 'none';
       }

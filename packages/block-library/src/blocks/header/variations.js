@@ -10,9 +10,8 @@ const variations = [
         layout: 'logo-left'
     },
     innerBlocks: [
-      ['novablocks/header-row', {
-        className: 'novablocks-header-row--primary',
-        name: 'primary',
+      [ 'novablocks/header-row', {
+        role: 'primary',
         label: __( 'Primary Navigation', '__plugin_txtd' ),
         isPrimary: true,
         blockTopSpacing: 0,
@@ -21,11 +20,8 @@ const variations = [
         emphasisBottomSpacing: 1,
       },
         [
-          ['novablocks/logo'],
-          [ 'novablocks/navigation', {
-            className: "novablocks-navigation novablocks-navigation--primary",
-            slug: "primary"
-          } ]
+          [ 'novablocks/logo' ],
+          [ 'novablocks/navigation', { slug: "primary" } ]
         ]
       ]
     ],
@@ -39,9 +35,8 @@ const variations = [
       layout: 'logo-center'
     },
     innerBlocks: [
-      ['novablocks/header-row', {
-        className: 'novablocks-header-row--primary',
-        name: 'primary',
+      [ 'novablocks/header-row', {
+        role: 'primary',
         label: __( 'Primary Navigation', '__plugin_txtd' ),
         isPrimary: true,
         blockTopSpacing: 0,
@@ -50,15 +45,9 @@ const variations = [
         emphasisBottomSpacing: 1,
       },
         [
-          [ 'novablocks/navigation', {
-            className: "novablocks-navigation novablocks-navigation--primary",
-            slug: "primary"
-          } ],
+          [ 'novablocks/navigation', { slug: "primary" } ],
           ['novablocks/logo'],
-          [ 'novablocks/navigation', {
-            className: "novablocks-navigation novablocks-navigation--secondary",
-            slug: "secondary"
-          } ]
+          [ 'novablocks/navigation', { slug: "secondary" } ]
         ]
       ]
     ],
@@ -72,9 +61,8 @@ const variations = [
       layout: 'logo-center-two-rows'
     },
     innerBlocks: [
-      ['novablocks/header-row', {
-        className: 'novablocks-header-row--logo',
-        name: 'logo',
+      [ 'novablocks/header-row', {
+        role: 'logo',
         label: __( 'Site Identity / Logo', '__plugin_txtd' ),
         blockTopSpacing: 0,
         blockBottomSpacing: 0,
@@ -82,20 +70,13 @@ const variations = [
         emphasisBottomSpacing: 2,
       },
         [
-          [ 'novablocks/navigation', {
-            className: "novablocks-navigation novablocks-navigation--secondary",
-            slug: "secondary"
-          } ],
-          ['novablocks/logo'],
-          [ 'novablocks/navigation', {
-            className: "novablocks-navigation novablocks-navigation--tertiary",
-            slug: "tertiary"
-          } ]
+          [ 'novablocks/navigation', { slug: "secondary" } ],
+          [ 'novablocks/logo' ],
+          [ 'novablocks/navigation', { slug: "tertiary" } ]
         ]
       ],
-      ['novablocks/header-row', {
-        className: 'novablocks-header-row--primary',
-        name: 'primary',
+      [ 'novablocks/header-row', {
+        role: 'primary',
         label: __( 'Primary Navigation', '__plugin_txtd' ),
         isPrimary: true,
         blockTopSpacing: 0,
@@ -104,10 +85,7 @@ const variations = [
         emphasisBottomSpacing: 1,
       },
         [
-          [ 'novablocks/navigation', {
-            className: "novablocks-navigation novablocks-navigation--primary",
-            slug: "primary"
-          } ]
+          [ 'novablocks/navigation', { slug: "primary" } ]
         ]
       ]
     ],
@@ -121,9 +99,8 @@ const variations = [
       layout: 'logo-center-three-rows'
     },
     innerBlocks:  [
-      ['novablocks/header-row', {
-        className: 'novablocks-header-row--secondary',
-        name: 'secondary',
+      [ 'novablocks/header-row', {
+        role: 'secondary',
         label: __( 'Secondary Navigation', '__plugin_txtd' ),
         blockTopSpacing: 0,
         blockBottomSpacing: 0,
@@ -131,19 +108,12 @@ const variations = [
         emphasisBottomSpacing: 1,
       },
         [
-          [ 'novablocks/navigation', {
-            className: "novablocks-navigation novablocks-navigation--secondary",
-            slug: "secondary"
-          } ],
-          [ 'novablocks/navigation', {
-            className: "novablocks-navigation novablocks-navigation--tertiary",
-            slug: "tertiary"
-          } ]
+          [ 'novablocks/navigation', { slug: "secondary" } ],
+          [ 'novablocks/navigation', { slug: "tertiary" } ]
         ]
       ],
-      ['novablocks/header-row', {
-        className: 'novablocks-header-row--logo',
-        name: 'logo',
+      [ 'novablocks/header-row', {
+        role: 'logo',
         label: __( 'Site Identity / Logo', '__plugin_txtd' ),
         blockTopSpacing: 0,
         blockBottomSpacing: 0,
@@ -154,9 +124,8 @@ const variations = [
           ['novablocks/logo']
         ]
       ],
-      ['novablocks/header-row', {
-        className: 'novablocks-header-row--primary',
-        name: 'primary',
+      [ 'novablocks/header-row', {
+        role: 'primary',
         label: __( 'Primary Navigation', '__plugin_txtd' ),
         isPrimary: true,
         blockTopSpacing: 0,
@@ -165,10 +134,7 @@ const variations = [
         emphasisBottomSpacing: 1,
       },
         [
-          [ 'novablocks/navigation', {
-            className: "novablocks-navigation novablocks-navigation--primary",
-            slug: "primary"
-          } ],
+          [ 'novablocks/navigation', { slug: "primary" } ],
         ]
       ],
     ],

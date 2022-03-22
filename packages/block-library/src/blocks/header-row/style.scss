@@ -1,6 +1,6 @@
 @include below(lap) {
 
-  .novablocks-header-row {
+  .nb-header-row {
     display: flex;
     flex-direction: column;
 
@@ -11,36 +11,36 @@
     --nb-emphasis-top-spacing: 0 !important;
     --nb-emphasis-bottom-spacing: 0 !important;
 
-    .novablocks-navigation--primary {
+    .nb-navigation--primary {
       order: -1;
     }
   }
 
-  :is(.novablocks-header-row, .more.specfic) {
+  :is(.nb-header-row, .more.specfic) {
     --sm-current-bg-color: inherit;
     --sm-current-fg1-color: inherit;
     --sm-current-fg2-color: inherit;
     --sm-current-accent-color: inherit;
   }
 
-  .novablocks-header-row--primary {
+  .nb-header-row--primary {
     order: -1;
   }
 }
 
-.novablocks-header-row {
+.nb-header-row {
   margin-top: 0;
   margin-bottom: 0;
 
   padding: 0 var(--nb-wrapper-sides-spacings);
 }
 
-:is(.novablocks-header-row__inner-container, .specificity.x2.x3.x4) {
+:is(.nb-header-row__inner-container, .specificity.x2.x3.x4) {
   padding-left: 0;
   padding-right: 0;
 }
 
-.novablocks-header-row__inner-container[class] > .wp-block.alignfull {
+.nb-header-row__inner-container[class] > .wp-block.alignfull {
 
   // __inner-container > .alignfull usually has negativ margins
   // but header rows need their padding on the sides
@@ -52,14 +52,14 @@
 
 @include above(lap) {
 
-  .novablocks-header-row {
+  .nb-header-row {
     --block-top-spacing: var(--nb-block-top-spacing, 0);
     --block-bottom-spacing: var(--nb-block-bottom-spacing, 0);
     --emphasis-top-spacing: var(--nb-emphasis-top-spacing, 0);
     --emphasis-bottom-spacing: var(--nb-emphasis-bottom-spacing, 0);
   }
 
-  .novablocks-header-row__inner-container[class] > .wp-block {
+  .nb-header-row__inner-container[class] > .wp-block {
     display: flex;
     column-gap: var(--nb-navigation-item-spacing);
     align-items: center;
@@ -90,7 +90,7 @@
       --justify-content: flex-end;
     }
 
-    .novablocks-header--sticky & {
+    .nb-header--sticky & {
       --emphasis-top-spacing: 0.25;
       --emphasis-bottom-spacing: 0.25;
     }
@@ -102,7 +102,7 @@
       }
     }
     
-    > [class*='novablocks-navigation'] {
+    > [class*='nb-navigation'] {
         &[class][class][class] {
           flex-grow: 1;
         }
@@ -110,7 +110,7 @@
   }
 
   // Overwrite navigation item spacing for non-primary rows
-  .novablocks-header[class] .novablocks-header-row:not(.novablocks-header-row--primary) {
+  .nb-header[class] .nb-header-row:not(.nb-header-row--primary) {
     --nb-navigation-item-spacing: 1.25em;
   }
 }

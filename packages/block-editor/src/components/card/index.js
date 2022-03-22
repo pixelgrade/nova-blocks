@@ -24,10 +24,10 @@ export const Card = ( props ) => {
   } = attributes;
 
   const defaultClassNames = classnames(
-    `supernova-item`,
-    `supernova-item--layout-${ cardLayout }`,
-    `supernova-item--scrolling-effect-${ scrollingEffect }`,
-    `supernova-item--aspect-ratio-${ thumbnailAspectRatioString }`,
+    `nb-supernova-item`,
+    `nb-supernova-item--layout-${ cardLayout }`,
+    `nb-supernova-item--scrolling-effect-${ scrollingEffect }`,
+    `nb-supernova-item--aspect-ratio-${ thumbnailAspectRatioString }`,
     getColorSignalClassnames( attributes, true )
   );
 
@@ -63,9 +63,9 @@ export const CardContentWrapper = ( props ) => {
   const align = getAlignFromMatrix( attributes?.contentPosition );
 
   const contentClassName = classnames(
-    `supernova-item__content`,
-    `supernova-item__content--valign-${ align[0] }`,
-    `supernova-item__content--halign-${ align[1] }`,
+    `nb-supernova-item__content`,
+    `nb-supernova-item__content--valign-${ align[0] }`,
+    `nb-supernova-item__content--halign-${ align[1] }`,
   );
 
   return (
@@ -78,8 +78,8 @@ export const CardContentWrapper = ( props ) => {
 export const CardMediaWrapper = ( props ) => {
 
   return (
-    <div className={ `supernova-item__media-wrapper` }>
-      <div className={ `supernova-item__media-aspect-ratio` }>
+    <div className={ `nb-supernova-item__media-wrapper` }>
+      <div className={ `nb-supernova-item__media-aspect-ratio` }>
         { props.children }
       </div>
     </div>

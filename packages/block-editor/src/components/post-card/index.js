@@ -44,7 +44,7 @@ export const PostCardMedia = ( props ) => {
   }
 
   return (
-    <img className={ `supernova-item__media` } src={ media.url } width={ media.width } height={ media.height } alt={media?.alt} />
+    <img className={ `nb-supernova-item__media` } src={ media.url } width={ media.width } height={ media.height } alt={media?.alt} />
   )
 };
 
@@ -78,7 +78,7 @@ export const PostCard = withMedia( props => {
           <Media { ...props } key={ 'card_post_media_' + post.id }/>
         </CardMediaWrapper>
       }
-      <div className={ 'supernova-item__inner-container' } key={'card_post_innercontainer_' + post.id}>
+      <div className={ 'nb-supernova-item__inner-container' } key={'card_post_innercontainer_' + post.id}>
         <CardMeta show={ showMeta } key={'card_post_metaabovetitle_' + post.id}>{ metaAboveTitle }</CardMeta>
         <CardTitle show={ showTitle } attributes={ attributes } key={'card_post_title_' + post.id}>{ post?.title?.raw || '' }</CardTitle>
         <CardMeta show={ showMeta } key={'card_post_metabelowtitle_' + post.id}>{ metaBelowTitle }</CardMeta>

@@ -35,7 +35,7 @@
 :is(
   .wp-block-group,
   .wp-block-group__inner-container,
-  .novablocks-header-row__inner-container,
+  .nb-header-row__inner-container,
   .specificity.x2.x3
 ) {
   padding-left: var(--nb-wrapper-sides-spacings);
@@ -105,6 +105,6 @@
 	-webkit-mask-image: -webkit-linear-gradient(0deg, white 0, white 100%);
 }
 
-.supernova-item__media-aspect-ratio[class] > * {
+.nb-supernova-item__media-aspect-ratio[class] > * {
   @include cover;
 }

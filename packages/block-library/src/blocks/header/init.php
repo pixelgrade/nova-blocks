@@ -52,10 +52,10 @@ if ( ! function_exists( 'novablocks_render_header_block' ) ) {
 		$data_attributes       = novablocks_get_data_attributes( $data_attributes_array, $attributes );
 
 		$classes = [
-			'novablocks-header',
-			'novablocks-header--main',
-			'novablocks-header-shadow',
-			'novablocks-header-background',
+			'nb-header',
+			'nb-header--main',
+			'nb-header-shadow',
+			'nb-header-background',
 			'alignfull',
 		];
 
@@ -105,7 +105,7 @@ if ( ! function_exists( 'novablocks_render_header_block' ) ) {
 			style="<?php echo esc_attr( $style ); ?>"
 			<?php echo join( ' ', $data_attributes ); ?>
 		>
-			<div class="novablocks-header__inner-container">
+			<div class="nb-header__inner-container">
 				<?php echo $content; ?>
 			</div>
 			<?php echo get_reading_bar_markup(); ?>

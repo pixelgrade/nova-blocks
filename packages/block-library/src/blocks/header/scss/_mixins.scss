@@ -24,8 +24,8 @@
 
 @mixin header-shadow {
   --header-shadow-opacity: 0;
-
-  &.novablocks-header--mobile[style*='fixed'] {
+  
+  &.nb-header--mobile[style*='fixed'] {
     --header-shadow-opacity: 0.1;
   }
 

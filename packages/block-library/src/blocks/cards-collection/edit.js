@@ -23,12 +23,12 @@ const CardsCollectionEdit = ( props ) => {
   const contentAlign = getAlignFromMatrix( attributes?.contentPosition );
 
   const contentClassName = classnames(
-    'supernova',
-    `supernova--content-type-${ contentType }`,
-    `supernova--card-layout-${ cardLayout }`,
-    `supernova--${ columns }-columns`,
-    `supernova--valign-${ contentAlign[0] }`,
-    `supernova--halign-${ contentAlign[1] }`,
+    'nb-supernova',
+    `nb-supernova--content-type-${ contentType }`,
+    `nb-supernova--card-layout-${ cardLayout }`,
+    `nb-supernova--${ columns }-columns`,
+    `nb-supernova--valign-${ contentAlign[0] }`,
+    `nb-supernova--halign-${ contentAlign[1] }`,
     'nb-content-layout-grid',
     props.className,
     `alignfull`,

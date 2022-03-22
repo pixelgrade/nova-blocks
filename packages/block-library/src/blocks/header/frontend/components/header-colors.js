@@ -46,11 +46,11 @@ class HeaderColors {
       return null;
     }
 
-    if ( hasClass( firstBlock, 'supernova' ) &&
+    if ( hasClass( firstBlock, 'nb-supernova' ) &&
          parseInt( attributes.imagePadding, 10 ) === 0 &&
          attributes.cardLayout === 'stacked' &&
          !firstBlock.querySelector( '.nb-collection__header' ) ) {
-      return firstBlock.querySelector( '.supernova-item' );
+      return firstBlock.querySelector( '.nb-supernova-item' );
     }
 
     return firstBlock;

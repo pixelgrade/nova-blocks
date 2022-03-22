@@ -2,7 +2,7 @@
   #SUPERNOVA CARD ITEM
 \*------------------------------------*/
 
-.supernova {
+.nb-supernova {
   --nb-card-layout-gap: calc( var(--nb-current-spacing) * 2 * var(--nb-card-layout-gap-modifier, 0) );
   --nb-card-content-padding: calc( var(--nb-current-spacing) * 2 * var(--nb-card-content-padding-multiplier, 0) );
   --nb-card-media-padding: calc( var(--nb-current-spacing) * 2 * var(--nb-card-media-padding-multiplier, 0) );
@@ -13,7 +13,7 @@
   --nb-variable-width-card-media-height: calc( 10em + 20em * var(--nb-card-media-container-height, 50) / 100 );
 }
 
-.supernova-item {
+.nb-supernova-item {
   position: relative;
   
   display: flex;
@@ -26,49 +26,49 @@
     height: 100%;
   }
 
-  .supernova-item__content {
+  .nb-supernova-item__content {
     flex-grow: 0;
   }
 }
 
-.supernova-item__inner-container {
+.nb-supernova-item__inner-container {
   padding: var(--nb-card-content-padding, 0);
 }
 
-.supernova-item__media-wrapper {
+.nb-supernova-item__media-wrapper {
 
   .blob-mix__mask {
     background-color: var(--sm-current-bg-color, var(--nb-bg-color));
   }
 }
 
-.supernova-item__media[class] {
+.nb-supernova-item__media[class] {
   width: 100%;
   height: 100%;
   object-fit: var(--nb-card-media-object-fit, cover);
 }
 
-.supernova-item__media--placeholder {
+.nb-supernova-item__media--placeholder {
   display: flex;
   align-items: center;
   justify-content: center;
 }
 
 
-.supernova-item__content,
-.supernova-item__media-wrapper {
+.nb-supernova-item__content,
+.nb-supernova-item__media-wrapper {
   flex: 0 0 auto;
 }
 
 .nb-collection__layout {
 
-  &:not(&--parametric) .supernova-item--layout-vertical-reverse {
+  &:not(&--parametric) .nb-supernova-item--layout-vertical-reverse {
     flex-direction: column-reverse;
   }
 
-  &--parametric .nb-grid__area--landscape .supernova-item:not(.supernova-item--layout-stacked),
-  &:not(&--parametric) .supernova-item--layout-horizontal,
-  &:not(&--parametric) .supernova-item--layout-horizontal-reverse {
+  &--parametric .nb-grid__area--landscape .nb-supernova-item:not(.nb-supernova-item--layout-stacked),
+  &:not(&--parametric) .nb-supernova-item--layout-horizontal,
+  &:not(&--parametric) .nb-supernova-item--layout-horizontal-reverse {
     flex-direction: row;
     
     @include below(tablet) {
@@ -77,19 +77,19 @@
 
     @include above(tablet) {
       
-      .supernova-item__content {
+      .nb-supernova-item__content {
         width: var(--nb-card-content-column-width);
         flex: 1 0 var(--nb-card-content-column-width);
       }
   
-      .supernova-item__media-wrapper {
+      .nb-supernova-item__media-wrapper {
         width: var(--nb-card-media-column-width);
         flex: 1 0 var(--nb-card-media-column-width);
       }
     }
   }
 
-  &:not(&--parametric) .supernova-item--layout-horizontal-reverse {
+  &:not(&--parametric) .nb-supernova-item--layout-horizontal-reverse {
     flex-direction: row-reverse;
     
     @include below(tablet) {
@@ -98,30 +98,30 @@
   }
 }
 
-.supernova-item--layout-stacked {
+.nb-supernova-item--layout-stacked {
 
-  .supernova-item__media-aspect-ratio:before {
+  .nb-supernova-item__media-aspect-ratio:before {
     content: none;
   }
 
   .nb-collection__layout.nb-collection__layout--variable-width & {
-    .supernova-item__content {
+    .nb-supernova-item__content {
       @include cover;
     }
   }
 
   .nb-collection__layout:not(.nb-collection__layout--variable-width) & {
-    .supernova-item__media-wrapper {
+    .nb-supernova-item__media-wrapper {
       @include cover;
     }
   }
 
-  &.supernova-item--style-basic .supernova-item__inner-container {
+  &.nb-supernova-item--style-basic .nb-supernova-item__inner-container {
     background: none;
   }
 }
 
-.supernova-item__media-aspect-ratio {
+.nb-supernova-item__media-aspect-ratio {
   position: relative;
   min-height: 100%;
 
@@ -134,27 +134,27 @@
 }
 
 // ------ #CARD MEDIA
-.supernova-item__media-wrapper {
+.nb-supernova-item__media-wrapper {
   position: relative;
   z-index: 10;
   padding: var(--nb-card-media-padding, 0);
 }
 
-.supernova-item__media-wrapper {
+.nb-supernova-item__media-wrapper {
   img,
   video {
     opacity: calc( 1 - var(--nb-overlay-filter-strength, 0));
   }
 }
 
-.supernova-item__media-doppler {
+.nb-supernova-item__media-doppler {
   width: 100%;
 }
 
 
 
 // ------ #CARD CONTENT
-.supernova-item__content {
+.nb-supernova-item__content {
   position: relative;
   z-index: 20;
 }
@@ -169,43 +169,43 @@
 // through the `Content to Media Spacing` option.
 
 @mixin remove-spacing-media-to-content($wrapper, $content) {
-   .supernova-item__media-wrapper:not(:last-child) {
+   .nb-supernova-item__media-wrapper:not(:last-child) {
       padding-#{$wrapper}: 0;
     }
 
-    .supernova-item__media-wrapper + .supernova-item__content .supernova-item__inner-container[class] {
+    .nb-supernova-item__media-wrapper + .nb-supernova-item__content .nb-supernova-item__inner-container[class] {
       padding-#{$content}: 0;
     }
 }
 
 @include above(tablet) {
 
-  .nb-collection__layout:not(.nb-collection__layout--parametric) .supernova-item {
+  .nb-collection__layout:not(.nb-collection__layout--parametric) .nb-supernova-item {
 
-    &.supernova-item--layout-vertical {
+    &.nb-supernova-item--layout-vertical {
       @include remove-spacing-media-to-content(bottom, top);
     }
 
-    &.supernova-item--layout-vertical-reverse {
+    &.nb-supernova-item--layout-vertical-reverse {
       @include remove-spacing-media-to-content(top, bottom);
     }
 
-    &.supernova-item--layout-horizontal {
+    &.nb-supernova-item--layout-horizontal {
       @include remove-spacing-media-to-content(right, left);
     }
 
-    &.supernova-item--layout-horizontal-reverse {
+    &.nb-supernova-item--layout-horizontal-reverse {
       @include remove-spacing-media-to-content(left, right);
     }
   }
 
   .nb-collection__layout.nb-collection__layout--parametric {
 
-    .nb-grid__area--landscape .supernova-item:not(.supernova-item--layout-stacked) {
+    .nb-grid__area--landscape .nb-supernova-item:not(.nb-supernova-item--layout-stacked) {
       @include remove-spacing-media-to-content(right, left);
     }
 
-    .nb-grid__area--portrait .supernova-item:not(.supernova-item--layout-stacked) {
+    .nb-grid__area--portrait .nb-supernova-item:not(.nb-supernova-item--layout-stacked) {
       @include remove-spacing-media-to-content(bottom, top);
     }
   }
@@ -231,11 +231,11 @@
       flex-basis: 1px;
     }
 
-    .supernova-item__media-aspect-ratio > * {
+    .nb-supernova-item__media-aspect-ratio > * {
       position: static;
     }
 
-    .supernova-item__media {
+    .nb-supernova-item__media {
       width: auto;
       height: var(--nb-variable-width-card-media-height);
       max-width: none;
@@ -247,17 +247,17 @@
       min-height: var(--nb-variable-width-card-media-height);
     }
 
-    .slick-initialized .supernova-item__media {
+    .slick-initialized .nb-supernova-item__media {
       height: auto;
     }
 
-    .supernova-item__media-aspect-ratio:before {
+    .nb-supernova-item__media-aspect-ratio:before {
       content: none;
     }
 
     // !!! TEMPORARY
     // @todo: should remove this, so doppler can work.
-    .supernova-item__media-doppler {
+    .nb-supernova-item__media-doppler {
       position: relative !important;
       width: 100% !important;
     }
@@ -272,12 +272,12 @@
   }
 }
 
-.supernova-item__media-doppler {
+.nb-supernova-item__media-doppler {
   height: 100%;
 }
 
 // Link added over the card content
-a.supernova-item__link {
+a.nb-supernova-item__link {
   display: block;
 
   &-overlay {
@@ -303,13 +303,13 @@ a.supernova-item__link {
 \*------------------------------------*/
 // All elements inside a Card are controlled using 
 // the Elements Visibility option
-.supernova-item .supernova-item__inner-container > *[class][class][class][class]:first-child {
+.nb-supernova-item .nb-supernova-item__inner-container > *[class][class][class][class]:first-child {
   --nb-block-top-spacing: 0;
 } 
 
 .nb-card__title[class][class][class] {
 
-  .supernova-item:not(.supernova-item--layout-stacked) & {
+  .nb-supernova-item:not(.nb-supernova-item--layout-stacked) & {
     --nb-block-top-spacing: 0.35;  
   }
 }
@@ -353,7 +353,7 @@ a.supernova-item__link {
 }
 
 // ------ #CARD HOVER EFFECT
-a.supernova-item__media-wrapper {
+a.nb-supernova-item__media-wrapper {
   transition: opacity 0.3s ease;
   
   &:hover {

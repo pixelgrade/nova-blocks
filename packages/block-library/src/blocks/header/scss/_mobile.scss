@@ -1,14 +1,14 @@
 @include below(lap) {
 
-  .novablocks-header--main[class] {
+  .nb-header--main[class] {
     @include apply-variation(6);
 
-    &.novablocks-header-background:before {
+    &.nb-header-background:before {
       position: fixed;
     }
   }
 
-  .novablocks-header {
+  .nb-header {
     display: none;
     overflow-y: auto;
 

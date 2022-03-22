@@ -123,7 +123,7 @@ $slick-arrow-background-opacity-hover: 0.6 !default;
 
 .nb-collection__layout--carousel {
   .nb-collection__layout-item,
-  .supernova-item {
+  .nb-supernova-item {
     height: 100%;
   }
 
@@ -344,9 +344,9 @@ $slick-arrow-background-opacity-hover: 0.6 !default;
 
 // These styles are applied when *Collection Layout* option is set to 'Carousel',
 // *Card Layout* is 'Stacked', *Pagination* is 'true', and *Number of Items per Row* is set to '1'.
-.supernova--card-layout-stacked.supernova--1-columns.alignfull {
+.nb-supernova--card-layout-stacked.nb-supernova--1-columns.alignfull {
 
-  &.supernova--show-pagination .nb-collection__layout--carousel .supernova-item__inner-container {
+  &.nb-supernova--show-pagination .nb-collection__layout--carousel .nb-supernova-item__inner-container {
     margin-bottom: calc(2 * var(--nb-spacing) + var(--current-font-size) * var(--current-line-height));
   }
 
@@ -361,15 +361,15 @@ $slick-arrow-background-opacity-hover: 0.6 !default;
 }
 
 .nb-collection__layout--variable-width {
-  .supernova-item__media-aspect-ratio {
+  .nb-supernova-item__media-aspect-ratio {
     > * {
       position: relative;
     }
   }
 }
 
-.supernova {
-  &:not(.supernova--1-columns) {
+.nb-supernova {
+  &:not(.nb-supernova--1-columns) {
     .slick-track {
       gap: var(--nb-grid-spacing);
     }

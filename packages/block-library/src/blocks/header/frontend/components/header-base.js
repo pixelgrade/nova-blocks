@@ -11,7 +11,7 @@ class HeaderBase {
   }
 
   initialize() {
-    addClass( this.element, 'novablocks-header--ready' );
+    addClass( this.element, 'nb-header--ready' );
     onScrollRAF( this.maybeUpdateStickyStyles.bind( this ) );
     const debouncedOnResize = debounce( this.onResize.bind( this ), 100 );
     window.addEventListener( 'resize', debouncedOnResize );

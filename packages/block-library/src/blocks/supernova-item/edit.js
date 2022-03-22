@@ -99,7 +99,7 @@ const CardMediaWithShapeDecoration = withShapeModelingDecoration( props => {
   const scrollingEffect = useScrollingEffect();
 
   return (
-      <img className={ `supernova-item__media` } src={ media.url } width={ media.width } height={ media.height }
+      <img className={ `nb-supernova-item__media` } src={ media.url } width={ media.width } height={ media.height }
            style={ scrollingEffect?.style } alt={ media.alt } />
   )
 } );
@@ -139,7 +139,7 @@ const SupernovaItemContent = ( props ) => {
   const SubTitleTagName = `h${ cardTitleLevel + 1 }`;
 
   const newProps = {
-    className: 'supernova-item__inner-container'
+    className: 'nb-supernova-item__inner-container'
   };
 
   const innerBlocksProps = useInnerBlocksProps( newProps );

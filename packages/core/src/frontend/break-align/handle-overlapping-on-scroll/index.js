@@ -45,7 +45,7 @@ export const getOverlappingSets = () => {
     const filteredBlocks = [];
 
     blocks.forEach( ( block, index) => {
-      if ( block.classList.contains( 'supernova' ) ) {
+      if ( block.classList.contains( 'nb-supernova' ) ) {
         filteredBlocks.push( ...Array.from( block.children ) );
       } else {
         filteredBlocks.push( block );

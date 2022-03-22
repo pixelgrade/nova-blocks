@@ -1,5 +1,5 @@
 export const addSocialMenuClass = ( container = document ) => {
-  const menuItem = container.querySelectorAll( '.novablocks-navigation .menu-item a' );
+  const menuItem = container.querySelectorAll( '.nb-navigation .menu-item a' );
   const bodyStyle = window.getComputedStyle( document.documentElement );
   const enableSocialIconsProp = bodyStyle.getPropertyValue( '--enable-social-icons' );
   const enableSocialIcons = !! parseInt( enableSocialIconsProp, 10 );

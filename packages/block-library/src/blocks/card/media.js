@@ -16,9 +16,9 @@ const CardMedia = ( props ) => {
     return (
       <Fragment>
         { media.type !== 'video' &&
-          <img className={ `supernova-item__media` } src={ mediaURL } alt={ media?.alt } /> }
+          <img className={ `nb-supernova-item__media` } src={ mediaURL } alt={ media?.alt } /> }
         { media.type === 'video' &&
-          <video muted autoPlay loop playsInline className={ `supernova-item__media` } src={ media?.url } /> }
+          <video muted autoPlay loop playsInline className={ `nb-supernova-item__media` } src={ media?.url } /> }
       </Fragment>
     )
   }

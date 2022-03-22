@@ -32,7 +32,7 @@ const getHexFromConfig = ( config ) => {
     const id = `novablocks-duotone-${ duotoneIncrement }`;
     duotoneIncrement = duotoneIncrement + 1;
     $obj.addClass( id );
-    const $style = $( '<style>' ).html( `.${ id } .supernova-item__media-wrapper :is(img, video) { filter: url( #${ id } ); }` );
+    const $style = $( '<style>' ).html( `.${ id } .nb-supernova-item__media-wrapper :is(img, video) { filter: url( #${ id } ); }` );
     const svgMarkup = getDuotoneFilterSvg( [ fromHex, toHex ], id );
     const $svg = $( svgMarkup );
     $style.insertAfter( $obj );

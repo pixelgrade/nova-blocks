@@ -56,7 +56,7 @@ const HeaderInspectorControls = ( props ) => {
         <ControlsGroup>
         <Notice
           key={ 'header-position-quick-start' }
-          id={ 'novablocks-header-position-quick-start' }
+          id={ 'nb-header-position-quick-start' }
           content={ <p><strong>{__( 'Quick start:', '__plugin_txtd' )}</strong> Set up your header layout using the options below and go to the <a href={customizerHeaderLink}>Customizer</a> to change the logo and menu content. </p> }
         />
 

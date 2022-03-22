@@ -1,4 +1,4 @@
-.novablocks-header--secondary {
+.nb-header--secondary {
   width: 100%;
   z-index: 2200;
 
@@ -16,7 +16,7 @@
     opacity: 0.1;
   }
 
-  > .novablocks-header__inner-container:not(:only-child):last-child {
+  > .nb-header__inner-container:not(:only-child):last-child {
     position: absolute;
     z-index: -1;
 
@@ -30,7 +30,7 @@
 
   &:hover {
 
-    > .novablocks-header__inner-container:not(:only-child):last-child {
+    > .nb-header__inner-container:not(:only-child):last-child {
       opacity: 1;
       pointer-events: auto;
     }
@@ -41,11 +41,11 @@
     display: none !important;
   }
 
-  .novablocks-header-row[data-is-primary]:not([data-is-sticky]) {
+  .nb-header-row[data-is-primary]:not([data-is-sticky]) {
     display: none;
   }
 
-  &:not(.novablocks-header--reading):not(.novablocks-header--next):hover .novablocks-header-row[data-is-primary] {
+  &:not(.nb-header--reading):not(.nb-header--next):hover .nb-header-row[data-is-primary] {
     display: block;
   }
 }
