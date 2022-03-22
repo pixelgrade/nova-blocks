@@ -25,18 +25,4 @@
       }
     }
   }
-
-  .novablocks-header__content {
-    display: flex;
-    flex-direction: column;
-
-    [class*="__inner-container"] > & {
-      max-width: none;
-    }
-
-    .site-branding {
-      padding: 1em;
-      order: -1;
-    }
-  }
 }

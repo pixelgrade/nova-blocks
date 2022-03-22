@@ -21,10 +21,6 @@
 
   gap: var(--nb-card-layout-gap);
 
-  & &__inner-container[class] {
-    padding: var(--nb-card-content-padding, 0);
-  }
-
   // Make all cards equal height
   .nb-collection__layout:not(.nb-collection__layout--parametric) & {
     height: 100%;
@@ -33,6 +29,10 @@
   .supernova-item__content {
     flex-grow: 0;
   }
+}
+
+.supernova-item__inner-container {
+  padding: var(--nb-card-content-padding, 0);
 }
 
 .supernova-item__media-wrapper {

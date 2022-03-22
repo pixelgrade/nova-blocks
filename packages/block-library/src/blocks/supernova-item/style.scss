@@ -57,21 +57,19 @@
   }
 }
 
-.supernova--card-layout-stacked.supernova--1-columns .nb-collection.alignfull {
+.supernova--1-columns:where(.supernova--card-layout-stacked, .supernova--card-layout-vertical, .supernova--card-layout-vertical-reversed) {
 
-  .nb-collection__layout:not(.nb-collection__layout--parametric) {
+  .nb-collection.alignfull {
 
-    // For this use case the supernova item container could have the same layout as the sidecar block
-    // However we need to remove any horizontal padding set with the Content Padding control
-    .supernova-item__inner-container {
-      @include nb-content-layout-grid;
+    .nb-collection__layout:not(.nb-collection__layout--parametric) {
 
-      padding-left: 0;
-      padding-right: 0;
+      // For this use case the supernova item container could have the same layout as the sidecar block
+      // However we need to remove any horizontal padding set with the Content Padding control
+      .supernova-item__inner-container {
+        @include nb-content-layout-grid;
 
-      > .nb-sidecar {
-        margin-left: 0;
-        margin-right: 0;
+        padding-left: 0;
+        padding-right: 0;
       }
     }
   }
