@@ -7,7 +7,8 @@ const variations = [
     title: __('Logo left with one menu on the right.', '__plugin_txtd' ),
     icon: icons.logoLeft,
     attributes: {
-        layout: 'logo-left'
+        layout: 'logo-left',
+        logoHeight: 30
     },
     innerBlocks: [
       [ 'novablocks/header-row', {
@@ -32,7 +33,8 @@ const variations = [
     title: __('Logo centered with one menu on the left and one menu on the right.', '__plugin_txtd' ),
     icon: icons.logoCenter,
     attributes: {
-      layout: 'logo-center'
+      layout: 'logo-center',
+      logoHeight: 30
     },
     innerBlocks: [
       [ 'novablocks/header-row', {
@@ -58,7 +60,9 @@ const variations = [
     title: __('Two Rows Header with centered logo and three menus.', '__plugin_txtd'),
     icon: icons.logoCenterTwoRows,
     attributes: {
-      layout: 'logo-center-two-rows'
+      layout: 'logo-center-two-rows',
+      logoHeight: 105,
+      stickyHeaderSpacingMultiplier: 0.25
     },
     innerBlocks: [
       [ 'novablocks/header-row', {
@@ -96,7 +100,9 @@ const variations = [
     title: __('Three Rows Header with centered logo and three menus.', '__plugin_txtd'),
     icon: icons.logoCenterThreeRows,
     attributes: {
-      layout: 'logo-center-three-rows'
+      layout: 'logo-center-three-rows',
+      logoHeight: 105,
+      stickyHeaderSpacingMultiplier: 0.25
     },
     innerBlocks:  [
       [ 'novablocks/header-row', {

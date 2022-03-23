@@ -9,7 +9,7 @@
 	},
 	"logoHeight": {
 		"type": "number",
-		"default": 22
+		"default": 30
 	},
 	"mobileLogoHeight": {
 		"type": "number",
