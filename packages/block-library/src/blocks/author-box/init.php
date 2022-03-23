@@ -83,30 +83,30 @@ if ( ! function_exists( 'novablocks_get_the_author_info_box' ) ) {
 			$display_name = get_the_author_meta( 'nickname', $post->post_author );
 		}
 
-		$author_details .= '<div class="c-author has-description" itemscope itemtype="http://schema.org/Person">';
+		$author_details .= '<div class="nb-author-box has-description" itemscope itemtype="http://schema.org/Person">';
 
 		// The author avatar
 		$author_avatar = get_avatar( get_the_author_meta( 'user_email' ), 100 );
 		if ( ! empty( $author_avatar ) ) {
-			$author_details .= '<div class="c-author__avatar">' . $author_avatar . '</div>';
+			$author_details .= '<div class="nb-author-box__avatar">' . $author_avatar . '</div>';
 		}
 
-		$author_details .= '<div class="c-author__details">';
+		$author_details .= '<div class="nb-author-box__details">';
 
 		if ( ! empty( $display_name ) ) {
-			$author_details .= '<span class="c-author__name h3">' . esc_html( $display_name ) . '</span>';
+			$author_details .= '<span class="nb-author-box__name h3">' . esc_html( $display_name ) . '</span>';
 		}
 
 		// The author bio
-		$author_details .= '<p class="c-author__description" itemprop="description">' . nl2br( $user_description ) . '</p>';
+		$author_details .= '<p class="nb-author-box__description" itemprop="description">' . nl2br( $user_description ) . '</p>';
 
-		$author_details .= '<footer class="c-author__footer">';
+		$author_details .= '<footer class="nb-author-box__footer">';
 
 		$author_details .= novablocks_get_author_bio_links( $post->ID );
 
 		$author_details .= '</footer>';
-		$author_details .= '</div><!-- .c-author__details -->';
-		$author_details .= '</div><!-- .c-author -->';
+		$author_details .= '</div><!-- .nb-author-box__details -->';
+		$author_details .= '</div><!-- .nb-author-box -->';
 
 		return $author_details;
 	}
@@ -137,21 +137,21 @@ if ( ! function_exists( 'novablocks_get_author_bio_links' ) ) {
 		$str     = wp_remote_fopen( 'https://www.gravatar.com/' . md5( strtolower( trim( get_the_author_meta( 'user_email' ) ) ) ) . '.php' );
 		$profile = unserialize( $str );
 
-		$markup .= "<span class=\"c-author__links\">\n";
+		$markup .= "<span class=\"nb-author-box__links\">\n";
 
 		/* translators: %s: the author name */
-		$markup .= '<a class="c-author__social-link  c-author__website-link h5" href="' . esc_url( $user_posts ) . '" rel="author" title="' . esc_attr( sprintf( esc_html__( 'View all posts by %s', '__components_txtd' ), get_the_author() ) ) . '">' . esc_html__( 'All posts', '__components_txtd' ) . '</a>';
+		$markup .= '<a class="nb-author-box__social-link  h5" href="' . esc_url( $user_posts ) . '" rel="author" title="' . esc_attr( sprintf( esc_html__( 'View all posts by %s', '__components_txtd' ), get_the_author() ) ) . '">' . esc_html__( 'All posts', '__components_txtd' ) . '</a>';
 
 		if ( is_array( $profile ) && ! empty( $profile['entry'][0]['urls'] ) ) {
 			foreach ( $profile['entry'][0]['urls'] as $link ) {
 				if ( ! empty( $link['value'] ) && ! empty( $link['title'] ) ) {
-					$markup .= '<a class="c-author__social-link h5" href="' . esc_url( $link['value'] ) . '" target="_blank">' . $link['title'] . "</a>\n";
+					$markup .= '<a class="nb-author-box__social-link  h5" href="' . esc_url( $link['value'] ) . '" target="_blank">' . $link['title'] . "</a>\n";
 				}
 			}
 		}
 
 		if ( ! empty( $user_website ) ) {
-			$markup .= '<a class="c-author__social-link h5" href="' . esc_url( $user_website ) . '" target="_blank">' . esc_html__( 'Website', '__components_txtd' ) . "</a>\n";
+			$markup .= '<a class="nb-author-box__social-link  h5" href="' . esc_url( $user_website ) . '" target="_blank">' . esc_html__( 'Website', '__components_txtd' ) . "</a>\n";
 		}
 		$markup .= "</span>\n";
 
