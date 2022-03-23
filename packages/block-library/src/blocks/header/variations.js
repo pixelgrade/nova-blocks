@@ -11,7 +11,7 @@ const variations = [
     },
     innerBlocks: [
       [ 'novablocks/header-row', {
-        role: 'primary',
+        slug: 'primary',
         label: __( 'Primary Navigation', '__plugin_txtd' ),
         isPrimary: true,
         blockTopSpacing: 0,
@@ -36,7 +36,7 @@ const variations = [
     },
     innerBlocks: [
       [ 'novablocks/header-row', {
-        role: 'primary',
+        slug: 'primary',
         label: __( 'Primary Navigation', '__plugin_txtd' ),
         isPrimary: true,
         blockTopSpacing: 0,
@@ -62,7 +62,7 @@ const variations = [
     },
     innerBlocks: [
       [ 'novablocks/header-row', {
-        role: 'logo',
+        slug: 'logo',
         label: __( 'Site Identity / Logo', '__plugin_txtd' ),
         blockTopSpacing: 0,
         blockBottomSpacing: 0,
@@ -76,7 +76,7 @@ const variations = [
         ]
       ],
       [ 'novablocks/header-row', {
-        role: 'primary',
+        slug: 'primary',
         label: __( 'Primary Navigation', '__plugin_txtd' ),
         isPrimary: true,
         blockTopSpacing: 0,
@@ -100,7 +100,7 @@ const variations = [
     },
     innerBlocks:  [
       [ 'novablocks/header-row', {
-        role: 'secondary',
+        slug: 'secondary',
         label: __( 'Secondary Navigation', '__plugin_txtd' ),
         blockTopSpacing: 0,
         blockBottomSpacing: 0,
@@ -113,7 +113,7 @@ const variations = [
         ]
       ],
       [ 'novablocks/header-row', {
-        role: 'logo',
+        slug: 'logo',
         label: __( 'Site Identity / Logo', '__plugin_txtd' ),
         blockTopSpacing: 0,
         blockBottomSpacing: 0,
@@ -125,7 +125,7 @@ const variations = [
         ]
       ],
       [ 'novablocks/header-row', {
-        role: 'primary',
+        slug: 'primary',
         label: __( 'Primary Navigation', '__plugin_txtd' ),
         isPrimary: true,
         blockTopSpacing: 0,

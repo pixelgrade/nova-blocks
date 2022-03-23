@@ -34,8 +34,6 @@ const HeaderRowEdit = withControlsVisibility( props => {
   const { attributes } = props;
   const { align, slug } = attributes;
 
-
-
   const blockProps = useBlockProps( {
     className: classnames(
       'nb-header-row',
