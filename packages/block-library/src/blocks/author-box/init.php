@@ -39,7 +39,7 @@ if ( ! function_exists( 'novablocks_render_author_box_block' ) ) {
 			return '';
 		}
 
-		return novablocks_get_the_author_info_box( $block->context[ 'postId' ] );
+		return novablocks_get_the_author_info_box( $block->context[ 'postId' ], $attributes );
 	}
 }
 
@@ -51,7 +51,7 @@ if ( ! function_exists( 'novablocks_get_the_author_info_box' ) ) {
 	 *
 	 * @return string
 	 */
-	function novablocks_get_the_author_info_box( $post_id ): string {
+	function novablocks_get_the_author_info_box( $post_id, $attributes ): string {
 
 		// Get the current post for easy use
 		$post = get_post( $post_id );
@@ -78,12 +78,24 @@ if ( ! function_exists( 'novablocks_get_the_author_info_box' ) ) {
 
 		// Get author's display name
 		$display_name = get_the_author_meta( 'display_name', $post->post_author );
+
 		// If display name is not available then use nickname as display name
 		if ( empty( $display_name ) ) {
 			$display_name = get_the_author_meta( 'nickname', $post->post_author );
 		}
 
-		$author_details .= '<div class="nb-author-box has-description" itemscope itemtype="http://schema.org/Person">';
+		$spacingProps = array_merge(
+			novablocks_get_spacing_css( $attributes ),
+			novablocks_get_sizing_css( $attributes ),
+		);
+
+		$style = join( '; ', $spacingProps ) . '; ';
+
+		$author_details .= '<div 
+			class="nb-author-box has-description"
+			style="' . $style . '"  
+			itemscope itemtype="http://schema.org/Person"
+			>';
 
 		// The author avatar
 		$author_avatar = get_avatar( get_the_author_meta( 'user_email' ), 100 );
