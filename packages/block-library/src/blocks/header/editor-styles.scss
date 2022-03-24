@@ -16,7 +16,7 @@
 
 // Use a Custom HTML block after the Header to
 // provide custom styling for a certain block pattern.
-.novablocks-header + .wp-block-html {
+.nb-header + .wp-block-html {
   
   grid-column: var(--block-full-start) / var(--block-full-end);
 
@@ -29,7 +29,6 @@
     width: 0.9em !important;
     overflow: hidden;
     margin-top: 0 !important;
-
 
     border-radius: 100px;
     cursor: pointer !important;
