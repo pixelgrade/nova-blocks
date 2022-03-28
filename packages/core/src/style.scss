@@ -61,6 +61,8 @@
 
 :is(.wp-block-group__inner-container, .specificity.x2.x3) {
   max-width: none;
+  padding-left: 0;
+  padding-right: 0;
 }
 
 .wp-block-group {
@@ -70,8 +72,8 @@
   // by multiplying with -1 and then adding 1 we make sure that
   // we only add padding when these values are smaller than 1
   &[class*="sm-color-signal"]:not(.sm-color-signal-0) {
-    padding-top: calc((1 + (-1 * var(--nb-emphasis-top-spacing))) * var(--nb-wrapper-sides-spacings));
-    padding-bottom: calc((1 + (-1 * var(--nb-emphasis-bottom-spacing))) * var(--nb-wrapper-sides-spacings));
+    padding-top: calc(max(0.75, var(--nb-emphasis-top-spacing)) * var(--nb-wrapper-sides-spacings));
+    padding-bottom: calc(max(0.75, var(--nb-emphasis-bottom-spacing)) * var(--nb-wrapper-sides-spacings));
     padding-left: var(--nb-wrapper-sides-spacings);
     padding-right: var(--nb-wrapper-sides-spacings);
   }

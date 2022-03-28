@@ -22,7 +22,7 @@ import attributes from './attributes';
 import { withSetChildrenAttributes } from "./filters";
 import { registerQueryStore } from './store';
 
-registerQueryStore();
+registerQueryStore( 'novablocks/supernova' );
 
 const coreQueryAlterations = settings => {
 

@@ -70,6 +70,7 @@ add_action( 'rest_api_init', 'novablocks_register_settings' );
 function novablocks_register_meta() {
 
 	if ( defined( 'NOVABLOCKS_USE_POST_META_ATTRIBUTES' ) && NOVABLOCKS_USE_POST_META_ATTRIBUTES ) {
+
 		register_meta( 'post', 'novablocks_hero_scroll_indicator', [
 			'type'         => 'boolean',
 			'single'       => true,
@@ -77,6 +78,12 @@ function novablocks_register_meta() {
 		] );
 
 		register_meta( 'post', 'novablocks_hero_position_indicators', [
+			'type'         => 'boolean',
+			'single'       => true,
+			'show_in_rest' => true,
+		] );
+
+		register_meta( 'post', 'supernova_prevent_duplicate', [
 			'type'         => 'boolean',
 			'single'       => true,
 			'show_in_rest' => true,
