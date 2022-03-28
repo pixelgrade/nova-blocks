@@ -96,10 +96,6 @@
     grid-column: var(--block-full-start) / var(--block-full-end);
   }
 
-  > .wp-block-group:not(.break-align-left):not(.break-align-right) > .wp-block-group__inner-container > * {
-    max-width: none;
-  }
-
   @include below(lap) {
     grid-template-columns:
       [fs] var(--nb-wrapper-sides-spacings) // [ws]
