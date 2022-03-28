@@ -12,6 +12,7 @@ function novablocks_get_separator_attributes(): array {
 
 	return novablocks_merge_attributes_from_array( [
 		'packages/core/src/blocks/core/separator/attributes.json',
+		'packages/color-signal/src/attributes.json',
 		'packages/block-editor/src/filters/with-space-and-sizing/attributes.json',
 	] );
 }
@@ -37,15 +38,19 @@ if ( ! function_exists( 'novablocks_render_separator_block' ) ) {
 			'align' . $attributes['align']
 		];
 
+		$classes = array_merge( $classes, novablocks_get_color_signal_classes( $attributes ) );
+
 		if ( ! empty( $attributes['className'] ) ) {
 			$classes[] = $attributes['className'];
 		}
 
-		$classes = join( ' ', $classes );
-
+		$data_attributes = novablocks_get_color_signal_data_attributes( $attributes );
 
 		ob_start(); ?>
-		<div class="<?php echo $classes ?>" style="<?php echo esc_attr( $style ); ?>">
+
+		<div <?php echo $data_attributes; ?>
+			class="<?php echo join( ' ', $classes ) ?>"
+			style="<?php echo esc_attr( $style ); ?>">
 			<?php
 			$novablocks_settings = novablocks_get_block_editor_settings();
 			if ( ! empty( $novablocks_settings['separator'] && ! empty( $novablocks_settings['separator']['markup'] ) ) ) {

@@ -4,6 +4,7 @@ import { addFilter } from '@wordpress/hooks';
 import { useBlockProps } from "@wordpress/block-editor";
 import { select } from "@wordpress/data";
 
+import attributes from './attributes.json';
 import edit from './edit';
 
 const addNovablocksSupport = ( settings ) => {
@@ -25,7 +26,16 @@ const addNovablocksSupport = ( settings ) => {
       ...settings.supports,
       align: [ 'wide', 'full' ],
       novaBlocks: {
-        spaceAndSizing: true
+        colorSignal: {
+          attributes: true,
+          controls: true,
+          functionalColors: false,
+          paletteClassname: true,
+          paletteVariationClassname: true,
+          colorSignalClassname: true,
+          stickySourceColor: false,
+        },
+        spaceAndSizing: true,
       },
     },
     edit,

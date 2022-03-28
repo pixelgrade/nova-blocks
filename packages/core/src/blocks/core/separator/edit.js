@@ -22,7 +22,6 @@ const SeparatorEdit = ( props ) => {
     style: props.style
   } );
 
-
   return (
     <div { ...blockProps } dangerouslySetInnerHTML={ { __html: novablocksSettings?.separator?.markup } } />
   );

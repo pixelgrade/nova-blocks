@@ -1,3 +1,9 @@
-.wp-block-separator[class] {
+:is(.wp-block-separator, #very.specific) {
   border: 0;
+  background: none;
+  color: var(--nb-bg-color);
+}
+
+.wp-block-separator:not(.is-style-wide):not(.is-style-dots) {
+  width: auto;
 }
