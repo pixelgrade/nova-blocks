@@ -1515,12 +1515,29 @@ function novablocks_get_posts_collection_cards_markup( array $attributes, $conte
 
 	$output = '';
 
+	global $novablocks_rendered_posts_ids;
+
+	if ( ! $novablocks_rendered_posts_ids ) {
+		$novablocks_rendered_posts_ids = [];
+	}
+
 	if ( isset( $block->context['queryId'] ) ) {
 
 		$page_key = isset( $block->context['queryId'] ) ? 'query-' . $block->context['queryId'] . '-page' : 'query-page';
 		$page     = empty( $_GET[ $page_key ] ) ? 1 : (int) $_GET[ $page_key ];
 
-		$query_args = build_query_vars_from_query_block( $block, $page );
+		if ( function_exists( 'gutenberg_build_query_vars_from_query_block' ) ) {
+			$query_args = gutenberg_build_query_vars_from_query_block( $block, $page );
+		} else {
+			$query_args = build_query_vars_from_query_block( $block, $page );
+		}
+
+		$prevent_duplicate_posts = get_post_meta( get_the_ID(), 'supernova_prevent_duplicate', true );
+
+		if ( $prevent_duplicate_posts ) {
+			$query_args['post__not_in'] = $novablocks_rendered_posts_ids;
+		}
+
 		// Override the custom query with the global query if needed.
 		$use_global_query = ( isset( $block->context['query']['inherit'] ) && $block->context['query']['inherit'] );
 		if ( $use_global_query ) {

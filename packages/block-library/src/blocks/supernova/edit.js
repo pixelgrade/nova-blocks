@@ -4,14 +4,14 @@
 import classnames from 'classnames';
 
 import { useBlockProps } from '@wordpress/block-editor';
-import { select, useDispatch, useSelect } from '@wordpress/data';
+import { select, useDispatch, useSelect, withDispatch } from '@wordpress/data';
 import { store as coreStore } from '@wordpress/core-data';
 import { Fragment, useCallback, memo, useEffect, useMemo } from '@wordpress/element';
 
 /**
  * Internal dependencies
  */
-import { useInnerBlocksCount, useInnerBlocks, useInnerBlocksLock, normalizeImages } from '@novablocks/block-editor';
+import { useMeta, useInnerBlocksCount, useInnerBlocks, useInnerBlocksLock, normalizeImages } from '@novablocks/block-editor';
 import { Collection, CollectionHeader } from '@novablocks/collection';
 import { BlockControls as MediaCompositionBlockControls } from '@novablocks/media-composition';
 
@@ -114,6 +114,10 @@ const SupernovaEdit = props => {
 
   const { queryId } = context;
   const isDescendentOfQueryLoop = Number.isFinite( queryId );
+  const [ preventDuplicatePosts, setPreventDuplicatePosts ] = useMeta( 'supernova_prevent_duplicate' );
+  const postIdsToExclude = useSelect( select => {
+    return select( 'novablocks/displayed-posts' ).previousPostIds( clientId );
+  }, [ attributes ] );
 
   // Make sure that the contentType attribute is set.
   // We will leave it for now, but it might not be needed
@@ -245,6 +249,11 @@ const SupernovaEdit = props => {
           query.postType = templateSlug.replace( 'archive-', '' );
         }
       }
+
+      if ( preventDuplicatePosts ) {
+        query.exclude = postIdsToExclude.join( ',' );
+      }
+
       return {
         posts: getEntityRecords( 'postType', query.postType, query ),
       };
@@ -265,6 +274,8 @@ const SupernovaEdit = props => {
       inherit,
       templateSlug,
       taxQuery,
+      preventDuplicatePosts,
+      postIdsToExclude,
     ]
   ));
 
@@ -291,6 +302,7 @@ const SupernovaEdit = props => {
 
   // We need to hook regardless to avoid error related to varying number of hooks.
   const { updateBlockAttributes } = useDispatch( 'core/block-editor' );
+
   // First, change the Query Loop's perPage attribute when Supernova's postsToShow changes.
   useEffect( () => {
     if ( syncQueryAndSupernova && !!parentQueryClientId && parseInt( attributes.postsToShow ) !== parseInt( perPage ) ) {
@@ -302,6 +314,7 @@ const SupernovaEdit = props => {
       } );
     }
   }, [ attributes ] );
+
   // Second, change the Supernova's postsToShow attribute when Query Loop's perPage changes.
   useEffect( () => {
     if ( syncQueryAndSupernova && !!parentQueryClientId && parseInt( attributes.postsToShow ) !== parseInt( context.query.perPage ) ) {
@@ -311,11 +324,13 @@ const SupernovaEdit = props => {
     }
   }, [ context ] );
 
-  const { markPostsAsDisplayed } = useDispatch( 'novablocks/displayed-posts' );
+  const { markPostsAsDisplayed, markSpecificPostsAsDisplayed } = useDispatch( 'novablocks/displayed-posts' );
 
-  useEffect( () => {
+  const markPosts = useCallback( ( clientId, posts ) => {
     markPostsAsDisplayed( clientId, posts );
-  }, [ posts ] )
+  }, [ attributes ] );
+
+  markPosts( clientId, posts );
 
   return (
     <Fragment>
