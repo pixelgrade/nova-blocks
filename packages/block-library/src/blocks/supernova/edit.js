@@ -3,9 +3,7 @@
  */
 import classnames from 'classnames';
 
-import {
-  useBlockProps,
-} from '@wordpress/block-editor';
+import { useBlockProps } from '@wordpress/block-editor';
 import { select, useDispatch, useSelect } from '@wordpress/data';
 import { store as coreStore } from '@wordpress/core-data';
 import { Fragment, useCallback, memo, useEffect, useMemo } from '@wordpress/element';
@@ -312,6 +310,12 @@ const SupernovaEdit = props => {
       } );
     }
   }, [ context ] );
+
+  const { markPostsAsDisplayed } = useDispatch( 'novablocks/displayed-posts' );
+
+  useEffect( () => {
+    markPostsAsDisplayed( clientId, posts );
+  }, [ posts ] )
 
   return (
     <Fragment>

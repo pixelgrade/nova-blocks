@@ -9,7 +9,7 @@ import { useMemo } from "@wordpress/element";
 /**
  * Internal dependencies
  */
-import { useInnerBlocks } from '@novablocks/block-editor';
+import { getSvg, useInnerBlocks } from '@novablocks/block-editor';
 import { getFocalPointImage } from "@novablocks/scrolling-effect";
 
 import edit from './edit';
@@ -17,11 +17,12 @@ import variations from './variations';
 import transforms from './transforms';
 import queryVariations from './variations/query-loop';
 import iconSvg from './icon.svg';
-
 import attributes from './attributes';
 
 import { withSetChildrenAttributes } from "./filters";
-import { getSvg } from "@novablocks/block-editor";
+import { registerQueryStore } from './store';
+
+registerQueryStore();
 
 const coreQueryAlterations = settings => {
 

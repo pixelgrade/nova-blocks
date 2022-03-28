@@ -4,8 +4,6 @@ const withAlignSettingsRemoved = ( settings ) => {
   const novaBlocksSupports = supports.novaBlocks ?? {};
 
   const {
-    __experimentalLayout,
-    layout,
     ...newSupports
   } = supports;
 
