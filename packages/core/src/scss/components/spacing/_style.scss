@@ -44,7 +44,7 @@
 
 
   // Bring Headings closer to Paragraphs and Lists
-  + :is(p, ul, ol) {
+  + :is(p, ul, ol, nav) {
     --nb-block-top-spacing: 0.5;
   }
 
