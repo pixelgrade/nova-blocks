@@ -37,9 +37,17 @@
   &:hover {
     z-index: 50;
   }
+}
 
-  &--selected {
-    cursor: default;
+.nb-palette__grade--selected {
+  cursor: default;
+}
+
+.nb-palette__grade--disabled {
+  pointer-events: none;
+
+  .nb-palette__grade-surface {
+    background: #EEEEEE;
   }
 }
 
@@ -50,7 +58,7 @@
   bottom: 0;
   left: 0;
   box-shadow: rgba(0,0,0,0.05) 0 0 0 1px inset;
-  background: var(--sm-current-bg-color);
+  background: var(--nb-bg-color);
 
   .nb-palette__grade:hover &,
   .nb-palette__grade--selected & {
@@ -81,7 +89,7 @@
   }
 
   .nb-palette__grade--source:not(:hover):not(.nb-palette__grade--selected) & {
-    color: var(--sm-current-bg-color);
+    color: var(--nb-bg-color);
   }
 }
 

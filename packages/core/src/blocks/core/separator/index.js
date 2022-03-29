@@ -27,6 +27,7 @@ const alterSeparatorSettings = ( settings ) => {
           paletteVariationClassname: true,
           colorSignalClassname: true,
           stickySourceColor: false,
+          minColorSignal: 1,
         },
         spaceAndSizing: true,
       },
@@ -44,7 +45,7 @@ const alterSeparatorSettings = ( settings ) => {
     }
   }
 };
-addFilter( 'blocks.registerBlockType', 'novablocks/separator/alter-separator-support', alterSeparatorSettings, Number.MIN_SAFE_INTEGER );
+addFilter( 'blocks.registerBlockType', 'novablocks/separator/alter-support', alterSeparatorSettings, 1 );
 
 const alterSeparatorAttributes = ( settings ) => {
 
@@ -60,5 +61,4 @@ const alterSeparatorAttributes = ( settings ) => {
     }
   }
 };
-
-addFilter( 'blocks.registerBlockType', 'novablocks/separator/add-novablocks-support', alterSeparatorAttributes, 20 );
+addFilter( 'blocks.registerBlockType', 'novablocks/separator/alter-attributes', alterSeparatorAttributes, 20 );

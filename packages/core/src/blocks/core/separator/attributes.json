@@ -1,10 +1,8 @@
 {
 	"colorSignal": {
-		"type": "number",
 		"default": 3
 	},
 	"paletteVariation": {
-		"type": "number",
 		"default": 12
 	},
 	"align": {

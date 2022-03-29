@@ -1,5 +1,8 @@
 import classnames from 'classnames';
+
 import { Button, Icon } from "@wordpress/components";
+
+import { useSupports } from "../../hooks";
 
 const defaultLabels = [
   'None',
@@ -11,9 +14,12 @@ const defaultLabels = [
 const SignalControl = ( props ) => {
 
   const { label, signal } = props;
-  const maxSignal = props.max || 3;
   const onChange = props.onChange || (() => {});
   const labels = props.labels || defaultLabels;
+  const supports = useSupports( props.name );
+
+  const maxSignal = Math.min( supports?.novaBlocks?.colorSignal?.maxColorSignal ?? 3, props?.max ?? 3 );
+  const minSignal = Math.max( supports?.novaBlocks?.colorSignal?.minColorSignal ?? 0, props?.min ?? 0 );
 
   const valueLabel = labels[ signal ];
 
@@ -45,7 +51,7 @@ const SignalControl = ( props ) => {
             <div className="nb-signal__controls">
               <Button
                 isSecondary
-                disabled={ signal === 0 }
+                disabled={ signal <= minSignal }
                 onClick={ () => {
                   onChange( signal - 1 );
                 } }>
@@ -53,7 +59,7 @@ const SignalControl = ( props ) => {
               </Button>
               <Button
                 isSecondary
-                disabled={ signal === maxSignal }
+                disabled={ signal >= maxSignal }
                 onClick={ () => {
                   onChange( signal + 1 );
                 } }>

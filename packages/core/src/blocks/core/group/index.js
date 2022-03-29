@@ -20,9 +20,6 @@ const addNovaBlocksSupport = ( settings ) => {
 
   return {
     ...settings,
-    attributes: {
-      ...settings.attributes,
-    },
     supports: {
       ...settings.supports,
       align: [ "left", "right", "wide", "full" ],
