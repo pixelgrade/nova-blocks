@@ -1,7 +1,7 @@
 @include below(lap) {
 
   .nb-header--main[class] {
-    @include apply-variation(6);
+    @include apply-variation(5);
 
     &.nb-header-background:before {
       position: fixed;
