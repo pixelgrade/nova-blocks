@@ -7,7 +7,7 @@ import { select } from "@wordpress/data";
 import attributes from './attributes.json';
 import edit from './edit';
 
-const addNovablocksSupport = ( settings ) => {
+const alterSeparatorSettings = ( settings ) => {
 
   if ( settings.name !== 'core/separator' ) {
     return settings;
@@ -15,13 +15,6 @@ const addNovablocksSupport = ( settings ) => {
 
   return {
     ...settings,
-    attributes: {
-      ...settings.attributes,
-      align: {
-        type: "string",
-        default: "none",
-      }
-    },
     supports: {
       ...settings.supports,
       align: [ 'wide', 'full' ],
@@ -51,5 +44,21 @@ const addNovablocksSupport = ( settings ) => {
     }
   }
 };
+addFilter( 'blocks.registerBlockType', 'novablocks/separator/alter-separator-support', alterSeparatorSettings, Number.MIN_SAFE_INTEGER );
 
-addFilter( 'blocks.registerBlockType', 'novablocks/separator/add-novablocks-support', addNovablocksSupport, 1 );
+const alterSeparatorAttributes = ( settings ) => {
+
+  if ( settings.name !== 'core/separator' ) {
+    return settings;
+  }
+
+  return {
+    ...settings,
+    attributes: {
+      ...settings.attributes,
+      ...attributes
+    }
+  }
+};
+
+addFilter( 'blocks.registerBlockType', 'novablocks/separator/add-novablocks-support', alterSeparatorAttributes, 20 );

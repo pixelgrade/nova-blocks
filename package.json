@@ -40,6 +40,7 @@
 		"@novablocks/media-composition": "file:packages/media-composition",
 		"@novablocks/scrolling-effect": "file:packages/scrolling-effect",
 		"@novablocks/shape-modeling": "file:packages/shape-modeling",
+		"@novablocks/tools": "file:packages/tools",
 		"@novablocks/utils": "file:packages/utils"
 	},
 	"devDependencies": {
