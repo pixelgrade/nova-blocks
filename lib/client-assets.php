@@ -406,7 +406,6 @@ function novablocks_register_block_types() {
 			);
 
 			$args[ $key ] = $handle;
-
 		}
 
 		// Possible stylesheets to be registered for each block.

@@ -12,7 +12,8 @@
 	"textdomain": "nova-blocks",
 	"attributes": {},
 	"usesContext": [
-		"postId"
+		"postId",
+		"postType"
 	],
 	"supports": {
 		"novaBlocks": {

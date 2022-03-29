@@ -39,12 +39,25 @@ if ( ! function_exists( 'novablocks_render_meta_box_block' ) ) {
 		$attributes        = novablocks_get_attributes_with_defaults( $attributes, $attributes_config );
 		$cssProps          = novablocks_get_space_and_sizing_css( $attributes );
 
+		if ( empty( $block->context['postId'] ) ) {
+			return '';
+		}
+
+		$post = get_post( $block->context['postId'] );
+		if ( empty( $post ) ) {
+			return '';
+		}
+
+		$author_id = get_the_author_meta( 'ID', $post->post_author );
+		$author    = get_userdata( $author_id );
+		if ( empty( $author ) ) {
+			return '';
+		}
+
 		ob_start(); ?>
 
 		<div class="c-meta" style="<?php echo join( '; ', $cssProps ); ?>">
 			<?php
-			$author_id        = get_the_author_meta( 'ID' );
-			$author           = get_userdata( $author_id );
 			$author_email     = $author->user_email;
 			$avatar_url       = get_avatar_url( $author_email, [ 'size' => 100, 'default' => 'identicon' ] );
 			$avatar           = get_avatar( $author_email, '80', 'identicon' );
@@ -74,7 +87,7 @@ if ( ! function_exists( 'novablocks_render_meta_box_block' ) ) {
 								</div>
 							</div>
 							<div class="c-meta__row c-meta__row--secondary">
-								<div class="c-meta__row-item"><?php echo get_the_date(); ?></div>
+								<div class="c-meta__row-item"><?php echo get_the_date( '', $post ); ?></div>
 								<div class="c-meta__row-item">
 									<?php
 									printf( __( '%s min read', '__theme_txtd' ), $min_reading_time );
@@ -86,7 +99,7 @@ if ( ! function_exists( 'novablocks_render_meta_box_block' ) ) {
 				</div> <!-- .c-meta-author -->
 			</div> <!-- .c-meta__authorship -->
 
-			<?php $comments_count = get_comments_number(); ?>
+			<?php $comments_count = get_comments_number( $post->ID ); ?>
 			<div class="c-meta__social">
 				<div class="c-meta__rows">
 					<div class="c-meta__row">
@@ -95,7 +108,11 @@ if ( ! function_exists( 'novablocks_render_meta_box_block' ) ) {
 						</div>
 						<div class="c-meta__row-item">
 							<div class="c-meta-comments">
-								<div class="c-meta-comments__count"><div class="c-meta-comments__count-text"><?php echo $comments_count ? $comments_count : '&nbsp;'; ?></div><div class="c-meta-comments__arrow"></div></div>
+								<div class="c-meta-comments__count">
+									<div
+										class="c-meta-comments__count-text"><?php echo $comments_count ? $comments_count : '&nbsp;'; ?></div>
+									<div class="c-meta-comments__arrow"></div>
+								</div>
 								<div class="c-meta-comments__label">
 									<a class="c-meta-comments__link"><?php echo esc_html__( 'Discuss', '__theme_txtd' ); ?></a>
 								</div>
