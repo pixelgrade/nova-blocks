@@ -526,6 +526,7 @@ add_action( 'init', 'novablocks_register_block_types', 20 );
 if ( ! function_exists( 'novablocks_enqueue_packages_scripts' ) ) {
 
 	function novablocks_enqueue_packages_scripts() {
+		global $pagenow;
 
 		// For now, we will always enqueue the core scripts and styles.
 		wp_enqueue_style( 'novablocks-core-style' );
@@ -533,7 +534,13 @@ if ( ! function_exists( 'novablocks_enqueue_packages_scripts' ) ) {
 		if ( novablocks_is_gutenberg() ) {
 			wp_enqueue_script( 'novablocks-core' );
 			wp_enqueue_style( 'novablocks-core-editor_style' );
-		} else {
+
+			if ( 'widgets.php' !== $pagenow ) {
+				wp_enqueue_script( 'novablocks-tools' );
+			}
+		}
+
+		if ( ! is_admin() )	{
 			wp_enqueue_script( 'novablocks-core/frontend' );
 		}
 	}
