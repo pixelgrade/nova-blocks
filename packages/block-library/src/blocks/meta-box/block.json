@@ -8,7 +8,10 @@
 	"keywords": ["author", "meta", "comments", "sharing"],
 	"textdomain": "nova-blocks",
 	"attributes": {},
-	"usesContext": [],
+	"usesContext": [
+		"postId",
+		"postType"
+	],
 	"supports": {
 		"novaBlocks": {
 			"spaceAndSizing": true
