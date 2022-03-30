@@ -156,7 +156,11 @@ class Header extends HeaderBase {
 
     if ( matches( element, '.nb-sidecar' ) ) {
       if ( element.children.length === 1 && matches( element.firstElementChild, '.nb-sidecar-area--content' ) ) {
-        return this.findProperElement( element.firstElementChild.firstElementChild );
+        const nextElement = element.firstElementChild.firstElementChild;
+
+        if ( matches( nextElement, 'alignfull' ) ) {
+          return this.findProperElement( nextElement );
+        }
       }
     }
 
