@@ -33,7 +33,6 @@ const withUpdatedAttributes = ( BlockEdit ) => {
     useEffect( () => {
       if ( supports?.novaBlocks?.colorSignal ) {
         const updatedAttributes = getUpdatedAttributes( attributes, clientId, {}, stickySourceColor );
-        console.log( props.name, attributes, updatedAttributes );
         setAttributes( updatedAttributes );
       }
     }, [] );
