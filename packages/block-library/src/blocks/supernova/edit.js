@@ -69,6 +69,7 @@ const SupernovaPreview = props => {
     showCollectionSubtitle,
     showPagination,
     cardLayout,
+    layoutStyle,
   } = attributes;
 
   // Overwrite the contentType if we are in a query.
@@ -80,6 +81,7 @@ const SupernovaPreview = props => {
     'nb-supernova',
     `nb-supernova--content-type-${contentType}`,
     `nb-supernova--card-layout-${cardLayout}`,
+    `nb-supernova--layout-${layoutStyle}`,
     `nb-supernova--${columns}-columns`,
     `nb-supernova--valign-${contentAlign[0]}`,
     `nb-supernova--halign-${contentAlign[1]}`,

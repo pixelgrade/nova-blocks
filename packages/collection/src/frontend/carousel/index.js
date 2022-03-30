@@ -23,33 +23,42 @@ const initializeCarousels = () => {
     const PALETTE_VARIATION_CLASS = `sm-variation-${ attributes.contentPaletteVariation }`;
     const CONTENT_SIGNAL_CLASS = `sm-color-signal-${ attributes.contentColorSignal }`;
 
+    const PREV_ARROW = `<button class="slick-prev ${ PALETTE_CLASS } ${ PALETTE_VARIATION_CLASS } ${ CONTENT_SIGNAL_CLASS }" aria-label="Previous" type="button">Previous</button>`;
+    const NEXT_ARROW = `<button class="slick-next ${ PALETTE_CLASS } ${ PALETTE_VARIATION_CLASS } ${ CONTENT_SIGNAL_CLASS }" aria-label="Next" type="button">Next</button>`;
+    const variableWidth = attributes.carouselLayout === 'variable' || attributes.carouselLayout === 'content';
+    const showDots = attributes.showPagination === 1;
+    const showArrows = attributes.showArrows === 1;
+
     const SLICK_OPTIONS = {
-//    rows: 0,
-      slidesToShow: attributes.columns,
-      dots: attributes.showPagination === 1,
-      dotsClass: `slick-dots ${PALETTE_CLASS} ${PALETTE_VARIATION_CLASS} ${CONTENT_SIGNAL_CLASS}`,
-      arrows: attributes.showArrows === 1,
-      prevArrow: `<button class="slick-prev ${ PALETTE_CLASS } ${ PALETTE_VARIATION_CLASS } ${ CONTENT_SIGNAL_CLASS }" aria-label="Previous" type="button">Previous</button>`,
-      nextArrow: `<button class="slick-next ${ PALETTE_CLASS } ${ PALETTE_VARIATION_CLASS } ${ CONTENT_SIGNAL_CLASS }" aria-label="Next" type="button">Next</button>`,
-      variableWidth: attributes.carouselLayout === 'variable' || attributes.carouselLayout === 'content',
+      dotsClass: `slick-dots ${ PALETTE_CLASS } ${ PALETTE_VARIATION_CLASS } ${ CONTENT_SIGNAL_CLASS }`,
+      prevArrow: PREV_ARROW,
+      nextArrow: NEXT_ARROW,
       customPaging: function(slider, i) {
         const index = i + 1;
         const sIndex = index <= 9 ? `<span>0</span>${index}` : index;
         return $('<button type="button" />').html( sIndex );
       },
+      mobileFirst: true,
+      dots: true,
+      arrows: false,
       infinite: true,
+      slidesToShow: 1,
+      slidesToScroll: 1,
+      centerMode: true,
+      centerPadding: 'calc(var(--nb-sidecar-sides) - var(--nb-grid-spacing) / 4)',
+      variableWidth: false,
+
       responsive: [
         {
           breakpoint: 1024,
           settings: {
-            arrows: false,
-            centerMode: true,
-            infinite: true,
-            slidesToShow: 1,
-            variableWidth: false,
-            centerPadding: '30px'
+            dots: showDots,
+            arrows: showArrows,
+            slidesToShow: attributes.columns,
+            centerMode: false,
+            variableWidth: variableWidth,
           }
-        },
+        }
       ]
     };
 

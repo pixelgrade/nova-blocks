@@ -218,54 +218,49 @@
 /*
  * Carousel Layout - Variable Width
  */
+@include above(lap) {
 
-.nb-collection__layout--carousel {
-  
-  &.nb-collection__layout--variable-width {
-  
-    // Replace display: tablet; width: 1px; trick
-    // with flex-basis, so we can use display: grid
-    // on supernova-item.
-    
-    .slick-track > * {
-      flex-basis: 1px;
-    }
+  .nb-collection__layout--carousel {
 
-    .nb-supernova-item__media-aspect-ratio > * {
-      position: static;
-    }
+    &.nb-collection__layout--variable-width {
 
-    .nb-supernova-item__media {
-      width: auto;
-      height: var(--nb-variable-width-card-media-height);
-      max-width: none;
-    }
+      // Replace display: tablet; width: 1px; trick
+      // with flex-basis, so we can use display: grid
+      // on supernova-item.
 
-    // Force media composition squared since it doesn't have an inherit aspect ratio
-    .novablocks-media-composition {
-      width: var(--nb-variable-width-card-media-height);
-      min-height: var(--nb-variable-width-card-media-height);
-    }
+      .slick-track > * {
+        flex-basis: 1px;
+      }
 
-    .slick-initialized .nb-supernova-item__media {
-      height: auto;
-    }
+      .nb-supernova-item__media-aspect-ratio > * {
+        position: static;
+      }
 
-    .nb-supernova-item__media-aspect-ratio:before {
-      content: none;
-    }
+      .nb-supernova-item__media {
+        width: auto;
+        height: var(--nb-variable-width-card-media-height);
+        max-width: none;
+      }
 
-    // !!! TEMPORARY
-    // @todo: should remove this, so doppler can work.
-    .nb-supernova-item__media-doppler {
-      position: relative !important;
-      width: 100% !important;
+      // Force media composition squared since it doesn't have an inherit aspect ratio
+      .novablocks-media-composition {
+        width: var(--nb-variable-width-card-media-height);
+        min-height: var(--nb-variable-width-card-media-height);
+      }
+
+      .slick-initialized .nb-supernova-item__media {
+        height: auto;
+      }
+
+      .nb-supernova-item__media-aspect-ratio:before {
+        content: none;
+      }
     }
   }
 }
 
 .nb-collection__layout--content-width {
-  
+
   .slick-slide {
     --slider-content-width: calc( 100vw - ( var(--nb-sidecar-sides) + var(--wds) + var(--wde) + var(--nb-sidecar-grid-gap) ) * 2);
     width: var(--slider-content-width) !important;

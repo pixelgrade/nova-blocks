@@ -72,6 +72,7 @@ if ( ! function_exists( 'novablocks_render_supernova_block' ) ) {
 			'nb-supernova',
 			'nb-supernova--content-type-' . $attributes['contentType'],
 			'nb-supernova--card-layout-' . $attributes['cardLayout'],
+			'nb-supernova--layout-' . $attributes['layoutStyle'],
 			'nb-supernova--' . $attributes['columns'] . '-columns',
 			'nb-supernova--valign-' . $align[0],
 			'nb-supernova--halign-' . $align[1],

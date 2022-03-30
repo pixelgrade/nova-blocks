@@ -35,3 +35,9 @@
     margin-right: 0;
   }
 }
+
+.nb-supernova--layout-carousel {
+  @include below(lap) {
+    text-align: center;
+  }
+}
