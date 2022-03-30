@@ -77,9 +77,9 @@ const isLightVariation = ( palette, variation ) => {
   }
 
   const variationIndex = parseInt( variation, 10 ) - 1;
-  const hex = currentPaletteConfig.variations ? currentPaletteConfig.variations[variationIndex].bg : currentPaletteConfig.colors[variationIndex].value;
+  const fg1 = currentPaletteConfig.variations ? currentPaletteConfig.variations[variationIndex].fg1 : currentPaletteConfig.colors[variationIndex].value;
 
-  return colord( '#FFFFFF' ).contrast( hex ) < colord( '#000000' ).contrast( hex );
+  return colord( '#FFFFFF' ).contrast( fg1 ) > Math.sqrt( 21 );
 }
 
 /**

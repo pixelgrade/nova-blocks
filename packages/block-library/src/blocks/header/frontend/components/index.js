@@ -142,26 +142,26 @@ class Header extends HeaderBase {
     return next;
   }
 
-  findProperElement( element ) {
+  findProperElement( element, previous ) {
+    const attributes = element.dataset;
+    const variation = attributes.paletteVariation ? parseInt( attributes.paletteVariation, 10 ) : 1;
+    const isShifted = !! attributes.useSourceColorAsReference;
+    const hasColorSignal = variation !== 1 || isShifted;
 
-    if ( matches( element, 'main, .wp-block-group, .wp-block-query, .wp-block-post-content' ) ) {
-      const dataset = element.dataset;
-      const variation = dataset.paletteVariation ? parseInt( dataset.paletteVariation, 10 ) : 1;
-      const isShifted = !! dataset.useSourceColorAsReference;
-
-      if ( variation === 1 && ! isShifted ) {
-        return this.findProperElement( element.firstElementChild );
+    if ( matches( element, 'main, .wp-block-group.alignfull, .wp-block-query, .wp-block-post-content' ) ) {
+      if ( ! hasColorSignal ) {
+        return this.findProperElement( element.firstElementChild, element );
       }
     }
 
     if ( matches( element, '.nb-sidecar' ) ) {
       if ( element.children.length === 1 && matches( element.firstElementChild, '.nb-sidecar-area--content' ) ) {
-        const nextElement = element.firstElementChild.firstElementChild;
-
-        if ( matches( nextElement, 'alignfull' ) ) {
-          return this.findProperElement( nextElement );
-        }
+        return this.findProperElement( element.firstElementChild.firstElementChild, element );
       }
+    }
+
+    if ( ! matches( element, '.alignfull' ) && hasColorSignal && !! previous ) {
+      return previous;
     }
 
     return element;
