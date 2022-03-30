@@ -76,12 +76,12 @@ export const getSignalRelativeToVariation = ( compared, reference, paletteId ) =
     return ( Math.abs(curr - compared ) < Math.abs( arr[prev] - compared ) ? index : prev );
   }, 0 );
 
-  // try to use signal 0 only when compared and reference are equal
-  if ( signal === 0 ) {
-    return compared === reference ? 0 : 1;
-  }
+  const config = window?.styleManager?.colorsConfig;
+  const palette = config.find( palette => `${ palette.id }` === `${ paletteId }` );
+  const colors = palette?.variations.map( variation => variation.bg );
 
-  return signal;
+  // try to use signal 0 only when compared and reference are equal
+  return colors[ compared - 1 ] === colors[ reference - 1 ] ? 0 : Math.max(1, signal );
 };
 
 /**
