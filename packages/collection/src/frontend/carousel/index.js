@@ -50,7 +50,7 @@ const initializeCarousels = () => {
 
       responsive: [
         {
-          breakpoint: 1024,
+          breakpoint: 768,
           settings: {
             dots: showDots,
             arrows: showArrows,

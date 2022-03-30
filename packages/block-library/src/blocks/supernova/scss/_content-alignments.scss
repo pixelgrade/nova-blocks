@@ -37,7 +37,7 @@
 }
 
 .nb-supernova--layout-carousel {
-  @include below(lap) {
+  @include below(tablet) {
     text-align: center;
   }
 }
