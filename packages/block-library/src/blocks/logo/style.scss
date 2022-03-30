@@ -1,4 +1,5 @@
 :is(.site-logo, .specificity.x2) {
+  --nb-current-logo-height-setting: var(--nb-header-logo-height-setting);
 
   a {
     display: block;
@@ -8,11 +9,11 @@
     display: block;
     max-width: 100%;
     width: auto;
-    height: calc(var(--nb-header-logo-height-setting) * 1px);
+    height: calc(var(--nb-current-logo-height-setting) * 1px);
     object-fit: contain;
 
-    @include below(tablet) {
-      height: calc(var(--nb-mobile-header-logo-height-setting) * 1px);
+    @include below(lap) {
+      --nb-current-logo-height-setting: var(--nb-mobile-header-logo-height-setting);
     }
   }
 }
