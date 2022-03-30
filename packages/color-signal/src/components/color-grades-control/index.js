@@ -81,13 +81,14 @@ const ColorGradesControl = ( props ) => {
               `sm-variation-${ currentVariation }`,
               {
                 'nb-palette__grade--selected': isSelected,
-                'nb-palette__grade--source': isSource,
+                'nb-palette__grade--source': ! isDisabled && isSource,
                 'nb-palette__grade--disabled': isDisabled
               }
             );
 
             if ( isSelected ) { content = getIcon( 'tick' ) }
             if ( isSource ) { content = getIcon( 'star' ) }
+            if ( isDisabled ) { content = getIcon( 'cancel' ) }
 
             return (
               <div data-signal={ nextSignal } className={ className } onClick={ () => { onChange( currentVariation ) } }
