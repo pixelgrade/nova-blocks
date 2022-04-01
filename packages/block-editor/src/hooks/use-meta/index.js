@@ -3,11 +3,15 @@ import { useSelect } from '@wordpress/data';
 import { useEntityProp } from '@wordpress/core-data';
 
 const useMeta = name => {
-  const postType = useSelect( ( select ) => select( 'core/editor' ).getCurrentPostType(), [] );
-  const [ meta, setMeta ] = useEntityProp( 'postType', postType, 'meta' );
+  const noop = () => {};
 
+  const postType = useSelect( ( select ) => select( 'core/editor' )?.getCurrentPostType(), [] );
+  if ( ! postType ) {
+    return [ null, noop ];
+  }
+
+  const [ meta, setMeta ] = useEntityProp( 'postType', postType, 'meta' );
   if ( ! meta ) {
-    const noop = () => {};
     return [ null, noop ];
   }
 
