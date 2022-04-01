@@ -53,6 +53,7 @@
 // do not overlap, so there is space that the aligned block can fill.
 :is(
   .is-root-container,
+  .edit-post-visual-editor__post-title-wrapper,
   .wp-block-post-content,
   .wp-block-template-part,
   [data-block-name="woocommerce/legacy-template"],
