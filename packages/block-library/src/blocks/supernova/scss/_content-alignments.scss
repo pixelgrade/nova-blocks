@@ -36,8 +36,15 @@
   }
 }
 
-.nb-supernova--layout-carousel {
-  @include below(tablet) {
-    text-align: center;
+.wp-block-query {
+  .nb-supernova--layout-carousel {
+    @include below(tablet) {
+      text-align: center;
+
+      .nb-card__description,
+      .nb-card__buttons {
+        display: none;
+      }
+    }
   }
 }
