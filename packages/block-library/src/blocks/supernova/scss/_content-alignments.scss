@@ -47,7 +47,7 @@
       }
 
       &:not(.nb-supernova--card-layout-stacked) {
-        --nb-card-media-padding-top: 100%;
+        --nb-card-media-padding-top: 100% !important;
       }
     }
   }
