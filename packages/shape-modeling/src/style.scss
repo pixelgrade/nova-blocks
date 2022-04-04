@@ -5,6 +5,10 @@
   height: 100%;
 }
 
+.blob-mix__mask {
+  overflow: hidden;
+}
+
 .blob-mix__mask-debug,
 .blob-mix__decoration {
 	position: absolute;
