@@ -81,7 +81,7 @@ if ( ! function_exists('render_reading_bar') ) {
 			$next_post = get_next_post();
 			if ( ! empty( $next_post ) && ! is_wp_error( $next_post ) ): ?>
 				<div class="c-reading-bar__wrapper-title  c-reading-bar__wrapper-title--next">
-					<label class="post-title__label"><?php esc_html_e( 'Next:', '__plugin_txtd' ); ?></label>
+					<label class="post-title__label"><?php esc_html_e( 'Read Next:', '__plugin_txtd' ); ?></label>
 					<a class="post-title__post-name" href="<?php the_permalink( $next_post ); ?>">
 						<?php echo get_the_title( $next_post ); ?>
 					</a>
