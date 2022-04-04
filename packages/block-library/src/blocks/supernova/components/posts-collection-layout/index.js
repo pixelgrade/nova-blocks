@@ -34,8 +34,8 @@ const PostsCollectionLayout = props => {
             }
 
             return (
-              <div className={'nb-collection__layout-item'} key={'collection_layout_item_' + post.id}>
-                <PostCard {...passedProps} post={post} key={'collection_post_card_post_' + post.id}/>
+              <div className={ 'nb-collection__layout-item' } key={ 'collection_layout_item_' + post.id }>
+                <PostCard { ...passedProps } post={ post } key={ 'collection_post_card_post_' + post.id }/>
               </div>
             );
           } )

@@ -1341,6 +1341,12 @@ function novablocks_get_collection_card_markup( string $media, string $content, 
 
 function novablocks_get_collection_card_markup_from_post( $post, array $attributes ): string {
 	$card_content = novablocks_get_post_card_contents( $post, $attributes );
+	$title = get_the_title( $post );
+	$dropcap = '';
+
+	if ( preg_match( '/[a-z]/i', $title, $match ) ) {
+		$dropcap = $match[0];
+	}
 
 	$media_markup = novablocks_get_collection_card_media_markup( [
 		'type' => 'image',
@@ -1350,7 +1356,7 @@ function novablocks_get_collection_card_markup_from_post( $post, array $attribut
 		'companionContent' => ( novablocks_show_card_contents( $attributes ) && ! empty( $card_content ) ),
 	] );
 
-	$media_markup = novablocks_get_collection_card_media_markup_wrapped( $media_markup, get_permalink( $post ) );
+	$media_markup = novablocks_get_collection_card_media_markup_wrapped( $media_markup, get_permalink( $post ), $dropcap );
 
 	$attributes['colorSignal']               = $attributes['contentColorSignal'];
 	$attributes['paletteVariation']          = $attributes['contentPaletteVariation'];
@@ -1359,7 +1365,7 @@ function novablocks_get_collection_card_markup_from_post( $post, array $attribut
 	return novablocks_get_collection_card_markup( $media_markup, $card_content, $attributes );
 }
 
-function novablocks_get_collection_card_media_markup_wrapped( $media, $link = false ): string {
+function novablocks_get_collection_card_media_markup_wrapped( $media, $link = false, $dropcap = '' ): string {
 	$output = '';
 
 	if ( empty( $media ) ) {
@@ -1372,11 +1378,18 @@ function novablocks_get_collection_card_media_markup_wrapped( $media, $link = fa
 		$output .= '<div class="nb-supernova-item__media-wrapper">';
 	}
 
-	$output .= '<div class="nb-supernova-item__media-aspect-ratio">
-			<div class="novablocks-doppler__mask novablocks-doppler__wrapper">
-				<div class="nb-supernova-item__media-doppler"> ' . $media . '</div>
-			</div>
-		</div>';
+	$output .= '<div class="nb-supernova-item__media-aspect-ratio">';
+
+	if ( ! empty( $dropcap ) ) {
+		$output .= '<div class="nb-supernova-item__dropcap-wrapper sm-variation-11">
+						<span class="nb-supernova-item__dropcap">' . $dropcap . '</span>
+					</div>';
+	}
+
+	$output .= '<div class="novablocks-doppler__mask novablocks-doppler__wrapper">
+					<div class="nb-supernova-item__media-doppler"> ' . $media . '</div>
+				</div>
+			</div>';
 
 	if ( ! empty( $link ) ) {
 		$output .= '</a>';
