@@ -35,7 +35,16 @@ if ( ! function_exists( 'novablocks_render_post_navigation_block' ) ) {
 		$attributes_config = novablocks_get_post_navigation_attributes();
 		$attributes        = novablocks_get_attributes_with_defaults( $attributes, $attributes_config );
 
-		return novablocks_get_the_post_navigation();
+		$spacingProps = array_merge(
+			novablocks_get_spacing_css( $attributes ),
+			novablocks_get_sizing_css( $attributes ),
+		);
+
+		$style = join( '; ', $spacingProps ) . '; ';
+
+		return '<div class="nb-post-navigation" style="' . $style . '">' .
+			novablocks_get_the_post_navigation( [], $attributes ) .
+		'</div>';
 	}
 }
 
@@ -57,7 +66,7 @@ if ( ! function_exists( 'novablocks_get_the_post_navigation' ) ) {
 	 * }
 	 * @return string Markup for post links.
 	 */
-	function novablocks_get_the_post_navigation( array $args = [] ): string {
+	function novablocks_get_the_post_navigation( array $args = [], array $attributes = [] ): string {
 
 		$args = wp_parse_args(
 			$args, [

@@ -12,9 +12,12 @@ import attributes from "./attributes";
 
 registerBlockType( 'novablocks/post-navigation', {
   attributes,
-  edit: function( props ) {
+  edit: props => {
 
-    const blockProps = useBlockProps();
+    const blockProps = useBlockProps( {
+      className: props.className,
+      style: props.style
+    } );
 
     return (
       <div { ...blockProps }>

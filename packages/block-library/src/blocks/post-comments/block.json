@@ -12,6 +12,9 @@
 		"postId"
 	],
 	"supports": {
-		"html": false
+		"html": false,
+		"novaBlocks": {
+			"spaceAndSizing": true
+		}
 	}
 }

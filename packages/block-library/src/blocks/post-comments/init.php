@@ -14,7 +14,16 @@ require_once 'lib/class-novablocks-comments-renderer.php';
 // Load the comments functional logic.
 require_once 'lib/class-novablocks-comments-logic.php';
 
-if ( ! function_exists ('novablocks_render_post_comments_block' ) ) {
+function novablocks_get_post_comments_attributes() {
+
+	return novablocks_merge_attributes_from_array( [
+		'packages/block-editor/src/filters/with-space-and-sizing/attributes.json',
+	] );
+
+}
+
+
+if ( ! function_exists( 'novablocks_render_post_comments_block' ) ) {
 	/**
 	 * Entry point to render the block with the given attributes, content, and context.
 	 *
@@ -27,6 +36,9 @@ if ( ! function_exists ('novablocks_render_post_comments_block' ) ) {
 	 * @return string
 	 */
 	function novablocks_render_post_comments_block( array $attributes, string $content, WP_Block $block ): string {
+		$attributes_config = novablocks_get_post_comments_attributes();
+		$attributes        = novablocks_get_attributes_with_defaults( $attributes, $attributes_config );
+
 		// Bail if we don't have a post ID.
 		if ( empty( $block->context[ 'postId' ] ) ) {
 			return '';
@@ -41,8 +53,17 @@ if ( ! function_exists ('novablocks_render_post_comments_block' ) ) {
 
 		$post_comments_renderer = new NovaBlocks_Comments_Renderer( $block->context[ 'postId' ], $attributes, $content );
 
+		$classes = array( 'novablocks-conversations' );
+
+		$spacingProps = array_merge(
+			novablocks_get_spacing_css( $attributes ),
+			novablocks_get_sizing_css( $attributes ),
+		);
+
+		$style = join( '; ', $spacingProps ) . '; ';
+
 		$before = '
-<div class="novablocks-conversations" id="novablocks-comments">
+<div class="' . join( ' ', $classes ) . '" id="novablocks-comments" style="' . $style . '">
 	<div class="novablocks-conversations__container">';
 		$after = '
 	</div><!-- .novablocks-conversations__container -->
