@@ -10,7 +10,7 @@ import ServerSideRender from '@wordpress/server-side-render';
  */
 import attributes from "./attributes";
 
-registerBlockType( 'novablocks/meta-box', {
+registerBlockType( 'novablocks/post-meta', {
   attributes,
   edit: function( props ) {
 
@@ -19,7 +19,7 @@ registerBlockType( 'novablocks/meta-box', {
     return (
       <div { ...blockProps }>
         <ServerSideRender
-          block="novablocks/meta-box"
+          block="novablocks/post-meta"
           attributes={ props.attributes }
         />
       </div>

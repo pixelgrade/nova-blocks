@@ -9,6 +9,8 @@
 	"textdomain": "nova-blocks",
 	"attributes": {},
 	"usesContext": [
+		"postId",
+		"postType",
 		"queryId",
 		"query",
 		"queryContext",

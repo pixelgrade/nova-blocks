@@ -32,12 +32,22 @@ if ( ! function_exists( 'novablocks_render_post_navigation_block' ) ) {
 	 *
 	 */
 	function novablocks_render_post_navigation_block( array $attributes, string $content, WP_Block $block ) {
+		// We assume we are in some sort of preview context (like in the Site Editor).
+		if ( empty( $block->context[ 'postId' ] ) ) {
+			return esc_html__( 'Post navigation', '__plugin_txtd' );
+		}
+
+		$post = get_post( $block->context['postId'] );
+		if ( empty( $post ) ) {
+			return '';
+		}
+
 		$attributes_config = novablocks_get_post_navigation_attributes();
 		$attributes        = novablocks_get_attributes_with_defaults( $attributes, $attributes_config );
 
 		$spacingProps = array_merge(
 			novablocks_get_spacing_css( $attributes ),
-			novablocks_get_sizing_css( $attributes ),
+			novablocks_get_sizing_css( $attributes )
 		);
 
 		$style = join( '; ', $spacingProps ) . '; ';
