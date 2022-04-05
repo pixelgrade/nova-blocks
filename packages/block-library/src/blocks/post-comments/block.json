@@ -9,7 +9,8 @@
 	"textdomain": "nova-blocks",
 	"attributes": {},
 	"usesContext": [
-		"postId"
+		"postId",
+		"postType"
 	],
 	"supports": {
 		"html": false,

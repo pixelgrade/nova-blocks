@@ -1,6 +1,6 @@
 <?php
 /**
- * Handle the Logo block server logic.
+ * Handle the Post Meta block server logic.
  */
 
 // If this file is called directly, abort.
@@ -8,16 +8,16 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-function novablocks_get_meta_box_attributes() {
+function novablocks_get_post_meta_attributes() {
 
 	return novablocks_merge_attributes_from_array( [
-		'packages/block-library/src/blocks/meta-box/attributes.json',
+		'packages/block-library/src/blocks/post-meta/attributes.json',
 		'packages/block-editor/src/filters/with-space-and-sizing/attributes.json',
 	] );
 
 }
 
-if ( ! function_exists( 'novablocks_render_meta_box_block' ) ) {
+if ( ! function_exists( 'novablocks_render_post_meta_block' ) ) {
 
 	/**
 	 * Entry point to render the block with the given attributes, content, and context.
@@ -30,17 +30,18 @@ if ( ! function_exists( 'novablocks_render_meta_box_block' ) ) {
 	 *
 	 * @return false|string
 	 */
-	function novablocks_render_meta_box_block( array $attributes, string $content, WP_Block $block ) {
+	function novablocks_render_post_meta_block( array $attributes, string $content, WP_Block $block ) {
 
 		// Maybe enqueue frontend-only scripts.
 		novablocks_maybe_enqueue_block_frontend_scripts( $block );
 
-		$attributes_config = novablocks_get_meta_box_attributes();
+		$attributes_config = novablocks_get_post_meta_attributes();
 		$attributes        = novablocks_get_attributes_with_defaults( $attributes, $attributes_config );
 		$cssProps          = novablocks_get_space_and_sizing_css( $attributes );
 
+		// We assume we are in some sort of preview context (like in the Site Editor).
 		if ( empty( $block->context['postId'] ) ) {
-			return '';
+			return esc_html__( 'Post meta', '__plugin_txtd' );
 		}
 
 		$post = get_post( $block->context['postId'] );

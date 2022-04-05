@@ -14,7 +14,7 @@ const PostCommentsPreview = function( props ) {
 
 	if ( ! postType || ! postId ) {
 		return (
-			<Warning>{ __( 'Post comments block: no post found.', '__plugin_txtd' ) }</Warning>
+			<Warning>{ __( 'Conversation System block (no post found)', '__plugin_txtd' ) }</Warning>
 		);
 	}
 
