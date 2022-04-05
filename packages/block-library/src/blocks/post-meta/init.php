@@ -100,26 +100,35 @@ if ( ! function_exists( 'novablocks_render_post_meta_block' ) ) {
 				</div> <!-- .c-meta-author -->
 			</div> <!-- .c-meta__authorship -->
 
-			<?php $comments_count = get_comments_number( $post->ID ); ?>
 			<div class="c-meta__social">
 				<div class="c-meta__rows">
 					<div class="c-meta__row">
 						<div class="c-meta__row-item">
 							<?php echo do_blocks( '<!-- wp:novablocks/sharing-overlay { "buttonLabel":"' . esc_html__( 'Share', '__theme_txtd' ) . '", "colorSignal": 2 } --><!-- /wp:novablocks/sharing-overlay -->' ); ?>
 						</div>
-						<div class="c-meta__row-item">
-							<div class="c-meta-comments">
-								<div class="c-meta-comments__count">
-									<div
-										class="c-meta-comments__count-text"><?php echo $comments_count ? $comments_count : '&nbsp;'; ?></div>
-									<div class="c-meta-comments__arrow"></div>
+						<?php
+						// Only show the Discuss link if comments are open and the post comments block is present.
+						global $_wp_current_template_content;
+						if ( comments_open( $post->ID ) &&
+						     ! empty( $_wp_current_template_content ) &&
+				             has_block( 'novablocks/post-comments', $_wp_current_template_content )
+						) {
+							$comments_count = get_comments_number( $post->ID );
+							?>
+							<div class="c-meta__row-item">
+								<div class="c-meta-comments">
+									<div class="c-meta-comments__count">
+										<div
+											class="c-meta-comments__count-text"><?php echo $comments_count ? $comments_count : '&nbsp;'; ?></div>
+										<div class="c-meta-comments__arrow"></div>
+									</div>
+									<div class="c-meta-comments__label">
+										<a class="c-meta-comments__link"><?php echo esc_html__( 'Discuss', '__theme_txtd' ); ?></a>
+									</div>
+									<a class="c-button__link" href="#novablocks-comments"></a>
 								</div>
-								<div class="c-meta-comments__label">
-									<a class="c-meta-comments__link"><?php echo esc_html__( 'Discuss', '__theme_txtd' ); ?></a>
-								</div>
-								<a class="c-button__link" href="#novablocks-comments"></a>
 							</div>
-						</div>
+						<?php } ?>
 					</div>
 				</div><!-- .c-meta__rows -->
 			</div><!-- .c-meta__social -->
