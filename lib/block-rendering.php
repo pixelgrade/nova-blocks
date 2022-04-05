@@ -1382,7 +1382,10 @@ function novablocks_get_collection_card_media_markup_wrapped( $media, $link = fa
 
 	if ( ! empty( $dropcap ) ) {
 		$output .= '<div class="nb-supernova-item__dropcap-wrapper sm-variation-11">
+						<div class="nb-supernova-item__dropcap-line  nb-supernova-item__dropcap-line--top"></div>
 						<span class="nb-supernova-item__dropcap">' . $dropcap . '</span>
+						<span class="nb-supernova-item__dropcap-more">' . __( 'Read More', '__plugin_txtd' ) . '</span>
+						<div class="nb-supernova-item__dropcap-line  nb-supernova-item__dropcap-line--bottom"></div>
 					</div>';
 	}
 
