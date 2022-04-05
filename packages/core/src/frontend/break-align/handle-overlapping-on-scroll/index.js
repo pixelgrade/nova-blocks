@@ -1,7 +1,5 @@
 import domReady from "@wordpress/dom-ready";
-import { matches, onScrollRAF } from "@novablocks/utils";
-
-import { doOverlap } from "./utils";
+import { doOverlap, matches, onScrollRAF } from "@novablocks/utils";
 
 const HIDDEN_BLOCK_CLASS = 'novablocks-hidden-block';
 
@@ -42,17 +40,26 @@ export const getOverlappingSets = () => {
       return ! matches( block, '.nb-sidecar' );
     } );
 
-    const filteredBlocks = [];
+    const targetBlocks = [];
 
     blocks.forEach( ( block, index) => {
+
+      if ( !! block.closest( '.nb-sidecar-area--sidebar' ) ) {
+        return;
+      }
+
+      if ( block === stickyElement ) {
+        return;
+      }
+
       if ( block.classList.contains( 'nb-supernova' ) ) {
-        filteredBlocks.push( ...Array.from( block.children ) );
+        targetBlocks.push( ...Array.from( block.children ) );
       } else {
-        filteredBlocks.push( block );
+        targetBlocks.push( block );
       }
     } );
 
-    return [ ...acc, [ stickyElement, filteredBlocks ] ];
+    return [ ...acc, [ stickyElement, targetBlocks ] ];
   }, [] );
 };
 
