@@ -69,6 +69,7 @@ function novablocks_get_plugin_url(): string {
 	return $novablocks_plugin_url;
 }
 
+require_once dirname( __FILE__ ) . '/lib/utils/ArrayHelpers.php';
 require_once dirname( __FILE__ ) . '/lib/extras.php';
 require_once dirname( __FILE__ ) . '/lib/setup.php';
 require_once dirname( __FILE__ ) . '/lib/rest-api.php';

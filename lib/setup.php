@@ -109,8 +109,9 @@ if ( ! function_exists( 'novablocks_body_classes' ) ) {
 
 if ( ! function_exists( 'novablocks_add_blocks_category' ) && class_exists( 'WP_Block_Editor_Context' ) ) {
 
-	function novablocks_add_blocks_category( $block_categories, $editor_context ) {
-		array_push(
+	function novablocks_add_blocks_category( $block_categories ) {
+		// We want to add the category at the beginning.
+		array_unshift(
 			$block_categories,
 			[
 				'slug'  => 'nova-blocks',
@@ -122,7 +123,7 @@ if ( ! function_exists( 'novablocks_add_blocks_category' ) && class_exists( 'WP_
 		return $block_categories;
 	}
 
-	add_filter( 'block_categories_all', 'novablocks_add_blocks_category', 10, 2 );
+	add_filter( 'block_categories_all', 'novablocks_add_blocks_category', 10, 1 );
 }
 
 /**
@@ -149,5 +150,8 @@ function novablocks_allowed_block_types( $allowed_block_types, WP_Block_Editor_C
 
 	return $allowed_block_types;
 }
-
 add_filter( 'allowed_block_types_all', 'novablocks_allowed_block_types', 10, 2 );
+
+// Load and fire up the Sidebars BLocks logic.
+require_once 'sidebars-blocks/class-nova_blocks-sidebars_blocks.php';
+NovaBlocks_SidebarsBlocks::instance();

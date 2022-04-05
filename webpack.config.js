@@ -7,7 +7,6 @@ const postcss = require( 'postcss' );
 const { get, compact } = require( 'lodash' );
 const { basename } = require( 'path' );
 const glob = require( "glob" );
-const ESLintPlugin = require('eslint-webpack-plugin');
 
 /**
  * WordPress dependencies
@@ -346,9 +345,38 @@ const VendorConfig = {
 	],
 };
 
+const SidebarsBlocksConfig =  {
+  mode,
+  externals: {
+    jquery: 'jQuery',
+    react: 'React',
+  },
+  entry: {
+    './dist/sidebars-blocks/index': './lib/sidebars-blocks/index',
+    './dist/sidebars-blocks/index.min': './lib/sidebars-blocks/index',
+  },
+  output: {
+    path: __dirname,
+  },
+  module: {
+    rules: [
+      {
+        test: /\.(js|jsx)$/,
+        exclude: /node_modules/,
+        use: [ 'babel-loader' ],
+      }
+    ]
+  },
+  optimization: {
+    ...minimizeConfig,
+  },
+  devtool
+};
+
 module.exports = [
 	PackagesConfig,
 	FrontendConfig,
 	BlocksConfig,
 	VendorConfig,
+  SidebarsBlocksConfig,
 ];
