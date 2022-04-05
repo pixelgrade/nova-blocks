@@ -6,6 +6,7 @@
 
 
 
+// CLASSIC grid layout
 .nb-collection__layout--classic {
 
   @include above(tablet) {
@@ -16,12 +17,12 @@
     // - Stacked
     :is(.nb-supernova-item--layout-vertical, .nb-supernova-item--layout-vertical-reverse, .nb-supernova-item--layout-stacked) {
 
-      :is(.nb-supernova--3-columns, .nb-supernova--4-columns) & {
-        // --nb-spacing-base: 0.5; // removed as it hard-coded the spacing on the Editor
-        // --nb-spacing-current-multiplier: 0.5;
+      :is(
+        .nb-supernova--3-columns, 
+        .nb-supernova--4-columns) & {
 
         .nb-card__description {
-          --font-size-modifier: 0.85
+          --font-size-modifier: 0.95; // 0.85 * 1.12
         }
       }
     }
@@ -29,29 +30,35 @@
     // Layout
     // - Horizontal
     // - Horizontal Reverse
-    :is(.nb-supernova-item--layout-horizontal, .nb-supernova-item--layout-horizontal-reverse) {
+    :is(
+      .nb-supernova-item--layout-horizontal, 
+      .nb-supernova-item--layout-horizontal-reverse) {
 
-      .nb-supernova--2-columns & {
-        --nb-spacing-base: 0.5;
+        .nb-supernova--2-columns & {
+          --nb-spacing-base: 0.5;
 
-        .nb-card__description {
-          --font-size-modifier: 0.85
+          .nb-card__description {
+            --font-size-modifier: 0.95
+          }
         }
-      }
 
-      :is(.nb-supernova--3-columns, .nb-supernova--4-columns)  & {
-        --nb-spacing-base: 0.5;
+        :is(.nb-supernova--3-columns, .nb-supernova--4-columns)  & {
+          --nb-spacing-base: 0.5;
 
-        .nb-card__description {
-          --font-size-modifier: 0.75
+          .nb-card__description {
+            --font-size-modifier: 0.84; // 0.75 * 1.12
+          }
         }
-      }
     }
   }
 }
 
+
+
+// PARAMETRIC grid layout
 .nb-collection__layout--parametric {
 
+  // Portrait - Vertical Cards
   .nb-grid__area--portrait {
 
     &.nb-grid__area--width-xl {
@@ -64,7 +71,7 @@
     &.nb-grid__area--width-l {
 
       .nb-card__title {
-        --font-size-modifier: 1.6;
+        --font-size-modifier: 1.8;
       }
     }
 
@@ -84,18 +91,19 @@
 
         .nb-card__title,
         .nb-card__subtitle {
-          --font-size-modifier: 0.6;
+          --font-size-modifier: 0.75;
         }
       }
     }
   }
 
+  // Landscape - Horizontal Cards
   .nb-grid__area--landscape {
 
     &.nb-grid__area--width-full {
 
       .nb-card__title {
-        --font-size-modifier: 1.6;
+        --font-size-modifier: 1.8;
       }
     }
 
@@ -128,7 +136,7 @@
 
         .nb-card__title,
         .nb-card__subtitle {
-          --font-size-modifier: 0.6;
+          --font-size-modifier: 0.75;
         }
       }
     }
@@ -140,10 +148,10 @@
       --font-size-modifier: 0.8;
 
       @include above(tablet) {
-        --font-size-modifier: 0.6;
+        --font-size-modifier: 0.75;
 
         .nb-card__title {
-          --font-size-modifier: 0.5;
+          --font-size-modifier: 0.56;
         }
       }
     }

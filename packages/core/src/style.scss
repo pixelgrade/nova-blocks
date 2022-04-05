@@ -32,14 +32,36 @@
 // Applying Grid on Group Block
 // added .specificity.x2 to override figure.wp-block-gallery { margin: 0; }
 // added .specificity.x2.x3 to override .block-editor-block-list__block .block-list-appender.block-list-appender { margin: 0; }
+:root {
+  --nb-group-padding-toggle: 1;
+}
+
+.alignleft,
+.alignright,
+.alignnone,
+.alignwide {
+  --nb-group-padding-toggle: 0;
+}
+
+@include above(lap) {
+  .nb-sidecar-area {
+    --nb-group-padding-toggle: 0;
+  }
+}
+
+.wp-block-group[class*="sm-color-signal"]:not(.sm-color-signal-0) {
+  --nb-group-padding-toggle: 1;
+}
+
 :is(
   .wp-block-group,
   .wp-block-group__inner-container,
   .nb-header-row__inner-container,
   .specificity.x2.x3
 ) {
-  padding-left: var(--nb-wrapper-sides-spacings);
-  padding-right: var(--nb-wrapper-sides-spacings);
+  --nb-group-side-padding: calc(var(--nb-wrapper-sides-spacings) * var(--nb-group-padding-toggle));
+  padding-left: var(--nb-group-side-padding);
+  padding-right: var(--nb-group-side-padding);
 
   > * {
     margin-left: auto;
@@ -54,8 +76,8 @@
   > :is(.alignfull, [data-align="full"]) {
     width: auto;
     max-width: none;
-    margin-left: calc(-1 * var(--nb-wrapper-sides-spacings));
-    margin-right: calc(-1 * var(--nb-wrapper-sides-spacings));
+    margin-left: calc(-1 * var(--nb-group-side-padding));
+    margin-right: calc(-1 * var(--nb-group-side-padding));
   }
 }
 

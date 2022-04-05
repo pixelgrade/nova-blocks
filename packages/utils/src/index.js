@@ -374,3 +374,21 @@ export const onScrollRAF = ( callback ) => {
 export const matches = ( el, selector ) => {
   return ( el.matches || el.matchesSelector || el.msMatchesSelector || el.mozMatchesSelector || el.webkitMatchesSelector || el.oMatchesSelector ).call( el, selector );
 };
+
+export const resizeDropcap = dropcap => {
+  const wrapper = dropcap.parentElement;
+
+  const dropcapWidth = dropcap.offsetWidth;
+  const wrapperWidth = wrapper.offsetWidth;
+  const widthRatio = wrapperWidth / dropcapWidth;
+  const dropcapHeight = dropcap.offsetHeight;
+  const wrapperHeight = wrapper.offsetHeight;
+  const heightRatio = wrapperHeight / dropcapHeight;
+  const ratio = Math.min( widthRatio, heightRatio );
+
+  const fontSize = window.getComputedStyle( dropcap, null ).getPropertyValue( 'font-size' );
+  const fontSizeValue = parseFloat( fontSize );
+  const newFontSizeValue = fontSizeValue * ratio;
+
+  dropcap.style.fontSize = `${ newFontSizeValue }px`;
+}
