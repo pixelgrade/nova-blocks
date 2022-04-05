@@ -1,9 +1,7 @@
 import domReady from "@wordpress/dom-ready";
 
 import "@novablocks/collection/frontend";
-import { debounce } from "@novablocks/utils";
-
-import { resizeDropcap } from "./utils";
+import { debounce, resizeDropcap } from "@novablocks/utils";
 
 const dropcaps = Array.from( document.querySelectorAll( '.nb-supernova-item__dropcap' ) );
 
