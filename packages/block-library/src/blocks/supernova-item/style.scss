@@ -49,12 +49,25 @@
     background: var(--nb-bg-color);
   }
 
-  a.nb-supernova-item__media-wrapper:not(:hover) & {
+  .nb-supernova-item:not(:hover) & {
     opacity: 0;
 
     .nb-supernova-item__dropcap {
       transform: translate(0, 10px);
     }
+  }
+
+  body:not(.u-collection-hover-dropcap) &,
+  .nb-supernova--card-layout-stacked & {
+    display: none;
+  }
+}
+
+.u-collection-hover-none a.nb-supernova-item__media-wrapper {
+  transition: opacity 0.3s ease;
+
+  &:hover {
+    opacity: 0.85;
   }
 }
 
