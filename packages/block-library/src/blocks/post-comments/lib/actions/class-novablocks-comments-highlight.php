@@ -133,6 +133,11 @@ if ( ! class_exists( 'NovaBlocks_Comments_Highlight' ) ) {
 				return $menu_items;
 			}
 
+			// Users can't highlight their own comments.
+			if ( $comment->user_id && get_current_user_id() === (int) $comment->user_id ) {
+				return $menu_items;
+			}
+
 			$data_comment_id = ' data-comment_id=' . esc_attr( $comment->comment_ID );
 
 			// Put the menu item at the top of the list.
