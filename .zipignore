@@ -52,6 +52,7 @@ docs
 circle.yml
 .circleci
 browserslist
+.browserlistrc
 babel.config.js
 .babelrc
 .eslintignore
