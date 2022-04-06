@@ -101,10 +101,16 @@
   }
 
   // Group block set as Row variation
-  &.is-layout-flex[class] {
+  &:is(.is-layout-flex,.x1.x2) {
+
     > * {
       margin-left: 0;
       margin-right: 0;
+
+      --nb-block-top-spacing: 0;
+      --nb-block-bottom-spacing: 0;
+      --nb-emphasis-top-spacing: 0;
+      --nb-emphasis-bottom-spacing: 0;
     }
   }
 }

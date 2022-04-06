@@ -16,6 +16,10 @@
   > * {
     --nb-spacing-current-multiplier: var(--nb-spacing-base);
   }
+
+  & > & {
+    --nb-spacing-current-multiplier: inherit;
+  }
 }
 
 @mixin block-spacing-container {
