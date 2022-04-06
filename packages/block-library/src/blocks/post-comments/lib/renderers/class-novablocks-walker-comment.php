@@ -64,6 +64,10 @@ if ( ! class_exists( 'NovaBlocks_Walker_Comment' ) ) {
 				$comment_classes[] = 'no-avatar';
 			}
 
+			if ( empty( $commenter_background ) ) {
+				$comment_classes[] = 'no-commenter-background';
+			}
+
 			$comment_wrapper_classes = apply_filters( 'novablocks/comments/comment_wrapper_classes', [ 'comment-wrapper' ], $comment, $depth, $args );
 			$comment_wrapper_classes = implode( ' ', $comment_wrapper_classes );
 			?>
