@@ -89,7 +89,7 @@
 
 .wp-block-group {
 
-  // groups that have a set color signal (different text and background color)
+  // Group blocks that have a set color signal (different text and background color)
   // and have no emphasis top or bottom spacing need to have some padding
   // by multiplying with -1 and then adding 1 we make sure that
   // we only add padding when these values are smaller than 1
@@ -98,6 +98,14 @@
     padding-bottom: calc(max(0.75, var(--nb-emphasis-bottom-spacing)) * var(--nb-wrapper-sides-spacings));
     padding-left: var(--nb-wrapper-sides-spacings);
     padding-right: var(--nb-wrapper-sides-spacings);
+  }
+
+  // Group block set as Row variation
+  &.is-layout-flex[class] {
+    > * {
+      margin-left: 0;
+      margin-right: 0;
+    }
   }
 }
 
