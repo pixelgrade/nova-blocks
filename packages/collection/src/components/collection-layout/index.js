@@ -1,6 +1,6 @@
 import classnames from "classnames";
 import { Fragment } from "@wordpress/element";
-import { CarouselLayout, ClassicLayout, ParametricLayout } from "../index";
+import { CarouselLayout, ClassicLayout, MasonryLayout, ParametricLayout } from "../index";
 
 const CollectionLayout = ( props ) => {
   const { attributes } = props;
@@ -17,9 +17,10 @@ const CollectionLayout = ( props ) => {
 
   return (
     <Fragment>
-      { layoutStyle === 'classic' && <ClassicLayout { ...passedProps } key={'classic_layout'} /> }
-      { layoutStyle === 'carousel' && <CarouselLayout { ...passedProps } key={'carousel_layout'} /> }
-      { layoutStyle === 'parametric' && <ParametricLayout { ...passedProps } key={'parametric_layout'} /> }
+      { layoutStyle === 'classic' && <ClassicLayout { ...passedProps } key={ 'classic_layout' }/> }
+      { layoutStyle === 'carousel' && <CarouselLayout { ...passedProps } key={ 'carousel_layout' }/> }
+      { layoutStyle === 'masonry' && <MasonryLayout { ...passedProps } key={ 'masonry_layout' }/> }
+      { layoutStyle === 'parametric' && <ParametricLayout { ...passedProps } key={ 'parametric_layout' }/> }
     </Fragment>
   )
 };

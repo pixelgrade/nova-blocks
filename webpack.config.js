@@ -350,6 +350,7 @@ const SidebarsBlocksConfig =  {
   externals: {
     jquery: 'jQuery',
     react: 'React',
+    lodash: 'lodash',
   },
   entry: {
     './dist/sidebars-blocks/index': './lib/sidebars-blocks/index',

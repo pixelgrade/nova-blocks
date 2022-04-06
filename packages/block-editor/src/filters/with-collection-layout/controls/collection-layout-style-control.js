@@ -6,6 +6,7 @@ import { ControlsGroup, withVisibility } from "../../../components";
 const layoutStyleOptions = [
   { label: __( 'Parametric Grid', '__plugin_txtd' ), value: 'parametric' },
   { label: __( 'Classic Grid', '__plugin_txtd' ), value: 'classic' },
+  { label: __( 'Masonry', '__plugin_txtd' ), value: 'masonry' },
   { label: __( 'Carousel', '__plugin_txtd' ), value: 'carousel' },
 ];
 

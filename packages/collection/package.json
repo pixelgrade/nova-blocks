@@ -18,6 +18,7 @@
 		"url": "https://github.com/pixelgrade/nova-blocks/issues"
 	},
 	"dependencies": {
+		"react-responsive-masonry": "^2.1.4",
 		"react-slick": "^0.28.1"
 	}
 }
