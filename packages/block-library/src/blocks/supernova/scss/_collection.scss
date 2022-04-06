@@ -90,6 +90,7 @@
   }
 }
 
+.nb-collection__layout--masonry,
 .nb-collection__layout--classic,
 .nb-collection__layout--parametric {
   --nb-collection-columns: var(--nb-collection-columns-count);
@@ -107,8 +108,15 @@
   @include below(tablet) {
     --nb-collection-columns: var(--nb-collection-columns-below-tablet, 1);
   }
-
 }
+
+.nb-collection__layout-column {
+  display: flex;
+  flex-direction: column;
+  gap: var(--nb-grid-spacing);
+}
+
+
 
 
 
