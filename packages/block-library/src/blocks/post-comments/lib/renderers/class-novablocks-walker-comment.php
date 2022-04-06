@@ -216,8 +216,8 @@ if ( ! class_exists( 'NovaBlocks_Walker_Comment' ) ) {
 					?>
 					</span>
 					<span class="dropdown-icon">
-						<svg class="arrow-down" viewBox="0 0 10 5"><use xlink:href="#arrow-down"></use></svg>
-						<svg class="dots" viewBox="0 0 5 5"><use xlink:href="#dots"></use></svg>
+						<svg class="arrow-down" viewBox="0 0 10 5"><use xlink:href="#icons-arrow-down"></use></svg>
+						<svg class="dots" viewBox="0 0 5 5"><use xlink:href="#icons-dots"></use></svg>
 					</span>
 				</label>
 				<div class="comment-dropdown-menu">
