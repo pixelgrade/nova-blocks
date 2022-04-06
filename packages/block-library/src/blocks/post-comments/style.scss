@@ -53,7 +53,7 @@
       .field-description {
         display: block;
         color: var(--field-description-color);
-        opacity: .5;
+        opacity: .6;
       }
     }
   
@@ -71,7 +71,6 @@
     }
   
     .comment-content {
-      --font-size-modifier: 0.9;
       
       @include block-spacing-container;
 
@@ -404,13 +403,25 @@
     .comment-content,
     .comment-footer-meta,
     .comment-footer-highlights {
-      grid-column: 2 / span 2;
+      grid-column: 2 / span 1;
     }
   
     .comment-author-avatar {
       grid-row: 1 / span 2;
       grid-column: 1 / span 1;
       align-self: start;
+    }
+
+    // Remove the spacing between Author Name <and> Comment Content
+    // when there is no Commenter Background Label
+    .no-commenter-background {
+      .comment-author-avatar {
+        margin-bottom: -30px !important;
+      }
+
+      @include below(tablet) { 
+        --avatar-column-size: 1.8rem;
+      }
     }
   
     .comment-author-info {
@@ -631,9 +642,6 @@
   
     .comment-footer-highlights {
       color: var(--component-accent-color);
-      font-weight: bold;
-  
-      font-size: 14px;
     }
   
     .comment-footer-highlights {
