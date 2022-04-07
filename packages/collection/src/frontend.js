@@ -195,13 +195,10 @@ const handleParametricGrid = ( $grid, $block, attributes ) => {
 }
 
 const handleGrids = ( selector ) => {
-  console.log( selector );
   $( selector ).each( function( i, grid ) {
     const $grid = $( grid );
     const $block = $grid.closest( '[data-layout-style]' );
     const attributes = $block.data();
-
-    console.log( attributes.layoutStyle );
 
     if ( [ 'classic', 'carousel' ].includes( attributes.layoutStyle ) ) {
       handleClassicGrid( $grid, $block, attributes );
