@@ -370,6 +370,10 @@
         }
       }
     }
+
+    .novablocks-conversations__container {
+      --nb-block-bottom-spacing: 0;
+    }
   
     .novablocks-conversations__container > .novablocks-conversations__form:last-child {
       padding-bottom: 0;

@@ -71,8 +71,7 @@
     }
 
     .post-navigation__post-title {
-      --font-size: 17;
-      --current-font-weight: 600;
+      --font-size: 19;
     }
   }
 }
@@ -95,6 +94,8 @@
   color: var(--sm-current-accent-color);
   transition: var(--theme-transition);
   transition-property: transform;
+
+  margin-bottom: 0.25em;
 }
 
 @include above(lap) {
@@ -109,7 +110,7 @@
     text-align: left;
   }
 
-  .post-navigation__link-label--previous {
+  .post-navigation__link-label--previous[class] {
     padding-left: var(--current-arrow-padding);
 
     &:after {

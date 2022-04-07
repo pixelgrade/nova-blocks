@@ -1,7 +1,7 @@
 .nb-author-box {
   display: flex;
   align-items: flex-start;
-  gap: var(--nb-spacing);
+  gap: calc(1.5 * var(--nb-spacing));
 
   @include below(tablet) {
     flex-direction: column;
@@ -29,23 +29,35 @@
   }
 }
 
+.nb-author-box__description {
+  --font-size-modifier: 0.9;
+}
+
 .nb-author-box__links {
   display: flex;
   flex-wrap: wrap;
-  column-gap: var(--nb-spacing);
+  column-gap: calc(0.5 * var(--nb-spacing));
   row-gap: calc(0.5 * var(--nb-spacing));
+
+  --font-size-modifier: 0.9;
 
   @include below(tablet) {
     justify-content: center;
   }
 
-  //a {
-  //  text-transform: uppercase;
-  //  text-decoration: none;
-  //  --current-font-weight: bold;
-  //}
-  //
-  //a:hover {
-  //  text-decoration: none;
-  //}
+  a {
+    text-decoration: none;
+  }
+}
+
+.nb-author-box__separator {
+  &:before {
+    content: "·";
+    position: relative;
+    display: inline-block;
+  }
+
+  &:last-child {
+    display: none;
+  }
 }

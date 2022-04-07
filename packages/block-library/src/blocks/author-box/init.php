@@ -149,23 +149,23 @@ if ( ! function_exists( 'novablocks_get_author_bio_links' ) ) {
 		$str     = wp_remote_fopen( 'https://www.gravatar.com/' . md5( strtolower( trim( get_the_author_meta( 'user_email' ) ) ) ) . '.php' );
 		$profile = unserialize( $str );
 
-		$markup .= "<span class=\"nb-author-box__links\">\n";
+		$markup .= "<div class=\"nb-author-box__links h6\">\n";
 
 		/* translators: %s: the author name */
-		$markup .= '<a class="nb-author-box__social-link  h5" href="' . esc_url( $user_posts ) . '" rel="author" title="' . esc_attr( sprintf( esc_html__( 'View all posts by %s', '__components_txtd' ), get_the_author() ) ) . '">' . esc_html__( 'All posts', '__components_txtd' ) . '</a>';
+		$markup .= '<a class="nb-author-box__social-link" href="' . esc_url( $user_posts ) . '" rel="author" title="' . esc_attr( sprintf( esc_html__( 'View all posts by %s', '__components_txtd' ), get_the_author() ) ) . '">' . esc_html__( 'All articles', '__components_txtd' ) . '</a><span class="nb-author-box__separator"></span>';
 
 		if ( is_array( $profile ) && ! empty( $profile['entry'][0]['urls'] ) ) {
 			foreach ( $profile['entry'][0]['urls'] as $link ) {
 				if ( ! empty( $link['value'] ) && ! empty( $link['title'] ) ) {
-					$markup .= '<a class="nb-author-box__social-link  h5" href="' . esc_url( $link['value'] ) . '" target="_blank">' . $link['title'] . "</a>\n";
+					$markup .= '<a class="nb-author-box__social-link" href="' . esc_url( $link['value'] ) . '" target="_blank">' . $link['title'] . "</a><span class='nb-author-box__separator'></span>\n";
 				}
 			}
 		}
 
 		if ( ! empty( $user_website ) ) {
-			$markup .= '<a class="nb-author-box__social-link  h5" href="' . esc_url( $user_website ) . '" target="_blank">' . esc_html__( 'Website', '__components_txtd' ) . "</a>\n";
+			$markup .= '<a class="nb-author-box__social-link" href="' . esc_url( $user_website ) . '" target="_blank">' . esc_html__( 'Website', '__components_txtd' ) . "</a><span class='nb-author-box__separator'></span>\n";
 		}
-		$markup .= "</span>\n";
+		$markup .= "</div>\n";
 
 		return $markup;
 	}
