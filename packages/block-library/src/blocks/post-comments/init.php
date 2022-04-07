@@ -63,7 +63,7 @@ if ( ! function_exists( 'novablocks_render_post_comments_block' ) ) {
 		$style = join( '; ', $spacingProps ) . '; ';
 
 		$before = '
-<div class="' . join( ' ', $classes ) . '" id="novablocks-comments" style="' . $style . '">
+<div class="' . join( ' ', $classes ) . '" id="comments" style="' . $style . '">
 	<div class="novablocks-conversations__container">';
 		$after = '
 	</div><!-- .novablocks-conversations__container -->
