@@ -5,7 +5,7 @@
 	"title": "Post Meta",
 	"category": "nova-blocks",
 	"description": "Display a cohesive section with author, meta, sharing and comments info.",
-	"keywords": ["author", "meta", "comments", "sharing"],
+	"keywords": ["author", "meta", "comments", "sharing", "byline", "avatar", "reading time"],
 	"textdomain": "nova-blocks",
 	"attributes": {},
 	"usesContext": [
