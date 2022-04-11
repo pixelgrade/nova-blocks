@@ -1,7 +1,7 @@
 {
 	"name": "@novablocks/tools",
 	"version": "1.0.0",
-	"description": "",
+	"description": "Utility tools for Nova Blocks blocks.",
 	"main": "build/index.js",
 	"module": "build-module/index.js",
 	"scripts": {

@@ -1,7 +1,7 @@
 {
 	"name": "@novablocks/base-styles",
 	"version": "1.0.0",
-	"description": "",
+	"description": "Base styling for Nova Blocks blocks.",
 	"author": "Razvan Onofrei <razvan.onofrei@pixelgrade.com> (https://razvanonofrei.com)",
 	"license": "ISC",
 	"repository": {

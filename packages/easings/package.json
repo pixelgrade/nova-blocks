@@ -1,7 +1,7 @@
 {
 	"name": "@novablocks/easings",
 	"version": "1.0.0",
-	"description": "",
+	"description": "Logic to handle the easings block component.",
 	"main": "build/index.js",
 	"module": "build-module/index.js",
 	"scripts": {

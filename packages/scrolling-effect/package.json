@@ -1,7 +1,7 @@
 {
 	"name": "@novablocks/scrolling-effect",
 	"version": "1.0.0",
-	"description": "",
+	"description": "Logic to handle the scrolling effect block component.",
 	"main": "build/index.js",
 	"module": "build-module/index.js",
 	"scripts": {

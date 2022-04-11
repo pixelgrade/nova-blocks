@@ -1,7 +1,7 @@
 {
 	"name": "@novablocks/shape-modeling",
 	"version": "1.0.0",
-	"description": "",
+	"description": "Logic to handle the shape modeling block component.",
 	"main": "build/index.js",
 	"module": "build-module/index.js",
 	"scripts": {

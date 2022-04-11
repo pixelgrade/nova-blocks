@@ -1,7 +1,7 @@
 {
 	"name": "@novablocks/collection",
 	"version": "1.0.0",
-	"description": "",
+	"description": "Logic to handle collections of blocks.",
 	"main": "build/index.js",
 	"module": "build-module/index.js",
 	"scripts": {

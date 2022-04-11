@@ -1,7 +1,7 @@
 {
 	"name": "@novablocks/block-editor",
 	"version": "1.0.0",
-	"description": "",
+	"description": "Logic related to the block editor.",
 	"main": "build/index.js",
 	"module": "build-module/index.js",
 	"scripts": {

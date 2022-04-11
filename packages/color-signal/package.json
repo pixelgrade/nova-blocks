@@ -1,7 +1,7 @@
 {
 	"name": "@novablocks/color-signal",
 	"version": "1.0.0",
-	"description": "",
+	"description": "Logic to handle the color signal component of blocks.",
 	"main": "build/index.js",
 	"module": "build-module/index.js",
 	"scripts": {

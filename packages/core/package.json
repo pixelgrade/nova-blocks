@@ -1,7 +1,7 @@
 {
 	"name": "@novablocks/core",
 	"version": "1.0.0",
-	"description": "",
+	"description": "The core Nova Blocks block editor logic.",
 	"main": "build/index.js",
 	"module": "build-module/index.js",
 	"scripts": {
