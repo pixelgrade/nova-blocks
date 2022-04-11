@@ -22,7 +22,7 @@ window.addComment = (function (window) {
     postIdFieldId: 'comment_post_ID',
 
     // Our additional config settings
-    commentsWrapperId: 'novablocks-comments',
+    commentsWrapperId: 'comments',
     openFormButtonClass: 'js-open-comment-form',
     commentFormSubmitId: 'comment-form-submit',
     replyingFlagClass: 'user-is-replying',
