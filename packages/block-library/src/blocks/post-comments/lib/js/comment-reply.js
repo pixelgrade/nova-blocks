@@ -26,7 +26,7 @@ window.addComment = (function (window) {
     openFormButtonClass: 'js-open-comment-form',
     commentFormSubmitId: 'comment-form-submit',
     replyingFlagClass: 'user-is-replying',
-    focusOnFieldId: 'comment',
+    focusOnFieldId: 'commentTrixEditor',
   };
 
   // If we have global settings, merge them with the defaults.
