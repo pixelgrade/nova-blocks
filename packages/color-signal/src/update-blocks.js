@@ -31,12 +31,13 @@ import {
     const blockListChanged = newBlockList !== blockList;
     blockList = newBlockList;
 
-    if ( blockListChanged ) {
+    // @todo create some sort of caching for blocks inside template parts
+//    if ( blockListChanged ) {
       // You can trigger here any behavior when the block list in the post changes.
       blockList.forEach( ( block ) => {
         updateBlock( block );
       } );
-    }
+//    }
   } );
 
 } )();
@@ -107,12 +108,21 @@ const updateBlock = ( block ) => {
   updateInnerBlocks( block );
 };
 
+const updateBlocks = ( blocks ) => {
+  if ( Array.isArray( blocks ) ) {
+    blocks.forEach( block => {
+      updateBlock( block );
+    } );
+  }
+}
+
 const updateInnerBlocks = ( block ) => {
+  const { getBlocks } = select( 'core/block-editor' );
 
   // recursively update all innerBlocks
-  if ( Array.isArray( block.innerBlocks ) ) {
-    block.innerBlocks.forEach( innerBlock => {
-      updateBlock( innerBlock );
-    } )
+  updateBlocks( block.innerBlocks );
+
+  if ( 'core/template-part' === block.name ) {
+    updateBlocks( getBlocks( block.clientId ) );
   }
 };
