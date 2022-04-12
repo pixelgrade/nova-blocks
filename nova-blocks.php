@@ -79,7 +79,6 @@ require_once dirname( __FILE__ ) . '/lib/block-patterns.php';
 require_once dirname( __FILE__ ) . '/lib/block-rendering.php';
 require_once dirname( __FILE__ ) . '/lib/client-assets.php';
 require_once dirname( __FILE__ ) . '/lib/deprecated.php';
-require_once dirname( __FILE__ ) . '/lib/block-areas/block-areas.php';
 
 require_once dirname( __FILE__ ) . '/packages/core/src/blocks/init.php';
 
