@@ -1,0 +1,31 @@
+// ------ #MIXINS
+@mixin progress-bar-style-below {
+  left: 0;
+  bottom: 0;
+}
+
+@mixin progress-bar-style-above {
+  left: 0;
+  top: 0;
+  bottom: auto;
+}
+
+// Work in Progress
+@mixin progress-bar-style-overlay {
+  .c-reading-progress {
+    left: 0;
+    top: 0;
+    bottom: auto;
+    height: 100%;
+
+    opacity: 0.3 !important;
+  }
+
+  .c-reading-bar {
+    z-index: 12 !important;
+  }
+
+  .nb-header--reading .c-reading-bar {
+    background: transparent !important;
+  }
+}

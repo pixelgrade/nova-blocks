@@ -42,8 +42,13 @@ class HeaderSticky extends HeaderBase {
       innerContainer.appendChild( primaryRow.cloneNode( true ) );
     }
 
-    readingBar && innerContainer.appendChild( readingBar );
-    progressBar && innerContainer.appendChild( progressBar );
+    if ( readingBar ) {
+      innerContainer.appendChild( readingBar );
+
+      if ( progressBar ) {
+        innerContainer.appendChild( progressBar );
+      }
+    }
 
     element.insertAdjacentElement( 'beforebegin', stickyHeader );
 

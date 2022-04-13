@@ -14,6 +14,7 @@ export const initializeReadingBar = ( header ) => {
   let showingNext = false;
 
   onScrollRAF( ( newScrollY, oldScrollY ) => {
+    const progress = clamp( ( newScrollY - min ) / ( max - min ), 0, 1 );
     const scrollingDown = newScrollY > oldScrollY;
     const showSomething = scrollingDown && newScrollY > min;
     const showReading = showSomething && newScrollY < max;
@@ -28,9 +29,6 @@ export const initializeReadingBar = ( header ) => {
       toggleClass( header, 'nb-header--next', showNext && above( 'lap' ) );
       showingNext = showNext;
     }
-
-    // update progress
-    const progress = clamp( ( newScrollY - min ) / ( max - min ), 0, 1 );
 
     if ( progressBar ) {
       progressBar.style.setProperty( '--progress', progress );
@@ -60,5 +58,5 @@ const getScrollTriggerBounds = () => {
   const min = titleBottom;
   const max = Math.max( min, contentBottom - ignoredHeight - window.innerHeight );
 
-  return [ min, max ];
+  return [ min, max * 0.75 ];
 }

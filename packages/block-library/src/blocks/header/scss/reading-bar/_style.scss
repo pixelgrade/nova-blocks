@@ -1,0 +1,189 @@
+@import "./mixins";
+@import "./progress";
+
+:root {
+  // Design System tokens
+  --theme-reading-progress-width: 3px; // use '0' to remove it
+  --theme-reading-progress-color: var(--sm-current-accent-color);
+}
+
+// Hide progress bar on small screens
+.c-reading-bar,
+.c-reading-progress {
+
+  @include below(lap) {
+    display: none;
+  }
+}
+
+// ------ #ALTERNATIVE STYLES
+// @include progress-bar-style-overlay;
+
+// @todo: for options below, add a global
+// control option to change those styles
+.c-reading-progress[data-progress-bar-style-="below"] {}
+.c-reading-progress[data-progress-bar-style-="overlay"] {}
+
+.c-reading-bar {
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 10;
+
+  width: 100%;
+  max-width: none;
+  height: 100%;
+  overflow: hidden;
+
+  --nb-block-top-spacing: 0 !important;
+
+  > * {
+    flex-basis: calc(100% / 3);
+  }
+
+  &[class] {
+    background: none;
+  }
+}
+
+.c-reading-bar__layer {
+  height: 100%;
+}
+
+.c-reading-bar__layer--current {
+
+  .post-title__label {
+    display: none;
+  }
+}
+
+.c-reading-bar__layer,
+.c-reading-bar__layer-wrapper {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+}
+
+
+
+.c-reading-bar__layer,
+.c-reading-bar__layer-wrapper,
+.nb-header-row__inner-container {
+  transition: transform var(--nb-transition-duration) ease-out;
+  will-change: transform;
+}
+
+.c-reading-bar__layer--next {
+  transform: translateY(100%);
+  overflow: hidden;
+
+  > .c-reading-bar__layer-wrapper {
+    transform: translateY(-100%);
+  }
+}
+
+.c-reading-bar__layer--next {
+
+  :is(&, & > .c-reading-bar__layer-wrapper) {
+
+    .nb-header--next & {
+      transform: none;
+    }
+  }
+}
+
+.c-reading-bar__layer-wrapper {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  column-gap: var(--nb-navigation-item-spacing);
+  padding: 0 var(--nb-wrapper-sides-spacings);
+
+  > :not(.c-reading-bar__title) {
+    flex: 0 0 auto;
+  }
+}
+
+
+.c-reading-bar__title {
+  display: flex;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+@keyframes reading-bar-show-overflow {
+  to {
+    overflow: visible;
+  }
+}
+
+.nb-header--secondary {
+
+  .nb-header__inner-container {
+    overflow: hidden;
+    animation: reading-bar-show-overflow var(--nb-transition-duration) forwards;
+  }
+
+  .c-reading-bar__layer--current {
+    transform: translateY(-100%);
+    pointer-events: none;
+  }
+
+  &:is(.nb-header--next, .nb-header--reading) {
+
+    .nb-header__inner-container {
+      animation: none;
+    }
+
+    .nb-header-row__inner-container {
+      transform: translateY(100%);
+      pointer-events: none;
+    }
+
+    .c-reading-bar__layer--current {
+      transform: translateY(0);
+      pointer-events: auto;
+    }
+  }
+}
+
+.c-reading-bar {
+
+  :is(&, #specific) {
+
+    .wp-block-button__link {
+      display: flex;
+      padding: 0;
+      border: 0;
+      background-color: transparent;
+      color: inherit;
+
+      span {
+        padding: 0;
+        margin: 0;
+      }
+
+      svg {
+        display: none;
+      }
+
+      &:before {
+        background-color: transparent;
+      }
+    }
+
+    .wp-block-buttons {
+      margin-top: 0;
+    }
+  }
+
+  .post-title__label[class] {
+    margin-bottom: 0;
+  }
+
+  .post-title__post-name {
+    margin-left: 5px;
+  }
+}
