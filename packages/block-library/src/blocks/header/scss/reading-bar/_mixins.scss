@@ -1,17 +1,6 @@
-// ------ #MIXINS
-@mixin progress-bar-style-below {
-  left: 0;
-  bottom: 0;
-}
-
-@mixin progress-bar-style-above {
-  left: 0;
-  top: 0;
-  bottom: auto;
-}
-
 // Work in Progress
 @mixin progress-bar-style-overlay {
+
   .c-reading-progress {
     left: 0;
     top: 0;

@@ -17,7 +17,7 @@ export const initializeReadingBar = ( header ) => {
     const progress = clamp( ( newScrollY - min ) / ( max - min ), 0, 1 );
     const scrollingDown = newScrollY > oldScrollY;
     const showSomething = scrollingDown && newScrollY > min;
-    const showReading = showSomething && newScrollY < max;
+    const showReading = showSomething && progress < 0.75;
     const showNext = showSomething && ! showReading;
 
     if ( showingReading !== showReading ) {
@@ -58,5 +58,5 @@ const getScrollTriggerBounds = () => {
   const min = titleBottom;
   const max = Math.max( min, contentBottom - ignoredHeight - window.innerHeight );
 
-  return [ min, max * 0.75 ];
+  return [ min, max ];
 }

@@ -29,6 +29,9 @@
 }
 
 .nb-header-row {
+  position: relative;
+  z-index: 10;
+
   margin-top: 0;
   margin-bottom: 0;
 

@@ -1,32 +1,41 @@
 // ------ #PROGRESS BAR STYLING
 .c-reading-progress {
-  @include progress-bar-style-below;
   position: absolute;
-  z-index: 11;
-
+  top: 100%;
+  left: 0;
 
   width: 100%;
   height: var(--theme-reading-progress-width);
 
   border: none;
-  appearance: none;
+  background-color: transparent;
 
-
-  &[class] {
-    background-color: transparent;
+  :is(&, #specific) {
+    margin: 0;
   }
 
   &:before {
     content: "";
-    display: block;
+
     position: absolute;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
+
+    display: block;
+    background-color: var(--nb-accent-color);
+
     will-change: transform;
     transform: scale(var(--progress, 0), 1);
     transform-origin: 0 50%;
-    background-color: var(--nb-accent-color);
   }
 }
+
+// ------ #ALTERNATIVE STYLES
+// @include progress-bar-style-overlay;
+
+// @todo: for options below, add a global
+// control option to change those styles
+.c-reading-progress[data-progress-bar-style-="below"] {}
+.c-reading-progress[data-progress-bar-style-="overlay"] {}
