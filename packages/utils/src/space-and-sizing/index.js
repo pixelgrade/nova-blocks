@@ -17,6 +17,7 @@ export const getSpacingCSSProps = ( attributes ) => {
     minHeightFallback,
     thumbnailAspectRatio,
     spacingModifier,
+    spacingMultiplierOverride,
   } = attributes;
 
   const emphasisTopSpacingValue = verticalAlignment === 'top' ? Math.abs(emphasisTopSpacing) : emphasisTopSpacing;
@@ -37,5 +38,6 @@ export const getSpacingCSSProps = ( attributes ) => {
     '--nb-card-layout-gap-modifier': layoutGutter / 100,
     '--nb-minimum-container-height': minHeightFallback + 'vh',
     '--nb-spacing-modifier': spacingModifier + '',
+    '--nb-spacing-multiplier-override': spacingMultiplierOverride + '',
   }
 };

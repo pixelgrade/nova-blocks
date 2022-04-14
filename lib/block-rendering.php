@@ -474,6 +474,10 @@ function novablocks_get_sizing_css( array $attributes ): array {
 		$props[] = '--nb-spacing-modifier: ' . $attributes['spacingModifier'];
 	}
 
+	if ( isset( $attributes['spacingMultiplierOverride'] ) ) {
+		$props[] = '--nb-spacing-multiplier-override: ' . $attributes['spacingMultiplierOverride'];
+	}
+
 	return $props;
 }
 

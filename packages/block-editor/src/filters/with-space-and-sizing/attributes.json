@@ -70,5 +70,9 @@
 	"spacingModifier": {
 		"type": "number",
 		"default": 1
+	},
+	"spacingMultiplierOverride": {
+		"type": "number",
+		"default": 1
 	}
 }

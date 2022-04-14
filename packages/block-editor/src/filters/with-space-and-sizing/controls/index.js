@@ -27,6 +27,7 @@ const SpaceAndSizingControls = ( props ) => {
       <ControlsTab label={ __( 'Settings', '__plugin_txtd' ) }>
         <CardSpacingSettings key={ 'card-spacing-settings' } { ...props } />
         <BlockSpacingModifier key={ 'spacing-modifier' } { ...props } />
+        <BlockChildrenSpacingModifier key={ 'spacing-children-modifier' } { ...props } />
         <MinimumContainerHeight id={ 'minimum-container-height' } key={ 'minimum-container-height' } { ...props } />
         <MediaHeight key={ 'media-container-height' } { ...props } />
         <ImageContainerHeightSettings id={ 'media-aspect-ratio' } key={ 'media-aspect-ratio-settings' } { ...props } />
@@ -76,6 +77,23 @@ const MediaHeight = withVisibility( 'media-container-height', false )( props => 
 } );
 
 const BlockSpacingModifier = withVisibility( 'spacing-modifier' )( props => {
+  const { attributes, setAttributes } = props;
+  const { spacingMultiplierOverride } = attributes;
+
+  return (
+    <ControlsGroup title={ __( 'Spacing Modifier', '__plugin_txtd' ) }>
+      <RangeControl
+        value={ spacingMultiplierOverride }
+        onChange={ ( spacingMultiplierOverride ) => setAttributes( { spacingMultiplierOverride } ) }
+        min={ 0 }
+        max={ 4 }
+        step={ 0.5 }
+      />
+    </ControlsGroup>
+  )
+} );
+
+const BlockChildrenSpacingModifier = withVisibility( 'spacing-children-modifier' )( props => {
   const { attributes, setAttributes } = props;
   const { spacingModifier } = attributes;
 

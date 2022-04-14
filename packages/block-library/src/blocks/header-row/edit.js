@@ -19,7 +19,7 @@ const withControlsVisibility = Component => {
 
     useEffect( () => {
       setControlsVisibility( {
-        'spacing-modifier': false,
+        'spacing-children-modifier': false,
       } );
     }, [] );
 

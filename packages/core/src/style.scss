@@ -94,8 +94,8 @@
   // by multiplying with -1 and then adding 1 we make sure that
   // we only add padding when these values are smaller than 1
   &[class*="sm-color-signal"]:not(.sm-color-signal-0) {
-    padding-top: calc(max(0.75, var(--nb-emphasis-top-spacing)) * var(--nb-wrapper-sides-spacings));
-    padding-bottom: calc(max(0.75, var(--nb-emphasis-bottom-spacing)) * var(--nb-wrapper-sides-spacings));
+    padding-top: calc(max(0.75 * var(--nb-wrapper-sides-spacings), var(--nb-emphasis-top-spacing) * var(--nb-current-spacing) * var(--nb-spacing-multiplier-override, 1)));
+    padding-bottom: calc(max(0.75 * var(--nb-wrapper-sides-spacings), var(--nb-emphasis-bottom-spacing) * var(--nb-current-spacing) * var(--nb-spacing-multiplier-override, 1)));
     padding-left: var(--nb-wrapper-sides-spacings);
     padding-right: var(--nb-wrapper-sides-spacings);
   }

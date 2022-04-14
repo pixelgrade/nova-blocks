@@ -1,8 +1,8 @@
 @mixin block-spacing {
-  margin-top: calc(var(--nb-block-top-spacing) * var(--nb-current-spacing));
-  margin-bottom: calc(var(--nb-block-bottom-spacing) * var(--nb-current-spacing));
-  padding-top: calc(var(--nb-emphasis-top-spacing) * var(--nb-current-spacing));
-  padding-bottom: calc(var(--nb-emphasis-bottom-spacing) * var(--nb-current-spacing));
+  margin-top: calc(var(--nb-block-top-spacing) * var(--nb-current-spacing) * var(--nb-spacing-multiplier-override, 1));
+  margin-bottom: calc(var(--nb-block-bottom-spacing) * var(--nb-current-spacing) * var(--nb-spacing-multiplier-override, 1));
+  padding-top: calc(var(--nb-emphasis-top-spacing) * var(--nb-current-spacing) * var(--nb-spacing-multiplier-override, 1));
+  padding-bottom: calc(var(--nb-emphasis-bottom-spacing) * var(--nb-current-spacing) * var(--nb-spacing-multiplier-override, 1));
 }
 
 
