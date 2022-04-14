@@ -76,8 +76,7 @@ export const getSignalRelativeToVariation = ( compared, reference, paletteId ) =
     return ( Math.abs(curr - compared ) < Math.abs( arr[prev] - compared ) ? index : prev );
   }, 0 );
 
-  const config = window?.styleManager?.colorsConfig;
-  const palette = config.find( palette => `${ palette.id }` === `${ paletteId }` );
+  const palette = getPaletteConfig( paletteId );
   const colors = palette?.variations.map( variation => variation.bg );
 
   // try to use signal 0 only when compared and reference are equal

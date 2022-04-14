@@ -41,9 +41,14 @@ export const getContentColorsSignalClassnames = ( attributes, supports ) => {
   return getColorSignalClassnames( newAttributes, supports );
 };
 
-export const getSignals = ( paletteId ) => {
+export const getPaletteConfig = ( paletteId ) => {
   const config = window?.styleManager?.colorsConfig;
-  const palette = config.find( palette => `${ palette.id }` === `${ paletteId }` );
+
+  return config.find( palette => `${ palette.id }` === `${ paletteId }` );
+}
+
+export const getSignals = ( paletteId ) => {
+  const palette = getPaletteConfig( paletteId );
   const colors = palette?.colors.slice();
 
   if ( ! palette || ! palette?.variations ) {

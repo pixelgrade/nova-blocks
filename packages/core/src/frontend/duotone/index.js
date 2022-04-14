@@ -1,9 +1,9 @@
 import $ from 'jquery';
-import { getDuotoneFilterSvg } from "@novablocks/utils";
+import { getDuotoneFilterSvg, getPaletteConfig } from "@novablocks/utils";
 
 const getHexFromConfig = ( config ) => {
   const { paletteId, variationIndex } = config;
-  const palette = styleManager.colorsConfig.find( palette => `${ palette.id }` === `${ paletteId }` );
+  const palette = getPaletteConfig( paletteId );
 
   if ( palette?.variations ) {
     return palette.variations[ variationIndex ].bg;

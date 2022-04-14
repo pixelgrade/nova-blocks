@@ -53,7 +53,20 @@ const updateBlock = ( block ) => {
   if ( supports?.novaBlocks?.colorSignal ) {
     const { updateBlockAttributes } = dispatch( 'core/block-editor' );
     const { attributes, clientId } = block;
-    const { colorSignal, palette, paletteVariation, useSourceColorAsReference } = attributes;
+    const { colorSignal, paletteVariation, useSourceColorAsReference } = attributes;
+
+    const config = window?.styleManager?.colorsConfig;
+
+    // make sure we're using an actual palette
+    const palette = ( () => {
+      const palette = config.find( palette => `${ palette.id }` === `${ attributes.palette }` );
+
+      if ( ! palette ) {
+        return 1;
+      }
+
+      return palette.id;
+    } )();
 
     const { getBlockParents, getBlock } = select( 'core/block-editor' );
     const parents = getBlockParents( clientId ).slice();
