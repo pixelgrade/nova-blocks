@@ -111,6 +111,7 @@ export const doOverlap = ( el1, el2 ) => {
 
 export const getContentBlocksArray = () => {
   const gridSelectors = [
+    ".is-root-container",
     ".wp-block-query",
     ".wp-block-post-content",
     ".wp-site-blocks",
