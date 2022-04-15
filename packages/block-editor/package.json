@@ -26,11 +26,10 @@
 		"@wordpress/html-entities": "^3.6.0",
 		"@wordpress/i18n": "^4.6.0",
 		"@wordpress/url": "^3.7.0",
-		"lodash": "^4.17.21",
-		"unsplash-js": "^7.0.15"
-	},
-	"devDependencies": {
 		"@wordpress/viewport": "^2.25.6",
+		"js-cookie": "^3.0.1",
+		"lodash": "^4.17.21",
+		"unsplash-js": "^7.0.15",
 		"html-to-react": "^1.4.8",
 		"react-spring": "^9.4.4"
 	}
