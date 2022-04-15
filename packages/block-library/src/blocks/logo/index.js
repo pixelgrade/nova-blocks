@@ -12,9 +12,7 @@ import attributes from "./attributes";
 import { __ } from '@wordpress/i18n';
 import { registerBlockType } from '@wordpress/blocks';
 import { dispatch, select } from "@wordpress/data";
-
-const { getBlockRootClientId } = select( 'core/block-editor' );
-const { selectBlock, clearSelectedBlock } = dispatch( 'core/editor' );
+import { useSelectParent } from "@novablocks/block-editor";
 
 registerBlockType( 'novablocks/logo', {
 	title: __( 'Logo', '__plugin_txtd' ),
@@ -33,18 +31,7 @@ registerBlockType( 'novablocks/logo', {
   },
 	edit: function( props ) {
 
-	  const {
-	    clientId,
-      isSelected
-    } = props;
-
-	  const parentClientId = getBlockRootClientId(clientId);
-
-    if ( isSelected ) {
-      clearSelectedBlock().then(() => {
-        selectBlock( parentClientId );
-      });
-    }
+    useSelectParent( props );
 
 		return (
 			<wp.serverSideRender

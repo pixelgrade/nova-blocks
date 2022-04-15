@@ -1,29 +1,19 @@
 import classnames from 'classnames';
 
-import {InnerBlocks} from '@wordpress/block-editor';
+import { InnerBlocks } from '@wordpress/block-editor';
 import { dispatch, select } from '@wordpress/data';
-
-const { getBlockRootClientId } = select( 'core/block-editor' );
-const { selectBlock, clearSelectedBlock } = dispatch( 'core/editor' );
+import { useSelectParent } from "@novablocks/block-editor";
 
 const SidecarAreaEdit = function( props ) {
 
   const {
     attributes,
     className,
-    clientId,
-    isSelected
   } = props;
 
-  const parentClientId = getBlockRootClientId( clientId );
+  useSelectParent( props );
 
-  const {lastItemIsSticky} = attributes;
-
-  if ( isSelected ) {
-    clearSelectedBlock().then(() => {
-      selectBlock( parentClientId );
-    });
-  }
+  const { lastItemIsSticky } = attributes;
 
   const classNames = classnames(
     className,
