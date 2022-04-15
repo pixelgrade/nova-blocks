@@ -96,6 +96,7 @@ Yes! Nova Block's core features are free to use.
 
 = 1.13.4 =
 * Fixes Doppler Scrolling effect for Hero and Slideshow blocks
+* Fixes some bugs that were breaking the Customizer
 
 = 1.13.3 =
 * Better handling of block configuration.
