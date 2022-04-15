@@ -1,0 +1,40 @@
+{
+	"scrollingEffect": {
+		"type": "string",
+		"default": "static"
+	},
+	"focalPoint": {
+		"type": "object",
+		"default": {
+			"x": 0.5,
+			"y": 0.5
+		}
+	},
+	"finalFocalPoint": {
+		"type": "object",
+		"default": {
+			"x": 0.5,
+			"y": 0.5
+		}
+	},
+	"initialBackgroundScale": {
+		"type": "number",
+		"default": 1
+	},
+	"finalBackgroundScale": {
+		"type": "number",
+		"default": 1
+	},
+	"motionPreset": {
+		"type": "string",
+		"default": "standard-dynamic"
+	},
+	"followThroughStart": {
+		"type": "boolean",
+		"default": true
+	},
+	"followThroughEnd": {
+		"type": "boolean",
+		"default": true
+	}
+}

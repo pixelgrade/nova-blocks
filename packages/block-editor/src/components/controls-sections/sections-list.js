@@ -12,7 +12,7 @@ const SectionsListItem = ( props ) => {
 	} = props;
 
 	return <div key={ kebabCase( label ) } className={ 'novablocks-sections__button' } onClick={ () => { onClick( label ) } }>{ label }</div>
-}
+};
 
 const SectionsList = ( props ) => {
 
@@ -28,23 +28,27 @@ const SectionsList = ( props ) => {
 	return (
 		<div className="novablocks-sections">
 			<div className="novablocks-sections__header">
-				<div className="novablocks-sections__title">{ __( 'Design Customization' ) }</div>
+				<div className="novablocks-sections__title">{ __( 'Design Customization', '__plugin_txtd' ) }</div>
 				<Cube />
 			</div>
 			<div className={ 'novablocks-sections__buttons' }>
-				{ blockSections.map( ( section, index ) => <SectionsListItem key={ index } label={ section.props.label } onClick={ onSectionClick } /> ) }
+				{ blockSections.map( ( section, index ) =>
+          <SectionsListItem key={ 'block_section_button_' + index } label={ section.props.label } onClick={ onSectionClick } /> )
+        }
 			</div>
 			{
 				!! modules.length &&
 				<Fragment>
-					<div className="novablocks-sections__title">{ __( 'Modules' ) }</div>
+					<div className="novablocks-sections__title">{ __( 'Modules', '__plugin_txtd' ) }</div>
 					<div className={ 'novablocks-sections__buttons' }>
-						{ modules.map( ( section, index ) => <SectionsListItem key={ index } label={ section.props.label } onClick={ onSectionClick } /> ) }
+						{ modules.map( ( section, index ) =>
+              <SectionsListItem key={ 'module_section_button_' + index } label={ section.props.label } onClick={ onSectionClick } /> )
+            }
 					</div>
 				</Fragment>
 			}
 		</div>
 	)
-}
+};
 
 export { SectionsList, SectionsListItem };

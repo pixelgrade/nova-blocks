@@ -1,14 +1,13 @@
 /**
+ * WordPress dependencies
+ */
+import { __ } from '@wordpress/i18n';
+import { registerBlockType } from '@wordpress/blocks';
+import { addFilter } from "@wordpress/hooks";
+
+/**
  * Internal dependencies
  */
-import iconSvg from './slideshow-block.svg';
-import edit from './edit';
-import save from './save';
-import { select } from '@wordpress/data';
-
-// Load deprecated file
-import deprecated from './deprecated';
-
 import {
   getRandomArrayFromArray,
   getRandomBetween,
@@ -20,15 +19,16 @@ import {
   getSvg
 } from "@novablocks/block-editor";
 
-import blockAttributes from "./attributes";
+import iconSvg from './icon.svg';
+import edit from './edit';
+import save from './save';
+import attributes from "./attributes";
+import attributesOverwrite from "./attributes-overwrite.json";
 
-const attributes = Object.assign( {}, blockAttributes );
+import transforms from './transforms';
+import './deprecated';
 
-/**
- * WordPress dependencies
- */
-import { __ } from '@wordpress/i18n';
-import { registerBlockType } from '@wordpress/blocks';
+const BLOCK_NAME = 'novablocks/slideshow';
 
 async function getNewDefaults() {
 	const placeholderImages = await getPlaceholderImages();
@@ -43,41 +43,70 @@ async function getNewDefaults() {
 
 	return {
 		galleryImages: images,
-	};
+  };
 }
 
-generateDefaults( 'novablocks/slideshow', getNewDefaults );
+generateDefaults( BLOCK_NAME, getNewDefaults );
 
-registerBlockType( 'novablocks/slideshow', {
-	title: __( 'Slideshow Me the Way', '__plugin_txtd' ),
+const overwriteAttributes = ( settings ) => {
+
+  if ( settings.name !== BLOCK_NAME ) {
+    return settings;
+  }
+
+  return {
+    ...settings,
+    attributes: {
+      ...settings.attributes,
+      ...attributesOverwrite
+    }
+  };
+};
+addFilter( 'blocks.registerBlockType', 'novablocks/slideshow/attributes-overwrite', overwriteAttributes, Number.MAX_SAFE_INTEGER );
+
+registerBlockType( BLOCK_NAME, {
+  apiVersion: 2,
+	title: __( 'Slideshow Me the Way (Deprecated)', '__plugin_txtd' ),
 	description: __( 'Display more than one piece of content in a single, coveted space.', '__plugin_txtd' ),
 	category: 'nova-blocks',
   icon: getSvg( iconSvg ),
 	// Additional search terms
-	keywords: [ __( 'slider', '__plugin_txtd' ), __( 'carousel', '__plugin_txtd' ), __( 'images', '__plugin_txtd' ), __( 'cover', '__plugin_txtd' ) ],
+	keywords: [
+	  __( 'slider', '__plugin_txtd' ),
+    __( 'carousel', '__plugin_txtd' ),
+    __( 'images', '__plugin_txtd' ),
+    __( 'cover', '__plugin_txtd' )
+  ],
 	attributes,
   supports: {
     html: false,
     novaBlocks: {
       colorSignal: {
-        altAttributes: true,
+        attributes: true,
         addOverlayColorDeprecatedMethod: true,
+        controls: true,
       },
-      overlayFilterStrength: true,
-      contentPositionMatrixToolbar: {
-        deprecated: true
+      overlayFilter: {
+        attributes: true,
+        controls: true,
+      },
+      contentPosition: {
+        attributes: true,
+        deprecated: true,
       },
       customDefaults: true,
-      doppler: {
-        altAttributes: true
+      scrollingEffect: {
+        attributes: true,
+        controls: true,
+        customWrapper: true,
       },
-      spaceAndSizing: true
+      spaceAndSizing: true,
+      cardElementsVisibility: {
+        attributes: true,
+      }
     },
   },
 	edit,
 	save,
-	getEditWrapperProps() {
-		const settings = select( 'core/block-editor' ).getSettings();
-		return settings.alignWide ? { 'data-align': 'full' } : {};
-	},
+  transforms,
 } );

@@ -1,6 +1,6 @@
-.novablocks-header--secondary {
+.nb-header--secondary {
   width: 100%;
-  z-index: 1100;
+  z-index: 2200;
 
   opacity: 0;
   pointer-events: none;
@@ -16,22 +16,7 @@
     opacity: 0.1;
   }
 
-  &:hover {
-  
-    > .novablocks-header__inner-container:not(:only-child):last-child {
-      opacity: 1;
-      pointer-events: auto;
-    }
-  }
-
-  &:not(.primary-menu--is-visible) {
-  
-    > .novablocks-header__inner-container:not(:only-child):last-child {
-      display: none;
-    }
-  }
-
-  > .novablocks-header__inner-container:not(:only-child):last-child {
+  > .nb-header__inner-container:not(:only-child):last-child {
     position: absolute;
     z-index: -1;
 
@@ -40,10 +25,27 @@
     opacity: 0;
     pointer-events: none;
     transition: transform 0.2s ease 0s, opacity 0.1s ease 0.1s;
-  
+
+  }
+
+  &:hover {
+
+    > .nb-header__inner-container:not(:only-child):last-child {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
   }
 
   @include below(lap) {
     display: none !important;
+  }
+
+  .nb-header-row[data-is-primary]:not([data-is-sticky]) {
+    display: none;
+  }
+
+  &:not(.nb-header--reading):not(.nb-header--next):hover .nb-header-row[data-is-primary] {
+    display: block;
   }
 }

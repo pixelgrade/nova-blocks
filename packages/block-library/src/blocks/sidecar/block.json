@@ -1,0 +1,20 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/block.json",
+	"apiVersion": 2,
+	"name": "novablocks/sidecar",
+	"title": "Sidecar",
+	"category": "nova-blocks",
+	"description": "Establish supporting sections that relate to the main content.",
+	"keywords": ["layout", "sidebar", "content", "aside"],
+	"textdomain": "nova-blocks",
+	"attributes": {},
+	"usesContext": [],
+	"supports": {
+		"html": false,
+		"anchor": true,
+		"novaBlocks": {
+			"colorSignal": true,
+			"spaceAndSizing": true
+		}
+	}
+}

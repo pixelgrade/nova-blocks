@@ -35,7 +35,7 @@ const SlideshowBlockControls = function( props ) {
 
 	return (
 		<BlockControls>
-			<Toolbar>
+      <Toolbar group={ 'block' }>
 				<MediaUpload
 					accept="image/*"
 					addToGallery={ hasImages }

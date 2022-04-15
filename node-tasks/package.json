@@ -1,6 +1,6 @@
 {
-    "name": "style-manager-node-tasks",
-    "description": "",
+    "name": "nova-blocks-node-tasks",
+    "description": "Tasks to ensure uniform usage of the proper node version.",
     "private": false,
     "sideEffects": false,
     "license": "GPL-2.0+",

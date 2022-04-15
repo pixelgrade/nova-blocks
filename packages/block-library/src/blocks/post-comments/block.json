@@ -1,0 +1,21 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/block.json",
+	"apiVersion": 2,
+	"name": "novablocks/post-comments",
+	"title": "Conversation System",
+	"category": "nova-blocks",
+	"description": "Display an engaging comments section to start meaningful conversations.",
+	"keywords": ["comment", "reply", "discussion", "reaction", "contributor", "interaction", "conversation", "review", "feedback"],
+	"textdomain": "nova-blocks",
+	"attributes": {},
+	"usesContext": [
+		"postId",
+		"postType"
+	],
+	"supports": {
+		"html": false,
+		"novaBlocks": {
+			"spaceAndSizing": true
+		}
+	}
+}

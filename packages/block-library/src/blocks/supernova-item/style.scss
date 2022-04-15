@@ -1,0 +1,78 @@
+@import "./scss/dropcap";
+
+.nb-supernova-item {
+
+  .nb-supernova--card-layout-stacked .nb-collection__layout--carousel & {
+    background-color: var(--sm-current-bg-color);
+  }
+
+  .wp-block-button {
+    display: block;
+  }
+}
+
+/*
+ * Currently Slick is applying display: inline-block.
+ * Until we find a solution for that,
+ * we are going to use !important for our style.
+ */
+.nb-supernova-item:not(.nb-supernova-item--layout-stacked) {
+  display: flex !important;
+}
+
+.nb-supernova-item--layout-stacked {
+  display: block !important;
+}
+
+:is(.nb-supernova--card-layout-horizontal, .nb-supernova--card-layout-horizontal-reverse) {
+  margin-top: calc(var(--block-top-spacing) * var(--nb-spacing));
+  margin-bottom: calc(var(--block-bottom-spacing) * var(--nb-spacing));
+
+  @include above(tablet) {
+
+    .nb-supernova-item {
+
+      .nb-supernova-item__media-wrapper {
+        margin-top: calc( var(--emphasis-top-spacing) * var(--nb-spacing));
+        margin-bottom: calc( var(--emphasis-bottom-spacing) * var(--nb-spacing));
+      }
+
+      .nb-supernova-item__content {
+        padding-top: calc( var(--emphasis-top-spacing) * var(--nb-spacing));
+        padding-bottom: calc( var(--emphasis-bottom-spacing) * var(--nb-spacing));
+      }
+    }
+  }
+
+  @include below(tablet) {
+    --nb-card-layout-gap: 0 !important;
+    --nb-block-top-spacing: 1;
+    --nb-block-bottom-spacing: 1;
+    --nb-emphasis-top-spacing: 0;
+    --nb-emphasis-bottom-spacing: 0;
+
+    .nb-supernova-item__media-wrapper,
+    .nb-supernova-item__content {
+      padding-top: calc( var(--nb-spacing) * 0.5 );
+      padding-bottom: calc( var(--nb-spacing) * 0.5 );
+    }
+  }
+}
+
+.nb-supernova--1-columns:where(.nb-supernova--card-layout-stacked, .nb-supernova--card-layout-vertical, .nb-supernova--card-layout-vertical-reversed) {
+
+  .nb-collection.alignfull {
+
+    .nb-collection__layout:not(.nb-collection__layout--parametric) {
+
+      // For this use case the supernova item container could have the same layout as the sidecar block
+      // However we need to remove any horizontal padding set with the Content Padding control
+      .nb-supernova-item__inner-container {
+        @include nb-content-layout-grid;
+
+        padding-left: 0;
+        padding-right: 0;
+      }
+    }
+  }
+}

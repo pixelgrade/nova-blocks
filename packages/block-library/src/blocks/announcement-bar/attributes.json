@@ -1,0 +1,18 @@
+{
+	"align": {
+		"type": "string",
+		"default": "full"
+	},
+	"url": {
+		"type": "string",
+		"default": ""
+	},
+	"opensInNewTab": {
+		"type": "boolean",
+		"default": false
+	},
+	"blockId": {
+		"type": "string",
+		"default": ""
+	}
+}

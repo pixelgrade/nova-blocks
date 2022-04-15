@@ -1,9 +1,9 @@
 .novablocks-slideshow {
 	position: relative;
 	z-index: 20;
-  
+
   @include block-spacing;
-  
+
   &[class] {
     padding-top: 0;
     padding-bottom: 0;
@@ -30,7 +30,7 @@
 }
 
 .novablocks-slideshow__background {
-  background-color: var(--novablocks-bg-color);
+  background-color: var(--sm-current-bg-color, var(--nb-bg-color));
 }
 
 .novablocks-slideshow__background,

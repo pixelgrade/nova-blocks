@@ -1,49 +1,64 @@
 import classnames from 'classnames';
 
-import { createHigherOrderComponent } from '@wordpress/compose';
 import { addFilter } from '@wordpress/hooks';
+import { useBlockProps } from "@wordpress/block-editor";
+import { select } from "@wordpress/data";
 
-export const addSeparatorFilters = ( settings ) => {
+import attributes from './attributes.json';
+import edit from './edit';
 
-  const separatorMarkup = settings?.separator?.markup;
+const alterSeparatorSettings = ( settings ) => {
 
-	const Separator = ( props ) => {
+  if ( settings.name !== 'core/separator' ) {
+    return settings;
+  }
 
-	  const useBlockProps = wp.blockEditor.useBlockProps;
-    const className = classnames(
-      'wp-block-separator',
-      props.className
-    );
+  return {
+    ...settings,
+    supports: {
+      ...settings.supports,
+      align: [ 'wide', 'full' ],
+      novaBlocks: {
+        colorSignal: {
+          attributes: true,
+          controls: true,
+          functionalColors: false,
+          paletteClassname: true,
+          paletteVariationClassname: true,
+          colorSignalClassname: true,
+          stickySourceColor: false,
+          minColorSignal: 1,
+        },
+        spaceAndSizing: true,
+      },
+    },
+    edit,
+    save: ( props ) => {
+      const { className, attributes } = props;
+      const { align } = attributes;
+      const settings = select( 'novablocks' ).getSettings();
+      const blockProps = useBlockProps.save( { className } );
 
-	  if ( typeof useBlockProps !== "undefined" ) {
-      const blockProps = useBlockProps( {
-        className: className,
-      } );
-
-      return <div { ...blockProps } dangerouslySetInnerHTML={ { __html: separatorMarkup } } />
+      return (
+        <div { ...blockProps } dangerouslySetInnerHTML={ { __html: settings?.separator?.markup } } />
+      )
     }
-
-    return <div className={ className } dangerouslySetInnerHTML={ { __html: separatorMarkup } } />
-	};
-
-	const replaceSeparatorEdit = createHigherOrderComponent( ( BlockEdit ) => {
-		return ( props ) => {
-			if ( 'core/separator' === props.name ) {
-				return <Separator className={ props.attributes.className } />;
-			} else {
-				return <BlockEdit { ...props } />;
-			}
-		}
-	}, "replaceSeparatorEdit" );
-
-	const replaceSeparatorSave = ( element, blockType, attributes ) => {
-		if ( 'core/separator' === blockType.name ) {
-      return <div className={ `wp-block-separator ${ attributes.className }` } dangerouslySetInnerHTML={ { __html: separatorMarkup } } />
-		}
-
-    return element;
-	};
-
-	addFilter( 'editor.BlockEdit', 'nova-theme/separator', replaceSeparatorEdit );
-	addFilter( 'blocks.getSaveElement', 'nova-theme/separator', replaceSeparatorSave );
+  }
 };
+addFilter( 'blocks.registerBlockType', 'novablocks/separator/alter-support', alterSeparatorSettings, 1 );
+
+const alterSeparatorAttributes = ( settings ) => {
+
+  if ( settings.name !== 'core/separator' ) {
+    return settings;
+  }
+
+  return {
+    ...settings,
+    attributes: {
+      ...settings.attributes,
+      ...attributes
+    }
+  }
+};
+addFilter( 'blocks.registerBlockType', 'novablocks/separator/alter-attributes', alterSeparatorAttributes, 20 );

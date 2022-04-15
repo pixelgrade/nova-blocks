@@ -1,0 +1,63 @@
+.nb-author-box {
+  display: flex;
+  align-items: flex-start;
+  gap: calc(1.5 * var(--nb-spacing));
+
+  @include below(tablet) {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+}
+
+.nb-author-box__details {
+  @include block-spacing-container;
+}
+
+.nb-author-box__name {
+  display: block;
+}
+
+.nb-author-box__avatar {
+  max-width: 22%;
+  flex-shrink: 0;
+  border-radius: 50%;
+  overflow: hidden;
+
+  img {
+    display: block;
+  }
+}
+
+.nb-author-box__description {
+  --font-size-modifier: 0.9;
+}
+
+.nb-author-box__links {
+  display: flex;
+  flex-wrap: wrap;
+  column-gap: calc(0.5 * var(--nb-spacing));
+  row-gap: calc(0.5 * var(--nb-spacing));
+
+  --font-size-modifier: 0.9;
+
+  @include below(tablet) {
+    justify-content: center;
+  }
+
+  a {
+    text-decoration: none;
+  }
+}
+
+.nb-author-box__separator {
+  &:before {
+    content: "·";
+    position: relative;
+    display: inline-block;
+  }
+
+  &:last-child {
+    display: none;
+  }
+}

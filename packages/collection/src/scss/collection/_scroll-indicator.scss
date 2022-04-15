@@ -1,0 +1,67 @@
+.nb-scroll-indicator {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 10;
+
+  display: flex;
+  justify-content: center;
+
+  transition: all .3s ease-out;
+  transition-property: opacity;
+  background: none !important;
+  cursor: pointer;
+
+  svg {
+    fill: var(--sm-current-bg-color, var(--nb-bg-color));
+  }
+  
+  &:after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    
+    width: 12px;
+    height: 12px;
+    border: 2px solid var(--sm-current-fg2-color, var(--nb-fg2-color));
+    border-left: 0;
+    border-top: 0;
+    
+    transform: translate(-50%, -70%) rotate(45deg);
+  }
+}
+
+.nb-scroll-indicator--hidden {
+  opacity: 0;
+}
+
+.nb-scroll-indicator:not(.nb-scroll-indicator--middle) {
+  bottom: 0;
+  z-index: 1;
+
+  width: 160px;
+  height: 50px;
+  margin-left: auto;
+  margin-right: auto;
+
+  color: var(--sm-current-bg-color, var(--nb-bg-color));
+  background: none;
+
+  &:after {
+    color: var(--sm-current-fg2-color, var(--nb-fg2-color));
+  }
+}
+
+.nb-scroll-indicator--middle {
+
+  &[class] {
+    background-color: transparent;
+    color: inherit;
+  }
+
+  svg {
+    opacity: 0;
+  }
+}

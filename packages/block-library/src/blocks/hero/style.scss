@@ -2,12 +2,13 @@
 
 .novablocks-hero {
 	position: relative;
+
 	display: flex;
-  
+
   &__inner-container {
     width: 100%;
   }
-  
+
   &[class][class] {
     padding-top: 0;
     padding-bottom: 0;
@@ -16,26 +17,33 @@
   > .novablocks-doppler__mask {
     @include cover;
   }
-  
+
   @include above(tablet) {
    @include block-spacing;
   }
 }
 
-.novablocks-hero.scrolling-effect-doppler {
-	align-items: flex-start;
+
+.novablocks-hero {
+  --nb-block-minimum-height: calc(var(--nb-minimum-container-height) - var(--admin-bar-height, 0px));
+  min-height: var(--nb-block-minimum-height);
 }
 
-.novablocks-hero__slider {
-	@include cover;
+.novablocks-hero--scrolling-effect-doppler {
+  align-items: flex-start;
+  --nb-block-minimum-height: calc(2 * var(--nb-minimum-container-height) - var(--admin-bar-height, 0px));
+}
+
+.novablocks-hero__foreground {
+  min-height: calc(var(--nb-minimum-container-height) - var(--admin-bar-height, 0px));
 }
 
 .novablocks-hero__media[class] {
 	@include image-cover;
+  opacity: calc( 1 - var(--nb-overlay-filter-strength, 0));
 }
 
-.novablocks-hero__inner-container[class] {
-  
+.novablocks-hero__inner-container[class][class] {
   max-width: none;
   
   > .wp-block-group {
@@ -60,58 +68,20 @@
     }
   }
   
-  .novablocks-sidecar {
+  .nb-sidecar {
     
     @include above(lap) {
-      --display-mode: grid;
+      --nb-sidecar-display: grid;
     }
     
-    > .novablocks-content:only-child {
+    > .nb-sidecar-area--content:only-child {
 
       > *:not([class*='align']) {
         --block-content-start: cs;
         --block-content-end: ce;
       }
-      
     }
-    
   }
-  
-}
-
-.novablocks-hero__indicator {
-	position: absolute;
-	right: 0;
-	bottom: var(--novablocks-spacing);
-	left: 50%;
-
-	display: flex;
-	justify-content: center;
-	color: inherit;
-
-	transition: all .3s ease-out;
-	transition-property: opacity;
-	transform: translate(-50%, -100%);
-	cursor: pointer;
-
-	&:after {
-		content: '';
-		position: absolute;
-		top: 50%;
-		left: 50%;
-
-		width: 12px;
-		height: 12px;
-		border: 2px solid currentColor;
-		border-left: 0;
-		border-top: 0;
-
-		transform: translate(-50%, -70%) rotate(45deg);
-	}
-}
-
-.novablocks-hero__indicator--hidden {
-	opacity: 0;
 }
 
 .components-nova--popover {

@@ -1,0 +1,23 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/block.json",
+	"apiVersion": 2,
+	"name": "novablocks/author-box",
+	"title": "Author box",
+	"category": "nova-blocks",
+	"description": "Display section with author bio, avatar and social links.",
+	"keywords": [
+		"author",
+		"bio"
+	],
+	"textdomain": "nova-blocks",
+	"attributes": {},
+	"usesContext": [
+		"postId",
+		"postType"
+	],
+	"supports": {
+		"novaBlocks": {
+			"spaceAndSizing": true
+		}
+	}
+}

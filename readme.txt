@@ -1,11 +1,11 @@
 === Nova Blocks by Pixelgrade ===
 Contributors: pixelgrade, vlad.olaru, babbardel, razvanonofrei, gorby31
-Tags: Blocks, editor, gutenberg, gutenberg blocks, page builder, block enabled, page building, block
-Requires at least: 5.2.2
-Tested up to: 5.7.2
-Requires PHP: 5.6.40
-Stable tag: 1.12.8
-License: GPL v2.0 (or later)
+Tags: blocks, editor, gutenberg, gutenberg blocks, page builder, block enabled, page building, full site editing, site editor
+Requires at least: 5.9
+Tested up to: 5.9.3
+Stable tag: 2.0.0
+Requires PHP: 7.1
+License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
 A collection of distinctive Gutenberg blocks, committed to making your site shine like a newborn star.
@@ -93,6 +93,34 @@ Yes! Nova Block's core features are free to use.
 3. Slideshow Me the Way block options
 
 == Changelog ==
+
+= 2.0.0 =
+* Major update with a lot of new features, improvements and bug fixes
+* Integrated Full Site Editing experience
+* New Blocks for card collections, heroes, slideshows, carousels and more
+* Improved Color Signal controls and behaviour
+* Improved Header block layout and styling
+* Added Masonry layout for Cards Collection blocks
+* Added Color Signal and Space and Sizing controls to some core blocks
+
+= 1.13.4 =
+* Fixes Doppler Scrolling effect for Hero and Slideshow blocks
+* Fixes some bugs that were breaking the Customizer
+
+= 1.13.3 =
+* Better handling of block configuration.
+
+= 1.13.2 =
+* Fix migration to the new Matrix Alignment control
+
+= 1.13.1 =
+* Escape data attributes on blocks that were messing up layout.
+
+= 1.13.0 =
+* Added Space and Sizing controls for the Group, Hero and Slideshow block
+* Enhanced Hero block content layout
+* Fixed Color Signal component logic for nested blocks
+* Fixed styling conflicts with menu items inside the Customizer
 
 = 1.12.8 =
 * Improved selection of Header Row and Sidecar blocks inside the block editor

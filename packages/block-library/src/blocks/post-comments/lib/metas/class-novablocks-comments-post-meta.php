@@ -60,7 +60,7 @@ if ( ! class_exists( 'NovaBlocks_Comments_Post_Meta' ) ) {
 				return;
 			}
 
-			if ( true !== apply_filters( 'novablocks_comments_add_post_type_metabox', ! in_array( $post_type, $this->excluded_post_types ), $post_type ) ) {
+			if ( true !== apply_filters( 'novablocks/comments/add_post_type_metabox', ! in_array( $post_type, $this->excluded_post_types ), $post_type ) ) {
 				return;
 			}
 
@@ -75,10 +75,12 @@ if ( ! class_exists( 'NovaBlocks_Comments_Post_Meta' ) ) {
 		 *
 		 * @param WP_Post $post
 		 */
-		public function posts_discussion_metabox_fields( $post ) {
+		public function posts_discussion_metabox_fields( WP_Post $post ) {
 			$conversation_starter_content = get_post_meta( $post->ID, 'nb_conversation_starter_content', true );
 			$conversation_starter_subtitle = get_post_meta( $post->ID, 'nb_conversation_starter_subtitle', true );
 			$conversation_starter_user_ID = get_post_meta( $post->ID, 'nb_conversation_starter_user_id', true );
+
+			$post_type_object = get_post_type_object( $post->post_type );
 
 			// Safety first.
 			wp_nonce_field( 'nb_save_post_discussion_extras', 'nb_post_discussion_extra_details', false );
@@ -111,8 +113,8 @@ if ( ! class_exists( 'NovaBlocks_Comments_Post_Meta' ) ) {
 						<td class=""><label for="nb_conversation_starter_user_id"><strong><?php esc_html_e( 'Conversation Starter', '__plugin_txtd' ); ?></strong></label></td>
 						<td>
 							<?php wp_dropdown_users(
-									apply_filters( 'novablocks_comments_post_conversation_starter_dropdown_users_args', [
-										'who'              => 'authors',
+									apply_filters( 'novablocks/comments/post_conversation_starter_dropdown_users_args', [
+										'capability'       => array( $post_type_object->cap->edit_posts ),
 										'name'             => 'nb_conversation_starter_user_id',
 										'selected'         => empty( $conversation_starter_user_ID ) ? $post->post_author : $conversation_starter_user_ID,
 										'include_selected' => true,
@@ -125,7 +127,7 @@ if ( ! class_exists( 'NovaBlocks_Comments_Post_Meta' ) ) {
 
 					<?php
 					// Allow others to add fields here.
-					do_action( 'novablocks_post_discussion_extra_details_fields', $post );
+					do_action( 'novablocks/comments/post_discussion_extra_details_fields', $post );
 					?>
 
 					</tbody>

@@ -37,10 +37,10 @@ if ( ! class_exists( 'NovaBlocks_Comments_Starter' ) ) {
 		/**
 		 * Instantiate a comments (conversation) starter renderer.
 		 *
-		 * @param WP_Post|int|null $post    Optional. The post who's comments header to render. Defaults to the current post.
-		 * @param array            $args    Optional. The arguments to consider when rendering.
+		 * @param WP_Post|int|null $post Optional. The post who's comments header to render. Defaults to the current post.
+		 * @param array            $args Optional. The arguments to consider when rendering.
 		 */
-		public function __construct( $post = null, $args = [] ) {
+		public function __construct( $post = null, array $args = [] ) {
 			$this->post = get_post( $post, OBJECT );
 
 			// Make sure defaults are in place.
@@ -52,11 +52,11 @@ if ( ! class_exists( 'NovaBlocks_Comments_Starter' ) ) {
 		/**
 		 * Entry point to render the comments header.
 		 *
-		 * @param array  $args    Optional.
+		 * @param array $args Optional.
 		 *
 		 * @return string
 		 */
-		public function render( $args = [] ) {
+		public function render( array $args = [] ): string {
 			// Render nothing without a proper post.
 			if ( empty( $this->post ) ) {
 				return '';
@@ -79,6 +79,10 @@ if ( ! class_exists( 'NovaBlocks_Comments_Starter' ) ) {
 			$this->register_hooks();
 
 			$conversation_starter_user_id = get_post_meta( $this->post->ID, 'nb_conversation_starter_user_id', true );
+
+			if ( empty( $conversation_starter_user_id ) ) {
+				return '';
+			}
 
 			$conversation_starter_content = get_post_meta( $this->post->ID, 'nb_conversation_starter_content', true );
 			// Replace any content tags present.
@@ -130,7 +134,7 @@ if ( ! class_exists( 'NovaBlocks_Comments_Starter' ) ) {
 				$should_render = false;
 			}
 
-			return apply_filters( 'novablocks_comments_starter_should_render', $should_render, $this->post, $args );
+			return apply_filters( 'novablocks/comments/starter_should_render', $should_render, $this->post, $args );
 		}
 
 		protected function register_hooks() {
@@ -148,10 +152,8 @@ if ( ! class_exists( 'NovaBlocks_Comments_Starter' ) ) {
 		 *
 		 * @return array
 		 */
-		protected function parse_args( $args ) {
-			$args = wp_parse_args( $args, $this->args );
-
-			return $args;
+		protected function parse_args( array $args ): array {
+			return wp_parse_args( $args, $this->args );
 		}
 	}
 }

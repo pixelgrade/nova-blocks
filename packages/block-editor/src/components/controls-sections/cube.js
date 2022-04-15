@@ -6,6 +6,6 @@ const Cube = ( props ) => {
 			<div className="novablocks-sections__cube-face novablocks-sections__cube-face--right"></div>
 		</div>
 	)
-}
+};
 
 export default Cube;

@@ -1,0 +1,25 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/block.json",
+	"apiVersion": 2,
+	"name": "novablocks/post-navigation",
+	"title": "Post navigation",
+	"category": "nova-blocks",
+	"description": "Display a navigation section with previous and next posts links.",
+	"keywords": [
+		"post",
+		"previous",
+		"next",
+		"navigation"
+	],
+	"textdomain": "nova-blocks",
+	"attributes": {},
+	"usesContext": [
+		"postId",
+		"postType"
+	],
+	"supports": {
+		"novaBlocks": {
+			"spaceAndSizing": true
+		}
+	}
+}

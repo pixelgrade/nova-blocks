@@ -1,6 +1,5 @@
-import { omit } from 'lodash';
 import { createBlock } from '@wordpress/blocks';
-import { select } from '@wordpress/data';
+import { useSettings } from '@novablocks/block-editor';
 
 const blockAttributes = {
   layout: {
@@ -12,13 +11,13 @@ const blockAttributes = {
     default: 'full'
   },
 
-}
+};
 
 const deprecated = [
   {
 
     isEligible: ( attributes, innerBlocks ) => {
-      return innerBlocks[0].name !== 'novablocks/header-row';
+      return innerBlocks.length && innerBlocks[0].name !== 'novablocks/header-row';
     },
 
 
@@ -27,16 +26,15 @@ const deprecated = [
     },
 
     migrate( attributes, innerBlocks ) {
-      const { getSettings } = select( 'novablocks' );
-      const settings = getSettings();
+      const novablocksSettings = useSettings();
 
-      const headerShouldBeSticky = settings.customify_config.header_position.value === 'sticky';
+      const headerShouldBeSticky = novablocksSettings?.customify_config?.header_position?.value === 'sticky' || false;
 
       return [
        attributes,
         [
           createBlock( 'novablocks/header-row', {
-              className: 'novablocks-header-row novablocks-header-row--primary',
+              className: 'nb-header-row nb-header-row--primary',
               name: 'primary',
               label: 'Primary Navigation',
               isSticky: headerShouldBeSticky

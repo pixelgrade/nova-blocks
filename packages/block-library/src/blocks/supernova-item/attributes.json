@@ -1,0 +1,58 @@
+{
+	"preview": {
+		"type": "boolean",
+		"default": true
+	},
+	"level": {
+		"type": "number",
+		"default": 2
+	},
+	"metaAboveTitle": {
+		"type": "string",
+		"default": ""
+	},
+	"metaBelowTitle": {
+		"type": "string",
+		"default": ""
+	},
+	"title": {
+		"type": "string",
+		"default": ""
+	},
+	"subtitle": {
+		"type": "string",
+		"default": ""
+	},
+	"description": {
+		"type": "string",
+		"default": ""
+	},
+	"buttonText": {
+		"type": "string",
+		"default": ""
+	},
+	"buttonUrl": {
+		"type": "string",
+		"default": ""
+	},
+	"buttonOpensInNewTab": {
+		"type": "boolean",
+		"default": false
+	},
+	"defaultsGenerated": {
+		"type": "boolean",
+		"default": false
+	},
+	"multiplePlaceholderImages": {
+		"type": "boolean",
+		"default": false
+	},
+	"lock": {
+		"type": "object",
+		"default": {}
+	},
+	"contentType": {
+		"type": "string",
+		"default": "fields"
+	}
+}

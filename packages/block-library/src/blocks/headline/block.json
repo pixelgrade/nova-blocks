@@ -1,0 +1,36 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/block.json",
+	"apiVersion": 2,
+	"name": "novablocks/headline",
+	"title": "Headline",
+	"category": "nova-blocks",
+	"description": "Organize a single row in your site's header.",
+	"keywords": ["heading", "title", "cta", "call to action"],
+	"textdomain": "nova-blocks",
+	"attributes": {
+		"primary": {
+			"type": "string",
+			"default": "Our Story"
+		},
+		"secondary": {
+			"type": "string",
+			"default": "Discover"
+		},
+		"level": {
+			"type": "number",
+			"default": 2
+		},
+		"align": {
+			"type": "string",
+			"default": "none"
+		},
+		"textAlign": {
+			"type": "string",
+			"default": "center"
+		}
+	},
+	"usesContext": [],
+	"supports": {
+		"align": [ "wide", "full" ]
+	}
+}

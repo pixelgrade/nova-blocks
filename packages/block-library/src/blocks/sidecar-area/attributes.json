@@ -1,0 +1,6 @@
+{
+	"areaName": {
+		"type": "string",
+		"default": "content"
+	}
+}

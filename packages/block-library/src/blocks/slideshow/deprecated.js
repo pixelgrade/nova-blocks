@@ -1,6 +1,6 @@
-import {addFilter} from "@wordpress/hooks";
+import { addFilter } from "@wordpress/hooks";
 
-import {migrateContentPadding} from '../hero/deprecated';
+import { migrateContentPadding } from '../hero/deprecated';
 
 const slideshowAddDeprecated = ( settings, name ) => {
 
@@ -12,12 +12,12 @@ const slideshowAddDeprecated = ( settings, name ) => {
 
   const deprecated = [
     migrateContentPadding( attributes )
-  ]
+  ];
 
   return {
     ...settings,
     deprecated
   }
-}
+};
 
 addFilter( 'blocks.registerBlockType', 'novablocks/slideshow-add-deprecated', slideshowAddDeprecated, 20 );

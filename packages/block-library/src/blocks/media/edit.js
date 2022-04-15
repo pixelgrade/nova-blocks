@@ -1,26 +1,54 @@
-/**
- * Internal dependencies
- */
-import BlockControls from './block-controls';
-import MediaPreview from './preview';
+import classnames from "classnames";
 
 /**
  * WordPress dependencies
  */
-import { Fragment } from '@wordpress/element';
+import { useCallback } from '@wordpress/element';
+import { useBlockProps } from "@wordpress/block-editor";
 
-const MediaEdit = function( props ) {
-	function updateImages( media ) {
-		props.setAttributes( {
+/**
+ * Internal dependencies
+ */
+import { getAlignmentClassnames } from "@novablocks/utils";
+
+import BlockControls from './block-controls';
+import MediaPreview from './preview';
+
+const MediaEdit = ( props ) => {
+
+  const { attributes, setAttributes } = props;
+  const { mediaPosition, verticalAlignment } = attributes;
+
+	const updateImages = useCallback( media => {
+		setAttributes( {
 			images: media.map( ( image ) => JSON.stringify( { id: image.id, url: image.url, alt: image.alt } ) ),
 		} );
-	}
+	}, [] );
+
+	const passedProps = {
+	  ...props,
+    updateImages
+  };
+
+  const className = classnames(
+    `novablocks-media`,
+    `novablocks-u-valign-${ verticalAlignment }`,
+    `has-image-on-the-${ mediaPosition }`,
+    getAlignmentClassnames( attributes ),
+    props.className,
+    `alignfull`,
+  );
+
+  const blockProps = useBlockProps( {
+    className: className,
+    style: props.style,
+  } );
 
 	return (
-		<Fragment>
-			<MediaPreview { ...{ ...props, updateImages } } />
-			<BlockControls { ...{ ...props, updateImages } } />
-		</Fragment>
+		<div { ...blockProps }>
+			<MediaPreview { ...passedProps } />
+			<BlockControls { ...passedProps } />
+		</div>
 	);
 };
 

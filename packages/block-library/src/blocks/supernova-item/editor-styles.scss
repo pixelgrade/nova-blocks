@@ -1,0 +1,45 @@
+.nb-supernova-item--layout-stacked {
+
+  .novablocks-change-media-overlay {
+    display: none;
+  }
+}
+
+.nb-supernova-item:not(.nb-supernova-item--layout-stacked) {
+
+  .novablocks-media-composition {
+
+    .novablocks-media-composition__grid,
+    .novablocks-change-media-overlay {
+      transition: var(--nb-transition);
+      transition-property: opacity;
+      --nb-transition-duration: .15s;
+    }
+
+    .novablocks-media-composition__grid {
+      pointer-events: none;
+    }
+
+    .novablocks-media-composition__grid-item {
+      pointer-events: auto;
+    }
+
+    .novablocks-change-media-overlay {
+      opacity: 0;
+      pointer-events: none;
+    }
+
+    .nb-supernova:is(.is-selected, .has-child-selected) &:hover {
+
+      .novablocks-media-composition__grid {
+        opacity: 0.7;
+      }
+
+      .novablocks-change-media-overlay {
+        opacity: 1;
+        pointer-events: auto;
+        cursor: pointer;
+      }
+    }
+  }
+}

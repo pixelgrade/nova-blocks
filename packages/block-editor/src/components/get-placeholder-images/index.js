@@ -1,7 +1,7 @@
-import Unsplash, { toJson } from "unsplash-js";
+import { createApi } from "unsplash-js";
 
 const APP_NAME = 'Nova Blocks';
-const COLLECTION_ID = 10606015;
+const COLLECTION_ID = '10606015';
 const URL_PARAMS = encodeURI( `utm_source=${ APP_NAME }&utm_medium=referral` );
 
 class PlaceholderImagesCollection {
@@ -20,13 +20,17 @@ class PlaceholderImagesCollection {
 			return [];
 		}
 
-		this.api = new Unsplash( { accessKey: apiKey } );
+		this.api = createApi( { accessKey: apiKey } );
 
-		return this.api.collections.getCollectionPhotos( COLLECTION_ID )
-		               .then( toJson )
-		               .then( photos => {
-			                this.images = photos.map( normalize );
-			                return this.images;
+		return this.api.collections.getPhotos( { collectionId: COLLECTION_ID } )
+		               .then( result => {
+                     if (result.errors) {
+                       console.log('error occurred: ', result.errors[0]);
+                     } else {
+                       const { results: photos, total} = result.response;
+                       this.images = photos.map( normalize );
+                       return this.images;
+                     }
 		               } )
 		               .finally( () => {
 		               	    this.fetchedImages = true;
@@ -79,7 +83,9 @@ class PlaceholderImagesCollection {
 			title: photo.description,
 			caption: `<p class="credits">Photo by <a target="_blank" href="${ photo.user.links.html }?${ URL_PARAMS }">${ photo.user.name }</a> on <a target="_blank" href="https://unsplash.com?${ URL_PARAMS }">Unsplash</a></p>`,
 			download: () => {
-				this.api.photos.downloadPhoto( photo );
+				this.api.photos.trackDownload( {
+          downloadLocation: photo.links.download_location,
+        } );
 			},
 		};
 	};

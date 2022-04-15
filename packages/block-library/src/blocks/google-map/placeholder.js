@@ -34,7 +34,7 @@ class MapPlaceholder extends Component {
 	render() {
 
 		const { apiKeyInstructions } = this.props;
-		const icon = <div className="editor-block-icon block-editor-block-icon">{ icons.map }</div>
+		const icon = <div className="editor-block-icon block-editor-block-icon">{ icons.map }</div>;
 
 		return (
 			<Placeholder
@@ -50,7 +50,7 @@ class MapPlaceholder extends Component {
 					onChange={ ( apiKey ) => { this.setState( { apiKey } ) } }
 					onKeyDown={ ( { keyCode } ) => { this.handleKeyDown( keyCode ) } }
 				/>
-				<Button isLarge disabled={ ! this.state.apiKey } type="button" onClick={ () => { this.props.saveApiKey( this.state.apiKey ) } }>
+				<Button islarge="true" disabled={ ! this.state.apiKey } type="button" onClick={ () => { this.props.saveApiKey( this.state.apiKey ) } }>
 					{ __( 'Save', '__plugin_txtd' ) }
 				</Button>
 			</Placeholder>

@@ -8,17 +8,17 @@ const NOTIFICATION_VISIBLE_CLASS = 'notification--is-visible';
   let $conversationsBlock = $('.novablocks-conversations'),
     $commentList = $('.comment-list'),
     $commentDropdown = $commentList.find('.comment-dropdown').children(),
-    $commentCheckboxes = $commentList.find(' .comment-dropdown-open')
+    $commentCheckboxes = $commentList.find(' .comment-dropdown-open');
 
-  const $notification = $('.novablocks-conversations__notification-text')
+  const $notification = $('.novablocks-conversations__notification-text');
 
-  bindEvents()
+  bindEvents();
 
-  highlightCommentOnClick()
+  highlightCommentOnClick();
 
   function bindEvents () {
     // Close comment "More" dropdown when clicking anywhere outside of it.
-    $(document).on('click', handleCommentDropdownState)
+    $(document).on('click', handleCommentDropdownState);
     // Handle comment direct link copying to the clipboard.
     $commentList.on('click', COPY_LINK_SELECTOR, copyLinkToClipboard)
   }
@@ -29,10 +29,10 @@ const NOTIFICATION_VISIBLE_CLASS = 'notification--is-visible';
       let $this = $(this),
         commentId = $this.data('comment_id'),
         wrapperSelector = '#wrapper-comment-' + commentId,
-        $commentWrapper = $(wrapperSelector)
+        $commentWrapper = $(wrapperSelector);
 
       // Put the whole comment in a working/loading state.
-      $commentWrapper.addClass('working')
+      $commentWrapper.addClass('working');
 
       $.ajax({
         url: nb_comments.ajaxUrl,
@@ -46,11 +46,11 @@ const NOTIFICATION_VISIBLE_CLASS = 'notification--is-visible';
         success: function (response) {
           // Replace the current comment markup with the received one.
           // But only replace the comment wrapper while leaving child comments intact.
-          let $newComment = $($.parseHTML(response))
-          $commentWrapper.replaceWith($newComment.find(wrapperSelector))
+          let $newComment = $($.parseHTML(response));
+          $commentWrapper.replaceWith($newComment.find(wrapperSelector));
 
           // Reinitialize stuff
-          $commentDropdown = $commentList.find('.comment-dropdown').children()
+          $commentDropdown = $commentList.find('.comment-dropdown').children();
           $commentCheckboxes = $commentList.find(' .comment-dropdown-open')
         },
         error: function (response) {
@@ -61,7 +61,7 @@ const NOTIFICATION_VISIBLE_CLASS = 'notification--is-visible';
           // There should be no working state.
           $commentWrapper.removeClass('working')
         }
-      })
+      });
 
       return false
     })
@@ -81,17 +81,17 @@ const NOTIFICATION_VISIBLE_CLASS = 'notification--is-visible';
 
   function copyLinkToClipboard (event) {
 
-    event.preventDefault()
+    event.preventDefault();
 
     let copyText = $(this).attr('href'),
-      succeeded
+      succeeded;
 
-    $notification.removeClass(NOTIFICATION_VISIBLE_CLASS)
+    $notification.removeClass(NOTIFICATION_VISIBLE_CLASS);
 
     document.addEventListener('copy', function (e) {
-      e.clipboardData.setData('text/plain', copyText)
+      e.clipboardData.setData('text/plain', copyText);
       e.preventDefault()
-    }, true)
+    }, true);
 
     try {
       succeeded = document.execCommand('copy')
@@ -106,4 +106,4 @@ const NOTIFICATION_VISIBLE_CLASS = 'notification--is-visible';
     }
   }
 
-})(jQuery, window)
+})(jQuery, window);

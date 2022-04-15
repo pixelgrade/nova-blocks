@@ -1,13 +1,13 @@
 {
 	"name": "@novablocks/utils",
 	"version": "1.0.0",
-	"description": "",
+	"description": "Various logic pieces to be used throughout the Nova Blocks blocks.",
 	"main": "build/index.js",
 	"module": "build-module/index.js",
 	"scripts": {
 		"test": "echo \"Error: no test specified\" && exit 1"
 	},
-	"author": "Razvan Onofrei <razvan.onofrei@pixelgrade.com> (http://razvanonofrei.com)",
+	"author": "Razvan Onofrei <razvan.onofrei@pixelgrade.com> (https://razvanonofrei.com)",
 	"license": "ISC",
 	"repository": {
 		"type": "git",
@@ -18,7 +18,8 @@
 		"url": "https://github.com/pixelgrade/nova-blocks/issues"
 	},
 	"devDependencies": {
-		"@wordpress/api-fetch": "^3.21.5",
-		"@wordpress/data": "^4.26.6"
+		"@wordpress/api-fetch": "^6.3.0",
+		"@wordpress/data": "^5.2.0",
+		"colord": "^2.9.2"
 	}
 }

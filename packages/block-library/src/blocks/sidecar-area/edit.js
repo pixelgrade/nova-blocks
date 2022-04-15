@@ -1,45 +1,33 @@
 import classnames from 'classnames';
 
-import {InnerBlocks} from '@wordpress/block-editor';
-import { dispatch, select } from '@wordpress/data';
-
-const { getBlockRootClientId } = select( 'core/block-editor' );
-const { selectBlock, clearSelectedBlock } = dispatch( 'core/editor' );
+import { useSelectParent } from '@novablocks/block-editor';
+import { InnerBlocks, useBlockProps, useInnerBlocksProps } from '@wordpress/block-editor';
 
 const SidecarAreaEdit = function( props ) {
+  useSelectParent( props );
 
-  const {
-    attributes,
-    className,
-    clientId,
-    isSelected
-  } = props;
-
-  const parentClientId = getBlockRootClientId( clientId );
-
-  const {lastItemIsSticky} = attributes;
-
-  if ( isSelected ) {
-    clearSelectedBlock().then(() => {
-      selectBlock( parentClientId );
-    });
-  }
-
-  const classNames = classnames(
-    className,
+  const className = classnames(
+    props.className,
+    'nb-sidecar-area',
+    `nb-sidecar-area--${ props.attributes.areaName }`,
     {
-      'last-block-is-sticky': lastItemIsSticky === true
+      'nb-content-layout-grid': props.attributes.areaName === 'content'
     }
-  )
+  );
+
+  const blockProps = useBlockProps( {
+    className: className,
+    style: props.style,
+  } );
+
+  const innerBlocksProps = useInnerBlocksProps( blockProps, {
+    templateLock: false,
+    renderAppender: InnerBlocks.ButtonBlockAppender
+  } );
 
   return (
-    <div className={classNames}>
-      <InnerBlocks
-        templateLock={false}
-        renderAppender={InnerBlocks.ButtonBlockAppender}
-      />
-    </div>
+    <div { ...innerBlocksProps } />
   )
-}
+};
 
 export default SidecarAreaEdit;

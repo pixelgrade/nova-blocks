@@ -1,221 +1,115 @@
 @import 'scss/mixins';
-@import 'scss/block-content-alignments';
 @import 'scss/utility';
 
 :root {
-  @include layout-settings;
+  --nb-font-size-smallest: 0.82;
+  --nb-font-size-smaller: 0.93;
+  --nb-font-size-normal: 1;
+  --nb-font-size-larger: 1.12;
+  --nb-font-size-largest: 1.18;
 }
 
-// This is where magic starts.
-.novablocks-sidecar,
-.novablocks-content {
-  position: relative;
-  @include layout-grid;
-  align-items: start;
-}
+.nb-sidecar-area {
 
-// Under 1024px everything is shown
-// on one column, so we need to add
-// a margin top to the sidebar.
-.novablocks-sidebar {
-  
-  z-index: 2;
-  
-  @include below(lap) {
-    margin-top: var(--grid-gap);
-  }
-}
-
-.novablocks-content {
-  
-  grid-column: var(--all-columns);
-  --block-content-end: ce;
-  
-  > * {
-    grid-column: var(--block-content-start)/var(--block-content-end);
-  }
-  
-  // Collections are coming with .alignfull,
-  // to help us with background-color.
-  // Nested in Collection Block is an inner-container
-  // which will be treated as a grid too.
-  > .novablocks-collection {
-    grid-column: var(--all-columns);
-  }
-}
-
-.novablocks-sidecar {
-  
-  grid-column: var(--all-columns) !important;
-  
-  > * {
+  @include above(lap) {
     grid-row: 1;
-  }
-  
-  // Sidebar Left with Content on the Right.
-  // Content will always start at CS and it
-  // will end at layout block limit on the right. Limit on the right
-  // is given by layout block alignment.
-  // Sidebar will always start at block limit on
-  // the left and will end at CS.
-  &--sidebar-left {
-    --block-content-start: cs;
-    --block-content-end: var(--block-limit-right);
-    
-    .novablocks-sidebar {
-      grid-column: var(--block-limit-left)/gs;
-    }
-  }
-  
-  // Sidebar Left with Content Centered and Sidebar Right.
-  // Content will always start at CS and will end at CE.
-  // Sidebar Left will start at block limit left and end at CS.
-  // Sidebar Right will start at CE and will end at block limit on right.
-  &--complex {
-    
-    .novablocks-content {
-      --block-content-start: cs;
-      --block-content-end: ce;
-    }
-    
-    .novablocks-sidebar {
-      grid-column: ws/gs;
-    }
-    
-    .novablocks-sidebar:last-child {
-      grid-column: ge/we;
-    }
+    --nb-block-top-spacing: 0 !important;
   }
 }
-// Default sidebar position is on the right,
-// so it will be positioned between [ge] and block-limit-right.
-.novablocks-sidebar {
-  grid-column: ge/var(--block-limit-right);
+
+.nb-sidecar-area--sidebar {
+  position: relative;
   height: 100%;
-  
-  > * {
-    z-index: 2;
+
+  @include below(lap) {
+    padding-top: 0 !important;
   }
 }
 
 // Apply top and bottom spacing
 // on all blocks inside content
 // and sidebar.
-.novablocks-content,
-.novablocks-sidebar {
-  
-  > * {
-    @include block-spacing;
-  }
-}
-
-// When grid is not used (eg. under 1024px),
-// we are using flex with direction column.
-.novablocks-content,
-.novablocks-sidecar {
-  flex-direction: column;
-}
-
-// Content should always have priority
-// and stay on top.
-.novablocks-content {
+.nb-sidecar-area--content {
   order: -1;
 }
 
-// Make last block from Sidebar Sticky
-.last-block-is-sticky {
-  
-  .novablocks-sidebar {
-    
-    >:last-child {
-      position: sticky;
-      top: var(--sticky-element-top-spacing);
-      margin-bottom: 1em;
-      
-      transition: var(--novablocks-transition);
-      transition-property: opacity;
+.break-align-left {
+  --block-wide-start: ws;
+  --block-full-start: fs;
+}
 
-      &.novablocks-hidden-block {
-        opacity: 0;
+.break-align-right {
+  --block-wide-end: we;
+  --block-full-end: fe;
+}
+
+// Default sidebar position is on the right, so it will be positioned between [ge] and block-limit-right.
+@include above(lap) {
+
+  .nb-sidecar {
+
+    > .nb-sidecar-area--content:not(:only-child) {
+      --block-content-start: var(--block-wide-start);
+      --block-content-end: var(--block-wide-end);
+    }
+  }
+
+  .nb-sidecar--sidebar-left {
+
+    > .nb-sidecar-area--content {
+      --block-wide-start: cs;
+      --block-full-start: cs;
+    }
+
+    > .nb-sidecar-area--sidebar {
+      --block-content-start: ws;
+      --block-content-end: gs;
+    }
+  }
+
+  .nb-sidecar--sidebar-right {
+
+    > .nb-sidecar-area--content {
+      --block-wide-end: ce;
+      --block-full-end: ce;
+      //--block-left-end: var(--block-content-end);
+    }
+
+    > .nb-sidecar-area--sidebar {
+      --block-content-start: ge;
+      --block-content-end: we;
+      //--block-right-start: var(--block-content-start);
+    }
+  }
+}
+
+// Make last block from Sidebar Sticky
+.nb-sidecar--sticky-sidebar.nb-sidecar--sidebar-ready {
+
+  .nb-sidecar-area--sidebar {
+
+    > :last-child {
+      position: sticky;
+      top: var(--nb-sidecar-sticky-top, var(--nb-spacing));
+
+      transition: .2s opacity ease-out;
+
+      @include above(lap) {
+
+        &.novablocks-hidden-block {
+          opacity: 0;
+        }
       }
     }
   }
 }
 
 
-// Minimum Sidebar Width Logic
-
-// Small Sidebar
-.novablocks-sidebar--small {
-  --minimum-sidebar-width:  var(--default-width-small-sidebar);
-}
-
-// Medium Sidebar
-.novablocks-sidebar--medium {
-  --minimum-sidebar-width:  var(--default-width-medium-sidebar);
-}
-
-// Large Sidebar
-.novablocks-sidebar--large {
-  --minimum-sidebar-width:  var(--default-width-large-sidebar);
-}
-
-// Applying Grid on Group Block
-.wp-block-group__inner-container {
-  @include layout-grid;
-  
-  > * {
-    grid-column: var(--block-content-start)/var(--block-content-end);
-  }
-}
-
-
-.novablocks-sidebar,
-.wp-block-group {
-  
-  .wp-block-group__inner-container {
-    --display-mode: block;
-  }
-}
-
-.novablocks-sidecar--sidebar-left {
-  
-  .novablocks-content {
-    
-    --block-content-end: var(--block-limit-right);
-  }
-}
-
-// Custom Offset Logic
-// On blocks without sidebar, we want to
-// adjust the offset based on user needs.
-// Until 1800px, we will use the same logic as minimum sidebar,
-// keeping the minimum width, and after
-// that we will transform that width to em.
-// By default --offset-addon will be equal to 230,
-// but this value can be easily controlled using a Customizer control.
-
-.novablocks-content:first-of-type:last-child {
-  --default-width-offset-sidebar: calc((var(--offset-addon) * 1px - var(--grid-gap)) * 0.5);
-  --sidebar-variable-offset-value: calc( (var(--offset-addon)/ var(--body-font-size)) * 1em );
-  
-  @include above(ultra) {
-    --default-width-offset-sidebar: calc( (var(--sidebar-variable-offset-value) - var(--grid-gap)) * 0.5);
-  }
-}
-
-.ignore-block {
-  
-  .novablocks-sidecar {
-    --default-width-offset-sidebar: var(--default-sidebar-width);
-  }
-}
-
-.novablocks-collection {
-  
-  // We do not want to alter font size modifier
-  // inside Nova Blocks Collections
-  .wp-block-group__inner-container[class] {
-    --font-size-modifier: 1;
+// Sidebar width overrides
+@each $size in small, medium, large {
+  @each $side in left, right {
+    .nb-sidecar--sidebar-#{$side}.nb-sidecar--sidebar-#{$size} {
+      --nb-sidecar-sidebar-#{$side}-width: min(var(--nb-sidecar-sidebar-#{$side}-max-width), var(--nb-sidecar-sidebar-#{$size}-width));
+    }
   }
 }

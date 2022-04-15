@@ -1,104 +1,67 @@
-import classnames from "classnames";
-import { Collection } from "@novablocks/collection";
-import { getContentVariationBySignal } from '@novablocks/utils';
+import classnames from 'classnames';
 
 /**
  * WordPress dependencies
  */
-import {
-	Fragment
- } from '@wordpress/element';
+import { useBlockProps, useInnerBlocksProps } from "@wordpress/block-editor";
+import { select, dispatch } from "@wordpress/data";
 
-import {
-	createHigherOrderComponent
- } from '@wordpress/compose';
+/**
+ * Internal dependencies
+ */
+import { useInnerBlocksCount } from "@novablocks/block-editor";
+import { Collection, CollectionBody, CollectionHeader } from "@novablocks/collection";
+import { getAlignFromMatrix } from "@novablocks/utils";
 
-import {
-	InnerBlocks,
- } from '@wordpress/block-editor';
-
-import {
-	select,
-	dispatch,
- } from '@wordpress/data';
+import { withControlsVisibility } from "./components";
 
 const ALLOWED_BLOCKS = [ 'novablocks/card' ];
-const CARDS_COLLECTION_TEMPLATE = [
-	[ 'novablocks/card' ],
-	[ 'novablocks/card' ],
-	[ 'novablocks/card' ],
-];
 
 const CardsCollectionEdit = ( props ) => {
+	const { attributes, clientId } = props;
+  const { cardLayout, columns, contentType } = attributes;
+  const contentAlign = getAlignFromMatrix( attributes?.contentPosition );
 
-	const {
-		innerBlocks,
-    isSelected,
-	} = props;
+  const contentClassName = classnames(
+    'nb-supernova',
+    `nb-supernova--content-type-${ contentType }`,
+    `nb-supernova--card-layout-${ cardLayout }`,
+    `nb-supernova--${ columns }-columns`,
+    `nb-supernova--valign-${ contentAlign[0] }`,
+    `nb-supernova--halign-${ contentAlign[1] }`,
+    'nb-content-layout-grid',
+    props.className,
+    `alignfull`,
+  );
 
-	const hasAppender = !! innerBlocks && innerBlocks.length < 4 && isSelected;
-	const passedProps = Object.assign( {}, props, {
-		className: classnames(
-			props.className,
-			'novablocks-cards-collection'
-		)
-	} );
+  const blockProps = useBlockProps( {
+    className: contentClassName,
+    style: props.style,
+  } );
 
-	return (
-		<Fragment>
-			<Collection.Component hasAppender={ hasAppender } { ...passedProps }>
-				<InnerBlocks
-					allowedBlocks={ ALLOWED_BLOCKS }
-					template={ CARDS_COLLECTION_TEMPLATE }
-          renderAppender={ hasAppender ? window.undefined : false }
-				/>
-			</Collection.Component>
-		</Fragment>
+  const innerBlocksProps = useInnerBlocksProps( {
+    className: classnames(
+      'nb-collection__layout',
+      'nb-collection__layout--classic',
+    )
+  }, {
+    allowedBlocks: ALLOWED_BLOCKS,
+    renderAppender: false,
+    templateInsertUpdatesSelection: false
+  } );
+
+  const { title, subtitle, ...innerBlockAttributes } = attributes;
+
+  useInnerBlocksCount( clientId, attributes, 'novablocks/card', innerBlockAttributes );
+
+  return (
+    <div { ...blockProps }>
+      <Collection { ...props } key={ 'collection' }>
+        <CollectionHeader { ...props } key={ 'header' } />
+        <CollectionBody { ...props } { ...innerBlocksProps } key={ 'body' }/>
+      </Collection>
+		</div>
 	);
 };
 
-const withCollectionVisibilityAttributes = createHigherOrderComponent( ( BlockListBlock ) => {
-	return ( props ) => {
-		if ( 'novablocks/cards-collection' === props.name ) {
-			const { clientId, attributes } = props;
-			const { getBlock } = select( 'core/block-editor' );
-			const { updateBlockAttributes } = dispatch( 'core/block-editor' );
-			const collection = getBlock( clientId );
-
-			const cards = collection.innerBlocks;
-
-			const newAttributes = (
-				( attributes ) => {
-				  const { contentAlign, showMedia, showTitle, showSubtitle, showDescription, showButtons, showMeta } = attributes;
-					const atts = { contentAlign, showMedia, showTitle, showSubtitle, showDescription, showButtons, showMeta };
-
-					// Card edit applies the value of the level attribute + 1 for the card title heading level
-          // we'll keep this as it is for now since we're implementing supernova
-					atts.level = Math.max( 1, attributes.cardTitleLevel - 1 );
-
-          return Object.assign( {}, atts, {
-            paletteVariation: getContentVariationBySignal( props ),
-            useSourceColorAsReference: attributes.useSourceColorAsReference
-          } );
-				}
-			)( attributes );
-
-			cards.forEach( block => {
-				updateBlockAttributes( block.clientId, newAttributes );
-
-				if ( Array.isArray( block.innerBlocks ) ) {
-					block.innerBlocks.forEach( innerBlock => {
-						updateBlockAttributes( innerBlock.clientId, {
-							align: newAttributes.contentAlign
-						} );
-					} );
-				}
-			} )
-		}
-		return <BlockListBlock { ...props } />
-	};
-}, 'withCollectionVisibilityAttributes' );
-
-wp.hooks.addFilter( 'editor.BlockEdit', 'novablocks/with-collection-visibility-attributes', withCollectionVisibilityAttributes );
-
-export default CardsCollectionEdit;
+export default withControlsVisibility( CardsCollectionEdit );

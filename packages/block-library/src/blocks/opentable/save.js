@@ -1,15 +1,12 @@
 import classnames from "classnames";
 
-/**
- * WordPress dependencies.
- */
-import { getColorSetClassnames } from "@novablocks/utils";
+import { getColorSignalClassnames } from '@novablocks/utils';
 
 const OpenTableSave = function( props ) {
 
 	const {
 		attributes,
-		className
+		className,
 	} = props;
 
 	const {
@@ -19,7 +16,7 @@ const OpenTableSave = function( props ) {
     layoutForm
   } = attributes;
 
-	const formSrc = `//www.opentable.com/widget/reservation/loader?rid=${ restaurantId }&domain=com&type=standard&theme=${ layoutForm }&iframe=false&overlay=false&domain=com&lang=${ language }`
+	const formSrc = `//www.opentable.com/widget/reservation/loader?rid=${ restaurantId }&domain=com&type=standard&theme=${ layoutForm }&iframe=false&overlay=false&domain=com&lang=${ language }`;
 
   const classNames = classnames(
     className,
@@ -28,7 +25,7 @@ const OpenTableSave = function( props ) {
     {
       'has-opentable-logo': showOpenTableLogo === true
     },
-    getColorSetClassnames( attributes )
+    getColorSignalClassnames( attributes, true )
   );
 
 	return (

@@ -1,0 +1,50 @@
+{
+	"showCollectionTitle": {
+		"type": "boolean",
+		"default": true
+	},
+	"showCollectionSubtitle": {
+		"type": "boolean",
+		"default": true
+	},
+	"showMedia": {
+		"type": "boolean",
+		"default": true
+	},
+	"showTitle": {
+		"type": "boolean",
+		"default": true
+	},
+	"showSubtitle": {
+		"type": "boolean",
+		"default": true
+	},
+	"showDescription": {
+		"type": "boolean",
+		"default": true
+	},
+	"showButtons": {
+		"type": "boolean",
+		"default": true
+	},
+	"showMeta": {
+		"type": "boolean",
+		"default": false
+	},
+	"scrollIndicatorBlock": {
+		"type": "boolean",
+		"default": false
+	},
+	"displayInnerContent": {
+		"type": "boolean",
+		"default": true
+	},
+	"showPagination": {
+		"type": "boolean",
+		"default": false
+	},
+	"showArrows": {
+		"type": "boolean",
+		"default": true
+	}
+}

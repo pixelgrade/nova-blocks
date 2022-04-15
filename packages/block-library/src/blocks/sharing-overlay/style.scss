@@ -1,7 +1,7 @@
 @import "scss/mixins.scss";
 
 :root {
-  --novablocks-sharing-overlay-spacing: calc( var(--novablocks-spacing) / 3 );
+  --nb-sharing-overlay-spacing: calc( var(--nb-spacing) / 3 );
 }
 
 .novablocks-sharing {
@@ -19,7 +19,7 @@
 		}
 
 		> * + * {
-			margin-left: calc( var(--novablocks-spacing) / 3 );
+			margin-left: calc( var(--nb-spacing) / 3 );
 		}
 	}
 }
@@ -28,7 +28,7 @@
 	position: absolute;
 	top: 0;
 	left: 0;
-	z-index: 100;
+	z-index: 3000;
 
 	max-width: 100%;
 
@@ -38,15 +38,13 @@
 }
 
 .novablocks-sharing__wrap {
-	background-color: var(--novablocks-bg-color);
-	color: var(--novablocks-fg1-color);
+  position: relative;
 
-	position: relative;
+  width: 25em;
+  max-width: 100%;
 
-	width: 25em;
-	max-width: 100%;
-
-	border-radius: 1em;
+  border-radius: 1em;
+  background-color: var(--sm-current-bg-color, var(--nb-bg-color));
 
 	a {
 		color: inherit;
@@ -74,27 +72,34 @@
 	position: relative;
 	max-height: 100%;
 
-	padding: calc( var(--novablocks-sharing-overlay-spacing) * 1.5 );
+	padding: calc( var(--nb-spacing) / 2 );
 	overflow: auto;
 }
 
-.novablocks-sharing__content {
+:is(
+  .novablocks-sharing__content,
+  .novablocks-sharing__group,
+  .novablocks-sharing__group-content
+) {
+  @include block-spacing-container;
+}
 
-	> * {
-		--novablocks-element-spacing-multiplier: 0.5;
-		@include block-spacing;
-  
-    &:not(:first-child) {
-      --novablocks-block-top-spacing: 1;
-      --novablocks-block-bottom-spacing: 0;
-    }
-	}
+.novablocks-sharing__content > * {
+  --nb-spacing-current-multiplier: 0.4;
+}
+
+.novablocks-sharing__group > * {
+  --nb-spacing-current-multiplier: 0.15;
+}
+
+.novablocks-sharing__group-content > * {
+  --nb-spacing-current-multiplier: 0.125;
 }
 
 .novablocks-sharing__close {
 	position: absolute;
-	top: var(--novablocks-sharing-overlay-spacing);
-	right: var(--novablocks-sharing-overlay-spacing);
+	top: var(--nb-sharing-overlay-spacing);
+	right: var(--nb-sharing-overlay-spacing);
 
 	display: flex;
 	justify-content: center;
@@ -119,14 +124,6 @@
 
 .novablocks-sharing__group {
 	position: relative;
-}
-
-.novablocks-sharing__group-content {
-
-	> * {
-		--novablocks-element-spacing-multiplier: 0.125;
-		@include block-spacing;
-	}
 }
 
 .novablocks-sharing__notification-wrap {
@@ -167,6 +164,7 @@
 }
 
 .novablocks-sharing__notification-icon {
+	color: #00cab6; // @todo: replace it with accent color from functional green
 
 	svg {
 		display: block;
@@ -178,16 +176,8 @@
 	}
 }
 
-.novablocks-sharing__group {
-
-	> * {
-		--novablocks-element-spacing-multiplier: 0.25;
-		@include block-spacing;
-	}
-}
-
 .novablocks-sharing__group-description[class] {
-	--novablocks-element-spacing-multiplier: 0;
+	--nb-spacing-current-multiplier: 0;
 }
 
 .novablocks-sharing__list {
@@ -207,7 +197,11 @@
 
 .novablocks-sharing__link,
 .novablocks-sharing__copy-input {
-	padding: calc( var(--novablocks-sharing-overlay-spacing) * 3 / 4 );
+	padding: calc( var(--nb-sharing-overlay-spacing) * 3 / 4 );
+}
+
+.novablocks-sharing__copy-input {
+	font-size: 0.8em;
 }
 
 .novablocks-sharing__link {
@@ -216,16 +210,16 @@
 
   // reset possible link styles
   &[class][class] {
-    color: var(--novablocks-fg1-color);
+    color: var(--sm-current-fg1-color, var(--nb-fg1-color));
     text-decoration: none;
   }
 
 	@include novablocks-sharing-link-hover;
 
-	margin-left: calc( var(--novablocks-sharing-overlay-spacing) * -3 / 4 );
+	margin-left: calc( var(--nb-sharing-overlay-spacing) * -3 / 4 );
 
 	> * {
-		margin-left: calc( var(--novablocks-sharing-overlay-spacing) * 3 / 4 );
+		margin-left: calc( var(--nb-sharing-overlay-spacing) * 3 / 4 );
 	}
 }
 
@@ -233,10 +227,10 @@
 	display: flex;
 	justify-content: center;
 	align-items: center;
-	flex: 0 0 1.25em;
+	flex: 0 0 1.5em;
 
 	svg {
-		width: 1.25em;
-		height: 1.25em;
+		width: 1em;
+		height: 1em;
 	}
 }

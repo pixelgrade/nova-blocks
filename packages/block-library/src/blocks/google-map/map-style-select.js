@@ -2,7 +2,7 @@ import classnames from 'classnames';
 import { compileStyles, getMarkersCenter } from "./utils";
 import defaultMapCenter from './default-map-center';
 
-import { 
+import {
 	Component
  } from '@wordpress/element';
 
@@ -70,7 +70,7 @@ class MapStyleSelect extends Component {
 									'is-active': option.slug === this.state.active,
 								} ) }
 								onClick={ () => {
-									this.setState( { active: option.slug } )
+									this.setState( { active: option.slug } );
 									onChange( option.slug );
 								} }
 								role="button"

@@ -1,6 +1,4 @@
-import AdvancedGallery from '@novablocks/advanced-gallery';
-
-import iconSvg from './advanced-gallery-block.svg';
+import { getRandomAttributes } from '@novablocks/media-composition';
 
 import {
 	generateDefaults,
@@ -17,11 +15,8 @@ import edit from './edit';
 import deprecated from './deprecated';
 import transforms from './transforms';
 
-import blockAttributes from './attributes';
-
-const { getRandomAttributes } = AdvancedGallery.utils;
-
-const attributes = Object.assign( {}, blockAttributes, AdvancedGallery.attributes );
+import iconSvg from './icon.svg';
+import attributes from './attributes';
 
 /**
  * WordPress dependencies
@@ -50,7 +45,7 @@ async function getNewDefaults() {
 generateDefaults( 'novablocks/advanced-gallery', getNewDefaults );
 
 registerBlockType( 'novablocks/advanced-gallery', {
-	title: __( 'Gallery of the Stars', '__plugin_txtd' ),
+	title: __( 'Gallery of the Stars (Deprecated)', '__plugin_txtd' ),
 	description: __( 'Display galleries of images in unique and creative compositions.', '__plugin_txtd' ),
 	category: 'nova-blocks',
 	icon: getSvg( iconSvg ),
@@ -58,11 +53,17 @@ registerBlockType( 'novablocks/advanced-gallery', {
 		align: [ 'wide', 'full' ],
     html: false,
     novaBlocks: {
-      blobs: true
+      mediaComposition: true,
+      spaceAndSizing: true,
+      cardElementsStacking:true,
     }
 	},
 	// Additional search terms
-	keywords: [ __( 'image with text', '__plugin_txtd' ), __( 'columns', '__plugin_txtd' ), __( 'side text', '__plugin_txtd' ) ],
+	keywords: [
+	  __( 'image with text', '__plugin_txtd' ),
+    __( 'columns', '__plugin_txtd' ),
+    __( 'side text', '__plugin_txtd' )
+  ],
 	edit,
 	save() {
 		return false;

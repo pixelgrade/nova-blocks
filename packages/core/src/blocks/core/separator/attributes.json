@@ -1,0 +1,12 @@
+{
+	"colorSignal": {
+		"default": 3
+	},
+	"paletteVariation": {
+		"default": 12
+	},
+	"align": {
+		"type": "string",
+		"default": "none"
+	}
+}

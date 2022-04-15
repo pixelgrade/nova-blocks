@@ -51,10 +51,10 @@ if ( ! class_exists( 'NovaBlocks_Comments_List' ) ) {
 		/**
 		 * Instantiate a comments list renderer.
 		 *
-		 * @param WP_Post|int|null $post Optional. The post who's comments to render. Defaults to the current post.
+		 * @param WP_Post|int|null $post Optional. The post whose comments to render. Defaults to the current post.
 		 * @param array            $args Optional. The arguments to consider when rendering.
 		 */
-		public function __construct( $post = null, $args = [] ) {
+		public function __construct( $post = null, array $args = [] ) {
 			$this->post = get_post( $post, OBJECT );
 
 			// Make sure defaults are in place.
@@ -116,7 +116,7 @@ if ( ! class_exists( 'NovaBlocks_Comments_List' ) ) {
 		 *
 		 * @return string
 		 */
-		public function render( $args = [] ) {
+		public function render( array $args = [] ): string {
 			// Render nothing without a proper post.
 			if ( empty( $this->post ) ) {
 				return '';
@@ -136,7 +136,7 @@ if ( ! class_exists( 'NovaBlocks_Comments_List' ) ) {
 			}
 
 			// Allow others to change this.
-			$wp_list_comments_args = apply_filters( 'novablocks_wp_list_comments_args', [
+			$wp_list_comments_args = apply_filters( 'novablocks/comments/wp_list_comments_args', [
 				'walker'                       => new NovaBlocks_Walker_Comment(),
 				'max_depth'                    => $list_args['maxThreadDepth'],
 				'reverse_top_level'            => $list_args['reverseTopLevelCommentsOrder'],
@@ -222,7 +222,7 @@ if ( ! class_exists( 'NovaBlocks_Comments_List' ) ) {
 				$should_render = false;
 			}
 
-			return apply_filters( 'novablocks_comments_list_should_render', $should_render, $this->post, $args, $comments );
+			return apply_filters( 'novablocks/comments/list_should_render', $should_render, $this->post, $args, $comments );
 		}
 
 		protected function register_hooks() {
@@ -246,7 +246,7 @@ if ( ! class_exists( 'NovaBlocks_Comments_List' ) ) {
 		 *
 		 * @return WP_Comment_Query|null
 		 */
-		public function set_query( $query, $query_args ) {
+		public function set_query( WP_Comment_Query $query, array $query_args ): ?WP_Comment_Query {
 			$this->query      = $query;
 			$this->query_args = $query_args;
 
@@ -256,7 +256,7 @@ if ( ! class_exists( 'NovaBlocks_Comments_List' ) ) {
 		/**
 		 * @return WP_Comment[]
 		 */
-		public function get_comments() {
+		public function get_comments(): ?array {
 			if ( ! is_null( $this->comments ) ) {
 				return $this->comments;
 			}
@@ -267,7 +267,7 @@ if ( ! class_exists( 'NovaBlocks_Comments_List' ) ) {
 		/**
 		 * @return int
 		 */
-		public function get_comments_count() {
+		public function get_comments_count(): int {
 			if ( ! is_null( $this->comments ) ) {
 				return count( $this->comments );
 			}
@@ -281,7 +281,7 @@ if ( ! class_exists( 'NovaBlocks_Comments_List' ) ) {
 		 *
 		 * @return WP_Comment[]
 		 */
-		public function get_comments_from_query( $query, $query_args ) {
+		public function get_comments_from_query( WP_Comment_Query $query, array $query_args ): array {
 
 			return $this->prepare_comments_from_query( $query, $query_args );
 		}
@@ -292,7 +292,7 @@ if ( ! class_exists( 'NovaBlocks_Comments_List' ) ) {
 		 *
 		 * @return WP_Comment[]
 		 */
-		protected function prepare_comments_from_query( $query, $query_args ) {
+		protected function prepare_comments_from_query( WP_Comment_Query $query, array $query_args ): array {
 			if ( empty( $query->comments ) ) {
 				return [];
 			}
@@ -336,7 +336,7 @@ if ( ! class_exists( 'NovaBlocks_Comments_List' ) ) {
 		 *
 		 * @return array
 		 */
-		protected function parse_args( $args ) {
+		protected function parse_args( array $args ): array {
 			// Handle the arguments by merging them with the existing ones.
 			return wp_parse_args( $args, $this->args );
 		}
@@ -348,7 +348,7 @@ if ( ! class_exists( 'NovaBlocks_Comments_List' ) ) {
 		 *
 		 * @return mixed|null The argument value if present, null otherwise.
 		 */
-		public function get_arg( $arg ) {
+		public function get_arg( string $arg ) {
 			if ( isset( $this->args[ $arg ] ) ) {
 				return $this->args[ $arg ];
 			}
@@ -361,7 +361,7 @@ if ( ! class_exists( 'NovaBlocks_Comments_List' ) ) {
 		 *
 		 * @return array
 		 */
-		protected function comments_query_args( $args = [] ) {
+		protected function comments_query_args( array $args = [] ): array {
 			// Make sure that all the needed args are there.
 			$args = $this->parse_args( $args );
 
@@ -406,7 +406,7 @@ if ( ! class_exists( 'NovaBlocks_Comments_List' ) ) {
 						 * @param int The time in minutes the comment should be visible to the author.
 						 * @param WP_Comment $comment
 						 */
-						$comment_preview_time    = apply_filters( 'novablocks_comments_list_preview_time', $args['commentPreviewTime'], $comment );
+						$comment_preview_time    = apply_filters( 'novablocks/comments/list_preview_time', $args['commentPreviewTime'], $comment );
 						$comment_preview_expires = strtotime( $comment->comment_date_gmt . '+' . absint( $comment_preview_time ) . ' minute' );
 
 						if ( time() < $comment_preview_expires ) {
@@ -484,7 +484,7 @@ if ( ! class_exists( 'NovaBlocks_Comments_List' ) ) {
 			 *
 			 */
 			$comment_args = apply_filters( 'comments_template_query_args', $comment_args );
-			$comment_args = apply_filters( 'novablocks_comments_list_query_args', $comment_args );
+			$comment_args = apply_filters( 'novablocks/comments/list_query_args', $comment_args );
 
 			return $comment_args;
 		}
@@ -498,7 +498,7 @@ if ( ! class_exists( 'NovaBlocks_Comments_List' ) ) {
 		 *
 		 * @return bool
 		 */
-		protected function localize_wp_list_comments_args( $args ) {
+		protected function localize_wp_list_comments_args( array $args ): bool {
 
 			// We don't want the walker instance in the localized data.
 			if ( isset( $args['walker'] ) ) {
@@ -531,7 +531,7 @@ if ( ! class_exists( 'NovaBlocks_Comments_List' ) ) {
 		 *
 		 * @return string
 		 */
-		public function get_single_comment_markup( $comment = null, $args = [] ) {
+		public function get_single_comment_markup( $comment = null, array $args = [] ): string {
 			$comment = get_comment( $comment );
 			if ( empty( $comment ) ) {
 				return '';

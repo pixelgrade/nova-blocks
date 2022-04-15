@@ -1,0 +1,32 @@
+.blob-mix,
+.blob-mix__media,
+.blob-mix__mask {
+  width: 100%;
+  height: 100%;
+}
+
+.blob-mix__mask {
+  overflow: hidden;
+}
+
+.blob-mix__mask-debug,
+.blob-mix__decoration {
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	transform-origin: 0 0;
+}
+
+.blob-mix__media {
+  position: relative;
+	z-index: 10;
+	transform: var(--blob-mix-media-transform);
+  transform-origin: 0 0;
+}
+
+.blob-mix__decoration {
+	transform: var(--blob-mix-decoration-transform);
+  fill: var(--sm-current-accent-color, var(--nb-accent-color));
+}

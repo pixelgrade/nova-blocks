@@ -1,13 +1,13 @@
 {
 	"name": "@novablocks/easings",
 	"version": "1.0.0",
-	"description": "",
+	"description": "Logic to handle the easings block component.",
 	"main": "build/index.js",
 	"module": "build-module/index.js",
 	"scripts": {
 		"test": "echo \"Error: no test specified\" && exit 1"
 	},
-	"author": "Razvan Onofrei <razvan.onofrei@pixelgrade.com> (http://razvanonofrei.com)",
+	"author": "Razvan Onofrei <razvan.onofrei@pixelgrade.com> (https://razvanonofrei.com)",
 	"license": "ISC",
 	"repository": {
 		"type": "git",

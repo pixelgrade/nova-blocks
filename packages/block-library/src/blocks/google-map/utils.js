@@ -1,5 +1,6 @@
 import defaultMapCenter from "./default-map-center";
 import styles from "./styles";
+import { select } from '@wordpress/data';
 
 export const addVisibilityToStyles = function( styles, showLabels, showIcons ) {
 
@@ -21,7 +22,7 @@ export const addVisibilityToStyles = function( styles, showLabels, showIcons ) {
 };
 
 export const compileStyles = function( styleData ) {
-	const accentColor = getMapAccentColor.call( this );
+	const accentColor = getMapAccentColor();
 	const styleDataString = JSON.stringify( styleData ).replace( /%ACCENT_COLOR%/g, accentColor );
 	return JSON.parse( styleDataString );
 };
@@ -37,7 +38,9 @@ export const getMapStyles = function() {
 };
 
 export const getMapAccentColor = function() {
-	return this?.props?.settings?.map?.accentColor || '#222222';
+  const novablocksSettings = select( 'novablocks' ).getSettings();
+
+	return novablocksSettings?.map?.accentColor || '#222222';
 };
 
 export const getCenterFromMarkers = function( markers ) {

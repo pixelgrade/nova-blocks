@@ -1,17 +1,34 @@
 {
 	"sidebarWidth": {
 		"type": "string",
-		"default": "medium"
-	},
-	"layout": {
-		"type": "string"
+		"default": "small"
 	},
 	"sidebarPosition": {
 		"type": "string",
-		"default": "right"
+		"default": "none"
 	},
 	"lastItemIsSticky": {
 		"type": "boolean",
 		"default": false
+	},
+	"tagName": {
+		"type": "string",
+		"default": "div"
+	},
+	"anchor": {
+		"type": "string",
+		"default": ""
+	},
+	"templateLock": {
+		"type": [ "string", "boolean" ],
+		"enum": [ "all", "insert", false ]
+	},
+	"contentFontSize": {
+		"type": "string",
+		"default": "normal"
+	},
+	"sidebarFontSize": {
+		"type": "string",
+		"default": "normal"
 	}
 }

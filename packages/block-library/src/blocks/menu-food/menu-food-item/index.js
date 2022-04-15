@@ -1,15 +1,15 @@
 /**
- * Internal dependencies
- */
-import iconSvg from '../menu-food-block.svg';
-import edit from './edit';
-import save from './save';
-
-/**
  * WordPress dependencies
  */
 import { __ } from '@wordpress/i18n';
 import { registerBlockType } from '@wordpress/blocks';
+
+/**
+ * Internal dependencies
+ */
+import iconSvg from '../icon.svg';
+import edit from './edit';
+import save from './save';
 import { getSvg } from "@novablocks/block-editor";
 
 registerBlockType( 'novablocks/menu-food-item', {

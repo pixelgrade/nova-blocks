@@ -12,11 +12,20 @@
 	.components-toggle-control .components-base-control__field {
 		justify-content: center;
 	}
+
+  .wp-block-button__inline-link {
+    color: inherit;
+  }
+
+  @include placeholder {
+    color: var(--nb-fg1-color);
+    opacity: 0.5;
+  }
 }
 
 .novablocks-announcement-bar {
 	.block-editor-inner-blocks {
-		padding: var(--novablocks-announcement-bar-padding) calc(2*var(--novablocks-announcement-bar-padding) + var(--novablocks-announcement-bar-close-width));
+		padding: var(--nb-announcement-bar-padding) calc(2*var(--nb-announcement-bar-padding) + var(--nb-announcement-bar-close-width));
 	}
 
 	.block-list-appender {

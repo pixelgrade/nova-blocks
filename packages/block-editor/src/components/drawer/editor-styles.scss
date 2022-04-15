@@ -1,6 +1,14 @@
 .novablocks-drawers {
 	position: relative;
 	overflow: hidden;
+
+  transition: var(--nb-transition);
+  transition-property: height;
+}
+
+.novablocks-drawers__wrap {
+  transition: var(--nb-transition);
+  transition-property: transform;
 }
 
 .novablocks-drawers__list {
@@ -55,7 +63,7 @@
 		border-top-width: 2px;
 		border-right-width: 2px;
 
-		transition: var(--novablocks-transition);
+		transition: var(--nb-transition);
 		transition-property: border-color;
 	}
 

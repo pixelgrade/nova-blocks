@@ -1,37 +1,43 @@
-@mixin block-spacing-apply-multiplier {
-
-	& {
-		--novablocks-element-spacing-multiplier: var(--novablocks-element-spacing-level-1-multiplier);
-	}
-
-	& & {
-		--novablocks-element-spacing-multiplier: var(--novablocks-element-spacing-level-2-multiplier);
-	}
-
-	& & & {
-		--novablocks-element-spacing-multiplier: var(--novablocks-element-spacing-level-3-multiplier);
-	}
+@mixin block-spacing {
+  margin-top: calc(var(--nb-block-top-spacing) * var(--nb-current-spacing) * var(--nb-spacing-multiplier-override, 1));
+  margin-bottom: calc(var(--nb-block-bottom-spacing) * var(--nb-current-spacing) * var(--nb-spacing-multiplier-override, 1));
+  padding-top: calc(var(--nb-emphasis-top-spacing) * var(--nb-current-spacing) * var(--nb-spacing-multiplier-override, 1));
+  padding-bottom: calc(var(--nb-emphasis-bottom-spacing) * var(--nb-current-spacing) * var(--nb-spacing-multiplier-override, 1));
 }
 
-@mixin block-spacing-reset {
+
+// --nb-spacing-base:               ...
+// --nb-spacing-current-multiplier: ... 
+// --nb-spacing-modifier:           control used by the 'Spacing and Sizing' block component
+@mixin block-spacing-modifier( $spacing-modifier: 1 ) {
+  --nb-spacing-modifier: #{ $spacing-modifier };
+  --nb-spacing-base: calc(var(--nb-spacing-current-multiplier) * var(--nb-spacing-modifier));
 
   > * {
-	  --novablocks-block-top-spacing: 1;
-    --novablocks-block-bottom-spacing: 0;
-    --novablocks-emphasis-top-spacing: 0;
-    --novablocks-emphasis-bottom-spacing: 0;
+    --nb-spacing-current-multiplier: var(--nb-spacing-base);
   }
 
-  > :first-child {
-    --novablocks-block-top-spacing: 0;
+  & > & {
+    --nb-spacing-base: inherit;
+  }
+}
+
+@mixin block-spacing-container {
+
+  > * {
+    --nb-block-top-spacing: 1;
+    --nb-block-bottom-spacing: 0;
+    --nb-emphasis-top-spacing: 0;
+    --nb-emphasis-bottom-spacing: 0;
+    --nb-current-spacing: calc(var(--nb-spacing) * var(--nb-spacing-current-multiplier));
+
+    @include block-spacing;
   }
 
+  // Set the first element vertical-align with the top of the container
+  // Exceptions: set certain HTML tags to skip being classified as first-child (eg. <style>)
+  > :first-child,
+  :is(noscript, style) + * {
+    --nb-block-top-spacing: 0; 
+  }
 }
-
-@mixin block-spacing {
-	margin-top: calc( var(--novablocks-block-top-spacing) * var(--novablocks-spacing) * var(--novablocks-element-spacing-multiplier, 1) );
-	margin-bottom: calc( var(--novablocks-block-bottom-spacing) * var(--novablocks-spacing) * var(--novablocks-element-spacing-multiplier, 1) );
-	padding-top: calc( var(--novablocks-emphasis-top-spacing) * var(--novablocks-spacing) * var(--novablocks-element-spacing-multiplier, 1) );
-	padding-bottom: calc( var(--novablocks-emphasis-bottom-spacing) * var(--novablocks-spacing) * var(--novablocks-element-spacing-multiplier, 1) );
-}
-

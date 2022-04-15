@@ -1,4 +1,27 @@
-// internal dependencies
+/**
+ * WordPress dependencies
+ */
+import {
+  Drawer,
+  Drawers,
+  DrawerList,
+  DrawerPanel,
+  DrawerListBefore,
+  DrawerListAfter
+} from "../index";
+
+import { __ } from '@wordpress/i18n';
+import { useBlockEditContext } from '@wordpress/block-editor';
+
+import {
+  Children,
+  useCallback,
+  useMemo,
+} from '@wordpress/element';
+
+/**
+ * Internal dependencies
+ */
 import { groupBy, orderBy } from 'lodash';
 import { getSectionsFromFills } from './utils';
 import { ControlsSectionsSlot, ControlsSectionsFill } from "./controls-sections-slot-fill";
@@ -7,51 +30,34 @@ import { DrawerContentSlot, DrawerContentFill } from "./drawer-content-slot-fill
 import Cube from './cube';
 import { ActiveSectionTabs } from "./tabs";
 
-import {
-	Drawer,
-	Drawers,
-	DrawerList,
-	DrawerPanel,
-	DrawerListBefore,
-	DrawerListAfter
-} from "../index";
-
-import { __ } from '@wordpress/i18n';
-import { useBlockEditContext } from '@wordpress/block-editor';
-
-import {
-	Children,
- } from '@wordpress/element';
-
 const ControlsSectionsComponent = ( props ) => {
 
 	const { sections } = props;
 
-	const advancedButton = document.querySelector( '.block-editor-block-inspector__advanced' );
-	const advancedWrapper = !! advancedButton && advancedButton.parentNode;
+	const advancedButton = useMemo( () => document.querySelector( '.block-editor-block-inspector__advanced' ), [] );
+	const advancedWrapper = useMemo( () => !! advancedButton && advancedButton.parentNode );
 
 	if ( !! advancedWrapper ) {
-		advancedWrapper.style.setProperty( 'transition', 'height .3s ease-out' );
-		advancedWrapper.style.setProperty( 'overflow', 'hidden' );
+		advancedWrapper.style.setProperty( 'transition', 'opacity .3s ease-out' );
 	}
 
-	const onOpen = () => {
+	const onOpen = useCallback( () => {
 		if ( !! advancedWrapper?.style ) {
-			advancedWrapper.style.setProperty( 'height', ` ${ advancedButton.offsetHeight }px`, );
+			advancedWrapper.style.setProperty( 'opacity', 1, );
 			requestAnimationFrame( () => {
-				advancedWrapper.style.setProperty( 'height', 0 );
+				advancedWrapper.style.setProperty( 'opacity', 0 );
 			} );
 		}
-	};
+	}, [ advancedWrapper ] );
 
-	const onClose = () => {
+	const onClose = useCallback( () => {
 		if ( !! advancedWrapper?.style ) {
 			advancedWrapper.addEventListener( 'transitionend', () => {
 				advancedWrapper.style.removeProperty( 'height' );
 			}, { once: true } );
-			advancedWrapper.style.setProperty( 'height', ` ${ advancedButton.offsetHeight }px` );
+			advancedWrapper.style.setProperty( 'opacity', 1 );
 		}
-	};
+	}, [ advancedWrapper ] );
 
 	const groups = groupBy( sections, section => {
 		return !! section.props.group ? section.props.group : '';
@@ -62,7 +68,7 @@ const ControlsSectionsComponent = ( props ) => {
 			<Drawers onOpen={ onOpen } onClose={ onClose }>
 				<DrawerListBefore>
 					<div className="novablocks-sections__header">
-						<div className="novablocks-sections__title">{ __( 'Design Customization' ) }</div>
+						<div className="novablocks-sections__title">{ __( 'Design Customization', '__plugin_txtd' ) }</div>
 						<Cube />
 					</div>
 				</DrawerListBefore>
@@ -71,15 +77,16 @@ const ControlsSectionsComponent = ( props ) => {
 						const sections = groups[ key ];
 
 						return (
-							<DrawerList title={ key } key={ key }>
+							<DrawerList title={ key } key={ 'drawer_' + key }>
 								{ sections.map( ( section, index ) => {
-									const { label, priority } = section.props;
+									const { id, label, order } = section.props;
 
 									return (
 										<Drawer
-											key={ index }
+											key={ 'drawer_' + key + '_section_' + id }
+                      id={ id }
 											title={ label }
-											priority={ priority }
+											order={ order }
 										/>
 									);
 								} ) }
@@ -113,7 +120,7 @@ const ControlsSectionsComponent = ( props ) => {
 							} );
 
 							return (
-								<DrawerPanel key={ index }>
+								<DrawerPanel key={ 'drawer_panel_' + key + '_' + index } id={ section.props.id }>
 									<ActiveSectionTabs
 										title={ section.props.label }
 										tabs={ compiledTabs }

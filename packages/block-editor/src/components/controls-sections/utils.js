@@ -13,7 +13,7 @@ export const mergeChildrenProps = ( children1, children2 ) => {
 	let children2Array = Array.isArray( children2 ) ? children2 : [ children2 ];
 
 	return children1Array.concat( children2Array );
-}
+};
 
 export const getSectionsFromFills = ( fills ) => {
 	const sections = [];
@@ -21,7 +21,7 @@ export const getSectionsFromFills = ( fills ) => {
 	// Merge sections with the same label
 	fills.forEach( fill => {
 		const index = sections.findIndex( section => {
-			return section.props.label === fill[0].props.label;
+			return section.props.id === fill[0].props.id;
 		} );
 
 		if ( index === -1 ) {

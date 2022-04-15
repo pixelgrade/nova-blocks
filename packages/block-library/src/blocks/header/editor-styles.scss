@@ -4,10 +4,57 @@
   --enable-social-icons: 1;
 }
 
-.wp-block[data-type='novablocks/header'] {
+:is(.nb-header, #more.specific) {
+  display: block;
+  position: relative;
+}
 
-	.editor-block-list__layout {
-		display: flex;
-		align-items: center;
-	}
+.nb-header:not(.nb-header--ready) {
+  opacity: 1;
+  --header-background-opacity: 1;
+}
+
+// Use a Custom HTML block after the Header to
+// provide custom styling for a certain block pattern.
+.nb-header + .wp-block-html {
+  
+  grid-column: var(--block-full-start) / var(--block-full-end);
+
+  &:not(.is-selected) {
+    position: absolute;
+    right: 0.5em;
+    bottom: 0.5em;
+
+    height: 0.9em;
+    width: 0.9em !important;
+    overflow: hidden;
+    margin-top: 0 !important;
+
+    border-radius: 100px;
+    cursor: pointer !important;
+
+    transition: transform 0.3s !important;
+
+    .block-editor-plain-text {
+      width: 100%;
+      border: none !important;
+      padding: 0 !important;
+      height: auto !important;
+      pointer-events: none;
+    }
+
+    &:after {
+      content: "";
+      color: white;
+      font-size: 11px;
+      font-family: sans-serif;
+      font-weight: bold;
+      text-align: center;
+      background: var(--wp-admin-theme-color);
+    }
+
+    &.is-hovered {
+      transform: scale(1.4);
+    }
+  }
 }

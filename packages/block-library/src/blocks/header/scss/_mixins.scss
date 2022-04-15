@@ -12,20 +12,20 @@
     width: 100%;
     height: 100%;
 
-    background-color: var(--novablocks-bg-color);
+    background-color: var(--sm-current-bg-color, var(--nb-bg-color));
     opacity: var(--header-background-opacity, 1);
 
-    transition: var(--novablocks-transition);
+    transition: var(--nb-transition);
     transition-property: opacity;
   }
 }
 
+
+
 @mixin header-shadow {
-  
   --header-shadow-opacity: 0;
   
-  &.novablocks-header--sticky,
-  &.novablocks-header--mobile[style*='fixed']{
+  &.nb-header--mobile[style*='fixed'] {
     --header-shadow-opacity: 0.1;
   }
 
@@ -36,8 +36,37 @@
     box-shadow: var(--shadow-color, #000000) 0 var(--shadow-y-offset, 0.0625em) var(--shadow-blur, 0.125em);
     opacity: var(--header-shadow-opacity, 0);
     pointer-events: none;
-    transition: var(--novablocks-transition);
+    transition: var(--nb-transition);
     transition-property: opacity;
     z-index: -1;
   }
+}
+
+
+
+@mixin badge( $style: default ) {
+  border: none;
+  padding: .21em .6em 0.23em;
+
+  @if $style == default {
+    background-color: var(--sm-current-bg-color);
+
+    border-radius: 0;
+  }
+
+  @if $style == highlighted {
+    background-color: var(--sm-current-accent-color);
+    background-image: linear-gradient(to right, rgba(0, 0, 0, 0.8), rgba(255, 255, 255, 0.6), rgba(0, 0, 0, 0.3));
+    background-blend-mode: hue;
+    
+    // Limit the badge text color to white to make it pop more
+    // 
+    // @todo: when Palette Basis Offset is 4-5 + 10-11 the badge text is not visible
+    // @initial solution: color: var(--sm-current-bg-color);
+    color: #FFFFFF;
+    
+    border-radius: 1em;
+    border: none;
+  }
+  
 }

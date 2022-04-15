@@ -1,0 +1,20 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/block.json",
+	"apiVersion": 2,
+	"name": "novablocks/sharing-overlay",
+	"title": "Sharing System",
+	"category": "nova-blocks",
+	"description": "Display a sharing button and overlay to make it easy for your readers to spread the word.",
+	"keywords": ["share", "social", "facebook", "twitter", "linkedin", "link", "copy", "email", "print", "clipboard"],
+	"textdomain": "nova-blocks",
+	"attributes": {},
+	"usesContext": [],
+	"supports": {
+		"html": false,
+		"novaBlocks": {
+			"colorSignal": {
+				"controls": true
+			}
+		}
+	}
+}

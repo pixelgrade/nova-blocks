@@ -3,28 +3,38 @@
  */
 import { __ } from '@wordpress/i18n';
 import { registerBlockType } from '@wordpress/blocks';
+import { addFilter } from "@wordpress/hooks";
 
 /**
  * Internal dependencies
  */
-import iconSvg from './google-map-block.svg';
-import edit from "./edit";
-
 import { getSvg } from "@novablocks/block-editor";
 
+import iconSvg from './icon.svg';
+import edit from "./edit";
 import attributes from "./attributes";
+import attributesOverwrite from "./attributes-overwrite.json";
 
-registerBlockType( 'novablocks/google-map', {
-	title: __( 'Map of the World', '__plugin_txtd' ),
-	description: __( 'Display an interactive map to show the location of your venue.', '__plugin_txtd' ),
-	category: 'nova-blocks',
+const BLOCK_NAME = 'novablocks/google-map';
+
+const overwriteAttributes = ( settings ) => {
+
+  if ( settings.name !== BLOCK_NAME ) {
+    return settings;
+  }
+
+  return {
+    ...settings,
+    attributes: {
+      ...settings.attributes,
+      ...attributesOverwrite
+    }
+  };
+};
+addFilter( 'blocks.registerBlockType', 'novablocks/google-map/attributes-overwrite', overwriteAttributes, Number.MAX_SAFE_INTEGER );
+
+registerBlockType( BLOCK_NAME, {
 	icon: getSvg( iconSvg ),
-	keywords: [
-		__( 'google', '__plugin_txtd' ),
-		__( 'maps', '__plugin_txtd' ),
-		__( 'google maps', '__plugin_txtd' ),
-		__( 'location', '__plugin_txtd' )
-	],
 	getEditWrapperProps( attributes ) {
 		const { align } = attributes;
 		if ( 'center' === align || 'full' === align ) {
@@ -32,14 +42,6 @@ registerBlockType( 'novablocks/google-map', {
 		}
 	},
 	attributes,
-  supports: {
-    html: false,
-    novaBlocks: {
-      doppler: {
-        altAttributes: true
-      }
-    }
-  },
 	edit,
 	save: function() {
 	  return false

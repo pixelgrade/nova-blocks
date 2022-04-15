@@ -3,50 +3,28 @@
  */
 import classnames from 'classnames';
 
-import AdvancedGallery from '@novablocks/advanced-gallery';
-
-import {
-  getAlignmentClassnames,
-  getColorSetClassnames,
-  getContentVariationBySignal
-} from '@novablocks/utils';
-
 import { InnerBlocks } from '@wordpress/block-editor';
+import { select } from '@wordpress/data';
 
-const MediaPreview = function( props ) {
+import { MediaCompositionPreview } from '@novablocks/media-composition';
+import { getColorSignalClassnames } from '@novablocks/utils';
+
+const MediaPreview = ( props ) => {
 
   const {
     attributes,
-    settings,
   } = props;
 
 	const {
-    className,
     contentStyle,
-
-    mediaPosition,
     images,
 
-    // alignment
-    verticalAlignment,
-    emphasisArea,
-
-    contentAreaWidth,
-    layoutGutter,
-
     palette,
-    useSourceColorAsReference,
-
-    contentPadding,
+    contentColorSignal,
+    contentPaletteVariation,
 	} = attributes;
 
-	const classNames = classnames(
-		className,
-		`novablocks-media`,
-		`has-image-on-the-${ mediaPosition }`,
-		`novablocks-u-valign-${ verticalAlignment }`,
-    getAlignmentClassnames( attributes )
-	);
+  const novablocksSettings = select( 'novablocks' ).getSettings();
 
 	const passedProps = props;
 
@@ -54,50 +32,44 @@ const MediaPreview = function( props ) {
 		passedProps.attributes.images = images.map( image => JSON.parse( image ) );
 	}
 
-	const cssVars = {
-		'--emphasis-area': emphasisArea,
-    '--card-content-padding': contentPadding,
-		'--novablocks-media-content-width': `${ contentAreaWidth }%`,
-		'--novablocks-media-gutter': `calc( ${ layoutGutter } * var(--novablocks-spacing) * 5 / 100 )`,
-	};
-
 	const blockClassNames = classnames(
 		`novablocks-block`,
 		`content-is-${ contentStyle }`,
-    getColorSetClassnames( attributes ),
+    getColorSignalClassnames( attributes, true ),
   );
-
-	const contentVariation = getContentVariationBySignal( props );
 
 	const contentClassNames = classnames(
     `novablocks-media__inner-container`,
     `novablocks-block__content`,
-    `sm-palette-${ palette }`,
-    `sm-variation-${ contentVariation }`,
-    {
-      'sm-palette--shifted': useSourceColorAsReference
-    }
+    getColorSignalClassnames( {
+      palette,
+      colorSignal: contentColorSignal,
+      paletteVariation: contentPaletteVariation,
+      useSourceColorAsReference: false
+    }, true )
   );
 
   return (
-		<div className={ classNames } style={ cssVars }>
-			<div className={ blockClassNames }>
-				<div className="wp-block-group__inner-container">
-					<div className="wp-block" data-align="wide">
-						<div className="novablocks-media__layout">
-							<div className="novablocks-media__content">
-								<div className={ contentClassNames }>
-									<InnerBlocks allowedBlocks={ settings.media.allowedBlocks } />
-								</div>
-							</div>
-							<div className="novablocks-media__aside">
-								<AdvancedGallery.Component { ...passedProps } />
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
+    <div className={ blockClassNames }>
+      <div className="wp-block-group__inner-container">
+        <div className="wp-block" data-align="wide">
+          <div className="novablocks-media__layout">
+            <div className="novablocks-media__content">
+              <div className={ contentClassNames }>
+                <InnerBlocks allowedBlocks={ novablocksSettings.media.allowedBlocks } />
+              </div>
+            </div>
+            <div className="novablocks-media__aside">
+              <div className="novablocks-media__media-aspect-ratio">
+                <div className="novablocks-media__media-wrapper">
+                  <MediaCompositionPreview { ...passedProps } />
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
 	);
 };
 

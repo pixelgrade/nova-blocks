@@ -1,14 +1,50 @@
 {
-	"order": {
+	"align": {
 		"type": "string",
-		"default": "desc"
+		"default": "wide"
 	},
-	"orderBy": {
+	"contentType": {
 		"type": "string",
-		"default": "date"
+		"default": "auto"
 	},
-	"category": {
+	"postsToShow": {
+		"type": "integer",
+		"default": 6
+	},
+	"loadingMode": {
 		"type": "string",
-		"default": "all"
+		"default": "automated"
+	},
+	"specificPosts": {
+		"type": "array",
+		"default": [],
+		"items": {
+			"type": "integer"
+		}
+	},
+	"preventDuplicatePosts": {
+		"type": "boolean",
+		"default": true
+	},
+	"authors": {
+		"type": "array",
+		"default": [],
+		"items": {
+			"type": "integer"
+		}
+	},
+	"categories": {
+		"type": "array",
+		"default": [],
+		"items": {
+			"type": "integer"
+		}
+	},
+	"tags": {
+		"type": "array",
+		"default": [],
+		"items": {
+			"type": "integer"
+		}
 	}
 }

@@ -1,2 +1,56 @@
-@import "./scss/site-branding";
-@import "./scss/site-title";
+:is(.site-logo, .specificity.x2) {
+  --nb-current-logo-height-setting: var(--nb-header-logo-height-setting);
+
+  a {
+    display: block;
+  }
+
+  img {
+    display: block;
+    max-width: 100%;
+    width: auto;
+    height: calc(var(--nb-current-logo-height-setting) * 1px);
+    object-fit: contain;
+
+    @include below(lap) {
+      --nb-current-logo-height-setting: var(--nb-mobile-header-logo-height-setting);
+    }
+  }
+}
+
+.site-title {
+  margin: 0;
+  font-size: calc(var(--nb-header-logo-height-setting) * 1px);
+
+  a {
+    color: inherit;
+    text-decoration: none;
+  }
+
+  @include below(tablet) {
+    font-size: calc(var(--nb-mobile-header-logo-height-setting) * 1px);
+  }
+
+}
+
+.site-branding {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-shrink: 0;
+
+  z-index: 1;
+}
+
+.site-info {
+  text-align: center;
+}
+
+.site-logo + .site-info {
+  text-align: left;
+
+  .site-title,
+  .site-description {
+    margin-left: 1rem;
+  }
+}

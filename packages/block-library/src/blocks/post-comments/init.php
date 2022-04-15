@@ -14,30 +14,56 @@ require_once 'lib/class-novablocks-comments-renderer.php';
 // Load the comments functional logic.
 require_once 'lib/class-novablocks-comments-logic.php';
 
-if ( ! function_exists ('novablocks_render_post_comments_block' ) ) {
+function novablocks_get_post_comments_attributes() {
+
+	return novablocks_merge_attributes_from_array( [
+		'packages/block-editor/src/filters/with-space-and-sizing/attributes.json',
+	] );
+
+}
+
+
+if ( ! function_exists( 'novablocks_render_post_comments_block' ) ) {
 	/**
 	 * Entry point to render the block with the given attributes, content, and context.
 	 *
-	 * @param array $attributes
-	 * @param string $content
+	 * @see \WP_Block::render()
+	 *
+	 * @param array    $attributes
+	 * @param string   $content
 	 * @param WP_Block $block
 	 *
 	 * @return string
 	 */
-	function novablocks_render_post_comments_block( $attributes, $content, $block ) {
+	function novablocks_render_post_comments_block( array $attributes, string $content, WP_Block $block ): string {
+		$attributes_config = novablocks_get_post_comments_attributes();
+		$attributes        = novablocks_get_attributes_with_defaults( $attributes, $attributes_config );
+
 		// Bail if we don't have a post ID.
 		if ( empty( $block->context[ 'postId' ] ) ) {
 			return '';
 		}
 
-		if ( ! apply_filters( 'novablocks_comments_block_should_render', true, $block->context[ 'postId' ], $attributes, $block ) ) {
+		if ( ! apply_filters( 'novablocks/comments/block_should_render', true, $block->context[ 'postId' ], $attributes, $block ) ) {
 			return '';
 		}
 
+		// Maybe enqueue frontend-only scripts.
+		novablocks_maybe_enqueue_block_frontend_scripts( $block );
+
 		$post_comments_renderer = new NovaBlocks_Comments_Renderer( $block->context[ 'postId' ], $attributes, $content );
 
+		$classes = array( 'novablocks-conversations' );
+
+		$spacingProps = array_merge(
+			novablocks_get_spacing_css( $attributes ),
+			novablocks_get_sizing_css( $attributes ),
+		);
+
+		$style = join( '; ', $spacingProps ) . '; ';
+
 		$before = '
-<div class="novablocks-conversations" id="novablocks-comments">
+<div class="' . join( ' ', $classes ) . '" id="comments" style="' . $style . '">
 	<div class="novablocks-conversations__container">';
 		$after = '
 	</div><!-- .novablocks-conversations__container -->
@@ -58,16 +84,8 @@ if ( ! function_exists ('novablocks_render_post_comments_block' ) ) {
 		     && $post->comment_count == 0 ) {
 
 			if ( ! empty( $post_comments_renderer->get_arg( 'commentsClosedMessage' ) ) ) {
-				ob_start(); ?>
-
-				<p class="comments-closed comments-closed__no-comments"><?php echo $post_comments_renderer->get_arg( 'commentsClosedMessage' ); ?></p>
-
-				<?php
-				$output = ob_get_clean();
-				// If we had output, wrap it in the $before and $after.
-				if ( ! empty( trim( $output ) ) ) {
-					$output = $before . $output . $after;
-				}
+				$output = '<p class="comments-closed comments-closed__no-comments">' . $post_comments_renderer->get_arg( 'commentsClosedMessage' ) . '</p>';
+				$output = $before . $output . $after;
 			}
 
 			return trim( $output );
@@ -114,17 +132,17 @@ if ( ! function_exists ('novablocks_replace_content_tags' ) ) {
 	/**
 	 * Replace any content tags present in the content.
 	 *
-	 * @param string $content
-	 * @param int    $post_id
-	 * @param int    $user_id
+	 * @param string   $content
+	 * @param int|null $post_id
+	 * @param int|null $user_id
 	 *
 	 * @return string
 	 */
-	function novablocks_replace_content_tags( $content, $post_id = null, $user_id = null ) {
+	function novablocks_replace_content_tags( string $content, int $post_id = null, int $user_id = null ): string {
 		$original_content = $content;
 
 		// Allow others to alter the content before we do our work
-		$content = apply_filters( 'novablocks_before_parse_content_tags', $content, $post_id, $user_id );
+		$content = apply_filters( 'novablocks/before_parse_content_tags', $content, $post_id, $user_id );
 
 		// Now we will replace all the supported tags with their value
 		// %year%
@@ -152,7 +170,7 @@ if ( ! function_exists ('novablocks_replace_content_tags' ) ) {
 					$user_id = $current_post->post_author;
 				} else {
 					global $authordata;
-					$user_id = isset( $authordata->ID ) ? $authordata->ID : false;
+					$user_id = $authordata->ID ?? false;
 				}
 			}
 
@@ -170,7 +188,7 @@ if ( ! function_exists ('novablocks_replace_content_tags' ) ) {
 		}
 
 		// Allow others to alter the content after we did our work
-		return apply_filters( 'novablocks_after_parse_content_tags', $content, $original_content, $post_id, $user_id );
+		return apply_filters( 'novablocks/after_parse_content_tags', $content, $original_content, $post_id, $user_id );
 	}
 }
 

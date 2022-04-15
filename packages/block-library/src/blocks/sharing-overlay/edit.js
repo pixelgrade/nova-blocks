@@ -3,14 +3,14 @@ import classnames from "classnames";
 import { Fragment } from "@wordpress/element";
 
 import { getIconSvg } from "@novablocks/block-editor";
-import { getColorSetClassnames } from "@novablocks/utils";
+import { getColorSignalClassnames } from '@novablocks/utils';
 
 import Controls from './controls';
 
 const SharingEdit = ( props ) => {
 
   const {
-    isSelected
+    isSelected,
   } = props;
 
   return (
@@ -24,47 +24,65 @@ const SharingEdit = ( props ) => {
       <Controls { ...props } />
     </Fragment>
   )
-}
+};
 
 const SharingOverlayPreview = ( props ) => {
 
+  const { attributes } = props;
+
   const {
-    attributes
-  } = props;
+    showCopy,
+    showSharePrivately,
+    showSocialIcons,
+    showShareInPerson,
+    showTwitter,
+    showFacebook,
+    showLinkedin,
+    showPinterest,
+    showWhatsapp,
+    headingLevel,
+    buttonLabel
+  } = attributes;
 
   const classNames = classnames(
     'novablocks-sharing__wrap',
-    getColorSetClassnames( attributes )
+    getColorSignalClassnames( attributes, true )
   );
+
+  const TitleTag = `h${ headingLevel }`;
 
   return (
     <div className={ classNames }>
       <div className="novablocks-sharing__container">
         <div className="novablocks-sharing__content">
-          <h4 className="novablocks-sharing__title">Sharing Options</h4>
-          <SharingItemsGroup title={ 'Use a link for everything' } description={ 'Copy link and paste it anywhere you want it' }>
+          <TitleTag className="novablocks-sharing__title">Sharing Options</TitleTag>
+          { showCopy && <SharingItemsGroup title={ 'Use a link for everything' } description={ 'Copy link and paste it anywhere you want it' }>
             <input className="novablocks-sharing__copy-input" type="text" value="http://rosa2.work/reservations/" readOnly="" />
             <div className="novablocks-sharing__list">
               <SharingButton icon={ 'link' } label={ 'Copy link to clipboard' } />
             </div>
-          </SharingItemsGroup>
-          <SharingItemsGroup title={ 'Share privately with friends' }>
+          </SharingItemsGroup> }
+          { showSharePrivately && <SharingItemsGroup title={ 'Share privately with friends' }>
             <div className="novablocks-sharing__list">
               <SharingButton icon={ 'email' } label={ 'Email' } />
             </div>
-          </SharingItemsGroup>
-          <SharingItemsGroup title={ 'Share publicly on social networks' }>
-            <div className="novablocks-sharing__list">
-              <SharingButton icon={ 'twitter' } label={ 'Twitter' } />
-              <SharingButton icon={ 'facebook' } label={ 'Facebook' } />
-              <SharingButton icon={ 'linkedin' } label={ 'Linkedin' } />
-            </div>
-          </SharingItemsGroup>
-          <SharingItemsGroup title={ 'Or maybe you want in person?' }>
+          </SharingItemsGroup> }
+          { showSocialIcons && ( showTwitter || showFacebook || showLinkedin ) &&
+            <SharingItemsGroup title={ 'Share publicly on social networks' }>
+              <div className="novablocks-sharing__list">
+                { showTwitter && <SharingButton icon={ 'twitter' } label={ 'Twitter' } /> }
+                { showFacebook && <SharingButton icon={ 'facebook' } label={ 'Facebook' } /> }
+                { showLinkedin && <SharingButton icon={ 'linkedin' } label={ 'Linkedin' } /> }
+                { showPinterest && <SharingButton icon={ 'share' } label={ 'Pinterest' } /> }
+                { showWhatsapp && <SharingButton icon={ 'whatsapp' } label={ 'WhatsApp' } /> }
+              </div>
+            </SharingItemsGroup>
+          }
+          { showShareInPerson && <SharingItemsGroup title={ 'Or maybe you want in person?' }>
             <div className="novablocks-sharing__list">
               <SharingButton icon={ 'printer' } label={ 'Print' } />
             </div>
-          </SharingItemsGroup>
+          </SharingItemsGroup> }
           <div className="novablocks-sharing__footer">Thanks for spreading the word!</div>
         </div>
       </div>
@@ -73,7 +91,7 @@ const SharingOverlayPreview = ( props ) => {
       </div>
     </div>
   )
-}
+};
 
 const SharingItemsGroup = ( props ) => {
 
@@ -98,7 +116,7 @@ const SharingItemsGroup = ( props ) => {
       }
     </div>
   );
-}
+};
 
 const SharingButton = ( props ) => {
 
@@ -117,6 +135,6 @@ const SharingButton = ( props ) => {
       </a>
     </div>
   )
-}
+};
 
 export default SharingEdit;

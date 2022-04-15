@@ -1,19 +1,38 @@
-export const addSocialMenuClass = function() {
-  const menuItem = document.querySelectorAll( '.novablocks-navigation .menu-item a' );
-  const bodyStyle = window.getComputedStyle( document.documentElement );
-  const enableSocialIconsProp = bodyStyle.getPropertyValue( '--enable-social-icons' );
-  const enableSocialIcons = !! parseInt( enableSocialIconsProp, 10 );
+import { addClass } from "@novablocks/utils";
 
-  if ( enableSocialIcons ) {
+export const getColorSetClasses = ( element ) => {
+  const classAttr = element?.getAttribute( 'class' );
 
-    menuItem.forEach( function( obj, index ) {
-      const elementStyle = window.getComputedStyle( obj );
-      const elementIsSocialProp = elementStyle.getPropertyValue( '--is-social' );
-      const elementIsSocial = !! parseInt( elementIsSocialProp, 10 );
-
-      if ( elementIsSocial ) {
-        obj.parentElement.classList.add( 'social-menu-item' );
-      }
-    } );
+  if ( ! classAttr ) {
+    return [];
   }
-}
+
+  const classes = classAttr.split( /\s+/ );
+
+  return classes.filter( classname => {
+    return classname.includes( 'sm-color-signal-' ) ||
+           classname.includes( 'sm-palette-' ) ||
+           classname.includes( 'sm-variation-' ) ||
+           classname.includes( 'sm-dark' ) ||
+           classname.includes( 'sm-light' );
+  } );
+};
+
+export const toggleClasses = ( element, classesToAdd = '' ) => {
+
+  const prefixes = [
+    'sm-palette-',
+    'sm-variation-',
+    'sm-color-signal-',
+    'sm-dark',
+    'sm-light',
+  ];
+
+  const classesToRemove = Array.from( element.classList ).filter( classname => {
+    return prefixes.some( prefix => classname.indexOf( prefix ) > -1 );
+  } );
+
+  element.classList.remove( ...classesToRemove );
+
+  addClass( element, classesToAdd );
+};

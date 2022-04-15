@@ -1,0 +1,20 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/block.json",
+	"apiVersion": 2,
+	"name": "novablocks/post-meta",
+	"title": "Post Meta",
+	"category": "nova-blocks",
+	"description": "Display a cohesive section with author, meta, sharing and comments info.",
+	"keywords": ["author", "meta", "comments", "sharing", "byline", "avatar", "reading time"],
+	"textdomain": "nova-blocks",
+	"attributes": {},
+	"usesContext": [
+		"postId",
+		"postType"
+	],
+	"supports": {
+		"novaBlocks": {
+			"spaceAndSizing": true
+		}
+	}
+}

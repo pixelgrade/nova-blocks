@@ -1,0 +1,10 @@
+{
+	"contentPadding": {
+		"type": "number",
+		"default": 50
+	},
+	"layoutGutter": {
+		"type": "number",
+		"default": 50
+	}
+}

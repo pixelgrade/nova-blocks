@@ -1,0 +1,179 @@
+// When Parametric Grid is used,
+// we are going to ignore some options
+// from Elements Visibility section,
+// and adjust elements visibility based on area
+// sizes and ratio.
+
+
+
+// CLASSIC grid layout
+.nb-collection__layout--classic {
+
+  @include above(tablet) {
+
+    // Layout
+    // - Vertical
+    // - Vertical Reverse
+    // - Stacked
+    :is(.nb-supernova-item--layout-vertical, .nb-supernova-item--layout-vertical-reverse, .nb-supernova-item--layout-stacked) {
+
+      :is(
+        .nb-supernova--3-columns, 
+        .nb-supernova--4-columns) & {
+
+        .nb-card__description {
+          --font-size-modifier: 0.95; // 0.85 * 1.12
+        }
+      }
+    }
+
+    // Layout
+    // - Horizontal
+    // - Horizontal Reverse
+    :is(
+      .nb-supernova-item--layout-horizontal, 
+      .nb-supernova-item--layout-horizontal-reverse) {
+
+        .nb-supernova--2-columns & {
+          --nb-spacing-base: 0.5;
+
+          .nb-card__description {
+            --font-size-modifier: 0.95
+          }
+        }
+
+        :is(.nb-supernova--3-columns, .nb-supernova--4-columns)  & {
+          --nb-spacing-base: 0.5;
+
+          .nb-card__description {
+            --font-size-modifier: 0.84; // 0.75 * 1.12
+          }
+        }
+    }
+  }
+}
+
+
+
+// PARAMETRIC grid layout
+.nb-collection__layout--parametric {
+
+  // Portrait - Vertical Cards
+  .nb-grid__area--portrait {
+
+    &.nb-grid__area--width-xl {
+
+      .nb-card__title {
+        --font-size-modifier: 1.8;
+      }
+    }
+
+    &.nb-grid__area--width-l {
+
+      .nb-card__title {
+        --font-size-modifier: 1.8;
+      }
+    }
+
+    &.nb-grid__area--width-m {
+
+      .nb-card__title {
+        --font-size-modifier: 1.4;
+      }
+    }
+
+    &.nb-grid__area--width-xs {
+      --grid-item-content-display: none;
+      --grid-item-buttons-display: none;
+
+      @include above(tablet) {
+        --font-size-modifier: 0.8;
+
+        .nb-card__title,
+        .nb-card__subtitle {
+          --font-size-modifier: 0.75;
+        }
+      }
+    }
+  }
+
+  // Landscape - Horizontal Cards
+  .nb-grid__area--landscape {
+
+    &.nb-grid__area--width-full {
+
+      .nb-card__title {
+        --font-size-modifier: 1.8;
+      }
+    }
+
+    &.nb-grid__area--width-xl {
+
+      .nb-card__title {
+        --font-size-modifier: 1.4;
+      }
+    }
+
+    &.nb-grid__area--width-m {
+
+      @include above(tablet) {
+        --font-size-modifier: 0.8;
+      }
+    }
+
+    &.nb-grid__area--width-s,
+    &.nb-grid__area--width-xs {
+      --card-image-width: 40%;
+    }
+
+    &.nb-grid__area--width-s {
+      --grid-item-content-display: none;
+      --grid-item-buttons-display: none;
+
+      --font-size-modifier: 0.8;
+
+      @include above(tablet) {
+
+        .nb-card__title,
+        .nb-card__subtitle {
+          --font-size-modifier: 0.75;
+        }
+      }
+    }
+
+    &.nb-grid__area--width-xs {
+      --grid-item-content-display: none;
+      --grid-item-buttons-display: none;
+
+      --font-size-modifier: 0.8;
+
+      @include above(tablet) {
+        --font-size-modifier: 0.75;
+
+        .nb-card__title {
+          --font-size-modifier: 0.56;
+        }
+      }
+    }
+  }
+
+  .nb-card__title {
+    display: var(--grid-item-title-display, block);
+  }
+
+  .nb-card__subtitle {
+    display: var(--grid-item-subtitle-display, block);
+  }
+
+  .nb-card__description {
+    display: var(--grid-item-content-display, block);
+  }
+
+  .nb-card__buttons {
+    display: var(--grid-item-buttons-display, block);
+  }
+
+  .nb-card__meta {
+    display: var(--grid-item-meta-display, block);
+  }
+}

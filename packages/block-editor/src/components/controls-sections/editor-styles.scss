@@ -1,4 +1,5 @@
 .novablocks-sections {
+  overflow: hidden;
 	border-top: 1px solid #e2e4e7;
 }
 
@@ -62,9 +63,9 @@
 }
 
 :root {
-	--novablocks-red: #DE1651;
-	--novablocks-green: #00CAB6;
-	--novablocks-purple: #8E65C0;
+	--nb-purple: #8E65C0;
+	--nb-green: #00CAB6;
+	--nb-red: #DE1651;
 }
 
 .novablocks-sections__cube {
@@ -84,34 +85,35 @@
 
 .novablocks-sections__cube-face--top {
 	transform: translateY(-2px) rotate(210deg) skewX(-30deg) scaleY(0.864);
-	background: var(--novablocks-purple);
+	background: var(--nb-purple);
 }
 
 .novablocks-sections__cube-face--left {
 	transform: translateX(-1px) rotate(90deg) skewX(-30deg) scaleY(0.864);
-	background: var(--novablocks-red);
+	background: var(--nb-red);
 }
 
 .novablocks-sections__cube-face--right {
 	transform: translateX(1px) rotate(-30deg) skewX(-30deg) scaleY(0.864);
-	background: var(--novablocks-green);
+	background: var(--nb-green);
 }
 
 .novablocks-section__controls {
-	--novablocks-section-controls-accent: var(--novablocks-red);
+	--nb-section-controls-accent: var(--nb-red);
+  --wp-admin-theme-color: var(--nb-section-controls-accent);
 
 	input[type="checkbox"]:checked,
 	input[type="radio"]:checked {
-		background: var(--novablocks-section-controls-accent);
-		border-color: var(--novablocks-section-controls-accent);
+		background: var(--nb-section-controls-accent);
+		border-color: var(--nb-section-controls-accent);
 	}
 
 	.components-form-toggle.is-checked .components-form-toggle__track {
-		background: var(--novablocks-section-controls-accent);
+		background: var(--nb-section-controls-accent);
 	}
 
 	.components-range-control__track {
-		color: var(--novablocks-section-controls-accent);
+		color: var(--nb-section-controls-accent);
 	}
 
 	.components-button.is-primary {
@@ -119,8 +121,8 @@
 		&,
 		&:not(:disabled):not([aria-disabled="true"]):hover,
 		&:focus:enabled {
-			background: var(--novablocks-section-controls-accent);
-			border-color: var(--novablocks-section-controls-accent);
+			background: var(--nb-section-controls-accent);
+			border-color: var(--nb-section-controls-accent);
 		}
 
 		&:disabled {
@@ -141,11 +143,11 @@
 }
 
 .novablocks-section__controls--customize {
-	--novablocks-section-controls-accent: var(--novablocks-green);
+	--nb-section-controls-accent: var(--nb-green);
 }
 
 .novablocks-section__controls--general {
-	--novablocks-section-controls-accent: var(--novablocks-purple);
+	--nb-section-controls-accent: var(--nb-purple);
 }
 
 .novablocks-sections__controls-header {
@@ -156,7 +158,8 @@
 	font-size: 16px;
 	text-align: center;
 
-	background-color: var(--novablocks-section-controls-accent);
+	background-color: var(--nb-section-controls-accent);
+  transition: background-color .2s ease-out;
 	color: #FFFFFF;
 }
 
@@ -205,7 +208,8 @@
 
 .novablocks-sections__tabs {
 	display: flex;
-	background-color: var(--novablocks-section-controls-accent);
+	background-color: var(--nb-section-controls-accent);
+  transition: background-color .2s ease-out;
 	color: #FFFFFF;
 	padding: 0 16px;
 }
@@ -238,7 +242,7 @@
 }
 
 .novablocks-controls-wrap {
-	transition: var(--novablocks-transition);
+	transition: var(--nb-transition);
 	transition-property: filter, opacity;
 
 	&:not(:last-child) {

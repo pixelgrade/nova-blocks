@@ -11,21 +11,9 @@
 		"type": "object",
 		"default": null
 	},
-	"minHeightFallback": {
-		"type": "number",
-		"default": 100
-	},
-	"scrollIndicator": {
+	"scrollIndicatorBlock": {
 		"type": "boolean",
-		"source": "meta",
-		"meta": "novablocks_hero_scroll_indicator",
 		"default": false
-	},
-	"positionIndicators": {
-		"type": "boolean",
-		"source": "meta",
-		"meta": "novablocks_hero_position_indicators",
-		"default": true
 	},
 	"defaultsGenerated": {
 		"type": "boolean",
@@ -34,9 +22,5 @@
 	"templateInserted": {
 	  	"type": "boolean",
 		"default": false
-	},
-	"displayInnerContent": {
-		"type": "boolean",
-		"default": true
 	}
 }

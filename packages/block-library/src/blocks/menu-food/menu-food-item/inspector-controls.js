@@ -21,8 +21,8 @@ const FoodMenuItemInspectorControls = function( props ) {
 	} = props;
 
 	return (
-		<ControlsSection label={__('Layout')}>
-			<ControlsTab label={ __( 'Settings' ) }>
+		<ControlsSection id={ 'layout' } label={ __( 'Layout', '__plugin_txtd' ) }>
+			<ControlsTab label={ __( 'Settings', '__plugin_txtd' ) }>
 				<ToggleControl
 					label={__( 'Highlight item', '__plugin_txtd' )}
 					help={__( 'Use it if you want to highlight some of the menu items and make them stand out.', '__plugin_txtd' )}

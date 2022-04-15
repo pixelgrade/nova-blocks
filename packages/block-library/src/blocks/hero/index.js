@@ -1,91 +1,142 @@
 /**
- * Internal dependencies
- */
-import iconSvg from './hero-block.svg';
-import edit from './edit';
-import save from './save';
-
-import { getRandomBetween } from "@novablocks/utils";
-import { getSvg } from "@novablocks/block-editor";
-
-import blockAttributes from "./attributes";
-
-import {
-	generateDefaults,
-	getPlaceholderImages,
-	insertTemplate,
-} from "@novablocks/block-editor";
-
-// Load deprecated file
-import deprecated from './deprecated';
-
-const attributes = Object.assign( {}, blockAttributes );
-
-/**
  * WordPress dependencies
  */
 import { __ } from '@wordpress/i18n';
 import { registerBlockType } from '@wordpress/blocks';
-import { select } from '@wordpress/data';
+import { addFilter } from '@wordpress/hooks';
 
-async function getNewDefaults() {
-	const placeholderImages = await getPlaceholderImages();
-	const index = getRandomBetween( 0, placeholderImages.length - 1 );
-	const image = placeholderImages[index];
+import { getSvg } from '@novablocks/block-editor';
 
-	if ( typeof image?.download === "function" ) {
-		image.download();
-	}
+import {
+  generateDefaults,
+  insertTemplate,
+} from '@novablocks/block-editor';
 
-	return {
-		media: {
-			...image,
-			type: 'image',
-		}
-	};
-}
+/**
+ * Internal dependencies
+ */
+import iconSvg from './icon.svg';
+import edit from './edit';
+import save from './save';
+import transforms from './transforms';
+import attributes from './attributes.json';
+import attributesOverwrite from './attributes-overwrite.json';
+import getNewDefaults from './get-new-defaults';
 
-const settings = select( 'novablocks' ).getSettings();
+// Load deprecated file
+import './deprecated';
 
-generateDefaults( 'novablocks/hero', getNewDefaults );
-insertTemplate( 'novablocks/hero', settings.hero.template );
+const BLOCK_NAME = 'novablocks/hero';
 
-registerBlockType( 'novablocks/hero', {
-	title: __( 'Hero of the Galaxy', '__plugin_txtd' ),
-	description: __( 'A great way to get your visitors acquainted with your content.', '__plugin_txtd' ),
-	category: 'nova-blocks',
-	icon: getSvg( iconSvg ),
-	// Additional search terms
-	keywords: [
-		__( 'cover', '__plugin_txtd' ),
-		__( 'full width', '__plugin_txtd' ),
-		__( 'hero image', '__plugin_txtd' ),
-		__( 'cover section', '__plugin_txtd' )
-	],
-	supports: {
-		anchor: true,
+generateDefaults( BLOCK_NAME, getNewDefaults );
+insertTemplate( BLOCK_NAME, [
+  [
+    'core/group',
+    {},
+    [
+      [
+        'novablocks/headline',
+        {
+          secondary: __( 'This is a catchy', '__plugin_txtd' ),
+          primary: __( 'Headline', '__plugin_txtd' ),
+          align: 'center',
+          level: 1,
+          fontSize: 'larger',
+          className: 'has-larger-font-size',
+        }
+      ],
+      [
+        'core/paragraph',
+        {
+          content: __( 'A brilliant subtitle to explain its catchiness', '__plugin_txtd' ),
+          align: 'center',
+          className: 'is-style-lead',
+        }
+      ],
+      [
+        'core/buttons',
+        {
+          align: 'center',
+          contentJustification: 'center',
+        },
+        [
+          [
+            'core/button',
+            {
+              text: __( 'Discover more', '__plugin_txtd' ),
+            },
+          ]
+        ]
+      ],
+    ],
+  ]
+] );
+
+const overwriteAttributes = ( settings ) => {
+
+  if ( settings.name !== BLOCK_NAME ) {
+    return settings;
+  }
+
+  return {
+    ...settings,
+    attributes: {
+      ...settings.attributes,
+      ...attributesOverwrite
+    }
+  };
+};
+addFilter( 'blocks.registerBlockType', 'novablocks/hero/attributes-overwrite', overwriteAttributes, Number.MAX_SAFE_INTEGER );
+
+registerBlockType( BLOCK_NAME, {
+  apiVersion: 2,
+  title: __( 'Hero of the Galaxy (Deprecated)', '__plugin_txtd' ),
+  description: __( 'A great way to get your visitors acquainted with your content.', '__plugin_txtd' ),
+  category: 'nova-blocks',
+  icon: getSvg( iconSvg ),
+  // Additional search terms
+  keywords: [
+    __( 'cover', '__plugin_txtd' ),
+    __( 'full width', '__plugin_txtd' ),
+    __( 'hero image', '__plugin_txtd' ),
+    __( 'cover section', '__plugin_txtd' )
+  ],
+  supports: {
+    anchor: true,
     html: false,
     novaBlocks: {
       colorSignal: {
-        altAttributes: true,
+        attributes: true,
         addOverlayColorDeprecatedMethod: true,
+        controls: true,
+        paletteClassname: true,
+        paletteVariationClassname: true,
+        colorSignalClassname: true,
       },
-      overlayFilterStrength: true,
-      contentPositionMatrixToolbar: {
+      overlayFilter: {
+        attributes: true,
+        controls: true,
+      },
+      contentPosition: {
+        attributes: true,
+        controls: true,
         deprecated: true
       },
       customDefaults: true,
-      doppler: {
-        altAttributes: true
+      scrollingEffect: {
+        attributes: true,
+        controls: true,
+        customWrapper: true,
+        doppler: true
       },
-      spaceAndSizing: true
+      spaceAndSizing: true,
+      cardElementsVisibility: {
+        attributes: true,
+      }
     },
-	},
-	attributes,
-	edit,
-	save,
-	getEditWrapperProps() {
-		const settings = select( 'core/block-editor' ).getSettings();
-		return settings.alignWide ? { 'data-align': 'full' } : {};
-	},
+  },
+  attributes,
+  edit,
+  save,
+  transforms
 } );

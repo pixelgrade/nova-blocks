@@ -1,27 +1,28 @@
 /**
  * WordPress dependencies
  */
-import { __ } from '@wordpress/i18n';
-import { addFilter } from '@wordpress/hooks';
 import { registerBlockType } from '@wordpress/blocks';
 import { select } from "@wordpress/data";
 import { InnerBlocks } from '@wordpress/block-editor';
+import { addFilter } from "@wordpress/hooks";
 
 import { getSvg } from "@novablocks/block-editor";
 
 /**
  * Internal dependencies
  */
-import iconSvg from './header-block.svg';
+import iconSvg from './icon.svg';
 import edit from './edit';
 import variations from './variations';
 import deprecated from './deprecated';
 import attributes from './attributes.json';
-import attributesColorSignal from './attributes-color-signal.json';
+import attributesOverwrite from "./attributes-overwrite.json";
 
-const withColorSignalAttributes = ( settings ) => {
+const BLOCK_NAME = 'novablocks/header';
 
-  if ( 'novablocks/header' !== settings.name ) {
+const overwriteAttributes = ( settings ) => {
+
+  if ( settings.name !== BLOCK_NAME ) {
     return settings;
   }
 
@@ -29,36 +30,18 @@ const withColorSignalAttributes = ( settings ) => {
     ...settings,
     attributes: {
       ...settings.attributes,
-      ...attributesColorSignal
+      ...attributesOverwrite
     }
   };
+};
 
-}
-addFilter( 'blocks.registerBlockType', 'novablocks/header-color-signal-attributes-overwrite', withColorSignalAttributes, 20 );
+addFilter( 'blocks.registerBlockType', 'novablocks/header/attributes-overwrite', overwriteAttributes, Number.MAX_SAFE_INTEGER );
 
-registerBlockType( 'novablocks/header', {
-	title: __( 'Header', '__plugin_txtd' ),
-	description: __( 'Outputs custom header markup.', '__plugin_txtd' ),
-	category: 'nova-blocks',
+registerBlockType( BLOCK_NAME, {
 	icon: getSvg( iconSvg ),
-	// Additional search terms
-	keywords: [ __( 'logo', '__plugin_txtd' ), __( 'menu', '__plugin_txtd' ) ],
-	supports: {
-    html: false,
-    multiple: false,
-    novaBlocks: {
-      colorSignal: true,
-    },
-  },
 	variations,
   deprecated,
   attributes,
 	edit,
-	save: function() {
-		return <InnerBlocks.Content />
-	},
-  getEditWrapperProps() {
-    const settings = select( 'core/block-editor' ).getSettings();
-    return settings.alignWide ? { 'data-align': 'full' } : {};
-  }
+	save: () => <InnerBlocks.Content />,
 } );

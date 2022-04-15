@@ -1,0 +1,70 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/block.json",
+	"apiVersion": 2,
+	"name": "novablocks/supernova-item",
+	"parent": [
+		"novablocks/supernova"
+	],
+	"title": "Card",
+	"category": "nova-blocks",
+	"description": "Define an item in a cards collection.",
+	"keywords": [
+		"layout",
+		"posts",
+		"grid",
+		"parametric",
+		"card"
+	],
+	"textdomain": "nova-blocks",
+	"attributes": {},
+	"usesContext": [
+		"postId",
+		"postType",
+		"queryId",
+		"query",
+		"queryContext",
+		"displayLayout"
+	],
+	"supports": {
+		"html": false,
+		"inserter": false,
+		"reusable": false,
+		"novaBlocks": {
+			"colorSignal": {
+				"attributes": true
+			},
+			"spaceAndSizing": {
+				"attributes": true
+			},
+			"contentPosition": {
+				"attributes": true
+			},
+			"collectionContent": {
+				"attributes": true
+			},
+			"collectionLayout": {
+				"attributes": true
+			},
+			"cardElementsVisibility": {
+				"attributes": true
+			},
+			"cardElementsStacking": {
+				"attributes": true
+			},
+			"mediaComposition": {
+				"attributes": true,
+				"blockControls": true
+			},
+			"overlayFilter": {
+				"attributes": true
+			},
+			"scrollingEffect": {
+				"attributes": true,
+				"customWrapper": true
+			},
+			"shapeModeling": {
+				"attributes": true
+			}
+		}
+	}
+}

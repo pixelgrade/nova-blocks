@@ -4,35 +4,41 @@ import * as icons from './icons';
 const variations = [
   {
     name: 'sidebar-left',
-    title: __('Sidebar Left with Content on the right', '__plugin_txtd' ),
+    title: __( 'Sidebar Left with Content on the right', '__plugin_txtd' ),
     icon: icons.sidebarLeft,
-    attributes: { sidebarPosition: 'left', className: 'alignwide'},
+    attributes: {
+      sidebarPosition: 'left',
+    },
     innerBlocks: [
-      ['novablocks/sidecar-area', {
-        className: 'novablocks-content'
-      }],
-      ['novablocks/sidecar-area', {
-        className: 'novablocks-sidebar'
-      }],
+      [ 'novablocks/sidecar-area', { areaName: 'content' } ],
+      [ 'novablocks/sidecar-area', { areaName: 'sidebar' } ],
     ],
     scope: [ 'block' ],
-  },
-  {
+  }, {
     name: 'sidebar-right',
-    title: __('Sidebar Right with Content on the left', '__plugin_txtd' ),
+    title: __( 'Sidebar Right with Content on the left', '__plugin_txtd' ),
     icon: icons.sidebarRight,
-    attributes: { sidebarPosition: 'right', className: 'alignwide'},
+    attributes: {
+      sidebarPosition: 'right',
+    },
     innerBlocks: [
-      ['novablocks/sidecar-area', {
-        className: 'novablocks-content'
-      }],
-      ['novablocks/sidecar-area', {
-        className: 'novablocks-sidebar'
-      }],
+      [ 'novablocks/sidecar-area', { areaName: 'content' } ],
+      [ 'novablocks/sidecar-area', { areaName: 'sidebar' } ],
     ],
     scope: [ 'block' ],
-  },
-
+  }, {
+    name: 'none',
+    isDefault: true,
+    title: __( 'Centered Content with no Sidebar', '__plugin_txtd' ),
+    icon: icons.sidebarNone,
+    attributes: {
+      sidebarPosition: 'none',
+    },
+    innerBlocks: [
+      [ 'novablocks/sidecar-area', { areaName: 'content' } ],
+    ],
+    scope: [ 'block' ],
+  }
 ];
 
 export default variations;

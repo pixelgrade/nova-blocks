@@ -1,0 +1,6 @@
+{
+	"blockTopSpacing": {
+		"type": "number",
+		"default": 0
+	}
+}

@@ -1,0 +1,26 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/block.json",
+	"apiVersion": 2,
+	"name": "novablocks/header-row",
+	"parent": [ "novablocks/header" ],
+	"title": "Header Row",
+	"category": "nova-blocks",
+	"description": "Organize a single row in your site's header.",
+	"keywords": ["layout", "logo", "menu", "navigation", "row", "columns"],
+	"textdomain": "nova-blocks",
+	"attributes": {},
+	"usesContext": [],
+	"supports": {
+		"align": [ "wide", "full" ],
+		"html": false,
+		"novaBlocks": {
+			"colorSignal": {
+				"attributes": true,
+				"controls": true,
+				"paletteClassname": true,
+				"paletteVariationClassname": true
+			},
+			"spaceAndSizing": true
+		}
+	}
+}

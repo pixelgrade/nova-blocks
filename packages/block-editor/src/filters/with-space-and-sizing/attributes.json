@@ -1,0 +1,78 @@
+{
+	"mediaContainerHeight": {
+		"type": "number",
+		"default": 50
+	},
+	"thumbnailAspectRatioString": {
+		"type": "string",
+		"default": "landscape"
+	},
+	"thumbnailAspectRatio": {
+		"type": "number",
+		"default": 50
+	},
+	"imageResizing": {
+		"type": "string",
+		"default": "cropped"
+	},
+	"imagePadding": {
+		"type": "number",
+		"default": 0
+	},
+	"contentPadding": {
+		"type": "number",
+		"default": 0
+	},
+	"emphasisBySpace": {
+		"type": "number",
+		"default": 1
+	},
+	"enableOverlapping": {
+		"type": "boolean",
+		"default": false
+	},
+	"blockTopSpacing": {
+		"type": "number",
+		"default": 1
+	},
+	"blockBottomSpacing": {
+		"type": "number",
+		"default": 0
+	},
+	"emphasisTopSpacing": {
+		"type": "number",
+		"default": 0
+	},
+	"emphasisBottomSpacing": {
+		"type": "number",
+		"default": 0
+	},
+	"minHeightFallback": {
+		"type": "number",
+		"default": 0
+	},
+	"balanceEmphasis": {
+		"type": "number",
+		"default": 50
+	},
+	"balanceFocalPoint": {
+		"type": "string",
+		"default": "content"
+	},
+	"contentAreaWidth": {
+		"type": "number",
+		"default": 50
+	},
+	"layoutGutter": {
+		"type": "number",
+		"default": 0
+	},
+	"spacingModifier": {
+		"type": "number",
+		"default": 1
+	},
+	"spacingMultiplierOverride": {
+		"type": "number",
+		"default": 1
+	}
+}

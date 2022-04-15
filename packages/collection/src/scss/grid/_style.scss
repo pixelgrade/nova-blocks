@@ -1,197 +1,29 @@
-.novablocks-card__title-size-modifier {
-	font-size: calc( var(--novablocks-card-title-font-size-modifier, 1) * 1em );
-	line-height: var(--novablocks-card-title-line-height-modifier, var(--current-line-height, 1.5));
-}
+@import "parametric-layout-modifiers";
 
-.novablocks-card__meta-size-modifier {
-	font-size: calc( var(--novablocks-card-meta-font-size-modifier, 1) * 1em );
-	line-height: var(--novablocks-card-meta-line-height-modifier, var(--current-line-height, 1.5));
-}
+.nb-grid {
+	grid-gap: var(--nb-grid-spacing);
 
-.novablocks-card__content-size-modifier {
-	font-size: calc( var(--novablocks-card-content-font-size-modifier, 1) * 1em );
-	line-height: var(--novablocks-card-content-line-height-modifier, var(--current-line-height, 1.5));
-}
-
-.novablocks-card__buttons-size-modifier {
-	font-size: calc( var(--novablocks-card-buttons-font-size-modifier, 1) * 1em );
-	line-height: var(--novablocks-card-buttons-line-height-modifier, var(--current-line-height, 1.5));
-}
-
-.novablocks-grid__area--portrait {
-
-	&.novablocks-grid__area--width-xl {
-		--novablocks-card-title-font-size-modifier: 1.8;
-	}
-
-	&.novablocks-grid__area--width-l {
-		--novablocks-card-title-font-size-modifier: 1.6;
-	}
-
-	&.novablocks-grid__area--width-m {
-		--novablocks-card-title-font-size-modifier: 1.4;
-	}
-
-	&.novablocks-grid__area--width-s {
-		--novablocks-card-title-font-size-modifier: 1;
-	}
-
-
-	&.novablocks-grid__area--width-xs {
-		--grid-item-content-display: none;
-		--grid-item-buttons-display: none;
-
-		@include above(tablet) {
-			--novablocks-card-spacing-modifier: 0.25;
-			--novablocks-card-meta-font-size-modifier: 0.8;
-			--novablocks-card-title-font-size-modifier: 0.6;
-
-			.novablocks-card__inner-container {
-				--novablocks-element-spacing-multiplier: 0.25;
-			}
-		}
-	}
-}
-
-.novablocks-grid__area--landscape {
-
-	&.novablocks-grid__area--width-full {
-		--novablocks-card-title-font-size-modifier: 1.6;
-	}
-
-	&.novablocks-grid__area--width-xl {
-		--novablocks-card-title-font-size-modifier: 1.4;
-	}
-
-	&.novablocks-grid__area--width-l {
-		--novablocks-card-title-font-size-modifier: 1;
-	}
-
-	&.novablocks-grid__area--width-m {
-
-		@include above(tablet) {
-			--novablocks-card-title-font-size-modifier: 0.8;
-		}
-	}
-
-	&.novablocks-grid__area--width-s {
-		--grid-item-content-display: none;
-		--grid-item-buttons-display: none;
-
-		--novablocks-card-title-font-size-modifier: 0.8;
-
-		@include above(tablet) {
-			--novablocks-card-spacing-modifier: 0.25;
-			--novablocks-card-meta-font-size-modifier: 0.8;
-			--novablocks-card-title-font-size-modifier: 0.6;
-		}
-	}
-
-	&.novablocks-grid__area--width-xs {
-		--grid-item-content-display: none;
-		--grid-item-buttons-display: none;
-
-		--novablocks-card-title-font-size-modifier: 0.8;
-
-		@include above(tablet) {
-			--novablocks-card-spacing-modifier: 0.25;
-			--novablocks-card-meta-font-size-modifier: 0.6;
-			--novablocks-card-title-font-size-modifier: 0.5;
-			--novablocks-card-content-font-size-modifier: 0.6;
-		}
-	}
-}
-
-.novablocks-grid__item-media {
-	display: var(--grid-item-media-display, block);
-}
-
-.novablocks-grid__item-content {
-	display: var(--grid-item-content-display, block);
-}
-
-.novablocks-grid__item-title {
-	display: var(--grid-item-title-display, block);
-}
-
-.novablocks-grid__item-subtitle {
-	display: var(--grid-item-subtitle-display, block);
-}
-
-.novablocks-grid__item-content {
-	display: var(--grid-item-content-display, block);
-}
-
-.novablocks-grid__item-buttons {
-	display: var(--grid-item-buttons-display, block);
-}
-
-.novablocks-grid__item-meta {
-	display: var(--grid-item-meta-display, block);
-}
-
-.novablocks-grid {
-	--novablocks-grid-spacing: var(--novablocks-spacing);
-	grid-gap: calc( var(--novablocks-grid-spacing) * var(--novablocks-grid-spacing-modifier, 1) );
-
-	.novablocks-grid__item {
+	.nb-grid__item {
 		--theme-content-width-normal: 100%;
 	}
 }
 
-.block-is-basic.content-is-highlighted,
-
-.block-is-moderate.content-is-moderate,
-.block-is-moderate.content-is-highlighted,
-
-.block-is-highlighted.content-is-moderate,
-.block-is-highlighted.content-is-highlighted {
-
-	@include above(tablet) {
-		--novablocks-grid-spacing-modifier: 0.5;
-	}
+.nb-grid__area + .nb-grid__area,
+.nb-grid__area > * + * {
+	margin-top: var(--nb-grid-spacing);
 }
 
-.novablocks-grid__area + .novablocks-grid__area,
-.novablocks-grid__area > * + * {
-	margin-top: calc( var(--novablocks-grid-spacing) * var(--novablocks-grid-spacing-modifier, 1) );
-}
-
-.novablocks-grid--mask {
-
-	.novablocks-grid__debug {
-		display: block;
-	}
-
-	.novablocks-grid__area {
-		border: 2px dashed var(--novablocks-purple);
-	}
-
-	.novablocks-grid__item {
-		border: 2px dashed var(--novablocks-green);
-
-		.novablocks-block__content {
-			opacity: 0;
-		}
-	}
-
-}
-.novablocks-grid--scaled {
-	transform: scale(0.5);
-	transform-origin: 50% 0;
-}
-
-.novablocks-grid__area {
+.nb-grid__area {
 	position: relative;
 	overflow: hidden;
 
-	.novablocks-grid__column:first-child &:first-child:last-child {
+	.nb-grid__column:first-child &:first-child:last-child {
 		position: sticky;
-		top: calc( var(--novablocks-grid-spacing) * var(--novablocks-grid-spacing-modifier, 1) );
+		top: var(--nb-grid-spacing);
 	}
 }
 
-.novablocks-grid__debug {
+.nb-grid__debug {
 	position: absolute;
 	top: 0;
 	right: 0;
@@ -201,7 +33,26 @@
 	padding: 10px;
 }
 
-.novablocks-grid__area--width-s,
-.novablocks-grid__area--width-xs {
-	--card-image-width: 40%;
+.nb-grid--scaled {
+	transform: scale(0.5);
+	transform-origin: 50% 0;
+}
+
+.nb-grid--mask {
+
+	.nb-grid__debug {
+		display: block;
+	}
+
+	.nb-grid__area {
+		border: 2px dashed var(--nb-purple);
+	}
+
+	.nb-grid__item {
+		border: 2px dashed var(--nb-green);
+
+		.novablocks-block__content {
+			opacity: 0;
+		}
+	}
 }

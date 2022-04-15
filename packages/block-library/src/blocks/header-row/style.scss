@@ -1,49 +1,99 @@
-@import "scss/mixins";
-
 @include below(lap) {
 
-  .novablocks-header-row {
+  .nb-header-row {
     display: flex;
     flex-direction: column;
 
-    &, * {
-      --sm-current-accent-color: inherit;
-      --sm-current-fg1-color: inherit;
-      --sm-current-bg-color: inherit;
-      --sm-current-fg2-color: inherit;
-    }
-
     --header-background-opacity: 0;
 
-    .novablocks-navigation--primary {
+    --nb-block-top-spacing: 0 !important;
+    --nb-block-bottom-spacing: 0 !important;
+    --nb-emphasis-top-spacing: 0 !important;
+    --nb-emphasis-bottom-spacing: 0 !important;
+
+    .nb-navigation--primary {
       order: -1;
     }
   }
 
-  .novablocks-header-row--primary {
+  :is(.nb-header-row, .more.specfic) {
+    --sm-current-bg-color: inherit;
+    --sm-current-fg1-color: inherit;
+    --sm-current-fg2-color: inherit;
+    --sm-current-accent-color: inherit;
+  }
+
+  .nb-header-row--primary {
     order: -1;
   }
 }
 
-.novablocks-header-row[class][class] {
+.nb-header-row {
+  position: relative;
+  z-index: 10;
+
   margin-top: 0;
   margin-bottom: 0;
-  padding-top: 0;
-  padding-bottom: 0;
+
+  padding: 0 var(--nb-wrapper-sides-spacings);
+}
+
+:is(.nb-header-row__inner-container, .specificity.x2.x3.x4) {
+  padding-left: 0;
+  padding-right: 0;
+}
+
+.nb-header-row__inner-container[class] > .wp-block.alignfull {
+
+  // __inner-container > .alignfull usually has negativ margins
+  // but header rows need their padding on the sides
+  &[class] {
+    margin-left: 0;
+    margin-right: 0;
+  }
 }
 
 @include above(lap) {
 
-  .novablocks-header-row {
-    --block-top-spacing: var(--novablocks-block-top-spacing, 0);
-    --block-bottom-spacing: var(--novablocks-block-bottom-spacing, 0);
-    --emphasis-top-spacing: var(--novablocks-emphasis-top-spacing, 0);
-    --emphasis-bottom-spacing: var(--novablocks-emphasis-bottom-spacing, 0);
+  .nb-header-row {
+    --block-top-spacing: var(--nb-block-top-spacing, 0);
+    --block-bottom-spacing: var(--nb-block-bottom-spacing, 0);
+    --emphasis-top-spacing: var(--nb-emphasis-top-spacing, 0);
+    --emphasis-bottom-spacing: var(--nb-emphasis-bottom-spacing, 0);
   }
 
-  .novablocks-header-row__inner-container[class] > .wp-block {
+  .nb-header-row__inner-container[class] > .wp-block {
+    display: flex;
+    column-gap: var(--nb-navigation-item-spacing);
+    align-items: center;
 
-    .novablocks-header--sticky & {
+    > :first-child:not(:last-child),
+    > :last-child:not(:first-child) {
+      flex: 1 1 50%;
+    }
+
+    > :only-child,
+    > :not(:first-child):not(:last-child) {
+      flex: 1 0 auto;
+    }
+
+    > * {
+      --justify-content: center;
+
+      &, .menu {
+        justify-content: var(--justify-content);
+      }
+    }
+
+    > :first-child:not(:last-child) {
+      --justify-content: flex-start;
+    }
+
+    > :last-child:not(:first-child) {
+      --justify-content: flex-end;
+    }
+
+    .nb-header--sticky & {
       --emphasis-top-spacing: 0.25;
       --emphasis-bottom-spacing: 0.25;
     }
@@ -55,19 +105,16 @@
       }
     }
     
-    > [class*='novablocks-navigation'] {
+    > [class*='nb-navigation'] {
         &[class][class][class] {
           flex-grow: 1;
         }
     }
+  }
 
-    --novablocks-element-spacing-multiplier: 1;
-
-    margin-top: calc(var(--block-top-spacing) * var(--novablocks-spacing) * var(--novablocks-element-spacing-multiplier, 1));
-    margin-bottom: calc(var(--block-bottom-spacing) * var(--novablocks-spacing) * var(--novablocks-element-spacing-multiplier, 1));
-    padding-top: calc(var(--emphasis-top-spacing) * var(--novablocks-spacing) * var(--novablocks-element-spacing-multiplier, 1));
-    padding-bottom: calc(var(--emphasis-bottom-spacing) * var(--novablocks-spacing) * var(--novablocks-element-spacing-multiplier, 1));
-
-    @include navigation-block-layout-common-styles;
+  // Overwrite navigation item spacing for non-primary rows
+  .nb-header[class] .nb-header-row:not(.nb-header-row--primary) {
+    --nb-navigation-item-spacing: 1.25em;
   }
 }
+

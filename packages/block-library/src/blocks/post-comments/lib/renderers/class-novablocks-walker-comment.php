@@ -64,14 +64,18 @@ if ( ! class_exists( 'NovaBlocks_Walker_Comment' ) ) {
 				$comment_classes[] = 'no-avatar';
 			}
 
-			$comment_wrapper_classes = apply_filters( 'novablocks_comment_wrapper_classes', [ 'comment-wrapper' ], $comment, $depth, $args );
+			if ( empty( $commenter_background ) ) {
+				$comment_classes[] = 'no-commenter-background';
+			}
+
+			$comment_wrapper_classes = apply_filters( 'novablocks/comments/comment_wrapper_classes', [ 'comment-wrapper' ], $comment, $depth, $args );
 			$comment_wrapper_classes = implode( ' ', $comment_wrapper_classes );
 			?>
 
 			<<?php echo $tag; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- static output ?> id="comment-<?php comment_ID(); ?>" <?php comment_class( $comment_classes, $comment ); ?>>
 			<div class="<?php echo esc_attr( $comment_wrapper_classes ); ?>" id="wrapper-comment-<?php comment_ID(); ?>">
 				<article class="comment-body">
-					<footer class="comment-meta">
+					<header class="comment-meta">
 						<?php
 						if ( 0 !== $args['avatar_size'] && ! empty( $avatar ) ) { ?>
 						<div class="comment-author-avatar vcard">
@@ -107,7 +111,7 @@ if ( ! class_exists( 'NovaBlocks_Walker_Comment' ) ) {
 						</div><!-- .comment-author-info -->
 
 						<?php $this->the_comment_extra_meta_actions( $comment, $depth, $args ); ?>
-					</footer><!-- .comment-meta -->
+					</header><!-- .comment-meta -->
 
 					<div class="comment-content">
 
@@ -139,7 +143,7 @@ if ( ! class_exists( 'NovaBlocks_Walker_Comment' ) ) {
 
 					</footer><!-- .comment-footer-meta -->
 
-					<?php do_action( 'novablocks_comments_list_comment_end', $comment, $depth, $args ); ?>
+					<?php do_action( 'novablocks/comments/list_comment:end', $comment, $depth, $args ); ?>
 
 				</article><!-- .comment-body -->
 			</div><!-- .comment-wrapper -->
@@ -209,12 +213,15 @@ if ( ! class_exists( 'NovaBlocks_Walker_Comment' ) ) {
 
 			<div class="comment-dropdown">
 				<input class="comment-dropdown-open" type="checkbox" id="dropdown-<?php comment_ID() ?>" aria-hidden="true" hidden/>
-				<label for="dropdown-<?php comment_ID() ?>" class="comment-dropdown-toggle"><?php
+				<label for="dropdown-<?php comment_ID() ?>" class="comment-dropdown-toggle">
+					<span class="dropdown-label"><?php
 					/* translators: %s: The label of the individual comment control for more comment actions. */
 					esc_html_e( 'More', '__plugin_txtd' );
-					?><span class="dropdown-icon">
-						<svg class="arrow-down" viewBox="0 0 10 5"><use xlink:href="#arrow-down"></use></svg>
-						<svg class="dots" viewBox="0 0 5 5"><use xlink:href="#dots"></use></svg>
+					?>
+					</span>
+					<span class="dropdown-icon">
+						<svg class="arrow-down" viewBox="0 0 10 5"><use xlink:href="#icons-arrow-down"></use></svg>
+						<svg class="dots" viewBox="0 0 5 5"><use xlink:href="#icons-dots"></use></svg>
 					</span>
 				</label>
 				<div class="comment-dropdown-menu">
@@ -230,7 +237,7 @@ if ( ! class_exists( 'NovaBlocks_Walker_Comment' ) ) {
 					 * @param int        $depth   Depth of the current comment.
 					 * @param array      $args    An array of arguments.
 					 */
-					$menu_items = apply_filters( 'novablock_comments_list_comment_extra_meta_menu_items', $menu_items, $comment, $depth, $args );
+					$menu_items = apply_filters( 'novablocks/comments/list_comment_extra_meta_menu_items', $menu_items, $comment, $depth, $args );
 
 					echo implode( "\n", $menu_items );
 					?>
@@ -248,7 +255,7 @@ if ( ! class_exists( 'NovaBlocks_Walker_Comment' ) ) {
 		 * @param int        $depth   Depth of the current comment.
 		 * @param array      $args    An array of arguments.
 		 */
-		protected function comment( $comment, $args, $depth ) {
+		protected function comment( $comment, $depth, $args ) {
 			$tag = ( 'div' === $args['style'] ) ? 'div' : 'li';
 			$add_below = 'comment';
 

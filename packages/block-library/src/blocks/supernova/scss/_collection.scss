@@ -1,0 +1,153 @@
+/*------------------------------------*\
+  #SUPERNOVA COLLECTION
+\*------------------------------------*/
+
+.nb-supernova {
+
+  // if it has some sort of color contrast
+  &[class*="sm-color-signal"]:not(.sm-color-signal-0) {
+
+    // and doesn't look like a hero area
+    &:not(.nb-supernova--card-layout-stacked.nb-supernova--1-columns.alignfull) {
+
+      // and is inside a sidecar area
+      .nb-sidecar-area & {
+
+        // add padding to the collections inside it
+        .nb-collection {
+
+          // only if they don't break outside the layout
+          &:not(.break-align-left) {
+            //@todo not working properly in FSE - try again
+            //padding-left: var(--nb-wrapper-sides-spacings);
+          }
+
+          &:not(.break-align-right) {
+            //padding-right: var(--nb-wrapper-sides-spacings);
+          }
+        }
+      }
+    }
+  }
+}
+
+.nb-collection {
+
+  .nb-collection__body[class] {
+    // Override Spacing Modifier option
+    // --nb-spacing-current-multiplier: 1; // cannot use this as it applies to all inner elements
+    margin-top: calc(var(--nb-block-top-spacing) * calc(var(--nb-spacing) * 1));
+  }
+}
+
+.nb-collection__layout {
+  --nb-grid-spacing: calc(var(--nb-spacing) * var(--nb-grid-spacing-modifier) * 0.02);
+
+  // this selector needs to be specific since the parametric grid layout
+  // moves layout-items inside nb-grid-area where proper spacing needs to occur
+  > .nb-collection__layout-item[class] {
+    margin: 0;
+  }
+}
+
+.nb-collection__layout--fixed-width {
+  .nb-supernova-item:not(.nb-supernova-item--aspect-ratio-auto) {
+    .nb-card__media-image {
+      @include image-cover;
+    }
+  }
+}
+
+.nb-supernova-item--aspect-ratio-auto {
+
+  .novablocks-media-composition__image {
+    position: static;
+
+    display: block;
+    width: 100%;
+    height: auto;
+    min-width: 0;
+    min-height: 0;
+    transform: none;
+  }
+
+  .novablocks-media-composition__grid-item-media {
+    flex-grow: 0;
+  }
+
+  .blob-mix {
+    position: relative;
+  }
+
+  .blob-mix__mask {
+    position: static;
+    height: auto;
+  }
+
+  .blob-mix__media {
+    position: relative;
+    height: auto;
+  }
+}
+
+.nb-collection__layout--masonry,
+.nb-collection__layout--classic,
+.nb-collection__layout--parametric {
+  --nb-collection-columns: var(--nb-collection-columns-count);
+  --nb-collection-columns-below-tablet: 1;
+
+  display: grid;
+  grid-gap: var(--nb-grid-spacing);
+  grid-template-columns: repeat(var(--nb-collection-columns, 1), 1fr);
+
+  > * {
+    width: 100%;
+    margin: 0;
+  }
+
+  @include below(tablet) {
+    --nb-collection-columns: var(--nb-collection-columns-below-tablet, 1);
+  }
+}
+
+.nb-collection__layout-column {
+  display: flex;
+  flex-direction: column;
+  gap: var(--nb-grid-spacing);
+}
+
+
+
+
+
+// ------ #CARDS COLLECTION SEPARATORS
+
+// @todo: for the card separator styling below, add a 
+// block control option to change the visibility
+
+// @todo: find a way to take into consideration the case when cards 
+// stack vertically and add separators below/above them
+
+// :root {
+//   --nb-collection-separator-weight: 1px;
+//   --nb-collection-separator-color: var(--sm-current-fg2-color);
+// }
+
+// .nb-collection__layout {
+//   > .nb-collection__layout-item[class]:not(:first-child) {
+//     position: relative;
+
+//     @include above(tablet) {
+//       &:before {
+//         content: "";
+//         position: absolute;
+//         top: 0;
+//         bottom: 0;
+//         left: calc( -1 * ((var(--nb-grid-spacing) + var(--nb-collection-separator-weight)) / 2);
+//         width: var(--nb-collection-separator-weight);
+//         background: var(--nb-collection-separator-color);
+//         opacity: 0.15;
+//       }
+//     }
+//   }
+// }

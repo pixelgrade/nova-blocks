@@ -7,88 +7,58 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 function novablocks_get_card_attributes() {
 
-	return novablocks_merge_attributes_from_array( array(
+	return novablocks_merge_attributes_from_array( [
 		'packages/block-library/src/blocks/card/attributes.json',
-		'packages/block-editor/src/hooks/with-color-signal/attributes.json',
-		'packages/block-editor/src/hooks/with-card-elements-display/attributes.json',
-		'packages/block-editor/src/hooks/with-card-details/attributes.json',
-	) );
+
+		'packages/color-signal/src/attributes.json',
+
+		'packages/block-editor/src/filters/with-card-elements-visibility/attributes.json',
+		'packages/block-editor/src/filters/with-card-details/attributes.json',
+
+		'packages/block-library/src/blocks/card/attributes-overwrite.json',
+	] );
 }
 
 if ( ! function_exists( 'novablocks_render_card_block' ) ) {
 
-	function novablocks_render_card_block( $attributes, $content ) {
+	/**
+	 * Entry point to render the block with the given attributes, content, and context.
+	 *
+	 * @see \WP_Block::render()
+	 *
+	 * @param array    $attributes
+	 * @param string   $content
+	 * @param WP_Block $block
+	 *
+	 * @return string
+	 */
+	function novablocks_render_card_block( array $attributes, string $content, WP_Block $block ): string {
+
+		// Maybe enqueue frontend-only scripts.
+		novablocks_maybe_enqueue_block_frontend_scripts( $block );
 
 		$attributes_config = novablocks_get_card_attributes();
-		$attributes = novablocks_get_attributes_with_defaults( $attributes, $attributes_config );
+		$attributes        = novablocks_get_attributes_with_defaults( $attributes, $attributes_config );
+		$card_media        = novablocks_get_collection_card_media_markup( $attributes['media'], $attributes );
 
-		$hlevel = $attributes['level'];
-		$titleTag = 'h' . ( $hlevel + 1 );
-		$subtitleTag = 'h' . ( $hlevel + 2 );
+		ob_start();
 
-		$classes = array(
-			'novablocks-card',
-			'novablocks-card--fixed-media-aspect-ratio',
-			'novablocks-card--portrait',
-			'novablocks-block__content'
-		);
-
-		if ( ! empty( $attributes['className'] ) ) {
-			$classes[] = $attributes['className'];
+		if ( ! empty( $attributes['showMeta'] ) && ! empty( $attributes['meta'] ) ) {
+			echo '<div class="nb-card__meta is-style-meta">' . $attributes['meta'] . '</div>';
 		}
 
-		if ( ! empty( $attributes['contentStyle'] ) ) {
-			$classes[] = 'content-is-' . $attributes['contentStyle'];
-		}
+		echo novablocks_get_card_item_title( $attributes['title'], $attributes );
+		echo novablocks_get_card_item_subtitle( $attributes['subtitle'], $attributes );
+		echo novablocks_get_card_item_description( $attributes['description'], $attributes );
 
-		$blockPaletteClasses = novablocks_get_palette_classes( $attributes );
-		$classes = array_merge( $classes, $blockPaletteClasses );
-
-		$className = join( ' ', $classes );
-
-		ob_start(); ?>
-
-		<div>
-		<div class="<?php echo $className; ?>">
-			<div class="novablocks-card__layout">
-				<div class="novablocks-card__layout-media">
-			        <?php if ( false != $attributes['showMedia'] ) { ?>
-						<div class="novablocks-card__media-wrap">
-							<div class="novablocks-card__media">
-								<?php echo novablocks_get_card_media_markup( $attributes['media'] ); ?>
-							</div>
-						</div>
-			        <?php } ?>
-				</div>
-				<div class="novablocks-card__layout-content">
-					<div class="novablocks-card__inner-container">
-						<?php if ( false != $attributes['showMeta'] && ! empty( $attributes['meta'] ) ) { ?>
-							<div class="novablocks-card__meta is-style-meta"><?php echo $attributes['meta']; ?></div>
-						<?php }
-
-						if ( false != $attributes['showTitle'] && ! empty( $attributes['title'] ) ) {
-							echo '<' . $titleTag . ' class="novablocks-card__title">' . $attributes['title'] . '</' . $titleTag . '>';
-						}
-
-						if ( false != $attributes['showSubtitle'] && ! empty( $attributes['subtitle'] ) ) {
-							echo '<' . $subtitleTag . ' class="novablocks-card__subtitle">' . $attributes['subtitle'] . '</' . $subtitleTag . '>';
-						}
-
-						if ( false != $attributes['showDescription'] && ! empty( $attributes['description'] ) ) { ?>
-							<div class="novablocks-card__description"><?php echo $attributes['description']; ?></div>
-						<?php }
-
-						if ( false != $attributes['showButtons'] && ! empty( $content ) ) { ?>
-							<div class="novablocks-card__buttons">
-								<?php echo $content; ?>
-							</div>
-						<?php } ?>
-					</div>
-				</div>
+		if ( ! empty( $attributes['showButtons'] ) && ! empty( $content ) ) { ?>
+			<div class="nb-card__buttons">
+				<?php echo wp_kses_post( $content ); ?>
 			</div>
-		</div>
-		</div>
+		<?php }
 
-		<?php return ob_get_clean();
+		$card_content = ob_get_clean();
+
+		return novablocks_get_collection_card_markup( $card_media, $card_content, $attributes );
 	}
 }

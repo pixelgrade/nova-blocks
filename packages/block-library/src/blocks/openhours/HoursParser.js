@@ -1,7 +1,7 @@
 // Copyright 2014 Foursquare Labs Inc. All Rights Reserved.
 
 var fourSq = fourSq || {};
-fourSq.util = fourSq.util || {}
+fourSq.util = fourSq.util || {};
 
 fourSq.util.Hours = {
   /**
@@ -83,7 +83,7 @@ fourSq.util.Hours = {
 
     return (hours * 60) + minutes;
   }
-}
+};
 
 fourSq.util.HoursParser = {
 
@@ -186,7 +186,7 @@ fourSq.util.HoursParser = {
       if (dayTimeMatch) {
         matches.push(dayTimeMatch);
       }
-    } while (dayTimeMatch)
+    } while (dayTimeMatch);
 
     if (matches.length <= 0) {
       // Try to find just a time range, and then we'll assume it's all days later on.
@@ -272,7 +272,7 @@ fourSq.util.HoursParser = {
       return alias.length;
     });
   }
-}
+};
 
 // Remove the days in which the business is closed. The parser doesn't need those days anyways.
 function removeClosedDays( schedule ) {

@@ -1,0 +1,390 @@
+/*------------------------------------*\
+  #CAROUSEL
+\*------------------------------------*/
+
+// Default Variables
+$slick-loader-path: '../images/' !default;
+$slick-arrow-color: white !default;
+$slick-dot-color: black !default;
+$slick-dot-color-active: $slick-dot-color !default;
+$slick-prev-character: '\2190' !default; // "\2190" outputs ascii character "←"
+$slick-next-character: '\2192' !default; // "\2192" outputs ascii character "→"
+$slick-dot-character: '\2022' !default; // "\2022" outputs ascii character "•"
+$slick-dot-size: 6px !default;
+
+// Arrows
+$slick-icon-opacity-default: 1 !default;
+$slick-icon-opacity-hover: 1 !default;
+$slick-opacity-not-active: 0.25 !default;
+$slick-arrow-size: 60px !default;
+
+$slick-arrow-background-opacity-default: 0.15 !default;
+$slick-arrow-background-opacity-hover: 0.6 !default;
+
+
+
+
+
+/*------------------------------------*\
+  #CAROUSEL - General Styling
+\*------------------------------------*/
+
+.slick-slider {
+  position: relative;
+  display: block;
+  box-sizing: border-box;
+  user-select: none;
+  touch-action: pan-y;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.slick-slide {
+  float: left;
+  height: 100%;
+  min-height: 1px;
+
+  [dir='rtl'] & {
+    float: right;
+  }
+
+  img {
+    display: block;
+  }
+
+  &.slick-loading img {
+    display: none;
+  }
+
+  display: none;
+
+  &.dragging img {
+    pointer-events: none;
+  }
+
+  .slick-initialized & {
+    display: block;
+  }
+
+  .slick-loading & {
+    visibility: hidden;
+  }
+
+  .slick-vertical & {
+    display: block;
+    height: auto;
+    border: 1px solid transparent;
+  }
+}
+
+.slick-list {
+  position: relative;
+  overflow: hidden;
+  display: block;
+  margin: 0;
+  padding: 0;
+
+  &:focus {
+    outline: none;
+  }
+
+  &.dragging {
+    cursor: pointer;
+    cursor: hand;
+  }
+}
+
+.slick-track {
+  position: relative;
+  left: 0;
+  top: 0;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+
+  display: flex;
+  align-items: stretch;
+
+  &:before,
+  &:after {
+    content: '';
+    display: table;
+  }
+
+  &:after {
+    clear: both;
+  }
+
+  .slick-loading & {
+    visibility: hidden;
+  }
+}
+
+
+
+.nb-collection__layout--carousel {
+
+  @include below(lap) {
+    margin-left: calc(-1 * var(--nb-sidecar-sides));
+    margin-right: calc(-1 * var(--nb-sidecar-sides));
+  }
+
+  //.nb-collection__layout-item,
+  //.nb-supernova-item {
+  //  height: 100%;
+  //}
+  //
+  //.slick-slide {
+  //  float: none;
+  //  height: auto;
+  //
+  //  > div {
+  //    height: 100%;
+  //
+  //    > .nb-collection__layout-item {
+  //      display: block !important;
+  //    }
+  //  }
+  //}
+}
+
+// Remove default color signal background
+:is(.slick-arrow, .slick-dots, .specificity.x2) {
+  background: transparent;
+}
+
+
+
+
+
+/*------------------------------------*\
+  #CAROUSEL - Navigation
+\*------------------------------------*/
+
+/**
+ * ARROWS
+ */
+.slick-arrow {
+  position: absolute;
+  top: 50%;
+  z-index: 1300;
+
+  display: block;
+  height: $slick-arrow-size;
+  width: $slick-arrow-size;
+  border-radius: 50%;
+  padding: 0;
+  border: none;
+  outline: none;
+
+  font-size: 0px !important;
+  line-height: 0px;
+
+  color: transparent;
+  transform: translate(0, -50%);
+  cursor: pointer;
+
+  backdrop-filter: blur(2px);
+
+  &:hover {
+    outline: none;
+    background: transparent;
+    color: transparent;
+
+    &:before {
+      opacity: $slick-icon-opacity-hover;
+    }
+
+    &:after {
+      opacity: $slick-arrow-background-opacity-hover;
+    }
+  }
+
+
+  // Arrow Icon
+  &:before {
+    font-size: 20px;
+    line-height: 1;
+    color: $slick-arrow-color;
+    opacity: $slick-icon-opacity-default;
+
+    display: block;
+
+    position: absolute;
+    z-index: 1;
+    top: 50%;
+    left: 50%;
+
+    width: 32px;
+    height: 32px;
+  }
+
+  &.slick-disabled:before {
+    opacity: $slick-opacity-not-active;
+  }
+
+  &.slick-hidden {
+    display: none;
+  }
+
+  // Arrow Background
+  &:after {
+    content: "";
+
+    display: block;
+
+    width: 100%;
+    height: 100%;
+
+    margin-top: 0;
+    border: 0;
+    border-radius: 50%;
+
+    background-color: black;
+    opacity: $slick-arrow-background-opacity-default;
+
+    transition: opacity 0.15s ease-in;
+    transform: none;
+  }
+}
+
+.slick-prev {
+  left: 25px;
+
+  &:before {
+    content: $slick-prev-character;
+  }
+}
+
+.slick-next {
+  right: 25px;
+
+  &:before {
+    content: $slick-next-character;
+  }
+}
+
+
+
+/**
+ * PAGINATION
+ *
+ * Dots transformed in numbers
+ */
+.slick-dots {
+  z-index: 1300;
+  display: block;
+
+  width: 100%;
+  padding: var(--nb-spacing) 0 0 0;
+  margin: 0;
+
+  list-style: none;
+  text-align: center;
+
+  li {
+    position: relative;
+    display: inline-block;
+    cursor: pointer;
+
+    button {
+
+      // We are using !important for the moment,
+      // because in Anima, button styles are applied
+      // using a selector with IDS.
+      margin: 0 calc(var(--nb-spacing) / 3);
+      padding: 0 !important;
+      border: 0 !important;
+      border-bottom: 2px solid transparent !important;
+      border-radius: 0 !important;
+
+      color: inherit !important;
+      background: none !important;
+      outline: 0;
+
+      // --font-size-modifier: 0.9;
+
+
+      transition: opacity .15s ease;
+      cursor: pointer;
+
+      &:hover {
+        outline: none;
+        opacity: .6;
+
+        &:before {
+          opacity: $slick-icon-opacity-hover;
+        }
+      }
+    }
+
+    &.slick-active {
+      button {
+        border-bottom-color: currentColor !important;
+
+        &:before {
+          color: $slick-dot-color-active;
+          opacity: $slick-icon-opacity-default;
+        }
+      }
+    }
+  }
+}
+
+
+
+
+
+/*------------------------------------*\
+  #CAROUSEL - Exceptions
+\*------------------------------------*/
+
+// ARROWS POSITIONING
+//
+// 1. Overlay Slideshow
+// 2. Below Content
+// 3. Above Content
+
+
+// These styles are applied when *Collection Layout* option is set to 'Carousel',
+// *Card Layout* is 'Stacked', *Pagination* is 'true', and *Number of Items per Row* is set to '1'.
+.nb-supernova--card-layout-stacked.nb-supernova--1-columns.alignfull {
+
+  &.nb-supernova--show-pagination .nb-collection__layout--carousel .nb-supernova-item__inner-container {
+    margin-bottom: calc(2 * var(--nb-spacing) + var(--current-font-size) * var(--current-line-height));
+  }
+
+  .nb-collection__layout--carousel {
+
+    .slick-dots {
+      position: absolute;
+      bottom: 0;
+      padding-bottom: var(--nb-spacing);
+    }
+  }
+}
+
+.nb-collection__layout--variable-width {
+  .nb-supernova-item__media-aspect-ratio {
+    > * {
+      position: relative;
+    }
+  }
+}
+
+
+.nb-supernova {
+  &:not(.nb-supernova--1-columns) {
+    @include above(lap) {
+      .slick-track {
+        gap: var(--nb-grid-spacing);
+      }
+    }
+
+    @include below(lap) {
+      .slick-slide {
+        padding-left: calc(var(--nb-grid-spacing) / 4);
+        padding-right: calc(var(--nb-grid-spacing) / 4);
+      }
+    }
+  }
+}

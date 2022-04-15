@@ -1,30 +1,27 @@
 :root {
+	--nb-spacing: 24px;
+	--nb-media-background-direction: 90deg;
 
-	--novablocks-spacing: 24px;
-	--novablocks-sides-spacings: var(--novablocks-spacing);
-	--novablocks-media-spacing: var(--novablocks-spacing);
-	--novablocks-media-gutter: var(--novablocks-spacing);
-	--novablocks-media-background-direction: 90deg;
+  --nb-wrapper-sides-spacings: var(--nb-spacing);
 
-  --novablocks-wrapper-sides-spacing: var(--novablocks-spacing);
+	--nb-transition-duration: 0.5s;
+	--nb-transition-easing: ease;
+	--nb-transition: all var(--nb-transition-duration) var(--nb-transition-easing);
 
-	--novablocks-transition-duration: 0.5s;
-	--novablocks-transition-easing: ease;
-	--novablocks-transition: all var(--novablocks-transition-duration) var(--novablocks-transition-easing);
+  // Vertical spacing decrease with the level of blocks nesting. 
+  --nb-spacing-base: 1;
+  --nb-spacing-modifier: 1;
+  --nb-spacing-current-multiplier: 1;
 
-	--novablocks-element-spacing-level-1-multiplier: 1;
-	--novablocks-element-spacing-level-2-multiplier: 0.75;
-	--novablocks-element-spacing-level-3-multiplier: 0.5;
-
-	--novablocks-block-content-box-shadow:
+	--nb-block-content-box-shadow:
 		0 32px 128px rgba(42, 54, 52, 0.1),
 		0 16px 64px rgba(42, 54, 52, 0.1),
 		0 8px 16px rgba(42, 54, 52, 0.1);
 }
 
 * {
-  --novablocks-bg-color: var(--sm-current-bg-color, #FFFFFF);
-  --novablocks-accent-color: var(--sm-current-accent-color, #203AB6);
-  --novablocks-fg1-color: var(--sm-current-fg1-color, #272743);
-  --novablocks-fg2-color: var(--sm-current-fg2-color, #000043);
+  --nb-bg-color: var(--sm-current-bg-color, #FFFFFF);
+  --nb-accent-color: var(--sm-current-accent-color, #203AB6);
+  --nb-fg1-color: var(--sm-current-fg1-color, #272743);
+  --nb-fg2-color: var(--sm-current-fg2-color, #000043);
 }

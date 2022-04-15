@@ -1,42 +1,28 @@
 @include below(lap) {
 
-  .novablocks-header--main {
+  .nb-header--main[class] {
+    @include apply-variation(5);
 
-    &.novablocks-header-background:before {
+    &.nb-header-background:before {
       position: fixed;
     }
   }
 
-  .novablocks-header {
+  .nb-header {
     display: none;
     overflow-y: auto;
 
-    position: fixed;
-    top: 0;
-    bottom: 0;
     left: 0;
-    z-index: 999;
+    z-index: 2100;
 
     .c-menu-toggle__checkbox ~ & {
       display: block;
     }
 
-    .c-menu-toggle__checkbox:not(:checked) ~ & {
-      transform: translateX(-100%);
-    }
-  }
-
-  .novablocks-header__content {
-    display: flex;
-    flex-direction: column;
-
-    [class*="__inner-container"] > & {
-      max-width: none;
-    }
-
-    .site-branding {
-      padding: 1em;
-      order: -1;
+    &, &:before {
+      .c-menu-toggle__checkbox:not(:checked) ~ & {
+        left: -100%;
+      }
     }
   }
 }

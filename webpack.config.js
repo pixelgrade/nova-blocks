@@ -188,13 +188,20 @@ const DefaultConfig = {
 			{
 				test: /\.svg$/,
 				use: [
-					'svg-sprite-loader',
+          {
+            loader: 'svg-sprite-loader',
+            options: {
+              symbolId: '[1]-[2]',
+              symbolRegExp: 'packages\\/([^\\/]*)\\/[^\\/]*(?:\\/svgs?|\\/blocks)?\\/(.*)\\.svg'
+            }
+          },
 					'svgo-loader'
 				]
 			}
 		] ),
 	},
 	plugins: [
+//    new ESLintPlugin(),
 		new CustomTemplatedPathPlugin( {
 			basename( path, data ) {
 				let rawRequest;
@@ -293,8 +300,7 @@ const minimizeConfig = {
  */
 const VendorScripts = [
 	'jquery.bully',
-	'jquery.slick',
-	'jquery.velocity'
+	'jquery.slick'
 ];
 
 const VendorEntries = {};
@@ -339,9 +345,39 @@ const VendorConfig = {
 	],
 };
 
+const SidebarsBlocksConfig =  {
+  mode,
+  externals: {
+    jquery: 'jQuery',
+    react: 'React',
+    lodash: 'lodash',
+  },
+  entry: {
+    './dist/sidebars-blocks/index': './lib/sidebars-blocks/index',
+    './dist/sidebars-blocks/index.min': './lib/sidebars-blocks/index',
+  },
+  output: {
+    path: __dirname,
+  },
+  module: {
+    rules: [
+      {
+        test: /\.(js|jsx)$/,
+        exclude: /node_modules/,
+        use: [ 'babel-loader' ],
+      }
+    ]
+  },
+  optimization: {
+    ...minimizeConfig,
+  },
+  devtool
+};
+
 module.exports = [
 	PackagesConfig,
 	FrontendConfig,
 	BlocksConfig,
 	VendorConfig,
+  SidebarsBlocksConfig,
 ];

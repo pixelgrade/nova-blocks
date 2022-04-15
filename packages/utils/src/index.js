@@ -1,98 +1,19 @@
-import classnames from "classnames";
-
-export const getRandomBetween = ( min, max ) => {
-	const random = Math.max(0, Math.random() - Number.MIN_VALUE );
-	return Math.floor( random * (max - min + 1) + min );
-};
-
-export const getRandomArrayFromArray = ( arr, n ) => {
-
-	let result = new Array( n ),
-		len = arr.length,
-		taken = new Array( len );
-
-	if ( ! len ) {
-		return [];
-	}
-
-	while ( n -- ) {
-		const x = Math.floor( Math.random() * len );
-		result[n] = arr[x in taken ? taken[x] : x];
-		taken[x] = -- len in taken ? taken[len] : len;
-	}
-
-	return result;
-};
-
-export const getRandomFromArray = ( arr ) => {
-	const array = getRandomArrayFromArray( arr, 1 );
-	return array[0];
-};
-
-export const getRandomBooleanValue = () => {
-	return getRandomArrayFromArray( [ true, false ], 1 )[0];
-};
-
-export const debounce = (func, wait) => {
-	let timeout = null;
-
-	return function () {
-		const context = this;
-		const args = arguments;
-
-		const later = () => {
-			func.apply(context, args);
-		};
-
-		clearTimeout(timeout);
-		timeout = setTimeout(later, wait);
-	}
-};
-
-export const range = function( min, max ) {
-	const array = [];
-	for ( let i = 0; i <= max - min; i++ ) {
-		array.push( i + min );
-	}
-	return array;
-};
+export * from './collection-layout';
+export * from './debounce';
+export * from './duotone';
+export * from './has-touch-screen';
+export * from './is-mobile-device';
+export * from './random';
+export * from './space-and-sizing';
+export * from './overlay-filter';
+export * from './color-signal';
+export * from './media';
+export * from './focal-point';
+export * from './media-query';
+export * from './array';
+export * from './break-align';
 
 export const isSafari = /^((?!chrome|android).)*safari/i.test(navigator.userAgent);
-
-export const hasTouchScreen = function() {
-	var hasTouchScreen = false;
-
-	if ( "maxTouchPoints" in navigator ) {
-		hasTouchScreen = navigator.maxTouchPoints > 0;
-	} else if ( "msMaxTouchPoints" in navigator ) {
-		hasTouchScreen = navigator.msMaxTouchPoints > 0;
-	} else {
-		var mQ = window.matchMedia && matchMedia( "(pointer:coarse)" );
-		if ( mQ && mQ.media === "(pointer:coarse)" ) {
-			hasTouchScreen = !!mQ.matches;
-		} else if ( 'orientation' in window ) {
-			hasTouchScreen = true;
-		} else {
-			var UA = navigator.userAgent;
-			hasTouchScreen = (
-				/\b(BlackBerry|webOS|iPhone|IEMobile)\b/i.test( UA ) || /\b(Android|Windows Phone|iPad|iPod)\b/i.test( UA )
-			);
-		}
-	}
-
-	return hasTouchScreen;
-};
-
-// using window.mobileAndTabletCheck from https://stackoverflow.com/a/11381730
-export const isMobileDevice = function() {
-	let check = false;
-	( function( a ) {
-		if ( /(android|bb\d+|meego).+mobile|avantgo|bada\/|blackberry|blazer|compal|elaine|fennec|hiptop|iemobile|ip(hone|od)|iris|kindle|lge |maemo|midp|mmp|mobile.+firefox|netfront|opera m(ob|in)i|palm( os)?|phone|p(ixi|re)\/|plucker|pocket|psp|series(4|6)0|symbian|treo|up\.(browser|link)|vodafone|wap|windows ce|xda|xiino|android|ipad|playbook|silk/i.test( a ) || /1207|6310|6590|3gso|4thp|50[1-6]i|770s|802s|a wa|abac|ac(er|oo|s\-)|ai(ko|rn)|al(av|ca|co)|amoi|an(ex|ny|yw)|aptu|ar(ch|go)|as(te|us)|attw|au(di|\-m|r |s )|avan|be(ck|ll|nq)|bi(lb|rd)|bl(ac|az)|br(e|v)w|bumb|bw\-(n|u)|c55\/|capi|ccwa|cdm\-|cell|chtm|cldc|cmd\-|co(mp|nd)|craw|da(it|ll|ng)|dbte|dc\-s|devi|dica|dmob|do(c|p)o|ds(12|\-d)|el(49|ai)|em(l2|ul)|er(ic|k0)|esl8|ez([4-7]0|os|wa|ze)|fetc|fly(\-|_)|g1 u|g560|gene|gf\-5|g\-mo|go(\.w|od)|gr(ad|un)|haie|hcit|hd\-(m|p|t)|hei\-|hi(pt|ta)|hp( i|ip)|hs\-c|ht(c(\-| |_|a|g|p|s|t)|tp)|hu(aw|tc)|i\-(20|go|ma)|i230|iac( |\-|\/)|ibro|idea|ig01|ikom|im1k|inno|ipaq|iris|ja(t|v)a|jbro|jemu|jigs|kddi|keji|kgt( |\/)|klon|kpt |kwc\-|kyo(c|k)|le(no|xi)|lg( g|\/(k|l|u)|50|54|\-[a-w])|libw|lynx|m1\-w|m3ga|m50\/|ma(te|ui|xo)|mc(01|21|ca)|m\-cr|me(rc|ri)|mi(o8|oa|ts)|mmef|mo(01|02|bi|de|do|t(\-| |o|v)|zz)|mt(50|p1|v )|mwbp|mywa|n10[0-2]|n20[2-3]|n30(0|2)|n50(0|2|5)|n7(0(0|1)|10)|ne((c|m)\-|on|tf|wf|wg|wt)|nok(6|i)|nzph|o2im|op(ti|wv)|oran|owg1|p800|pan(a|d|t)|pdxg|pg(13|\-([1-8]|c))|phil|pire|pl(ay|uc)|pn\-2|po(ck|rt|se)|prox|psio|pt\-g|qa\-a|qc(07|12|21|32|60|\-[2-7]|i\-)|qtek|r380|r600|raks|rim9|ro(ve|zo)|s55\/|sa(ge|ma|mm|ms|ny|va)|sc(01|h\-|oo|p\-)|sdk\/|se(c(\-|0|1)|47|mc|nd|ri)|sgh\-|shar|sie(\-|m)|sk\-0|sl(45|id)|sm(al|ar|b3|it|t5)|so(ft|ny)|sp(01|h\-|v\-|v )|sy(01|mb)|t2(18|50)|t6(00|10|18)|ta(gt|lk)|tcl\-|tdg\-|tel(i|m)|tim\-|t\-mo|to(pl|sh)|ts(70|m\-|m3|m5)|tx\-9|up(\.b|g1|si)|utst|v400|v750|veri|vi(rg|te)|vk(40|5[0-3]|\-v)|vm40|voda|vulc|vx(52|53|60|61|70|80|81|83|85|98)|w3c(\-| )|webc|whit|wi(g |nc|nw)|wmlb|wonu|x700|yas\-|your|zeto|zte\-/i.test( a.substr( 0, 4 ) ) ) {
-			check = true;
-		}
-	} )( navigator.userAgent || navigator.vendor || window.opera );
-	return check;
-};
 
 export const findParents = ( target, query ) => {
 	let parents = [];
@@ -133,45 +54,6 @@ export const shuffleArray = function( array ) {
 	return array;
 };
 
-export const defaultSnapValues = {
-	x: [0, 0.5, 1],
-	y: [0, 0.5, 1]
-};
-
-export const maybeSnapFocalPoint = function( focalPoint, snapValues = defaultSnapValues ) {
-	let x = parseFloat( focalPoint.x );
-	let y = parseFloat( focalPoint.y );
-	let thereshold = 0.05;
-
-	snapValues.x.forEach( snapValue => {
-		if ( snapValue - thereshold < x && x < snapValue + thereshold ) {
-			x = snapValue;
-		}
-	} );
-
-	snapValues.y.forEach( snapValue => {
-		if ( snapValue - thereshold < y && y < snapValue + thereshold ) {
-			y = snapValue;
-		}
-	} );
-
-	return { x, y }
-};
-
-export const getSnapClassname = focalPoint => {
-	const classNames = [];
-
-	if ( defaultSnapValues.x.includes( parseFloat( focalPoint.x ) ) ) {
-		classNames.push( 'is-snapped-x' );
-	}
-
-	if ( defaultSnapValues.y.includes( parseFloat( focalPoint.y ) ) ) {
-		classNames.push( 'is-snapped-y' );
-	}
-
-	return classNames.join( ' ' );
-};
-
 export const getControlsClasses = ( attributes, compileAttributes ) => {
 	const isDirty = areAttributesDirty( attributes, compileAttributes );
 	return getControlsDirtyClasses( isDirty );
@@ -186,7 +68,7 @@ export const areAttributesDirty = ( attributes, compileAttributes ) => {
 	}
 
 	return dirty;
-}
+};
 
 export const getControlsDirtyClasses = ( isDirty ) => {
 	const classes = [ 'novablocks-controls-wrap' ];
@@ -195,11 +77,11 @@ export const getControlsDirtyClasses = ( isDirty ) => {
 		classes.push( 'novablocks-controls-wrap--dirty' );
 	}
 
-	return classnames( classes );
+	return classes.join( ' ' );
 };
 
-export const getCardMediaPaddingTop = ( containerHeight ) => {
-	let compiledHeight = containerHeight / 50 - 1;
+export const getCardMediaPaddingTop = ( thumbnailAspectRatio ) => {
+	let compiledHeight = thumbnailAspectRatio / 50 - 1;
 
 	if ( compiledHeight < 0 ) {
 		compiledHeight *= 2;
@@ -221,22 +103,7 @@ export const getCardMediaPaddingTop = ( containerHeight ) => {
 	return `${ numerator * 100 / denominator }%`;
 };
 
-const breakpoints = {
-	desktop: 1366,
-	lap: 1024,
-	tablet: 768,
-	mobile: 480,
-};
 
-export const below = ( breakpoint ) => {
-	const width = breakpoints[breakpoint];
-	return window.innerWidth < width;
-};
-
-export const above = ( breakpoint ) => {
-	const width = breakpoints[breakpoint];
-	return window.innerWidth >= width;
-};
 
 export const titleCase = ( str ) => {
 	var splitStr = str.toLowerCase().split( ' ' );
@@ -247,7 +114,7 @@ export const titleCase = ( str ) => {
 	}
 	// Directly return the joined string
 	return splitStr.join( ' ' );
-}
+};
 
 export const isAnyPartOfElementInViewport = (element) => {
 	const rect = element.getBoundingClientRect();
@@ -260,93 +127,9 @@ export const isAnyPartOfElementInViewport = (element) => {
 	const horInView = (rect.left <= windowWidth) && ((rect.left + rect.width) >= 0);
 
 	return (vertInView && horInView);
-}
-
-export const getVariationFromSignal = ( signal ) => {
-
-  if ( signal === 1 ) {
-    return 3;
-  }
-
-  if ( signal === 2 ) {
-    return 6;
-  }
-
-  if ( signal === 3 ) {
-    return 10;
-  }
-
-  return 1;
-}
-
-export const getSignalRelativeToVariation = ( compare, reference ) => {
-  const variationOptions = getSignalOptionsFromVariation( reference );
-
-  return variationOptions.reduce( ( prev, curr, index, arr ) => {
-    return ( Math.abs(curr - compare ) < Math.abs( arr[prev] - compare ) ? index : prev );
-  }, 0 );
-}
-
-export const getSignalFromVariation = ( variation ) => {
-
-  if ( variation === 1 ) {
-    return 0;
-  }
-
-  if ( variation < 5 ) {
-    return 1;
-  }
-
-  if ( variation < 9 ) {
-    return 2;
-  }
-
-  return 3;
-}
-
-export const getSignalOptionsFromVariation = ( variation ) => {
-  const blockSignal = getSignalFromVariation( variation );
-
-  const variationOptions = Array.from( Array( 4 ).keys() ).map( index => {
-    return index === blockSignal ? variation : getVariationFromSignal( index );
-  } );
-
-  variationOptions.sort( ( variation1, variation2 ) => {
-    return Math.abs( variation - variation1 ) < Math.abs( variation - variation2 ) ? -1 : 1;
-  } );
-
-  return variationOptions;
-}
-
-export const getContentVariationBySignal = ( props ) => {
-  const { attributes } = props;
-  const { contentColorSignal, paletteVariation, useSourceColorAsReference } = attributes;
-  const siteVariation = getSiteColorVariation();
-  const currentPalette = getCurrentPaletteConfig(props);
-  const { sourceIndex } = currentPalette;
-
-  const offset = useSourceColorAsReference ? sourceIndex : siteVariation - 1;
-  const referenceVariation = normalizeVariationValue( paletteVariation + offset );
-
-  const contentSignalOptions = getSignalOptionsFromVariation( referenceVariation );
-
-  return normalizeVariationValue( contentSignalOptions[ contentColorSignal ] - offset )
-}
-
-// Helper function to get current Palette Config,
-// and generate a default, if a palette does not exist.
-export const getCurrentPaletteConfig = ( props ) => {
-  const { attributes, settings } = props;
-  const { palette } = attributes;
-  const { palettes } = settings;
+};
 
 
-  if ( ! Array.isArray( palettes) || ! palettes.length ) {
-    return { sourceIndex: 6 }
-  }
-
-  return palettes.find( paletteIterator => paletteIterator.id === palette ) || palettes[0];
-}
 
 // Uppercase the first letter of a string in JavaScript
 // https://flaviocopes.com/how-to-uppercase-first-letter-javascript/
@@ -358,38 +141,23 @@ export const capitalizeFirstLetter = ( string ) => {
   }
 
   return string.charAt( 0 ).toUpperCase() + string.slice( 1 )
-}
+};
 
-export const getColorSetClassnames = ( attributes ) => {
 
-  const {
-    palette,
-    paletteVariation,
-    useSourceColorAsReference
-  } = attributes;
-
-  return classnames(
-    `sm-palette-${ palette }`,
-    `sm-variation-${ paletteVariation }`,
-    {
-      'sm-palette--shifted': !! useSourceColorAsReference
-    }
-  );
-}
 
 export const getAlignmentClassnames = ( attributes ) => {
   const { contentPosition } = attributes;
+
+  if ( typeof contentPosition !== "string" ) {
+    return '';
+  }
 
   const alignment = contentPosition.split( " " );
   const verticalAlignment = alignment[0];
   const horizontalAlignment = alignment[1];
 
   return `novablocks-u-valign-${ verticalAlignment } novablocks-u-halign-${ horizontalAlignment }`;
-}
-
-export const normalizeVariationValue = ( value ) => {
-  return ( value + 11 ) % 12 + 1;
-}
+};
 
 export const getLevelAttributes = ( attributes ) => {
   const { level } = attributes;
@@ -399,7 +167,7 @@ export const getLevelAttributes = ( attributes ) => {
     collectionTitleLevel: level,
     cardTitleLevel: level + 1
   }
-}
+};
 
 export const getAspectRatioAttributes = ( attributes ) => {
   let {
@@ -419,7 +187,7 @@ export const getAspectRatioAttributes = ( attributes ) => {
     thumbnailAspectRatio,
     thumbnailAspectRatioString,
   }
-}
+};
 
 export const getPaddingTopFromContainerHeight = ( containerHeight ) => {
   let height = containerHeight / 50 - 1;
@@ -437,7 +205,7 @@ export const getPaddingTopFromContainerHeight = ( containerHeight ) => {
   }
 
   return numerator * 100 / denominator;
-}
+};
 
 export const getAlignFromMatrix = ( alignMatrixValue ) => {
 
@@ -448,126 +216,179 @@ export const getAlignFromMatrix = ( alignMatrixValue ) => {
   const align = alignMatrixValue.split( /\b\s+/ );
 
   return [ align[0], align[1] || 'center' ];
+};
+
+
+
+
+
+
+
+export const ready = ( fn ) => {
+  if ( document.readyState != 'loading' ) {
+    fn();
+  } else {
+    document.addEventListener( 'DOMContentLoaded', fn );
+  }
+};
+
+export const addClass = ( element, classes ) => {
+  const classesArray = classes.split( /\s+/ ).filter( x => x.trim().length );
+
+  if ( classesArray.length ) {
+    element.classList.add( ...classesArray );
+  }
+};
+
+export const removeClass = ( element, classes ) => {
+  const classesArray = classes.split(/\s+/).filter( x => x.trim().length );
+
+  if ( classesArray.length ) {
+    element.classList.remove( ...classesArray );
+  }
+};
+
+export const hasClass = ( element, className ) => {
+  return element.classList.contains( className );
+};
+
+export const empty = ( element ) => {
+  while ( element.firstChild ) {
+    element.removeChild( element.firstChild );
+  }
 }
+
+export const toggleClass = ( element, className, condition ) => {
+
+  if ( typeof condition !== "undefined" ) {
+    if ( !! condition ) {
+      addClass( element, className );
+    } else {
+      removeClass( element, className );
+    }
+    return;
+  }
+
+  if ( hasClass( element, className ) ) {
+    removeClass( element, className );
+  } else {
+    addClass( element, className );
+  }
+}
+
+export const getFirstChild = ( element ) => {
+  var firstChild = element.firstChild;
+
+  while ( firstChild != null && firstChild.nodeType === 3 ) { // skip TextNodes
+    firstChild = firstChild.nextSibling;
+  }
+
+  return firstChild;
+}
+
+export function setAndResetElementStyles ( element, props = {} ) {
+
+  const setProps = () => {
+    Object.keys( props ).forEach( key => {
+      element.style[key] = props[key];
+    } );
+  }
+
+  const resetProps = () => {
+    Object.keys( props ).forEach( key => {
+      element.style[key] = '';
+    } );
+  }
+
+  setProps();
+
+  if ( window.requestIdleCallback ) {
+    window.requestIdleCallback( resetProps );
+  } else {
+    setTimeout( resetProps, 0 );
+  }
+}
+
+export const clamp = ( number, min, max ) => {
+  return Math.min( Math.max( min, number ), max )
+};
 
 export const isFunctionalPalette = palette => {
   const id = palette.id + '';
   return id.charAt(0) === '_';
-}
+};
 
-export const mapPalettesToColorPalette = palette => {
-  const { colors, sourceIndex } = palette;
-  return {
-    name: palette.label,
-    color: colors[sourceIndex].value
-  };
-}
+export const IS_EDITOR = document.body.classList.contains( 'block-editor-page' );
+export const IS_CUSTOMIZER = document.body.classList.contains( 'wp-customizer' );
 
-export const compileVariationAttributes = ( palette, paletteVariation, useSourceColorAsReference ) => {
-  const { sourceIndex } = palette;
-  const siteVariation = getSiteColorVariation();
+export const getPreviewAttributes = ( attributes ) => {
 
-  let offset = siteVariation - sourceIndex - 1;
-  let newPaletteVariation = useSourceColorAsReference ? paletteVariation + offset : paletteVariation;
-  newPaletteVariation = normalizeVariationValue( newPaletteVariation );
-
-  return {
-    useSourceColorAsReference: useSourceColorAsReference,
-    paletteVariation: paletteVariation,
+  if ( ! needsPreview( attributes ) ) {
+    return Object.assign( {}, attributes, {
+      preview: false,
+    } );
   }
-}
 
-export const getAbsoluteVariation = ( palette, paletteVariation, useSourceColorAsReference ) => {
-  const { sourceIndex } = palette;
-  const siteVariation = getSiteColorVariation();
-  let offset = siteVariation - sourceIndex - 1;
-  let variation = useSourceColorAsReference ? paletteVariation + offset : paletteVariation - offset
-
-  return normalizeVariationValue( variation );
-}
-
-export const getAbsoluteColorVariation = ( props ) => {
-
-  const {
-    attributes: {
-      paletteVariation,
-      useSourceColorAsReference
-    }
-  } = props;
-
-  const currentPalette = getCurrentPaletteConfig( props );
-  const { sourceIndex } = currentPalette;
-  const siteVariation = getSiteColorVariation();
-  const siteVariationOffset = siteVariation - 1;
-  const colorReferenceOffset = useSourceColorAsReference ? sourceIndex : 0;
-
-  return normalizeVariationValue( paletteVariation - colorReferenceOffset + siteVariationOffset );
-}
-
-export const getCurrentPaletteRelativeColorVariation = ( paletteVariation, props ) => {
-  return getRelativeColorVariation( getCurrentPaletteConfig( props ), paletteVariation, props );
-}
-
-export const getSiteColorVariation = () => {
-  return parseInt( window?.customify_config?.sm_site_color_variation?.value || 1, 10 );
-}
-
-export const getRelativeColorVariation = ( paletteConfig, paletteVariation, props ) => {
-
-  const {
-    attributes: {
-      useSourceColorAsReference
-    }
-  } = props;
-
-  const { sourceIndex } = paletteConfig;
-  const siteVariation = getSiteColorVariation();
-  const siteVariationOffset = useSourceColorAsReference ? 0 : ( siteVariation - 1 );
-  const colorReferenceOffset = useSourceColorAsReference ? sourceIndex : 0;
-
-  return normalizeVariationValue( paletteVariation - colorReferenceOffset - siteVariationOffset )
-}
-
-export const getSignalAttributes = ( signal, palette, sticky = false ) => {
-  const { sourceIndex } = palette;
-  const siteVariation = getSiteColorVariation();
-  const variationOptions = getSignalOptionsFromVariation( siteVariation );
-  const sourceSignal = getSignalRelativeToVariation( sourceIndex + 1, siteVariation );
-  const nextVariation = sourceSignal === signal ? 1 : normalizeVariationValue( variationOptions[ signal ] - siteVariation + 1 );
-
-  if ( sticky ) {
-
-    return {
-      colorSignal: signal,
-      palette: palette.id,
-      paletteVariation: nextVariation,
-      useSourceColorAsReference: sourceSignal === signal,
-    }
-
-  } else {
-
-    return {
-      palette: palette.id
-    }
-
+  if ( attributes?.preview ) {
+    return attributes;
   }
+
+  return Object.assign( {}, attributes, {
+    layoutStyle: 'classic',
+    columns: 1,
+    cardLayout: 'horizontal',
+    cardMediaOpacity: 100,
+  } );
+};
+
+export const needsPreview = ( attributes ) => {
+  return [ "parametric", "carousel" ].includes( attributes.layoutStyle ) && "auto" !== attributes.contentType;
+};
+
+export const onScrollRAF = ( callback ) => {
+  let scrollY = window.pageYOffset;
+  let lastScrollY = -1;
+  let frameRendered = false;
+
+  window.addEventListener( 'scroll', () => {
+    scrollY = window.pageYOffset;
+    frameRendered = false;
+  } );
+
+  window.addEventListener( 'resize', () => {
+    frameRendered = false;
+  } );
+
+  const tick = () => {
+    if ( ! frameRendered ) {
+      callback( scrollY, lastScrollY );
+      lastScrollY = scrollY;
+      frameRendered = true;
+    }
+    requestAnimationFrame( tick );
+  }
+
+  requestAnimationFrame( tick );
 }
 
-export const getSpacingCSSProps = ( attributes ) => {
+export const matches = ( el, selector ) => {
+  return ( el.matches || el.matchesSelector || el.msMatchesSelector || el.mozMatchesSelector || el.webkitMatchesSelector || el.oMatchesSelector ).call( el, selector );
+};
 
-  const {
-    blockTopSpacing,
-    blockBottomSpacing,
-    emphasisTopSpacing,
-    emphasisBottomSpacing,
-    verticalAlignment
-  } = attributes;
+export const resizeDropcap = dropcap => {
+  const wrapper = dropcap.parentElement;
 
-  return {
-    '--novablocks-emphasis-top-spacing': verticalAlignment === 'top' ? Math.abs(emphasisTopSpacing) : emphasisTopSpacing,
-    '--novablocks-emphasis-bottom-spacing': verticalAlignment === 'bottom' ? Math.abs(emphasisBottomSpacing) : emphasisBottomSpacing,
-    '--novablocks-block-top-spacing': blockTopSpacing,
-    '--novablocks-block-bottom-spacing': blockBottomSpacing,
-    '--novablocks-block-zindex': Math.max( 0, -1 * ( blockTopSpacing + blockBottomSpacing ) ),
-  }
+  const dropcapWidth = dropcap.offsetWidth;
+  const wrapperWidth = wrapper.offsetWidth;
+  const widthRatio = wrapperWidth / dropcapWidth;
+  const dropcapHeight = dropcap.offsetHeight;
+  const wrapperHeight = wrapper.offsetHeight;
+  const heightRatio = wrapperHeight / dropcapHeight;
+  const ratio = Math.min( widthRatio, heightRatio );
+
+  const fontSize = window.getComputedStyle( dropcap, null ).getPropertyValue( 'font-size' );
+  const fontSizeValue = parseFloat( fontSize );
+  const newFontSizeValue = fontSizeValue * ratio;
+
+  dropcap.style.fontSize = `${ newFontSizeValue }px`;
 }

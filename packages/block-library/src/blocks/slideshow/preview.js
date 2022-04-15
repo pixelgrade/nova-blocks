@@ -1,20 +1,17 @@
 /**
- * Internal dependencies
- */
-import SlideshowBackground from './background';
-import { GalleryPlaceholder, getEditorScrollContainer } from '@novablocks/block-editor';
-
-/**
  * WordPress dependencies
  */
-import {
-	Component,
-	Fragment,
- } from '@wordpress/element';
+import { Component, Fragment } from '@wordpress/element';
 
-import { getColorSetClassnames } from "@novablocks/utils";
+/**
+ * Internal dependencies
+ */
+import { GalleryPlaceholder } from '@novablocks/block-editor';
+
+import SlideshowBackground from './background';
 
 const SlideshowPreview = class extends Component {
+
 	constructor() {
 		super( ...arguments );
 
@@ -44,55 +41,8 @@ const SlideshowPreview = class extends Component {
 
 	renderContent() {
 
-		const {
-			attributes,
-			previewImage,
-			className,
-		} = this.props;
-
-    const {
-      // layout
-      contentPadding,
-      contentPaddingCustom,
-      contentWidth,
-      contentWidthCustom,
-      minHeight,
-
-      // alignment
-      contentPosition,
-
-      // media
-      galleryImages,
-    } = attributes;
-
-		const alignment = contentPosition.split( " " );
-		const verticalAlignment = alignment[0];
-		const horizontalAlignment = alignment[1];
-
-		const classes = [
-			className,
-			'novablocks-slideshow is-ready',
-			`novablocks-u-valign-${ verticalAlignment }`,
-			`novablocks-u-halign-${ horizontalAlignment }`,
-			`novablocks-u-spacing-${ contentPadding }`,
-			`novablocks-u-content-width-${ contentWidth }`,
-      getColorSetClassnames( attributes )
-    ];
-
-		const styles = {
-			slideshow: {},
-			content: {},
-			foreground: {},
-		};
-
-		if ( contentPadding === 'custom' ) {
-			styles.foreground.paddingTop = `${ contentPaddingCustom }%`;
-			styles.foreground.paddingBottom = `${ contentPaddingCustom }%`;
-		}
-
-		if ( contentWidth === 'custom' ) {
-			styles.content.maxWidth = `${ contentWidthCustom }%`;
-		}
+		const { attributes, previewImage } = this.props;
+    const { galleryImages, minHeightFallback } = attributes;
 
 		let maxAspectRatio = 0;
 		let mediaMinHeight = 0;
@@ -104,22 +54,18 @@ const SlideshowPreview = class extends Component {
 			mediaMinHeight = this.state.dimensions.width / maxAspectRatio;
 		} );
 
-    const scrollContainer = getEditorScrollContainer();
-		const attributesHeight = scrollContainer.offsetHeight * minHeight / 100;
-
-		styles.slideshow.minHeight = Math.max( attributesHeight, mediaMinHeight, maxAspectRatio ) + 'px';
+		const minHeight = Math.max( mediaMinHeight, minHeightFallback );
 
 		return (
 			<Fragment>
-				{ !! galleryImages.length && <div className={ classes.join( ' ' ) } style={ styles.slideshow }>
+				{ !! galleryImages.length && <div style={ { minHeight: minHeight } }>
 					<div className="novablocks-slideshow__slider">
 						<div className="novablocks-slideshow__slide">
 							{ previewImage && <Fragment>
 								<SlideshowBackground { ...this.props } />
-								<div className="novablocks-slideshow__foreground novablocks-doppler__foreground novablocks-u-content-padding novablocks-u-content-align" style={ styles.foreground }>
+								<div className="novablocks-slideshow__foreground novablocks-u-content-padding novablocks-u-content-align">
 									<div
-										className="novablocks-slideshow__inner-container novablocks-u-content-width"
-										style={ styles.content }
+										className="novablocks-slideshow__inner-container"
 										dangerouslySetInnerHTML={ {
 											__html:
 												( typeof previewImage.title === 'string' && `<h2>${ previewImage.title }</h2>` || '' ) +

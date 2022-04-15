@@ -1,0 +1,81 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/block.json",
+	"apiVersion": 2,
+	"name": "novablocks/supernova",
+	"title": "Cards Collection",
+	"category": "nova-blocks",
+	"description": "Create amazing layouts from your posts or static content.",
+	"keywords": ["posts", "grid", "layout", "query", "parametric", "card", "collection"],
+	"textdomain": "nova-blocks",
+	"attributes": {},
+	"usesContext": [
+		"postId",
+		"postType",
+		"queryId",
+		"query",
+		"queryContext",
+		"templateSlug"
+	],
+	"supports": {
+		"html": false,
+		"novaBlocks": {
+			"colorSignal": {
+				"attributes": true,
+				"controls": true,
+				"contentColorSignal": true,
+				"paletteClassname": true,
+				"paletteVariationClassname": true,
+				"colorSignalClassname": true
+			},
+			"spaceAndSizing": {
+				"attributes": true,
+				"controls": true,
+				"advancedSpacing": true
+			},
+			"contentPosition": {
+				"attributes": true,
+				"controls": true
+			},
+			"collectionContent": {
+				"attributes": true,
+				"controls": true
+			},
+			"collectionLayout": {
+				"attributes": true,
+				"controls": true
+			},
+			"cardElementsVisibility": {
+				"attributes": true,
+				"controls": true
+			},
+			"cardElementsStacking": {
+				"attributes": true,
+				"controls": true
+			},
+
+			"mediaComposition": {
+				"attributes": true,
+				"controls": true
+			},
+			"overlayFilter": {
+				"attributes": true,
+				"controls": true,
+				"duotone": ".blob-mix__media"
+			},
+			"scrollingEffect": {
+				"attributes": true,
+				"controls": true,
+				"customWrapper": true,
+				"doppler": true
+			},
+			"shapeModeling": {
+				"attributes": true,
+				"controls": true
+			}
+		},
+		"color": {
+			"text": false,
+			"background": false
+		}
+	}
+}

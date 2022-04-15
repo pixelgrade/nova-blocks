@@ -44,11 +44,11 @@ if ( ! class_exists( 'NovaBlocks_Comments_Header' ) ) {
 		/**
 		 * Instantiate a comments header renderer.
 		 *
-		 * @param WP_Post|int|null $post    Optional. The post who's comments header to render. Defaults to the current post.
+		 * @param WP_Post|int|null $post    Optional. The post whose comments header to render. Defaults to the current post.
 		 * @param array            $args    Optional. The arguments to consider when rendering.
 		 * @param string           $content Optional. The content to use when rendering.
 		 */
-		public function __construct( $post = null, $args = [], $content = '' ) {
+		public function __construct( $post = null, array $args = [], string $content = '' ) {
 			$this->post = get_post( $post, OBJECT );
 
 			// Make sure defaults are in place.
@@ -81,7 +81,7 @@ if ( ! class_exists( 'NovaBlocks_Comments_Header' ) ) {
 		 *
 		 * @return string
 		 */
-		public function render( $args = [], $content = '' ) {
+		public function render( array $args = [], string $content = '' ): string {
 			// Render nothing without a proper post.
 			if ( empty( $this->post ) ) {
 				return '';
@@ -179,7 +179,7 @@ if ( ! class_exists( 'NovaBlocks_Comments_Header' ) ) {
 				$should_render = false;
 			}
 
-			return apply_filters( 'novablocks_comments_header_should_render', $should_render, $this->post, $args );
+			return apply_filters( 'novablocks/comments/header_should_render', $should_render, $this->post, $args );
 		}
 
 		protected function register_hooks() {
@@ -210,10 +210,8 @@ if ( ! class_exists( 'NovaBlocks_Comments_Header' ) ) {
 		 *
 		 * @return array
 		 */
-		protected function parse_args( $args ) {
-			$args = wp_parse_args( $args, $this->args );
-
-			return $args;
+		protected function parse_args( array $args ): array {
+			return wp_parse_args( $args, $this->args );
 		}
 	}
 }

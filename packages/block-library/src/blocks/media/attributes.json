@@ -11,14 +11,6 @@
 		"type": "string",
 		"default": "moderate"
 	},
-	"horizontalAlignment": {
-		"type": "string",
-		"default": "center"
-	},
-	"verticalAlignment": {
-		"type": "string",
-		"default": ""
-	},
 	"layoutPreset": {
 		"type": "string",
 		"default": "stable"
@@ -30,13 +22,5 @@
   	"templateInserted": {
 	  	"type": "boolean",
 	  	"default": false
-  	},
-	"contentPadding": {
-		"type": "number",
-		"default": 100
-	},
-	"emphasisArea": {
-		"type": "number",
-		"default": 100
-	}
+  	}
 }

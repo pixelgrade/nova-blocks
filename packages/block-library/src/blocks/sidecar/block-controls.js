@@ -2,48 +2,46 @@
  * WordPress dependencies
  */
 import { __ } from '@wordpress/i18n';
-
 import { BlockControls } from '@wordpress/block-editor';
+import { ToolbarGroup, ToolbarButton } from '@wordpress/components';
 
-import { Toolbar } from '@wordpress/components';
-
-const SIDECAR_ALIGNMENTS_CONTROLS = {
+const SIDEBAR_ALIGNMENTS_CONTROLS = {
   left: {
     icon: 'align-pull-left',
-    title: __( 'Show sidebar on left side', '__plugin_txtd' ),
+    label: __( 'Show Sidebar on Left Side', '__plugin_txtd' ),
   },
   right: {
     icon: 'align-pull-right',
-    title: __( 'Show sidebar on right side', '__plugin_txtd' ),
+    label: __( 'Show Sidebar on Right Side', '__plugin_txtd' ),
   },
 };
 
 const SidecarBlockControls = function( props ) {
 
-  const {
-    attributes,
-    setAttributes,
-  } = props;
+  const { attributes, setAttributes } = props;
+  const { sidebarPosition } = attributes;
 
-  const {
-    sidebarPosition,
-  } = attributes;
+  if ( sidebarPosition === 'none' ) {
+    return null;
+  }
 
   return (
     <BlockControls>
-
-      <Toolbar
-        controls={ Object.keys( SIDECAR_ALIGNMENTS_CONTROLS ).map( ( control ) => {
-          return {
-            ...SIDECAR_ALIGNMENTS_CONTROLS[ control ],
-            onClick: () => {
-              setAttributes( { sidebarPosition: control } );
-            },
-            isActive: sidebarPosition === control,
-          };
+      <ToolbarGroup>
+        { Object.keys( SIDEBAR_ALIGNMENTS_CONTROLS ).map( ( control ) => {
+          return (
+            <ToolbarButton
+              icon={ SIDEBAR_ALIGNMENTS_CONTROLS[ control ].icon }
+              label={ SIDEBAR_ALIGNMENTS_CONTROLS[ control ].label }
+              key={ control }
+              isActive={ control === sidebarPosition }
+              onClick={ () => {
+                setAttributes( { sidebarPosition: control } )
+              } }
+            />
+          )
         } ) }
-      />
-
+      </ToolbarGroup>
     </BlockControls>
   );
 };

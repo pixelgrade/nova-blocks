@@ -1,73 +1,78 @@
 import { __ } from '@wordpress/i18n';
-
-import {
-	Button,
-	RadioControl,
- } from '@wordpress/components';
-
-import {
-	Fragment,
- } from '@wordpress/element';
-
-import {
-	useBlockEditContext
- } from '@wordpress/block-editor';
-
-import {
-	withDispatch,
-	withSelect,
- } from '@wordpress/data';
-
-import {
-	compose
- } from '@wordpress/compose';
+import { Button, RadioControl } from '@wordpress/components';
+import { Fragment, useCallback, useMemo } from '@wordpress/element';
 
 const PresetControl = ( props ) => {
 
-	const noop = () => { return {} };
-	const { randomize, attributes, setAttributes } = props;
-	const options = Array.isArray( props.options ) ? props.options.slice() : [];
-	const randomizeAttributes = typeof randomize === "function" ? randomize : noop;
+	const {
+	  label,
+    options,
+	  randomize,
+    attributes,
+    setAttributes,
+	} = props;
 
-	if ( typeof randomize !== "undefined" ) {
+	const randomizeAttributes = useCallback( () => {
+	  if ( typeof randomize === "function" ) {
+      return randomize();
+    }
+	  return {};
+  }, [ randomize ] );
 
-    options.push({
-      label: 'Just My Style™',
-      value: 'just-my-style',
-      preset: {}
-    });
+  const presetOptions = useMemo( () => {
+    const presetOptions = Array.isArray( options ) ? options.slice() : [];
 
-  }
+    if ( typeof randomize !== "undefined" ) {
 
-	const selectedPreset = getSelectedPreset( options, attributes );
+      presetOptions.push( {
+        label: 'Just My Style™',
+        value: 'just-my-style',
+        preset: {}
+      } );
+
+    }
+
+    return presetOptions;
+  }, [ options, randomize ] );
+
+	const selectedPreset = useMemo( () => {
+	  return getSelectedPreset( presetOptions, attributes );
+  }, [ presetOptions, attributes ] );
+
+	const onPresetChange = useCallback( preset => {
+
+    if ( 'just-my-style' === preset ) {
+      setAttributes( Object.assign( {}, randomizeAttributes() ) );
+      return;
+    }
+
+    const newAttributes = getNewAttributesFromPreset( preset, presetOptions );
+    setAttributes( newAttributes );
+
+  }, [ presetOptions ] );
 
 	return (
 		<Fragment>
 			<RadioControl
-				{ ...props }
-				options={ options }
+        label={ label }
+				options={ presetOptions.map( option => {
+				  return {
+            label: option.label,
+            value: option.value
+          }
+        } ) }
 				selected={ selectedPreset }
-				onChange={ preset => {
-
-					if ( 'just-my-style' === preset ) {
-						setAttributes( Object.assign( {}, randomizeAttributes() ) );
-						return;
-					}
-
-					const newAttributes = getNewAttributesFromPreset( preset, options );
-					setAttributes( newAttributes );
-				} }
+				onChange={ onPresetChange }
 			/>
 			{
 				selectedPreset === 'just-my-style' &&
 				<div key={ 'advanced-gallery-surprise-control' }>
 					<Button
-						isLarge
 						isPrimary
 						onClick={ () => {
 							setAttributes( randomizeAttributes() )
 						} }>
-						{ __( '💡 Surprise me!' ) }
+						{ __( '💡 Surprise me!', '__plugin_txtd' ) }
 					</Button>
 				</div>
 			}
@@ -102,27 +107,4 @@ export const getSelectedPreset = ( presetOptions, attributes ) => {
 	return null;
 };
 
-const applyWithSelect = withSelect( ( select, props ) => {
-	const { clientId } = useBlockEditContext();
-	const { getBlock } = select( 'core/block-editor' );
-	const { attributes } = getBlock( clientId );
-
-	return {
-		...props,
-		clientId,
-		attributes,
-	};
-} );
-
-const applyWithDispatch = withDispatch( ( dispatch, { clientId } ) => {
-	const { updateBlockAttributes } = dispatch( 'core/block-editor' );
-	const setAttributes = ( newAttributes ) => {
-		return updateBlockAttributes( clientId, newAttributes );
-	};
-
-	return {
-		setAttributes,
-	};
-} );
-
-export default compose( [ applyWithSelect, applyWithDispatch ] )( PresetControl );
+export default PresetControl;

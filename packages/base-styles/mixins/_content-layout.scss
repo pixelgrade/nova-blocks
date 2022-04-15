@@ -1,0 +1,124 @@
+// Default Layout Settings
+// In Anima this value will be equal with site header height. 
+// In this way, the sticky block will not be under the header.
+@mixin nb-layout-settings {
+  --nb-actual-container-width: min(var(--nb-container-width), calc(100% - var(--nb-wrapper-sides-spacings) * 2));
+
+  @each $side in left, right {
+    --nb-sidecar-sidebar-#{$side}-gap: clamp(0px, var(--nb-sidecar-sidebar-#{$side}-width) * 999, var(--nb-sidecar-gap));
+    --nb-sidecar-sidebar-#{$side}-max-width: calc(var(--nb-actual-container-width) * 0.5 - var(--nb-sidecar-gap) * 1.5);
+    --nb-sidecar-content-#{$side}: calc(50% - var(--nb-sidecar-sides) - var(--nb-sidecar-sidebar-#{$side}-width) - var(--nb-sidecar-sidebar-#{$side}-gap) - var(--nb-sidecar-gap) * 0.5);
+  }
+}
+
+
+// Default Layout Grid
+// fs - full start
+// ws - wide start
+// cs - content start
+// ce - content end
+// cc - content center
+// we - wide end
+// fe - full end
+// gs - gap start
+// ge - gap end
+// gcs - gap content start
+// gce - gap content end
+// The same thing applies for [cc] [ce].
+
+//noinspection ALL
+@mixin nb-content-layout-grid {
+  @include nb-layout-settings;
+
+  display: grid;
+  max-width: none;
+
+  // a grid inside another will only work if they're overlapping perfectly
+  // so we don't tweak selectors specificity when we know for sure this needs to span from [fs] to [fe]
+  grid-column: fs / fe !important;
+  grid-template-columns:
+    [fs] var(--nb-sidecar-sides)
+    [ws] var(--nb-sidecar-sidebar-left-width)
+    [frs] 1fr
+    [gs] var(--nb-sidecar-sidebar-left-gap)
+    [cs] var(--nb-sidecar-content-left)
+    [gcs] calc(var(--nb-sidecar-gap) / 2)
+    [cc] calc(var(--nb-sidecar-gap) / 2)
+    [gce] var(--nb-sidecar-content-right)
+    [ce] var(--nb-sidecar-sidebar-right-gap)
+    [ge] 1fr
+    [fre] var(--nb-sidecar-sidebar-right-width)
+    [we] var(--nb-sidecar-sides)
+    [fe];
+  grid-auto-rows: min-content;
+
+  // horizontally align images that can't be pulled to center
+  > .wp-block-image {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  // classic editor styles have custom styles for aligned images
+  > :where(.wp-block)[data-align=left],
+  > :where(.wp-block)[data-align=right] {
+    height: auto;
+
+    > .wp-block-image {
+      margin: 0;
+    }
+  }
+
+  // force grid items take up all the available horizontal space
+  > *:not(.block-list-appender) {
+    width: 100%;
+    max-width: none;
+  }
+
+  // overwrite default editor's styles on .editor-styles-wrapper .wp-block styles
+  .editor-styles-wrapper & > .wp-block {
+    margin-left: 0;
+    margin-right: 0;
+  }
+  // --------------
+
+  > * {
+    grid-column: var(--block-content-start) / var(--block-content-end);
+  }
+
+  // Align: WIDE
+  > :is(.alignwide, [data-align="wide"]) {
+    grid-column: var(--block-wide-start) / var(--block-wide-end);
+  }
+
+  // Align: FULL
+  > :is(.alignfull, [data-align="full"]) {
+    grid-column: var(--block-full-start) / var(--block-full-end);
+  }
+
+  @include below(lap) {
+    grid-template-columns:
+      [fs] var(--nb-wrapper-sides-spacings) // [ws]
+      [ws] auto // [gs]
+      [gs] 0 // [cs]
+      [cs] 1fr // [gcs]
+      [gcs] 0 // [cc]
+      [cc] 0  // [gce]
+      [gce] 1fr // [gce]
+      [ce] 0 // [ge]
+      [ge] auto // [we]
+      [we] var(--nb-wrapper-sides-spacings) [fe];
+
+    @at-root {
+      :where(#{&}) > * {
+        grid-column: ws / we;
+      }
+    }
+  }
+
+  .nb-sidecar-area--sidebar & {
+    @include above(lap) {
+      display: block;
+    }
+  }
+}

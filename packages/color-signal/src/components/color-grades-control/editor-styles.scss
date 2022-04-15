@@ -1,0 +1,120 @@
+.components-nb-color-grades-control {
+
+  .components-base-control__field {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    .nb-signal-icon {
+      --bar-width: 6px;
+      --bar-space: 2px;
+      --bar-height: 20px;
+      --bar-height-diff: 7px;
+    }
+  }
+}
+
+.nb-palette__grades {
+  display: flex;
+  margin-left: -2px;
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
+
+.nb-palette__grade {
+  flex: 1 1 0;
+  margin-left: 2px;
+  position: relative;
+  background: none !important;
+  cursor: pointer;
+
+  &:before {
+    content: "";
+    display: block;
+    padding-top: 150%;
+  }
+
+  &:hover {
+    z-index: 50;
+  }
+}
+
+.nb-palette__grade--selected {
+  cursor: default;
+}
+
+.nb-palette__grade--disabled {
+  pointer-events: none;
+
+  .nb-palette__grade-surface {
+    background: #EEEEEE;
+  }
+
+  .nb-palette__grade-icon {
+    color: #CCCCCC;
+  }
+}
+
+.nb-palette__grade-surface {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  box-shadow: rgba(0,0,0,0.05) 0 0 0 1px inset;
+  background: var(--nb-bg-color);
+
+  .nb-palette__grade:hover &,
+  .nb-palette__grade--selected & {
+    top: -7px;
+    bottom: -7px;
+    left: -7px;
+    right: -7px;
+    border: 2px solid white;
+    z-index: 20;
+  }
+
+  .nb-palette__grade--source:not(:hover):not(.nb-palette__grade--selected) & {
+    background: none;
+    box-shadow: none;
+  }
+}
+
+.nb-palette__grade-icon {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  z-index: 30;
+  width: 1em;
+  transform: translate(-50%,-50%);
+
+  svg {
+    display: block;
+  }
+
+  .nb-palette__grade--source:not(:hover):not(.nb-palette__grade--selected) & {
+    color: var(--nb-bg-color);
+  }
+}
+
+.nb-palette__signal-previews {
+  display: flex;
+  gap: 2px;
+  text-align: center;
+  margin-top: 20px;
+  margin-bottom: 20px;
+
+  > * {
+    flex: 1 0 0;
+  }
+}
+
+.nb-palette__signal-preview {
+  min-height: 30px;
+  background-image: linear-gradient(58deg, white 48%, transparent 52%);
+  box-shadow: rgba(0,0,0,0.1) 0 0 0 1px inset;
+
+  &--1 { background-color: #DDDDDD }
+  &--2 { background-color: #888888 }
+  &--3 { background-color: #222222 }
+}

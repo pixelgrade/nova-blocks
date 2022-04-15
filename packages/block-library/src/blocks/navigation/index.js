@@ -1,52 +1,54 @@
 /**
- * Internal dependencies
- */
-import iconSvg from './navigation-block.svg';
-import attributes from "./attributes";
-
-/**
  * WordPress dependencies
  */
-import { __ } from '@wordpress/i18n';
 import { registerBlockType } from '@wordpress/blocks';
-import { getSvg } from "@novablocks/block-editor";
+import ServerSideRender from '@wordpress/server-side-render';
+import { useLayoutEffect } from "@wordpress/element";
 
-import { dispatch, select } from "@wordpress/data";
+/**
+ * Internal dependencies
+ */
+import { getSvg, useSelectParent } from "@novablocks/block-editor";
 
-const { getBlockRootClientId } = select( 'core/block-editor' );
-const { selectBlock, clearSelectedBlock } = dispatch( 'core/editor' );
+import iconSvg from './icon.svg';
+import attributes from "./attributes";
+import { addSocialMenuClass } from "./utils";
 
 registerBlockType( 'novablocks/navigation', {
-	title: __( 'Space Navigation', '__plugin_txtd' ),
-	description: __( 'Outputs chosen navigation menu markup.', '__plugin_txtd' ),
-	category: 'nova-blocks',
   icon: getSvg( iconSvg ),
-	// Additional search terms
-	keywords: [ __( 'menu', '__plugin_txtd' ), __( 'site menu', '__plugin_txtd' ), __( 'primary', '__plugin_txtd' ), __( 'secondary', '__plugin_txtd' ) ],
-	parent: ['novablocks/header-row'],
 	attributes,
-  supports: {
-    html: false
-  },
 	edit: function( props ) {
+    const { clientId } = props;
 
-    const {
-      clientId,
-      isSelected
-    } = props;
+    useSelectParent( props );
 
-    const parentClientId = getBlockRootClientId(clientId);
+    useLayoutEffect( () => {
+      const element = document.querySelector( `.block-${ clientId }` );
+      const parent = element ? element.parentElement : null;
 
-    if ( isSelected ) {
-      clearSelectedBlock().then(() => {
-        selectBlock( parentClientId );
-      });
-    }
+      if ( parent ) {
+
+        if ( ! window.MutationObserver ) {
+          return
+        }
+
+        const observer = new MutationObserver( ( mutationsList ) => {
+          addSocialMenuClass( parent );
+        } );
+
+        observer.observe( parent.parentElement, { childList: true, subtree: true } )
+
+        return ( () => {
+          observer.disconnect();
+        } );
+      }
+    }, [] );
 
 		return (
-			<wp.serverSideRender
+			<ServerSideRender
 				block="novablocks/navigation"
 				attributes={ props.attributes }
+        className={ `block-${ clientId }` }
 			/>
 		)
 	},

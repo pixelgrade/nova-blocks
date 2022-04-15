@@ -1,0 +1,22 @@
+{
+	"minHeightFallback": {
+		"type": "number",
+		"default": 100
+	},
+	"overlayFilterStrength": {
+		"type": "number",
+		"default": 30
+	},
+	"colorSignal": {
+		"type": "number",
+		"default": 3
+	},
+	"paletteVariation": {
+		"type": "number",
+		"default": 12
+	},
+	"scrollingEffect": {
+		"type": "string",
+		"default": "parallax"
+	}
+}

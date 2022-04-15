@@ -11,14 +11,16 @@
     left: 0;
     z-index: -1;
 
-    background: var(--novablocks-fg1-color);
-    transition: var(--novablocks-transition);
-    transition-property: background-color;
+    opacity: 0.15;
+    background: var(--sm-current-fg1-color, var(--nb-fg1-color));
+    
+    transition: var(--nb-transition);
+    transition-property: background-color, opacity; 
     transition-duration: .15s;
-    opacity: 0.1;
   }
 
   &:hover:before {
-    background: var(--novablocks-bg-color);
+    opacity: 0.3;
+    background: var(--sm-current-accent-color, var(--nb-accent-color));
   }
 }

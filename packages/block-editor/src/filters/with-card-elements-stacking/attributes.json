@@ -1,0 +1,6 @@
+{
+	"cardLayout": {
+		"type": "string",
+		"default": "vertical"
+	}
+}

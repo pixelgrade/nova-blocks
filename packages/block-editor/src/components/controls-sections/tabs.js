@@ -1,27 +1,31 @@
+/**
+ * WordPress dependencies
+ */
 import classnames from "classnames";
+import {
+  useEffect,
+  useLayoutEffect,
+  useMemo,
+} from '@wordpress/element';
+import { cleanForSlug } from '@wordpress/url';
+import { __ } from '@wordpress/i18n';
 
-import { useSpring, animated } from 'react-spring';
-
-import { useMemoryState } from '../../components';
+/**
+ * Internal dependencies
+ */
+import { useMemoryState } from '../../index';
 import Cube from "./cube";
+import { useResizeObserver } from "../../index";
 
 const ACCENT_COLORS = [ 'rgb(142,101,192)', 'rgb(0,202,182)', 'rgb(222,22,81)' ];
 
-import { __ } from '@wordpress/i18n';
-
-import {
-	useEffect,
-	Component,
-	createRef,
- } from '@wordpress/element';
-
 const getTabAccentColor = ( label ) => {
 
-	if ( __( 'General' ) === label ) {
+	if ( __( 'Presets', '__plugin_txtd' ) === label ) {
 		return ACCENT_COLORS[0];
 	}
 
-	if ( __( 'Customize' ) === label ) {
+	if ( __( 'Customize', '__plugin_txtd' ) === label ) {
 		return ACCENT_COLORS[1];
 	}
 
@@ -50,26 +54,27 @@ const ActiveSectionTabs = ( props ) => {
 		return null;
 	}
 
-	let [ activeTabLabel, setActiveTabLabel ] = useMemoryState( 'activeTab', tabs[0].props.label );
-	const existingTab = tabs.some( tab => activeTabLabel === tab.props.label );
+	const [ activeTabLabel, setActiveTabLabel ] = useMemoryState( 'activeTab', tabs[0].props.label );
+	const existingTab = useMemo( () => tabs.some( tab => activeTabLabel === tab.props.label ), [ tabs, activeTabLabel ] );
 
-	if ( ! existingTab ) {
-		activeTabLabel = tabs[0].props.label;
-	}
+  useEffect( () => {
+
+    if ( ! existingTab ) {
+      setActiveTabLabel( tabs[0].props.label );
+    }
+
+  }, [ existingTab ] );
 
 	const activeTabIndex = tabs.findIndex( tab => tab.props.label === activeTabLabel );
-	const activeTab = tabs[activeTabIndex];
+	const activeTab = tabs[ activeTabIndex ];
+	const accentColor = getTabAccentColor( activeTabLabel );
 
-	const { accentColor } = useSpring({
-		accentColor: getTabAccentColor( activeTabLabel )
-	} );
-
-	useEffect( updateHeight, [activeTabLabel] );
+	useLayoutEffect( updateHeight, [ activeTabLabel ] );
 
 	return (
-		<animated.div className={ `novablocks-section__controls` } style={ { '--novablocks-section-controls-accent': accentColor } }>
+		<div className={ `novablocks-section__controls` } style={ { '--nb-section-controls-accent': accentColor } }>
 			<div className="novablocks-sections__controls-header">
-				<div className="novablocks-sections__controls-back" onClick={ goBack } key={ 'tabs-back-button' }></div>
+				<div className="novablocks-sections__controls-back" onClick={ goBack } key={ 'tabs-back-button' } />
 				<div className="novablocks-sections__controls-title" key={ 'tabs-title' }>{ title }</div>
 				<Cube />
 			</div>
@@ -85,50 +90,28 @@ const ActiveSectionTabs = ( props ) => {
 							};
 
 							return (
-								<div className={ className } onClick={ onClick } key={ index }>{ label }</div>
+								<div className={ className } onClick={ onClick } key={ cleanForSlug(label) + '_section_tab_' + index }>{ label }</div>
 							);
 						} )
 					}
 				</div>
 			}
 			<TabContent activeTab={ activeTab } { ...props } />
-		</animated.div>
+		</div>
 	)
 };
 
-class TabContent extends Component {
+const TabContent = ( props ) => {
+  const { activeTab, updateHeight } = props;
+  const [ ref, entry ] = useResizeObserver();
 
-	constructor() {
-		super( ...arguments );
+  useLayoutEffect( updateHeight, [ entry ] );
 
-		this.resizeObserver = null;
-		this.resizeElement = createRef();
-	}
-
-	componentDidMount() {
-		this.resizeObserver = new ResizeObserver( entries => {
-			this.props.updateHeight();
-		} );
-
-		this.resizeObserver.observe( this.resizeElement.current );
-	}
-
-	componentWillUnmount() {
-		if ( this.resizeObserver ) {
-			this.resizeObserver.disconnect();
-		}
-	}
-
-	render() {
-
-		const { activeTab } = this.props;
-
-		return (
-			<div className={ 'novablocks-sections__tab-content' } ref={ this.resizeElement }>
-				{ !! activeTab && activeTab.props.children }
-			</div>
-		)
-	}
+  return (
+    <div className={ 'novablocks-sections__tab-content' } ref={ ref }>
+      { !! activeTab && activeTab.props.children }
+    </div>
+  );
 };
 
 export { ActiveSectionTabs };

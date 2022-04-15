@@ -1,0 +1,24 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/block.json",
+	"apiVersion": 2,
+	"name": "novablocks/sidecar-area",
+	"parent": [
+		"novablocks/sidecar"
+	],
+	"title": "Sidecar Area",
+	"category": "nova-blocks",
+	"description": "Define a sidecar area.",
+	"keywords": [
+		"layout",
+		"sidebar",
+		"content",
+		"aside"
+	],
+	"textdomain": "nova-blocks",
+	"attributes": {},
+	"usesContext": [],
+	"supports": {
+		"html": false,
+		"reusable": false
+	}
+}

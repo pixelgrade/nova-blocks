@@ -1,0 +1,11 @@
+{
+	"colorSignal": {
+		"default": 1
+	},
+	"paletteVariation": {
+		"default": 1
+	},
+	"useSourceColorAsReference": {
+		"default": true
+	}
+}

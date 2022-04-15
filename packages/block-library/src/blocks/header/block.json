@@ -1,0 +1,25 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/block.json",
+	"apiVersion": 2,
+	"name": "novablocks/header",
+	"title": "Header",
+	"category": "nova-blocks",
+	"description": "Display your site's header (logo, navigation, etc.) with smart layouts and behaviors.",
+	"keywords": ["layout", "logo", "menu", "navigation", "row"],
+	"textdomain": "nova-blocks",
+	"attributes": {},
+	"usesContext": [],
+	"supports": {
+		"html": false,
+		"novaBlocks": {
+			"colorSignal": {
+				"attributes": true,
+				"controls": true,
+				"paletteClassname": true,
+				"paletteVariationClassname": true,
+				"colorSignalClassname": true
+			},
+			"spaceAndSizing": true
+		}
+	}
+}

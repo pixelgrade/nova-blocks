@@ -1,13 +1,13 @@
 {
 	"name": "@novablocks/core",
 	"version": "1.0.0",
-	"description": "",
+	"description": "The core Nova Blocks block editor logic.",
 	"main": "build/index.js",
 	"module": "build-module/index.js",
 	"scripts": {
 		"test": "echo \"Error: no test specified\" && exit 1"
 	},
-	"author": "Razvan Onofrei <razvan.onofrei@pixelgrade.com> (http://razvanonofrei.com)",
+	"author": "Razvan Onofrei <razvan.onofrei@pixelgrade.com> (https://razvanonofrei.com)",
 	"license": "ISC",
 	"repository": {
 		"type": "git",
@@ -18,14 +18,14 @@
 		"url": "https://github.com/pixelgrade/nova-blocks/issues"
 	},
 	"dependencies": {
-		"@novablocks/components": "file:../components",
 		"@novablocks/icons": "file:../icons",
-		"@wordpress/block-editor": "^5.2.6",
-		"@wordpress/components": "^12.0.6",
-		"@wordpress/compose": "^3.24.3",
-		"@wordpress/data": "^4.26.6",
-		"@wordpress/element": "^2.19.1",
-		"@wordpress/hooks": "^2.11.1",
-		"@wordpress/i18n": "^3.18.0"
+		"@wordpress/block-editor": "^6.2.0",
+		"@wordpress/components": "^14.2.0",
+		"@wordpress/compose": "^4.2.0",
+		"@wordpress/data": "^5.2.0",
+		"@wordpress/edit-post": "^6.3.0",
+		"@wordpress/element": "^3.2.0",
+		"@wordpress/hooks": "^3.6.0",
+		"@wordpress/i18n": "^4.6.0"
 	}
 }

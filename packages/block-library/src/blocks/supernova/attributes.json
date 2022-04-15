@@ -1,0 +1,34 @@
+{
+	"variation": {
+		"type": "string",
+		"default": "supernova"
+	},
+	"align": {
+		"type": "string",
+		"default": "wide"
+	},
+	"preview": {
+		"type": "boolean",
+		"default": true
+	},
+	"headerPosition": {
+		"type": "number",
+		"default": 0
+	},
+	"title": {
+		"type": "string",
+		"default": "Latest Posts"
+	},
+	"subtitle": {
+		"type": "string",
+		"default": "A collection of our latest articles displayed in a cohesive layout"
+	},
+	"collectionTitleLevel": {
+		"type": "number",
+		"default": 2
+	},
+	"contentType": {
+		"type": "string",
+		"default": "fields"
+	}
+}

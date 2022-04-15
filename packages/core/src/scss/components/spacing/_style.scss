@@ -1,18 +1,58 @@
-.entry-content,
-.wp-block-column,
-[class*="__inner-container"][class] {
-  @include block-spacing-reset;
+/**
+ * GENERAL BLOCKS SPACING
+ * Apply the default spacing to all elements inside the container below.
+ */
 
-  > * {
-    @include block-spacing;
-  }
+[class]:is(
+  .wp-site-blocks,
+  .wp-block-column,
+  .wp-block-query,
+  .wp-block-post-content,
+  .wp-block-template-part,
+  .wp-block-media-text__content,
+  .wp-block-group,
+  .wp-block-group__inner-container,
+  .block-editor-block-list__layout,
+  .widget,
+  .nb-list,
+  .nb-sidecar,
+  .nb-sidecar-area,
+  .nb-content-layout-grid,
+  .nb-block-spacing-container,
+  .nb-supernova-item__inner-container,
+  .nb-header__inner-container
+) {
+  @include block-spacing-container;
 }
 
-.wp-block-column,
-[class*="__inner-container"] {
-  --novablocks-element-spacing-multiplier: var(--novablocks-element-spacing-level-2-multiplier);
+.wp-block-column[class] {
+  --nb-block-top-spacing: 0;
+}
 
-  & & {
-    --novablocks-element-spacing-multiplier: var(--novablocks-element-spacing-level-3-multiplier);
+[style*="--nb-spacing-modifier"] {
+  @include block-spacing-modifier;
+}
+
+/**
+ * EXCEPTIONS
+ * Spacing exceptions for Headings
+ */
+:is(h1, h2, h3, h4, h5, h6, .specificity.x2) {
+
+  // Higher spacing before Headings
+  &:not(:first-child) {
+    --nb-block-top-spacing: 1.25;
+  }
+
+
+  // Bring Headings closer to Paragraphs and Lists
+  + :is(p, ul, ol, nav) {
+    --nb-block-top-spacing: 0.5;
+  }
+
+
+  // Consecutive Headings stays together
+  + :is(h1, h2, h3, h4, h5, h6, .specificity.x2) {
+    --nb-block-top-spacing: 0.25;
   }
 }

@@ -21,8 +21,7 @@ trix-toolbar {
 
   &[id] {
     @include block-spacing;
-    --novablocks-element-spacing-multiplier: .175;
-    --novablocks-block-top-spacing: 1;
+    --nb-block-top-spacing: .175;
   }
 
   background-color: var(--trix-input-bg-color);
@@ -103,6 +102,10 @@ trix-editor {
     padding-left: 1em;
     border-left: 2px solid currentColor;
     font-style: italic;
+  }
+
+  > * {
+    --nb-spacing-current-multiplier: 0.25;
   }
 }
 

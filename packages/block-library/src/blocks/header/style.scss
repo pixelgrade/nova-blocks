@@ -1,74 +1,155 @@
 @import 'scss/mixins';
 @import 'scss/menu-toggle';
-@import 'scss/reading-bar';
+@import 'scss/reading-bar/style';
+
+@import 'scss/header-mobile';
+@import 'scss/header-secondary';
 
 :root {
   --icons-size-multiplier: 1.3;
   --icons-horizontal-spacing-reducer: 2;
 }
 
-.novablocks-header[class] {
-  position: absolute;
+@property --nb-header-vertical-spacing-multiplier {
+  syntax: '<number>'; /* <- defined as type number for the transition to work */
+  initial-value: 1;
+  inherits: false;
+}
+
+.nb-header[class] {
   width: 100%;
+  --nb-navigation-item-spacing: calc(var(--nb-navigation-item-spacing-setting) * var(--nb-spacing) * 2 / 100);
+
+  .nb-header-row {
+    --nb-wrapper-sides-spacings: calc( var(--nb-spacing) * var(--nb-header-sides-spacing-setting, 50) * 2 / 100 );
+
+    // Size down the vertical spacing of the header rows
+    // by adding the `--nb-header-vertical-spacing-multiplier`
+    // variable to the default formula.
+    padding-top: calc(var(--nb-emphasis-top-spacing) * var(--nb-current-spacing) * var(--nb-header-vertical-spacing-multiplier));
+    padding-bottom: calc(var(--nb-emphasis-bottom-spacing) * var(--nb-current-spacing) * var(--nb-header-vertical-spacing-multiplier));
+  }
+
+  @include above(lap) {
+
+    :is(.nb-header-row, #specific) {
+      transition: var(--nb-transition);
+      transition-duration: .15s;
+      transition-property: opacity, --nb-header-vertical-spacing-multiplier;
+    }
+
+    &:is(.is-sticky, .nb-header--secondary) .nb-header-row {
+      --nb-header-vertical-spacing-multiplier: var(--nb-sticky-header-spacing-multiplier, 1);
+    }
+  }
 }
 
-.novablocks-header--sticky[class] {
+:is(.nb-header, .nb-header--mobile, #more.specific) {
+  --nb-block-top-spacing: 0;
+}
+
+.nb-header--sticky[class] {
   --header-background-opacity: 0.95;
-
-  position: fixed;
-  top: 0;
 }
 
-.novablocks-header--mobile {
-  
+.nb-header--mobile {
+
   @include above(lap) {
     display: none;
   }
 
-  &.novablocks-header--scrolled {
-    color: var(--novablocks-fg2-color);
+  &.nb-header--scrolled {
+    color: var(--sm-current-fg2-color, var(--nb-fg2-color));
   }
 }
 
-@import "scss/header-secondary";
+@include below(lap) {
+
+  .nb-header__inner-container {
+    display: flex;
+    flex-direction: column;
+
+    > .nb-header-row--primary {
+      order: -1;
+    }
+  }
+}
 
 @include above(lap) {
 
-  .novablocks-header--main {
+  .nb-header--main {
     top: 0;
     left: 0;
     right: 0;
-    z-index: 1000;
+    z-index: 2001;
 
     transition: var(--theme-transition);
     transition-property: opacity;
-
-    will-change: transform;
   }
 
-  .novablocks-header__inner-container {
+  .nb-header__inner-container {
     width: 100%;
-  }
-
-  .novablocks-header__content {
-
-    > .novablocks-navigation {
-
-      > .menu,
-      > .menu > ul {
-        justify-content: inherit;
-      }
-    }
   }
 }
 
 @import 'scss/mobile';
 @import 'scss/mobile-transitions';
 
-.novablocks-header-background {
+:where(.nb-header-background) {
   @include header-background;
 }
 
-.novablocks-header-shadow {
+:where(.nb-header-shadow) {
   @include header-shadow;
+}
+
+.nb-header:not(.nb-header--ready) {
+  opacity: 0;
+  --header-background-opacity: 0;
+}
+
+// Hide all header and header-row backgrounds when Header is *transparent*
+.nb-header.nb-header--transparent:not(.nb-header--sticky) {
+
+  @include above(lap) {
+    --header-background-opacity: 0;
+  }
+}
+
+.nb-header--mobile {
+
+  &.nb-header--transparent {
+
+    &:before {
+      --header-background-opacity: 0;
+    }
+  }
+
+  &:not(.nb-header--transparent) {
+    --header-background-opacity: 0.95;
+  }
+}
+
+
+
+/**
+ * Badges for Menu Items
+ *
+ * Impose a few custom font rules outside of the Design System tokens.
+ * Uppercase and letter-spacing helps small font sizes (10-11px) to be legible.
+ * 
+ * @todo: uppercase it's not working well with serif typefaces and we need to 
+ * find a way to pass some exceptions based on font family
+ */
+.menu-item-label {
+    @include badge(highlighted);
+    --font-size-modifier: 0.7;
+
+    // Custom font rules
+    text-transform: uppercase;
+    font-weight: bold;
+    letter-spacing: 0.03em;
+    
+    vertical-align: middle;
+    margin-left: var(--navigation-item-sub-elements-spacing);
 }

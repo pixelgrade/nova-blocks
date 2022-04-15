@@ -1,0 +1,361 @@
+/*------------------------------------*\
+  #SUPERNOVA CARD ITEM
+\*------------------------------------*/
+
+.nb-supernova {
+  --nb-card-layout-gap: calc( var(--nb-current-spacing) * 2 * var(--nb-card-layout-gap-modifier, 0) );
+  --nb-card-content-padding: calc( var(--nb-current-spacing) * 2 * var(--nb-card-content-padding-multiplier, 0) );
+  --nb-card-media-padding: calc( var(--nb-current-spacing) * 2 * var(--nb-card-media-padding-multiplier, 0) );
+
+  --nb-card-content-column-width: calc( var(--nb-card-content-area-width) - var(--nb-card-layout-gap) * 0.5 );
+  --nb-card-media-column-width: calc( 100% - var(--nb-card-content-column-width) - var(--nb-card-layout-gap));
+
+  --nb-variable-width-card-media-height: calc( 10em + 20em * var(--nb-card-media-container-height, 50) / 100 );
+}
+
+.nb-supernova-item {
+  position: relative;
+  
+  display: flex;
+  flex-direction: column;
+
+  gap: var(--nb-card-layout-gap);
+
+  // Make all cards equal height
+  .nb-collection__layout:not(.nb-collection__layout--parametric) & {
+    height: 100%;
+  }
+
+  .nb-supernova-item__content {
+    flex-grow: 0;
+  }
+}
+
+.nb-supernova-item__inner-container {
+  padding: var(--nb-card-content-padding, 0);
+}
+
+.nb-supernova-item__media-wrapper {
+
+  .blob-mix__mask {
+    background-color: var(--sm-current-bg-color, var(--nb-bg-color));
+  }
+}
+
+.nb-supernova-item__media[class] {
+  width: 100%;
+  height: 100%;
+  object-fit: var(--nb-card-media-object-fit, cover);
+}
+
+.nb-supernova-item__media--placeholder {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+
+.nb-supernova-item__content,
+.nb-supernova-item__media-wrapper {
+  flex: 0 0 auto;
+}
+
+.nb-collection__layout {
+
+  &:not(&--parametric) .nb-supernova-item--layout-vertical-reverse {
+    flex-direction: column-reverse;
+  }
+
+  &--parametric .nb-grid__area--landscape .nb-supernova-item:not(.nb-supernova-item--layout-stacked),
+  &:not(&--parametric) .nb-supernova-item--layout-horizontal,
+  &:not(&--parametric) .nb-supernova-item--layout-horizontal-reverse {
+    flex-direction: row;
+    
+    @include below(tablet) {
+      flex-direction: column;
+    }
+
+    @include above(tablet) {
+      
+      .nb-supernova-item__content {
+        width: var(--nb-card-content-column-width);
+        flex: 1 0 var(--nb-card-content-column-width);
+      }
+  
+      .nb-supernova-item__media-wrapper {
+        width: var(--nb-card-media-column-width);
+        flex: 1 0 var(--nb-card-media-column-width);
+      }
+    }
+  }
+
+  &:not(&--parametric) .nb-supernova-item--layout-horizontal-reverse {
+    flex-direction: row-reverse;
+    
+    @include below(tablet) {
+      flex-direction: column;
+    }
+  }
+}
+
+.nb-supernova-item--layout-stacked {
+
+  .nb-supernova-item__media-aspect-ratio:before {
+    content: none;
+  }
+
+  .nb-collection__layout.nb-collection__layout--variable-width & {
+    .nb-supernova-item__content {
+      @include cover;
+    }
+  }
+
+  .nb-collection__layout:not(.nb-collection__layout--variable-width) & {
+    .nb-supernova-item__media-wrapper {
+      @include cover;
+    }
+  }
+}
+
+.nb-supernova-item__media-aspect-ratio {
+  position: relative;
+  min-height: 100%;
+
+  &:before {
+    content: "";
+    display: block;
+    padding-top: var(--nb-card-media-padding-top, 100%);
+    pointer-events: none;
+  }
+}
+
+// ------ #CARD MEDIA
+.nb-supernova-item__media-wrapper {
+  position: relative;
+  z-index: 10;
+  padding: var(--nb-card-media-padding, 0);
+}
+
+.nb-supernova-item__media-wrapper {
+  img,
+  video {
+    opacity: calc( 1 - var(--nb-overlay-filter-strength, 0));
+  }
+}
+
+.nb-supernova-item__media-doppler {
+  width: 100%;
+}
+
+
+
+// ------ #CARD CONTENT
+.nb-supernova-item__content {
+  position: relative;
+  z-index: 20;
+}
+
+
+
+
+
+// ------ #ELEMENTS STACKING SPACING
+// Remove the padding between Media and Content
+// so the spacing between them is controlled only
+// through the `Content to Media Spacing` option.
+
+@mixin remove-spacing-media-to-content($wrapper, $content) {
+   .nb-supernova-item__media-wrapper:not(:last-child) {
+      padding-#{$wrapper}: 0;
+    }
+
+    .nb-supernova-item__media-wrapper + .nb-supernova-item__content .nb-supernova-item__inner-container[class] {
+      padding-#{$content}: 0;
+    }
+}
+
+@include above(tablet) {
+
+  .nb-collection__layout:not(.nb-collection__layout--parametric) .nb-supernova-item {
+
+    &.nb-supernova-item--layout-vertical {
+      @include remove-spacing-media-to-content(bottom, top);
+    }
+
+    &.nb-supernova-item--layout-vertical-reverse {
+      @include remove-spacing-media-to-content(top, bottom);
+    }
+
+    &.nb-supernova-item--layout-horizontal {
+      @include remove-spacing-media-to-content(right, left);
+    }
+
+    &.nb-supernova-item--layout-horizontal-reverse {
+      @include remove-spacing-media-to-content(left, right);
+    }
+  }
+
+  .nb-collection__layout.nb-collection__layout--parametric {
+
+    .nb-grid__area--landscape .nb-supernova-item:not(.nb-supernova-item--layout-stacked) {
+      @include remove-spacing-media-to-content(right, left);
+    }
+
+    .nb-grid__area--portrait .nb-supernova-item:not(.nb-supernova-item--layout-stacked) {
+      @include remove-spacing-media-to-content(bottom, top);
+    }
+  }
+}
+
+
+
+
+
+/*
+ * Carousel Layout - Variable Width
+ */
+@include above(lap) {
+
+  .nb-collection__layout--carousel {
+
+    &.nb-collection__layout--variable-width {
+
+      // Replace display: tablet; width: 1px; trick
+      // with flex-basis, so we can use display: grid
+      // on supernova-item.
+
+      .slick-track > * {
+        flex-basis: 1px;
+      }
+
+      .nb-supernova-item__media-aspect-ratio > * {
+        position: static;
+      }
+
+      .nb-supernova-item__media {
+        width: auto;
+        height: var(--nb-variable-width-card-media-height);
+        max-width: none;
+      }
+
+      // Force media composition squared since it doesn't have an inherit aspect ratio
+      .novablocks-media-composition {
+        width: var(--nb-variable-width-card-media-height);
+        min-height: var(--nb-variable-width-card-media-height);
+      }
+
+      .slick-initialized .nb-supernova-item__media {
+        height: auto;
+      }
+
+      .nb-supernova-item__media-aspect-ratio:before {
+        content: none;
+      }
+    }
+  }
+}
+
+.nb-collection__layout--content-width {
+
+  .slick-slide {
+    --slider-content-width: calc( 100vw - ( var(--nb-sidecar-sides) + var(--wds) + var(--wde) + var(--nb-sidecar-grid-gap) ) * 2);
+    width: var(--slider-content-width) !important;
+  }
+}
+
+.nb-supernova-item__media-doppler {
+  height: 100%;
+}
+
+// Link added over the card content
+a.nb-supernova-item__link {
+  display: block;
+
+  &-overlay {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    
+    display: block;
+    max-width: none !important;
+    margin: 0 !important;
+  }
+
+  &-inline {
+
+  }
+}
+
+
+/*------------------------------------*\
+  #CARD CONTENT ELEMENTS
+\*------------------------------------*/
+// All elements inside a Card are controlled using 
+// the Elements Visibility option
+.nb-supernova-item .nb-supernova-item__inner-container > *[class][class][class][class]:first-child {
+  --nb-block-top-spacing: 0;
+} 
+
+.nb-card__title[class][class][class] {
+
+  .nb-supernova-item:not(.nb-supernova-item--layout-stacked) & {
+    --nb-block-top-spacing: 0.35;  
+  }
+}
+
+.nb-card__subtitle {
+  
+}
+
+.nb-card__description {
+  
+}
+
+.nb-card__buttons[class][class][class] {
+  position: relative;
+  z-index: 1;
+
+  --nb-block-top-spacing: 1;
+}
+
+.nb-card__meta {
+
+  &-separator {
+    display: inline-block;
+    vertical-align: middle;
+   
+    width: 2em;
+    
+    margin-left: 0.25em;
+    margin-right: 0.25em;
+    
+    box-sizing: content-box;
+    
+    &:after {
+      content: "";
+      display: block;
+      width: 100%;
+      height: 0.075em;
+      background: currentColor;
+    }
+  }
+}
+
+// ------ #CARD HOVER EFFECT
+//a.nb-supernova-item__media-wrapper {
+//  transition: opacity 0.3s ease;
+//
+//  &:hover {
+//    opacity: 0.85;
+//  }
+//}
+
+.nb-card__title {
+  a {
+    &:hover {
+      color: var(--sm-current-accent-color);
+    }
+  }
+}

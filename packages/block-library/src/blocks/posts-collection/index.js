@@ -1,28 +1,28 @@
 /**
- * Internal dependencies
+ * WordPress dependencies
  */
-import iconSvg from './posts-collection-block.svg';
-import edit from './edit';
-import variations from './variations';
+import { __ } from "@wordpress/i18n";
+import { registerBlockType } from "@wordpress/blocks";
+import { InnerBlocks } from "@wordpress/block-editor";
 
 /**
  * Nova Blocks dependencies
  */
 import { getSvg } from "@novablocks/block-editor";
-import { Collection } from "@novablocks/collection";
 
 /**
- * WordPress dependencies
+ * Internal dependencies
  */
-import { __ } from '@wordpress/i18n';
-import { registerBlockType } from '@wordpress/blocks';
-import { InnerBlocks } from '@wordpress/block-editor';
-
-import blockAttributes from './attributes';
-const attributes = Object.assign( {}, blockAttributes, Collection.attributes );
+import attributes from "./attributes";
+import iconSvg from "./icon.svg";
+import edit from "./edit";
+import transforms from "./transforms";
+import variations from "./variations";
+import "./with-content-loader";
 
 registerBlockType( 'novablocks/posts-collection', {
-	title: __( 'Posts Collection', '__plugin_txtd' ),
+  apiVersion: 2,
+	title: __( 'Posts Collection (Deprecated)', '__plugin_txtd' ),
 	description: __( 'Show Latest Posts', '__plugin_txtd' ),
 	category: 'nova-blocks',
   icon: getSvg( iconSvg ),
@@ -32,17 +32,17 @@ registerBlockType( 'novablocks/posts-collection', {
     html: false,
     novaBlocks: {
       colorSignal: true,
-      contentColorSignal: true,
-      latestPosts: true,
+      collectionLayout: true,
+      contentLoader: true,
+      overlayFilter: true,
       spaceAndSizing: true,
+      cardElementsStacking:true,
+      cardElementsVisibility:true,
     },
   },
 	edit,
 	save() {
 		return <InnerBlocks.Content />;
 	},
-	getEditWrapperProps() {
-		const settings = wp.data.select( 'core/block-editor' ).getSettings();
-		return settings.alignWide ? { 'data-align': 'full' } : {};
-	},
+  transforms,
 } );
