@@ -95,10 +95,10 @@ Yes! Nova Block's core features are free to use.
 == Changelog ==
 
 = 2.0.0 =
-* Major update with a lot of new features, improvemnents and bug fixes
+* Major update with a lot of new features, improvements and bug fixes
 * Integrated Full Site Editing experience
 * New Blocks for card collections, heroes, slideshows, carousels and more
-* Improved Color Signal controls and behavior
+* Improved Color Signal controls and behaviour
 * Improved Header block layout and styling
 * Added Masonry layout for Cards Collection blocks
 * Added Color Signal and Space and Sizing controls to some core blocks
