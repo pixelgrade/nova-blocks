@@ -3,7 +3,7 @@ Contributors: pixelgrade, vlad.olaru, babbardel, razvanonofrei, gorby31
 Tags: blocks, editor, gutenberg, gutenberg blocks, page builder, block enabled, page building, full site editing, site editor
 Requires at least: 5.9
 Tested up to: 5.9.3
-Stable tag: 1.13.3
+Stable tag: 2.0.0
 Requires PHP: 7.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -93,6 +93,15 @@ Yes! Nova Block's core features are free to use.
 3. Slideshow Me the Way block options
 
 == Changelog ==
+
+= 2.0.0 =
+* Major update with a lot of new features, improvemnents and bug fixes
+* Integrated Full Site Editing experience
+* New Blocks for card collections, heroes, slideshows, carousels and more
+* Improved Color Signal controls and behavior
+* Improved Header block layout and styling
+* Added Masonry layout for Cards Collection blocks
+* Added Color Signal and Space and Sizing controls to some core blocks
 
 = 1.13.3 =
 * Better handling of block configuration.
