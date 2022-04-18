@@ -108,7 +108,11 @@ if ( ! function_exists( 'novablocks_render_header_block' ) ) {
 			<div class="nb-header__inner-container">
 				<?php echo $content; ?>
 			</div>
-			<?php echo get_reading_bar_markup(); ?>
+			<?php
+				if ( is_single() ) {
+					echo get_reading_bar_markup();
+				}
+			?>
 		</div>
 
 		<?php do_action( 'novablocks/header:after' );
