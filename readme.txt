@@ -4,7 +4,7 @@ Tags: Blocks, editor, gutenberg, gutenberg blocks, page builder, block enabled, 
 Requires at least: 5.5.0
 Tested up to: 5.8.1
 Requires PHP: 5.6.40
-Stable tag: 1.13.4
+Stable tag: 1.13.5
 License: GPL v2.0 (or later)
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
