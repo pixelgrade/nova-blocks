@@ -1,4 +1,8 @@
 {
+	"isLandscape": {
+		"type": "boolean",
+		"default": false
+	},
 	"order": {
 		"type": "string",
 		"default": "desc"
