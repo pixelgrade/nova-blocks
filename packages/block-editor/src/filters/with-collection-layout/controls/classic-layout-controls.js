@@ -8,7 +8,7 @@ import ItemsGapControls from './items-gap-control';
 
 const ClassicLayoutControls = ( props ) => {
 
-  if ( props.attributes.layoutStyle !== 'classic' ) {
+  if ( ! [ 'classic', 'masonry' ].includes( props.attributes.layoutStyle ) ) {
     return null;
   }
 
