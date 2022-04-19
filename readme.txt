@@ -94,6 +94,10 @@ Yes! Nova Block's core features are free to use.
 
 == Changelog ==
 
+= 2.0.1 =
+* Ensure blocks full compatibility with other custom post types (e.g. WooCommerce products)
+* ...
+
 = 2.0.0 =
 * Major update with a lot of new features, improvements and bug fixes
 * Integrated Full Site Editing experience
