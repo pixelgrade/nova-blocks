@@ -71,7 +71,38 @@ export const getMetadata = ( post, meta ) => {
     case 'author':
       return post?.author && <Author userId={ post.author } />;
     case 'category':
-      return !! post?.categories?.length && <Category termId={ post.categories[0] } />;
+      // Map the meta according to the post type.
+      let categoryId = 0;
+      switch ( post.type ) {
+        case 'product':
+          if ( !! post?.product_cat?.length ) {
+            categoryId = post.product_cat[0];
+          }
+          break;
+        case 'portfolio':
+          // This is the CPT possibly registered by Pixelgrade Care.
+          if ( !! post?.portfolio_type?.length ) {
+            categoryId = post.portfolio_type[0];
+          }
+          break;
+        case 'gallery':
+          // This is the CPT possibly registered by Pixelgrade Care.
+          if ( !! post?.gallery_type?.length ) {
+            categoryId = post.gallery_type[0];
+          }
+          break;
+        case 'testimonial':
+          // This is the CPT possibly registered by Pixelgrade Care.
+          // Testimonials don't have categories.
+          break;
+        default:
+          if ( !! post?.categories?.length ) {
+            categoryId = post.categories[0];
+          }
+          break;
+      }
+
+      return !! categoryId && <Category termId={ categoryId } postType={post.type} />;
     case 'comments':
       return !!post?.id && <Comments postId={ post.id } />;
     case 'date':
@@ -83,7 +114,38 @@ export const getMetadata = ( post, meta ) => {
         </time>
       );
     case 'tags':
-      return !! post?.tags?.length && <Tags termIds={ post.tags } />;
+      // Map the meta according to the post type.
+      let tagIds = [];
+      switch ( post.type ) {
+        case 'product':
+          if ( !! post?.product_tag?.length ) {
+            tagIds = post.product_tag;
+          }
+          break;
+        case 'portfolio':
+          // This is the CPT possibly registered by Pixelgrade Care.
+          if ( !! post?.portfolio_tag?.length ) {
+            tagIds = post.portfolio_tag;
+          }
+          break;
+        case 'gallery':
+          // This is the CPT possibly registered by Pixelgrade Care.
+          if ( !! post?.gallery_tag?.length ) {
+            tagIds = post.gallery_tag;
+          }
+          break;
+        case 'testimonial':
+          // This is the CPT possibly registered by Pixelgrade Care.
+          // Testimonials don't have categories.
+          break;
+        default:
+          if ( !! post?.tags?.length ) {
+            tagIds = post.tags;
+          }
+          break;
+      }
+
+      return !! tagIds && <Tags termIds={tagIds} postType={post.type} />;
     case 'reading-time':
       return <ReadingTime post={ post } />;
     default:

@@ -834,22 +834,23 @@ function novablocks_get_card_post_meta( $post, array $attributes ): array {
 		if ( $secondaryMetaIsOutput ) {
 			$combinedMeta .= $metaSeparator . $secondaryMeta;
 		}
-
 	} else {
 		$combinedMeta = empty( $primaryMeta ) ? $secondaryMeta : $primaryMeta;
 	}
 
-	if ( 'above-title' === $attributes['metadataPosition'] ) {
-		$aboveTitleMeta = $combinedMeta;
-	}
-
-	if ( 'below-title' === $attributes['metadataPosition'] ) {
-		$belowTitleMeta = $combinedMeta;
-	}
-
-	if ( 'split' === $attributes['metadataPosition'] ) {
-		$aboveTitleMeta = $primaryMeta;
-		$belowTitleMeta = $secondaryMeta;
+	switch ( $attributes['metadataPosition'] ) {
+		case 'above-title':
+			$aboveTitleMeta = $combinedMeta;
+			break;
+		case 'below-title':
+			$belowTitleMeta = $combinedMeta;
+			break;
+		case 'split':
+			$aboveTitleMeta = $primaryMeta;
+			$belowTitleMeta = $secondaryMeta;
+			break;
+		default:
+			break;
 	}
 
 	return [
@@ -1637,6 +1638,12 @@ function novablocks_get_post_card_contents( $post, $attributes ): string {
 	return $output;
 }
 
+/**
+ * @param WP_Post $post
+ * @param string $meta
+ *
+ * @return string|WP_Error
+ */
 function novablocks_get_post_card_meta( $post, $meta ) {
 
 	if ( $meta === 'author' ) {
@@ -1644,13 +1651,33 @@ function novablocks_get_post_card_meta( $post, $meta ) {
 	}
 
 	if ( $meta === 'category' ) {
-		$categories = wp_get_post_categories( $post->ID );
+		// Map the meta according to the post type.
+		switch ( $post->post_type ) {
+			case 'product':
+				$categories = get_the_terms( $post->ID, 'product_cat' );
+				break;
+			case 'portfolio':
+				// This is the CPT possibly registered by Pixelgrade Care.
+				$categories = get_the_terms( $post->ID, 'portfolio_type' );
+				break;
+			case 'gallery':
+				// This is the CPT possibly registered by Pixelgrade Care.
+				$categories = get_the_terms( $post->ID, 'gallery_type' );
+				break;
+			case 'testimonial':
+				// This is the CPT possibly registered by Pixelgrade Care.
+				// Testimonials don't have categories.
+				return '';
+			default:
+				$categories = get_the_category( $post->ID );
+				break;
+		}
 
 		if ( ! empty( $categories ) && ! is_wp_error( $categories ) ) {
-			$category_id = $categories[0];
-			$category    = get_the_category_by_ID( $category_id );
-
-			return $category;
+			// Return only the first one.
+			return $categories[0]->name;
+		} else {
+			return '';
 		}
 	}
 
@@ -1680,12 +1707,34 @@ function novablocks_get_post_card_meta( $post, $meta ) {
 	}
 
 	if ( $meta === 'tags' ) {
-		$tags = get_the_tags( $post->ID );
+		// Map the meta according to the post type.
+		switch ( $post->post_type ) {
+			case 'product':
+				$tags = get_the_terms( $post->ID, 'product_tag' );
+				break;
+			case 'portfolio':
+				// This is the CPT possibly registered by Pixelgrade Care.
+				$tags = get_the_terms( $post->ID, 'portfolio_tag' );
+				break;
+			case 'gallery':
+				// This is the CPT possibly registered by Pixelgrade Care.
+				$tags = get_the_terms( $post->ID, 'gallery_tag' );
+				break;
+			case 'testimonial':
+				// This is the CPT possibly registered by Pixelgrade Care.
+				// Testimonials don't have categories.
+				return '';
+			default:
+				$tags = get_the_tags( $post->ID );
+				break;
+		}
 
 		if ( ! empty( $tags ) && ! is_wp_error( $tags ) ) {
 			$tag_names = array_map( 'novablocks_get_tag_name', $tags );
 
 			return join( ', ', $tag_names );
+		} else {
+			return '';
 		}
 	}
 
