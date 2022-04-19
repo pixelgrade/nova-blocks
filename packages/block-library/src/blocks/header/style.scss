@@ -33,9 +33,9 @@
   @include above(lap) {
 
     :is(.nb-header-row, #specific) {
-      transition: var(--nb-transition);
-      transition-duration: .15s;
-      transition-property: opacity, --nb-header-vertical-spacing-multiplier;
+      transition:
+        --nb-header-vertical-spacing-multiplier .15s ease-out,
+        transform .5s ease;
     }
 
     &:is(.is-sticky, .nb-header--secondary) .nb-header-row {

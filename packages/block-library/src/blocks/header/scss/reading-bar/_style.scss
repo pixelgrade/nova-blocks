@@ -99,18 +99,17 @@
   }
 }
 
-.nb-header--secondary {
+.nb-header {
 
   .nb-header__inner-container {
     overflow: hidden;
-    animation: reading-bar-show-overflow var(--nb-transition-duration) forwards;
+    animation: reading-bar-show-overflow 0s linear var(--nb-transition-duration) forwards;
   }
 
-  .c-reading-bar,
-  .nb-header-row__inner-container {
+  .c-reading-bar {
     transition: 0.5s ease;
-    transition-property: opacity, transform;
-    will-change: opacity, transform;
+    transition-property: transform;
+    will-change: transform;
   }
 
   .c-reading-bar {
@@ -129,7 +128,7 @@
       pointer-events: auto;
     }
 
-    .nb-header-row__inner-container {
+    .nb-header-row {
       transform: translateY(100%);
       pointer-events: none;
     }
