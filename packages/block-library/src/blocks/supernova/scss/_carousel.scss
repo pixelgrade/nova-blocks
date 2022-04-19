@@ -31,6 +31,8 @@ $slick-arrow-background-opacity-hover: 0.6 !default;
 
 .slick-slider {
   position: relative;
+  z-index: 1; // force stacking context to allow block toolbar to be above slider elements
+
   display: block;
   box-sizing: border-box;
   user-select: none;
