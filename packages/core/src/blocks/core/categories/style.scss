@@ -1,0 +1,5 @@
+.wp-block-row > .wp-block-categories-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--nb-current-spacing);
+}
