@@ -5,8 +5,11 @@
 @import 'scss/content-alignments';
 
 .nb-supernova {
-  background: none !important;
-  @include block-background;
+
+  &[class*="sm-variation-"]:not(.sm-color-signal-0) {
+    background: none !important;
+    @include block-background;
+  }
 
   &.nb-supernova--card-layout-horizontal {
     --emphasis-area-gradient-direction: -90deg;
