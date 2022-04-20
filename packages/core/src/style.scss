@@ -5,6 +5,7 @@
 @import 'scss/components/layout/style';
 @import 'scss/components/spacing/style';
 
+@import 'blocks/core/group/style';
 @import 'blocks/core/list/style';
 @import 'blocks/core/separator/style';
 
@@ -12,120 +13,6 @@
 
 *, *:before, *:after {
   box-sizing: border-box;
-}
-
-//:is(.wp-site-blocks) {
-//  padding-left: var(--nb-wrapper-sides-spacings);
-//  padding-right: var(--nb-wrapper-sides-spacings);
-//
-//  > :is(
-//    .wp-block-template-part,
-//    .nb-sidecar,
-//    .alignfull,
-//    [data-align="full"]
-//  ) {
-//    margin-left: calc(-1 * var(--nb-wrapper-sides-spacings));
-//    margin-right: calc(-1 * var(--nb-wrapper-sides-spacings));
-//  }
-//}
-
-// Applying Grid on Group Block
-// added .specificity.x2 to override figure.wp-block-gallery { margin: 0; }
-// added .specificity.x2.x3 to override .block-editor-block-list__block .block-list-appender.block-list-appender { margin: 0; }
-:root {
-  --nb-group-padding-toggle: 1;
-}
-
-.alignleft,
-.alignright,
-.alignnone,
-.alignwide {
-  --nb-group-padding-toggle: 0;
-}
-
-@include above(lap) {
-  .nb-sidecar-area {
-    --nb-group-padding-toggle: 0;
-  }
-}
-
-.wp-block-group[class*="sm-color-signal"]:not(.sm-color-signal-0) {
-  --nb-group-padding-toggle: 1;
-}
-
-:is(
-  .wp-block-group,
-  .wp-block-group__inner-container,
-  .nb-header-row__inner-container,
-  .specificity.x2.x3
-) {
-  --nb-group-side-padding: calc(var(--nb-wrapper-sides-spacings) * var(--nb-group-padding-toggle));
-  padding-left: var(--nb-group-side-padding);
-  padding-right: var(--nb-group-side-padding);
-
-  > * {
-    margin-left: auto;
-    margin-right: auto;
-    max-width: var(--nb-content-width);
-  }
-
-  > :is(.alignwide, [data-align="wide"]) {
-    max-width: var(--nb-container-width);
-  }
-
-  > :is(.alignfull, [data-align="full"]) {
-    width: auto;
-    max-width: none;
-    margin-left: calc(-1 * var(--nb-group-side-padding));
-    margin-right: calc(-1 * var(--nb-group-side-padding));
-  }
-}
-
-:is(.wp-block-group__inner-container, .specificity.x2.x3) {
-  max-width: none;
-  padding-left: 0;
-  padding-right: 0;
-}
-
-.wp-block-group {
-
-  // Group blocks that have a set color signal (different text and background color)
-  // and have no emphasis top or bottom spacing need to have some padding
-  // by multiplying with -1 and then adding 1 we make sure that
-  // we only add padding when these values are smaller than 1
-  &[class*="sm-color-signal"]:not(.sm-color-signal-0):not(:empty) {
-    padding-top: calc(max(0.75 * var(--nb-wrapper-sides-spacings), var(--nb-emphasis-top-spacing) * var(--nb-current-spacing) * var(--nb-spacing-multiplier-override, 1)));
-    padding-bottom: calc(max(0.75 * var(--nb-wrapper-sides-spacings), var(--nb-emphasis-bottom-spacing) * var(--nb-current-spacing) * var(--nb-spacing-multiplier-override, 1)));
-    padding-left: var(--nb-wrapper-sides-spacings);
-    padding-right: var(--nb-wrapper-sides-spacings);
-  }
-
-  // Group block set as Row variation
-  &:is(.is-layout-flex,.x1.x2) {
-
-    > * {
-      margin-left: 0;
-      margin-right: 0;
-
-      --nb-block-top-spacing: 0;
-      --nb-block-bottom-spacing: 0;
-      --nb-emphasis-top-spacing: 0;
-      --nb-emphasis-bottom-spacing: 0;
-    }
-  }
-}
-
-.wp-block-group__inner-container {
-
-  .sm-color-signal-0:not(.alignfull):not([data-align="full"]) > & {
-    padding-left: 0;
-    padding-right: 0;
-
-    > :is(.alignfull, [data-align="full"]) {
-      margin-left: 0;
-      margin-right: 0;
-    }
-  }
 }
 
 .admin-bar {
