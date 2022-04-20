@@ -51,4 +51,14 @@
       }
     }
   }
+
 }
+
+// Hide List and Grid view buttons from Query Loop toolbar
+// ToDo: remove them using JS or PHP
+.components-toolbar-group {
+  [aria-label="List view"],
+  [aria-label="Grid view"] {
+    display: none;
+  }
+} 
