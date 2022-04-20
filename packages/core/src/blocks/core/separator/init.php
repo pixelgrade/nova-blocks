@@ -11,9 +11,9 @@ if ( ! defined( 'ABSPATH' ) ) {
 function novablocks_get_separator_attributes(): array {
 
 	return novablocks_merge_attributes_from_array( [
-		'packages/core/src/blocks/core/separator/attributes.json',
 		'packages/color-signal/src/attributes.json',
 		'packages/block-editor/src/filters/with-space-and-sizing/attributes.json',
+		'packages/core/src/blocks/core/separator/attributes.json',
 	] );
 }
 

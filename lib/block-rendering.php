@@ -1082,8 +1082,11 @@ function novablocks_get_color_signal_data_attributes( array $attributes ): strin
 		'data-palette="' . $attributes['palette'] . '"',
 		'data-palette-variation="' . $attributes['paletteVariation'] . '"',
 		'data-color-signal="' . $attributes['colorSignal'] . '"',
-		'data-use-source-color-as-reference="' . $attributes['useSourceColorAsReference'] . '"',
 	];
+
+	if ( ! empty( $attributes['useSourceColorAsReference'] ) ) {
+		$data_attributes[] = 'data-use-source-color-as-reference';
+	}
 
 	return join( ' ', $data_attributes );
 }
