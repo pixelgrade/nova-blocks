@@ -11,24 +11,32 @@ import { carouselCollection as icon } from '../icons';
 const CARDS_COUNT = 5;
 
 const attributes = {
-  align: 'full',
+  showCollectionTitle: false,
+  showCollectionSubtitle: false,
 
+  align: 'full',
   contentType: 'fields',
   layoutStyle: 'carousel',
-  contentPadding: 100,
+  carouselLayout: 'fixed',
+  gridGap: 30,
+
+  spacingModifier: 0.5,
+  mediaContainerHeight: 50,
+  contentPadding: 0,
+  layoutGutter: 25,
 
   emphasisBySpace: 1,
-  emphasisTopSpacing: 1,
-  emphasisBottomSpacing: 1,
+  emphasisTopSpacing: 0,
+  emphasisBottomSpacing: 0,
 
   postsToShow: CARDS_COUNT,
-  columns: 1,
+  columns: 3,
 
-  cardLayout: 'stacked',
-  contentPosition: 'center center',
-  overlayFilterStrength: 40,
-  contentColorSignal: 3,
-  contentPaletteVariation: 12,
+  cardLayout: 'vertical',
+  contentPosition: 'center left',
+
+  contentColorSignal: 0,
+  contentPaletteVariation: 1,
 
   defaultsGenerated: false,
 };

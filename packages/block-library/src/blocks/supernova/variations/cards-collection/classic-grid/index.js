@@ -15,9 +15,9 @@ const attributes = {
   contentType: 'fields',
   layoutStyle: 'classic',
 
-  emphasisTopSpacing: 1,
-  emphasisBottomSpacing: 1,
-  layoutGutter: 10,
+  emphasisTopSpacing: 0,
+  emphasisBottomSpacing: 0,
+  layoutGutter: 25,
 
   postsToShow: CARDS_COUNT,
   columns: 3,
@@ -25,6 +25,15 @@ const attributes = {
   cardLayout: 'vertical',
   contentPosition: 'top left',
   cardMediaOpacity: 100,
+
+  showCollectionTitle: true,
+  showCollectionSubtitle: true,
+  showMedia: true,
+  showMeta: false,
+  showTitle: true,
+  showSubtitle: false,
+  showDescription: true,
+  showButtons: true,
 
   defaultsGenerated: false,
 };

@@ -9,7 +9,7 @@
 	},
 	"metaAboveTitle": {
 		"type": "string",
-		"default": ""
+		"default": "Meta Data"
 	},
 	"metaBelowTitle": {
 		"type": "string",
@@ -17,7 +17,7 @@
 	},
 	"title": {
 		"type": "string",
-		"default": ""
+		"default": "This is a catchy title"
 	},
 	"subtitle": {
 		"type": "string",
@@ -25,7 +25,7 @@
 	},
 	"description": {
 		"type": "string",
-		"default": ""
+		"default": "A brilliant subtitle to explain its catchiness"
 	},
 	"buttonText": {
 		"type": "string",

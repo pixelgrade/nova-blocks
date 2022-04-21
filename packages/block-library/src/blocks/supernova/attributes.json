@@ -17,11 +17,11 @@
 	},
 	"title": {
 		"type": "string",
-		"default": "Latest Posts"
+		"default": "Cards Collection"
 	},
 	"subtitle": {
 		"type": "string",
-		"default": "A collection of our latest articles displayed in a cohesive layout"
+		"default": "A collection of individual cards displayed in a cohesive layout"
 	},
 	"collectionTitleLevel": {
 		"type": "number",

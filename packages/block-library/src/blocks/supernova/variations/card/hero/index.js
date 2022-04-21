@@ -12,6 +12,9 @@ import iconSvg from './icon.svg';
 const attributes = {
   variation: 'novablocks-card-hero',
 
+  showCollectionTitle: false,
+  showCollectionSubtitle: false,
+
   contentType: 'custom',
   layoutStyle: 'classic',
   contentPadding: 100,
@@ -20,9 +23,6 @@ const attributes = {
 
   postsToShow: 1,
   columns: 1,
-
-  showCollectionTitle: false,
-  showCollectionSubtitle: false,
 
   contentPosition: 'center center',
   minHeightFallback: 66,
@@ -38,7 +38,7 @@ const attributes = {
   emphasisTopSpacing: 0,
   emphasisBottomSpacing: 0,
 
-  scrollingEffect: 'static',
+  scrollingEffect: 'parallax',
 
   defaultsGenerated: false,
 };

@@ -1,9 +1,10 @@
-import { postsCollectionCarousel, postsCollectionClassicGrid, postsCollectionParametricGrid } from './posts-collection';
+import { postsCollectionCarousel, postsCollectionSlideshow, postsCollectionClassicGrid, postsCollectionParametricGrid } from './posts-collection';
 
 const queryVariations = [
-  postsCollectionCarousel,
   postsCollectionClassicGrid,
+  postsCollectionSlideshow,
   postsCollectionParametricGrid,
+  postsCollectionCarousel,
 ];
 
 export default queryVariations;

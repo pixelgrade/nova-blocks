@@ -11,7 +11,7 @@ import metadata from '../../../../block.json';
 
 const { name: SUPERNOVA_BLOCK } = metadata;
 
-const CARDS_COUNT = 5;
+const CARDS_COUNT = 3;
 
 const attributes = {
   query: {
@@ -32,29 +32,33 @@ const innerSupernovaAttributes = {
   showCollectionTitle: false,
   showCollectionSubtitle: false,
 
+  title: __( 'You should read these', '__plugin_txtd' ),
+  subtitle: __( 'A fancy slideshow with our latest posts never hurt nobody.', '__plugin_txtd' ),
+
   align: 'full',
   contentType: 'auto',
   layoutStyle: 'carousel',
-  carouselLayout: 'fixed',
-  gridGap: 30,
+  contentPadding: 100,
 
-  spacingModifier: 0.5,
-  mediaContainerHeight: 50,
-  contentPadding: 0,
-  layoutGutter: 25,
+  contentPosition: 'center center',
+  minHeightFallback: 66,
+
+  postsToShow: CARDS_COUNT,
+  columns: 1,
 
   emphasisBySpace: 1,
   emphasisTopSpacing: 0,
   emphasisBottomSpacing: 0,
 
-  postsToShow: CARDS_COUNT,
-  columns: 3,
+  cardTitleLevel: 1,
 
-  cardLayout: 'vertical',
-  contentPosition: 'center left',
+  cardLayout: 'stacked',
 
-  contentColorSignal: 0,
-  contentPaletteVariation: 1,
+  scrollingEffect: 'static',
+
+  overlayFilterStrength: 30,
+  contentColorSignal: 3,
+  contentPaletteVariation: 12,
 };
 
 const innerSupernovaItemAttributes = {
@@ -67,9 +71,9 @@ const innerSupernovaItemAttributes = {
 };
 
 const carousel = {
-  name: 'novablocks/supernova/query-posts-carousel',
-  title: __( 'Query Loop → Posts Collection: Carousel', '__plugin_txtd' ),
-  description: __( 'Display a queried set of posts in a carousel layout.', '__plugin_txtd' ),
+  name: 'novablocks/supernova/query-posts-slideshow',
+  title: __( 'Query Loop → Posts Collection: Slideshow', '__plugin_txtd' ),
+  description: __( 'Display a queried set of posts in a slideshow layout.', '__plugin_txtd' ),
   keywords: [ 'query', 'post', 'collection', 'layout', 'carousel', 'slideshow', 'slider', 'horizontal', 'section', ],
   icon,
   attributes,

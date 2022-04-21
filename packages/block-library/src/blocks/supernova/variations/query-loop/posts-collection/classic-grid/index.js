@@ -6,12 +6,12 @@ import { __ } from '@wordpress/i18n';
 /**
  * Internal dependencies
  */
-import { postsCollection as icon } from '../../icons';
+import { classicGrid as icon } from '../../icons';
 import metadata from '../../../../block.json';
 
 const { name: SUPERNOVA_BLOCK } = metadata;
 
-const CARDS_COUNT = 6;
+const CARDS_COUNT = 3;
 
 const attributes = {
   query: {
@@ -30,7 +30,7 @@ const attributes = {
 
 const innerSupernovaAttributes = {
   showCollectionTitle: true,
-  showCollectionSubtitle: true,
+  showCollectionSubtitle: false,
 
   title: __( 'Fresh posts from the grid', '__plugin_txtd' ),
   subtitle: __( 'A collection of our latest articles.', '__plugin_txtd' ),
@@ -39,9 +39,11 @@ const innerSupernovaAttributes = {
   layoutStyle: 'classic',
 
   emphasisBySpace: 1,
-  emphasisTopSpacing: 1,
-  emphasisBottomSpacing: 1,
+  emphasisTopSpacing: 0,
+  emphasisBottomSpacing: 0,
   layoutGutter: 10,
+
+  minHeightFallback: 66,
 
   postsToShow: CARDS_COUNT,
   columns: 3,
@@ -74,7 +76,6 @@ const classicGrid = {
       innerSupernovaAttributes,
       Array.from( Array( CARDS_COUNT ) ).map( () => [ 'novablocks/supernova-item', innerSupernovaItemAttributes ] ),
     ],
-    [ 'core/query-pagination' ],
   ],
   scope: [ 'inserter', 'block' ],
 };

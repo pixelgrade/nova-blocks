@@ -36,8 +36,8 @@ const innerSupernovaAttributes = {
   subtitle: __( 'A super-duper-parametric collection of our latest brain-dumps.', '__plugin_txtd' ),
 
   emphasisBySpace: 1,
-  emphasisTopSpacing: 1,
-  emphasisBottomSpacing: 1,
+  emphasisTopSpacing: 0,
+  emphasisBottomSpacing: 0,
 
   contentType: 'auto',
   layoutStyle: 'parametric',
@@ -71,7 +71,6 @@ const parametricGrid = {
       innerSupernovaAttributes,
       Array.from( Array( CARDS_COUNT ) ).map( () => [ 'novablocks/supernova-item', innerSupernovaItemAttributes ] ),
     ],
-    [ 'core/query-pagination' ],
   ],
   scope: [ 'inserter', 'block', ],
 };

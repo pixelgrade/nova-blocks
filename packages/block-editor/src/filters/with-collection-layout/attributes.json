@@ -1,15 +1,15 @@
 {
 	"postsToShow": {
 		"type": "integer",
-		"default": 6
+		"default": 3
 	},
 	"layoutStyle": {
 		"type": "string",
-		"default": "parametric"
+		"default": "classic"
 	},
 	"columns": {
 		"type": "number",
-		"default": 1
+		"default": 3
 	},
 	"gridGap": {
 		"type": "number",
