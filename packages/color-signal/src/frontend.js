@@ -18,14 +18,18 @@ const updateColors = ( siteVariation ) => {
   updateScrollIndicator();
 };
 
+// Get the Palette Basis Offset value to use it as the top most reference variation
+const siteVariation = getSiteColorVariation();
+
+window.addEventListener( 'nb:updateColors', () => {
+  updateColors( siteVariation );
+} );
+
 ready( () => {
 
   if ( IS_EDITOR ) {
     return;
   }
-
-  // Get the Palette Basis Offset value to use it as the top most reference variation
-  const siteVariation = getSiteColorVariation();
 
   updateColors( siteVariation );
 

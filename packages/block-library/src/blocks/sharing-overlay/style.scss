@@ -207,6 +207,11 @@
 .novablocks-sharing__link {
 	display: flex;
 	align-items: center;
+	margin-left: calc( var(--nb-sharing-overlay-spacing) * -3 / 4 );
+
+	> * {
+		margin-left: calc( var(--nb-sharing-overlay-spacing) * 3 / 4 );
+	}
 
   // reset possible link styles
   &[class][class] {
@@ -214,13 +219,9 @@
     text-decoration: none;
   }
 
-	@include novablocks-sharing-link-hover;
-
-	margin-left: calc( var(--nb-sharing-overlay-spacing) * -3 / 4 );
-
-	> * {
-		margin-left: calc( var(--nb-sharing-overlay-spacing) * 3 / 4 );
-	}
+  &:not(.novablocks-sharing__link--copy) {
+	  @include novablocks-sharing-link-hover;
+  }
 }
 
 .novablocks-sharing__link-icon {
