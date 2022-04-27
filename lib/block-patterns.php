@@ -22,8 +22,8 @@ function novablocks_register_block_patterns_categories() {
 		'query'        => [ 'label' => _x( 'Posts Collection', 'Block pattern category', '__plugin_txtd' ) ],
 		'pages'        => [ 'label' => _x( 'Pages', 'Block pattern category', '__plugin_txtd' ) ],
 
-		'header'       => [ 'label' => _x( 'Layout: Header', 'Block pattern category', '__plugin_txtd' ) ],
-		'footer'       => [ 'label' => _x( 'Layout: Footer', 'Block pattern category', '__plugin_txtd' ) ],
+		'headers'       => [ 'label' => _x( 'Layout: Header', 'Block pattern category', '__plugin_txtd' ) ],
+		'footers'       => [ 'label' => _x( 'Layout: Footer', 'Block pattern category', '__plugin_txtd' ) ],
 	];
 
 	/**
