@@ -130,23 +130,11 @@ $slick-arrow-background-opacity-hover: 0.6 !default;
     margin-right: calc(-1 * var(--nb-sidecar-sides));
   }
 
-  //.nb-collection__layout-item,
-  //.nb-supernova-item {
-  //  height: 100%;
-  //}
-  //
-  //.slick-slide {
-  //  float: none;
-  //  height: auto;
-  //
-  //  > div {
-  //    height: 100%;
-  //
-  //    > .nb-collection__layout-item {
-  //      display: block !important;
-  //    }
-  //  }
-  //}
+  .slick-slide {
+    > .mb-collection__layout-item {
+      display: block !important;
+    }
+  }
 }
 
 // Remove default color signal background
