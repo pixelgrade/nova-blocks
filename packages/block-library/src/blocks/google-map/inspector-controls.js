@@ -55,7 +55,7 @@ class ButtonInspectorControls extends Component {
 							{ ...this.props }
 							key={ 'google-map-style-controls' }
 							apiKey={ savedApiKey }
-							value={ styleSlug }
+							selected={ styleSlug }
 							options={ styles }
 							onChange={ newStyleSlug => {
 								const mapStyles = styles.find( style => style.slug === newStyleSlug ).styles;

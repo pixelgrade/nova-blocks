@@ -1,10 +1,10 @@
 .novablocks-opentable {
-
 	--nb-opentable-spacing: 5%;
 
 	.ot-title[class][class] {
 		line-height: 1;
 		margin-bottom: var(--nb-opentable-spacing);
+    color: inherit;
 	}
 
 	.ot-button[class] {

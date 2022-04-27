@@ -1,99 +1,73 @@
 import classnames from 'classnames';
-import { compileStyles, getMarkersCenter } from "./utils";
+
+import { Component, useCallback, useMemo, useState } from '@wordpress/element';
+
+import { ImageSelectControl } from "@novablocks/block-editor";
+
+import { compileStyles, getCenterFromMarkers, getMarkersCenter } from "./utils";
 import defaultMapCenter from './default-map-center';
 
-import {
-	Component
- } from '@wordpress/element';
+const MapStyleSelect = props => {
+  const { attributes, apiKey, options, selected } = props;
+  const { markers, zoom } = attributes;
+  const onChange = typeof props.onChange === "function" ? props.onChange : () => {};
+  const center = useMemo( () => {
+    if ( Array.isArray( markers ) && markers.length ) {
+      return getCenterFromMarkers( markers );
+    }
+    return new google.maps.LatLng( defaultMapCenter );
+  }, [ markers ] );
+  const getStaticStyle = useCallback( option => {
+    const result = [];
+    const styles = compileStyles( option.styles );
 
-class MapStyleSelect extends Component {
+    styles.forEach( function( v, i, a ) {
+      var style = '';
+      if ( v.stylers ) {
+        if ( v.stylers.length > 0 ) {
+          style += ( v.hasOwnProperty( 'featureType' ) ? 'feature:' + v.featureType : 'feature:all' ) + '|';
+          style += ( v.hasOwnProperty( 'elementType' ) ? 'element:' + v.elementType : 'element:all' ) + '|';
+          v.stylers.forEach( function( val, i, a ) {
+            var prop = Object.keys( val )[ 0 ];
+            var propertyval = val[ prop ].toString().replace( '#', '0x' );
+            style += prop + ':' + propertyval + '|';
+          } );
+        }
+      }
+      result.push( 'style=' + encodeURIComponent( style ) );
+    } );
+    return result.join( '&' );
+  } );
 
-	constructor() {
-		super( ...arguments );
+  const getImageSrc = useCallback( option => {
+    const latitude = center.lat();
+    const longitude = center.lng();
 
-		this.state = {
-			active: this.props.value
-		};
+    const style = getStaticStyle( option );
+    const size = '200x200';
+    const mapType = 'roadmap';
+    const url = 'https://maps.googleapis.com/maps/api/staticmap';
 
-		this.compileStyles = compileStyles.bind( this );
-	}
+    return `${ url }?center=${ latitude },${ longitude }&zoom=${ zoom }&size=${ size }&maptype=${ mapType }&${ style }&key=${ apiKey }`;
+  }, [] );
 
-	getStaticStyle( styles ) {
-		var result = [];
-		styles.forEach( function( v, i, a ) {
-			var style = '';
-			if ( v.stylers ) {
-				if ( v.stylers.length > 0 ) {
-					style += ( v.hasOwnProperty( 'featureType' ) ? 'feature:' + v.featureType : 'feature:all' ) + '|';
-					style += ( v.hasOwnProperty( 'elementType' ) ? 'element:' + v.elementType : 'element:all' ) + '|';
-					v.stylers.forEach( function( val, i, a ) {
-						var prop = Object.keys( val )[0];
-						var propertyval = val[ prop ].toString().replace( '#', '0x' );
-						style += prop + ':' + propertyval + '|';
-					} );
-				}
-			}
-			result.push( 'style=' + encodeURIComponent( style ) );
-		} );
-		return result.join( '&' );
-	}
+  const controlOptions = useMemo( () => {
+    return options.map( option => {
+      return {
+        ...option,
+        src: getImageSrc( option ),
+      }
+    } );
+  }, [ options ] );
 
-	render() {
-		const {
-			attributes,
-			options,
-			value,
-			onChange,
-			apiKey,
-		} = this.props;
 
-		const { markers, zoom } = attributes;
-
-		const center = markers.length ? getMarkersCenter.call( this ) : new google.maps.LatLng( defaultMapCenter );
-		const latitude = center.lat();
-		const longitude = center.lng();
-
-		return (
-			<div className="components-base-control">
-				<div className="editor-block-styles block-editor-block-styles novablocks-block-editor-map-styles">
-					{ options.map( option => {
-						const style = this.getStaticStyle( this.compileStyles( option.styles ) );
-						const size = '200x200';
-						const mapType = 'roadmap';
-						const url = 'https://maps.googleapis.com/maps/api/staticmap';
-						const src = `${url}?center=${latitude},${longitude}&zoom=${zoom}&size=${size}&maptype=${mapType}&${style}&key=${apiKey}`;
-
-						return (
-							<div
-								key={ option.slug }
-								className={ classnames( 'editor-block-styles__item block-editor-block-styles__item', {
-									'is-active': option.slug === this.state.active,
-								} ) }
-								onClick={ () => {
-									this.setState( { active: option.slug } );
-									onChange( option.slug );
-								} }
-								role="button"
-								tabIndex="0"
-								aria-label={ option.label }>
-
-								<div className="editor-block-styles__item-preview block-editor-block-styles__item-preview">
-									<img
-										src={ src }
-										alt={ `${ option.label } map style preview` }
-									/>
-								</div>
-								<div className="editor-block-styles__item-label block-editor-block-styles__item-label">
-									{ option.label }
-								</div>
-
-							</div>
-						)
-					} ) }
-				</div>
-			</div>
-		)
-	}
+  return (
+    <ImageSelectControl
+      selected={ selected }
+      onChange={ onChange }
+      options={ controlOptions }
+    />
+  )
 }
 
 export default MapStyleSelect;

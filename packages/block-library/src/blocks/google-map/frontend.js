@@ -18,7 +18,9 @@ import { addVisibilityToStyles, getCenterFromMarkers } from "./utils";
       const markers = $obj.data( 'markers' );
       const showLabels = $obj.data( 'show-labels' );
       const showIcons = $obj.data( 'show-icons' );
-      const styles = $obj.data( 'styles' );
+      const styles = $obj.data( 'style-data' );
+
+      console.log( styles );
       const stylesWithColor = addColorToStyles( styles, accentColor );
       const zoom = $obj.data( 'zoom' );
       const hideControls = !$obj.data( 'controls' );
@@ -34,8 +36,7 @@ import { addVisibilityToStyles, getCenterFromMarkers } from "./utils";
       const map = new google.maps.Map( obj, mapOptions );
 
       const pinMarkup = pin.replace( /%ACCENT_COLOR%/g, accentColor );
-      const mapMarkers = markers.map( markerString => {
-        const marker = JSON.parse( markerString );
+      const mapMarkers = markers.map( marker => {
 
         return new google.maps.Marker( {
           map: map,

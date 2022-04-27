@@ -70,7 +70,7 @@ if ( ! function_exists('render_reading_bar') ) {
 			</div>
 		<?php }
 		$menu_trigger = ob_get_clean();
-		$social_trigger = do_blocks( '<!-- wp:novablocks/sharing-overlay {"buttonLabel":"Share", "useSourceColorAsReference":"1", "paletteVariation":"1"}  /-->' );
+		$social_trigger = do_blocks( '<!-- wp:novablocks/sharing-overlay {"buttonLabel":"Share", "useSourceColorAsReference":"1"}  /-->' );
 
 		ob_start(); ?>
 		<div class="c-reading-bar__title  c-reading-bar__title--current">

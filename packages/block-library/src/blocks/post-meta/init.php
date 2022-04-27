@@ -104,7 +104,7 @@ if ( ! function_exists( 'novablocks_render_post_meta_block' ) ) {
 				<div class="c-meta__rows">
 					<div class="c-meta__row">
 						<div class="c-meta__row-item">
-							<?php echo do_blocks( '<!-- wp:novablocks/sharing-overlay { "buttonLabel":"' . esc_html__( 'Share', '__theme_txtd' ) . '", "colorSignal": 2 } --><!-- /wp:novablocks/sharing-overlay -->' ); ?>
+							<?php echo do_blocks( '<!-- wp:novablocks/sharing-overlay { "buttonLabel":"' . esc_html__( 'Share', '__theme_txtd' ) . '", "useSourceColorAsReference":"1" } --><!-- /wp:novablocks/sharing-overlay -->' ); ?>
 						</div>
 						<?php
 						// Only show the Discuss link if comments are open and the post comments block is present.

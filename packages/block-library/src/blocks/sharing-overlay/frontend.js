@@ -108,6 +108,9 @@ import services from './services';
 
 	} );
 
+  const event = new Event( 'nb:updateColors' );
+  window.dispatchEvent( event );
+
 	function createGroupTitle( attributes ) {
 		const { headingLevel } = attributes;
 
@@ -278,7 +281,7 @@ import services from './services';
 			label: 'Copy link to clipboard',
 			url: '#',
 			icon: 'link',
-			classes: 'sm-palette-2 sm-variation-1 sm-palette--shifted',
+			classes: 'novablocks-sharing__link--copy',
 			callback: () => {
 				const visibleClassName = 'novablocks-sharing__notification--visible';
 				const input = $input.get(0);
@@ -304,6 +307,15 @@ import services from './services';
 				}
 			}
 		} ] );
+
+    const $link = $button.get(0).querySelector( '.novablocks-sharing__link' );
+
+    if ( $link ) {
+      $link.dataset.colorSignal = 2;
+      $link.dataset.palette = 2;
+      $link.dataset.paletteVariation = 1;
+      $link.dataset.useSourceColorAsReference = true;
+    }
 
 		return createGroup( {
 			id: 'copy-link',

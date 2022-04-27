@@ -7,6 +7,7 @@ export { default as DuotonePicker } from './duotone-picker';
 export { default as FontSizePicker } from './font-size-picker';
 export { default as HeadingLevelIcon } from "./heading-level-icon";
 export { default as HeadingToolbar } from "./heading-toolbar";
+export { default as ImageSelectControl } from './image-select-control';
 export { default as InnerBlocksPreview } from './inner-blocks-preview';
 export { default as Notice } from "./notice";
 export { default as ParametricGrid } from "./parametric-grid";
