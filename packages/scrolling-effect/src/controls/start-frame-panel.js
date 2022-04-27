@@ -1,7 +1,10 @@
 import { __ } from "@wordpress/i18n";
 import { useMemo } from "@wordpress/element";
+
+import { withVisibility } from "@novablocks/block-editor";
 import { FocalPointPicker, PanelBody, RangeControl, ToggleControl } from "@wordpress/components";
 import { getSnapClassname, maybeSnapFocalPoint } from "@novablocks/utils";
+
 import { getFocalPointImage } from '../utils';
 
 const StartFramePanel = ( props ) => {
@@ -106,4 +109,4 @@ const StartFramePanel = ( props ) => {
   )
 };
 
-export default StartFramePanel;
+export default withVisibility( 'start-frame-panel' )( StartFramePanel );

@@ -199,10 +199,28 @@ const MapBlockControls = props => {
       <BlockAlignmentToolbar
         value={ attributes.align }
         onChange={ align => setAttributes( { align } ) }
-        controls={ [ 'full' ] }
+        controls={ [ 'wide', 'full' ] }
       />
     </BlockControls>
   )
 }
 
-export default Edit;
+const withControlsVisibility = Component => {
+
+  return ( props ) => {
+
+    const { setControlsVisibility } = props;
+
+    useEffect( () => {
+      setControlsVisibility( {
+        'start-frame-panel': false,
+      } );
+    }, [] );
+
+    return (
+      <Component { ...props } />
+    )
+  }
+}
+
+export default withControlsVisibility( Edit );

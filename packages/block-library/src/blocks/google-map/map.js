@@ -23,24 +23,22 @@ class Map extends Component {
 		this.markers = [];
 	}
 
-	onPlacesChanged() {
+  onPlacesChanged() {
 
-		if ( ! this.searchBox ) {
-			return;
-		}
+    if ( !this.searchBox ) {
+      return;
+    }
 
-		this.props.onChange( this.searchBox.getPlaces().map( place => {
-			const keepProps = [ 'name', 'geometry' ];
-			const filtered = Object.keys( place )
-			                       .filter( key => keepProps.includes( key ) )
-			                       .reduce( ( obj, key ) => {
-				                       obj[ key ] = place[ key ];
-				                       return obj;
-			                       }, {} );
-
-			return JSON.stringify( filtered );
-		} ) );
-	}
+    this.props.onChange( this.searchBox.getPlaces().map( place => {
+      const keepProps = [ 'name', 'geometry' ];
+      return Object.keys( place )
+                   .filter( key => keepProps.includes( key ) )
+                   .reduce( ( obj, key ) => {
+                     obj[ key ] = place[ key ];
+                     return obj;
+                   }, {} );
+    } ) );
+  }
 
 	createMarkers() {
 		const { attributes } = this.props;
@@ -49,8 +47,7 @@ class Map extends Component {
 		const accentColor = styleSlug === 'customized' ? getMapAccentColor.call( this ) : '#222222';
 		const pinMarkup = pin.replace( '%ACCENT_COLOR%', accentColor );
 
-		markers.forEach( markerString => {
-			const marker = JSON.parse( markerString );
+		markers.forEach( marker => {
 
 			if ( ! marker.geometry ) {
 				return;

@@ -1,0 +1,24 @@
+.components-image-select-control {
+  display: flex;
+  gap: 10px;
+}
+
+.components-image-select-control__option {
+  border: 2px solid #EEE;
+  padding: 4px;
+  border-radius: 4px;
+  cursor: pointer;
+
+  &:hover {
+    border-color: #CCC;
+  }
+
+  &.components-image-select-control__option--selected {
+     border-color: var(--wp-admin-theme-color);
+  }
+}
+
+.components-image-select-control__label {
+  text-align: center;
+  padding: 0 4px;
+}

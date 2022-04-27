@@ -57,8 +57,7 @@ export const getCenterFromMarkers = function( markers ) {
 		return new google.maps.LatLng( center.geometry.location );
 	}
 
-	markers.forEach( markerString => {
-		const marker = JSON.parse( markerString );
+	markers.forEach( marker => {
 
 		if ( ! marker.geometry ) {
 			return;

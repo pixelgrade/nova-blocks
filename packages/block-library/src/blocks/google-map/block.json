@@ -10,6 +10,14 @@
 	"attributes": {},
 	"usesContext": [],
 	"supports": {
-		"html": false
+		"html": false,
+		"novaBlocks": {
+			"spaceAndSizing": true,
+			"scrollingEffect": {
+				"attributes": true,
+				"controls": true,
+				"customWrapper": true
+			}
+		}
 	}
 }

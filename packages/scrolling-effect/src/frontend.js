@@ -119,13 +119,13 @@ $( function() {
       const props = getProps( cfg, attributes, fixed );
       const styles = getStylesFromProps( props );
 
-      $container.data( 'styles', styles );
+      $container.data( 'style-data', styles );
     } );
 
     $blocks.each( function( i, container ) {
       const $container = $( container );
       const $background = $container.data( 'target' );
-      $background.css( $container.data( 'styles' ) );
+      $background.css( $container.data( 'style-data' ) );
     } );
 
     requestAnimationFrame( parallaxUpdateLoop );

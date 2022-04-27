@@ -12,8 +12,8 @@ function novablocks_get_google_map_attributes() {
 
 	return novablocks_merge_attributes_from_array( [
 		'packages/scrolling-effect/src/attributes.json',
-		'packages/scrolling-effect/src/attributes-alt.json',
 		'packages/block-library/src/blocks/google-map/attributes.json',
+		'packages/block-library/src/blocks/google-map/attributes-overwrite.json',
 	] );
 
 }
@@ -43,17 +43,11 @@ if ( ! function_exists( 'novablocks_render_google_map_block' ) ) {
 			[
 				'novablocks-map',
 				'novablocks-doppler',
+				'align' . $attributes['align'],
+				'scrolling-effect-' . $attributes['scrollingEffect']
 			],
-			novablocks_get_block_extra_classes( $attributes )
+			novablocks_get_block_extra_classes( $attributes ),
 		);
-
-		if ( ! empty( $attributes['align'] ) ) {
-			$classes[] = 'align' . $attributes['align'];
-		}
-
-		if ( ! empty( $attributes['scrollingEffect'] ) ) {
-			$classes[] = 'scrolling-effect-' . $attributes['scrollingEffect'];
-		}
 
 		ob_start();
 
@@ -66,30 +60,32 @@ if ( ! function_exists( 'novablocks_render_google_map_block' ) ) {
 
 		$novablocks_settings = novablocks_get_block_editor_settings();
 		$map_accent_color    = $novablocks_settings['map']['accentColor'];
+
+		$data_attributes_array = array_map( 'novablocks_camel_case_to_kebab_case', array_keys( $attributes ) );
+
+		$map_attributes = [
+			'show-controls',
+			'show-icons',
+			'show-labels',
+			'style-data',
+			'markers',
+			'zoom',
+		];
+
+		$other_attributes = array_diff( $data_attributes_array, $map_attributes );
+
+		$map_data_attributes = novablocks_get_data_attributes( $map_attributes, $attributes );
+		$other_data_attributes = novablocks_get_data_attributes( $other_attributes, $attributes );
 		?>
 
-		<div <?php
-			echo $id;
-			echo 'data-scrolling-effect="' . esc_attr( $attributes['scrollingEffect'] ) . '" ';
-			echo 'data-focal-point="' . json_encode( $attributes['focalPoint'] ) . '" ';
-			echo 'data-final-focal-point="' . json_encode( $attributes['finalFocalPoint'] ) . '" ';
-			echo 'data-initial-background-scale="' . esc_attr( $attributes['initialBackgroundScale'] ) . '" ';
-			echo 'data-final-background-scale="' . esc_attr( $attributes['finalBackgroundScale'] ) . '" ';
-			echo 'data-smooth-start="' . esc_attr( $attributes['followThroughStart'] ) . '" ';
-			echo 'data-smooth-end="' . esc_attr( $attributes['followThroughEnd'] ) . '" ';
-			?>
+		<div <?php echo $id; ?>
+			<?php echo join( ' ', $other_data_attributes ); ?>
 			class="<?php echo esc_attr( join( ' ', $classes ) ); ?>">
 			<div class="novablocks-map__map-container">
 				<div class="novablocks-doppler__mask novablocks-doppler__wrapper">
-					<div
-						class="novablocks-doppler__target novablocks-map__map js-novablocks-google-map"
-						data-accent-color='<?php echo esc_attr( $map_accent_color ); ?>'
-						data-show-icons='<?php echo json_encode( $attributes['showIcons'] ); ?>'
-						data-show-labels='<?php echo json_encode( $attributes['showLabels'] ); ?>'
-						data-styles='<?php echo json_encode( $attributes['styleData'] ); ?>'
-						data-markers='<?php echo json_encode( $attributes['markers'] ); ?>'
-						data-zoom='<?php echo esc_attr( $attributes['zoom'] ); ?>'
-						data-controls='<?php echo esc_attr( $attributes['showControls'] ); ?>'
+					<div class="novablocks-doppler__target novablocks-map__map js-novablocks-google-map"
+						 data-accent-color='<?php echo esc_attr( $map_accent_color ); ?>'
+						<?php echo join( ' ', $map_data_attributes ); ?>
 					>
 					</div>
 				</div>
