@@ -126,6 +126,7 @@ addFilter(
   withSetChildrenAttributes,
   Number.MAX_SAFE_INTEGER
 );
+
 addFilter(
   'editor.BlockEdit',
   'novablocks/supernova/with-focal-point-image',

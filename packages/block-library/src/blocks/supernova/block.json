@@ -30,7 +30,8 @@
 			"spaceAndSizing": {
 				"attributes": true,
 				"controls": true,
-				"advancedSpacing": true
+				"advancedSpacing": true,
+				"customProps": false
 			},
 			"contentPosition": {
 				"attributes": true,
