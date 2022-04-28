@@ -213,13 +213,6 @@
  */
 @include above(lap) {
 
-  .nb-collection__layout--masonry {
-
-    .nb-supernova-item__media {
-
-    }
-  }
-
   .nb-collection__layout--carousel.nb-collection__layout--variable-width {
 
     // Replace display: tablet; width: 1px; trick

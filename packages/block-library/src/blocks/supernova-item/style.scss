@@ -11,6 +11,10 @@
   }
 }
 
+.nb-supernova-item__media {
+  display: block;
+}
+
 .nb-supernova-item.nb-supernova-item--layout-stacked {
   --nb-block-minimum-height: calc(var(--nb-minimum-container-height) - var(--admin-bar-height, 0px));
   min-height: var(--nb-block-minimum-height);
