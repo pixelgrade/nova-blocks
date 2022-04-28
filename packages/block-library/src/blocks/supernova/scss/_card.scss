@@ -213,41 +213,47 @@
  */
 @include above(lap) {
 
-  .nb-collection__layout--carousel {
+  .nb-collection__layout--masonry {
 
-    &.nb-collection__layout--variable-width {
+    .nb-supernova-item__media {
 
-      // Replace display: tablet; width: 1px; trick
-      // with flex-basis, so we can use display: grid
-      // on supernova-item.
+    }
+  }
 
-      .slick-track > * {
-        flex-basis: 1px;
-      }
+  .nb-collection__layout--carousel.nb-collection__layout--variable-width {
 
-      .nb-supernova-item__media-aspect-ratio > * {
-        position: static;
-      }
+    // Replace display: tablet; width: 1px; trick
+    // with flex-basis, so we can use display: grid
+    // on supernova-item.
+    .slick-track > * {
+      flex-basis: 1px;
+    }
 
-      .nb-supernova-item__media {
-        width: auto;
-        height: var(--nb-variable-width-card-media-height);
-        max-width: none;
-      }
+    .nb-supernova-item__media {
+      width: auto;
+      height: var(--nb-variable-width-card-media-height);
+      max-width: none;
+    }
 
-      // Force media composition squared since it doesn't have an inherit aspect ratio
-      .novablocks-media-composition {
-        width: var(--nb-variable-width-card-media-height);
-        min-height: var(--nb-variable-width-card-media-height);
-      }
+    .slick-initialized .nb-supernova-item__media {
+      height: auto;
+    }
+  }
 
-      .slick-initialized .nb-supernova-item__media {
-        height: auto;
-      }
+  :is(.nb-collection__layout--carousel.nb-collection__layout--variable-width, .nb-collection__layout--masonry) {
 
-      .nb-supernova-item__media-aspect-ratio:before {
-        content: none;
-      }
+    .nb-supernova-item__media-aspect-ratio > * {
+      position: static;
+    }
+
+    // Force media composition squared since it doesn't have an inherit aspect ratio
+    .novablocks-media-composition {
+      width: var(--nb-variable-width-card-media-height);
+      min-height: var(--nb-variable-width-card-media-height);
+    }
+
+    .nb-supernova-item__media-aspect-ratio:before {
+      content: none;
     }
   }
 }
