@@ -131,7 +131,7 @@ $slick-arrow-background-opacity-hover: 0.6 !default;
   }
 
   .slick-slide {
-    > .mb-collection__layout-item {
+    .mb-collection__layout-item {
       display: block !important;
     }
   }
