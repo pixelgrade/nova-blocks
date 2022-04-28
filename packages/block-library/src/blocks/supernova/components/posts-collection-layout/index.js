@@ -7,39 +7,34 @@ import { PostCard } from '../index';
 const PostsCollectionLayout = props => {
   const { posts, clientId } = props;
   const innerBlocks = useInnerBlocks( clientId );
-  const attributes = Object.assign( {}, props.attributes, {
-    colorSignal: props.attributes.contentColorSignal,
-    paletteVariation: props.attributes.contentPaletteVariation,
-    useSourceColorAsReference: false
-  } );
 
-  const passedProps = Object.assign( {}, props, {
-    attributes: attributes
-  } );
+  if ( ! Array.isArray( posts ) ) {
+    return (
+      <Spinner />
+    )
+  }
 
-  // We don't want to pass the posts to each PostCard, only a single post.
-  delete passedProps.posts;
+  if ( ! posts.length ) {
+    return (
+      <p> { __( 'No posts to display.', '__plugin_txtd' ) }</p>
+    )
+  }
 
   return (
-    <CollectionBody {...props} key={'body_' + clientId}>
-      {!posts
-        ? <Spinner/>
-        : !posts.length
-          ? <p> {__( 'No posts to display.', '__plugin_txtd' )}</p>
-          : posts.map( ( post, index ) => {
-            const innerBlock = innerBlocks[index];
+    <CollectionBody { ...props } key={ 'body_' + clientId }>
+      { posts.map( ( post, index ) => {
+        const innerBlock = innerBlocks[ index ];
 
-            if ( !innerBlock ) {
-              return null;
-            }
+        if ( ! innerBlock ) {
+          return null;
+        }
 
-            return (
-              <div className={ 'nb-collection__layout-item' } key={ 'collection_layout_item_' + post.id }>
-                <PostCard { ...passedProps } post={ post } key={ 'collection_post_card_post_' + post.id }/>
-              </div>
-            );
-          } )
-      }
+        return (
+          <div className={ 'nb-collection__layout-item' } key={ 'collection_layout_item_' + post.id }>
+            <PostCard { ...innerBlock } post={ post } key={ 'collection_post_card_post_' + post.id }/>
+          </div>
+        );
+      } ) }
     </CollectionBody>
   );
 };
