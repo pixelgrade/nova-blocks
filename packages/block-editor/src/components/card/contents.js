@@ -1,11 +1,31 @@
 import { TextPlaceholder } from "../../components";
+import { useMemo } from "@wordpress/element";
+import { getAlignFromMatrix } from "@novablocks/utils";
 
-export const CardButton = ( props ) => {
+export const CardButton = ( { attributes, children } ) => {
+
+  const style = useMemo( () => {
+    const contentAlign = getAlignFromMatrix( attributes?.contentPosition );
+    const style = { justifyContent: 'center' };
+
+    if ( contentAlign[1] === 'left' ) {
+      style.justifyContent = 'flex-start';
+    }
+
+    if ( contentAlign[1] === 'right' ) {
+      style.justifyContent = 'flex-end';
+    }
+
+    return style;
+
+  }, [ attributes ] );
 
   return (
-    <div className="wp-block-button is-style-text">
-      <div className="wp-block-button__link">
-        { props.children }
+    <div className="wp-block-buttons" style={ style }>
+      <div
+        className="wp-block-button sm-color-signal-1 is-style-text sm-palette-1 sm-palette--shifted sm-variation-1 sm-light"
+        data-palette="1" data-palette-variation="1" data-color-signal="1" data-use-source-color-as-reference="true">
+        <a className="wp-block-button__link">{ children }</a>
       </div>
     </div>
    )

@@ -1485,15 +1485,31 @@ function novablocks_get_card_item_buttons( array $buttons, array $attributes ): 
 		return '';
 	}
 
+	$align = preg_split( '/\b\s+/', $attributes['contentPosition'] );
+
+	$justify_content = 'center';
+
+	if ( $align[1] === 'left' ) {
+		$justify_content = 'flex-start';
+	}
+
+	if ( $align[1] === 'right' ) {
+		$justify_content = 'flex-end';
+	}
+
 	$output = '';
 	foreach ( $buttons as $button ) {
 		if ( empty ( $button['text'] ) ) {
 			continue;
 		}
 
-		$output .= '<div class="wp-block-button is-style-text">
-			<a class="wp-block-button__link" href="' . esc_url( $button['url'] ) . '">' . $button['text'] . '</a>
-		</div>';
+		$output .= '<div class="wp-block-buttons" style="justify-content: ' . $justify_content . '">
+      <div
+        class="wp-block-button sm-color-signal-1 is-style-text sm-palette-1 sm-palette--shifted sm-variation-1 sm-light"
+        data-palette="1" data-palette-variation="1" data-color-signal="1" data-use-source-color-as-reference="true">
+        <a class="wp-block-button__link" href="' . esc_url( $button['url'] ) . '">' . $button['text'] . '</a>
+      </div>
+    </div>';
 	}
 
 	$output = trim( $output );

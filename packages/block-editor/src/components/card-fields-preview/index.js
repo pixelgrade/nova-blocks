@@ -27,7 +27,7 @@ const CardFieldsPreview = ( props ) => {
       <CardMeta show={ showMeta }>{ metaBelowTitle }</CardMeta>
       <CardDescription show={ showDescription }>{ stripHTML( description ) }</CardDescription>
       <CardFooter show={ showButtons && !! buttonText }>
-        <CardButton>{ buttonText }</CardButton>
+        <CardButton { ...props }>{ buttonText }</CardButton>
       </CardFooter>
     </Fragment>
   )
