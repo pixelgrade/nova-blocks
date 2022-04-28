@@ -69,6 +69,7 @@ const SupernovaPreview = props => {
     showCollectionSubtitle,
     showPagination,
     cardLayout,
+    carouselLayout,
     layoutStyle,
   } = attributes;
 
@@ -79,13 +80,14 @@ const SupernovaPreview = props => {
 
   const className = classnames(
     'nb-supernova',
-    `nb-supernova--content-type-${contentType}`,
-    `nb-supernova--card-layout-${cardLayout}`,
-    `nb-supernova--layout-${layoutStyle}`,
-    `nb-supernova--${columns}-columns`,
-    `nb-supernova--valign-${contentAlign[0]}`,
-    `nb-supernova--halign-${contentAlign[1]}`,
+    `nb-supernova--content-type-${ contentType }`,
+    `nb-supernova--card-layout-${ cardLayout }`,
+    `nb-supernova--layout-${ layoutStyle }`,
+    `nb-supernova--${ columns }-columns`,
+    `nb-supernova--valign-${ contentAlign[ 0 ] }`,
+    `nb-supernova--halign-${ contentAlign[ 1 ] }`,
     { 'nb-supernova--show-pagination': showPagination },
+    { [ `nb-supernova--carousel-layout-${ carouselLayout }` ]: layoutStyle === 'carousel' },
     props.className,
     'alignfull'
   );

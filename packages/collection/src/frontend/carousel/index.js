@@ -54,7 +54,7 @@ const initializeCarousels = () => {
           settings: {
             dots: showDots,
             arrows: showArrows,
-            slidesToShow: attributes.columns,
+            slidesToShow: variableWidth ? 1 : attributes.columns,
             centerMode: false,
             variableWidth: variableWidth,
           }

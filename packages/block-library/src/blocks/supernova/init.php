@@ -87,6 +87,10 @@ if ( ! function_exists( 'novablocks_render_supernova_block' ) ) {
 			$classes[] = 'nb-supernova--show-pagination';
 		}
 
+		if ( $attributes['layoutStyle'] === 'carousel' ) {
+			$classes[] = 'nb-supernova--carousel-layout-' . $attributes['carouselLayout'];
+		}
+
 		$cssProps = array_merge(
 			novablocks_get_media_composition_css( $attributes ),
 			novablocks_get_color_signal_css( $attributes ),

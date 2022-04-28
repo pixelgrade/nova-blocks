@@ -363,18 +363,21 @@ $slick-arrow-background-opacity-hover: 0.6 !default;
 
 
 .nb-supernova {
-  &:not(.nb-supernova--1-columns) {
+  &:is(
+    :not(.nb-supernova--card-layout-stacked.nb-supernova--1-columns),
+    .nb-supernova--carousel-layout-variable
+   ) {
     @include above(lap) {
       .slick-track {
         gap: var(--nb-grid-spacing);
       }
     }
+  }
 
-    @include below(lap) {
-      .slick-slide {
-        padding-left: calc(var(--nb-grid-spacing) / 4);
-        padding-right: calc(var(--nb-grid-spacing) / 4);
-      }
+  @include below(lap) {
+    .slick-slide {
+      padding-left: calc(var(--nb-grid-spacing) / 4);
+      padding-right: calc(var(--nb-grid-spacing) / 4);
     }
   }
 }
