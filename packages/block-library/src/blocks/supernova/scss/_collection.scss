@@ -58,6 +58,14 @@
   }
 }
 
+.nb-collection__header[class] {
+  padding-bottom: calc(-1 * var(--nb-block-top-spacing) * var(--nb-spacing));
+}
+
+.nb-collection__inner-container {
+  position: relative;
+}
+
 .nb-supernova-item--aspect-ratio-auto {
 
   .novablocks-media-composition__image {
