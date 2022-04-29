@@ -11,7 +11,7 @@ const withSpaceAndSizingEditCustomProps = createHigherOrderComponent( OriginalCo
 
     const style = props.style ? props.style : {};
 
-    if ( supports?.novaBlocks?.spaceAndSizing === true || supports?.novaBlocks?.spaceAndSizing?.customProps !== false ) {
+    if ( !! supports?.novaBlocks?.spaceAndSizing ) {
       Object.assign( style, getSpacingCSSProps( attributes ) );
     }
 
