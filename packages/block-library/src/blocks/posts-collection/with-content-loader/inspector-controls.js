@@ -29,7 +29,7 @@ const Controls = ( props ) => {
     <ControlsSection
       id={ 'content-loader' }
       label={ __( 'Collection Content' ) }
-      group={ __( 'Block Anatomy' ) }
+      group={ __( 'Card Anatomy' ) }
       order={ 10 }>
       <ControlsTab label={ __( 'Settings' ) }>
         <SelectControl

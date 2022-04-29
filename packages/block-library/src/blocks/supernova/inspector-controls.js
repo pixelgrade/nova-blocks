@@ -14,7 +14,7 @@ const Controls = ( props ) => {
   const {
     attributes,
     setAttributes,
-    inQuery,
+    inQuery
   } = props;
 
   // If we are in a query block, everything is automatic (contentType is auto).
@@ -23,15 +23,24 @@ const Controls = ( props ) => {
   }
 
   const {
-    contentType
+    contentType,
+    postsToShow,
+    columns
   } = attributes;
+
+  // Hide the "Collection" section when there is 
+  // a single item in a single column 
+  // Examples: Media Card, Hero Card
+  if ( postsToShow === 1 && columns === 1 ) {
+    return null;
+  }
 
   return (
     <ControlsSection
       id={ 'content-type' }
-      label={ __( 'Collection Content' ) }
-      group={ __( 'Block Anatomy' ) }
-      order={ 10 }>
+      label={ __( 'Content Type' ) }
+      group={ __( 'Card Anatomy' ) }
+      order={ 100 }>
       <ControlsTab label={ __( 'Settings' ) }>
         <SelectControl
           key={ 'collection-content-type' }
