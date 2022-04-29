@@ -2,17 +2,20 @@
   #SUPERNOVA CARD ITEM
 \*------------------------------------*/
 
-.nb-supernova-item {
-  --nb-card-layout-gap: calc( var(--nb-current-spacing) * 2 * var(--nb-card-layout-gap-modifier, 0) * var(--nb-spacing-multiplier-override, 1));
-  --nb-card-content-padding: calc( var(--nb-current-spacing) * 2 * var(--nb-card-content-padding-multiplier, 0) * var(--nb-spacing-multiplier-override, 1));
-  --nb-card-media-padding: calc( var(--nb-current-spacing) * 2 * var(--nb-card-media-padding-multiplier, 0) * var(--nb-spacing-multiplier-override, 1));
+.nb-supernova {
+  --nb-card-layout-gap: calc( var(--nb-current-spacing) * 2 * var(--nb-card-layout-gap-modifier, 0) );
+  --nb-card-content-padding: calc( var(--nb-current-spacing) * 2 * var(--nb-card-content-padding-multiplier, 0) );
+  --nb-card-media-padding: calc( var(--nb-current-spacing) * 2 * var(--nb-card-media-padding-multiplier, 0) );
 
   --nb-card-content-column-width: calc( var(--nb-card-content-area-width) - var(--nb-card-layout-gap) * 0.5 );
   --nb-card-media-column-width: calc( 100% - var(--nb-card-content-column-width) - var(--nb-card-layout-gap));
 
   --nb-variable-width-card-media-height: calc( 10em + 20em * var(--nb-card-media-container-height, 50) / 100 );
+}
 
+.nb-supernova-item {
   position: relative;
+  
   display: flex;
   flex-direction: column;
 

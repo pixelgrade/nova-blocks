@@ -19,15 +19,23 @@ const Controls = ( props ) => {
 
   const {
     attributes: {
-      layoutStyle
+      layoutStyle,
+      postsToShow,
+      columns
     },
   } = props;
+
+  // Hide the "Collection" section when there is 
+  // a single item in a single column 
+  // Examples: Media Card, Hero Card
+  if ( postsToShow === 1  && columns === 1 ) {
+    return null;
+  }
 
   return (
     <ControlsSection
       id={ 'collection-layout' }
       label={ __( 'Collection Layout', '__plugin_txtd' ) }
-      group={ __( 'Block Anatomy', '__plugin_txtd' ) }
       order={ 20 }>
       {
         'parametric' === layoutStyle &&

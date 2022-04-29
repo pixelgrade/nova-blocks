@@ -45,8 +45,8 @@ const MediaCompositionControls = props => {
     <ControlsSection
       id={ 'media-composition' }
       label={ __( 'Media Composition', '__plugin_txtd' ) }
-      group={ __( 'Block Anatomy', '__plugin_txtd' ) }
-      order={ 10 }
+      group={ __( 'Card Anatomy', '__plugin_txtd' ) }
+      order={ 15 }
       key={ clientId + '_media-composition-controls-section' }>
 
       <ControlsTab label={ __( 'Presets', '__plugin_txtd' ) } key={'media_composition_presets'}>
