@@ -1,6 +1,6 @@
 === Nova Blocks by Pixelgrade ===
 Contributors: pixelgrade, vlad.olaru, babbardel, razvanonofrei, gorby31
-Tags: blocks, editor, gutenberg, gutenberg blocks, page builder, block enabled, page building, full site editing, site editor
+Tags: blocks, editor, gutenberg, gutenberg blocks, page builder, block enabled, page building, full site editing, site editor, posts collection
 Requires at least: 5.9
 Tested up to: 5.9.3
 Stable tag: 2.0.0
@@ -96,7 +96,16 @@ Yes! Nova Block's core features are free to use.
 
 = 2.0.1 =
 * Ensure blocks full compatibility with other custom post types (e.g. WooCommerce products)
-* ...
+* Minor improvements and fixes for the integration with the Style Manager plugin and its Color and Fonts Systems
+* Blocks interface improvements and fixes
+* Fixes for the google-map block
+* Improve global spacing styling
+* Improvements and fixes for the carousel styles
+* Improve masonry layouts styling for Cards Collection blocks
+* Fixes for the sharing popup colors
+* Fixes for card button alignment
+* Update blocks interface copy
+* Ensure compatibility with the latest Gutenberg version
 
 = 2.0.0 =
 * Major update with a lot of new features, improvements and bug fixes
