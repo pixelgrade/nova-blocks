@@ -30,10 +30,6 @@
 }
 
 .nb-supernova {
-  --block-top-spacing: var(--nb-block-top-spacing, 0);
-  --block-bottom-spacing: var(--nb-block-bottom-spacing, 0);
-  --emphasis-top-spacing: var(--nb-emphasis-top-spacing, 0);
-  --emphasis-bottom-spacing: var(--nb-emphasis-bottom-spacing, 0);
 
   //&[class][class] {
   //  padding-top: calc( max(var(--emphasis-top-spacing), -1 * var(--emphasis-top-spacing)) * var(--nb-spacing));

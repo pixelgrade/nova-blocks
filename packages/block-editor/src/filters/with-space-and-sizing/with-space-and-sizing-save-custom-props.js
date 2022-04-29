@@ -5,7 +5,7 @@ const withSpaceAndSizingSaveCustomProps = ( extraProps, blockType, attributes ) 
 
   const supports = getSupports( blockType.name );
 
-  if ( ! supports?.novaBlocks?.spaceAndSizing ) {
+  if ( supports?.novaBlocks?.spaceAndSizing === true || supports?.novaBlocks?.spaceAndSizing?.customProps !== false ) {
     return extraProps;
   }
 

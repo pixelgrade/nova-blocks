@@ -28,22 +28,32 @@
   display: block !important;
 }
 
+.nb-supernova-item__inner-container {
+  --nb-spacing-multiplier-override: 1;
+}
+
+.nb-supernova-item {
+  @include block-spacing;
+}
+
 :is(.nb-supernova--card-layout-horizontal, .nb-supernova--card-layout-horizontal-reverse) {
-  margin-top: calc(var(--block-top-spacing) * var(--nb-spacing));
-  margin-bottom: calc(var(--block-bottom-spacing) * var(--nb-spacing));
 
   @include above(tablet) {
 
     .nb-supernova-item {
+      margin-top: calc( var(--nb-block-top-spacing) * var(--nb-current-spacing) * var(--nb-spacing-multiplier-override, 1));
+      margin-bottom: calc( var(--nb-block-bottom-spacing) * var(--nb-current-spacing) * var(--nb-spacing-multiplier-override, 1));
+      padding-top: 0;
+      padding-bottom: 0;
 
       .nb-supernova-item__media-wrapper {
-        margin-top: calc( var(--emphasis-top-spacing) * var(--nb-spacing));
-        margin-bottom: calc( var(--emphasis-bottom-spacing) * var(--nb-spacing));
+        margin-top: calc( var(--nb-emphasis-top-spacing) * var(--nb-current-spacing) * var(--nb-spacing-multiplier-override, 1));
+        margin-bottom: calc( var(--nb-emphasis-bottom-spacing) * var(--nb-current-spacing) * var(--nb-spacing-multiplier-override, 1));
       }
 
       .nb-supernova-item__content {
-        padding-top: calc( var(--emphasis-top-spacing) * var(--nb-spacing));
-        padding-bottom: calc( var(--emphasis-bottom-spacing) * var(--nb-spacing));
+        padding-top: calc( var(--nb-emphasis-top-spacing) * var(--nb-current-spacing) * var(--nb-spacing-multiplier-override, 1));
+        padding-bottom: calc( var(--nb-emphasis-bottom-spacing) * var(--nb-current-spacing) * var(--nb-spacing-multiplier-override, 1));
       }
     }
   }
