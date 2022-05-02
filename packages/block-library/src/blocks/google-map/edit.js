@@ -185,7 +185,7 @@ const Edit = props => {
           apiKey={ savedApiKey }
           apiKeyInstructions={ instructions }
         /> }
-        { showMap && <Map { ...props } onChange={ markers => { setAttributes( { markers } ) } } /> }
+        { showMap && <Map { ...props } /> }
       </div>
     </Fragment>
   );

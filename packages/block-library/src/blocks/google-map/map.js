@@ -1,196 +1,151 @@
-import pin from './pin';
-import { getMapStyles, getMarkersCenter, getMapAccentColor, addVisibilityToStyles } from './utils';
-import defaultMapCenter from './default-map-center';
-
 import { __ } from '@wordpress/i18n';
-import { Component } from '@wordpress/element';
+import { Component, useCallback, useEffect, useMemo, useRef, useState } from '@wordpress/element';
 import { Placeholder } from '@wordpress/components';
 
-class Map extends Component {
+import { useDidUpdateEffect, useSettings } from '@novablocks/block-editor';
 
-	constructor() {
-		super( ...arguments );
+import {
+  getCenterFromMarkers,
+  getMarkersCenter,
+  getMapAccentColor,
+  addVisibilityToStyles
+} from './utils';
 
-		this.map = null;
-		this.searchBox = null;
-		this.markers = [];
+import styles from './styles';
+import defaultMapCenter from './default-map-center';
+import pin from './pin';
 
-		this.getMapStyles = getMapStyles.bind( this );
-	}
+const Map = ( props ) => {
+  const { attributes, setAttributes, isSelected, clientId } = props;
+  const { markers, styleData, styleSlug, showControls, showLabels, showIcons, zoom } = attributes;
+  const settings = useSettings();
+  const accentColor = useMemo( () => settings?.map?.accentColor ?? '#222222', [ settings ] );
+  const pinColor = useMemo( () => styleSlug === 'customized' ? accentColor : '#222222', [ styleSlug ] );
+  const pinMarkup = useMemo( () => pin.replace( '%ACCENT_COLOR%', pinColor ), [ pinColor ] );
 
-	clearMarkers() {
-		this.markers.forEach( marker => { marker.setMap( null ) } );
-		this.markers = [];
-	}
+  const mapMarkers = useRef( [] );
+  const searchInputRef = useRef( null );
+  const mapContainerRef = useRef( null );
+  const map = useRef( null );
+  const searchBox = useRef( null );
 
-  onPlacesChanged() {
+  // initialize map
+  useEffect( () => {
+    const newMap = new google.maps.Map( mapContainerRef.current, {
+      mapTypeId: 'roadmap',
+      center: defaultMapCenter,
+      zoom: zoom,
+      styles: mapStyles,
+      clickableIcons: false,
+      disableDefaultUI: ! showControls,
+      disableDoubleClickZoom: true,
+      draggable: false,
+      gestureHandling: 'none',
+      keyboardShortcuts: false,
+      scrollwheel: false,
+    } );
 
-    if ( !this.searchBox ) {
-      return;
-    }
+    google.maps.event.trigger( map, 'resize' );
 
-    this.props.onChange( this.searchBox.getPlaces().map( place => {
-      const keepProps = [ 'name', 'geometry' ];
+    map.current = newMap;
+  }, [] );
+
+  // initialize searchBox
+  useEffect( () => {
+    // Create the search box and link it to the UI element.
+    searchBox.current = new google.maps.places.SearchBox( searchInputRef.current );
+
+    // Bias the SearchBox results towards current map's viewport.
+    map.current.addListener( 'bounds_changed', () => {
+      searchBox.current.setBounds( map.current.getBounds() );
+    } );
+
+    // Listen for the event fired when the user selects a prediction and retrieve
+    // more details for that place.
+    searchBox.current.addListener( 'places_changed', onPlacesChanged );
+  }, [] );
+
+  const onPlacesChanged = useCallback( () => {
+    const places = searchBox.current.getPlaces();
+    const keepProps = [ 'name', 'geometry' ];
+    const markers = places.map( place => {
       return Object.keys( place )
                    .filter( key => keepProps.includes( key ) )
                    .reduce( ( obj, key ) => {
                      obj[ key ] = place[ key ];
                      return obj;
                    }, {} );
-    } ) );
-  }
+    } );
 
-	createMarkers() {
-		const { attributes } = this.props;
-		const { markers, styleSlug } = attributes;
+    setAttributes( { markers } );
+  }, [] );
 
-		const accentColor = styleSlug === 'customized' ? getMapAccentColor.call( this ) : '#222222';
-		const pinMarkup = pin.replace( '%ACCENT_COLOR%', accentColor );
+  useMemo( () => {
+    mapMarkers.current.forEach( marker => { marker.setMap( null ) } );
+    mapMarkers.current = [];
 
-		markers.forEach( marker => {
+    markers.forEach( marker => {
 
-			if ( ! marker.geometry ) {
-				return;
-			}
+      if ( ! marker.geometry ) {
+        return;
+      }
 
-			this.markers.push( new google.maps.Marker( {
-				map: this.map,
-				icon: { url: 'data:image/svg+xml;charset=UTF-8,' + encodeURIComponent( pinMarkup ) },
-				title: marker.name,
-				position: marker.geometry.location
-			} ) );
-		} );
+      const newMarker = new google.maps.Marker( {
+        icon: { url: 'data:image/svg+xml;charset=UTF-8,' + encodeURIComponent( pinMarkup ) },
+        title: marker.name,
+        position: marker.geometry.location
+      } );
 
-		if ( this.markers.length ) {
-			this.map.setCenter( getMarkersCenter.call( this ) );
-		}
-	}
+      newMarker.setMap( map.current );
+      mapMarkers.current.push( newMarker );
 
-	initializeMap() {
-		const { attributes } = this.props;
-		const { showControls, showLabels, showIcons, zoom } = attributes;
+    } );
 
-		this.map = new google.maps.Map( document.getElementById( `novablocks-google-map-${ this.props.clientId }` ), {
-			mapTypeId: 'roadmap',
-			center: defaultMapCenter,
-			zoom: zoom,
-			styles: addVisibilityToStyles( this.getMapStyles(), showLabels, showIcons ),
+    if ( map.current ) {
+      map.current.setCenter( getCenterFromMarkers( markers ) );
+    }
+  }, [ markers, pinMarkup ] );
 
-			clickableIcons: false,
-			disableDefaultUI: ! showControls,
-			disableDoubleClickZoom: true,
-			draggable: false,
-			gestureHandling: 'none',
-			keyboardShortcuts: false,
-			scrollwheel: false,
-		} );
-	}
+  const mapStyles = useMemo( () => {
+    const shouldHaveCustomStyles = styleSlug !== 'original' && styleData.length !== 0;
+    const selectedStyles = styles.find( style => style.slug === styleSlug );
+    const styleDataBySlug = selectedStyles ? selectedStyles.styles : {};
+    const data = shouldHaveCustomStyles && styleDataBySlug || styleData;
+    const replacedData = JSON.parse( JSON.stringify( data ).replace( /%ACCENT_COLOR%/g, pinColor ) );
 
-	initializeSearchBox() {
-		// Create the search box and link it to the UI element.
-		const input = document.getElementById( `novablocks-google-map-search-input-${ this.props.clientId }` );
-		this.searchBox = new google.maps.places.SearchBox( input );
+    return addVisibilityToStyles( replacedData, showLabels, showIcons );
+  }, [ styleData, showLabels, showIcons, styleSlug ] );
 
-		// Bias the SearchBox results towards current map's viewport.
-		this.map.addListener( 'bounds_changed', () => {
-			this.searchBox.setBounds( this.map.getBounds() );
-		} );
+  useEffect( () => {
+    map.current.setOptions( {
+      zoom: zoom,
+      disableDefaultUI: ! showControls,
+      styles: mapStyles
+    } );
+  }, [ showControls, zoom, mapStyles ] );
 
-		// Listen for the event fired when the user selects a prediction and retrieve
-		// more details for that place.
-		this.searchBox.addListener( 'places_changed', this.onPlacesChanged.bind( this ) );
-	}
+  const placeholderStyles = useMemo( () => isSelected ? {} : { display: 'none' }, [ isSelected ] );
 
-	updateMapOptions() {
-
-		if ( this.map === null ) {
-			return
-		}
-
-		const options = {};
-		const { attributes } = this.props;
-		const { showControls, showLabels, showIcons, zoom } = attributes;
-
-		options.zoom = zoom;
-		options.disableDefaultUI = ! showControls;
-		options.styles = addVisibilityToStyles( this.getMapStyles(), showLabels, showIcons );
-
-		this.map.setOptions( options );
-	}
-
-	updateMapMarkers() {
-		this.clearMarkers();
-		this.createMarkers();
-	}
-
-	componentDidMount() {
-
-		if ( this.map === null ) {
-			this.initializeMap();
-			this.initializeSearchBox();
-			this.createMarkers();
-			return;
-		}
-
-		google.maps.event.trigger( this.map, 'resize' );
-	}
-
-	shouldComponentUpdate( nextProps ) {
-		let shouldUpdate = false;
-		Object.entries( this.props ).forEach( ( [ key, val ] ) => {
-			if ( nextProps[ key ] !== val ) {
-				shouldUpdate = true;
-			}
-		} );
-
-		return shouldUpdate;
-	}
-
-	componentDidUpdate( prevProps, prevState ) {
-		this.updateMapOptions();
-
-		if ( prevProps.attributes.markers !== this.props.attributes.markers ||
-		     prevProps.attributes.styleSlug !== this.props.attributes.styleSlug ) {
-			this.updateMapMarkers();
-		}
-	}
-
-	render() {
-		return (
-      <div className="novablocks-map__map" id={ `novablocks-google-map-${ this.props.clientId }` }
-           style={ this.props?.doppler?.style }/>
-    )
-	}
+  return (
+    <div className="novablocks-map">
+      <div className="novablocks-map__search-box">
+        <Placeholder style={ placeholderStyles }>
+          <input
+            type="text"
+            ref={ searchInputRef }
+            placeholder={ __( 'Enter an address to drop a pin on this map', '__plugin_txtd' ) }
+          />
+        </Placeholder>
+      </div>
+      <div className="novablocks-map__map-container">
+        <div
+          className="novablocks-map__map"
+          ref={ mapContainerRef }
+          style={ props?.doppler?.style }
+        />
+      </div>
+    </div>
+  )
 }
 
-const MapWrapper = ( Map ) => {
-
-	return ( props ) => {
-
-		const { parallax, ...otherProps } = props;
-		const searchBoxStyles = {};
-
-		if ( ! props.isSelected ) {
-			searchBoxStyles.display = 'none';
-		}
-
-		return (
-			<div className="novablocks-map">
-				<div className="novablocks-map__search-box">
-					<Placeholder style={ searchBoxStyles }>
-						<input
-							type="text"
-							id={ `novablocks-google-map-search-input-${ props.clientId }` }
-							placeholder={ __( 'Enter an address to drop a pin on this map', '__plugin_txtd' ) }
-						/>
-					</Placeholder>
-				</div>
-				<div className="novablocks-map__map-container">
-          <Map {...otherProps}/>
-				</div>
-			</div>
-		);
-	}
-};
-
-export default MapWrapper( Map );
+export default Map;

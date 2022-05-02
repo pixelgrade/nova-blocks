@@ -43,7 +43,7 @@ export const getMapAccentColor = function() {
 	return novablocksSettings?.map?.accentColor || '#222222';
 };
 
-export const getCenterFromMarkers = function( markers ) {
+export const getCenterFromMarkers = ( markers ) => {
 
 	if ( typeof google === "undefined" || typeof google.maps === "undefined" ) {
 		return defaultMapCenter;
@@ -53,7 +53,7 @@ export const getCenterFromMarkers = function( markers ) {
 
 	// when there is only one marker bounds aren't accurate at great zoom levels
 	if ( markers.length === 1 ) {
-		const center = JSON.parse( markers[0] );
+		const center = markers[0];
 		return new google.maps.LatLng( center.geometry.location );
 	}
 
