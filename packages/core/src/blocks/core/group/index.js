@@ -38,35 +38,4 @@ const addNovaBlocksSupport = ( settings ) => {
   };
 };
 
-const withBlockEditProps = createHigherOrderComponent( ( BlockListBlock ) => {
-
-  return ( props ) => {
-    const { attributes } = props;
-    const { align } = attributes;
-
-    let wrapperProps = props.wrapperProps;
-
-    if ( 'core/group' !== props.name ) {
-      return <BlockListBlock { ...props } />
-    }
-
-    wrapperProps = {
-      ...wrapperProps,
-      style: {
-        ...wrapperProps?.style,
-        ...getSpacingCSSProps( attributes )
-      },
-      className: classnames(
-        wrapperProps?.className,
-        getColorSignalClassnames( attributes, true ),
-      )
-    };
-
-    return <BlockListBlock { ...props } wrapperProps={ wrapperProps } />
-  };
-
-}, 'withBlockEditProps' );
-
-
 addFilter( 'blocks.registerBlockType', 'novablocks/group/settings-add-nb-support', addNovaBlocksSupport, 1 );
-addFilter( 'editor.BlockListBlock', 'novablocks/group/with-block-edit-props', withBlockEditProps );

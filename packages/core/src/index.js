@@ -30,6 +30,7 @@ const handleAlignedBlocks = () => {
 wp.novaBlocks = new novaBlocks();
 
 import "./blocks/core/button";
+import "./blocks/core/columns";
 import "./blocks/core/group";
 import "./blocks/core/list";
 import "./blocks/core/query";
