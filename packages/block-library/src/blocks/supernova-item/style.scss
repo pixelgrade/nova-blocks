@@ -29,21 +29,16 @@
 }
 
 :is(.nb-supernova--card-layout-horizontal, .nb-supernova--card-layout-horizontal-reverse) {
-  margin-top: calc(var(--block-top-spacing) * var(--nb-spacing));
-  margin-bottom: calc(var(--block-bottom-spacing) * var(--nb-spacing));
 
   @include above(tablet) {
 
     .nb-supernova-item {
+      padding-top: calc( -1 * max(0, var(--nb-emphasis-top-spacing)) * var(--nb-spacing));
+      padding-bottom: calc( -1 * max(0, var(--nb-emphasis-bottom-spacing)) * var(--nb-spacing));
 
       .nb-supernova-item__media-wrapper {
-        margin-top: calc( var(--emphasis-top-spacing) * var(--nb-spacing));
-        margin-bottom: calc( var(--emphasis-bottom-spacing) * var(--nb-spacing));
-      }
-
-      .nb-supernova-item__content {
-        padding-top: calc( var(--emphasis-top-spacing) * var(--nb-spacing));
-        padding-bottom: calc( var(--emphasis-bottom-spacing) * var(--nb-spacing));
+        margin-top: calc( min(0, var(--nb-emphasis-top-spacing)) * var(--nb-spacing));
+        margin-bottom: calc( min(0, var(--nb-emphasis-bottom-spacing)) * var(--nb-spacing));
       }
     }
   }
