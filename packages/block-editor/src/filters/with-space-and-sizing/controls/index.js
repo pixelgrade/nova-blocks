@@ -22,8 +22,14 @@ const SpaceAndSizingControls = ( props ) => {
 
   return (
     <ControlsSection id={ 'space-and-sizing' } label={ __( 'Space and Sizing', '__plugin_txtd' ) } order={ 20 }>
-      <SpaceAndSizingGeneral { ...props } />
-      <SpaceAndSizingCustomize { ...props } />
+      <ControlsTab id="space-and-sizing-presets" label={ __( 'Presets', '__plugin_txtd' ) }>
+        <SpaceAndSizingPresets { ...props } />
+      </ControlsTab>
+      <ControlsTab id="space-and-sizing-customize" label={ __( 'Customize', '__plugin_txtd' ) }>
+        <CardSpacingCustomize key={ 'card-spacing-customize' } { ...props } />
+        <ImageContainerHeightCustomize key={ 'image-container-customize' } { ...props } />
+        <VisualBalanceCustomize key={ 'visual-balance-customize' } { ...props } />
+      </ControlsTab>
       <ControlsTab label={ __( 'Settings', '__plugin_txtd' ) }>
         <CardSpacingSettings key={ 'card-spacing-settings' } { ...props } />
         <BlockSpacingModifier key={ 'spacing-modifier' } { ...props } />
@@ -39,24 +45,6 @@ const SpaceAndSizingControls = ( props ) => {
     </ControlsSection>
   )
 };
-
-const SpaceAndSizingGeneral = withVisibility( 'space-and-sizing-presets' )( props => {
-  return (
-    <ControlsTab label={ __( 'Presets', '__plugin_txtd' ) }>
-      <SpaceAndSizingPresets { ...props } />
-    </ControlsTab>
-  )
-} );
-
-const SpaceAndSizingCustomize = withVisibility( 'space-and-sizing-customize' )( props => {
-  return (
-    <ControlsTab label={ __( 'Customize', '__plugin_txtd' ) }>
-      <CardSpacingCustomize key={ 'card-spacing-customize' } { ...props } />
-      <ImageContainerHeightCustomize key={ 'image-container-customize' } { ...props } />
-      <VisualBalanceCustomize key={ 'visual-balance-customize' } { ...props } />
-    </ControlsTab>
-  )
-} )
 
 const MediaHeight = withVisibility( 'media-container-height', false )( props => {
 

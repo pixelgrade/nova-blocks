@@ -15,7 +15,7 @@ import { useBlockEditContext } from '@wordpress/block-editor';
 
 import {
   Children,
-  useCallback,
+  useCallback, useContext,
   useMemo,
 } from '@wordpress/element';
 
@@ -29,6 +29,7 @@ import { DrawerContentSlot, DrawerContentFill } from "./drawer-content-slot-fill
 
 import Cube from './cube';
 import { ActiveSectionTabs } from "./tabs";
+import ControlsVisibilityContext from "../../filters/with-controls-visibility/context";
 
 const ControlsSectionsComponent = ( props ) => {
 
@@ -36,6 +37,7 @@ const ControlsSectionsComponent = ( props ) => {
 
 	const advancedButton = useMemo( () => document.querySelector( '.block-editor-block-inspector__advanced' ), [] );
 	const advancedWrapper = useMemo( () => !! advancedButton && advancedButton.parentNode );
+  const visibilityContext = useContext( ControlsVisibilityContext );
 
 	if ( !! advancedWrapper ) {
 		advancedWrapper.style.setProperty( 'transition', 'opacity .3s ease-out' );
@@ -100,7 +102,16 @@ const ControlsSectionsComponent = ( props ) => {
 
 						return sections.map( ( section, index ) => {
 							const { children, label } = section.props;
-							const tabs = Children.toArray( children ).filter( child => child.type === ControlsTab );
+							const tabs = Children.toArray( children ).filter( child => {
+                const id = child?.props?.id;
+                let show = true;
+
+                if ( id && typeof visibilityContext[id] !== "undefined" ) {
+                  show = visibilityContext[id];
+                }
+
+                return child.type === ControlsTab && show;
+              } );
 							const orderedTabs = orderBy( tabs, tab => tab.props.priority || 0, ['desc'] );
 							const groupedTabs = groupBy( orderedTabs, tab => {
 								return tab.props.label;
