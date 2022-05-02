@@ -12,5 +12,6 @@ import './with-custom-align';
 
 import "./with-card-elements-stacking";
 import "./with-collection-layout";
+import "./with-preview-attributes";
 import "./with-overlay-filter";
 import "./with-space-and-sizing";

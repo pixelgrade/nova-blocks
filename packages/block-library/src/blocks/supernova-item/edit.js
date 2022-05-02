@@ -24,8 +24,7 @@ import {
   CardButton,
   CardMediaWrapper,
   useInnerBlocks,
-  useSelectParent,
-  withPreviewAttributes
+  useSelectParent
 } from "@novablocks/block-editor";
 import { withShapeModelingDecoration } from "@novablocks/shape-modeling";
 
@@ -241,4 +240,4 @@ const SupernovaItemContent = ( props ) => {
   );
 };
 
-export default withPreviewAttributes( SupernovaItemEdit );
+export default SupernovaItemEdit;

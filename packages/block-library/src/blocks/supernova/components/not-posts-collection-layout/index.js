@@ -1,7 +1,7 @@
 import { Fragment } from "@wordpress/element";
 import { useInnerBlocksProps } from "@wordpress/block-editor";
 
-import { useInnerBlocks, withPreviewAttributes } from "@novablocks/block-editor";
+import { useInnerBlocks } from "@novablocks/block-editor";
 import { CollectionBody } from "@novablocks/collection";
 
 import { SupernovaItemPreview } from "../index";
@@ -34,7 +34,7 @@ const CardsCollectionPreview = ( props ) => {
   )
 };
 
-const CardsCollectionLayout = withPreviewAttributes( props => {
+const CardsCollectionLayout = props => {
   const { attributes } = props;
   const { preview } = attributes;
 
@@ -46,6 +46,6 @@ const CardsCollectionLayout = withPreviewAttributes( props => {
       }
     </Fragment>
   )
-} );
+};
 
 export default CardsCollectionLayout;

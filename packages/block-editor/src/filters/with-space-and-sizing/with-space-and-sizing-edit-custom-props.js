@@ -5,7 +5,6 @@ import { useSupports } from "../../hooks";
 const withSpaceAndSizingEditCustomProps = createHigherOrderComponent( OriginalComponent => {
 
   return ( props ) => {
-
     const supports = useSupports( props.name );
     const { attributes } = props;
 

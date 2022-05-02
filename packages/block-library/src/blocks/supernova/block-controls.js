@@ -5,7 +5,6 @@ import { Button, Toolbar } from '@wordpress/components';
 import { getIconSvg } from "@novablocks/block-editor";
 import { needsPreview } from "@novablocks/utils";
 
-import PreviewModeControls from './controls/preview-mode-controls';
 import FlipMediaControls from './controls/flip-media-controls';
 
 const Controls = ( props ) => {
@@ -21,7 +20,6 @@ const Controls = ( props ) => {
         setAttributes( { align: nextAlign ?? 'none' } );
       } } />
       <FlipMediaControls { ...props } />
-      <PreviewModeControls { ...props } />
     </BlockControls>
   )
 };
