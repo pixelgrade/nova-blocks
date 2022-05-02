@@ -22,6 +22,7 @@ const Map = ( props ) => {
   const accentColor = useMemo( () => settings?.map?.accentColor ?? '#222222', [ settings ] );
   const pinColor = useMemo( () => styleSlug === 'customized' ? accentColor : '#222222', [ styleSlug ] );
   const pinMarkup = useMemo( () => pin.replace( '%ACCENT_COLOR%', pinColor ), [ pinColor ] );
+  const [ mapLoaded, setMapLoaded ] = useState( false );
 
   const mapMarkers = useRef( [] );
   const searchInputRef = useRef( null );
@@ -48,6 +49,8 @@ const Map = ( props ) => {
     google.maps.event.trigger( map, 'resize' );
 
     map.current = newMap;
+
+    setMapLoaded( true );
   }, [] );
 
   // initialize searchBox
@@ -104,7 +107,7 @@ const Map = ( props ) => {
     if ( map.current ) {
       map.current.setCenter( getCenterFromMarkers( markers ) );
     }
-  }, [ markers, pinMarkup ] );
+  }, [ markers, pinMarkup, mapLoaded ] );
 
   const mapStyles = useMemo( () => {
     const shouldHaveCustomStyles = styleSlug !== 'original' && styleData.length !== 0;
