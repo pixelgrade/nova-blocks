@@ -89,7 +89,9 @@ class Header extends HeaderBase {
     } );
 
     this.paddingTopTargets.forEach( target => {
-      target.style.paddingTop = `${ paddingTopCarry + this.getHeight() }px`
+      const value = `${ paddingTopCarry + this.getHeight() }px`;
+      target.style.setProperty( '--nb-header-neighbour-padding-top', value );
+      target.style.paddingTop = value;
     } );
   }
 

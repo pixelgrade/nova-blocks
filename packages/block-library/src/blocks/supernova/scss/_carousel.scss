@@ -131,7 +131,7 @@ $slick-arrow-background-opacity-hover: 0.6 !default;
   }
 
   .slick-slide {
-    .mb-collection__layout-item {
+    .nb-collection__layout-item {
       display: block !important;
     }
   }
@@ -340,7 +340,7 @@ $slick-arrow-background-opacity-hover: 0.6 !default;
 .nb-supernova--card-layout-stacked.nb-supernova--1-columns.alignfull {
 
   &.nb-supernova--show-pagination .nb-collection__layout--carousel .nb-supernova-item__inner-container {
-    margin-bottom: calc(2 * var(--nb-spacing) + var(--current-font-size) * var(--current-line-height));
+    --nb-supernova-item-carousel-padding-bottom: calc(2 * var(--nb-spacing) + var(--current-font-size) * var(--current-line-height));
   }
 
   .nb-collection__layout--carousel {
