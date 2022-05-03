@@ -18,3 +18,34 @@
 .novablocks-map__map {
 	@include cover;
 }
+
+.novablocks-gmap__marker {
+  position: absolute;
+  top: 0;
+  left: 0;
+  transform: translate(-50%, -100%);
+
+  svg {
+    display: block;
+  }
+}
+
+.novablocks-gamp__marker-label {
+  position: absolute;
+  top: 0;
+  left: 0;
+
+  display: flex;
+  align-items: center;
+  min-height: 50px;
+  padding: 0.3em 0.7em 0.2em calc(62px + 0.3em);
+
+  white-space: nowrap;
+
+  background: #FFFFFF;
+  border-radius: 999em;
+}
+
+.novablocks-gamp__marker-icon {
+  position: relative;
+}

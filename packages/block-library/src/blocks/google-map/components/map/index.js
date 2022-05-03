@@ -4,23 +4,28 @@ import { Placeholder } from '@wordpress/components';
 
 import { useDidUpdateEffect, useSettings } from '@novablocks/block-editor';
 
+import { MarkersList } from "../index";
+
 import {
+  addVisibilityToStyles,
+  createHtmlMapMarker,
+  getMarkerLatLng,
+  getMarkerMarkup,
   getCenterFromMarkers,
   getMarkersCenter,
   getMapAccentColor,
-  addVisibilityToStyles
-} from './utils';
-
-import styles from './styles';
-import defaultMapCenter from './default-map-center';
-import pin from './pin';
+  pin,
+  styles,
+  DEFAULT_MAP_CENTER,
+  DEFAULT_PIN_COLOR
+} from '../../utils';
 
 const Map = ( props ) => {
   const { attributes, setAttributes, isSelected, clientId } = props;
-  const { markers, styleData, styleSlug, showControls, showLabels, showIcons, zoom } = attributes;
+  const { markers, styleData, styleSlug, showControls, showMarkerLabels, showLabels, showIcons, zoom } = attributes;
   const settings = useSettings();
-  const accentColor = useMemo( () => settings?.map?.accentColor ?? '#222222', [ settings ] );
-  const pinColor = useMemo( () => styleSlug === 'customized' ? accentColor : '#222222', [ styleSlug ] );
+  const accentColor = useMemo( () => settings?.map?.accentColor ?? DEFAULT_PIN_COLOR, [ settings ] );
+  const pinColor = useMemo( () => styleSlug === 'customized' ? accentColor : DEFAULT_PIN_COLOR, [ styleSlug ] );
   const pinMarkup = useMemo( () => pin.replace( '%ACCENT_COLOR%', pinColor ), [ pinColor ] );
   const [ mapLoaded, setMapLoaded ] = useState( false );
 
@@ -34,7 +39,7 @@ const Map = ( props ) => {
   useEffect( () => {
     const newMap = new google.maps.Map( mapContainerRef.current, {
       mapTypeId: 'roadmap',
-      center: defaultMapCenter,
+      center: DEFAULT_MAP_CENTER,
       zoom: zoom,
       styles: mapStyles,
       clickableIcons: false,
@@ -63,15 +68,13 @@ const Map = ( props ) => {
       searchBox.current.setBounds( map.current.getBounds() );
     } );
 
-    // Listen for the event fired when the user selects a prediction and retrieve
-    // more details for that place.
-    searchBox.current.addListener( 'places_changed', onPlacesChanged );
-  }, [] );
+  }, [ onPlacesChanged ] );
 
   const onPlacesChanged = useCallback( () => {
     const places = searchBox.current.getPlaces();
     const keepProps = [ 'name', 'geometry' ];
-    const markers = places.map( place => {
+
+    const newMarkers = places.map( place => {
       return Object.keys( place )
                    .filter( key => keepProps.includes( key ) )
                    .reduce( ( obj, key ) => {
@@ -80,11 +83,45 @@ const Map = ( props ) => {
                    }, {} );
     } );
 
-    setAttributes( { markers } );
+    setAttributes( { markers: [ ...markers, ...newMarkers ] } );
+  }, [ markers ] );
+
+  const fitBounds = useCallback( () => {
+
+    if ( mapMarkers.current.length < 1 ) {
+      return;
+    }
+
+    if ( mapMarkers.current.length === 1 ) {
+      map.current.setCenter( mapMarkers.current[0].latlng );
+      return;
+    }
+
+    var bounds = new google.maps.LatLngBounds();
+    mapMarkers.current.forEach( marker => {
+      bounds.extend( marker.latlng );
+    } )
+
+    map.current.fitBounds( bounds, { top: 75 } );
+    setAttributes( { zoom: map.current.getZoom() } );
   }, [] );
 
-  useMemo( () => {
-    mapMarkers.current.forEach( marker => { marker.setMap( null ) } );
+  useEffect( () => {
+    // Listen for the event fired when the user selects a prediction and retrieve
+    // more details for that place.
+    const listener = searchBox.current.addListener( 'places_changed', onPlacesChanged );
+
+    return () => {
+      google.maps.event.removeListener( listener );
+    }
+  }, [ onPlacesChanged ] );
+
+  useEffect( () => {
+
+    mapMarkers.current.forEach( marker => {
+      marker.remove();
+      marker.setMap( null );
+    } );
     mapMarkers.current = [];
 
     markers.forEach( marker => {
@@ -93,21 +130,20 @@ const Map = ( props ) => {
         return;
       }
 
-      const newMarker = new google.maps.Marker( {
-        icon: { url: 'data:image/svg+xml;charset=UTF-8,' + encodeURIComponent( pinMarkup ) },
-        title: marker.name,
-        position: marker.geometry.location
-      } );
+      const latlng = getMarkerLatLng( marker );
+      const html = getMarkerMarkup( marker, { showMarkerLabels, styleSlug }, accentColor );
+      const htmlMarker = createHtmlMapMarker( latlng, html );
 
-      newMarker.setMap( map.current );
-      mapMarkers.current.push( newMarker );
+      htmlMarker.setMap( map.current );
+
+      mapMarkers.current.push( htmlMarker );
 
     } );
 
     if ( map.current ) {
-      map.current.setCenter( getCenterFromMarkers( markers ) );
+      fitBounds();
     }
-  }, [ markers, pinMarkup, mapLoaded ] );
+  }, [ showMarkerLabels, markers, accentColor, mapLoaded ] );
 
   const mapStyles = useMemo( () => {
     const shouldHaveCustomStyles = styleSlug !== 'original' && styleData.length !== 0;

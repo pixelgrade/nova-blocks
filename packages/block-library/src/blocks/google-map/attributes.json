@@ -10,9 +10,9 @@
 			"type": "object"
 		}
 	},
-	"pinColor": {
-		"type": "string",
-		"default": "#222222"
+	"showMarkerLabels": {
+		"type": "boolean",
+		"default": false
 	},
 	"showControls": {
 		"type": "boolean",

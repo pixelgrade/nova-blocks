@@ -2,32 +2,13 @@ import classnames from 'classnames';
 
 import { __ } from '@wordpress/i18n';
 import { models, loadPromise } from '@wordpress/api';
-
-import {
-  Component,
-  Fragment,
-  useCallback,
-  useEffect,
-  useMemo,
-  useRef,
-  useState,
-} from '@wordpress/element';
-
+import { useBlockProps } from '@wordpress/block-editor';
 import { Spinner } from '@wordpress/components';
-
-import {
-  BlockAlignmentToolbar,
-  BlockControls,
-  useBlockProps,
-} from '@wordpress/block-editor';
-
-import { createHigherOrderComponent } from '@wordpress/compose';
+import { Fragment, useCallback, useEffect, useMemo, useRef, useState } from '@wordpress/element';
 
 import { useDidUpdateEffect } from '@novablocks/block-editor';
 
-import MapPlaceholder from './placeholder';
-import Map from './map';
-import InspectorControls from './inspector-controls';
+import { BlockControls, InspectorControls, Map, MapPlaceholder, withControlsVisibility } from './components';
 
 const API_KEY_SETTING_ID = 'novablocks_google_maps_api_key';
 
@@ -166,7 +147,7 @@ const Edit = props => {
 
   return (
     <Fragment>
-      <MapBlockControls { ...props } />
+      <BlockControls { ...props } />
       {
         showInspectorControls &&
         <InspectorControls
@@ -190,37 +171,6 @@ const Edit = props => {
     </Fragment>
   );
 
-}
-
-const MapBlockControls = props => {
-  const { attributes, setAttributes } = props;
-  return (
-    <BlockControls>
-      <BlockAlignmentToolbar
-        value={ attributes.align }
-        onChange={ align => setAttributes( { align } ) }
-        controls={ [ 'wide', 'full' ] }
-      />
-    </BlockControls>
-  )
-}
-
-const withControlsVisibility = Component => {
-
-  return ( props ) => {
-
-    const { setControlsVisibility } = props;
-
-    useEffect( () => {
-      setControlsVisibility( {
-        'start-frame-panel': false,
-      } );
-    }, [] );
-
-    return (
-      <Component { ...props } />
-    )
-  }
 }
 
 export default withControlsVisibility( Edit );

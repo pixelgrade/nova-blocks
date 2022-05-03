@@ -4,8 +4,7 @@ import { Component, useCallback, useMemo, useState } from '@wordpress/element';
 
 import { ImageSelectControl } from "@novablocks/block-editor";
 
-import { compileStyles, getCenterFromMarkers, getMarkersCenter } from "./utils";
-import defaultMapCenter from './default-map-center';
+import { compileStyles, DEFAULT_MAP_CENTER, getCenterFromMarkers, getMarkersCenter } from "../../utils";
 
 const MapStyleSelect = props => {
   const { attributes, apiKey, options, selected } = props;
@@ -15,7 +14,7 @@ const MapStyleSelect = props => {
     if ( Array.isArray( markers ) && markers.length ) {
       return getCenterFromMarkers( markers );
     }
-    return new google.maps.LatLng( defaultMapCenter );
+    return new google.maps.LatLng( DEFAULT_MAP_CENTER );
   }, [ markers ] );
   const getStaticStyle = useCallback( option => {
     const result = [];

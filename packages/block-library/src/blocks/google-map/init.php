@@ -64,6 +64,7 @@ if ( ! function_exists( 'novablocks_render_google_map_block' ) ) {
 		$data_attributes_array = array_map( 'novablocks_camel_case_to_kebab_case', array_keys( $attributes ) );
 
 		$map_attributes = [
+			'show-marker-labels',
 			'show-controls',
 			'show-icons',
 			'show-labels',

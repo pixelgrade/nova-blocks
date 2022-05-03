@@ -1,90 +1,92 @@
-import pin from "./pin";
-import { addVisibilityToStyles, getCenterFromMarkers } from "./utils";
+import domReady from "@wordpress/dom-ready";
 
-(function( $, window, undefined ) {
+import {
+  addVisibilityToStyles,
+  createHtmlMapMarker,
+  getCenterFromMarkers,
+  getMarkerLatLng,
+  getMarkerMarkup,
+  pin
+} from "./utils";
 
-	mapInit();
+domReady( () => {
 
-	function mapInit() {
+  if ( !window?.google?.maps ) {
+    return;
+  }
 
-		if ( ! window?.google?.maps ) {
-			return;
-		}
+  const mapsElements = Array.from( document.querySelectorAll( '.js-novablocks-google-map' ) );
 
-    $( '.js-novablocks-google-map' ).each( function( i, obj ) {
+  mapsElements.forEach( mapElement => {
 
-      const $obj = $( obj );
-      const accentColor = $obj.data( 'accent-color' );
-      const markers = $obj.data( 'markers' );
-      const showLabels = $obj.data( 'show-labels' );
-      const showIcons = $obj.data( 'show-icons' );
-      const styles = $obj.data( 'style-data' );
+    const {
+      accentColor,
+      showControls,
+      styleData
+    } = mapElement.dataset;
 
-      console.log( styles );
-      const stylesWithColor = addColorToStyles( styles, accentColor );
-      const zoom = $obj.data( 'zoom' );
-      const hideControls = !$obj.data( 'controls' );
-      const mapOptions = {
-        mapTypeId: 'roadmap',
-        center: getCenterFromMarkers( markers ),
-        zoom: zoom,
-        styles: addVisibilityToStyles( stylesWithColor, showLabels, showIcons ),
-        disableDefaultUI: hideControls,
-        clickableIcons: false,
-        keyboardShortcuts: false,
-      };
-      const map = new google.maps.Map( obj, mapOptions );
+    const markers = JSON.parse( mapElement.dataset.markers );
+    const zoom = parseInt( mapElement.dataset.zoom, 10 );
 
-      const pinMarkup = pin.replace( /%ACCENT_COLOR%/g, accentColor );
-      const mapMarkers = markers.map( marker => {
+    const mapOptions = {
+      mapTypeId: 'roadmap',
+      center: getCenterFromMarkers( markers ),
+      zoom: zoom,
+      styles: getCompiledStyles( styleData, mapElement.dataset, accentColor ),
+      disableDefaultUI: !showControls,
+      clickableIcons: false,
+      keyboardShortcuts: false,
+    };
 
-        return new google.maps.Marker( {
-          map: map,
-          icon: {url: 'data:image/svg+xml;charset=UTF-8,' + encodeURIComponent( pinMarkup )},
-          title: marker.title,
-          position: marker.geometry.location,
-        } );
-      } );
+    const map = new google.maps.Map( mapElement, mapOptions );
 
-      $obj.data( 'map', map );
-      $obj.data( 'mapMarkers', mapMarkers );
+    mapElement.dataset.map = map;
+    mapElement.dataset.mapMarkers = createMapMarkers( markers, map, mapElement.dataset, accentColor );
+  } );
 
-    } );
+  const api = window?.parent?.wp?.customize;
 
-		const api = window?.parent?.wp?.customize;
+  if ( !!api ) {
 
-		if ( !! api ) {
+    api( 'sm_color_primary', ( setting ) => {
+      setting.bind( new_value => {
 
-			api( 'sm_color_primary', ( setting ) => {
-			  setting.bind( new_value => {
-          $( '.js-novablocks-google-map' ).each( function( i, obj ) {
-            const $obj = $( obj );
-            const map = $obj.data( 'map' );
-            const mapMarkers = $obj.data( 'mapMarkers' );
-            const styles = $obj.data( 'styles' );
-            const stylesWithColor = addColorToStyles( styles, new_value );
+        mapElements.forEach( mapElement => {
+          const { styleData, markers, map, mapMarkers } = mapElement.dataset;
 
-            const showLabels = $obj.data( 'show-labels' );
-            const showIcons = $obj.data( 'show-icons' );
-            const pinMarkup = pin.replace( /%ACCENT_COLOR%/g, new_value );
+          map.setOptions( { styles: getCompiledStyles( styleData, mapElement.dataset, new_value ) } );
 
-            map.setOptions( {
-              styles: addVisibilityToStyles( stylesWithColor, showLabels, showIcons ),
-            } );
-
-            mapMarkers.forEach( mapMarker => {
-              mapMarker.setOptions( {
-                icon: { url: 'data:image/svg+xml;charset=UTF-8,' + encodeURIComponent( pinMarkup ) },
-              } );
-            } )
+          mapMarkers.forEach( mapMarker => {
+            mapMarker.remove();
+            mapMarker.setMap( null );
           } );
+
+          mapElement.dataset.mapMarkers = createMapMarkers( markers, map, mapElement.dataset, new_value );
         } );
       } );
-		}
-	}
+    } );
+  }
+} );
 
-	function addColorToStyles( styleData, color ) {
-		return JSON.parse( JSON.stringify( styleData ).replace( /%ACCENT_COLOR%/g, color ) )
-	}
+function getCompiledStyles( styleData, attributes, accentColor ) {
+  const { showLabels, showIcons } = attributes;
+  const stylesWithColor = addColorToStyles( styleData, accentColor );
+  return addVisibilityToStyles( stylesWithColor, showLabels, showIcons );
+}
 
-})( jQuery, window );
+function createMapMarkers( markers, map, attributes, accentColor ) {
+  const { showMarkerLabels, styleSlug } = attributes;
+
+  return markers.map( marker => {
+    const latlng = getMarkerLatLng( marker );
+    const html = getMarkerMarkup( marker, { showMarkerLabels, styleSlug }, accentColor );
+    console.log( html );
+    const htmlMarker = createHtmlMapMarker( latlng, html );
+    htmlMarker.setMap( map );
+    return htmlMarker;
+  } );
+}
+
+function addColorToStyles( styleData, color ) {
+  return JSON.parse( JSON.stringify( styleData ).replace( /%ACCENT_COLOR%/g, color ) )
+}
