@@ -28,6 +28,7 @@ const withPreviewAttributes = BlockEdit => {
       }
 
       props.setAttribtues( attributes );
+
     }, [ attributes ] );
 
     const newAttributes = useMemo( () => getPreviewAttributes( attributes ), [ attributes ] );
