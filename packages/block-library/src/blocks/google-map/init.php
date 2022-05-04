@@ -69,6 +69,7 @@ if ( ! function_exists( 'novablocks_render_google_map_block' ) ) {
 			'show-icons',
 			'show-labels',
 			'style-data',
+			'style-slug',
 			'markers',
 			'zoom',
 		];

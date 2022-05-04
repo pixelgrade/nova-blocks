@@ -4,7 +4,7 @@ import { Component, useCallback, useMemo, useState } from '@wordpress/element';
 
 import { ImageSelectControl } from "@novablocks/block-editor";
 
-import { compileStyles, DEFAULT_MAP_CENTER, getCenterFromMarkers, getMarkersCenter } from "../../utils";
+import { compileStyles, DEFAULT_MAP_CENTER, getCenterFromMarkers } from "../../utils";
 
 const MapStyleSelect = props => {
   const { attributes, apiKey, options, selected } = props;

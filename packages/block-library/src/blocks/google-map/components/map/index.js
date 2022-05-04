@@ -9,15 +9,16 @@ import { MarkersList } from "../index";
 import {
   addVisibilityToStyles,
   createHtmlMapMarker,
+  getCompiledStyles,
   getMarkerLatLng,
   getMarkerMarkup,
+  getMarkersBounds,
   getCenterFromMarkers,
-  getMarkersCenter,
   getMapAccentColor,
   pin,
   styles,
   DEFAULT_MAP_CENTER,
-  DEFAULT_PIN_COLOR
+  DEFAULT_PIN_COLOR,
 } from '../../utils';
 
 const Map = ( props ) => {
@@ -97,14 +98,14 @@ const Map = ( props ) => {
       return;
     }
 
-    var bounds = new google.maps.LatLngBounds();
+    const bounds = new google.maps.LatLngBounds();
     mapMarkers.current.forEach( marker => {
       bounds.extend( marker.latlng );
     } )
 
     map.current.fitBounds( bounds, { top: 75 } );
     setAttributes( { zoom: map.current.getZoom() } );
-  }, [] );
+  }, [ markers ] );
 
   useEffect( () => {
     // Listen for the event fired when the user selects a prediction and retrieve
@@ -146,14 +147,8 @@ const Map = ( props ) => {
   }, [ showMarkerLabels, markers, accentColor, mapLoaded ] );
 
   const mapStyles = useMemo( () => {
-    const shouldHaveCustomStyles = styleSlug !== 'original' && styleData.length !== 0;
-    const selectedStyles = styles.find( style => style.slug === styleSlug );
-    const styleDataBySlug = selectedStyles ? selectedStyles.styles : {};
-    const data = shouldHaveCustomStyles && styleDataBySlug || styleData;
-    const replacedData = JSON.parse( JSON.stringify( data ).replace( /%ACCENT_COLOR%/g, pinColor ) );
-
-    return addVisibilityToStyles( replacedData, showLabels, showIcons );
-  }, [ styleData, showLabels, showIcons, styleSlug ] );
+    return getCompiledStyles( attributes, pinColor );
+  }, [ attributes, pinColor ] );
 
   useEffect( () => {
     map.current.setOptions( {

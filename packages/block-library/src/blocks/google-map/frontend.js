@@ -4,9 +4,12 @@ import {
   addVisibilityToStyles,
   createHtmlMapMarker,
   getCenterFromMarkers,
+  getCompiledStyles,
   getMarkerLatLng,
   getMarkerMarkup,
-  pin
+  getMarkersBounds,
+  pin,
+  styles
 } from "./utils";
 
 domReady( () => {
@@ -18,21 +21,14 @@ domReady( () => {
   const mapsElements = Array.from( document.querySelectorAll( '.js-novablocks-google-map' ) );
 
   mapsElements.forEach( mapElement => {
-
-    const {
-      accentColor,
-      showControls,
-      styleData
-    } = mapElement.dataset;
-
-    const markers = JSON.parse( mapElement.dataset.markers );
-    const zoom = parseInt( mapElement.dataset.zoom, 10 );
+    const attributes = getAttributes( mapElement );
+    const { accentColor, showControls, markers, zoom } = attributes;
 
     const mapOptions = {
       mapTypeId: 'roadmap',
       center: getCenterFromMarkers( markers ),
       zoom: zoom,
-      styles: getCompiledStyles( styleData, mapElement.dataset, accentColor ),
+      styles: getCompiledStyles( attributes, accentColor ),
       disableDefaultUI: !showControls,
       clickableIcons: false,
       keyboardShortcuts: false,
@@ -40,8 +36,12 @@ domReady( () => {
 
     const map = new google.maps.Map( mapElement, mapOptions );
 
+    google.maps.event.addListenerOnce( map, 'idle', () => {
+      map.fitBounds( map.getBounds(), { top: 75, right: 100 } );
+    } );
+
     mapElement.dataset.map = map;
-    mapElement.dataset.mapMarkers = createMapMarkers( markers, map, mapElement.dataset, accentColor );
+    mapElement.dataset.mapMarkers = createMapMarkers( markers, map, attributes, accentColor );
   } );
 
   const api = window?.parent?.wp?.customize;
@@ -52,26 +52,35 @@ domReady( () => {
       setting.bind( new_value => {
 
         mapElements.forEach( mapElement => {
-          const { styleData, markers, map, mapMarkers } = mapElement.dataset;
+          const attributes = getAttributes( mapElement );
+          const { styleData, markers, map, mapMarkers } = attributes;
 
-          map.setOptions( { styles: getCompiledStyles( styleData, mapElement.dataset, new_value ) } );
+          map.setOptions( { styles: getCompiledStyles( attributes, new_value ) } );
 
           mapMarkers.forEach( mapMarker => {
             mapMarker.remove();
             mapMarker.setMap( null );
           } );
 
-          mapElement.dataset.mapMarkers = createMapMarkers( markers, map, mapElement.dataset, new_value );
+          mapElement.dataset.mapMarkers = createMapMarkers( markers, map, attributes, new_value );
         } );
       } );
     } );
   }
 } );
 
-function getCompiledStyles( styleData, attributes, accentColor ) {
-  const { showLabels, showIcons } = attributes;
-  const stylesWithColor = addColorToStyles( styleData, accentColor );
-  return addVisibilityToStyles( stylesWithColor, showLabels, showIcons );
+function getAttributes( element ) {
+  const attributes = {};
+
+  Object.keys( element.dataset ).forEach( key => {
+    try {
+      attributes[ key ] = JSON.parse( element.dataset[ key ] );
+    } catch (e) {
+      attributes[ key ] = element.dataset[ key ];
+    }
+  } );
+
+  return attributes;
 }
 
 function createMapMarkers( markers, map, attributes, accentColor ) {
@@ -80,7 +89,6 @@ function createMapMarkers( markers, map, attributes, accentColor ) {
   return markers.map( marker => {
     const latlng = getMarkerLatLng( marker );
     const html = getMarkerMarkup( marker, { showMarkerLabels, styleSlug }, accentColor );
-    console.log( html );
     const htmlMarker = createHtmlMapMarker( latlng, html );
     htmlMarker.setMap( map );
     return htmlMarker;

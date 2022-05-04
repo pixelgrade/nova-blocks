@@ -75,9 +75,16 @@ export const getCenterFromMarkers = ( markers ) => {
   return bounds.getCenter();
 };
 
-export const getMarkersCenter = () => {
-  return getCenterFromMarkers( this.props.attributes.markers );
-};
+export const getMarkersBounds = ( makers ) => {
+  const bounds = new google.maps.LatLngBounds();
+
+  makers.forEach( marker => {
+    const latlng = getMarkerLatLng( marker )
+    bounds.extend( latlng );
+  } );
+
+  return bounds;
+}
 
 export const DEFAULT_PIN_COLOR = '#222222';
 
@@ -98,6 +105,18 @@ export const getMarkerMarkup = ( marker, attributes, accentColor = DEFAULT_PIN_C
           ${ labelMarkup }
           <div class="novablocks-gamp__marker-icon">${ pinMarkup }</div>
         </div>`
+}
+
+export const getCompiledStyles = ( attributes, accentColor ) => {
+  const { showLabels, showIcons, styleData, styleSlug } = attributes;
+
+  const shouldHaveCustomStyles = styleSlug !== 'original' && styleData.length !== 0;
+  const selectedStyles = styles.find( style => style.slug === styleSlug );
+  const styleDataBySlug = selectedStyles ? selectedStyles.styles : {};
+  const data = shouldHaveCustomStyles && styleDataBySlug || styleData;
+  const replacedData = JSON.parse( JSON.stringify( data ).replace( /%ACCENT_COLOR%/g, accentColor ) );
+
+  return addVisibilityToStyles( replacedData, showLabels, showIcons );
 }
 
 export {
