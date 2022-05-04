@@ -77,7 +77,11 @@ export const getSignalRelativeToVariation = ( compared, reference, paletteId ) =
   }, 0 );
 
   const palette = getPaletteConfig( paletteId );
-  const colors = palette?.variations?.map( variation => variation.bg ) || palette.colors;
+  let colors = palette.colors;
+
+  if ( Array.isArray( palette?.variations ) ) {
+      colors = palette.variations.map( variation => variation.bg );
+  }
 
   // try to use signal 0 only when compared and reference are equal
   return colors[ compared - 1 ] === colors[ reference - 1 ] ? 0 : Math.max(1, signal );
