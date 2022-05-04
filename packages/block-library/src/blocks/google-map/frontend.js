@@ -36,10 +36,6 @@ domReady( () => {
 
     const map = new google.maps.Map( mapElement, mapOptions );
 
-    google.maps.event.addListenerOnce( map, 'idle', () => {
-      map.fitBounds( map.getBounds(), { top: 75, right: 100 } );
-    } );
-
     mapElement.dataset.map = map;
     mapElement.dataset.mapMarkers = createMapMarkers( markers, map, attributes, accentColor );
   } );
