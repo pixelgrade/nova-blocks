@@ -106,13 +106,17 @@
     animation: reading-bar-show-overflow 0s linear var(--nb-transition-duration) forwards;
   }
 
-  .c-reading-bar {
+  .c-reading-bar__container {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+
     transition: 0.5s ease;
     transition-property: transform;
     will-change: transform;
-  }
 
-  .c-reading-bar {
     transform: translateY(-100%);
     pointer-events: none;
   }
@@ -123,12 +127,12 @@
       animation: none;
     }
 
-    .c-reading-bar {
+    .c-reading-bar__container {
       transform: translateY(0);
       pointer-events: auto;
     }
 
-    .nb-header-row {
+    .nb-header-row:not(.nb-header-row--reading) {
       transform: translateY(100%);
       pointer-events: none;
     }

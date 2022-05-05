@@ -94,21 +94,23 @@ if ( ! function_exists('render_reading_bar') ) {
 
 		ob_start(); ?>
 		<!--Reading Bar-->
-		<div class="c-reading-bar js-reading-bar">
-			<div class="c-reading-bar__layer c-reading-bar__layer--current">
-				<div class="c-reading-bar__layer-wrapper">
-					<div class="c-reading-bar__wrapper-menu-trigger"><?php echo $menu_trigger; ?></div>
-					<?php echo $current_post_title; ?>
-					<div class="c-reading-bar__wrapper-social"><?php echo $social_trigger; ?></div>
+		<div class="c-reading-bar  nb-header-row  nb-header-row--reading  js-reading-bar">
+			<div class="c-reading-bar__container  nb-header-background">
+				<div class="c-reading-bar__layer c-reading-bar__layer--current">
+					<div class="c-reading-bar__layer-wrapper">
+						<div class="c-reading-bar__wrapper-menu-trigger"><?php echo $menu_trigger; ?></div>
+						<?php echo $current_post_title; ?>
+						<div class="c-reading-bar__wrapper-social"><?php echo $social_trigger; ?></div>
+					</div>
 				</div>
-			</div>
-			<?php if ( $next_post_title ) { ?>
-			<div class="c-reading-bar__layer c-reading-bar__layer--next sm-color-signal-2 sm-palette-1 sm-variation-1 sm-palette--shifted">
-				<div class="c-reading-bar__layer-wrapper">
-					<?php echo $next_post_title; ?>
+				<?php if ( $next_post_title ) { ?>
+				<div class="c-reading-bar__layer c-reading-bar__layer--next sm-color-signal-2 sm-palette-1 sm-variation-1 sm-palette--shifted">
+					<div class="c-reading-bar__layer-wrapper">
+						<?php echo $next_post_title; ?>
+					</div>
 				</div>
+				<?php } ?>
 			</div>
-			<?php } ?>
 		</div><!-- .c-reading-bar -->
 
 		<!--Reading Progress Bar-->
