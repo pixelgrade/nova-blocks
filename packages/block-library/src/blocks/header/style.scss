@@ -38,18 +38,26 @@
         transform .5s ease;
     }
 
-    &:is(.is-sticky, .nb-header--secondary) .nb-header-row {
+    &:is(.nb-header--sticky, .nb-header--secondary) .nb-header-row {
       --nb-header-vertical-spacing-multiplier: var(--nb-sticky-header-spacing-multiplier, 1);
+    }
+  }
+}
+
+// Hide all header and header-row backgrounds when Header is *transparent*
+@include above(lap) {
+
+  .nb-header--transparent {
+    --header-background-opacity: 0;
+
+    &.nb-header--sticky .nb-header-row {
+      --header-background-opacity: 0.95;
     }
   }
 }
 
 :is(.nb-header, .nb-header--mobile, #more.specific) {
   --nb-block-top-spacing: 0;
-}
-
-.nb-header--sticky[class] {
-  --header-background-opacity: 0.95;
 }
 
 .nb-header--mobile {
@@ -108,25 +116,14 @@
   --header-background-opacity: 0;
 }
 
-// Hide all header and header-row backgrounds when Header is *transparent*
-.nb-header.nb-header--transparent:not(.nb-header--sticky) {
-
-  @include above(lap) {
-    --header-background-opacity: 0;
-  }
-}
-
 .nb-header--mobile {
 
   &.nb-header--transparent {
+    --header-background-opacity: 0;
 
-    &:before {
-      --header-background-opacity: 0;
+    &.nb-header--sticky {
+      --header-background-opacity: 0.95;
     }
-  }
-
-  &:not(.nb-header--transparent) {
-    --header-background-opacity: 0.95;
   }
 }
 

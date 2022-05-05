@@ -58,7 +58,7 @@ class HeaderBase {
   applyStickyStyles( element, scrollY ) {
     const target = element ?? this.element;
 
-    toggleClass( element, 'is-sticky', this.shouldBeSticky );
+    toggleClass( element, 'nb-header--sticky', this.shouldBeSticky );
 
     if ( this.shouldBeSticky ) {
       target.style.position = 'fixed';

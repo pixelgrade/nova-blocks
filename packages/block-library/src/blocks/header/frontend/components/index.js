@@ -254,7 +254,6 @@ class Header extends HeaderBase {
 
     if ( this.isSticky && above( 'lap' ) ) {
       HeaderBase.prototype.applyStickyStyles.call( this, element, scrollY );
-      toggleClass( this.element, 'nb-header--transparent', !this.shouldBeSticky );
       this.toggleRowsColors( !this.shouldBeSticky );
     }
   }

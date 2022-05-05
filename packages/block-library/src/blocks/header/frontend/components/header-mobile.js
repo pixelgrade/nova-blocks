@@ -45,6 +45,7 @@ class HeaderMobile extends HeaderBase {
     this.element = document.createElement( 'div' );
     this.element.setAttribute( 'class', 'nb-header--mobile nb-header-background nb-header-shadow' );
     this.element.setAttribute( 'style', this.parent.element.getAttribute( 'style' ) );
+    addClass( this.element, 'nb-header--transparent' );
     this.copyElementFromParent( '.c-branding' );
     this.copyElementFromParent( '.menu-item--cart' );
     this.menuToggle.element.insertAdjacentElement( 'afterend', this.element );

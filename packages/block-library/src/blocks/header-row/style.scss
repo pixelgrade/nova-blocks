@@ -92,11 +92,6 @@
     > :last-child:not(:first-child) {
       --justify-content: flex-end;
     }
-
-    .nb-header--sticky & {
-      --emphasis-top-spacing: 0.25;
-      --emphasis-bottom-spacing: 0.25;
-    }
     
     > [class*='branding'] {
       
