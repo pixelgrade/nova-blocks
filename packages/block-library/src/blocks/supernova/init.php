@@ -56,15 +56,18 @@ if ( ! function_exists( 'novablocks_render_supernova_block' ) ) {
 		}
 
 		$data_attributes_array = array_map( 'novablocks_camel_case_to_kebab_case', array_keys( $attributes ) );
-		$blacklist             = [ 'position-indicators' ];
 
-		if ( $attributes['columns'] === 1 &&
-		     $attributes['cardLayout'] === 'stacked' &&
-		     $attributes['layoutStyle'] === 'carousel' ) {
-			$blacklist = [];
+		$data_attributes = novablocks_get_data_attributes( $data_attributes_array, $attributes );
+
+		if (
+			$attributes['columns'] === 1 &&
+			$attributes['cardLayout'] === 'stacked' &&
+			$attributes['layoutStyle'] === 'carousel'
+		) {
+			if ( get_post_meta( get_the_ID(), 'novablocks_hero_position_indicators', true ) ) {
+				$data_attributes[] = 'data-position-indicators="1"';
+			}
 		}
-
-		$data_attributes = novablocks_get_data_attributes( $data_attributes_array, $attributes, $blacklist );
 
 		$align = preg_split( '/\b\s+/', $attributes['contentPosition'] );
 

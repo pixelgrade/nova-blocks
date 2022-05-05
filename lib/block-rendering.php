@@ -1314,14 +1314,15 @@ function novablocks_get_collection_card_markup( string $media, string $content, 
 		'use-source-color-as-reference',
 	];
 
-	if ( $attributes['columns'] === 1 &&
-	     ! empty( $attributes['cardLayout'] ) && $attributes['cardLayout'] === 'stacked' &&
-	     $attributes['layoutStyle'] !== 'carousel' ) {
-
-		$data_attributes_array[] = 'position-indicators';
-	}
-
 	$data_attributes = novablocks_get_data_attributes( $data_attributes_array, $attributes );
+
+	if ( $attributes['columns'] === 1 &&
+		 $attributes['cardLayout'] === 'stacked' &&
+		 $attributes['layoutStyle'] !== 'carousel' ) {
+		if ( get_post_meta( get_the_ID(), 'novablocks_hero_position_indicators', true ) ) {
+			$data_attributes[] = 'data-position-indicators="1"';
+		}
+	}
 
 	ob_start(); ?>
 

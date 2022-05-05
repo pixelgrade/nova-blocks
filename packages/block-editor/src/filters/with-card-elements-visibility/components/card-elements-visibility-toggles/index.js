@@ -72,9 +72,10 @@ const CardElementsVisibilityToggles = ( props ) => {
     <ToggleGroup
       onChange={ setAttributes }
       toggles={ blockToggles.map( toggle => {
+        const value = 'meta' === toggle.type ? meta[ toggle.attribute ] : attributes[ toggle.attribute ];
         return {
           ...toggle,
-          value: attributes[ toggle.attribute ],
+          value: value,
           onChange: ( newValue ) => {
             if ( 'meta' === toggle.type && !! postType ) {
               setMeta( { ...meta, [toggle.attribute]: newValue } )

@@ -20,8 +20,8 @@ const SCROLL_BUTTON_HIDDEN_CLASS = 'nb-scroll-indicator--hidden';
     const isMiddle = $scrollButton.hasClass( '.nb-scroll-indicator--middle' );
     const heroBox = $hero.get( 0 ).getBoundingClientRect();
 
-    $scrollButton.data( 'is-middle', isMiddle );
-    $scrollButton.data( 'hero-box', heroBox );
+    obj.dataset.isMiddle = isMiddle;
+    obj.dataset.heroBox = JSON.stringify( heroBox );
 
     $scrollButton.on( 'click', function() {
       const heroBoxTop = heroBox.y || heroBox.top;
@@ -47,13 +47,13 @@ const SCROLL_BUTTON_HIDDEN_CLASS = 'nb-scroll-indicator--hidden';
 
     $scrollButtons.each( ( i, obj ) => {
       const $scrollButton = $( obj );
-      const heroBox = $scrollButton.data( 'hero-box' );
+      const heroBox = JSON.parse( obj.dataset.heroBox );
 
-      const heroBoxTop = heroBox.y || heroBox.top;
+      const heroBoxTop = heroBox.top;
       const hideScrollButton = scrollY > heroBoxTop + 200;
       const scrollButtonHidden = $scrollButton.data( 'is-hidden' );
 
-      if ( ! $scrollButton.data( 'is-middle' ) ) {
+      if ( ! obj.dataset.isMiddle ) {
         return;
       }
 
