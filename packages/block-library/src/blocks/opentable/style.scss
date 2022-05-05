@@ -28,8 +28,8 @@
 	}
 
 	.picker__day {
-		height: 26px;
-		width: 26px;
+		height: 100%;
+		width: 100%;
 
 		border: 2px solid transparent;
 
@@ -37,11 +37,12 @@
 	}
 
 	.picker__day--selected {
-		border-color: #ccc;
+		border-color: var(--sm-current-accent-color, var(--nb-accent-color));
 	}
 
 	.picker__close {
 		color: var(--sm-current-fg1-color, var(--nb-fg1-color));
+		background: var(--sm-current-bg-color, var(--nb-bg-color));
 
 		&:hover {
 			color: var(--sm-current-fg2-color, var(--nb-fg2-color));
@@ -243,11 +244,12 @@
 		}
 
 		.picker {
-			top: 100%;
+			top: calc(100% - 5px);
 		}
 
 		.picker__holder {
 			left: 0;
+			width: 100%;
 		}
 	}
 }
