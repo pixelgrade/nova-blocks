@@ -150,3 +150,22 @@
     vertical-align: middle;
     margin-left: var(--navigation-item-sub-elements-spacing);
 }
+
+.nb-header-neighbour.nb-supernova--card-layout-stacked.nb-supernova--1-columns.alignfull .nb-supernova-item__media-wrapper:after {
+    content: '';
+
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 1;
+
+    width: 100%;
+    height: 100%;
+
+    background-image: linear-gradient(
+        rgba(0, 0, 0, 0.2) 0,
+        rgba(0, 0, 0, 0.03) calc(2 * var(--nb-header-height, 0px)
+    ), rgba(0, 0, 0, 0) 100%);
+
+  pointer-events: none;
+}

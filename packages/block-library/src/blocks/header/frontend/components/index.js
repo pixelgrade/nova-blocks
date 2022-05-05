@@ -32,6 +32,8 @@ class Header extends HeaderBase {
     this.colorsElement = this.findColorsElement( this.adjacentElementTargetChild );
     this.paddingTopTargets = this.findPaddingTopTargets( this.adjacentElementTargetChild );
 
+    addClass( this.adjacentElementTargetChild, 'nb-header-neighbour' );
+
     this.rows = this.getHeaderRows();
     this.isSimple = [ 'logo-left', 'logo-center' ].includes( element.dataset.layout );
     this.isSticky = this.isSimple && this.rows.find( row => row.element.dataset.isSticky );
@@ -87,6 +89,8 @@ class Header extends HeaderBase {
       element.style.paddingTop = 0;
       element.style.marginTop = 0;
     } );
+
+    this.adjacentElementTargetChild.style.setProperty( '--nb-header-height', `${ this.getHeight() }px` );
 
     this.paddingTopTargets.forEach( target => {
       const value = `${ paddingTopCarry + this.getHeight() }px`;
