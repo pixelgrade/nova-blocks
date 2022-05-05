@@ -111,10 +111,10 @@ if ( ! function_exists('render_reading_bar') ) {
 				</div>
 				<?php } ?>
 			</div>
+			<div class="c-reading-bar__progress  js-reading-progress"></div>
 		</div><!-- .c-reading-bar -->
 
 		<!--Reading Progress Bar-->
-		<div class="c-reading-progress  js-reading-progress"></div>
 		<?php
 
 		return ob_get_clean();

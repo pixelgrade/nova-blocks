@@ -8,6 +8,13 @@ export const initializeReadingBar = ( header ) => {
 
   bindMenuLabelClick( header );
 
+  const firstRow = header.querySelector( '.nb-header-row' );
+  const readingBar = header.querySelector( '.js-reading-bar' );
+
+  if ( firstRow && readingBar ) {
+    firstRow.appendChild( readingBar );
+  }
+
   const progressBar = header.querySelector( '.js-reading-progress' );
   const [ min, max ] = getScrollTriggerBounds();
   let showingReading = false;

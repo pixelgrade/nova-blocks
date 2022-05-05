@@ -9,7 +9,7 @@
 
 // Hide progress bar on small screens
 .c-reading-bar,
-.c-reading-progress {
+.c-reading-bar__progress {
 
   @include below(lap) {
     display: none;
