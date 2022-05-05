@@ -69,7 +69,7 @@
     --header-background-opacity: 0.97;
   }
 
-  .nb-header--main .nb-header-row--logo {
+  .nb-header--main :is(.nb-header-row--logo, .c-branding) {
     display: none !important;
   }
 
