@@ -2,8 +2,8 @@
 Contributors: pixelgrade, vlad.olaru, babbardel, razvanonofrei, gorby31
 Tags: blocks, editor, gutenberg, gutenberg blocks, page builder, block enabled, page building, full site editing, site editor, posts collection
 Requires at least: 5.9
-Tested up to: 5.9.3
-Stable tag: 2.0.0
+Tested up to: 5.9.4
+Stable tag: 2.0.1
 Requires PHP: 7.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -97,13 +97,15 @@ Yes! Nova Block's core features are free to use.
 = 2.0.1 =
 * Ensure blocks full compatibility with other custom post types (e.g. WooCommerce products)
 * Minor improvements and fixes for the integration with the Style Manager plugin and its Color and Fonts Systems
-* Blocks interface improvements and fixes
-* Fixes for the google-map block
+* General blocks interface improvements and fixes
+* Improvements and fixes for the google-map block
 * Improve global spacing styling
 * Improvements and fixes for the carousel styles
+* Improvements and fixes for the header block
 * Improve masonry layouts styling for Cards Collection blocks
 * Fixes for the sharing popup colors
 * Fixes for card button alignment
+* Fixes for the OpenTable block
 * Update blocks interface copy
 * Ensure compatibility with the latest Gutenberg version
 
