@@ -57,7 +57,7 @@ if ( ! function_exists( 'novablocks_render_post_comments_block' ) ) {
 
 		$spacingProps = array_merge(
 			novablocks_get_spacing_css( $attributes ),
-			novablocks_get_sizing_css( $attributes ),
+			novablocks_get_sizing_css( $attributes )
 		);
 
 		$style = join( '; ', $spacingProps ) . '; ';
