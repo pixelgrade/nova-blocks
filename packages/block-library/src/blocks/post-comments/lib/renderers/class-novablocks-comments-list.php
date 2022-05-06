@@ -541,7 +541,7 @@ if ( ! class_exists( 'NovaBlocks_Comments_List' ) ) {
 
 			$args = wp_parse_args( $args, [
 				'walker'      => new NovaBlocks_Walker_Comment(),
-				'avatar_size' => 100,
+				'avatar_size' => 96,
 				'style'       => 'div',
 				'short_ping'  => true,
 				// Since we do the proper query above, we don't want the walker to do it once again.
