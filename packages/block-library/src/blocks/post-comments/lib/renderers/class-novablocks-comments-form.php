@@ -56,7 +56,7 @@ if ( ! class_exists( 'NovaBlocks_Comments_Form' ) ) {
 				'html5'       => current_theme_supports( 'html5', 'comment-form' ),
 
 				// Double the actual size for high dpi displays. Set to zero (0) for no avatars.
-				'avatarSize'  => 100,
+				'avatarSize'  => 96,
 				'avatarClass' => 'avatar',
 
 				'commentLabel'                   => esc_html__( 'What\'s your comment or question?', '__plugin_txtd' ),

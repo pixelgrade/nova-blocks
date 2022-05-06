@@ -72,7 +72,7 @@ if ( ! class_exists( 'NovaBlocks_Comments_List' ) ) {
 
 				'displayCommenterBackground' => true,
 				// Double the actual size for high dpi displays. Set to zero (0) for no avatars.
-				'avatarSize'                 => 100,
+				'avatarSize'                 => 96,
 
 				// The message to use in the comments list when a comment is not approved.
 				'moderationMessage'          => '',
