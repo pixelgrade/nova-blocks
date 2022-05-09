@@ -101,9 +101,13 @@
 
 .nb-header {
 
-  .nb-header__inner-container {
+  .nb-header-row {
     overflow: hidden;
     animation: reading-bar-show-overflow 0s linear var(--nb-transition-duration) forwards;
+  }
+
+  .c-reading-bar {
+    pointer-events: none;
   }
 
   .c-reading-bar__container {
@@ -113,26 +117,30 @@
     bottom: 0;
     left: 0;
 
-    transition: 0.5s ease;
-    transition-property: transform;
-    will-change: transform;
-
     transform: translateY(-100%);
-    pointer-events: none;
+  }
+
+  .c-reading-bar__container,
+  .nb-header-row__inner-container {
+    transition: transform 0.5s ease;
+    will-change: transform;
   }
 
   &:is(.nb-header--next, .nb-header--reading) {
 
-    .nb-header__inner-container {
+    .nb-header-row {
       animation: none;
+    }
+
+    .c-reading-bar {
+      pointer-events: auto;
     }
 
     .c-reading-bar__container {
       transform: translateY(0);
-      pointer-events: auto;
     }
 
-    .nb-header-row:not(.nb-header-row--reading) {
+    .nb-header-row .nb-header-row__inner-container {
       transform: translateY(100%);
       pointer-events: none;
     }

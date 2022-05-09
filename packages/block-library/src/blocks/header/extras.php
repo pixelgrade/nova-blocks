@@ -93,9 +93,10 @@ if ( ! function_exists('render_reading_bar') ) {
 
 
 		ob_start(); ?>
+
 		<!--Reading Bar-->
-		<div class="c-reading-bar  nb-header-row  nb-header-row--reading  js-reading-bar">
-			<div class="c-reading-bar__container  nb-header-background">
+		<div class="c-reading-bar  js-reading-bar">
+			<div class="c-reading-bar__container">
 				<div class="c-reading-bar__layer c-reading-bar__layer--current">
 					<div class="c-reading-bar__layer-wrapper">
 						<div class="c-reading-bar__wrapper-menu-trigger"><?php echo $menu_trigger; ?></div>
@@ -111,8 +112,8 @@ if ( ! function_exists('render_reading_bar') ) {
 				</div>
 				<?php } ?>
 			</div>
-			<div class="c-reading-bar__progress  js-reading-progress"></div>
 		</div><!-- .c-reading-bar -->
+		<div class="c-reading-bar__progress  js-reading-progress"></div>
 
 		<!--Reading Progress Bar-->
 		<?php
