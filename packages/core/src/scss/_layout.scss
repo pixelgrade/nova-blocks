@@ -24,7 +24,7 @@
 
   --nb-content-inset-setting: 288;
 
-  --nb-sidecar-sidebar-small-width: max(var(--nb-content-inset-setting) * 1px, (var(--nb-content-inset-setting) / var(--sm-site-container-width) / 16) * 100%);
+  --nb-sidecar-sidebar-small-width: max(var(--nb-content-inset-setting) * 1px, 15%);
   --nb-sidecar-sidebar-medium-width: max(330px, ( 100% - var(--nb-sidecar-sides) ) / 4 );
   --nb-sidecar-sidebar-large-width: max(400px, ( 100% - var(--nb-sidecar-sides) ) / 3 );
 
