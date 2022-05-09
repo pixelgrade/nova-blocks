@@ -8,7 +8,18 @@ export const initializeReadingBar = ( header ) => {
 
   bindMenuLabelClick( header );
 
-  const progressBar = header.querySelector( '.js-reading-progress' );
+  const firstRow = header.querySelector( '.nb-header-row' );
+  const readingBar = document.querySelector( '.js-reading-bar' );
+  const progressBar = document.querySelector( '.js-reading-progress' );
+
+  if ( firstRow && readingBar ) {
+    firstRow.appendChild( readingBar );
+  }
+
+  if ( progressBar ) {
+    header.appendChild( progressBar );
+  }
+
   const [ min, max ] = getScrollTriggerBounds();
   let showingReading = false;
   let showingNext = false;
@@ -37,11 +48,13 @@ export const initializeReadingBar = ( header ) => {
 }
 
 const bindMenuLabelClick = ( header ) => {
-  const menuButton = header.querySelector( '.js-sticky-menu-trigger' );
+  const menuButton = document.querySelector( '.js-sticky-menu-trigger' );
 
-  menuButton.addEventListener( 'click', () => {
-    removeClass( header, 'nb-header--reading nb-header--next' )
-  } );
+  if ( menuButton ) {
+    menuButton.addEventListener( 'click', () => {
+      removeClass( header, 'nb-header--reading nb-header--next' )
+    } );
+  }
 }
 
 const getScrollTriggerBounds = () => {

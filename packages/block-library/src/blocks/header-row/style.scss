@@ -55,13 +55,6 @@
 
 @include above(lap) {
 
-  .nb-header-row {
-    --block-top-spacing: var(--nb-block-top-spacing, 0);
-    --block-bottom-spacing: var(--nb-block-bottom-spacing, 0);
-    --emphasis-top-spacing: var(--nb-emphasis-top-spacing, 0);
-    --emphasis-bottom-spacing: var(--nb-emphasis-bottom-spacing, 0);
-  }
-
   .nb-header-row__inner-container[class] > .wp-block {
     display: flex;
     column-gap: var(--nb-navigation-item-spacing);

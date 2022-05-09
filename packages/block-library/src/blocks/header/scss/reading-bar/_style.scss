@@ -9,7 +9,7 @@
 
 // Hide progress bar on small screens
 .c-reading-bar,
-.c-reading-progress {
+.c-reading-bar__progress {
 
   @include below(lap) {
     display: none;
@@ -101,34 +101,46 @@
 
 .nb-header {
 
-  .nb-header__inner-container {
+  .nb-header-row {
     overflow: hidden;
     animation: reading-bar-show-overflow 0s linear var(--nb-transition-duration) forwards;
   }
 
   .c-reading-bar {
-    transition: 0.5s ease;
-    transition-property: transform;
-    will-change: transform;
+    pointer-events: none;
   }
 
-  .c-reading-bar {
+  .c-reading-bar__container {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+
     transform: translateY(-100%);
-    pointer-events: none;
+  }
+
+  .c-reading-bar__container,
+  .nb-header-row__inner-container {
+    transition: transform 0.5s ease;
+    will-change: transform;
   }
 
   &:is(.nb-header--next, .nb-header--reading) {
 
-    .nb-header__inner-container {
+    .nb-header-row {
       animation: none;
     }
 
     .c-reading-bar {
-      transform: translateY(0);
       pointer-events: auto;
     }
 
-    .nb-header-row {
+    .c-reading-bar__container {
+      transform: translateY(0);
+    }
+
+    .nb-header-row .nb-header-row__inner-container {
       transform: translateY(100%);
       pointer-events: none;
     }

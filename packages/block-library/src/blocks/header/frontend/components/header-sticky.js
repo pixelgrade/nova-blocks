@@ -24,8 +24,6 @@ class HeaderSticky extends HeaderBase {
     const headerRows = Array.from( element.querySelectorAll( '.nb-header-row' ) );
     const stickyRow = headerRows.find( row => row.dataset.isSticky );
     const primaryRow = headerRows.find( row => row.dataset.isPrimary );
-    const readingBar = element.querySelector( '.js-reading-bar' );
-    const progressBar = element.querySelector( '.js-reading-progress' );
 
     if ( ! stickyRow ) {
       return false;
@@ -33,21 +31,12 @@ class HeaderSticky extends HeaderBase {
 
     this.stickyRow = stickyRow;
 
-
     if ( stickyRow ) {
       innerContainer.appendChild( stickyRow.cloneNode( true ) );
     }
 
     if ( primaryRow && primaryRow !== stickyRow ) {
       innerContainer.appendChild( primaryRow.cloneNode( true ) );
-    }
-
-    if ( readingBar ) {
-      innerContainer.appendChild( readingBar );
-
-      if ( progressBar ) {
-        innerContainer.appendChild( progressBar );
-      }
     }
 
     element.insertAdjacentElement( 'beforebegin', stickyHeader );

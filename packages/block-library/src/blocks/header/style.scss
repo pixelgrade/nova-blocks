@@ -13,15 +13,15 @@
 @property --nb-header-vertical-spacing-multiplier {
   syntax: '<number>'; /* <- defined as type number for the transition to work */
   initial-value: 1;
-  inherits: false;
+  inherits: true;
 }
 
-.nb-header[class] {
-  width: 100%;
-  --nb-navigation-item-spacing: calc(var(--nb-navigation-item-spacing-setting) * var(--nb-spacing) * 2 / 100);
+:is(.nb-header-row, .specificity.x2.x3) {
+  padding-top: 0;
+  padding-bottom: 0;
 
-  .nb-header-row {
-    --nb-wrapper-sides-spacings: calc( var(--nb-spacing) * var(--nb-header-sides-spacing-setting, 50) * 2 / 100 );
+  .nb-header-row__inner-container > .wp-block {
+    --nb-wrapper-sides-spacings: calc(var(--nb-spacing) * var(--nb-header-sides-spacing-setting, 50) * 2 / 100);
 
     // Size down the vertical spacing of the header rows
     // by adding the `--nb-header-vertical-spacing-multiplier`
@@ -29,6 +29,11 @@
     padding-top: calc(var(--nb-emphasis-top-spacing) * var(--nb-current-spacing) * var(--nb-header-vertical-spacing-multiplier));
     padding-bottom: calc(var(--nb-emphasis-bottom-spacing) * var(--nb-current-spacing) * var(--nb-header-vertical-spacing-multiplier));
   }
+}
+
+.nb-header[class] {
+  width: 100%;
+  --nb-navigation-item-spacing: calc(var(--nb-navigation-item-spacing-setting) * var(--nb-spacing) * 2 / 100);
 
   @include above(lap) {
 
@@ -134,8 +139,8 @@
  *
  * Impose a few custom font rules outside of the Design System tokens.
  * Uppercase and letter-spacing helps small font sizes (10-11px) to be legible.
- * 
- * @todo: uppercase it's not working well with serif typefaces and we need to 
+ *
+ * @todo: uppercase it's not working well with serif typefaces and we need to
  * find a way to pass some exceptions based on font family
  */
 .menu-item-label {
@@ -146,7 +151,7 @@
     text-transform: uppercase;
     font-weight: bold;
     letter-spacing: 0.03em;
-    
+
     vertical-align: middle;
     margin-left: var(--navigation-item-sub-elements-spacing);
 }
