@@ -127,7 +127,7 @@ if ( ! function_exists( 'novablocks_add_blocks_category' ) && class_exists( 'WP_
 }
 
 /**
- * Filters the block editor allowed_block_types setting.
+ * Filters the block editor allowed_block_types setting to add allowed block types depending on context.
  *
  * @param bool|array              $allowed_block_types  Array of block type slugs, or boolean to enable/disable all.
  *                                                      Default true (all registered block types supported).
