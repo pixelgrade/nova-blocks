@@ -55,13 +55,18 @@ if ( ! function_exists( 'novablocks_render_cards_collection_block' ) ) {
 
 		$classes = [
 			'nb-supernova',
-			'nb-supernova--content-type-' . $attributes['contentType'],
-			'nb-supernova--card-layout-' . $attributes['cardLayout'],
 			'nb-supernova--valign-' . $align[0],
 			'nb-supernova--halign-' . $align[1],
 			'nb-content-layout-grid',
 			'alignfull',
 		];
+		if ( isset( $attributes['contentType'] ) ) {
+			$classes[] = 'nb-supernova--content-type-' . $attributes['contentType'];
+		}
+
+		if ( isset( $attributes['cardLayout'] ) ) {
+			$classes[] = 'nb-supernova--card-layout-' . $attributes['cardLayout'];
+		}
 
 		$classes = array_merge(
 			novablocks_get_grid_area_fallback_classnames( $attributes ),

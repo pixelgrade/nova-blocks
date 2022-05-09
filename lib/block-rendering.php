@@ -1316,9 +1316,10 @@ function novablocks_get_collection_card_markup( string $media, string $content, 
 
 	$data_attributes = novablocks_get_data_attributes( $data_attributes_array, $attributes );
 
-	if ( $attributes['columns'] === 1 &&
-		 $attributes['cardLayout'] === 'stacked' &&
-		 $attributes['layoutStyle'] !== 'carousel' ) {
+	if ( ( isset( $attributes['columns'] ) && $attributes['columns'] === 1 ) &&
+	     ( isset( $attributes['cardLayout']) && $attributes['cardLayout'] === 'stacked' ) &&
+	     ( isset( $attributes['layoutStyle'] ) && $attributes['layoutStyle'] !== 'carousel' ) ) {
+
 		if ( get_post_meta( get_the_ID(), 'novablocks_hero_position_indicators', true ) ) {
 			$data_attributes[] = 'data-position-indicators="1"';
 		}
@@ -1621,7 +1622,7 @@ function novablocks_get_posts_collection_cards_markup( array $attributes, $conte
 }
 
 function novablocks_show_card_contents( array $attributes ): bool {
-	$hide_hero_inner_content = $attributes['contentType'] === 'custom' &&
+	$hide_hero_inner_content = isset( $attributes['contentType'] ) && $attributes['contentType'] === 'custom' &&
 	                           empty( $attributes['displayInnerContent'] );
 
 	return ! $hide_hero_inner_content &&
