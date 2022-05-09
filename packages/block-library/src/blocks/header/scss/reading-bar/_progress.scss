@@ -1,5 +1,5 @@
 // ------ #PROGRESS BAR STYLING
-.c-reading-progress {
+.c-reading-bar__progress {
   position: absolute;
   top: 100%;
   left: 0;
@@ -37,5 +37,5 @@
 
 // @todo: for options below, add a global
 // control option to change those styles
-.c-reading-progress[data-progress-bar-style-="below"] {}
-.c-reading-progress[data-progress-bar-style-="overlay"] {}
+.c-reading-bar__progress[data-progress-bar-style-="below"] {}
+.c-reading-bar__progress[data-progress-bar-style-="overlay"] {}
