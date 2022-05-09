@@ -523,7 +523,7 @@ if ( ! function_exists( 'novablocks_get_collection_output' ) ) {
 
 	function novablocks_get_collection_output( array $attributes, $content, $block ): string {
 
-		if ( 'auto' === $attributes['contentType'] ) {
+		if ( isset( $attributes['contentType'] ) && 'auto' === $attributes['contentType'] ) {
 			$content = novablocks_get_posts_collection_cards_markup( $attributes, $content, $block );
 		}
 

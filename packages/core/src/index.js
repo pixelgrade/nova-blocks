@@ -16,6 +16,8 @@ export class novaBlocks {
 		} );
 
     handleAlignedBlocks();
+
+    hideDeprecatedBlocks();
   }
 }
 
@@ -25,6 +27,19 @@ const handleAlignedBlocks = () => {
     cleanupBreakClasses();
     contentBlocks.forEach( maybeAddBreakClassesToElement );
   }, 100 ) );
+}
+
+const hideDeprecatedBlocks = () => {
+  // We will force the editor preferences to hide the deprecated block types.
+  // This will happen on each page load, so the user can only temporarily show them through the Preferences modal.
+  wp.data.dispatch( 'core/edit-post' ).hideBlockTypes( [
+    'novablocks/advanced-gallery',
+    'novablocks/cards-collection',
+    'novablocks/posts-collection',
+    'novablocks/hero',
+    'novablocks/media',
+    'novablocks/slideshow',
+  ] );
 }
 
 wp.novaBlocks = new novaBlocks();
