@@ -21,15 +21,18 @@
   }
 
   --nb-sidecar-gap: calc(var(--nb-spacing) * 2);
-  --nb-sidecar-sidebar-small-width: min(288px, 20%);
-  --nb-sidecar-sidebar-medium-width: min(330px, 25%);
-  --nb-sidecar-sidebar-large-width: min(400px, 30%);
+
+  --nb-content-inset-setting: 288;
+
+  --nb-sidecar-sidebar-small-width: max(var(--nb-content-inset-setting) * 1px, (var(--nb-content-inset-setting) / var(--sm-site-container-width) / 16) * 100%);
+  --nb-sidecar-sidebar-medium-width: max(330px, ( 100% - var(--nb-sidecar-sides) ) / 4 );
+  --nb-sidecar-sidebar-large-width: max(400px, ( 100% - var(--nb-sidecar-sides) ) / 3 );
 
   // the unit is needed in order for the calc functions to work
   --nb-sidecar-sidebar-left-width: var(--nb-sidecar-sidebar-small-width);
   --nb-sidecar-sidebar-right-width: var(--nb-sidecar-sidebar-small-width);
 
-  --nb-container-width: 1200px;
+  --nb-container-width: calc(var(--nb-container-width-setting) * var(--current-font-size, 16px));
   --nb-content-width: calc(var(--nb-container-width) - var(--nb-sidecar-sidebar-left-width) - var(--nb-sidecar-sidebar-left-gap) - var(--nb-sidecar-sidebar-right-width) - var(--nb-sidecar-sidebar-right-gap));
   --nb-sidecar-sides: max(var(--nb-wrapper-sides-spacings), calc((100% - var(--nb-container-width)) * 0.5));
 
