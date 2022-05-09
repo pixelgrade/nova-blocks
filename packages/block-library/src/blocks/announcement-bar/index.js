@@ -12,6 +12,7 @@ import {
  */
 import deprecated from './deprecated';
 import edit from './edit';
+import attributes from './attributes.json';
 import { getSvg } from "@novablocks/block-editor";
 import iconSvg from './icon.svg';
 

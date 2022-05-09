@@ -7,24 +7,7 @@
 	"description": "Display a banner across the top of your site with a message of your choice.",
 	"keywords": ["promo bar", "welcome header bar", "top bar", "banner"],
 	"textdomain": "nova-blocks",
-	"attributes": {
-		"align": {
-			"type": "string",
-			"default": "full"
-		},
-		"url": {
-			"type": "string",
-			"default": ""
-		},
-		"opensInNewTab": {
-			"type": "boolean",
-			"default": false
-		},
-		"content": {
-			"type": "string",
-			"default": "<b>Find me on Instagram!</b> New photos and interesting facts every day."
-		}
-	},
+	"attributes": {},
 	"usesContext": [],
 	"supports": {
 		"align": [ "wide", "full" ],

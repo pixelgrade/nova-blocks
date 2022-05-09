@@ -1,0 +1,34 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/block.json",
+	"apiVersion": 2,
+	"name": "novablocks/menu-food",
+	"title": "Food Menu",
+	"category": "nova-blocks",
+	"description": "Display a list of food or drink items available at your venue.",
+	"keywords": [
+		"food menu",
+		"restaurant menu",
+		"dishes",
+		"eats",
+		"menu list"
+	],
+	"textdomain": "nova-blocks",
+	"attributes": {
+	},
+	"supports": {
+		"html": false,
+		"novaBlocks": {
+		}
+	},
+	"styles": [
+		{
+			"name": "lassic",
+			"label": "Classic",
+			"isDefault": true
+		},
+		{
+			"name": "basic",
+			"label": "Basic"
+		}
+	]
+}

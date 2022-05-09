@@ -11,8 +11,8 @@
 		"type": "boolean",
 		"default": false
 	},
-	"blockId": {
+	"content": {
 		"type": "string",
-		"default": ""
+		"default": "<b>Find me on Instagram!</b> New photos and interesting facts every day."
 	}
 }

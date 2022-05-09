@@ -5,6 +5,11 @@
 	}
 }
 
+.nova-food-menu {
+  --block-content-start: ws;
+  --block-content-end: we;
+}
+
 .nova-food-menu-item {
 	display: grid;
 	grid-template-columns: 1fr auto;
