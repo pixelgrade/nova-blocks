@@ -32,6 +32,8 @@ class Header extends HeaderBase {
     this.colorsElement = this.findColorsElement( this.adjacentElementTargetChild );
     this.paddingTopTargets = this.findPaddingTopTargets( this.adjacentElementTargetChild );
 
+    this.gatherPromoBars();
+
     addClass( this.adjacentElementTargetChild, 'nb-header-neighbour' );
 
     this.rows = this.getHeaderRows();
@@ -54,6 +56,37 @@ class Header extends HeaderBase {
     this.toggleRowsColors( true );
 
     addClass( this.element, 'nb-header--transparent' );
+  }
+
+  gatherPromoBars() {
+    const promoBars = document.querySelectorAll( '.novablocks-announcement-bar, .nb-header' );
+
+    this.promoBars = [];
+
+    let headerFound = false;
+
+    promoBars.forEach( promoBar => {
+
+      if ( promoBar === this.element ) {
+        headerFound = true;
+      }
+
+      if ( ! headerFound ) {
+        this.promoBars.push( promoBar );
+      }
+
+    } );
+
+  }
+
+  updatePromoBarsHeight() {
+    let promoBarsHeight = 0;
+
+    this.promoBars.forEach( promoBar => {
+      promoBarsHeight += promoBar.offsetHeight;
+    } );
+
+    document.body.style.setProperty( '--nb-promo-bar-height', `${ promoBarsHeight }px` );
   }
 
   getHeight() {
@@ -110,7 +143,7 @@ class Header extends HeaderBase {
     }
 
     this.applyPaddingTopToTargets();
-
+    this.updatePromoBarsHeight();
     this.updateStickyStyles( scrollY );
   }
 
