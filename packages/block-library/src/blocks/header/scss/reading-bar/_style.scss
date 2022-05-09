@@ -10,9 +10,10 @@
 // Hide progress bar on small screens
 .c-reading-bar,
 .c-reading-bar__progress {
+  display: none;
 
   @include below(lap) {
-    display: none;
+    display: none !important;
   }
 }
 
@@ -116,6 +117,7 @@
     right: 0;
     bottom: 0;
     left: 0;
+    overflow: hidden;
 
     transform: translateY(-100%);
   }

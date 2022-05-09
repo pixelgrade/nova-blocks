@@ -13,10 +13,12 @@ export const initializeReadingBar = ( header ) => {
   const progressBar = document.querySelector( '.js-reading-progress' );
 
   if ( firstRow && readingBar ) {
+    readingBar.style.display = 'block';
     firstRow.appendChild( readingBar );
   }
 
   if ( progressBar ) {
+    progressBar.style.display = 'block';
     header.appendChild( progressBar );
   }
 
