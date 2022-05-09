@@ -36,25 +36,18 @@
   --nb-header-neighbour-padding-top: 0px;
 }
 
-@property --nb-header-neighbour-padding-top {
-  syntax: '<number>';
-  initial-value: 0;
-  inherits: false;
-}
-
 .nb-supernova-item__inner-container {
-  --nb-header-neighbour-padding-top: 0; // do not inherit from parent
   --nb-supernova-item-padding-top: max(var(--nb-header-neighbour-padding-top), var(--nb-card-content-padding));
   --nb-supernova-item-padding-bottom: max(var(--nb-supernova-item-carousel-padding-bottom), var(--nb-card-content-padding));
+  --nb-supernova-item-padding: max(var(--nb-supernova-item-padding-top), var(--nb-supernova-item-padding-bottom));
 
-  padding: var(--nb-card-content-padding, 0);
-  padding-top: var(--nb-supernova-item-padding-top) !important;
-  padding-bottom: var(--nb-supernova-item-padding-bottom) !important;
+  padding: var(--nb-supernova-item-padding);
+  padding-top: var(--nb-supernova-item-padding-top, 0px) !important;
+  padding-bottom: var(--nb-supernova-item-padding-bottom, 0px) !important;
 
   .nb-supernova--card-layout-stacked.nb-supernova--valign-center & {
-    --nb-supernova-item-padding: max(var(--nb-supernova-item-padding-top), var(--nb-supernova-item-padding-bottom));
-    padding-top: var(--nb-supernova-item-padding) !important;
-    padding-bottom: var(--nb-supernova-item-padding) !important;
+    padding-top: var(--nb-supernova-item-padding, 0px) !important;
+    padding-bottom: var(--nb-supernova-item-padding, 0px) !important;
   }
 }
 
