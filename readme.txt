@@ -3,7 +3,7 @@ Contributors: pixelgrade, vlad.olaru, babbardel, razvanonofrei, gorby31
 Tags: blocks, editor, gutenberg, gutenberg blocks, page builder, block enabled, page building, full site editing, site editor, posts collection
 Requires at least: 5.9
 Tested up to: 5.9.4
-Stable tag: 2.0.1
+Stable tag: 2.0.2
 Requires PHP: 7.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -31,10 +31,11 @@ Nova Blocks is a collection of **distinctive Gutenberg blocks,** committed to ma
 
 = Tested with the following WordPress themes: =
 
+* [Rosa LT](https://pixelgrade.com/themes/restaurants/rosa-lt/) _by Pixelgrade_
+* [Felt LT](https://pixelgrade.com/themes/blogging/felt-lt/) _by Pixelgrade_
 * [Twenty Nineteen](https://wordpress.org/themes/twentynineteen/) _by WordPress team_
 * [Storefront](https://wordpress.org/themes/storefront/) _by Automattic_
 * [Osteria](https://pixelgrade.com/themes/restaurants/osteria/) _by Pixelgrade_
-* [Rosa2](https://pixelgrade.com/themes/restaurants/rosa2/) _by Pixelgrade_
 
 **Made with love by [Pixelgrade](https://pixelgrade.com/)**
 
@@ -66,8 +67,6 @@ The Nova Blocks plugin bundles the following third-party resources:
 * [jQuery Velocity plugin](http://velocityjs.org/) Copyright (c) 2014-2017 Julian Shapiro - License: MIT
 * [JS Cookie](https://github.com/js-cookie/js-cookie) Copyright (c) 2018 Klaus Hartl, Fagner Brack, GitHub Contributors - License: MIT
 
-* [Block Areas](https://wordpress.org/plugins/block-areas/) - License GPLv2
-
 == Installation ==
 
 Installing "Nova Blocks" can be done either by searching for "Nova Blocks" via the `Plugins → Add New` screen in your WordPress dashboard, or by using the following steps:
@@ -93,6 +92,17 @@ Yes! Nova Block's core features are free to use.
 3. Slideshow Me the Way block options
 
 == Changelog ==
+
+= 2.0.2 =
+* Change post comments block default avatar size to a more standard one (96) to avoid further thumbnail generation.
+* Fix styling for the reading bar
+* Decrease hero and promo bar heights when used together
+* Fix Supernova Item block padding
+* Improve sidebars width calculations
+* Cleanup and improve the menu-food block
+* Fix separators color in dark-mode
+* Fix content width in certain situations
+* Hide deprecated blocks from the inserter via the block editor preferences logic.
 
 = 2.0.1 =
 * Ensure blocks full compatibility with other custom post types (e.g. WooCommerce products)
