@@ -36,6 +36,10 @@
   --nb-header-neighbour-padding-top: 0px;
 }
 
+.nb-supernova-item {
+  --nb-header-neighbour-padding-top: 0px;
+}
+
 .nb-supernova-item__inner-container {
   --nb-supernova-item-padding-top: max(var(--nb-header-neighbour-padding-top), var(--nb-card-content-padding));
   --nb-supernova-item-padding-bottom: max(var(--nb-supernova-item-carousel-padding-bottom), var(--nb-card-content-padding));
