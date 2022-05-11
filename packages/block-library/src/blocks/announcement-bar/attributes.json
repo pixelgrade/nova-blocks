@@ -3,6 +3,10 @@
 		"type": "string",
 		"default": "full"
 	},
+	"blockId": {
+		"type": "string",
+		"default": ""
+	},
 	"url": {
 		"type": "string",
 		"default": ""
