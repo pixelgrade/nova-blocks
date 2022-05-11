@@ -69,8 +69,8 @@
 
   @include nb-content-layout-grid;
 
-  > :is(.alignleft, [data-align="left"]),
-  > :is(.alignright, [data-align="right"]) {
+  > :is(.alignleft, [data-align="left"], #specific),
+  > :is(.alignright, [data-align="right"],  #specific) {
     float: none;
     margin-inline-start: 0;
     margin-inline-end: 0;
