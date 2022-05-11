@@ -18,6 +18,7 @@ domReady( () => {
     return;
   }
 
+  const DarkMode = window?.sm?.darkMode?.default;
   const mapsElements = Array.from( document.querySelectorAll( '.js-novablocks-google-map' ) );
 
   mapsElements.forEach( mapElement => {
@@ -38,6 +39,12 @@ domReady( () => {
 
     mapElement.dataset.map = map;
     mapElement.dataset.mapMarkers = createMapMarkers( markers, map, attributes, accentColor );
+
+    if ( DarkMode && typeof DarkMode.bind === "function" ) {
+      DarkMode.bind( () => {
+        map.setOptions( { styles: getCompiledStyles( attributes, accentColor ) } );
+      } );
+    }
   } );
 
   const api = window?.parent?.wp?.customize;

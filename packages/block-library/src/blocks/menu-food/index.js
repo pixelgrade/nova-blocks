@@ -20,8 +20,6 @@ import { getSvg } from "@novablocks/block-editor";
 import metadata from './block.json';
 const { name: BLOCK_NAME } = metadata;
 
-console.log( 'ABRACADABRA' );
-
 registerBlockType( BLOCK_NAME, {
   icon: getSvg( iconSvg ),
   attributes: attributes,

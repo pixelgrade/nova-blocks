@@ -955,9 +955,10 @@
   }
   
   .novablocks-conversation__starter {
-  
     --conversation-starter-avatar-size: 50px;
     --conversation-starter-column-gap: 10px;
+
+    position: relative;
   
     display: grid;
     grid-template-columns: var(--conversation-starter-avatar-size) 1fr;
@@ -970,8 +971,20 @@
   
     padding: 22px 25px;
     margin-bottom: 2em;
-  
-    background-color: var(--comment-highlighted-color);
+
+    transform: translateZ(0);
+
+    &:after {
+      content: "";
+      position: absolute;
+      top: 0;
+      right: 0;
+      bottom: 0;
+      left: 0;
+      z-index: -1;
+      background-color: var(--nb-accent-color);
+      opacity: 0.1;
+    }
   
     &.no-avatar {
       --conversation-starter-avatar-size: 0;
@@ -989,8 +1002,11 @@
       grid-column-gap: var(--conversation-starter-column-gap);
       grid-row-gap: 0;
   
-      border-radius: 0 50px;
       padding: 45px 60px;
+
+      &:after {
+        border-radius: 0 50px;
+      }
     }
   }
   

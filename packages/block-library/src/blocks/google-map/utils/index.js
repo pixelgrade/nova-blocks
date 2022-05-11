@@ -107,9 +107,15 @@ export const getMarkerMarkup = ( marker, attributes, accentColor = DEFAULT_PIN_C
         </div>`
 }
 
-export const getCompiledStyles = ( attributes, accentColor ) => {
-  const { showLabels, showIcons, styleData, styleSlug } = attributes;
+export const getCompiledStyles = ( atts, accentColor ) => {
+  const DarkMode = window?.sm?.darkMode?.default;
+  const attributes = Object.assign( {}, atts );
 
+  if ( DarkMode && DarkMode.isCompiledDark() ) {
+    Object.assign( attributes, { styleSlug: 'dark' } );
+  }
+
+  const { showLabels, showIcons, styleData, styleSlug } = attributes;
   const shouldHaveCustomStyles = styleSlug !== 'original' && styleData.length !== 0;
   const selectedStyles = styles.find( style => style.slug === styleSlug );
   const styleDataBySlug = selectedStyles ? selectedStyles.styles : {};

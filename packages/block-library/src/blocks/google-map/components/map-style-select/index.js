@@ -48,7 +48,7 @@ const MapStyleSelect = props => {
     const url = 'https://maps.googleapis.com/maps/api/staticmap';
 
     return `${ url }?center=${ latitude },${ longitude }&zoom=${ zoom }&size=${ size }&maptype=${ mapType }&${ style }&key=${ apiKey }`;
-  }, [] );
+  }, [ center ] );
 
   const controlOptions = useMemo( () => {
     return options.map( option => {
