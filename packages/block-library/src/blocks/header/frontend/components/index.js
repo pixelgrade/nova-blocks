@@ -42,7 +42,7 @@ class Header extends HeaderBase {
 
     this.mobileHeader = new HeaderMobile( this );
 
-    if ( !this.isSimple ) {
+    if ( ! this.isSimple ) {
       this.stickyHeader = new HeaderSticky( this.element );
     }
 
@@ -140,6 +140,10 @@ class Header extends HeaderBase {
 
       this.element.style.position = 'absolute';
       this.element.style.top = `${ this.staticDistance }px`;
+    }
+
+    if ( this.isSticky ) {
+      document.documentElement.style.setProperty( '--theme-sticky-header-height', `${ this.getHeight() }px` ) ;
     }
 
     this.applyPaddingTopToTargets();
