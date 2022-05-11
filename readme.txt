@@ -93,6 +93,14 @@ Yes! Nova Block's core features are free to use.
 
 == Changelog ==
 
+= 2.0.3 =
+* Fix announcement-bar block (missing blockId attribute)
+* Fix error in site editor (related to hide deprecated blocks)
+* Styling fixes for images in content
+* Styling adjustments to the conversation starter section of the post-comments block
+* Improve the google-map block to adjust styling in dark mode
+* Styling fixes for sticky widgets
+
 = 2.0.2 =
 * Change post comments block default avatar size to a more standard one (96) to avoid further thumbnail generation.
 * Fix styling for the reading bar
