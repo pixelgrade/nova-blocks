@@ -338,7 +338,7 @@ const SupernovaEdit = props => {
 
   return (
     <Fragment>
-      <MemoizedSupernovaPreview { ...props } posts={ posts } inQuery={ isDescendentOfQueryLoop } key={ 'preview' }/>
+      <SupernovaPreview { ...props } posts={ posts } inQuery={ isDescendentOfQueryLoop } key={ 'preview' }/>
       <BlockControls { ...props } inQuery={ isDescendentOfQueryLoop } key={ 'block-controls' }/>
       <InspectorControls { ...props } inQuery={ isDescendentOfQueryLoop } key={ 'inspector-controls' }/>
       <ChangeMediaBlockControls { ...props } key={ 'media-composition-block-controls' }/>

@@ -1,7 +1,7 @@
 /**
  * WordPress dependencies
  */
-import { useEffect, useMemo, useState } from '@wordpress/element';
+import { Fragment, useEffect, useMemo, useState } from '@wordpress/element';
 import { Popover } from '@wordpress/components';
 import { useSelect } from '@wordpress/data';
 
@@ -19,13 +19,16 @@ import { useScrollingEffect, withScrollingEffect } from '@novablocks/scrolling-e
 import { normalizeMedia } from '@novablocks/utils';
 
 import { MediaCompositionPreview } from "@novablocks/media-composition";
+
 import {
   Card,
   CardButton,
   CardMediaWrapper,
   useInnerBlocks,
-  useSelectParent
+  useSelectParent,
+  useEffectDebugger,
 } from "@novablocks/block-editor";
+
 import { withShapeModelingDecoration } from "@novablocks/shape-modeling";
 
 const SupernovaItemEdit = props => {
@@ -117,9 +120,6 @@ const SupernovaItemContent = ( props ) => {
     title,
     subtitle,
     description,
-    buttonText,
-    buttonUrl,
-    buttonOpensInNewTab,
 
     showTitle,
     showSubtitle,
@@ -132,7 +132,6 @@ const SupernovaItemContent = ( props ) => {
     cardTitleFontSize,
   } = attributes;
 
-  const [ showPopover, setShowPopover ] = useState( false );
   const TitleTagName = `h${ cardTitleLevel }`;
   const titleClassName = `has-${ cardTitleFontSize }-font-size`;
   const SubTitleTagName = `h${ cardTitleLevel + 1 }`;
@@ -200,37 +199,7 @@ const SupernovaItemContent = ( props ) => {
               onChange={ description => { setAttributes( { description } ) } }
             />
         }
-        {
-          showButtons &&
-          <CardButton>
-            <RichText
-              placeholder={ `Button` }
-              tagName={ 'span' }
-              value={ buttonText }
-              onChange={ buttonText => { setAttributes( { buttonText } ) } }
-              allowedFormats={ [] }
-              unstableOnFocus={ () => { setShowPopover( true ) } }
-              onBlur={ () => { setShowPopover( false ) } }
-            />
-            { showPopover &&
-              <Popover position="bottom center">
-                <LinkControl
-                  className={ 'wp-block-navigation-link__inline-link-input' }
-                  value={ {
-                    url: buttonUrl,
-                    opensInNewTab: buttonOpensInNewTab
-                  } }
-                  onChange={ ( { url, opensInNewTab } ) => {
-                    setAttributes( {
-                      buttonUrl: url,
-                      buttonOpensInNewTab: opensInNewTab
-                    } );
-                  } }
-                />
-              </Popover>
-            }
-          </CardButton>
-        }
+        <SupernovaItemButton { ...props } />
       </div>
     )
   }
@@ -239,5 +208,64 @@ const SupernovaItemContent = ( props ) => {
     displayInnerContent && <div { ...innerBlocksProps } />
   );
 };
+
+const SupernovaItemButton = ( props ) => {
+  const { attributes, setAttributes } = props;
+  const [ showPopover, setShowPopover ] = useState( false );
+
+  const {
+    showButtons,
+    buttonText,
+  } = attributes;
+
+  if ( ! showButtons ) {
+    return null;
+  }
+
+  return (
+    <CardButton>
+      <RichText
+        placeholder={ `Button` }
+        tagName={ 'span' }
+        value={ buttonText }
+        onChange={ buttonText => { setAttributes( { buttonText } ) } }
+        allowedFormats={ [] }
+        onClick={ () => { setShowPopover( ! showPopover ) } }
+      />
+      <SupernovaItemButtonPopover { ...props } show={ showPopover } />
+    </CardButton>
+  )
+}
+
+const SupernovaItemButtonPopover = props => {
+  const { show, attributes, setAttributes } = props;
+
+  const {
+    buttonUrl,
+    buttonOpensInNewTab,
+  } = attributes;
+
+  if ( ! show ) {
+    return null;
+  }
+
+  return (
+    <Popover position="bottom center" focusOnMount={ false }>
+      <LinkControl
+        className={ 'wp-block-navigation-link__inline-link-input' }
+        value={ {
+          url: buttonUrl,
+          opensInNewTab: buttonOpensInNewTab
+        } }
+        onChange={ ( { url, opensInNewTab } ) => {
+          setAttributes( {
+            buttonUrl: url,
+            buttonOpensInNewTab: opensInNewTab
+          } );
+        } }
+      />
+    </Popover>
+  )
+}
 
 export default SupernovaItemEdit;
