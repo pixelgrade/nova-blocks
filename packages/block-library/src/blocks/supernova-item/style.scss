@@ -3,7 +3,7 @@
 .nb-supernova-item {
 
   .nb-supernova--card-layout-stacked .nb-collection__layout--carousel & {
-    background-color: var(--sm-current-bg-color);
+    //background-color: var(--sm-current-bg-color);
   }
 
   .wp-block-button {
@@ -60,18 +60,30 @@
 
 .nb-supernova--1-columns:where(.nb-supernova--card-layout-stacked, .nb-supernova--card-layout-vertical, .nb-supernova--card-layout-vertical-reversed) {
 
-  .nb-collection.alignfull {
+  > .nb-collection.alignfull {
 
-    .nb-collection__layout:not(.nb-collection__layout--parametric) {
+    > .nb-collection__layout:not(.nb-collection__layout--parametric) {
 
-      // For this use case the supernova item container could have the same layout as the sidecar block
-      // However we need to remove any horizontal padding set with the Content Padding control
-      .nb-supernova-item__inner-container {
-        @include nb-content-layout-grid;
+      > .slick-list > .slick-track > .slick-slide > div > .nb-collection__layout-item,
+      > .nb-collection__layout-item {
 
-        padding-left: 0;
-        padding-right: 0;
+        // For this use case the supernova item container could have the same layout as the sidecar block
+        // However we need to remove any horizontal padding set with the Content Padding control
+        > .nb-supernova-item > .nb-supernova-item__content > .nb-supernova-item__inner-container {
+          @include nb-content-layout-grid;
+
+          padding-left: 0;
+          padding-right: 0;
+        }
       }
     }
   }
+}
+
+.nb-supernova-item__inner-container .nb-supernova {
+  display: block !important;
+}
+
+.nb-collection__layout-item {
+  overflow: hidden;
 }

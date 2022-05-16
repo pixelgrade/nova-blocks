@@ -66,7 +66,6 @@ const initializeCarousels = () => {
          attributes.columns === 1 &&
          attributes.carouselLayout !== 'variable' ) {
       Object.assign( SLICK_OPTIONS, {
-//        rows: 0,
         // for simpler reveal transitions between slides
         fade: true,
         speed: 1000,

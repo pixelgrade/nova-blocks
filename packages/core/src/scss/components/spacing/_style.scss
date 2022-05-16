@@ -26,6 +26,10 @@
   @include block-spacing-container;
 }
 
+:is(.wp-block-template-part, #specific) {
+  --nb-block-top-spacing: 0;
+}
+
 :is(
   .wp-block-row,
   .specificity.x2
