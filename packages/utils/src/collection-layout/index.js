@@ -217,9 +217,9 @@ export const removeSmallestColumn = ( areaColumns ) => {
   areaColumns.splice( indexToRemove, 1 );
 };
 
-export const normalizeColumns = ( areaColumns, attributes ) => {
+export const normalizeColumns = ( areaColumns ) => {
   moveColumnsToLeft( areaColumns );
-  growColumnsToRight( areaColumns, attributes );
+  growColumnsToRight( areaColumns );
   moveColumnsToTop( areaColumns );
 
   areaColumns.forEach( areaColumn => {
@@ -256,8 +256,11 @@ export const moveColumnsToLeft = ( areaColumns ) => {
   } );
 };
 
-export const growColumnsToRight = ( areaColumns, attributes ) => {
-  const { gridcolumns } = attributes;
+export const growColumnsToRight = ( areaColumns ) => {
+
+  const columns = areaColumns.reduce( ( acc, curr ) => {
+    return Math.max( curr.col + curr.width - 1, acc );
+  }, 0 )
 
   areaColumns.forEach( areaColumn => {
     let spaceRight = 0;
@@ -272,7 +275,7 @@ export const growColumnsToRight = ( areaColumns, attributes ) => {
                    areaColumn.col > compareColumn.col + compareColumn.width - 1 );
       } );
 
-      if ( overlapRight || areaColumn.col + areaColumn.width + spaceRight - 1 >= gridcolumns ) {
+      if ( overlapRight || areaColumn.col + areaColumn.width + spaceRight - 1 >= columns ) {
         growingRight = false;
       } else {
         spaceRight++;

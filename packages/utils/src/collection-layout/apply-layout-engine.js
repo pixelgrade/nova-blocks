@@ -4,6 +4,23 @@ import { transposeMatrix } from './index';
 // Given a state, it will return a list of posts with details to handle their layout.
 export const applyLayoutEngine = state => {
 
+  const {
+    balancemdandiw,
+    boostfeature,
+    featureposition,
+    featuresize,
+    flipcolsrows,
+    fragmentation,
+    gridcolumns,
+    gridrows,
+    hierarchycrossing,
+    imageweightleft,
+    imageweightright,
+    metadetailsleft,
+    metadetailsright,
+    subfeature,
+  } = state;
+
   const debug = false;
 
   // Before we can get to generating the "grid areas" for each post (meaning start col and row plus end col and ro),
@@ -24,18 +41,18 @@ export const applyLayoutEngine = state => {
   // The nth matrix: a bidimensional matrix the same size as the grid, holding in each cell what nth post should that cell belong to.
   // From this matrix we can extrapolate many details since the same nth value will be used to fill all the cells belonging to a post.
   // So we know the position and dimensions.
-  const nthMatrix = initBidimensionalMatrix( [], state.gridcolumns, state.gridrows, emptyChar );
+  const nthMatrix = initBidimensionalMatrix( [], gridcolumns, gridrows, emptyChar );
   // The image weight matrix
-  const imageWeightMatrix = initBidimensionalMatrix( [], state.gridcolumns, state.gridrows, emptyChar );
+  const imageWeightMatrix = initBidimensionalMatrix( [], gridcolumns, gridrows, emptyChar );
   // The meta-details matrix
-  const metaDetailsMatrix = initBidimensionalMatrix( [], state.gridcolumns, state.gridrows, emptyChar );
+  const metaDetailsMatrix = initBidimensionalMatrix( [], gridcolumns, gridrows, emptyChar );
 
   // Helper matrices.
 
   // The columns width matrix
-  const widthMatrix = initUnidimensionalMatrix( [], state.gridcolumns, emptyChar );
+  const widthMatrix = initUnidimensionalMatrix( [], gridcolumns, emptyChar );
   // The vertical fragment size matrix
-  const verticalFragmentSizeMatrix = initUnidimensionalMatrix( [], state.gridcolumns, emptyChar );
+  const verticalFragmentSizeMatrix = initUnidimensionalMatrix( [], gridcolumns, emptyChar );
 
   let i, j;
 
@@ -50,7 +67,7 @@ export const applyLayoutEngine = state => {
 
   let widthIdx = 1;
   // First, mark the feature.
-  for ( i = state.featureposition; i < state.featureposition + state.featuresize; i ++ ) {
+  for ( i = featureposition; i < featureposition + featuresize; i ++ ) {
     widthMatrix[ i ] = widthIdx;
   }
 
@@ -59,7 +76,7 @@ export const applyLayoutEngine = state => {
   // And remember the positions we are int the virtual matrix without the feature.
   let frgIdx = 0;
   widthIdx ++;
-  for ( i = 1; i <= state.gridcolumns; i ++ ) {
+  for ( i = 1; i <= gridcolumns; i ++ ) {
     if ( widthMatrix[ i ] === emptyChar ) {
       frgIdx ++;
       // If the previous position has a different number than the current one, it is clear we should increment and write.
@@ -68,9 +85,9 @@ export const applyLayoutEngine = state => {
       } else {
         // If the previous position has the same value as the current one, we need to determine
         // if the fragmentation bit pattern imposes a "cut".
-        const cutMarker = 1 << ( state.gridcolumns - state.featuresize - frgIdx );
+        const cutMarker = 1 << ( gridcolumns - featuresize - frgIdx );
         // If there is a 1 at this position, make a cut aka increase the number.
-        if ( ( cutMarker & state.fragmentation ) === cutMarker ) {
+        if ( ( cutMarker & fragmentation ) === cutMarker ) {
           widthIdx ++;
         }
       }
@@ -86,7 +103,7 @@ export const applyLayoutEngine = state => {
      We will spread the image weight range left-to-right. Each column will consume the range according to its width.
      Even it is a bidimensional matrix, for now we will only generate one row and copy it.
    */
-  for ( i = 1; i <= state.gridcolumns; i ++ ) {
+  for ( i = 1; i <= gridcolumns; i ++ ) {
     // Determine the other end of the current column.
     let end = i;
     while ( widthMatrix[ end + 1 ] === widthMatrix[ i ] ) {
@@ -95,11 +112,11 @@ export const applyLayoutEngine = state => {
 
     // Now calculate.
     if ( i === 1 ) {
-      imageWeightMatrix[ 1 ][ i ] = state.imageweightleft;
-    } else if ( end === state.gridcolumns ) {
-      imageWeightMatrix[ 1 ][ i ] = state.imageweightright;
+      imageWeightMatrix[ 1 ][ i ] = imageweightleft;
+    } else if ( end === gridcolumns ) {
+      imageWeightMatrix[ 1 ][ i ] = imageweightright;
     } else {
-      imageWeightMatrix[ 1 ][ i ] = Math.round( state.imageweightleft - ( ( state.imageweightleft - state.imageweightright ) * ( i + end - 1 ) / ( 2 * state.gridcolumns ) ) );
+      imageWeightMatrix[ 1 ][ i ] = Math.round( imageweightleft - ( ( imageweightleft - imageweightright ) * ( i + end - 1 ) / ( 2 * gridcolumns ) ) );
     }
 
     // Fill the entire column with the same meta-details value.
@@ -109,7 +126,7 @@ export const applyLayoutEngine = state => {
     i = end;
   }
   // Copy the first row to all the rest.
-  for ( i = 2; i <= state.gridrows; i ++ ) {
+  for ( i = 2; i <= gridrows; i ++ ) {
     imageWeightMatrix[ i ] = imageWeightMatrix[ 1 ].slice(); // .slice() creates a copy of the array, not reference.
   }
 
@@ -120,7 +137,7 @@ export const applyLayoutEngine = state => {
      We will spread the meta-details range left-to-right. Each column will consume the range according to its width.
      Even it is a bidimensional matrix, for now we will only generate one row and copy it.
    */
-  for ( i = 1; i <= state.gridcolumns; i ++ ) {
+  for ( i = 1; i <= gridcolumns; i ++ ) {
     // Determine the other end of the current column.
     let end = i;
     while ( widthMatrix[ end + 1 ] === widthMatrix[ i ] ) {
@@ -129,15 +146,15 @@ export const applyLayoutEngine = state => {
 
     // Now calculate.
     if ( i === 1 ) {
-      metaDetailsMatrix[ 1 ][ i ] = state.metadetailsleft;
-    } else if ( end === state.gridcolumns ) {
-      metaDetailsMatrix[ 1 ][ i ] = state.metadetailsright;
+      metaDetailsMatrix[ 1 ][ i ] = metadetailsleft;
+    } else if ( end === gridcolumns ) {
+      metaDetailsMatrix[ 1 ][ i ] = metadetailsright;
     } else {
-      metaDetailsMatrix[ 1 ][ i ] = state.metadetailsleft - ( ( state.metadetailsleft - state.metadetailsright ) * ( i + end - 1 ) / ( 2 * state.gridcolumns ) );
+      metaDetailsMatrix[ 1 ][ i ] = metadetailsleft - ( ( metadetailsleft - metadetailsright ) * ( i + end - 1 ) / ( 2 * gridcolumns ) );
 
       // If we are instructed to balance MD with IW, we will multiply the MD value with the "distance" of the IW value from the "center" of the IW range.
-      if ( state.balancemdandiw && 0 !== state.imageweightleft - state.imageweightright ) {
-        metaDetailsMatrix[ 1 ][ i ] = metaDetailsMatrix[ 1 ][ i ] * ( Math.abs( state.imageweightleft - state.imageweightright ) / 2 / imageWeightMatrix[ 1 ][ i ] );
+      if ( balancemdandiw && 0 !== imageweightleft - imageweightright ) {
+        metaDetailsMatrix[ 1 ][ i ] = metaDetailsMatrix[ 1 ][ i ] * ( Math.abs( imageweightleft - imageweightright ) / 2 / imageWeightMatrix[ 1 ][ i ] );
       }
 
       metaDetailsMatrix[ 1 ][ i ] = Math.round( metaDetailsMatrix[ 1 ][ i ] );
@@ -150,7 +167,7 @@ export const applyLayoutEngine = state => {
     i = end;
   }
   // Copy the first row to all the rest.
-  for ( i = 2; i <= state.gridrows; i ++ ) {
+  for ( i = 2; i <= gridrows; i ++ ) {
     metaDetailsMatrix[ i ] = metaDetailsMatrix[ 1 ].slice(); // .slice() creates a copy of the array, not reference.
   }
 
@@ -160,11 +177,11 @@ export const applyLayoutEngine = state => {
   4. Handle the boost feature emphasis.
      We will assign the maximum meta-details and image weight value to the feature, and assign its current value to the column holding the maximum values.
   */
-  if ( state.boostfeature && state.featuresize > 0 ) {
+  if ( boostfeature && featuresize > 0 ) {
     // Find column with maximum meta-details value, if the feature isn't already at the max.
     let maxMetaDetailsPos = 1,
       maxImageWeightPos = 1;
-    for ( i = 1; i <= state.gridcolumns; i ++ ) {
+    for ( i = 1; i <= gridcolumns; i ++ ) {
       if ( metaDetailsMatrix[ 1 ][ i ] > metaDetailsMatrix[ 1 ][ maxMetaDetailsPos ] ) {
         maxMetaDetailsPos = i;
       }
@@ -174,9 +191,9 @@ export const applyLayoutEngine = state => {
       }
     }
 
-    if ( maxMetaDetailsPos !== state.featureposition ) {
+    if ( maxMetaDetailsPos !== featureposition ) {
       // We have something to switch.
-      let featureValue = metaDetailsMatrix[ 1 ][ state.featureposition ];
+      let featureValue = metaDetailsMatrix[ 1 ][ featureposition ];
       let maxValue = metaDetailsMatrix[ 1 ][ maxMetaDetailsPos ];
 
       // Go and fill each column with the switched values.
@@ -185,23 +202,23 @@ export const applyLayoutEngine = state => {
         metaDetailsMatrix[ 1 ][ i ] = featureValue;
         i ++;
       }
-      i = state.featureposition;
-      while ( widthMatrix[ i ] === widthMatrix[ state.featureposition ] ) {
+      i = featureposition;
+      while ( widthMatrix[ i ] === widthMatrix[ featureposition ] ) {
         metaDetailsMatrix[ 1 ][ i ] = maxValue;
         i ++;
       }
 
       // Copy the first row to all the rest.
-      for ( i = 2; i <= state.gridrows; i ++ ) {
+      for ( i = 2; i <= gridrows; i ++ ) {
         metaDetailsMatrix[ i ] = metaDetailsMatrix[ 1 ].slice(); // .slice() creates a copy of the array, not reference.
       }
 
       debug ? console.log( "The boosted feature meta-details matrix: ".padEnd( 45, ' ' ) + metaDetailsMatrix[ 1 ] ) : false;
     }
 
-    if ( maxImageWeightPos !== state.featureposition ) {
+    if ( maxImageWeightPos !== featureposition ) {
       // We have something to switch.
-      let featureValue = imageWeightMatrix[ 1 ][ state.featureposition ];
+      let featureValue = imageWeightMatrix[ 1 ][ featureposition ];
       let maxValue = imageWeightMatrix[ 1 ][ maxImageWeightPos ];
 
       // Go and fill each column with the switched values.
@@ -210,14 +227,14 @@ export const applyLayoutEngine = state => {
         imageWeightMatrix[ 1 ][ i ] = featureValue;
         i ++;
       }
-      i = state.featureposition;
-      while ( widthMatrix[ i ] === widthMatrix[ state.featureposition ] ) {
+      i = featureposition;
+      while ( widthMatrix[ i ] === widthMatrix[ featureposition ] ) {
         imageWeightMatrix[ 1 ][ i ] = maxValue;
         i ++;
       }
 
       // Copy the first row to all the rest.
-      for ( i = 2; i <= state.gridrows; i ++ ) {
+      for ( i = 2; i <= gridrows; i ++ ) {
         imageWeightMatrix[ i ] = imageWeightMatrix[ 1 ].slice(); // .slice() creates a copy of the array, not reference.
       }
 
@@ -232,7 +249,7 @@ export const applyLayoutEngine = state => {
   // First determine the max meta-details and image weight value.
   let maxMetaDetailsValue = metaDetailsMatrix[ 1 ][ 1 ],
     maxImageWeightValue = imageWeightMatrix[ 1 ][ 1 ];
-  for ( i = 1; i <= state.gridcolumns; i ++ ) {
+  for ( i = 1; i <= gridcolumns; i ++ ) {
     if ( metaDetailsMatrix[ 1 ][ i ] > maxMetaDetailsValue ) {
       maxMetaDetailsValue = metaDetailsMatrix[ 1 ][ i ];
     }
@@ -250,7 +267,7 @@ export const applyLayoutEngine = state => {
     maxMetaDetailsValue = 1;
   }
 
-  for ( i = 1; i <= state.gridcolumns; i ++ ) {
+  for ( i = 1; i <= gridcolumns; i ++ ) {
     // Determine the other end of the current column.
     let end = i;
     while ( widthMatrix[ end + 1 ] === widthMatrix[ i ] ) {
@@ -258,7 +275,7 @@ export const applyLayoutEngine = state => {
     }
 
     // Now calculate.
-    verticalFragmentSizeMatrix[ i ] = Math.round( ( ( ( metaDetailsMatrix[ 1 ][ i ] / maxMetaDetailsValue ) + ( imageWeightMatrix[ 1 ][ i ] / maxImageWeightValue ) ) / 2 ) * state.gridrows );
+    verticalFragmentSizeMatrix[ i ] = Math.round( ( ( ( metaDetailsMatrix[ 1 ][ i ] / maxMetaDetailsValue ) + ( imageWeightMatrix[ 1 ][ i ] / maxImageWeightValue ) ) / 2 ) * gridrows );
     // The vertical fragment size can't be more than 3 times the column width (a really tall post).
     if ( verticalFragmentSizeMatrix[ i ] > ( end - i + 1 ) * 3 ) {
       verticalFragmentSizeMatrix[ i ] = ( end - i + 1 ) * 3;
@@ -269,15 +286,15 @@ export const applyLayoutEngine = state => {
     }
 
     // If the sub feature option is active, and we have a single column for the feature, reduce the vertical fragmentation with 25%.
-    if ( state.subfeature && i === state.featureposition && state.featuresize > 0 && verticalFragmentSizeMatrix[ i ] === state.gridrows ) {
+    if ( subfeature && i === featureposition && featuresize > 0 && verticalFragmentSizeMatrix[ i ] === gridrows ) {
       verticalFragmentSizeMatrix[ i ] = Math.floor( verticalFragmentSizeMatrix[ i ] * 0.75 );
     }
 
     // Safety measures.
     if ( verticalFragmentSizeMatrix[ i ] < 1 ) {
       verticalFragmentSizeMatrix[ i ] = 1;
-    } else if ( verticalFragmentSizeMatrix[ i ] > state.gridrows ) {
-      verticalFragmentSizeMatrix[ i ] = state.gridrows;
+    } else if ( verticalFragmentSizeMatrix[ i ] > gridrows ) {
+      verticalFragmentSizeMatrix[ i ] = gridrows;
     }
 
     // Fill the entire column with the same fragment size.
@@ -299,25 +316,25 @@ export const applyLayoutEngine = state => {
   let currentNth = 1;
 
   // Start with the feature column.
-  if ( state.featuresize > 0 ) {
+  if ( featuresize > 0 ) {
     i = 1;
-    while ( i <= verticalFragmentSizeMatrix[ state.featureposition ] ) {
-      j = state.featureposition;
+    while ( i <= verticalFragmentSizeMatrix[ featureposition ] ) {
+      j = featureposition;
       do {
         nthMatrix[ i ][ j ] = currentNth;
         j ++;
-      } while ( widthMatrix[ state.featureposition ] === widthMatrix[ j ] );
+      } while ( widthMatrix[ featureposition ] === widthMatrix[ j ] );
 
       i ++;
     }
 
     currentNth ++;
 
-    if ( i <= state.gridrows ) {
+    if ( i <= gridrows ) {
       // We have room under the feature for a secondary feature post.
       // We will reduce the meta-details and image weight by 33% that of the main feature post.
-      while ( i <= state.gridrows ) {
-        j = state.featureposition;
+      while ( i <= gridrows ) {
+        j = featureposition;
         do {
           nthMatrix[ i ][ j ] = currentNth;
 
@@ -326,7 +343,7 @@ export const applyLayoutEngine = state => {
           imageWeightMatrix[ i ][ j ] = Math.round( imageWeightMatrix[ i ][ j ] * 0.66 );
 
           j ++;
-        } while ( widthMatrix[ state.featureposition ] === widthMatrix[ j ] );
+        } while ( widthMatrix[ featureposition ] === widthMatrix[ j ] );
 
         i ++;
       }
@@ -338,7 +355,7 @@ export const applyLayoutEngine = state => {
   // Now start from the left top corner and go through each column, left to right.
   let currentColumnStartCol = 1;
   let currentPostStartRow;
-  while ( currentColumnStartCol <= state.gridcolumns ) {
+  while ( currentColumnStartCol <= gridcolumns ) {
     if ( nthMatrix[ 1 ][ currentColumnStartCol ] !== emptyChar ) {
       currentColumnStartCol ++;
       continue;
@@ -346,9 +363,9 @@ export const applyLayoutEngine = state => {
 
     // Fill the current column with posts.
     currentPostStartRow = 1;
-    while ( currentPostStartRow <= state.gridrows ) {
+    while ( currentPostStartRow <= gridrows ) {
       i = currentPostStartRow;
-      while ( i <= currentPostStartRow + verticalFragmentSizeMatrix[ currentColumnStartCol ] - 1 && i <= state.gridrows ) {
+      while ( i <= currentPostStartRow + verticalFragmentSizeMatrix[ currentColumnStartCol ] - 1 && i <= gridrows ) {
         j = currentColumnStartCol;
         do {
           nthMatrix[ i ][ j ] = currentNth;
@@ -379,11 +396,11 @@ export const applyLayoutEngine = state => {
 
   // We start with the first post in the list.
   let maxNth = currentNth;
-  let hierachyCrossingStrenth = state.hierarchycrossing;
+  let hierachyCrossingStrength = hierarchycrossing;
 
   currentNth = 1;
 
-  while ( hierachyCrossingStrenth > 0 && currentNth <= maxNth ) {
+  while ( hierachyCrossingStrength > 0 && currentNth <= maxNth ) {
     let currentPostDetails = getNthPostDetails( currentNth, nthMatrix, metaDetailsMatrix, imageWeightMatrix );
     if ( false === currentPostDetails ) {
       currentNth ++;
@@ -391,7 +408,7 @@ export const applyLayoutEngine = state => {
     }
 
     // If the current post is all the way to the right edge, stop.
-    if ( currentPostDetails.endGridColumn === state.gridcolumns ) {
+    if ( currentPostDetails.endGridColumn === gridcolumns ) {
       break;
     }
 
@@ -422,12 +439,12 @@ export const applyLayoutEngine = state => {
     }
 
     // If the to-be replaced post(s) score is larger than the remaining hierarchy crossing strength, nothing to do.
-    if ( hierachyCrossingStrenth < replacedPostScore ) {
+    if ( hierachyCrossingStrength < replacedPostScore ) {
       currentNth ++;
       continue;
     }
 
-    let currentPostScore = ( maxNth / currentPostDetails.nth ) * ( currentPostDetails.area + currentPostDetails.imageWeight + currentPostDetails.metaDetails ) * Math.pow( 2 * hierachyCrossingStrenth / 50, 3 );
+    let currentPostScore = ( maxNth / currentPostDetails.nth ) * ( currentPostDetails.area + currentPostDetails.imageWeight + currentPostDetails.metaDetails ) * Math.pow( 2 * hierachyCrossingStrength / 50, 3 );
     // If the current post score is bigger than the to-be replaced post(s) score, it's a go.
     if ( currentPostScore > replacedPostScore ) {
       // Expand the current post over the replaced ones.
@@ -442,7 +459,7 @@ export const applyLayoutEngine = state => {
       }
 
       // Decrease the crossing strength.
-      hierachyCrossingStrenth -= replacedPostScore;
+      hierachyCrossingStrength -= replacedPostScore;
 
       // We now have a gap in the post list. We need to renumber the posts after the replaced ones and adjust the maxnth.
       // The image weight and meta-details remain unchanged.
@@ -454,16 +471,17 @@ export const applyLayoutEngine = state => {
   }
 
   // Transpose all matrices if flipcolssrows attribute is set to true
-  const finalNthMatrix = !state.flipcolsrows ? nthMatrix : transposeMatrix( nthMatrix );
-  const finalMetaMatrix = !state.flipcolsrows ? metaDetailsMatrix : transposeMatrix( metaDetailsMatrix );
-  const finalImageMatrix = !state.flipcolsrows ? imageWeightMatrix : transposeMatrix( imageWeightMatrix );
+  const finalNthMatrix = ! flipcolsrows ? nthMatrix : transposeMatrix( nthMatrix );
+  const finalMetaMatrix = ! flipcolsrows ? metaDetailsMatrix : transposeMatrix( metaDetailsMatrix );
+  const finalImageMatrix = ! flipcolsrows ? imageWeightMatrix : transposeMatrix( imageWeightMatrix );
 
   /*
   8. Finally, generate the posts list.
   */
-  const areaColumns = getGroupedPostAreas( state, finalNthMatrix, finalMetaMatrix, finalImageMatrix );
+  const myState = JSON.parse( JSON.stringify( state ) );
+  const areaColumns = getGroupedPostAreas( myState, finalNthMatrix, finalMetaMatrix, finalImageMatrix );
 
-  moveLargestColumnToStart( areaColumns );
+//  moveLargestColumnToStart( areaColumns );
 
   return areaColumns;
 };
@@ -551,6 +569,8 @@ function getNthValues( nthMatrix ) {
 
 function normalizeAreas( nthMatrix, areasArray ) {
   const values = getNthValues( nthMatrix );
+  const normalizedAreasArray = JSON.parse( JSON.stringify( areasArray ) );
+
   values.sort( ( a, b ) => {
     return a - b;
   } );
@@ -562,7 +582,7 @@ function normalizeAreas( nthMatrix, areasArray ) {
   }
 
   return values.map( ( nth, index ) => {
-    const area = areasArray.find( area => area.nth === nth );
+    const area = normalizedAreasArray.find( area => area.nth === nth );
     area.nth = index + 1;
     return area;
   } );
@@ -579,14 +599,17 @@ function replaceNth( nth1, nth2, nthMatrix ) {
 }
 
 const mergeSimilarAreas = ( nthMatrix, metaDetailsMatrix, imageWeightMatrix, areasArray, state ) => {
+  const myAreasArray = JSON.parse( JSON.stringify( areasArray ) );
   let currentPostDetails;
 
   for ( let currentNth = 1; currentNth <= getMaxNth( nthMatrix ); currentNth ++ ) {
     currentPostDetails = getNthPostDetails( currentNth, nthMatrix, metaDetailsMatrix, imageWeightMatrix );
     if ( currentPostDetails ) {
-      mergeAreaNeighbours( currentPostDetails.startGridRow, currentPostDetails.startGridColumn, nthMatrix, metaDetailsMatrix, imageWeightMatrix, areasArray, state );
+      mergeAreaNeighbours( currentPostDetails.startGridRow, currentPostDetails.startGridColumn, nthMatrix, metaDetailsMatrix, imageWeightMatrix, myAreasArray, state );
     }
   }
+
+  return myAreasArray;
 };
 
 const mergeAreaNeighbours = ( row, col, nthMatrix, metaDetailsMatrix, imageWeightMatrix, areasArray, state ) => {
@@ -646,7 +669,7 @@ const mergeAreaNeighbours = ( row, col, nthMatrix, metaDetailsMatrix, imageWeigh
 
   searching = !mergeable;
 
-  while ( searching && !state.flipcolsrows ) {
+  while ( searching && ! state.flipcolsrows ) {
     nextNth = nthMatrix[ row ][ col + width ];
     nextNthStart = getFirstOccurrence( nextNth, nthMatrix );
     nextRow = nextNthStart.row;
