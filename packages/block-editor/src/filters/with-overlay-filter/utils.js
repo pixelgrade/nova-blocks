@@ -1,10 +1,20 @@
-import { getSignals } from "@novablocks/utils";
+import { getPaletteConfig, getSignals } from "@novablocks/utils";
 
 /**
  * Returns a Duotone Presets Array.
  * @param palettes
  * @returns {array}
  */
+const getAlteredSignals = ( palette ) => {
+  const signals = getSignals( palette.id );
+  const sourceVariation = palette.sourceIndex + 1;
+  const neareastIndex = signals.reduce( ( index, signal, currentIndex, signals ) => {
+    return Math.abs( signals[ index ] - sourceVariation ) <= Math.abs( signals[ currentIndex ] - sourceVariation ) ? index : currentIndex;
+  }, 0 );
+  signals.splice( neareastIndex, 1, [ sourceVariation ] );
+  return signals;
+}
+
 export const generateDuotonePresetsFromPalettes = ( palettes ) => {
   const presets = [];
 
@@ -13,10 +23,10 @@ export const generateDuotonePresetsFromPalettes = ( palettes ) => {
   }
 
   palettes.forEach( palette1 => {
-    const signals1 = getSignals( palette1.id );
+    const signals1 = getAlteredSignals( palette1 );
 
     palettes.filter( palette2 => palette1.id !== palette2.id ).forEach( palette2 => {
-      const signals2 = getSignals( palette2.id );
+      const signals2 = getAlteredSignals( palette2 );
 
       signals1.forEach( ( signal1, index1 ) => {
         signals2.forEach( ( signal2, index2 ) => {
@@ -64,7 +74,7 @@ export const generateColorPalettes = ( palettes ) => {
   }
 
   palettes.forEach( palette => {
-    const signals = getSignals( palette.id );
+    const signals = getAlteredSignals( palette );
     const label = palette.label;
 
     signals.forEach( ( signal, index ) => {
