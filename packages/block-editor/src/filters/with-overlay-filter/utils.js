@@ -11,7 +11,7 @@ const getAlteredSignals = ( palette ) => {
   const neareastIndex = signals.reduce( ( index, signal, currentIndex, signals ) => {
     return Math.abs( signals[ index ] - sourceVariation ) <= Math.abs( signals[ currentIndex ] - sourceVariation ) ? index : currentIndex;
   }, 0 );
-  signals.splice( neareastIndex, 1, [ sourceVariation ] );
+  signals.splice( neareastIndex, 1, sourceVariation );
   return signals;
 }
 
