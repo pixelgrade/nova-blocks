@@ -13,6 +13,8 @@ const GridAnatomyControls = ( props ) => {
   } = props;
 
   const {
+    featuresize,
+    featureposition,
     gridcolumns,
     gridrows,
   } = attributes;
@@ -24,7 +26,14 @@ const GridAnatomyControls = ( props ) => {
         value={ gridcolumns }
         onChange={ gridcolumns => {
           if ( typeof gridcolumns !== "undefined" ) {
-            setAttributes( { gridcolumns } );
+            const maxFeaturePosition = gridcolumns + 1 - featuresize;
+            const newFeaturePosition = Math.max( 1, Math.min( maxFeaturePosition, featureposition ) );
+            const newFeatureSize = Math.max( 1, gridcolumns + 1 - newFeaturePosition );
+            setAttributes( {
+              featuresize: newFeatureSize,
+              featureposition: newFeaturePosition,
+              gridcolumns
+            } );
           }
         } }
         min={ 1 }
