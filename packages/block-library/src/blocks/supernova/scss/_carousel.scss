@@ -343,7 +343,7 @@ $slick-arrow-background-opacity-hover: 0.6 !default;
 
 // These styles are applied when *Collection Layout* option is set to 'Carousel',
 // *Card Layout* is 'Stacked', *Pagination* is 'true', and *Number of Items per Row* is set to '1'.
-.nb-supernova--card-layout-stacked.nb-supernova--1-columns.alignfull {
+.nb-supernova--card-layout-stacked.nb-supernova--1-columns.nb-supernova--align-full {
 
   &.nb-supernova--show-pagination .nb-collection__layout--carousel .nb-supernova-item__inner-container {
     --nb-supernova-item-carousel-padding-bottom: calc(2 * var(--nb-spacing) + var(--current-font-size) * var(--current-line-height));

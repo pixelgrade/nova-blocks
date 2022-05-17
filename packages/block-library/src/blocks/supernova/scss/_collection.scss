@@ -8,7 +8,7 @@
   &[class*="sm-color-signal"]:not(.sm-color-signal-0) {
 
     // and doesn't look like a hero area
-    &:not(.nb-supernova--card-layout-stacked.nb-supernova--1-columns.alignfull) {
+    &:not(.nb-supernova--card-layout-stacked.nb-supernova--1-columns.nb-supernova--align-full) {
 
       // and is inside a sidecar area
       .nb-sidecar-area & {
