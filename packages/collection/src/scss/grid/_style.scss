@@ -17,6 +17,22 @@
 	position: relative;
 	overflow: hidden;
 
+  .nb-supernova--card-layout-stacked & {
+    height: 100%;
+
+    display: flex;
+    flex-direction: column;
+
+    > .nb-grid__item {
+      flex-grow: 1;
+
+      > .nb-collection__layout-item,
+      > .nb-collection__layout-item > .nb-supernova-item {
+        height: 100%;
+      }
+    }
+  }
+
 	.nb-grid__column:first-child &:first-child:last-child {
 		position: sticky;
 		top: var(--nb-grid-spacing);
