@@ -107,7 +107,7 @@ const handleParametricGrid = ( $grid, $block, attributes ) => {
       }
     }
 
-    normalizeColumns( areaColumns );
+    normalizeColumns( areaColumns, attributes );
     redistributeCardsInAreas( areaColumns, cardsCount, attributes );
 
     let gridcolumns = attributes.flipcolsrows ? attributes.gridrows : attributes.gridcolumns;
