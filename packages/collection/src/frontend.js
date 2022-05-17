@@ -7,7 +7,6 @@ import {
   applyLayoutEngine,
   getAreaClassname,
   removeSmallestColumn,
-  normalizeColumns,
   getAreaClassnameByWidthRatio,
   getGridStyle,
   redistributeCardsInAreas,
@@ -107,7 +106,6 @@ const handleParametricGrid = ( $grid, $block, attributes ) => {
       }
     }
 
-    normalizeColumns( areaColumns, attributes );
     redistributeCardsInAreas( areaColumns, cardsCount, attributes );
 
     let gridcolumns = attributes.flipcolsrows ? attributes.gridrows : attributes.gridcolumns;
