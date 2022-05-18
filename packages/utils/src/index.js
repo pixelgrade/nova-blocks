@@ -379,10 +379,10 @@ export const resizeDropcap = dropcap => {
   const wrapper = dropcap.parentElement;
 
   const dropcapWidth = dropcap.offsetWidth;
-  const wrapperWidth = wrapper.offsetWidth;
+  const wrapperWidth = wrapper.offsetWidth * 0.9;
   const widthRatio = wrapperWidth / dropcapWidth;
   const dropcapHeight = dropcap.offsetHeight;
-  const wrapperHeight = wrapper.offsetHeight;
+  const wrapperHeight = wrapper.offsetHeight * 0.9;
   const heightRatio = wrapperHeight / dropcapHeight;
   const ratio = Math.min( widthRatio, heightRatio );
 

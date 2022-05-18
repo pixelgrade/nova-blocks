@@ -14,3 +14,4 @@ const debouncedResizeAllDropcaps = debounce( resizeAllDropcaps, 100 );
 domReady( resizeAllDropcaps );
 
 window.addEventListener( 'resize', debouncedResizeAllDropcaps );
+window.addEventListener( 'nb:layout', resizeAllDropcaps );

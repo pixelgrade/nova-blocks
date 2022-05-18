@@ -193,6 +193,7 @@ const handleParametricGrid = ( $grid, $block, attributes ) => {
 }
 
 const handleGrids = ( selector ) => {
+
   $( selector ).each( function( i, grid ) {
     const $grid = $( grid );
     const $block = $grid.closest( '[data-layout-style]' );
@@ -210,4 +211,7 @@ const handleGrids = ( selector ) => {
       handleMasonryGrid( $grid, $block, attributes );
     }
   } );
+
+  const resize = new CustomEvent( 'nb:layout' );
+  window.dispatchEvent( resize );
 }
