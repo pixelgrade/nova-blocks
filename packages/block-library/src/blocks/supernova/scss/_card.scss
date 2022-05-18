@@ -256,7 +256,7 @@
     }
   }
 
-  :is(.nb-collection__layout--carousel.nb-collection__layout--variable-width, .nb-collection__layout--masonry) {
+  :is(.nb-collection__layout--carousel.nb-collection__layout--variable-width, .nb-supernova-item--aspect-ratio-auto) {
 
     .nb-supernova-item__media-aspect-ratio > * {
       position: static;
