@@ -3,7 +3,7 @@ Contributors: pixelgrade, vlad.olaru, babbardel, razvanonofrei, gorby31
 Tags: blocks, editor, gutenberg, gutenberg blocks, page builder, block enabled, page building, full site editing, site editor, posts collection
 Requires at least: 5.9
 Tested up to: 5.9.4
-Stable tag: 2.0.2
+Stable tag: 2.0.3
 Requires PHP: 7.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -31,6 +31,7 @@ Nova Blocks is a collection of **distinctive Gutenberg blocks,** committed to ma
 
 = Tested with the following WordPress themes: =
 
+* [Julia LT](https://pixelgrade.com/themes/blogging/julia-lt/) _by Pixelgrade_
 * [Rosa LT](https://pixelgrade.com/themes/restaurants/rosa-lt/) _by Pixelgrade_
 * [Felt LT](https://pixelgrade.com/themes/blogging/felt-lt/) _by Pixelgrade_
 * [Twenty Nineteen](https://wordpress.org/themes/twentynineteen/) _by WordPress team_
@@ -100,6 +101,12 @@ Yes! Nova Block's core features are free to use.
 * Styling adjustments to the conversation starter section of the post-comments block
 * Improve the google-map block to adjust styling in dark mode
 * Styling fixes for sticky widgets
+* Styling fixes for carousels inside heroes
+* Improve duotone component
+* Styling improvements to dropcap
+* Improve Supernova block media aspect-ratio handling
+* Styling fixes and improvements to parametric grid layouts (media handling)
+* Apply color-signal logic to all scroll indicators in heroes
 
 = 2.0.2 =
 * Change post comments block default avatar size to a more standard one (96) to avoid further thumbnail generation.
