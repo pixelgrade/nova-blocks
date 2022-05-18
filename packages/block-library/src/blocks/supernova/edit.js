@@ -63,6 +63,7 @@ const SupernovaPreview = props => {
   } = props;
 
   const {
+    align,
     columns,
     headerPosition,
     showCollectionTitle,
@@ -86,6 +87,7 @@ const SupernovaPreview = props => {
     `nb-supernova--${ columns }-columns`,
     `nb-supernova--valign-${ contentAlign[ 0 ] }`,
     `nb-supernova--halign-${ contentAlign[ 1 ] }`,
+    `nb-supernova--align-${ align }`,
     { 'nb-supernova--show-pagination': showPagination },
     { [ `nb-supernova--carousel-layout-${ carouselLayout }` ]: layoutStyle === 'carousel' },
     props.className,
