@@ -113,7 +113,7 @@ export const PostCard = withMedia( props => {
         <CardDescription show={ showDescription }
                          key={ 'card_post_description_' + post.id }>{ stripHTML( post?.excerpt?.rendered || '' ) }</CardDescription>
         <CardFooter show={ showButtons } key={ 'card_post_footer_' + post.id }>
-          <CardButton key={ 'card_post_footer_button_' + post.id }>{ __( 'Read More', '__plugin_txtd' ) }</CardButton>
+          <CardButton attributes={ attributes } key={ 'card_post_footer_button_' + post.id }>{ __( 'Read More', '__plugin_txtd' ) }</CardButton>
         </CardFooter>
       </div>
     </Card>
