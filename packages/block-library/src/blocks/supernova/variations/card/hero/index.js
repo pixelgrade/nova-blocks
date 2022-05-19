@@ -55,7 +55,9 @@ const innerBlocks = [
     [
       [ 'core/heading', { level: 1, content: 'This is a catchy title' } ],
       [ 'core/paragraph', { content: 'A brilliant subtitle to explain its catchiness', className: 'is-style-lead' } ],
-      [ 'core/button', { text: 'Discover more' } ],
+      [ 'core/buttons', { layout: { type: 'flex', justifyContent: 'center' } }, [
+        [ 'core/button', { text: 'Discover more' } ]
+      ] ],
     ]
   ]
 ];
