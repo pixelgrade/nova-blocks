@@ -48,6 +48,7 @@ if ( ! function_exists( 'novablocks_render_sidecar_block' ) ) {
 			'nb-sidecar--sidebar-' . $attributes['sidebarPosition'],
 			'nb-sidecar--sidebar-' . $attributes['sidebarWidth'],
 			'nb-content-layout-grid',
+			'alignfull'
 		];
 
 		if ( ! empty( $attributes['lastItemIsSticky'] ) ) {

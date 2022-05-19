@@ -35,6 +35,7 @@ const Edit = ( props ) => {
     {
       'nb-sidecar--sticky-sidebar': lastItemIsSticky === true,
     },
+    'alignfull'
   );
 
   const blockProps = useBlockProps( {
