@@ -1,7 +1,7 @@
 import { Fragment } from "@wordpress/element";
 import { __unstableStripHTML as stripHTML } from '@wordpress/dom';
 
-import { CardButton, CardDescription, CardFooter, CardMeta, CardTitle } from "../../index";
+import { CardButton, CardDescription, CardFooter, CardMeta, CardTitle, CardSubtitle } from "../../index";
 
 const CardFieldsPreview = ( props ) => {
 
@@ -9,10 +9,12 @@ const CardFieldsPreview = ( props ) => {
     attributes: {
       metaAboveTitle,
       title,
+      subtitle,
       metaBelowTitle,
       description,
       showMeta,
       showTitle,
+      showSubtitle,
       showDescription,
 
       buttonText,
@@ -22,11 +24,12 @@ const CardFieldsPreview = ( props ) => {
 
   return (
     <Fragment>
-      <CardMeta show={ showMeta }>{ metaAboveTitle }</CardMeta>
-      <CardTitle show={ showTitle }>{ title }</CardTitle>
-      <CardMeta show={ showMeta }>{ metaBelowTitle }</CardMeta>
-      <CardDescription show={ showDescription }>{ stripHTML( description ) }</CardDescription>
-      <CardFooter show={ showButtons && !! buttonText }>
+      <CardMeta { ...props } show={ showMeta }>{ metaAboveTitle }</CardMeta>
+      <CardTitle { ...props } show={ showTitle }>{ title }</CardTitle>
+      <CardSubtitle { ...props } show={ showSubtitle }>{ subtitle }</CardSubtitle>
+      <CardMeta { ...props } show={ showMeta }>{ metaBelowTitle }</CardMeta>
+      <CardDescription { ...props } show={ showDescription }>{ stripHTML( description ) }</CardDescription>
+      <CardFooter { ...props } show={ showButtons && !! buttonText }>
         <CardButton { ...props }>{ buttonText }</CardButton>
       </CardFooter>
     </Fragment>
