@@ -35,7 +35,7 @@
 
 .site-branding {
   display: flex;
-  justify-content: center;
+  justify-content: var(--justify-content, center);
   align-items: center;
   flex-shrink: 0;
 

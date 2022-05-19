@@ -51,10 +51,6 @@ if ( ! function_exists( 'novablocks_render_supernova_block' ) ) {
 		$attributes_config = novablocks_get_supernova_attributes();
 		$attributes        = novablocks_get_attributes_with_defaults( $attributes, $attributes_config );
 
-		if ( $attributes['layoutStyle'] === 'carousel' ) {
-			$attributes['scrollingEffect'] = 'static';
-		}
-
 		$data_attributes_array = array_map( 'novablocks_camel_case_to_kebab_case', array_keys( $attributes ) );
 
 		$data_attributes = novablocks_get_data_attributes( $data_attributes_array, $attributes );
