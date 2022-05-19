@@ -40,12 +40,15 @@ const withSetChildrenAttributes = OriginalComponent => {
           updateBlockAttributes( block.clientId, newAttributes );
 
           const contentBlocks = getBlock( block.clientId ).innerBlocks;
+          const contentAlign = getAlignFromMatrix( attributes?.contentPosition );
 
           if ( Array.isArray( contentBlocks ) ) {
             contentBlocks.filter( block => block.name === 'novablocks/headline' ).forEach( block => {
-              const contentAlign = getAlignFromMatrix( attributes?.contentPosition );
-
               updateBlockAttributes( block.clientId, { textAlign: contentAlign[1] } );
+            } )
+
+            contentBlocks.filter( block => block.name === 'core/buttons' ).forEach( block => {
+              updateBlockAttributes( block.clientId, { layout: { ...block.attributes.layout, type: 'flex', justifyContent: contentAlign[1] } } );
             } )
           }
         } );
