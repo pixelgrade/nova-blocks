@@ -1,18 +1,18 @@
-# Copyright (C) 2019 Pixelgrade
-# This file is distributed under the same license as the Nova Blocks plugin.
+# Copyright (C) 2022 Pixelgrade
+# This file is distributed under the GPLv2 or later.
 msgid ""
 msgstr ""
-"Project-Id-Version: Nova Blocks 1.1.0\n"
+"Project-Id-Version: Nova Blocks 2.0.3\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/nova-blocks\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2019-10-01T11:43:22+03:00\n"
+"POT-Creation-Date: 2022-05-19T07:48:33+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"X-Generator: WP-CLI 2.3.0\n"
-"X-Domain: __plugin_txtd\n"
+"X-Generator: WP-CLI 2.5.0\n"
+"X-Domain: nova-blocks\n"
 
 #. Plugin Name of the plugin
 msgid "Nova Blocks"
@@ -34,736 +34,2657 @@ msgstr ""
 msgid "https://www.pixelgrade.com"
 msgstr ""
 
-#: lib/extras.php:470
-#: lib/extras.php:484
-msgid "Basic"
-msgstr ""
-
-#: lib/extras.php:474
-#: lib/extras.php:488
-msgid "Moderate"
-msgstr ""
-
-#: lib/extras.php:478
-#: lib/extras.php:492
-msgid "Highlighted"
-msgstr ""
-
-#: lib/extras.php:548
-msgid "Auto"
-msgstr ""
-
-#: lib/extras.php:552
-#: lib/extras.php:588
-msgid "Half"
-msgstr ""
-
-#: lib/extras.php:556
-#: lib/extras.php:592
-msgid "Two Thirds"
-msgstr ""
-
-#: lib/extras.php:560
-#: lib/extras.php:596
-msgid "Three Quarters"
-msgstr ""
-
-#: lib/extras.php:564
-msgid "Full Height"
-msgstr ""
-
-#: lib/extras.php:574
-#: src/components/color-controls/index.js:49
-msgid "None"
-msgstr ""
-
-#: lib/extras.php:578
-msgid "First Hero Block Only"
-msgstr ""
-
-#: lib/extras.php:582
-msgid "All Hero Blocks"
-msgstr ""
-
-#: lib/extras.php:600
-#: lib/extras.php:624
-msgid "Full"
-msgstr ""
-
-#: lib/extras.php:606
-msgid "Small"
-msgstr ""
-
-#: lib/extras.php:610
-msgid "Medium"
-msgstr ""
-
-#: lib/extras.php:614
-#: lib/extras.php:628
-msgid "Large"
-msgstr ""
-
-#: lib/extras.php:618
-#: lib/extras.php:636
-#: lib/extras.php:654
-msgid "Custom"
-msgstr ""
-
-#: lib/extras.php:632
-msgid "Narrow"
-msgstr ""
-
-#: lib/extras.php:642
-msgid "Fast as Mercure"
-msgstr ""
-
-#: lib/extras.php:646
-msgid "Natural as Earth"
-msgstr ""
-
-#: lib/extras.php:650
-msgid "Slow as Neptune"
-msgstr ""
-
-#: src/blocks/header/init.php:45
+#: build/block-library/blocks/header/extras.php:67
+#: build/block-library/blocks/header/init.php:96
+#: packages/block-library/src/blocks/header/extras.php:67
+#: packages/block-library/src/blocks/header/init.php:96
 msgid "Menu"
 msgstr ""
 
-#: src/blocks/announcement-bar/index.js:24
-msgid "Announcement Bar"
+#: build/block-library/blocks/header/extras.php:77
+#: packages/block-library/src/blocks/header/extras.php:77
+msgid "Reading:"
 msgstr ""
 
-#: src/blocks/announcement-bar/index.js:25
-msgid "Display a featured message through a banner across the top of your site."
+#: build/block-library/blocks/header/extras.php:86
+#: packages/block-library/src/blocks/header/extras.php:86
+msgid "Read Next:"
 msgstr ""
 
-#: src/blocks/announcement-bar/index.js:28
-msgid "Promo Bar"
+#: build/block-library/blocks/openhours/init.php:577
+#: packages/block-library/src/blocks/openhours/init.php:577
+msgid "You haven't setup a schedule yet."
 msgstr ""
 
-#: src/blocks/announcement-bar/index.js:28
-msgid "Welcome Header Bar"
+#: build/block-library/blocks/post-comments/init.php:71
+#: packages/block-library/src/blocks/post-comments/init.php:71
+msgid "Link copied to your clipboard"
 msgstr ""
 
-#: src/blocks/announcement-bar/index.js:28
-msgid "Top Bar"
+#: build/block-library/blocks/post-comments/lib/actions/class-novablocks-comments-highlight.php:88
+#: packages/block-library/src/blocks/post-comments/lib/actions/class-novablocks-comments-highlight.php:88
+msgid "Highlighted by"
 msgstr ""
 
-#: src/blocks/announcement-bar/index.js:31
-msgid "Accent"
+#: build/block-library/blocks/post-comments/lib/actions/class-novablocks-comments-highlight.php:102
+#: packages/block-library/src/blocks/post-comments/lib/actions/class-novablocks-comments-highlight.php:102
+msgid "Conversation editor"
 msgstr ""
 
-#: src/blocks/announcement-bar/index.js:35
-msgid "Alternative"
+#: build/block-library/blocks/post-comments/lib/actions/class-novablocks-comments-highlight.php:104
+#: packages/block-library/src/blocks/post-comments/lib/actions/class-novablocks-comments-highlight.php:104
+msgid "Conversation starter"
 msgstr ""
 
-#: src/blocks/announcement-bar/index.js:38
-msgid "Alert"
+#: build/block-library/blocks/post-comments/lib/actions/class-novablocks-comments-highlight.php:106
+#: packages/block-library/src/blocks/post-comments/lib/actions/class-novablocks-comments-highlight.php:106
+msgid "Article author"
 msgstr ""
 
-#: src/blocks/announcement-bar/index.js:76
-msgid "Add a link to make the whole Announcement Bar clickable."
+#: build/block-library/blocks/post-comments/lib/actions/class-novablocks-comments-highlight.php:147
+#: packages/block-library/src/blocks/post-comments/lib/actions/class-novablocks-comments-highlight.php:147
+msgid "Toggle your highlight of this comment"
 msgstr ""
 
-#: src/blocks/announcement-bar/index.js:93
-msgid "Open in new tab"
+#: build/block-library/blocks/post-comments/lib/actions/class-novablocks-comments-highlight.php:148
+#: packages/block-library/src/blocks/post-comments/lib/actions/class-novablocks-comments-highlight.php:148
+msgid "Toggle your highlight"
 msgstr ""
 
-#: src/blocks/google-map/api-key-panel-body.js:33
-msgid "Google Maps API Key"
+#: build/block-library/blocks/post-comments/lib/actions/class-novablocks-comments-highlight.php:189
+#: packages/block-library/src/blocks/post-comments/lib/actions/class-novablocks-comments-highlight.php:189
+msgid "Highlighters of this comment"
 msgstr ""
 
-#: src/blocks/google-map/api-key-panel-body.js:35
-#: src/blocks/google-map/placeholder.js:48
-msgid "Paste API key here"
+#: build/block-library/blocks/post-comments/lib/actions/class-novablocks-comments-highlight.php:198
+#: packages/block-library/src/blocks/post-comments/lib/actions/class-novablocks-comments-highlight.php:198
+msgid "Me (%s)"
 msgstr ""
 
-#: src/blocks/google-map/api-key-panel-body.js:41
-#: src/blocks/google-map/placeholder.js:54
-msgid "Save"
+#: build/block-library/blocks/post-comments/lib/actions/class-novablocks-comments-highlight.php:225
+#: packages/block-library/src/blocks/post-comments/lib/actions/class-novablocks-comments-highlight.php:225
+msgid "All the current highlights of this comment, plus the option to highlight yourself.<br/>Highlighters can only be <strong>registered users</strong> that have <strong>management capabilities</strong> for comments."
 msgstr ""
 
-#: src/blocks/google-map/edit.js:160
-msgid "register a Google Maps API Key"
+#: build/block-library/blocks/post-comments/lib/actions/class-novablocks-comments-highlight.php:235
+#: packages/block-library/src/blocks/post-comments/lib/actions/class-novablocks-comments-highlight.php:235
+msgid "<strong>Error:</strong> Wrong data sent."
 msgstr ""
 
-#: src/blocks/google-map/edit.js:164
-msgid "It seems that your Google Maps API key is INVALID. Please double check that you pasted it correctly and that it is a valid API key. More information about how to"
+#: build/block-library/blocks/post-comments/lib/actions/class-novablocks-comments-highlight.php:236
+#: build/block-library/blocks/post-comments/lib/actions/class-novablocks-comments-highlight.php:253
+#: build/block-library/blocks/post-comments/lib/actions/class-novablocks-comments-highlight.php:272
+#: build/block-library/blocks/post-comments/lib/actions/class-novablocks-comments-highlight.php:286
+#: build/block-library/blocks/post-comments/lib/actions/class-novablocks-comments-highlight.php:298
+#: build/block-library/blocks/post-comments/lib/metas/class-novablocks-comments-meta.php:97
+#: packages/block-library/src/blocks/post-comments/lib/actions/class-novablocks-comments-highlight.php:236
+#: packages/block-library/src/blocks/post-comments/lib/actions/class-novablocks-comments-highlight.php:253
+#: packages/block-library/src/blocks/post-comments/lib/actions/class-novablocks-comments-highlight.php:272
+#: packages/block-library/src/blocks/post-comments/lib/actions/class-novablocks-comments-highlight.php:286
+#: packages/block-library/src/blocks/post-comments/lib/actions/class-novablocks-comments-highlight.php:298
+#: packages/block-library/src/blocks/post-comments/lib/metas/class-novablocks-comments-meta.php:97
+msgid "Comment Submission Failure"
 msgstr ""
 
-#: src/blocks/google-map/edit.js:169
-msgid "To display the map, you need to"
+#: build/block-library/blocks/post-comments/lib/actions/class-novablocks-comments-highlight.php:252
+#: packages/block-library/src/blocks/post-comments/lib/actions/class-novablocks-comments-highlight.php:252
+msgid "<strong>Error:</strong> You don't have the needed credentials to highlight comments."
 msgstr ""
 
-#: src/blocks/google-map/edit.js:169
-msgid "and include it bellow."
+#: build/block-library/blocks/post-comments/lib/actions/class-novablocks-comments-highlight.php:271
+#: packages/block-library/src/blocks/post-comments/lib/actions/class-novablocks-comments-highlight.php:271
+msgid "<strong>Error:</strong> You can't highlight your own comments."
 msgstr ""
 
-#: src/blocks/google-map/index.js:18
-msgid "Map of the World"
+#: build/block-library/blocks/post-comments/lib/actions/class-novablocks-comments-highlight.php:285
+#: packages/block-library/src/blocks/post-comments/lib/actions/class-novablocks-comments-highlight.php:285
+msgid "<strong>Error:</strong> Couldn't unhighlight this comment."
 msgstr ""
 
-#: src/blocks/google-map/index.js:19
-msgid "Display an interactive map to show the location of your venue."
+#: build/block-library/blocks/post-comments/lib/actions/class-novablocks-comments-highlight.php:297
+#: packages/block-library/src/blocks/post-comments/lib/actions/class-novablocks-comments-highlight.php:297
+msgid "<strong>Error:</strong> Couldn't highlight this comment."
 msgstr ""
 
-#: src/blocks/google-map/index.js:23
-msgid "google"
+#: build/block-library/blocks/post-comments/lib/actions/class-novablocks-comments-highlight.php:322
+#: packages/block-library/src/blocks/post-comments/lib/actions/class-novablocks-comments-highlight.php:322
+msgid "Comment Submission Success"
 msgstr ""
 
-#: src/blocks/google-map/index.js:23
-msgid "maps"
+#: build/block-library/blocks/post-comments/lib/actions/class-novablocks-comments-highlight.php:422
+#: build/block-library/blocks/post-comments/lib/actions/class-novablocks-comments-highlight.php:432
+#: build/block-library/blocks/post-comments/lib/class-novablocks-comments-logic.php:263
+#: build/block-library/blocks/post-comments/lib/class-novablocks-comments-logic.php:273
+#: build/block-library/blocks/post-comments/lib/metas/class-novablocks-comments-meta.php:224
+#: build/block-library/blocks/post-comments/lib/metas/class-novablocks-comments-meta.php:234
+#: build/block-library/blocks/post-comments/lib/metas/class-novablocks-comments-post-meta.php:199
+#: build/block-library/blocks/post-comments/lib/metas/class-novablocks-comments-post-meta.php:209
+#: lib/sidebars-blocks/class-nova_blocks-sidebars_blocks.php:213
+#: lib/sidebars-blocks/class-nova_blocks-sidebars_blocks.php:223
+#: packages/block-library/src/blocks/post-comments/lib/actions/class-novablocks-comments-highlight.php:422
+#: packages/block-library/src/blocks/post-comments/lib/actions/class-novablocks-comments-highlight.php:432
+#: packages/block-library/src/blocks/post-comments/lib/class-novablocks-comments-logic.php:263
+#: packages/block-library/src/blocks/post-comments/lib/class-novablocks-comments-logic.php:273
+#: packages/block-library/src/blocks/post-comments/lib/metas/class-novablocks-comments-meta.php:224
+#: packages/block-library/src/blocks/post-comments/lib/metas/class-novablocks-comments-meta.php:234
+#: packages/block-library/src/blocks/post-comments/lib/metas/class-novablocks-comments-post-meta.php:199
+#: packages/block-library/src/blocks/post-comments/lib/metas/class-novablocks-comments-post-meta.php:209
+msgid "You should not do that!"
 msgstr ""
 
-#: src/blocks/google-map/index.js:23
-msgid "google maps"
+#: build/block-library/blocks/post-comments/lib/class-novablocks-comments-renderer.php:90
+#: packages/block-library/src/blocks/post-comments/lib/class-novablocks-comments-renderer.php:90
+msgid "This conversation has been closed. If you have more to share, please "
 msgstr ""
 
-#: src/blocks/google-map/index.js:23
-msgid "location"
+#: build/block-library/blocks/post-comments/lib/class-novablocks-comments-renderer.php:90
+#: packages/block-library/src/blocks/post-comments/lib/class-novablocks-comments-renderer.php:90
+msgid "contact us"
 msgstr ""
 
-#: src/blocks/google-map/inspector-controls.js:52
-msgid "Map Design"
+#: build/block-library/blocks/post-comments/lib/metas/class-novablocks-comments-meta.php:80
+#: packages/block-library/src/blocks/post-comments/lib/metas/class-novablocks-comments-meta.php:80
+msgid "<strong>Error</strong>: You did not add your relevant background or experience."
 msgstr ""
 
-#: src/blocks/google-map/inspector-controls.js:68
-msgid "Show Nearby Venues"
+#: build/block-library/blocks/post-comments/lib/metas/class-novablocks-comments-meta.php:135
+#: packages/block-library/src/blocks/post-comments/lib/metas/class-novablocks-comments-meta.php:135
+msgid "Extra Details"
 msgstr ""
 
-#: src/blocks/google-map/inspector-controls.js:73
-msgid "Show Street Labels"
+#: build/block-library/blocks/post-comments/lib/metas/class-novablocks-comments-meta.php:154
+#: packages/block-library/src/blocks/post-comments/lib/metas/class-novablocks-comments-meta.php:154
+msgid "Comment extra details"
 msgstr ""
 
-#: src/blocks/google-map/inspector-controls.js:78
-msgid "Show Controls"
+#: build/block-library/blocks/post-comments/lib/metas/class-novablocks-comments-meta.php:158
+#: packages/block-library/src/blocks/post-comments/lib/metas/class-novablocks-comments-meta.php:158
+msgid "Commenter Relevant Background"
 msgstr ""
 
-#: src/blocks/google-map/inspector-controls.js:83
-msgid "Zoom Level"
+#: build/block-library/blocks/post-comments/lib/metas/class-novablocks-comments-post-meta.php:67
+#: packages/block-library/src/blocks/post-comments/lib/metas/class-novablocks-comments-post-meta.php:67
+msgid "Discussion Extra Details"
 msgstr ""
 
-#: src/blocks/google-map/map.js:198
-msgid "Enter an address to drop a pin on this map"
+#: build/block-library/blocks/post-comments/lib/metas/class-novablocks-comments-post-meta.php:90
+#: packages/block-library/src/blocks/post-comments/lib/metas/class-novablocks-comments-post-meta.php:90
+msgid "Post discussion extra details"
 msgstr ""
 
-#: src/blocks/google-map/placeholder.js:42
-msgid "Location Map of The World"
+#: build/block-library/blocks/post-comments/lib/metas/class-novablocks-comments-post-meta.php:94
+#: packages/block-library/src/blocks/post-comments/lib/metas/class-novablocks-comments-post-meta.php:94
+msgid "Conversation Starter Message"
 msgstr ""
 
-#: src/blocks/header/edit.js:23
-msgid "Logo on the left side and one navigation menu"
+#: build/block-library/blocks/post-comments/lib/metas/class-novablocks-comments-post-meta.php:97
+#: packages/block-library/src/blocks/post-comments/lib/metas/class-novablocks-comments-post-meta.php:97
+msgid "Write the content that will kick-start a meaningful conversation with and among your readers."
 msgstr ""
 
-#: src/blocks/header/edit.js:35
-msgid "Logo centered and one navigation menu on each side"
+#: build/block-library/blocks/post-comments/lib/metas/class-novablocks-comments-post-meta.php:98
+#: packages/block-library/src/blocks/post-comments/lib/metas/class-novablocks-comments-post-meta.php:98
+msgid "You can use HTML elements like <code>&lt;b&gt;</code>, <code>&lt;i&gt;</code>, <code>&lt;a&gt;</code> to put some structure or emphasis on your message. Best that you don't overdo it."
 msgstr ""
 
-#: src/blocks/header/edit.js:89
-msgid "Change Layout"
+#: build/block-library/blocks/post-comments/lib/metas/class-novablocks-comments-post-meta.php:99
+#: packages/block-library/src/blocks/post-comments/lib/metas/class-novablocks-comments-post-meta.php:99
+msgid "You can include the following dynamic tags: <code>%author%</code> equivalent to <code>%author_display_name%</code>, <code>%author_first_name%</code>, <code>%author_last_name%</code>, <code>%post_title%</code>, and <code>%year%</code>. These will be replaced with the corresponding value."
 msgstr ""
 
-#: src/blocks/header/index.js:17
-msgid "Header"
+#: build/block-library/blocks/post-comments/lib/metas/class-novablocks-comments-post-meta.php:100
+#: packages/block-library/src/blocks/post-comments/lib/metas/class-novablocks-comments-post-meta.php:100
+msgid "<b>Leave empty to hide/skip</b> the entire conversation starter section for this post."
 msgstr ""
 
-#: src/blocks/header/index.js:18
-msgid "Outputs custom header markup."
+#: build/block-library/blocks/post-comments/lib/metas/class-novablocks-comments-post-meta.php:104
+#: packages/block-library/src/blocks/post-comments/lib/metas/class-novablocks-comments-post-meta.php:104
+msgid "Conversation Starter Subtitle (Optional)"
 msgstr ""
 
-#: src/blocks/header/index.js:22
-msgid "logo"
+#: build/block-library/blocks/post-comments/lib/metas/class-novablocks-comments-post-meta.php:107
+#: packages/block-library/src/blocks/post-comments/lib/metas/class-novablocks-comments-post-meta.php:107
+msgid "You can use the <code>%author%</code> dynamic tag like in this example: \"A question by %author%, author of this article:\""
 msgstr ""
 
-#: src/blocks/header/index.js:22
-#: src/blocks/navigation/index.js:20
-msgid "menu"
+#: build/block-library/blocks/post-comments/lib/metas/class-novablocks-comments-post-meta.php:108
+#: packages/block-library/src/blocks/post-comments/lib/metas/class-novablocks-comments-post-meta.php:108
+msgid "Here are all the dynamic tags you can use: <code>%author%</code> equivalent to <code>%author_display_name%</code>, <code>%author_first_name%</code>, <code>%author_last_name%</code>, <code>%post_title%</code>, and <code>%year%</code>. These will be replaced with the corresponding value."
 msgstr ""
 
-#: src/blocks/headline/edit.js:49
-msgid "Level"
+#: build/block-library/blocks/post-comments/lib/metas/class-novablocks-comments-post-meta.php:109
+#: packages/block-library/src/blocks/post-comments/lib/metas/class-novablocks-comments-post-meta.php:109
+msgid "<b>Leave empty</b> to not show a subtitle for your conversation starter content."
 msgstr ""
 
-#: src/blocks/headline/edit.js:64
-msgid "Subtitle…"
+#: build/block-library/blocks/post-comments/lib/metas/class-novablocks-comments-post-meta.php:113
+#: packages/block-library/src/blocks/post-comments/lib/metas/class-novablocks-comments-post-meta.php:113
+msgid "Conversation Starter"
 msgstr ""
 
-#: src/blocks/headline/edit.js:74
-msgid "Write title…"
+#: build/block-library/blocks/post-comments/lib/metas/class-novablocks-comments-post-meta.php:124
+#: packages/block-library/src/blocks/post-comments/lib/metas/class-novablocks-comments-post-meta.php:124
+msgid "Who is doing the conversation starting? By default, it's the post author."
 msgstr ""
 
-#. translators: %s: heading level e.g: "1", "2", "3"
-#: src/blocks/headline/heading-toolbar.js:19
-msgid "Heading %d"
+#: build/block-library/blocks/post-comments/lib/renderers/class-novablocks-comments-form.php:62
+#: packages/block-library/src/blocks/post-comments/lib/renderers/class-novablocks-comments-form.php:62
+msgid "What's your comment or question?"
 msgstr ""
 
-#: src/blocks/headline/index.js:16
-msgid "Headline"
+#. translators %s: The current commenter name.
+#: build/block-library/blocks/post-comments/lib/renderers/class-novablocks-comments-form.php:66
+#: packages/block-library/src/blocks/post-comments/lib/renderers/class-novablocks-comments-form.php:66
+msgid "What's your comment or question, %s?"
 msgstr ""
 
-#: src/blocks/headline/index.js:17
-msgid "Advanced heading block with a fancier display"
+#: build/block-library/blocks/post-comments/lib/renderers/class-novablocks-comments-form.php:68
+#: packages/block-library/src/blocks/post-comments/lib/renderers/class-novablocks-comments-form.php:68
+msgid "Let's start a personal, meaningful conversation."
 msgstr ""
 
-#: src/blocks/headline/index.js:21
-msgid "heading"
+#: build/block-library/blocks/post-comments/lib/renderers/class-novablocks-comments-form.php:70
+#: packages/block-library/src/blocks/post-comments/lib/renderers/class-novablocks-comments-form.php:70
+msgid "Share your knowledge or ask a question.."
 msgstr ""
 
-#: src/blocks/headline/index.js:21
-msgid "title"
+#: build/block-library/blocks/post-comments/lib/renderers/class-novablocks-comments-form.php:78
+#: packages/block-library/src/blocks/post-comments/lib/renderers/class-novablocks-comments-form.php:78
+msgid "What is your background around this topic?"
 msgstr ""
 
-#: src/blocks/headline/index.js:21
-msgid "cta"
+#: build/block-library/blocks/post-comments/lib/renderers/class-novablocks-comments-form.php:80
+#: packages/block-library/src/blocks/post-comments/lib/renderers/class-novablocks-comments-form.php:80
+#: build/block-library/blocks/post-comments/index.js:6
+msgid "Example: Practical philosopher, therapist and writer."
 msgstr ""
 
-#: src/blocks/headline/index.js:21
-msgid "call to action"
+#: build/block-library/blocks/post-comments/lib/renderers/class-novablocks-comments-form.php:82
+#: packages/block-library/src/blocks/post-comments/lib/renderers/class-novablocks-comments-form.php:82
+msgid "Your relevant background..."
 msgstr ""
 
-#: src/blocks/headline/index.js:29
-msgid "Our Story"
+#: build/block-library/blocks/post-comments/lib/renderers/class-novablocks-comments-form.php:84
+#: packages/block-library/src/blocks/post-comments/lib/renderers/class-novablocks-comments-form.php:84
+#: build/block-library/blocks/post-comments/index.js:6
+msgid "What is your name?"
 msgstr ""
 
-#: src/blocks/headline/index.js:33
-msgid "Discover"
+#: build/block-library/blocks/post-comments/lib/renderers/class-novablocks-comments-form.php:88
+#: packages/block-library/src/blocks/post-comments/lib/renderers/class-novablocks-comments-form.php:88
+msgid "Ernest Hemingway"
 msgstr ""
 
-#: src/blocks/hero/block-controls.js:40
-#: src/blocks/media/block-controls.js:75
-#: src/blocks/slideshow/block-controls.js:66
-msgid "Change Media"
+#: build/block-library/blocks/post-comments/lib/renderers/class-novablocks-comments-form.php:90
+#: packages/block-library/src/blocks/post-comments/lib/renderers/class-novablocks-comments-form.php:90
+#: build/block-library/blocks/post-comments/index.js:6
+msgid "What is your email address?"
 msgstr ""
 
-#: src/blocks/hero/edit.js:129
-msgid "Focal Point"
+#: build/block-library/blocks/post-comments/lib/renderers/class-novablocks-comments-form.php:92
+#: packages/block-library/src/blocks/post-comments/lib/renderers/class-novablocks-comments-form.php:92
+msgid "It will not be published or shared with others."
 msgstr ""
 
-#: src/blocks/hero/index.js:19
-msgid "Hero of the Galaxy"
+#: build/block-library/blocks/post-comments/lib/renderers/class-novablocks-comments-form.php:94
+#: packages/block-library/src/blocks/post-comments/lib/renderers/class-novablocks-comments-form.php:94
+#: build/block-library/blocks/post-comments/index.js:6
+msgid "your@email.com"
 msgstr ""
 
-#: src/blocks/hero/index.js:20
-msgid "A great way to get your visitors acquainted with your content."
+#: build/block-library/blocks/post-comments/lib/renderers/class-novablocks-comments-form.php:98
+#: packages/block-library/src/blocks/post-comments/lib/renderers/class-novablocks-comments-form.php:98
+msgid "What is your website URL?"
 msgstr ""
 
-#: src/blocks/hero/index.js:24
-#: src/blocks/slideshow/index.js:23
-msgid "cover"
+#: build/block-library/blocks/post-comments/lib/renderers/class-novablocks-comments-form.php:102
+#: packages/block-library/src/blocks/post-comments/lib/renderers/class-novablocks-comments-form.php:102
+msgid "https://yourwonderfulsite.com"
 msgstr ""
 
-#: src/blocks/hero/index.js:24
-msgid "full width"
+#: build/block-library/blocks/post-comments/lib/renderers/class-novablocks-comments-form.php:104
+#: packages/block-library/src/blocks/post-comments/lib/renderers/class-novablocks-comments-form.php:104
+msgid "Save my details in this browser for the next time I comment."
 msgstr ""
 
-#: src/blocks/hero/index.js:24
-msgid "hero image"
+#: build/block-library/blocks/post-comments/lib/renderers/class-novablocks-comments-form.php:107
+#: build/block-library/blocks/post-comments/lib/renderers/class-novablocks-comments-form.php:255
+#: build/block-library/blocks/post-comments/lib/renderers/class-novablocks-comments-form.php:261
+#: build/block-library/blocks/post-comments/lib/renderers/class-novablocks-comments-form.php:589
+#: packages/block-library/src/blocks/post-comments/lib/renderers/class-novablocks-comments-form.php:107
+#: packages/block-library/src/blocks/post-comments/lib/renderers/class-novablocks-comments-form.php:255
+#: packages/block-library/src/blocks/post-comments/lib/renderers/class-novablocks-comments-form.php:261
+#: packages/block-library/src/blocks/post-comments/lib/renderers/class-novablocks-comments-form.php:589
+#: build/block-library/blocks/post-comments/index.js:6
+msgid "Add this comment"
 msgstr ""
 
-#: src/blocks/hero/index.js:24
-msgid "cover section"
+#: build/block-library/blocks/post-comments/lib/renderers/class-novablocks-comments-form.php:108
+#: build/block-library/blocks/post-comments/lib/renderers/class-novablocks-comments-form.php:586
+#: packages/block-library/src/blocks/post-comments/lib/renderers/class-novablocks-comments-form.php:108
+#: packages/block-library/src/blocks/post-comments/lib/renderers/class-novablocks-comments-form.php:586
+msgid "Cancel reply"
 msgstr ""
 
-#: src/blocks/logo/index.js:14
-msgid "Logo"
+#. translators: Comment reply button text. %s: Comment author name.
+#: build/block-library/blocks/post-comments/lib/renderers/class-novablocks-comments-form.php:110
+#: build/block-library/blocks/post-comments/lib/renderers/class-novablocks-comments-list.php:84
+#: packages/block-library/src/blocks/post-comments/lib/renderers/class-novablocks-comments-form.php:110
+#: packages/block-library/src/blocks/post-comments/lib/renderers/class-novablocks-comments-list.php:84
+msgid "Reply to %s"
 msgstr ""
 
-#: src/blocks/logo/index.js:15
-msgid "Outputs custom logo markup."
+#: build/block-library/blocks/post-comments/lib/renderers/class-novablocks-comments-header.php:56
+#: packages/block-library/src/blocks/post-comments/lib/renderers/class-novablocks-comments-header.php:56
+#: build/block-library/blocks/post-comments/index.js:6
+msgid "Conversations"
 msgstr ""
 
-#: src/blocks/logo/index.js:19
-msgid "branding"
+#: build/block-library/blocks/post-comments/lib/renderers/class-novablocks-comments-header.php:57
+#: packages/block-library/src/blocks/post-comments/lib/renderers/class-novablocks-comments-header.php:57
+msgid "Start the conversation"
 msgstr ""
 
-#: src/blocks/media/block-controls.js:25
-msgid "Show Media on Left Side"
+#: build/block-library/blocks/post-comments/lib/renderers/class-novablocks-comments-header.php:60
+#: packages/block-library/src/blocks/post-comments/lib/renderers/class-novablocks-comments-header.php:60
+msgid "One so far"
 msgstr ""
 
-#: src/blocks/media/block-controls.js:29
-msgid "Show Media on Right Side"
+#: build/block-library/blocks/post-comments/lib/renderers/class-novablocks-comments-header.php:61
+#: packages/block-library/src/blocks/post-comments/lib/renderers/class-novablocks-comments-header.php:61
+msgid "% comments"
 msgstr ""
 
-#: src/blocks/media/index.js:16
-msgid "Media Card Constellation"
+#: build/block-library/blocks/post-comments/lib/renderers/class-novablocks-comments-list.php:81
+#: packages/block-library/src/blocks/post-comments/lib/renderers/class-novablocks-comments-list.php:81
+msgid "Reply"
 msgstr ""
 
-#: src/blocks/media/index.js:17
-msgid "Display media objects alongside short pieces of content."
+#. translators: Moderation message shown only to moderators.
+#: build/block-library/blocks/post-comments/lib/renderers/class-novablocks-comments-list.php:91
+#: packages/block-library/src/blocks/post-comments/lib/renderers/class-novablocks-comments-list.php:91
+msgid "⚠️ This comment is waiting for your moderation. ⚠️"
 msgstr ""
 
-#: src/blocks/media/index.js:21
-msgid "image with text"
+#: build/block-library/blocks/post-comments/lib/renderers/class-novablocks-comments-list.php:189
+#: packages/block-library/src/blocks/post-comments/lib/renderers/class-novablocks-comments-list.php:189
+msgid "Newer Conversations"
 msgstr ""
 
-#: src/blocks/media/index.js:21
-msgid "columns"
+#: build/block-library/blocks/post-comments/lib/renderers/class-novablocks-comments-list.php:190
+#: packages/block-library/src/blocks/post-comments/lib/renderers/class-novablocks-comments-list.php:190
+msgid "Older Conversations"
 msgstr ""
 
-#: src/blocks/media/index.js:21
-msgid "side text"
+#: build/block-library/blocks/post-comments/lib/renderers/class-novablocks-comments-list.php:204
+#: packages/block-library/src/blocks/post-comments/lib/renderers/class-novablocks-comments-list.php:204
+msgid "Comments"
 msgstr ""
 
-#: src/blocks/media/inspector-controls.js:38
-msgid "Content Area"
+#. translators: %s: Denotes the fact that the commenter is the author of the current post.
+#: build/block-library/blocks/post-comments/lib/renderers/class-novablocks-walker-comment.php:40
+#: build/block-library/blocks/post-comments/lib/renderers/class-novablocks-walker-comment.php:277
+#: packages/block-library/src/blocks/post-comments/lib/renderers/class-novablocks-walker-comment.php:40
+#: packages/block-library/src/blocks/post-comments/lib/renderers/class-novablocks-walker-comment.php:277
+msgid "Author"
 msgstr ""
 
-#: src/blocks/media/inspector-controls.js:40
-#: src/blocks/media/inspector-controls.js:50
-msgid "Emphasis Level"
+#: build/block-library/blocks/post-comments/lib/renderers/class-novablocks-walker-comment.php:57
+#: packages/block-library/src/blocks/post-comments/lib/renderers/class-novablocks-walker-comment.php:57
+msgid "This comment is only visible to you since it is awaiting moderation."
 msgstr ""
 
-#: src/blocks/media/inspector-controls.js:48
-msgid "Block Area"
+#: build/block-library/blocks/post-comments/lib/renderers/class-novablocks-walker-comment.php:97
+#: build/block-library/blocks/post-comments/lib/renderers/class-novablocks-walker-comment.php:325
+#: packages/block-library/src/blocks/post-comments/lib/renderers/class-novablocks-walker-comment.php:97
+#: packages/block-library/src/blocks/post-comments/lib/renderers/class-novablocks-walker-comment.php:325
+msgid "says:"
 msgstr ""
 
-#: src/blocks/menu-food-item/index.js:16
-#: src/blocks/menu-food-item/inspector-controls.js:21
-msgid "Menu Item"
+#: build/block-library/blocks/post-comments/lib/renderers/class-novablocks-walker-comment.php:108
+#: build/block-library/blocks/post-comments/lib/renderers/class-novablocks-walker-comment.php:336
+#: packages/block-library/src/blocks/post-comments/lib/renderers/class-novablocks-walker-comment.php:108
+#: packages/block-library/src/blocks/post-comments/lib/renderers/class-novablocks-walker-comment.php:336
+msgid "Relevant commenter background or experience:"
 msgstr ""
 
-#: src/blocks/menu-food-item/index.js:17
-msgid "A food or drink item contained in a menu or menu section."
+#. translators: 1: Comment date, 2: Comment time.
+#: build/block-library/blocks/post-comments/lib/renderers/class-novablocks-walker-comment.php:131
+#: packages/block-library/src/blocks/post-comments/lib/renderers/class-novablocks-walker-comment.php:131
+msgid "%1$s at %2$s"
 msgstr ""
 
-#: src/blocks/menu-food-item/index.js:21
-msgid "menu item"
+#: build/block-library/blocks/post-comments/lib/renderers/class-novablocks-walker-comment.php:141
+#: build/block-library/blocks/post-comments/lib/renderers/class-novablocks-walker-comment.php:371
+#: packages/block-library/src/blocks/post-comments/lib/renderers/class-novablocks-walker-comment.php:141
+#: packages/block-library/src/blocks/post-comments/lib/renderers/class-novablocks-walker-comment.php:371
+msgid "Edit"
 msgstr ""
 
-#: src/blocks/menu-food-item/index.js:21
-msgid "food item"
+#: build/block-library/blocks/post-comments/lib/renderers/class-novablocks-walker-comment.php:192
+#: packages/block-library/src/blocks/post-comments/lib/renderers/class-novablocks-walker-comment.php:192
+msgid "Just now"
 msgstr ""
 
-#: src/blocks/menu-food-item/index.js:21
-msgid "dish"
+#: build/block-library/blocks/post-comments/lib/renderers/class-novablocks-walker-comment.php:195
+#: packages/block-library/src/blocks/post-comments/lib/renderers/class-novablocks-walker-comment.php:195
+msgctxt "%s = human-readable time difference"
+msgid "%s ago"
 msgstr ""
 
-#: src/blocks/menu-food-item/index.js:21
-msgid "list item"
+#: build/block-library/blocks/post-comments/lib/renderers/class-novablocks-walker-comment.php:201
+#: packages/block-library/src/blocks/post-comments/lib/renderers/class-novablocks-walker-comment.php:201
+msgid "On %s"
 msgstr ""
 
-#: src/blocks/menu-food-item/index.js:26
-msgid "Sweet Shrimp Salad"
+#. translators: %s: The label of the individual comment control for more comment actions.
+#: build/block-library/blocks/post-comments/lib/renderers/class-novablocks-walker-comment.php:219
+#: packages/block-library/src/blocks/post-comments/lib/renderers/class-novablocks-walker-comment.php:219
+msgid "More"
 msgstr ""
 
-#: src/blocks/menu-food-item/index.js:30
-msgid "Tomatillo, Baja Crema, Cabbage, Fried Okra"
+#: build/block-library/blocks/post-comments/lib/renderers/class-novablocks-walker-comment.php:230
+#: packages/block-library/src/blocks/post-comments/lib/renderers/class-novablocks-walker-comment.php:230
+msgid "Click to copy in clipboard the URL to this comment"
 msgstr ""
 
-#: src/blocks/menu-food-item/index.js:42
-msgid "Our top pick"
+#: build/block-library/blocks/post-comments/lib/renderers/class-novablocks-walker-comment.php:230
+#: packages/block-library/src/blocks/post-comments/lib/renderers/class-novablocks-walker-comment.php:230
+msgid "Copy link to comment"
 msgstr ""
 
-#: src/blocks/menu-food-item/inspector-controls.js:24
-msgid "Highlight item"
+#: build/block-library/blocks/post-comments/lib/renderers/class-novablocks-walker-comment.php:266
+#: packages/block-library/src/blocks/post-comments/lib/renderers/class-novablocks-walker-comment.php:266
+msgid "Your comment is awaiting moderation."
 msgstr ""
 
-#: src/blocks/menu-food-item/inspector-controls.js:25
-msgid "Use it if you want to highlight some of the menu items and make them stand out."
+#: build/block-library/blocks/post-comments/lib/renderers/class-novablocks-walker-comment.php:268
+#: packages/block-library/src/blocks/post-comments/lib/renderers/class-novablocks-walker-comment.php:268
+msgid "Your comment is awaiting moderation. This is a preview, your comment will be visible after it has been approved."
 msgstr ""
 
-#: src/blocks/menu-food-item/inspector-controls.js:31
-msgid "On sale"
+#: build/block-library/blocks/post-meta/init.php:44
+#: packages/block-library/src/blocks/post-meta/init.php:44
+msgid "Post meta"
 msgstr ""
 
-#: src/blocks/menu-food-item/preview.js:58
-msgid "Product Title"
+#: build/block-library/blocks/post-navigation/init.php:37
+#: packages/block-library/src/blocks/post-navigation/init.php:37
+msgid "Post navigation"
 msgstr ""
 
-#: src/blocks/menu-food-item/preview.js:68
-msgid "$0.00"
+#: lib/block-editor-settings.php:22
+msgid "None"
 msgstr ""
 
-#: src/blocks/menu-food-item/preview.js:90
-msgid "Product Description"
+#: lib/block-editor-settings.php:26
+msgid "Half"
 msgstr ""
 
-#: src/blocks/menu-food-section/index.js:16
-msgid "Food Menu Section"
+#: lib/block-editor-settings.php:30
+msgid "Two Thirds"
 msgstr ""
 
-#: src/blocks/menu-food-section/index.js:17
-msgid "A subgrouping of the Menu."
+#: lib/block-editor-settings.php:34
+msgid "Three Quarters"
 msgstr ""
 
-#: src/blocks/menu-food-section/index.js:21
-msgid "menu section"
+#: lib/block-editor-settings.php:38
+#: lib/block-editor-settings.php:62
+msgid "Full"
 msgstr ""
 
-#: src/blocks/menu-food-section/index.js:21
-msgid "food section"
+#: lib/block-editor-settings.php:44
+#: build/block-library/blocks/sidecar/index.js:6
+msgid "Small"
 msgstr ""
 
-#: src/blocks/menu-food-section/index.js:21
-msgid "list section"
+#: lib/block-editor-settings.php:48
+#: build/block-library/blocks/sidecar/index.js:6
+msgid "Medium"
 msgstr ""
 
-#: src/blocks/menu-food-section/index.js:21
-msgid "dishes section"
+#: lib/block-editor-settings.php:52
+#: lib/block-editor-settings.php:66
+#: build/block-library/blocks/sidecar/index.js:6
+msgid "Large"
 msgstr ""
 
-#: src/blocks/menu-food-section/index.js:26
-msgid "Drinks"
+#: lib/block-editor-settings.php:56
+#: lib/block-editor-settings.php:74
+msgid "Custom"
 msgstr ""
 
-#: src/blocks/menu-food-section/preview.js:61
-msgid "Add New Menu Item"
+#: lib/block-editor-settings.php:70
+msgid "Narrow"
 msgstr ""
 
-#: src/blocks/menu-food-section/preview.js:65
-msgid "Add Menu Item"
+#: lib/block-editor-settings.php:142
+#: build/block-library/blocks/header/index.js:6
+msgid "Static"
 msgstr ""
 
-#: src/blocks/menu-food/index.js:18
-msgid "Food Menu"
-msgstr ""
-
-#: src/blocks/menu-food/index.js:19
-msgid "Display a list of food or drink items available at your venue."
-msgstr ""
-
-#: src/blocks/menu-food/index.js:23
-msgid "food menu"
-msgstr ""
-
-#: src/blocks/menu-food/index.js:23
-msgid "restaurant menu"
-msgstr ""
-
-#: src/blocks/menu-food/index.js:23
-msgid "dishes"
-msgstr ""
-
-#: src/blocks/menu-food/index.js:23
-msgid "eats"
-msgstr ""
-
-#: src/blocks/menu-food/index.js:23
-msgid "menu list"
-msgstr ""
-
-#: src/blocks/menu-food/inspector-controls.js:21
-#: src/blocks/opentable/inspector-controls.js:50
-#: src/components/layout-panel/index.js:21
-msgid "Layout"
-msgstr ""
-
-#: src/blocks/menu-food/inspector-controls.js:23
-msgid "2 columns"
-msgstr ""
-
-#: src/blocks/menu-food/preview.js:77
-msgid "Add New Menu Section"
-msgstr ""
-
-#: src/blocks/menu-food/preview.js:81
-msgid "Add Menu Section"
-msgstr ""
-
-#: src/blocks/navigation/index.js:15
-msgid "Space Navigation"
-msgstr ""
-
-#: src/blocks/navigation/index.js:16
-msgid "Outputs chosen navigaiton menu markup."
-msgstr ""
-
-#: src/blocks/navigation/index.js:20
-msgid "site menu"
-msgstr ""
-
-#: src/blocks/navigation/index.js:20
-msgid "primary"
-msgstr ""
-
-#: src/blocks/navigation/index.js:20
-msgid "secondary"
-msgstr ""
-
-#: src/blocks/opentable/index.js:17
-msgid "OpenTable Reservation"
-msgstr ""
-
-#: src/blocks/opentable/index.js:18
-msgid "Add OpenTable online reservation booking to your site."
-msgstr ""
-
-#: src/blocks/opentable/index.js:22
-msgid "reservations"
-msgstr ""
-
-#: src/blocks/opentable/index.js:22
-msgid "bookings"
-msgstr ""
-
-#: src/blocks/opentable/inspector-controls.js:23
-msgid "Settings"
-msgstr ""
-
-#: src/blocks/opentable/inspector-controls.js:61
-msgid "Show OpenTable Logo"
-msgstr ""
-
-#: src/blocks/slideshow/index.js:18
-msgid "Slideshow Me the Way"
-msgstr ""
-
-#: src/blocks/slideshow/index.js:19
-msgid "Display more than one piece of content in a single, coveted space."
-msgstr ""
-
-#: src/blocks/slideshow/index.js:23
-msgid "slider"
-msgstr ""
-
-#: src/blocks/slideshow/index.js:23
-msgid "carousel"
-msgstr ""
-
-#: src/blocks/slideshow/index.js:23
-msgid "images"
-msgstr ""
-
-#: src/blocks/slideshow/inspector-controls.js:54
-msgid "Slides"
-msgstr ""
-
-#: src/blocks/slideshow/inspector-controls.js:79
-#: src/components/height-controls/index.js:41
-msgid "Height"
-msgstr ""
-
-#: src/blocks/slideshow/inspector-controls.js:81
-#: src/components/height-controls/index.js:52
-msgid "Minimum Height"
-msgstr ""
-
-#: src/blocks/slideshow/inspector-controls.js:93
-msgid "Coming Soon"
-msgstr ""
-
-#: src/components/alignment-controls/index.js:35
-msgid "Content Alignment"
-msgstr ""
-
-#: src/components/alignment-controls/index.js:59
-msgid "Horizontal"
-msgstr ""
-
-#: src/components/alignment-controls/index.js:72
-msgid "Vertical"
-msgstr ""
-
-#: src/components/block-horizontal-alignment-toolbar/index.js:26
-msgid "Align Left"
-msgstr ""
-
-#: src/components/block-horizontal-alignment-toolbar/index.js:30
-msgid "Align Middle"
-msgstr ""
-
-#: src/components/block-horizontal-alignment-toolbar/index.js:34
-msgid "Align Right"
-msgstr ""
-
-#: src/components/color-controls/index.js:27
-#: src/components/color-controls/index.js:50
-msgid "Dark"
-msgstr ""
-
-#: src/components/color-controls/index.js:30
-#: src/components/color-controls/index.js:51
-msgid "Light"
-msgstr ""
-
-#: src/components/color-controls/index.js:46
-msgid "Overlay Filter Style"
-msgstr ""
-
-#: src/components/color-controls/index.js:56
-msgid "Overlay Filter Strength"
-msgstr ""
-
-#: src/components/color-controls/index.js:95
-msgid "Color Settings"
-msgstr ""
-
-#: src/components/color-controls/index.js:100
-msgid "Content Color"
-msgstr ""
-
-#: src/components/color-controls/index.js:122
-msgid "Color Options"
-msgstr ""
-
-#: src/components/gallery-options/index.js:45
-msgid "Drag images, upload new ones or select files from your library."
-msgstr ""
-
-#: src/components/height-controls/index.js:43
-msgid "Apply Minimum Height"
-msgstr ""
-
-#: src/components/height-controls/index.js:82
-msgid "Scroll Indicator"
-msgstr ""
-
-#: src/components/height-controls/index.js:84
-msgid "Enable Scroll Indicator"
-msgstr ""
-
-#: src/components/layout-panel/padding.js:35
-msgid "Content Padding"
-msgstr ""
-
-#: src/components/layout-panel/width.js:35
-msgid "Content Width"
-msgstr ""
-
-#: src/components/parallax-panel/index.js:34
+#: lib/block-editor-settings.php:146
 msgid "Parallax"
 msgstr ""
 
-#: src/components/parallax-panel/index.js:36
-msgid "Enable Parallax Scrolling"
+#: lib/block-editor-settings.php:460
+msgid "Default Block Spacing"
 msgstr ""
 
-#: src/components/parallax-panel/index.js:42
-msgid "Parallax Orbital Speed"
+#: lib/block-editor-settings.php:472
+msgid "Overlap Nearby Blocks / Bottom"
 msgstr ""
 
-#: src/components/parallax-panel/index.js:57
-msgid "The speed at which the parallax effect runs."
+#: lib/block-editor-settings.php:484
+msgid "Overlap Nearby Blocks / Centered"
 msgstr ""
 
-#: src/components/parallax-panel/index.js:67
-msgid "It starts from 0 when the image will keep with the content (no parallax) up to 100 when the image appears fixed in place."
+#: lib/block-editor-settings.php:496
+msgid "Overlap Nearby Blocks / Top"
 msgstr ""
 
-#: src/components/position-indicators-panel/index.js:14
-msgid "Position Indicators"
+#: lib/block-editor-settings.php:513
+msgid "Overlap 1 / Top Anchoring"
 msgstr ""
 
-#: src/components/position-indicators-panel/index.js:16
-msgid "Enable Position Indicators"
+#: lib/block-editor-settings.php:525
+msgid "Overlap 2 / Centered"
 msgstr ""
 
-#: src/filters/with-font-size-picker/index.js:38
+#: lib/block-editor-settings.php:537
+msgid "Overlap 3 / Bottom Anchoring"
+msgstr ""
+
+#: lib/block-patterns.php:17
+msgctxt "Block pattern category"
+msgid "Features"
+msgstr ""
+
+#: lib/block-patterns.php:18
+msgctxt "Block pattern category"
+msgid "Headlines"
+msgstr ""
+
+#: lib/block-patterns.php:19
+msgctxt "Block pattern category"
+msgid "Testimonials"
+msgstr ""
+
+#: lib/block-patterns.php:20
+msgctxt "Block pattern category"
+msgid "Team"
+msgstr ""
+
+#: lib/block-patterns.php:21
+msgctxt "Block pattern category"
+msgid "Location"
+msgstr ""
+
+#: lib/block-patterns.php:22
+msgctxt "Block pattern category"
+msgid "Posts Collection"
+msgstr ""
+
+#: lib/block-patterns.php:23
+msgctxt "Block pattern category"
+msgid "Pages"
+msgstr ""
+
+#: lib/block-patterns.php:25
+msgctxt "Block pattern category"
+msgid "Layout: Header"
+msgstr ""
+
+#: lib/block-patterns.php:26
+msgctxt "Block pattern category"
+msgid "Layout: Footer"
+msgstr ""
+
+#: lib/block-rendering.php:1397
+#: lib/block-rendering.php:1654
+msgid "Read More"
+msgstr ""
+
+#: lib/block-rendering.php:1709
+msgid "No Comments"
+msgstr ""
+
+#: lib/block-rendering.php:1714
+msgctxt "comments title"
+msgid "%1$s Comment"
+msgid_plural "%1$s Comments"
+msgstr[0] ""
+msgstr[1] ""
+
+#: lib/block-rendering.php:1763
+msgid "%s min read"
+msgstr ""
+
+#: lib/patterns/features-1.php:6
+msgid "Plugin: Features 1"
+msgstr ""
+
+#: lib/patterns/features-1.php:7
+msgctxt "Block pattern description"
+msgid "Three features on one row."
+msgstr ""
+
+#: lib/patterns/headline-1.php:6
+msgid "Plugin: Feature with Testimonial"
+msgstr ""
+
+#: lib/patterns/headline-1.php:7
+#: lib/patterns/headline-2.php:7
+#: lib/patterns/headline-3.php:7
+#: lib/patterns/location-1.php:7
+#: lib/patterns/posts-1.php:7
+#: lib/patterns/posts-2.php:7
+#: lib/patterns/posts-3.php:7
+#: lib/patterns/posts-4.php:7
+#: lib/patterns/team-1.php:7
+msgctxt "Block pattern description"
+msgid "..."
+msgstr ""
+
+#: lib/patterns/headline-2.php:6
+msgid "Plugin: Simple Feature"
+msgstr ""
+
+#: lib/patterns/headline-3.php:6
+msgid "Plugin: Portfolio Intro"
+msgstr ""
+
+#: lib/patterns/location-1.php:6
+msgid "Plugin: Multiple offices"
+msgstr ""
+
+#: lib/patterns/posts-1.php:6
+msgid "Plugin: Classic Grid"
+msgstr ""
+
+#: lib/patterns/posts-2.php:6
+msgid "Plugin: Horizontal Cards"
+msgstr ""
+
+#: lib/patterns/posts-3.php:6
+msgid "Plugin: Overlay Cards"
+msgstr ""
+
+#: lib/patterns/posts-4.php:6
+msgid "Plugin: Parametric Grid"
+msgstr ""
+
+#: lib/patterns/team-1.php:6
+msgid "Plugin: Meet the team"
+msgstr ""
+
+#: lib/patterns/testimonials-1.php:6
+msgid "Plugin: Testimonials 1"
+msgstr ""
+
+#: lib/patterns/testimonials-1.php:7
+msgctxt "Block pattern description"
+msgid "Three testimonials on one row."
+msgstr ""
+
+#: lib/patterns/testimonials-2.php:6
+msgid "Plugin: Single large testimonial"
+msgstr ""
+
+#: lib/patterns/testimonials-2.php:7
+#: lib/patterns/testimonials-3.php:7
+#: lib/patterns/testimonials-4.php:7
+msgctxt "Block pattern description"
+msgid "---"
+msgstr ""
+
+#: lib/patterns/testimonials-3.php:6
+msgid "Plugin: Single testimonial with logo"
+msgstr ""
+
+#: lib/patterns/testimonials-4.php:6
+msgid "Plugin: Horizontal testimonial with photo blob"
+msgstr ""
+
+#: lib/setup.php:46
+msgid "Nova Blocks Huge"
+msgstr ""
+
+#: lib/setup.php:47
+msgid "Nova Blocks Large"
+msgstr ""
+
+#: lib/setup.php:48
+msgid "Nova Blocks Medium"
+msgstr ""
+
+#: lib/setup.php:49
+msgid "Nova Blocks Small"
+msgstr ""
+
+#: lib/setup.php:50
+msgid "Nova Blocks Tiny"
+msgstr ""
+
+#: lib/sidebars-blocks/class-nova_blocks-sidebars_blocks.php:68
+msgid "Sidebars/Widgets Areas"
+msgstr ""
+
+#. translators: %s: The sidebar title.
+#: lib/sidebars-blocks/class-nova_blocks-sidebars_blocks.php:114
+msgid "Displays the widgets added to the `%s` sidebar, through the `Appearance → Widgets` admin page."
+msgstr ""
+
+#: build/block-library/blocks/advanced-gallery/index.js:1
+msgid "Gallery of the Stars (Deprecated)"
+msgstr ""
+
+#: build/block-library/blocks/advanced-gallery/index.js:1
+msgid "Display galleries of images in unique and creative compositions."
+msgstr ""
+
+#: build/block-library/blocks/advanced-gallery/index.js:1
+#: build/block-library/blocks/card/index.js:6
+#: build/block-library/blocks/media/index.js:6
+msgid "image with text"
+msgstr ""
+
+#: build/block-library/blocks/advanced-gallery/index.js:1
+#: build/block-library/blocks/cards-collection/index.js:6
+#: build/block-library/blocks/media/index.js:6
+msgid "columns"
+msgstr ""
+
+#: build/block-library/blocks/advanced-gallery/index.js:1
+#: build/block-library/blocks/media/index.js:6
+msgid "side text"
+msgstr ""
+
+#: build/block-library/blocks/announcement-bar/index.js:6
+msgid "Add a link to make the whole Announcement Bar clickable."
+msgstr ""
+
+#: build/block-library/blocks/announcement-bar/index.js:6
+msgid "Open in new tab"
+msgstr ""
+
+#: build/block-library/blocks/card/index.js:6
+msgid "Card"
+msgstr ""
+
+#: build/block-library/blocks/card/index.js:6
+msgid "Display related pieces of information in a flexible container visually resembling a playing card."
+msgstr ""
+
+#: build/block-library/blocks/card/index.js:6
+msgid "Meta"
+msgstr ""
+
+#: build/block-library/blocks/card/index.js:6
+msgid "Title"
+msgstr ""
+
+#: build/block-library/blocks/card/index.js:6
+msgid "Subtitle"
+msgstr ""
+
+#: build/block-library/blocks/card/index.js:6
+msgid "This is just an example of what a description for this card could look like"
+msgstr ""
+
+#: build/block-library/blocks/card/index.js:6
+#: build/block-library/blocks/hero/index.js:6
+#: build/block-library/blocks/slideshow/index.js:6
+#: build/media-composition/index.js:1
+msgid "Change Media"
+msgstr ""
+
+#: build/block-library/blocks/cards-collection/index.js:6
+msgid "Cards Collection (Deprecated)"
+msgstr ""
+
+#: build/block-library/blocks/cards-collection/index.js:6
+msgid "Display a list of related items placed within a coherent layout."
+msgstr ""
+
+#: build/block-library/blocks/cards-collection/index.js:6
+msgid "grid"
+msgstr ""
+
+#: build/block-library/blocks/cards-collection/index.js:6
+msgid "collection"
+msgstr ""
+
+#: build/block-library/blocks/cards-collection/index.js:6
+msgid "group"
+msgstr ""
+
+#: build/block-library/blocks/google-map/index.js:6
+msgid "register a Google Maps API Key"
+msgstr ""
+
+#: build/block-library/blocks/google-map/index.js:6
+msgid "It seems that your Google Maps API key is INVALID. Please REFRESH the page, double check that you pasted it correctly, and that it is a valid API key. More information about how to"
+msgstr ""
+
+#: build/block-library/blocks/google-map/index.js:6
+msgid "To display the map, you need to"
+msgstr ""
+
+#: build/block-library/blocks/google-map/index.js:6
+msgid "and include it bellow."
+msgstr ""
+
+#: build/block-library/blocks/google-map/index.js:6
+msgid "Paste API key here"
+msgstr ""
+
+#: build/block-library/blocks/google-map/index.js:6
+msgid "Google Maps API Key"
+msgstr ""
+
+#: build/block-library/blocks/google-map/index.js:6
+msgid "Save"
+msgstr ""
+
+#: build/block-library/blocks/google-map/index.js:6
+msgid "Map Design"
+msgstr ""
+
+#: build/block-library/blocks/google-map/index.js:6
+#: build/block-library/blocks/opentable/index.js:6
+#: build/color-signal/index.js:6
+#: build/media-composition/index.js:1
+#: build/scrolling-effect/index.js:1
+msgid "Customize"
+msgstr ""
+
+#: build/block-library/blocks/google-map/index.js:6
+#: build/block-library/blocks/header/index.js:6
+#: build/block-library/blocks/menu-food/index.js:6
+#: build/block-library/blocks/openhours/index.js:1
+#: build/block-library/blocks/opentable/index.js:6
+#: build/block-library/blocks/sharing-overlay/index.js:6
+#: build/block-library/blocks/sidecar/index.js:6
+#: build/color-signal/index.js:6
+#: build/core/index.js:6
+#: build/media-composition/index.js:1
+#: build/shape-modeling/index.js:6
+msgid "Settings"
+msgstr ""
+
+#: build/block-library/blocks/google-map/index.js:6
+msgid "Show Nearby Venues"
+msgstr ""
+
+#: build/block-library/blocks/google-map/index.js:6
+msgid "Show Labels"
+msgstr ""
+
+#: build/block-library/blocks/google-map/index.js:6
+msgid "Show Controls"
+msgstr ""
+
+#: build/block-library/blocks/google-map/index.js:6
+msgid "Show Marker Labels"
+msgstr ""
+
+#: build/block-library/blocks/google-map/index.js:6
+msgid "Zoom Level"
+msgstr ""
+
+#: build/block-library/blocks/google-map/index.js:6
+#: build/block-library/blocks/openhours/index.js:1
+#: build/block-library/blocks/opentable/index.js:6
+msgid "Setup"
+msgstr ""
+
+#: build/block-library/blocks/google-map/index.js:6
+msgid "Map Markers"
+msgstr ""
+
+#: build/block-library/blocks/google-map/index.js:6
+msgid "Enter an address to drop a pin on this map"
+msgstr ""
+
+#: build/block-library/blocks/google-map/index.js:6
+msgid "Location Map of The World"
+msgstr ""
+
+#: build/block-library/blocks/header/index.js:6
+msgid "Logo Height"
+msgstr ""
+
+#: build/block-library/blocks/header/index.js:6
+msgid "Adjust the height of your logo."
+msgstr ""
+
+#: build/block-library/blocks/header/index.js:6
+msgid "Mobile Logo Height"
+msgstr ""
+
+#: build/block-library/blocks/header/index.js:6
+msgid "Adjust the height of your logo on small screens."
+msgstr ""
+
+#: build/block-library/blocks/header/index.js:6
+msgid "Navigation Link Spacing"
+msgstr ""
+
+#: build/block-library/blocks/header/index.js:6
+msgid "Adjust the spacing between individual items in your navigation."
+msgstr ""
+
+#: build/block-library/blocks/header/index.js:6
+msgid "Header Sides Spacing"
+msgstr ""
+
+#: build/block-library/blocks/header/index.js:6
+msgid "Adjust the space separating the header and the sides of the browser."
+msgstr ""
+
+#: build/block-library/blocks/header/index.js:6
+msgid "Sticky Header Spacing Multiplier"
+msgstr ""
+
+#: build/block-library/blocks/header/index.js:6
+msgid "Adjust the vertical spacing for the sticky header on scroll."
+msgstr ""
+
+#: build/block-library/blocks/header/index.js:6
+msgid "Header Layout"
+msgstr ""
+
+#: build/block-library/blocks/header/index.js:6
+#: build/media-composition/index.js:1
+msgid "Quick start:"
+msgstr ""
+
+#: build/block-library/blocks/header/index.js:6
+msgid "Header Position on Scroll"
+msgstr ""
+
+#: build/block-library/blocks/header/index.js:6
+msgid "Sticky (fixed)"
+msgstr ""
+
+#: build/block-library/blocks/header/index.js:6
+msgid "Sticky Row Selection"
+msgstr ""
+
+#: build/block-library/blocks/header/index.js:6
+msgid "Select which row stay fixed on scroll."
+msgstr ""
+
+#: build/block-library/blocks/header/index.js:6
+msgid "Change Layout"
+msgstr ""
+
+#: build/block-library/blocks/header/index.js:6
+msgid "Logo on the left side and one navigation menu"
+msgstr ""
+
+#: build/block-library/blocks/header/index.js:6
+msgid "Logo centered and one navigation menu on each side"
+msgstr ""
+
+#: build/block-library/blocks/header/index.js:6
+msgid "Logo left with one menu on the right."
+msgstr ""
+
+#: build/block-library/blocks/header/index.js:6
+msgid "Primary Navigation"
+msgstr ""
+
+#: build/block-library/blocks/header/index.js:6
+msgid "Logo centered with one menu on the left and one menu on the right."
+msgstr ""
+
+#: build/block-library/blocks/header/index.js:6
+msgid "Two Rows Header with centered logo and three menus."
+msgstr ""
+
+#: build/block-library/blocks/header/index.js:6
+msgid "Site Identity / Logo"
+msgstr ""
+
+#: build/block-library/blocks/header/index.js:6
+msgid "Three Rows Header with centered logo and three menus."
+msgstr ""
+
+#: build/block-library/blocks/header/index.js:6
+msgid "Secondary Navigation"
+msgstr ""
+
+#: build/block-library/blocks/headline/index.js:6
+msgid "Subtitle…"
+msgstr ""
+
+#: build/block-library/blocks/headline/index.js:6
+msgid "Write title…"
+msgstr ""
+
+#: build/block-library/blocks/headline/index.js:6
+msgid "Headline Settings"
+msgstr ""
+
+#: build/block-library/blocks/headline/index.js:6
+msgid "Level"
+msgstr ""
+
+#: build/block-library/blocks/hero/index.js:6
+msgid "This is a catchy"
+msgstr ""
+
+#: build/block-library/blocks/hero/index.js:6
+msgid "Headline"
+msgstr ""
+
+#: build/block-library/blocks/hero/index.js:6
+msgid "A brilliant subtitle to explain its catchiness"
+msgstr ""
+
+#: build/block-library/blocks/hero/index.js:6
+msgid "Discover more"
+msgstr ""
+
+#: build/block-library/blocks/hero/index.js:6
+msgid "Hero of the Galaxy (Deprecated)"
+msgstr ""
+
+#: build/block-library/blocks/hero/index.js:6
+#: build/block-library/blocks/supernova/index.js:6
+msgid "A great way to get your visitors acquainted with your content."
+msgstr ""
+
+#: build/block-library/blocks/hero/index.js:6
+#: build/block-library/blocks/slideshow/index.js:6
+msgid "cover"
+msgstr ""
+
+#: build/block-library/blocks/hero/index.js:6
+msgid "full width"
+msgstr ""
+
+#: build/block-library/blocks/hero/index.js:6
+msgid "hero image"
+msgstr ""
+
+#: build/block-library/blocks/hero/index.js:6
+msgid "cover section"
+msgstr ""
+
+#: build/block-library/blocks/hero/index.js:6
+msgid "Set up elements for this block"
+msgstr ""
+
+#: build/block-library/blocks/media/index.js:6
+msgid "Shoot for the moon, Even if You Miss it"
+msgstr ""
+
+#: build/block-library/blocks/media/index.js:6
+msgid "Welcome to our planet, look and feel matters!"
+msgstr ""
+
+#: build/block-library/blocks/media/index.js:6
+msgid "We've always defined ourselves by the ability to overcome the impossible. And we count these moments. These moments when we dare to aim higher, to break barriers, to reach for the stars, to make the unknown known."
+msgstr ""
+
+#: build/block-library/blocks/media/index.js:6
+msgid "Discover More"
+msgstr ""
+
+#: build/block-library/blocks/media/index.js:6
+msgid "Media Card Constellation (Deprecated)"
+msgstr ""
+
+#: build/block-library/blocks/media/index.js:6
+msgid "Display media objects alongside short pieces of content."
+msgstr ""
+
+#: build/block-library/blocks/media/index.js:6
+#: build/block-library/blocks/supernova/index.js:6
+msgid "Show Media on Left Side"
+msgstr ""
+
+#: build/block-library/blocks/media/index.js:6
+#: build/block-library/blocks/supernova/index.js:6
+msgid "Show Media on Right Side"
+msgstr ""
+
+#: build/block-library/blocks/media/index.js:6
+msgid "Orientation"
+msgstr ""
+
+#: build/block-library/blocks/menu-food/index.js:6
+msgid "Add New Section"
+msgstr ""
+
+#: build/block-library/blocks/menu-food/index.js:6
+msgid "Add Section"
+msgstr ""
+
+#: build/block-library/blocks/menu-food/index.js:6
+#: build/block-library/blocks/opentable/index.js:6
+msgid "Layout"
+msgstr ""
+
+#: build/block-library/blocks/menu-food/index.js:6
+msgid "2 columns"
+msgstr ""
+
+#: build/block-library/blocks/menu-food/index.js:6
+msgid "Price"
+msgstr ""
+
+#: build/block-library/blocks/menu-food/index.js:6
+msgid "Description"
+msgstr ""
+
+#: build/block-library/blocks/menu-food/index.js:6
+msgid "Food Menu Section"
+msgstr ""
+
+#: build/block-library/blocks/menu-food/index.js:6
+msgid "A subgrouping of the Menu."
+msgstr ""
+
+#: build/block-library/blocks/menu-food/index.js:6
+msgid "menu section"
+msgstr ""
+
+#: build/block-library/blocks/menu-food/index.js:6
+msgid "food section"
+msgstr ""
+
+#: build/block-library/blocks/menu-food/index.js:6
+msgid "list section"
+msgstr ""
+
+#: build/block-library/blocks/menu-food/index.js:6
+msgid "dishes section"
+msgstr ""
+
+#: build/block-library/blocks/menu-food/index.js:6
+msgid "Drinks"
+msgstr ""
+
+#: build/block-library/blocks/menu-food/index.js:6
+msgid "Add New Item"
+msgstr ""
+
+#: build/block-library/blocks/menu-food/index.js:6
+msgid "Add Item"
+msgstr ""
+
+#: build/block-library/blocks/menu-food/index.js:6
+msgid "Menu Item"
+msgstr ""
+
+#: build/block-library/blocks/menu-food/index.js:6
+msgid "A food or drink item contained in a menu or menu section."
+msgstr ""
+
+#: build/block-library/blocks/menu-food/index.js:6
+msgid "menu item"
+msgstr ""
+
+#: build/block-library/blocks/menu-food/index.js:6
+msgid "food item"
+msgstr ""
+
+#: build/block-library/blocks/menu-food/index.js:6
+msgid "dish"
+msgstr ""
+
+#: build/block-library/blocks/menu-food/index.js:6
+msgid "list item"
+msgstr ""
+
+#: build/block-library/blocks/menu-food/index.js:6
+msgid "Sweet Shrimp Salad"
+msgstr ""
+
+#: build/block-library/blocks/menu-food/index.js:6
+msgid "Tomatillo, Baja Crema, Cabbage, Fried Okra"
+msgstr ""
+
+#: build/block-library/blocks/menu-food/index.js:6
+msgid "Our top pick"
+msgstr ""
+
+#: build/block-library/blocks/menu-food/index.js:6
+msgid "Product Title"
+msgstr ""
+
+#: build/block-library/blocks/menu-food/index.js:6
+msgid "$0.00"
+msgstr ""
+
+#: build/block-library/blocks/menu-food/index.js:6
+msgid "Product Description"
+msgstr ""
+
+#: build/block-library/blocks/menu-food/index.js:6
+msgid "Highlight item"
+msgstr ""
+
+#: build/block-library/blocks/menu-food/index.js:6
+msgid "Use it if you want to highlight some of the menu items and make them stand out."
+msgstr ""
+
+#: build/block-library/blocks/menu-food/index.js:6
+msgid "On sale"
+msgstr ""
+
+#: build/block-library/blocks/openhours/index.js:1
+msgid "OpenHours"
+msgstr ""
+
+#: build/block-library/blocks/openhours/index.js:1
+msgid "Display Opening Hours for any kind of venue."
+msgstr ""
+
+#: build/block-library/blocks/openhours/index.js:1
+msgid "Learn more about time formatting"
+msgstr ""
+
+#: build/block-library/blocks/openhours/index.js:1
+msgid "Write your opening hours in a simple human readable format"
+msgstr ""
+
+#: build/block-library/blocks/openhours/index.js:1
+msgid ""
+"Monday 10am - 3pm\n"
+"Tuesday to Friday 9 - 17\n"
+"Sat noon - 2am"
+msgstr ""
+
+#: build/block-library/blocks/openhours/index.js:1
+#: build/block-library/blocks/sharing-overlay/index.js:6
+#: build/core/index.js:6
+#: build/media-composition/index.js:1
+msgid "Display"
+msgstr ""
+
+#: build/block-library/blocks/openhours/index.js:1
+msgid "Displaying the opening hours"
+msgstr ""
+
+#: build/block-library/blocks/openhours/index.js:1
+msgid "Overview"
+msgstr ""
+
+#: build/block-library/blocks/openhours/index.js:1
+msgid "Current Status"
+msgstr ""
+
+#: build/block-library/blocks/openhours/index.js:1
+msgid "Write the \"Open\" and \"Closed\" messages using the tags displayed below."
+msgstr ""
+
+#: build/block-library/blocks/openhours/index.js:1
+msgid "Open Note"
+msgstr ""
+
+#: build/block-library/blocks/openhours/index.js:1
+msgid "It's {time} and we're Open until {today-closing-time}."
+msgstr ""
+
+#: build/block-library/blocks/openhours/index.js:1
+msgid "{time} - It's today, we're Open."
+msgstr ""
+
+#: build/block-library/blocks/openhours/index.js:1
+msgid "Closed Note"
+msgstr ""
+
+#: build/block-library/blocks/openhours/index.js:1
+msgid "We're closed until {next-opening-day} at {next-opening-time}."
+msgstr ""
+
+#: build/block-library/blocks/openhours/index.js:1
+msgid "{time} - it's closed now."
+msgstr ""
+
+#: build/block-library/blocks/openhours/index.js:1
+msgid "Closed Label"
+msgstr ""
+
+#: build/block-library/blocks/openhours/index.js:1
+msgid "Compress Opening Hours"
+msgstr ""
+
+#: build/block-library/blocks/openhours/index.js:1
+msgid "Hide Closed Days"
+msgstr ""
+
+#: build/block-library/blocks/openhours/index.js:1
+msgid "Use Short Day Name"
+msgstr ""
+
+#: build/block-library/blocks/openhours/index.js:1
+msgid "Time Format"
+msgstr ""
+
+#: build/block-library/blocks/opentable/index.js:6
+msgid "OpenTable Reservation"
+msgstr ""
+
+#: build/block-library/blocks/opentable/index.js:6
+msgid "Add OpenTable online reservation booking to your site."
+msgstr ""
+
+#: build/block-library/blocks/opentable/index.js:6
+msgid "reservations"
+msgstr ""
+
+#: build/block-library/blocks/opentable/index.js:6
+msgid "bookings"
+msgstr ""
+
+#: build/block-library/blocks/opentable/index.js:6
+msgid "Restaurant ID"
+msgstr ""
+
+#: build/block-library/blocks/opentable/index.js:6
+msgid "1"
+msgstr ""
+
+#: build/block-library/blocks/opentable/index.js:6
+msgid "You can find your restaurant ID on the OpenTable website."
+msgstr ""
+
+#: build/block-library/blocks/opentable/index.js:6
+msgid "Language"
+msgstr ""
+
+#: build/block-library/blocks/opentable/index.js:6
+msgid "English-EN"
+msgstr ""
+
+#: build/block-library/blocks/opentable/index.js:6
+msgid "French-CA"
+msgstr ""
+
+#: build/block-library/blocks/opentable/index.js:6
+msgid "Deutsch-DE"
+msgstr ""
+
+#: build/block-library/blocks/opentable/index.js:6
+msgid "Spanish-MX"
+msgstr ""
+
+#: build/block-library/blocks/opentable/index.js:6
+msgid "Japanese-JP"
+msgstr ""
+
+#: build/block-library/blocks/opentable/index.js:6
+msgid "Dutch-NL"
+msgstr ""
+
+#: build/block-library/blocks/opentable/index.js:6
+msgid "Italian-IT"
+msgstr ""
+
+#: build/block-library/blocks/opentable/index.js:6
+msgid "Horizontal"
+msgstr ""
+
+#: build/block-library/blocks/opentable/index.js:6
+msgid "Vertical"
+msgstr ""
+
+#: build/block-library/blocks/opentable/index.js:6
+msgid "Show OpenTable Logo"
+msgstr ""
+
+#: build/block-library/blocks/post-comments/index.js:6
+msgid "No comments."
+msgstr ""
+
+#: build/block-library/blocks/post-comments/index.js:6
+msgid "What’s your comment or question?"
+msgstr ""
+
+#: build/block-library/blocks/post-comments/index.js:6
+msgid "Let’s start a personal and a meaningful conversation. "
+msgstr ""
+
+#: build/block-library/blocks/post-comments/index.js:6
+msgid "Join the conversation, share your knowledge or ask a question..."
+msgstr ""
+
+#: build/block-library/blocks/post-comments/index.js:6
+msgid "What is your expertise or qualification in this topic?"
+msgstr ""
+
+#: build/block-library/blocks/post-comments/index.js:6
+msgid "Your relevant experience or expertise..."
+msgstr ""
+
+#: build/block-library/blocks/post-comments/index.js:6
+msgid "eg. John Doe"
+msgstr ""
+
+#: build/block-library/blocks/post-comments/index.js:6
+msgid "Your email address will not be published."
+msgstr ""
+
+#: build/block-library/blocks/post-comments/index.js:6
+msgid "Nova Blocks: Conversation System Block."
+msgstr ""
+
+#: build/block-library/blocks/posts-collection/index.js:1
+msgid "Posts Collection (Deprecated)"
+msgstr ""
+
+#: build/block-library/blocks/posts-collection/index.js:1
+msgid "Show Latest Posts"
+msgstr ""
+
+#: build/block-library/blocks/posts-collection/index.js:1
+msgid "Posts Carousel (Deprecated)"
+msgstr ""
+
+#: build/block-library/blocks/posts-collection/index.js:1
+msgid "Posts Collection displayed as a carousel."
+msgstr ""
+
+#: build/block-library/blocks/posts-collection/index.js:1
+#: build/block-library/blocks/supernova/index.js:6
+msgid "Content Type"
+msgstr ""
+
+#: build/block-library/blocks/posts-collection/index.js:1
+msgid "Posts loading type"
+msgstr ""
+
+#: build/block-library/blocks/sharing-overlay/index.js:6
+msgid "Copy Link"
+msgstr ""
+
+#: build/block-library/blocks/sharing-overlay/index.js:6
+msgid "Share Privately"
+msgstr ""
+
+#: build/block-library/blocks/sharing-overlay/index.js:6
+msgid "Social Icons"
+msgstr ""
+
+#: build/block-library/blocks/sharing-overlay/index.js:6
+msgid "Show Print"
+msgstr ""
+
+#: build/block-library/blocks/sharing-overlay/index.js:6
+msgid "Set up sections for this block"
+msgstr ""
+
+#: build/block-library/blocks/sharing-overlay/index.js:6
+msgid "Set up social icons"
+msgstr ""
+
+#: build/block-library/blocks/sidecar/index.js:6
+msgid "Smallest"
+msgstr ""
+
+#: build/block-library/blocks/sidecar/index.js:6
 msgid "Smaller"
 msgstr ""
 
-#: src/filters/with-font-size-picker/index.js:39
+#: build/block-library/blocks/sidecar/index.js:6
 msgid "Normal"
 msgstr ""
 
-#: src/filters/with-font-size-picker/index.js:40
+#: build/block-library/blocks/sidecar/index.js:6
 msgid "Larger"
 msgstr ""
 
-#: src/filters/with-font-size-picker/index.js:75
-msgid "Text Settings"
+#: build/block-library/blocks/sidecar/index.js:6
+msgid "Largest"
 msgstr ""
 
-#: src/filters/with-font-size-picker/index.js:77
-msgid "Font Size"
+#: build/block-library/blocks/sidecar/index.js:6
+msgid "Content Font Size"
+msgstr ""
+
+#: build/block-library/blocks/sidecar/index.js:6
+msgid "Sidebar Font Size"
+msgstr ""
+
+#: build/block-library/blocks/sidecar/index.js:6
+msgid "The <header> element should represent introductory content, typically a group of introductory or navigational aids."
+msgstr ""
+
+#: build/block-library/blocks/sidecar/index.js:6
+msgid "The <main> element should be used for the primary content of your document only. "
+msgstr ""
+
+#: build/block-library/blocks/sidecar/index.js:6
+msgid "The <section> element should represent a standalone portion of the document that can't be better represented by another element."
+msgstr ""
+
+#: build/block-library/blocks/sidecar/index.js:6
+msgid "The <article> element should represent a self contained, syndicatable portion of the document."
+msgstr ""
+
+#: build/block-library/blocks/sidecar/index.js:6
+msgid "The <aside> element should represent a portion of a document whose content is only indirectly related to the document's main content."
+msgstr ""
+
+#: build/block-library/blocks/sidecar/index.js:6
+msgid "The <footer> element should represent a footer for its nearest sectioning element (e.g.: <section>, <article>, <main> etc.)."
+msgstr ""
+
+#: build/block-library/blocks/sidecar/index.js:6
+msgid "Sidecar Layout"
+msgstr ""
+
+#: build/block-library/blocks/sidecar/index.js:6
+msgid "Block Anatomy"
+msgstr ""
+
+#: build/block-library/blocks/sidecar/index.js:6
+msgid "Sidebar Position"
+msgstr ""
+
+#: build/block-library/blocks/sidecar/index.js:6
+msgid "Show sidebar on left"
+msgstr ""
+
+#: build/block-library/blocks/sidecar/index.js:6
+msgid "Show sidebar on right"
+msgstr ""
+
+#: build/block-library/blocks/sidecar/index.js:6
+msgid "No sidebar"
+msgstr ""
+
+#: build/block-library/blocks/sidecar/index.js:6
+msgid "Sidebar Size"
+msgstr ""
+
+#: build/block-library/blocks/sidecar/index.js:6
+msgid "Enable sticky sidebar on scroll"
+msgstr ""
+
+#: build/block-library/blocks/sidecar/index.js:6
+msgid "The last item inside sidebar will be sticky on scroll."
+msgstr ""
+
+#: build/block-library/blocks/sidecar/index.js:6
+msgid "All blocks inside sidebar will be static."
+msgstr ""
+
+#: build/block-library/blocks/sidecar/index.js:6
+msgid "HTML element"
+msgstr ""
+
+#: build/block-library/blocks/sidecar/index.js:6
+msgid "Default (<div>)"
+msgstr ""
+
+#: build/block-library/blocks/sidecar/index.js:6
+msgid "Show Sidebar on Left Side"
+msgstr ""
+
+#: build/block-library/blocks/sidecar/index.js:6
+msgid "Show Sidebar on Right Side"
+msgstr ""
+
+#: build/block-library/blocks/sidecar/index.js:6
+msgid "Sidebar Left with Content on the right"
+msgstr ""
+
+#: build/block-library/blocks/sidecar/index.js:6
+msgid "Sidebar Right with Content on the left"
+msgstr ""
+
+#: build/block-library/blocks/sidecar/index.js:6
+msgid "Centered Content with no Sidebar"
+msgstr ""
+
+#: build/block-library/blocks/slideshow/index.js:6
+msgid "Slideshow Me the Way (Deprecated)"
+msgstr ""
+
+#: build/block-library/blocks/slideshow/index.js:6
+msgid "Display more than one piece of content in a single, coveted space."
+msgstr ""
+
+#: build/block-library/blocks/slideshow/index.js:6
+msgid "slider"
+msgstr ""
+
+#: build/block-library/blocks/slideshow/index.js:6
+msgid "carousel"
+msgstr ""
+
+#: build/block-library/blocks/slideshow/index.js:6
+msgid "images"
+msgstr ""
+
+#: build/block-library/blocks/supernova/index.js:6
+msgid "No posts to display."
+msgstr ""
+
+#: build/block-library/blocks/supernova/index.js:6
+msgid "Advanced Gallery"
+msgstr ""
+
+#: build/block-library/blocks/supernova/index.js:6
+msgid "Display a gallery of images in a unique and creative composition."
+msgstr ""
+
+#: build/block-library/blocks/supernova/index.js:6
+msgid "Cards Collection: Carousel"
+msgstr ""
+
+#: build/block-library/blocks/supernova/index.js:6
+msgid "Display a list of related items in a carousel/slideshow layout."
+msgstr ""
+
+#: build/block-library/blocks/supernova/index.js:6
+msgid "Cards Collection: Classic Grid"
+msgstr ""
+
+#: build/block-library/blocks/supernova/index.js:6
+msgid "Display a list of related items in a classic grid layout."
+msgstr ""
+
+#: build/block-library/blocks/supernova/index.js:6
+msgid "Cards Collection: Parametric Grid"
+msgstr ""
+
+#: build/block-library/blocks/supernova/index.js:6
+msgid "Display a list of related items in a parametric grid layout."
+msgstr ""
+
+#: build/block-library/blocks/supernova/index.js:6
+msgid "Hero Card"
+msgstr ""
+
+#: build/block-library/blocks/supernova/index.js:6
+msgid "Media Card"
+msgstr ""
+
+#: build/block-library/blocks/supernova/index.js:6
+msgid "Display media alongside short pieces of content."
+msgstr ""
+
+#: build/block-library/blocks/supernova/index.js:6
+msgid "Vertical Card"
+msgstr ""
+
+#: build/block-library/blocks/supernova/index.js:6
+msgid "Display media and short pieces of content, one after another."
+msgstr ""
+
+#: build/block-library/blocks/supernova/index.js:6
+msgid "Fresh posts from the grid"
+msgstr ""
+
+#: build/block-library/blocks/supernova/index.js:6
+msgid "A collection of our latest articles."
+msgstr ""
+
+#: build/block-library/blocks/supernova/index.js:6
+msgid "Query Loop → Posts Collection: Classic Grid"
+msgstr ""
+
+#: build/block-library/blocks/supernova/index.js:6
+msgid "Display a queried set of posts in a classic grid format (columns and rows)."
+msgstr ""
+
+#: build/block-library/blocks/supernova/index.js:6
+msgid "You should read these"
+msgstr ""
+
+#: build/block-library/blocks/supernova/index.js:6
+msgid "A fancy slideshow with our latest posts never hurt nobody."
+msgstr ""
+
+#: build/block-library/blocks/supernova/index.js:6
+msgid "Query Loop → Posts Collection: Slideshow"
+msgstr ""
+
+#: build/block-library/blocks/supernova/index.js:6
+msgid "Display a queried set of posts in a slideshow layout."
+msgstr ""
+
+#: build/block-library/blocks/supernova/index.js:6
+msgid "Our latest brainy posts"
+msgstr ""
+
+#: build/block-library/blocks/supernova/index.js:6
+msgid "A super-duper-parametric collection of our latest brain-dumps."
+msgstr ""
+
+#: build/block-library/blocks/supernova/index.js:6
+msgid "Query Loop → Posts Collection: Parametric Grid"
+msgstr ""
+
+#: build/block-library/blocks/supernova/index.js:6
+msgid "Display a queried set of posts in a beautiful, consistent manner."
+msgstr ""
+
+#: build/block-library/blocks/supernova/index.js:6
+msgid "Query Loop → Posts Collection: Carousel"
+msgstr ""
+
+#: build/block-library/blocks/supernova/index.js:6
+msgid "Display a queried set of posts in a carousel layout."
+msgstr ""
+
+#: build/collection/index.js:6
+msgid "Collection title"
+msgstr ""
+
+#: build/collection/index.js:6
+msgid "Collection subtitle"
+msgstr ""
+
+#: build/color-signal/index.js:6
+msgid "Use Source Color as Reference"
+msgstr ""
+
+#: build/color-signal/index.js:6
+msgid "Use Functional Colors"
+msgstr ""
+
+#: build/color-signal/index.js:6
+msgid "Miscellaneous"
+msgstr ""
+
+#: build/color-signal/index.js:6
+msgid "Block Color Signal"
+msgstr ""
+
+#: build/color-signal/index.js:6
+msgid "Content Area Color Signal"
+msgstr ""
+
+#: build/color-signal/index.js:6
+msgid "Emphasis Area"
+msgstr ""
+
+#: build/color-signal/index.js:6
+msgid "Color Signal"
+msgstr ""
+
+#: build/color-signal/index.js:6
+msgid "Quickstart:"
+msgstr ""
+
+#: build/color-signal/index.js:6
+msgid "Use this tool to signal particular blocks on your page. A block with a higher color signal stands apart from the rest of your content."
+msgstr ""
+
+#: build/color-signal/index.js:6
+msgid "✔ Ok, I get it!"
+msgstr ""
+
+#: build/core/index.js:6
+msgid "Marker Settings"
+msgstr ""
+
+#: build/core/index.js:6
+msgid "List Items Connection"
+msgstr ""
+
+#: build/core/index.js:6
+msgid "Prevent duplicate posts"
+msgstr ""
+
+#: build/media-composition/index.js:1
+msgid "Media"
+msgstr ""
+
+#: build/media-composition/index.js:1
+msgid "Edit Gallery"
+msgstr ""
+
+#: build/media-composition/index.js:1
+msgid "Add Video"
+msgstr ""
+
+#: build/media-composition/index.js:1
+msgid "Media Aspect Ratio"
+msgstr ""
+
+#: build/media-composition/index.js:1
+msgid "Image Resizing"
+msgstr ""
+
+#: build/media-composition/index.js:1
+msgid "Stretch to fill the container"
+msgstr ""
+
+#: build/media-composition/index.js:1
+msgid "Shrink to fit (no crop)"
+msgstr ""
+
+#: build/media-composition/index.js:1
+msgid "Media Composition"
+msgstr ""
+
+#: build/media-composition/index.js:1
+msgid "Card Anatomy"
+msgstr ""
+
+#: build/media-composition/index.js:1
+#: build/shape-modeling/index.js:6
+msgid "Presets"
+msgstr ""
+
+#: build/media-composition/index.js:1
+msgid "Set up your gallery layout using the presets list below and use the Customize tab to fine-tune the details."
+msgstr ""
+
+#: build/media-composition/index.js:1
+msgid "✔ Ok, I got it!"
+msgstr ""
+
+#: build/media-composition/index.js:1
+msgid "Images Crop Style"
+msgstr ""
+
+#: build/media-composition/index.js:1
+msgid "Gallery"
+msgstr ""
+
+#: build/media-composition/index.js:1
+msgid "Size Contrast"
+msgstr ""
+
+#: build/media-composition/index.js:1
+msgid "Position Shift"
+msgstr ""
+
+#: build/media-composition/index.js:1
+msgid "Elements Distance"
+msgstr ""
+
+#: build/media-composition/index.js:1
+msgid "Placement Variation"
+msgstr ""
+
+#: build/media-composition/index.js:1
+msgid "Image Rotation"
+msgstr ""
+
+#: build/media-composition/index.js:1
+msgid "Image Position"
+msgstr ""
+
+#: build/scrolling-effect/index.js:1
+msgid "Doppler by Pixelgrade ®"
+msgstr ""
+
+#: build/scrolling-effect/index.js:1
+msgid "Scrolling Effect"
+msgstr ""
+
+#: build/scrolling-effect/index.js:1
+#: build/shape-modeling/index.js:6
+msgid "Modules"
+msgstr ""
+
+#: build/scrolling-effect/index.js:1
+msgid "Static Scrolling Settings"
+msgstr ""
+
+#: build/scrolling-effect/index.js:1
+msgid "Parallax Scrolling Settings"
+msgstr ""
+
+#: build/scrolling-effect/index.js:1
+msgid "Start Frame"
+msgstr ""
+
+#: build/scrolling-effect/index.js:1
+msgid "Smooth start transition"
+msgstr ""
+
+#: build/scrolling-effect/index.js:1
+msgid "End Frame"
+msgstr ""
+
+#: build/scrolling-effect/index.js:1
+msgid "Smooth end transition"
+msgstr ""
+
+#: build/shape-modeling/index.js:6
+msgid "Debug"
+msgstr ""
+
+#: build/shape-modeling/index.js:6
+msgid "Enable Shape Debug"
+msgstr ""
+
+#: build/shape-modeling/index.js:6
+msgid "Sides"
+msgstr ""
+
+#: build/shape-modeling/index.js:6
+msgid "Pattern Seed"
+msgstr ""
+
+#: build/shape-modeling/index.js:6
+msgid "Variation"
+msgstr ""
+
+#: build/shape-modeling/index.js:6
+msgid "Smoothness"
+msgstr ""
+
+#: build/shape-modeling/index.js:6
+msgid "Rotation"
+msgstr ""
+
+#: build/shape-modeling/index.js:6
+msgid "Scaling"
+msgstr ""
+
+#: build/shape-modeling/index.js:6
+msgid "Horizontal Displacement"
+msgstr ""
+
+#: build/shape-modeling/index.js:6
+msgid "Vertical Displacement"
+msgstr ""
+
+#: build/shape-modeling/index.js:6
+msgid "Size Balance"
+msgstr ""
+
+#: build/shape-modeling/index.js:6
+msgid "Shape Modeling"
+msgstr ""
+
+#: build/shape-modeling/index.js:6
+msgid "Use this tool to generate shapes and combine them with your images to create designs that are a unique and memorable part of your brand identity."
+msgstr ""
+
+#: build/shape-modeling/index.js:6
+msgid "Choose a shape preset:"
+msgstr ""
+
+#: build/shape-modeling/index.js:6
+msgid "Media Shape"
+msgstr ""
+
+#: build/shape-modeling/index.js:6
+msgid "Enable Media Shape"
+msgstr ""
+
+#: build/shape-modeling/index.js:6
+msgid "Decorative Shape"
+msgstr ""
+
+#: build/shape-modeling/index.js:6
+msgid "Enable Blob Decoration"
+msgstr ""
+
+#: build/tools/index.js:1
+msgid "Nova Blocks Tools"
+msgstr ""
+
+#: build/tools/index.js:1
+msgid "Blocks"
+msgstr ""
+
+#: build/block-library/blocks/announcement-bar/block.json
+#: packages/block-library/src/blocks/announcement-bar/block.json
+msgctxt "block title"
+msgid "Announcement Bar"
+msgstr ""
+
+#: build/block-library/blocks/announcement-bar/block.json
+#: packages/block-library/src/blocks/announcement-bar/block.json
+msgctxt "block description"
+msgid "Display a banner across the top of your site with a message of your choice."
+msgstr ""
+
+#: build/block-library/blocks/announcement-bar/block.json
+#: packages/block-library/src/blocks/announcement-bar/block.json
+msgctxt "block keyword"
+msgid "promo bar"
+msgstr ""
+
+#: build/block-library/blocks/announcement-bar/block.json
+#: packages/block-library/src/blocks/announcement-bar/block.json
+msgctxt "block keyword"
+msgid "welcome header bar"
+msgstr ""
+
+#: build/block-library/blocks/announcement-bar/block.json
+#: packages/block-library/src/blocks/announcement-bar/block.json
+msgctxt "block keyword"
+msgid "top bar"
+msgstr ""
+
+#: build/block-library/blocks/announcement-bar/block.json
+#: packages/block-library/src/blocks/announcement-bar/block.json
+msgctxt "block keyword"
+msgid "banner"
+msgstr ""
+
+#: build/block-library/blocks/author-box/block.json
+#: packages/block-library/src/blocks/author-box/block.json
+msgctxt "block title"
+msgid "Author box"
+msgstr ""
+
+#: build/block-library/blocks/author-box/block.json
+#: packages/block-library/src/blocks/author-box/block.json
+msgctxt "block description"
+msgid "Display section with author bio, avatar and social links."
+msgstr ""
+
+#: build/block-library/blocks/author-box/block.json
+#: build/block-library/blocks/post-meta/block.json
+#: packages/block-library/src/blocks/author-box/block.json
+#: packages/block-library/src/blocks/post-meta/block.json
+msgctxt "block keyword"
+msgid "author"
+msgstr ""
+
+#: build/block-library/blocks/author-box/block.json
+#: packages/block-library/src/blocks/author-box/block.json
+msgctxt "block keyword"
+msgid "bio"
+msgstr ""
+
+#: build/block-library/blocks/google-map/block.json
+#: packages/block-library/src/blocks/google-map/block.json
+msgctxt "block title"
+msgid "Map of the World"
+msgstr ""
+
+#: build/block-library/blocks/google-map/block.json
+#: packages/block-library/src/blocks/google-map/block.json
+msgctxt "block description"
+msgid "Display an interactive map to show the location of your venue."
+msgstr ""
+
+#: build/block-library/blocks/google-map/block.json
+#: packages/block-library/src/blocks/google-map/block.json
+msgctxt "block keyword"
+msgid "google"
+msgstr ""
+
+#: build/block-library/blocks/google-map/block.json
+#: packages/block-library/src/blocks/google-map/block.json
+msgctxt "block keyword"
+msgid "maps"
+msgstr ""
+
+#: build/block-library/blocks/google-map/block.json
+#: packages/block-library/src/blocks/google-map/block.json
+msgctxt "block keyword"
+msgid "location"
+msgstr ""
+
+#: build/block-library/blocks/google-map/block.json
+#: packages/block-library/src/blocks/google-map/block.json
+msgctxt "block keyword"
+msgid "pins"
+msgstr ""
+
+#: build/block-library/blocks/google-map/block.json
+#: packages/block-library/src/blocks/google-map/block.json
+msgctxt "block keyword"
+msgid "gmap"
+msgstr ""
+
+#: build/block-library/blocks/header-row/block.json
+#: packages/block-library/src/blocks/header-row/block.json
+msgctxt "block title"
+msgid "Header Row"
+msgstr ""
+
+#: build/block-library/blocks/header-row/block.json
+#: build/block-library/blocks/headline/block.json
+#: packages/block-library/src/blocks/header-row/block.json
+#: packages/block-library/src/blocks/headline/block.json
+msgctxt "block description"
+msgid "Organize a single row in your site's header."
+msgstr ""
+
+#: build/block-library/blocks/header-row/block.json
+#: build/block-library/blocks/header/block.json
+#: build/block-library/blocks/sidecar-area/block.json
+#: build/block-library/blocks/sidecar/block.json
+#: build/block-library/blocks/supernova-item/block.json
+#: build/block-library/blocks/supernova/block.json
+#: packages/block-library/src/blocks/header-row/block.json
+#: packages/block-library/src/blocks/header/block.json
+#: packages/block-library/src/blocks/sidecar-area/block.json
+#: packages/block-library/src/blocks/sidecar/block.json
+#: packages/block-library/src/blocks/supernova-item/block.json
+#: packages/block-library/src/blocks/supernova/block.json
+msgctxt "block keyword"
+msgid "layout"
+msgstr ""
+
+#: build/block-library/blocks/header-row/block.json
+#: build/block-library/blocks/header/block.json
+#: packages/block-library/src/blocks/header-row/block.json
+#: packages/block-library/src/blocks/header/block.json
+msgctxt "block keyword"
+msgid "logo"
+msgstr ""
+
+#: build/block-library/blocks/header-row/block.json
+#: build/block-library/blocks/header/block.json
+#: build/block-library/blocks/navigation/block.json
+#: packages/block-library/src/blocks/header-row/block.json
+#: packages/block-library/src/blocks/header/block.json
+#: packages/block-library/src/blocks/navigation/block.json
+msgctxt "block keyword"
+msgid "menu"
+msgstr ""
+
+#: build/block-library/blocks/header-row/block.json
+#: build/block-library/blocks/header/block.json
+#: build/block-library/blocks/navigation/block.json
+#: build/block-library/blocks/post-navigation/block.json
+#: packages/block-library/src/blocks/header-row/block.json
+#: packages/block-library/src/blocks/header/block.json
+#: packages/block-library/src/blocks/navigation/block.json
+#: packages/block-library/src/blocks/post-navigation/block.json
+msgctxt "block keyword"
+msgid "navigation"
+msgstr ""
+
+#: build/block-library/blocks/header-row/block.json
+#: build/block-library/blocks/header/block.json
+#: packages/block-library/src/blocks/header-row/block.json
+#: packages/block-library/src/blocks/header/block.json
+msgctxt "block keyword"
+msgid "row"
+msgstr ""
+
+#: build/block-library/blocks/header-row/block.json
+#: packages/block-library/src/blocks/header-row/block.json
+msgctxt "block keyword"
+msgid "columns"
+msgstr ""
+
+#: build/block-library/blocks/header/block.json
+#: packages/block-library/src/blocks/header/block.json
+msgctxt "block title"
+msgid "Header"
+msgstr ""
+
+#: build/block-library/blocks/header/block.json
+#: packages/block-library/src/blocks/header/block.json
+msgctxt "block description"
+msgid "Display your site's header (logo, navigation, etc.) with smart layouts and behaviors."
+msgstr ""
+
+#: build/block-library/blocks/headline/block.json
+#: packages/block-library/src/blocks/headline/block.json
+msgctxt "block title"
+msgid "Headline"
+msgstr ""
+
+#: build/block-library/blocks/headline/block.json
+#: packages/block-library/src/blocks/headline/block.json
+msgctxt "block keyword"
+msgid "heading"
+msgstr ""
+
+#: build/block-library/blocks/headline/block.json
+#: packages/block-library/src/blocks/headline/block.json
+msgctxt "block keyword"
+msgid "title"
+msgstr ""
+
+#: build/block-library/blocks/headline/block.json
+#: packages/block-library/src/blocks/headline/block.json
+msgctxt "block keyword"
+msgid "cta"
+msgstr ""
+
+#: build/block-library/blocks/headline/block.json
+#: packages/block-library/src/blocks/headline/block.json
+msgctxt "block keyword"
+msgid "call to action"
+msgstr ""
+
+#: build/block-library/blocks/logo/block.json
+#: packages/block-library/src/blocks/logo/block.json
+msgctxt "block title"
+msgid "Site Logo"
+msgstr ""
+
+#: build/block-library/blocks/logo/block.json
+#: packages/block-library/src/blocks/logo/block.json
+msgctxt "block description"
+msgid "Display your site's logo."
+msgstr ""
+
+#: build/block-library/blocks/logo/block.json
+#: packages/block-library/src/blocks/logo/block.json
+msgctxt "block keyword"
+msgid "branding"
+msgstr ""
+
+#: build/block-library/blocks/menu-food/block.json
+#: packages/block-library/src/blocks/menu-food/block.json
+msgctxt "block title"
+msgid "Food Menu"
+msgstr ""
+
+#: build/block-library/blocks/menu-food/block.json
+#: packages/block-library/src/blocks/menu-food/block.json
+msgctxt "block description"
+msgid "Display a list of food or drink items available at your venue."
+msgstr ""
+
+#: build/block-library/blocks/menu-food/block.json
+#: packages/block-library/src/blocks/menu-food/block.json
+msgctxt "block keyword"
+msgid "food menu"
+msgstr ""
+
+#: build/block-library/blocks/menu-food/block.json
+#: packages/block-library/src/blocks/menu-food/block.json
+msgctxt "block keyword"
+msgid "restaurant menu"
+msgstr ""
+
+#: build/block-library/blocks/menu-food/block.json
+#: packages/block-library/src/blocks/menu-food/block.json
+msgctxt "block keyword"
+msgid "dishes"
+msgstr ""
+
+#: build/block-library/blocks/menu-food/block.json
+#: packages/block-library/src/blocks/menu-food/block.json
+msgctxt "block keyword"
+msgid "eats"
+msgstr ""
+
+#: build/block-library/blocks/menu-food/block.json
+#: packages/block-library/src/blocks/menu-food/block.json
+msgctxt "block keyword"
+msgid "menu list"
+msgstr ""
+
+#: build/block-library/blocks/menu-food/block.json
+#: packages/block-library/src/blocks/menu-food/block.json
+msgctxt "block style label"
+msgid "Classic"
+msgstr ""
+
+#: build/block-library/blocks/menu-food/block.json
+#: packages/block-library/src/blocks/menu-food/block.json
+msgctxt "block style label"
+msgid "Basic"
+msgstr ""
+
+#: build/block-library/blocks/navigation/block.json
+#: packages/block-library/src/blocks/navigation/block.json
+msgctxt "block title"
+msgid "Space Navigation"
+msgstr ""
+
+#: build/block-library/blocks/navigation/block.json
+#: packages/block-library/src/blocks/navigation/block.json
+msgctxt "block description"
+msgid "Display a certain navigation menu in your site's header."
+msgstr ""
+
+#: build/block-library/blocks/navigation/block.json
+#: packages/block-library/src/blocks/navigation/block.json
+msgctxt "block keyword"
+msgid "site-menu"
+msgstr ""
+
+#: build/block-library/blocks/navigation/block.json
+#: packages/block-library/src/blocks/navigation/block.json
+msgctxt "block keyword"
+msgid "primary"
+msgstr ""
+
+#: build/block-library/blocks/navigation/block.json
+#: packages/block-library/src/blocks/navigation/block.json
+msgctxt "block keyword"
+msgid "secondary"
+msgstr ""
+
+#: build/block-library/blocks/post-comments/block.json
+#: packages/block-library/src/blocks/post-comments/block.json
+msgctxt "block title"
+msgid "Conversation System"
+msgstr ""
+
+#: build/block-library/blocks/post-comments/block.json
+#: packages/block-library/src/blocks/post-comments/block.json
+msgctxt "block description"
+msgid "Display an engaging comments section to start meaningful conversations."
+msgstr ""
+
+#: build/block-library/blocks/post-comments/block.json
+#: packages/block-library/src/blocks/post-comments/block.json
+msgctxt "block keyword"
+msgid "comment"
+msgstr ""
+
+#: build/block-library/blocks/post-comments/block.json
+#: packages/block-library/src/blocks/post-comments/block.json
+msgctxt "block keyword"
+msgid "reply"
+msgstr ""
+
+#: build/block-library/blocks/post-comments/block.json
+#: packages/block-library/src/blocks/post-comments/block.json
+msgctxt "block keyword"
+msgid "discussion"
+msgstr ""
+
+#: build/block-library/blocks/post-comments/block.json
+#: packages/block-library/src/blocks/post-comments/block.json
+msgctxt "block keyword"
+msgid "reaction"
+msgstr ""
+
+#: build/block-library/blocks/post-comments/block.json
+#: packages/block-library/src/blocks/post-comments/block.json
+msgctxt "block keyword"
+msgid "contributor"
+msgstr ""
+
+#: build/block-library/blocks/post-comments/block.json
+#: packages/block-library/src/blocks/post-comments/block.json
+msgctxt "block keyword"
+msgid "interaction"
+msgstr ""
+
+#: build/block-library/blocks/post-comments/block.json
+#: packages/block-library/src/blocks/post-comments/block.json
+msgctxt "block keyword"
+msgid "conversation"
+msgstr ""
+
+#: build/block-library/blocks/post-comments/block.json
+#: packages/block-library/src/blocks/post-comments/block.json
+msgctxt "block keyword"
+msgid "review"
+msgstr ""
+
+#: build/block-library/blocks/post-comments/block.json
+#: packages/block-library/src/blocks/post-comments/block.json
+msgctxt "block keyword"
+msgid "feedback"
+msgstr ""
+
+#: build/block-library/blocks/post-meta/block.json
+#: packages/block-library/src/blocks/post-meta/block.json
+msgctxt "block title"
+msgid "Post Meta"
+msgstr ""
+
+#: build/block-library/blocks/post-meta/block.json
+#: packages/block-library/src/blocks/post-meta/block.json
+msgctxt "block description"
+msgid "Display a cohesive section with author, meta, sharing and comments info."
+msgstr ""
+
+#: build/block-library/blocks/post-meta/block.json
+#: packages/block-library/src/blocks/post-meta/block.json
+msgctxt "block keyword"
+msgid "meta"
+msgstr ""
+
+#: build/block-library/blocks/post-meta/block.json
+#: packages/block-library/src/blocks/post-meta/block.json
+msgctxt "block keyword"
+msgid "comments"
+msgstr ""
+
+#: build/block-library/blocks/post-meta/block.json
+#: packages/block-library/src/blocks/post-meta/block.json
+msgctxt "block keyword"
+msgid "sharing"
+msgstr ""
+
+#: build/block-library/blocks/post-meta/block.json
+#: packages/block-library/src/blocks/post-meta/block.json
+msgctxt "block keyword"
+msgid "byline"
+msgstr ""
+
+#: build/block-library/blocks/post-meta/block.json
+#: packages/block-library/src/blocks/post-meta/block.json
+msgctxt "block keyword"
+msgid "avatar"
+msgstr ""
+
+#: build/block-library/blocks/post-meta/block.json
+#: packages/block-library/src/blocks/post-meta/block.json
+msgctxt "block keyword"
+msgid "reading time"
+msgstr ""
+
+#: build/block-library/blocks/post-navigation/block.json
+#: packages/block-library/src/blocks/post-navigation/block.json
+msgctxt "block title"
+msgid "Post navigation"
+msgstr ""
+
+#: build/block-library/blocks/post-navigation/block.json
+#: packages/block-library/src/blocks/post-navigation/block.json
+msgctxt "block description"
+msgid "Display a navigation section with previous and next posts links."
+msgstr ""
+
+#: build/block-library/blocks/post-navigation/block.json
+#: packages/block-library/src/blocks/post-navigation/block.json
+msgctxt "block keyword"
+msgid "post"
+msgstr ""
+
+#: build/block-library/blocks/post-navigation/block.json
+#: packages/block-library/src/blocks/post-navigation/block.json
+msgctxt "block keyword"
+msgid "previous"
+msgstr ""
+
+#: build/block-library/blocks/post-navigation/block.json
+#: packages/block-library/src/blocks/post-navigation/block.json
+msgctxt "block keyword"
+msgid "next"
+msgstr ""
+
+#: build/block-library/blocks/sharing-overlay/block.json
+#: packages/block-library/src/blocks/sharing-overlay/block.json
+msgctxt "block title"
+msgid "Sharing System"
+msgstr ""
+
+#: build/block-library/blocks/sharing-overlay/block.json
+#: packages/block-library/src/blocks/sharing-overlay/block.json
+msgctxt "block description"
+msgid "Display a sharing button and overlay to make it easy for your readers to spread the word."
+msgstr ""
+
+#: build/block-library/blocks/sharing-overlay/block.json
+#: packages/block-library/src/blocks/sharing-overlay/block.json
+msgctxt "block keyword"
+msgid "share"
+msgstr ""
+
+#: build/block-library/blocks/sharing-overlay/block.json
+#: packages/block-library/src/blocks/sharing-overlay/block.json
+msgctxt "block keyword"
+msgid "social"
+msgstr ""
+
+#: build/block-library/blocks/sharing-overlay/block.json
+#: packages/block-library/src/blocks/sharing-overlay/block.json
+msgctxt "block keyword"
+msgid "facebook"
+msgstr ""
+
+#: build/block-library/blocks/sharing-overlay/block.json
+#: packages/block-library/src/blocks/sharing-overlay/block.json
+msgctxt "block keyword"
+msgid "twitter"
+msgstr ""
+
+#: build/block-library/blocks/sharing-overlay/block.json
+#: packages/block-library/src/blocks/sharing-overlay/block.json
+msgctxt "block keyword"
+msgid "linkedin"
+msgstr ""
+
+#: build/block-library/blocks/sharing-overlay/block.json
+#: packages/block-library/src/blocks/sharing-overlay/block.json
+msgctxt "block keyword"
+msgid "link"
+msgstr ""
+
+#: build/block-library/blocks/sharing-overlay/block.json
+#: packages/block-library/src/blocks/sharing-overlay/block.json
+msgctxt "block keyword"
+msgid "copy"
+msgstr ""
+
+#: build/block-library/blocks/sharing-overlay/block.json
+#: packages/block-library/src/blocks/sharing-overlay/block.json
+msgctxt "block keyword"
+msgid "email"
+msgstr ""
+
+#: build/block-library/blocks/sharing-overlay/block.json
+#: packages/block-library/src/blocks/sharing-overlay/block.json
+msgctxt "block keyword"
+msgid "print"
+msgstr ""
+
+#: build/block-library/blocks/sharing-overlay/block.json
+#: packages/block-library/src/blocks/sharing-overlay/block.json
+msgctxt "block keyword"
+msgid "clipboard"
+msgstr ""
+
+#: build/block-library/blocks/sidecar-area/block.json
+#: packages/block-library/src/blocks/sidecar-area/block.json
+msgctxt "block title"
+msgid "Sidecar Area"
+msgstr ""
+
+#: build/block-library/blocks/sidecar-area/block.json
+#: packages/block-library/src/blocks/sidecar-area/block.json
+msgctxt "block description"
+msgid "Define a sidecar area."
+msgstr ""
+
+#: build/block-library/blocks/sidecar-area/block.json
+#: build/block-library/blocks/sidecar/block.json
+#: packages/block-library/src/blocks/sidecar-area/block.json
+#: packages/block-library/src/blocks/sidecar/block.json
+msgctxt "block keyword"
+msgid "sidebar"
+msgstr ""
+
+#: build/block-library/blocks/sidecar-area/block.json
+#: build/block-library/blocks/sidecar/block.json
+#: packages/block-library/src/blocks/sidecar-area/block.json
+#: packages/block-library/src/blocks/sidecar/block.json
+msgctxt "block keyword"
+msgid "content"
+msgstr ""
+
+#: build/block-library/blocks/sidecar-area/block.json
+#: build/block-library/blocks/sidecar/block.json
+#: packages/block-library/src/blocks/sidecar-area/block.json
+#: packages/block-library/src/blocks/sidecar/block.json
+msgctxt "block keyword"
+msgid "aside"
+msgstr ""
+
+#: build/block-library/blocks/sidecar/block.json
+#: packages/block-library/src/blocks/sidecar/block.json
+msgctxt "block title"
+msgid "Sidecar"
+msgstr ""
+
+#: build/block-library/blocks/sidecar/block.json
+#: packages/block-library/src/blocks/sidecar/block.json
+msgctxt "block description"
+msgid "Establish supporting sections that relate to the main content."
+msgstr ""
+
+#: build/block-library/blocks/supernova-item/block.json
+#: packages/block-library/src/blocks/supernova-item/block.json
+msgctxt "block title"
+msgid "Card"
+msgstr ""
+
+#: build/block-library/blocks/supernova-item/block.json
+#: packages/block-library/src/blocks/supernova-item/block.json
+msgctxt "block description"
+msgid "Define an item in a cards collection."
+msgstr ""
+
+#: build/block-library/blocks/supernova-item/block.json
+#: build/block-library/blocks/supernova/block.json
+#: packages/block-library/src/blocks/supernova-item/block.json
+#: packages/block-library/src/blocks/supernova/block.json
+msgctxt "block keyword"
+msgid "posts"
+msgstr ""
+
+#: build/block-library/blocks/supernova-item/block.json
+#: build/block-library/blocks/supernova/block.json
+#: packages/block-library/src/blocks/supernova-item/block.json
+#: packages/block-library/src/blocks/supernova/block.json
+msgctxt "block keyword"
+msgid "grid"
+msgstr ""
+
+#: build/block-library/blocks/supernova-item/block.json
+#: build/block-library/blocks/supernova/block.json
+#: packages/block-library/src/blocks/supernova-item/block.json
+#: packages/block-library/src/blocks/supernova/block.json
+msgctxt "block keyword"
+msgid "parametric"
+msgstr ""
+
+#: build/block-library/blocks/supernova-item/block.json
+#: build/block-library/blocks/supernova/block.json
+#: packages/block-library/src/blocks/supernova-item/block.json
+#: packages/block-library/src/blocks/supernova/block.json
+msgctxt "block keyword"
+msgid "card"
+msgstr ""
+
+#: build/block-library/blocks/supernova/block.json
+#: packages/block-library/src/blocks/supernova/block.json
+msgctxt "block title"
+msgid "Cards Collection"
+msgstr ""
+
+#: build/block-library/blocks/supernova/block.json
+#: packages/block-library/src/blocks/supernova/block.json
+msgctxt "block description"
+msgid "Create amazing layouts from your posts or static content."
+msgstr ""
+
+#: build/block-library/blocks/supernova/block.json
+#: packages/block-library/src/blocks/supernova/block.json
+msgctxt "block keyword"
+msgid "query"
+msgstr ""
+
+#: build/block-library/blocks/supernova/block.json
+#: packages/block-library/src/blocks/supernova/block.json
+msgctxt "block keyword"
+msgid "collection"
 msgstr ""
