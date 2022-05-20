@@ -94,6 +94,17 @@ Yes! Nova Block's core features are free to use.
 
 == Changelog ==
 
+= 2.0.4 =
+* Fix query loop card's blocks alignment
+* Fix site branding alignment
+* Fix the display of carousel pagination inside editor
+* Update the .pot file with all the translatable strings
+* Fix Supernova hero variation initial content (buttons)
+* Fix Supernova preview for items with predefined fields
+* Post Meta block: Use a more standard avatar size for avatar URL
+* Add "alignfull" class to Sidecar block to allow layout inside hero-like Supernova items
+* Improve build process
+
 = 2.0.3 =
 * Fix announcement-bar block (missing blockId attribute)
 * Fix error in site editor (related to hide deprecated blocks)
