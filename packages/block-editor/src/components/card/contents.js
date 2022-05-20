@@ -64,6 +64,28 @@ export const CardTitle = withVisibilityAndPlaceholder( ( props ) => {
   );
 } );
 
+export const CardSubtitle = withVisibilityAndPlaceholder( ( props ) => {
+
+  const {
+    attributes,
+    placeholder,
+    children,
+  } = props;
+
+  const {
+    cardTitleLevel
+  } = attributes;
+
+  const SubTitleTagName = `h${ cardTitleLevel + 1 }`;
+
+  return (
+
+    <SubTitleTagName className={ `nb-card__subtitle` }>
+      { ! placeholder ? children : <TextPlaceholder/> }
+    </SubTitleTagName>
+  );
+} );
+
 export const CardMeta = withVisibilityAndPlaceholder( ( props ) => {
 
   const {
