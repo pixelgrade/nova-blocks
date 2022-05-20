@@ -1709,6 +1709,7 @@ function novablocks_get_post_card_meta( $post, $meta ) {
 			return esc_html__( 'No Comments', '__plugin_txtd' );
 		}
 
+		/* translators: 1: The number of comments singular, 2: The number of comments plural. */
 		return esc_html(
 			sprintf(
 				_nx(
@@ -1760,6 +1761,7 @@ function novablocks_get_post_card_meta( $post, $meta ) {
 	}
 
 	if ( $meta == 'reading-time' ) {
+		/* translators: %s: The post reading time in minutes. */
 		return sprintf( __( '%s min read', '__plugin_txtd' ), novablocks_get_post_reading_time_in_minutes( $post ) );
 	}
 

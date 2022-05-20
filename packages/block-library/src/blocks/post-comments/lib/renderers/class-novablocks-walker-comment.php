@@ -192,12 +192,14 @@ if ( ! class_exists( 'NovaBlocks_Walker_Comment' ) ) {
 				$time_text = esc_html__( 'Just now', '__plugin_txtd' );
 			} elseif ( current_time( 'U' ) - get_comment_time( 'U' ) < 14 * DAY_IN_SECONDS ) {
 				$time_text = sprintf(
+						/* translators: %s: human-readable time difference */
 						_x( '%s ago', '%s = human-readable time difference', '__plugin_txtd' ),
 						human_time_diff(
 								get_comment_time( 'U' ),
 								current_time( 'timestamp' ) )
 				);
 			} else {
+				/* translators: %s: The comment date. */
 				$time_text = sprintf( esc_html__( 'On %s', '__plugin_txtd' ), get_comment_date() );
 			}
 

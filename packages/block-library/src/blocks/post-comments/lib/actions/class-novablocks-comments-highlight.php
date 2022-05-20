@@ -195,7 +195,9 @@ if ( ! class_exists( 'NovaBlocks_Comments_Highlight' ) ) {
 								<input type="checkbox"
 								       name="nb_comment_highlighted_by[]" <?php checked( false !== array_search( get_current_user_id(), $comment_highlighted_by ) ); ?>
 								       value="<?php echo esc_attr( get_current_user_id() ); ?>" autocomplete="off"/>
-								<span><?php printf( esc_html__( 'Me (%s)', '__plugin_txtd' ), wp_get_current_user()->display_name ); ?></span>
+								<span><?php
+									/* translators: %s: Current logged-in user display name. */
+									printf( esc_html__( 'Me (%s)', '__plugin_txtd' ), wp_get_current_user()->display_name ); ?></span>
 							</label>
 						</p>
 
