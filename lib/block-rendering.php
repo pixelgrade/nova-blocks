@@ -1709,12 +1709,12 @@ function novablocks_get_post_card_meta( $post, $meta ) {
 			return esc_html__( 'No Comments', '__plugin_txtd' );
 		}
 
-		/* translators: 1: The number of comments singular, 2: The number of comments plural. */
 		return esc_html(
 			sprintf(
+				/* translators: %s: The number of comments. */
 				_nx(
-					'%1$s Comment',
-					'%1$s Comments',
+					'%s Comment',
+					'%s Comments',
 					$comments_number,
 					'comments title',
 					'__plugin_txtd'
