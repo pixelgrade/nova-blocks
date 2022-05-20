@@ -23,6 +23,7 @@
 		"@wordpress/element": "^3.2.0",
 		"@wordpress/hooks": "^3.6.0",
 		"@wordpress/i18n": "^4.6.0",
-		"fast-mersenne-twister": "^1.0.3"
+		"fast-mersenne-twister": "^1.0.3",
+		"react-spring": "^9.4.4"
 	}
 }

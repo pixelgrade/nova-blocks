@@ -1,5 +1,5 @@
 import classnames from 'classnames';
-import { Spring, animated } from 'react-spring/renderprops';
+import { Spring, animated } from 'react-spring';
 import { createHigherOrderComponent } from '@wordpress/compose';
 import { Fragment } from "@wordpress/element";
 
