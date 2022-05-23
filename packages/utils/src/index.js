@@ -392,3 +392,17 @@ export const resizeDropcap = dropcap => {
 
   dropcap.style.fontSize = `${ newFontSizeValue }px`;
 }
+
+export const getAttributes = element => {
+  const attributes = {};
+
+  Object.keys( element.dataset ).forEach( key => {
+    try {
+      attributes[ key ] = JSON.parse( element.dataset[ key ] );
+    } catch (e) {
+      attributes[ key ] = element.dataset[ key ];
+    }
+  } );
+
+  return attributes;
+}

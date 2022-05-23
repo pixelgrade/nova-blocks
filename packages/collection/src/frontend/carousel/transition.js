@@ -3,7 +3,18 @@ const TRANSITION_EASING = 'easeInOutCirc';
 const FOREGROUND_SELECTOR = '.nb-supernova-item__content';
 const BACKGROUND_SELECTOR = '.nb-supernova-item__media-wrapper';
 
-const transition = ( $current, $next, sign = 1 ) => {
+const moveLeft = ( element, value, use3D ) => {
+
+  if ( use3D ) {
+    element.style.transform = `translate3d(${ value }px,0,0)`;
+    return;
+  }
+
+  element.style.left = `${ value }px`;
+
+}
+
+const transition = ( $current, $next, sign = 1, use3D = true ) => {
   const slideWidth = $current.outerWidth();
 
   const move = 300;
@@ -32,20 +43,23 @@ const transition = ( $current, $next, sign = 1 ) => {
     progress: function( elements, complete, remaining, start, tweenValue ) {
 
         if ( next ) {
-          next.style.transform = `translate3d(${ slideWidth * tweenValue * sign }px,0,0)`;
+          moveLeft( next, slideWidth * tweenValue * sign, use3D );
         }
 
         if ( nextFg ) {
-          nextFg.style.transform = `translate3d(${ ( - slideWidth ) * tweenValue * sign }px,0,0)`;
+          moveLeft( nextFg, ( - slideWidth ) * tweenValue * sign, use3D );
         }
 
         if ( nextBg ) {
-          nextBg.style.transform = `translate3d(${ ( move - slideWidth ) * tweenValue * sign }px,0,0)`;
+          moveLeft( nextBg, ( move - slideWidth ) * tweenValue * sign, use3D );
         }
 
         if ( currentBg ) {
-          currentBg.style.transform = `translate3d(${ ( - move ) * ( 1 - tweenValue ) * sign }px,0,0)`;
+          moveLeft( currentBg, ( - move ) * ( 1 - tweenValue ) * sign, use3D );
         }
+
+      const resize = new CustomEvent( 'nb:slick-update' );
+      window.dispatchEvent( resize );
     },
     complete: function() {
       $current.removeClass( 'slick-slide--current' );

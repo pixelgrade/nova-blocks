@@ -1,5 +1,7 @@
 import domReady from "@wordpress/dom-ready";
 
+import { getAttributes } from "@novablocks/utils";
+
 import {
   addVisibilityToStyles,
   createHtmlMapMarker,
@@ -71,20 +73,6 @@ domReady( () => {
     } );
   }
 } );
-
-function getAttributes( element ) {
-  const attributes = {};
-
-  Object.keys( element.dataset ).forEach( key => {
-    try {
-      attributes[ key ] = JSON.parse( element.dataset[ key ] );
-    } catch (e) {
-      attributes[ key ] = element.dataset[ key ];
-    }
-  } );
-
-  return attributes;
-}
 
 function createMapMarkers( markers, map, attributes, accentColor ) {
   const { showMarkerLabels, styleSlug } = attributes;

@@ -11,12 +11,12 @@ export const hasFixedBackground = ( $slide ) => {
   return fixed;
 };
 
-export const onBeforeSlideChange = ( event, slick, currentSlide, nextSlide ) => {
+export const onBeforeSlideChange = ( event, slick, currentSlide, nextSlide, use3D = true ) => {
   const $currentSlide = $( slick.$slides[ currentSlide ] );
   const $nextSlide = $( slick.$slides[ nextSlide ] );
   const direction = getDirection( slick, currentSlide, nextSlide );
 
-  transition( $currentSlide, $nextSlide, direction );
+  transition( $currentSlide, $nextSlide, direction, use3D );
 };
 
 export const getDirection = ( slick, currentSlide, nextSlide ) => {
