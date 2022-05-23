@@ -65,7 +65,7 @@ if ( ! function_exists( 'novablocks_render_post_meta_block' ) ) {
 			$min_reading_time = novablocks_get_post_reading_time_in_minutes( $post, 280 );
 
 			$byline = sprintf(
-				__( '%s', '__theme_txtd' ),
+				__( '%s', '__plugin_txtd' ),
 				'<span class="author vcard"><a class="url fn n" href="' . esc_url( get_author_posts_url( $author_id ) ) . '">' . $author->display_name . '</a></span>'
 			);
 
@@ -91,7 +91,7 @@ if ( ! function_exists( 'novablocks_render_post_meta_block' ) ) {
 								<div class="c-meta__row-item"><?php echo get_the_date( '', $post ); ?></div>
 								<div class="c-meta__row-item">
 									<?php
-									printf( __( '%s min read', '__theme_txtd' ), $min_reading_time );
+									printf( __( '%s min read', '__plugin_txtd' ), $min_reading_time );
 									?>
 								</div>
 							</div> <!-- .c-meta__row--secondary -->
@@ -104,7 +104,7 @@ if ( ! function_exists( 'novablocks_render_post_meta_block' ) ) {
 				<div class="c-meta__rows">
 					<div class="c-meta__row">
 						<div class="c-meta__row-item">
-							<?php echo do_blocks( '<!-- wp:novablocks/sharing-overlay { "buttonLabel":"' . esc_html__( 'Share', '__theme_txtd' ) . '", "useSourceColorAsReference":"1" } --><!-- /wp:novablocks/sharing-overlay -->' ); ?>
+							<?php echo do_blocks( '<!-- wp:novablocks/sharing-overlay { "buttonLabel":"' . esc_html__( 'Share', '__plugin_txtd' ) . '", "useSourceColorAsReference":"1" } --><!-- /wp:novablocks/sharing-overlay -->' ); ?>
 						</div>
 						<?php
 						// Only show the Discuss link if comments are open and the post comments block is present.
@@ -123,7 +123,7 @@ if ( ! function_exists( 'novablocks_render_post_meta_block' ) ) {
 										<div class="c-meta-comments__arrow"></div>
 									</div>
 									<div class="c-meta-comments__label">
-										<a class="c-meta-comments__link"><?php echo esc_html__( 'Discuss', '__theme_txtd' ); ?></a>
+										<a class="c-meta-comments__link"><?php echo esc_html__( 'Discuss', '__plugin_txtd' ); ?></a>
 									</div>
 									<a class="c-button__link" href="#comments"></a>
 								</div>
