@@ -104,6 +104,9 @@ if ( ! class_exists( 'NovaBlocks_Comments_Logic' ) ) {
 			require_once 'integrations/starter-content.php';
 		}
 
+		/**
+		 * @return void
+		 */
 		public function enqueue_scripts() {
 
 			$block_dir_url = trailingslashit( trailingslashit( novablocks_get_plugin_url() ) . 'build/block-library/blocks/post-comments' );
@@ -113,6 +116,12 @@ if ( ! class_exists( 'NovaBlocks_Comments_Logic' ) ) {
 			wp_register_script( 'comment-reply', $block_dir_url . 'lib/js/comment-reply.js', [], false, true );
 		}
 
+		/**
+		 * @param array $allowedtags
+		 * @param string $context
+		 *
+		 * @return array
+		 */
 		public function filter_comment_allowed_html_tags( $allowedtags, $context ) {
 			if ( 'pre_comment_content' === $context ) {
 				if ( empty( $allowedtags ) ) {
