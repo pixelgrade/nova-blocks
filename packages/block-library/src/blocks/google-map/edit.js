@@ -1,10 +1,18 @@
 import classnames from 'classnames';
 
-import { __ } from '@wordpress/i18n';
+import { __, sprintf } from '@wordpress/i18n';
 import { models, loadPromise } from '@wordpress/api';
 import { useBlockProps } from '@wordpress/block-editor';
 import { Spinner } from '@wordpress/components';
-import { Fragment, useCallback, useEffect, useMemo, useRef, useState } from '@wordpress/element';
+import {
+  createInterpolateElement,
+  Fragment,
+  useCallback,
+  useEffect,
+  useMemo,
+  useRef,
+  useState
+} from '@wordpress/element';
 
 import { useDidUpdateEffect } from '@novablocks/block-editor';
 
@@ -109,24 +117,18 @@ const Edit = props => {
 
   const instructions = useMemo( () => {
     const url = '//developers.google.com/maps/documentation/javascript/get-api-key';
-    const hyperlink = <a target="_blank" href={ url }>{ __( 'register a Google Maps API Key', '__plugin_txtd' ) }</a>;
 
     if ( gmAuthFailure ) {
-      return (
-        <Fragment>
-          { __( 'It seems that your Google Maps API key is INVALID. Please REFRESH the page, double check that you pasted it correctly, and that it is a valid API key. More information about how to', '__plugin_txtd' ) }
-          { hyperlink }
-        </Fragment>
-      )
+      return createInterpolateElement(
+        __( 'It seems that your Google Maps API key is INVALID. Please REFRESH the page, double check that you pasted it correctly, and that it is a valid API key. More information about how to <a>register a Google Maps API Key</a>.', '__plugin_txtd' ),
+        { a: <a target="_blank" href={ url } /> }
+      );
     }
 
-    return (
-      <Fragment>
-        { __( 'To display the map, you need to', '__plugin_txtd' ) }
-        { hyperlink }
-        { __( 'and include it bellow.', '__plugin_txtd' ) }
-      </Fragment>
-    )
+    return createInterpolateElement(
+      __( 'To display the map, you need to <a>register a Google Maps API Key</a> and include it bellow.', '__plugin_txtd' ),
+      { a: <a target="_blank" href={ url } /> }
+    );
   }, [ gmAuthFailure ] );
 
   const showInspectorControls = useMemo( () => {
