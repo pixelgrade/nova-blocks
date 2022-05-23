@@ -87,11 +87,21 @@ if ( ! class_exists( 'NovaBlocks_Comments_Logic' ) ) {
 		}
 
 		private function register_hooks() {
+			add_action( 'admin_init', [ $this, 'admin_init' ], 10 );
+
 			add_action( 'wp_enqueue_scripts', [ $this, 'enqueue_scripts' ], 99 );
 
 			// Handle comment submission kses filtering to allow certain HTML tags, even for guests
 			// or users that don't have the 'unfiltered_html' capability.
 			add_filter( 'wp_kses_allowed_html', [ $this, 'filter_comment_allowed_html_tags' ], 10, 2 );
+		}
+
+		/**
+		 * Initialize logic only needed in the WordPress dashboard (admin).
+		 */
+		public function admin_init() {
+			// Load the logic for the Starter Content integration.
+			require_once 'integrations/starter-content.php';
 		}
 
 		public function enqueue_scripts() {
