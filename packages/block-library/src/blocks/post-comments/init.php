@@ -175,15 +175,18 @@ if ( ! function_exists ('novablocks_replace_content_tags' ) ) {
 			}
 
 			if ( ! empty( $user_id ) ) {
-				// %author_first_name%
-				$content = str_replace( '%author_first_name%', get_the_author_meta( 'first_name', $user_id ), $content );
-				// %author_last_name%
-				$content = str_replace( '%author_last_name%', get_the_author_meta( 'last_name', $user_id ), $content );
-				// %author% or %author_display_name%
-				$content = str_replace( [
-					'%author%',
-					'%author_display_name%'
-				], get_the_author_meta( 'display_name', $user_id ), $content );
+				$author = get_userdata( $user_id );
+				if ( ! empty( $author ) ) {
+					// %author_first_name%
+					$content = str_replace( '%author_first_name%', $author->first_name, $content );
+					// %author_last_name%
+					$content = str_replace( '%author_last_name%', $author->last_name, $content );
+					// %author% or %author_display_name%
+					$content = str_replace( [
+						'%author%',
+						'%author_display_name%'
+					], $author->display_name, $content );
+				}
 			}
 		}
 

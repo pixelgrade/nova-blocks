@@ -85,14 +85,14 @@ if ( ! function_exists( 'novablocks_get_the_post_navigation' ) ) {
 				'in_same_term'       => false,
 				'excluded_terms'     => '',
 				'taxonomy'           => 'category',
-				'screen_reader_text' => esc_html__( 'Post navigation', '__theme_txtd' ),
+				'screen_reader_text' => esc_html__( 'Post navigation', '__plugin_txtd' ),
 			]
 		);
 
 		$navigation = '';
 
 		$previous = get_previous_post_link(
-			'<div class="post-navigation__link post-navigation__link--previous"><span class="post-navigation__link-label  post-navigation__link-label--previous">' . esc_html__( 'Previous article', '__theme_txtd' ) . '</span><span class="post-navigation__post-title  post-navigation__post-title--previous">%link</span></div>',
+			'<div class="post-navigation__link post-navigation__link--previous"><span class="post-navigation__link-label  post-navigation__link-label--previous">' . esc_html__( 'Previous article', '__plugin_txtd' ) . '</span><span class="post-navigation__post-title  post-navigation__post-title--previous">%link</span></div>',
 			$args['prev_text'],
 			$args['in_same_term'],
 			$args['excluded_terms'],
@@ -100,7 +100,7 @@ if ( ! function_exists( 'novablocks_get_the_post_navigation' ) ) {
 		);
 
 		$next = get_next_post_link(
-			'<div class="post-navigation__link post-navigation__link--next"><span class="post-navigation__link-label  post-navigation__link-label--next">' . esc_html__( 'Next article', '__theme_txtd' ) . '</span><span class="post-navigation__post-title  post-navigation__post-title--next">%link</span></div>',
+			'<div class="post-navigation__link post-navigation__link--next"><span class="post-navigation__link-label  post-navigation__link-label--next">' . esc_html__( 'Next article', '__plugin_txtd' ) . '</span><span class="post-navigation__post-title  post-navigation__post-title--next">%link</span></div>',
 			$args['next_text'],
 			$args['in_same_term'],
 			$args['excluded_terms'],

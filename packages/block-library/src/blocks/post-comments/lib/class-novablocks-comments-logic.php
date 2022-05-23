@@ -87,6 +87,8 @@ if ( ! class_exists( 'NovaBlocks_Comments_Logic' ) ) {
 		}
 
 		private function register_hooks() {
+			add_action( 'admin_init', [ $this, 'admin_init' ], 10 );
+
 			add_action( 'wp_enqueue_scripts', [ $this, 'enqueue_scripts' ], 99 );
 
 			// Handle comment submission kses filtering to allow certain HTML tags, even for guests
@@ -94,6 +96,17 @@ if ( ! class_exists( 'NovaBlocks_Comments_Logic' ) ) {
 			add_filter( 'wp_kses_allowed_html', [ $this, 'filter_comment_allowed_html_tags' ], 10, 2 );
 		}
 
+		/**
+		 * Initialize logic only needed in the WordPress dashboard (admin).
+		 */
+		public function admin_init() {
+			// Load the logic for the Starter Content integration.
+			require_once 'integrations/starter-content.php';
+		}
+
+		/**
+		 * @return void
+		 */
 		public function enqueue_scripts() {
 
 			$block_dir_url = trailingslashit( trailingslashit( novablocks_get_plugin_url() ) . 'build/block-library/blocks/post-comments' );
@@ -103,6 +116,12 @@ if ( ! class_exists( 'NovaBlocks_Comments_Logic' ) ) {
 			wp_register_script( 'comment-reply', $block_dir_url . 'lib/js/comment-reply.js', [], false, true );
 		}
 
+		/**
+		 * @param array $allowedtags
+		 * @param string $context
+		 *
+		 * @return array
+		 */
 		public function filter_comment_allowed_html_tags( $allowedtags, $context ) {
 			if ( 'pre_comment_content' === $context ) {
 				if ( empty( $allowedtags ) ) {
