@@ -1,5 +1,5 @@
-import $ from 'jquery';
-import { debounce, hasTouchScreen, IS_EDITOR, IS_CUSTOMIZER } from "@novablocks/utils";
+import domReady from "@wordpress/dom-ready";
+import { debounce, getAttributes, hasTouchScreen, IS_EDITOR, IS_CUSTOMIZER } from "@novablocks/utils";
 import { getProps, getState, getStylesFromProps } from "./utils";
 
 const getScrollContainerHeight = () => {
@@ -30,6 +30,18 @@ const getConfig = ( container ) => {
   }
 };
 
+const updateContainerState = ( container ) => {
+  const refId = container.dataset.refId;
+  const { attributes, target, config } = REFERENCES[ refId ];
+  const newConfig = Object.assign( {}, config, getConfig( container ) );
+  const newState = getState( newConfig, attributes );
+
+  Object.assign( REFERENCES[ refId ], {
+    state: newState,
+    config: newConfig,
+  } );
+}
+
 const isTricky = ( start ) => {
 
   for ( let element = start.parentNode; element && element !== document; element = element.parentNode ) {
@@ -43,27 +55,25 @@ const isTricky = ( start ) => {
   return false;
 };
 
-$( function() {
+domReady( () => {
 
   if ( IS_EDITOR || IS_CUSTOMIZER ) {
     return;
   }
 
-  const $window = $( window );
-  let frameRendered = false;
+  window.REFERENCES = {};
 
-	const $blocks = $( '.novablocks-doppler__wrapper' ).filter( ( i, container ) => {
-    const $container = $( container );
-    const $block = $container.closest( '[data-scrolling-effect]' );
-    const attributes = $block.data();
+	const containers = Array.from( document.querySelectorAll( '.novablocks-doppler__wrapper' ) ).filter( container => {
+    const block = container.closest( '[data-scrolling-effect]' );
+    const attributes = getAttributes( block );
 
     return attributes?.scrollingEffect && attributes.scrollingEffect !== 'static';
   } );
 
-	$blocks.each( function( i, container ) {
-		const $container = $( container );
-		const $block = $container.closest( '[data-scrolling-effect]' );
-    const attributes = $block.data();
+  containers.forEach( ( container, index ) => {
+    const block = container.closest( '[data-scrolling-effect]' );
+    const attributes = getAttributes( block );
+    const refId = `container-${ index }`;
 
 		if ( ! attributes ) {
 		  return;
@@ -71,61 +81,45 @@ $( function() {
 
 		const config = getConfig( container );
 
-		$container.data( {
-			state: getState( config, attributes ),
-			config: config,
-		} );
+    container.dataset.refId = refId;
 
-		const $background = $container.find( '.novablocks-doppler__target' );
+    REFERENCES[ refId ] = {
+      state: getState( config, attributes ),
+      config,
+      target: container.querySelector( '.novablocks-doppler__target' ),
+      style: {},
+      attributes,
+    };
 
-		$container.data( 'target', $background );
-
-    function parallaxUpdateState() {
-			const newConfig = Object.assign( {}, config, getConfig( container ) );
-			const state = getState( newConfig, attributes );
-
-			$container.data( 'state', state );
-			$container.data( 'config', newConfig );
-			frameRendered = false;
-		}
-
-    const debouncedUpdateState = debounce( parallaxUpdateState, 100 );
-
-		$window.on( 'scroll', parallaxUpdateState );
-		$window.on( 'resize', debouncedUpdateState );
-
-		$container.on( 'update', debouncedUpdateState );
-
-    parallaxUpdateState();
 	} );
 
-	function parallaxUpdateLoop() {
+  const updateAllContainersState = () => {
+    containers.forEach( updateContainerState );
+  }
 
-    $blocks.each( function( i, container ) {
-      const $container = $( container );
-      const $block = $container.closest( '[data-scrolling-effect]' );
-      const attributes = $block.data();
+  const debouncedUpdateAllContainersState = debounce( updateAllContainersState, 100 );
 
-      if ( ! attributes ) {
-        return;
-      }
+  window.addEventListener( 'scroll', updateAllContainersState );
+  window.addEventListener( 'resize', debouncedUpdateAllContainersState );
+  window.addEventListener( 'nb:slick-update', updateAllContainersState );
 
-      const state = $container.data( 'state' );
-      const config = $container.data( 'config' );
+  updateAllContainersState();
+
+  const parallaxUpdateLoop = () => {
+
+    containers.forEach( container => {
+      const refId = container.dataset.refId;
+      const { attributes, target, state, config } = REFERENCES[ refId ];
       const cfg = Object.assign( {}, state, config );
-      const $background = $container.data( 'target' );
-      const element = $background.get( 0 );
-      const fixed = ! isTricky( element );
-      const props = getProps( cfg, attributes, fixed );
-      const styles = getStylesFromProps( props );
+      const props = getProps( cfg, attributes, true );
 
-      $container.data( 'style-data', styles );
+      REFERENCES[ refId ].style = getStylesFromProps( props );
     } );
 
-    $blocks.each( function( i, container ) {
-      const $container = $( container );
-      const $background = $container.data( 'target' );
-      $background.css( $container.data( 'style-data' ) );
+    containers.forEach( container => {
+      const refId = container.dataset.refId;
+      const { target, style } = REFERENCES[ refId ];
+      Object.assign( target.style, style );
     } );
 
     requestAnimationFrame( parallaxUpdateLoop );

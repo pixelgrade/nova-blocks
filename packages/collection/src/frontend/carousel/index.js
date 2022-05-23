@@ -28,6 +28,8 @@ const initializeCarousels = () => {
     const variableWidth = attributes.carouselLayout === 'variable' || attributes.carouselLayout === 'content';
     const showDots = attributes.showPagination === 1;
     const showArrows = attributes.showArrows === 1;
+    const scrollingEffect = $block.data( 'scrollingEffect' );
+    const use3D = scrollingEffect === 'static';
 
     const SLICK_OPTIONS = {
       dotsClass: `slick-dots ${ PALETTE_CLASS } ${ PALETTE_VARIATION_CLASS } ${ CONTENT_SIGNAL_CLASS }`,
@@ -71,7 +73,9 @@ const initializeCarousels = () => {
         speed: 1000,
       } );
 
-      $carousel.on( 'beforeChange', onBeforeSlideChange );
+      $carousel.on( 'beforeChange', ( event, slick, currentSlide, nextSlide ) => {
+        onBeforeSlideChange( event, slick, currentSlide, nextSlide, use3D );
+      } );
     }
 
     if ( $carousel.children().length > 1 ) {

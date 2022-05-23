@@ -1,9 +1,18 @@
-function userPrefersReducedMotion() {
-	const mediaQuery = window.matchMedia( '(prefers-reduced-motion: reduce)' );
-	return !! mediaQuery.matches;
-}
+const userPrefersReducedMotion = ( () => {
+  const query = window.matchMedia( '(prefers-reduced-motion: reduce)' );
+  let matches = false;
+  const check = ( eventOrQuery ) => {
+    matches = !! eventOrQuery.matches;
+  }
 
-export const getIntermediateFocalPoint = function( focalPoint1, focalPoint2, progress ) {
+  query.addEventListener( 'change', check )
+
+  return () => {
+    return matches;
+  }
+} )();
+
+export const getIntermediateFocalPoint = ( focalPoint1, focalPoint2, progress ) => {
 
 	if ( ! focalPoint1 && ! focalPoint2 ) {
 		return {
@@ -26,14 +35,14 @@ export const getIntermediateFocalPoint = function( focalPoint1, focalPoint2, pro
 	}
 };
 
-export const getStyles = function( config, attributes ) {
+export const getStyles = ( config, attributes ) => {
 
 	const props = getProps( config, attributes );
 
 	return getStylesFromProps( props );
 };
 
-export const getStylesFromProps = function( props ) {
+export const getStylesFromProps = ( props ) => {
 
 	const {
 	  fixed,
@@ -52,8 +61,8 @@ export const getStylesFromProps = function( props ) {
 	  position: fixed ? 'fixed' : 'absolute',
     top: 0,
     left: 0,
-		width: width || '',
-		height: height || '',
+		width: width ? `${ width }px` : '',
+		height: height ? `${ height }px` : '',
 		minHeight: 0,
 		maxWidth: 'none',
 		transform: `translate(${ moveX },${ moveY * parallaxAmount }px) translateX(${ offsetX }) translateY(${ offsetY }px) scale(${ scale })`,
