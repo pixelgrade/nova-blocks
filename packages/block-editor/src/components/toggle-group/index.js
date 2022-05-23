@@ -1,7 +1,4 @@
-import {
-	useTransition,
-	animated,
-} from 'react-spring';
+import { useTransition, animated } from 'react-spring';
 
 import {
 	Fragment,

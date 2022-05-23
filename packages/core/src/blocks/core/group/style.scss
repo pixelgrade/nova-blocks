@@ -19,6 +19,10 @@
   --nb-group-padding-toggle: 1;
 }
 
+.nb-supernova-item__inner-container {
+  --nb-group-padding-toggle: 1;
+}
+
 // Applying Grid on Group Block
 // added .specificity.x2 to override figure.wp-block-gallery { margin: 0; }
 // added .specificity.x2.x3 to override .block-editor-block-list__block .block-list-appender.block-list-appender { margin: 0; }
