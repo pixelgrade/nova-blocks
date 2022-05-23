@@ -223,7 +223,7 @@ const SupernovaItemButton = ( props ) => {
   }
 
   return (
-    <CardButton>
+    <CardButton { ...props }>
       <RichText
         placeholder={ `Button` }
         tagName={ 'span' }

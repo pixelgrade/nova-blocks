@@ -1505,9 +1505,9 @@ function novablocks_get_card_item_buttons( array $buttons, array $attributes ): 
 			continue;
 		}
 
-		$output .= '<div class="wp-block-buttons" style="justify-content: ' . $justify_content . '">
+	$output .= '<div class="wp-block-buttons" style="justify-content: ' . $justify_content . '">
       <div
-        class="wp-block-button sm-color-signal-1 is-style-text sm-palette-1 sm-palette--shifted sm-variation-1 sm-light"
+        class="wp-block-button is-style-' . $attributes[ 'buttonsStyle' ] . ' sm-color-signal-1 sm-palette-1 sm-palette--shifted sm-variation-1 sm-light"
         data-palette="1" data-palette-variation="1" data-color-signal="1" data-use-source-color-as-reference="true">
         <a class="wp-block-button__link" href="' . esc_url( $button['url'] ) . '">' . $button['text'] . '</a>
       </div>
