@@ -30,7 +30,6 @@
   .wp-block-group:not(.wp-block-row),
   .wp-block-group__inner-container,
   .nb-header-row__inner-container,
-  .nb-supernova-item__inner-container,
   .specificity.x2.x3
 ) {
   --nb-group-side-padding: calc(var(--nb-wrapper-sides-spacings) * var(--nb-group-padding-toggle));
