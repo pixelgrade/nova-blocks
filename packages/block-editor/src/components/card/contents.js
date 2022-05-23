@@ -4,6 +4,8 @@ import { getAlignFromMatrix } from "@novablocks/utils";
 
 export const CardButton = ( { attributes, children } ) => {
 
+  const { buttonsStyle } = attributes;
+
   const style = useMemo( () => {
     const contentAlign = getAlignFromMatrix( attributes?.contentPosition );
     const style = { justifyContent: 'center' };
@@ -23,7 +25,7 @@ export const CardButton = ( { attributes, children } ) => {
   return (
     <div className="wp-block-buttons" style={ style }>
       <div
-        className="wp-block-button sm-color-signal-1 is-style-text sm-palette-1 sm-palette--shifted sm-variation-1 sm-light"
+        className={ `wp-block-button is-style-${ buttonsStyle } sm-color-signal-1 sm-palette-1 sm-palette--shifted sm-variation-1 sm-light` }
         data-palette="1" data-palette-variation="1" data-color-signal="1" data-use-source-color-as-reference="true">
         <a className="wp-block-button__link">{ children }</a>
       </div>
