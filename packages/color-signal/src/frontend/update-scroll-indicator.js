@@ -1,4 +1,4 @@
-import { addClass, getColorSignalClassnames, removeClass } from "@novablocks/utils";
+import { addClass, hasClass, getColorSignalClassnames, removeClass } from "@novablocks/utils";
 import { getSiteColorVariation } from "../utils";
 
 export const updateScrollIndicator = () => {
@@ -9,7 +9,7 @@ export const updateScrollIndicator = () => {
     const indicators = Array.from( block.querySelectorAll( '.nb-scroll-indicator:not(.nb-scroll-indicator--middle)' ) );
     const nextElement = block.nextElementSibling;
 
-    if ( ! nextElement ) {
+    if ( ! nextElement || ! nextElement.dataset.colorSignal ) {
       indicators.forEach( applySiteColorSignal );
       return;
     }
