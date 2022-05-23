@@ -37,7 +37,12 @@ const advancedGallery = {
   name: 'novablocks/supernova/advanced-gallery',
   title: __( 'Advanced Gallery', '__plugin_txtd' ),
   description: __( 'Display a gallery of images in a unique and creative composition.', '__plugin_txtd' ),
-  keywords:["media", "collection", "layout", "composition"],
+  keywords:[
+    __( 'media', '__plugin_txtd' ),
+    __( 'collection', '__plugin_txtd' ),
+    __( 'layout', '__plugin_txtd' ),
+    __( 'composition', '__plugin_txtd' ),
+  ],
   icon: icon,
   attributes,
   innerBlocks: [

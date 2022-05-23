@@ -21,7 +21,7 @@ const Edit = ( props ) => {
   if ( Array.isArray( posts ) && ! posts.length ) {
     return (
       <div className={ 'wp-block__inner-container' }>
-        <p>{ __( 'There are no posts to be displayed in this block. Try changing the Content Filter settings.' ) }</p>
+        <p>{ __( 'There are no posts to be displayed in this block. Try changing the Content Filter settings.', '__plugin_txtd' ) }</p>
       </div>
     )
   }

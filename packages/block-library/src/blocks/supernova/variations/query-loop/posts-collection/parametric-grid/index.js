@@ -62,7 +62,17 @@ const parametricGrid = {
   name: 'novablocks/supernova/query-posts-parametric',
   title: __( 'Query Loop → Posts Collection: Parametric Grid', '__plugin_txtd' ),
   description: __( 'Display a queried set of posts in a beautiful, consistent manner.', '__plugin_txtd' ),
-  keywords: [ 'query', 'post', 'collection', 'layout', 'grid', 'parametric', 'composition', 'columns', 'rows' ],
+  keywords: [
+    __( 'query', '__plugin_txtd' ),
+    __( 'post', '__plugin_txtd' ),
+    __( 'collection', '__plugin_txtd' ),
+    __( 'layout', '__plugin_txtd' ),
+    __( 'grid', '__plugin_txtd' ),
+    __( 'parametric', '__plugin_txtd' ),
+    __( 'composition', '__plugin_txtd' ),
+    __( 'columns', '__plugin_txtd' ),
+    __( 'rows', '__plugin_txtd' ),
+  ],
   icon,
   attributes,
   innerBlocks: [

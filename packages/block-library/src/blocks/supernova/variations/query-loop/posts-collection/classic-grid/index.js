@@ -67,7 +67,15 @@ const classicGrid = {
   name: 'novablocks/supernova/query-posts-classic-grid',
   title: __( 'Query Loop → Posts Collection: Classic Grid', '__plugin_txtd' ),
   description: __( 'Display a queried set of posts in a classic grid format (columns and rows).', '__plugin_txtd' ),
-  keywords: [ 'query', 'post', 'collection', 'layout', 'grid', 'columns', 'rows' ],
+  keywords: [
+    __( 'query', '__plugin_txtd' ),
+    __( 'post', '__plugin_txtd' ),
+    __( 'collection', '__plugin_txtd' ),
+    __( 'layout', '__plugin_txtd' ),
+    __( 'grid', '__plugin_txtd' ),
+    __( 'columns', '__plugin_txtd' ),
+    __( 'rows', '__plugin_txtd' ),
+  ],
   icon,
   attributes,
   innerBlocks: [

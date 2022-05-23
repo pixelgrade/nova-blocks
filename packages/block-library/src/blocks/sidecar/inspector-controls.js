@@ -39,7 +39,7 @@ const SidecarInspectorControls = ( props ) => {
       'The <section> element should represent a standalone portion of the document that can\'t be better represented by another element.', '__plugin_txtd'
     ),
     article: __(
-      'The <article> element should represent a self contained, syndicatable portion of the document.', '__plugin_txtd'
+      'The <article> element should represent a self-contained, syndicatable portion of the document.', '__plugin_txtd'
     ),
     aside: __(
       'The <aside> element should represent a portion of a document whose content is only indirectly related to the document\'s main content.', '__plugin_txtd'

@@ -53,10 +53,10 @@ const innerBlocks = [
     'novablocks/supernova-item',
     innerBlockAttributes,
     [
-      [ 'core/heading', { level: 1, content: 'This is a catchy title' } ],
-      [ 'core/paragraph', { content: 'A brilliant subtitle to explain its catchiness', className: 'is-style-lead' } ],
+      [ 'core/heading', { level: 1, content: __( 'This is a catchy title', '__plugin_txtd' ) } ],
+      [ 'core/paragraph', { content: __( 'A brilliant subtitle to explain its catchiness', '__plugin_txtd' ), className: 'is-style-lead' } ],
       [ 'core/buttons', { layout: { type: 'flex', justifyContent: 'center' } }, [
-        [ 'core/button', { text: 'Discover more' } ]
+        [ 'core/button', { text: __( 'Discover more', '__plugin_txtd' ) } ]
       ] ],
     ]
   ]
@@ -66,7 +66,13 @@ const hero = {
   name: 'novablocks/supernova/card/hero',
   title: __( 'Hero Card', '__plugin_txtd' ),
   description: __( 'A great way to get your visitors acquainted with your content.', '__plugin_txtd' ),
-  keywords: [ 'card', 'layout', 'hero', 'full-width', 'cover' ],
+  keywords: [
+    __( 'card', '__plugin_txtd' ),
+    __( 'layout', '__plugin_txtd' ),
+    __( 'hero', '__plugin_txtd' ),
+    __( 'full-width', '__plugin_txtd' ),
+    __( 'cover', '__plugin_txtd' ),
+  ],
   icon: getSvg( iconSvg ),
   attributes: attributes,
   innerBlocks,

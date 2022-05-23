@@ -23,8 +23,8 @@ const QueryControls = ( props ) => {
 				selected={ loadingMode }
 				onChange={ onLoadingModeChange }
 				options={ [
-					{ label: __( 'Automated (latest posts)' ), value: 'automated' },
-					{ label: __( 'Manual (specific posts)' ), value: 'manual' },
+					{ label: __( 'Automated (latest posts)', '__plugin_txtd' ), value: 'automated' },
+					{ label: __( 'Manual (specific posts)', '__plugin_txtd' ), value: 'manual' },
 				] }
 			/>
 		),

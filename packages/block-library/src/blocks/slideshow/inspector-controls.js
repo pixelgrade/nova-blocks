@@ -59,8 +59,8 @@ const SlideshowInspectorControls = function( props ) {
   }
 
 	return (
-    <ControlsSection id={ 'slides' } label={ __( 'Slides' ) }>
-      <ControlsTab label={ __( 'Settings' ) }>
+    <ControlsSection id={ 'slides' } label={ __( 'Slides', '__plugin_txtd' ) }>
+      <ControlsTab label={ __( 'Settings', '__plugin_txtd' ) }>
         <GalleryPreview
           key={ 'slideshow-gallery-preview' }
           galleryImages={ galleryImages }

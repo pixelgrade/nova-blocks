@@ -4,7 +4,7 @@
 import { __ } from '@wordpress/i18n';
 import { RadioControl, RangeControl } from '@wordpress/components';
 import { useSelect, useDispatch } from "@wordpress/data";
-import { useState, useCallback } from "@wordpress/element";
+import { useState, useCallback, createInterpolateElement } from '@wordpress/element';
 
 /**
  * Internal dependencies
@@ -57,7 +57,7 @@ const HeaderInspectorControls = ( props ) => {
         <Notice
           key={ 'header-position-quick-start' }
           id={ 'nb-header-position-quick-start' }
-          content={ <p><strong>{__( 'Quick start:', '__plugin_txtd' )}</strong> Set up your header layout using the options below and go to the <a href={customizerHeaderLink}>Customizer</a> to change the logo and menu content. </p> }
+          content={ <p><strong>{__( 'Quick start:', '__plugin_txtd' )}</strong> { createInterpolateElement( __( 'Set up your header layout using the options below and go to the <a>Customizer</a> to change the logo and menu content.', '__plugin_txtd' ), { a: <a href={customizerHeaderLink} /> } ) } </p> }
         />
 
         <RadioControl

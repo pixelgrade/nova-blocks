@@ -28,8 +28,8 @@ const Controls = ( props ) => {
     columns
   } = attributes;
 
-  // Hide the "Collection" section when there is 
-  // a single item in a single column 
+  // Hide the "Collection" section when there is
+  // a single item in a single column
   // Examples: Media Card, Hero Card
   if ( postsToShow === 1 && columns === 1 ) {
     return null;
@@ -38,17 +38,17 @@ const Controls = ( props ) => {
   return (
     <ControlsSection
       id={ 'content-type' }
-      label={ __( 'Content Type' ) }
-      group={ __( 'Card Anatomy' ) }
+      label={ __( 'Content Type', '__plugin_txtd' ) }
+      group={ __( 'Card Anatomy', '__plugin_txtd' ) }
       order={ 100 }>
-      <ControlsTab label={ __( 'Settings' ) }>
+      <ControlsTab label={ __( 'Settings', '__plugin_txtd' ) }>
         <SelectControl
           key={ 'collection-content-type' }
           label={ __( 'Content Type', '__plugin_txtd' ) }
           value={ contentType }
           options={ [
-            { label: 'Pre-defined fields', value: 'fields' },
-            { label: 'Custom Blocks', value: 'custom' },
+            { label: __( 'Pre-defined fields', '__plugin_txtd' ), value: 'fields' },
+            { label: __( 'Custom Blocks', '__plugin_txtd' ), value: 'custom' },
           ] }
           onChange={ contentType => {
             setAttributes( { contentType } );

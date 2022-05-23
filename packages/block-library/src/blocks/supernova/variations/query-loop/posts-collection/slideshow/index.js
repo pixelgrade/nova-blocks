@@ -74,7 +74,17 @@ const carousel = {
   name: 'novablocks/supernova/query-posts-slideshow',
   title: __( 'Query Loop → Posts Collection: Slideshow', '__plugin_txtd' ),
   description: __( 'Display a queried set of posts in a slideshow layout.', '__plugin_txtd' ),
-  keywords: [ 'query', 'post', 'collection', 'layout', 'carousel', 'slideshow', 'slider', 'horizontal', 'section', ],
+  keywords: [
+    __( 'query', '__plugin_txtd' ),
+    __( 'post', '__plugin_txtd' ),
+    __( 'collection', '__plugin_txtd' ),
+    __( 'layout', '__plugin_txtd' ),
+    __( 'carousel', '__plugin_txtd' ),
+    __( 'slideshow', '__plugin_txtd' ),
+    __( 'slider', '__plugin_txtd' ),
+    __( 'horizontal', '__plugin_txtd' ),
+    __( 'section', '__plugin_txtd' ),
+  ],
   icon,
   attributes,
   innerBlocks: [

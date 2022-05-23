@@ -17,7 +17,7 @@ const fetchAuthorSuggestions = ( search ) => {
 	} ).then( function( users ) {
 		return users.map( user => ( {
 			value: user.id,
-			label: decodeEntities( user.name ) || __( '(no name)' ),
+			label: decodeEntities( user.name ) || __( '(no name)', '__plugin_txtd' ),
 		} ) );
 	} );
 };
@@ -32,7 +32,7 @@ const fetchSavedAuthors = ( userIDs ) => {
 	} ).then( function( users ) {
 		return users.map( user => ( {
 			value: user.id,
-			label: decodeEntities( user.name ) || __( '(no name)' ),
+			label: decodeEntities( user.name ) || __( '(no name)', '__plugin_txtd' ),
 		} ) );
 	} );
 };
@@ -49,7 +49,7 @@ const fetchCategorySuggestions = ( search ) => {
 	} ).then( function( categories ) {
 		return categories.map( category => ( {
 			value: category.id,
-			label: decodeEntities( category.name ) || __( '(no title)' ),
+			label: decodeEntities( category.name ) || __( '(no title)', '__plugin_txtd' ),
 		} ) );
 	} );
 };
@@ -64,7 +64,7 @@ const fetchSavedCategories = ( categoryIDs ) => {
 	} ).then( function( categories ) {
 		return categories.map( category => ( {
 			value: category.id,
-			label: decodeEntities( category.name ) || __( '(no title)' ),
+			label: decodeEntities( category.name ) || __( '(no title)', '__plugin_txtd' ),
 		} ) );
 	} );
 };
@@ -89,7 +89,7 @@ const fetchTagSuggestions = ( search ) => {
 	} ).then( function( tags ) {
 		return tags.map( tag => ( {
 			value: tag.id,
-			label: decodeEntities( tag.name ) || __( '(no title)' ),
+			label: decodeEntities( tag.name ) || __( '(no title)', '__plugin_txtd' ),
 		} ) );
 	} );
 };
@@ -104,7 +104,7 @@ const fetchSavedTags = ( tagIDs ) => {
 	} ).then( function( tags ) {
 		return tags.map( tag => ( {
 			value: tag.id,
-			label: decodeEntities( tag.name ) || __( '(no title)' ),
+			label: decodeEntities( tag.name ) || __( '(no title)', '__plugin_txtd' ),
 		} ) );
 	} );
 };
@@ -131,8 +131,8 @@ const AutomatedControls = ( props ) => {
 	return [
 		<ToggleControl
       key={"prevent-duplicate-posts"}
-			label={ __( "Prevent Duplicate Posts" ) }
-			help={ __( "The posts displayed by other blocks won't show up in this block" ) }
+			label={ __( 'Prevent Duplicate Posts', '__plugin_txtd' ) }
+			help={ __( "The posts displayed by other blocks won't show up in this block", '__plugin_txtd' ) }
 			checked={ preventDuplicatePosts }
 			onChange={ onPreventDuplicatePostsChange }
 		/>,
@@ -143,7 +143,7 @@ const AutomatedControls = ( props ) => {
 				onChange={ onAuthorsChange }
 				fetchSuggestions={ fetchAuthorSuggestions }
 				fetchSavedInfo={ fetchSavedAuthors }
-				label={ __( 'Authors' ) }
+				label={ __( 'Authors', '__plugin_txtd' ) }
 			/>
 		),
 		onCategoriesChange && (
@@ -157,7 +157,7 @@ const AutomatedControls = ( props ) => {
 				} }
 				fetchSuggestions={ fetchCategorySuggestions }
 				fetchSavedInfo={ fetchSavedCategories }
-				label={ __( 'Categories' ) }
+				label={ __( 'Categories', '__plugin_txtd' ) }
 			/>
 		),
 		onTagsChange && (
@@ -167,7 +167,7 @@ const AutomatedControls = ( props ) => {
 				onChange={ onTagsChange }
 				fetchSuggestions={ fetchTagSuggestions }
 				fetchSavedInfo={ fetchSavedTags }
-				label={ __( 'Tags' ) }
+				label={ __( 'Tags', '__plugin_txtd' ) }
 			/>
 		),
 	]

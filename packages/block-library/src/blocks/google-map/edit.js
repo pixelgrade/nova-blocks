@@ -1,6 +1,6 @@
 import classnames from 'classnames';
 
-import { __, sprintf } from '@wordpress/i18n';
+import { __ } from '@wordpress/i18n';
 import { models, loadPromise } from '@wordpress/api';
 import { useBlockProps } from '@wordpress/block-editor';
 import { Spinner } from '@wordpress/components';

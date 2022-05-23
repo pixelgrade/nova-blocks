@@ -16,7 +16,7 @@ const fetchPostSuggestions = ( search ) => {
 	} ).then( function( posts ) {
 		return posts.map( post => ( {
 			value: post.id,
-			label: decodeEntities( post.title ) || __( '(no title)' ),
+			label: decodeEntities( post.title ) || __( '(no title)', '__plugin_txtd' ),
 		} ) );
 	} );
 };
@@ -31,7 +31,7 @@ const fetchSavedPosts = ( postIDs ) => {
 	} ).then( function( posts ) {
 		return posts.map( post => ( {
 			value: post.id,
-			label: decodeEntities( post.title.rendered ) || __( '(no title)' ),
+			label: decodeEntities( post.title.rendered ) || __( '(no title)', '__plugin_txtd' ),
 		} ) );
 	} );
 };
@@ -55,8 +55,8 @@ const ManualControls = ( props ) => {
 			onChange={ onSpecificPostsChange }
 			fetchSuggestions={ fetchPostSuggestions }
 			fetchSavedInfo={ fetchSavedPosts }
-			label={ __( 'Posts' ) }
-			help={ __( 'Begin typing post title, click autocomplete result to select.' ) }
+			label={ __( 'Posts', '__plugin_txtd' ) }
+			help={ __( 'Begin typing post title, click autocomplete result to select.', '__plugin_txtd' ) }
 		/>
 	)
 };

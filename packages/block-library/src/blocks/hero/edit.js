@@ -27,13 +27,13 @@ const HeroEdit = ( props ) => {
 
   const toggles = [
     {
-      label: __( 'Inner Content' ),
+      label: __( 'Inner Content', '__plugin_txtd' ),
       attribute: 'displayInnerContent'
     }, {
-      label: __( 'Position Indicators' ),
+      label: __( 'Position Indicators', '__plugin_txtd' ),
       attribute: 'positionIndicators'
     }, {
-      label: __( 'Scroll Indicator' ),
+      label: __( 'Scroll Indicator', '__plugin_txtd' ),
       attribute: 'scrollIndicatorBlock'
     }
   ];
@@ -58,8 +58,8 @@ const HeroEdit = ( props ) => {
     <div { ...blockProps }>
       <HeroPreview { ...props } />
       <BlockControls { ...props } />
-      <ControlsSection id={ 'elements-visibility' } label={ __( 'Elements Visibility' ) } group={ __( 'Input' ) }>
-        <ControlsTab label={ __( 'Settings' ) }>
+      <ControlsSection id={ 'elements-visibility' } label={ __( 'Elements Visibility', '__plugin_txtd' ) } group={ __( 'Input', '__plugin_txtd' ) }>
+        <ControlsTab label={ __( 'Settings', '__plugin_txtd' ) }>
           <ControlsGroup title={ __( 'Set up elements for this block', '__plugin_txtd' ) }>
             <ToggleGroup
               onChange={ setAttributes }
