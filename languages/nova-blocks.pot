@@ -9,7 +9,7 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2022-05-20T11:16:50+00:00\n"
+"POT-Creation-Date: 2022-05-24T07:42:00+00:00\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "X-Generator: WP-CLI 2.5.0\n"
 "X-Domain: nova-blocks\n"
@@ -154,8 +154,8 @@ msgstr ""
 
 #: build/block-library/blocks/post-comments/lib/actions/class-novablocks-comments-highlight.php:424
 #: build/block-library/blocks/post-comments/lib/actions/class-novablocks-comments-highlight.php:434
-#: build/block-library/blocks/post-comments/lib/class-novablocks-comments-logic.php:263
-#: build/block-library/blocks/post-comments/lib/class-novablocks-comments-logic.php:273
+#: build/block-library/blocks/post-comments/lib/class-novablocks-comments-logic.php:282
+#: build/block-library/blocks/post-comments/lib/class-novablocks-comments-logic.php:292
 #: build/block-library/blocks/post-comments/lib/metas/class-novablocks-comments-meta.php:224
 #: build/block-library/blocks/post-comments/lib/metas/class-novablocks-comments-meta.php:234
 #: build/block-library/blocks/post-comments/lib/metas/class-novablocks-comments-post-meta.php:199
@@ -164,8 +164,8 @@ msgstr ""
 #: lib/sidebars-blocks/class-nova_blocks-sidebars_blocks.php:223
 #: packages/block-library/src/blocks/post-comments/lib/actions/class-novablocks-comments-highlight.php:424
 #: packages/block-library/src/blocks/post-comments/lib/actions/class-novablocks-comments-highlight.php:434
-#: packages/block-library/src/blocks/post-comments/lib/class-novablocks-comments-logic.php:263
-#: packages/block-library/src/blocks/post-comments/lib/class-novablocks-comments-logic.php:273
+#: packages/block-library/src/blocks/post-comments/lib/class-novablocks-comments-logic.php:282
+#: packages/block-library/src/blocks/post-comments/lib/class-novablocks-comments-logic.php:292
 #: packages/block-library/src/blocks/post-comments/lib/metas/class-novablocks-comments-meta.php:224
 #: packages/block-library/src/blocks/post-comments/lib/metas/class-novablocks-comments-meta.php:234
 #: packages/block-library/src/blocks/post-comments/lib/metas/class-novablocks-comments-post-meta.php:199
@@ -511,9 +511,44 @@ msgstr ""
 msgid "Post meta"
 msgstr ""
 
+#. translators: %s: The post author name linked (byline).
+#: build/block-library/blocks/post-meta/init.php:69
+#: packages/block-library/src/blocks/post-meta/init.php:69
+msgid "%s"
+msgstr ""
+
+#. translators: %s: The post reading time in minutes.
+#: build/block-library/blocks/post-meta/init.php:95
+#: lib/block-rendering.php:1765
+#: packages/block-library/src/blocks/post-meta/init.php:95
+msgid "%s min read"
+msgstr ""
+
+#: build/block-library/blocks/post-meta/init.php:108
+#: packages/block-library/src/blocks/post-meta/init.php:108
+msgid "Share"
+msgstr ""
+
+#: build/block-library/blocks/post-meta/init.php:127
+#: packages/block-library/src/blocks/post-meta/init.php:127
+msgid "Discuss"
+msgstr ""
+
 #: build/block-library/blocks/post-navigation/init.php:37
+#: build/block-library/blocks/post-navigation/init.php:88
 #: packages/block-library/src/blocks/post-navigation/init.php:37
+#: packages/block-library/src/blocks/post-navigation/init.php:88
 msgid "Post navigation"
+msgstr ""
+
+#: build/block-library/blocks/post-navigation/init.php:95
+#: packages/block-library/src/blocks/post-navigation/init.php:95
+msgid "Previous article"
+msgstr ""
+
+#: build/block-library/blocks/post-navigation/init.php:103
+#: packages/block-library/src/blocks/post-navigation/init.php:103
+msgid "Next article"
 msgstr ""
 
 #: lib/block-editor-settings.php:22
@@ -661,11 +696,6 @@ msgid_plural "%s Comments"
 msgstr[0] ""
 msgstr[1] ""
 
-#. translators: %s: The post reading time in minutes.
-#: lib/block-rendering.php:1765
-msgid "%s min read"
-msgstr ""
-
 #: lib/patterns/features-1.php:6
 msgid "Plugin: Features 1"
 msgstr ""
@@ -798,6 +828,7 @@ msgstr ""
 #: build/block-library/blocks/advanced-gallery/index.js:1
 #: build/block-library/blocks/cards-collection/index.js:6
 #: build/block-library/blocks/media/index.js:6
+#: build/block-library/blocks/supernova/index.js:6
 msgid "columns"
 msgstr ""
 
@@ -854,10 +885,12 @@ msgid "Display a list of related items placed within a coherent layout."
 msgstr ""
 
 #: build/block-library/blocks/cards-collection/index.js:6
+#: build/block-library/blocks/supernova/index.js:6
 msgid "grid"
 msgstr ""
 
 #: build/block-library/blocks/cards-collection/index.js:6
+#: build/block-library/blocks/supernova/index.js:6
 msgid "collection"
 msgstr ""
 
@@ -866,19 +899,11 @@ msgid "group"
 msgstr ""
 
 #: build/block-library/blocks/google-map/index.js:6
-msgid "register a Google Maps API Key"
+msgid "It seems that your Google Maps API key is INVALID. Please REFRESH the page, double check that you pasted it correctly, and that it is a valid API key. More information about how to <a>register a Google Maps API Key</a>."
 msgstr ""
 
 #: build/block-library/blocks/google-map/index.js:6
-msgid "It seems that your Google Maps API key is INVALID. Please REFRESH the page, double check that you pasted it correctly, and that it is a valid API key. More information about how to"
-msgstr ""
-
-#: build/block-library/blocks/google-map/index.js:6
-msgid "To display the map, you need to"
-msgstr ""
-
-#: build/block-library/blocks/google-map/index.js:6
-msgid "and include it bellow."
+msgid "To display the map, you need to <a>register a Google Maps API Key</a> and include it bellow."
 msgstr ""
 
 #: build/block-library/blocks/google-map/index.js:6
@@ -907,11 +932,15 @@ msgstr ""
 
 #: build/block-library/blocks/google-map/index.js:6
 #: build/block-library/blocks/header/index.js:6
+#: build/block-library/blocks/hero/index.js:6
 #: build/block-library/blocks/menu-food/index.js:6
 #: build/block-library/blocks/openhours/index.js:1
 #: build/block-library/blocks/opentable/index.js:6
+#: build/block-library/blocks/posts-collection/index.js:1
 #: build/block-library/blocks/sharing-overlay/index.js:6
 #: build/block-library/blocks/sidecar/index.js:6
+#: build/block-library/blocks/slideshow/index.js:6
+#: build/block-library/blocks/supernova/index.js:6
 #: build/color-signal/index.js:6
 #: build/core/index.js:6
 #: build/media-composition/index.js:1
@@ -1006,6 +1035,10 @@ msgid "Quick start:"
 msgstr ""
 
 #: build/block-library/blocks/header/index.js:6
+msgid "Set up your header layout using the options below and go to the <a>Customizer</a> to change the logo and menu content."
+msgstr ""
+
+#: build/block-library/blocks/header/index.js:6
 msgid "Header Position on Scroll"
 msgstr ""
 
@@ -1086,10 +1119,12 @@ msgid "Headline"
 msgstr ""
 
 #: build/block-library/blocks/hero/index.js:6
+#: build/block-library/blocks/supernova/index.js:6
 msgid "A brilliant subtitle to explain its catchiness"
 msgstr ""
 
 #: build/block-library/blocks/hero/index.js:6
+#: build/block-library/blocks/supernova/index.js:6
 msgid "Discover more"
 msgstr ""
 
@@ -1104,6 +1139,7 @@ msgstr ""
 
 #: build/block-library/blocks/hero/index.js:6
 #: build/block-library/blocks/slideshow/index.js:6
+#: build/block-library/blocks/supernova/index.js:6
 msgid "cover"
 msgstr ""
 
@@ -1117,6 +1153,26 @@ msgstr ""
 
 #: build/block-library/blocks/hero/index.js:6
 msgid "cover section"
+msgstr ""
+
+#: build/block-library/blocks/hero/index.js:6
+msgid "Inner Content"
+msgstr ""
+
+#: build/block-library/blocks/hero/index.js:6
+msgid "Position Indicators"
+msgstr ""
+
+#: build/block-library/blocks/hero/index.js:6
+msgid "Scroll Indicator"
+msgstr ""
+
+#: build/block-library/blocks/hero/index.js:6
+msgid "Elements Visibility"
+msgstr ""
+
+#: build/block-library/blocks/hero/index.js:6
+msgid "Input"
 msgstr ""
 
 #: build/block-library/blocks/hero/index.js:6
@@ -1489,6 +1545,10 @@ msgid "Show Latest Posts"
 msgstr ""
 
 #: build/block-library/blocks/posts-collection/index.js:1
+msgid "There are no posts to be displayed in this block. Try changing the Content Filter settings."
+msgstr ""
+
+#: build/block-library/blocks/posts-collection/index.js:1
 msgid "Posts Carousel (Deprecated)"
 msgstr ""
 
@@ -1497,12 +1557,79 @@ msgid "Posts Collection displayed as a carousel."
 msgstr ""
 
 #: build/block-library/blocks/posts-collection/index.js:1
+msgid "Collection Content"
+msgstr ""
+
+#: build/block-library/blocks/posts-collection/index.js:1
+#: build/block-library/blocks/supernova/index.js:6
+#: build/media-composition/index.js:1
+msgid "Card Anatomy"
+msgstr ""
+
+#: build/block-library/blocks/posts-collection/index.js:1
 #: build/block-library/blocks/supernova/index.js:6
 msgid "Content Type"
 msgstr ""
 
 #: build/block-library/blocks/posts-collection/index.js:1
+msgid "Automatic Blocks"
+msgstr ""
+
+#: build/block-library/blocks/posts-collection/index.js:1
+msgid "Blocks with pre-defined fields"
+msgstr ""
+
+#: build/block-library/blocks/posts-collection/index.js:1
+#: build/block-library/blocks/supernova/index.js:6
+msgid "Custom Blocks"
+msgstr ""
+
+#: build/block-library/blocks/posts-collection/index.js:1
 msgid "Posts loading type"
+msgstr ""
+
+#: build/block-library/blocks/posts-collection/index.js:1
+msgid "Automated (latest posts)"
+msgstr ""
+
+#: build/block-library/blocks/posts-collection/index.js:1
+msgid "Manual (specific posts)"
+msgstr ""
+
+#: build/block-library/blocks/posts-collection/index.js:1
+msgid "(no title)"
+msgstr ""
+
+#: build/block-library/blocks/posts-collection/index.js:1
+msgid "Posts"
+msgstr ""
+
+#: build/block-library/blocks/posts-collection/index.js:1
+msgid "Begin typing post title, click autocomplete result to select."
+msgstr ""
+
+#: build/block-library/blocks/posts-collection/index.js:1
+msgid "(no name)"
+msgstr ""
+
+#: build/block-library/blocks/posts-collection/index.js:1
+msgid "Prevent Duplicate Posts"
+msgstr ""
+
+#: build/block-library/blocks/posts-collection/index.js:1
+msgid "The posts displayed by other blocks won't show up in this block"
+msgstr ""
+
+#: build/block-library/blocks/posts-collection/index.js:1
+msgid "Authors"
+msgstr ""
+
+#: build/block-library/blocks/posts-collection/index.js:1
+msgid "Categories"
+msgstr ""
+
+#: build/block-library/blocks/posts-collection/index.js:1
+msgid "Tags"
 msgstr ""
 
 #: build/block-library/blocks/sharing-overlay/index.js:6
@@ -1570,7 +1697,7 @@ msgid "The <section> element should represent a standalone portion of the docume
 msgstr ""
 
 #: build/block-library/blocks/sidecar/index.js:6
-msgid "The <article> element should represent a self contained, syndicatable portion of the document."
+msgid "The <article> element should represent a self-contained, syndicatable portion of the document."
 msgstr ""
 
 #: build/block-library/blocks/sidecar/index.js:6
@@ -1658,15 +1785,25 @@ msgid "Display more than one piece of content in a single, coveted space."
 msgstr ""
 
 #: build/block-library/blocks/slideshow/index.js:6
+#: build/block-library/blocks/supernova/index.js:6
 msgid "slider"
 msgstr ""
 
 #: build/block-library/blocks/slideshow/index.js:6
+#: build/block-library/blocks/supernova/index.js:6
 msgid "carousel"
 msgstr ""
 
 #: build/block-library/blocks/slideshow/index.js:6
 msgid "images"
+msgstr ""
+
+#: build/block-library/blocks/slideshow/index.js:6
+msgid "Slides"
+msgstr ""
+
+#: build/block-library/blocks/supernova/index.js:6
+msgid "Pre-defined fields"
 msgstr ""
 
 #: build/block-library/blocks/supernova/index.js:6
@@ -1682,11 +1819,39 @@ msgid "Display a gallery of images in a unique and creative composition."
 msgstr ""
 
 #: build/block-library/blocks/supernova/index.js:6
+msgid "media"
+msgstr ""
+
+#: build/block-library/blocks/supernova/index.js:6
+msgid "layout"
+msgstr ""
+
+#: build/block-library/blocks/supernova/index.js:6
+msgid "composition"
+msgstr ""
+
+#: build/block-library/blocks/supernova/index.js:6
 msgid "Cards Collection: Carousel"
 msgstr ""
 
 #: build/block-library/blocks/supernova/index.js:6
 msgid "Display a list of related items in a carousel/slideshow layout."
+msgstr ""
+
+#: build/block-library/blocks/supernova/index.js:6
+msgid "card"
+msgstr ""
+
+#: build/block-library/blocks/supernova/index.js:6
+msgid "slideshow"
+msgstr ""
+
+#: build/block-library/blocks/supernova/index.js:6
+msgid "horizontal"
+msgstr ""
+
+#: build/block-library/blocks/supernova/index.js:6
+msgid "section"
 msgstr ""
 
 #: build/block-library/blocks/supernova/index.js:6
@@ -1698,6 +1863,10 @@ msgid "Display a list of related items in a classic grid layout."
 msgstr ""
 
 #: build/block-library/blocks/supernova/index.js:6
+msgid "rows"
+msgstr ""
+
+#: build/block-library/blocks/supernova/index.js:6
 msgid "Cards Collection: Parametric Grid"
 msgstr ""
 
@@ -1706,7 +1875,35 @@ msgid "Display a list of related items in a parametric grid layout."
 msgstr ""
 
 #: build/block-library/blocks/supernova/index.js:6
+msgid "parametric"
+msgstr ""
+
+#: build/block-library/blocks/supernova/index.js:6
+msgid "This is a catchy title"
+msgstr ""
+
+#: build/block-library/blocks/supernova/index.js:6
 msgid "Hero Card"
+msgstr ""
+
+#: build/block-library/blocks/supernova/index.js:6
+msgid "hero"
+msgstr ""
+
+#: build/block-library/blocks/supernova/index.js:6
+msgid "full-width"
+msgstr ""
+
+#: build/block-library/blocks/supernova/index.js:6
+msgid "Shoot for the moon, Even if You Miss."
+msgstr ""
+
+#: build/block-library/blocks/supernova/index.js:6
+msgid "A catchy title"
+msgstr ""
+
+#: build/block-library/blocks/supernova/index.js:6
+msgid "A brilliant description to explain its catchiness. We have always defined ourselves by the ability to overcome the impossible. And we count these moments. These moments when we dare to aim higher, to break barriers, to make the unknown known."
 msgstr ""
 
 #: build/block-library/blocks/supernova/index.js:6
@@ -1718,11 +1915,31 @@ msgid "Display media alongside short pieces of content."
 msgstr ""
 
 #: build/block-library/blocks/supernova/index.js:6
+msgid "media-text"
+msgstr ""
+
+#: build/block-library/blocks/supernova/index.js:6
+msgid "feature"
+msgstr ""
+
+#: build/block-library/blocks/supernova/index.js:6
 msgid "Vertical Card"
 msgstr ""
 
 #: build/block-library/blocks/supernova/index.js:6
 msgid "Display media and short pieces of content, one after another."
+msgstr ""
+
+#: build/block-library/blocks/supernova/index.js:6
+msgid "vertical"
+msgstr ""
+
+#: build/block-library/blocks/supernova/index.js:6
+msgid "panel"
+msgstr ""
+
+#: build/block-library/blocks/supernova/index.js:6
+msgid "column"
 msgstr ""
 
 #: build/block-library/blocks/supernova/index.js:6
@@ -1739,6 +1956,14 @@ msgstr ""
 
 #: build/block-library/blocks/supernova/index.js:6
 msgid "Display a queried set of posts in a classic grid format (columns and rows)."
+msgstr ""
+
+#: build/block-library/blocks/supernova/index.js:6
+msgid "query"
+msgstr ""
+
+#: build/block-library/blocks/supernova/index.js:6
+msgid "post"
 msgstr ""
 
 #: build/block-library/blocks/supernova/index.js:6
@@ -1871,10 +2096,6 @@ msgstr ""
 
 #: build/media-composition/index.js:1
 msgid "Media Composition"
-msgstr ""
-
-#: build/media-composition/index.js:1
-msgid "Card Anatomy"
 msgstr ""
 
 #: build/media-composition/index.js:1
