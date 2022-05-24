@@ -117,6 +117,7 @@ const MemoizedSupernovaPreview = memo( SupernovaPreview );
 const SupernovaEdit = props => {
 
   const { attributes, setAttributes, context, clientId } = props;
+  const { postsToShow } = attributes;
 
   const { queryId } = context;
   const isDescendentOfQueryLoop = Number.isFinite( queryId );
@@ -134,7 +135,7 @@ const SupernovaEdit = props => {
     setAttributes( { contentType: 'fields' } );
   }
 
-  const cardAttributes = useMemo( () => {
+  const innerBlocksAttributes = useMemo( () => {
 
     const {
       title,
@@ -142,10 +143,10 @@ const SupernovaEdit = props => {
       contentColorSignal,
       contentPaletteVariation,
       contentType,
-      ...cardAttributes
+      ...innerBlocksAttributes
     } = attributes;
 
-    return Object.assign( {}, cardAttributes, {
+    return Object.assign( {}, innerBlocksAttributes, {
       colorSignal: contentColorSignal,
       paletteVariation: contentPaletteVariation,
       useSourceColorAsReference: false,
@@ -154,7 +155,7 @@ const SupernovaEdit = props => {
   }, [ attributes ] );
 
   // Make sure that we keep the number of inner Supernova Items in sync with the number of items.
-  useInnerBlocksCount( clientId, attributes, 'novablocks/supernova-item', cardAttributes );
+//  useInnerBlocksCount( clientId, postsToShow, 'novablocks/supernova-item', innerBlocksAttributes );
 
   // Either lock or unlock nb-supernova-items depending on whether we are in a query or not.
   if ( isDescendentOfQueryLoop ) {

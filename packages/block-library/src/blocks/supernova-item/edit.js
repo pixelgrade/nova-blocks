@@ -27,12 +27,14 @@ import {
   useInnerBlocks,
   useSelectParent,
   useEffectDebugger,
+  useCustomDefaults,
 } from "@novablocks/block-editor";
 
 import { withShapeModelingDecoration } from "@novablocks/shape-modeling";
 
-const SupernovaItemEdit = props => {
+import { getNewDefaults } from "./utils";
 
+const SupernovaItemEdit = props => {
   const { attributes, setControlsVisibility, clientId } = props;
   const { showMedia } = attributes;
   const parent = useSelect( select =>{
@@ -45,12 +47,14 @@ const SupernovaItemEdit = props => {
 
     return null;
   }, [ clientId ] );
+
   const innerBlocks = useInnerBlocks( parent );
   const selectParentCondition = useMemo( () => {
     return 1 === innerBlocks.length;
   }, [ innerBlocks ] );
 
   useSelectParent( props, selectParentCondition );
+  useCustomDefaults( clientId, attributes, getNewDefaults );
 
   useEffect( () => {
     setControlsVisibility( {
