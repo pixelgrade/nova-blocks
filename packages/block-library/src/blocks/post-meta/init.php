@@ -65,6 +65,7 @@ if ( ! function_exists( 'novablocks_render_post_meta_block' ) ) {
 			$min_reading_time = novablocks_get_post_reading_time_in_minutes( $post, 280 );
 
 			$byline = sprintf(
+				/* translators: %s: The post author name linked (byline).  */
 				__( '%s', '__plugin_txtd' ),
 				'<span class="author vcard"><a class="url fn n" href="' . esc_url( get_author_posts_url( $author_id ) ) . '">' . $author->display_name . '</a></span>'
 			);
