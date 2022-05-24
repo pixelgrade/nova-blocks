@@ -13,6 +13,7 @@
 		"postType"
 	],
 	"supports": {
+		"align": [ "wide" ],
 		"novaBlocks": {
 			"spaceAndSizing": true
 		}

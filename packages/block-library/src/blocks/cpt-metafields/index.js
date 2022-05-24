@@ -13,7 +13,6 @@ import attributes from "./attributes";
 registerBlockType( 'novablocks/cpt-metafields', {
   attributes,
   edit: function( props ) {
-
     const blockProps = useBlockProps();
 
     return (
