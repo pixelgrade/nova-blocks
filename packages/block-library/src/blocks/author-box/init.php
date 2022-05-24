@@ -94,7 +94,7 @@ if ( ! function_exists( 'novablocks_get_the_author_info_box' ) ) {
 		$author_details .= '<div 
 			class="nb-author-box has-description"
 			style="' . $style . '"  
-			itemscope itemtype="http://schema.org/Person"
+			itemscope itemtype="https://schema.org/Person"
 			>';
 
 		// The author avatar

@@ -23,7 +23,7 @@ const FoodMenuSectionSave = function( props ) {
 	);
 
 	return (
-		<div className={classNames} itemScope itemType="http://schema.org/MenuSection">
+		<div className={classNames} itemScope itemType="https://schema.org/MenuSection">
 
 			<header className="nova-food-menu__header">
 				<RichText.Content

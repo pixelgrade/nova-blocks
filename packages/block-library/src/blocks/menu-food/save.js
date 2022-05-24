@@ -25,7 +25,7 @@ const FoodMenuSave = function( props ) {
 	);
 
 	return (
-		<div className={classNames} itemScope itemType="http://schema.org/Menu">
+		<div className={classNames} itemScope itemType="https://schema.org/Menu">
 			<InnerBlocks.Content/>
 		</div>
 	)

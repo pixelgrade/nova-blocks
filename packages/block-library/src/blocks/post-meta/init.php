@@ -72,7 +72,7 @@ if ( ! function_exists( 'novablocks_render_post_meta_block' ) ) {
 
 			?>
 			<div class="c-meta__authorship">
-				<div class="c-meta-author" itemscope="" itemtype="http://schema.org/Person">
+				<div class="c-meta-author" itemscope="" itemtype="https://schema.org/Person">
 					<?php if ( ! empty( $avatar_url ) ) { ?>
 						<div class="c-meta-author__avatar">
 							<meta itemprop="image" content="<?php echo esc_url( $avatar_url ); ?>"/>
