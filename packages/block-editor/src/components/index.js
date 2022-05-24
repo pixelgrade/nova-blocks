@@ -20,7 +20,6 @@ export { default as VariationPicker } from "./variation-picker";
 export { default as withVisibility } from "./with-visibility";
 
 export { default as insertTemplate } from './insert-template';
-export { default as generateDefaults } from './generate-defaults';
 export { default as getPlaceholderImages } from './get-placeholder-images';
 export { default as normalizeImages } from './normalize-images';
 

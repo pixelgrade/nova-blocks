@@ -4,13 +4,12 @@ import { useEffect } from "@wordpress/element";
 
 import { useInnerBlocks } from "../../hooks";
 
-const useInnerBlocksCount = ( clientId, attributes, innerBlockName, innerBlockAttributes ) => {
+const useInnerBlocksCount = ( clientId, postsToShow, innerBlockName, innerBlockAttributes ) => {
   const itemsCount = useSelect( select => select( 'core/block-editor' ).getBlockCount( clientId ), [ clientId ] );
   const { replaceInnerBlocks } = useDispatch( 'core/block-editor' );
   const innerBlocks = useInnerBlocks( clientId );
 
   return useEffect( () => {
-    const { postsToShow } = attributes;
     const newInnerBlocks = innerBlocks.slice( 0, postsToShow );
 
     if ( postsToShow > itemsCount ) {
@@ -20,7 +19,7 @@ const useInnerBlocksCount = ( clientId, attributes, innerBlockName, innerBlockAt
     }
 
     replaceInnerBlocks( clientId, newInnerBlocks );
-  }, [ attributes ] );
+  }, [ postsToShow ] );
 };
 
 export default useInnerBlocksCount;

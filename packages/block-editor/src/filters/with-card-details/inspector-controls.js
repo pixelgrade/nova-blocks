@@ -6,6 +6,7 @@ import { getControlsClasses, getLevelAttributes } from "@novablocks/utils";
 import { ControlsGroup, ControlsSection, ControlsTab, HeadingToolbar, withVisibility } from "../../components";
 
 import {
+  ButtonsStyle,
   CardTitleLevel,
   CollectionTitleLevel,
   MetadataSource,
@@ -64,6 +65,7 @@ export const CardDetailsContent = withVisibility( 'card-details-content' )( prop
     <ControlsGroup title={ __( 'Content', '__plugin_txtd' ) }>
       <CollectionTitleLevel { ...props } />
       <CardTitleLevel { ...props } />
+      <ButtonsStyle { ...props } />
     </ControlsGroup>
   )
 } );
