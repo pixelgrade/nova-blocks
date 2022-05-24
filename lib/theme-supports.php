@@ -86,6 +86,15 @@ function novablocks_get_theme_support(): array {
 		],
 	];
 
+	if ( class_exists( 'PixelgradeCare_CPT_Metafields' )
+	     && function_exists( 'pixcare_cpt_metafields_get_post_metafields' ) ) {
+
+		$default[ 'cpt-metafields'] = [
+			'name'    => 'cpt-metafields',
+			'enabled' => true,
+		];
+	}
+
 	if ( is_array( $theme_support ) ) {
 		$theme_support = novablocks_array_merge_recursive_distinct( $required, $default, $theme_support );
 		ksort( $theme_support );

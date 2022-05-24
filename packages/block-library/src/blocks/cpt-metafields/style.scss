@@ -1,0 +1,254 @@
+.c-meta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  flex-direction: row-reverse;
+  justify-content: flex-end;
+  gap: var(--nb-spacing);
+
+  --font-size-modifier: 1 !important;
+
+  a {
+
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+
+  &__social &__row-item:after {
+    content: none;
+  }
+
+  a:not(.button) {
+    text-decoration: none;
+  }
+
+  .c-meta-comments__link {
+    color: inherit;
+  }
+
+  .novablocks-sharing[class][class] {
+
+    .wp-block-buttons {
+      margin-top: 0;
+    }
+  }
+
+  .novablocks-sharing__button-label {
+
+    position: relative;
+
+    &:before {
+      content: '';
+
+      position: absolute;
+      bottom: 0;
+
+      width: 100%;
+      height: 3px;
+
+      background: currentColor;
+
+      transform: scale3d(0, 1, 1);
+      transform-origin: right;
+
+      transition: var(--theme-transition);
+      transition-property: transform;
+
+      will-change: transform;
+      -webkit-backface-visibility: hidden;
+    }
+
+    &:hover:before {
+      transform: scale3d(1, 1, 1);
+      transform-origin: left;
+    }
+  }
+
+  .novablocks-sharing,
+  .c-meta-comments {
+
+    &:hover {
+
+      a,
+      .novablocks-sharing__button-label {
+
+        &:before {
+          transform: scale3d(1, 1, 1);
+          transform-origin: left;
+        }
+      }
+    }
+  }
+
+  .c-button__link {
+    position: absolute;
+
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+
+    display: block;
+  }
+}
+
+.c-meta-author {
+  display: flex;
+  column-gap: calc(0.5 * var(--nb-spacing));
+  row-gap: var(--nb-spacing);
+
+  &__avatar {
+    flex: 0 0 2em;
+
+    display: flex;
+    align-items: center;
+
+    @include above(lap) {
+      flex-basis: 2.6em;
+    }
+
+    &-wrapper {
+      position: relative;
+      width: 100%;
+      padding-top: 100%;
+      border-radius: 50%;
+      overflow: hidden;
+
+      img {
+        display: block;
+        width: 100%;
+        height: 100%;
+
+        position: absolute;
+        top: 0;
+        left: 0;
+
+        object-fit: cover;
+      }
+    }
+  }
+
+  &__body {
+    align-self: center;
+  }
+}
+
+.c-meta-comments {
+  position: relative;
+
+  display: flex;
+  align-items: center;
+
+  &__link[class][class] {
+    text-decoration-color: currentColor;
+    text-decoration: none;
+  }
+
+  &__count {
+    position: relative;
+    padding: 0 0.35em;
+    min-width: 1.5em;
+    border-radius: 4px;
+    text-align: center;
+
+    color: currentColor;
+
+    background-color: var(--nb-bg-color);
+
+    border: 1px solid currentColor;
+  }
+
+  &__count + &__label {
+    margin-left: 0.5em;
+  }
+}
+
+.c-meta__authorship {
+  flex-grow: 1;
+
+  .c-meta__row-item {
+
+    &:not(:last-child):after {
+      content: "\00B7";
+      padding-left: 0.3em;
+      padding-right: 0.3em;
+    }
+  }
+}
+
+.c-meta__social {
+  order: -1;
+
+  .novablocks-sharing .wp-block-button__link[class][class][class] {
+    display: flex;
+
+    border: 0;
+    padding: 0;
+    --font-size: inherit;
+    --font-size-modifier: 1;
+    --current-font-weight: unset;
+
+    &[class] {
+
+      &:before {
+        content: none;
+      }
+
+      &, &:hover, &:focus, &:active {
+        color: inherit;
+        box-shadow: none;
+        transform: none;
+        background: transparent;
+      }
+    }
+
+    .novablocks-sharing__button-label {
+      margin-left: .5em;
+    }
+
+    .novablocks-icon {
+      width: 1.5em;
+      stroke-width: 0.65;
+    }
+  }
+
+  .c-meta__row {
+    gap: var(--nb-spacing);
+  }
+}
+
+.c-meta__row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+
+  &.c-meta__row--secondary {
+    opacity: 0.7;
+  }
+}
+
+.novablocks-icon-symbol[class][class] {
+  fill: transparent;
+}
+
+.c-meta-comments__count-text {
+  color: var(--nb-fg2-color);
+  --font-size-modifier: 0.75;
+}
+
+.c-meta-comments__arrow {
+  position: absolute;
+
+  right: 30%;
+
+  border-left: 0.45em solid transparent;
+  border-top: 0.35em solid var(--nb-bg-color);
+
+  filter: drop-shadow(1px 0px 0 currentColor) drop-shadow(0 1px 0 currentColor);
+}
+
+.c-meta-author__body .author a {
+  --current-font-weight: bold;
+  color: var(--nb-accent-color);
+}
