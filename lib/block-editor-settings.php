@@ -554,3 +554,25 @@ function novablocks_disable_block_editor_layout( $settings, $context ) {
 	return $settings;
 }
 add_filter( 'block_editor_settings_all', 'novablocks_disable_block_editor_layout', PHP_INT_MAX, 2 );
+
+function novablocks_get_facets() {
+	$facetwp_settings_option = get_option( 'facetwp_settings' );
+	$facetwp_settings = ( false !== $facetwp_settings_option ) ? json_decode( $facetwp_settings_option, true ) : [];
+
+	if ( ! isset( $facetwp_settings['facets'] ) ) {
+		$facetwp_settings['facets'] = [];
+	}
+
+	return apply_filters( 'facetwp_facets', $facetwp_settings['facets'] );
+}
+
+function novablocks_settings_add_facetwp_facets( $novablocks_settings ) {
+	$facets = novablocks_get_facets();
+
+	if ( ! empty( $facets ) ) {
+		$novablocks_settings[ 'facetwp_facets' ] = $facets;
+	}
+
+	return $novablocks_settings;
+}
+add_filter( 'novablocks_block_editor_settings', 'novablocks_settings_add_facetwp_facets' );

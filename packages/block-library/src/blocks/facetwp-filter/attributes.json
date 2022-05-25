@@ -1,0 +1,10 @@
+{
+	"facet": {
+		"type": "string",
+		"default": ""
+	},
+	"showLabels": {
+		"type": "boolean",
+		"default": false
+	}
+}

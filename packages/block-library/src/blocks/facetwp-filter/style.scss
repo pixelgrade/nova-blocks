@@ -1,0 +1,23 @@
+:is(.facetwp-type-radio, #specific) {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1em;
+
+  .facetwp-radio {
+    background: none !important;
+    padding: 0;
+    margin: 0;
+  }
+
+  .facetwp-display-value {
+    padding: 0;
+  }
+
+  .facetwp-counter {
+    display: none;
+  }
+
+  .facetwp-radio:not(.checked):not(:hover) {
+    opacity: 0.5;
+  }
+}
