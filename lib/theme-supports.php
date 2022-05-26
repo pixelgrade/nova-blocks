@@ -95,8 +95,24 @@ function novablocks_get_theme_support(): array {
 		];
 	}
 
+	$default['facetwp-facet'] = [
+		'name'    => 'facetwp-facet',
+		'enabled' => true,
+	];
 	$default['facetwp-filter'] = [
 		'name'    => 'facetwp-filter',
+		'enabled' => true,
+	];
+	$default['facetwp-selections'] = [
+		'name'    => 'facetwp-selections',
+		'enabled' => true,
+	];
+	$default['facetwp-title'] = [
+		'name'    => 'facetwp-title',
+		'enabled' => true,
+	];
+	$default['facetwp-toggle'] = [
+		'name'    => 'facetwp-toggle',
 		'enabled' => true,
 	];
 

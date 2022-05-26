@@ -5,15 +5,15 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-function novablocks_get_facetwp_filter_attributes() {
+function novablocks_get_facetwp_selections_attributes() {
 
 	return novablocks_merge_attributes_from_array( [
-		'packages/block-library/src/blocks/facetwp-filter/attributes.json',
+		'packages/block-library/src/blocks/facetwp-selections/attributes.json',
 	] );
 
 }
 
-if ( ! function_exists( 'novablocks_render_facetwp_filter_block' ) ) {
+if ( ! function_exists( 'novablocks_render_facetwp_selections_block' ) ) {
 
 	/**
 	 * Entry point to render the block with the given attributes, content, and context.
@@ -26,21 +26,20 @@ if ( ! function_exists( 'novablocks_render_facetwp_filter_block' ) ) {
 	 *
 	 * @return false|string
 	 */
-	function novablocks_render_facetwp_filter_block( array $attributes, string $content, WP_Block $block ) {
-		$attributes_config = novablocks_get_facetwp_filter_attributes();
+	function novablocks_render_facetwp_selections_block( array $attributes, string $content, WP_Block $block ) {
+		$attributes_config = novablocks_get_facetwp_selections_attributes();
 		$attributes        = novablocks_get_attributes_with_defaults( $attributes, $attributes_config );
 
 		$classes = [
-			'nb-facetwp-filter',
-			'nb-facetwp-filter--section-type-' . $attributes[ 'sectionType' ],
-			'nb-facetwp-filter--orientation-' . $attributes[ 'orientation' ],
+			'nb-facetwp-selections',
 		];
+
 
 		ob_start(); ?>
 
 		<div class="<?php echo join( ' ', $classes ); ?>">
-			<?php echo $content; ?>
-		</div> <!-- .nb-facetwp-filter -->
+			<?php echo do_shortcode( '[facetwp selections="true"]' ); ?>
+		</div> <!-- .nb-facetwp-selections -->
 
 		<?php return ob_get_clean();
 	}

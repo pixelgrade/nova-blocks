@@ -1,10 +1,14 @@
 {
-	"facet": {
+	"align": {
 		"type": "string",
-		"default": ""
+		"default": "none"
 	},
-	"showLabels": {
-		"type": "boolean",
-		"default": false
+	"sectionType": {
+		"type": "string",
+		"default": "visible"
+	},
+	"orientation": {
+		"type": "string",
+		"default": "vertical"
 	}
 }
