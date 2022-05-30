@@ -12,8 +12,8 @@ domReady( () => {
       toggle.dataset.toggled = "false";
 
       toggle.addEventListener( 'click', () => {
+        toggle.dataset.toggled = toggle.dataset.toggled !== "true";
         hiddenBlocks.forEach( hiddenBlock => {
-          toggle.dataset.toggled = toggle.dataset.toggled !== "true";
           toggleClass( hiddenBlock, 'is-visible', toggle.dataset.toggled === "true" );
         } );
       } )
