@@ -9,11 +9,12 @@ domReady( () => {
     const toggles = block.querySelectorAll( '.nb-facetwp-toggle' );
 
     toggles.forEach( toggle => {
-      toggle.dataset.toggled = false;
+      toggle.dataset.toggled = "false";
 
       toggle.addEventListener( 'click', () => {
         hiddenBlocks.forEach( hiddenBlock => {
-          toggleClass( hiddenBlock, 'is-visible', ! toggle.dataset.toggled );
+          toggle.dataset.toggled = toggle.dataset.toggled !== "true";
+          toggleClass( hiddenBlock, 'is-visible', toggle.dataset.toggled === "true" );
         } );
       } )
     } )

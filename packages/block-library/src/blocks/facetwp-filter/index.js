@@ -16,7 +16,5 @@ import meta from "./block.json";
 registerBlockType( meta.name, {
   attributes,
   edit,
-  save:  function() {
-    return <InnerBlocks.Content />
-  },
+  save: () => <InnerBlocks.Content />,
 } );

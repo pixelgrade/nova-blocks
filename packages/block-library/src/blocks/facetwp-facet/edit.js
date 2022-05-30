@@ -39,12 +39,10 @@ const Edit = ( props ) => {
     className: "nb-facetwp-filter__item"
   } );
 
-  console.log( facets );
-
   return (
     <div { ...blockProps }>
-      <div className="nb-facetwp-filter__item-text" onClick={ () => { setShowdropdown( ! showDropdown ) } }>
-        <span className="nb-facetwp-filter__item-label">{ activeFacet.label }</span>
+      <div className="nb-facetwp-filter__item-text">
+        <span className="nb-facetwp-filter__item-label" onClick={ () => { setShowdropdown( ! showDropdown ) } }>{ activeFacet.label }</span>
         <span className="nb-facetwp-filter__item-type">{ activeFacet.type }</span>
       </div>
       { showDropdown &&
