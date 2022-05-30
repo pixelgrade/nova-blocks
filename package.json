@@ -42,8 +42,7 @@
 		"@novablocks/scrolling-effect": "file:packages/scrolling-effect",
 		"@novablocks/shape-modeling": "file:packages/shape-modeling",
 		"@novablocks/tools": "file:packages/tools",
-		"@novablocks/utils": "file:packages/utils",
-		"react-contenteditable": "^3.3.6"
+		"@novablocks/utils": "file:packages/utils"
 	},
 	"devDependencies": {
 		"@babel/plugin-proposal-optional-chaining": "^7.14.5",
@@ -81,6 +80,7 @@
 		"os": "^0.1.2",
 		"path": "^0.12.7",
 		"postcss": "^8.3.11",
+		"react-contenteditable": "^3.3.6",
 		"rimraf": "^3.0.2",
 		"rtlcss": "^3.4.0",
 		"svg-sprite-loader": "^6.0.11",

@@ -3,9 +3,8 @@
 	"apiVersion": 2,
 	"name": "novablocks/facetwp-toggle",
 	"parent": [ "novablocks/facetwp-filter" ],
-	"title": "FacetWP Toggle",
+	"title": "Toggle",
 	"category": "nova-blocks",
-	"description": "Display FacetWP filter",
 	"keywords": [
 		"facetwp",
 		"filter"

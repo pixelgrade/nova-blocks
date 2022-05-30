@@ -24,10 +24,7 @@ const withBlockListWrapperProps = createHigherOrderComponent( ( BlockListBlock )
         ...wrapperProps?.style,
         ...getSpacingCSSProps( attributes )
       },
-      className: classnames(
-        wrapperProps?.className,
-        getColorSignalClassnames( attributes, true ),
-      )
+      className: wrapperProps?.className
     };
 
     return <BlockListBlock { ...props } wrapperProps={ wrapperProps } />

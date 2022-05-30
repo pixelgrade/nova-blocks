@@ -2,16 +2,17 @@
 	"$schema": "https://schemas.wp.org/trunk/block.json",
 	"apiVersion": 2,
 	"name": "novablocks/facetwp-filter",
-	"title": "FacetWP Filter",
+	"title": "Filter Controls",
 	"category": "nova-blocks",
-	"description": "Display FacetWP filter",
+	"description": "Add faceted search and filtering to your website using the FacetWP plugin",
 	"keywords": [ "facetwp", "filter" ],
 	"textdomain": "nova-blocks",
 	"attributes": {},
 	"usesContext": [],
 	"supports": {
+		"align": [ "wide" ],
 		"novaBlocks": {
-			"colorSignal": true
+			"spaceAndSizing": true
 		}
 	}
 }

@@ -3,9 +3,8 @@
 	"apiVersion": 2,
 	"name": "novablocks/facetwp-facet",
 	"parent": [ "novablocks/facetwp-filter" ],
-	"title": "FacetWP Facet",
+	"title": "Facet",
 	"category": "nova-blocks",
-	"description": "Display FacetWP facet",
 	"keywords": [
 		"facetwp",
 		"filter"

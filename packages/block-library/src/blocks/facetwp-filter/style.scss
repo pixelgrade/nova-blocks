@@ -1,3 +1,38 @@
 .nb-facetwp-filter--section-type-hidden:not(.is-visible) {
   display: none;
 }
+
+:is(.facetwp-selections, #specific) {
+
+  > ul {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5em;
+
+    > li {
+      position: relative;
+      padding: 0.25em 0.75em;
+      transform: translateZ(0);
+
+      &:before {
+        content: "";
+        position: absolute;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        z-index: -1;
+
+        background: currentColor;
+        opacity: 0.1;
+        border-radius: 0.25em;
+      }
+    }
+  }
+
+  .facetwp-selection-value {
+    padding: 0;
+    margin: 0;
+    background: none;
+  }
+}

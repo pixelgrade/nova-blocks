@@ -36,11 +36,16 @@ if ( ! function_exists( 'novablocks_render_facetwp_filter_block' ) ) {
 			'nb-facetwp-filter',
 			'nb-facetwp-filter--section-type-' . $attributes[ 'sectionType' ],
 			'nb-facetwp-filter--orientation-' . $attributes[ 'orientation' ],
+			'align' . $attributes['align']
 		];
+
+		$cssProps = array_merge(
+			novablocks_get_space_and_sizing_css( $attributes ),
+		);
 
 		ob_start(); ?>
 
-		<div class="<?php echo join( ' ', $classes ); ?>">
+		<div class="<?php echo join( ' ', $classes ); ?>" style="<?php echo join( ';', $cssProps ); ?>">
 			<?php echo $content; ?>
 		</div> <!-- .nb-facetwp-filter -->
 

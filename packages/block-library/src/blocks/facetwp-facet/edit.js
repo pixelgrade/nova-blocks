@@ -2,7 +2,7 @@ import { useBlockProps } from "@wordpress/block-editor";
 import ServerSideRender from "@wordpress/server-side-render";
 import { IconButton, SelectControl, ToggleControl, Toolbar } from "@wordpress/components";
 import { BlockControls } from "@wordpress/block-editor";
-import { Fragment, useMemo, useState } from "@wordpress/element";
+import { Fragment, useEffect, useMemo, useState } from "@wordpress/element";
 import { __ } from "@wordpress/i18n";
 
 import { ControlsSection, ControlsTab, useSettings } from "@novablocks/block-editor";
@@ -39,10 +39,16 @@ const Edit = ( props ) => {
     className: "nb-facetwp-filter__item"
   } );
 
+  useEffect( () => {
+    if ( facet === "" ) {
+      setShowdropdown( true );
+    }
+  }, [ facet ] );
+
   return (
     <div { ...blockProps }>
       <div className="nb-facetwp-filter__item-text">
-        <span className="nb-facetwp-filter__item-label" onClick={ () => { setShowdropdown( ! showDropdown ) } }>{ activeFacet.label }</span>
+        <span className="nb-facetwp-filter__item-label">{ activeFacet.label }</span>
         <span className="nb-facetwp-filter__item-type">{ activeFacet.type }</span>
       </div>
       { showDropdown &&
@@ -60,7 +66,7 @@ const Edit = ( props ) => {
         </div>
       }
       <FacetInspectorControls { ...props } />
-      <FacetBlockControls { ...props } />
+      <EditToolbarButton { ...props } />
     </div>
   )
 }
@@ -82,7 +88,7 @@ const FacetInspectorControls = ( props ) => {
   )
 }
 
-const FacetBlockControls = ( props ) => {
+const EditToolbarButton = ( props ) => {
   const { attributes, setAttributes } = props;
   const activeFacet = useActiveFacet( attributes );
 
