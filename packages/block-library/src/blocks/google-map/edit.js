@@ -126,7 +126,7 @@ const Edit = props => {
     }
 
     return createInterpolateElement(
-      __( 'To display the map, you need to <a>register a Google Maps API Key</a> and include it bellow.', '__plugin_txtd' ),
+      __( 'To display the map, you need to <a>register a Google Maps API Key</a> and paste it here.', '__plugin_txtd' ),
       { a: <a target="_blank" href={ url } /> }
     );
   }, [ gmAuthFailure ] );
