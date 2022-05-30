@@ -31,15 +31,19 @@ if ( ! function_exists( 'novablocks_render_facetwp_toggle_block' ) ) {
 		$attributes        = novablocks_get_attributes_with_defaults( $attributes, $attributes_config );
 
 		$classes = [
+			'wp-block-buttons',
 			'nb-facetwp-toggle',
 		];
 
-
 		ob_start(); ?>
 
-		<div class="<?php echo join( ' ', $classes ); ?>">
-			<?php echo $attributes[ 'text' ]; ?>
-		</div> <!-- .nb-facetwp-toggle -->
+		<div class="wp-block-buttons">
+			<div class="wp-block-button">
+				<div class="wp-block-button__link nb-facetwp-toggle">
+					<?php echo $attributes[ 'text' ]; ?>
+				</div>
+			</div>
+		</div>
 
 		<?php return ob_get_clean();
 	}
