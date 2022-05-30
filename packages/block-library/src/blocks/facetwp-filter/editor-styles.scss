@@ -45,6 +45,10 @@
   .nb-facetwp-filter--visible & {
     background: #3858E9;
     color: #FFFFFF;
+
+    &:is(.nb-facetwp-filter__item--title, .nb-facetwp-filter__item--toggle) {
+      background: #121416;
+    }
   }
 
   .nb-facetwp-filter__dropdown {
