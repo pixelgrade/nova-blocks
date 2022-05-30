@@ -42,7 +42,8 @@
 		"@novablocks/scrolling-effect": "file:packages/scrolling-effect",
 		"@novablocks/shape-modeling": "file:packages/shape-modeling",
 		"@novablocks/tools": "file:packages/tools",
-		"@novablocks/utils": "file:packages/utils"
+		"@novablocks/utils": "file:packages/utils",
+		"react-contenteditable": "^3.3.6"
 	},
 	"devDependencies": {
 		"@babel/plugin-proposal-optional-chaining": "^7.14.5",

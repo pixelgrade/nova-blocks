@@ -38,7 +38,7 @@ if ( ! function_exists( 'novablocks_render_facetwp_toggle_block' ) ) {
 		ob_start(); ?>
 
 		<div class="<?php echo join( ' ', $classes ); ?>">
-			Toggle
+			<?php echo $attributes[ 'text' ]; ?>
 		</div> <!-- .nb-facetwp-toggle -->
 
 		<?php return ob_get_clean();

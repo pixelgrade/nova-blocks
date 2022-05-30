@@ -13,7 +13,9 @@ const Edit = ( props ) => {
     className: `nb-facetwp-filter  nb-facetwp-filter--${ sectionType }`
   } );
 
-  const innerBlocksProps = useInnerBlocksProps( blockProps, {
+  const innerBlocksProps = useInnerBlocksProps( {
+    className: 'nb-facetwp-filter__list'
+  }, {
     allowedBlocks: [
       'novablocks/facetwp-facet',
       'novablocks/facetwp-selections',
@@ -24,7 +26,19 @@ const Edit = ( props ) => {
 
   return (
     <Fragment>
-      <div { ...innerBlocksProps } />
+      <div { ...blockProps }>
+        { sectionType === 'hidden' &&
+          <div className={ 'nb-facetwp-filter__header' }>
+            <div className={ 'nb-facetwp-filter__title' }>
+              { __( 'More Filters section', '__plugin_txtd' ) }
+            </div>
+            <div className={ 'nb-facetwp-filter__description' }>
+              { __( 'Filtering controls placed below will be shown using a "More Filters" button.', '__plugin_txtd' ) }
+            </div>
+          </div>
+        }
+        <div { ...innerBlocksProps } />
+      </div>
       <FilterInspectorControls { ...props } />
     </Fragment>
   )

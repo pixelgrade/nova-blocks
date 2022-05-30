@@ -1,4 +1,4 @@
-.nb-facetwp-filter {
+.nb-facetwp-filter__list {
   display: flex;
   flex-wrap: wrap;
   gap: 0.5em;
@@ -62,7 +62,7 @@
   --current-font-weight: 400;
 }
 
-.nb-facetwp-filter__item--title {
+:is(.nb-facetwp-filter__item--title, .nb-facetwp-filter__item--toggle) {
 
   :is(input, #specific) {
     color: inherit;
@@ -74,4 +74,12 @@
     appearance: none;
     box-shadow: none;
   }
+}
+
+.nb-facetwp-filter__header + .nb-facetwp-filter__list {
+  margin-top: 1em;
+}
+
+.nb-facetwp-filter__title {
+  --current-font-weight: 700;
 }
