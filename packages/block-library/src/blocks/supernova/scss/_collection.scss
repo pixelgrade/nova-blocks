@@ -60,7 +60,7 @@
 
 .nb-supernova-item--aspect-ratio-auto {
 
-  .nb-supernova-item__media-aspect-ratio {
+  :is(.nb-supernova-item__media-aspect-ratio, #specific) {
 
     > * {
       position: static;
