@@ -35,7 +35,7 @@ const withSetChildrenAttributes = OriginalComponent => {
       const { innerBlocks } = getBlock( clientId );
       const newAttributes = getChildAttributes( attributes );
 
-      if ( Array.isArray( innerBlocks ) ) {
+      if ( attributes.contentPosition && Array.isArray( innerBlocks ) ) {
         innerBlocks.filter( block => block.name === 'novablocks/supernova-item' ).forEach( block => {
           updateBlockAttributes( block.clientId, newAttributes );
 
