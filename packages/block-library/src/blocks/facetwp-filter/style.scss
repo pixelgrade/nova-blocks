@@ -31,8 +31,48 @@
   }
 
   .facetwp-selection-value {
-    padding: 0;
-    margin: 0;
+    position: relative;
+
+    padding-right: 1.1em;
+    margin-right: 0;
     background: none;
+
+    &:before,
+    &:after {
+      content: "";
+      position: absolute;
+      top: calc(50% - 0.5em);
+      right: 0.4em;
+
+      display: block;
+      width: 0.1em;
+      height: 1em;
+      border-radius: 0.1em;
+      background: currentColor;
+    }
+
+    &:before {
+      transform: rotate(45deg);
+    }
+
+    &:after {
+      transform: rotate(-45deg);
+    }
+  }
+}
+
+.nb-facetwp-filter--orientation-horizontal {
+  display: flex;
+  gap: var(--nb-spacing);
+
+  .nb-facetwp-facet {
+    display: flex;
+    gap: calc( var(--nb-spacing) * 0.5 );
+  }
+
+  :is(.facetwp-type-radio) {
+    display: flex;
+    flex-wrap: wrap;
+    gap: calc( var(--nb-spacing) * 0.5 );
   }
 }

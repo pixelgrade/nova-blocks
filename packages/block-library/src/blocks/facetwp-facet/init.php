@@ -43,13 +43,13 @@ if ( ! function_exists( 'novablocks_render_facetwp_facet_block' ) ) {
 			}
 		}
 
-
 		ob_start(); ?>
 
 		<div class="<?php echo join( ' ', $classes ); ?>">
-			<?php
-			echo do_shortcode( '[facetwp facet="' . $attributes['facet'] . '"]' );
-			?>
+			<div class="nb-facetwp-facet__label"><?php echo $activeFacet['label']; ?></div>
+			<div class="nb-facetwp-facet__options">
+				<?php echo do_shortcode( '[facetwp facet="' . $attributes['facet'] . '"]' ); ?>
+			</div>
 		</div> <!-- .nb-facetwp-facet -->
 
 		<?php return ob_get_clean();

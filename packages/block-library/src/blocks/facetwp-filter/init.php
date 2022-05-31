@@ -9,6 +9,7 @@ function novablocks_get_facetwp_filter_attributes() {
 
 	return novablocks_merge_attributes_from_array( [
 		'packages/block-library/src/blocks/facetwp-filter/attributes.json',
+		'packages/block-editor/src/filters/with-space-and-sizing/attributes.json',
 	] );
 
 }
