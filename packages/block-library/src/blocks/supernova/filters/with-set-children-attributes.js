@@ -43,8 +43,17 @@ const withSetChildrenAttributes = OriginalComponent => {
           const contentAlign = getAlignFromMatrix( attributes?.contentPosition );
 
           if ( Array.isArray( contentBlocks ) ) {
+
             contentBlocks.filter( block => block.name === 'novablocks/headline' ).forEach( block => {
               updateBlockAttributes( block.clientId, { textAlign: contentAlign[1] } );
+            } )
+
+            contentBlocks.filter( block => block.name === 'core/heading' ).forEach( block => {
+              updateBlockAttributes( block.clientId, { textAlign: contentAlign[1] } );
+            } )
+
+            contentBlocks.filter( block => block.name === 'core/paragraph' ).forEach( block => {
+              updateBlockAttributes( block.clientId, { align: contentAlign[1] } );
             } )
 
             contentBlocks.filter( block => block.name === 'core/buttons' ).forEach( block => {
