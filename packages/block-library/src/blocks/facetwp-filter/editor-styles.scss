@@ -58,11 +58,12 @@
 
 .nb-facetwp-filter__item-text {
   display: flex;
-  gap: 2em;
+  gap: 1em;
 }
 
 .nb-facetwp-filter__item-type {
   font-size: 0.9em;
+  white-space: nowrap;
   --current-font-weight: 400;
 }
 
