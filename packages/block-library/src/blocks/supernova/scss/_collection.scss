@@ -60,6 +60,23 @@
 
 .nb-supernova-item--aspect-ratio-auto {
 
+  .nb-supernova-item__media-aspect-ratio {
+
+    > * {
+      position: static;
+    }
+
+    &:before {
+      content: none;
+    }
+  }
+
+  // Force media composition squared since it doesn't have an inherit aspect ratio
+  .novablocks-media-composition {
+    width: var(--nb-variable-width-card-media-height);
+    min-height: var(--nb-variable-width-card-media-height);
+  }
+
   .novablocks-media-composition__image {
     position: static;
 
