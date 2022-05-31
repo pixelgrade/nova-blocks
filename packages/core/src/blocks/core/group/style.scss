@@ -36,6 +36,20 @@
   padding-left: var(--nb-group-side-padding);
   padding-right: var(--nb-group-side-padding);
 
+  > :is(.alignfull, [data-align="full"]) {
+    margin-left: calc(-1 * var(--nb-group-side-padding));
+    margin-right: calc(-1 * var(--nb-group-side-padding));
+  }
+}
+
+:is(
+  .wp-block-group:not(.wp-block-row),
+  .wp-block-group__inner-container,
+  .nb-header-row__inner-container,
+  .nb-supernova-item__inner-container,
+  .specificity.x2.x3
+) {
+
   > * {
     margin-left: auto;
     margin-right: auto;
@@ -49,8 +63,6 @@
   > :is(.alignfull, [data-align="full"]) {
     width: auto;
     max-width: none;
-    margin-left: calc(-1 * var(--nb-group-side-padding));
-    margin-right: calc(-1 * var(--nb-group-side-padding));
   }
 }
 
