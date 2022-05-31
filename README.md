@@ -1,6 +1,7 @@
 <img width="100" alt="nova-icon" src="https://user-images.githubusercontent.com/1632775/58468221-d0f5b180-8145-11e9-9c5f-21a7eb902dcb.png">
 
 # Nova Blocks for Gutenberg Space
+
 ### Nova Blocks is a collection of distinctive Gutenberg blocks, committed to making your site shine like a newborn star.  It is taking a design-driven approach to help you made the right decisions and showcase your content in the best shape.
 
 [Download for Free](https://downloads.wordpress.org/plugins/nova-blocks.latest-stable.zip)
@@ -31,7 +32,7 @@ Yes! Nova Blocks are built to inherit your theme style as much as possible.
 
 **Is Nova Blocks free?**
 
-Yes! Nova Block’s core features are free to use.
+Yes! Nova Blocks' core features are free to use.
 
 ## Installation
 
@@ -41,10 +42,11 @@ Yes! Nova Block’s core features are free to use.
 4. Do the same steps for the “Gutenberg” plugin and install the latest version of the Editor.
 5. Start using the new blocks on your pages by searching and/or selecting them from the **Nova Blocks** section of the Gutenberg Editor.
 
-## Tested with the following WordPress themes:
-- [Twenty Nineteen](https://wordpress.org/themes/twentynineteen/) _by WordPress team_
-- [Storefront](https://wordpress.org/themes/storefront/) _by Automattic_
-- [Osteria](https://pixelgrade.com/themes/osteria/) _by Pixelgrade_
+## Completely compatible with the following WordPress themes:
+- [Mies LT](https://pixelgrade.com/themes/portfolio/mies-lt/) _by Pixelgrade_
+- [Julia LT](https://pixelgrade.com/themes/blogging/julia-lt/) _by Pixelgrade_
+- [Rosa LT](https://pixelgrade.com/themes/restaurants/rosa-lt/) _by Pixelgrade_
+- [Felt LT](https://pixelgrade.com/themes/blogging/felt-lt/) _by Pixelgrade_
 
 ## Contributing
 The essence of **open source** is that by freely sharing the code, you have the freedom to use it for any purpose, study how it works and adapt it to your needs, improve the program and **share your improvements** with the community so that we all benefit. 🙏
@@ -64,13 +66,13 @@ A manually curated list that include all the valuable people that have contribut
 
 ## Local Environment Setup Pointers
 
-You need to be careful since we **require** certain **node versions (v14) and PHP versions (v7.4).**
+You need to be careful since we **require** certain **Node.js (v14) and PHP (v7.4) versions.**
 
-For ease of development, it is best to use `nvm` (https://github.com/nvm-sh/nvm) for node version management and automatic node version switching on shell navigation. For the `zsh` shell the easiest way is to use [oh-my-zsh](https://github.com/ohmyzsh/ohmyzsh) with the `nvm` [plugin](https://github.com/ohmyzsh/ohmyzsh/tree/master/plugins/nvm) activated.
+For ease of development, it is best to use [**nvm**](https://github.com/nvm-sh/nvm) for node version management and automatic node version switching on shell navigation. For the `zsh` shell the easiest way is to use [oh-my-zsh](https://github.com/ohmyzsh/ohmyzsh) with the `nvm` [plugin](https://github.com/ohmyzsh/ohmyzsh/tree/master/plugins/nvm) activated.
 
 We use the following oh-my-zsh plugins: `plugins=(composer git nvm npm)` configured in `~/.zshrc`. For automatic node version switching, place this line in `~/.zshrc` just below the plugins line: `NVM_AUTOLOAD=1`. Now whenever you enter a directory through the shell, if it finds a `.nvmrc` file, it will switch to the specified node version.
 
 ## License
 Nova Blocks source code is released under the [GNU GPL v3 license](https://www.gnu.org/licenses/gpl-3.0.en.html) or later. This is so you have the freedom to create something beautiful and share it back with us.
 
-2019-2021 © Pixelgrade.
+2019-2022 © Pixelgrade.
