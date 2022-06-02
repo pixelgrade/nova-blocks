@@ -33,7 +33,7 @@
   .facetwp-selection-value {
     position: relative;
 
-    padding-right: 1.1em;
+    padding-right: 1.4em;
     margin-right: 0;
     background: none;
 
@@ -41,12 +41,12 @@
     &:after {
       content: "";
       position: absolute;
-      top: calc(50% - 0.5em);
+      top: calc(50% - 0.4em);
       right: 0.4em;
 
       display: block;
       width: 0.1em;
-      height: 1em;
+      height: 0.8em;
       border-radius: 0.1em;
       background: currentColor;
     }
@@ -73,6 +73,6 @@
   :is(.facetwp-type-radio) {
     display: flex;
     flex-wrap: wrap;
-    gap: calc( var(--nb-spacing) * 0.5 );
+    gap: 0 calc( var(--nb-spacing) * 0.5 );
   }
 }
