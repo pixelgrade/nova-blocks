@@ -76,3 +76,11 @@
     gap: 0 calc( var(--nb-spacing) * 0.5 );
   }
 }
+
+:is(.nb-facetwp-title, .nb-facetwp-facet__label) {
+  font-weight: bolder;
+
+  * {
+    font-weight: inherit;
+  }
+}

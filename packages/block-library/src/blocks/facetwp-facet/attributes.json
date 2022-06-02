@@ -3,8 +3,12 @@
 		"type": "string",
 		"default": ""
 	},
-	"showLabels": {
+	"hideCounts": {
 		"type": "boolean",
-		"default": true
+		"default": false
+	},
+	"hideLabels": {
+		"type": "boolean",
+		"default": false
 	}
 }

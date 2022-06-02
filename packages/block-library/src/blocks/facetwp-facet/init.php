@@ -43,6 +43,14 @@ if ( ! function_exists( 'novablocks_render_facetwp_facet_block' ) ) {
 			}
 		}
 
+		if ( $attributes['hideCounts'] ) {
+			$classes[] = 'nb-facetwp-facet--hide-counts';
+		}
+
+		if ( $attributes['hideLabels'] ) {
+			$classes[] = 'nb-facetwp-facet--hide-labels';
+		}
+
 		ob_start(); ?>
 
 		<div class="<?php echo join( ' ', $classes ); ?>">
