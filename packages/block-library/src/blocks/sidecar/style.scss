@@ -46,9 +46,9 @@
 // Default sidebar position is on the right, so it will be positioned between [ge] and block-limit-right.
 @include above(lap) {
 
-  .nb-sidecar {
+  .nb-sidecar:not(.nb-sidecar--sidebar-none) {
 
-    > .nb-sidecar-area--content:not(:only-child) {
+    > .nb-sidecar-area--content {
       --block-content-start: var(--block-wide-start);
       --block-content-end: var(--block-wide-end);
     }
