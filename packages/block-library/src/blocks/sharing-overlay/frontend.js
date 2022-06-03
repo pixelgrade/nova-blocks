@@ -6,6 +6,8 @@ import { getIcon } from "@novablocks/icons";
 import Shariff from 'shariff';
 import services from './services';
 
+import { __ } from '@wordpress/i18n';
+
 (function() {
 
   const $adminBar = $( '#wpadminbar' );
@@ -21,8 +23,8 @@ import services from './services';
 		const $openButtonWrap = $openButton.closest( '.wp-block-button' );
     const $closeButton = $overlay.find( '.novablocks-sharing__close' );
 
-    const $title = $( `<h${ attributes.headingLevel }>`, { class: 'novablocks-sharing__title' } ).text( 'Sharing Options' );
-    const $footer = $( '<div>', { class: 'novablocks-sharing__footer' } ).text( 'Thanks for spreading the word!' );
+    const $title = $( `<h${ attributes.headingLevel }>`, { class: 'novablocks-sharing__title' } ).text( __( 'Sharing Options', '__plugin_txtd' ) );
+    const $footer = $( '<div>', { class: 'novablocks-sharing__footer' } ).text( __( 'Thanks for spreading the word!', '__plugin_txtd' ) );
 
 		$openButton.prepend( getIcon( 'share' ) );
     $closeButton.prepend( getIcon( 'cancel' ) );
@@ -169,7 +171,7 @@ import services from './services';
 
 		return createGroup( {
 			id: 'public',
-			title: 'Share publicly on social networks',
+			title: __( 'Share publicly on social networks', '__plugin_txtd' ),
 			description: '',
 			content: $publicList
 		}, attributes );
@@ -195,7 +197,7 @@ import services from './services';
 
 		return createGroup( {
 			id: 'private',
-			title: 'Share privately with friends',
+			title: __( 'Share privately with friends', '__plugin_txtd'  ),
 			description: '',
 			content: createContentFromLinks( links )
 		}, attributes );
@@ -222,7 +224,7 @@ import services from './services';
 
 		return createGroup( {
 			id: 'in-person',
-			title: 'Or maybe you want in person?',
+			title: __( 'Or maybe you want in person?', '__plugin_txtd' ),
 			description: '',
 			content: createContentFromLinks( links )
 		}, attributes );
@@ -265,20 +267,20 @@ import services from './services';
 	}
 
 	function createCopyLinkGroup( attributes ) {
-		const groupTitle = 'Use a link for everything';
-		const groupDescription = 'Copy link and paste it anywhere you want it.';
+		const groupTitle = __( 'Use a link for everything', '__plugin_txtd' );
+		const groupDescription = __( 'Copy link and paste it anywhere you want it.', '__plugin_txtd' );
 
 		const $input = $( `<input class="novablocks-sharing__copy-input sm-palette-1 sm-variation-1" type="text" value="${ window.location.href }" readonly />` );
 		const $notification = $( '<div class="novablocks-sharing__notification-wrap">' );
 		const $notificationContent = $( '<div class="novablocks-sharing__notification">' );
-		const $notificationText = $( '<span class="novablocks-sharing__notification-text">Link copied to your clipboard</span>' );
+		const $notificationText = $( '<span class="novablocks-sharing__notification-text">' + __('Link copied to your clipboard', '__plugin_txtd' ) + '</span>' );
 		const $notificationIcon = $( '<span class="novablocks-sharing__notification-icon">' ).append( getIcon( 'tick' ) );
 
 		$notificationContent.append( $notificationIcon ).append( $notificationText );
 		$notificationContent.appendTo( $notification );
 
 		const $button = createContentFromLinks( [ {
-			label: 'Copy link to clipboard',
+			label: __('Copy link to clipboard', '__plugin_txtd' ),
 			url: '#',
 			icon: 'link',
 			classes: 'novablocks-sharing__link--copy',
