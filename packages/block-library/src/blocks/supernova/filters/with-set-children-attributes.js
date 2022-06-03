@@ -35,7 +35,7 @@ const withSetChildrenAttributes = OriginalComponent => {
       const { innerBlocks } = getBlock( clientId );
       const newAttributes = getChildAttributes( attributes );
 
-      if ( Array.isArray( innerBlocks ) ) {
+      if ( attributes.contentPosition && Array.isArray( innerBlocks ) ) {
         innerBlocks.filter( block => block.name === 'novablocks/supernova-item' ).forEach( block => {
           updateBlockAttributes( block.clientId, newAttributes );
 
@@ -43,8 +43,17 @@ const withSetChildrenAttributes = OriginalComponent => {
           const contentAlign = getAlignFromMatrix( attributes?.contentPosition );
 
           if ( Array.isArray( contentBlocks ) ) {
+
             contentBlocks.filter( block => block.name === 'novablocks/headline' ).forEach( block => {
               updateBlockAttributes( block.clientId, { textAlign: contentAlign[1] } );
+            } )
+
+            contentBlocks.filter( block => block.name === 'core/heading' ).forEach( block => {
+              updateBlockAttributes( block.clientId, { textAlign: contentAlign[1] } );
+            } )
+
+            contentBlocks.filter( block => block.name === 'core/paragraph' ).forEach( block => {
+              updateBlockAttributes( block.clientId, { align: contentAlign[1] } );
             } )
 
             contentBlocks.filter( block => block.name === 'core/buttons' ).forEach( block => {

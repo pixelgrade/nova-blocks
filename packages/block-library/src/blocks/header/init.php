@@ -109,7 +109,7 @@ if ( ! function_exists( 'novablocks_render_header_block' ) ) {
 				<?php
 					echo $content;
 
-					if ( is_single() ) {
+					if ( is_single() || is_singular( 'portfolio' ) ) {
 						echo get_reading_bar_markup();
 					}
 				?>

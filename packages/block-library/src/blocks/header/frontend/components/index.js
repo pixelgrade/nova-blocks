@@ -38,7 +38,7 @@ class Header extends HeaderBase {
 
     this.rows = this.getHeaderRows();
     this.isSimple = [ 'logo-left', 'logo-center' ].includes( element.dataset.layout );
-    this.isSticky = this.isSimple && this.rows.find( row => row.element.dataset.isSticky );
+    this.isSticky = this.isSimple && !! this.rows.find( row => row.element.dataset.isSticky );
 
     this.mobileHeader = new HeaderMobile( this );
 

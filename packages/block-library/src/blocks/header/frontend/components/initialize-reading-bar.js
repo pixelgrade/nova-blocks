@@ -1,16 +1,15 @@
 import { above, clamp, onScrollRAF, removeClass, syncColorSignalClasses, hasClass, toggleClass } from "@novablocks/utils";
 
 export const initializeReadingBar = ( header ) => {
+  const firstRow = header.querySelector( '.nb-header-row' );
+  const readingBar = document.querySelector( '.js-reading-bar' );
+  const progressBar = document.querySelector( '.js-reading-progress' );
 
-  if ( ! hasClass( document.body, 'single-post' ) ) {
+  if ( ! readingBar ) {
     return;
   }
 
   bindMenuLabelClick( header );
-
-  const firstRow = header.querySelector( '.nb-header-row' );
-  const readingBar = document.querySelector( '.js-reading-bar' );
-  const progressBar = document.querySelector( '.js-reading-progress' );
 
   if ( firstRow && readingBar ) {
     readingBar.style.display = 'block';

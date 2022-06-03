@@ -234,7 +234,7 @@
 /*
  * Carousel Layout - Variable Width
  */
-@include above(lap) {
+@include above(tablet) {
 
   .nb-collection__layout--carousel.nb-collection__layout--variable-width {
 
@@ -254,22 +254,22 @@
     .slick-initialized .nb-supernova-item__media {
       height: auto;
     }
-  }
 
-  :is(.nb-collection__layout--carousel.nb-collection__layout--variable-width, .nb-supernova-item--aspect-ratio-auto) {
+    .nb-supernova-item__media-aspect-ratio {
 
-    .nb-supernova-item__media-aspect-ratio > * {
-      position: static;
+      > * {
+        position: static;
+      }
+
+      &:before {
+        content: none;
+      }
     }
 
     // Force media composition squared since it doesn't have an inherit aspect ratio
     .novablocks-media-composition {
       width: var(--nb-variable-width-card-media-height);
       min-height: var(--nb-variable-width-card-media-height);
-    }
-
-    .nb-supernova-item__media-aspect-ratio:before {
-      content: none;
     }
   }
 }

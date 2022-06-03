@@ -73,15 +73,20 @@ const Edit = ( props ) => {
 
 const FacetInspectorControls = ( props ) => {
   const { attributes, setAttributes } = props;
-  const { showLabels } = attributes;
+  const { hideLabels, hideCounts } = attributes;
 
   return (
     <ControlsSection id={ 'setup' } label={ __( 'Setup', '__plugin_txtd' ) }>
       <ControlsTab label={ __( 'Settings', '__plugin_txtd' ) }>
         <ToggleControl
-          label={__( 'Show Label', '__plugin_txtd' )}
-          checked={ showLabels }
-          onChange={ () => setAttributes( { showLabels: ! showLabels } ) }
+          label={__( 'Hide Label', '__plugin_txtd' )}
+          checked={ hideLabels }
+          onChange={ () => setAttributes( { hideLabels: ! hideLabels } ) }
+        />
+        <ToggleControl
+          label={__( 'Hide Counts', '__plugin_txtd' )}
+          checked={ hideCounts }
+          onChange={ () => setAttributes( { hideCounts: ! hideCounts } ) }
         />
       </ControlsTab>
     </ControlsSection>

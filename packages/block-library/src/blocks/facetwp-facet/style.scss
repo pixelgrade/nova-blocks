@@ -4,17 +4,30 @@
     background: none !important;
     padding: 0;
     margin: 0;
+
+    display: flex;
+    gap: 0.25em;
   }
 
   .facetwp-display-value {
     padding: 0;
   }
 
+  .facetwp-radio:is(.checked, :hover:not(.disabled)) {
+    text-decoration: underline;
+  }
+}
+
+.nb-facetwp-facet--hide-counts {
+
   .facetwp-counter {
     display: none;
   }
+}
 
-  .facetwp-radio:not(.checked):not(:hover) {
-    opacity: 0.5;
+.nb-facetwp-facet--hide-labels {
+
+  .nb-facetwp-facet__label {
+    display: none;
   }
 }
