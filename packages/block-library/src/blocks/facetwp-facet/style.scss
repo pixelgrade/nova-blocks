@@ -13,10 +13,28 @@
     padding: 0;
   }
 
-  .facetwp-radio:is(.checked, :hover:not(.disabled)) {
+  * {
+    font-weight: inherit;
+  }
+
+  // Active Facet
+  .facetwp-radio:is(.checked) {
+    text-decoration: underline;
+    font-weight: bolder;
+  }
+
+  // Hover Facet
+  .facetwp-radio:is(:hover:not(.disabled)) {
     text-decoration: underline;
   }
 }
+
+.facetwp-checkbox.disabled, .facetwp-radio.disabled {
+    opacity: 0.4;
+    cursor: default;
+}
+
+
 
 .nb-facetwp-facet--hide-counts {
 
