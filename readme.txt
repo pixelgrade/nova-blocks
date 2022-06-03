@@ -96,7 +96,12 @@ Yes! Nova Block's core features are free to use.
 
 = 2.1.0 =
 * Removed deprecated blocks
-* Fixes and improvements all-around
+* Performance optimization
+* Fixes to i18n (missing translatable strings)
+* Add advanced filtering block (FacetWP integration)
+* Add CPT metafields block
+* Many styling fixes and improvements
+* Ensure compatibility with WordPress 6.0
 
 = 2.0.4 =
 * Fix query loop card's blocks alignment
