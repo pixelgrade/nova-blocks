@@ -73,7 +73,10 @@
     padding-right: var(--nb-wrapper-sides-spacings);
   }
 
-  // Group block set as Row variation
+  /*--------------------------------------------*\
+    #HELPER CLASS - .is-layout-flex
+  \*--------------------------------------------*/
+  // Use the .is-layout-flex CSS class as a way to mark the Row variation
   &:is(.is-layout-flex,.x1.x2) {
 
     > * {
