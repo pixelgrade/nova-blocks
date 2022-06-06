@@ -8,6 +8,11 @@
   > * {
     overflow: hidden;
   }
+
+  > *,
+  > * > .nb-collection__layout-item {
+    height: 100%;
+  }
 }
 
 .slick-slide--current {
