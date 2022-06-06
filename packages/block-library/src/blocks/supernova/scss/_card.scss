@@ -43,15 +43,15 @@
 .nb-supernova-item__inner-container {
   --nb-supernova-item-padding-top: max(var(--nb-header-neighbour-padding-top), var(--nb-card-content-padding));
   --nb-supernova-item-padding-bottom: max(var(--nb-supernova-item-carousel-padding-bottom), var(--nb-card-content-padding));
-  --nb-supernova-item-padding: max(var(--nb-supernova-item-padding-top), var(--nb-supernova-item-padding-bottom));
+  --nb-supernova-item-padding-max: max(var(--nb-supernova-item-padding-top), var(--nb-supernova-item-padding-bottom));
 
-  padding: var(--nb-supernova-item-padding);
+  padding: var(--nb-card-content-padding);
   padding-top: var(--nb-supernova-item-padding-top, 0px) !important;
   padding-bottom: var(--nb-supernova-item-padding-bottom, 0px) !important;
 
   .nb-supernova--card-layout-stacked.nb-supernova--valign-center & {
-    padding-top: var(--nb-supernova-item-padding, 0px) !important;
-    padding-bottom: var(--nb-supernova-item-padding, 0px) !important;
+    padding-top: var(--nb-supernova-item-padding-max, 0px) !important;
+    padding-bottom: var(--nb-supernova-item-padding-max, 0px) !important;
   }
 }
 
