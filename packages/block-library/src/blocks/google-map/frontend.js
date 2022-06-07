@@ -5,6 +5,7 @@ import { getAttributes } from "@novablocks/utils";
 import {
   addVisibilityToStyles,
   createHtmlMapMarker,
+  fitMapBoundsToMarkers,
   getCenterFromMarkers,
   getCompiledStyles,
   getMarkerLatLng,
@@ -13,6 +14,8 @@ import {
   pin,
   styles
 } from "./utils";
+
+export const REFERENCES = {};
 
 domReady( () => {
 
@@ -23,9 +26,10 @@ domReady( () => {
   const DarkMode = window?.sm?.darkMode?.default;
   const mapsElements = Array.from( document.querySelectorAll( '.js-novablocks-google-map' ) );
 
-  mapsElements.forEach( mapElement => {
+  mapsElements.forEach( ( mapElement, index ) => {
     const attributes = getAttributes( mapElement );
     const { accentColor, showControls, markers, zoom } = attributes;
+    const refId = `google-map-${ index }`;
 
     const mapOptions = {
       mapTypeId: 'roadmap',
@@ -38,9 +42,23 @@ domReady( () => {
     };
 
     const map = new google.maps.Map( mapElement, mapOptions );
+    const mapMarkers = createMapMarkers( markers, map, attributes, accentColor );
 
-    mapElement.dataset.map = map;
-    mapElement.dataset.mapMarkers = createMapMarkers( markers, map, attributes, accentColor );
+    google.maps.event.addListenerOnce( map, 'idle', function() {
+      const mapBounds = map.getBounds();
+      const mapMarkersContained = mapMarkers.every( mapMarker => mapBounds.contains( mapMarker.latlng ) );
+
+      if ( ! mapMarkersContained ) {
+        fitMapBoundsToMarkers( map, mapMarkers );
+      }
+    } );
+
+    mapElement.dataset.refId = refId;
+
+    REFERENCES[ refId ] = {
+      map: map,
+      mapMarkers: mapMarkers
+    }
 
     if ( DarkMode && typeof DarkMode.bind === "function" ) {
       DarkMode.bind( () => {
@@ -59,6 +77,7 @@ domReady( () => {
         mapElements.forEach( mapElement => {
           const attributes = getAttributes( mapElement );
           const { styleData, markers, map, mapMarkers } = attributes;
+          const refId = mapElement.dataset.refId;
 
           map.setOptions( { styles: getCompiledStyles( attributes, new_value ) } );
 
@@ -67,7 +86,7 @@ domReady( () => {
             mapMarker.setMap( null );
           } );
 
-          mapElement.dataset.mapMarkers = createMapMarkers( markers, map, attributes, new_value );
+          REFERENCES[ refId ].mapMarkers = createMapMarkers( markers, map, attributes, new_value );
         } );
       } );
     } );

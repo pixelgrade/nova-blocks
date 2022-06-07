@@ -9,6 +9,7 @@ import { MarkersList } from "../index";
 import {
   addVisibilityToStyles,
   createHtmlMapMarker,
+  fitMapBoundsToMarkers,
   getCompiledStyles,
   getMarkerLatLng,
   getMarkerMarkup,
@@ -88,22 +89,7 @@ const Map = ( props ) => {
   }, [ markers ] );
 
   const fitBounds = useCallback( () => {
-
-    if ( mapMarkers.current.length < 1 ) {
-      return;
-    }
-
-    if ( mapMarkers.current.length === 1 ) {
-      map.current.setCenter( mapMarkers.current[0].latlng );
-      return;
-    }
-
-    const bounds = new google.maps.LatLngBounds();
-    mapMarkers.current.forEach( marker => {
-      bounds.extend( marker.latlng );
-    } )
-
-    map.current.fitBounds( bounds, { top: 75 } );
+    fitMapBoundsToMarkers( map.current, mapMarkers.current, { top: 75 } );
     setAttributes( { zoom: map.current.getZoom() } );
   }, [ markers ] );
 

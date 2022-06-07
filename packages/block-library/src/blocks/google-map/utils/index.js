@@ -131,4 +131,24 @@ export {
   styles,
 }
 
+export const fitMapBoundsToMarkers = ( map, mapMarkers, padding ) => {
+
+  if ( mapMarkers.length < 1 ) {
+    return;
+  }
+
+  if ( mapMarkers.length === 1 ) {
+    map.setCenter( mapMarkers[0].latlng );
+    return;
+  }
+
+  const bounds = new google.maps.LatLngBounds();
+  mapMarkers.forEach( marker => {
+    bounds.extend( marker.latlng );
+  } )
+
+  map.fitBounds( bounds, padding );
+
+}
+
 export { default as createHtmlMapMarker } from './create-html-map-marker';
