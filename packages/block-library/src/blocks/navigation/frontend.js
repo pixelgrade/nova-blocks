@@ -1,5 +1,7 @@
+import domReady from '@wordpress/dom-ready';
+
 import { addSocialMenuClass } from './utils';
 
-( function( $, window, undefined ) {
+domReady( () => {
   addSocialMenuClass();
-} )( jQuery, window );
+} );
