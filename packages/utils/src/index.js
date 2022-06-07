@@ -416,3 +416,10 @@ export const applyCSS = ( element, css ) => {
     }
   }
 }
+
+export const remove = ( element ) => {
+
+  if ( element && element.parentNode ) {
+    element.parentNode.removeChild( element );
+  }
+}
