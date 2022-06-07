@@ -785,6 +785,21 @@ function novablocks_get_collection_card_media_markup( array $media, array $attri
 					}
 				}
 
+				// If we have a "stacked" card layout and the parallax scrolling effect,
+				// the images will be zoomed in to some degree;
+				// to maintain sharpness, we will reduce the width descriptor of each image in the srcset list
+				// by a small percent.
+				if ( ( ! empty( $attributes['cardLayout'] ) && 'stacked' === $attributes['cardLayout'] )
+				     && ( ! empty( $attributes['scrollingEffect'] ) && 'parallax' === $attributes['scrollingEffect'] ) ) {
+
+					add_filter( 'wp_calculate_image_srcset', 'novablocks_reduce_srcset_width_descriptor', 10, 1 );
+
+					// Make sure the sizes attribute reflects the reduction.
+					if ( ! empty( $attachment_image_width ) ) {
+						$attachment_image_width = (int) round( $attachment_image_width * 0.9 );
+					}
+				}
+
 				// If we have determined some sizes, "wrap" them in some safety nets.
 				// Otherwise, we will use some default ones.
 				if ( ! empty( $sizes ) ) {
@@ -805,6 +820,13 @@ function novablocks_get_collection_card_media_markup( array $media, array $attri
 						'class'                      => 'nb-supernova-item__media novablocks-doppler__target',
 						'sizes'                      => ! empty( $sizes ) ? implode( ', ', $sizes ) : false,
 					] ) . PHP_EOL;
+
+				// Remove the filter.
+				if ( ( ! empty( $attributes['cardLayout'] ) && 'stacked' === $attributes['cardLayout'] )
+				     && ( ! empty( $attributes['scrollingEffect'] ) && 'parallax' === $attributes['scrollingEffect'] ) ) {
+
+					remove_filter( 'wp_calculate_image_srcset', 'novablocks_reduce_srcset_width_descriptor', 10 );
+				}
 			} else {
 				$output .= '<img class="nb-supernova-item__media novablocks-doppler__target" data-shape-modeling-target src="' . esc_url( $url ) . '" alt="' . ( ! empty( $media['alt'] ) ? esc_attr( $media['alt'] ) : '' ) . '" />' . PHP_EOL;
 			}
@@ -812,6 +834,38 @@ function novablocks_get_collection_card_media_markup( array $media, array $attri
 	}
 
 	return $output;
+}
+
+/**
+ * We will reduce the width descriptor of each image in the srcset list by a small percent.
+ *
+ * @param array  $sources {
+ *     One or more arrays of source data to include in the 'srcset'.
+ *
+ *     @type array $width {
+ *         @type string $url        The URL of an image source.
+ *         @type string $descriptor The descriptor type used in the image candidate string,
+ *                                  either 'w' or 'x'.
+ *         @type int    $value      The source width if paired with a 'w' descriptor, or a
+ *                                  pixel density value if paired with an 'x' descriptor.
+ *     }
+ * }
+ *
+ * @return array
+ */
+function novablocks_reduce_srcset_width_descriptor( $sources ) {
+	// We will multiply each width descriptor value with the factor.
+	$reduction_factor = 0.9;
+
+	foreach ( $sources as $width => $source ) {
+		if ( empty( $source['descriptor'] ) || 'w' !== $source['descriptor'] || empty( $source['value'] ) ) {
+			continue;
+		}
+
+		$sources[ $width ]['value'] = (int) round( $source['value'] * $reduction_factor );
+	}
+
+	return $sources;
 }
 
 /**
