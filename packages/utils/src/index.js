@@ -406,3 +406,13 @@ export const getAttributes = element => {
 
   return attributes;
 }
+
+export const applyCSS = ( element, css ) => {
+  for ( let property in css ) {
+    if ( property.indexOf( '--' ) === 0 ) {
+      element.style.setProperty( property, css[ property ] );
+    } else {
+      element.style[ property ] = css[ property ];
+    }
+  }
+}
