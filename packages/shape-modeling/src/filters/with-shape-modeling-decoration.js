@@ -1,7 +1,5 @@
 import classnames from 'classnames';
-import { Spring, animated } from 'react-spring';
 import { createHigherOrderComponent } from '@wordpress/compose';
-import { Fragment } from "@wordpress/element";
 
 import {
   generatePath,
@@ -9,6 +7,7 @@ import {
   getBlobAttsFromAttributes,
   getBlobStyles,
   getBlobMaskStyles,
+  getBlobMediaStyles,
 } from '../utils';
 
 import { getColorSignalClassnames } from "@novablocks/utils";
@@ -51,41 +50,26 @@ const withShapeModelingDecoration = createHigherOrderComponent( OriginalComponen
 
 		return (
 			<div className={ 'blob-mix' } style={ blobsStyles }>
-				<Spring config={ { delay: 0 } } to={ { path: svgMaskPath } }>
-					{ springProps => {
-						return (
-							<Fragment>
-								<div className={ `novablocks-media-composition__grid-item-mask blob-mix__media` }>
-									<animated.div className={ blobMaskClasses } style={ blobsEnableMask ? getBlobMaskStyles( springProps.path, svgViewBox ) : {} }>
-										<OriginalComponent { ...props } />
-									</animated.div>
-									<svg className="blob-mix__mask-debug" viewBox={ svgViewBox } preserveAspectRatio='none' xmlns='http://www.w3.org/2000/svg' version='1.1'>
-										{
-											blobsEnableMask && enableShapeDebug &&
-											<ShapeDebug { ...blobMaskAtts } />
-										}
-									</svg>
-								</div>
-							</Fragment>
-						);
-					} }
-				</Spring>
+        <div className={ `novablocks-media-composition__grid-item-mask blob-mix__media` } style={ getBlobMediaStyles( attributes ) }>
+          <div className={ blobMaskClasses } style={ blobsEnableMask ? getBlobMaskStyles( svgMaskPath, svgViewBox ) : {} }>
+            <OriginalComponent { ...props } />
+          </div>
+          <svg className="blob-mix__mask-debug" viewBox={ svgViewBox } preserveAspectRatio='none' xmlns='http://www.w3.org/2000/svg' version='1.1'>
+            {
+              blobsEnableMask && enableShapeDebug &&
+              <ShapeDebug { ...blobMaskAtts } />
+            }
+          </svg>
+        </div>
 				{
 					blobsEnableDecoration &&
-					<Spring config={ { delay: 0 } } to={ { path: svgPath } }>
-						{ props => {
-
-							return (
-								<svg className={ `blob-mix__decoration` } viewBox={ svgViewBox } preserveAspectRatio='none' xmlns='http://www.w3.org/2000/svg' version='1.1'>
-									<animated.path d={ props.path }></animated.path>
-									{
-										enableShapeDebug &&
-										<ShapeDebug { ...blobAtts } />
-									}
-								</svg>
-							);
-						} }
-					</Spring>
+          <svg className={ `blob-mix__decoration` } viewBox={ svgViewBox } preserveAspectRatio='none' xmlns='http://www.w3.org/2000/svg' version='1.1'>
+            <path d={ svgPath }></path>
+            {
+              enableShapeDebug &&
+              <ShapeDebug { ...blobAtts } />
+            }
+          </svg>
 				}
 			</div>
 		)
