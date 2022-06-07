@@ -3,10 +3,15 @@
 
 .slick-slide {
   opacity: 1 !important;
-  
+
   // element on which we apply the custom transition
   > * {
     overflow: hidden;
+  }
+
+  > *,
+  > * > .nb-collection__layout-item {
+    height: 100%;
   }
 }
 

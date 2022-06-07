@@ -41,8 +41,6 @@ $slick-arrow-background-opacity-hover: 0.6 !default;
 }
 
 .slick-slide {
-  float: left;
-  height: 100%;
   min-height: 1px;
 
   [dir='rtl'] & {
@@ -125,9 +123,12 @@ $slick-arrow-background-opacity-hover: 0.6 !default;
 
 .nb-collection__layout--carousel {
 
-  @include below(lap) {
-    margin-left: calc(-1 * var(--nb-sidecar-sides));
-    margin-right: calc(-1 * var(--nb-sidecar-sides));
+  .nb-supernova:not(.nb-supernova--card-layout-stacked.nb-supernova--1-columns.nb-supernova--align-full) & {
+
+    @include below(lap) {
+      margin-left: calc(-1 * var(--nb-sidecar-sides));
+      margin-right: calc(-1 * var(--nb-sidecar-sides));
+    }
   }
 
   &:not(.slick-initialized) {

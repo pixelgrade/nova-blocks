@@ -24,9 +24,9 @@
 
   --nb-content-inset-setting: 288;
 
-  --nb-sidecar-sidebar-small-width: calc(var(--nb-content-inset-setting) * 1px);
-  --nb-sidecar-sidebar-medium-width: 330px;
-  --nb-sidecar-sidebar-large-width: 400px;
+  --nb-sidecar-sidebar-small-width: calc(var(--nb-content-inset-setting) * var(--theme-body-final-font-size, 16px) / 16);
+  --nb-sidecar-sidebar-medium-width: calc(330 * var(--theme-body-final-font-size, 16px) / 16);
+  --nb-sidecar-sidebar-large-width: calc(400 * var(--theme-body-final-font-size, 16px) / 16);
 
   // the unit is needed in order for the calc functions to work
   --nb-sidecar-sidebar-left-width: var(--nb-sidecar-sidebar-small-width);
