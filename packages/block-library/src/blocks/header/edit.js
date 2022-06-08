@@ -25,6 +25,7 @@ const withControlsVisibility = Component => {
       setControlsVisibility( {
         'space-and-sizing-presets': false,
         'space-and-sizing-customize': false,
+        'spacing-modifier': false,
         'block-spacing': false,
       } );
     }, [] );

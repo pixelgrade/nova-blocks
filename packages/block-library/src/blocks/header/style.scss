@@ -26,8 +26,8 @@
     // Size down the vertical spacing of the header rows
     // by adding the `--nb-header-vertical-spacing-multiplier`
     // variable to the default formula.
-    padding-top: calc(var(--nb-emphasis-top-spacing) * var(--nb-current-spacing) * var(--nb-header-vertical-spacing-multiplier, 1));
-    padding-bottom: calc(var(--nb-emphasis-bottom-spacing) * var(--nb-current-spacing) * var(--nb-header-vertical-spacing-multiplier, 1));
+    padding-top: calc(var(--nb-emphasis-top-spacing) * var(--nb-current-spacing) * var(--nb-spacing-multiplier-override, 1) * var(--nb-header-vertical-spacing-multiplier, 1));
+    padding-bottom: calc(var(--nb-emphasis-bottom-spacing) * var(--nb-current-spacing) * var(--nb-spacing-multiplier-override, 1) * var(--nb-header-vertical-spacing-multiplier, 1));
   }
 }
 
