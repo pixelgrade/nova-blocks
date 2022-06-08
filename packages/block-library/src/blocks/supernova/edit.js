@@ -155,7 +155,7 @@ const SupernovaEdit = props => {
   }, [ attributes ] );
 
   // Make sure that we keep the number of inner Supernova Items in sync with the number of items.
-//  useInnerBlocksCount( clientId, postsToShow, 'novablocks/supernova-item', innerBlocksAttributes );
+  useInnerBlocksCount( clientId, postsToShow, 'novablocks/supernova-item', innerBlocksAttributes );
 
   // Either lock or unlock nb-supernova-items depending on whether we are in a query or not.
   if ( isDescendentOfQueryLoop ) {
