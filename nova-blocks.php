@@ -3,7 +3,7 @@
  * Plugin Name: Nova Blocks
  * Plugin URI: https://github.com/pixelgrade/nova-blocks/
  * Description: Nova Blocks is a collection of <strong>distinctive Gutenberg blocks</strong>, committed to making your site shine like a newborn star. It is taking a design-driven approach to help you made the right decisions and showcase your content in the best shape.
- * Version: 2.1.0
+ * Version: 2.1.1
  * Author: Pixelgrade
  * Author URI: https://www.pixelgrade.com
  * License: GPLv2 or later
@@ -29,7 +29,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-define( 'Pixelgrade\NovaBlocks\VERSION', '2.1.0' );
+define( 'Pixelgrade\NovaBlocks\VERSION', '2.1.1' );
 
 /**
  * Gets this plugin's directory file path.

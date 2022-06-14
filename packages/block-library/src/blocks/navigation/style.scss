@@ -4,14 +4,17 @@ $arrow-down-svg-path: './arrow-down.svg';
   --navigation-item-sub-elements-spacing: 7px;
   --nb-navigation-item-padding-y: .75em;
 
-  @include above(lap) {
-    display: flex;
-    justify-content: center;
+  :is(ul.menu, .menu > ul) {
+    column-gap: var(--nb-navigation-item-spacing);
   }
 
-  ul.menu,
-  .menu > ul {
-    column-gap: var(--nb-navigation-item-spacing);
+  @include above(lap) {
+    display: flex;
+    justify-content: var(--justify-content, center);
+
+    :is(ul.menu, .menu > ul) {
+      justify-content: var(--justify-content, center);
+    }
   }
 
   @import "scss/menu";

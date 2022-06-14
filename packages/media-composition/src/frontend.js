@@ -1,4 +1,6 @@
-import $ from 'jquery';
+import domReady from '@wordpress/dom-ready';
+
+import { applyCSS, getAttributes } from '@novablocks/utils';
 
 import {
   getMediaCompositionCSSProps,
@@ -6,43 +8,30 @@ import {
   GridItemCollection
 } from './utils';
 
-$( function() {
+domReady( () => {
 
-	$( '.novablocks-media-composition' ).each( ( i, gallery ) => {
-		const $gallery = $( gallery );
-		const $grid = $gallery.find( '.novablocks-media-composition__grid' );
+  const compositions = document.querySelectorAll( '.novablocks-media-composition' );
 
-		const $block = $gallery.closest( '[data-size-contrast]' );
-		const attributes = $block.data();
+  compositions.forEach( composition => {
+    const grid = composition.querySelector( '.novablocks-media-composition__grid' );
+    const block = composition.closest( '[data-size-contrast]' );
+    const attributes = getAttributes( block );
+    const images = Array.from( composition.querySelectorAll( '.novablocks-media-composition__image' ) );
+    const gridItemsCollection = new GridItemCollection( images, attributes );
 
-		const images = $gallery.find( '.novablocks-media-composition__image' ).toArray();
-		const gridItemsCollection = new GridItemCollection( images, attributes );
+    gridItemsCollection.gridItems.map( ( gridItem, index ) => {
+      const item = gridItem.image.closest( '.novablocks-media-composition__grid-item' );
+      applyCSS( item, gridItem.getStyle() );
+      applyCSS( gridItem.image, gridItem.getImageStyle() );
+    } );
 
-		gridItemsCollection.gridItems.map( ( gridItem, index ) => {
-			let $image = $( gridItem.image ),
-				$item = $image.closest( '.novablocks-media-composition__grid-item' );
+    if ( grid ) {
+      const gridStyle = getMediaCompositionCSSProps( attributes );
+      applyCSS( grid, gridStyle );
+    }
+  } );
 
-			$item.css( gridItem.getStyle() );
-			$image.css( gridItem.getImageStyle() );
-		} );
-
-		if ( $grid.length ) {
-
-			const gridStyle = getMediaCompositionCSSProps( attributes );
-
-			$grid.css( gridStyle );
-
-			for ( let propertyName in gridStyle ) {
-				if ( propertyName.indexOf( '--' ) === 0 ) {
-					$grid.get( 0 ).style.setProperty( propertyName, gridStyle[propertyName] );
-				}
-			}
-		}
-
-	} );
-
-	$( '.novablocks-media-composition__grid' ).each( function( i, obj ) {
-		safariHeightFix( obj );
-	} );
+  const grids = document.querySelectorAll( '.novablocks-media-composition__grid' );
+  grids.forEach( safariHeightFix );
 
 } );
