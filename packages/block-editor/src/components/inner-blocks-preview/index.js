@@ -6,7 +6,17 @@ const InnerBlocksPreview = props => {
   const innerBlocks = useInnerBlocks( clientId );
 
   return (
-    innerBlocks.map( innerBlock => getSaveElement( innerBlock.name, innerBlock.attributes, innerBlock.innerBlocks ) )
+    innerBlocks.map( innerBlock => {
+      const element = getSaveElement( innerBlock.name, innerBlock.attributes, innerBlock.innerBlocks );
+
+      if ( innerBlock.name === 'core/buttons' ) {
+        Object.assign( element.props.style, {
+          justifyContent: innerBlock.attributes.layout?.justifyContent
+        } );
+      }
+
+      return element;
+    } )
   )
 };
 

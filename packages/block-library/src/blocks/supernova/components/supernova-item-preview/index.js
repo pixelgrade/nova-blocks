@@ -16,14 +16,15 @@ const SupernovaItemPreview = props => {
   const { style, ...otherProps } = props;
 
   return (
-    <Card {...otherProps} className={className}>
-      {showMedia
-        && <CardMediaWrapper {...props}>
-          <MediaCompositionOrFirstMedia {...props} />
-        </CardMediaWrapper>}
-      <div className={'nb-supernova-item__inner-container'}>
-        {'fields' === contentType && <CardFieldsPreview {...props} key={'card_fields'}/>}
-        {'custom' === contentType && <InnerBlocksPreview {...props} key={'inner_blocks'}/>}
+    <Card { ...otherProps } className={ className }>
+      { showMedia &&
+        <CardMediaWrapper { ...props }>
+          <MediaCompositionOrFirstMedia { ...props } />
+        </CardMediaWrapper>
+      }
+      <div className={ 'nb-supernova-item__inner-container' }>
+        { 'fields' === contentType && <CardFieldsPreview { ...props } key={ 'card_fields' }/> }
+        { 'custom' === contentType && <InnerBlocksPreview { ...props } key={ 'inner_blocks' }/> }
       </div>
     </Card>
   );
@@ -41,12 +42,12 @@ const MediaCompositionOrFirstMedia = props => {
     const media = normalizeMedia( images[0] );
 
     return (
-      <img className={`nb-supernova-item__media`} src={media.url} width={media.width} height={media.height} alt={media.alt}/>
+      <img className={ `nb-supernova-item__media` } src={ media.url } width={ media.width } height={ media.height } alt={ media.alt }/>
     );
   }
 
   return (
-    <MediaCompositionPreview {...props} />
+    <MediaCompositionPreview { ...props } />
   );
 };
 
