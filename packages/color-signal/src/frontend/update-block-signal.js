@@ -50,7 +50,7 @@ export const updateBlockSignal = ( block, parentVariation ) => {
     colorSignal,
   }, true );
 
-  const isLight = isLightVariation( palette, finalVariation );
+  const isLight = isLightVariation( palette, finalAbsoluteVariation );
 
   addClass( block, newClassnames );
   toggleClass( block, 'sm-light', isLight );

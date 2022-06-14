@@ -1,5 +1,4 @@
 import { addClass, debounce, onScrollRAF, toggleClass } from '@novablocks/utils';
-import domReady from '@wordpress/dom-ready';
 
 class HeaderBase {
 

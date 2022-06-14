@@ -1,18 +1,13 @@
 import {
-  mqService,
   above,
   below,
   matches,
   addClass,
   hasClass,
-  removeClass,
-  toggleClass,
-  setAndResetElementStyles
 } from '@novablocks/utils';
 
 import HeaderBase from "./header-base";
 import HeaderMobile from "./header-mobile";
-import HeaderRow from "./header-row";
 import HeaderColors from "./header-colors";
 import HeaderSticky from "./header-sticky";
 import { initializeReadingBar } from "./initialize-reading-bar";
@@ -211,7 +206,11 @@ class Header extends HeaderBase {
       return previous;
     }
 
-    return element;
+    if ( matches( element, '[class*="sm-palette-"]' ) ) {
+      return element;
+    }
+
+    return element.closest( '[class*="sm-palette-"]' );
   }
 
   findColorsElement( element ) {
