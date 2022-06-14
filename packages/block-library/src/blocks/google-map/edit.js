@@ -31,8 +31,8 @@ const Edit = props => {
   const { align, styleData } = attributes;
   const [ fetchedScript, setFetchedScript ] = useState( false );
   const [ fetchedApiKey, setFetchedApiKey ] = useState( false );
-  const [ savedApiKey, setSavedApiKey ] = useState( null );
-  const [ apiKey, setApiKey ] = useState( null );
+  const [ savedApiKey, setSavedApiKey ] = useState( '' );
+  const [ apiKey, setApiKey ] = useState( '' );
 
   const blockProps = useBlockProps( {
     className: classnames(
@@ -132,7 +132,7 @@ const Edit = props => {
   }, [ gmAuthFailure ] );
 
   const showInspectorControls = useMemo( () => {
-    return fetchedApiKey && fetchedScript && savedApiKey && ! gmAuthFailure;
+    return fetchedApiKey && fetchedScript && !!savedApiKey && ! gmAuthFailure;
   }, [ fetchedApiKey, fetchedScript, savedApiKey, gmAuthFailure ] );
 
   const showSpinner = useMemo( () => {
