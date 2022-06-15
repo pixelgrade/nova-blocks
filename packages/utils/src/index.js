@@ -1,17 +1,18 @@
-export * from './collection-layout';
-export * from './debounce';
-export * from './duotone';
-export * from './has-touch-screen';
-export * from './is-mobile-device';
-export * from './random';
-export * from './space-and-sizing';
-export * from './overlay-filter';
-export * from './color-signal';
-export * from './media';
-export * from './focal-point';
-export * from './media-query';
 export * from './array';
 export * from './break-align';
+export * from './collection-layout';
+export * from './color-signal';
+export * from './debounce';
+export * from './duotone';
+export * from './focal-point';
+export * from './has-touch-screen';
+export * from './is-mobile-device';
+export * from './media';
+export * from './media-query';
+export * from './overlay-filter';
+export * from './random';
+export * from './scroll-to';
+export * from './space-and-sizing';
 
 export const isSafari = /^((?!chrome|android).)*safari/i.test(navigator.userAgent);
 

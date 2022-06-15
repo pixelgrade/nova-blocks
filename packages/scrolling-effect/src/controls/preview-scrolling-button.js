@@ -2,11 +2,11 @@ import { __ } from "@wordpress/i18n";
 import { Button } from "@wordpress/components";
 import { useCallback } from "@wordpress/element";
 
+import { easeInOutCubic } from "@novablocks/easings";
 import { useScrollContainer } from "@novablocks/block-editor";
+import { scrollTo } from "@novablocks/utils";
 
-import { withScrollingEffectPreview } from '../components';
-
-const PreviewScrollingButton = withScrollingEffectPreview( props => {
+const PreviewScrollingButton = props => {
 
   const { clientId } = props;
   const scrollContainer = useScrollContainer();
@@ -22,13 +22,13 @@ const PreviewScrollingButton = withScrollingEffectPreview( props => {
       const end = start + scrollContainer.offsetHeight + element.offsetHeight;
 
       scrollContainer.scrollTo( { top: start } );
-      scrollContainer.scrollTo( { top: end, behavior: 'smooth' } );
+      scrollTo( scrollContainer, end, 2000, easeInOutCubic );
     }
 
   }, [ scrollContainer ] );
 
   return (
-    <div>
+    <div className={ 'nb-scrolling-preview-control' }>
       <Button
         islarge="true"
         isPrimary
@@ -36,6 +36,6 @@ const PreviewScrollingButton = withScrollingEffectPreview( props => {
         onClick={ onClick }>{ __( 'Preview Scrolling', '__plugin_txtd' ) }</Button>
     </div>
   )
-} );
+};
 
 export default PreviewScrollingButton;

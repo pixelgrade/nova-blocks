@@ -85,3 +85,7 @@
 .novablocks-scrolling-effect [value="doppler"] + label {
 	@include pro-feature-label;
 }
+
+.nb-scrolling-preview-control {
+  margin-bottom: 24px;
+}
