@@ -1,5 +1,5 @@
 import { PanelBody, RadioControl } from "@wordpress/components";
-// import PreviewScrollingButton from "./preview-scrolling-button";
+import PreviewScrollingButton from "./preview-scrolling-button";
 
 import { useSettings } from "@novablocks/block-editor";
 
@@ -21,7 +21,6 @@ const DopplerPresetsPanel = ( props ) => {
 
   return (
     <PanelBody title={ `Doppler Scrolling Settings` }>
-
       <RadioControl
         label={ 'Motion Presets' }
         selected={ motionPreset }
@@ -37,8 +36,6 @@ const DopplerPresetsPanel = ( props ) => {
         } }
         options={ novablocksSettings.motionPresetOptions }
       />
-      {/*<PreviewScrollingButton { ...props } />*/}
-
     </PanelBody>
   )
 };
