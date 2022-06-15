@@ -1,13 +1,14 @@
 /**
  * WordPress dependencies
  */
-import { Fragment, useEffect, useMemo, useState } from '@wordpress/element';
+import { useEffect, useMemo, useState } from '@wordpress/element';
 import { Popover } from '@wordpress/components';
 import { useSelect } from '@wordpress/data';
 
 import {
-  RichText,
   __experimentalLinkControl as LinkControl,
+  InnerBlocks,
+  RichText,
   useBlockProps,
   useInnerBlocksProps,
 } from '@wordpress/block-editor';
@@ -26,7 +27,6 @@ import {
   CardMediaWrapper,
   useInnerBlocks,
   useSelectParent,
-  useEffectDebugger,
   useCustomDefaults,
 } from "@novablocks/block-editor";
 
@@ -144,7 +144,9 @@ const SupernovaItemContent = ( props ) => {
     className: 'nb-supernova-item__inner-container'
   };
 
-  const innerBlocksProps = useInnerBlocksProps( newProps );
+  const innerBlocksProps = useInnerBlocksProps( newProps, {
+    renderAppender: InnerBlocks.ButtonBlockAppender
+  } );
 
   if ( 'fields' === contentType ) {
     return (
