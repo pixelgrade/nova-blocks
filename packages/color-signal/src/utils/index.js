@@ -24,9 +24,23 @@ export const mapPalettesToColorPalette = palette => {
   };
 };
 
-export const getSiteColorVariation = () => {
-  return parseInt( window?.styleManager?.siteColorVariation || 1, 10 );
-};
+export const getSiteColorVariation = ( () => {
+
+  let initialSiteVariation = window?.styleManager?.siteColorVariation || 1;
+
+  if ( wp?.customize ) {
+    wp.customize( 'sm_site_color_variation', setting => {
+      setting.bind( newValue => {
+        initialSiteVariation = parseInt( newValue, 10 );
+      } );
+    } );
+  }
+
+  return () => {
+    return initialSiteVariation;
+  };
+
+} )();
 
 export const getPaletteConfig = ( palette ) => {
   const palettes = window?.styleManager?.colorsConfig;

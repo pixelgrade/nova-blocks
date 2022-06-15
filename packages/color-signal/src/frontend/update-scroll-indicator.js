@@ -26,7 +26,9 @@ export const updateScrollIndicator = () => {
 
       if ( !! indicator && !! nextElement?.dataset?.colorSignal ) {
         const attributes = nextElement.dataset;
-        const classNamesToAdd = getColorSignalClassnames( attributes, true );
+        const classNamesToAdd = getColorSignalClassnames( attributes, true ).split( " " ).filter( className => {
+          return className.indexOf( 'sm-color-signal-' ) < 0;
+        } ).join( " " );
         const classNamesToRemove = [ ...indicator.classList ].filter( className => {
           return className.indexOf( 'sm-palette-' ) > -1 ||
                  className.indexOf( 'sm-variation-' ) > -1 ||

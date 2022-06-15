@@ -38,7 +38,8 @@ ready( () => {
   if ( parent?.wp?.customize ) {
     parent.wp.customize( 'sm_site_color_variation', setting => {
       setting.bind( ( newValue, oldValue ) => {
-        updateColors( newValue );
+        const newSiteVariation = parseInt( newValue, 10 );
+        updateColors( newSiteVariation );
       } );
     } )
   }

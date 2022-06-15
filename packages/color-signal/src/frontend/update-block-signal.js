@@ -35,7 +35,7 @@ export const updateBlockSignal = ( block, parentVariation ) => {
   const nextVariation = computeColorSignal( parentVariation, colorSignal, palette, absoluteVariation );
   const finalVariation = useSourceColorAsReference ? 1 : removeSiteVariationOffset( nextVariation );
   const sourceIndex = getSourceIndexFromPaletteId( palette );
-  const finalAbsoluteVariation = useSourceColorAsReference ? addSiteVariationOffset( sourceIndex + 1 ) : finalVariation;
+  const finalAbsoluteVariation = useSourceColorAsReference ? addSiteVariationOffset( sourceIndex + 1 ) : addSiteVariationOffset( finalVariation );
 
   const classes = Array.from( block.classList );
   const paletteClassname = classes.find( classname => classname.indexOf( 'sm-palette-' ) > -1 );
