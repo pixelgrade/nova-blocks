@@ -82,6 +82,7 @@ if ( ! function_exists( 'novablocks_render_supernova_block' ) ) {
 			novablocks_get_grid_area_fallback_classnames( $attributes )
 		);
 
+		// Output the Additional CSS class(es) of the block
 		if ( ! empty( $attributes['className'] ) ) {
 			$classes[] = $attributes['className'];
 		}
@@ -103,9 +104,12 @@ if ( ! function_exists( 'novablocks_render_supernova_block' ) ) {
 			novablocks_get_collection_layout_css( $attributes )
 		);
 
+		// Output the HTML anchor (ID) of the block
 		if ( ! empty( $attributes['anchor'] ) ) {
 			$id = 'id="'. $attributes['anchor'] .'" ';
 		}
+
+
 
 		return '<div class="' . esc_attr( join( ' ', $classes ) ) . '" style="' . join( ';', $cssProps ) . '"
 			' . $id . join( ' ', $data_attributes ) . '>
