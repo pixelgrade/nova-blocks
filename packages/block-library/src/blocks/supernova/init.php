@@ -109,8 +109,6 @@ if ( ! function_exists( 'novablocks_render_supernova_block' ) ) {
 			$id = 'id="'. $attributes['anchor'] .'" ';
 		}
 
-
-
 		return '<div class="' . esc_attr( join( ' ', $classes ) ) . '" style="' . join( ';', $cssProps ) . '"
 			' . $id . join( ' ', $data_attributes ) . '>
 			' . novablocks_get_collection_output( $attributes, $content, $block ) . '

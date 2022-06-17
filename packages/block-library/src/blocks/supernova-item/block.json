@@ -27,6 +27,7 @@
 	],
 	"supports": {
 		"html": false,
+		"anchor": true,
 		"inserter": false,
 		"reusable": false,
 		"novaBlocks": {

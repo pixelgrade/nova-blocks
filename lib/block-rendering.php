@@ -1340,6 +1340,11 @@ function novablocks_get_collection_card_markup( string $media, string $content, 
 		$cardClasses[] = 'nb-supernova-item--aspect-ratio-' . $attributes['thumbnailAspectRatioString'];
 	}
 
+	// Output the Additional CSS class(es) of the block
+	if ( ! empty( $attributes['className'] ) ) {
+		$cardClasses[] = $attributes['className'];
+	}
+
 	$cardClasses = array_merge(
 		$cardClasses,
 		novablocks_get_color_signal_classes( $attributes )
@@ -1379,9 +1384,14 @@ function novablocks_get_collection_card_markup( string $media, string $content, 
 		}
 	}
 
+	// Output the HTML anchor (ID) of the block
+	if ( ! empty( $attributes['anchor'] ) ) {
+		$id = 'id="'. $attributes['anchor'] .'" ';
+	}
+
 	ob_start(); ?>
 
-	<div class="nb-collection__layout-item">
+	<div class="nb-collection__layout-item" <?php echo $id; ?>>
 		<div class="<?php echo esc_attr( join( ' ', $cardClasses ) ); ?>" <?php echo join( ' ', $data_attributes ); ?>>
 			<?php if ( ! empty( $attributes['showMedia'] ) && ! empty( $media ) ) {
 				echo $media;
