@@ -121,10 +121,10 @@ const SupernovaEdit = props => {
 
   const { queryId } = context;
   const isDescendentOfQueryLoop = Number.isFinite( queryId );
-  const [ preventDuplicatePosts, setPreventDuplicatePosts ] = useMeta( 'supernova_prevent_duplicate' );
+  const [ preventDuplicatePosts ] = useMeta( 'supernova_prevent_duplicate' );
   const postIdsToExclude = useSelect( select => {
     return select( 'novablocks/displayed-posts' ).previousPostIds( clientId );
-  }, [ attributes ] );
+  }, [ clientId ] );
 
   // Make sure that the contentType attribute is set.
   // We will leave it for now, but it might not be needed
@@ -312,15 +312,15 @@ const SupernovaEdit = props => {
 
   // First, change the Query Loop's perPage attribute when Supernova's postsToShow changes.
   useEffect( () => {
-    if ( syncQueryAndSupernova && !!parentQueryClientId && parseInt( attributes.postsToShow ) !== parseInt( perPage ) ) {
+    if ( syncQueryAndSupernova && !!parentQueryClientId && parseInt( postsToShow ) !== parseInt( perPage ) ) {
       updateBlockAttributes( parentQueryClientId, {
         query: {
           ...context.query,
-          perPage: parseInt( attributes.postsToShow ),
+          perPage: parseInt( postsToShow ),
         }
       } );
     }
-  }, [ attributes ] );
+  }, [ context.query, postsToShow ] );
 
   // Second, change the Supernova's postsToShow attribute when Query Loop's perPage changes.
   useEffect( () => {
@@ -331,17 +331,15 @@ const SupernovaEdit = props => {
     }
   }, [ context ] );
 
-  const { markPostsAsDisplayed, markSpecificPostsAsDisplayed } = useDispatch( 'novablocks/displayed-posts' );
+  const { markPostsAsDisplayed } = useDispatch( 'novablocks/displayed-posts' );
 
-  const markPosts = useCallback( ( clientId, posts ) => {
+  useEffect( () => {
     markPostsAsDisplayed( clientId, posts );
-  }, [ attributes ] );
-
-  markPosts( clientId, posts );
+  }, [ posts ] );
 
   return (
     <Fragment>
-      <SupernovaPreview { ...props } posts={ posts } inQuery={ isDescendentOfQueryLoop } key={ 'preview' }/>
+      <MemoizedSupernovaPreview { ...props } posts={ posts } inQuery={ isDescendentOfQueryLoop } key={ 'preview' }/>
       <BlockControls { ...props } inQuery={ isDescendentOfQueryLoop } key={ 'block-controls' }/>
       <InspectorControls { ...props } inQuery={ isDescendentOfQueryLoop } key={ 'inspector-controls' }/>
       <ChangeMediaBlockControls { ...props } key={ 'media-composition-block-controls' }/>
