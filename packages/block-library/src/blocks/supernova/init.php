@@ -76,11 +76,15 @@ if ( ! function_exists( 'novablocks_render_supernova_block' ) ) {
 			'nb-supernova--valign-' . $align[0],
 			'nb-supernova--halign-' . $align[1],
 			'nb-supernova--align-' . $attributes['align'],
-			'alignfull'
+			'alignfull',
 		],
 			novablocks_get_color_signal_classes( $attributes ),
 			novablocks_get_grid_area_fallback_classnames( $attributes )
 		);
+
+		if ( ! empty( $attributes['className'] ) ) {
+			$classes[] = $attributes['className'];
+		}
 
 		// This refers to the carousel pagination, not the Query Loop pagination.
 		if ( $attributes['showPagination'] ) {
@@ -99,8 +103,12 @@ if ( ! function_exists( 'novablocks_render_supernova_block' ) ) {
 			novablocks_get_collection_layout_css( $attributes )
 		);
 
+		if ( ! empty( $attributes['anchor'] ) ) {
+			$id = 'id="'. $attributes['anchor'] .'" ';
+		}
+
 		return '<div class="' . esc_attr( join( ' ', $classes ) ) . '" style="' . join( ';', $cssProps ) . '"
-			' . join( ' ', $data_attributes ) . '>
+			' . $id . join( ' ', $data_attributes ) . '>
 			' . novablocks_get_collection_output( $attributes, $content, $block ) . '
 		</div>';
 	}

@@ -1,4 +1,8 @@
 {
+	"anchor": {
+		"type": "string",
+		"default": ""
+	},
 	"variation": {
 		"type": "string",
 		"default": "supernova"

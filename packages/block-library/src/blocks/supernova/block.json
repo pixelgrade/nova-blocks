@@ -18,6 +18,7 @@
 	],
 	"supports": {
 		"html": false,
+		"anchor": true,
 		"novaBlocks": {
 			"colorSignal": {
 				"attributes": true,
