@@ -11,7 +11,7 @@ export * from './media';
 export * from './media-query';
 export * from './overlay-filter';
 export * from './random';
-export * from './scroll-to';
+export * from './scroll-from-to';
 export * from './space-and-sizing';
 
 export const isSafari = /^((?!chrome|android).)*safari/i.test(navigator.userAgent);

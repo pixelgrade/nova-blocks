@@ -4,7 +4,7 @@ import { useCallback } from "@wordpress/element";
 
 import { easeInOutCubic } from "@novablocks/easings";
 import { useScrollContainer } from "@novablocks/block-editor";
-import { scrollTo } from "@novablocks/utils";
+import { scrollFromTo } from "@novablocks/utils";
 
 const PreviewScrollingButton = props => {
 
@@ -21,8 +21,7 @@ const PreviewScrollingButton = props => {
       const start = scrollContainer.scrollTop + elementBox.top - scrollContainerBox.top - scrollContainer.offsetHeight;
       const end = start + scrollContainer.offsetHeight + element.offsetHeight;
 
-      scrollContainer.scrollTo( { top: start } );
-      scrollTo( scrollContainer, end, 2000, easeInOutCubic );
+      scrollFromTo( scrollContainer, start, end, 2000, easeInOutCubic );
     }
 
   }, [ scrollContainer ] );
