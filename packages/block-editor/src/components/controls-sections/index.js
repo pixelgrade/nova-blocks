@@ -65,6 +65,39 @@ const ControlsSectionsComponent = ( props ) => {
 		return !! section.props.group ? section.props.group : '';
 	} );
 
+  const getCompiledTabs = useCallback( section => {
+    const { children } = section.props;
+
+    const tabs = Children.toArray( children ).filter( child => {
+      const id = child?.props?.id;
+      let show = true;
+
+      if ( id && typeof visibilityContext[ id ] !== "undefined" ) {
+        show = visibilityContext[ id ];
+      }
+
+      return child.type === ControlsTab && show;
+    } );
+
+    const orderedTabs = orderBy( tabs, tab => tab.props.priority || 0, [ 'desc' ] );
+    const groupedTabs = groupBy( orderedTabs, tab => {
+      return tab.props.label;
+    } );
+
+    return Object.keys( groupedTabs ).map( key => {
+      const group = groupedTabs[ key ];
+
+      return {
+        props: {
+          label: key,
+          children: group.reduce( ( accumulator, tab ) => {
+            return accumulator.concat( Children.toArray( tab.props.children ) );
+          }, [] )
+        }
+      };
+    } );
+  }, [] );
+
 	return (
 		<div className="novablocks-sections">
 			<Drawers onOpen={ onOpen } onClose={ onClose }>
@@ -101,41 +134,11 @@ const ControlsSectionsComponent = ( props ) => {
 						const sections = groups[ key ];
 
 						return sections.map( ( section, index ) => {
-							const { children, label } = section.props;
-							const tabs = Children.toArray( children ).filter( child => {
-                const id = child?.props?.id;
-                let show = true;
-
-                if ( id && typeof visibilityContext[id] !== "undefined" ) {
-                  show = visibilityContext[id];
-                }
-
-                return child.type === ControlsTab && show;
-              } );
-							const orderedTabs = orderBy( tabs, tab => tab.props.priority || 0, ['desc'] );
-							const groupedTabs = groupBy( orderedTabs, tab => {
-								return tab.props.label;
-							} );
-
-							const compiledTabs = Object.keys( groupedTabs ).map( key => {
-								const group = groupedTabs[key];
-
-								return {
-									props: {
-										label: key,
-										children: group.reduce( ( accumulator, tab ) => {
-											return accumulator.concat( Children.toArray( tab.props.children ) );
-										}, [] )
-									}
-								};
-							} );
+              const tabs = getCompiledTabs( section );
 
 							return (
 								<DrawerPanel key={ 'drawer_panel_' + key + '_' + index } id={ section.props.id }>
-									<ActiveSectionTabs
-										title={ section.props.label }
-										tabs={ compiledTabs }
-									/>
+									<ActiveSectionTabs title={ section.props.label } tabs={ tabs } />
 								</DrawerPanel>
 							)
 						} );

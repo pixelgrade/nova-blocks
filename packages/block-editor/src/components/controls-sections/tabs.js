@@ -48,22 +48,23 @@ const ActiveSectionTabs = ( props ) => {
 		tabs,
 		goBack,
 		updateHeight,
+    isActive
 	} = props;
 
 	if ( ! tabs.length ) {
 		return null;
 	}
 
-	const [ activeTabLabel, setActiveTabLabel ] = useMemoryState( 'activeTab', tabs[0].props.label );
-	const existingTab = useMemo( () => tabs.some( tab => activeTabLabel === tab.props.label ), [ tabs, activeTabLabel ] );
+  const [ activeTabLabel, setActiveTabLabel ] = useMemoryState( 'activeTab', tabs[0].props.label );
 
   useEffect( () => {
+    const existingTab = tabs.some( tab => activeTabLabel === tab.props.label );
 
-    if ( ! existingTab ) {
+    if ( isActive && ! existingTab ) {
       setActiveTabLabel( tabs[0].props.label );
     }
 
-  }, [ existingTab ] );
+  }, [ isActive, activeTabLabel, tabs ] );
 
 	const activeTabIndex = tabs.findIndex( tab => tab.props.label === activeTabLabel );
 	const activeTab = tabs[ activeTabIndex ];

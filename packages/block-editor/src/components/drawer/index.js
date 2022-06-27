@@ -20,8 +20,8 @@ const Drawers = ( ownProps ) => {
 	const drawerPanels = childrenArray.filter( child => child.type === DrawerPanel );
   const beforeChildren = children.filter( child => child.type === DrawerListBefore );
 
-	const [ open, setOpen ] = useMemoryState( 'drawerOpen', false );
-	const [ lastActiveDrawerId, setLastActiveDrawerId ] = useMemoryState( 'drawerActiveId', false );
+	const [ open, setOpen ] = useMemoryState( 'drawerOpen' );
+	const [ lastActiveDrawerId, setLastActiveDrawerId ] = useMemoryState( 'drawerActiveId' );
 	const [ wrapperHeight, setWrapperHeight ] = useMemoryState( 'drawerHeight', 0 );
 
 	const existingDrawer = useMemo( () => drawerLists.some( drawerList => {
@@ -117,6 +117,10 @@ const Drawers = ( ownProps ) => {
 								'novablocks-drawers__panel--hidden': lastActiveDrawerId !== drawerPanel.props.id
 							}
 						);
+
+            if ( lastActiveDrawerId !== drawerPanel.props.id ) {
+              return null;
+            }
 
 						return (
 							<div key={ `drawer_panel_${ drawerPanel.props.id }` } className={ className } ref={ ref => ref && refMap.set( drawerPanel, ref ) }>
