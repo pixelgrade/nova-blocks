@@ -1,4 +1,7 @@
-:is(.nb-supernova-item__dropcap-wrapper, #specific) {
+// position: static is added to the following selector
+// .nb-supernova-item--aspect-ratio-auto :is(.nb-supernova-item__media-aspect-ratio,#specific) > *
+// this is why we needed #very#specific added
+:is(.nb-supernova-item__dropcap-wrapper, #very#specific) {
   position: absolute;
   top: 0;
   left: 0;
