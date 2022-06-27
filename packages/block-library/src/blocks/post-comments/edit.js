@@ -7,14 +7,12 @@ import { Placeholder } from "@wordpress/components";
 import { __ } from "@wordpress/i18n";
 import { useSelect } from "@wordpress/data";
 import { RawHTML } from "@wordpress/element";
-import { useBlockProps } from "@wordpress/block-editor";
+import { useBlockProps, Warning } from "@wordpress/block-editor";
 
 const PostCommentsEdit = props => {
 
-  const {
-    attributes,
-    context
-  } = props;
+  const { context } = props;
+  const commentStatus = useSelect( select => select( 'core/editor' ).getEditedPostAttribute( 'comment_status' ) );
 
   const { postId, postType } = context;
   const className = classnames(
@@ -31,6 +29,14 @@ const PostCommentsEdit = props => {
     return (
       <div { ...blockProps }>
         <Placeholder>{ __( 'Nova Blocks: Conversation System Block.', '__plugin_txtd' ) }</Placeholder>
+      </div>
+    );
+  }
+
+  if ( 'open' !== commentStatus ) {
+    return (
+      <div { ...blockProps }>
+        <Warning>{ __( 'Comments are disabled for this post', '__plugin_txtd' ) }</Warning>
       </div>
     );
   }
