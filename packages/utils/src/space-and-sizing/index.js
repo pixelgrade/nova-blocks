@@ -36,6 +36,7 @@ export const getSpacingCSSProps = ( attributes ) => {
     '--nb-card-media-object-fit': imageResizing === 'cropped' ? 'cover' : 'scale-down',
     '--nb-card-media-padding-multiplier': imagePadding / 100,
     '--nb-card-layout-gap-modifier': layoutGutter / 100,
+    '--nb-min-height-fallback': minHeightFallback,
     '--nb-minimum-container-height': minHeightFallback + 'vh',
     '--nb-spacing-modifier': spacingModifier + '',
     '--nb-spacing-multiplier-override': spacingMultiplierOverride + '',
