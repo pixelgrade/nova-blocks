@@ -15,16 +15,18 @@ import { useMeta, useInnerBlocksCount, useInnerBlocks, useInnerBlocksLock, norma
 import { Collection, CollectionHeader } from '@novablocks/collection';
 import { BlockControls as MediaCompositionBlockControls } from '@novablocks/media-composition';
 
+import { getAlignFromMatrix } from '@novablocks/utils';
+
 import BlockControls from './block-controls';
 import InspectorControls from './inspector-controls';
-
-import { getAlignFromMatrix } from '@novablocks/utils';
 
 import {
   PostsCollectionLayout,
   CardsCollectionLayout,
   withControlsVisibility,
 } from './components';
+
+import { compileSupernovaItemAttributes } from './utils';
 
 const ChangeMediaBlockControls = ( props ) => {
   const { clientId } = props;
@@ -136,22 +138,7 @@ const SupernovaEdit = props => {
   }
 
   const innerBlocksAttributes = useMemo( () => {
-
-    const {
-      title,
-      subtitle,
-      contentColorSignal,
-      contentPaletteVariation,
-      contentType,
-      ...innerBlocksAttributes
-    } = attributes;
-
-    return Object.assign( {}, innerBlocksAttributes, {
-      colorSignal: contentColorSignal,
-      paletteVariation: contentPaletteVariation,
-      useSourceColorAsReference: false,
-    } );
-
+    return compileSupernovaItemAttributes( attributes );
   }, [ attributes ] );
 
   // Make sure that we keep the number of inner Supernova Items in sync with the number of items.

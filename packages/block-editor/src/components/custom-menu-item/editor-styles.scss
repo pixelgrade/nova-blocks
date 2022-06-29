@@ -1,0 +1,25 @@
+.novablocks-navigable-menu {
+
+  .components-button {
+    height: auto;
+    white-space: normal;
+    text-align: left;
+
+    p {
+      margin: 0;
+    }
+  }
+
+  .novablocks-navigable-menu__item-wrap {
+    white-space: normal;
+  }
+
+  .novablocks-navigable-menu__item-label + .novablocks-navigable-menu__item-help {
+    margin-top: 0.25em;
+  }
+
+  .novablocks-navigable-menu__item-help {
+    font-size: 12px;
+    opacity: 0.5;
+  }
+}

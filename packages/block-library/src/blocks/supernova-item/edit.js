@@ -1,7 +1,7 @@
 /**
  * WordPress dependencies
  */
-import { useEffect, useMemo, useState } from '@wordpress/element';
+import { Fragment, useEffect, useMemo, useState } from '@wordpress/element';
 import { Popover } from '@wordpress/components';
 import { useSelect } from '@wordpress/data';
 
@@ -33,6 +33,7 @@ import {
 import { withShapeModelingDecoration } from "@novablocks/shape-modeling";
 
 import { getNewDefaults } from "./utils";
+import BlockControls from './block-controls';
 
 const SupernovaItemEdit = props => {
   const { attributes, setControlsVisibility, clientId } = props;
@@ -68,16 +69,19 @@ const SupernovaItemEdit = props => {
   });
 
   return (
-    <div { ...blockProps }>
-      <Card { ...props }>
-        { showMedia &&
-          <CardMediaWrapper { ...props }>
-            <CardMedia { ...props } />
-          </CardMediaWrapper>
-        }
-        <SupernovaItemContent { ...props } />
-      </Card>
-    </div>
+    <Fragment>
+      <div { ...blockProps }>
+        <Card { ...props }>
+          { showMedia &&
+            <CardMediaWrapper { ...props }>
+              <CardMedia { ...props } />
+            </CardMediaWrapper>
+          }
+          <SupernovaItemContent { ...props } />
+        </Card>
+      </div>
+      <BlockControls { ...props } />
+    </Fragment>
   )
 };
 
