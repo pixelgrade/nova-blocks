@@ -1,7 +1,7 @@
 import { addFilter } from "@wordpress/hooks";
 import { createHigherOrderComponent } from '@wordpress/compose';
 
-import normalizeImages from "../../components/normalize-images/index";
+import { normalizeImages } from "../../components/normalize-images/index";
 
 export const withOnSelectImages = createHigherOrderComponent( WrappedComponent => {
 

@@ -11,7 +11,7 @@ const Author = ( props ) => {
     }
     const currentUserId = userId;
     apiFetch( {
-      path: `/wp/v2/users/${ props.id }`,
+      path: `/wp/v2/users/${ userId }`,
     } ).then( ( res ) => {
       // Stale requests will have the `currentUserId` of an older closure.
       if ( currentUserId === userId ) {
@@ -20,7 +20,7 @@ const Author = ( props ) => {
     } );
   }, [ userId ] );
 
-  if ( !userId || author === undefined ) {
+  if ( ! userId || author === undefined ) {
     return '';
   }
 
