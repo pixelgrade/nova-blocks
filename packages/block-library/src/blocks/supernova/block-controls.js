@@ -22,7 +22,6 @@ import { useDispatch } from '@wordpress/data';
 import {
   CustomMenuItem,
   normalizeImage,
-  normalizeImages,
   useInnerBlocks
 } from "@novablocks/block-editor";
 
@@ -60,7 +59,6 @@ const Controls = ( props ) => {
 
     collection.forEach( ( [ childClientId, image ] ) => {
       normalizeImage( image ).then( newImage => {
-        console.log( childClientId, newImage );
         updateBlockAttributes( childClientId, { images: [ newImage ] } );
       } );
     } );
