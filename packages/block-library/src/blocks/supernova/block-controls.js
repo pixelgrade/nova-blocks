@@ -21,6 +21,7 @@ import { useDispatch } from '@wordpress/data';
 
 import {
   CustomMenuItem,
+  normalizeImage,
   normalizeImages,
   useInnerBlocks
 } from "@novablocks/block-editor";
@@ -35,7 +36,7 @@ const Controls = ( props ) => {
   const { attributes, setAttributes, clientId } = props;
   const { align, postsToShow } = attributes;
   const innerBlocks = useInnerBlocks( clientId );
-  const { replaceInnerBlocks } = useDispatch( 'core/block-editor' );
+  const { replaceInnerBlocks, updateBlockAttributes } = useDispatch( 'core/block-editor' );
 
   const innerBlockAttributes = useMemo( () => {
     return compileSupernovaItemAttributes( attributes );
@@ -44,16 +45,24 @@ const Controls = ( props ) => {
   const onSelectImages = useCallback( images => {
     const newInnerBlocks = innerBlocks.slice();
 
-    normalizeImages( images ).then( newImages => {
-      newImages.forEach( image => {
-        newInnerBlocks.push( createBlock( 'novablocks/supernova-item', {
-          ...innerBlockAttributes,
-          defaultsGenerated: true,
-          images: [ image ]
-        } ) );
+    const collection = images.map( image => {
+      const block = createBlock( 'novablocks/supernova-item', {
+        ...innerBlockAttributes,
+        defaultsGenerated: true
       } );
 
-      replaceInnerBlocks( clientId, newInnerBlocks );
+      newInnerBlocks.push( block );
+
+      return [ block.clientId, image ];
+    } );
+
+    replaceInnerBlocks( clientId, newInnerBlocks );
+
+    collection.forEach( ( [ childClientId, image ] ) => {
+      normalizeImage( image ).then( newImage => {
+        console.log( childClientId, newImage );
+        updateBlockAttributes( childClientId, { images: [ newImage ] } );
+      } );
     } );
 
   }, [ clientId, innerBlocks ] );

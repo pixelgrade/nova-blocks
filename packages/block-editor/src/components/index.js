@@ -17,15 +17,13 @@ export { default as SignalControl } from "./signal-control";
 export { default as TextPlaceholder } from './text-placeholder';
 export { default as ToggleGroup } from "./toggle-group";
 export { default as VariationPicker } from "./variation-picker";
-
 export { default as withVisibility } from "./with-visibility";
-
 export { default as insertTemplate } from './insert-template';
 export { default as getPlaceholderImages } from './get-placeholder-images';
-export { default as normalizeImages } from './normalize-images';
 
-export * from "./post-card";
 export * from './card';
+export * from './normalize-images';
+export * from "./post-card";
 
 export {
   getSvg,
