@@ -22,4 +22,22 @@
     font-size: 12px;
     opacity: 0.5;
   }
+
+  .components-menu-group + .components-menu-group {
+    position: relative;
+    border: 0;
+
+    &:before {
+      content: "";
+
+      position: absolute;
+      top: 0;
+      left: -8px;
+      right: -8px;
+
+      display: block;
+      height: 1px;
+      background-color: #CCCCCC;
+    }
+  }
 }
