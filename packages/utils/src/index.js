@@ -343,7 +343,7 @@ export const getPreviewAttributes = ( attributes ) => {
 };
 
 export const needsPreview = ( attributes ) => {
-  return [ "parametric", "carousel" ].includes( attributes.layoutStyle ) && "auto" !== attributes.contentType;
+  return [ "parametric", "carousel", "masonry" ].includes( attributes.layoutStyle ) && "auto" !== attributes.contentType;
 };
 
 export const onScrollRAF = ( callback ) => {
