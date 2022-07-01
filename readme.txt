@@ -3,7 +3,7 @@ Contributors: pixelgrade, vlad.olaru, babbardel, razvanonofrei, gorby31
 Tags: blocks, editor, gutenberg, gutenberg blocks, page builder, block enabled, page building, full site editing, site editor, posts collection
 Requires at least: 5.9
 Tested up to: 6.0.0
-Stable tag: 2.1.2
+Stable tag: 2.1.3
 Requires PHP: 7.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -93,6 +93,12 @@ Yes! Nova Block's core features are free to use.
 3. Slideshow Me the Way block options
 
 == Changelog ==
+
+= 2.1.3 =
+* Improve cards management for Supernova Item blocks
+* Improve display of Hero blocks inside block pattern preview
+* Fix display of Author meta for posts inside the Supernova block
+* Fix masonry layout preview in editor for Supernova block
 
 = 2.1.2 =
 * Add the ability to preview the scrolling effect set for supernova blocks inside the editor
