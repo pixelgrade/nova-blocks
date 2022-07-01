@@ -1,6 +1,6 @@
 import { __ } from '@wordpress/i18n';
 import { createBlock } from '@wordpress/blocks';
-import { useCallback, useMemo } from '@wordpress/element';
+import { Fragment, useCallback, useMemo } from '@wordpress/element';
 import { addCard, gallery, plus } from '@wordpress/icons';
 
 import {
@@ -31,8 +31,36 @@ import { compileSupernovaItemAttributes } from './utils';
 const ALLOWED_MEDIA_TYPES = [ 'image', 'video' ];
 
 const Controls = ( props ) => {
+  return (
+    <Fragment>
+      <QueryControls { ...props } />
+      <InnerBlocksControls { ...props } />
+    </Fragment>
+  )
+}
 
-  const { attributes, setAttributes, clientId } = props;
+const QueryControls = ( props ) => {
+  const { attributes, setAttributes, inQuery } = props;
+  const { postsToShow } = attributes;
+
+  if ( ! inQuery ) {
+    return null;
+  }
+
+  return (
+    <BlockControls>
+      <ToolbarGroup label={ __( 'Altceva', '__plugin_txtd' ) }>
+        <ToolbarButton onClick={ () => { setAttributes( { postsToShow: postsToShow + 1 } ); } }>
+          { __( 'Add Cards', '__plugin_txtd' ) }
+        </ToolbarButton>
+      </ToolbarGroup>
+    </BlockControls>
+  )
+}
+
+const InnerBlocksControls = ( props ) => {
+
+  const { attributes, setAttributes, clientId, inQuery } = props;
   const { align, postsToShow } = attributes;
   const innerBlocks = useInnerBlocks( clientId );
   const { replaceInnerBlocks, updateBlockAttributes } = useDispatch( 'core/block-editor' );
@@ -72,6 +100,10 @@ const Controls = ( props ) => {
     newInnerBlocks.push( newBlock );
     replaceInnerBlocks( clientId, newInnerBlocks );
   }, [ innerBlocks, postsToShow ] );
+
+  if ( inQuery ) {
+    return null;
+  }
 
   return (
     <BlockControls>
