@@ -95,8 +95,10 @@ const InnerBlocksControls = ( props ) => {
 
   const addNewCard = useCallback( () => {
     const newInnerBlocks = innerBlocks.slice();
-    const newBlockAttributes = innerBlocks[ innerBlocks.length - 1 ].attributes;
-    const newBlock = createBlock( 'novablocks/supernova-item', newBlockAttributes );
+    const lastBlock = innerBlocks[ innerBlocks.length - 1 ];
+    const newBlockAttributes = lastBlock.attributes;
+    const newBlockInnerBlocks = lastBlock.innerBlocks;
+    const newBlock = createBlock( 'novablocks/supernova-item', newBlockAttributes, newBlockInnerBlocks );
     newInnerBlocks.push( newBlock );
     replaceInnerBlocks( clientId, newInnerBlocks );
   }, [ innerBlocks, postsToShow ] );
@@ -147,6 +149,7 @@ const InnerBlocksControls = ( props ) => {
               <MenuGroup>
                 <MediaUpload
                   allowedTypes={ ALLOWED_MEDIA_TYPES }
+                  gallery
                   multiple
                   value={ [] }
                   onSelect={ onSelectImages }

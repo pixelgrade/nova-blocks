@@ -21,15 +21,16 @@ const SupernovaItemBlockControls = ( props ) => {
     return null;
   }, [ clientId ] );
 
+  const innerBlocks = useInnerBlocks( clientId );
   const parentInnerBlocks = useInnerBlocks( parentClientId );
 
   const addNewCard = useCallback( () => {
     const newInnerBlocks = parentInnerBlocks.slice();
     const index = newInnerBlocks.findIndex( block => block.clientId === clientId );
-    const newBlock = createBlock( 'novablocks/supernova-item', attributes );
+    const newBlock = createBlock( 'novablocks/supernova-item', attributes, innerBlocks );
     newInnerBlocks.splice( index + 1, 0, newBlock );
     replaceInnerBlocks( parentClientId, newInnerBlocks );
-  }, [ clientId, parentClientId, attributes ] );
+  }, [ clientId, innerBlocks, parentClientId, attributes ] );
 
   return (
     <BlockControls>
