@@ -1,5 +1,5 @@
 import { __ } from "@wordpress/i18n";
-import { createBlock } from "@wordpress/blocks";
+import { cloneBlock } from "@wordpress/blocks";
 import { useDispatch, useSelect } from "@wordpress/data";
 import { useCallback } from "@wordpress/element";
 import { BlockControls } from "@wordpress/block-editor";
@@ -10,6 +10,7 @@ import { useInnerBlocks } from "@novablocks/block-editor";
 const SupernovaItemBlockControls = ( props ) => {
   const { clientId, attributes } = props;
   const { replaceInnerBlocks } = useDispatch( 'core/block-editor' );
+  const block = useSelect( select => select( 'core/block-editor' ).getBlock( clientId ), [ clientId ] );
 
   const parentClientId = useSelect( select => {
     const parents = select( 'core/block-editor' ).getBlockParents( clientId ).slice();
@@ -27,7 +28,7 @@ const SupernovaItemBlockControls = ( props ) => {
   const addNewCard = useCallback( () => {
     const newInnerBlocks = parentInnerBlocks.slice();
     const index = newInnerBlocks.findIndex( block => block.clientId === clientId );
-    const newBlock = createBlock( 'novablocks/supernova-item', attributes, innerBlocks );
+    const newBlock = cloneBlock( block );
     newInnerBlocks.splice( index + 1, 0, newBlock );
     replaceInnerBlocks( parentClientId, newInnerBlocks );
   }, [ clientId, innerBlocks, parentClientId, attributes ] );

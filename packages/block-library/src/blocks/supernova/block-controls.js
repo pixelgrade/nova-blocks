@@ -1,5 +1,5 @@
 import { __ } from '@wordpress/i18n';
-import { createBlock } from '@wordpress/blocks';
+import { cloneBlock, createBlock } from '@wordpress/blocks';
 import { Fragment, useCallback, useMemo } from '@wordpress/element';
 import { addCard, gallery, plus } from '@wordpress/icons';
 
@@ -49,7 +49,7 @@ const QueryControls = ( props ) => {
 
   return (
     <BlockControls>
-      <ToolbarGroup label={ __( 'Altceva', '__plugin_txtd' ) }>
+      <ToolbarGroup label={ __( 'Cards', '__plugin_txtd' ) }>
         <ToolbarButton onClick={ () => { setAttributes( { postsToShow: postsToShow + 1 } ); } }>
           { __( 'Add Cards', '__plugin_txtd' ) }
         </ToolbarButton>
@@ -96,9 +96,7 @@ const InnerBlocksControls = ( props ) => {
   const addNewCard = useCallback( () => {
     const newInnerBlocks = innerBlocks.slice();
     const lastBlock = innerBlocks[ innerBlocks.length - 1 ];
-    const newBlockAttributes = lastBlock.attributes;
-    const newBlockInnerBlocks = lastBlock.innerBlocks;
-    const newBlock = createBlock( 'novablocks/supernova-item', newBlockAttributes, newBlockInnerBlocks );
+    const newBlock = cloneBlock( lastBlock );
     newInnerBlocks.push( newBlock );
     replaceInnerBlocks( clientId, newInnerBlocks );
   }, [ innerBlocks, postsToShow ] );
