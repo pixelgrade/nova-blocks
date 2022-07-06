@@ -11,9 +11,7 @@
 
     .novablocks-media-composition__grid,
     .novablocks-change-media-overlay {
-      transition: var(--nb-transition);
-      transition-property: opacity;
-      --nb-transition-duration: .15s;
+
     }
 
     .novablocks-media-composition__grid {
@@ -32,7 +30,7 @@
     .nb-supernova:is(.is-selected, .has-child-selected) &:hover {
 
       .novablocks-media-composition__grid {
-        opacity: 0.7;
+
       }
 
       .novablocks-change-media-overlay {
