@@ -36,6 +36,11 @@ export const getIntermediateFocalPoint = ( focalPoint1, focalPoint2, progress ) 
 };
 
 export const getStyles = ( config, attributes ) => {
+  const { scrollingEffect } = attributes;
+
+  if ( 'static' === scrollingEffect ) {
+    return {};
+  }
 
 	const props = getProps( config, attributes );
 
@@ -154,26 +159,9 @@ export const getProps = function( config, attributes, fixed ) {
 
 	const {
 		scrollingEffect,
-		initialBackgroundScale,
   } = attributes;
 
 	const newFocalPoint = getFocalPoint( attributes, progress );
-
-	if ( scrollingEffect === 'static' ) {
-
-		return {
-			width: containerBox.width,
-			height: containerBox.height,
-			scale: initialBackgroundScale || 1,
-			moveX: 0,
-			moveY: 0,
-			offsetX: 0,
-			offsetY: 0,
-			parallaxAmount: 0,
-			focalPoint: newFocalPoint,
-		};
-	}
-
 	const parallaxAmount = userPrefersReducedMotion() ? 0 : scrollingEffect === 'parallax' ? 0.75 : 1;
 	const { maxScale, newScale } = getScales( attributes, progress );
 	const newImageHeight = getNewImageHeight( config, parallaxAmount );

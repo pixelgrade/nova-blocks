@@ -10,9 +10,12 @@
 
   > :is(.nb-supernova-item__content, .nb-supernova-item__media-wrapper) {
     position: static !important;
-    grid-area: 1 / 1 / span 1 / span 1;
+
     width: auto;
     height: auto;
+
+    grid-area: 1 / 1 / span 1 / span 1;
+    align-self: stretch;
   }
 
   > .nb-supernova-item__content {
