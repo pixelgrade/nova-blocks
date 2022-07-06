@@ -42,7 +42,7 @@ export const getContentColorsSignalClassnames = ( attributes, supports ) => {
 };
 
 export const getPaletteConfig = ( paletteId ) => {
-  const config = window?.styleManager?.colorsConfig;
+  const config = window.styleManager?.colorsConfig || [];
 
   return config.find( palette => `${ palette.id }` === `${ paletteId }` );
 }

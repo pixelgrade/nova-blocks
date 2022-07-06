@@ -64,7 +64,7 @@ export const updateBlockSignal = ( block, parentVariation ) => {
 const isLightVariation = ( palette, variation ) => {
   colordExtend( [ colordA11yPlugin ] );
 
-  if ( !Array.isArray( window?.styleManager?.colorsConfig ) ) {
+  if ( ! Array.isArray( window.styleManager?.colorsConfig ) ) {
     return;
   }
 

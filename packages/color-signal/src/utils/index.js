@@ -43,7 +43,7 @@ export const getSiteColorVariation = ( () => {
 } )();
 
 export const getPaletteConfig = ( palette ) => {
-  const palettes = window?.styleManager?.colorsConfig;
+  const palettes = window.styleManager?.colorsConfig || [];
 
   if ( ! Array.isArray( palettes ) || ! palettes.length ) {
     return { sourceIndex: 6 }
@@ -91,6 +91,11 @@ export const getSignalRelativeToVariation = ( compared, reference, paletteId ) =
   }, 0 );
 
   const palette = getPaletteConfig( paletteId );
+
+  if ( ! palette.colors ) {
+    return signal;
+  }
+
   let colors = palette.colors;
 
   if ( Array.isArray( palette?.variations ) ) {

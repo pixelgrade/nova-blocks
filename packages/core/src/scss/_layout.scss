@@ -32,7 +32,7 @@
   --nb-sidecar-sidebar-left-width: var(--nb-sidecar-sidebar-small-width);
   --nb-sidecar-sidebar-right-width: var(--nb-sidecar-sidebar-small-width);
 
-  --nb-container-width: calc(var(--nb-container-width-setting) * var(--current-font-size, 16px));
+  --nb-container-width: calc(var(--nb-container-width-setting, 67) * var(--current-font-size, 16px));
   --nb-content-width: calc(var(--nb-container-width) - var(--nb-sidecar-sidebar-left-width) - var(--nb-sidecar-sidebar-left-gap) - var(--nb-sidecar-sidebar-right-width) - var(--nb-sidecar-sidebar-right-gap));
   --nb-sidecar-sides: max(var(--nb-wrapper-sides-spacings), calc((100% - var(--nb-container-width)) * 0.5));
 

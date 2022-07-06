@@ -20,7 +20,7 @@ import { useSupports } from "../../hooks";
 
 import { generateDuotonePresetsFromPalettes, generateColorPalettes } from "./utils";
 
-const PALETTES = styleManager.colorsConfig;
+const PALETTES = window.styleManager?.colorsConfig || [];
 const FILTERED_PALETTES = PALETTES.filter( palette => ! isFunctionalPalette( palette ) );
 const DUOTONE_PALETTES = generateDuotonePresetsFromPalettes( FILTERED_PALETTES );
 const COLOR_PALETTES = generateColorPalettes( FILTERED_PALETTES );

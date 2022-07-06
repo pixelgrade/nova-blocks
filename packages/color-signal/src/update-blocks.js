@@ -55,7 +55,7 @@ const updateBlock = ( block ) => {
     const { attributes, clientId } = block;
     const { colorSignal, paletteVariation, useSourceColorAsReference } = attributes;
 
-    const config = window?.styleManager?.colorsConfig;
+    const config = window.styleManager?.colorsConfig || [];
 
     // make sure we're using an actual palette
     const palette = ( () => {
