@@ -6,7 +6,7 @@ import {
 /**
  * WordPress dependencies
  */
-import { Fragment, useState } from '@wordpress/element';
+import { Fragment, useCallback, useState } from '@wordpress/element';
 import { __ } from '@wordpress/i18n';
 
 import { parseContent } from "./HoursParser";
@@ -21,56 +21,22 @@ import {
 	ExternalLink
 } from '@wordpress/components';
 
-const OpenHoursInspectorControls = function( props ) {
+const OpenHoursInspectorControls = props => {
 
-	const {
-		attributes: {
-			openHoursStyle,
-			text,
-			timeFormat,
-			openNote,
-			closedNote,
-			closedLabel,
-			compressOpeningHours,
-			hideClosedDays,
-			useShortName
-		},
-		setAttributes,
-	} = props;
-
-	const timeFormattingUrl = 'https://wordpress.org/support/article/formatting-date-and-time/';
-
-	const AvailableTagsModal = () => {
-		const [ isOpen, setOpen ] = useState( false );
-		const openModal = () => setOpen( true );
-		const closeModal = () => setOpen( false );
-
-		return (
-			<Fragment>
-				<Button className={'novablocks__label'} isLink onClick={ openModal }>See available tags</Button>
-				{ isOpen && (
-					<Modal
-						onRequestClose={ closeModal }
-						shouldCloseOnEsc = { true }
-						shouldCloseOnClickOutside = { true }
-						className = 'novablocks-openhours__modal'
-					>
-					</Modal>
-				) }
-			</Fragment>
-		)
-	};
-
-	const timeFormattingInstructions = (
-		<Fragment>
-			<ExternalLink href={ timeFormattingUrl }>
-				{ __( 'Learn more about time formatting', '__plugin_txtd' ) }
-			</ExternalLink>
-		</Fragment>
-	);
+	const { attributes, setAttributes } = props;
+  const {
+    openHoursStyle,
+    text,
+    timeFormat,
+    openNote,
+    closedNote,
+    closedLabel,
+    compressOpeningHours,
+    hideClosedDays,
+    useShortName
+  } = attributes;
 
 	return (
-
 		<Fragment>
 			<ControlsSection id={ 'setup' } label={ __( 'Setup', '__plugin_txtd' ) }>
 				<ControlsTab label={ __( 'Settings', '__plugin_txtd' ) }>
@@ -96,13 +62,14 @@ const OpenHoursInspectorControls = function( props ) {
 					<RadioControl
 						key={ 'openhours-display-controls' }
 						label={ __( 'Displaying the opening hours', '__plugin_txtd' ) }
-						value={ openHoursStyle }
 						selected={ openHoursStyle }
 						options={ [
 							{ label: __( 'Overview', '__plugin_txtd' ), value: 'overview' },
 							{ label: __( 'Current Status', '__plugin_txtd' ), value: 'status' },
 						] }
-						onChange={ ( nextOpenHoursStyle ) => setAttributes( { openHoursStyle: nextOpenHoursStyle } ) }
+						onChange={ ( openHoursStyle ) => {
+              setAttributes( { openHoursStyle } )
+            } }
 					/>
 
 
@@ -165,17 +132,84 @@ const OpenHoursInspectorControls = function( props ) {
 						onChange={ () => setAttributes( { useShortName: ! useShortName } ) }
 					/> }
 
-					<TextControl
-						label={__( 'Time Format', '__plugin_txtd' )}
-						value={ timeFormat }
-						help = { timeFormattingInstructions }
-						onChange={( timeFormat ) => setAttributes( {timeFormat} )}
-					/>
+          <TextControl
+            label={ __( 'Time Format', '__plugin_txtd' ) }
+            value={ timeFormat }
+            help={ <ExternalLink href={ 'https://wordpress.org/support/article/formatting-date-and-time/' }>
+              { __( 'Learn more about time formatting', '__plugin_txtd' ) }
+            </ExternalLink> }
+            onChange={ ( timeFormat ) => setAttributes( { timeFormat } ) }
+          />
 
 				</ControlsTab>
 			</ControlsSection>
 		</Fragment>
 	)
+};
+
+const AvailableTagsModal = () => {
+  const [ isOpen, setOpen ] = useState( false );
+  const openModal = useCallback( () => setOpen( true ), [] );
+  const closeModal = useCallback( () => setOpen( false ), [] );
+
+  return (
+    <Fragment>
+      <Button className={ 'novablocks__label' } isLink onClick={ openModal }>See available tags</Button>
+      { isOpen && (
+        <Modal
+          onRequestClose={ closeModal }
+          shouldCloseOnEsc={ true }
+          shouldCloseOnClickOutside={ true }
+          className='novablocks-openhours__modal'
+        >
+          <table className={ 'novablocks-openhours__tags-table' }>
+            <tbody>
+            <tr>
+              <th>Tag</th>
+              <th>Description</th>
+            </tr>
+            <tr>
+              <td>{ "{ time }" }</td>
+              <td>Will be replaced by&nbsp;the current WordPress installation time.</td>
+            </tr>
+            <tr>
+              <td>{ "{ today }" }</td>
+              <td>Will be replaced by the name of the current day.</td>
+            </tr>
+            <tr>
+              <td>{ "{ today - opening - time }" }</td>
+              <td>Will be replaced by the current day’s opening time.</td>
+            </tr>
+            <tr>
+              <td>{ "{ today - closing - time }" }</td>
+              <td>Will be replaced by the current day’s closing time.</td>
+            </tr>
+            <tr>
+              <td>{ "{ today - timeframe }" }</td>
+              <td>Will be replaced by the current day’s open-closed timeframe.</td>
+            </tr>
+            <tr>
+              <td>{ "{ next - opening - day }" }</td>
+              <td>Will be replaced by the next day’s (in which you will be open) name.</td>
+            </tr>
+            <tr>
+              <td>{ "{ next - opening - time }" }</td>
+              <td>Will be replaced by the opening time of your next open day.</td>
+            </tr>
+            <tr>
+              <td>{ "{ next - closing - time }" }</td>
+              <td>Will be replaced by the closing time of your next open day.</td>
+            </tr>
+            <tr>
+              <td>{ "{ next - opening - timeframe }" }</td>
+              <td>Will be replaced by the open-closed timeframe of your next open day.</td>
+            </tr>
+            </tbody>
+          </table>
+        </Modal>
+      ) }
+    </Fragment>
+  )
 };
 
 export default OpenHoursInspectorControls;

@@ -24,3 +24,28 @@
 .novablocks__example--multi {
 	white-space: pre;
 }
+
+.novablocks-openhours__modal {
+  min-height: 0;
+
+  .components-modal__content {
+    padding-bottom: 76px;
+  }
+}
+
+.novablocks-openhours__tags-table {
+  border-collapse: collapse;
+
+  th {
+    text-align: left;
+    font-weight: 700;
+  }
+
+  td, th {
+    padding: 1em;
+  }
+
+  tr:nth-child(2n + 1) {
+    background: #eeeeee;
+  }
+}
