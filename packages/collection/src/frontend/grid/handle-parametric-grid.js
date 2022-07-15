@@ -8,11 +8,12 @@ import {
   getAreaClassname,
   getGridStyle,
   isLandscape,
+  normalizeColumns,
   redistributeCardsInAreas,
   remove,
   removeClass,
   removeSmallestColumn,
-  toggleClass
+  toggleClass,
 } from "@novablocks/utils";
 
 const defaultBlockWidth = 1152; // magic
@@ -59,6 +60,7 @@ export const handleParametricGrid = ( grid, block, attributes ) => {
       }
     }
 
+    normalizeColumns( areaColumns, attributes );
     redistributeCardsInAreas( areaColumns, posts.length, attributes );
 
     let gridcolumns = attributes.flipcolsrows ? attributes.gridrows : attributes.gridcolumns;
