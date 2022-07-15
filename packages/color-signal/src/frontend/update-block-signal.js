@@ -52,8 +52,6 @@ export const updateBlockSignal = ( block, parentVariation ) => {
 
   const isLight = isLightVariation( palette, finalAbsoluteVariation );
 
-  console.group( block, parentVariation, finalVariation, finalAbsoluteVariation );
-
   addClass( block, newClassnames );
   toggleClass( block, 'sm-light', isLight );
   toggleClass( block, 'sm-dark', ! isLight );
@@ -61,8 +59,6 @@ export const updateBlockSignal = ( block, parentVariation ) => {
   innerBlocks.forEach( innerBlock => {
     updateBlockSignal( innerBlock, finalAbsoluteVariation );
   } );
-
-  console.groupEnd();
 };
 
 const isLightVariation = ( palette, variation ) => {

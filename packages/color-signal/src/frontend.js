@@ -14,7 +14,6 @@ import {
 import { updateScrollIndicator } from "./frontend/update-scroll-indicator";
 
 const updateColors = ( siteVariation ) => {
-  console.log( siteVariation );
   updateAllBlocksSignal( siteVariation );
   updateScrollIndicator();
 };
