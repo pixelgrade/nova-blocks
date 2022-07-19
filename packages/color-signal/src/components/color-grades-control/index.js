@@ -5,15 +5,10 @@ import { useSupports } from "@novablocks/block-editor";
 
 import {
   addSiteVariationOffset,
-  getAbsoluteColorVariation,
   getSignalRelativeToVariation,
   getSourceIndexFromPaletteId,
   normalizeVariationValue,
 } from "../../utils";
-
-import {
-  getParentVariation,
-} from "../../editor/utils";
 
 const ColorGradesControl = ( props ) => {
 
@@ -21,7 +16,6 @@ const ColorGradesControl = ( props ) => {
     attributes,
     label,
     signal,
-    clientId,
     value,
     parentVariation,
     useReference,

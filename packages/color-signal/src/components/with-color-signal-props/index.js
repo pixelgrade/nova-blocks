@@ -4,18 +4,8 @@ import { useMemoryState } from "@novablocks/block-editor";
 import { useSupports } from "@novablocks/block-editor";
 
 import {
-  getParentVariation,
   getUpdatedAttributes
 } from "../../editor/utils";
-
-import {
-  addSiteVariationOffset,
-  computeColorSignal,
-  getAbsoluteColorVariation,
-  getSignalRelativeToVariation,
-  getSourceIndexFromPaletteId,
-  removeSiteVariationOffset
-} from "../../utils";
 
 const withColorSignalProps = OriginalComponent => {
 

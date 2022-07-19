@@ -26,10 +26,11 @@ export const mapPalettesToColorPalette = palette => {
 
 export const getSiteColorVariation = ( () => {
 
+  const api = window.parent?.wp?.customize || window.wp?.customize;
   let initialSiteVariation = window?.styleManager?.siteColorVariation || 1;
 
-  if ( wp?.customize ) {
-    wp.customize( 'sm_site_color_variation', setting => {
+  if ( api ) {
+    api( 'sm_site_color_variation', setting => {
       setting.bind( newValue => {
         initialSiteVariation = parseInt( newValue, 10 );
       } );
