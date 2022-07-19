@@ -97,8 +97,11 @@ Yes! Nova Block's core features are free to use.
 = 2.1.3 =
 * Improve cards management for Supernova Item blocks
 * Improve display of Hero blocks inside block pattern preview
+* Improve Open Hours block's instructions inside the block editor
+* Improve Site Color Variation setting preview in Customizer
 * Fix display of Author meta for posts inside the Supernova block
 * Fix masonry layout preview in editor for Supernova block
+* Fix parametric grid layout display on mobile devices
 
 = 2.1.2 =
 * Add the ability to preview the scrolling effect set for supernova blocks inside the editor
