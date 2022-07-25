@@ -18,22 +18,32 @@
 
 .nb-supernova-item.nb-supernova-item--layout-stacked {
   --nb-block-minimum-height: var(--nb-minimum-container-height);
+  --nb-block-content-min-height: var(--nb-block-minimum-height);
+  --nb-block-full-height: calc(100vh - var(--admin-bar-height, 0px) - var(--nb-promo-bar-height, 0px));
   min-height: var(--nb-block-minimum-height);
 
   [data-min-height-fallback="100"] & {
-    --nb-block-minimum-height: calc(var(--nb-minimum-container-height) - var(--admin-bar-height, 0px) - var(--nb-promo-bar-height, 0px));
+    --nb-block-minimum-height: var(--nb-block-full-height);
   }
 
   &.nb-supernova-item--scrolling-effect-doppler {
     --nb-block-minimum-height: calc(2 * var(--nb-minimum-container-height));
 
+    :is(
+        [data-min-height-fallback="50"],
+        [data-min-height-fallback="75"],
+        [data-min-height-fallback="100"]
+    ) & {
+      --nb-block-content-min-height: var(--nb-block-full-height);
+    }
+
     [data-min-height-fallback="50"] & {
-      --nb-block-minimum-height: calc(2 * var(--nb-minimum-container-height) - var(--admin-bar-height, 0px) - var(--nb-promo-bar-height, 0px));
+      --nb-block-minimum-height: var(--nb-block-full-height);
     }
   }
 
   .nb-supernova-item__content {
-    min-height: var(--nb-block-minimum-height);
+    min-height: var(--nb-block-content-min-height);
   }
 }
 
