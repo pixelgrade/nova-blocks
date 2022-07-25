@@ -7,6 +7,7 @@ import {
 
 import { MediaCompositionPreview } from '@novablocks/media-composition';
 import { getColorSignalClassnames, normalizeMedia } from '@novablocks/utils';
+import { useScrollingEffect, withScrollingEffect } from "@novablocks/scrolling-effect";
 
 const SupernovaItemPreview = props => {
 
@@ -30,9 +31,10 @@ const SupernovaItemPreview = props => {
   );
 };
 
-const MediaCompositionOrFirstMedia = props => {
+const MediaCompositionOrFirstMedia = withScrollingEffect( props => {
   const { attributes } = props;
   const { images, showMedia } = attributes;
+  const scrollingEffect = useScrollingEffect();
 
   if ( !showMedia ) {
     return null;
@@ -42,13 +44,15 @@ const MediaCompositionOrFirstMedia = props => {
     const media = normalizeMedia( images[0] );
 
     return (
-      <img className={ `nb-supernova-item__media` } src={ media.url } width={ media.width } height={ media.height } alt={ media.alt }/>
+      <img className={ `nb-supernova-item__media` } src={ media.url } width={ media.width } height={ media.height } alt={ media.alt } style={ scrollingEffect?.style } />
     );
   }
 
   return (
-    <MediaCompositionPreview { ...props } />
+    <div style={ scrollingEffect?.style }>
+      <MediaCompositionPreview { ...props } />
+    </div>
   );
-};
+} );
 
 export default SupernovaItemPreview;

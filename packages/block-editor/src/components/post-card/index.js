@@ -39,7 +39,6 @@ const withMedia = withSelect( ( select, ownProps ) => {
 } );
 
 export const PostCardMedia = ( props ) => {
-
   const { media } = props;
 
   if ( ! media ) {
@@ -47,8 +46,12 @@ export const PostCardMedia = ( props ) => {
   }
 
   return (
-    <img className={ `nb-supernova-item__media` } src={ media.url } width={ media.width } height={ media.height }
-         alt={ media?.alt } />
+    <img className={ `nb-supernova-item__media` }
+         src={ media.url }
+         width={ media.width }
+         height={ media.height }
+         alt={ media?.alt }
+      />
   )
 };
 
