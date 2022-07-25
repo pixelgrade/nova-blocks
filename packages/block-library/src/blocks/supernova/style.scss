@@ -29,11 +29,7 @@
   &.nb-supernova-item--scrolling-effect-doppler {
     --nb-block-minimum-height: calc(2 * var(--nb-minimum-container-height));
 
-    :is(
-        [data-min-height-fallback="50"],
-        [data-min-height-fallback="75"],
-        [data-min-height-fallback="100"]
-    ) & {
+    [data-min-height-fallback]:not([data-min-height-fallback="0"]) & {
       --nb-block-content-min-height: var(--nb-block-full-height);
     }
 
