@@ -95,8 +95,10 @@ Yes! Nova Block's core features are free to use.
 == Changelog ==
 
 = 2.1.4 =
+* Add scrolling effect preview for Supernova blocks with carousel layout.
+* Improve container and content height behavior for blocks with or without Doppler effect.
 * Fix PHP 8.0+ error.
-* Test with the latest WordPress version (6.0.1)
+* Test with the latest WordPress version (6.0.1).
 
 = 2.1.3 =
 * Improve cards management for Supernova Item blocks
