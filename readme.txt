@@ -2,8 +2,8 @@
 Contributors: pixelgrade, vlad.olaru, babbardel, razvanonofrei, gorby31
 Tags: blocks, editor, gutenberg, gutenberg blocks, page builder, block enabled, page building, full site editing, site editor, posts collection
 Requires at least: 5.9
-Tested up to: 6.0.0
-Stable tag: 2.1.3
+Tested up to: 6.0.1
+Stable tag: 2.1.4
 Requires PHP: 7.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -93,6 +93,10 @@ Yes! Nova Block's core features are free to use.
 3. Slideshow Me the Way block options
 
 == Changelog ==
+
+= 2.1.4 =
+* Fix PHP 8.0+ error.
+* Test with the latest WordPress version (6.0.1)
 
 = 2.1.3 =
 * Improve cards management for Supernova Item blocks
