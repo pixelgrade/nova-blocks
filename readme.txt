@@ -2,7 +2,7 @@
 Contributors: pixelgrade, vlad.olaru, babbardel, razvanonofrei, gorby31
 Tags: Blocks, editor, gutenberg, gutenberg blocks, page builder, block enabled, page building, block
 Requires at least: 5.5.0
-Tested up to: 5.8.1
+Tested up to: 6.0.3
 Requires PHP: 5.6.40
 Stable tag: 1.13.5
 License: GPL v2.0 (or later)
@@ -93,6 +93,11 @@ Yes! Nova Block's core features are free to use.
 3. Slideshow Me the Way block options
 
 == Changelog ==
+
+= 1.13.5 =
+* Fixes for Posts Collection block (missing isLandscape attribute)
+* Replace deprecated filter for blocks category
+* Fix core package script missing dependency
 
 = 1.13.4 =
 * Fixes Doppler Scrolling effect for Hero and Slideshow blocks
