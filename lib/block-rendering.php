@@ -943,10 +943,6 @@ function novablocks_build_articles_query( array $attributes, $block ): array {
 		$query_args['orderby']  = 'post__in';
 		unset( $query_args['posts_per_page'] );
 	} else if ( ! $manual_mode ) {
-		$page_key = isset( $block->context['queryId'] ) ? 'query-' . $block->context['queryId'] . '-page' : 'query-page';
-		$page     = empty( $_GET[ $page_key ] ) ? 1 : (int) $_GET[ $page_key ];
-
-		$query_args = array_merge( $query_args, build_query_vars_from_query_block( $block, $page ) );
 		// Override the custom query with the global query if needed.
 		$use_global_query = ( isset( $block->context['query']['inherit'] ) && $block->context['query']['inherit'] );
 		if ( $use_global_query ) {
@@ -960,16 +956,27 @@ function novablocks_build_articles_query( array $attributes, $block ): array {
 					$query_args['post_type'] = get_post_type( get_the_ID() );
 				}
 			}
-		}
+		} else {
+			$page_key = isset( $block->context['queryId'] ) ? 'query-' . $block->context['queryId'] . '-page' : 'query-page';
+			$page     = empty( $_GET[ $page_key ] ) ? 1 : (int) $_GET[ $page_key ];
 
-		if ( $authors && count( $authors ) ) {
-			$query_args['author__in'] = $authors;
-		}
-		if ( $categories && count( $categories ) ) {
-			$query_args['category__in'] = novablocks_expand_categories_to_include_subcategories( $categories );
-		}
-		if ( $tags && count( $tags ) ) {
-			$query_args['tag__in'] = $tags;
+			if ( function_exists( 'gutenberg_build_query_vars_from_query_block' ) ) {
+				$block_query_args = gutenberg_build_query_vars_from_query_block( $block, $page );
+			} else {
+				$block_query_args = build_query_vars_from_query_block( $block, $page );
+			}
+
+			$query_args = array_merge( $query_args, $block_query_args );
+
+			if ( $authors && count( $authors ) ) {
+				$query_args['author__in'] = $authors;
+			}
+			if ( $categories && count( $categories ) ) {
+				$query_args['category__in'] = novablocks_expand_categories_to_include_subcategories( $categories );
+			}
+			if ( $tags && count( $tags ) ) {
+				$query_args['tag__in'] = $tags;
+			}
 		}
 	}
 
@@ -1384,7 +1391,8 @@ function novablocks_get_collection_card_markup( string $media, string $content, 
 		}
 	}
 
-	// Output the HTML anchor (ID) of the block
+	// Output the HTML anchor (ID) of the block.
+	$id = '';
 	if ( ! empty( $attributes['anchor'] ) ) {
 		$id = 'id="'. $attributes['anchor'] .'" ';
 	}
@@ -1621,48 +1629,38 @@ function novablocks_get_posts_collection_cards_markup( array $attributes, $conte
 
 	$output = '';
 
-	global $novablocks_rendered_posts_ids;
+	$page_key = isset( $block->context['queryId'] ) ? 'query-' . $block->context['queryId'] . '-page' : 'query-page';
+	$page     = empty( $_GET[ $page_key ] ) ? 1 : (int) $_GET[ $page_key ];
 
-	if ( ! $novablocks_rendered_posts_ids ) {
-		$novablocks_rendered_posts_ids = [];
-	}
-
-	if ( isset( $block->context['queryId'] ) ) {
-
-		$page_key = isset( $block->context['queryId'] ) ? 'query-' . $block->context['queryId'] . '-page' : 'query-page';
-		$page     = empty( $_GET[ $page_key ] ) ? 1 : (int) $_GET[ $page_key ];
-
-		if ( function_exists( 'gutenberg_build_query_vars_from_query_block' ) ) {
-			$query_args = gutenberg_build_query_vars_from_query_block( $block, $page );
-		} else {
-			$query_args = build_query_vars_from_query_block( $block, $page );
-		}
+	// Use global query if needed.
+	$use_global_query = ( isset( $block->context['query']['inherit'] ) && $block->context['query']['inherit'] );
+	if ( $use_global_query ) {
+		global $wp_query;
+		$query = clone $wp_query;
 
 		$prevent_duplicate_posts = get_post_meta( get_the_ID(), 'supernova_prevent_duplicate', true );
-
 		if ( $prevent_duplicate_posts ) {
-			$query_args['post__not_in'] = $novablocks_rendered_posts_ids;
-		}
-
-		// Override the custom query with the global query if needed.
-		$use_global_query = ( isset( $block->context['query']['inherit'] ) && $block->context['query']['inherit'] );
-		if ( $use_global_query ) {
-			global $wp_query;
-			if ( $wp_query && isset( $wp_query->query_vars ) && is_array( $wp_query->query_vars ) ) {
-				// Unset `offset` because if is set, $wp_query overrides/ignores the paged parameter and breaks pagination.
-				unset( $query_args['offset'] );
-				$query_args = wp_parse_args( $wp_query->query_vars, $query_args );
-
-				if ( empty( $query_args['post_type'] ) && is_singular() ) {
-					$query_args['post_type'] = get_post_type( get_the_ID() );
-				}
-			}
+			$query->set( 'post__not_in', array_unique( array_merge( $query->get( 'post__not_in', [] ), $novablocks_rendered_posts_ids ) ) );
+			$query->get_posts();
 		}
 	} else {
-		$query_args = novablocks_build_articles_query( $attributes, $block );
-	}
+		if ( isset( $block->context['queryId'] ) ) {
+			if ( function_exists( 'gutenberg_build_query_vars_from_query_block' ) ) {
+				$query_args = gutenberg_build_query_vars_from_query_block( $block, $page );
+			} else {
+				$query_args = build_query_vars_from_query_block( $block, $page );
+			}
 
-	$query = new WP_Query( $query_args );
+			$prevent_duplicate_posts = get_post_meta( get_the_ID(), 'supernova_prevent_duplicate', true );
+			if ( $prevent_duplicate_posts ) {
+				$query_args['post__not_in'] = $novablocks_rendered_posts_ids;
+			}
+		} else {
+			$query_args = novablocks_build_articles_query( $attributes, $block );
+		}
+
+		$query = new WP_Query( $query_args );
+	}
 
 	if ( ! $query->have_posts() ) {
 		return $output;
@@ -1676,7 +1674,7 @@ function novablocks_get_posts_collection_cards_markup( array $attributes, $conte
 		if ( ! empty( $markup ) ) {
 			$output .= $markup;
 			// Only remember posts that were actually rendered.
-			array_push( $novablocks_rendered_posts_ids, $post->ID );
+			$novablocks_rendered_posts_ids[] = $post->ID;
 		}
 	}
 
