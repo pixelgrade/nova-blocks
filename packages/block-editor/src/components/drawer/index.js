@@ -4,7 +4,7 @@ import { orderBy } from 'lodash';
 import {
 	Children,
 	cloneElement,
-	useEffect,
+	useLayoutEffect,
 	useMemo,
 	useRef,
 	useState,
@@ -29,7 +29,7 @@ const Drawers = ( ownProps ) => {
 		return drawers.some( drawer => drawer?.props?.id === lastActiveDrawerId );
 	} ), [ drawerLists ] );
 
-	useEffect( () => {
+	useLayoutEffect( () => {
 
     if ( ! existingDrawer ) {
       setOpen( false );
@@ -61,7 +61,7 @@ const Drawers = ( ownProps ) => {
 		setWrapperHeight( !! open ? drawerPanelHeight : drawerListHeight );
 	};
 
-	useEffect( updateHeight, [ open ] );
+	useLayoutEffect( updateHeight, [ open ] );
 
 	const transform = open ? 'translate3d(-100%,0,0)' : 'translate3d(0%,0,0)';
 
