@@ -2,8 +2,8 @@
 Contributors: pixelgrade, vlad.olaru, babbardel, razvanonofrei, gorby31
 Tags: blocks, editor, gutenberg, gutenberg blocks, page builder, block enabled, page building, full site editing, site editor, posts collection
 Requires at least: 5.9
-Tested up to: 6.0.1
-Stable tag: 2.1.5
+Tested up to: 6.2.0
+Stable tag: 2.1.6
 Requires PHP: 7.4
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -93,6 +93,10 @@ Yes! Nova Block's core features are free to use.
 3. Slideshow Me the Way block options
 
 == Changelog ==
+
+= 2.1.6 =
+* Fixed issue with blocks options being hidden when opening a sliding panel
+* Restored missing Content Alignment icons in Space and Sizing component
 
 = 2.1.5 =
 * Fix Supernova query in certain situations.

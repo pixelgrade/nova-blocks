@@ -4,11 +4,11 @@ import { orderBy } from 'lodash';
 import {
 	Children,
 	cloneElement,
-	useEffect,
+	useLayoutEffect,
 	useMemo,
 	useRef,
 	useState,
- } from '@wordpress/element';
+} from '@wordpress/element';
 
 import { useMemoryState } from '../../index';
 
@@ -29,7 +29,7 @@ const Drawers = ( ownProps ) => {
 		return drawers.some( drawer => drawer?.props?.id === lastActiveDrawerId );
 	} ), [ drawerLists ] );
 
-	useEffect( () => {
+	useLayoutEffect( () => {
 
     if ( ! existingDrawer ) {
       setOpen( false );
@@ -58,11 +58,14 @@ const Drawers = ( ownProps ) => {
 		const drawerListHeight = getDrawerListHeight();
 		const drawerPanelHeight = getActiveDrawerTitleHeight();
 
+		// If the drawer is open, the height of the wrapper should be the height of the drawer panel.
 		setWrapperHeight( !! open ? drawerPanelHeight : drawerListHeight );
 	};
 
-	useEffect( updateHeight, [ open ] );
+	// This hook updates the height of the collapsible to match the height of the content
+	useLayoutEffect( updateHeight, [ open ] );
 
+	// Translate the drawer to the left when the menu button is clicked.
 	const transform = open ? 'translate3d(-100%,0,0)' : 'translate3d(0%,0,0)';
 
 	// keep track of number of drawers in previous drawerLists
