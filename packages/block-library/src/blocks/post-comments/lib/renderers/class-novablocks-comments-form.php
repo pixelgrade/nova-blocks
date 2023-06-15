@@ -550,18 +550,20 @@ if ( ! class_exists( 'NovaBlocks_Comments_Form' ) ) {
 				}
 
 				// We need to add the commenter background field to the comment textarea because we want it for logged in users too.
+
 				$defaults['comment_field'] .=
 					sprintf( '
 <p class="comment-form-background comment-fields-wrapper">
 	<label for="nb_commenter_background">%s%s</label>
 	<span class="field-description">%s</span>
-	<input id="nb_commenter_background" name="nb_commenter_background" type="text" value="%s" size="30" placeholder="%s" required="required" />
+	<input id="nb_commenter_background" name="nb_commenter_background" type="text" value="%s" size="30" placeholder="%s" %s />
 </p>',
 						$args['commenterBackgroundLabel'],
 						( $args['commenterBackgroundRequired'] ? ' <span class="required">*</span>' : '' ),
 						$args['commenterBackgroundDescription'],
 						esc_attr( $previous_commenter_background ),
-						esc_attr( $args['commenterBackgroundPlaceholder'] )
+						esc_attr( $args['commenterBackgroundPlaceholder'] ),
+						( $args['commenterBackgroundRequired'] ? 'required="required"' : '')
 					);
 			}
 
