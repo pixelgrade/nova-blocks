@@ -86,3 +86,4 @@ packages/**/*.js
 packages/**/*.scss
 **/package.json
 **/package-lock.json
+vendor

@@ -1,6 +1,6 @@
 {
 	"name": "nova-blocks",
-	"version": "2.1.5",
+	"version": "2.1.6",
 	"description": "A collection of WordPress blocks infused with Pixelgrade's special sauce.",
 	"main": "blocks/index.js",
 	"private": false,
