@@ -74,7 +74,7 @@ if ( ! class_exists( 'NovaBlocks_Comments_Form' ) ) {
 
 				// Display the commenter background field.
 				'commenterBackground'            => true,
-				'commenterBackgroundRequired'    => true,
+				'commenterBackgroundRequired'    => false,
 				'commenterBackgroundLabel'       => esc_html__( 'What is your background around this topic?', '__plugin_txtd' ),
 				// Leave empty for no description.
 				'commenterBackgroundDescription' => esc_html__( 'Example: Practical philosopher, therapist and writer.', '__plugin_txtd' ),
@@ -109,6 +109,10 @@ if ( ! class_exists( 'NovaBlocks_Comments_Form' ) ) {
 				// This is the label used on the submit button for the comment/reply form.
 				'replyToText'        => esc_html__( 'Reply to %s', '__plugin_txtd' ),
 			] );
+		}
+
+		public function getArgs() {
+			return $this->args;
 		}
 
 		/**
