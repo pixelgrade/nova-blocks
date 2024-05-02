@@ -7,13 +7,17 @@ import { useSupports } from "../../hooks";
 import Controls from "./controls";
 import { getDuotoneFilterSvg } from "@novablocks/utils";
 
+import { useRef, useEffect } from "@wordpress/element";
+import { useBlockProps } from "@wordpress/block-editor";
+
+
 
 const DuotoneFilter = ( props ) => {
   const { attributes, clientId } = props;
   const { overlayFilterDuotoneConfig, overlayFilterType } = attributes;
   const from = overlayFilterDuotoneConfig?.from;
   const to = overlayFilterDuotoneConfig?.to;
-  const element = useContext( BlockList.__unstableElementContext );
+  // const element = useContext( BlockList.__unstableElementContext ); // WordPress 6.5 conflict
   const id = `novablocks-duotone-${ clientId }`;
 
   if ( ! from || ! to || overlayFilterType !== 'duotone' ) {
