@@ -62,6 +62,17 @@ if ( ! class_exists( 'NovaBlocks_Comments_Meta' ) ) {
 				return $commentdata;
 			}
 
+		
+			// Include or require the class-novablocks-comments-form.php file if it's not already included.
+			require_once dirname(__FILE__) . '/../renderers/class-novablocks-comments-form.php';
+
+			// Create an instance of NovaBlocks_Comments_Form.
+			$commentsForm = new NovaBlocks_Comments_Form();
+
+			// Access the $commenterBackgroundRequired variable.
+			$commenter_background_required = $commentsForm->getArgs()['commenterBackgroundRequired'];
+			
+
 			// We only enforce the commenter background for comments, not other types like reviews.
 			if ( empty( $commentdata['comment_type'] ) || 'comment' !== $commentdata['comment_type'] ) {
 				return $commentdata;
@@ -76,11 +87,12 @@ if ( ! class_exists( 'NovaBlocks_Comments_Meta' ) ) {
 				}
 			}
 
-			if ( empty( $_POST['nb_commenter_background'] ) ) {
+			if (empty($_POST['nb_commenter_background']) && $commenter_background_required) {
 				$comment = new WP_Error( 'require_nb_commenter_background', __( '<strong>Error</strong>: You did not add your relevant background or experience.', '__plugin_txtd' ), 200 );
 			} else {
-				$stripped_background = trim( strip_tags( $_POST['nb_commenter_background'] ) );
-				if ( mb_strlen( $stripped_background, '8bit' ) > 245 ) {
+				$stripped_background = isset($_POST['nb_commenter_background']) ? trim( strip_tags( $_POST['nb_commenter_background'] ) ) : '';
+
+				if (isset($stripped_background) && mb_strlen($stripped_background, '8bit') > 245) {
 					$comment = new WP_Error( 'nb_commenter_background_length', __( '<strong>Error</strong>: Your background or experience is too long.' ), 200 );
 				}
 			}

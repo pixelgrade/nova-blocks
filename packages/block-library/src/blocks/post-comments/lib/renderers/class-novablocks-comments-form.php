@@ -74,7 +74,7 @@ if ( ! class_exists( 'NovaBlocks_Comments_Form' ) ) {
 
 				// Display the commenter background field.
 				'commenterBackground'            => true,
-				'commenterBackgroundRequired'    => true,
+				'commenterBackgroundRequired'    => false,
 				'commenterBackgroundLabel'       => esc_html__( 'What is your background around this topic?', '__plugin_txtd' ),
 				// Leave empty for no description.
 				'commenterBackgroundDescription' => esc_html__( 'Example: Practical philosopher, therapist and writer.', '__plugin_txtd' ),
@@ -109,6 +109,10 @@ if ( ! class_exists( 'NovaBlocks_Comments_Form' ) ) {
 				// This is the label used on the submit button for the comment/reply form.
 				'replyToText'        => esc_html__( 'Reply to %s', '__plugin_txtd' ),
 			] );
+		}
+
+		public function getArgs() {
+			return $this->args;
 		}
 
 		/**
@@ -550,18 +554,20 @@ if ( ! class_exists( 'NovaBlocks_Comments_Form' ) ) {
 				}
 
 				// We need to add the commenter background field to the comment textarea because we want it for logged in users too.
+
 				$defaults['comment_field'] .=
 					sprintf( '
 <p class="comment-form-background comment-fields-wrapper">
 	<label for="nb_commenter_background">%s%s</label>
 	<span class="field-description">%s</span>
-	<input id="nb_commenter_background" name="nb_commenter_background" type="text" value="%s" size="30" placeholder="%s" required="required" />
+	<input id="nb_commenter_background" name="nb_commenter_background" type="text" value="%s" size="30" placeholder="%s" %s />
 </p>',
 						$args['commenterBackgroundLabel'],
 						( $args['commenterBackgroundRequired'] ? ' <span class="required">*</span>' : '' ),
 						$args['commenterBackgroundDescription'],
 						esc_attr( $previous_commenter_background ),
-						esc_attr( $args['commenterBackgroundPlaceholder'] )
+						esc_attr( $args['commenterBackgroundPlaceholder'] ),
+						( $args['commenterBackgroundRequired'] ? 'required="required"' : '')
 					);
 			}
 

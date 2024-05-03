@@ -59,7 +59,7 @@ const Drawers = ( ownProps ) => {
 		const drawerPanelHeight = getActiveDrawerTitleHeight();
 
 		// If the drawer is open, the height of the wrapper should be the height of the drawer panel.
-		setWrapperHeight( !! open ? drawerPanelHeight : drawerListHeight );
+		setWrapperHeight( (!!open ? drawerPanelHeight : drawerListHeight) || 'auto' );
 	};
 
 	// This hook updates the height of the collapsible to match the height of the content

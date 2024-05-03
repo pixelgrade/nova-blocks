@@ -9,9 +9,18 @@ import { useSelect } from "@wordpress/data";
 import { RawHTML } from "@wordpress/element";
 import { useBlockProps, Warning } from "@wordpress/block-editor";
 
+import { useInnerBlocks, VariationPicker } from "@novablocks/block-editor";
+
+import InspectorControls from "./inspector-controls";
+
 const PostCommentsEdit = props => {
 
-  const { context } = props;
+  const { 
+    context,
+    attributes: {
+      hasUserExperience
+    },
+  } = props;
   const commentStatus = useSelect( select => select( 'core/editor' ).getEditedPostAttribute( 'comment_status' ) );
 
   const { postId, postType } = context;
@@ -28,6 +37,7 @@ const PostCommentsEdit = props => {
   if ( ! postType || ! postId ) {
     return (
       <div { ...blockProps }>
+      <InspectorControls { ...props } />
         <Placeholder>{ __( 'Nova Blocks: Conversation System Block.', '__plugin_txtd' ) }</Placeholder>
       </div>
     );
