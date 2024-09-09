@@ -35,7 +35,7 @@ if ( ! function_exists( 'novablocks_render_separator_block' ) ) {
 
 		$classes = [
 			'wp-block-separator',
-			'align' . $attributes['align']
+			'align' . sanitize_html_class( $attributes['align'] )
 		];
 
 		$classes = array_merge( $classes, novablocks_get_color_signal_classes( $attributes ) );
@@ -49,7 +49,7 @@ if ( ! function_exists( 'novablocks_render_separator_block' ) ) {
 		ob_start(); ?>
 
 		<div <?php echo $data_attributes; ?>
-			class="<?php echo join( ' ', $classes ) ?>"
+			class="<?php echo esc_attr( join( ' ', $classes ) ); ?>"
 			style="<?php echo esc_attr( $style ); ?>">
 			<?php
 			$novablocks_settings = novablocks_get_block_editor_settings();

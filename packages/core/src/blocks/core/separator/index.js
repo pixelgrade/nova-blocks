@@ -37,12 +37,19 @@ const alterSeparatorSettings = ( settings ) => {
       const { className, attributes } = props;
       const { align } = attributes;
       const settings = select( 'novablocks' ).getSettings();
-      const blockProps = useBlockProps.save( { className } );
-
+    
+      const alignClass = align ? `align${align}` : '';
+    
+      const blockProps = useBlockProps.save( {
+        className: classnames( className, alignClass ),
+      });
+    
       return (
-        <div { ...blockProps } dangerouslySetInnerHTML={ { __html: settings?.separator?.markup } } />
-      )
-    }
+        <div { ...blockProps }>
+          { settings?.separator?.markup && <div dangerouslySetInnerHTML={ { __html: settings.separator.markup } } /> }
+        </div>
+      );
+    }    
   }
 };
 addFilter( 'blocks.registerBlockType', 'novablocks/separator/alter-support', alterSeparatorSettings, 1 );
