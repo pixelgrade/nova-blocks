@@ -2,8 +2,8 @@
 Contributors: pixelgrade, vlad.olaru, babbardel, razvanonofrei, gorby31
 Tags: blocks, editor, gutenberg, gutenberg blocks, page builder, block enabled, page building, full site editing, site editor, posts collection
 Requires at least: 5.9
-Tested up to: 6.6.1
-Stable tag: 2.1.8
+Tested up to: 6.8
+Stable tag: 2.1.9
 Requires PHP: 7.4
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -93,6 +93,10 @@ Yes! Nova Block's core features are free to use.
 3. Slideshow Me the Way block options
 
 == Changelog ==
+
+= 2.1.9 =
+* Fixed an authenticated (Contributor+) stored XSS in the Cards Collection → supernova-item block (`buttonsStyle` attribute).
+* Added whitelist sanitization + `esc_attr()` escaping for `buttonsStyle`; verified with WordPress 6.8 & PHP 8.3.
 
 = 2.1.8 =
 * Fixed an authenticated (Contributor+) stored cross-site scripting (XSS) vulnerability via the 'align' attribute of the 'wp:separator' Gutenberg block.
