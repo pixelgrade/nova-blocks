@@ -56,6 +56,16 @@ function novablocks_get_block_extra_classes( array $attributes ): array {
 	return $classes;
 }
 
+
+if ( ! function_exists( 'novablocks_sanitize_buttons_style' ) ) {
+	function novablocks_sanitize_buttons_style( $value ) {
+		$allowed = array( 'outline', 'solid', 'ghost' ); // extinde după nevoie
+		$value   = sanitize_text_field( $value );
+
+		return in_array( $value, $allowed, true ) ? $value : 'outline';
+	}
+}
+
 function novablocks_get_collection_attributes() {
 	return novablocks_get_attributes_from_json( 'packages/collection/src/collection-attributes.json' );
 }
@@ -1573,13 +1583,16 @@ function novablocks_get_card_item_buttons( array $buttons, array $attributes ): 
 
 	$output = '';
 	foreach ( $buttons as $button ) {
+		$raw_style    = isset( $attributes['buttonsStyle'] ) ? $attributes['buttonsStyle'] : '';
+		$button_style = novablocks_sanitize_buttons_style( $raw_style );
+
 		if ( empty ( $button['text'] ) ) {
 			continue;
 		}
 
 	$output .= '<div class="wp-block-buttons" style="justify-content: ' . $justify_content . '">
       <div
-        class="wp-block-button is-style-' . $attributes[ 'buttonsStyle' ] . ' sm-color-signal-1 sm-palette-1 sm-palette--shifted sm-variation-1 sm-light"
+        class="wp-block-button is-style-' . esc_attr( $button_style ) . ' sm-color-signal-1 sm-palette-1 sm-palette--shifted sm-variation-1 sm-light"
         data-palette="1" data-palette-variation="1" data-color-signal="1" data-use-source-color-as-reference="true">
         <a class="wp-block-button__link" href="' . esc_url( $button['url'] ) . '">' . $button['text'] . '</a>
       </div>
