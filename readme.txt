@@ -3,7 +3,7 @@ Contributors: pixelgrade, vlad.olaru, babbardel, razvanonofrei, gorby31
 Tags: blocks, editor, gutenberg, gutenberg blocks, page builder, block enabled, page building, full site editing, site editor, posts collection
 Requires at least: 5.9
 Tested up to: 6.5.3
-Stable tag: 2.1.7
+Stable tag: 2.1.10
 Requires PHP: 7.4
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -93,6 +93,15 @@ Yes! Nova Block's core features are free to use.
 3. Slideshow Me the Way block options
 
 == Changelog ==
+
+= 2.1.10 =
+* Security: Fixed Stored XSS in Separator block (CVE-2026-24528).
+* Security: Fixed Object Injection via unserialize() in author-box block.
+* Security: Fixed multiple Stored XSS vulnerabilities in block rendering (collection headers, card items, media titles/captions).
+* Security: Fixed unescaped anchor, className, and style attributes across multiple blocks.
+* Security: Fixed XSS in FacetWP, OpenHours, sharing overlay, comment highlighters, logo, and post-meta blocks.
+* Security: Added input validation and sanitization to REST API endpoint.
+* Security: Improved comment meta data sanitization.
 
 = 2.1.7 =
 * Resolved a compatibility issue with WordPress 6.5.x where blocks displayed the error "This block has encountered an error and cannot be previewed."
