@@ -36,7 +36,8 @@ if ( ! function_exists( 'novablocks_render_logo_block' ) ) {
 		];
 
 		if ( ! empty( $attributes['className'] ) ) {
-			$classes[] = $attributes['className'];
+			$custom_classes = array_map( 'sanitize_html_class', explode( ' ', $attributes['className'] ) );
+			$classes        = array_merge( $classes, array_filter( $custom_classes ) );
 		}
 
 		ob_start();
@@ -73,7 +74,7 @@ if ( ! function_exists( 'novablocks_render_logo_block' ) ) {
 
 					if ( $description || is_customize_preview() ) { ?>
 						<p class="site-description">
-							<?php echo $description; ?>
+							<?php echo esc_html( $description ); ?>
 						</p>
 					<?php } ?>
 				</div>
