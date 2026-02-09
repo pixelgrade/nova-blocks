@@ -84,7 +84,8 @@ if ( ! function_exists( 'novablocks_render_supernova_block' ) ) {
 
 		// Output the Additional CSS class(es) of the block
 		if ( ! empty( $attributes['className'] ) ) {
-			$classes[] = $attributes['className'];
+			$custom_classes = array_map( 'sanitize_html_class', explode( ' ', $attributes['className'] ) );
+			$classes        = array_merge( $classes, array_filter( $custom_classes ) );
 		}
 
 		// This refers to the carousel pagination, not the Query Loop pagination.
@@ -107,10 +108,10 @@ if ( ! function_exists( 'novablocks_render_supernova_block' ) ) {
 		// Output the HTML anchor (ID) of the block.
 		$anchor = ' ';
 		if ( ! empty( $attributes['anchor'] ) ) {
-			$anchor = 'id="'. $attributes['anchor'] .'" ';
+			$anchor = 'id="' . esc_attr( $attributes['anchor'] ) . '" ';
 		}
 
-		return '<div class="' . esc_attr( join( ' ', $classes ) ) . '" style="' . join( ';', $cssProps ) . '"
+		return '<div class="' . esc_attr( join( ' ', $classes ) ) . '" style="' . esc_attr( join( ';', $cssProps ) ) . '"
 			' . $anchor . join( ' ', $data_attributes ) . '>
 			' . novablocks_get_collection_output( $attributes, $content, $block ) . '
 		</div>';
