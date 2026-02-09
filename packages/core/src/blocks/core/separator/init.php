@@ -33,28 +33,34 @@ if ( ! function_exists( 'novablocks_render_separator_block' ) ) {
 		$spacingProps   = novablocks_get_spacing_css( $attributes );
 		$style = join( '; ', $spacingProps ) . '; ';
 
+		$allowed_align_values = array( 'none', 'wide', 'full', 'center', 'left', 'right' );
+		$align                = isset( $attributes['align'] ) && in_array( $attributes['align'], $allowed_align_values, true )
+			? $attributes['align']
+			: 'none';
+
 		$classes = [
 			'wp-block-separator',
-			'align' . $attributes['align']
+			'align' . $align,
 		];
 
 		$classes = array_merge( $classes, novablocks_get_color_signal_classes( $attributes ) );
 
 		if ( ! empty( $attributes['className'] ) ) {
-			$classes[] = $attributes['className'];
+			$custom_classes = array_map( 'sanitize_html_class', explode( ' ', $attributes['className'] ) );
+			$classes        = array_merge( $classes, array_filter( $custom_classes ) );
 		}
 
 		$data_attributes = novablocks_get_color_signal_data_attributes( $attributes );
 
 		ob_start(); ?>
 
-		<div <?php echo $data_attributes; ?>
-			class="<?php echo join( ' ', $classes ) ?>"
+		<div <?php echo $data_attributes; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- Each value is escaped with esc_attr() in novablocks_get_color_signal_data_attributes(). ?>
+			class="<?php echo esc_attr( join( ' ', $classes ) ); ?>"
 			style="<?php echo esc_attr( $style ); ?>">
 			<?php
 			$novablocks_settings = novablocks_get_block_editor_settings();
-			if ( ! empty( $novablocks_settings['separator'] && ! empty( $novablocks_settings['separator']['markup'] ) ) ) {
-				echo $novablocks_settings['separator']['markup'];
+			if ( ! empty( $novablocks_settings['separator'] ) && ! empty( $novablocks_settings['separator']['markup'] ) ) {
+				echo wp_kses_post( $novablocks_settings['separator']['markup'] );
 			}
 			?>
 		</div>
