@@ -340,11 +340,11 @@ function novablocks_get_media_composition_markup( array $attributes, array $cont
 				$output .= '<div class="novablocks-media-composition__grid-item-info">';
 
 				if ( $has_caption ) {
-					$output .= '<div class="novablocks-media-composition__grid-item-caption">' . wptexturize( $image['caption'] ) . '</div>';
+					$output .= '<div class="novablocks-media-composition__grid-item-caption">' . wp_kses_post( wptexturize( $image['caption'] ) ) . '</div>';
 				}
 
 				if ( $has_description ) {
-					$output .= '<div class="novablocks-media-composition__grid-item-description">' . wptexturize( $attachment->post_content ) . '</div>';
+					$output .= '<div class="novablocks-media-composition__grid-item-description">' . wp_kses_post( wptexturize( $attachment->post_content ) ) . '</div>';
 				}
 
 				$output .= '</div>';
@@ -595,19 +595,22 @@ function novablocks_render_scroll_indicator( array $attributes ) {
 }
 
 function novablocks_get_collection_header_output( array $attributes ): string {
-	$titleTag         = 'h' . $attributes['collectionTitleLevel'];
-	$fontSizeModifier = 'has-' . $attributes['collectionTitleFontSize'] . '-font-size';
+	$allowed_levels   = array( 1, 2, 3, 4, 5, 6 );
+	$level            = in_array( (int) $attributes['collectionTitleLevel'], $allowed_levels, true )
+		? (int) $attributes['collectionTitleLevel'] : 2;
+	$titleTag         = 'h' . $level;
+	$fontSizeModifier = 'has-' . sanitize_html_class( $attributes['collectionTitleFontSize'] ) . '-font-size';
 
 	$output = '';
 
 	if ( ! empty( $attributes['showCollectionTitle'] ) && ! empty( $attributes['title'] ) ) {
-		$output .= '<' . $titleTag . ' class="nb-collection__title wp-block alignfull ' . $fontSizeModifier . '">';
-		$output .= $attributes['title'];
+		$output .= '<' . $titleTag . ' class="nb-collection__title wp-block alignfull ' . esc_attr( $fontSizeModifier ) . '">';
+		$output .= esc_html( $attributes['title'] );
 		$output .= '</' . $titleTag . '>';
 	}
 
 	if ( ! empty( $attributes['showCollectionSubtitle'] ) && ! empty( $attributes['subtitle'] ) ) {
-		$output .= '<p class="nb-collection__subtitle wp-block is-style-lead alignfull">' . $attributes['subtitle'] . '</p>';
+		$output .= '<p class="nb-collection__subtitle wp-block is-style-lead alignfull">' . esc_html( $attributes['subtitle'] ) . '</p>';
 	}
 
 	return $output;
@@ -1028,7 +1031,7 @@ function novablocks_the_media_title( $media, $before = '', $after = '', $echo = 
 	$title = $before . $title . $after;
 
 	if ( $echo ) {
-		echo $title;
+		echo wp_kses_post( $title );
 	}
 
 	return $title;
@@ -1140,9 +1143,9 @@ function novablocks_get_color_signal_classes( array $attributes ): array {
 function novablocks_get_color_signal_data_attributes( array $attributes ): string {
 
 	$data_attributes = [
-		'data-palette="' . $attributes['palette'] . '"',
-		'data-palette-variation="' . $attributes['paletteVariation'] . '"',
-		'data-color-signal="' . $attributes['colorSignal'] . '"',
+		'data-palette="' . esc_attr( $attributes['palette'] ) . '"',
+		'data-palette-variation="' . esc_attr( $attributes['paletteVariation'] ) . '"',
+		'data-color-signal="' . esc_attr( $attributes['colorSignal'] ) . '"',
 	];
 
 	if ( ! empty( $attributes['useSourceColorAsReference'] ) ) {
@@ -1349,7 +1352,8 @@ function novablocks_get_collection_card_markup( string $media, string $content, 
 
 	// Output the Additional CSS class(es) of the block
 	if ( ! empty( $attributes['className'] ) ) {
-		$cardClasses[] = $attributes['className'];
+		$custom_classes = array_map( 'sanitize_html_class', explode( ' ', $attributes['className'] ) );
+		$cardClasses    = array_merge( $cardClasses, array_filter( $custom_classes ) );
 	}
 
 	$cardClasses = array_merge(
@@ -1394,7 +1398,7 @@ function novablocks_get_collection_card_markup( string $media, string $content, 
 	// Output the HTML anchor (ID) of the block.
 	$id = '';
 	if ( ! empty( $attributes['anchor'] ) ) {
-		$id = 'id="'. $attributes['anchor'] .'" ';
+		$id = 'id="' . esc_attr( $attributes['anchor'] ) . '" ';
 	}
 
 	ob_start(); ?>
@@ -1510,7 +1514,7 @@ function novablocks_get_card_item_meta( $metaValue, array $attributes ): string 
 		return '';
 	}
 
-	return '<p class="nb-card__meta is-style-meta">' . $metaValue . '</p>';
+	return '<p class="nb-card__meta is-style-meta">' . esc_html( $metaValue ) . '</p>';
 }
 
 function novablocks_get_card_item_title( string $title, array $attributes, $post = null ): string {
@@ -1519,17 +1523,20 @@ function novablocks_get_card_item_title( string $title, array $attributes, $post
 		return '';
 	}
 
-	$titleTag         = 'h' . $attributes['cardTitleLevel'];
-	$fontSizeModifier = 'has-' . $attributes['cardTitleFontSize'] . '-font-size';
+	$allowed_levels   = array( 1, 2, 3, 4, 5, 6 );
+	$card_level       = in_array( (int) $attributes['cardTitleLevel'], $allowed_levels, true )
+		? (int) $attributes['cardTitleLevel'] : 3;
+	$titleTag         = 'h' . $card_level;
+	$fontSizeModifier = 'has-' . sanitize_html_class( $attributes['cardTitleFontSize'] ) . '-font-size';
 
 	// Default to the current, global post if not provided.
 	if ( empty( $post ) ) {
 		$post = get_post();
 	}
 
-	$output = '<' . $titleTag . ' class="nb-card__title ' . $fontSizeModifier . '">';
+	$output = '<' . $titleTag . ' class="nb-card__title ' . esc_attr( $fontSizeModifier ) . '">';
 	$output .= novablocks_get_card_item_link( get_permalink( $post ), $attributes, 'open' );
-	$output .= $title;
+	$output .= esc_html( $title );
 	$output .= novablocks_get_card_item_link( get_permalink( $post ), $attributes, 'close' );
 	$output .= '</' . $titleTag . '>';
 
@@ -1541,9 +1548,13 @@ function novablocks_get_card_item_subtitle( string $subtitle, array $attributes 
 		return '';
 	}
 
-	$subtitleTag = 'h' . ( ( int ) $attributes['cardTitleLevel'] + 1 );
+	$allowed_levels  = array( 1, 2, 3, 4, 5, 6 );
+	$card_level      = in_array( (int) $attributes['cardTitleLevel'], $allowed_levels, true )
+		? (int) $attributes['cardTitleLevel'] : 3;
+	$subtitle_level  = min( $card_level + 1, 6 );
+	$subtitleTag     = 'h' . $subtitle_level;
 
-	return '<' . $subtitleTag . ' class="nb-card__subtitle">' . $subtitle . '</' . $subtitleTag . '>';
+	return '<' . $subtitleTag . ' class="nb-card__subtitle">' . esc_html( $subtitle ) . '</' . $subtitleTag . '>';
 }
 
 function novablocks_get_card_item_description( string $description, array $attributes ): string {
@@ -1551,7 +1562,7 @@ function novablocks_get_card_item_description( string $description, array $attri
 		return '';
 	}
 
-	return '<p class="nb-card__description">' . $description . '</p>';
+	return '<p class="nb-card__description">' . esc_html( $description ) . '</p>';
 }
 
 function novablocks_get_card_item_buttons( array $buttons, array $attributes ): string {
@@ -1577,11 +1588,11 @@ function novablocks_get_card_item_buttons( array $buttons, array $attributes ): 
 			continue;
 		}
 
-	$output .= '<div class="wp-block-buttons" style="justify-content: ' . $justify_content . '">
+	$output .= '<div class="wp-block-buttons" style="justify-content: ' . esc_attr( $justify_content ) . '">
       <div
-        class="wp-block-button is-style-' . $attributes[ 'buttonsStyle' ] . ' sm-color-signal-1 sm-palette-1 sm-palette--shifted sm-variation-1 sm-light"
+        class="wp-block-button is-style-' . esc_attr( $attributes['buttonsStyle'] ) . ' sm-color-signal-1 sm-palette-1 sm-palette--shifted sm-variation-1 sm-light"
         data-palette="1" data-palette-variation="1" data-color-signal="1" data-use-source-color-as-reference="true">
-        <a class="wp-block-button__link" href="' . esc_url( $button['url'] ) . '">' . $button['text'] . '</a>
+        <a class="wp-block-button__link" href="' . esc_url( $button['url'] ) . '">' . esc_html( $button['text'] ) . '</a>
       </div>
     </div>';
 	}
