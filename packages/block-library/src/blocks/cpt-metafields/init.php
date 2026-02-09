@@ -70,7 +70,7 @@ if ( ! function_exists( 'novablocks_render_cpt_metafields_block' ) ) {
 
 		ob_start(); ?>
 
-		<div class="<?php echo join( ' ', $classes ); ?>" style="<?php echo join( '; ', $cssProps ); ?>">
+		<div class="<?php echo esc_attr( join( ' ', $classes ) ); ?>" style="<?php echo esc_attr( join( '; ', $cssProps ) ); ?>">
 			<?php
 			$metafields_list_output = '<dl class="nb-cpt-metafields__list">' . PHP_EOL;
 

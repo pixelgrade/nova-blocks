@@ -52,7 +52,7 @@ if ( ! function_exists( 'novablocks_render_post_navigation_block' ) ) {
 
 		$style = join( '; ', $spacingProps ) . '; ';
 
-		return '<div class="nb-post-navigation" style="' . $style . '">' .
+		return '<div class="nb-post-navigation" style="' . esc_attr( $style ) . '">' .
 			novablocks_get_the_post_navigation( [], $attributes ) .
 		'</div>';
 	}

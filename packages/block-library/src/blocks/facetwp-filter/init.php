@@ -46,7 +46,7 @@ if ( ! function_exists( 'novablocks_render_facetwp_filter_block' ) ) {
 
 		ob_start(); ?>
 
-		<div class="<?php echo join( ' ', $classes ); ?>" style="<?php echo join( ';', $cssProps ); ?>">
+		<div class="<?php echo esc_attr( join( ' ', $classes ) ); ?>" style="<?php echo esc_attr( join( ';', $cssProps ) ); ?>">
 			<?php echo $content; ?>
 		</div> <!-- .nb-facetwp-filter -->
 

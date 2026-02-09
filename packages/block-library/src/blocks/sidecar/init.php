@@ -68,6 +68,6 @@ if ( ! function_exists( 'novablocks_render_sidecar_block' ) ) {
 			$id = ' id="' .  esc_attr( $attributes['anchor'] ). '" ';
 		}
 
-		return '<' . $tag . ' class="' . esc_attr( join( ' ', $classes ) ) . '" ' . $id . join( ' ', $data_attributes ) . ' style="' . join( '; ', $cssProps ) .'">' . $content . '</' . $tag .'>';
+		return '<' . $tag . ' class="' . esc_attr( join( ' ', $classes ) ) . '" ' . $id . join( ' ', $data_attributes ) . ' style="' . esc_attr( join( '; ', $cssProps ) ) . '">' . $content . '</' . $tag . '>';
 	}
 }
