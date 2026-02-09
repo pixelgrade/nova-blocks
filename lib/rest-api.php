@@ -12,6 +12,16 @@ function novablocks_register_api_endpoints() {
 		'methods'             => 'GET',
 		'callback'            => 'novablocks_get_categories_with_children',
 		'permission_callback' => '__return_true',
+		'args'                => [
+			'ids' => [
+				'validate_callback' => function ( $param ) {
+					return is_array( $param ) || is_numeric( $param );
+				},
+				'sanitize_callback' => function ( $param ) {
+					return is_array( $param ) ? array_map( 'absint', $param ) : [ absint( $param ) ];
+				},
+			],
+		],
 	] );
 }
 
