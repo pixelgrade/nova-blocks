@@ -40,7 +40,7 @@ if ( ! function_exists( 'novablocks_render_facetwp_toggle_block' ) ) {
 		<div class="wp-block-buttons">
 			<div class="wp-block-button">
 				<div class="wp-block-button__link nb-facetwp-toggle">
-					<?php echo $attributes[ 'text' ]; ?>
+					<?php echo esc_html( $attributes['text'] ); ?>
 				</div>
 			</div>
 		</div>

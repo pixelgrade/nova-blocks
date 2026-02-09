@@ -36,8 +36,8 @@ if ( ! function_exists( 'novablocks_render_facetwp_title_block' ) ) {
 
 		ob_start(); ?>
 
-		<div class="<?php echo join( ' ', $classes ); ?>">
-			<?php echo $attributes[ 'text' ]; ?>
+		<div class="<?php echo esc_attr( join( ' ', $classes ) ); ?>">
+			<?php echo esc_html( $attributes['text'] ); ?>
 		</div> <!-- .nb-facetwp-title -->
 
 		<?php return ob_get_clean();
