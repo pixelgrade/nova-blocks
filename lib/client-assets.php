@@ -355,6 +355,7 @@ function novablocks_register_block_types() {
 				$dependencies[] = 'novablocks-media-composition';
 				$dependencies[] = 'novablocks-scrolling-effect';
 				$dependencies[] = 'novablocks-shape-modeling';
+				$dependencies[] = 'regenerator-runtime';
 			}
 
 			/**

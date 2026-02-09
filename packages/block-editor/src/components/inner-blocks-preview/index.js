@@ -9,7 +9,7 @@ const InnerBlocksPreview = props => {
     innerBlocks.map( innerBlock => {
       const element = getSaveElement( innerBlock.name, innerBlock.attributes, innerBlock.innerBlocks );
 
-      if ( innerBlock.name === 'core/buttons' ) {
+      if ( innerBlock.name === 'core/buttons' && element.props.style ) {
         Object.assign( element.props.style, {
           justifyContent: innerBlock.attributes.layout?.justifyContent
         } );
