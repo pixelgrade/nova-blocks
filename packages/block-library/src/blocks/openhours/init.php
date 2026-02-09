@@ -552,19 +552,19 @@ function novablocks_openhours_overview_content( $attributes ) {
 			?>
 			<tr>
 				<td>
-					<div><?php echo $day; ?></div>
+					<div><?php echo esc_html( $day ); ?></div>
 				</td>
 				<?php
 				if ( $hours === $attributes['closedLabel'] ) {
 					?>
 					<td>
-						<div class="open-hours-closed"><?php echo $hours; ?></div>
+						<div class="open-hours-closed"><?php echo esc_html( $hours ); ?></div>
 					</td>
 					<?php
 				} else {
 					?>
 					<td>
-						<div><?php echo $hours; ?></div>
+						<div><?php echo esc_html( $hours ); ?></div>
 					</td>
 					<?php
 				}
@@ -606,9 +606,9 @@ function novablocks_openhours_status_content( $attributes ) {
 
 
 	<?php if ( $helper->is_open( $attributes ) ) { ?>
-		<div class="opening-hours-note  opening-hours-note--open"><?php echo $open_note ?></div>
+		<div class="opening-hours-note  opening-hours-note--open"><?php echo esc_html( $open_note ); ?></div>
 	<?php } else { ?>
-		<div class="opening-hours-note  opening-hours-note--closed"><?php echo $closed_note ?></div>
+		<div class="opening-hours-note  opening-hours-note--closed"><?php echo esc_html( $closed_note ); ?></div>
 		<?php
 	}
 	?>
