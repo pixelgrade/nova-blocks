@@ -19,7 +19,7 @@ function novablocks_is_gutenberg(): bool {
 			return true;
 		}
 
-		if ( ( $pagenow == 'themes.php' ) && ( $_GET['page'] == 'gutenberg-edit-site' ) ) {
+		if ( ( 'themes.php' === $pagenow ) && ( isset( $_GET['page'] ) && 'gutenberg-edit-site' === $_GET['page'] ) ) {
 			return true;
 		}
 	}
