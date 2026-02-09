@@ -122,7 +122,7 @@ if ( ! class_exists( 'NovaBlocks_Comments_Meta' ) ) {
 		 */
 		public function save_comment_meta_data( $comment_id ) {
 			if ( ! empty( $_POST['nb_commenter_background'] ) ) {
-				$commenter_background = trim( strip_tags( $_POST['nb_commenter_background'] ) );
+				$commenter_background = sanitize_text_field( wp_unslash( $_POST['nb_commenter_background'] ) );
 				if ( ! empty( $commenter_background ) ) {
 					update_comment_meta( $comment_id, 'nb_commenter_background', $commenter_background );
 				}
