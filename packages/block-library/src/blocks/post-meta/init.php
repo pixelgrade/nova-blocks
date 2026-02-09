@@ -57,7 +57,7 @@ if ( ! function_exists( 'novablocks_render_post_meta_block' ) ) {
 
 		ob_start(); ?>
 
-		<div class="c-meta" style="<?php echo join( '; ', $cssProps ); ?>">
+		<div class="c-meta" style="<?php echo esc_attr( join( '; ', $cssProps ) ); ?>">
 			<?php
 			$author_email     = $author->user_email;
 			$avatar_url       = get_avatar_url( $author_email, [ 'size' => 96, 'default' => 'identicon' ] );
@@ -67,7 +67,7 @@ if ( ! function_exists( 'novablocks_render_post_meta_block' ) ) {
 			$byline = sprintf(
 				/* translators: %s: The post author name linked (byline).  */
 				__( '%s', '__plugin_txtd' ),
-				'<span class="author vcard"><a class="url fn n" href="' . esc_url( get_author_posts_url( $author_id ) ) . '">' . $author->display_name . '</a></span>'
+				'<span class="author vcard"><a class="url fn n" href="' . esc_url( get_author_posts_url( $author_id ) ) . '">' . esc_html( $author->display_name ) . '</a></span>'
 			);
 
 			?>
