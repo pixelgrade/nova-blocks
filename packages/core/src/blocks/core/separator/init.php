@@ -60,7 +60,25 @@ if ( ! function_exists( 'novablocks_render_separator_block' ) ) {
 			<?php
 			$novablocks_settings = novablocks_get_block_editor_settings();
 			if ( ! empty( $novablocks_settings['separator'] ) && ! empty( $novablocks_settings['separator']['markup'] ) ) {
-				echo wp_kses_post( $novablocks_settings['separator']['markup'] );
+				$allowed_tags = array_merge(
+					wp_kses_allowed_html( 'post' ),
+					array(
+						'svg'  => array(
+							'class'       => true,
+							'fill'        => true,
+							'height'      => true,
+							'style'       => true,
+							'viewbox'     => true,
+							'width'       => true,
+							'xmlns'       => true,
+						),
+						'path' => array(
+							'd'    => true,
+							'fill' => true,
+						),
+					)
+				);
+				echo wp_kses( $novablocks_settings['separator']['markup'], $allowed_tags );
 			}
 			?>
 		</div>
