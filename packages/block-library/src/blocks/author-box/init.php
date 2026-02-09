@@ -93,7 +93,7 @@ if ( ! function_exists( 'novablocks_get_the_author_info_box' ) ) {
 
 		$author_details .= '<div 
 			class="nb-author-box has-description"
-			style="' . $style . '"  
+			style="' . esc_attr( $style ) . '"
 			itemscope itemtype="https://schema.org/Person"
 			>';
 
@@ -110,7 +110,7 @@ if ( ! function_exists( 'novablocks_get_the_author_info_box' ) ) {
 		}
 
 		// The author bio
-		$author_details .= '<p class="nb-author-box__description" itemprop="description">' . nl2br( $user_description ) . '</p>';
+		$author_details .= '<p class="nb-author-box__description" itemprop="description">' . nl2br( esc_html( $user_description ) ) . '</p>';
 
 		$author_details .= '<footer class="nb-author-box__footer">';
 
@@ -146,8 +146,8 @@ if ( ! function_exists( 'novablocks_get_author_bio_links' ) ) {
 		// Get link to the author archive page.
 		$user_posts = get_author_posts_url( get_the_author_meta( 'ID', $post->post_author ) );
 
-		$str     = wp_remote_fopen( 'https://www.gravatar.com/' . md5( strtolower( trim( get_the_author_meta( 'user_email' ) ) ) ) . '.php' );
-		$profile = unserialize( $str );
+		$str     = wp_remote_fopen( 'https://www.gravatar.com/' . md5( strtolower( trim( get_the_author_meta( 'user_email' ) ) ) ) . '.json' );
+		$profile = json_decode( $str, true );
 
 		$markup .= "<div class=\"nb-author-box__links h6\">\n";
 
@@ -157,7 +157,7 @@ if ( ! function_exists( 'novablocks_get_author_bio_links' ) ) {
 		if ( is_array( $profile ) && ! empty( $profile['entry'][0]['urls'] ) ) {
 			foreach ( $profile['entry'][0]['urls'] as $link ) {
 				if ( ! empty( $link['value'] ) && ! empty( $link['title'] ) ) {
-					$markup .= '<a class="nb-author-box__social-link" href="' . esc_url( $link['value'] ) . '" target="_blank">' . $link['title'] . "</a><span class='nb-author-box__separator'></span>\n";
+					$markup .= '<a class="nb-author-box__social-link" href="' . esc_url( $link['value'] ) . '" target="_blank">' . esc_html( $link['title'] ) . "</a><span class='nb-author-box__separator'></span>\n";
 				}
 			}
 		}
