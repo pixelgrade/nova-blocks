@@ -53,14 +53,15 @@ if ( ! function_exists( 'novablocks_render_sharing_overlay_block' ) ) {
 
 		$data_attributes = novablocks_get_data_attributes( $data_attributes_array, $attributes, $color_data );
 		$color_data_attributes = novablocks_get_data_attributes( $color_data, $attributes );
-		$data_attributes[] = 'data-title="' . get_the_title() . '"';
-		$data_attributes[] = 'data-url="' . get_permalink() . '"';
+		$data_attributes[] = 'data-title="' . esc_attr( get_the_title() ) . '"';
+		$data_attributes[] = 'data-url="' . esc_url( get_permalink() ) . '"';
 
 		ob_start();
 
 		$classes = [ 'novablocks-sharing', ];
-		if ( ! empty( $attributes[ 'className' ] ) ) {
-			$classes[] = $attributes[ 'className' ];
+		if ( ! empty( $attributes['className'] ) ) {
+			$custom_classes = array_map( 'sanitize_html_class', explode( ' ', $attributes['className'] ) );
+			$classes        = array_merge( $classes, array_filter( $custom_classes ) );
 		} ?>
 
 		<div class="<?php echo esc_attr( join( ' ', $classes ) ); ?>" <?php echo join( ' ', $data_attributes ); ?>>
