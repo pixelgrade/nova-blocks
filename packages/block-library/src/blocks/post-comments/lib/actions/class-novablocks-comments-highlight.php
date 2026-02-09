@@ -109,7 +109,7 @@ if ( ! class_exists( 'NovaBlocks_Comments_Highlight' ) ) {
 							?>
 							<li class="comment-highlightedby-human">
 								<div
-									class="comment-highlightedby-human-name"><?php echo $highlighter->display_name; ?></div>
+									class="comment-highlightedby-human-name"><?php echo esc_html( $highlighter->display_name ); ?></div>
 								<div class="comment-highlightedby-human-expertise"><?php echo $expertise ?></div>
 							</li>
 						<?php } ?>
@@ -308,7 +308,7 @@ if ( ! class_exists( 'NovaBlocks_Comments_Highlight' ) ) {
 
 			$commentsListArgs = [];
 			if ( ! empty( $_POST['commentsListArgs'] ) && is_array( $_POST['commentsListArgs'] ) ) {
-				$commentsListArgs = $_POST['commentsListArgs'];
+				$commentsListArgs = array_map( 'sanitize_text_field', wp_unslash( $_POST['commentsListArgs'] ) );
 			}
 
 			// If we've reached thus far, the toggling was successful.
