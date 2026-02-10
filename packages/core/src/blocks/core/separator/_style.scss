@@ -8,6 +8,15 @@
   }
 }
 
+// Inside hero/supernova contexts, the Anima theme sets
+// .c-separator__symbol to accent color. Match lines/arrows
+// by setting the whole separator to accent.
+:is(.nb-supernova-item__inner-container, .novablocks-hero__inner-container) {
+  :is(.wp-block-separator, #very.specific) {
+    color: var(--nb-accent-color);
+  }
+}
+
 .wp-block-separator:not(.is-style-wide):not(.is-style-dots) {
   width: auto;
 }
