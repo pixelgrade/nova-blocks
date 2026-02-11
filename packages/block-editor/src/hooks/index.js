@@ -15,6 +15,7 @@ export { default as useSettings } from './use-settings';
 export { default as useScrollContainer } from './use-scroll-container';
 export { default as useScrollContainerBox } from './use-scroll-container-box';
 export { default as useSelectParent } from './use-select-parent';
+export { default as useSpacingIsZeroedByAncestor } from './use-spacing-is-zeroed-by-ancestor';
 export { default as useTraceUpdate } from './use-trace-update';
 export { default as useVisibility } from './use-visibility';
 export { default as useCustomDefaults } from './use-custom-defaults';

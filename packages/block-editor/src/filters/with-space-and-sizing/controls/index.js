@@ -2,6 +2,7 @@ import { __ } from "@wordpress/i18n";
 import { RangeControl } from "@wordpress/components";
 
 import { ControlsGroup, ControlsSection, ControlsTab, withVisibility } from "../../../components";
+import { useSpacingIsZeroedByAncestor } from "../../../hooks";
 
 import SpaceAndSizingPresets from './space-and-sizing-presets';
 
@@ -18,19 +19,42 @@ import VisualBalance from "./visual-balance";
 import MediaPadding from "./media-padding";
 import ContentToMediaSpacing from "./content-to-media-spacing";
 
+const SpacingZeroedNotice = ( { clientId } ) => {
+  const parentBlockTitle = useSpacingIsZeroedByAncestor( clientId );
+
+  if ( ! parentBlockTitle ) {
+    return null;
+  }
+
+  return (
+    <div className={ 'novablocks-notice' } style={{ padding: '12px 16px', marginBottom: '16px', backgroundColor: '#FCEBEA', color: '#8B1A10' }}>
+      <p style={{ margin: 0, fontSize: '12px' }}>
+        <strong>{ __( 'Spacing controls have no effect.', '__plugin_txtd' ) }</strong>
+        { ' ' }
+        { __( 'The parent', '__plugin_txtd' ) + ' ' }
+        <strong>{ parentBlockTitle }</strong>
+        { ' ' + __( 'block has "Spacing Modifier for Inside Elements" set to 0.', '__plugin_txtd' ) }
+      </p>
+    </div>
+  );
+};
+
 const SpaceAndSizingControls = ( props ) => {
 
   return (
     <ControlsSection id={ 'space-and-sizing' } label={ __( 'Space and Sizing', '__plugin_txtd' ) } order={ 20 }>
       <ControlsTab id="space-and-sizing-presets" label={ __( 'Presets', '__plugin_txtd' ) }>
+        <SpacingZeroedNotice clientId={ props.clientId } />
         <SpaceAndSizingPresets { ...props } />
       </ControlsTab>
       <ControlsTab id="space-and-sizing-customize" label={ __( 'Customize', '__plugin_txtd' ) }>
+        <SpacingZeroedNotice clientId={ props.clientId } />
         <CardSpacingCustomize key={ 'card-spacing-customize' } { ...props } />
         <ImageContainerHeightCustomize key={ 'image-container-customize' } { ...props } />
         <VisualBalanceCustomize key={ 'visual-balance-customize' } { ...props } />
       </ControlsTab>
       <ControlsTab label={ __( 'Settings', '__plugin_txtd' ) }>
+        <SpacingZeroedNotice clientId={ props.clientId } />
         <CardSpacingSettings key={ 'card-spacing-settings' } { ...props } />
         <BlockSpacingModifier key={ 'spacing-modifier' } { ...props } />
         <BlockChildrenSpacingModifier key={ 'spacing-children-modifier' } { ...props } />
