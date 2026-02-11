@@ -3,7 +3,7 @@ Contributors: pixelgrade, vlad.olaru, babbardel, razvanonofrei, gorby31
 Tags: blocks, editor, gutenberg, gutenberg blocks, page builder, block enabled, page building, full site editing, site editor, posts collection
 Requires at least: 5.9
 Tested up to: 6.9.1
-Stable tag: 2.1.10
+Stable tag: 2.1.11
 Requires PHP: 7.4
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -93,6 +93,9 @@ Yes! Nova Block's core features are free to use.
 3. Slideshow Me the Way block options
 
 == Changelog ==
+
+= 2.1.11 =
+* Fix: Card blocks displaying raw HTML span tags for category/author/tag meta text (regression from 2.1.10 security escaping).
 
 = 2.1.10 =
 * Security: Fixed Stored XSS in Separator block (CVE-2026-24528).

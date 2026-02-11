@@ -1493,10 +1493,10 @@ function novablocks_get_card_contents( array $attributes ): string {
 
 	$output = '';
 
-	$output .= novablocks_get_card_item_meta( $attributes['metaAboveTitle'], $attributes );
+	$output .= novablocks_get_card_item_meta( esc_html( $attributes['metaAboveTitle'] ), $attributes );
 	$output .= novablocks_get_card_item_title( $attributes['title'], $attributes );
 	$output .= novablocks_get_card_item_subtitle( $attributes['subtitle'], $attributes );
-	$output .= novablocks_get_card_item_meta( $attributes['metaBelowTitle'], $attributes );
+	$output .= novablocks_get_card_item_meta( esc_html( $attributes['metaBelowTitle'] ), $attributes );
 	$output .= novablocks_get_card_item_description( $attributes['description'], $attributes );
 	$output .= novablocks_get_card_item_buttons( [
 		[
@@ -1514,7 +1514,7 @@ function novablocks_get_card_item_meta( $metaValue, array $attributes ): string 
 		return '';
 	}
 
-	return '<p class="nb-card__meta is-style-meta">' . esc_html( $metaValue ) . '</p>';
+	return '<p class="nb-card__meta is-style-meta">' . wp_kses_post( $metaValue ) . '</p>';
 }
 
 function novablocks_get_card_item_title( string $title, array $attributes, $post = null ): string {
@@ -1741,7 +1741,7 @@ function novablocks_get_post_card_contents( $post, $attributes ): string {
 function novablocks_get_post_card_meta( $post, $meta ) {
 
 	if ( $meta === 'author' ) {
-		return get_the_author_meta( 'display_name', $post->post_author );
+		return esc_html( get_the_author_meta( 'display_name', $post->post_author ) );
 	}
 
 	if ( $meta === 'category' ) {
@@ -1769,7 +1769,7 @@ function novablocks_get_post_card_meta( $post, $meta ) {
 
 		if ( ! empty( $categories ) && ! is_wp_error( $categories ) ) {
 			// Return only the first one.
-			return $categories[0]->name;
+			return esc_html( $categories[0]->name );
 		} else {
 			return '';
 		}
@@ -1827,7 +1827,7 @@ function novablocks_get_post_card_meta( $post, $meta ) {
 		if ( ! empty( $tags ) && ! is_wp_error( $tags ) ) {
 			$tag_names = array_map( 'novablocks_get_tag_name', $tags );
 
-			return join( ', ', $tag_names );
+			return esc_html( join( ', ', $tag_names ) );
 		} else {
 			return '';
 		}
@@ -1835,7 +1835,7 @@ function novablocks_get_post_card_meta( $post, $meta ) {
 
 	if ( $meta == 'reading-time' ) {
 		/* translators: %s: The post reading time in minutes. */
-		return sprintf( __( '%s min read', '__plugin_txtd' ), novablocks_get_post_reading_time_in_minutes( $post ) );
+		return esc_html( sprintf( __( '%s min read', '__plugin_txtd' ), novablocks_get_post_reading_time_in_minutes( $post ) ) );
 	}
 
 	return '';
