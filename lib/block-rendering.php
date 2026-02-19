@@ -7,6 +7,49 @@
  * @package NovaBlocks
  */
 
+/**
+ * Fix duplicate CSS classes in block innerContent that break WordPress layout system.
+ *
+ * When blocks are saved with duplicate classes (e.g. "alignwide" appearing twice),
+ * WordPress's wp_render_layout_support_flag() fails to match the inner block wrapper
+ * because rendered HTML deduplicates classes while innerContent retains duplicates.
+ * This causes layout classes like is-layout-flex to not be applied, breaking gallery
+ * columns and other flex layouts.
+ *
+ * @param array $parsed_block The parsed block data.
+ *
+ * @return array
+ */
+function novablocks_fix_duplicate_classes_in_inner_content( $parsed_block ) {
+	if ( empty( $parsed_block['innerContent'] ) || ! is_array( $parsed_block['innerContent'] ) ) {
+		return $parsed_block;
+	}
+
+	foreach ( $parsed_block['innerContent'] as $index => $chunk ) {
+		if ( ! is_string( $chunk ) ) {
+			continue;
+		}
+
+		// Find class attributes with duplicate values and deduplicate them.
+		$parsed_block['innerContent'][ $index ] = preg_replace_callback(
+			'/\bclass="([^"]*)"/',
+			function ( $matches ) {
+				$classes = preg_split( '/\s+/', trim( $matches[1] ) );
+				$unique  = array_unique( $classes );
+				if ( count( $unique ) === count( $classes ) ) {
+					return $matches[0]; // No duplicates, return unchanged.
+				}
+
+				return 'class="' . implode( ' ', $unique ) . '"';
+			},
+			$chunk
+		);
+	}
+
+	return $parsed_block;
+}
+add_filter( 'render_block_data', 'novablocks_fix_duplicate_classes_in_inner_content', 5 );
+
 function novablocks_get_alignment( array $attributes ): array {
 
 	if ( ! empty( $attributes['contentPosition'] ) ) {

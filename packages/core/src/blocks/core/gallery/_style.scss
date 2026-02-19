@@ -1,0 +1,14 @@
+// Fix gallery block layout when global layout styles are not available.
+//
+// WordPress relies on .is-layout-flex (from wp_enqueue_global_styles) to
+// provide display:flex for the gallery container. When global styles are
+// removed or the layout class injection fails (e.g. due to duplicate CSS
+// classes in saved content), galleries collapse to a single column.
+//
+// This provides the flex layout directly on the gallery container to ensure
+// multi-column galleries always work.
+.wp-block-gallery.has-nested-images {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--wp--style--unstable-gallery-gap, var(--gallery-block--gutter-size, var(--wp--style--block-gap, 0.5em)));
+}
