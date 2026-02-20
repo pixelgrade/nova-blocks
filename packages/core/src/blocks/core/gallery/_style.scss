@@ -1,12 +1,53 @@
-// Fix gallery block layout when global layout styles are not available.
+// ==========================================================================
+// WordPress Layout System Fallbacks
+// ==========================================================================
 //
-// WordPress relies on .is-layout-flex (from wp_enqueue_global_styles) to
-// provide display:flex for the gallery container. When global styles are
-// removed or the layout class injection fails (e.g. due to duplicate CSS
-// classes in saved content), galleries collapse to a single column.
+// WordPress relies on wp_enqueue_global_styles() to provide base CSS for
+// the block layout system (is-layout-flex, is-layout-grid, is-layout-flow).
+// When themes remove global styles (as Anima does), these layout classes
+// have no CSS definitions, breaking blocks that depend on them.
 //
-// This provides the flex layout directly on the gallery container to ensure
-// multi-column galleries always work.
+// This provides the essential layout definitions as a safety net.
+
+// --------------------------------------------------------------------------
+// Flex layout (used by Gallery, Group Row, Buttons, Navigation, Social Links)
+// --------------------------------------------------------------------------
+.is-layout-flex {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+
+  // Vertical flex variation (Group block vertical layout)
+  &.is-vertical {
+    flex-direction: column;
+    align-items: stretch; // Match WP core default for vertical
+  }
+
+  // Gap fallback when no custom gap is set
+  > * {
+    margin: 0;
+  }
+}
+
+// Content justification classes (require flex to work)
+.is-content-justification-center {
+  justify-content: center;
+}
+
+.is-content-justification-right {
+  justify-content: flex-end;
+}
+
+.is-content-justification-space-between {
+  justify-content: space-between;
+}
+
+// --------------------------------------------------------------------------
+// Gallery-specific fix
+// --------------------------------------------------------------------------
+// The gallery block with has-nested-images needs flex even without
+// is-layout-flex class (e.g. when duplicate classes in saved content
+// prevent WordPress from injecting the layout class).
 .wp-block-gallery.has-nested-images {
   display: flex;
   flex-wrap: wrap;
