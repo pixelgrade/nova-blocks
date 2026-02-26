@@ -178,6 +178,9 @@ const CopyBlocksAssetsPlugin =
 
 const DefaultConfig = {
 	mode,
+	resolve: {
+		extensions: [ '.js', '.json' ],
+	},
 	module: {
 		rules: compact( [
 			mode !== 'production' && {

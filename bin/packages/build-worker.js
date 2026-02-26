@@ -138,7 +138,7 @@ const BUILD_TASK_BY_EXTENSION = {
 					path.dirname( file ),
 				],
 				style: 'expanded',
-				silenceDeprecations: [ 'import' ],
+				silenceDeprecations: [ 'import', 'global-builtin', 'slash-div' ],
 			}
 		);
 
