@@ -6,7 +6,7 @@ const fs = require( 'fs' );
 const path = require( 'path' );
 const babel = require( '@babel/core' );
 const makeDir = require( 'make-dir' );
-const sass = require( 'node-sass' );
+const sass = require( 'sass' );
 const postcss = require( 'postcss' );
 
 /**
@@ -52,12 +52,6 @@ const copyFile = promisify( fs.copyFile );
  */
 const writeFile = promisify( fs.writeFile );
 
-/**
- * Promisified sass.render.
- *
- * @type {Function}
- */
-const renderSass = promisify( sass.render );
 
 /**
  * Get the package name for a specified file
@@ -129,19 +123,24 @@ const BUILD_TASK_BY_EXTENSION = {
 			readFile( file, 'utf8' ),
 		] );
 
-		const builtSass = await renderSass( {
-			file,
-			includePaths: [ path.join( PACKAGES_DIR, 'base-styles' ) ],
-			data:
-				[
-					'functions',
-					'mixins',
-				]
-					.map( ( imported ) => {
-						return `@import "${ imported }";`
-					} )
-					.join( ' ' ) + contents,
-		} );
+		const builtSass = sass.compileString(
+			[
+				'functions',
+				'mixins',
+			]
+				.map( ( imported ) => {
+					return `@import "${ imported }";`
+				} )
+				.join( ' ' ) + contents,
+			{
+				loadPaths: [
+					path.join( PACKAGES_DIR, 'base-styles' ),
+					path.dirname( file ),
+				],
+				style: 'expanded',
+				silenceDeprecations: [ 'import' ],
+			}
+		);
 
 		const result = await postcss( require( 'autoprefixer' ) ).process(
 			builtSass.css,
