@@ -648,7 +648,7 @@ function novablocks_get_collection_header_output( array $attributes ): string {
 
 	if ( ! empty( $attributes['showCollectionTitle'] ) && ! empty( $attributes['title'] ) ) {
 		$output .= '<' . $titleTag . ' class="nb-collection__title wp-block alignfull ' . esc_attr( $fontSizeModifier ) . '">';
-		$output .= esc_html( $attributes['title'] );
+		$output .= wp_kses_post( $attributes['title'] );
 		$output .= '</' . $titleTag . '>';
 	}
 
@@ -1536,10 +1536,10 @@ function novablocks_get_card_contents( array $attributes ): string {
 
 	$output = '';
 
-	$output .= novablocks_get_card_item_meta( esc_html( $attributes['metaAboveTitle'] ), $attributes );
+	$output .= novablocks_get_card_item_meta( $attributes['metaAboveTitle'], $attributes );
 	$output .= novablocks_get_card_item_title( $attributes['title'], $attributes );
 	$output .= novablocks_get_card_item_subtitle( $attributes['subtitle'], $attributes );
-	$output .= novablocks_get_card_item_meta( esc_html( $attributes['metaBelowTitle'] ), $attributes );
+	$output .= novablocks_get_card_item_meta( $attributes['metaBelowTitle'], $attributes );
 	$output .= novablocks_get_card_item_description( $attributes['description'], $attributes );
 	$output .= novablocks_get_card_item_buttons( [
 		[
@@ -1605,7 +1605,7 @@ function novablocks_get_card_item_description( string $description, array $attri
 		return '';
 	}
 
-	return '<p class="nb-card__description">' . esc_html( $description ) . '</p>';
+	return '<p class="nb-card__description">' . wp_kses_post( $description ) . '</p>';
 }
 
 function novablocks_get_card_item_buttons( array $buttons, array $attributes ): string {

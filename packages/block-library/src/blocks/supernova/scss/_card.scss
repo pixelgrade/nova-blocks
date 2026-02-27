@@ -337,6 +337,14 @@ a.nb-supernova-item__link {
   z-index: 1;
 
   --nb-block-top-spacing: 1;
+
+  .wp-block-button[class] {
+    display: block;
+  }
+
+  .wp-block-button__link {
+    box-sizing: content-box;
+  }
 }
 
 .nb-card__meta {
