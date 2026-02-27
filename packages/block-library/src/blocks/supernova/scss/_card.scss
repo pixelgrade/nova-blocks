@@ -338,12 +338,8 @@ a.nb-supernova-item__link {
 
   --nb-block-top-spacing: 1;
 
-  .wp-block-button[class] {
-    display: block;
-  }
-
   .wp-block-button__link {
-    box-sizing: content-box;
+    width: auto;
   }
 }
 
