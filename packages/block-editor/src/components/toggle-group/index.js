@@ -21,12 +21,12 @@ const ToggleGroup = ( props ) => {
 	const config = {
 		initial: { left: 0 },
     from: { opacity: 0, height: 0, left: 40 },
-		enter: item => async next => {
+		enter: item => next => {
 			const ref = refMap.get( item );
-		  await next( { opacity: 1, left: 0, height: ref.offsetHeight } );
+		  return next( { opacity: 1, left: 0, height: ref.offsetHeight } );
 		},
-    leave: item => async (next, cancel) => {
-		  await next( { opacity: 0, height: 0, left: 40 } );
+    leave: item => (next, cancel) => {
+		  return next( { opacity: 0, height: 0, left: 40 } );
     },
     keys: item => item.attribute
 	};

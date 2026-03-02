@@ -33,6 +33,11 @@ export const getConfig = ( container ) => {
 
 export const updateContainerState = ( container ) => {
   const refId = container.dataset.refId;
+
+  if ( ! refId || ! REFERENCES[ refId ] ) {
+    return;
+  }
+
   const { attributes, target, config } = REFERENCES[ refId ];
   const newConfig = Object.assign( {}, config, getConfig( container ) );
   const newState = getState( newConfig, attributes );
@@ -80,6 +85,11 @@ export const getContainers = () => {
 export const updateContainersStyle = ( containers ) => {
   containers.forEach( container => {
     const refId = container.dataset.refId;
+
+    if ( ! refId || ! REFERENCES[ refId ] ) {
+      return;
+    }
+
     const { attributes, target, state, config } = REFERENCES[ refId ];
     const cfg = Object.assign( {}, state, config );
     const props = getProps( cfg, attributes, true );
@@ -89,7 +99,17 @@ export const updateContainersStyle = ( containers ) => {
 
   containers.forEach( container => {
     const refId = container.dataset.refId;
+
+    if ( ! refId || ! REFERENCES[ refId ] ) {
+      return;
+    }
+
     const { target, style } = REFERENCES[ refId ];
+
+    if ( ! target ) {
+      return;
+    }
+
     Object.assign( target.style, style );
   } );
 }
