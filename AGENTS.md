@@ -5,7 +5,7 @@
 - **MUST use Node 22 LTS** — Older versions (e.g. Node 14, 16) are no longer supported and will not work.
 - **NEVER run `npm run build` or `npm run zip` with the wrong Node version** — it runs `preclean:packages` which DELETES the `build/` directory BEFORE building. If the build then fails, the plugin is left broken with no `build/` dir.
 - **Always use `npm run zip`** (not `npx gulp zip` alone) — `npm run zip` runs the full build first via `prezip` hook. Running `gulp zip` alone skips the JS/CSS compilation and produces an incomplete zip (~270KB instead of ~1MB).
-- **CLAUDE.md is excluded from zip** via `.zipignore` — keep it that way.
+- **AGENTS.md and CLAUDE.md are excluded from zip** via `.zipignore` — keep it that way.
 
 ## Prerequisites
 
@@ -44,8 +44,8 @@ ls -la ../nova-blocks-X-Y-Z.zip
 # Must contain build/ directory
 unzip -l ../nova-blocks-X-Y-Z.zip | grep "nova-blocks/build/" | head -3
 
-# Must NOT contain CLAUDE.md
-unzip -l ../nova-blocks-X-Y-Z.zip | grep "CLAUDE.md"
+# Must NOT contain AGENTS.md or CLAUDE.md
+unzip -l ../nova-blocks-X-Y-Z.zip | grep -E "AGENTS.md|CLAUDE.md"
 
 # Check version fields
 unzip -p ../nova-blocks-X-Y-Z.zip nova-blocks/readme.txt | grep -E "Tested up to|Stable tag"
