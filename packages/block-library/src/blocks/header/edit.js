@@ -4,7 +4,7 @@ import { __ } from '@wordpress/i18n';
 import { Component, Fragment, useEffect, useLayoutEffect } from '@wordpress/element';
 import { InnerBlocks, useBlockProps } from '@wordpress/block-editor';
 
-const useInnerBlocksProps = wp.blockEditor.useInnerBlocksProps ?? wp.blockEditor.__experimentalUseInnerBlocksProps;
+const useInnerBlocksProps = wp.blockEditor.useInnerBlocksProps;
 
 import { useInnerBlocks, VariationPicker } from "@novablocks/block-editor";
 

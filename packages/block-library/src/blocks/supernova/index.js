@@ -38,7 +38,7 @@ const coreQueryAlterations = settings => {
   // Change what the query block supports.
   settings.supports.align = false;
   settings.supports.html = false;
-  settings.supports.__experimentalLayout = false;
+  settings.supports.layout = false;
 
 
   // Add our own Query block variations.

@@ -1,6 +1,10 @@
 import { __ } from "@wordpress/i18n";
 import { withSelect } from "@wordpress/data";
-import { __unstableStripHTML as stripHTML } from '@wordpress/dom';
+const stripHTML = ( html ) => {
+  const doc = document.implementation.createHTMLDocument( '' );
+  doc.body.innerHTML = html;
+  return doc.body.textContent || '';
+};
 import { useEffect, useRef } from '@wordpress/element';
 
 import {

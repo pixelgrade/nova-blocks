@@ -154,7 +154,7 @@ const AvailableTagsModal = () => {
 
   return (
     <Fragment>
-      <Button className={ 'novablocks__label' } isLink onClick={ openModal }>See available tags</Button>
+      <Button className={ 'novablocks__label' } variant="link" onClick={ openModal }>See available tags</Button>
       { isOpen && (
         <Modal
           onRequestClose={ closeModal }

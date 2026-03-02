@@ -27,7 +27,7 @@ const MarkersList = props => {
                 value={ marker.name }
                 onChange={ newName => { renameMaker( index, newName ) } }
               />
-              <Button isDestructive onClick={ () => { deleteMarker( index ) } }>Delete</Button>
+              <Button isDestructive variant="tertiary" onClick={ () => { deleteMarker( index ) } }>Delete</Button>
             </div>
           )
         } )

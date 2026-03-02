@@ -4,8 +4,8 @@
 import classnames from 'classnames';
 
 import { Fragment } from "@wordpress/element";
-import { InnerBlocks, URLInput } from "@wordpress/block-editor";
-import { BaseControl, ToggleControl } from "@wordpress/components";
+import { InnerBlocks } from "@wordpress/block-editor";
+import { BaseControl, TextControl, ToggleControl } from "@wordpress/components";
 import { __ } from "@wordpress/i18n";
 import { useEffect } from '@wordpress/element';
 import { useBlockProps, useInnerBlocksProps } from "@wordpress/block-editor";
@@ -50,19 +50,14 @@ const Edit = ( props ) => {
       <div { ...innerBlockProps } />
       { isSelected &&
         <div className="novablocks-announcement-bar__url-field-wrapper">
-          <BaseControl
+          <TextControl
             label={ __( 'Add a link to make the whole Announcement Bar clickable.', '__plugin_txtd' ) }
-            className="wp-block-button__inline-link">
-            <URLInput
-              className="wp-block-button__inline-link-input"
-              value={ url }
-              autoFocus={ false }
-              onChange={ ( value ) => setAttributes( { url: value } ) }
-              disableSuggestions={ !isSelected }
-              isFullWidth
-              hasBorder
-            />
-          </BaseControl>
+            className="wp-block-button__inline-link"
+            type="url"
+            value={ url || '' }
+            onChange={ ( value ) => setAttributes( { url: value } ) }
+            placeholder={ __( 'Paste URL or type to search…', '__plugin_txtd' ) }
+          />
           <ToggleControl
             checked={ opensInNewTab }
             onChange={ ( opensInNewTab ) => {

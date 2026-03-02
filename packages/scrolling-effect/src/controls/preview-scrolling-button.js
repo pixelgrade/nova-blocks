@@ -33,8 +33,8 @@ const PreviewScrollingButton = props => {
   return (
     <div className={ 'nb-scrolling-preview-control' }>
       <Button
-        islarge="true"
-        isPrimary
+        size="default"
+        variant="primary"
         disabled={ false }
         onClick={ onClick }>{ __( 'Preview Scrolling', '__plugin_txtd' ) }</Button>
     </div>

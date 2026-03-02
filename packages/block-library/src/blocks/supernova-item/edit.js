@@ -6,7 +6,7 @@ import { Popover } from '@wordpress/components';
 import { useSelect } from '@wordpress/data';
 
 import {
-  __experimentalLinkControl as LinkControl,
+  LinkControl,
   InnerBlocks,
   RichText,
   useBlockProps,

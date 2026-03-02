@@ -3,7 +3,7 @@ import {
 } from "@wordpress/element";
 
 import {
-  __experimentalGetSettings,
+  getSettings as getDateSettings,
   dateI18n,
   format
 } from '@wordpress/date';
@@ -106,7 +106,7 @@ export const getMetadata = ( post, meta ) => {
     case 'comments':
       return !!post?.id && <Comments postId={ post.id } />;
     case 'date':
-      const dateFormat = __experimentalGetSettings().formats.date;
+      const dateFormat = getDateSettings().formats.date;
 
       return !!post?.date_gmt && (
         <time dateTime={ format( 'c', post.date_gmt ) }>

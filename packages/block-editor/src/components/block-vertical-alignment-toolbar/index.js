@@ -91,7 +91,7 @@ export default compose(
     const { getBlockRootClientId, getSettings } = select( 'core/block-editor' );
     return {
       isCollapsed: isCollapsed || ! isLargeViewport || (
-        ! getSettings().hasFixedToolbar &&
+        ! ( getSettings().fixedToolbar ?? getSettings().hasFixedToolbar ) &&
         getBlockRootClientId( clientId )
       ),
     };

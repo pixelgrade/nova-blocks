@@ -122,7 +122,7 @@ const SidecarInspectorControls = ( props ) => {
         </ControlsTab>
       </ControlsSection>
 
-      <InspectorControls __experimentalGroup="advanced">
+      <InspectorControls group="advanced">
         <SelectControl
           label={ __( 'HTML element', '__plugin_txtd' ) }
           options={ [

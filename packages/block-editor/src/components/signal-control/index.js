@@ -50,7 +50,7 @@ const SignalControl = ( props ) => {
             </div>
             <div className="nb-signal__controls">
               <Button
-                isSecondary
+                variant="secondary"
                 disabled={ signal <= minSignal }
                 onClick={ () => {
                   onChange( signal - 1 );
@@ -58,7 +58,7 @@ const SignalControl = ( props ) => {
                 <Icon icon={ 'minus' } />
               </Button>
               <Button
-                isSecondary
+                variant="secondary"
                 disabled={ signal >= maxSignal }
                 onClick={ () => {
                   onChange( signal + 1 );

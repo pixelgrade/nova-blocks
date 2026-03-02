@@ -1,5 +1,9 @@
 import { Fragment } from "@wordpress/element";
-import { __unstableStripHTML as stripHTML } from '@wordpress/dom';
+const stripHTML = ( html ) => {
+  const doc = document.implementation.createHTMLDocument( '' );
+  doc.body.innerHTML = html;
+  return doc.body.textContent || '';
+};
 
 import { CardButton, CardDescription, CardFooter, CardMeta, CardTitle, CardSubtitle } from "../../index";
 

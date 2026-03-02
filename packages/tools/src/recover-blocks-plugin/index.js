@@ -11,7 +11,7 @@ import { recoverAllBlocks } from "./recover-blocks";
 const NovaBlocksToolsPlugin = () => (
   <PluginSidebar name="novablocks-tools" title={ __( 'Nova Blocks Tools', '__plugin_txtd' ) } icon={ tool }>
     <PanelBody title={ __( 'Blocks', '__plugin_txtd' ) }>
-      <Button isPrimary onClick={ recoverAllBlocks }>Recover Blocks</Button>
+      <Button variant="primary" onClick={ recoverAllBlocks }>Recover Blocks</Button>
     </PanelBody>
   </PluginSidebar>
 );

@@ -22,7 +22,7 @@
 	},
 	"styles": [
 		{
-			"name": "lassic",
+			"name": "classic",
 			"label": "Classic",
 			"isDefault": true
 		},

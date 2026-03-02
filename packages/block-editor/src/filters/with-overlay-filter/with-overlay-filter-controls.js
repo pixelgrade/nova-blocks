@@ -1,14 +1,10 @@
 import classnames from 'classnames';
 import { createHigherOrderComponent } from "@wordpress/compose";
-import { Fragment, createPortal, useContext } from "@wordpress/element";
-import { BlockList } from "@wordpress/block-editor";
+import { Fragment, useRef } from "@wordpress/element";
 
 import { useSupports } from "../../hooks";
 import Controls from "./controls";
 import { getDuotoneFilterSvg } from "@novablocks/utils";
-
-import { useRef, useEffect } from "@wordpress/element";
-import { useBlockProps } from "@wordpress/block-editor";
 
 
 
@@ -17,7 +13,7 @@ const DuotoneFilter = ( props ) => {
   const { overlayFilterDuotoneConfig, overlayFilterType } = attributes;
   const from = overlayFilterDuotoneConfig?.from;
   const to = overlayFilterDuotoneConfig?.to;
-  // const element = useContext( BlockList.__unstableElementContext ); // WordPress 6.5 conflict
+  const blockRef = useRef( null );
   const id = `novablocks-duotone-${ clientId }`;
 
   if ( ! from || ! to || overlayFilterType !== 'duotone' ) {
@@ -29,7 +25,7 @@ const DuotoneFilter = ( props ) => {
         <style> .${ id } .nb-supernova-item__media-wrapper :is(img, video) { filter: url( #${ id } ); }</style>
     `;
 
-  return element ? createPortal( <div dangerouslySetInnerHTML={ { __html: svgMarkup } } />, element ) : null;
+  return <div ref={ blockRef } style={ { display: 'none' } } dangerouslySetInnerHTML={ { __html: svgMarkup } } />;
 };
 
 const withOverlayFilterControls = createHigherOrderComponent( OriginalComponent => {

@@ -13,7 +13,7 @@ const ShapeSwapButton = ( props ) => {
 
   return (
     <Button
-      isPrimary
+      variant="primary"
       icon={ 'controls-repeat' }
       onClick={ () => { setAttributes( newAttributes ) } }
     >

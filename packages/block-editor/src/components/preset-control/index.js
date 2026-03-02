@@ -68,7 +68,7 @@ const PresetControl = ( props ) => {
 				selectedPreset === 'just-my-style' &&
 				<div key={ 'advanced-gallery-surprise-control' }>
 					<Button
-						isPrimary
+						variant="primary"
 						onClick={ () => {
 							setAttributes( randomizeAttributes() )
 						} }>
