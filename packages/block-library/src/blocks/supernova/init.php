@@ -97,6 +97,18 @@ if ( ! function_exists( 'novablocks_render_supernova_block' ) ) {
 			$classes[] = 'nb-supernova--carousel-layout-' . $attributes['carouselLayout'];
 		}
 
+		if ( ! empty( $attributes['thumbnailAspectRatioString'] ) && $attributes['thumbnailAspectRatioString'] === 'original' ) {
+			$classes[] = 'nb-supernova--aspect-ratio-original';
+		}
+
+		if ( ! empty( $attributes['pileParallaxAmount'] ) && $attributes['pileParallaxAmount'] > 0 ) {
+			$classes[] = 'nb-supernova--pile-parallax';
+		}
+
+		if ( ! empty( $attributes['pile3dEffect'] ) ) {
+			$classes[] = 'nb-supernova--pile-3d';
+		}
+
 		$cssProps = array_merge(
 			novablocks_get_media_composition_css( $attributes ),
 			novablocks_get_color_signal_css( $attributes ),

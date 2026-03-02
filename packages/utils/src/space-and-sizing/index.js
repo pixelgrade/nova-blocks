@@ -37,9 +37,12 @@ export const getSpacingCSSProps = ( attributes, existingStyle = {} ) => {
     layoutGutter,
     minHeightFallback,
     thumbnailAspectRatio,
+    thumbnailAspectRatioString,
     spacingModifier,
     spacingMultiplierOverride,
   } = attributes;
+
+  const isOriginalAspectRatio = thumbnailAspectRatioString === 'original';
 
   const emphasisTopSpacingValue = verticalAlignment === 'top' ? Math.abs(emphasisTopSpacing) : emphasisTopSpacing;
   const emphasisBottomSpacingValue = verticalAlignment === 'bottom' ? Math.abs(emphasisBottomSpacing) : emphasisBottomSpacing;
@@ -55,8 +58,14 @@ export const getSpacingCSSProps = ( attributes, existingStyle = {} ) => {
       existingStyle?.['--nb-card-media-container-height'] ?? mediaContainerHeight
     ),
     '--nb-card-content-padding-multiplier': contentPadding / 100,
-    '--nb-card-media-padding-top': getCardMediaPaddingTop( thumbnailAspectRatio ),
-    '--nb-card-media-object-fit': imageResizing === 'cropped' ? 'cover' : 'scale-down',
+    ...( isOriginalAspectRatio ? {} : (() => {
+      const paddingTop = parseFloat( getCardMediaPaddingTop( thumbnailAspectRatio ) );
+      return {
+        '--nb-card-media-padding-top': `${ paddingTop }%`,
+        '--nb-card-media-aspect-ratio': 100 / paddingTop,
+      };
+    })() ),
+    '--nb-card-media-object-fit': isOriginalAspectRatio ? 'contain' : ( imageResizing === 'cropped' ? 'cover' : 'scale-down' ),
     '--nb-card-media-padding-multiplier': imagePadding / 100,
     '--nb-card-layout-gap-modifier': layoutGutter / 100,
     '--nb-min-height-fallback': minHeightFallback,

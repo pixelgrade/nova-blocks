@@ -4,7 +4,6 @@ import {
   ControlsSection,
   ControlsTab,
   PresetControl,
-  withVisibility,
 } from "../../../components";
 
 import presets from "./presets";
@@ -58,4 +57,4 @@ const Controls = ( props ) => {
   );
 };
 
-export default withVisibility('collection-layout-section' )( Controls );
+export default Controls;
