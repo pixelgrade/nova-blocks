@@ -13,7 +13,7 @@ const withSpaceAndSizingSaveCustomProps = ( extraProps, blockType, attributes ) 
     ...extraProps,
     style: {
       ...extraProps?.style,
-      ...getSpacingCSSProps( attributes )
+      ...getSpacingCSSProps( attributes, extraProps?.style )
     },
   }
 };
