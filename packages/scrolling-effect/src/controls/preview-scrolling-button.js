@@ -12,9 +12,13 @@ const PreviewScrollingButton = props => {
   const scrollContainer = useScrollContainer();
 
   const onClick = useCallback( () => {
-    const element = document.querySelector( `#block-${ clientId }` );
+    if ( ! scrollContainer ) return;
 
-    if ( element && scrollContainer ) {
+    // Query in the scroll container's document (may be inside an iframe).
+    const doc = scrollContainer.ownerDocument;
+    const element = doc.querySelector( `#block-${ clientId }` );
+
+    if ( element ) {
       const elementBox = element.getBoundingClientRect();
       const scrollContainerBox = scrollContainer.getBoundingClientRect();
 
@@ -24,7 +28,7 @@ const PreviewScrollingButton = props => {
       scrollFromTo( scrollContainer, start, end, 2000, easeInOutCubic );
     }
 
-  }, [ scrollContainer ] );
+  }, [ scrollContainer, clientId ] );
 
   return (
     <div className={ 'nb-scrolling-preview-control' }>

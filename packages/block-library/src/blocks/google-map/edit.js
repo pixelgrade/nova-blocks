@@ -1,7 +1,7 @@
 import classnames from 'classnames';
 
 import { __ } from '@wordpress/i18n';
-import { models, loadPromise } from '@wordpress/api';
+import apiFetch from '@wordpress/api-fetch';
 import { useBlockProps } from '@wordpress/block-editor';
 import { Spinner } from '@wordpress/components';
 import {
@@ -10,7 +10,6 @@ import {
   useCallback,
   useEffect,
   useMemo,
-  useRef,
   useState
 } from '@wordpress/element';
 
@@ -47,11 +46,9 @@ const Edit = props => {
   }, [] );
 
   const [ gmAuthFailure, setGmAuthFailure ] = useState( initialGmAuthFailure );
-  const onGoogleMapsAuthFailure = useCallback( ( event ) => {
+  const onGoogleMapsAuthFailure = useCallback( () => {
     setGmAuthFailure( true );
   }, [] );
-
-  const settings = useRef( null );
 
   useDidUpdateEffect(() => {
     const keyParam = savedApiKey !== '' ? `key=${ savedApiKey }&` : '';
@@ -80,17 +77,14 @@ const Edit = props => {
   useEffect( () => {
     window.addEventListener( 'novablock.googlemaps_authfailure', onGoogleMapsAuthFailure );
 
-    loadPromise.done( () => {
-      settings.current = new models.Settings();
-
-      settings.current.on( `change:${ API_KEY_SETTING_ID }`, model => {
-        const apiKey = model.get( API_KEY_SETTING_ID );
-        setFetchedApiKey( true );
-        setSavedApiKey( apiKey );
-        setApiKey( apiKey );
-      } );
-
-      settings.current.fetch();
+    // Fetch the API key from WP settings via REST API.
+    apiFetch( { path: '/wp/v2/settings' } ).then( ( settings ) => {
+      const key = settings[ API_KEY_SETTING_ID ] || '';
+      setFetchedApiKey( true );
+      setSavedApiKey( key );
+      setApiKey( key );
+    } ).catch( () => {
+      setFetchedApiKey( true );
     } );
 
     return ( () => {
@@ -106,12 +100,15 @@ const Edit = props => {
     return passedProps;
   }, [ props ] );
 
-  const onSaveApiKey = ( apiKey ) => {
-    const key = new models.Settings( { [ API_KEY_SETTING_ID ]: apiKey } );
-
-    key.save().then( () => {
+  const onSaveApiKey = ( newApiKey ) => {
+    apiFetch( {
+      path: '/wp/v2/settings',
+      method: 'POST',
+      data: { [ API_KEY_SETTING_ID ]: newApiKey },
+    } ).then( () => {
       setGmAuthFailure( false );
-      settings.current.fetch();
+      setSavedApiKey( newApiKey );
+      setApiKey( newApiKey );
     } );
   }
 
