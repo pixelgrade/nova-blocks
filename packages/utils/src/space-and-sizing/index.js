@@ -1,6 +1,27 @@
 import { getCardMediaPaddingTop } from "../index";
 
-export const getSpacingCSSProps = ( attributes ) => {
+const normalizePxUnit = ( value ) => {
+  if ( typeof value === 'number' ) {
+    return `${ value }px`;
+  }
+
+  if ( typeof value === 'string' ) {
+    const trimmed = value.trim();
+
+    if ( trimmed.endsWith( 'px' ) ) {
+      return value;
+    }
+
+    const numericValue = Number( trimmed );
+    if ( ! Number.isNaN( numericValue ) ) {
+      return `${ numericValue }px`;
+    }
+  }
+
+  return value;
+};
+
+export const getSpacingCSSProps = ( attributes, existingStyle = {} ) => {
 
   const {
     blockTopSpacing,
@@ -30,7 +51,9 @@ export const getSpacingCSSProps = ( attributes ) => {
     '--nb-block-bottom-spacing': blockBottomSpacing + '',
     '--nb-block-zindex': Math.max( 0, -1 * ( blockTopSpacing + blockBottomSpacing ) ),
     '--nb-card-content-area-width': `${ contentAreaWidth }%`,
-    '--nb-card-media-container-height': mediaContainerHeight,
+    '--nb-card-media-container-height': normalizePxUnit(
+      existingStyle?.['--nb-card-media-container-height'] ?? mediaContainerHeight
+    ),
     '--nb-card-content-padding-multiplier': contentPadding / 100,
     '--nb-card-media-padding-top': getCardMediaPaddingTop( thumbnailAspectRatio ),
     '--nb-card-media-object-fit': imageResizing === 'cropped' ? 'cover' : 'scale-down',

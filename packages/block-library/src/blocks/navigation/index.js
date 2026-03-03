@@ -3,7 +3,7 @@
  */
 import { registerBlockType } from '@wordpress/blocks';
 import ServerSideRender from '@wordpress/server-side-render';
-import { useLayoutEffect } from "@wordpress/element";
+import { useLayoutEffect, useRef } from "@wordpress/element";
 
 /**
  * Internal dependencies
@@ -18,38 +18,38 @@ registerBlockType( 'novablocks/navigation', {
   icon: getSvg( iconSvg ),
 	attributes,
 	edit: function( props ) {
-    const { clientId } = props;
+    const containerRef = useRef( null );
 
     useSelectParent( props );
 
     useLayoutEffect( () => {
-      const element = document.querySelector( `.block-${ clientId }` );
-      const parent = element ? element.parentElement : null;
+      const container = containerRef.current;
+      if ( ! container ) return;
 
-      if ( parent ) {
+      addSocialMenuClass( container );
 
-        if ( ! window.MutationObserver ) {
-          return
-        }
-
-        const observer = new MutationObserver( ( mutationsList ) => {
-          addSocialMenuClass( parent );
-        } );
-
-        observer.observe( parent.parentElement, { childList: true, subtree: true } )
-
-        return ( () => {
-          observer.disconnect();
-        } );
+      if ( ! window.MutationObserver ) {
+        return;
       }
+
+      const observer = new MutationObserver( () => {
+        addSocialMenuClass( container );
+      } );
+
+      observer.observe( container, { childList: true, subtree: true } );
+
+      return () => {
+        observer.disconnect();
+      };
     }, [] );
 
 		return (
-			<ServerSideRender
-				block="novablocks/navigation"
-				attributes={ props.attributes }
-        className={ `block-${ clientId }` }
-			/>
+			<div ref={ containerRef }>
+				<ServerSideRender
+					block="novablocks/navigation"
+					attributes={ props.attributes }
+				/>
+			</div>
 		)
 	},
 	save: function() {

@@ -548,12 +548,11 @@ function novablocks_get_space_and_sizing_advanced_presets(): array {
 	];
 }
 
-function novablocks_disable_block_editor_layout( $settings, $context ) {
-	$settings[ 'supportsLayout' ] = false;
-
-	return $settings;
-}
-add_filter( 'block_editor_settings_all', 'novablocks_disable_block_editor_layout', PHP_INT_MAX, 2 );
+// Removed: novablocks_disable_block_editor_layout() was globally disabling
+// supportsLayout for ALL blocks. This conflicts with WP 7.0's layout system
+// which relies on supportsLayout for core blocks (Group, Columns, Row).
+// Nova Blocks blocks control their own layout via CSS custom properties and
+// do not need this global override.
 
 function novablocks_get_facets() {
 	$facetwp_settings_option = get_option( 'facetwp_settings' );

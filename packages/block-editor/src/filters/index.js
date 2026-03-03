@@ -4,6 +4,7 @@ import "./with-card-elements-visibility";
 import "./with-content-position-matrix";
 import "./with-controls-sections";
 import "./with-controls-visibility";
+import "./with-deprecated-image";
 import "./with-deprecated-group";
 import "./with-font-size-picker"; // @todo maybe rely on supports API
 import "./with-on-select-images";
