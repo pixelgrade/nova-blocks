@@ -23,6 +23,8 @@ const resetAnimatedStyles = ( block ) => {
   block.style.overflow = '';
   block.style.transition = '';
   block.style.willChange = '';
+  block.style.marginTop = '';
+  block.style.marginBottom = '';
 };
 
 const slideDown = ( block ) => {
@@ -34,11 +36,17 @@ const slideDown = ( block ) => {
     return;
   }
 
-  block.style.transition = `height ${ TRANSITION_DURATION }ms ${ TRANSITION_EASING }, opacity ${ TRANSITION_DURATION }ms ease`;
+  const computedStyle = window.getComputedStyle( block );
+  const targetMarginTop = parseFloat( computedStyle.marginTop ) || 0;
+  const targetMarginBottom = parseFloat( computedStyle.marginBottom ) || 0;
+
+  block.style.transition = `height ${ TRANSITION_DURATION }ms ${ TRANSITION_EASING }, opacity ${ TRANSITION_DURATION }ms ease, margin-top ${ TRANSITION_DURATION }ms ${ TRANSITION_EASING }, margin-bottom ${ TRANSITION_DURATION }ms ${ TRANSITION_EASING }`;
   block.style.overflow = 'hidden';
-  block.style.willChange = 'height, opacity';
+  block.style.willChange = 'height, opacity, margin-top, margin-bottom';
   block.style.height = '0px';
   block.style.opacity = '0';
+  block.style.marginTop = '0px';
+  block.style.marginBottom = '0px';
 
   // Force layout before animating to the expanded height.
   block.offsetHeight;
@@ -46,6 +54,8 @@ const slideDown = ( block ) => {
   const targetHeight = block.scrollHeight;
   block.style.height = `${ targetHeight }px`;
   block.style.opacity = '1';
+  block.style.marginTop = `${ targetMarginTop }px`;
+  block.style.marginBottom = `${ targetMarginBottom }px`;
 
   const timerId = window.setTimeout( () => {
     resetAnimatedStyles( block );
@@ -64,17 +74,25 @@ const slideUp = ( block ) => {
     return;
   }
 
-  block.style.transition = `height ${ TRANSITION_DURATION }ms ${ TRANSITION_EASING }, opacity ${ TRANSITION_DURATION }ms ease`;
+  const computedStyle = window.getComputedStyle( block );
+  const currentMarginTop = parseFloat( computedStyle.marginTop ) || 0;
+  const currentMarginBottom = parseFloat( computedStyle.marginBottom ) || 0;
+
+  block.style.transition = `height ${ TRANSITION_DURATION }ms ${ TRANSITION_EASING }, opacity ${ TRANSITION_DURATION }ms ease, margin-top ${ TRANSITION_DURATION }ms ${ TRANSITION_EASING }, margin-bottom ${ TRANSITION_DURATION }ms ${ TRANSITION_EASING }`;
   block.style.overflow = 'hidden';
-  block.style.willChange = 'height, opacity';
+  block.style.willChange = 'height, opacity, margin-top, margin-bottom';
   block.style.height = `${ block.scrollHeight }px`;
   block.style.opacity = '1';
+  block.style.marginTop = `${ currentMarginTop }px`;
+  block.style.marginBottom = `${ currentMarginBottom }px`;
 
   // Force layout before collapsing.
   block.offsetHeight;
 
   block.style.height = '0px';
   block.style.opacity = '0';
+  block.style.marginTop = '0px';
+  block.style.marginBottom = '0px';
 
   const timerId = window.setTimeout( () => {
     block.classList.remove( 'is-visible' );
