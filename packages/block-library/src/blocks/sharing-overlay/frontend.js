@@ -14,6 +14,14 @@ import { __ } from '@wordpress/i18n';
 
 	$( '.novablocks-sharing' ).each( function( i, obj ) {
 		const $block = $( obj );
+
+		// The frontend script can be evaluated multiple times after AJAX transitions.
+		// Guard against duplicate initialization on the same block node.
+		if ( $block.attr( 'data-nb-sharing-initialized' ) === '1' ) {
+			return;
+		}
+		$block.attr( 'data-nb-sharing-initialized', '1' );
+
 		const $overlay = $block.find( '.js-sharing-overlay' ).appendTo( 'body' );
 		const attributes = $block.data();
 

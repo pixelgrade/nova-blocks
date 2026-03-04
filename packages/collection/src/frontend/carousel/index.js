@@ -17,7 +17,18 @@ const initializeCarousels = () => {
 
   $carousels.each( function( index, slider ) {
     const $carousel = $( slider );
+
+    // This script can be re-executed after AJAX transitions.
+    // Avoid initializing slick twice on the same carousel node.
+    if ( $carousel.hasClass( 'slick-initialized' ) ) {
+      return;
+    }
+
     const $block = $carousel.closest( '[data-layout-style="carousel"]' );
+    if ( ! $block.length ) {
+      return;
+    }
+
     const attributes = $block.data();
     const PALETTE_CLASS = `sm-palette-${ attributes.palette }`;
     const PALETTE_VARIATION_CLASS = `sm-variation-${ attributes.contentPaletteVariation }`;
