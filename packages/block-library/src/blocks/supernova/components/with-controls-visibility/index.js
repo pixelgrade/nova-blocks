@@ -53,7 +53,7 @@ const withControlsVisibility = OriginalComponent => {
         'metadata-position': !! showMeta,
 
         // Media Composition
-        'media-composition-block-controls': 1 === innerBlocks.length && showMedia
+        'media-composition-block-controls': 1 === innerBlocks.length && showMedia,
       } );
 
     }, [ attributes, innerBlocks ] );

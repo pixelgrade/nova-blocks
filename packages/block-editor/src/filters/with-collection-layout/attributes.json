@@ -82,5 +82,21 @@
 	"carouselLayout": {
 		"type": "string",
 		"default": "fixed"
+	},
+	"pileParallaxAmount": {
+		"type": "number",
+		"default": 0
+	},
+	"pile3dEffect": {
+		"type": "boolean",
+		"default": false
+	},
+	"pile3dTarget": {
+		"type": "string",
+		"default": "item"
+	},
+	"pile3dTargetRule": {
+		"type": "string",
+		"default": "odd"
 	}
 }

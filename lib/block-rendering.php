@@ -497,11 +497,18 @@ function novablocks_get_sizing_css( array $attributes ): array {
 		$props[] = '--nb-card-media-container-height: ' . $attributes['mediaContainerHeight'];
 	}
 
-	if ( isset( $attributes['thumbnailAspectRatio'] ) ) {
-		$props[] = '--nb-card-media-padding-top: ' . novablocks_get_card_media_padding_top( $attributes['thumbnailAspectRatio'] ) . '%';
+	$is_original_aspect_ratio = ! empty( $attributes['thumbnailAspectRatioString'] ) && $attributes['thumbnailAspectRatioString'] === 'original';
+
+	if ( isset( $attributes['thumbnailAspectRatio'] ) && ! $is_original_aspect_ratio ) {
+		$padding_top = novablocks_get_card_media_padding_top( $attributes['thumbnailAspectRatio'] );
+		$props[] = '--nb-card-media-padding-top: ' . $padding_top . '%';
+		// Unitless aspect-ratio for stacked cards (width / height).
+		$props[] = '--nb-card-media-aspect-ratio: ' . ( 100 / $padding_top );
 	}
 
-	if ( isset( $attributes['imageResizing'] ) ) {
+	if ( $is_original_aspect_ratio ) {
+		$props[] = '--nb-card-media-object-fit: contain';
+	} elseif ( isset( $attributes['imageResizing'] ) ) {
 		$props[] = '--nb-card-media-object-fit: ' . ( $attributes['imageResizing'] === 'cropped' ? 'cover' : 'scale-down' );
 	}
 

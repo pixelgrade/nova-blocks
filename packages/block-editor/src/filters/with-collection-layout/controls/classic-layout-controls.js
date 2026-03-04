@@ -5,6 +5,9 @@ import { ControlsGroup } from "../../../components";
 import ItemsCountControl from './items-count-control';
 import ItemsPerRowControl from './items-per-row-control';
 import ItemsGapControls from './items-gap-control';
+import ItemsAspectRatioControl from './items-aspect-ratio-control';
+import Pile3dGridControls from './pile-3d-grid-controls';
+import PileParallaxControls from './pile-parallax-controls';
 
 const ClassicLayoutControls = ( props ) => {
 
@@ -20,11 +23,20 @@ const ClassicLayoutControls = ( props ) => {
   } = props;
 
   return (
-    <ControlsGroup title={ __( 'Cards Count', '__plugin_txtd' ) }>
-      <ItemsCountControl postsToShow={postsToShow} setAttributes={setAttributes} />
-      <ItemsPerRowControl { ...props } />
-      <ItemsGapControls { ...props } />
-    </ControlsGroup>
+    <>
+      <ControlsGroup title={ __( 'Cards Count', '__plugin_txtd' ) }>
+        <ItemsCountControl postsToShow={postsToShow} setAttributes={setAttributes} />
+        <ItemsPerRowControl { ...props } />
+        <ItemsGapControls { ...props } />
+      </ControlsGroup>
+      <ControlsGroup title={ __( 'Layout', '__plugin_txtd' ) }>
+        <ItemsAspectRatioControl { ...props } />
+        <Pile3dGridControls { ...props } />
+      </ControlsGroup>
+      <ControlsGroup title={ __( 'Parallax', '__plugin_txtd' ) }>
+        <PileParallaxControls { ...props } />
+      </ControlsGroup>
+    </>
   )
 };
 

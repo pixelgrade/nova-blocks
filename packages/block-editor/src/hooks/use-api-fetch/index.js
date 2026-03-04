@@ -15,14 +15,14 @@ const useApiFetch = ( url ) => {
 			return;
 		}
 
-		const fetchData = async () => {
-			if ( ! cache[ url ] ) {
-				cache[ url ] = await index( { path: url } );
-			}
+		if ( cache[ url ] ) {
 			setData( cache[ url ] );
-		};
-
-		fetchData();
+		} else {
+			index( { path: url } ).then( ( result ) => {
+				cache[ url ] = result;
+				setData( result );
+			} );
+		}
 
 	}, [ url ] );
 

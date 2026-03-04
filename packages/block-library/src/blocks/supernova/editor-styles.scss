@@ -5,7 +5,10 @@
   .nb-collection__layout.nb-collection__layout--variable-width & .nb-supernova-item__content,
   .nb-collection__layout:not(.nb-collection__layout--variable-width) & .nb-supernova-item__media-wrapper {
     --reference-aspect-ratio: 16/9;
-    aspect-ratio: calc(100 / var(--nb-min-height-fallback) * var(--reference-aspect-ratio) * var(--aspect-ratio-multiplier, 1));
+    // max() guards against division by zero when Minimum Container Height is "None" (fallback=0).
+    // With max(_, 0.001), fallback=0 produces aspect-ratio ≈ 177778 — effectively no height
+    // constraint, so the content grid cell determines card height instead.
+    aspect-ratio: calc(100 / max(var(--nb-min-height-fallback, 0.001), 0.001) * var(--reference-aspect-ratio) * var(--aspect-ratio-multiplier, 1));
   }
 
   > :is(.nb-supernova-item__content, .nb-supernova-item__media-wrapper) {

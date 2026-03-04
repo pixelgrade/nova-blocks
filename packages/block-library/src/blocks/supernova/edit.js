@@ -74,6 +74,9 @@ const SupernovaPreview = props => {
     cardLayout,
     carouselLayout,
     layoutStyle,
+    thumbnailAspectRatioString,
+    pileParallaxAmount,
+    pile3dEffect,
   } = attributes;
 
   // Overwrite the contentType if we are in a query.
@@ -92,6 +95,9 @@ const SupernovaPreview = props => {
     `nb-supernova--align-${ align }`,
     { 'nb-supernova--show-pagination': showPagination },
     { [ `nb-supernova--carousel-layout-${ carouselLayout }` ]: layoutStyle === 'carousel' },
+    { 'nb-supernova--aspect-ratio-original': thumbnailAspectRatioString === 'original' },
+    { 'nb-supernova--pile-parallax': pileParallaxAmount > 0 },
+    { 'nb-supernova--pile-3d': !! pile3dEffect },
     props.className,
     'alignfull'
   );
