@@ -9,11 +9,29 @@ const withSpaceAndSizingSaveCustomProps = ( extraProps, blockType, attributes ) 
     return extraProps;
   }
 
+  const spacingCSSProps = getSpacingCSSProps( attributes, extraProps?.style );
+  const legacySpacingFlags = attributes?.metadata?.__novablocksLegacySpacing;
+
+  if ( legacySpacingFlags?.missingAspectRatioVar ) {
+    delete spacingCSSProps['--nb-card-media-aspect-ratio'];
+  }
+
+  if ( legacySpacingFlags?.missingMinHeightFallbackVar ) {
+    delete spacingCSSProps['--nb-min-height-fallback'];
+  }
+
+  if ( legacySpacingFlags?.zIndexSerializedAsPx ) {
+    const zIndex = spacingCSSProps['--nb-block-zindex'];
+    if ( typeof zIndex === 'number' ) {
+      spacingCSSProps['--nb-block-zindex'] = `${ zIndex }px`;
+    }
+  }
+
   return {
     ...extraProps,
     style: {
       ...extraProps?.style,
-      ...getSpacingCSSProps( attributes, extraProps?.style )
+      ...spacingCSSProps
     },
   }
 };
