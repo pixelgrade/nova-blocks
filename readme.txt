@@ -3,7 +3,7 @@ Contributors: pixelgrade, vlad.olaru, babbardel, razvanonofrei, gorby31
 Tags: blocks, gutenberg, gutenberg blocks, page builder, full site editing
 Requires at least: 5.9
 Tested up to: 7.0
-Stable tag: 2.1.13
+Stable tag: 2.1.14
 Requires PHP: 7.4
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -93,6 +93,12 @@ Yes! Nova Block's core features are free to use.
 3. Slideshow Me the Way block options
 
 == Changelog ==
+
+= 2.1.14 =
+* Release: Published the latest WordPress 7.0 compatibility and Collection Layout improvements as 2.1.14 to keep GitHub and WordPress.org versioning aligned.
+* Fix: Legacy starter-content block validation regressions for NB-enhanced core blocks (Group, Columns, Separator, Quote).
+* Fix: FacetWP hidden filters close animation and end-of-close layout jump.
+* Fix: Frontend collection and sharing initialization during AJAX transition re-execution.
 
 = 2.1.11 =
 * Fix: Card blocks displaying raw HTML span tags for category/author/tag meta text (regression from 2.1.10 security escaping).
