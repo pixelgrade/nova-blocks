@@ -1,0 +1,173 @@
+#!/usr/bin/env bash
+
+set -euo pipefail
+
+script_dir="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+repo_root="$(cd "${script_dir}/.." && pwd)"
+
+sync_mode="${PRIVATE_SYNC_MODE:-copy}"
+force="false"
+source_dir="${PRIVATE_SOURCE_DIR:-}"
+repo_url="${PRIVATE_REPO_URL:-}"
+
+targets=(
+  "AGENTS.local.md"
+  ".claude/napkin.md"
+  ".env.local"
+)
+
+usage() {
+  cat <<'EOF'
+Bootstrap private local overlays for nova-blocks.
+
+The script syncs the following files when they exist in the private source:
+  - AGENTS.local.md
+  - .claude/napkin.md
+  - .env.local
+
+Usage:
+  bin/bootstrap-private [--copy|--link] [--force] [--repo-url URL] [--source-dir DIR]
+
+Config sources, in precedence order:
+  1. command-line flags
+  2. .env.local (if already present)
+  3. git config --local novablocks.privateRepo
+  4. PRIVATE_REPO_URL / PRIVATE_SOURCE_DIR / PRIVATE_SYNC_MODE environment variables
+
+Defaults:
+  sync mode: copy
+  source dir: .private/source
+
+Examples:
+  git config --local novablocks.privateRepo git@github.com:<you>/nova-blocks-private.git
+  bin/bootstrap-private
+  bin/bootstrap-private --force
+  bin/bootstrap-private --link --source-dir ~/Developer/nova-blocks-private
+EOF
+}
+
+while [[ $# -gt 0 ]]; do
+  case "$1" in
+    --copy)
+      sync_mode="copy"
+      shift
+      ;;
+    --link)
+      sync_mode="link"
+      shift
+      ;;
+    --force)
+      force="true"
+      shift
+      ;;
+    --repo-url)
+      [[ $# -ge 2 ]] || {
+        echo "Missing value for --repo-url" >&2
+        exit 1
+      }
+      repo_url="$2"
+      shift 2
+      ;;
+    --source-dir)
+      [[ $# -ge 2 ]] || {
+        echo "Missing value for --source-dir" >&2
+        exit 1
+      }
+      source_dir="$2"
+      shift 2
+      ;;
+    -h|--help)
+      usage
+      exit 0
+      ;;
+    *)
+      echo "Unknown argument: $1" >&2
+      usage >&2
+      exit 1
+      ;;
+  esac
+done
+
+if [[ -f "${repo_root}/.env.local" ]]; then
+  # shellcheck disable=SC1091
+  set -a
+  source "${repo_root}/.env.local"
+  set +a
+
+  sync_mode="${PRIVATE_SYNC_MODE:-$sync_mode}"
+  source_dir="${PRIVATE_SOURCE_DIR:-$source_dir}"
+  repo_url="${PRIVATE_REPO_URL:-$repo_url}"
+fi
+
+if [[ -z "$repo_url" ]]; then
+  repo_url="$(git -C "$repo_root" config --local --get novablocks.privateRepo || true)"
+fi
+
+if [[ -z "$source_dir" ]]; then
+  source_dir="${repo_root}/.private/source"
+fi
+
+if [[ "$sync_mode" != "copy" && "$sync_mode" != "link" ]]; then
+  echo "PRIVATE_SYNC_MODE must be 'copy' or 'link'." >&2
+  exit 1
+fi
+
+if [[ ! -d "$source_dir" ]]; then
+  if [[ -z "$repo_url" ]]; then
+    echo "No private source found." >&2
+    echo "Set one of the following first:" >&2
+    echo "  - git config --local novablocks.privateRepo <git-url>" >&2
+    echo "  - PRIVATE_REPO_URL in your shell" >&2
+    echo "  - --repo-url <git-url>" >&2
+    echo "  - --source-dir <existing-private-checkout>" >&2
+    exit 1
+  fi
+
+  mkdir -p "$(dirname "$source_dir")"
+  echo "Cloning private overlay into ${source_dir}"
+  git clone "$repo_url" "$source_dir"
+elif [[ -n "$repo_url" && -d "${source_dir}/.git" ]]; then
+  echo "Updating private overlay in ${source_dir}"
+  git -C "$source_dir" pull --ff-only
+fi
+
+sync_target() {
+  local rel="$1"
+  local src="${source_dir}/${rel}"
+  local dst="${repo_root}/${rel}"
+
+  if [[ ! -e "$src" ]]; then
+    echo "skip ${rel} (missing in private source)"
+    return
+  fi
+
+  mkdir -p "$(dirname "$dst")"
+
+  if [[ -e "$dst" || -L "$dst" ]]; then
+    if [[ -f "$src" && -f "$dst" ]] && cmp -s "$src" "$dst"; then
+      echo "up to date ${rel}"
+      return
+    fi
+
+    if [[ "$force" != "true" ]]; then
+      echo "skip ${rel} (already exists, rerun with --force to replace)"
+      return
+    fi
+
+    rm -rf "$dst"
+  fi
+
+  if [[ "$sync_mode" == "link" ]]; then
+    ln -s "$src" "$dst"
+    echo "linked ${rel}"
+  else
+    cp "$src" "$dst"
+    echo "copied ${rel}"
+  fi
+}
+
+for rel in "${targets[@]}"; do
+  sync_target "$rel"
+done
+
+echo "Done."

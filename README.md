@@ -77,6 +77,59 @@ For ease of development, it is best to use [**nvm**](https://github.com/nvm-sh/n
 
 We use the following oh-my-zsh plugins: `plugins=(composer git nvm npm)` configured in `~/.zshrc`. For automatic node version switching, place this line in `~/.zshrc` just below the plugins line: `NVM_AUTOLOAD=1`. Now whenever you enter a directory through the shell, if it finds a `.nvmrc` file, it will switch to the specified node version.
 
+## Private Local Overlays
+
+This repo supports a split between tracked public templates and ignored local private files.
+
+Tracked files:
+
+- `AGENTS.md`
+- `AGENTS.local.example.md`
+- `.claude/napkin.example.md`
+- `.env.example`
+- `bin/bootstrap-private`
+
+Ignored files:
+
+- `AGENTS.local.md`
+- `.claude/napkin.md`
+- `.env.local`
+- `.private/`
+
+Recommended workflow:
+
+1. Put your real private files in a separate private repo, for example `nova-blocks-private`.
+2. Store any of these files there when needed:
+   - `AGENTS.local.md`
+   - `.claude/napkin.md`
+   - `.env.local`
+3. After cloning `nova-blocks`, configure the private repo once:
+
+```bash
+git config --local novablocks.privateRepo git@github.com:<you>/nova-blocks-private.git
+```
+
+4. Hydrate the local private files:
+
+```bash
+bin/bootstrap-private
+```
+
+Useful variants:
+
+```bash
+# replace existing local private files from the private source
+bin/bootstrap-private --force
+
+# symlink the files instead of copying them
+bin/bootstrap-private --link
+
+# use an existing local checkout of your private repo
+bin/bootstrap-private --source-dir ~/Developer/nova-blocks-private
+```
+
+The bootstrap script syncs `AGENTS.local.md`, `.claude/napkin.md`, and `.env.local` when those files exist in the private source.
+
 ## License
 
 Nova Blocks source code is released under the [GNU GPL v3 license](https://www.gnu.org/licenses/gpl-3.0.en.html) or later. This is so you have the freedom to create something beautiful and share it back with us.

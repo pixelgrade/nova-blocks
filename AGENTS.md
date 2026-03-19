@@ -78,6 +78,13 @@ gh release view X.Y.Z
 
 GitHub repo: `git@github.com:pixelgrade/nova-blocks.git`
 
+## Private Local Files
+
+- Keep machine-specific notes in `AGENTS.local.md` or `.claude/napkin.md`.
+- Keep local env values in `.env.local`.
+- Do not commit those private overlays; commit only the `*.example` files.
+- Use `bin/bootstrap-private` to hydrate the private overlays after cloning the public repo.
+
 ## Issue Resolution Workflow
 
 When a GitHub issue is fixed and the work is considered done:

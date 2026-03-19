@@ -5,3 +5,12 @@
 /dist/
 
 /vendor/
+
+# Private local overlays
+.env
+.env.local
+.env.*.local
+AGENTS.local.md
+.claude/napkin.md
+.claude/local/
+.private/
