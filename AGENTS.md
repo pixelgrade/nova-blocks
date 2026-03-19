@@ -78,6 +78,15 @@ gh release view X.Y.Z
 
 GitHub repo: `git@github.com:pixelgrade/nova-blocks.git`
 
+## Issue Resolution Workflow
+
+When a GitHub issue is fixed and the work is considered done:
+
+1. Commit the source changes and push them to GitHub unless the user explicitly says not to push yet.
+2. Add a comment on the issue summarizing the root cause, the fix, and how it was verified.
+3. Close the issue after the push and comment are done.
+4. Assign the issue to the requested milestone if the user asked for one.
+
 ## Release on WordPress.org SVN
 
 ### SVN Authentication

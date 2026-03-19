@@ -1,13 +1,21 @@
 import "@novablocks/core/frontend";
-import { addClass, removeClass, toggleClass, onScrollRAF, clamp, ready, syncColorSignalClasses } from '@novablocks/utils';
 import Header from './frontend/components/index';
 
-ready( () => {
+const initializeHeaders = () => {
 
   const headerElements = Array.from( document.querySelectorAll( '.nb-header' ) );
 
-  const headers = headerElements.map( element => {
-    return new Header( element );
+  headerElements.forEach( element => {
+    new Header( element );
   } );
 
-} );
+};
+
+// When this script is deferred, `document.readyState` is already `interactive`.
+// Waiting for the actual DOM ready event keeps header color setup after the
+// color-signal initialization that still runs on `DOMContentLoaded`.
+if ( document.readyState === 'complete' ) {
+  initializeHeaders();
+} else {
+  document.addEventListener( 'DOMContentLoaded', initializeHeaders );
+}
