@@ -125,7 +125,7 @@ bin/bootstrap-private --force
 bin/bootstrap-private --link
 
 # use an existing local checkout of your private repo
-bin/bootstrap-private --source-dir ~/Developer/nova-blocks-private
+bin/bootstrap-private --source-dir /path/to/nova-blocks-private
 ```
 
 The bootstrap script syncs `AGENTS.local.md`, `.claude/napkin.md`, and `.env.local` when those files exist in the private source.

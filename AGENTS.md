@@ -84,7 +84,6 @@ GitHub repo: `git@github.com:pixelgrade/nova-blocks.git`
 - Keep local env values in `.env.local`.
 - Do not commit those private overlays; commit only the `*.example` files.
 - Use `bin/bootstrap-private` to hydrate the private overlays after cloning the public repo.
-- Private companion repo: `git@github.com:georgeolaru/nova-blocks-private.git`
 
 Clone/bootstrap flow for a fresh machine:
 ```bash
@@ -92,8 +91,8 @@ Clone/bootstrap flow for a fresh machine:
 git clone git@github.com:pixelgrade/nova-blocks.git
 cd nova-blocks
 
-# 2. Point the repo at the private companion repo
-git config --local novablocks.privateRepo git@github.com:georgeolaru/nova-blocks-private.git
+# 2. Point the repo at your private companion repo
+git config --local novablocks.privateRepo git@github.com:<you>/nova-blocks-private.git
 
 # 3. Hydrate the private local overlays
 bin/bootstrap-private
@@ -106,8 +105,8 @@ What gets pulled from the private repo when present:
 
 If you prefer to keep an explicit local checkout of the private repo, use:
 ```bash
-git clone git@github.com:georgeolaru/nova-blocks-private.git ~/Developer/nova-blocks-private
-bin/bootstrap-private --source-dir ~/Developer/nova-blocks-private
+git clone git@github.com:<you>/nova-blocks-private.git /path/to/nova-blocks-private
+bin/bootstrap-private --source-dir /path/to/nova-blocks-private
 ```
 
 ## Issue Resolution Workflow
