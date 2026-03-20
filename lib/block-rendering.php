@@ -1634,7 +1634,9 @@ function novablocks_get_card_item_buttons( array $buttons, array $attributes ): 
 
 	$output = '';
 	foreach ( $buttons as $button ) {
-		if ( empty ( $button['text'] ) ) {
+		// Button labels are plain text; strip any imported markup before escaping.
+		$button_text = trim( wp_strip_all_tags( wp_specialchars_decode( (string) ( $button['text'] ?? '' ), ENT_QUOTES ) ) );
+		if ( '' === $button_text ) {
 			continue;
 		}
 
@@ -1642,7 +1644,7 @@ function novablocks_get_card_item_buttons( array $buttons, array $attributes ): 
       <div
         class="wp-block-button is-style-' . esc_attr( $attributes['buttonsStyle'] ) . ' sm-color-signal-1 sm-palette-1 sm-palette--shifted sm-variation-1 sm-light"
         data-palette="1" data-palette-variation="1" data-color-signal="1" data-use-source-color-as-reference="true">
-        <a class="wp-block-button__link" href="' . esc_url( $button['url'] ) . '">' . esc_html( $button['text'] ) . '</a>
+        <a class="wp-block-button__link" href="' . esc_url( $button['url'] ) . '">' . esc_html( $button_text ) . '</a>
       </div>
     </div>';
 	}
