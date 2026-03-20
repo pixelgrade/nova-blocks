@@ -51,6 +51,41 @@ function novablocks_register_block_patterns_categories() {
 add_action( 'init', 'novablocks_register_block_patterns_categories', 10 );
 
 /**
+ * Removes third-party header template-part patterns that are invalid once Nova
+ * augments their underlying core blocks.
+ *
+ * @return void
+ */
+function novablocks_unregister_incompatible_template_part_patterns() {
+	if ( ! function_exists( 'unregister_block_pattern' ) ) {
+		return;
+	}
+
+	$pattern_slugs = [
+		'woocommerce-blocks/header-centered-menu',
+		'woocommerce-blocks/header-distraction-free',
+		'woocommerce-blocks/header-essential',
+		'woocommerce-blocks/header-large',
+		'woocommerce-blocks/header-minimal',
+	];
+
+	/**
+	 * Filters the list of third-party template-part patterns to unregister.
+	 *
+	 * @param string[] $pattern_slugs Pattern slugs to unregister.
+	 */
+	$pattern_slugs = apply_filters( 'novablocks/incompatible_template_part_patterns', $pattern_slugs );
+
+	foreach ( $pattern_slugs as $pattern_slug ) {
+		if ( is_string( $pattern_slug ) && WP_Block_Patterns_Registry::get_instance()->is_registered( $pattern_slug ) ) {
+			unregister_block_pattern( $pattern_slug );
+		}
+	}
+}
+
+add_action( 'init', 'novablocks_unregister_incompatible_template_part_patterns', 100 );
+
+/**
  * Registers block patterns.
  *
  * @return void
