@@ -44,8 +44,8 @@ ls -la ../nova-blocks-X-Y-Z.zip
 # Must contain build/ directory
 unzip -l ../nova-blocks-X-Y-Z.zip | grep "nova-blocks/build/" | head -3
 
-# Must NOT contain AGENTS.md or CLAUDE.md
-unzip -l ../nova-blocks-X-Y-Z.zip | grep -E "AGENTS.md|CLAUDE.md"
+# Must NOT contain AGENTS.md, CLAUDE.md, or .ai/
+unzip -l ../nova-blocks-X-Y-Z.zip | grep -E "AGENTS.md|CLAUDE.md|\\.ai/"
 
 # Check version fields
 unzip -p ../nova-blocks-X-Y-Z.zip nova-blocks/readme.txt | grep -E "Tested up to|Stable tag"
@@ -80,6 +80,8 @@ GitHub repo: `git@github.com:pixelgrade/nova-blocks.git`
 
 ## Private Local Files
 
+- Keep `AGENTS.md` as the canonical shared instruction file for both Codex and Claude.
+- Keep `CLAUDE.md` as a thin shim to `@AGENTS.md` so the shared instructions stay in one place.
 - Keep shared private agent instructions in `AGENTS.local.md`.
 - Keep vendor-neutral private research notes, plans, and issue writeups in `.ai/`.
 - Keep tool-specific distilled working memory in `.claude/napkin.md`.

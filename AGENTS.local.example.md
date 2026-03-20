@@ -12,4 +12,5 @@ Use the private local copy for:
 - anything that should not ship in the public repo
 
 Keep larger private plans, research notes, and issue writeups in `.ai/`.
+Keep tool-specific distilled working memory in `.claude/napkin.md`.
 Keep `AGENTS.md` limited to public, repo-safe instructions.
