@@ -5,7 +5,7 @@
 - **MUST use Node 22 LTS** — Older versions (e.g. Node 14, 16) are no longer supported and will not work.
 - **NEVER run `npm run build` or `npm run zip` with the wrong Node version** — it runs `preclean:packages` which DELETES the `build/` directory BEFORE building. If the build then fails, the plugin is left broken with no `build/` dir.
 - **Always use `npm run zip`** (not `npx gulp zip` alone) — `npm run zip` runs the full build first via `prezip` hook. Running `gulp zip` alone skips the JS/CSS compilation and produces an incomplete zip (~270KB instead of ~1MB).
-- **AGENTS.md and CLAUDE.md are excluded from zip** via `.zipignore` — keep it that way.
+- **AGENTS.md, CLAUDE.md, and `.ai/` are excluded from zip** via `.zipignore` — keep it that way.
 
 ## Prerequisites
 
@@ -80,7 +80,9 @@ GitHub repo: `git@github.com:pixelgrade/nova-blocks.git`
 
 ## Private Local Files
 
-- Keep machine-specific notes in `AGENTS.local.md` or `.claude/napkin.md`.
+- Keep shared private agent instructions in `AGENTS.local.md`.
+- Keep vendor-neutral private research notes, plans, and issue writeups in `.ai/`.
+- Keep tool-specific distilled working memory in `.claude/napkin.md`.
 - Keep local env values in `.env.local`.
 - Do not commit those private overlays; commit only the `*.example` files.
 - Use `bin/bootstrap-private` to hydrate the private overlays after cloning the public repo.
@@ -100,6 +102,7 @@ bin/bootstrap-private
 
 What gets pulled from the private repo when present:
 - `AGENTS.local.md`
+- `.ai/`
 - `.claude/napkin.md`
 - `.env.local`
 

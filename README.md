@@ -92,6 +92,7 @@ Tracked files:
 Ignored files:
 
 - `AGENTS.local.md`
+- `.ai/`
 - `.claude/napkin.md`
 - `.env.local`
 - `.private/`
@@ -101,6 +102,7 @@ Recommended workflow:
 1. Put your real private files in a separate private repo, for example `nova-blocks-private`.
 2. Store any of these files there when needed:
    - `AGENTS.local.md`
+   - `.ai/`
    - `.claude/napkin.md`
    - `.env.local`
 3. After cloning `nova-blocks`, configure the private repo once:
@@ -128,7 +130,9 @@ bin/bootstrap-private --link
 bin/bootstrap-private --source-dir /path/to/nova-blocks-private
 ```
 
-The bootstrap script syncs `AGENTS.local.md`, `.claude/napkin.md`, and `.env.local` when those files exist in the private source.
+Use `AGENTS.local.md` for shared private instructions, `.ai/` for vendor-neutral plans/research notes, and `.claude/napkin.md` for tool-specific distilled working memory.
+
+The bootstrap script syncs `AGENTS.local.md`, `.ai/`, `.claude/napkin.md`, and `.env.local` when those files exist in the private source.
 
 ## License
 

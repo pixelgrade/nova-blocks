@@ -12,6 +12,7 @@ repo_url="${PRIVATE_REPO_URL:-}"
 
 targets=(
   "AGENTS.local.md"
+  ".ai"
   ".claude/napkin.md"
   ".env.local"
 )
@@ -22,6 +23,7 @@ Bootstrap private local overlays for nova-blocks.
 
 The script syncs the following files when they exist in the private source:
   - AGENTS.local.md
+  - .ai/
   - .claude/napkin.md
   - .env.local
 
@@ -161,7 +163,11 @@ sync_target() {
     ln -s "$src" "$dst"
     echo "linked ${rel}"
   else
-    cp "$src" "$dst"
+    if [[ -d "$src" && ! -L "$src" ]]; then
+      cp -R "$src" "$dst"
+    else
+      cp "$src" "$dst"
+    fi
     echo "copied ${rel}"
   fi
 }

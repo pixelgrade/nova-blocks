@@ -8,6 +8,8 @@ Use the private local copy for:
 - local site IDs
 - personal workflow notes
 - private QA shortcuts
+- shared private instructions that should apply to both Claude and Codex
 - anything that should not ship in the public repo
 
+Keep larger private plans, research notes, and issue writeups in `.ai/`.
 Keep `AGENTS.md` limited to public, repo-safe instructions.
