@@ -169,6 +169,14 @@ When changing the version number, update ALL of these:
 - [ ] `readme.txt` → `Stable tag: X.Y.Z`
 - [ ] `readme.txt` → `Tested up to: X.Y`
 
+## Cards Collection Hover Border Integration
+
+- The Pile-style hover frame for stacked Cards Collection blocks is driven by the `overlayFilterHoverBorderSize` attribute under `Overlay Filter`, not by page transitions.
+- Keep the style attribute wiring in sync in both `packages/utils/src/overlay-filter/index.js` and `lib/block-rendering.php` so editor and frontend receive the same `--nb-overlay-filter-hover-border-size` CSS variable.
+- The `Hover Border Size` control should only appear when the collection has more than one column and media is visible.
+- The current `Hover Border Size` UI range is `0–20`.
+- The current `Content Area Padding` control step is `10`, not `25`.
+
 ## Header Template-Part Pattern Compatibility
 
 ### WooCommerce header patterns in the Header Design picker

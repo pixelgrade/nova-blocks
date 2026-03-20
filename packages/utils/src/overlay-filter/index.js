@@ -1,8 +1,17 @@
 export const getOverlayFilterCSSProps = ( attributes ) => {
 
-  const { overlayFilterStrength } = attributes;
+  const {
+    overlayFilterStrength,
+    overlayFilterHoverBorderSize,
+  } = attributes;
 
-  return {
+  const props = {
     '--nb-overlay-filter-strength': overlayFilterStrength / 100
+  };
+
+  if ( typeof overlayFilterHoverBorderSize === 'number' ) {
+    props['--nb-overlay-filter-hover-border-size'] = `${ overlayFilterHoverBorderSize }px`;
   }
+
+  return props;
 };

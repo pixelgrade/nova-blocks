@@ -472,9 +472,15 @@ function novablocks_get_color_signal_css( array $attributes ): array {
 }
 
 function novablocks_get_overlay_filter_css( array $attributes ): array {
-	return [
+	$props = [
 		'--nb-overlay-filter-strength: ' . $attributes['overlayFilterStrength'] / 100,
 	];
+
+	if ( isset( $attributes['overlayFilterHoverBorderSize'] ) && $attributes['overlayFilterHoverBorderSize'] !== '' ) {
+		$props[] = '--nb-overlay-filter-hover-border-size: ' . $attributes['overlayFilterHoverBorderSize'] . 'px';
+	}
+
+	return $props;
 }
 
 function novablocks_get_sizing_css( array $attributes ): array {

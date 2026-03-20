@@ -28,7 +28,14 @@ const COLOR_PALETTES = generateColorPalettes( FILTERED_PALETTES );
 const OverlayFilterControls = ( props ) => {
 
   const { attributes, setAttributes } = props;
-  const { overlayFilterStrength } = attributes;
+  const {
+    overlayFilterStrength,
+    overlayFilterHoverBorderSize,
+    columns,
+    showMedia,
+  } = attributes;
+
+  const showHoverBorderSizeControl = Number( columns ) > 1 && showMedia !== false;
 
   return (
     <ControlsSection id={ 'overlay-filter' } label={ __( 'Overlay Filter', '__plugin_txtd' ) } group={ __( 'Modules', '__plugin_txtd' ) } order={ 40 }>
@@ -47,6 +54,18 @@ const OverlayFilterControls = ( props ) => {
             step={ 10 }
           />
         </ControlsGroup>
+        { showHoverBorderSizeControl &&
+          <ControlsGroup>
+            <RangeControl
+              label={ __( 'Hover Border Size', '__plugin_txtd' ) }
+              help={ __( 'The selected collection keeps the hover border visible in the editor while you adjust it. Set to 0 to disable it.', '__plugin_txtd' ) }
+              value={ overlayFilterHoverBorderSize ?? 0 }
+              onChange={ ( nextHoverBorderSize ) => setAttributes( { overlayFilterHoverBorderSize: nextHoverBorderSize } ) }
+              min={ 0 }
+              max={ 20 }
+              step={ 1 }
+            />
+          </ControlsGroup> }
       </ControlsTab>
     </ControlsSection>
   );
