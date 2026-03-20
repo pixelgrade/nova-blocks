@@ -164,6 +164,27 @@ When changing the version number, update ALL of these:
 - [ ] `readme.txt` → `Stable tag: X.Y.Z`
 - [ ] `readme.txt` → `Tested up to: X.Y`
 
+## Header Template-Part Pattern Compatibility
+
+### WooCommerce header patterns in the Header Design picker
+- The Site Editor `Template Part > Design` picker includes any registered patterns with `blockTypes: core/template-part/header`, including plugin patterns.
+- WooCommerce registers header presets under these slugs:
+  - `woocommerce-blocks/header-centered-menu`
+  - `woocommerce-blocks/header-distraction-free`
+  - `woocommerce-blocks/header-essential`
+  - `woocommerce-blocks/header-large`
+  - `woocommerce-blocks/header-minimal`
+
+### Why they were removed
+- Nova augments `core/group`, `core/columns`, and `core/separator` save output with extra `sm-*` classes, `data-*` attributes, and `--nb-*` inline styles.
+- WooCommerce header patterns serialize plain core markup, so in the Header Design preview iframe they revalidate as invalid and show `Block contains unexpected or invalid content.`
+- The chosen fix was the smallest practical one: hide those broken presets instead of trying to make Nova's custom core block serialization backward-compatible with third-party static pattern HTML.
+
+### Current implementation
+- Nova unregisters the five WooCommerce header pattern slugs in `lib/block-patterns.php` on `init` priority `100`.
+- The list can be adjusted via the `novablocks/incompatible_template_part_patterns` filter.
+- This decision was implemented while fixing issue `#494` in commit `7e0b0902` (`Hide incompatible WooCommerce header patterns`).
+
 ## Separator Styling Architecture
 
 The separator block (`core/separator`) uses `currentColor` inheritance for all its parts:
