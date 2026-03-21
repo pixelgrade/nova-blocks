@@ -1,4 +1,8 @@
-.wp-block-row > .wp-block-categories-list {
+:is(
+  .wp-block-row,
+  .wp-block-group.is-layout-flex,
+  .wp-block-group.wp-block-group-is-layout-flex
+) > .wp-block-categories-list {
   display: flex;
   flex-wrap: wrap;
   gap: var(--nb-current-spacing);
