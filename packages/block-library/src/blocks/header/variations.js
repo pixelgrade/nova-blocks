@@ -29,6 +29,33 @@ const variations = [
     scope: [ 'block' ],
   },
   {
+    name: 'logo-left-center-right',
+    title: __('Logo left with one menu in the center and one menu on the right.', '__plugin_txtd' ),
+    icon: icons.logoLeftCenterRight,
+    attributes: {
+      layout: 'logo-left-center-right',
+      logoHeight: 30
+    },
+    innerBlocks: [
+      [ 'novablocks/header-row', {
+        slug: 'primary',
+        label: __( 'Primary Navigation', '__plugin_txtd' ),
+        isPrimary: true,
+        blockTopSpacing: 0,
+        blockBottomSpacing: 0,
+        emphasisTopSpacing: 1,
+        emphasisBottomSpacing: 1,
+      },
+        [
+          [ 'novablocks/logo' ],
+          [ 'novablocks/navigation', { slug: "primary" } ],
+          [ 'novablocks/navigation', { slug: "secondary" } ]
+        ]
+      ]
+    ],
+    scope: [ 'block' ],
+  },
+  {
     name: 'logo-center',
     title: __('Logo centered with one menu on the left and one menu on the right.', '__plugin_txtd' ),
     icon: icons.logoCenter,

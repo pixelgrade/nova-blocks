@@ -100,5 +100,35 @@
   .nb-header[class] .nb-header-row:not(.nb-header-row--primary) {
     --nb-navigation-item-spacing: 1.25em;
   }
-}
 
+  :is(.nb-header-logo-left-center-right, .nb-header[data-layout='logo-left-center-right'], #more.specific) {
+
+    .nb-header-row__inner-container[class] > .wp-block {
+
+      > :first-child:not(:last-child),
+      > :last-child:not(:first-child) {
+        flex: 1 1 0;
+        min-width: 0;
+      }
+
+      > :not(:first-child):not(:last-child) {
+        flex: 0 1 auto;
+        min-width: 0;
+      }
+
+      > :first-child[class*='branding']:not(:last-child) {
+
+        &[class][class][class] {
+          flex: 1 1 0;
+        }
+      }
+
+      > :not(:first-child):not(:last-child)[class*='nb-navigation'] {
+
+        &[class][class][class] {
+          flex: 0 1 auto;
+        }
+      }
+    }
+  }
+}

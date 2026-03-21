@@ -32,7 +32,7 @@ class Header extends HeaderBase {
     addClass( this.adjacentElementTargetChild, 'nb-header-neighbour' );
 
     this.rows = this.getHeaderRows();
-    this.isSimple = [ 'logo-left', 'logo-center' ].includes( element.dataset.layout );
+    this.isSimple = [ 'logo-left', 'logo-left-center-right', 'logo-center' ].includes( element.dataset.layout );
     this.isSticky = this.isSimple && !! this.rows.find( row => row.element.dataset.isSticky );
 
     this.mobileHeader = new HeaderMobile( this );

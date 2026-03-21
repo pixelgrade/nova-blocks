@@ -29,6 +29,22 @@ const TEMPLATE_OPTIONS = [
         slug: "secondary"
       } ],
     ],
+  },
+  {
+    title: __( 'Logo on the left side, one centered navigation menu, and one navigation menu on the right', '__plugin_txtd' ),
+    name: 'logo-left-center-right',
+    icon: icons.logoLeftCenterRight,
+    template: [
+      [ 'novablocks/logo' ],
+      [ 'novablocks/navigation', {
+        className: "nb-navigation nb-navigation--primary",
+        slug: "primary"
+      } ],
+      [ 'novablocks/navigation', {
+        className: "nb-navigation nb-navigation--secondary",
+        slug: "secondary"
+      } ],
+    ],
   }
 ];
 

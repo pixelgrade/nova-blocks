@@ -11,6 +11,15 @@ export const logoLeft = (
   </SVG>
 );
 
+export const logoLeftCenterRight = (
+  <SVG width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <Path d="M1 20H13V28H1V20Z" fill="#F9E547"/>
+    <Path d="M1 20H13V28H1V20Z" fill="#FAC919"/>
+    <Path d="M15 20H31V28H15V20Z" fill="#C4C7D5"/>
+    <Path d="M33 20H47V28H33V20Z" fill="#C4C7D5"/>
+  </SVG>
+);
+
 export const logoCenter = (
   <SVG width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
     <Path d="M33 20H47V28H33V20Z" fill="#C4C7D5"/>
