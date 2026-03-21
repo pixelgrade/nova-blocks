@@ -33,7 +33,13 @@ __MACOSX
 CHANGELOG.md
 CLAUDE.md
 AGENTS.md
+AGENTS.local.md
 .ai
+.claude
+.private
+.env
+.env.local
+.env.*.local
 CONTRIBUTING.md
 README.md
 **/README.md
@@ -77,6 +83,8 @@ phpstan.neon.dist
 .npmrc
 .nvmrc
 .node-version
+tmp
+**/tmp
 
 # Nova Blocks specifics
 src/**/*.js

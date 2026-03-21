@@ -3,7 +3,7 @@ Contributors: pixelgrade, vlad.olaru, babbardel, razvanonofrei, gorby31
 Tags: blocks, gutenberg, gutenberg blocks, page builder, full site editing
 Requires at least: 5.9
 Tested up to: 7.0
-Stable tag: 2.1.14
+Stable tag: 2.1.15
 Requires PHP: 7.4
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -93,6 +93,10 @@ Yes! Nova Block's core features are free to use.
 3. Slideshow Me the Way block options
 
 == Changelog ==
+
+= 2.1.15 =
+* Fix: Restore the editor grid used for alignwide and alignfull block width calculations in the block editor.
+* Fix: Exclude private local overlays and temporary scratch files from release zips.
 
 = 2.1.14 =
 * Release: Published the latest WordPress 7.0 compatibility and Collection Layout improvements as 2.1.14 to keep GitHub and WordPress.org versioning aligned.
