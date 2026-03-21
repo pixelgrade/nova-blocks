@@ -2,6 +2,12 @@
 
 // Editor layout adjustments
 
+// Core's post-content stylesheet resets the editor canvas to flow-root,
+// which disables Nova's grid-based width calculations for alignwide/full blocks.
+.editor-styles-wrapper .wp-block-post-content {
+	display: grid;
+}
+
 // Make list view panel appear on top of the block list
 // to avoid making content too narrow
 .edit-site-editor__list-view-panel,
