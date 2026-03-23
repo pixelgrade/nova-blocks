@@ -372,6 +372,223 @@ function novablocks_get_blob_presets(): array {
 	];
 }
 
+/**
+ * Adds a minimal inline Nova header fallback for Site Editor previews.
+ *
+ * Template thumbnails render inside many iframes at once. When Chrome starts
+ * dropping stylesheet requests under that load, the header-row and navigation
+ * blocks lose the flex rules that keep previews readable. Gutenberg's shared
+ * lazy-editor settings endpoint currently resolves under `core/edit-post`, even
+ * when it serves Site Editor previews, so cover both editor contexts here.
+ * Keep the fallback inline so previews do not depend on extra network requests.
+ *
+ * @param array                   $settings Default editor settings.
+ * @param WP_Block_Editor_Context $context  Current block editor context.
+ *
+ * @return array
+ */
+function novablocks_add_site_editor_preview_fallback_styles( array $settings, WP_Block_Editor_Context $context ): array {
+	if ( ! in_array( $context->name, [ 'core/edit-site', 'core/edit-post' ], true ) ) {
+		return $settings;
+	}
+
+	$settings['styles']   = $settings['styles'] ?? [];
+	$settings['styles'][] = [
+		'css'            => novablocks_get_site_editor_preview_fallback_styles(),
+		'id'             => 'novablocks-site-editor-preview-fallback',
+		'__unstableType' => 'presets',
+	];
+
+	return $settings;
+}
+add_filter( 'block_editor_settings_all', 'novablocks_add_site_editor_preview_fallback_styles', 20, 2 );
+
+/**
+ * Gets the inline CSS used to keep Site Editor template previews readable.
+ *
+ * @return string
+ */
+function novablocks_get_site_editor_preview_fallback_styles(): string {
+	return <<<'CSS'
+@media only screen and (min-width:1024px) {
+	.nb-header-row__inner-container[class] > .wp-block {
+		display: flex;
+		column-gap: var(--nb-navigation-item-spacing);
+		align-items: center;
+	}
+
+	.nb-header-row__inner-container[class] > .wp-block > :first-child:not(:last-child),
+	.nb-header-row__inner-container[class] > .wp-block > :last-child:not(:first-child) {
+		flex: 1 1 50%;
+	}
+
+	.nb-header-row__inner-container[class] > .wp-block > :only-child,
+	.nb-header-row__inner-container[class] > .wp-block > :not(:first-child):not(:last-child) {
+		flex: 1 0 auto;
+	}
+
+	.nb-header-row__inner-container[class] > .wp-block > * {
+		justify-content: var(--justify-content, center);
+	}
+
+	.nb-header-row__inner-container[class] > .wp-block > :first-child:not(:last-child) {
+		--justify-content: flex-start;
+	}
+
+	.nb-header-row__inner-container[class] > .wp-block > :last-child:not(:first-child) {
+		--justify-content: flex-end;
+	}
+
+	.nb-header-row__inner-container[class] > .wp-block > [class*='branding'][class][class][class] {
+		flex-basis: auto;
+	}
+
+	.nb-header-row__inner-container[class] > .wp-block > [class*='nb-navigation'][class][class][class] {
+		flex-grow: 1;
+	}
+
+	.nb-navigation {
+		display: flex;
+		justify-content: var(--justify-content, center);
+	}
+
+	.nb-navigation :is(ul.menu, .menu > ul) {
+		display: flex;
+		flex-wrap: wrap;
+		column-gap: var(--nb-navigation-item-spacing);
+		justify-content: var(--justify-content, center);
+	}
+}
+
+.nb-navigation .menu > ul,
+.nb-navigation ul.menu {
+	list-style: none;
+	padding-left: 0;
+}
+
+.nb-navigation .menu > ul a,
+.nb-navigation ul.menu a {
+	display: block;
+	padding-top: var(--nb-navigation-item-padding-y);
+	padding-bottom: var(--nb-navigation-item-padding-y);
+	color: inherit;
+	text-decoration: none;
+}
+CSS;
+}
+
+/**
+ * Prunes heavy iframe assets from the Site Editor template list previews.
+ *
+ * In the current core/Gutenberg runtime, template thumbnails inherit iframe
+ * assets from `__unstableResolvedAssets` in the editor settings rather than the
+ * experimental `/wp-block-editor/v1/assets` response. Strip the WooCommerce
+ * styles directly from that resolved HTML so the template list stops
+ * exhausting Chrome's resource budget while leaving full editors and frontend
+ * requests untouched.
+ *
+ * @param array                   $settings Editor settings.
+ * @param WP_Block_Editor_Context $context  Current block editor context.
+ *
+ * @return array
+ */
+function novablocks_prune_template_list_preview_resolved_assets( array $settings, WP_Block_Editor_Context $context ): array {
+	if ( 'core/edit-site' !== $context->name || ! novablocks_is_template_list_site_editor_request() ) {
+		return $settings;
+	}
+
+	if ( ! isset( $settings['__unstableResolvedAssets']['styles'] ) || ! is_string( $settings['__unstableResolvedAssets']['styles'] ) ) {
+		return $settings;
+	}
+
+	$settings['__unstableResolvedAssets']['styles'] = novablocks_remove_preview_woocommerce_style_tags(
+		$settings['__unstableResolvedAssets']['styles']
+	);
+
+	return $settings;
+}
+add_filter( 'block_editor_settings_all', 'novablocks_prune_template_list_preview_resolved_assets', 25, 2 );
+
+/**
+ * Determines whether the current request is the Site Editor template list.
+ *
+ * @return bool
+ */
+function novablocks_is_template_list_site_editor_request(): bool {
+	if ( ! is_admin() ) {
+		return false;
+	}
+
+	global $pagenow;
+
+	if ( 'site-editor.php' !== $pagenow ) {
+		return false;
+	}
+
+	if ( empty( $_GET['p'] ) || ! is_string( $_GET['p'] ) ) {
+		return false;
+	}
+
+	return '/template' === rawurldecode( sanitize_text_field( wp_unslash( $_GET['p'] ) ) );
+}
+
+/**
+ * Dequeues WooCommerce styles before the template list prints parent styles.
+ *
+ * Gutenberg clones compatibility styles from the parent Site Editor document
+ * into each preview iframe. Remove WooCommerce handles at print time so the
+ * template grid does not multiply those editor-only assets across every card.
+ *
+ * @return void
+ */
+function novablocks_dequeue_template_list_preview_woocommerce_styles(): void {
+	if ( ! novablocks_is_template_list_site_editor_request() ) {
+		return;
+	}
+
+	$wp_styles = wp_styles();
+
+	foreach ( $wp_styles->queue as $handle ) {
+		if ( empty( $wp_styles->registered[ $handle ]->src ) ) {
+			continue;
+		}
+
+		if ( ! novablocks_is_woocommerce_style_source( $wp_styles->registered[ $handle ]->src ) ) {
+			continue;
+		}
+
+		wp_dequeue_style( $handle );
+	}
+}
+add_action( 'admin_print_styles', 'novablocks_dequeue_template_list_preview_woocommerce_styles', 0 );
+add_action( 'wp_print_styles', 'novablocks_dequeue_template_list_preview_woocommerce_styles', 0 );
+
+/**
+ * Determines whether a stylesheet source belongs to WooCommerce.
+ *
+ * @param string $src Registered stylesheet source.
+ *
+ * @return bool
+ */
+function novablocks_is_woocommerce_style_source( string $src ): bool {
+	return false !== strpos( $src, '/wp-content/plugins/woocommerce/' );
+}
+
+/**
+ * Removes WooCommerce stylesheet tags from resolved preview assets.
+ *
+ * @param string $styles_html HTML string generated by `_wp_get_iframed_editor_assets()`.
+ *
+ * @return string
+ */
+function novablocks_remove_preview_woocommerce_style_tags( string $styles_html ): string {
+	return (string) preg_replace(
+		'#<link\b[^>]*href=(["\'])[^"\']*/wp-content/plugins/woocommerce/[^"\']*\1[^>]*>\s*#i',
+		'',
+		$styles_html
+	);
+}
+
 function novablocks_get_media_composition_markup_presets(): array {
 	return [
 		[

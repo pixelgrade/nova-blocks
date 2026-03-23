@@ -8,6 +8,13 @@
 	display: grid;
 }
 
+// Top-level Query Loop blocks act as Nova layout grids on the frontend. In the
+// editor, core can still cap them at the content width, which traps inner
+// alignfull collections and heroes inside a narrow wrapper.
+.editor-styles-wrapper .is-root-container > .wp-block.wp-block-query {
+	max-width: none;
+}
+
 // Make list view panel appear on top of the block list
 // to avoid making content too narrow
 .edit-site-editor__list-view-panel,

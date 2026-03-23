@@ -3,7 +3,7 @@ Contributors: pixelgrade, vlad.olaru, babbardel, razvanonofrei, gorby31
 Tags: blocks, gutenberg, gutenberg blocks, page builder, full site editing
 Requires at least: 5.9
 Tested up to: 7.0
-Stable tag: 2.1.15
+Stable tag: 2.1.16
 Requires PHP: 7.4
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -93,6 +93,12 @@ Yes! Nova Block's core features are free to use.
 3. Slideshow Me the Way block options
 
 == Changelog ==
+
+= 2.1.16 =
+* Fix: Add the Pile-style header layout with separate centered and right-side navigation areas.
+* Fix: Keep Categories lists laid out correctly inside flex Row and Group containers.
+* Fix: Restore readable Site Editor template previews when editor iframe assets drop under heavy preview load.
+* Fix: Re-run aligned block width calculations only for relevant editor mutations and keep Query Loop wrappers from trapping full-width blocks in the editor.
 
 = 2.1.15 =
 * Fix: Restore the editor grid used for alignwide and alignfull block width calculations in the block editor.
