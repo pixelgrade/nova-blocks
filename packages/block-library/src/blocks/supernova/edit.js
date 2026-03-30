@@ -98,6 +98,8 @@ const SupernovaPreview = props => {
     { 'nb-supernova--aspect-ratio-original': thumbnailAspectRatioString === 'original' },
     { 'nb-supernova--pile-parallax': pileParallaxAmount > 0 },
     { 'nb-supernova--pile-3d': !! pile3dEffect },
+    { [ `nb-supernova--pile-3d-target-${ attributes.pile3dTarget }` ]: !! pile3dEffect },
+    { [ `nb-supernova--pile-3d-rule-${ attributes.pile3dTargetRule }` ]: !! pile3dEffect },
     props.className,
     'alignfull'
   );
@@ -343,4 +345,3 @@ const SupernovaEdit = props => {
 };
 
 export default withControlsVisibility( SupernovaEdit );
-

@@ -1,5 +1,6 @@
 import { createHigherOrderComponent } from "@wordpress/compose";
 import { useSupports } from "../../hooks";
+import { getCollectionLayoutCustomProperties } from "./get-collection-layout-custom-properties";
 
 const withCollectionLayoutEditCustomProps = createHigherOrderComponent( OriginalComponent => {
 
@@ -8,16 +9,10 @@ const withCollectionLayoutEditCustomProps = createHigherOrderComponent( Original
     const supports = useSupports( props.name );
     const { attributes } = props;
 
-    const { columns, gridGap } = attributes;
-
     const style = props.style ? props.style : {};
 
     if ( !! supports?.novaBlocks?.collectionLayout ) {
-
-      let collectionLayoutProps = {
-        '--nb-collection-columns-count': columns,
-        '--nb-grid-spacing-modifier': gridGap
-      };
+      let collectionLayoutProps = getCollectionLayoutCustomProperties( attributes );
 
       Object.assign( style, collectionLayoutProps );
     }

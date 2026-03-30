@@ -41,7 +41,7 @@
 }
 
 .nb-collection__layout {
-  --nb-grid-spacing: calc(var(--nb-spacing) * var(--nb-grid-spacing-modifier) * 0.02);
+  --nb-grid-spacing: calc(var(--nb-spacing) * var(--nb-grid-spacing-modifier) * var(--nb-grid-spacing-multiplier, 1) * 0.02);
 
   // this selector needs to be specific since the parametric grid layout
   // moves layout-items inside nb-grid-area where proper spacing needs to occur
@@ -131,6 +131,67 @@
   display: flex;
   flex-direction: column;
   gap: var(--nb-grid-spacing);
+}
+
+@mixin pile-3d-small-card {
+  > .nb-supernova-item {
+    height: auto;
+    width: calc(100% * var(--nb-pile-3d-scale, 0.82));
+  }
+}
+
+.nb-supernova--pile-3d.nb-supernova--card-layout-stacked {
+  .nb-collection__layout-item {
+    display: grid;
+    justify-items: center;
+    align-items: start;
+  }
+
+  .nb-collection__layout-item > .nb-supernova-item {
+    width: 100%;
+    height: auto;
+    transition: width 180ms ease;
+  }
+
+  &.nb-supernova--pile-3d-target-item {
+    &.nb-supernova--pile-3d-rule-odd {
+      .nb-collection__layout-item:nth-child(odd) {
+        @include pile-3d-small-card;
+      }
+    }
+
+    &.nb-supernova--pile-3d-rule-even {
+      .nb-collection__layout-item:nth-child(even) {
+        @include pile-3d-small-card;
+      }
+    }
+  }
+
+  &.nb-supernova--pile-3d-target-column {
+    @for $columns from 1 through 4 {
+      &.nb-supernova--#{$columns}-columns {
+        &.nb-supernova--pile-3d-rule-odd {
+          @for $column from 1 through $columns {
+            @if $column % 2 == 1 {
+              .nb-collection__layout-item:nth-child(#{$columns}n + #{$column}) {
+                @include pile-3d-small-card;
+              }
+            }
+          }
+        }
+
+        &.nb-supernova--pile-3d-rule-even {
+          @for $column from 1 through $columns {
+            @if $column % 2 == 0 {
+              .nb-collection__layout-item:nth-child(#{$columns}n + #{$column}) {
+                @include pile-3d-small-card;
+              }
+            }
+          }
+        }
+      }
+    }
+  }
 }
 
 

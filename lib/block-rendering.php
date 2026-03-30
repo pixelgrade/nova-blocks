@@ -541,6 +541,20 @@ function novablocks_get_collection_layout_css( array $attributes ): array {
 	return [
 		'--nb-collection-columns-count: ' . $attributes['columns'],
 		'--nb-grid-spacing-modifier: ' . $attributes['gridGap'],
+		'--nb-grid-spacing-multiplier: ' . ( ! empty( $attributes['pile3dEffect'] ) ? 2 : 1 ),
+		'--nb-pile-3d-scale: ' . ( ! empty( $attributes['pile3dEffect'] ) ? '0.82' : '1' ),
+	];
+}
+
+function novablocks_get_collection_layout_classes( array $attributes ): array {
+	if ( empty( $attributes['pile3dEffect'] ) ) {
+		return [];
+	}
+
+	return [
+		'nb-supernova--pile-3d',
+		'nb-supernova--pile-3d-target-' . sanitize_html_class( $attributes['pile3dTarget'] ?? 'item' ),
+		'nb-supernova--pile-3d-rule-' . sanitize_html_class( $attributes['pile3dTargetRule'] ?? 'odd' ),
 	];
 }
 
@@ -1461,6 +1475,9 @@ function novablocks_get_collection_card_markup( string $media, string $content, 
 
 	<div class="nb-collection__layout-item" <?php echo $id; ?>>
 		<div class="<?php echo esc_attr( join( ' ', $cardClasses ) ); ?>" <?php echo join( ' ', $data_attributes ); ?>>
+			<?php if ( ( $attributes['cardLayout'] ?? '' ) === 'stacked' ) { ?>
+			<div class="nb-supernova-item__frame">
+			<?php } ?>
 			<?php if ( ! empty( $attributes['showMedia'] ) && ! empty( $media ) ) {
 				echo $media;
 			}
@@ -1473,6 +1490,9 @@ function novablocks_get_collection_card_markup( string $media, string $content, 
 						?>
 					</div>
 				</div>
+			<?php } ?>
+			<?php if ( ( $attributes['cardLayout'] ?? '' ) === 'stacked' ) { ?>
+			</div>
 			<?php } ?>
 		</div>
 	</div>

@@ -2,6 +2,11 @@
   display: grid !important;
   min-height: 0 !important;
 
+  .nb-supernova-item__frame {
+    display: grid;
+    width: 100%;
+  }
+
   .nb-collection__layout.nb-collection__layout--variable-width & .nb-supernova-item__content,
   .nb-collection__layout:not(.nb-collection__layout--variable-width) & .nb-supernova-item__media-wrapper {
     --reference-aspect-ratio: 16/9;
@@ -11,7 +16,7 @@
     aspect-ratio: calc(100 / max(var(--nb-min-height-fallback, 0.001), 0.001) * var(--reference-aspect-ratio) * var(--aspect-ratio-multiplier, 1));
   }
 
-  > :is(.nb-supernova-item__content, .nb-supernova-item__media-wrapper) {
+  .nb-supernova-item__frame > :is(.nb-supernova-item__content, .nb-supernova-item__media-wrapper) {
     position: static !important;
 
     width: auto;
@@ -21,7 +26,7 @@
     align-self: stretch;
   }
 
-  > .nb-supernova-item__content {
+  .nb-supernova-item__frame > .nb-supernova-item__content {
     min-height: 0 !important;
   }
 

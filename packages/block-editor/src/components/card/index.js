@@ -44,14 +44,21 @@ export const Card = ( props ) => {
   const children = Children.toArray( props.children );
   const mediaChildren = children.filter( child => child.type === CardMediaWrapper );
   const passedChildren = children.filter( child => child.type !== CardMediaWrapper && child.type !== CardContentWrapper );
-
-  return (
-    <div className={ classNames } style={ props.style }>
+  const cardBody = (
+    <>
       { ! mediaChildren.length && media && <CardMediaWrapper media={ media } { ...props } /> }
       { !! mediaChildren.length && mediaChildren }
       <CardContentWrapper { ...props }>
         { passedChildren }
       </CardContentWrapper>
+    </>
+  );
+
+  return (
+    <div className={ classNames } style={ props.style }>
+      { cardLayout === 'stacked'
+        ? <div className="nb-supernova-item__frame">{ cardBody }</div>
+        : cardBody }
     </div>
   );
 };

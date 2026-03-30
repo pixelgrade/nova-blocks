@@ -105,9 +105,10 @@ if ( ! function_exists( 'novablocks_render_supernova_block' ) ) {
 			$classes[] = 'nb-supernova--pile-parallax';
 		}
 
-		if ( ! empty( $attributes['pile3dEffect'] ) ) {
-			$classes[] = 'nb-supernova--pile-3d';
-		}
+		$classes = array_merge(
+			$classes,
+			novablocks_get_collection_layout_classes( $attributes )
+		);
 
 		$cssProps = array_merge(
 			novablocks_get_media_composition_css( $attributes ),
