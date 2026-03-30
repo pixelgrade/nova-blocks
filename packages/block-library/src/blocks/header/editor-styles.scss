@@ -14,6 +14,79 @@
   --header-background-opacity: 1;
 }
 
+.nb-header-layout-placeholder {
+  padding-top: 24px;
+  padding-bottom: 24px;
+
+  .components-placeholder__label,
+  .components-placeholder__instructions,
+  .components-placeholder__fieldset {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  }
+
+  .components-placeholder__label {
+    align-items: flex-start;
+    font-size: 28px;
+    font-weight: 500;
+    line-height: 1.2;
+    margin-bottom: 12px;
+  }
+
+  .components-placeholder__instructions {
+    font-size: 16px;
+    line-height: 1.6;
+    margin-bottom: 20px;
+    max-width: 72ch;
+  }
+}
+
+.nb-header-layout-placeholder__grid {
+  display: grid;
+  gap: 16px;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  width: 100%;
+
+  @media (max-width: 900px) {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+.nb-header-layout-placeholder__card {
+  cursor: pointer;
+  height: 100%;
+  transition: box-shadow 120ms ease;
+  box-shadow: inset 0 0 0 1px #dcdcde;
+
+  &:hover,
+  &:focus {
+    box-shadow: inset 0 0 0 1px var(--wp-admin-theme-color);
+  }
+}
+
+.nb-header-layout-placeholder__card-body {
+  padding-bottom: 28px;
+}
+
+.nb-header-layout-placeholder__icon {
+  display: flex;
+  align-items: center;
+  min-height: 32px;
+}
+
+.nb-header-layout-placeholder__title {
+  font-size: 16px;
+  font-weight: 600;
+  line-height: 1.4;
+  margin: 0;
+}
+
+.nb-header-layout-placeholder__description {
+  color: #50575e;
+  font-size: 13px;
+  line-height: 1.5;
+  margin: 0;
+}
+
 // Use a Custom HTML block after the Header to
 // provide custom styling for a certain block pattern.
 .nb-header + .wp-block-html {

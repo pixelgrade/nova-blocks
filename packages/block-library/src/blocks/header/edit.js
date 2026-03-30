@@ -1,19 +1,17 @@
 import classnames from 'classnames';
 
-import { __ } from '@wordpress/i18n';
-import { Component, Fragment, useEffect, useLayoutEffect } from '@wordpress/element';
-import { InnerBlocks, useBlockProps } from '@wordpress/block-editor';
+import { Component, Fragment, useEffect } from '@wordpress/element';
+import { useBlockProps } from '@wordpress/block-editor';
 
 const useInnerBlocksProps = wp.blockEditor.useInnerBlocksProps;
 
-import { useInnerBlocks, VariationPicker } from "@novablocks/block-editor";
+import { useInnerBlocks } from "@novablocks/block-editor";
 
 import {
   HeaderBlockControls,
   HeaderInspectorControls,
+  HeaderLayoutPlaceholder,
 } from './components';
-
-import TEMPLATE_OPTIONS from './template-options';
 
 const withControlsVisibility = Component => {
 
@@ -66,7 +64,7 @@ const Edit = withControlsVisibility( props => {
   } );
 
   if ( ! innerBlocks.length ) {
-    return <VariationPicker { ...props } />
+    return <HeaderLayoutPlaceholder { ...props } />
   }
 
   return (
