@@ -7,6 +7,14 @@
     width: 100%;
   }
 
+  // Slick clones in the editor can resolve stacked layers wider than the slide,
+  // which then explodes the aspect-ratio-driven height. Clamp them to the slide.
+  .nb-collection__layout--carousel & :is(.nb-supernova-item__frame, .nb-supernova-item__content, .nb-supernova-item__media-wrapper) {
+    width: 100% !important;
+    min-width: 0 !important;
+    max-width: 100% !important;
+  }
+
   .nb-collection__layout.nb-collection__layout--variable-width & .nb-supernova-item__content,
   .nb-collection__layout:not(.nb-collection__layout--variable-width) & .nb-supernova-item__media-wrapper {
     --reference-aspect-ratio: 16/9;
