@@ -5,6 +5,11 @@
   .nb-supernova-item__frame {
     display: grid;
     width: 100%;
+    // Prevent grid auto-sizing from exploding when the media wrapper's
+    // extreme aspect-ratio (from --nb-min-height-fallback ≈ 0) produces
+    // an enormous max-content width in the implicit grid track.
+    overflow: hidden;
+    min-width: 0;
   }
 
   // Slick clones in the editor can resolve stacked layers wider than the slide,
@@ -32,6 +37,8 @@
 
     width: auto;
     height: auto;
+    min-width: 0;
+    max-width: 100%;
 
     grid-area: 1 / 1 / span 1 / span 1;
     align-self: stretch;
