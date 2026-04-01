@@ -26,10 +26,13 @@
     // Parallax media is intentionally wider than the card; clip it so the
     // editor grid track keeps the hero width instead of expanding to the media.
     overflow: hidden;
-    // max() guards against division by zero when Minimum Container Height is "None" (fallback=0).
-    // With max(_, 0.001), fallback=0 produces aspect-ratio ≈ 177778 — effectively no height
-    // constraint, so the content grid cell determines card height instead.
-    aspect-ratio: calc(100 / max(var(--nb-min-height-fallback, 0.001), 0.001) * var(--reference-aspect-ratio) * var(--aspect-ratio-multiplier, 1));
+    // Cap the aspect-ratio at 2/1 so cards always have visible featured images
+    // in the editor. Without the cap, fallback=0 produces aspect-ratio ≈ 177778
+    // which collapses cards to content-only height (~100px).
+    aspect-ratio: min(
+      calc(100 / max(var(--nb-min-height-fallback, 0.001), 0.001) * var(--reference-aspect-ratio) * var(--aspect-ratio-multiplier, 1)),
+      2
+    );
   }
 
   .nb-supernova-item__frame > :is(.nb-supernova-item__content, .nb-supernova-item__media-wrapper) {
