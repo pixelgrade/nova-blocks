@@ -1,0 +1,38 @@
+{
+	"align": {
+		"type": "string",
+		"default": "full"
+	},
+	"source": {
+		"type": "string",
+		"default": "auto"
+	},
+	"direction": {
+		"type": "string",
+		"default": "next"
+	},
+	"loopToFirst": {
+		"type": "boolean",
+		"default": true
+	},
+	"manualPostId": {
+		"type": "number",
+		"default": 0
+	},
+	"headingText": {
+		"type": "string",
+		"default": ""
+	},
+	"buttonText": {
+		"type": "string",
+		"default": "See More"
+	},
+	"contentPosition": {
+		"type": "string",
+		"default": "center center"
+	},
+	"minHeight": {
+		"type": "number",
+		"default": 50
+	}
+}

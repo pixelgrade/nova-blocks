@@ -1,0 +1,32 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/block.json",
+	"apiVersion": 2,
+	"name": "novablocks/contextual-post-card",
+	"title": "Contextual Post Card",
+	"category": "nova-blocks",
+	"description": "Display a single large card that points to an adjacent or manually selected post.",
+	"keywords": [
+		"context",
+		"post",
+		"card",
+		"adjacent",
+		"featured"
+	],
+	"textdomain": "nova-blocks",
+	"attributes": {},
+	"usesContext": [
+		"postId",
+		"postType"
+	],
+	"supports": {
+		"html": false,
+		"anchor": true,
+		"align": [
+			"wide",
+			"full"
+		],
+		"novaBlocks": {
+			"spaceAndSizing": true
+		}
+	}
+}

@@ -1,0 +1,167 @@
+@import '../supernova/scss/card';
+@import '../supernova/scss/content-alignments';
+
+.nb-contextual-post-card {
+	--nb-card-content-padding-multiplier: 1;
+	--nb-card-media-padding-multiplier: 0;
+	--nb-card-layout-gap-modifier: 0;
+	--nb-card-media-padding-top: 56.25%;
+	--nb-contextual-post-card-surface-color: #eee;
+	--nb-contextual-post-card-text-color: #333;
+	--nb-contextual-post-card-hover-text-color: #fff;
+	position: relative;
+	isolation: isolate;
+}
+
+.nb-contextual-post-card .nb-collection,
+.nb-contextual-post-card .nb-collection__body,
+.nb-contextual-post-card .nb-collection__layout,
+.nb-contextual-post-card .nb-collection__layout-item {
+	width: 100%;
+}
+
+.nb-contextual-post-card .nb-supernova-item {
+	--current-color: var(--nb-contextual-post-card-text-color);
+	position: relative;
+	min-height: var(--nb-contextual-post-card-min-height, 50vh);
+	background: var(--nb-contextual-post-card-surface-color);
+	color: var(--nb-contextual-post-card-text-color);
+	overflow: hidden;
+}
+
+.nb-contextual-post-card .nb-supernova-item__frame {
+	position: relative;
+	display: grid;
+	min-height: inherit;
+}
+
+.nb-contextual-post-card .nb-supernova-item__frame > .nb-supernova-item__media-wrapper,
+.nb-contextual-post-card .nb-supernova-item__frame > .nb-supernova-item__content {
+	grid-area: 1 / 1 / span 1 / span 1;
+}
+
+.nb-contextual-post-card .nb-supernova-item__frame > .nb-supernova-item__media-wrapper {
+	position: absolute;
+	inset: 0;
+}
+
+.nb-contextual-post-card .nb-supernova-item__frame > .nb-supernova-item__content {
+	position: relative;
+	min-height: inherit;
+	z-index: 20;
+}
+
+.nb-contextual-post-card .nb-supernova-item__content {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	position: relative;
+	min-height: inherit;
+	padding: 100px 120px;
+	text-align: center;
+	color: inherit;
+	z-index: 20;
+	transition: color 0.3s ease-in-out;
+}
+
+.nb-contextual-post-card .nb-supernova-item__content::before,
+.nb-contextual-post-card .nb-supernova-item__content::after {
+	content: none;
+}
+
+.nb-contextual-post-card__media-wrapper {
+	overflow: hidden;
+	background: var(--nb-contextual-post-card-project-color, #333);
+	opacity: 0;
+	pointer-events: none;
+	z-index: 0;
+	transition: opacity 0.3s ease-in-out !important;
+	transition-delay: 0s !important;
+}
+
+.nb-contextual-post-card__media,
+.nb-contextual-post-card__media-wrapper .nb-supernova-item__media-aspect-ratio,
+.nb-contextual-post-card__media-wrapper .novablocks-doppler__mask,
+.nb-contextual-post-card__media-wrapper .nb-supernova-item__media-doppler {
+	width: 100%;
+	height: 100%;
+}
+
+.nb-contextual-post-card__media {
+	display: block;
+	object-fit: cover;
+	transform: none;
+	transition: none;
+}
+
+.nb-contextual-post-card__surface:is(:hover, :focus-within) {
+	--current-color: var(--nb-contextual-post-card-hover-text-color);
+	color: var(--nb-contextual-post-card-hover-text-color);
+}
+
+.nb-contextual-post-card__surface:is(:hover, :focus-within) .nb-contextual-post-card__media-wrapper {
+	opacity: 1;
+}
+
+.nb-contextual-post-card .nb-supernova-item__content > .nb-supernova-item__inner-container {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	gap: 6px;
+	max-width: 900px;
+	padding: 0;
+	width: auto;
+	margin: 0 auto;
+	text-align: center;
+}
+
+.nb-contextual-post-card__eyebrow,
+.nb-contextual-post-card__button {
+	display: inline-block;
+	margin: 0;
+	color: inherit;
+}
+
+.nb-contextual-post-card__heading {
+	color: inherit !important;
+	margin: 6px 0 0;
+	max-width: none;
+}
+
+.nb-contextual-post-card__button-wrap {
+	margin-top: 12px;
+	justify-content: center;
+	pointer-events: none;
+}
+
+.nb-contextual-post-card__button {
+	color: inherit !important;
+	pointer-events: none;
+}
+
+a.nb-supernova-item__link.nb-contextual-post-card__link {
+	position: absolute;
+	inset: 0;
+	z-index: 100;
+	display: block;
+	max-width: none;
+}
+
+@media (max-width: 781px) {
+	.nb-contextual-post-card {
+		--nb-card-content-padding-multiplier: 1;
+	}
+
+	.nb-contextual-post-card .nb-supernova-item {
+		min-height: min(70vh, var(--nb-contextual-post-card-min-height, 50vh));
+	}
+
+	.nb-contextual-post-card .nb-supernova-item__inner-container {
+		padding: 0;
+	}
+
+	.nb-contextual-post-card .nb-supernova-item__content {
+		padding: 40px 25px;
+	}
+}
