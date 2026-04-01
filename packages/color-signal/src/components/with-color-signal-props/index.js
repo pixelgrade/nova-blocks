@@ -14,7 +14,12 @@ const withColorSignalProps = OriginalComponent => {
 
     const { attributes, setAttributes, clientId } = props;
     const currentAttributes = useCurrentColorSignalAttributes( clientId, attributes );
-    const [ showFunctionalColors, setShowFunctionalColors ] = useMemoryState( 'showFunctionalColors', false );
+    const liveAttributes = {
+      ...attributes,
+      ...currentAttributes,
+    };
+    const memoryStateKey = clientId ? `showFunctionalColors:${ clientId }` : `showFunctionalColors:${ props.name }`;
+    const [ showFunctionalColors, setShowFunctionalColors ] = useMemoryState( memoryStateKey, false );
     const supports = useSupports( props.name );
     const stickySourceColor = supports?.novaBlocks?.colorSignal?.stickySourceColor !== false;
 
@@ -26,6 +31,7 @@ const withColorSignalProps = OriginalComponent => {
     return (
       <OriginalComponent
         { ...props }
+        attributes={ liveAttributes }
         updateBlock={ updateBlock }
         stickySourceColor={ stickySourceColor }
         showFunctionalColors={ showFunctionalColors }

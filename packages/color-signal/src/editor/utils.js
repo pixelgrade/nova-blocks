@@ -19,7 +19,13 @@ import {
  * @returns {number|*}
  */
 export const getParentVariation = ( clientId ) => {
-  const { getBlockParents, getBlock, getSelectedBlockClientId } = select( 'core/block-editor' );
+  const blockEditorSelect = select( 'core/block-editor' );
+  const { getBlockParents, getBlock, getSelectedBlockClientId } = blockEditorSelect || {};
+
+  if ( typeof getBlockParents !== 'function' || typeof getBlock !== 'function' ) {
+    return getSiteColorVariation();
+  }
+
   const resolvedClientId = clientId || getSelectedBlockClientId();
   const blockParents = resolvedClientId ? getBlockParents( resolvedClientId ) : undefined;
   const parents = Array.isArray( blockParents ) ? blockParents.slice() : [];
@@ -28,7 +34,12 @@ export const getParentVariation = ( clientId ) => {
   while ( parents.length ) {
     const parentClientId = parents.pop();
     const parentBlock = getBlock( parentClientId );
-    const parentAttributes = parentBlock.attributes;
+    const parentAttributes = parentBlock?.attributes;
+
+    if ( ! parentBlock?.name || ! parentAttributes ) {
+      continue;
+    }
+
     const supports = getSupports( parentBlock.name );
 
     // if this parent supports colorSignal return it's absolute paletteVariation

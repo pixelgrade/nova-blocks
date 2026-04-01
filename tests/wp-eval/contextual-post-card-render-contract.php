@@ -78,6 +78,10 @@ if ( false === strpos( $markup, '--nb-contextual-post-card-min-height: 50vh' ) )
 	throw new RuntimeException( 'Expected render output to default to the Pile-style 50vh height.' );
 }
 
+if ( false === strpos( $markup, 'data-color="#123456"' ) ) {
+	throw new RuntimeException( 'Expected render output to expose the resolved contextual post color on the card link element.' );
+}
+
 if ( $old_post instanceof WP_Post ) {
 	$GLOBALS['post'] = $old_post;
 	setup_postdata( $old_post );

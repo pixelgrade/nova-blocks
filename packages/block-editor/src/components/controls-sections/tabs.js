@@ -44,6 +44,7 @@ const getTabClassName = ( label, activeTabLabel ) => {
 const ActiveSectionTabs = ( props ) => {
 
 	const {
+		id,
 		title,
 		tabs,
 		goBack,
@@ -51,11 +52,12 @@ const ActiveSectionTabs = ( props ) => {
     isActive
 	} = props;
 
-	if ( ! tabs.length ) {
+  if ( ! tabs.length ) {
 		return null;
 	}
 
-  const [ activeTabLabel, setActiveTabLabel ] = useMemoryState( 'activeTab', tabs[0].props.label );
+  const memoryStateKey = useMemo( () => `activeTab:${ id || title }`, [ id, title ] );
+  const [ activeTabLabel, setActiveTabLabel ] = useMemoryState( memoryStateKey, tabs[0].props.label );
 
   useEffect( () => {
     const existingTab = tabs.some( tab => activeTabLabel === tab.props.label );

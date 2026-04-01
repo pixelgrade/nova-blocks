@@ -16,7 +16,7 @@ const PalettePicker = ( props ) => {
 
   const {
     attributes,
-    setAttributes,
+    updateBlock,
     clientId,
     showFunctionalColors,
     stickySourceColor
@@ -24,7 +24,7 @@ const PalettePicker = ( props ) => {
 
   const novablocksSettings = useSettings();
 
-  const { palettes } = novablocksSettings;
+  const palettes = Array.isArray( novablocksSettings?.palettes ) ? novablocksSettings.palettes : [];
   const { palette, paletteVariation, useSourceColorAsReference } = attributes;
 
   const functionalColors = palettes.filter( palette => isFunctionalPalette( palette ) );
@@ -41,14 +41,14 @@ const PalettePicker = ( props ) => {
       const nextVariation = nextSourceColorAsReference ? 1 : absoluteVariation;
       const nextSignal = getSignalRelativeToVariation( addSiteVariationOffset( absoluteVariation ), referenceVariation, palette );
 
-      setAttributes( {
+      updateBlock( {
         useSourceColorAsReference: nextSourceColorAsReference,
         paletteVariation: nextVariation,
         colorSignal: nextSignal,
       } );
 
     } else {
-      setAttributes( {
+      updateBlock( {
         palette: nextPalette
       } );
 
@@ -72,10 +72,12 @@ const PalettePicker = ( props ) => {
         options={ options }
         onChange={ value => {
           const palette = visiblePalettes.find( palette => `${ palette.id }` === value );
-          onPaletteChange( `${ palette.id }` );
+          if ( palette ) {
+            onPaletteChange( `${ palette.id }` );
+          }
         } }
         favorite={ paletteVariation === 1 && useSourceColorAsReference }
-        selected={ palette }
+        selected={ `${ palette }` }
       />
     </ControlsGroup>
   )

@@ -225,18 +225,10 @@ if ( ! function_exists( 'novablocks_register_packages_scripts' ) ) {
 		}
 
 		$nova_editor_settings = novablocks_get_block_editor_settings();
-
-		$palettes = function_exists( 'sm_get_palettes_for_current_request' )
-			? sm_get_palettes_for_current_request()
-			: json_decode( get_option( 'sm_advanced_palette_output', '[]' ) );
-
-		if ( empty( $palettes ) && function_exists( 'sm_get_fallback_palettes' ) ) {
-			$palettes = sm_get_fallback_palettes();
-		}
-
-		if ( ! empty( $palettes ) ) {
-			$nova_editor_settings['palettes'] = $palettes;
-		}
+		$nova_editor_settings = array_merge(
+			$nova_editor_settings,
+			novablocks_get_palette_settings_fragment()
+		);
 
 		if ( function_exists( 'Pixelgrade\StyleManager\get_option_details_all' ) ) {
 			$nova_editor_settings['customify_config'] = \Pixelgrade\StyleManager\get_option_details_all();
@@ -270,6 +262,30 @@ if ( ! function_exists( 'novablocks_register_packages_scripts' ) ) {
 	}
 }
 add_action( 'init', 'novablocks_register_packages_scripts', 11 );
+
+/**
+ * Build the Style Manager palette settings fragment injected into Nova editor settings.
+ *
+ * @return array
+ */
+function novablocks_get_palette_settings_fragment(): array {
+	$palettes = [];
+
+	if ( function_exists( 'sm_get_palette_runtime_payload' ) ) {
+		$runtime_payload = sm_get_palette_runtime_payload();
+		$palettes        = is_array( $runtime_payload['palettes'] ?? null ) ? $runtime_payload['palettes'] : [];
+	} elseif ( function_exists( 'sm_get_palettes_for_current_request' ) ) {
+		$palettes = sm_get_palettes_for_current_request();
+	} else {
+		$palettes = json_decode( get_option( 'sm_advanced_palette_output', '[]' ) );
+	}
+
+	if ( empty( $palettes ) && function_exists( 'sm_get_fallback_palettes' ) ) {
+		$palettes = sm_get_fallback_palettes();
+	}
+
+	return empty( $palettes ) ? [] : [ 'palettes' => $palettes ];
+}
 
 function novablocks_register_block_types() {
 

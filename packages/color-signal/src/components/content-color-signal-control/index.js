@@ -15,7 +15,7 @@ import {
 
 const ContentColorSignalControl = ( props ) => {
 
-  const { attributes, clientId, setAttributes, name } = props;
+  const { attributes, updateBlock, name } = props;
   const { contentColorSignal, palette } = attributes;
   const supports = useSupports( name );
   const colorSignalSupport = supports?.novaBlocks?.colorSignal;
@@ -28,15 +28,15 @@ const ContentColorSignalControl = ( props ) => {
     <ControlsGroup key={'content_color_signal_group'}>
       <SignalControl { ...props }
                      label={ __( 'Content Area Color Signal', '__plugin_txtd' ) }
-                     max={ getMaxSignal( palette ) }
-                     signal={ contentColorSignal }
-                     onChange={ contentColorSignal => {
+                       max={ getMaxSignal( palette ) }
+                       signal={ contentColorSignal }
+                       onChange={ contentColorSignal => {
                        const { contentPaletteVariation } = attributes;
                        const absoluteVariation = getAbsoluteColorVariation( attributes );
                        const nextContentPaletteVariation = computeColorSignal( absoluteVariation, contentColorSignal, palette, contentPaletteVariation );
                        const finalContentPaletteVariation = removeSiteVariationOffset( nextContentPaletteVariation );
 
-                       setAttributes( {
+                       updateBlock( {
                          contentColorSignal: contentColorSignal,
                          contentPaletteVariation: finalContentPaletteVariation,
                        } )

@@ -47,11 +47,32 @@ export const getPaletteConfig = ( paletteId ) => {
   return config.find( palette => `${ palette.id }` === `${ paletteId }` );
 }
 
+const getPaletteSignalColors = ( palette ) => {
+  if ( Array.isArray( palette?.colors ) && palette.colors.length ) {
+    return palette.colors
+      .map( color => typeof color === 'string' ? color : color?.value )
+      .filter( Boolean );
+  }
+
+  if ( Array.isArray( palette?.variations ) && palette.variations.length ) {
+    return palette.variations
+      .map( variation => variation?.bg )
+      .filter( Boolean );
+  }
+
+  return [];
+};
+
 export const getSignals = ( paletteId ) => {
   const palette = getPaletteConfig( paletteId );
-  const colors = palette?.colors.slice();
 
   if ( ! palette || ! palette?.variations ) {
+    return getDefaultSignals();
+  }
+
+  const colors = getPaletteSignalColors( palette );
+
+  if ( ! colors.length ) {
     return getDefaultSignals();
   }
 

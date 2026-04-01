@@ -137,11 +137,11 @@ const ControlsSectionsComponent = ( props ) => {
               const tabs = getCompiledTabs( section );
 
 							return (
-								<DrawerPanel key={ 'drawer_panel_' + key + '_' + index } id={ section.props.id }>
-									<ActiveSectionTabs title={ section.props.label } tabs={ tabs } />
-								</DrawerPanel>
-							)
-						} );
+										<DrawerPanel key={ 'drawer_panel_' + key + '_' + index } id={ section.props.id }>
+											<ActiveSectionTabs id={ section.props.id } title={ section.props.label } tabs={ tabs } />
+										</DrawerPanel>
+									)
+								} );
 					} )
 				}
 				<DrawerListAfter>

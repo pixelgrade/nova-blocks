@@ -9,8 +9,7 @@ const ContentColorGradeControl = props => {
 
   const {
     attributes,
-    setAttributes,
-    clientId,
+    updateBlock,
     name
   } = props;
 
@@ -28,12 +27,12 @@ const ContentColorGradeControl = props => {
     const absoluteVariation = getAbsoluteColorVariation( attributes );
     const nextContentColorSignal = getSignalRelativeToVariation( nextContentPaletteVariation, absoluteVariation, palette );
 
-    setAttributes( {
+    updateBlock( {
       contentColorSignal: nextContentColorSignal,
       contentPaletteVariation: nextContentPaletteVariation
     } );
 
-  }, [ attributes, palette, setAttributes ] );
+  }, [ attributes, palette, updateBlock ] );
 
   if ( colorSignalSupport !== true && colorSignalSupport?.contentColorSignal !== true ) {
     return null;

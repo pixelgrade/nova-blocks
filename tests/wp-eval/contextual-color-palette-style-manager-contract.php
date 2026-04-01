@@ -1,7 +1,50 @@
 <?php
 
+if ( ! function_exists( 'sm_get_palette_runtime_payload' ) ) {
+	throw new RuntimeException( 'Expected sm_get_palette_runtime_payload() to exist.' );
+}
+
 if ( ! function_exists( 'sm_build_contextual_palette_from_color' ) ) {
 	throw new RuntimeException( 'Expected sm_build_contextual_palette_from_color() to exist.' );
+}
+
+add_filter(
+	'style_manager/runtime_palettes',
+	static function ( $palettes ) {
+		$palettes[] = sm_build_contextual_palette_from_color( '#123456', 'contextual-post', 'Contextual Post' );
+		return $palettes;
+	}
+);
+
+$runtime_payload = sm_get_palette_runtime_payload();
+
+if ( empty( $runtime_payload['palettes'] ) || ! is_array( $runtime_payload['palettes'] ) ) {
+	throw new RuntimeException( 'Expected runtime palette payload to expose merged palettes.' );
+}
+
+if ( ! array_key_exists( 'runtimePalettes', $runtime_payload ) || ! is_array( $runtime_payload['runtimePalettes'] ) ) {
+	throw new RuntimeException( 'Expected runtime palette payload to expose runtimePalettes.' );
+}
+
+if ( ! array_key_exists( 'runtimeCss', $runtime_payload ) || ! is_string( $runtime_payload['runtimeCss'] ) ) {
+	throw new RuntimeException( 'Expected runtime palette payload to expose runtimeCss.' );
+}
+
+$runtime_contextual_palette = null;
+
+foreach ( $runtime_payload['palettes'] as $runtime_palette ) {
+	if ( isset( $runtime_palette->id ) && 'contextual-post' === (string) $runtime_palette->id ) {
+		$runtime_contextual_palette = $runtime_palette;
+		break;
+	}
+}
+
+if ( ! $runtime_contextual_palette ) {
+	throw new RuntimeException( 'Expected runtime palette payload to include the contextual palette.' );
+}
+
+if ( false === strpos( $runtime_payload['runtimeCss'], '.sm-palette-contextual-post {' ) ) {
+	throw new RuntimeException( 'Expected runtime palette payload CSS to include the contextual palette selector.' );
 }
 
 $palette = sm_build_contextual_palette_from_color( '#123456', 'contextual-post', 'Contextual Post' );
