@@ -138,6 +138,8 @@
 .nb-contextual-post-card__button {
 	color: inherit !important;
 	pointer-events: none;
+	--theme-button-transition: all var(--theme-transition-duration-fast) var(--theme-transition-easing);
+	--theme-button-hover-transition: var(--theme-button-transition);
 }
 
 a.nb-supernova-item__link.nb-contextual-post-card__link {

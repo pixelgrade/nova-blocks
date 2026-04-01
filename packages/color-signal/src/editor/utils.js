@@ -19,8 +19,10 @@ import {
  * @returns {number|*}
  */
 export const getParentVariation = ( clientId ) => {
-  const { getBlockParents, getBlock } = select( 'core/block-editor' );
-  const parents = getBlockParents( clientId ).slice();
+  const { getBlockParents, getBlock, getSelectedBlockClientId } = select( 'core/block-editor' );
+  const resolvedClientId = clientId || getSelectedBlockClientId();
+  const blockParents = resolvedClientId ? getBlockParents( resolvedClientId ) : undefined;
+  const parents = Array.isArray( blockParents ) ? blockParents.slice() : [];
 
   // Loop through parents array until we find a block with Color Signal component enabled
   while ( parents.length ) {

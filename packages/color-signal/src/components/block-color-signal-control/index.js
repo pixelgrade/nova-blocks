@@ -36,7 +36,7 @@ const BlockColorSignal = props => {
       useSourceColorAsReference: false,
     }, true, true );
 
-  }, [ palette, updateBlock ] );
+  }, [ attributes, clientId, palette, updateBlock ] );
 
   return (
     <SignalControl

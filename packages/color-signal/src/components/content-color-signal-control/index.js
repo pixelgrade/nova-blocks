@@ -15,7 +15,7 @@ import {
 
 const ContentColorSignalControl = ( props ) => {
 
-  const { attributes, setAttributes, name } = props;
+  const { attributes, clientId, setAttributes, name } = props;
   const { contentColorSignal, palette } = attributes;
   const supports = useSupports( name );
   const colorSignalSupport = supports?.novaBlocks?.colorSignal;

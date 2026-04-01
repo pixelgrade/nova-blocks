@@ -21,7 +21,6 @@ import {
 } from "../components";
 
 const Controls = withColorSignalProps( props => {
-
   return (
     <ControlsSection id={ 'color-signal' } label={ __( 'Color Signal', '__plugin_txtd' ) } order={ 10 } key={'color_signal_controls_section'}>
       <ControlsTab label={ __( 'Customize', '__plugin_txtd' ) } key={'color_signal_customize_tab'}>

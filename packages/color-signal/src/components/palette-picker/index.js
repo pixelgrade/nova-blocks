@@ -36,7 +36,6 @@ const PalettePicker = ( props ) => {
     if ( nextPalette === palette && stickySourceColor ) {
       const referenceVariation = getParentVariation( clientId );
       const sourceIndex = getSourceIndexFromPaletteId( palette );
-      const { useSourceColorAsReference } = attributes;
       const nextSourceColorAsReference = ! useSourceColorAsReference;
       const absoluteVariation = sourceIndex + 1;
       const nextVariation = nextSourceColorAsReference ? 1 : absoluteVariation;
@@ -49,7 +48,6 @@ const PalettePicker = ( props ) => {
       } );
 
     } else {
-
       setAttributes( {
         palette: nextPalette
       } );
@@ -69,6 +67,7 @@ const PalettePicker = ( props ) => {
   return (
     <ControlsGroup key={'block_color_signal_palette_picker'}>
       <ColorPicker
+        { ...props }
         label={ 'Color Palette' }
         options={ options }
         onChange={ value => {
@@ -77,7 +76,6 @@ const PalettePicker = ( props ) => {
         } }
         favorite={ paletteVariation === 1 && useSourceColorAsReference }
         selected={ palette }
-        { ...props }
       />
     </ControlsGroup>
   )
