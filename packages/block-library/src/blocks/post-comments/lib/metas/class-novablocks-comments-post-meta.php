@@ -26,6 +26,7 @@ if ( ! class_exists( 'NovaBlocks_Comments_Post_Meta' ) ) {
 		protected static $_instance = null;
 
 		protected $excluded_post_types = [
+			'page', // Pages rarely use conversation starters; excluding keeps the iframed Post Editor.
 			'product', // the Product reviews is a separate problem to be solved.
 			'shop_order', // Comments are used internally, as notes.
 			'shop_subscription', // Comments are used internally, as notes.
