@@ -363,6 +363,58 @@ npm run build          # Full build + zip
 - Original implementation plan: `anima/plans/2026-03-22-logo-loading-transition-styles.md`
 - Original page transitions design: `anima/plans/2026-02-25-page-transitions-design.md`
 
+## Editor CSS: Iframed vs Non-Iframed Post Editor
+
+### The two editor contexts
+
+WordPress has two editing contexts with different CSS environments:
+- **Site Editor** (`site-editor.php`): Always iframed. `<body>` has `editor-styles-wrapper` class. Clean CSS isolation.
+- **Post Editor** (`post.php`): Non-iframed by default (`renderingMode: "post-only"`). `.editor-styles-wrapper` is on a `<div>`, not `<body>`. Admin CSS can bleed in.
+
+### What enables the iframe in Post Editor
+
+Three conditions must ALL be met:
+1. `add_theme_support('editor-styles')` — Anima adds this unconditionally in `anima_setup()`
+2. No active meta boxes — meta boxes force the editor out of iframe mode (they need direct DOM access)
+3. The rendering mode must be `template-locked` or `all` (not `post-only`, which is the default for pages)
+
+Even with all three, WP 7.0 still uses `post-only` mode for pages, so the Post Editor typically remains non-iframed.
+
+### CSS selector implications
+
+**Never use `body.editor-styles-wrapper` in editor-targeted CSS.** It only matches in the iframed Site Editor. Use `.editor-styles-wrapper` instead — it matches in both contexts.
+
+The Anima theme's `src/scss/utility/_items-aspect-ratio.scss` handles editor CSS for Nova Blocks cards. If adding new editor-only rules there, use `.editor-styles-wrapper` (not `body.editor-styles-wrapper`).
+
+### Stacked card editor layout (editor-styles.scss)
+
+Nova Blocks' `editor-styles.scss` (in `packages/block-library/src/blocks/supernova/`) overrides the frontend stacked card layout for the editor:
+- Sets `position: static !important` on media wrapper and content (instead of `position: absolute` from `@include cover`)
+- Uses CSS Grid `grid-area: 1/1` for stacking instead of absolute positioning
+- Applies `aspect-ratio` based on `--nb-min-height-fallback` to control card height
+
+**Critical constraint**: The `overflow: hidden` and `min-width: 0` on `.nb-supernova-item__frame` prevent a CSS Grid auto-sizing explosion where the implicit grid track expands to ~33 million pixels. This happens when the media wrapper's extreme `aspect-ratio` (from `minHeightFallback=0`) produces an enormous `max-content` width. Without these constraints, card content gets pushed millions of pixels off-screen.
+
+### Discussion Extra Details meta box
+
+The `NovaBlocks_Comments_Post_Meta` class registers a "Discussion Extra Details" meta box on any post type supporting comments. The `page` post type is excluded (`$excluded_post_types`) to avoid blocking the iframed Post Editor.
+
+### Testing editor CSS changes
+
+When testing editor CSS, always verify in BOTH:
+1. Post Editor on a page (`post.php?post=X&action=edit`) — non-iframed
+2. Site Editor on a template (`site-editor.php?canvas=edit&p=...`) — iframed
+
+CSS that works in the Site Editor may not work in the Post Editor due to the `body.editor-styles-wrapper` selector issue.
+
+## WordPress Studio (localhost:8888)
+
+- The Studio site at `localhost:8888` serves from `/Users/georgeolaru/Studio/pile-lt-starter/`
+- Uses the `wp-code-mirror` plugin to rsync the Anima theme and plugins (Nova Blocks, Style Manager, Pixelgrade Care, wp-code-mirror) from the `style-manager.local` site
+- Config at `/Users/georgeolaru/Studio/pile-lt-starter/wp-content/uploads/wp-code-mirror/config/`
+- Studio's WASM PHP runtime may cache bytecode — restart via `studio site stop --path /Users/georgeolaru/Studio/pile-lt-starter && studio site start --path /Users/georgeolaru/Studio/pile-lt-starter` to pick up PHP changes
+- Studio CLI: `/usr/local/bin/studio`
+
 ## Full Release Checklist
 
 - [ ] Source changes committed and pushed to `main`
