@@ -95,4 +95,11 @@
       opacity: 1;
     }
   }
+
+  // Selected separators get extra top padding from the editor to reserve
+  // room for the floating toolbar. That padded wrapper makes the generic
+  // preview look like it fills through the separator itself on first paint.
+  &.wp-block-separator {
+    padding-top: 0 !important;
+  }
 }
