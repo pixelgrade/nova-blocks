@@ -2,6 +2,8 @@
 @import "scss/collection/style";
 
 .slick-slide {
+  opacity: 1 !important;
+
   // element on which we apply the custom transition
   > * {
     overflow: hidden;
@@ -11,11 +13,6 @@
   > * > .nb-collection__layout-item {
     height: 100%;
   }
-}
-
-.slick-slide--current,
-.slick-slide--next {
-  opacity: 1 !important;
 }
 
 .slick-slide--current {

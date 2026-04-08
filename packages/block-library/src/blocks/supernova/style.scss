@@ -11,6 +11,10 @@
     @include block-background;
   }
 
+  &.nb-supernova--layout-carousel.sm-color-signal-0 .nb-supernova-item__frame > :is(.nb-supernova-item__content, .nb-supernova-item__media-wrapper) {
+    background-color: var(--sm-current-bg-color, var(--nb-bg-color));
+  }
+
   &.nb-supernova--card-layout-horizontal {
     --emphasis-area-gradient-direction: -90deg;
   }
