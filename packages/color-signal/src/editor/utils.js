@@ -85,6 +85,7 @@ export const getUpdatedAttributes = ( attributes, clientId, newAttributes = {}, 
     paletteVariation: nextSourceAsReference ? 1 : finalVariation,
     useSourceColorAsReference: nextSourceAsReference,
     colorSignal: nextSignal,
+    contentColorSignal: contentColorSignal,
     contentPaletteVariation: contentColorSignal === 0 ? finalVariation : nextContentVariation,
   }
 }
