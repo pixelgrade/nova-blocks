@@ -55,3 +55,12 @@
     --aspect-ratio-multiplier: 0.5;
   }
 }
+
+.nb-supernova--pile-3d.nb-supernova--card-layout-stacked .nb-collection__layout-item {
+  // Gutenberg can add horizontal padding to some block-list wrappers, which
+  // turns their implicit grid track into a narrower base width. Normalize the
+  // wrapper so Odd and Even start from the same width before the 3D scale.
+  padding-left: 0 !important;
+  padding-right: 0 !important;
+  grid-template-columns: minmax(0, 1fr) !important;
+}

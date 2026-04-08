@@ -145,6 +145,13 @@
     display: grid;
     justify-items: center;
     align-items: start;
+    // WordPress can add horizontal block padding on some collection items,
+    // which turns the implicit grid track into a narrower base width for only
+    // some cards. Normalize the wrapper so Odd and Even shrink from the same
+    // full column width on the frontend.
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+    grid-template-columns: minmax(0, 1fr) !important;
   }
 
   .nb-collection__layout-item > .nb-supernova-item {
