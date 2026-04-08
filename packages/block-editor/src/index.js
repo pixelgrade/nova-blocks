@@ -1,3 +1,5 @@
+import './preferences';
+
 export * from './components';
 export * from './filters';
 export * from './hooks';

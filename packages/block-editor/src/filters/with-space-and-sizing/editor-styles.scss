@@ -1,0 +1,98 @@
+.novablocks-space-and-sizing-preview {
+  --nb-space-preview-outer-color: rgba(24, 119, 242, 0.18);
+  --nb-space-preview-outer-border-color: rgba(24, 119, 242, 0.45);
+  --nb-space-preview-inner-color: rgba(24, 119, 242, 0.08);
+  --nb-space-preview-transition: opacity 120ms ease-out, background-size 120ms ease-out;
+  --nb-space-preview-top-size: calc(
+    max(
+      var(--nb-block-top-spacing, 0),
+      calc(-1 * var(--nb-block-top-spacing, 0))
+    ) * var(--nb-spacing)
+  );
+  --nb-space-preview-bottom-size: calc(
+    max(
+      var(--nb-block-bottom-spacing, 0),
+      calc(-1 * var(--nb-block-bottom-spacing, 0))
+    ) * var(--nb-spacing)
+  );
+  --nb-space-preview-top-offset: calc(
+    max(0, calc(-1 * var(--nb-block-top-spacing, 0))) * var(--nb-spacing)
+  );
+  --nb-space-preview-bottom-offset: calc(
+    max(0, calc(-1 * var(--nb-block-bottom-spacing, 0))) * var(--nb-spacing)
+  );
+  --nb-space-preview-emphasis-top-size: calc(
+    max(
+      var(--nb-emphasis-top-spacing, 0),
+      calc(-1 * var(--nb-emphasis-top-spacing, 0))
+    ) * var(--nb-spacing)
+  );
+  --nb-space-preview-emphasis-bottom-size: calc(
+    max(
+      var(--nb-emphasis-bottom-spacing, 0),
+      calc(-1 * var(--nb-emphasis-bottom-spacing, 0))
+    ) * var(--nb-spacing)
+  );
+
+  position: relative;
+  transition: var(--nb-space-preview-transition);
+
+  &:before,
+  &:after {
+    content: "";
+    position: absolute;
+    left: 0;
+    right: 0;
+    pointer-events: none;
+    opacity: 0;
+    transition: var(--nb-space-preview-transition);
+  }
+
+  &:before {
+    top: calc(-1 * var(--nb-space-preview-top-size) + var(--nb-space-preview-top-offset));
+    height: var(--nb-space-preview-top-size);
+    background:
+      repeating-linear-gradient(
+        -45deg,
+        transparent 0,
+        transparent 10px,
+        rgba(24, 119, 242, 0.12) 10px,
+        rgba(24, 119, 242, 0.12) 20px
+      ),
+      linear-gradient(var(--nb-space-preview-outer-color), var(--nb-space-preview-outer-color));
+    border-top: 1px solid var(--nb-space-preview-outer-border-color);
+    border-bottom: 1px solid var(--nb-space-preview-outer-border-color);
+  }
+
+  &:after {
+    bottom: calc(-1 * var(--nb-space-preview-bottom-size) + var(--nb-space-preview-bottom-offset));
+    height: var(--nb-space-preview-bottom-size);
+    background:
+      repeating-linear-gradient(
+        -45deg,
+        transparent 0,
+        transparent 10px,
+        rgba(24, 119, 242, 0.12) 10px,
+        rgba(24, 119, 242, 0.12) 20px
+      ),
+      linear-gradient(var(--nb-space-preview-outer-color), var(--nb-space-preview-outer-color));
+    border-top: 1px solid var(--nb-space-preview-outer-border-color);
+    border-bottom: 1px solid var(--nb-space-preview-outer-border-color);
+  }
+
+  &--visible {
+    background-image:
+      linear-gradient(var(--nb-space-preview-inner-color), var(--nb-space-preview-inner-color)),
+      linear-gradient(var(--nb-space-preview-inner-color), var(--nb-space-preview-inner-color));
+    background-position: top left, bottom left;
+    background-repeat: no-repeat;
+    background-size:
+      100% var(--nb-space-preview-emphasis-top-size),
+      100% var(--nb-space-preview-emphasis-bottom-size);
+
+    &:before,
+    &:after {
+      opacity: 1;
+    }
+  }
+}

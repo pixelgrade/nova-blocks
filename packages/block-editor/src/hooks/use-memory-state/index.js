@@ -1,20 +1,26 @@
-import { useState } from '@wordpress/element';
+import { useEffect, useMemo, useState } from '@wordpress/element';
 
-const memoryState = {};
+const {
+  getMemoryStateValue,
+  setMemoryStateValue,
+  subscribeToMemoryState,
+} = require( './store' );
 
 const useMemoryState = ( key, initialState ) => {
-  const [ state, setState ] = useState( () => {
-    const hasMemoryValue = Object.prototype.hasOwnProperty.call( memoryState, key );
-    if ( hasMemoryValue ) {
-      return memoryState[ key ]
-    } else {
-      return typeof initialState === 'function' ? initialState() : initialState;
-    }
-  } );
+  const initialValue = useMemo(
+    () => getMemoryStateValue( key, initialState ),
+    [ key, initialState ]
+  );
+  const [ state, setState ] = useState( initialValue );
+
+  useEffect( () => {
+    setState( getMemoryStateValue( key, initialState ) );
+
+    return subscribeToMemoryState( key, setState );
+  }, [ key, initialState ] );
 
   function onChange( nextState ) {
-    memoryState[ key ] = nextState;
-    setState( nextState );
+    setMemoryStateValue( key, nextState, initialState );
   }
 
   return [ state, onChange ];
