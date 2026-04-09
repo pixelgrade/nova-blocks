@@ -95,12 +95,14 @@ Yes! Nova Block's core features are free to use.
 == Changelog ==
 
 = 2.1.15 =
-* Fix: Restore the editor grid used for alignwide and alignfull block width calculations in the block editor.
-* Fix: Exclude private local overlays and temporary scratch files from release zips.
-* Fix: Add the Pile-style header layout with separate centered and right-side navigation areas.
-* Fix: Keep Categories lists laid out correctly inside flex Row and Group containers.
-* Fix: Restore readable Site Editor template previews when editor iframe assets drop under heavy preview load.
-* Fix: Re-run aligned block width calculations only for relevant editor mutations and keep Query Loop wrappers from trapping full-width blocks in the editor.
+* Release: Re-publish 2.1.15 from the latest main branch so GitHub and WordPress.org ship the same patch level.
+* New: Add the Pile-style header layout, improve the header layout chooser, and hide incompatible WooCommerce header template-part patterns.
+* New: Add the Contextual Post Card block for single-project end caps.
+* Fix: Restore the editor grid used for alignwide and alignfull width calculations and stabilize stacked Supernova/card previews in the editor.
+* Fix: Wire Cards Collection 3D Grid odd/even sizing, normalize pile 3D card widths, and add stacked-card hover border controls.
+* Fix: Restore readable Site Editor/template preview overlays, keep Categories lists correct inside flex Row and Group containers, and exclude pages from the comments extra-details meta box integration.
+* Fix: Refine contextual color signal palette syncing and content color updates across editor and runtime rendering.
+* Fix: Keep carousel masking, separator preview overlays, transparent header color initialization, and card button labels rendering correctly.
 
 = 2.1.14 =
 * Release: Published the latest WordPress 7.0 compatibility and Collection Layout improvements as 2.1.14 to keep GitHub and WordPress.org versioning aligned.
