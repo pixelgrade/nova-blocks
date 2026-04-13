@@ -3,6 +3,7 @@
 **/build-module/
 **/build-style/
 /dist/
+tmp/
 
 /vendor/
 
