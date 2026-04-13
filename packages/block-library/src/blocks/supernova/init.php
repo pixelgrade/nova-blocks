@@ -30,6 +30,16 @@ function novablocks_get_supernova_attributes(): array {
 
 }
 
+function novablocks_should_heal_slideshow_hero_content_signal( array $attributes ): bool {
+	return ! empty( $attributes['showMedia'] ) &&
+	       $attributes['contentType'] === 'auto' &&
+	       $attributes['layoutStyle'] === 'carousel' &&
+	       $attributes['cardLayout'] === 'stacked' &&
+	       $attributes['align'] === 'full' &&
+	       (int) $attributes['columns'] === 1 &&
+	       (int) $attributes['contentColorSignal'] === 0;
+}
+
 if ( ! function_exists( 'novablocks_render_supernova_block' ) ) {
 
 	/**
@@ -50,6 +60,12 @@ if ( ! function_exists( 'novablocks_render_supernova_block' ) ) {
 
 		$attributes_config = novablocks_get_supernova_attributes();
 		$attributes        = novablocks_get_attributes_with_defaults( $attributes, $attributes_config );
+
+		// Older slideshow heroes can drift to contentColorSignal 0, which masks media on stacked query slides.
+		if ( novablocks_should_heal_slideshow_hero_content_signal( $attributes ) ) {
+			$attributes['contentColorSignal']     = 3;
+			$attributes['contentPaletteVariation'] = novablocks_get_content_variation( $attributes );
+		}
 
 		$data_attributes_array = array_map( 'novablocks_camel_case_to_kebab_case', array_keys( $attributes ) );
 
