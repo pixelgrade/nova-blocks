@@ -28,6 +28,107 @@ import {
 
 import { compileSupernovaItemAttributes } from './utils';
 
+const normalizeVariationValue = ( value ) => ( value + 11 ) % 12 + 1;
+
+const getSignalFromVariation = ( variation ) => {
+  if ( variation === 1 ) {
+    return 0;
+  }
+
+  if ( variation < 5 ) {
+    return 1;
+  }
+
+  if ( variation < 9 ) {
+    return 2;
+  }
+
+  return 3;
+};
+
+const getVariationFromSignal = ( signal ) => {
+  if ( signal === 1 ) {
+    return 3;
+  }
+
+  if ( signal === 2 ) {
+    return 6;
+  }
+
+  if ( signal === 3 ) {
+    return 10;
+  }
+
+  return 1;
+};
+
+const getSignalOptionsFromVariation = ( variation ) => {
+  const blockSignal = getSignalFromVariation( variation );
+  const variationOptions = [];
+
+  for ( let index = 0; index < 4; index++ ) {
+    if ( index === blockSignal ) {
+      variationOptions.push( variation );
+    } else {
+      variationOptions.push( getVariationFromSignal( index ) );
+    }
+  }
+
+  return variationOptions.sort( ( variation1, variation2 ) => {
+    return Math.abs( variation - variation1 ) < Math.abs( variation - variation2 ) ? -1 : 1;
+  } );
+};
+
+const getSiteVariationOffset = () => {
+  const siteVariation = parseInt( window?.styleManager?.siteColorVariation, 10 );
+
+  return Number.isNaN( siteVariation ) ? 0 : siteVariation - 1;
+};
+
+const getPaletteSourceIndex = ( paletteId ) => {
+  const palettes = Array.isArray( window?.styleManager?.colorsConfig ) ? window.styleManager.colorsConfig : [];
+  const palette = palettes.find( ( thisPalette ) => `${ thisPalette.id }` === `${ paletteId }` );
+  const sourceIndex = parseInt( palette?.sourceIndex, 10 );
+
+  return Number.isNaN( sourceIndex ) ? 6 : sourceIndex;
+};
+
+const getSlideshowHeroContentVariation = ( attributes, contentColorSignal ) => {
+  const paletteVariation = parseInt( attributes.paletteVariation, 10 );
+  const sourceIndex = getPaletteSourceIndex( attributes.palette );
+  let offset = getSiteVariationOffset();
+
+  if ( attributes.useSourceColorAsReference ) {
+    offset = sourceIndex;
+  }
+
+  const referenceVariation = normalizeVariationValue( paletteVariation + offset );
+  const signalOptions = getSignalOptionsFromVariation( referenceVariation );
+
+  return normalizeVariationValue( signalOptions[ contentColorSignal ] - offset );
+};
+
+const shouldHealSlideshowHeroContentSignal = ( attributes ) => {
+  return !! attributes.showMedia &&
+    attributes.contentType === 'auto' &&
+    attributes.layoutStyle === 'carousel' &&
+    attributes.cardLayout === 'stacked' &&
+    attributes.align === 'full' &&
+    parseInt( attributes.columns, 10 ) === 1 &&
+    parseInt( attributes.contentColorSignal, 10 ) === 0;
+};
+
+const getHealedSlideshowHeroContentSignalAttributes = ( attributes ) => {
+  if ( ! shouldHealSlideshowHeroContentSignal( attributes ) ) {
+    return null;
+  }
+
+  return {
+    contentColorSignal: 3,
+    contentPaletteVariation: getSlideshowHeroContentVariation( attributes, 3 ),
+  };
+};
+
 const ChangeMediaBlockControls = ( props ) => {
   const { clientId } = props;
   const innerBlocks = useInnerBlocks( clientId );
@@ -128,6 +229,17 @@ const SupernovaEdit = props => {
 
   const { attributes, setAttributes, context, clientId } = props;
   const { postsToShow } = attributes;
+  const healedSlideshowHeroAttributes = useMemo(
+    () => getHealedSlideshowHeroContentSignalAttributes( attributes ),
+    [ attributes ]
+  );
+  const previewAttributes = useMemo(
+    () => healedSlideshowHeroAttributes ? {
+      ...attributes,
+      ...healedSlideshowHeroAttributes
+    } : attributes,
+    [ attributes, healedSlideshowHeroAttributes ]
+  );
 
   const { queryId } = context;
   const isDescendentOfQueryLoop = Number.isFinite( queryId );
@@ -145,9 +257,15 @@ const SupernovaEdit = props => {
     setAttributes( { contentType: 'fields' } );
   }
 
+  useEffect( () => {
+    if ( healedSlideshowHeroAttributes ) {
+      setAttributes( healedSlideshowHeroAttributes );
+    }
+  }, [ healedSlideshowHeroAttributes, setAttributes ] );
+
   const innerBlocksAttributes = useMemo( () => {
-    return compileSupernovaItemAttributes( attributes );
-  }, [ attributes ] );
+    return compileSupernovaItemAttributes( previewAttributes );
+  }, [ previewAttributes ] );
 
   // Make sure that we keep the number of inner Supernova Items in sync with the number of items.
   useInnerBlocksCount( clientId, postsToShow, 'novablocks/supernova-item', innerBlocksAttributes );
@@ -336,7 +454,7 @@ const SupernovaEdit = props => {
 
   return (
     <Fragment>
-      <SupernovaPreview { ...props } posts={ posts } inQuery={ isDescendentOfQueryLoop } key={ 'preview' }/>
+      <SupernovaPreview { ...props } attributes={ previewAttributes } posts={ posts } inQuery={ isDescendentOfQueryLoop } key={ 'preview' }/>
       <BlockControls { ...props } inQuery={ isDescendentOfQueryLoop } key={ 'block-controls' }/>
       <InspectorControls { ...props } inQuery={ isDescendentOfQueryLoop } key={ 'inspector-controls' }/>
       <ChangeMediaBlockControls { ...props } key={ 'media-composition-block-controls' }/>
