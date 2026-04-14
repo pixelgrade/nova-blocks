@@ -1524,7 +1524,28 @@ function novablocks_get_collection_card_markup_from_post( $post, array $attribut
 	$attributes['paletteVariation']          = $attributes['contentPaletteVariation'];
 	$attributes['useSourceColorAsReference'] = false;
 
-	return novablocks_get_collection_card_markup( $media_markup, $card_content, $attributes );
+	$profile = apply_filters( 'novablocks/post_card_profile', [], $post, $attributes );
+
+	$render_data = [
+		'card_classes'    => [],
+		'card_attributes' => $attributes,
+		'media_markup'    => $media_markup,
+		'content_markup'  => $card_content,
+	];
+
+	$render_data = apply_filters( 'novablocks/post_card_render_data', $render_data, $post, $attributes, $profile );
+
+	if ( ! empty( $render_data['card_classes'] ) && is_array( $render_data['card_classes'] ) ) {
+		$extra_classes = implode( ' ', array_map( 'sanitize_html_class', $render_data['card_classes'] ) );
+		$existing_classes = $render_data['card_attributes']['className'] ?? '';
+		$render_data['card_attributes']['className'] = trim( $existing_classes . ' ' . $extra_classes );
+	}
+
+	return novablocks_get_collection_card_markup(
+		$render_data['media_markup'],
+		$render_data['content_markup'],
+		$render_data['card_attributes']
+	);
 }
 
 function novablocks_get_collection_card_media_markup_wrapped( $media, $link = false, $dropcap = '' ): string {
