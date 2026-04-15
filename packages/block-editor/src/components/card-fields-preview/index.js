@@ -15,6 +15,7 @@ const CardFieldsPreview = ( props ) => {
       title,
       subtitle,
       metaBelowTitle,
+      metaBelowContent,
       description,
       showMeta,
       showTitle,
@@ -33,6 +34,7 @@ const CardFieldsPreview = ( props ) => {
       <CardSubtitle { ...props } show={ showSubtitle }>{ subtitle }</CardSubtitle>
       <CardMeta { ...props } show={ showMeta }>{ metaBelowTitle }</CardMeta>
       <CardDescription { ...props } show={ showDescription }>{ stripHTML( description ) }</CardDescription>
+      <CardMeta { ...props } show={ showMeta }>{ metaBelowContent }</CardMeta>
       <CardFooter { ...props } show={ showButtons && !! buttonText }>
         <CardButton { ...props }>{ buttonText }</CardButton>
       </CardFooter>

@@ -15,6 +15,10 @@
 		"type": "string",
 		"default": ""
 	},
+	"metaBelowContent": {
+		"type": "string",
+		"default": ""
+	},
 	"title": {
 		"type": "string",
 		"default": "This is a catchy title"

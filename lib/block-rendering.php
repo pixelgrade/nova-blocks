@@ -954,6 +954,7 @@ function novablocks_get_card_post_meta( $post, array $attributes ): array {
 	$secondaryMetaIsOutput = $attributes['secondaryMetadata'] !== 'none';
 	$aboveTitleMeta        = '';
 	$belowTitleMeta        = '';
+	$belowContentMeta      = '';
 
 	if ( ! empty( $primaryMeta ) && ! empty( $secondaryMeta ) ) {
 		$combinedMeta = $primaryMeta;
@@ -972,9 +973,12 @@ function novablocks_get_card_post_meta( $post, array $attributes ): array {
 		case 'below-title':
 			$belowTitleMeta = $combinedMeta;
 			break;
+		case 'below-content':
+			$belowContentMeta = $combinedMeta;
+			break;
 		case 'split':
 			$aboveTitleMeta = $primaryMeta;
-			$belowTitleMeta = $secondaryMeta;
+			$belowContentMeta = $secondaryMeta;
 			break;
 		default:
 			break;
@@ -983,6 +987,7 @@ function novablocks_get_card_post_meta( $post, array $attributes ): array {
 	return [
 		$aboveTitleMeta,
 		$belowTitleMeta,
+		$belowContentMeta,
 	];
 }
 
@@ -1621,6 +1626,7 @@ function novablocks_get_card_contents( array $attributes ): string {
 	$output .= novablocks_get_card_item_subtitle( $attributes['subtitle'], $attributes );
 	$output .= novablocks_get_card_item_meta( $attributes['metaBelowTitle'], $attributes );
 	$output .= novablocks_get_card_item_description( $attributes['description'], $attributes );
+	$output .= novablocks_get_card_item_meta( $attributes['metaBelowContent'] ?? '', $attributes );
 	$output .= novablocks_get_card_item_buttons( [
 		[
 			'text' => $attributes['buttonText'],
@@ -1840,12 +1846,14 @@ function novablocks_get_post_card_contents( $post, $attributes ): string {
 	$postMeta       = novablocks_get_card_post_meta( $post, $attributes );
 	$aboveTitleMeta = $postMeta[0];
 	$belowTitleMeta = $postMeta[1];
+	$belowContentMeta = $postMeta[2];
 	$output         .= novablocks_get_card_item_meta( $aboveTitleMeta, $attributes );
 	$output         .= novablocks_get_card_item_title( $title, $attributes, $post );
 	$output         .= novablocks_get_card_item_meta( $belowTitleMeta, $attributes );
 
 	$excerpt = get_the_excerpt( $post );
 	$output  .= novablocks_get_card_item_description( $excerpt, $attributes );
+	$output  .= novablocks_get_card_item_meta( $belowContentMeta, $attributes );
 
 	$output .= novablocks_get_card_item_buttons( [
 		[

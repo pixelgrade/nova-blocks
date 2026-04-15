@@ -23,6 +23,7 @@ const MetadataPosition = props => {
         options={ [
           { label: __( 'Above Title', '__plugin_txtd' ), value: 'above-title' },
           { label: __( 'Below Title', '__plugin_txtd' ), value: 'below-title' },
+          { label: __( 'Below Content', '__plugin_txtd' ), value: 'below-content' },
           { label: __( 'Split (Above Title / Below Content)', '__plugin_txtd' ), value: 'split' },
         ] }
       />
