@@ -178,7 +178,7 @@ function novablocks_maybe_get_quote_blueprint_card_markup( WP_Post $post, array 
 	}
 
 	$media_markup = novablocks_get_quote_blueprint_media_markup( $post, $item_attributes, $content_markup !== '' );
-	$item_markup  = novablocks_get_collection_card_markup( $media_markup, $content_markup, $item_attributes );
+	$item_markup  = novablocks_get_collection_card_surface_markup( $media_markup, $content_markup, $item_attributes );
 
 	return novablocks_get_quote_blueprint_supernova_markup( $root_attributes, $item_markup );
 }
@@ -260,7 +260,22 @@ function novablocks_get_quote_blueprint_item_attributes( array $attributes, arra
 		$item_attributes['className'] = trim( ( $attributes['className'] ?? '' ) . ' ' . $blueprint_item['className'] );
 	}
 
+	$item_attributes['surfaceStyleProps'] = novablocks_get_quote_blueprint_item_style_props( $item_attributes );
+
 	return $item_attributes;
+}
+
+function novablocks_get_quote_blueprint_item_style_props( array $attributes ): array {
+	return array_merge(
+		[
+			'aspect-ratio: auto',
+		],
+		novablocks_get_media_composition_css( $attributes ),
+		novablocks_get_color_signal_css( $attributes ),
+		novablocks_get_overlay_filter_css( $attributes ),
+		novablocks_get_space_and_sizing_css( $attributes ),
+		novablocks_get_collection_layout_css( $attributes )
+	);
 }
 
 function novablocks_get_quote_blueprint_content_markup( WP_Post $post, array $profile, array $item_block ): string {
@@ -383,24 +398,34 @@ function novablocks_get_quote_blueprint_permalink_markup( WP_Post $post ): strin
 }
 
 function novablocks_get_quote_blueprint_supernova_markup( array $attributes, string $content ): string {
-	$data_attributes_array = array_map( 'novablocks_camel_case_to_kebab_case', array_keys( $attributes ) );
-	$data_attributes       = novablocks_get_data_attributes( $data_attributes_array, $attributes );
+	$data_attributes = novablocks_get_data_attributes(
+		[
+			'palette',
+			'palette-variation',
+			'color-signal',
+			'content-palette-variation',
+			'content-color-signal',
+			'use-source-color-as-reference',
+			'emphasis-area',
+			'card-layout',
+			'content-position',
+		],
+		$attributes
+	);
 	$align                 = preg_split( '/\b\s+/', $attributes['contentPosition'] ?? 'center center' );
 
 	$classes = array_merge(
 		[
 			'nb-supernova',
+			'nb-post-format-card-blueprint',
+			'nb-post-format-card-blueprint--quote',
 			'nb-supernova--content-type-' . ( $attributes['contentType'] ?? 'custom' ),
 			'nb-supernova--card-layout-' . ( $attributes['cardLayout'] ?? 'stacked' ),
-			'nb-supernova--layout-' . ( $attributes['layoutStyle'] ?? 'classic' ),
-			'nb-supernova--' . ( $attributes['columns'] ?? 1 ) . '-columns',
+			'nb-supernova--1-columns',
 			'nb-supernova--valign-' . ( $align[0] ?? 'center' ),
 			'nb-supernova--halign-' . ( $align[1] ?? 'center' ),
-			'nb-supernova--align-' . ( $attributes['align'] ?? 'wide' ),
-			'alignfull',
 		],
-		novablocks_get_color_signal_classes( $attributes ),
-		novablocks_get_grid_area_fallback_classnames( $attributes )
+		novablocks_get_color_signal_classes( $attributes )
 	);
 
 	if ( ! empty( $attributes['className'] ) ) {
@@ -408,30 +433,14 @@ function novablocks_get_quote_blueprint_supernova_markup( array $attributes, str
 		$classes        = array_merge( $classes, array_filter( $custom_classes ) );
 	}
 
-	if ( ! empty( $attributes['showPagination'] ) ) {
-		$classes[] = 'nb-supernova--show-pagination';
-	}
-
-	if ( ( $attributes['layoutStyle'] ?? '' ) === 'carousel' ) {
-		$classes[] = 'nb-supernova--carousel-layout-' . ( $attributes['carouselLayout'] ?? 'fixed' );
-	}
-
-	if ( ! empty( $attributes['thumbnailAspectRatioString'] ) && $attributes['thumbnailAspectRatioString'] === 'original' ) {
-		$classes[] = 'nb-supernova--aspect-ratio-original';
-	}
-
-	if ( ! empty( $attributes['pileParallaxAmount'] ) && $attributes['pileParallaxAmount'] > 0 ) {
-		$classes[] = 'nb-supernova--pile-parallax';
-	}
-
-	$classes = array_merge( $classes, novablocks_get_collection_layout_classes( $attributes ) );
-
 	$css_props = array_merge(
 		novablocks_get_media_composition_css( $attributes ),
 		novablocks_get_color_signal_css( $attributes ),
 		novablocks_get_overlay_filter_css( $attributes ),
 		novablocks_get_space_and_sizing_css( $attributes ),
-		novablocks_get_collection_layout_css( $attributes )
+		[
+			'display: block',
+		]
 	);
 
 	$anchor = ' ';
@@ -439,7 +448,7 @@ function novablocks_get_quote_blueprint_supernova_markup( array $attributes, str
 		$anchor = 'id="' . esc_attr( $attributes['anchor'] ) . '" ';
 	}
 
-	return '<div class="' . esc_attr( join( ' ', $classes ) ) . '" style="' . esc_attr( join( ';', $css_props ) ) . '" ' . $anchor . join( ' ', $data_attributes ) . '>' .
-		novablocks_get_collection_output( $attributes, $content, null ) .
-	'</div>';
+		return '<div class="nb-collection__layout-item"><div class="' . esc_attr( join( ' ', $classes ) ) . '" style="' . esc_attr( join( ';', $css_props ) ) . '" ' . $anchor . join( ' ', $data_attributes ) . '>' .
+			$content .
+		'</div></div>';
 }

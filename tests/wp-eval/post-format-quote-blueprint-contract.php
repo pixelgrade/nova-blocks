@@ -258,6 +258,30 @@ try {
 		novablocks_fail_post_format_quote_blueprint_contract( 'Expected Quote blueprint cards to render inside a Supernova surface wrapper.' );
 	}
 
+	if ( false !== strpos( $valid_markup, 'nb-collection__body' ) ) {
+		novablocks_fail_post_format_quote_blueprint_contract( 'Expected Quote blueprint cards to avoid nested collection wrappers.' );
+	}
+
+	if ( 1 !== substr_count( $valid_markup, 'nb-collection__layout-item' ) ) {
+		novablocks_fail_post_format_quote_blueprint_contract( 'Expected Quote blueprint cards to keep exactly one parent collection layout item wrapper.' );
+	}
+
+	if ( false !== strpos( $valid_markup, 'nb-supernova--layout-masonry' ) || false !== strpos( $valid_markup, 'alignfull' ) ) {
+		novablocks_fail_post_format_quote_blueprint_contract( 'Expected Quote blueprint roots to avoid collection layout classes.' );
+	}
+
+	if ( false === strpos( $valid_markup, 'nb-supernova--1-columns' ) ) {
+		novablocks_fail_post_format_quote_blueprint_contract( 'Expected Quote blueprint roots to keep the single-card Supernova context.' );
+	}
+
+	if ( false === strpos( $valid_markup, 'display: block' ) ) {
+		novablocks_fail_post_format_quote_blueprint_contract( 'Expected Quote blueprint roots to force block flow so the bound card can fill its slot.' );
+	}
+
+	if ( false === strpos( $valid_markup, 'aspect-ratio: auto' ) ) {
+		novablocks_fail_post_format_quote_blueprint_contract( 'Expected Quote blueprint items to opt out of the outer collection aspect-ratio utility.' );
+	}
+
 	if ( 1 !== preg_match( '/<div class="[^"]*\bnb-supernova\b[^"]*"[^>]*data-color-signal=[\'"]3[\'"]/', $valid_markup ) ) {
 		novablocks_fail_post_format_quote_blueprint_contract( 'Expected Quote blueprint root signal context to reach the rendered card.' );
 	}
