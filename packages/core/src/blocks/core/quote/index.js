@@ -6,6 +6,11 @@ registerBlockStyle( 'core/quote', {
   label: 'Grande',
 } );
 
+registerBlockStyle( 'core/quote', {
+  name: 'editorial',
+  label: 'Editorial',
+} );
+
 const addDeprecatedQuoteWithoutNormalFontSizeClass = ( settings, name ) => {
   if ( name !== 'core/quote' || typeof settings?.save !== 'function' ) {
     return settings;

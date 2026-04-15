@@ -148,7 +148,7 @@ set_post_thumbnail( $quote_post_id, $quote_attachment_id );
 $valid_blueprint_content =
 	'<!-- wp:novablocks/supernova {"contentType":"custom","palette":1,"paletteVariation":11,"colorSignal":3,"contentPaletteVariation":11,"contentColorSignal":3,"blobSides":3,"blobPatternSeed":3,"blobComplexity":0,"blobSmoothness":33,"blobRotation":0,"blobMaskSides":3,"blobMaskPatternSeed":3,"blobMaskComplexity":0,"blobMaskSmoothness":33,"blobMaskRotation":0,"blobsSizeBalance":50,"blobsHorizontalDisplacement":50,"blobsVerticalDisplacement":50,"stylePreset":"the-cloud-atlas","sizeContrast":0,"positionShift":0,"elementsDistance":20,"placementVariation":25,"imageRotation":0,"objectPosition":50} -->' .
 	'<!-- wp:novablocks/supernova-item {"contentType":"custom","cardLayout":"stacked","contentPosition":"bottom right","contentPadding":50,"overlayFilterStrength":80,"minHeightFallback":66,"thumbnailAspectRatioString":"landscape","imageResizing":"cover","colorSignal":3,"paletteVariation":11,"contentPaletteVariation":11} -->' .
-	'<!-- wp:quote --><blockquote class="wp-block-quote is-style-plain"><!-- wp:paragraph --><p>Blueprint quote copy.</p><!-- /wp:paragraph --><cite>Blueprint cite</cite></blockquote><!-- /wp:quote -->' .
+	'<!-- wp:quote {"className":"is-style-editorial has-normal-font-size"} --><blockquote class="wp-block-quote is-style-editorial has-normal-font-size"><!-- wp:paragraph --><p>Blueprint quote copy.</p><!-- /wp:paragraph --><cite>Blueprint cite</cite></blockquote><!-- /wp:quote -->' .
 	'<!-- /wp:novablocks/supernova-item -->' .
 	'<!-- /wp:novablocks/supernova -->';
 
@@ -300,6 +300,10 @@ try {
 
 	if ( false !== strpos( $valid_markup, 'Blueprint quote copy.' ) ) {
 		novablocks_fail_post_format_quote_blueprint_contract( 'Expected Quote blueprint cards to replace the static blueprint quote copy.' );
+	}
+
+	if ( false === strpos( $valid_markup, 'is-style-editorial' ) ) {
+		novablocks_fail_post_format_quote_blueprint_contract( 'Expected Quote blueprint cards to preserve the quote block style class.' );
 	}
 
 	$active_blueprint_mode = 'valid';
