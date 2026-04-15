@@ -183,6 +183,53 @@ function novablocks_maybe_get_quote_blueprint_card_markup( WP_Post $post, array 
 	return novablocks_get_quote_blueprint_supernova_markup( $root_attributes, $item_markup );
 }
 
+function novablocks_get_quote_blueprint_media_context_attribute_keys(): array {
+	return [
+		'stylePreset',
+		'sizeContrast',
+		'positionShift',
+		'elementsDistance',
+		'placementVariation',
+		'imageRotation',
+		'imageResizing',
+		'containerHeight',
+		'objectPosition',
+		'defaultsGenerated',
+		'blobsEnableMask',
+		'blobSides',
+		'blobPatternSeed',
+		'blobComplexity',
+		'blobSmoothness',
+		'blobRotation',
+		'blobsEnableDecoration',
+		'blobMaskSides',
+		'blobMaskPatternSeed',
+		'blobMaskComplexity',
+		'blobMaskSmoothness',
+		'blobMaskRotation',
+		'blobsSizeBalance',
+		'blobsHorizontalDisplacement',
+		'blobsVerticalDisplacement',
+	];
+}
+
+function novablocks_get_quote_blueprint_root_data_attribute_names(): array {
+	return array_merge(
+		[
+			'palette',
+			'palette-variation',
+			'color-signal',
+			'content-palette-variation',
+			'content-color-signal',
+			'use-source-color-as-reference',
+			'emphasis-area',
+			'card-layout',
+			'content-position',
+		],
+		array_map( 'novablocks_camel_case_to_kebab_case', novablocks_get_quote_blueprint_media_context_attribute_keys() )
+	);
+}
+
 function novablocks_get_quote_blueprint_root_attributes( array $attributes, array $blueprint ): array {
 	$root_attributes = $attributes;
 	$blueprint_root  = $blueprint['root_attrs'] ?? [];
@@ -199,9 +246,16 @@ function novablocks_get_quote_blueprint_root_attributes( array $attributes, arra
 		'className',
 	];
 
+	$root_override_keys = array_merge(
+		$root_override_keys,
+		novablocks_get_quote_blueprint_media_context_attribute_keys()
+	);
+
 	foreach ( $root_override_keys as $key ) {
 		if ( array_key_exists( $key, $blueprint_root ) ) {
 			$root_attributes[ $key ] = $blueprint_root[ $key ];
+		} elseif ( array_key_exists( $key, $blueprint_item ) ) {
+			$root_attributes[ $key ] = $blueprint_item[ $key ];
 		}
 	}
 
@@ -399,17 +453,7 @@ function novablocks_get_quote_blueprint_permalink_markup( WP_Post $post ): strin
 
 function novablocks_get_quote_blueprint_supernova_markup( array $attributes, string $content ): string {
 	$data_attributes = novablocks_get_data_attributes(
-		[
-			'palette',
-			'palette-variation',
-			'color-signal',
-			'content-palette-variation',
-			'content-color-signal',
-			'use-source-color-as-reference',
-			'emphasis-area',
-			'card-layout',
-			'content-position',
-		],
+		novablocks_get_quote_blueprint_root_data_attribute_names(),
 		$attributes
 	);
 	$align                 = preg_split( '/\b\s+/', $attributes['contentPosition'] ?? 'center center' );

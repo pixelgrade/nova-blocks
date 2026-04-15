@@ -146,14 +146,14 @@ $quote_attachment_id = $create_attachment( 'Quote Blueprint Fixture', 1600, 900 
 set_post_thumbnail( $quote_post_id, $quote_attachment_id );
 
 $valid_blueprint_content =
-	'<!-- wp:novablocks/supernova {"contentType":"custom","colorSignal":3,"paletteVariation":11,"palette":1} -->' .
+	'<!-- wp:novablocks/supernova {"contentType":"custom","palette":1,"paletteVariation":11,"colorSignal":3,"contentPaletteVariation":11,"contentColorSignal":3,"blobSides":3,"blobPatternSeed":3,"blobComplexity":0,"blobSmoothness":33,"blobRotation":0,"blobMaskSides":3,"blobMaskPatternSeed":3,"blobMaskComplexity":0,"blobMaskSmoothness":33,"blobMaskRotation":0,"blobsSizeBalance":50,"blobsHorizontalDisplacement":50,"blobsVerticalDisplacement":50,"stylePreset":"the-cloud-atlas","sizeContrast":0,"positionShift":0,"elementsDistance":20,"placementVariation":25,"imageRotation":0,"objectPosition":50} -->' .
 	'<!-- wp:novablocks/supernova-item {"contentType":"custom","cardLayout":"stacked","contentPosition":"bottom right","contentPadding":50,"overlayFilterStrength":80,"minHeightFallback":66,"thumbnailAspectRatioString":"landscape","imageResizing":"cover","colorSignal":3,"paletteVariation":11,"contentPaletteVariation":11} -->' .
 	'<!-- wp:quote --><blockquote class="wp-block-quote is-style-plain"><!-- wp:paragraph --><p>Blueprint quote copy.</p><!-- /wp:paragraph --><cite>Blueprint cite</cite></blockquote><!-- /wp:quote -->' .
 	'<!-- /wp:novablocks/supernova-item -->' .
 	'<!-- /wp:novablocks/supernova -->';
 
 $invalid_blueprint_content =
-	'<!-- wp:novablocks/supernova {"contentType":"custom","colorSignal":3,"paletteVariation":11,"palette":1} -->' .
+	'<!-- wp:novablocks/supernova {"contentType":"custom","palette":1,"paletteVariation":11,"colorSignal":3,"contentPaletteVariation":11,"contentColorSignal":3,"blobSides":3,"blobPatternSeed":3,"blobComplexity":0,"blobSmoothness":33,"blobRotation":0,"blobMaskSides":3,"blobMaskPatternSeed":3,"blobMaskComplexity":0,"blobMaskSmoothness":33,"blobMaskRotation":0,"blobsSizeBalance":50,"blobsHorizontalDisplacement":50,"blobsVerticalDisplacement":50} -->' .
 	'<!-- wp:novablocks/supernova-item {"contentType":"custom","cardLayout":"stacked"} -->' .
 	'<!-- wp:paragraph --><p>Missing quote block.</p><!-- /wp:paragraph -->' .
 	'<!-- /wp:novablocks/supernova-item -->' .
@@ -284,6 +284,14 @@ try {
 
 	if ( 1 !== preg_match( '/<div class="[^"]*\bnb-supernova\b[^"]*"[^>]*data-color-signal=[\'"]3[\'"]/', $valid_markup ) ) {
 		novablocks_fail_post_format_quote_blueprint_contract( 'Expected Quote blueprint root signal context to reach the rendered card.' );
+	}
+
+	if ( 1 !== preg_match( '/<div class="[^"]*\bnb-supernova\b[^"]*"[^>]*data-content-color-signal=[\'"]3[\'"]/', $valid_markup ) ) {
+		novablocks_fail_post_format_quote_blueprint_contract( 'Expected Quote blueprint roots to keep the blueprint content signal context.' );
+	}
+
+	if ( 1 !== preg_match( '/<div class="[^"]*\bnb-supernova\b[^"]*"[^>]*data-blob-sides=[\'"]3[\'"]/', $valid_markup ) ) {
+		novablocks_fail_post_format_quote_blueprint_contract( 'Expected Quote blueprint roots to expose the blueprint shape-modeling context.' );
 	}
 
 	if ( false === strpos( $valid_markup, 'Paul Graham' ) ) {
