@@ -26,6 +26,7 @@ const initialize = () => {
   window.addEventListener( 'scroll', updateAllContainersState );
   window.addEventListener( 'resize', debouncedUpdateAllContainersState );
   window.addEventListener( 'nb:slick-update', updateAllContainersState );
+  window.addEventListener( 'nb:masonry-layout', updateAllContainersState );
   window.addEventListener( 'load', updateAllContainersState );
 
   const parallaxUpdateLoop = () => {

@@ -26,7 +26,7 @@ domReady( () => {
     }
 
     if ( 'masonry' === attributes.layoutStyle ) {
-      handleMasonryGrid( grid, attributes );
+      handleMasonryGrid( grid, block, attributes );
     }
   } );
 
