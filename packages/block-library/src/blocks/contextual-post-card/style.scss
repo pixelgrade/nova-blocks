@@ -6,9 +6,6 @@
 	--nb-card-media-padding-multiplier: 0;
 	--nb-card-layout-gap-modifier: 0;
 	--nb-card-media-padding-top: 56.25%;
-	--nb-contextual-post-card-surface-color: #eee;
-	--nb-contextual-post-card-text-color: #333;
-	--nb-contextual-post-card-hover-text-color: #fff;
 	position: relative;
 	isolation: isolate;
 }
@@ -21,11 +18,11 @@
 }
 
 .nb-contextual-post-card .nb-supernova-item {
-	--current-color: var(--nb-contextual-post-card-text-color);
+	--current-color: var(--sm-current-fg1-color, var(--nb-fg1-color));
 	position: relative;
 	min-height: var(--nb-contextual-post-card-min-height, 50vh);
-	background: var(--nb-contextual-post-card-surface-color);
-	color: var(--nb-contextual-post-card-text-color);
+	background: var(--sm-current-bg-color, var(--nb-bg-color));
+	color: var(--sm-current-fg1-color, var(--nb-fg1-color));
 	overflow: hidden;
 }
 
@@ -71,7 +68,7 @@
 
 .nb-contextual-post-card__media-wrapper {
 	overflow: hidden;
-	background: var(--nb-contextual-post-card-project-color, #333);
+	background: var(--sm-current-accent-color, var(--nb-accent-color));
 	opacity: 0;
 	pointer-events: none;
 	z-index: 0;
@@ -95,8 +92,8 @@
 }
 
 .nb-contextual-post-card__surface:is(:hover, :focus-within) {
-	--current-color: var(--nb-contextual-post-card-hover-text-color);
-	color: var(--nb-contextual-post-card-hover-text-color);
+	--current-color: var(--sm-current-bg-color, var(--nb-bg-color));
+	color: var(--current-color);
 }
 
 .nb-contextual-post-card__surface:is(:hover, :focus-within) .nb-contextual-post-card__media-wrapper {

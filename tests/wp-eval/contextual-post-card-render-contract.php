@@ -21,6 +21,7 @@ if ( count( $portfolio_posts ) < 2 ) {
 $context_post = $portfolio_posts[0];
 $target_post  = $portfolio_posts[1];
 $old_post     = $GLOBALS['post'] ?? null;
+$palette_id   = 'contextual-post';
 
 $original_project_color = get_post_meta( $target_post->ID, '_project_color', true );
 
@@ -70,16 +71,44 @@ if ( false === strpos( $markup, 'nb-supernova-item__link' ) ) {
 	throw new RuntimeException( 'Expected render output to include the standard Nova card link element.' );
 }
 
-if ( false === strpos( $markup, '--nb-contextual-post-card-project-color: #123456' ) ) {
-	throw new RuntimeException( 'Expected render output to expose the target project color as a CSS variable.' );
+if ( false === strpos( $markup, '.sm-palette-' . $palette_id . ' {' ) ) {
+	throw new RuntimeException( 'Expected render output to inline the runtime palette CSS for the target post palette.' );
 }
 
 if ( false === strpos( $markup, '--nb-contextual-post-card-min-height: 50vh' ) ) {
 	throw new RuntimeException( 'Expected render output to default to the Pile-style 50vh height.' );
 }
 
-if ( false === strpos( $markup, 'data-color="#123456"' ) ) {
-	throw new RuntimeException( 'Expected render output to expose the resolved contextual post color on the card link element.' );
+if ( false === strpos( $markup, 'sm-palette-' . $palette_id ) ) {
+	throw new RuntimeException( 'Expected render output to include the target post contextual palette class.' );
+}
+
+if ( false === strpos( $markup, 'sm-variation-1' ) ) {
+	throw new RuntimeException( 'Expected render output to include the default contextual palette variation class.' );
+}
+
+if ( false === strpos( $markup, 'sm-color-signal-0' ) ) {
+	throw new RuntimeException( 'Expected render output to include the default contextual color signal class.' );
+}
+
+if ( false === strpos( $markup, 'data-palette="' . $palette_id . '"' ) ) {
+	throw new RuntimeException( 'Expected render output to expose the target contextual palette id as a data attribute.' );
+}
+
+if ( false === strpos( $markup, 'data-palette-variation="1"' ) ) {
+	throw new RuntimeException( 'Expected render output to expose the default contextual palette variation.' );
+}
+
+if ( false === strpos( $markup, 'data-color-signal="0"' ) ) {
+	throw new RuntimeException( 'Expected render output to expose the default contextual color signal.' );
+}
+
+if ( false !== strpos( $markup, '--nb-contextual-post-card-project-color:' ) ) {
+	throw new RuntimeException( 'Expected render output to stop exposing a custom contextual post color CSS variable.' );
+}
+
+if ( false !== strpos( $markup, 'data-color=' ) ) {
+	throw new RuntimeException( 'Expected render output to stop exposing the contextual post color via data-color.' );
 }
 
 if ( $old_post instanceof WP_Post ) {
