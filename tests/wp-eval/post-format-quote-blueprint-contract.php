@@ -36,6 +36,9 @@ $attributes = [
 	'cardTitleLevel'          => 3,
 	'cardTitleFontSize'       => 'regular',
 	'contentPosition'         => 'top left',
+	'contentPadding'          => 0,
+	'blockTopSpacing'         => 0,
+	'blockBottomSpacing'      => 0,
 	'columns'                 => 1,
 	'cardLayout'              => 'vertical',
 	'palette'                 => 1,
@@ -243,6 +246,35 @@ add_filter( 'novablocks/post_card_profile', $profile_filter, 10, 2 );
 add_filter( 'novablocks/post_card_render_data', $render_data_filter, 10, 4 );
 
 try {
+	$direct_blueprint_template                 = new WP_Block_Template();
+	$direct_blueprint_template->slug           = 'card-quote';
+	$direct_blueprint_template->content        = $valid_blueprint_content;
+	$direct_blueprint_template->type           = 'wp_template_part';
+	$direct_blueprint_template->theme          = get_stylesheet();
+	$direct_blueprint_template->source         = 'custom';
+	$direct_blueprint_template->origin         = 'theme';
+	$direct_blueprint_template->area           = WP_TEMPLATE_PART_AREA_UNCATEGORIZED;
+	$direct_blueprint_template->has_theme_file = false;
+	$direct_blueprint_template->is_custom      = true;
+
+	$direct_blueprint = novablocks_parse_post_format_card_blueprint( $direct_blueprint_template );
+
+	if ( empty( $direct_blueprint ) ) {
+		novablocks_fail_post_format_quote_blueprint_contract( 'Expected the direct Quote blueprint fixture to parse successfully.' );
+	}
+
+	$direct_root_attributes = novablocks_get_quote_blueprint_root_attributes( $attributes, $direct_blueprint );
+	$direct_item_attributes = novablocks_get_quote_blueprint_item_attributes( $attributes, $direct_blueprint );
+	$direct_root_css        = novablocks_get_space_and_sizing_css( $direct_root_attributes );
+
+	if ( ! in_array( '--nb-card-content-padding-multiplier: 0.5', $direct_root_css, true ) ) {
+		novablocks_fail_post_format_quote_blueprint_contract( 'Expected Quote blueprint roots to propagate content padding into the Supernova surface context.' );
+	}
+
+	if ( 0 !== (int) ( $direct_item_attributes['colorSignal'] ?? -1 ) ) {
+		novablocks_fail_post_format_quote_blueprint_contract( 'Expected Quote blueprint items to inherit the root signal context instead of reapplying it.' );
+	}
+
 	$active_blueprint_mode = 'valid';
 	$valid_markup          = novablocks_get_collection_card_markup_from_post( get_post( $quote_post_id ), $attributes );
 
@@ -278,12 +310,20 @@ try {
 		novablocks_fail_post_format_quote_blueprint_contract( 'Expected Quote blueprint roots to force block flow so the bound card can fill its slot.' );
 	}
 
+	if ( 1 !== preg_match( '/<div class="[^"]*\bnb-supernova\b[^"]*"[^>]*style="[^"]*--nb-card-content-padding-multiplier:\s*0\.5\b/', $valid_markup ) ) {
+		novablocks_fail_post_format_quote_blueprint_contract( 'Expected Quote blueprint roots to carry the blueprint content padding multiplier.' );
+	}
+
 	if ( false === strpos( $valid_markup, 'aspect-ratio: auto' ) ) {
 		novablocks_fail_post_format_quote_blueprint_contract( 'Expected Quote blueprint items to opt out of the outer collection aspect-ratio utility.' );
 	}
 
 	if ( 1 !== preg_match( '/<div class="[^"]*\bnb-supernova\b[^"]*"[^>]*data-color-signal=[\'"]3[\'"]/', $valid_markup ) ) {
 		novablocks_fail_post_format_quote_blueprint_contract( 'Expected Quote blueprint root signal context to reach the rendered card.' );
+	}
+
+	if ( 1 !== preg_match( '/<div class="[^"]*\bnb-supernova-item\b[^"]*"[^>]*data-color-signal=[\'"]0[\'"]/', $valid_markup ) ) {
+		novablocks_fail_post_format_quote_blueprint_contract( 'Expected Quote blueprint items to stay neutral relative to the blueprint root signal.' );
 	}
 
 	if ( 1 !== preg_match( '/<div class="[^"]*\bnb-supernova\b[^"]*"[^>]*data-content-color-signal=[\'"]3[\'"]/', $valid_markup ) ) {

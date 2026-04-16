@@ -1562,7 +1562,7 @@ function novablocks_get_collection_card_markup_from_post( $post, array $attribut
 		$render_data['card_attributes']['className'] = trim( $existing_classes . ' ' . $extra_classes );
 	}
 
-	$blueprint_markup = novablocks_maybe_get_quote_blueprint_card_markup(
+	$blueprint_markup = novablocks_maybe_get_post_format_blueprint_card_markup(
 		get_post( $post ),
 		$render_data['card_attributes'],
 		$profile
