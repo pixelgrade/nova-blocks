@@ -113,10 +113,6 @@
   --nb-collection-columns: var(--nb-collection-columns-count);
   --nb-collection-columns-below-tablet: 1;
 
-  display: grid;
-  grid-gap: var(--nb-grid-spacing);
-  grid-template-columns: repeat(var(--nb-collection-columns, 1), 1fr);
-
   > * {
     width: 100%;
     margin: 0;
@@ -125,6 +121,34 @@
   @include below(tablet) {
     --nb-collection-columns: var(--nb-collection-columns-below-tablet, 1);
   }
+}
+
+.nb-collection__layout--masonry {
+  display: block;
+  column-gap: var(--nb-grid-spacing);
+  row-gap: var(--nb-grid-spacing);
+
+  > .nb-collection__layout-item + .nb-collection__layout-item {
+    margin-top: var(--nb-grid-spacing);
+  }
+
+  &.nb-collection__layout--masonry-ready {
+    position: relative;
+  }
+
+  &.nb-collection__layout--masonry-ready > .nb-collection__layout-item {
+    position: absolute;
+    top: 0;
+    left: 0;
+    margin-top: 0;
+  }
+}
+
+.nb-collection__layout--classic,
+.nb-collection__layout--parametric {
+  display: grid;
+  grid-gap: var(--nb-grid-spacing);
+  grid-template-columns: repeat(var(--nb-collection-columns, 1), 1fr);
 }
 
 .nb-collection__layout-column {
