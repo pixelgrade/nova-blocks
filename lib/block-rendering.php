@@ -1399,7 +1399,7 @@ function novablocks_get_area_classname_by_width_ratio( $ratio ): string {
 	return 'nb-grid__area--width-full';
 }
 
-function novablocks_get_collection_card_markup( string $media, string $content, array $attributes ): string {
+function novablocks_get_collection_card_surface_markup( string $media, string $content, array $attributes ): string {
 
 	// Make sure that the defaults are in place.
 	$attributes = wp_parse_args( $attributes, [
@@ -1432,6 +1432,11 @@ function novablocks_get_collection_card_markup( string $media, string $content, 
 	);
 
 	$contentClasses = [ 'nb-supernova-item__content', ];
+	$surface_style_props = [];
+
+	if ( ! empty( $attributes['surfaceStyleProps'] ) && is_array( $attributes['surfaceStyleProps'] ) ) {
+		$surface_style_props = array_values( array_filter( $attributes['surfaceStyleProps'] ) );
+	}
 
 	if ( ! empty( $attributes['contentPosition'] ) ) {
 		$align = preg_split( '/\b\s+/', $attributes['contentPosition'] );
@@ -1473,8 +1478,7 @@ function novablocks_get_collection_card_markup( string $media, string $content, 
 
 	ob_start(); ?>
 
-	<div class="nb-collection__layout-item" <?php echo $id; ?>>
-		<div class="<?php echo esc_attr( join( ' ', $cardClasses ) ); ?>" <?php echo join( ' ', $data_attributes ); ?>>
+		<div class="<?php echo esc_attr( join( ' ', $cardClasses ) ); ?>" <?php echo $id; ?><?php if ( ! empty( $surface_style_props ) ) { ?>style="<?php echo esc_attr( join( ';', $surface_style_props ) ); ?>" <?php } ?><?php echo join( ' ', $data_attributes ); ?>>
 			<?php if ( ( $attributes['cardLayout'] ?? '' ) === 'stacked' ) { ?>
 			<div class="nb-supernova-item__frame">
 			<?php } ?>
@@ -1495,7 +1499,19 @@ function novablocks_get_collection_card_markup( string $media, string $content, 
 			</div>
 			<?php } ?>
 		</div>
-	</div>
+
+	<?php
+	return ob_get_clean();
+}
+
+function novablocks_get_collection_card_markup( string $media, string $content, array $attributes ): string {
+	$surface_markup = novablocks_get_collection_card_surface_markup( $media, $content, $attributes );
+
+	ob_start(); ?>
+
+		<div class="nb-collection__layout-item">
+			<?php echo $surface_markup; ?>
+		</div>
 
 	<?php
 	return ob_get_clean();
@@ -1524,7 +1540,38 @@ function novablocks_get_collection_card_markup_from_post( $post, array $attribut
 	$attributes['paletteVariation']          = $attributes['contentPaletteVariation'];
 	$attributes['useSourceColorAsReference'] = false;
 
-	return novablocks_get_collection_card_markup( $media_markup, $card_content, $attributes );
+	$profile = apply_filters( 'novablocks/post_card_profile', [], $post, $attributes );
+
+	$render_data = [
+		'card_classes'    => [],
+		'card_attributes' => $attributes,
+		'media_markup'    => $media_markup,
+		'content_markup'  => $card_content,
+	];
+
+	$render_data = apply_filters( 'novablocks/post_card_render_data', $render_data, $post, $attributes, $profile );
+
+	if ( ! empty( $render_data['card_classes'] ) && is_array( $render_data['card_classes'] ) ) {
+		$extra_classes = implode( ' ', array_map( 'sanitize_html_class', $render_data['card_classes'] ) );
+		$existing_classes = $render_data['card_attributes']['className'] ?? '';
+		$render_data['card_attributes']['className'] = trim( $existing_classes . ' ' . $extra_classes );
+	}
+
+	$blueprint_markup = novablocks_maybe_get_post_format_blueprint_card_markup(
+		get_post( $post ),
+		$render_data['card_attributes'],
+		$profile
+	);
+
+	if ( is_string( $blueprint_markup ) && '' !== $blueprint_markup ) {
+		return $blueprint_markup;
+	}
+
+	return novablocks_get_collection_card_markup(
+		$render_data['media_markup'],
+		$render_data['content_markup'],
+		$render_data['card_attributes']
+	);
 }
 
 function novablocks_get_collection_card_media_markup_wrapped( $media, $link = false, $dropcap = '' ): string {
