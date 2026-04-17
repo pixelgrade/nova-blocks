@@ -133,8 +133,8 @@ if ( ! function_exists( 'novablocks_get_contextual_post_card_default_heading' ) 
 	}
 }
 
-if ( ! function_exists( 'novablocks_get_contextual_post_card_project_color' ) ) {
-	function novablocks_get_contextual_post_card_project_color( WP_Post $target_post ): string {
+if ( ! function_exists( 'novablocks_get_contextual_post_card_color' ) ) {
+	function novablocks_get_contextual_post_card_color( WP_Post $target_post ): string {
 		$color = '';
 
 		if ( function_exists( 'anima_get_project_color' ) ) {
@@ -151,7 +151,97 @@ if ( ! function_exists( 'novablocks_get_contextual_post_card_project_color' ) ) 
 
 		$color = sanitize_hex_color( $color );
 
-		return $color ?: '#333333';
+		return $color ?: '';
+	}
+}
+
+if ( ! function_exists( 'novablocks_get_contextual_post_card_palette_id' ) ) {
+	function novablocks_get_contextual_post_card_palette_id(): string {
+		return 'contextual-post';
+	}
+}
+
+if ( ! function_exists( 'novablocks_get_contextual_post_card_palette_attributes' ) ) {
+	function novablocks_get_contextual_post_card_palette_attributes(): array {
+		return [
+			'palette'                    => novablocks_get_contextual_post_card_palette_id(),
+			'paletteVariation'           => 1,
+			'colorSignal'                => 0,
+			'useSourceColorAsReference'  => false,
+		];
+	}
+}
+
+if ( ! function_exists( 'novablocks_get_contextual_post_card_palette_context' ) ) {
+	function novablocks_get_contextual_post_card_palette_context( WP_Post $target_post, string $color ): array {
+		return [
+			'post_id'          => $target_post->ID,
+			'contextual_color' => $color,
+		];
+	}
+}
+
+if ( ! function_exists( 'novablocks_get_contextual_post_card_palette_payload' ) ) {
+	function novablocks_get_contextual_post_card_palette_payload( WP_Post $target_post ): array {
+		static $cache = [];
+
+		$color = novablocks_get_contextual_post_card_color( $target_post );
+
+		if ( '' === $color || ! function_exists( 'sm_build_contextual_palette_from_color' ) ) {
+			return [];
+		}
+
+		$palette_id = novablocks_get_contextual_post_card_palette_id();
+		$cache_key  = $palette_id . ':' . $target_post->ID . ':' . $color;
+
+		if ( isset( $cache[ $cache_key ] ) ) {
+			return $cache[ $cache_key ];
+		}
+
+		$palette_context = novablocks_get_contextual_post_card_palette_context( $target_post, $color );
+		$runtime_payload = function_exists( 'sm_get_palette_runtime_payload' )
+			? sm_get_palette_runtime_payload( $palette_context )
+			: [];
+		$runtime_palettes = is_array( $runtime_payload['runtimePalettes'] ?? null )
+			? $runtime_payload['runtimePalettes']
+			: [];
+		$palette = null;
+
+		foreach ( $runtime_palettes as $runtime_palette ) {
+			if ( is_object( $runtime_palette ) && isset( $runtime_palette->id ) && $palette_id === (string) $runtime_palette->id ) {
+				$palette = $runtime_palette;
+				break;
+			}
+		}
+
+		if ( ! $palette && function_exists( 'sm_build_contextual_palette_from_color' ) ) {
+			$palette = sm_build_contextual_palette_from_color(
+				$color,
+				$palette_id,
+				get_the_title( $target_post ) ?: __( 'Contextual Post', '__plugin_txtd' )
+			);
+		}
+
+		if ( ! is_object( $palette ) ) {
+			$cache[ $cache_key ] = [];
+			return [];
+		}
+
+		$runtime_css = is_string( $runtime_payload['runtimeCss'] ?? null )
+			? $runtime_payload['runtimeCss']
+			: '';
+
+		if ( '' === $runtime_css && function_exists( 'sm_palettes_output' ) ) {
+			$runtime_css = (string) sm_palettes_output( [ $palette ] );
+		}
+
+		$cache[ $cache_key ] = [
+			'palette'    => $palette,
+			'runtimeCss' => $runtime_css,
+			'attributes' => novablocks_get_contextual_post_card_palette_attributes(),
+		];
+
+		return $cache[ $cache_key ];
 	}
 }
 
@@ -218,7 +308,7 @@ if ( ! function_exists( 'novablocks_render_contextual_post_card_block' ) ) {
 		$heading_text = trim( (string) ( $attributes['headingText'] ?? '' ) );
 		$button_text  = trim( (string) ( $attributes['buttonText'] ?? '' ) );
 		$target_title = get_the_title( $target_post );
-		$project_color = novablocks_get_contextual_post_card_project_color( $target_post );
+		$palette_payload = novablocks_get_contextual_post_card_palette_payload( $target_post );
 
 		if ( $heading_text === '' ) {
 			$heading_text = novablocks_get_contextual_post_card_default_heading( $target_post, $attributes );
@@ -258,7 +348,6 @@ if ( ! function_exists( 'novablocks_render_contextual_post_card_block' ) ) {
 			novablocks_get_space_and_sizing_css( $attributes ),
 			[
 				'--nb-contextual-post-card-min-height: ' . absint( $attributes['minHeight'] ?? 50 ) . 'vh',
-				'--nb-contextual-post-card-project-color: ' . $project_color,
 			]
 		);
 
@@ -270,6 +359,24 @@ if ( ! function_exists( 'novablocks_render_contextual_post_card_block' ) ) {
 		$heading_level = 2;
 		$heading_tag   = 'h' . $heading_level;
 		$media_markup  = novablocks_get_contextual_post_card_media_markup( $target_post, $attributes );
+		$surface_classes = [
+			'nb-contextual-post-card__surface',
+			'nb-supernova-item',
+			'nb-supernova-item--layout-stacked',
+		];
+		$surface_data_attributes = '';
+
+		if ( ! empty( $palette_payload['attributes'] ) ) {
+			$surface_classes = array_merge(
+				$surface_classes,
+				novablocks_get_color_signal_classes( $palette_payload['attributes'] ),
+				[
+					'sm-color-signal-' . $palette_payload['attributes']['colorSignal'],
+				]
+			);
+			$surface_data_attributes = novablocks_get_color_signal_data_attributes( $palette_payload['attributes'] );
+		}
+
 		$content_classes = [
 			'nb-supernova-item__content',
 			'nb-supernova-item__content--valign-' . sanitize_html_class( $valign ),
@@ -285,12 +392,15 @@ if ( ! function_exists( 'novablocks_render_contextual_post_card_block' ) ) {
 
 		ob_start();
 		?>
+		<?php if ( ! empty( $palette_payload['runtimeCss'] ) ) { ?>
+			<style class="nb-contextual-post-card__runtime-palette"><?php echo esc_html( $palette_payload['runtimeCss'] ); ?></style>
+		<?php } ?>
 		<div class="<?php echo esc_attr( join( ' ', $classes ) ); ?>" style="<?php echo esc_attr( join( ';', $css_props ) ); ?>" <?php echo $anchor; ?>>
 			<div class="nb-collection align<?php echo esc_attr( $attributes['align'] ?? 'full' ); ?>">
 				<div class="nb-collection__body">
 					<div class="nb-collection__layout nb-collection__layout--classic nb-collection__layout--content-width">
 						<div class="nb-collection__layout-item">
-							<div class="nb-contextual-post-card__surface nb-supernova-item nb-supernova-item--layout-stacked">
+							<div class="<?php echo esc_attr( join( ' ', $surface_classes ) ); ?>" <?php echo $surface_data_attributes; ?>>
 								<div class="nb-supernova-item__frame">
 									<?php echo $media_markup; ?>
 									<div class="<?php echo esc_attr( join( ' ', $content_classes ) ); ?>">
@@ -307,7 +417,7 @@ if ( ! function_exists( 'novablocks_render_contextual_post_card_block' ) ) {
 										</div>
 									</div>
 								</div>
-								<a class="nb-supernova-item__link nb-contextual-post-card__link" href="<?php echo esc_url( get_permalink( $target_post ) ); ?>" aria-label="<?php echo esc_attr( $aria_label ); ?>" data-color="<?php echo esc_attr( $project_color ); ?>"></a>
+								<a class="nb-supernova-item__link nb-contextual-post-card__link" href="<?php echo esc_url( get_permalink( $target_post ) ); ?>" aria-label="<?php echo esc_attr( $aria_label ); ?>"></a>
 							</div>
 						</div>
 					</div>
