@@ -125,6 +125,7 @@ const SupernovaItemContent = ( props ) => {
     contentType,
     metaAboveTitle,
     metaBelowTitle,
+    metaBelowContent,
     title,
     subtitle,
     description,
@@ -208,6 +209,17 @@ const SupernovaItemContent = ( props ) => {
               value={ description }
               onChange={ description => { setAttributes( { description } ) } }
             />
+        }
+        {
+          showMeta &&
+          <RichText
+            className={ 'nb-card__meta is-style-meta' }
+            placeholder={ `Meta` }
+            tagName={ 'p' }
+            value={ metaBelowContent }
+            onChange={ metaBelowContent => { setAttributes( { metaBelowContent } ) } }
+            allowedFormats={ [] }
+          />
         }
         <SupernovaItemButton { ...props } />
       </div>

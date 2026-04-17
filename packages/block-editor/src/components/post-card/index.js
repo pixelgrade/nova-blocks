@@ -99,6 +99,7 @@ export const PostCard = withMedia( props => {
   const {
     metaAboveTitle,
     metaBelowTitle,
+    metaBelowContent,
   } = getMeta( props );
 
   const Media = props.Media || PostCardMedia;
@@ -119,6 +120,7 @@ export const PostCard = withMedia( props => {
         <CardMeta show={ showMeta } key={ 'card_post_metabelowtitle_' + post.id }>{ metaBelowTitle }</CardMeta>
         <CardDescription show={ showDescription }
                          key={ 'card_post_description_' + post.id }>{ stripHTML( post?.excerpt?.rendered || '' ) }</CardDescription>
+        <CardMeta show={ showMeta } key={ 'card_post_metabelowcontent_' + post.id }>{ metaBelowContent }</CardMeta>
         <CardFooter show={ showButtons } key={ 'card_post_footer_' + post.id }>
           <CardButton { ...props } key={ 'card_post_footer_button_' + post.id }>{ __( 'Read More', '__plugin_txtd' ) }</CardButton>
         </CardFooter>

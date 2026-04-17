@@ -31,6 +31,7 @@ export const getMeta = ( props ) => {
   let combinedMeta;
   let metaAboveTitle;
   let metaBelowTitle;
+  let metaBelowContent;
 
   if ( primaryMeta && secondaryMeta ) {
     combinedMeta = (
@@ -51,9 +52,12 @@ export const getMeta = ( props ) => {
     case 'below-title':
       metaBelowTitle = combinedMeta;
       break;
+    case 'below-content':
+      metaBelowContent = combinedMeta;
+      break;
     case 'split':
       metaAboveTitle = primaryMeta;
-      metaBelowTitle = secondaryMeta;
+      metaBelowContent = secondaryMeta;
       break;
     default:
       break;
@@ -61,7 +65,8 @@ export const getMeta = ( props ) => {
 
   return {
     metaAboveTitle,
-    metaBelowTitle
+    metaBelowTitle,
+    metaBelowContent,
   }
 };
 
