@@ -3,7 +3,7 @@ Contributors: pixelgrade, vlad.olaru, babbardel, razvanonofrei, gorby31
 Tags: blocks, gutenberg, gutenberg blocks, page builder, full site editing
 Requires at least: 5.9
 Tested up to: 7.0
-Stable tag: 2.1.16
+Stable tag: 2.1.17
 Requires PHP: 7.4
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -93,6 +93,12 @@ Yes! Nova Block's core features are free to use.
 3. Slideshow Me the Way block options
 
 == Changelog ==
+
+= 2.1.17 =
+* New: Add post-format blueprint cards for quote and image posts, including the editorial quote style.
+* New: Add the below-content metadata position for post cards.
+* Fix: Restore multi-column masonry packing on the frontend and in the editor preview.
+* Fix: Refactor contextual post cards to use the shared runtime palette tokens.
 
 = 2.1.16 =
 * Fix: Heal stale Supernova slideshow hero content signal `0` states in saved frontend output so stacked full-width single-column query slides keep the intended media/content colors.
