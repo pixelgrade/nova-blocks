@@ -347,26 +347,44 @@ a.nb-supernova-item__link {
 
 // Author-facing description size override (collection-level).
 //
-// The parametric layout modifiers (see collection/scss/grid/_parametric-layout-modifiers.scss)
-// set --font-size-modifier on .nb-card__description based on layout context
-// (e.g. 0.95 in 3/4-col vertical grids). Those rules reach 4-class specificity
-// via the nested ancestry, so an explicit author override uses !important to
-// win unconditionally. Without `!important`, picking "Smaller" on a 3-col grid
-// would still be overridden by the layout-aware 0.95 baseline.
-.nb-supernova--card-description-size-smallest .nb-card__description {
+// Two things need to happen for the chosen size to apply everywhere:
+//
+// 1. Override --font-size-modifier so any descendant reading the modifier
+//    (line-height calcs, nested --current-font-size resolutions) sees the
+//    new scalar. !important beats the parametric-layout baseline
+//    (collection/scss/grid/_parametric-layout-modifiers.scss) which reaches
+//    4-class specificity via the nested ancestry.
+//
+// 2. Emit `font-size: var(--current-font-size)` explicitly on
+//    .nb-card__description with high enough specificity to beat the
+//    block editor's global `.editor-styles-wrapper[class] p { font-size:
+//    inherit }` rule in theme editor stylesheets. Without this, <p class="nb-card__description">
+//    inherits font-size from its parent inside the editor canvas and the
+//    author's override is invisible while editing — even though it works
+//    fine on the frontend. The [class][class] trick matches the existing
+//    pattern on .nb-card__buttons above.
+%nb-card-description-size-apply {
+  font-size: var(--current-font-size);
+}
+
+.nb-supernova--card-description-size-smallest .nb-card__description[class][class] {
   --font-size-modifier: 0.8 !important;
+  @extend %nb-card-description-size-apply;
 }
 
-.nb-supernova--card-description-size-smaller .nb-card__description {
+.nb-supernova--card-description-size-smaller .nb-card__description[class][class] {
   --font-size-modifier: 0.9 !important;
+  @extend %nb-card-description-size-apply;
 }
 
-.nb-supernova--card-description-size-larger .nb-card__description {
+.nb-supernova--card-description-size-larger .nb-card__description[class][class] {
   --font-size-modifier: 1.1 !important;
+  @extend %nb-card-description-size-apply;
 }
 
-.nb-supernova--card-description-size-largest .nb-card__description {
+.nb-supernova--card-description-size-largest .nb-card__description[class][class] {
   --font-size-modifier: 1.2 !important;
+  @extend %nb-card-description-size-apply;
 }
 
 .nb-card__buttons[class][class][class] {
