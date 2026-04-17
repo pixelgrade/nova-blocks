@@ -13,6 +13,7 @@ import "./with-legacy-spacing-markup";
 import './with-custom-align';
 
 import "./with-card-elements-stacking";
+import "./with-card-description-size";
 import "./with-collection-layout";
 import "./with-preview-attributes";
 import "./with-overlay-filter";

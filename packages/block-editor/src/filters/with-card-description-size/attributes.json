@@ -1,0 +1,6 @@
+{
+	"cardDescriptionSize": {
+		"type": "string",
+		"default": "normal"
+	}
+}

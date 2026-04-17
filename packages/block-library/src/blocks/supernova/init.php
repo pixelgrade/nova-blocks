@@ -20,6 +20,7 @@ function novablocks_get_supernova_attributes(): array {
 
 		'packages/block-editor/src/filters/with-card-details/attributes.json',
 		'packages/block-editor/src/filters/with-card-elements-stacking/attributes.json',
+		'packages/block-editor/src/filters/with-card-description-size/attributes.json',
 		'packages/block-editor/src/filters/with-collection-layout/attributes.json',
 		'packages/block-editor/src/filters/with-collection-content/attributes.json',
 		'packages/block-editor/src/filters/with-content-position-matrix/attributes.json',
@@ -119,6 +120,12 @@ if ( ! function_exists( 'novablocks_render_supernova_block' ) ) {
 
 		if ( ! empty( $attributes['pileParallaxAmount'] ) && $attributes['pileParallaxAmount'] > 0 ) {
 			$classes[] = 'nb-supernova--pile-parallax';
+		}
+
+		// Author-picked card description size override. 'normal' keeps the
+		// layout-aware default; other values scale via --font-size-modifier.
+		if ( ! empty( $attributes['cardDescriptionSize'] ) && $attributes['cardDescriptionSize'] !== 'normal' ) {
+			$classes[] = 'nb-supernova--card-description-size-' . sanitize_html_class( $attributes['cardDescriptionSize'] );
 		}
 
 		$classes = array_merge(

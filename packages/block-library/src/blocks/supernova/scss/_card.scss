@@ -342,7 +342,31 @@ a.nb-supernova-item__link {
 }
 
 .nb-card__description {
-  
+
+}
+
+// Author-facing description size override (collection-level).
+//
+// The parametric layout modifiers (see collection/scss/grid/_parametric-layout-modifiers.scss)
+// set --font-size-modifier on .nb-card__description based on layout context
+// (e.g. 0.95 in 3/4-col vertical grids). Those rules reach 4-class specificity
+// via the nested ancestry, so an explicit author override uses !important to
+// win unconditionally. Without `!important`, picking "Smaller" on a 3-col grid
+// would still be overridden by the layout-aware 0.95 baseline.
+.nb-supernova--card-description-size-smallest .nb-card__description {
+  --font-size-modifier: 0.8 !important;
+}
+
+.nb-supernova--card-description-size-smaller .nb-card__description {
+  --font-size-modifier: 0.9 !important;
+}
+
+.nb-supernova--card-description-size-larger .nb-card__description {
+  --font-size-modifier: 1.1 !important;
+}
+
+.nb-supernova--card-description-size-largest .nb-card__description {
+  --font-size-modifier: 1.2 !important;
 }
 
 .nb-card__buttons[class][class][class] {
