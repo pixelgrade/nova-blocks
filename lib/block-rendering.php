@@ -1691,6 +1691,17 @@ function novablocks_get_card_item_description( string $description, array $attri
 		return '';
 	}
 
+	// Query Loop callers pass get_the_excerpt() output, which WP runs through
+	// wpautop and returns wrapped in <p>…</p>. Nesting that inside our own
+	// <p class="nb-card__description"> produces invalid markup; browsers
+	// parse the inner <p> by auto-closing the outer, yielding an empty
+	// .nb-card__description followed by an orphan <p> carrying the actual
+	// text. That orphan escapes any styling scoped to .nb-card__description —
+	// including the collection-level "Description Size" override. Strip the
+	// outermost paragraph wrap so the excerpt merges cleanly into ours.
+	$description = trim( $description );
+	$description = preg_replace( '#^<p(?:\s[^>]*)?>(.*)</p>\s*$#is', '$1', $description );
+
 	return '<p class="nb-card__description">' . wp_kses_post( $description ) . '</p>';
 }
 
