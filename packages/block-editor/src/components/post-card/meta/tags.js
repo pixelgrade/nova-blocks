@@ -1,56 +1,49 @@
-import { useEffect, useState } from '@wordpress/element';
-import apiFetch from '@wordpress/api-fetch';
-import { addQueryArgs } from '@wordpress/url';
+import { useSelect } from '@wordpress/data';
+
+const getTaxonomySlug = ( postType ) => {
+  switch ( postType ) {
+    case 'product':
+      return 'product_tag';
+    case 'portfolio':
+      // This is the CPT possibly registered by Pixelgrade Care.
+      return 'portfolio_tag';
+    case 'gallery':
+      // This is the CPT possibly registered by Pixelgrade Care.
+      return 'gallery_tag';
+    case 'testimonial':
+      // This is the CPT possibly registered by Pixelgrade Care.
+      // Testimonials don't have tags.
+      return null;
+    default:
+      return 'post_tag';
+  }
+};
 
 const Tags = ( props ) => {
   const { termIds, postType } = props;
-  const [ tags, setTags ] = useState();
+  const taxonomy = getTaxonomySlug( postType );
 
-  useEffect( () => {
-    if ( !termIds ) {
-      return;
-    }
-    const currentTermIds = termIds.join(',');
-    let url = '/wp/v2/tags';
-    switch ( postType ) {
-      case 'product':
-        url = '/wp/v2/product_tag';
-        break;
-      case 'portfolio':
-        // This is the CPT possibly registered by Pixelgrade Care.
-        url = '/wp/v2/portfolio_tag';
-        break;
-      case 'gallery':
-        // This is the CPT possibly registered by Pixelgrade Care.
-        url = '/wp/v2/gallery_tag';
-        break;
-      case 'testimonial':
-        // This is the CPT possibly registered by Pixelgrade Care.
-        // Testimonials don't have categories.
-        break;
-      default:
-        break;
-    }
-
-    apiFetch( {
-      path: addQueryArgs( url, {
-        page:1,
-        per_page: 10,
-        include: termIds,
-      } ),
-    } ).then( ( res ) => {
-      // Stale requests will have the `currentTermIds` of an older closure.
-      if ( currentTermIds === termIds.join(',') ) {
-        setTags( res );
+  const tags = useSelect(
+    ( select ) => {
+      if ( ! termIds || ! termIds.length || ! taxonomy ) {
+        return [];
       }
-    } );
-  }, [ termIds ] );
+      const { getEntityRecord } = select( 'core' );
+      return termIds.map( ( id ) => getEntityRecord( 'taxonomy', taxonomy, id ) );
+    },
+    [ termIds, taxonomy ],
+  );
 
-  if ( !termIds || tags === undefined || !tags.length ) {
+  if ( ! termIds || ! termIds.length || ! taxonomy ) {
     return '';
   }
 
-	return tags.map( tag => tag.name ).join( ', ' ) || '';
+  // Wait until all terms have resolved so the visible list doesn't flicker.
+  if ( tags.some( ( tag ) => tag === undefined ) ) {
+    return '';
+  }
+
+  return tags.filter( Boolean ).map( ( tag ) => tag.name ).join( ', ' );
 
 };
 

@@ -1,51 +1,40 @@
-import { useState, useEffect } from '@wordpress/element';
-import apiFetch from '@wordpress/api-fetch';
+import { useSelect } from '@wordpress/data';
+
+const getTaxonomySlug = ( postType ) => {
+  switch ( postType ) {
+    case 'product':
+      return 'product_cat';
+    case 'portfolio':
+      // This is the CPT possibly registered by Pixelgrade Care.
+      return 'portfolio_type';
+    case 'gallery':
+      // This is the CPT possibly registered by Pixelgrade Care.
+      return 'gallery_type';
+    case 'testimonial':
+      // This is the CPT possibly registered by Pixelgrade Care.
+      // Testimonials don't have categories.
+      return null;
+    default:
+      return 'category';
+  }
+};
 
 const Category = ( props ) => {
   const { termId, postType } = props;
-  const [ category, setCategory ] = useState();
+  const taxonomy = getTaxonomySlug( postType );
 
-  useEffect( () => {
-    if ( !termId ) {
-      return;
-    }
-    const currentTermId = termId;
-    let path = `/wp/v2/categories/${ termId }`;
-    switch ( postType ) {
-      case 'product':
-        path = `/wp/v2/product_cat/${ termId }`;
-        break;
-      case 'portfolio':
-        // This is the CPT possibly registered by Pixelgrade Care.
-        path = `/wp/v2/portfolio_type/${ termId }`;
-        break;
-      case 'gallery':
-        // This is the CPT possibly registered by Pixelgrade Care.
-        path = `/wp/v2/gallery_type/${ termId }`;
-        break;
-      case 'testimonial':
-        // This is the CPT possibly registered by Pixelgrade Care.
-        // Testimonials don't have categories.
-        break;
-      default:
-        break;
-    }
+  const category = useSelect(
+    ( select ) => ( termId && taxonomy )
+      ? select( 'core' ).getEntityRecord( 'taxonomy', taxonomy, termId )
+      : null,
+    [ termId, taxonomy ],
+  );
 
-    apiFetch( {
-      path: path,
-    } ).then( ( res ) => {
-      // Stale requests will have the `currentTermId` of an older closure.
-      if ( currentTermId === termId ) {
-        setCategory( res );
-      }
-    } );
-  }, [ termId ] );
-
-  if ( !termId || category === undefined ) {
+  if ( ! termId || ! taxonomy ) {
     return '';
   }
 
-	return category?.name || '';
+  return category?.name || '';
 
 };
 

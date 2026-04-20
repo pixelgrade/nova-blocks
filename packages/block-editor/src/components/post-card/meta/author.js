@@ -1,30 +1,18 @@
-import { useEffect, useState } from '@wordpress/element';
-import apiFetch from '@wordpress/api-fetch';
+import { useSelect } from '@wordpress/data';
 
 const Author = ( props ) => {
   const { userId } = props;
-  const [ author, setAuthor ] = useState();
 
-  useEffect( () => {
-    if ( !userId ) {
-      return;
-    }
-    const currentUserId = userId;
-    apiFetch( {
-      path: `/wp/v2/users/${ userId }`,
-    } ).then( ( res ) => {
-      // Stale requests will have the `currentUserId` of an older closure.
-      if ( currentUserId === userId ) {
-        setAuthor( res );
-      }
-    } );
-  }, [ userId ] );
+  const author = useSelect(
+    ( select ) => userId ? select( 'core' ).getUser( userId ) : null,
+    [ userId ],
+  );
 
-  if ( ! userId || author === undefined ) {
+  if ( ! userId ) {
     return '';
   }
 
-	return author?.name || '';
+  return author?.name || '';
 
 };
 
