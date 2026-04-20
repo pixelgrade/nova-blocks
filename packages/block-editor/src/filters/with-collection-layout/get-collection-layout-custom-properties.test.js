@@ -10,12 +10,14 @@ test('keeps the stored grid gap and doubles the effective spacing for 3D grid co
     getCollectionLayoutCustomProperties( {
       columns: 3,
       gridGap: 100,
+      verticalGapModifier: 1.5,
       pile3dEffect: true,
     } ),
     {
       '--nb-collection-columns-count': 3,
       '--nb-grid-spacing-modifier': 100,
       '--nb-grid-spacing-multiplier': 2,
+      '--nb-grid-row-spacing-multiplier': 1.5,
       '--nb-pile-3d-scale': 0.82,
     }
   );

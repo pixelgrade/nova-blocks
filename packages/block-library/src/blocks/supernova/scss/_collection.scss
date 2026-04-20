@@ -42,6 +42,7 @@
 
 .nb-collection__layout {
   --nb-grid-spacing: calc(var(--nb-spacing) * var(--nb-grid-spacing-modifier) * var(--nb-grid-spacing-multiplier, 1) * 0.02);
+  --nb-grid-row-spacing: calc(var(--nb-grid-spacing) * var(--nb-grid-row-spacing-multiplier, 1));
 
   // this selector needs to be specific since the parametric grid layout
   // moves layout-items inside nb-grid-area where proper spacing needs to occur
@@ -126,10 +127,10 @@
 .nb-collection__layout--masonry {
   display: block;
   column-gap: var(--nb-grid-spacing);
-  row-gap: var(--nb-grid-spacing);
+  row-gap: var(--nb-grid-row-spacing);
 
   > .nb-collection__layout-item + .nb-collection__layout-item {
-    margin-top: var(--nb-grid-spacing);
+    margin-top: var(--nb-grid-row-spacing);
   }
 
   &.nb-collection__layout--masonry-ready {
@@ -147,7 +148,8 @@
 .nb-collection__layout--classic,
 .nb-collection__layout--parametric {
   display: grid;
-  grid-gap: var(--nb-grid-spacing);
+  column-gap: var(--nb-grid-spacing);
+  row-gap: var(--nb-grid-row-spacing);
   grid-template-columns: repeat(var(--nb-collection-columns, 1), 1fr);
 }
 

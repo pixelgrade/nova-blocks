@@ -15,6 +15,10 @@
 		"type": "number",
 		"default": 50
 	},
+	"verticalGapModifier": {
+		"type": "number",
+		"default": 1
+	},
 	"gridcolumns": {
 		"type": "number",
 		"default": 6

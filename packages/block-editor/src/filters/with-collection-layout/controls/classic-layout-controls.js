@@ -5,6 +5,7 @@ import { ControlsGroup } from "../../../components";
 import ItemsCountControl from './items-count-control';
 import ItemsPerRowControl from './items-per-row-control';
 import ItemsGapControls from './items-gap-control';
+import VerticalGapModifierControl from './vertical-gap-modifier-control';
 import ItemsAspectRatioControl from './items-aspect-ratio-control';
 import Pile3dGridControls from './pile-3d-grid-controls';
 import PileParallaxControls from './pile-parallax-controls';
@@ -28,6 +29,7 @@ const ClassicLayoutControls = ( props ) => {
         <ItemsCountControl postsToShow={postsToShow} setAttributes={setAttributes} />
         <ItemsPerRowControl { ...props } />
         <ItemsGapControls { ...props } />
+        <VerticalGapModifierControl { ...props } />
       </ControlsGroup>
       <ControlsGroup title={ __( 'Layout', '__plugin_txtd' ) }>
         <ItemsAspectRatioControl { ...props } />
