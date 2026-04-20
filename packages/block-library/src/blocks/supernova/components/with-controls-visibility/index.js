@@ -50,7 +50,9 @@ const withControlsVisibility = OriginalComponent => {
         'collection-title-level': !! showCollectionTitle,
         'card-title-level': !! showTitle,
         'metadata-source': !! showMeta,
-        'metadata-position': !! showMeta,
+        // Element Order list replaces Media Position + Metadata Position.
+        // Show whenever at least one movable element (media or meta) is active.
+        'element-order': ( !! showMedia && 'vertical' === cardLayout ) || !! showMeta,
 
         // Media Composition
         'media-composition-block-controls': 1 === innerBlocks.length && showMedia,

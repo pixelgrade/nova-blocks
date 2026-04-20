@@ -205,6 +205,17 @@
     .nb-supernova-item__media-wrapper + .nb-supernova-item__content .nb-supernova-item__inner-container[class] {
       padding-#{$content}: 0;
     }
+
+    // Symmetric zeroing when the order is [content-before-media, media, ...]
+    // Without this, the inner-container padding on the pre-media content and
+    // the media-wrapper's leading padding would stack on top of the flex gap.
+    .nb-supernova-item__content--before-media .nb-supernova-item__inner-container[class] {
+      padding-#{$wrapper}: 0;
+    }
+
+    .nb-supernova-item__content--before-media + .nb-supernova-item__media-wrapper {
+      padding-#{$content}: 0;
+    }
 }
 
 @include above(tablet) {

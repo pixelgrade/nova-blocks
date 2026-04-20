@@ -23,6 +23,10 @@
 		"type": "string",
 		"default": "above-title"
 	},
+	"mediaPosition": {
+		"type": "string",
+		"default": "before-title"
+	},
 	"primaryMetadata": {
 		"type": "string",
 		"default": "category"
@@ -34,5 +38,9 @@
 	"buttonsStyle": {
 		"type": "string",
 		"default": "text"
+	},
+	"elementOrder": {
+		"type": "array",
+		"default": []
 	}
 }

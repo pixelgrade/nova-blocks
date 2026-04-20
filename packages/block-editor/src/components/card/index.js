@@ -43,8 +43,15 @@ export const Card = ( props ) => {
 
   const children = Children.toArray( props.children );
   const mediaChildren = children.filter( child => child.type === CardMediaWrapper );
+  const contentWrapperChildren = children.filter( child => child.type === CardContentWrapper );
   const passedChildren = children.filter( child => child.type !== CardMediaWrapper && child.type !== CardContentWrapper );
-  const cardBody = (
+
+  // When the caller provides explicit CardContentWrapper children, render
+  // children in source order so the caller controls media/content ordering
+  // (e.g. mediaPosition: after-title). Otherwise fall back to the default
+  // auto-wrap behavior: media first, then a single content wrapper around
+  // the remaining children.
+  const cardBody = contentWrapperChildren.length ? children : (
     <>
       { ! mediaChildren.length && media && <CardMediaWrapper media={ media } { ...props } /> }
       { !! mediaChildren.length && mediaChildren }
@@ -65,7 +72,7 @@ export const Card = ( props ) => {
 
 export const CardContentWrapper = ( props ) => {
 
-  const { attributes } = props;
+  const { attributes, extraClassName } = props;
 
   const align = getAlignFromMatrix( attributes?.contentPosition );
 
@@ -73,6 +80,7 @@ export const CardContentWrapper = ( props ) => {
     `nb-supernova-item__content`,
     `nb-supernova-item__content--valign-${ align[0] }`,
     `nb-supernova-item__content--halign-${ align[1] }`,
+    extraClassName,
   );
 
   return (

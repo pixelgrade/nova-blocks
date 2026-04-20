@@ -29,7 +29,7 @@ const MetadataSource = ( props ) => {
   ];
 
   return (
-    <ControlsGroup title={ __( 'Additional Information', '__plugin_txtd' ) }>
+    <ControlsGroup title={ __( 'Metadata', '__plugin_txtd' ) }>
       <SelectControl
         key={ 'primary-metadata-source' }
         label={ __( 'Primary Metadata', '__plugin_txtd' ) }

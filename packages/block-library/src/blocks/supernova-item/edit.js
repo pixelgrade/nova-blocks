@@ -24,7 +24,11 @@ import { MediaCompositionPreview } from "@novablocks/media-composition";
 import {
   Card,
   CardButton,
+  CardContentWrapper,
   CardMediaWrapper,
+  ELEMENT,
+  getVisibleOrder,
+  metasAreAdjacent,
   useInnerBlocks,
   useSelectParent,
   useCustomDefaults,
@@ -37,7 +41,7 @@ import BlockControls from './block-controls';
 
 const SupernovaItemEdit = props => {
   const { attributes, setControlsVisibility, clientId } = props;
-  const { showMedia } = attributes;
+  const { showMedia, mediaPosition, cardLayout, contentType } = attributes;
   const parent = useSelect( select =>{
     const { getBlockParents } = select( 'core/block-editor' );
     const parents = getBlockParents( clientId ).slice();
@@ -68,16 +72,61 @@ const SupernovaItemEdit = props => {
     className: 'nb-collection__layout-item'
   });
 
+  // Walk the effective element order (either the saved elementOrder attribute
+  // or the legacy derivation when it hasn't been touched yet) and split the
+  // content around media based on where Media sits in the list.
+  //
+  // The reorder UI applies to both the predefined fields content and the
+  // post-driven 'auto' mode (where SupernovaItemContent renders placeholders
+  // so the editor reflects the reorder even though real post data only
+  // appears on the frontend). Custom inner-block cards keep their
+  // single-wrapper layout so authors can drop arbitrary blocks inside.
+  const useElementOrder = contentType === 'fields' || contentType === 'auto';
+  const order           = useElementOrder ? getVisibleOrder( attributes ) : [];
+  const mediaIndex      = order.indexOf( ELEMENT.MEDIA );
+  const contentItems    = order.filter( id => id !== ELEMENT.MEDIA );
+  const beforeMediaItems = mediaIndex > 0 ? order.slice( 0, mediaIndex ).filter( id => id !== ELEMENT.MEDIA ) : [];
+  const afterMediaItems  = mediaIndex >= 0 ? order.slice( mediaIndex + 1 ).filter( id => id !== ELEMENT.MEDIA ) : contentItems;
+
+  // Media sits between two content halves only when it's not first in the
+  // order and not last — otherwise the whole card renders as
+  // [media → content] or [content → media].
+  const splitAroundMedia = useElementOrder && showMedia && mediaIndex > 0 && mediaIndex < order.length - 1;
+
+  const renderMedia = () => (
+    <CardMediaWrapper { ...props }>
+      <CardMedia { ...props } />
+    </CardMediaWrapper>
+  );
+
   return (
     <Fragment>
       <div { ...blockProps }>
         <Card { ...props }>
-          { showMedia &&
-            <CardMediaWrapper { ...props }>
-              <CardMedia { ...props } />
-            </CardMediaWrapper>
-          }
-          <SupernovaItemContent { ...props } />
+          { useElementOrder ? (
+            splitAroundMedia ? (
+              <>
+                <CardContentWrapper { ...props } extraClassName="nb-supernova-item__content--before-media">
+                  <SupernovaItemContent { ...props } items={ beforeMediaItems } />
+                </CardContentWrapper>
+                { renderMedia() }
+                <CardContentWrapper { ...props } extraClassName="nb-supernova-item__content--after-media">
+                  <SupernovaItemContent { ...props } items={ afterMediaItems } />
+                </CardContentWrapper>
+              </>
+            ) : (
+              <>
+                { showMedia && mediaIndex === 0 && renderMedia() }
+                <SupernovaItemContent { ...props } items={ contentItems } />
+                { showMedia && mediaIndex === order.length - 1 && renderMedia() }
+              </>
+            )
+          ) : (
+            <>
+              { showMedia && renderMedia() }
+              <SupernovaItemContent { ...props } />
+            </>
+          ) }
         </Card>
       </div>
       <BlockControls { ...props } />
@@ -119,21 +168,17 @@ const SupernovaItemContent = ( props ) => {
   const {
     attributes,
     setAttributes,
+    items,
   } = props;
 
   const {
     contentType,
     metaAboveTitle,
-    metaBelowTitle,
     metaBelowContent,
     title,
     subtitle,
     description,
 
-    showTitle,
-    showSubtitle,
-    showDescription,
-    showButtons,
     showMeta,
     displayInnerContent,
 
@@ -141,8 +186,8 @@ const SupernovaItemContent = ( props ) => {
     cardTitleFontSize,
   } = attributes;
 
-  const TitleTagName = `h${ cardTitleLevel }`;
-  const titleClassName = `has-${ cardTitleFontSize }-font-size`;
+  const TitleTagName    = `h${ cardTitleLevel }`;
+  const titleClassName  = `has-${ cardTitleFontSize }-font-size`;
   const SubTitleTagName = `h${ cardTitleLevel + 1 }`;
 
   const newProps = {
@@ -154,76 +199,236 @@ const SupernovaItemContent = ( props ) => {
   } );
 
   if ( 'fields' === contentType ) {
-    return (
-      <div { ...newProps }>
-        {
-          showMeta &&
+
+    // `items` is the ordered list of element ids to render in this content
+    // block. supernova-item's edit fn splits the visible element order around
+    // Media and passes the halves in as `items`.
+    const list = Array.isArray( items ) ? items : null;
+    if ( ! list ) {
+      return <div { ...newProps } />;
+    }
+
+    const adjacent = metasAreAdjacent( list );
+
+    const elements = [];
+    for ( let i = 0; i < list.length; i++ ) {
+      const id = list[ i ];
+
+      // Collapse meta-primary + meta-secondary into a single RichText row
+      // when they're neighbours — matches the frontend render where the two
+      // metas appear on the same line inside one <p>.
+      if ( adjacent && showMeta && (
+        ( id === ELEMENT.META_PRIMARY   && list[ i + 1 ] === ELEMENT.META_SECONDARY ) ||
+        ( id === ELEMENT.META_SECONDARY && list[ i + 1 ] === ELEMENT.META_PRIMARY   )
+      ) ) {
+        const primaryFirst = id === ELEMENT.META_PRIMARY;
+        elements.push(
+          <div key={ `meta-combined-${ i }` } className="nb-card__meta-combined">
+            <RichText
+              className="nb-card__meta is-style-meta"
+              placeholder={ primaryFirst ? 'Primary metadata' : 'Secondary metadata' }
+              tagName="span"
+              value={ primaryFirst ? metaAboveTitle : metaBelowContent }
+              onChange={ value => setAttributes( primaryFirst ? { metaAboveTitle: value } : { metaBelowContent: value } ) }
+              allowedFormats={ [] }
+            />
+            <span className="nb-card__meta-separator" aria-hidden="true" />
+            <RichText
+              className="nb-card__meta is-style-meta"
+              placeholder={ primaryFirst ? 'Secondary metadata' : 'Primary metadata' }
+              tagName="span"
+              value={ primaryFirst ? metaBelowContent : metaAboveTitle }
+              onChange={ value => setAttributes( primaryFirst ? { metaBelowContent: value } : { metaAboveTitle: value } ) }
+              allowedFormats={ [] }
+            />
+          </div>
+        );
+        i++; // skip the secondary we just consumed
+        continue;
+      }
+
+      if ( id === ELEMENT.META_PRIMARY && showMeta ) {
+        elements.push(
           <RichText
-            className={ `nb-card__meta is-style-meta` }
-            placeholder={ `Meta` }
-            tagName={ 'p' }
+            key={ `meta-primary-${ i }` }
+            className="nb-card__meta is-style-meta"
+            placeholder="Primary metadata"
+            tagName="p"
             value={ metaAboveTitle }
-            onChange={ metaAboveTitle => { setAttributes( { metaAboveTitle } ) } }
+            onChange={ metaAboveTitle => setAttributes( { metaAboveTitle } ) }
             allowedFormats={ [] }
           />
-        }
-        {
-          showTitle &&
+        );
+        continue;
+      }
+
+      if ( id === ELEMENT.META_SECONDARY && showMeta ) {
+        elements.push(
           <RichText
+            key={ `meta-secondary-${ i }` }
+            className="nb-card__meta is-style-meta"
+            placeholder="Secondary metadata"
+            tagName="p"
+            value={ metaBelowContent }
+            onChange={ metaBelowContent => setAttributes( { metaBelowContent } ) }
+            allowedFormats={ [] }
+          />
+        );
+        continue;
+      }
+
+      if ( id === ELEMENT.TITLE ) {
+        elements.push(
+          <RichText
+            key={ `title-${ i }` }
             className={ `nb-card__title ${ titleClassName }` }
-            placeholder={ `Title` }
+            placeholder="Title"
             tagName={ TitleTagName }
             value={ title }
-            onChange={ title => { setAttributes( { title } ) } }
+            onChange={ title => setAttributes( { title } ) }
             allowedFormats={ [] }
           />
-        }
-        {
-          showSubtitle &&
+        );
+        continue;
+      }
+
+      if ( id === ELEMENT.SUBTITLE ) {
+        elements.push(
           <RichText
-            className={ `nb-card__subtitle` }
-            placeholder={ `Subtitle` }
+            key={ `subtitle-${ i }` }
+            className="nb-card__subtitle"
+            placeholder="Subtitle"
             tagName={ SubTitleTagName }
             value={ subtitle }
-            onChange={ subtitle => { setAttributes( { subtitle } ) } }
+            onChange={ subtitle => setAttributes( { subtitle } ) }
             allowedFormats={ [] }
           />
-        }
-        {
-          showMeta &&
+        );
+        continue;
+      }
+
+      if ( id === ELEMENT.DESCRIPTION ) {
+        elements.push(
           <RichText
-            className={ 'nb-card__meta is-style-meta' }
-            placeholder={ `Meta` }
-            tagName={ 'p' }
-            value={ metaBelowTitle }
-            onChange={ metaBelowTitle => { setAttributes( { metaBelowTitle } ) } }
-            allowedFormats={ [] }
+            key={ `description-${ i }` }
+            className="nb-card__description"
+            placeholder="Content"
+            tagName="p"
+            value={ description }
+            onChange={ description => setAttributes( { description } ) }
           />
+        );
+        continue;
+      }
+
+      if ( id === ELEMENT.BUTTONS ) {
+        elements.push( <SupernovaItemButton key={ `buttons-${ i }` } { ...props } /> );
+        continue;
+      }
+    }
+
+    return <div { ...newProps }>{ elements }</div>;
+  }
+
+  // Auto mode (Query Loop / Posts Collection): the editor has no real post
+  // data to render, so each element renders as a static placeholder in its
+  // current position. Authors still see their reorder reflected in the
+  // editor; the frontend replaces placeholders with actual post data.
+  if ( 'auto' === contentType ) {
+    const list = Array.isArray( props.items ) ? props.items : null;
+    if ( ! list ) {
+      return <div { ...newProps } />;
+    }
+
+    const { primaryMetadata, secondaryMetadata } = attributes;
+    const adjacent = metasAreAdjacent( list );
+
+    const metaPlaceholder = ( source ) => {
+      switch ( source ) {
+        case 'author':       return 'Author name';
+        case 'category':     return 'Category';
+        case 'comments':     return '0 comments';
+        case 'date':         return 'Jan 1, 2026';
+        case 'tags':         return 'tag, tag';
+        case 'reading-time': return '3 min read';
+        default:             return '';
+      }
+    };
+
+    const elements = [];
+    for ( let i = 0; i < list.length; i++ ) {
+      const id = list[ i ];
+      const key = `${ id }-${ i }`;
+
+      // Adjacent primary + secondary → combined placeholder row
+      if ( adjacent && (
+        ( id === ELEMENT.META_PRIMARY   && list[ i + 1 ] === ELEMENT.META_SECONDARY ) ||
+        ( id === ELEMENT.META_SECONDARY && list[ i + 1 ] === ELEMENT.META_PRIMARY   )
+      ) ) {
+        const primaryFirst = id === ELEMENT.META_PRIMARY;
+        const firstText  = metaPlaceholder( primaryFirst ? primaryMetadata : secondaryMetadata );
+        const secondText = metaPlaceholder( primaryFirst ? secondaryMetadata : primaryMetadata );
+        if ( firstText || secondText ) {
+          elements.push(
+            <p key={ `meta-combined-${ i }` } className="nb-card__meta is-style-meta nb-card__meta-combined is-placeholder">
+              { firstText && <span className="nb-card__meta--primary">{ firstText }</span> }
+              { firstText && secondText && <span className="nb-card__meta-separator" aria-hidden="true" /> }
+              { secondText && <span className="nb-card__meta--secondary">{ secondText }</span> }
+            </p>
+          );
         }
-        {
-          showDescription &&
-            <RichText
-              className={ `nb-card__description` }
-              placeholder={ `Content` }
-              tagName={ 'p' }
-              value={ description }
-              onChange={ description => { setAttributes( { description } ) } }
-            />
+        i++;
+        continue;
+      }
+
+      if ( id === ELEMENT.META_PRIMARY ) {
+        const text = metaPlaceholder( primaryMetadata );
+        if ( text ) {
+          elements.push( <p key={ key } className="nb-card__meta is-style-meta is-placeholder">{ text }</p> );
         }
-        {
-          showMeta &&
-          <RichText
-            className={ 'nb-card__meta is-style-meta' }
-            placeholder={ `Meta` }
-            tagName={ 'p' }
-            value={ metaBelowContent }
-            onChange={ metaBelowContent => { setAttributes( { metaBelowContent } ) } }
-            allowedFormats={ [] }
-          />
+        continue;
+      }
+
+      if ( id === ELEMENT.META_SECONDARY ) {
+        const text = metaPlaceholder( secondaryMetadata );
+        if ( text ) {
+          elements.push( <p key={ key } className="nb-card__meta is-style-meta is-placeholder">{ text }</p> );
         }
-        <SupernovaItemButton { ...props } />
-      </div>
-    )
+        continue;
+      }
+
+      if ( id === ELEMENT.TITLE ) {
+        elements.push(
+          <TitleTagName key={ key } className={ `nb-card__title ${ titleClassName } is-placeholder` }>Post title</TitleTagName>
+        );
+        continue;
+      }
+
+      if ( id === ELEMENT.SUBTITLE ) {
+        // Post-driven cards do not have a subtitle — skip entirely in the editor too.
+        continue;
+      }
+
+      if ( id === ELEMENT.DESCRIPTION ) {
+        elements.push(
+          <p key={ key } className="nb-card__description is-placeholder">A brief excerpt from the post appears here, giving readers a preview of what's inside.</p>
+        );
+        continue;
+      }
+
+      if ( id === ELEMENT.BUTTONS ) {
+        elements.push(
+          <p key={ key } className="nb-card__buttons is-placeholder">
+            <span className="wp-block-button is-style-outline">
+              <span className="wp-block-button__link">Read more</span>
+            </span>
+          </p>
+        );
+        continue;
+      }
+    }
+
+    return <div { ...newProps }>{ elements }</div>;
   }
 
   return (
