@@ -542,6 +542,7 @@ function novablocks_get_collection_layout_css( array $attributes ): array {
 		'--nb-collection-columns-count: ' . $attributes['columns'],
 		'--nb-grid-spacing-modifier: ' . $attributes['gridGap'],
 		'--nb-grid-spacing-multiplier: ' . ( ! empty( $attributes['pile3dEffect'] ) ? 2 : 1 ),
+		'--nb-grid-row-spacing-multiplier: ' . ( $attributes['verticalGapModifier'] ?? 1 ),
 		'--nb-pile-3d-scale: ' . ( ! empty( $attributes['pile3dEffect'] ) ? '0.82' : '1' ),
 	];
 }
@@ -1404,7 +1405,7 @@ function novablocks_get_area_classname_by_width_ratio( $ratio ): string {
 	return 'nb-grid__area--width-full';
 }
 
-function novablocks_get_collection_card_surface_markup( string $media, string $content, array $attributes ): string {
+function novablocks_get_collection_card_surface_markup( string $media, string $content, array $attributes, string $content_before_media = '' ): string {
 
 	// Make sure that the defaults are in place.
 	$attributes = wp_parse_args( $attributes, [
@@ -1487,11 +1488,18 @@ function novablocks_get_collection_card_surface_markup( string $media, string $c
 			<?php if ( ( $attributes['cardLayout'] ?? '' ) === 'stacked' ) { ?>
 			<div class="nb-supernova-item__frame">
 			<?php } ?>
+			<?php if ( novablocks_show_card_contents( $attributes ) && ! empty( $content_before_media ) ) { ?>
+				<div class="<?php echo esc_attr( join( ' ', $contentClasses ) ); ?> nb-supernova-item__content--before-media">
+					<div class="nb-supernova-item__inner-container">
+						<?php echo $content_before_media; ?>
+					</div>
+				</div>
+			<?php } ?>
 			<?php if ( ! empty( $attributes['showMedia'] ) && ! empty( $media ) ) {
 				echo $media;
 			}
 			if ( novablocks_show_card_contents( $attributes ) && ! empty( $content ) ) { ?>
-				<div class="<?php echo esc_attr( join( ' ', $contentClasses ) ); ?>">
+				<div class="<?php echo esc_attr( join( ' ', $contentClasses ) ); ?><?php echo ! empty( $content_before_media ) ? ' nb-supernova-item__content--after-media' : ''; ?>">
 					<div class="nb-supernova-item__inner-container">
 						<?php
 						echo $content;
@@ -1509,8 +1517,8 @@ function novablocks_get_collection_card_surface_markup( string $media, string $c
 	return ob_get_clean();
 }
 
-function novablocks_get_collection_card_markup( string $media, string $content, array $attributes ): string {
-	$surface_markup = novablocks_get_collection_card_surface_markup( $media, $content, $attributes );
+function novablocks_get_collection_card_markup( string $media, string $content, array $attributes, string $content_before_media = '' ): string {
+	$surface_markup = novablocks_get_collection_card_surface_markup( $media, $content, $attributes, $content_before_media );
 
 	ob_start(); ?>
 
@@ -1522,21 +1530,269 @@ function novablocks_get_collection_card_markup( string $media, string $content, 
 	return ob_get_clean();
 }
 
+/**
+ * Decide whether the card should render content in split slots
+ * (pre-media title block + post-media remainder) for "after-title" media
+ * position. Only applies to vertical cards with fields content and media.
+ *
+ * @deprecated since elementOrder was introduced. The split/no-split decision
+ * now derives from Media's position in the resolved element order. Kept for
+ * any external callers that may rely on it.
+ */
+function novablocks_card_should_split_content( array $attributes ): bool {
+	return ! empty( $attributes['showMedia'] )
+		&& ( $attributes['mediaPosition'] ?? 'before-title' ) === 'after-title'
+		&& ( $attributes['cardLayout'] ?? '' ) === 'vertical'
+		&& ( $attributes['contentType'] ?? 'fields' ) === 'fields';
+}
+
+/**
+ * Valid card element identifiers that can appear in the `elementOrder`
+ * attribute. Mirrors the ELEMENT constants exported from the JS
+ * `element-order-utils` module — keep them in sync.
+ */
+function novablocks_card_element_ids(): array {
+	return [ 'media', 'meta-primary', 'meta-secondary', 'title', 'subtitle', 'description', 'buttons' ];
+}
+
+/**
+ * Canonical default element order used when `elementOrder` has not been set.
+ * Mirrors the JS `DEFAULT_ORDER` so editor and frontend stay aligned.
+ */
+function novablocks_default_card_element_order(): array {
+	return [ 'media', 'meta-primary', 'meta-secondary', 'title', 'subtitle', 'description', 'buttons' ];
+}
+
+/**
+ * Resolve the effective element order.
+ *
+ * - If a non-empty `elementOrder` attribute is saved, use it verbatim (after
+ *   sanitising: known ids only, deduplicated, with any missing defaults
+ *   appended so newly introduced elements surface automatically).
+ * - Otherwise derive a legacy order from `mediaPosition` + `metadataPosition`
+ *   that matches the pre-elementOrder rendering.
+ */
+function novablocks_resolve_card_element_order( array $attributes ): array {
+	$order = $attributes['elementOrder'] ?? [];
+
+	if ( is_array( $order ) && ! empty( $order ) ) {
+		$valid  = novablocks_card_element_ids();
+		$seen   = [];
+		$clean  = [];
+		foreach ( $order as $id ) {
+			if ( is_string( $id ) && in_array( $id, $valid, true ) && ! in_array( $id, $seen, true ) ) {
+				$clean[] = $id;
+				$seen[]  = $id;
+			}
+		}
+		foreach ( novablocks_default_card_element_order() as $id ) {
+			if ( ! in_array( $id, $seen, true ) ) $clean[] = $id;
+		}
+		return $clean;
+	}
+
+	return novablocks_derive_legacy_card_element_order( $attributes );
+}
+
+function novablocks_derive_legacy_card_element_order( array $attributes ): array {
+	$mediaPosition    = $attributes['mediaPosition']    ?? 'before-title';
+	$metadataPosition = $attributes['metadataPosition'] ?? 'above-title';
+
+	$items = [];
+
+	if ( $mediaPosition === 'before-title' ) $items[] = 'media';
+
+	if ( $metadataPosition === 'above-title' ) {
+		$items[] = 'meta-primary';
+		$items[] = 'meta-secondary';
+	} elseif ( $metadataPosition === 'split' ) {
+		$items[] = 'meta-primary';
+	}
+
+	$items[] = 'title';
+
+	if ( $mediaPosition === 'after-title' ) $items[] = 'media';
+
+	$items[] = 'subtitle';
+
+	if ( $metadataPosition === 'below-title' ) {
+		$items[] = 'meta-primary';
+		$items[] = 'meta-secondary';
+	}
+
+	$items[] = 'description';
+
+	if ( $metadataPosition === 'below-content' ) {
+		$items[] = 'meta-primary';
+		$items[] = 'meta-secondary';
+	} elseif ( $metadataPosition === 'split' ) {
+		$items[] = 'meta-secondary';
+	}
+
+	$items[] = 'buttons';
+
+	return $items;
+}
+
+function novablocks_is_card_element_visible( string $id, array $attributes ): bool {
+	switch ( $id ) {
+		case 'media':          return ! empty( $attributes['showMedia'] );
+		case 'meta-primary':
+		case 'meta-secondary': return ! empty( $attributes['showMeta'] );
+		case 'title':          return ! isset( $attributes['showTitle'] )       || $attributes['showTitle']       !== false;
+		case 'subtitle':       return ! isset( $attributes['showSubtitle'] )    || $attributes['showSubtitle']    !== false;
+		case 'description':    return ! isset( $attributes['showDescription'] ) || $attributes['showDescription'] !== false;
+		case 'buttons':        return ! empty( $attributes['showButtons'] );
+		default:               return false;
+	}
+}
+
+/**
+ * Return the effective order filtered to items that would actually render
+ * (visibility flags honoured). This is what both the editor list and the
+ * card render walk.
+ */
+function novablocks_get_visible_card_element_order( array $attributes ): array {
+	return array_values( array_filter(
+		novablocks_resolve_card_element_order( $attributes ),
+		function ( $id ) use ( $attributes ) {
+			return novablocks_is_card_element_visible( $id, $attributes );
+		}
+	) );
+}
+
+/**
+ * Render a list of card element ids into content markup. Media is not handled
+ * here — it's rendered by the surface function as a sibling of the content
+ * wrapper, so callers must exclude 'media' from the ids list.
+ *
+ * When meta-primary and meta-secondary appear adjacent, they collapse into a
+ * single <p> tag — matching the editor's visual grouping and the user's
+ * expectation that "nearby metadatas show on the same line".
+ */
+function novablocks_get_card_items_markup( array $item_ids, array $attributes ): string {
+	$output           = '';
+	$metaAboveTitle   = $attributes['metaAboveTitle']   ?? '';
+	$metaBelowContent = $attributes['metaBelowContent'] ?? '';
+	$count            = count( $item_ids );
+
+	for ( $i = 0; $i < $count; $i++ ) {
+		$id   = $item_ids[ $i ];
+		$next = $item_ids[ $i + 1 ] ?? null;
+
+		$is_meta_pair = (
+			( $id === 'meta-primary'   && $next === 'meta-secondary' ) ||
+			( $id === 'meta-secondary' && $next === 'meta-primary'   )
+		);
+
+		if ( $is_meta_pair ) {
+			$primary_first = $id === 'meta-primary';
+			$first  = $primary_first ? $metaAboveTitle   : $metaBelowContent;
+			$second = $primary_first ? $metaBelowContent : $metaAboveTitle;
+			$output .= novablocks_get_card_item_combined_meta( $first, $second, $attributes );
+			$i++; // consume the paired sibling
+			continue;
+		}
+
+		switch ( $id ) {
+			case 'meta-primary':
+				$output .= novablocks_get_card_item_meta( $metaAboveTitle, $attributes );
+				break;
+			case 'meta-secondary':
+				$output .= novablocks_get_card_item_meta( $metaBelowContent, $attributes );
+				break;
+			case 'title':
+				$output .= novablocks_get_card_item_title( $attributes['title'] ?? '', $attributes );
+				break;
+			case 'subtitle':
+				$output .= novablocks_get_card_item_subtitle( $attributes['subtitle'] ?? '', $attributes );
+				break;
+			case 'description':
+				$output .= novablocks_get_card_item_description( $attributes['description'] ?? '', $attributes );
+				break;
+			case 'buttons':
+				$output .= novablocks_get_card_item_buttons( [
+					[
+						'text' => $attributes['buttonText'] ?? '',
+						'url'  => $attributes['buttonUrl']  ?? '',
+					],
+				], $attributes );
+				break;
+		}
+	}
+
+	return $output;
+}
+
+/**
+ * Render two meta strings as a single combined paragraph so nearby metadatas
+ * appear on one card line (matching how the current "above / below" slot
+ * renders when both sources share a position).
+ */
+function novablocks_get_card_item_combined_meta( string $first, string $second, array $attributes ): string {
+	if ( empty( $attributes['showMeta'] ) ) {
+		return '';
+	}
+
+	$first  = (string) $first;
+	$second = (string) $second;
+	$first_len  = strlen( $first );
+	$second_len = strlen( $second );
+
+	if ( ! $first_len && ! $second_len ) {
+		return '';
+	}
+
+	// Fall back to the regular single-slot render when only one side has
+	// content — no need for an inline separator.
+	if ( ! $first_len )  return novablocks_get_card_item_meta( $second, $attributes );
+	if ( ! $second_len ) return novablocks_get_card_item_meta( $first,  $attributes );
+
+	return '<p class="nb-card__meta is-style-meta nb-card__meta-combined">'
+		. '<span>' . wp_kses_post( $first ) . '</span>'
+		. '<span class="nb-card__meta-separator" aria-hidden="true"></span>'
+		. '<span>' . wp_kses_post( $second ) . '</span>'
+		. '</p>';
+}
+
 function novablocks_get_collection_card_markup_from_post( $post, array $attributes ): string {
-	$card_content = novablocks_get_post_card_contents( $post, $attributes );
+
+	// Resolve the effective element order (elementOrder attribute or legacy
+	// derivation) and split content around Media the same way the fields-mode
+	// render does, so Query Loop cards honour the Content Details reorder UI.
+	$order                = novablocks_get_visible_card_element_order( $attributes );
+	$media_index          = array_search( 'media', $order, true );
+	$content_before_media = '';
+	$card_content         = '';
+
+	if ( $media_index !== false && $media_index > 0 && $media_index < count( $order ) - 1 ) {
+		$before_ids           = array_slice( $order, 0, $media_index );
+		$after_ids            = array_slice( $order, $media_index + 1 );
+		$content_before_media = novablocks_get_post_card_items_markup( $post, $before_ids, $attributes );
+		$card_content         = novablocks_get_post_card_items_markup( $post, $after_ids,  $attributes );
+	} else {
+		$content_ids  = array_values( array_filter( $order, function ( $id ) { return $id !== 'media'; } ) );
+		$card_content = novablocks_get_post_card_items_markup( $post, $content_ids, $attributes );
+
+		if ( $media_index !== false && $media_index === count( $order ) - 1 && ! empty( $attributes['showMedia'] ) ) {
+			$content_before_media = $card_content;
+			$card_content         = '';
+		}
+	}
+
 	$title = get_the_title( $post );
 	$dropcap = '';
-
 	if ( preg_match( '/[a-z]/i', $title, $match ) ) {
 		$dropcap = $match[0];
 	}
 
-	$media_markup = novablocks_get_collection_card_media_markup( [
+	$has_any_content = ! empty( $card_content ) || ! empty( $content_before_media );
+	$media_markup    = novablocks_get_collection_card_media_markup( [
 		'type' => 'image',
 		'url'  => get_the_post_thumbnail_url( $post ),
 		'id'   => get_post_thumbnail_id( $post ),
 	], $attributes, [
-		'companionContent' => ( novablocks_show_card_contents( $attributes ) && ! empty( $card_content ) ),
+		'companionContent' => ( novablocks_show_card_contents( $attributes ) && $has_any_content ),
 	] );
 
 	$media_markup = novablocks_get_collection_card_media_markup_wrapped( $media_markup, get_permalink( $post ), $dropcap );
@@ -1548,10 +1804,11 @@ function novablocks_get_collection_card_markup_from_post( $post, array $attribut
 	$profile = apply_filters( 'novablocks/post_card_profile', [], $post, $attributes );
 
 	$render_data = [
-		'card_classes'    => [],
-		'card_attributes' => $attributes,
-		'media_markup'    => $media_markup,
-		'content_markup'  => $card_content,
+		'card_classes'         => [],
+		'card_attributes'      => $attributes,
+		'media_markup'         => $media_markup,
+		'content_markup'       => $card_content,
+		'content_before_media' => $content_before_media,
 	];
 
 	$render_data = apply_filters( 'novablocks/post_card_render_data', $render_data, $post, $attributes, $profile );
@@ -1575,7 +1832,8 @@ function novablocks_get_collection_card_markup_from_post( $post, array $attribut
 	return novablocks_get_collection_card_markup(
 		$render_data['media_markup'],
 		$render_data['content_markup'],
-		$render_data['card_attributes']
+		$render_data['card_attributes'],
+		$render_data['content_before_media'] ?? ''
 	);
 }
 
@@ -1617,22 +1875,30 @@ function novablocks_get_collection_card_media_markup_wrapped( $media, $link = fa
 	return $output;
 }
 
-function novablocks_get_card_contents( array $attributes ): string {
+function novablocks_get_card_contents( array $attributes, string $slot = 'full' ): string {
 
 	$output = '';
 
-	$output .= novablocks_get_card_item_meta( $attributes['metaAboveTitle'], $attributes );
-	$output .= novablocks_get_card_item_title( $attributes['title'], $attributes );
-	$output .= novablocks_get_card_item_subtitle( $attributes['subtitle'], $attributes );
-	$output .= novablocks_get_card_item_meta( $attributes['metaBelowTitle'], $attributes );
-	$output .= novablocks_get_card_item_description( $attributes['description'], $attributes );
-	$output .= novablocks_get_card_item_meta( $attributes['metaBelowContent'] ?? '', $attributes );
-	$output .= novablocks_get_card_item_buttons( [
-		[
-			'text' => $attributes['buttonText'],
-			'url'  => $attributes ['buttonUrl'],
-		],
-	], $attributes );
+	$render_before = in_array( $slot, [ 'full', 'before-media' ], true );
+	$render_after  = in_array( $slot, [ 'full', 'after-media' ], true );
+
+	if ( $render_before ) {
+		$output .= novablocks_get_card_item_meta( $attributes['metaAboveTitle'], $attributes );
+		$output .= novablocks_get_card_item_title( $attributes['title'], $attributes );
+	}
+
+	if ( $render_after ) {
+		$output .= novablocks_get_card_item_subtitle( $attributes['subtitle'], $attributes );
+		$output .= novablocks_get_card_item_meta( $attributes['metaBelowTitle'], $attributes );
+		$output .= novablocks_get_card_item_description( $attributes['description'], $attributes );
+		$output .= novablocks_get_card_item_meta( $attributes['metaBelowContent'] ?? '', $attributes );
+		$output .= novablocks_get_card_item_buttons( [
+			[
+				'text' => $attributes['buttonText'],
+				'url'  => $attributes ['buttonUrl'],
+			],
+		], $attributes );
+	}
 
 	return $output;
 }
@@ -1872,6 +2138,97 @@ function novablocks_get_post_card_contents( $post, $attributes ): string {
 			'url'  => get_permalink( $post ),
 		],
 	], $attributes );
+
+	return $output;
+}
+
+/**
+ * Render a list of card element ids into content markup using post-derived
+ * data (title, excerpt, Primary/Secondary meta sources). Mirrors
+ * novablocks_get_card_items_markup but pulls content from the post.
+ *
+ * Media is rendered separately by the caller and must be excluded from $item_ids.
+ */
+function novablocks_get_post_card_items_markup( $post, array $item_ids, array $attributes ): string {
+
+	$output       = '';
+	$primarySrc   = $attributes['primaryMetadata']   ?? 'none';
+	$secondarySrc = $attributes['secondaryMetadata'] ?? 'none';
+
+	$primaryMeta   = '<span class="nb-card__meta--primary">' .
+		novablocks_get_post_card_meta( $post, $primarySrc ) . '</span>';
+	$secondaryMeta = '<span class="nb-card__meta--secondary">' .
+		novablocks_get_post_card_meta( $post, $secondarySrc ) . '</span>';
+
+	$primaryIsOutput   = $primarySrc   !== 'none';
+	$secondaryIsOutput = $secondarySrc !== 'none';
+
+	$title     = get_the_title( $post );
+	$excerpt   = get_the_excerpt( $post );
+	$permalink = get_permalink( $post );
+
+	$count = count( $item_ids );
+	for ( $i = 0; $i < $count; $i++ ) {
+		$id   = $item_ids[ $i ];
+		$next = $item_ids[ $i + 1 ] ?? null;
+
+		// Combine adjacent Primary + Secondary into one <p> (same line).
+		$is_meta_pair = (
+			( $id === 'meta-primary'   && $next === 'meta-secondary' ) ||
+			( $id === 'meta-secondary' && $next === 'meta-primary'   )
+		);
+
+		if ( $is_meta_pair && ! empty( $attributes['showMeta'] ) && ( $primaryIsOutput || $secondaryIsOutput ) ) {
+			$first_meta  = $id === 'meta-primary' ? $primaryMeta  : $secondaryMeta;
+			$second_meta = $id === 'meta-primary' ? $secondaryMeta : $primaryMeta;
+			$first_on    = $id === 'meta-primary' ? $primaryIsOutput  : $secondaryIsOutput;
+			$second_on   = $id === 'meta-primary' ? $secondaryIsOutput : $primaryIsOutput;
+
+			if ( $first_on && $second_on ) {
+				$output .= '<p class="nb-card__meta is-style-meta nb-card__meta-combined">'
+					. $first_meta
+					. '<span class="nb-card__meta-separator" aria-hidden="true"></span>'
+					. $second_meta
+					. '</p>';
+			} elseif ( $first_on ) {
+				$output .= '<p class="nb-card__meta is-style-meta">' . $first_meta . '</p>';
+			} elseif ( $second_on ) {
+				$output .= '<p class="nb-card__meta is-style-meta">' . $second_meta . '</p>';
+			}
+			$i++; // consume the paired sibling
+			continue;
+		}
+
+		switch ( $id ) {
+			case 'meta-primary':
+				if ( ! empty( $attributes['showMeta'] ) && $primaryIsOutput ) {
+					$output .= '<p class="nb-card__meta is-style-meta">' . $primaryMeta . '</p>';
+				}
+				break;
+			case 'meta-secondary':
+				if ( ! empty( $attributes['showMeta'] ) && $secondaryIsOutput ) {
+					$output .= '<p class="nb-card__meta is-style-meta">' . $secondaryMeta . '</p>';
+				}
+				break;
+			case 'title':
+				$output .= novablocks_get_card_item_title( $title, $attributes, $post );
+				break;
+			case 'subtitle':
+				// Post-driven cards do not expose a separate subtitle — skip.
+				break;
+			case 'description':
+				$output .= novablocks_get_card_item_description( $excerpt, $attributes );
+				break;
+			case 'buttons':
+				$output .= novablocks_get_card_item_buttons( [
+					[
+						'text' => esc_html__( 'Read More', '__plugin_txtd' ),
+						'url'  => $permalink,
+					],
+				], $attributes );
+				break;
+		}
+	}
 
 	return $output;
 }
