@@ -16,6 +16,9 @@ const scrollingEffectSource = fs.readFileSync(
 test( 'masonry dispatches a layout event after cards are positioned', () => {
   assert.match( masonrySource, /const LAYOUT_EVENT_NAME = 'nb:masonry-layout';/ );
   assert.match( masonrySource, /const BASE_LAYOUT_EVENT_NAME = 'nb:layout';/ );
+  assert.match( masonrySource, /const getGridGaps = \( grid \) => \{/ );
+  assert.match( masonrySource, /columnGap:\s*getComputedGap\( styles\.columnGap, styles\.gap \),/ );
+  assert.match( masonrySource, /rowGap:\s*getComputedGap\( styles\.rowGap, styles\.gap \),/ );
   assert.match( masonrySource, /items\[ index \]\.style\.transform = `translate\(\$\{ x \}px, \$\{ y \}px\)`;/ );
   assert.match( masonrySource, /window\.dispatchEvent\(\s*new CustomEvent\(\s*LAYOUT_EVENT_NAME/ );
   assert.match( masonrySource, /window\.dispatchEvent\(\s*new Event\(\s*BASE_LAYOUT_EVENT_NAME\s*\)\s*\)/ );

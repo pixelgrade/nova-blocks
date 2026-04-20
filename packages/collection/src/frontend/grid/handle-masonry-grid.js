@@ -30,13 +30,12 @@ const clearItemStyles = ( item ) => {
   item.style.transform = '';
 };
 
-const getGridGap = ( grid ) => {
-  const styles = window.getComputedStyle( grid );
-  const columnGap = Number.parseFloat( styles.columnGap );
-  const fallbackGap = Number.parseFloat( styles.gap );
+const getComputedGap = ( value, fallbackValue ) => {
+  const parsedValue = Number.parseFloat( value );
+  const fallbackGap = Number.parseFloat( fallbackValue );
 
-  if ( Number.isFinite( columnGap ) ) {
-    return columnGap;
+  if ( Number.isFinite( parsedValue ) ) {
+    return parsedValue;
   }
 
   if ( Number.isFinite( fallbackGap ) ) {
@@ -44,6 +43,15 @@ const getGridGap = ( grid ) => {
   }
 
   return 0;
+};
+
+const getGridGaps = ( grid ) => {
+  const styles = window.getComputedStyle( grid );
+
+  return {
+    columnGap: getComputedGap( styles.columnGap, styles.gap ),
+    rowGap: getComputedGap( styles.rowGap, styles.gap ),
+  };
 };
 
 const waitForImage = ( image ) => {
@@ -117,11 +125,11 @@ export const handleMasonryGrid = ( grid, block, attributes ) => {
     }
 
     const containerWidth = grid.getBoundingClientRect().width;
-    const gap = getGridGap( grid );
+    const { columnGap, rowGap } = getGridGaps( grid );
     const columnWidth = calculateColumnWidth( {
       containerWidth,
       columnCount: activeColumns,
-      gap,
+      columnGap,
     } );
 
     items.forEach( item => {
@@ -136,7 +144,8 @@ export const handleMasonryGrid = ( grid, block, attributes ) => {
     const { positions, containerHeight } = calculateMasonryLayout( {
       containerWidth,
       columnCount: activeColumns,
-      gap,
+      columnGap,
+      rowGap,
       itemHeights,
     } );
 

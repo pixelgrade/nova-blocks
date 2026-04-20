@@ -31,12 +31,13 @@ const normalizeContainerWidth = ( containerWidth ) => {
 const calculateColumnWidth = ( {
   containerWidth,
   columnCount,
-  gap = 0,
+  columnGap = 0,
+  gap = columnGap,
 } ) => {
   const normalizedColumns = normalizeColumnCount( columnCount );
-  const normalizedGap = normalizeGap( gap );
+  const normalizedColumnGap = normalizeGap( columnGap ?? gap );
   const normalizedWidth = normalizeContainerWidth( containerWidth );
-  const totalGapWidth = normalizedGap * Math.max( normalizedColumns - 1, 0 );
+  const totalGapWidth = normalizedColumnGap * Math.max( normalizedColumns - 1, 0 );
 
   return Math.max( ( normalizedWidth - totalGapWidth ) / normalizedColumns, 0 );
 };
@@ -53,30 +54,33 @@ const getTopColumnPosition = ( columnHeights ) => {
 const calculateMasonryLayout = ( {
   containerWidth,
   columnCount,
-  gap = 0,
+  columnGap = 0,
+  rowGap = 0,
+  gap = columnGap,
   itemHeights = [],
 } ) => {
   const normalizedColumns = normalizeColumnCount( columnCount );
-  const normalizedGap = normalizeGap( gap );
+  const normalizedColumnGap = normalizeGap( columnGap ?? gap );
+  const normalizedRowGap = normalizeGap( rowGap );
   const columnWidth = calculateColumnWidth( {
     containerWidth,
     columnCount: normalizedColumns,
-    gap: normalizedGap,
+    columnGap: normalizedColumnGap,
   } );
   const columnHeights = Array.from( { length: normalizedColumns }, () => 0 );
 
   const positions = itemHeights.map( itemHeight => {
     const normalizedItemHeight = normalizeContainerWidth( itemHeight );
     const { columnIndex, y } = getTopColumnPosition( columnHeights );
-    const x = ( columnWidth + normalizedGap ) * columnIndex;
+    const x = ( columnWidth + normalizedColumnGap ) * columnIndex;
 
-    columnHeights[ columnIndex ] = y + normalizedItemHeight + normalizedGap;
+    columnHeights[ columnIndex ] = y + normalizedItemHeight + normalizedRowGap;
 
     return { x, y };
   } );
 
   const tallestColumn = Math.max( ...columnHeights, 0 );
-  const containerHeight = tallestColumn > 0 ? tallestColumn - normalizedGap : 0;
+  const containerHeight = tallestColumn > 0 ? tallestColumn - normalizedRowGap : 0;
 
   return {
     columnWidth,

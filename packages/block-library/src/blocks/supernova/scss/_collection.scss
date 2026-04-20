@@ -156,7 +156,7 @@
 .nb-collection__layout-column {
   display: flex;
   flex-direction: column;
-  gap: var(--nb-grid-spacing);
+  gap: var(--nb-grid-row-spacing);
 }
 
 @mixin pile-3d-small-card {

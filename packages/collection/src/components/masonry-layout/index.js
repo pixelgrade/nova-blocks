@@ -8,7 +8,7 @@ const MasonryLayout = ( props ) => {
   const editorLayoutStyle = {
     display: 'grid',
     gridTemplateColumns: `repeat(${ normalizedColumns }, minmax(0, 1fr))`,
-    gap: 'var(--nb-grid-spacing)',
+    columnGap: 'var(--nb-grid-spacing)',
     alignItems: 'start',
   };
 

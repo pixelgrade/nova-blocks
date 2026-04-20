@@ -1,7 +1,8 @@
 @import "parametric-layout-modifiers";
 
 .nb-grid {
-	grid-gap: var(--nb-grid-spacing);
+	column-gap: var(--nb-grid-spacing);
+	row-gap: var(--nb-grid-row-spacing);
 
 	.nb-grid__item {
 		--theme-content-width-normal: 100%;
@@ -10,7 +11,7 @@
 
 .nb-grid__area + .nb-grid__area,
 .nb-grid__area > * + * {
-	margin-top: var(--nb-grid-spacing);
+	margin-top: var(--nb-grid-row-spacing);
 }
 
 .nb-grid__area {
@@ -34,7 +35,7 @@
 
 	.nb-grid__column:first-child &:first-child:last-child {
 		position: sticky;
-		top: var(--nb-grid-spacing);
+		top: var(--nb-grid-row-spacing);
 	}
 }
 

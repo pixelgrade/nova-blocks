@@ -13,5 +13,6 @@ test( 'editor masonry layout keeps multiple columns via an explicit grid wrapper
 	assert.match( masonryLayoutSource, /const editorLayoutStyle = \{/ );
 	assert.match( masonryLayoutSource, /display:\s*'grid'/ );
 	assert.match( masonryLayoutSource, /gridTemplateColumns:\s*`repeat\(\$\{ normalizedColumns \}, minmax\(0, 1fr\)\)`/ );
-	assert.match( masonryLayoutSource, /gap:\s*'var\(--nb-grid-spacing\)'/ );
+	assert.match( masonryLayoutSource, /columnGap:\s*'var\(--nb-grid-spacing\)'/ );
+	assert.doesNotMatch( masonryLayoutSource, /gap:\s*'var\(--nb-grid-spacing\)'/ );
 } );

@@ -16,4 +16,14 @@ test('grid-based collection layouts split the base gap into column and row spaci
     styleSource,
     /\.nb-collection__layout--classic,\s*\.nb-collection__layout--parametric\s*\{[\s\S]*?display:\s*grid;[\s\S]*?column-gap:\s*var\(--nb-grid-spacing\);[\s\S]*?row-gap:\s*var\(--nb-grid-row-spacing\);[\s\S]*?grid-template-columns:\s*repeat\(var\(--nb-collection-columns,\s*1\),\s*1fr\);/
   );
+
+  assert.match(
+    styleSource,
+    /\.nb-collection__layout--masonry\s*\{[\s\S]*?column-gap:\s*var\(--nb-grid-spacing\);[\s\S]*?row-gap:\s*var\(--nb-grid-row-spacing\);/
+  );
+
+  assert.match(
+    styleSource,
+    /\.nb-collection__layout-column\s*\{[\s\S]*?gap:\s*var\(--nb-grid-row-spacing\);/
+  );
 });
