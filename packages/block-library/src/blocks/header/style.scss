@@ -8,6 +8,7 @@
 :root {
   --icons-size-multiplier: 1.3;
   --icons-horizontal-spacing-reducer: 2;
+  --nb-mobile-header-safe-area-inset-top: env(safe-area-inset-top, 0px);
 }
 
 @property --nb-header-vertical-spacing-multiplier {
