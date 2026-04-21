@@ -144,6 +144,7 @@
     body.has-intro-animations {
       --nb-mobile-menu-item-intro-transform: none;
       --nb-mobile-menu-item-intro-clip-path: inset(0 0 0 0 round var(--anima-intro-clip-radius, 18px));
+      --nb-mobile-menu-items-intro-delay: .4s;
       --nb-mobile-menu-item-stagger: 45ms;
     }
 
@@ -173,7 +174,7 @@
 
       > :is(ul.menu, .menu > ul) > li {
         animation: nb-mobile-menu-item-intro var(--anima-intro-duration, .6s) var(--anima-intro-easing, ease) both;
-        animation-delay: calc(var(--nb-mobile-menu-item-index, 0) * var(--nb-mobile-menu-item-stagger, 45ms));
+        animation-delay: calc(var(--nb-mobile-menu-items-intro-delay, .4s) + var(--nb-mobile-menu-item-index, 0) * var(--nb-mobile-menu-item-stagger, 45ms));
         transform-origin: left center;
         will-change: opacity, transform, clip-path;
       }

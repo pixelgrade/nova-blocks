@@ -65,8 +65,14 @@ test( 'open mobile menu items replay the active intro animation style on every o
 
   assert.match(
     source,
-    /animation-delay:\s*calc\(var\(--nb-mobile-menu-item-index,\s*0\)\s*\*\s*var\(--nb-mobile-menu-item-stagger/,
-    'mobile menu item intro animation must stagger items through per-item indexes'
+    /--nb-mobile-menu-items-intro-delay:\s*\.4s;/,
+    'mobile menu item intro animation must wait for the existing 0.4s panel slide transition'
+  );
+
+  assert.match(
+    source,
+    /animation-delay:\s*calc\(var\(--nb-mobile-menu-items-intro-delay,\s*\.4s\)\s*\+\s*var\(--nb-mobile-menu-item-index,\s*0\)\s*\*\s*var\(--nb-mobile-menu-item-stagger/,
+    'mobile menu item intro animation must combine the panel slide delay with the per-item stagger'
   );
 
   assert.match(
