@@ -36,6 +36,11 @@ class HeaderMobile extends HeaderBase {
     const menuToggleCheckbox = document.getElementById( 'nova-menu-toggle' );
 
     this.navigationIsOpen = menuToggleCheckbox.checked;
+    // Reconcile body.overflow with the checkbox state on every init.
+    // Under AJAX page transitions (Anima theme, Barba) the body element persists
+    // across navigations — the inline `overflow: hidden` set on menu-open would
+    // otherwise leak into the destination page and kill iOS touch scroll.
+    document.body.style.overflow = menuToggleCheckbox.checked ? 'hidden' : '';
     this.menuToggle = new MenuToggle( menuToggleCheckbox, {
       onChange: this.onToggleChange.bind( this )
     } );
