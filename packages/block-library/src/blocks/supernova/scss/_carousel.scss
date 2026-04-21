@@ -362,6 +362,13 @@ $slick-arrow-background-opacity-hover: 0.6 !default;
       padding-bottom: var(--nb-spacing);
     }
   }
+
+  @include below(lap) {
+    .nb-collection__layout--carousel.nb-collection__layout--fixed-width .slick-slide {
+      padding-left: 0;
+      padding-right: 0;
+    }
+  }
 }
 
 .nb-collection__layout--variable-width {
