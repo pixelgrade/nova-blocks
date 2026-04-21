@@ -28,4 +28,10 @@ test( 'open mobile menu current item uses inherited text color and active underl
     />\s*a\s*\{[\s\S]*?&:before\s*\{[\s\S]*?background:\s*currentColor;[\s\S]*?transform:\s*scale3d\(1,\s*1,\s*1\);/,
     'current mobile menu items must render the desktop-style active underline with currentColor'
   );
+
+  assert.match(
+    source,
+    />\s*a\s*\{[\s\S]*?display:\s*inline-block;/,
+    'current mobile menu links must size to their text so the underline does not span the full row'
+  );
 } );
