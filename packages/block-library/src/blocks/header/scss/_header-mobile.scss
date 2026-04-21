@@ -134,6 +134,54 @@
     }
   }
 
+  @media (prefers-reduced-motion: no-preference) {
+
+    body.has-intro-animations {
+      --nb-mobile-menu-item-intro-transform: none;
+      --nb-mobile-menu-item-intro-clip-path: inset(0 0 0 0 round var(--anima-intro-clip-radius, 18px));
+      --nb-mobile-menu-item-stagger: 45ms;
+    }
+
+    body.has-intro-animations--fade {
+      --nb-mobile-menu-item-intro-transform: none;
+    }
+
+    body.has-intro-animations--scale {
+      --nb-mobile-menu-item-intro-transform: scale(var(--anima-intro-scale-start, .96));
+    }
+
+    body.has-intro-animations--slide {
+      --nb-mobile-menu-item-intro-transform: translate3d(0, calc(var(--anima-intro-distance, 42px) * .5), 0);
+    }
+
+    body.has-intro-animations--clip {
+      --nb-mobile-menu-item-intro-transform: translate3d(0, calc(var(--anima-intro-distance, 42px) * .2), 0);
+      --nb-mobile-menu-item-intro-clip-path: inset(0 100% 0 0 round var(--anima-intro-clip-radius, 18px));
+    }
+
+    body.has-intro-animations--flex {
+      --nb-mobile-menu-item-intro-transform: translate3d(0, calc(var(--anima-intro-distance, 42px) * .35), 0) scale(.965);
+      --nb-mobile-menu-item-intro-clip-path: inset(14% 0 0 0 round var(--anima-intro-clip-radius, 18px));
+    }
+
+    body.has-intro-animations .c-menu-toggle__checkbox:checked ~ .nb-header .nb-navigation {
+
+      > :is(ul.menu, .menu > ul) > li {
+        animation: nb-mobile-menu-item-intro var(--anima-intro-duration, .6s) var(--anima-intro-easing, ease) both;
+        animation-delay: calc(var(--nb-mobile-menu-item-index, 0) * var(--nb-mobile-menu-item-stagger, 45ms));
+        transform-origin: left center;
+        will-change: opacity, transform, clip-path;
+      }
+
+      @for $index from 1 through 12 {
+
+        > :is(ul.menu, .menu > ul) > li:nth-child(#{$index}) {
+          --nb-mobile-menu-item-index: #{$index - 1};
+        }
+      }
+    }
+  }
+
   .nb-header__inner-container,
   .nb-header__buttons-menu {
 
@@ -146,6 +194,20 @@
       opacity: 0;
       transition: opacity .2s ease 0s;
     }
+  }
+}
+
+@keyframes nb-mobile-menu-item-intro {
+  from {
+    opacity: 0;
+    transform: var(--nb-mobile-menu-item-intro-transform, none);
+    clip-path: var(--nb-mobile-menu-item-intro-clip-path, inset(0 0 0 0 round var(--anima-intro-clip-radius, 18px)));
+  }
+
+  to {
+    opacity: 1;
+    transform: none;
+    clip-path: inset(0 0 0 0 round var(--anima-intro-clip-radius, 18px));
   }
 }
 

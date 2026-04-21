@@ -43,3 +43,35 @@ test( 'open mobile menu social items keep a readable horizontal gap', () => {
     'adjacent social menu items must have a small horizontal gap in the open mobile menu'
   );
 } );
+
+test( 'open mobile menu items replay the active intro animation style on every open', () => {
+  assert.match(
+    source,
+    /@media\s*\(prefers-reduced-motion:\s*no-preference\)[\s\S]*?body\.has-intro-animations\s+\.c-menu-toggle__checkbox:checked\s*~\s*\.nb-header[\s\S]*?>\s*:is\(\s*ul\.menu,\s*\.menu\s*>\s*ul\s*\)\s*>\s*li\s*\{[\s\S]*?animation:\s*nb-mobile-menu-item-intro\s+var\(--anima-intro-duration/,
+    'mobile menu item intro animation must be scoped to the checked menu state and use the Style Manager duration'
+  );
+
+  assert.match(
+    source,
+    /animation:[\s\S]*?var\(--anima-intro-easing/,
+    'mobile menu item intro animation must use the Style Manager easing'
+  );
+
+  assert.match(
+    source,
+    /animation-delay:\s*calc\(var\(--nb-mobile-menu-item-index,\s*0\)\s*\*\s*var\(--nb-mobile-menu-item-stagger/,
+    'mobile menu item intro animation must stagger items through per-item indexes'
+  );
+
+  assert.match(
+    source,
+    /body\.has-intro-animations--slide[\s\S]*?--nb-mobile-menu-item-intro-transform:\s*translate3d\(0,\s*calc\(var\(--anima-intro-distance,\s*42px\)\s*\*\s*\.5\),\s*0\);/,
+    'slide intro style must reuse the Style Manager intro distance token'
+  );
+
+  assert.match(
+    source,
+    /@keyframes\s+nb-mobile-menu-item-intro[\s\S]*?from\s*\{[\s\S]*?opacity:\s*0;[\s\S]*?transform:\s*var\(--nb-mobile-menu-item-intro-transform/,
+    'mobile menu intro keyframes must stage items from the selected intro style'
+  );
+} );
