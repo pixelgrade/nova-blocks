@@ -59,8 +59,14 @@ test( 'open mobile menu items replay the active intro animation style on every o
 
   assert.match(
     source,
-    /animation-delay:\s*calc\(var\(--nb-mobile-menu-item-index,\s*0\)\s*\*\s*var\(--nb-mobile-menu-item-stagger/,
-    'mobile menu item intro animation must stagger items through per-item indexes'
+    /--nb-mobile-menu-items-intro-delay:\s*\.35s;/,
+    'mobile menu item intro animation must wait for the existing parent opacity reveal to start'
+  );
+
+  assert.match(
+    source,
+    /animation-delay:\s*calc\(var\(--nb-mobile-menu-items-intro-delay,\s*\.35s\)\s*\+\s*var\(--nb-mobile-menu-item-index,\s*0\)\s*\*\s*var\(--nb-mobile-menu-item-stagger/,
+    'mobile menu item intro animation must combine the parent reveal offset with the per-item stagger'
   );
 
   assert.match(
