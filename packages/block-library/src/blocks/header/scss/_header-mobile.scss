@@ -96,6 +96,10 @@
     }
 
     .c-menu-toggle__checkbox:checked ~ .nb-header & {
+      .social-menu-item + .social-menu-item {
+        margin-left: .35em;
+      }
+
       > :is(ul.menu, .menu > ul) > li[class*="current"] {
         position: relative;
         color: inherit;

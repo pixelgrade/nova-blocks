@@ -35,3 +35,11 @@ test( 'open mobile menu current item uses inherited text color and active underl
     'current mobile menu links must size to their text so the underline does not span the full row'
   );
 } );
+
+test( 'open mobile menu social items keep a readable horizontal gap', () => {
+  assert.match(
+    source,
+    /\.c-menu-toggle__checkbox:checked\s*~\s*\.nb-header[\s\S]*?\.social-menu-item\s*\+\s*\.social-menu-item\s*\{[\s\S]*?margin-left:\s*\.35em;/,
+    'adjacent social menu items must have a small horizontal gap in the open mobile menu'
+  );
+} );
