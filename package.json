@@ -51,14 +51,14 @@
 		"@wordpress/custom-templated-path-webpack-plugin": "^2.1.0",
 		"@wordpress/dependency-extraction-webpack-plugin": "^4.31.0",
 		"@wordpress/library-export-default-webpack-plugin": "^2.2.0",
-		"@wordpress/scripts": "^17",
+		"@wordpress/scripts": "^31",
 		"autoprefixer": "^10.4.21",
 		"babel-plugin-inline-json-import": "^0.3.2",
 		"babel-plugin-lodash": "^3.3.4",
 		"browserslist": "^4.24.4",
 		"command-exists": "^1.2.9",
 		"concurrently": "^7.6.0",
-		"copy-webpack-plugin": "^6.4.1",
+		"copy-webpack-plugin": "^14.0.0",
 		"cssnano": "^5.1.15",
 		"del": "^6.0.0",
 		"eslint-plugin-react-hooks": "^4.2.0",
@@ -81,9 +81,9 @@
 		"sass": "^1.97.3",
 		"svg-sprite-loader": "^6.0.11",
 		"svgo-loader": "^3.0.0",
-		"terser-webpack-plugin": "^4.2.3",
+		"terser-webpack-plugin": "^5.4.0",
 		"uuid": "^8.3.2",
-		"webpack": "4.46.0",
+		"webpack": "5.105.4",
 		"webpack-cli": "^3.3.12"
 	}
 }
