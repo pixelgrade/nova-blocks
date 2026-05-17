@@ -1,0 +1,61 @@
+{
+	"align": {
+		"type": "string",
+		"default": "full"
+	},
+	"anchor": {
+		"type": "string",
+		"default": ""
+	},
+	"className": {
+		"type": "string",
+		"default": ""
+	},
+	"media": {
+		"type": "object",
+		"default": null
+	},
+	"scrollIndicatorBlock": {
+		"type": "boolean",
+		"default": false
+	},
+	"defaultsGenerated": {
+		"type": "boolean",
+		"default": false
+	},
+	"templateInserted": {
+		"type": "boolean",
+		"default": false
+	},
+	"contentPosition": {
+		"type": "string",
+		"default": "center center"
+	},
+	"minHeightFallback": {
+		"type": "number",
+		"default": 66
+	},
+	"overlayFilterStrength": {
+		"type": "number",
+		"default": 30
+	},
+	"colorSignal": {
+		"type": "number",
+		"default": 3
+	},
+	"paletteVariation": {
+		"type": "number",
+		"default": 12
+	},
+	"scrollingEffect": {
+		"type": "string",
+		"default": "parallax"
+	},
+	"focalPoint": {
+		"type": "object",
+		"default": {
+			"x": 0.5,
+			"y": 0.5
+		}
+	}
+}

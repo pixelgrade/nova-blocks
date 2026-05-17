@@ -1,0 +1,14 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/block.json",
+	"apiVersion": 2,
+	"name": "novablocks/hero",
+	"title": "Legacy Hero",
+	"category": "nova-blocks",
+	"description": "Compatibility shim for legacy Hero content.",
+	"textdomain": "nova-blocks",
+	"attributes": {},
+	"supports": {
+		"html": false,
+		"inserter": false
+	}
+}
