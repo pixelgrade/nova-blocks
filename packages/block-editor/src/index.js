@@ -1,4 +1,5 @@
 import './preferences';
+import './cleanup-site-editor-entity-edits';
 
 export * from './components';
 export * from './filters';
