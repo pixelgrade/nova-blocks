@@ -7,6 +7,7 @@ const KEYS = [
   'colorSignal',
   'contentColorSignal',
   'contentPaletteVariation',
+  'emphasisArea',
 ];
 
 const pickCurrentAttributes = ( currentBlockAttributes = {}, fallbackAttributes = {} ) => {
@@ -32,5 +33,6 @@ export const useCurrentColorSignalAttributes = ( clientId, attributes ) => {
     attributes.colorSignal,
     attributes.contentColorSignal,
     attributes.contentPaletteVariation,
+    attributes.emphasisArea,
   ] );
 };

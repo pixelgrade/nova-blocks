@@ -5,7 +5,11 @@ import { ControlsGroup, withVisibility } from "@novablocks/block-editor";
 const EmphasisAreaControl = props => {
 
   const { attributes, setAttributes } = props;
-  const { emphasisArea } = attributes;
+  const { colorSignal, emphasisArea } = attributes;
+
+  if ( colorSignal === 0 ) {
+    return null;
+  }
 
   return (
     <ControlsGroup key={'emphasis_area_group'}>

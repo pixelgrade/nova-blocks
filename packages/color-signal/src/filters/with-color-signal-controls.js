@@ -15,6 +15,7 @@ const COLOR_SIGNAL_ATTR_KEYS = [
   'colorSignal',
   'contentColorSignal',
   'contentPaletteVariation',
+  'emphasisArea',
 ];
 
 /**

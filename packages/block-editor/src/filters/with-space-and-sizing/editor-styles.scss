@@ -37,49 +37,6 @@
   position: relative;
   transition: var(--nb-space-preview-transition);
 
-  &:before,
-  &:after {
-    content: "";
-    position: absolute;
-    left: 0;
-    right: 0;
-    pointer-events: none;
-    opacity: 0;
-    transition: var(--nb-space-preview-transition);
-  }
-
-  &:before {
-    top: calc(-1 * var(--nb-space-preview-top-size) + var(--nb-space-preview-top-offset));
-    height: var(--nb-space-preview-top-size);
-    background:
-      repeating-linear-gradient(
-        -45deg,
-        transparent 0,
-        transparent 10px,
-        rgba(24, 119, 242, 0.12) 10px,
-        rgba(24, 119, 242, 0.12) 20px
-      ),
-      linear-gradient(var(--nb-space-preview-outer-color), var(--nb-space-preview-outer-color));
-    border-top: 1px solid var(--nb-space-preview-outer-border-color);
-    border-bottom: 1px solid var(--nb-space-preview-outer-border-color);
-  }
-
-  &:after {
-    bottom: calc(-1 * var(--nb-space-preview-bottom-size) + var(--nb-space-preview-bottom-offset));
-    height: var(--nb-space-preview-bottom-size);
-    background:
-      repeating-linear-gradient(
-        -45deg,
-        transparent 0,
-        transparent 10px,
-        rgba(24, 119, 242, 0.12) 10px,
-        rgba(24, 119, 242, 0.12) 20px
-      ),
-      linear-gradient(var(--nb-space-preview-outer-color), var(--nb-space-preview-outer-color));
-    border-top: 1px solid var(--nb-space-preview-outer-border-color);
-    border-bottom: 1px solid var(--nb-space-preview-outer-border-color);
-  }
-
   &--visible {
     background-image:
       linear-gradient(var(--nb-space-preview-inner-color), var(--nb-space-preview-inner-color)),
@@ -92,7 +49,33 @@
 
     &:before,
     &:after {
-      opacity: 1;
+      content: "";
+      position: absolute;
+      left: 0;
+      right: 0;
+      pointer-events: none;
+      transition: var(--nb-space-preview-transition);
+      background:
+        repeating-linear-gradient(
+          -45deg,
+          transparent 0,
+          transparent 10px,
+          rgba(24, 119, 242, 0.12) 10px,
+          rgba(24, 119, 242, 0.12) 20px
+        ),
+        linear-gradient(var(--nb-space-preview-outer-color), var(--nb-space-preview-outer-color));
+      border-top: 1px solid var(--nb-space-preview-outer-border-color);
+      border-bottom: 1px solid var(--nb-space-preview-outer-border-color);
+    }
+
+    &:before {
+      top: calc(-1 * var(--nb-space-preview-top-size) + var(--nb-space-preview-top-offset));
+      height: var(--nb-space-preview-top-size);
+    }
+
+    &:after {
+      bottom: calc(-1 * var(--nb-space-preview-bottom-size) + var(--nb-space-preview-bottom-offset));
+      height: var(--nb-space-preview-bottom-size);
     }
   }
 
