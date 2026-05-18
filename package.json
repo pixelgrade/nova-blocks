@@ -74,7 +74,7 @@
 		"lodash": "4.17.21",
 		"node-watch": "^0.7.2",
 		"npm-check-updates": "^11.1.1",
-		"postcss": "^8.5.3",
+		"postcss": "^8.5.10",
 		"react-contenteditable": "^3.3.6",
 		"rimraf": "^3.0.2",
 		"rtlcss": "^3.5.0",
