@@ -472,8 +472,12 @@ function novablocks_get_color_signal_css( array $attributes ): array {
 }
 
 function novablocks_get_overlay_filter_css( array $attributes ): array {
+	$overlay_filter_strength = ! empty( $attributes['overlayFilterType'] ) && $attributes['overlayFilterType'] === 'duotone'
+		? 0
+		: ( $attributes['overlayFilterStrength'] ?? 0 ) / 100;
+
 	$props = [
-		'--nb-overlay-filter-strength: ' . $attributes['overlayFilterStrength'] / 100,
+		'--nb-overlay-filter-strength: ' . $overlay_filter_strength,
 	];
 
 	if ( isset( $attributes['overlayFilterHoverBorderSize'] ) && $attributes['overlayFilterHoverBorderSize'] !== '' ) {

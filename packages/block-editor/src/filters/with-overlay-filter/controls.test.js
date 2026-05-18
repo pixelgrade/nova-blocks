@@ -100,4 +100,57 @@ describe( 'OverlayFilterControls', () => {
 		expect( markup ).toContain( 'class="mock-duotone-picker" data-options-count="2"' );
 		expect( markup ).toContain( 'class="mock-color-picker" data-options-count="4"' );
 	} );
+
+	it( 'hides overlay filter strength while duotone is selected', () => {
+		window.styleManager = {
+			colorsConfig: [
+				createPalette( 1, [ '#111111', '#222222' ] ),
+				createPalette( 2, [ '#eeeeee', '#ffffff' ] ),
+			],
+		};
+
+		let OverlayFilterControls;
+		jest.isolateModules( () => {
+			OverlayFilterControls = require( './controls' ).default;
+		} );
+
+		const markup = renderToStaticMarkup(
+			<OverlayFilterControls
+				name="novablocks/supernova"
+				attributes={ {
+					columns: 1,
+					overlayFilterStrength: 90,
+					overlayFilterType: 'duotone',
+					showMedia: true,
+				} }
+				setAttributes={ jest.fn() }
+			/>
+		);
+
+		expect( markup ).not.toContain( 'Overlay Filter Strength' );
+		expect( markup ).not.toContain( 'class="mock-range-control"' );
+	} );
+
+	it( 'shows overlay filter strength while unitone is selected', () => {
+		let OverlayFilterControls;
+		jest.isolateModules( () => {
+			OverlayFilterControls = require( './controls' ).default;
+		} );
+
+		const markup = renderToStaticMarkup(
+			<OverlayFilterControls
+				name="novablocks/supernova"
+				attributes={ {
+					columns: 1,
+					overlayFilterStrength: 90,
+					overlayFilterType: 'unitone',
+					showMedia: true,
+				} }
+				setAttributes={ jest.fn() }
+			/>
+		);
+
+		expect( markup ).toContain( 'Overlay Filter Strength' );
+		expect( markup ).toContain( 'class="mock-range-control"' );
+	} );
 } );

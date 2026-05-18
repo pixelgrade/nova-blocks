@@ -79,7 +79,6 @@ export default function HeadlineEdit( props ) {
           value={ secondary }
           onChange={ ( value ) => setAttributes( { secondary: value } ) }
           placeholder={ __( 'Subtitle…', '__plugin_txtd' ) }
-          keepPlaceholderOnFocus={ true }
           allowedFormats={ [] }
         />
         <RichText
@@ -89,7 +88,6 @@ export default function HeadlineEdit( props ) {
           value={ primary }
           onChange={ ( value ) => setAttributes( { primary: value } ) }
           placeholder={ __( 'Write title…', '__plugin_txtd' ) }
-          keepPlaceholderOnFocus={ true }
           allowedFormats={ [] }
         />
       </TagName>

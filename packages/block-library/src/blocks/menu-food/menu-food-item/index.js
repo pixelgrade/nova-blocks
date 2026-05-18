@@ -13,6 +13,7 @@ import save from './save';
 import { getSvg } from "@novablocks/block-editor";
 
 registerBlockType( 'novablocks/menu-food-item', {
+	apiVersion: 3,
 	title: __( 'Menu Item', '__plugin_txtd' ),
 	description: __( 'A food or drink item contained in a menu or menu section.', '__plugin_txtd' ),
 	category: 'nova-blocks',

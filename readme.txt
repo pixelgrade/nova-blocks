@@ -3,7 +3,7 @@ Contributors: pixelgrade, vlad.olaru, babbardel, razvanonofrei, gorby31
 Tags: blocks, gutenberg, gutenberg blocks, page builder, full site editing
 Requires at least: 5.9
 Tested up to: 7.0
-Stable tag: 2.1.17
+Stable tag: 2.1.18
 Requires PHP: 7.4
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -93,6 +93,17 @@ Yes! Nova Block's core features are free to use.
 3. Slideshow Me the Way block options
 
 == Changelog ==
+
+= 2.1.18 =
+* Compatibility: Move Nova block metadata and manual registrations to Block API v3 for WordPress 7.0 iframe editor readiness.
+* New: Add legacy Hero block compatibility.
+* New: Add the collection vertical gap modifier, card description size controls, and reorderable Card Content Details controls.
+* Fix: Prevent false dirty Site Editor entities.
+* Fix: Improve mobile header menu spacing, animation timing, and active-item underline behavior.
+* Fix: Keep fragment-wrapped card media/content in the correct stacked card frame structure.
+* Fix: Resolve overlay filter palettes after Style Manager color config becomes available.
+* Fix: Hide and neutralize the overlay filter strength control when duotone overlays are selected.
+* Fix: Remove WP 7 editor console warnings from the Headline block, editor preferences, and Nova Blocks Tools sidebar.
 
 = 2.1.17 =
 * New: Add post-format blueprint cards for quote and image posts, including the editorial quote style.

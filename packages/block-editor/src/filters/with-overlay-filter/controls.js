@@ -36,11 +36,13 @@ const OverlayFilterControls = ( props ) => {
   const {
     overlayFilterStrength,
     overlayFilterHoverBorderSize,
+    overlayFilterType,
     columns,
     showMedia,
   } = attributes;
 
   const showHoverBorderSizeControl = Number( columns ) > 1 && showMedia !== false;
+  const showOverlayFilterStrengthControl = overlayFilterType !== 'duotone';
 
   return (
     <ControlsSection id={ 'overlay-filter' } label={ __( 'Overlay Filter', '__plugin_txtd' ) } group={ __( 'Modules', '__plugin_txtd' ) } order={ 40 }>
@@ -49,16 +51,17 @@ const OverlayFilterControls = ( props ) => {
           <OverlayType { ...props } />
         </ControlsGroup>
         <CustomDuotonePicker { ...props } />
-        <ControlsGroup>
-          <RangeControl
-            label={ __( 'Overlay Filter Strength', '__plugin_txtd' ) }
-            value={ overlayFilterStrength }
-            onChange={ ( nextOverlayFilterStrength ) => setAttributes( { overlayFilterStrength: nextOverlayFilterStrength } ) }
-            min={ 0 }
-            max={ 90 }
-            step={ 10 }
-          />
-        </ControlsGroup>
+        { showOverlayFilterStrengthControl &&
+          <ControlsGroup>
+            <RangeControl
+              label={ __( 'Overlay Filter Strength', '__plugin_txtd' ) }
+              value={ overlayFilterStrength }
+              onChange={ ( nextOverlayFilterStrength ) => setAttributes( { overlayFilterStrength: nextOverlayFilterStrength } ) }
+              min={ 0 }
+              max={ 90 }
+              step={ 10 }
+            />
+          </ControlsGroup> }
         { showHoverBorderSizeControl &&
           <ControlsGroup>
             <RangeControl

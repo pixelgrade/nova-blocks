@@ -532,6 +532,7 @@ function novablocks_register_block_types() {
 				);
 			} else {
 				register_block_type( 'novablocks/' . $block, array_merge( $args, [
+					'api_version'  => 3,
 					'uses_context' => [ 'postId', 'postType', ],
 				] ) );
 			}

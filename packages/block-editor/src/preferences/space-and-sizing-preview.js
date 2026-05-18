@@ -1,10 +1,7 @@
 import { dispatch, useDispatch, useSelect } from '@wordpress/data';
+import { ToggleControl } from '@wordpress/components';
 import { createPortal, useEffect, useState } from '@wordpress/element';
 import { __ } from '@wordpress/i18n';
-import {
-  PreferencesModalSection,
-  ___unstablePreferencesModalBaseOption as BaseOption,
-} from '@wordpress/interface';
 import { store as preferencesStore } from '@wordpress/preferences';
 import { registerPlugin } from '@wordpress/plugins';
 
@@ -87,23 +84,30 @@ const SpaceAndSizingPreviewPreferences = () => {
   }
 
   return createPortal(
-    <PreferencesModalSection
-      title={ __( 'Nova Blocks', '__plugin_txtd' ) }
-      description={ __( 'Set defaults for Nova Blocks editing helpers.', '__plugin_txtd' ) }
-    >
-      <BaseOption
-        label={ __( 'Show Space and Sizing preview by default', '__plugin_txtd' ) }
-        help={ __( 'Shows the spacing preview while the Space and Sizing section is open on supported blocks.', '__plugin_txtd' ) }
-        isChecked={ isChecked }
-        onChange={ ( nextValue ) => {
-          set(
-            SPACE_AND_SIZING_PREVIEW_PREFERENCE_SCOPE,
-            SPACE_AND_SIZING_PREVIEW_PREFERENCE_KEY,
-            nextValue
-          );
-        } }
-      />
-    </PreferencesModalSection>,
+    <fieldset className="interface-preferences-modal__section">
+      <legend>
+        <h2 className="interface-preferences-modal__section-title">
+          { __( 'Nova Blocks', '__plugin_txtd' ) }
+        </h2>
+        <p className="interface-preferences-modal__section-description">
+          { __( 'Set defaults for Nova Blocks editing helpers.', '__plugin_txtd' ) }
+        </p>
+      </legend>
+      <div className="interface-preferences-modal__option">
+        <ToggleControl
+          label={ __( 'Show Space and Sizing preview by default', '__plugin_txtd' ) }
+          help={ __( 'Shows the spacing preview while the Space and Sizing section is open on supported blocks.', '__plugin_txtd' ) }
+          checked={ isChecked }
+          onChange={ ( nextValue ) => {
+            set(
+              SPACE_AND_SIZING_PREVIEW_PREFERENCE_SCOPE,
+              SPACE_AND_SIZING_PREVIEW_PREFERENCE_KEY,
+              nextValue
+            );
+          } }
+        />
+      </div>
+    </fieldset>,
     portalTarget
   );
 };

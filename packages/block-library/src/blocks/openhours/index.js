@@ -13,6 +13,7 @@ import { registerBlockType } from '@wordpress/blocks';
 import { getSvg } from "@novablocks/block-editor";
 
 registerBlockType( 'novablocks/openhours', {
+	apiVersion: 3,
 	title: __( 'OpenHours', '__plugin_txtd' ),
 	description: __( 'Display Opening Hours for any kind of venue.', '__plugin_txtd' ),
 	category: 'nova-blocks',

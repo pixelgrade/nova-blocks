@@ -132,7 +132,7 @@ const LegacyHeroEdit = ( { attributes, clientId } ) => {
 };
 
 registerBlockType( 'novablocks/hero', {
-	apiVersion: 2,
+	apiVersion: 3,
 	title: __( 'Legacy Hero', '__plugin_txtd' ),
 	description: __( 'Compatibility shim for legacy Hero content.', '__plugin_txtd' ),
 	category: 'nova-blocks',

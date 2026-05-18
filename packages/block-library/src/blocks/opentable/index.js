@@ -17,6 +17,7 @@ import attributes from './attributes.json';
 import attributesColorSignal from './attributes-color-signal.json';
 
 registerBlockType( 'novablocks/opentable', {
+	apiVersion: 3,
 	title: __( 'OpenTable Reservation', '__plugin_txtd' ),
 	description: __( 'Add OpenTable online reservation booking to your site.', '__plugin_txtd' ),
 	category: 'nova-blocks',
@@ -50,4 +51,3 @@ const alterAttributes = ( settings ) => {
 };
 
 addFilter( 'blocks.registerBlockType', 'novablocks/opentable/color-signal-attributes-overwrite', alterAttributes, 20 );
-

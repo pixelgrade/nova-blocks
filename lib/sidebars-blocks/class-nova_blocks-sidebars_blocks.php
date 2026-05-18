@@ -147,7 +147,7 @@ class NovaBlocks_SidebarsBlocks {
 						'customClassName' => false,
 					],
 					'description'     => $sidebar_details['description'],
-					'api_version'     => 2,
+					'api_version'     => 3,
 					'attributes'      => [
 						'sidebarId' => [
 							'type'    => 'string',
