@@ -1,6 +1,6 @@
 import classnames from 'classnames';
 
-import { Children } from '@wordpress/element';
+import { Children, Fragment, isValidElement } from '@wordpress/element';
 
 import { getColorSignalClassnames } from "@novablocks/utils";
 
@@ -10,6 +10,22 @@ import {
 } from "@novablocks/utils";
 
 export * from './contents';
+
+const flattenCardChildren = children => {
+  return Children.toArray( children ).reduce( ( flattenedChildren, child ) => {
+    if ( isValidElement( child ) && child.type === Fragment ) {
+      return [
+        ...flattenedChildren,
+        ...flattenCardChildren( child.props.children ),
+      ];
+    }
+
+    return [
+      ...flattenedChildren,
+      child,
+    ];
+  }, [] );
+};
 
 export const Card = ( props ) => {
 
@@ -41,7 +57,7 @@ export const Card = ( props ) => {
 
   const classNames = layoutStyle !== 'parametric' ? extraClassNames : defaultClassNames;
 
-  const children = Children.toArray( props.children );
+  const children = flattenCardChildren( props.children );
   const mediaChildren = children.filter( child => child.type === CardMediaWrapper );
   const contentWrapperChildren = children.filter( child => child.type === CardContentWrapper );
   const passedChildren = children.filter( child => child.type !== CardMediaWrapper && child.type !== CardContentWrapper );

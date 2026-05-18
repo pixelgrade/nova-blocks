@@ -20,10 +20,15 @@ import { useSupports } from "../../hooks";
 
 import { generateDuotonePresetsFromPalettes, generateColorPalettes } from "./utils";
 
-const PALETTES = window.styleManager?.colorsConfig || [];
-const FILTERED_PALETTES = PALETTES.filter( palette => ! isFunctionalPalette( palette ) );
-const DUOTONE_PALETTES = generateDuotonePresetsFromPalettes( FILTERED_PALETTES );
-const COLOR_PALETTES = generateColorPalettes( FILTERED_PALETTES );
+const getOverlayFilterPalettes = () => {
+  const palettes = window.styleManager?.colorsConfig || [];
+  const filteredPalettes = palettes.filter( palette => ! isFunctionalPalette( palette ) );
+
+  return {
+    colorPalettes: generateColorPalettes( filteredPalettes ),
+    duotonePalettes: generateDuotonePresetsFromPalettes( filteredPalettes ),
+  };
+};
 
 const OverlayFilterControls = ( props ) => {
 
@@ -121,12 +126,17 @@ const CustomDuotonePicker = ( props ) => {
   const { overlayFilterType, overlayFilterDuotoneConfig } = attributes;
   const from = overlayFilterDuotoneConfig?.from;
   const to = overlayFilterDuotoneConfig?.to;
+  const colorsConfig = window.styleManager?.colorsConfig;
+  const {
+    colorPalettes,
+    duotonePalettes,
+  } = useMemo( getOverlayFilterPalettes, [ colorsConfig ] );
 
   if ( overlayFilterType !== 'duotone' ) {
     return null;
   }
 
-  const options = DUOTONE_PALETTES.map( ( duotone, index ) => {
+  const options = duotonePalettes.map( ( duotone, index ) => {
     return {
       data: duotone,
       value: index,
@@ -134,7 +144,7 @@ const CustomDuotonePicker = ( props ) => {
     }
   } );
 
-  const colorOptions = COLOR_PALETTES.map( ( color, index ) => {
+  const colorOptions = colorPalettes.map( ( color, index ) => {
     return {
       data: color,
       value: index,
