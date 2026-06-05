@@ -41,7 +41,11 @@ test('generated mobile header lets stylesheet safe-area padding override copied 
   );
 } );
 
-test('open mobile menu uses a stable readable color pair instead of palette variation 5', () => {
+test('open mobile menu uses the source-shifted palette variation instead of a hard-coded color pair', () => {
+  const [ mobileMenuOpenMixinSource = '' ] = mixinsSource.match(
+    /@mixin\s+mobile-menu-open-color-scheme\s*\{[\s\S]*?\n\}/
+  ) || [];
+
   assert.doesNotMatch(
     mobileSource,
     /@include\s+apply-variation\(\s*5\s*\);/
@@ -52,24 +56,24 @@ test('open mobile menu uses a stable readable color pair instead of palette vari
     /@include\s+apply-variation\(\s*5\s*\);/
   );
 
-  assert.match(
+  assert.doesNotMatch(
     styleSource,
-    /--nb-mobile-menu-background-color:\s*#111111;/
+    /--nb-mobile-menu-(background|foreground|accent)-color:/
+  );
+
+  assert.doesNotMatch(
+    mobileMenuOpenMixinSource,
+    /#(?:111111|FFFFFF)\b/i
   );
 
   assert.match(
-    styleSource,
-    /--nb-mobile-menu-foreground-color:\s*#FFFFFF;/
-  );
-
-  assert.match(
-    mixinsSource,
-    /@mixin\s+mobile-menu-open-color-scheme\s*\{[\s\S]*?--sm-current-bg-color:\s*var\(--nb-mobile-menu-background-color,\s*#111111\);[\s\S]*?--sm-current-fg1-color:\s*var\(--nb-mobile-menu-foreground-color,\s*#FFFFFF\);[\s\S]*?color:\s*var\(--sm-current-fg1-color,\s*#FFFFFF\);/
+    mobileMenuOpenMixinSource,
+    /@mixin\s+mobile-menu-open-color-scheme\s*\{[\s\S]*?--sm-current-bg-color:\s*var\(--sm-bg-color-1\);[\s\S]*?--sm-current-accent-color:\s*var\(--sm-accent-color-1\);[\s\S]*?--sm-current-fg1-color:\s*var\(--sm-fg1-color-1\);[\s\S]*?--sm-current-fg2-color:\s*var\(--sm-fg2-color-1\);[\s\S]*?color:\s*var\(--sm-current-fg1-color\);/
   );
 
   assert.match(
     mobileSource,
-    /\.nb-header--main\[class\]\s*\{[\s\S]*?@include\s+mobile-menu-open-color-scheme;/
+    /\.nb-header--main\[class\]\.sm-palette--shifted\s*\{[\s\S]*?@include\s+mobile-menu-open-color-scheme;/
   );
 
   assert.match(
@@ -80,5 +84,35 @@ test('open mobile menu uses a stable readable color pair instead of palette vari
   assert.match(
     menuToggleSource,
     /\.c-menu-toggle__checkbox:checked\s*~\s*&\s*\{[\s\S]*?@include\s+mobile-menu-open-color-scheme;/
+  );
+
+  assert.match(
+    headerMobileJsSource,
+    /this\.mobileMenuOpenColorClass\s*=\s*'sm-palette--shifted';/
+  );
+
+  assert.match(
+    headerMobileJsSource,
+    /addClass\(\s*this\.parent\.element,\s*this\.mobileMenuOpenColorClass\s*\);/
+  );
+
+  assert.match(
+    headerMobileJsSource,
+    /addClass\(\s*this\.menuToggle\.element,\s*this\.mobileMenuOpenColorClass\s*\);/
+  );
+
+  assert.match(
+    headerMobileJsSource,
+    /clearMobileMenuOpenColorClassRemoval\(\)\s*\{[\s\S]*?removeEventListener\(\s*'transitionend',\s*this\.mobileMenuOpenColorClassRemovalHandler\s*\);/
+  );
+
+  assert.match(
+    headerMobileJsSource,
+    /scheduleMobileMenuOpenColorClassRemoval\(\)\s*\{[\s\S]*?window\.setTimeout\(\s*removeMobileMenuOpenColorClass,\s*100\s*\);[\s\S]*?addEventListener\(\s*'transitionend',\s*this\.mobileMenuOpenColorClassRemovalHandler\s*\);[\s\S]*?window\.setTimeout\(\s*removeMobileMenuOpenColorClass,\s*700\s*\);/
+  );
+
+  assert.match(
+    headerMobileJsSource,
+    /event\.target\s*===\s*this\.parent\.element\s*&&\s*event\.propertyName\s*===\s*'left'/
   );
 } );

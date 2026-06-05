@@ -1,8 +1,10 @@
 @include below(lap) {
 
-  .nb-header--main[class] {
+  .nb-header--main[class].sm-palette--shifted {
     @include mobile-menu-open-color-scheme;
+  }
 
+  .nb-header--main[class] {
     &.nb-header-background:before {
       position: fixed;
     }

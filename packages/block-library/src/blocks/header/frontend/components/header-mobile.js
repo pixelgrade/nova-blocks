@@ -1,4 +1,4 @@
-import { below, addClass, removeClass } from '@novablocks/utils';
+import { below, addClass, removeClass, hasClass } from '@novablocks/utils';
 import { getColorSetClasses } from '../../utils';
 
 import HeaderBase from './header-base';
@@ -26,6 +26,10 @@ class HeaderMobile extends HeaderBase {
     } );
 
     this.headerClasses = getColorSetClasses( this.parent.element ).join( ' ' );
+    this.mobileMenuOpenColorClass = 'sm-palette--shifted';
+    this.parentHadMobileMenuOpenColorClass = hasClass( this.parent.element, this.mobileMenuOpenColorClass );
+    this.mobileMenuOpenColorClassRemovalTimeout = null;
+    this.mobileMenuOpenColorClassRemovalHandler = null;
     this.colors = new HeaderColors( this.element, logoRow?.element, this.parent.colorsElement );
     this.menuToggleColors = new HeaderColors( this.menuToggle.element, logoRow?.element, this.parent.colorsElement );
 
@@ -127,12 +131,57 @@ class HeaderMobile extends HeaderBase {
 
   updateToggleClasses() {
     if ( this.navigationIsOpen ) {
+      this.clearMobileMenuOpenColorClassRemoval();
       removeClass( this.menuToggle.element, `${ this.menuToggleColors.transparentColorClasses } ${ this.menuToggleColors.initialColorClasses }` );
       addClass( this.menuToggle.element, this.headerClasses );
+      addClass( this.parent.element, this.mobileMenuOpenColorClass );
+      addClass( this.menuToggle.element, this.mobileMenuOpenColorClass );
     } else {
       removeClass( this.menuToggle.element, this.headerClasses );
+      removeClass( this.menuToggle.element, this.mobileMenuOpenColorClass );
+
+      this.scheduleMobileMenuOpenColorClassRemoval();
+
       this.menuToggleColors.toggleColors( !this.shouldBeSticky );
     }
+  }
+
+  clearMobileMenuOpenColorClassRemoval() {
+    if ( this.mobileMenuOpenColorClassRemovalTimeout ) {
+      window.clearTimeout( this.mobileMenuOpenColorClassRemovalTimeout );
+      this.mobileMenuOpenColorClassRemovalTimeout = null;
+    }
+
+    if ( this.mobileMenuOpenColorClassRemovalHandler ) {
+      this.parent.element.removeEventListener( 'transitionend', this.mobileMenuOpenColorClassRemovalHandler );
+      this.mobileMenuOpenColorClassRemovalHandler = null;
+    }
+  }
+
+  scheduleMobileMenuOpenColorClassRemoval() {
+    if ( this.parentHadMobileMenuOpenColorClass ) {
+      return;
+    }
+
+    this.clearMobileMenuOpenColorClassRemoval();
+
+    const removeMobileMenuOpenColorClass = () => {
+      this.clearMobileMenuOpenColorClassRemoval();
+      removeClass( this.parent.element, this.mobileMenuOpenColorClass );
+    };
+
+    this.mobileMenuOpenColorClassRemovalHandler = event => {
+      if ( event.target === this.parent.element && event.propertyName === 'left' ) {
+        if ( this.mobileMenuOpenColorClassRemovalTimeout ) {
+          window.clearTimeout( this.mobileMenuOpenColorClassRemovalTimeout );
+        }
+
+        this.mobileMenuOpenColorClassRemovalTimeout = window.setTimeout( removeMobileMenuOpenColorClass, 100 );
+      }
+    };
+
+    this.parent.element.addEventListener( 'transitionend', this.mobileMenuOpenColorClassRemovalHandler );
+    this.mobileMenuOpenColorClassRemovalTimeout = window.setTimeout( removeMobileMenuOpenColorClass, 700 );
   }
 
   copyElementFromParent( selector ) {
