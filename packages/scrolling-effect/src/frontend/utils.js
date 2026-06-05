@@ -1,11 +1,10 @@
-import { getAttributes, hasTouchScreen } from "@novablocks/utils";
+import { getAttributes } from "@novablocks/utils";
 import { getProps, getState, getStylesFromProps } from "../utils";
 
 export const REFERENCES = {};
 
 export const getScrollContainerHeight = () => {
-  const useOrientation = hasTouchScreen() && 'orientation' in window;
-  return useOrientation && window.screen && window.screen.availHeight || window.innerHeight
+  return window.visualViewport?.height || window.innerHeight || document.documentElement.clientHeight;
 };
 
 export const getConfig = ( container ) => {
