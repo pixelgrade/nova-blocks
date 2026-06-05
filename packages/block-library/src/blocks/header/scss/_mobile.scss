@@ -1,10 +1,14 @@
 @include below(lap) {
 
   .nb-header--main[class] {
-    @include apply-variation(5);
+    @include mobile-menu-open-color-scheme;
 
     &.nb-header-background:before {
       position: fixed;
+    }
+
+    .c-menu-toggle__checkbox:checked ~ &.nb-header-background:before {
+      --header-background-opacity: 1;
     }
   }
 

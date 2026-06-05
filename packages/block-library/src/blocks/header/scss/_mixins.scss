@@ -22,6 +22,17 @@
 
 
 
+@mixin mobile-menu-open-color-scheme {
+  --sm-current-bg-color: var(--nb-mobile-menu-background-color, #111111);
+  --sm-current-accent-color: var(--nb-mobile-menu-accent-color, var(--nb-mobile-menu-foreground-color, #FFFFFF));
+  --sm-current-fg1-color: var(--nb-mobile-menu-foreground-color, #FFFFFF);
+  --sm-current-fg2-color: var(--nb-mobile-menu-foreground-color, #FFFFFF);
+
+  color: var(--sm-current-fg1-color, #FFFFFF);
+}
+
+
+
 @mixin header-shadow {
   --header-shadow-opacity: 0;
   
