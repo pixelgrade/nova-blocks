@@ -996,6 +996,52 @@ function novablocks_get_card_post_meta( $post, array $attributes ): array {
 	];
 }
 
+function novablocks_get_facetwp_paged_query_var(): int {
+	if ( ! function_exists( 'FWP' ) ) {
+		return 0;
+	}
+
+	try {
+		if ( ! empty( FWP()->request->url_vars['paged'] ) ) {
+			return max( 1, absint( FWP()->request->url_vars['paged'] ) );
+		}
+	} catch ( Throwable $exception ) {
+		// FacetWP may not have initialized its request object yet.
+	}
+
+	$prefix = '_';
+	try {
+		$facetwp_prefix = FWP()->helper->get_setting( 'prefix' );
+		if ( is_string( $facetwp_prefix ) && '' !== $facetwp_prefix ) {
+			$prefix = $facetwp_prefix;
+		}
+	} catch ( Throwable $exception ) {
+		// Keep the FacetWP default URL prefix.
+	}
+
+	$page_key = $prefix . 'paged';
+	if ( isset( $_GET[ $page_key ] ) && '' !== $_GET[ $page_key ] ) {
+		return max( 1, absint( wp_unslash( $_GET[ $page_key ] ) ) );
+	}
+
+	if ( isset( $_POST['data'] ) && is_array( $_POST['data'] ) && ! empty( $_POST['data']['paged'] ) ) {
+		return max( 1, absint( wp_unslash( $_POST['data']['paged'] ) ) );
+	}
+
+	return 0;
+}
+
+function novablocks_get_query_loop_page( $block ): int {
+	$facetwp_page = novablocks_get_facetwp_paged_query_var();
+	if ( $facetwp_page > 0 ) {
+		return $facetwp_page;
+	}
+
+	$page_key = isset( $block->context['queryId'] ) ? 'query-' . $block->context['queryId'] . '-page' : 'query-page';
+
+	return empty( $_GET[ $page_key ] ) ? 1 : max( 1, absint( wp_unslash( $_GET[ $page_key ] ) ) );
+}
+
 function novablocks_build_articles_query( array $attributes, $block ): array {
 	global $novablocks_rendered_posts_ids;
 
@@ -1040,8 +1086,7 @@ function novablocks_build_articles_query( array $attributes, $block ): array {
 				}
 			}
 		} else {
-			$page_key = isset( $block->context['queryId'] ) ? 'query-' . $block->context['queryId'] . '-page' : 'query-page';
-			$page     = empty( $_GET[ $page_key ] ) ? 1 : (int) $_GET[ $page_key ];
+			$page = novablocks_get_query_loop_page( $block );
 
 			if ( function_exists( 'gutenberg_build_query_vars_from_query_block' ) ) {
 				$block_query_args = gutenberg_build_query_vars_from_query_block( $block, $page );
@@ -2052,8 +2097,7 @@ function novablocks_get_posts_collection_cards_markup( array $attributes, $conte
 
 	$output = '';
 
-	$page_key = isset( $block->context['queryId'] ) ? 'query-' . $block->context['queryId'] . '-page' : 'query-page';
-	$page     = empty( $_GET[ $page_key ] ) ? 1 : (int) $_GET[ $page_key ];
+	$page = novablocks_get_query_loop_page( $block );
 
 	// Use global query if needed.
 	$use_global_query = ( isset( $block->context['query']['inherit'] ) && $block->context['query']['inherit'] );
