@@ -1,0 +1,29 @@
+.nb-facetwp-pager {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 0.5em;
+	align-items: center;
+
+	.facetwp-pager {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 0.5em;
+		align-items: center;
+	}
+
+	.facetwp-page {
+		color: inherit;
+		cursor: pointer;
+		text-decoration: none;
+	}
+
+	.facetwp-page.active {
+		cursor: default;
+		font-weight: bolder;
+		text-decoration: underline;
+	}
+
+	.facetwp-page:not(.active):not(.dots):hover {
+		text-decoration: underline;
+	}
+}

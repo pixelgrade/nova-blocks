@@ -103,6 +103,10 @@ function novablocks_get_theme_support(): array {
 		'name'    => 'facetwp-filter',
 		'enabled' => true,
 	];
+	$default['facetwp-pager'] = [
+		'name'    => 'facetwp-pager',
+		'enabled' => true,
+	];
 	$default['facetwp-selections'] = [
 		'name'    => 'facetwp-selections',
 		'enabled' => true,

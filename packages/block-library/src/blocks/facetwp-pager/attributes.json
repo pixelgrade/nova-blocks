@@ -1,0 +1,6 @@
+{
+	"facet": {
+		"type": "string",
+		"default": ""
+	}
+}
