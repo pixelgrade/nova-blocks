@@ -12,6 +12,32 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
+function novablocks_plus_entitlement_bridge_is_available(): bool {
+	$available = function_exists( 'has_filter' ) && false !== has_filter( 'pixelgrade/has_entitlement' );
+
+	if ( function_exists( 'apply_filters' ) ) {
+		$available = (bool) apply_filters( 'novablocks/pixelgrade_plus_entitlement_bridge_is_available', $available );
+	}
+
+	return $available;
+}
+
+function novablocks_has_pixelgrade_plus_entitlement( string $entitlement, bool $default_when_bridge_unavailable = false ): bool {
+	if ( ! novablocks_plus_entitlement_bridge_is_available() ) {
+		return $default_when_bridge_unavailable;
+	}
+
+	if ( ! function_exists( 'apply_filters' ) ) {
+		return false;
+	}
+
+	return (bool) apply_filters( 'pixelgrade/has_entitlement', false, $entitlement );
+}
+
+function novablocks_motion_controls_are_unlocked(): bool {
+	return novablocks_has_pixelgrade_plus_entitlement( 'motion_controls', true );
+}
+
 function novablocks_get_block_editor_settings(): array {
 
 	$settings = [
@@ -161,6 +187,10 @@ function novablocks_get_block_editor_settings(): array {
 
 	$settings = apply_filters( 'novablocks/block_editor_initial_settings', $settings );
 	$settings = apply_filters( 'novablocks_block_editor_settings', $settings );
+
+	if ( ! novablocks_motion_controls_are_unlocked() ) {
+		$settings['motionPresetOptions'] = [];
+	}
 
 	return $settings;
 }
