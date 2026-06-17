@@ -40,6 +40,26 @@ Nova Blocks is a collection of **distinctive Gutenberg blocks,** committed to ma
 
 **Made with love by [Pixelgrade](https://pixelgrade.com/)**
 
+== Privacy & External Services ==
+
+Nova Blocks relies on one external service to deliver its curated block-pattern library.
+
+**Pixelgrade Cloud (cloud.pixelgrade.com)**
+
+To provide curated block patterns in the editor inserter, the plugin fetches block-pattern
+assets from Pixelgrade Cloud. This request is made from WordPress admin/editor contexts,
+not from ordinary frontend page loads, and the response is cached locally.
+
+When fetching block patterns, the plugin sends: your site URL, whether the site uses SSL,
+your WordPress version, the Nova Blocks version, the Style Manager version when present,
+and your active theme's slug, stylesheet slug, name, URI, version, and text domain. No
+personal data about your site's visitors is sent or collected, and the plugin does not
+load any tracking or analytics scripts for this feature.
+
+* Service: Pixelgrade Cloud
+* Provider: Pixelgrade — https://pixelgrade.com
+* Privacy Policy: https://pixelgrade.com/privacy/
+
 == Contributing ==
 
 The proposed value of **Open Source** is that by freely sharing the code with the community, others can use, improve and contribute back to it.
