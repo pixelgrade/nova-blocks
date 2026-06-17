@@ -283,6 +283,12 @@ function novablocks_cloud_patterns_success_response(): array {
 								'title'   => 'Pro Pattern',
 								'content' => '<!-- wp:paragraph --><p>Pro</p><!-- /wp:paragraph -->',
 							],
+							'categories' => [
+								[
+									'slug' => 'premium',
+									'name' => 'Premium',
+								],
+							],
 						],
 						'pixelgrade/top-level-pro-wins' => [
 							'name'       => 'pixelgrade/top-level-pro-wins',
@@ -323,6 +329,7 @@ novablocks_cloud_patterns_assert_same( false, $request['args']['sslverify'] ?? n
 novablocks_cloud_patterns_assert_same( false, $GLOBALS['novablocks_cloud_pattern_options']['novablocks_cloud_block_patterns__autoload'] ?? null, 'Cloud pattern cache must not autoload.' );
 
 novablocks_cloud_patterns_assert_same( true, isset( $GLOBALS['novablocks_cloud_pattern_registered_categories']['heroes'] ), 'Cloud pattern categories must be registered.' );
+novablocks_cloud_patterns_assert_same( false, isset( $GLOBALS['novablocks_cloud_pattern_registered_categories']['premium'] ), 'Pro-only cloud pattern categories must stay locked by default.' );
 novablocks_cloud_patterns_assert_same( true, isset( $GLOBALS['novablocks_cloud_pattern_registered_patterns']['pixelgrade/free-pattern'] ), 'Free cloud pattern must register.' );
 novablocks_cloud_patterns_assert_same( false, isset( $GLOBALS['novablocks_cloud_pattern_registered_patterns']['pixelgrade/pro-pattern'] ), 'Pro cloud pattern must stay locked by default.' );
 novablocks_cloud_patterns_assert_same( false, isset( $GLOBALS['novablocks_cloud_pattern_registered_patterns']['pixelgrade/top-level-pro-wins'] ), 'Top-level pro tier must stay locked even when properties.tier says free.' );
@@ -345,7 +352,9 @@ add_filter(
 );
 $GLOBALS['novablocks_cloud_pattern_remote_response'] = novablocks_cloud_patterns_success_response();
 
+novablocks_register_cloud_block_patterns_categories();
 novablocks_register_cloud_block_patterns();
+novablocks_cloud_patterns_assert_same( true, isset( $GLOBALS['novablocks_cloud_pattern_registered_categories']['premium'] ), 'Pro-only cloud pattern categories should register when a trusted integration unlocks the pro tier.' );
 novablocks_cloud_patterns_assert_same( true, isset( $GLOBALS['novablocks_cloud_pattern_registered_patterns']['pixelgrade/pro-pattern'] ), 'Pro cloud pattern should register when a trusted integration unlocks the pro tier.' );
 novablocks_cloud_patterns_assert_same( true, isset( $GLOBALS['novablocks_cloud_pattern_registered_patterns']['pixelgrade/top-level-pro-wins'] ), 'Top-level pro tier should register when a trusted integration unlocks the pro tier.' );
 

@@ -402,8 +402,18 @@ add_action( 'init', 'novablocks_register_cloud_block_patterns', 30 );
  */
 function novablocks_extract_cloud_block_patterns_categories( array $block_patterns_config ): array {
 	$block_patterns_categories = [];
+	$allowed_tiers             = novablocks_get_allowed_cloud_block_pattern_tiers();
 
 	foreach ( $block_patterns_config as $block_pattern_config ) {
+		if ( ! is_array( $block_pattern_config ) ) {
+			continue;
+		}
+
+		$tier = novablocks_get_cloud_block_pattern_tier( $block_pattern_config );
+		if ( ! in_array( $tier, $allowed_tiers, true ) ) {
+			continue;
+		}
+
 		if ( empty( $block_pattern_config['categories'] ) || ! is_array( $block_pattern_config['categories'] ) ) {
 			continue;
 		}
