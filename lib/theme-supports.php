@@ -71,6 +71,18 @@ function novablocks_get_theme_support(): array {
 		],
 	];
 
+	// Header navigation special items (cart/search/dark-mode) are only needed
+	// when block-based header navigation editing is enabled.
+	if ( function_exists( 'novablocks_header_nav_block_editing_enabled' )
+	     && novablocks_header_nav_block_editing_enabled() ) {
+		foreach ( [ 'navigation-search', 'navigation-cart', 'navigation-dark-mode' ] as $special_item ) {
+			$required[ $special_item ] = [
+				'name'    => $special_item,
+				'enabled' => true,
+			];
+		}
+	}
+
 	$default = [
 		'hero'      => [
 			'name'    => 'hero',
