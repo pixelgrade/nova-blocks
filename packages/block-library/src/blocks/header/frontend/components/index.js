@@ -23,7 +23,7 @@ class Header extends HeaderBase {
 
     this.element = element;
     this.adjacentElement = this.getAdjacentElement( element );
-    this.adjacentElementTargetChild = this.findProperElement( this.adjacentElement );
+    this.adjacentElementTargetChild = this.findProperElement( this.adjacentElement ) || this.adjacentElement;
     this.colorsElement = this.findColorsElement( this.adjacentElementTargetChild );
     this.paddingTopTargets = this.findPaddingTopTargets( this.adjacentElementTargetChild );
 
@@ -181,6 +181,10 @@ class Header extends HeaderBase {
   }
 
   findProperElement( element, previous ) {
+    if ( ! element ) {
+      return previous;
+    }
+
     const attributes = element.dataset;
     const variation = attributes.paletteVariation ? parseInt( attributes.paletteVariation, 10 ) : 1;
     const isShifted = !! attributes.useSourceColorAsReference;
