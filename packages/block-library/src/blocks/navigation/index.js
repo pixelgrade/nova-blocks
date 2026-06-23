@@ -80,8 +80,18 @@ const NavigationEntityEdit = ( { attributes: blockAttributes, navRef } ) => {
   } );
 
   const innerBlocksProps = useInnerBlocksProps( blockProps, {
-    template: [ [ 'core/navigation', { ref: navRef, overlayMenu: 'never' } ] ],
-    templateLock: 'all',
+    // Lock the core/navigation block itself in place (no move/remove — it is the
+    // location's menu), but `templateLock: false` keeps its menu items fully
+    // editable (add / reorder / remove / add submenu). Without the explicit
+    // false the parent lock would cascade and freeze the items.
+    template: [ [ 'core/navigation', {
+      ref: navRef,
+      overlayMenu: 'never',
+      templateLock: false,
+      lock: { move: true, remove: true },
+    } ] ],
+    templateLock: false,
+    allowedBlocks: [ 'core/navigation' ],
     renderAppender: false,
   } );
 

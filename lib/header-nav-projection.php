@@ -782,6 +782,18 @@ function novablocks_header_nav_localize_editor_data(): void {
 	if ( wp_script_is( 'novablocks-core', 'registered' ) || wp_script_is( 'novablocks-core', 'enqueued' ) ) {
 		wp_localize_script( 'novablocks-core', 'novablocksHeaderNav', novablocks_header_nav_editor_data() );
 	}
+
+	// Hide the embedded core/navigation controls that don't apply to the
+	// wp_nav_menu frontend — and, for the overlay (mobile menu), crash the
+	// preview when enabled. These controls render in the inspector, which lives
+	// in the MAIN editor document (not the canvas iframe), so this has to be an
+	// admin stylesheet rather than a block editor-style. The :has() selectors
+	// only match panels belonging to core/navigation.
+	$css = 'body.nb-core-navigation-selected .block-editor-block-inspector .components-panel__body{display:none!important;}';
+
+	wp_register_style( 'novablocks-header-nav-editor', false );
+	wp_enqueue_style( 'novablocks-header-nav-editor' );
+	wp_add_inline_style( 'novablocks-header-nav-editor', $css );
 }
 
 /**

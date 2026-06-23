@@ -58,4 +58,25 @@ if ( ENABLED ) {
   }, 'withBadgeControl' );
 
   addFilter( 'editor.BlockEdit', 'novablocks/nav-badge-control', withBadgeControl );
+
+  // Surface the badge visually in the editor (the frontend renders it via the
+  // Anima walker). We tag the block wrapper with the badge text so editor CSS
+  // can show it — see editor-styles.scss.
+  const withBadgeWrapper = createHigherOrderComponent( ( BlockListBlock ) => ( props ) => {
+    const badge = props.attributes && props.attributes.novablocksBadge;
+
+    if ( ! TARGET_BLOCKS.includes( props.name ) || ! badge ) {
+      return <BlockListBlock { ...props } />;
+    }
+
+    return (
+      <BlockListBlock
+        { ...props }
+        className={ `${ props.className || '' } has-nb-badge`.trim() }
+        wrapperProps={ { ...props.wrapperProps, 'data-nb-badge': badge } }
+      />
+    );
+  }, 'withBadgeWrapper' );
+
+  addFilter( 'editor.BlockListBlock', 'novablocks/nav-badge-wrapper', withBadgeWrapper );
 }
