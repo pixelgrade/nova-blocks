@@ -62,3 +62,40 @@ test('keeps the structural block templates attached to each definition', () => {
     assert.ok( definition.innerBlocks.length > 0 );
   } );
 } );
+
+const collectBlockNames = ( blocks ) => {
+  const names = [];
+
+  blocks.forEach( ( entry ) => {
+    if ( ! Array.isArray( entry ) ) {
+      return;
+    }
+
+    const [ name, , children ] = entry;
+
+    if ( typeof name === 'string' ) {
+      names.push( name );
+    }
+
+    if ( Array.isArray( children ) ) {
+      names.push( ...collectBlockNames( children ) );
+    }
+  } );
+
+  return names;
+};
+
+test('uses the inline-editable core/site-logo in every layout template', () => {
+  HEADER_LAYOUT_DEFINITIONS.forEach( ( definition ) => {
+    const names = collectBlockNames( definition.innerBlocks );
+
+    assert.ok(
+      names.includes( 'core/site-logo' ),
+      `${ definition.name } should use core/site-logo`
+    );
+    assert.ok(
+      ! names.includes( 'novablocks/logo' ),
+      `${ definition.name } should not use the legacy novablocks/logo`
+    );
+  } );
+} );

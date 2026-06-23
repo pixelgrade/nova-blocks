@@ -82,13 +82,14 @@
       --justify-content: flex-end;
     }
     
-    > [class*='branding'] {
-      
+    > [class*='branding'],
+    > .wp-block-site-logo {
+
       &[class][class][class] {
         flex-basis: auto;
       }
     }
-    
+
     > [class*='nb-navigation'] {
         &[class][class][class] {
           flex-grow: 1;
@@ -116,7 +117,8 @@
         min-width: 0;
       }
 
-      > :first-child[class*='branding']:not(:last-child) {
+      > :first-child[class*='branding']:not(:last-child),
+      > :first-child.wp-block-site-logo:not(:last-child) {
 
         &[class][class][class] {
           flex: 1 1 0;
@@ -129,6 +131,27 @@
           flex: 0 1 auto;
         }
       }
+    }
+  }
+}
+
+// core/site-logo height parity with novablocks/logo. The logo block's own
+// stylesheet (`.site-logo img`) is only enqueued when novablocks/logo is on the
+// page; core/site-logo's `.wp-block-site-logo` must be sized from the header
+// context so the two render 1:1 (height-driven, content-width column).
+.nb-header-row .wp-block-site-logo {
+  display: flex;
+  align-items: center;
+
+  img {
+    display: block;
+    width: auto;
+    height: calc(var(--nb-header-logo-height-setting) * 1px);
+    max-width: 100%;
+    object-fit: contain;
+
+    @include below(lap) {
+      height: calc(var(--nb-mobile-header-logo-height-setting) * 1px);
     }
   }
 }

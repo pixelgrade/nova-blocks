@@ -1,7 +1,7 @@
 /**
  * WordPress dependencies
  */
-import { registerBlockType } from '@wordpress/blocks';
+import { registerBlockType, createBlock } from '@wordpress/blocks';
 import { useBlockProps } from '@wordpress/block-editor';
 import ServerSideRender from '@wordpress/server-side-render';
 
@@ -16,6 +16,18 @@ import attributes from "./attributes";
 registerBlockType( 'novablocks/logo', {
   icon: getSvg( iconSvg ),
   attributes,
+  transforms: {
+    to: [
+      {
+        type: 'block',
+        blocks: [ 'core/site-logo' ],
+        // novablocks/logo carries no logo data of its own (it reflects the
+        // `custom_logo` theme mod), so the inline-editable core/site-logo is a
+        // clean drop-in replacement.
+        transform: () => createBlock( 'core/site-logo' ),
+      },
+    ],
+  },
   save: function() {
     return false
   },

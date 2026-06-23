@@ -22,7 +22,8 @@ class HeaderMobile extends HeaderBase {
     this.createMobileHeader();
 
     const logoRow = this.parent.rows.find( row => {
-      return row.element.querySelector( '.site-logo' );
+      // `.site-logo` = novablocks/logo, `.wp-block-site-logo` = core/site-logo.
+      return row.element.querySelector( '.site-logo, .wp-block-site-logo' );
     } );
 
     this.headerClasses = getColorSetClasses( this.parent.element ).join( ' ' );

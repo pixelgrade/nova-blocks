@@ -9,7 +9,9 @@ import { useEffect } from "@wordpress/element";
 /**
  * Internal dependencies.
  */
-const ALLOWED_BLOCKS = [ 'novablocks/logo', 'novablocks/navigation' ];
+// `core/site-logo` is the inline-editable logo going forward; `novablocks/logo`
+// stays allowed so existing headers (serialized with it) keep working.
+const ALLOWED_BLOCKS = [ 'core/site-logo', 'novablocks/logo', 'novablocks/navigation' ];
 
 const withControlsVisibility = Component => {
 

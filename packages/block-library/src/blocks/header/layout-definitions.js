@@ -21,7 +21,7 @@ const HEADER_LAYOUT_DEFINITIONS = [
         emphasisBottomSpacing: 1,
       },
         [
-          [ 'novablocks/logo' ],
+          [ 'core/site-logo' ],
           [ 'novablocks/navigation', { slug: 'primary' } ],
         ] ],
     ],
@@ -46,7 +46,7 @@ const HEADER_LAYOUT_DEFINITIONS = [
         emphasisBottomSpacing: 1,
       },
         [
-          [ 'novablocks/logo' ],
+          [ 'core/site-logo' ],
           [ 'novablocks/navigation', { slug: 'primary' } ],
           [ 'novablocks/navigation', { slug: 'secondary' } ],
         ] ],
@@ -73,7 +73,7 @@ const HEADER_LAYOUT_DEFINITIONS = [
       },
         [
           [ 'novablocks/navigation', { slug: 'primary' } ],
-          [ 'novablocks/logo' ],
+          [ 'core/site-logo' ],
           [ 'novablocks/navigation', { slug: 'secondary' } ],
         ] ],
     ],
@@ -99,7 +99,7 @@ const HEADER_LAYOUT_DEFINITIONS = [
       },
         [
           [ 'novablocks/navigation', { slug: 'secondary' } ],
-          [ 'novablocks/logo' ],
+          [ 'core/site-logo' ],
           [ 'novablocks/navigation', { slug: 'tertiary' } ],
         ] ],
       [ 'novablocks/header-row', {
@@ -148,7 +148,7 @@ const HEADER_LAYOUT_DEFINITIONS = [
         emphasisBottomSpacing: 1,
       },
         [
-          [ 'novablocks/logo' ],
+          [ 'core/site-logo' ],
         ] ],
       [ 'novablocks/header-row', {
         slug: 'primary',
