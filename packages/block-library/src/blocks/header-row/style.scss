@@ -152,6 +152,14 @@
     max-width: 100%;
     object-fit: contain;
 
+    // Adapt over transparent/dark headers, parity with novablocks/logo's
+    // single-logo case: Anima sets --theme-logo-default-filter on .sm-dark
+    // (grayscale + brightness => white logo); it is unset (none) in light
+    // context. See anima src/scss/components/_logo.scss.
+    filter: var(--theme-logo-default-filter, none);
+    transition: var(--theme-transition);
+    transition-property: filter;
+
     @include below(lap) {
       height: calc(var(--nb-mobile-header-logo-height-setting) * 1px);
     }

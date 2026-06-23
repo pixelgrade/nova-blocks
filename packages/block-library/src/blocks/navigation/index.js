@@ -16,6 +16,7 @@ import iconSvg from './icon.svg';
 import attributes from './attributes';
 import { addSocialMenuClass } from './utils';
 import './badge-filter';
+import './strip-core-panels';
 
 // Localised by PHP (lib/header-nav-projection.php -> novablocks_header_nav_editor_data).
 // `enabled` follows the novablocks/enable_block_nav_editing flag; `entities` maps
