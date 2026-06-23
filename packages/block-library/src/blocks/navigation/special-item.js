@@ -6,7 +6,7 @@
  * project: the Anima visual style and an optional badge.
  */
 import { registerBlockType } from '@wordpress/blocks';
-import { useBlockProps, InspectorControls } from '@wordpress/block-editor';
+import { useBlockProps, InspectorControls, RichText } from '@wordpress/block-editor';
 import { PanelBody, SelectControl, TextControl } from '@wordpress/components';
 import { Fragment } from '@wordpress/element';
 import { __ } from '@wordpress/i18n';
@@ -28,6 +28,12 @@ export const registerNavigationSpecialItem = ( metadata, { defaultLabel, default
         <Fragment>
           <InspectorControls>
             <PanelBody title={ panelTitle }>
+              <TextControl
+                label={ __( 'Label', 'nova-blocks' ) }
+                value={ attributes.label || '' }
+                placeholder={ defaultLabel }
+                onChange={ ( label ) => setAttributes( { label } ) }
+              />
               <SelectControl
                 label={ __( 'Visual style', 'nova-blocks' ) }
                 help={ __( 'How this item appears in the navigation.', 'nova-blocks' ) }
@@ -53,9 +59,15 @@ export const registerNavigationSpecialItem = ( metadata, { defaultLabel, default
                 <span className="nb-navigation-special-item__icon">{ icon }</span>
               ) }
               { showLabel && (
-                <span className="nb-navigation-special-item__label">
-                  { attributes.label || defaultLabel }
-                </span>
+                <RichText
+                  tagName="span"
+                  identifier="label"
+                  className="nb-navigation-special-item__label"
+                  value={ attributes.label || '' }
+                  placeholder={ defaultLabel }
+                  onChange={ ( label ) => setAttributes( { label } ) }
+                  allowedFormats={ [] }
+                />
               ) }
               { badge && (
                 <span className="nb-navigation-special-item__badge">{ badge }</span>
