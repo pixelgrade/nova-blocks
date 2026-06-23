@@ -34,21 +34,26 @@ function novablocks_header_nav_locations(): array {
  * @return array<string,array>
  */
 function novablocks_header_nav_special_items(): array {
+	// URLs, classes, and visual-style defaults mirror Anima's special menu items
+	// (themes/anima/inc/admin/class-admin-nav-menus.php) so wp_nav_menu output is 1:1.
 	return [
 		'novablocks/navigation-search'    => [
-			'title'   => 'Search',
-			'url'     => '#search',
-			'classes' => [ 'menu-item--search' ],
+			'title'        => 'Search',
+			'url'          => '#search',
+			'classes'      => [ 'menu-item--search' ],
+			'visual_style' => 'label_icon',
 		],
 		'novablocks/navigation-cart'      => [
-			'title'   => 'Cart',
-			'url'     => '', // Resolved to the WooCommerce cart permalink at apply time.
-			'classes' => [ 'menu-item--cart' ],
+			'title'        => 'Cart',
+			'url'          => '', // Resolved to the WooCommerce cart permalink at apply time.
+			'classes'      => [ 'menu-item--cart' ],
+			'visual_style' => 'icon',
 		],
 		'novablocks/navigation-dark-mode' => [
-			'title'   => 'Dark Mode',
-			'url'     => '#',
-			'classes' => [ 'menu-item--dark-mode', 'js-sm-dark-mode-toggle' ],
+			'title'        => 'Dark Mode',
+			'url'          => '#color-scheme-switcher',
+			'classes'      => [ 'menu-item--dark-mode', 'js-sm-dark-mode-toggle' ],
+			'visual_style' => 'icon',
 		],
 	];
 }
@@ -71,6 +76,7 @@ function novablocks_header_nav_descriptor_defaults(): array {
 		'attr_title'   => '',
 		'classes'      => [],
 		'badge'        => '',
+		'visual_style' => '',
 		'source_block' => '',
 		'children'     => [],
 	];
@@ -106,6 +112,7 @@ function novablocks_header_nav_block_to_descriptor( array $block ): ?array {
 			'object_id'    => 0,
 			'classes'      => $config['classes'],
 			'badge'        => isset( $attrs['novablocksBadge'] ) ? (string) $attrs['novablocksBadge'] : '',
+			'visual_style' => isset( $attrs['novablocksVisualStyle'] ) && '' !== $attrs['novablocksVisualStyle'] ? (string) $attrs['novablocksVisualStyle'] : $config['visual_style'],
 			'source_block' => $name,
 		] );
 	}
@@ -115,10 +122,13 @@ function novablocks_header_nav_block_to_descriptor( array $block ): ?array {
 		$type_attr = $attrs['type'] ?? '';
 		$object_id = isset( $attrs['id'] ) ? (int) $attrs['id'] : 0;
 
-		if ( 'post-type' === $kind ) {
+		// A post-type/taxonomy reference is only valid with a concrete object id;
+		// otherwise treat it as a plain custom URL item so we never write a
+		// dangling menu item (object_id 0) that the frontend can't resolve.
+		if ( 'post-type' === $kind && $object_id > 0 ) {
 			$menu_type = 'post_type';
 			$object    = '' !== $type_attr ? $type_attr : 'page';
-		} elseif ( 'taxonomy' === $kind ) {
+		} elseif ( 'taxonomy' === $kind && $object_id > 0 ) {
 			$menu_type = 'taxonomy';
 			$object    = '' !== $type_attr ? $type_attr : 'category';
 		} else {
@@ -138,6 +148,7 @@ function novablocks_header_nav_block_to_descriptor( array $block ): ?array {
 			'description'  => $attrs['description'] ?? '',
 			'attr_title'   => $attrs['title'] ?? '',
 			'badge'        => isset( $attrs['novablocksBadge'] ) ? (string) $attrs['novablocksBadge'] : '',
+			'visual_style' => isset( $attrs['novablocksVisualStyle'] ) ? (string) $attrs['novablocksVisualStyle'] : '',
 			'source_block' => $name,
 		] );
 
@@ -214,18 +225,22 @@ function novablocks_header_nav_flatten_descriptors( array $descriptors ): array 
  * ---------------------------------------------------------------------- */
 
 /**
- * Marker class => special block name, for recognising Anima special items.
+ * Recognise an Anima special item from its CSS classes. Requires EVERY class a
+ * special item defines to be present, so a normal link that merely reuses one
+ * marker class (e.g. a hand-authored `menu-item--dark-mode`) is not
+ * misclassified and stripped of its URL.
  *
- * @return array<string,string>
+ * @param array $classes Item CSS classes.
+ * @return string Block name, or '' if not a special item.
  */
-function novablocks_header_nav_marker_blocks(): array {
-	$markers = [];
-
+function novablocks_header_nav_match_special( array $classes ): string {
 	foreach ( novablocks_header_nav_special_items() as $block_name => $config ) {
-		$markers[ $config['classes'][0] ] = $block_name;
+		if ( ! array_diff( $config['classes'], $classes ) ) {
+			return $block_name;
+		}
 	}
 
-	return $markers;
+	return '';
 }
 
 /**
@@ -240,29 +255,32 @@ function novablocks_header_nav_marker_blocks(): array {
  * @return array
  */
 function novablocks_header_nav_item_to_block( array $item, array $children = [] ): array {
-	$classes = $item['classes'] ?? [];
-	$badge   = (string) ( $item['badge'] ?? '' );
+	$classes      = $item['classes'] ?? [];
+	$badge        = (string) ( $item['badge'] ?? '' );
+	$visual_style = (string) ( $item['visual_style'] ?? '' );
 
 	// Special item?
-	foreach ( novablocks_header_nav_marker_blocks() as $marker => $block_name ) {
-		if ( in_array( $marker, $classes, true ) ) {
-			$config = novablocks_header_nav_special_items()[ $block_name ];
-			$attrs  = [];
+	$special = novablocks_header_nav_match_special( $classes );
+	if ( '' !== $special ) {
+		$config = novablocks_header_nav_special_items()[ $special ];
+		$attrs  = [];
 
-			if ( ( $item['title'] ?? '' ) !== $config['title'] && '' !== ( $item['title'] ?? '' ) ) {
-				$attrs['label'] = $item['title'];
-			}
-			if ( '' !== $badge ) {
-				$attrs['novablocksBadge'] = $badge;
-			}
-
-			return [
-				'blockName'   => $block_name,
-				'attrs'       => $attrs,
-				'innerBlocks' => [],
-				'innerHTML'   => '',
-			];
+		if ( ( $item['title'] ?? '' ) !== $config['title'] && '' !== ( $item['title'] ?? '' ) ) {
+			$attrs['label'] = $item['title'];
 		}
+		if ( '' !== $badge ) {
+			$attrs['novablocksBadge'] = $badge;
+		}
+		if ( '' !== $visual_style && $visual_style !== $config['visual_style'] ) {
+			$attrs['novablocksVisualStyle'] = $visual_style;
+		}
+
+		return [
+			'blockName'   => $special,
+			'attrs'       => $attrs,
+			'innerBlocks' => [],
+			'innerHTML'   => '',
+		];
 	}
 
 	$block_name = ! empty( $children ) ? 'core/navigation-submenu' : 'core/navigation-link';
@@ -298,6 +316,9 @@ function novablocks_header_nav_item_to_block( array $item, array $children = [] 
 	}
 	if ( '' !== $badge ) {
 		$attrs['novablocksBadge'] = $badge;
+	}
+	if ( '' !== $visual_style ) {
+		$attrs['novablocksVisualStyle'] = $visual_style;
 	}
 
 	return [
@@ -437,17 +458,31 @@ function novablocks_header_nav_project_entity_to_menu( int $entity_id, string $l
  * @return bool True on success.
  */
 function novablocks_header_nav_apply_rows_to_menu( array $rows, string $location ): bool {
+	// Guard against wiping the menu on an empty (likely failed-parse) entity.
+	// A deliberate "clear everything" is rare and can be added later behind an
+	// explicit flag; silently deleting every item is the worse failure mode.
+	if ( empty( $rows ) ) {
+		return true;
+	}
+
 	$menu = novablocks_header_nav_get_or_create_generated_menu( $location );
 
 	if ( ! $menu instanceof WP_Term ) {
 		return false;
 	}
 
-	$menu_id      = $menu->term_id;
-	$existing     = wp_get_nav_menu_items( $menu_id ) ?: [];
+	$menu_id = $menu->term_id;
+
+	// wp_get_nav_menu_items() is documented to order by menu_order, but re-sort
+	// defensively so position-based id reuse never matches the wrong item.
+	$existing = wp_get_nav_menu_items( $menu_id ) ?: [];
+	usort( $existing, static function ( $a, $b ) {
+		return ( (int) $a->menu_order ) <=> ( (int) $b->menu_order );
+	} );
 	$existing_ids = wp_list_pluck( $existing, 'db_id' );
 
 	$created_ids = []; // 1-based row index => created db id.
+	$had_error   = false;
 
 	foreach ( $rows as $position => $row ) {
 		$reuse_id = isset( $existing_ids[ $position ] ) ? (int) $existing_ids[ $position ] : 0;
@@ -477,13 +512,22 @@ function novablocks_header_nav_apply_rows_to_menu( array $rows, string $location
 			'menu-item-position'    => $row['index'],
 		] );
 
-		if ( is_wp_error( $item_id ) ) {
-			continue;
+		// On failure, stop and DON'T delete the surplus: a half-written menu is
+		// recoverable on the next save, but orphaning children (whose parent id
+		// would resolve to 0) or deleting still-needed items is not.
+		if ( is_wp_error( $item_id ) || ! $item_id ) {
+			$had_error = true;
+			break;
 		}
 
 		$created_ids[ $row['index'] ] = (int) $item_id;
 
 		update_post_meta( $item_id, '_menu_item_badge', $row['badge'] );
+		update_post_meta( $item_id, '_menu_item_visual_style', $row['visual_style'] );
+	}
+
+	if ( $had_error ) {
+		return false;
 	}
 
 	// Remove surplus items left over from a previous, longer projection.
@@ -562,6 +606,7 @@ function novablocks_header_nav_normalize_menu_item( $item ): array {
 		'attr_title'  => (string) $item->attr_title,
 		'classes'     => array_values( array_filter( (array) $item->classes ) ),
 		'badge'       => (string) get_post_meta( $item->ID, '_menu_item_badge', true ),
+		'visual_style' => (string) get_post_meta( $item->ID, '_menu_item_visual_style', true ),
 	];
 }
 
@@ -678,6 +723,12 @@ function novablocks_header_nav_maybe_seed(): void {
  * @param int $post_id wp_navigation post id.
  */
 function novablocks_header_nav_on_entity_save( int $post_id ): void {
+	// Re-check the flag here too: it may have been toggled off after the hook
+	// was registered on init, and we must not mutate menus when disabled.
+	if ( ! novablocks_header_nav_block_editing_enabled() ) {
+		return;
+	}
+
 	if ( wp_is_post_revision( $post_id ) || wp_is_post_autosave( $post_id ) ) {
 		return;
 	}

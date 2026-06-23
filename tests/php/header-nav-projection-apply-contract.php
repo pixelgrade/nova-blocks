@@ -70,6 +70,10 @@ function wp_get_nav_menu_items( $menu_id ) {
 	return $GLOBALS['store']['menu_items'][ $menu_id ] ?? [];
 }
 function wp_update_nav_menu_item( $menu_id, $item_id, $args ) {
+	// Test hook: fail for a specific title to exercise the error path.
+	if ( isset( $GLOBALS['store']['fail_on_title'] ) && ( $args['menu-item-title'] ?? '' ) === $GLOBALS['store']['fail_on_title'] ) {
+		return new WP_Error();
+	}
 	if ( ! $item_id ) {
 		$item_id = ++$GLOBALS['store']['next_item_id'];
 		$GLOBALS['store']['item_order'][] = $item_id;
@@ -180,6 +184,59 @@ nb_assert_same( $menu_id, $GLOBALS['store']['locations']['primary'] ?? null, 'ge
 $ok2 = novablocks_header_nav_apply_rows_to_menu( $rows, 'primary' );
 nb_assert( $ok2, 'second apply returns true' );
 nb_assert_same( 1, count( $GLOBALS['store']['nav_menus'] ), 'second apply reuses the generated menu (no duplicate)' );
+
+// visual_style meta written (Anima fidelity): search default is label_icon.
+nb_assert_same( 'label_icon', $GLOBALS['store']['post_meta'][ $search['id'] ]['_menu_item_visual_style'] ?? null, 'search visual_style meta written' );
+
+/* ----- isolated edge scenarios ------------------------------------------- */
+
+function nb_reset_store(): void {
+	$GLOBALS['store'] = [
+		'nav_menus' => [], 'term_meta' => [], 'menu_items' => [], 'item_args' => [],
+		'item_order' => [], 'post_meta' => [], 'deleted' => [], 'locations' => [],
+		'next_term_id' => 100, 'next_item_id' => 1000,
+	];
+}
+
+// A failed write aborts WITHOUT deleting surplus (no corruption / no orphans).
+nb_reset_store();
+$GLOBALS['store']['nav_menus'][] = new WP_Term( 200, 'gen' );
+$GLOBALS['store']['term_meta'][200]['_novablocks_generated_for'] = 'primary';
+$GLOBALS['store']['menu_items'][200] = [
+	(object) [ 'db_id' => 9001, 'menu_order' => 1 ],
+	(object) [ 'db_id' => 9002, 'menu_order' => 2 ],
+	(object) [ 'db_id' => 9003, 'menu_order' => 3 ],
+];
+$GLOBALS['store']['fail_on_title'] = 'Home';
+$rows_err = novablocks_header_nav_flatten_descriptors( novablocks_header_nav_blocks_to_descriptors( [
+	nb_block( 'core/navigation-link', [ 'label' => 'Top', 'url' => '/', 'kind' => 'custom' ] ),
+	nb_block( 'core/navigation-link', [ 'label' => 'Home', 'url' => '/home', 'kind' => 'custom' ] ),
+] ) );
+nb_assert_same( false, novablocks_header_nav_apply_rows_to_menu( $rows_err, 'primary' ), 'apply returns false when a write fails' );
+nb_assert_same( 0, count( $GLOBALS['store']['deleted'] ), 'no surplus deletion after a failed write' );
+
+// An empty entity is a safe no-op, never a full wipe.
+nb_reset_store();
+$GLOBALS['store']['nav_menus'][] = new WP_Term( 300, 'gen' );
+$GLOBALS['store']['term_meta'][300]['_novablocks_generated_for'] = 'primary';
+$GLOBALS['store']['menu_items'][300] = [ (object) [ 'db_id' => 7001, 'menu_order' => 1 ] ];
+nb_assert_same( true, novablocks_header_nav_apply_rows_to_menu( [], 'primary' ), 'empty rows is a safe no-op' );
+nb_assert_same( 0, count( $GLOBALS['store']['deleted'] ), 'empty rows never deletes existing items' );
+
+// Surplus items from a previous, longer projection are removed.
+nb_reset_store();
+$GLOBALS['store']['nav_menus'][] = new WP_Term( 400, 'gen' );
+$GLOBALS['store']['term_meta'][400]['_novablocks_generated_for'] = 'primary';
+$GLOBALS['store']['menu_items'][400] = [
+	(object) [ 'db_id' => 6001, 'menu_order' => 1 ],
+	(object) [ 'db_id' => 6002, 'menu_order' => 2 ],
+	(object) [ 'db_id' => 6003, 'menu_order' => 3 ],
+];
+$rows_short = novablocks_header_nav_flatten_descriptors( novablocks_header_nav_blocks_to_descriptors( [
+	nb_block( 'core/navigation-link', [ 'label' => 'Only', 'url' => '/', 'kind' => 'custom' ] ),
+] ) );
+novablocks_header_nav_apply_rows_to_menu( $rows_short, 'primary' );
+nb_assert_same( [ 6002, 6003 ], $GLOBALS['store']['deleted'], 'surplus items deleted, first item reused' );
 
 if ( $failures > 0 ) {
 	fwrite( STDERR, "\nheader nav projection apply contract: {$failures} failure(s)\n" );

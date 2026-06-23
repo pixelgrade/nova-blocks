@@ -142,6 +142,42 @@ foreach ( $rows as $row ) {
 nb_assert( null !== $team_row, 'team row present after flatten' );
 nb_assert_same( $about_row['index'], $team_row['parent_index'], 'team parent_index points to the About row index' );
 
+/* ----- edge cases (regression guards from the adversarial review) -------- */
+
+// #5: a post-type link with no concrete object id must NOT become a dangling
+// menu item (object_id 0); it falls back to a plain custom URL item.
+$dangling = novablocks_header_nav_block_to_descriptor(
+	nb_block( 'core/navigation-link', [ 'label' => 'Loose', 'url' => '/loose', 'kind' => 'post-type', 'type' => 'page' ] )
+);
+nb_assert_same( 'custom', $dangling['type'], 'post-type link without id falls back to custom' );
+nb_assert_same( 'custom', $dangling['object'], 'post-type link without id has custom object' );
+nb_assert_same( 0, $dangling['object_id'], 'post-type link without id has object_id 0 as custom' );
+
+// #4 fidelity: special items carry their Anima visual-style default.
+$search_desc = novablocks_header_nav_block_to_descriptor( nb_block( 'novablocks/navigation-search' ) );
+nb_assert_same( 'label_icon', $search_desc['visual_style'], 'search default visual style' );
+$dark_desc = novablocks_header_nav_block_to_descriptor( nb_block( 'novablocks/navigation-dark-mode' ) );
+nb_assert_same( 'icon', $dark_desc['visual_style'], 'dark-mode default visual style' );
+nb_assert_same( '#color-scheme-switcher', $dark_desc['url'], 'dark-mode canonical url' );
+
+// #7: a normal link that merely reuses ONE marker class is not misclassified.
+$not_special = novablocks_header_nav_item_to_block( [
+	'title'   => 'My Dark Page',
+	'url'     => '/dark',
+	'type'    => 'custom',
+	'classes' => [ 'menu-item--dark-mode' ], // missing js-sm-dark-mode-toggle
+] );
+nb_assert_same( 'core/navigation-link', $not_special['blockName'], 'partial marker class stays a normal link' );
+
+// A real special item (all classes present) IS recognised.
+$real_dark = novablocks_header_nav_item_to_block( [
+	'title'   => 'Dark Mode',
+	'url'     => '#color-scheme-switcher',
+	'type'    => 'custom',
+	'classes' => [ 'menu-item--dark-mode', 'js-sm-dark-mode-toggle' ],
+] );
+nb_assert_same( 'novablocks/navigation-dark-mode', $real_dark['blockName'], 'full marker classes recognised as special' );
+
 if ( $failures > 0 ) {
 	fwrite( STDERR, "\nheader nav projection contract: {$failures} failure(s)\n" );
 	exit( 1 );

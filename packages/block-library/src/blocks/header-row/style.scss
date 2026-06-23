@@ -142,6 +142,8 @@
 .nb-header-row .wp-block-site-logo {
   display: flex;
   align-items: center;
+  justify-content: var(--justify-content, center);
+  flex-shrink: 0;
 
   img {
     display: block;

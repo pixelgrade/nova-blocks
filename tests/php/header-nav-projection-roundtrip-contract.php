@@ -47,6 +47,7 @@ function nb_rows_to_items( array $rows ): array {
 			'attr_title'  => $row['attr_title'],
 			'classes'     => $row['classes'],
 			'badge'       => $row['badge'],
+			'visual_style' => $row['visual_style'],
 		];
 	}
 

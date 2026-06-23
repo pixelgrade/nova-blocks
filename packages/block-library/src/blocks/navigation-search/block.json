@@ -11,7 +11,8 @@
 	"icon": "search",
 	"attributes": {
 		"label": { "type": "string" },
-		"novablocksBadge": { "type": "string" }
+		"novablocksBadge": { "type": "string" },
+		"novablocksVisualStyle": { "type": "string" }
 	},
 	"supports": {
 		"html": false,

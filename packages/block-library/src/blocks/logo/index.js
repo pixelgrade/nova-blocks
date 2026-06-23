@@ -23,8 +23,8 @@ registerBlockType( 'novablocks/logo', {
         blocks: [ 'core/site-logo' ],
         // novablocks/logo carries no logo data of its own (it reflects the
         // `custom_logo` theme mod), so the inline-editable core/site-logo is a
-        // clean drop-in replacement.
-        transform: () => createBlock( 'core/site-logo' ),
+        // clean drop-in replacement. Preserve any custom className.
+        transform: ( { className } ) => createBlock( 'core/site-logo', className ? { className } : {} ),
       },
     ],
   },
