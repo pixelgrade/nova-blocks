@@ -3,11 +3,28 @@
 }
 
 .nb-navigation {
-  
+
   .menu-item {
-    
+
     a {
       pointer-events: none !important;
     }
   }
 }
+
+// Inline core/navigation editing preview: read closer to the wp_nav_menu
+// frontend this block actually renders (frontend uses classic markup, so it is
+// unaffected by these rules).
+.nb-navigation {
+
+  .wp-block-navigation {
+    gap: var(--nb-navigation-item-spacing, 1.5em);
+  }
+
+  .wp-block-navigation-item__content,
+  .wp-block-navigation-item__content:hover,
+  .wp-block-navigation-item__content:focus {
+    text-decoration: none;
+  }
+}
+

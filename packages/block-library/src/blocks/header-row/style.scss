@@ -83,7 +83,8 @@
     }
     
     > [class*='branding'],
-    > .wp-block-site-logo {
+    > .wp-block-site-logo,
+    > .c-logo--site-logo {
 
       &[class][class][class] {
         flex-basis: auto;
@@ -118,7 +119,8 @@
       }
 
       > :first-child[class*='branding']:not(:last-child),
-      > :first-child.wp-block-site-logo:not(:last-child) {
+      > :first-child.wp-block-site-logo:not(:last-child),
+      > :first-child.c-logo--site-logo:not(:last-child) {
 
         &[class][class][class] {
           flex: 1 1 0;

@@ -28,7 +28,8 @@
 		"prezip": "npm run build",
 		"zip": "gulp zip",
 		"preinstall": "cd ./node-tasks/ && npm install && node ./lock_node_version.js",
-		"postinstall": "node ./bin/packages/install.js && node ./bin/patch-node22-compat.js"
+		"postinstall": "node ./bin/packages/install.js && node ./bin/patch-node22-compat.js",
+		"test": "bash ./bin/run-tests.sh"
 	},
 	"dependencies": {
 		"@novablocks/block-editor": "file:packages/block-editor",

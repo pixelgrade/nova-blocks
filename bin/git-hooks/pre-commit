@@ -1,0 +1,6 @@
+#!/usr/bin/env bash
+#
+# Nova Blocks pre-commit hook — runs the fast test suite before each commit.
+# Install with: bin/install-git-hooks.sh   (skip once with: git commit --no-verify)
+#
+exec "$( git rev-parse --show-toplevel )/bin/run-tests.sh"
