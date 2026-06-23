@@ -209,6 +209,141 @@ function novablocks_header_nav_flatten_descriptors( array $descriptors ): array 
 }
 
 /* -------------------------------------------------------------------------
+ * Reverse mapping (seeding): classic menu items -> core/navigation block tree.
+ * Pure; used one-time to seed the editing entity from an existing menu.
+ * ---------------------------------------------------------------------- */
+
+/**
+ * Marker class => special block name, for recognising Anima special items.
+ *
+ * @return array<string,string>
+ */
+function novablocks_header_nav_marker_blocks(): array {
+	$markers = [];
+
+	foreach ( novablocks_header_nav_special_items() as $block_name => $config ) {
+		$markers[ $config['classes'][0] ] = $block_name;
+	}
+
+	return $markers;
+}
+
+/**
+ * Convert one normalised classic menu item (+ its already-built child blocks)
+ * into a parse_blocks-shaped block array.
+ *
+ * Normalised item keys: title, url, type, object, object_id, target, xfn,
+ * description, attr_title, classes (array), badge.
+ *
+ * @param array $item     Normalised menu item.
+ * @param array $children Child block arrays.
+ * @return array
+ */
+function novablocks_header_nav_item_to_block( array $item, array $children = [] ): array {
+	$classes = $item['classes'] ?? [];
+	$badge   = (string) ( $item['badge'] ?? '' );
+
+	// Special item?
+	foreach ( novablocks_header_nav_marker_blocks() as $marker => $block_name ) {
+		if ( in_array( $marker, $classes, true ) ) {
+			$config = novablocks_header_nav_special_items()[ $block_name ];
+			$attrs  = [];
+
+			if ( ( $item['title'] ?? '' ) !== $config['title'] && '' !== ( $item['title'] ?? '' ) ) {
+				$attrs['label'] = $item['title'];
+			}
+			if ( '' !== $badge ) {
+				$attrs['novablocksBadge'] = $badge;
+			}
+
+			return [
+				'blockName'   => $block_name,
+				'attrs'       => $attrs,
+				'innerBlocks' => [],
+				'innerHTML'   => '',
+			];
+		}
+	}
+
+	$block_name = ! empty( $children ) ? 'core/navigation-submenu' : 'core/navigation-link';
+	$attrs      = [
+		'label' => $item['title'] ?? '',
+		'url'   => $item['url'] ?? '',
+	];
+
+	$type = $item['type'] ?? 'custom';
+	if ( 'post_type' === $type ) {
+		$attrs['kind'] = 'post-type';
+		$attrs['type'] = $item['object'] ?? 'page';
+		$attrs['id']   = (int) ( $item['object_id'] ?? 0 );
+	} elseif ( 'taxonomy' === $type ) {
+		$attrs['kind'] = 'taxonomy';
+		$attrs['type'] = $item['object'] ?? 'category';
+		$attrs['id']   = (int) ( $item['object_id'] ?? 0 );
+	} else {
+		$attrs['kind'] = 'custom';
+	}
+
+	if ( '_blank' === ( $item['target'] ?? '' ) ) {
+		$attrs['opensInNewTab'] = true;
+	}
+	if ( '' !== ( $item['xfn'] ?? '' ) ) {
+		$attrs['rel'] = $item['xfn'];
+	}
+	if ( '' !== ( $item['description'] ?? '' ) ) {
+		$attrs['description'] = $item['description'];
+	}
+	if ( '' !== ( $item['attr_title'] ?? '' ) ) {
+		$attrs['title'] = $item['attr_title'];
+	}
+	if ( '' !== $badge ) {
+		$attrs['novablocksBadge'] = $badge;
+	}
+
+	return [
+		'blockName'   => $block_name,
+		'attrs'       => $attrs,
+		'innerBlocks' => $children,
+		'innerHTML'   => '',
+	];
+}
+
+/**
+ * Convert a flat set of normalised classic menu items into a nested
+ * core/navigation block tree (parse_blocks shape). Each item needs `id`,
+ * `parent` (0 = top-level) and `order`.
+ *
+ * @param array $items Normalised items.
+ * @return array
+ */
+function novablocks_header_nav_menu_items_to_blocks( array $items ): array {
+	$by_parent = [];
+
+	foreach ( $items as $item ) {
+		$parent                 = (int) ( $item['parent'] ?? 0 );
+		$by_parent[ $parent ][] = $item;
+	}
+
+	$build = function ( int $parent_id ) use ( &$build, $by_parent ) {
+		$blocks   = [];
+		$children = $by_parent[ $parent_id ] ?? [];
+
+		usort( $children, static function ( $a, $b ) {
+			return ( $a['order'] ?? 0 ) <=> ( $b['order'] ?? 0 );
+		} );
+
+		foreach ( $children as $item ) {
+			$child_blocks = $build( (int) $item['id'] );
+			$blocks[]     = novablocks_header_nav_item_to_block( $item, $child_blocks );
+		}
+
+		return $blocks;
+	};
+
+	return $build( 0 );
+}
+
+/* -------------------------------------------------------------------------
  * WordPress-runtime apply / sync (only executed via hooks, never at include).
  * ---------------------------------------------------------------------- */
 
@@ -393,6 +528,151 @@ function novablocks_header_nav_entity_location( int $entity_id ): string {
 }
 
 /**
+ * Persist the location => entity id map.
+ *
+ * @param string $location  Theme location slug.
+ * @param int    $entity_id wp_navigation post id.
+ */
+function novablocks_header_nav_set_entity_for_location( string $location, int $entity_id ): void {
+	$map              = novablocks_header_nav_entity_map();
+	$map[ $location ] = $entity_id;
+	update_option( 'novablocks_header_nav_entities', $map );
+}
+
+/**
+ * Normalise a WordPress nav_menu_item object into the shape the reverse mapper
+ * expects (including the Anima badge meta).
+ *
+ * @param WP_Post|object $item WordPress menu item.
+ * @return array
+ */
+function novablocks_header_nav_normalize_menu_item( $item ): array {
+	return [
+		'id'          => (int) $item->ID,
+		'parent'      => (int) $item->menu_item_parent,
+		'order'       => (int) $item->menu_order,
+		'title'       => (string) $item->title,
+		'url'         => (string) $item->url,
+		'type'        => (string) $item->type, // 'post_type' | 'taxonomy' | 'custom'
+		'object'      => (string) $item->object,
+		'object_id'   => (int) $item->object_id,
+		'target'      => (string) $item->target,
+		'xfn'         => (string) $item->xfn,
+		'description' => (string) $item->description,
+		'attr_title'  => (string) $item->attr_title,
+		'classes'     => array_values( array_filter( (array) $item->classes ) ),
+		'badge'       => (string) get_post_meta( $item->ID, '_menu_item_badge', true ),
+	];
+}
+
+/**
+ * Create a wp_navigation editing entity for a location from a block tree.
+ *
+ * @param string $location Theme location slug.
+ * @param array  $blocks   parse_blocks-shaped block tree.
+ * @return int Entity post id (0 on failure).
+ */
+function novablocks_header_nav_create_entity( string $location, array $blocks ): int {
+	/* translators: %s: header location name. */
+	$title = sprintf( __( 'Header: %s', '__plugin_txtd' ), ucfirst( $location ) );
+
+	$entity_id = wp_insert_post( [
+		'post_type'    => 'wp_navigation',
+		'post_status'  => 'publish',
+		'post_title'   => $title,
+		'post_content' => serialize_blocks( $blocks ),
+	] );
+
+	if ( is_wp_error( $entity_id ) || ! $entity_id ) {
+		return 0;
+	}
+
+	novablocks_header_nav_set_entity_for_location( $location, (int) $entity_id );
+
+	return (int) $entity_id;
+}
+
+/**
+ * Get (or create an empty) editing entity for a location. Used by the inline
+ * editor to resolve a slug to a `ref`.
+ *
+ * @param string $location Theme location slug.
+ * @return int Entity post id.
+ */
+function novablocks_header_nav_get_or_create_entity_for_location( string $location ): int {
+	$map = novablocks_header_nav_entity_map();
+
+	if ( ! empty( $map[ $location ] ) && get_post( $map[ $location ] ) instanceof WP_Post ) {
+		return (int) $map[ $location ];
+	}
+
+	return novablocks_header_nav_create_entity( $location, [] );
+}
+
+/**
+ * Seed a location's editing entity from its currently-assigned classic menu,
+ * then project it. Non-destructive: the original menu is left intact; the
+ * location is reassigned to a fresh Nova-owned generated menu by the projection.
+ *
+ * @param string $location Theme location slug.
+ * @return bool True if a new entity was seeded.
+ */
+function novablocks_header_nav_seed_location( string $location ): bool {
+	$map = novablocks_header_nav_entity_map();
+
+	// Already seeded.
+	if ( ! empty( $map[ $location ] ) && get_post( $map[ $location ] ) instanceof WP_Post ) {
+		return false;
+	}
+
+	$locations = get_nav_menu_locations();
+	$menu_id   = isset( $locations[ $location ] ) ? (int) $locations[ $location ] : 0;
+
+	if ( $menu_id <= 0 ) {
+		return false;
+	}
+
+	$raw_items = wp_get_nav_menu_items( $menu_id );
+
+	if ( empty( $raw_items ) ) {
+		return false;
+	}
+
+	$items  = array_map( 'novablocks_header_nav_normalize_menu_item', $raw_items );
+	$blocks = novablocks_header_nav_menu_items_to_blocks( $items );
+
+	$entity_id = novablocks_header_nav_create_entity( $location, $blocks );
+
+	if ( ! $entity_id ) {
+		return false;
+	}
+
+	novablocks_header_nav_project_entity_to_menu( $entity_id, $location );
+
+	return true;
+}
+
+/**
+ * One-time migration: seed all predefined locations from their existing menus.
+ * Guarded by an option so it only runs once per site.
+ */
+function novablocks_header_nav_maybe_seed(): void {
+	if ( ! novablocks_header_nav_block_editing_enabled() ) {
+		return;
+	}
+
+	if ( get_option( 'novablocks_header_nav_seeded' ) ) {
+		return;
+	}
+
+	foreach ( novablocks_header_nav_locations() as $location ) {
+		novablocks_header_nav_seed_location( $location );
+	}
+
+	update_option( 'novablocks_header_nav_seeded', 1 );
+}
+
+/**
  * Save hook: re-project an entity when it is saved.
  *
  * @param int $post_id wp_navigation post id.
@@ -418,4 +698,7 @@ function novablocks_header_nav_register_projection(): void {
 	}
 
 	add_action( 'save_post_wp_navigation', 'novablocks_header_nav_on_entity_save', 20, 1 );
+
+	// One-time, admin-side adoption of existing menus into editing entities.
+	add_action( 'admin_init', 'novablocks_header_nav_maybe_seed' );
 }

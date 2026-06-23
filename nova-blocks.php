@@ -81,5 +81,10 @@ require_once dirname( __FILE__ ) . '/lib/block-rendering.php';
 require_once dirname( __FILE__ ) . '/lib/post-format-card-blueprints.php';
 require_once dirname( __FILE__ ) . '/lib/client-assets.php';
 require_once dirname( __FILE__ ) . '/lib/deprecated.php';
+require_once dirname( __FILE__ ) . '/lib/header-nav-projection.php';
+
+// Register header navigation projection hooks (no-op unless the
+// `novablocks/enable_block_nav_editing` feature flag is enabled).
+add_action( 'init', 'novablocks_header_nav_register_projection', 20 );
 
 require_once dirname( __FILE__ ) . '/packages/core/src/blocks/init.php';
