@@ -1,0 +1,20 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/block.json",
+	"apiVersion": 3,
+	"name": "novablocks/navigation-cart",
+	"title": "Cart Item",
+	"category": "nova-blocks",
+	"parent": [ "core/navigation", "core/navigation-submenu" ],
+	"description": "A cart link item for the header navigation. Projects to the classic menu cart item so the frontend renders 1:1.",
+	"keywords": [ "menu", "navigation", "cart", "woocommerce" ],
+	"textdomain": "nova-blocks",
+	"icon": "cart",
+	"attributes": {
+		"label": { "type": "string" },
+		"novablocksBadge": { "type": "string" }
+	},
+	"supports": {
+		"html": false,
+		"reusable": false
+	}
+}

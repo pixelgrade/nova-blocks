@@ -1,0 +1,20 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/block.json",
+	"apiVersion": 3,
+	"name": "novablocks/navigation-search",
+	"title": "Search Item",
+	"category": "nova-blocks",
+	"parent": [ "core/navigation", "core/navigation-submenu" ],
+	"description": "A search trigger item for the header navigation. Projects to the classic menu search item so the frontend renders 1:1.",
+	"keywords": [ "menu", "navigation", "search" ],
+	"textdomain": "nova-blocks",
+	"icon": "search",
+	"attributes": {
+		"label": { "type": "string" },
+		"novablocksBadge": { "type": "string" }
+	},
+	"supports": {
+		"html": false,
+		"reusable": false
+	}
+}
