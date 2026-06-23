@@ -174,7 +174,9 @@ nb_assert_same( 'menu-item--search', $search['args']['menu-item-classes'], 'sear
 nb_assert_same( '#search', $search['args']['menu-item-url'], 'search url' );
 
 $cart = nb_args_by_title( 'Cart' );
-nb_assert_same( 'menu-item--cart', $cart['args']['menu-item-classes'], 'cart keeps its CSS class' );
+// Cart defaults to visual_style 'icon', so it also gains Anima's icon-only class.
+nb_assert_same( 'menu-item--cart icon-only', $cart['args']['menu-item-classes'], 'cart (icon visual style) gets icon-only' );
+nb_assert_same( 'menu-item--search', $search['args']['menu-item-classes'], 'search (label+icon) gets no visual-style class' );
 
 // Location assignment.
 nb_assert_same( $menu_id, $GLOBALS['store']['locations']['primary'] ?? null, 'generated menu assigned to the location' );

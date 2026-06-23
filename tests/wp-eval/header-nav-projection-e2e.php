@@ -97,6 +97,7 @@ try {
 		'menu-item-status'  => 'publish',
 		'menu-item-classes' => 'menu-item--search',
 	] );
+	update_post_meta( $searchitem, '_menu_item_visual_style', 'icon' );
 
 	/* 2. Assign to a scratch location and run seeding (classic -> entity). */
 	$locs              = get_nav_menu_locations();
@@ -141,6 +142,7 @@ try {
 	nbe_assert( false !== strpos( $html, 'sub-menu' ), 'rendered menu has a sub-menu list' );
 	nbe_assert( false !== strpos( $html, 'E2E Child' ), 'rendered menu includes the submenu child' );
 	nbe_assert( false !== strpos( $html, 'menu-item--search' ), 'rendered menu keeps the search special-item class' );
+	nbe_assert( false !== strpos( $html, 'icon-only' ), 'icon visual-style projects Anima\'s icon-only class (hides the label)' );
 	nbe_assert( false !== strpos( $html, 'New' ), 'rendered menu includes the badge text' );
 
 	/* 4. Edit the entity (append a link) and re-project. */

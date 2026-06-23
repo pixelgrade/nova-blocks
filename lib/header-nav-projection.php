@@ -510,6 +510,18 @@ function novablocks_header_nav_apply_rows_to_menu( array $rows, string $location
 			? $created_ids[ $row['parent_index'] ]
 			: 0;
 
+		// Derive Anima's visual-style class from the item's visual_style, the
+		// same way the theme does for its native special items
+		// (Anima_Admin_Nav_Menus::setup_nav_menu_item): icon-only hides the
+		// label (text-indent), no-icon hides the icon. Anima only adds these to
+		// its own `custom-pxg` items, so we add them here for the projected ones.
+		$classes = $row['classes'];
+		if ( 'icon' === $row['visual_style'] ) {
+			$classes[] = 'icon-only';
+		} elseif ( 'label' === $row['visual_style'] ) {
+			$classes[] = 'no-icon';
+		}
+
 		$item_id = wp_update_nav_menu_item( $menu_id, $reuse_id, [
 			'menu-item-title'       => $row['title'],
 			'menu-item-url'         => $url,
@@ -522,7 +534,7 @@ function novablocks_header_nav_apply_rows_to_menu( array $rows, string $location
 			'menu-item-xfn'         => $row['xfn'],
 			'menu-item-description'  => $row['description'],
 			'menu-item-attr-title'  => $row['attr_title'],
-			'menu-item-classes'     => implode( ' ', $row['classes'] ),
+			'menu-item-classes'     => implode( ' ', $classes ),
 			'menu-item-position'    => $row['index'],
 		] );
 
