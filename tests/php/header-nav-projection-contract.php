@@ -153,6 +153,22 @@ nb_assert_same( 'custom', $dangling['type'], 'post-type link without id falls ba
 nb_assert_same( 'custom', $dangling['object'], 'post-type link without id has custom object' );
 nb_assert_same( 0, $dangling['object_id'], 'post-type link without id has object_id 0 as custom' );
 
+// post_type_archive fidelity (e.g. WooCommerce "All Products" -> shop archive):
+// preserved as a real archive both ways, so wp_nav_menu keeps the type class +
+// regenerates the URL (no degraded custom item).
+$arch_desc = novablocks_header_nav_block_to_descriptor(
+	nb_block( 'core/navigation-link', [ 'label' => 'All Products', 'url' => '/shop', 'kind' => 'post-type-archive', 'type' => 'product' ] )
+);
+nb_assert_same( 'post_type_archive', $arch_desc['type'], 'archive descriptor type' );
+nb_assert_same( 'product', $arch_desc['object'], 'archive descriptor object is the post type' );
+nb_assert_same( 0, $arch_desc['object_id'], 'archive descriptor has no object id' );
+
+$arch_block = novablocks_header_nav_item_to_block(
+	[ 'title' => 'All Products', 'url' => '/shop', 'type' => 'post_type_archive', 'object' => 'product' ]
+);
+nb_assert_same( 'post-type-archive', $arch_block['attrs']['kind'], 'archive item rebuilds as post-type-archive' );
+nb_assert_same( 'product', $arch_block['attrs']['type'], 'archive item keeps its post type' );
+
 // #4 fidelity: special items carry their Anima visual-style default.
 $search_desc = novablocks_header_nav_block_to_descriptor( nb_block( 'novablocks/navigation-search' ) );
 nb_assert_same( 'label_icon', $search_desc['visual_style'], 'search default visual style' );
@@ -168,6 +184,20 @@ $not_special = novablocks_header_nav_item_to_block( [
 	'classes' => [ 'menu-item--dark-mode' ], // missing js-sm-dark-mode-toggle
 ] );
 nb_assert_same( 'core/navigation-link', $not_special['blockName'], 'partial marker class stays a normal link' );
+
+// Serialization guard: a submenu rebuilt from items must carry an innerContent
+// placeholder per child, or serialize_blocks() drops the children (self-closing).
+$child_block   = [ 'blockName' => 'core/navigation-link', 'attrs' => [], 'innerBlocks' => [], 'innerHTML' => '', 'innerContent' => [] ];
+$submenu_block = novablocks_header_nav_item_to_block(
+	[ 'title' => 'Shop', 'url' => '/shop', 'type' => 'post_type', 'object' => 'page', 'object_id' => 140 ],
+	[ $child_block ]
+);
+nb_assert_same( 'core/navigation-submenu', $submenu_block['blockName'], 'item with children becomes a submenu' );
+nb_assert_same( 1, count( $submenu_block['innerBlocks'] ), 'submenu keeps its child block' );
+nb_assert_same( [ null ], $submenu_block['innerContent'], 'submenu innerContent has one placeholder per child' );
+
+$leaf_block = novablocks_header_nav_item_to_block( [ 'title' => 'Home', 'url' => '/', 'type' => 'custom' ], [] );
+nb_assert_same( [], $leaf_block['innerContent'], 'a childless item has empty innerContent' );
 
 // A real special item (all classes present) IS recognised.
 $real_dark = novablocks_header_nav_item_to_block( [

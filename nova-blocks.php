@@ -84,7 +84,8 @@ require_once dirname( __FILE__ ) . '/lib/deprecated.php';
 require_once dirname( __FILE__ ) . '/lib/header-nav-projection.php';
 
 // Register header navigation projection hooks (no-op unless the
-// `novablocks/enable_block_nav_editing` feature flag is enabled).
+// `novablocks/enable_block_nav_editing` feature flag is enabled). Seeding and the
+// editor map are wired to admin_init / enqueue_block_editor_assets from here.
 add_action( 'init', 'novablocks_header_nav_register_projection', 20 );
 
 require_once dirname( __FILE__ ) . '/packages/core/src/blocks/init.php';
