@@ -11,13 +11,18 @@ import { PanelBody, SelectControl, TextControl } from '@wordpress/components';
 import { Fragment } from '@wordpress/element';
 import { __ } from '@wordpress/i18n';
 
-export const registerNavigationSpecialItem = ( metadata, { defaultLabel, defaultVisualStyle, panelTitle } ) => {
+export const registerNavigationSpecialItem = ( metadata, { defaultLabel, defaultVisualStyle, panelTitle, icon } ) => {
   registerBlockType( metadata.name, {
     attributes: metadata.attributes,
     edit: ( { attributes, setAttributes } ) => {
       const blockProps = useBlockProps( {
         className: 'wp-block-navigation-item nb-navigation-special-item',
       } );
+
+      const visualStyle = attributes.novablocksVisualStyle || defaultVisualStyle;
+      const showIcon = 'icon' === visualStyle || 'label_icon' === visualStyle;
+      const showLabel = 'label' === visualStyle || 'label_icon' === visualStyle;
+      const badge = attributes.novablocksBadge;
 
       return (
         <Fragment>
@@ -26,7 +31,7 @@ export const registerNavigationSpecialItem = ( metadata, { defaultLabel, default
               <SelectControl
                 label={ __( 'Visual style', 'nova-blocks' ) }
                 help={ __( 'How this item appears in the navigation.', 'nova-blocks' ) }
-                value={ attributes.novablocksVisualStyle || defaultVisualStyle }
+                value={ visualStyle }
                 options={ [
                   { label: __( 'Label', 'nova-blocks' ), value: 'label' },
                   { label: __( 'Icon', 'nova-blocks' ), value: 'icon' },
@@ -37,14 +42,24 @@ export const registerNavigationSpecialItem = ( metadata, { defaultLabel, default
               <TextControl
                 label={ __( 'Badge text', 'nova-blocks' ) }
                 help={ __( 'Optional badge (e.g. a cart count or "New").', 'nova-blocks' ) }
-                value={ attributes.novablocksBadge || '' }
+                value={ badge || '' }
                 onChange={ ( novablocksBadge ) => setAttributes( { novablocksBadge } ) }
               />
             </PanelBody>
           </InspectorControls>
           <div { ...blockProps }>
-            <span className="wp-block-navigation-item__content">
-              { attributes.label || defaultLabel }
+            <span className="wp-block-navigation-item__content nb-navigation-special-item__content">
+              { showIcon && icon && (
+                <span className="nb-navigation-special-item__icon">{ icon }</span>
+              ) }
+              { showLabel && (
+                <span className="nb-navigation-special-item__label">
+                  { attributes.label || defaultLabel }
+                </span>
+              ) }
+              { badge && (
+                <span className="nb-navigation-special-item__badge">{ badge }</span>
+              ) }
             </span>
           </div>
         </Fragment>

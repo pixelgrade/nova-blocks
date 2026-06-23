@@ -6,10 +6,12 @@
 import { __ } from '@wordpress/i18n';
 
 import { registerNavigationSpecialItem } from '../navigation/special-item';
+import { CartIcon } from '../navigation/special-item-icons';
 import metadata from './block.json';
 
 registerNavigationSpecialItem( metadata, {
   defaultLabel: __( 'Cart', 'nova-blocks' ),
   defaultVisualStyle: 'icon',
   panelTitle: __( 'Cart item', 'nova-blocks' ),
+  icon: CartIcon,
 } );

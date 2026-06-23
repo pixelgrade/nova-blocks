@@ -6,10 +6,12 @@
 import { __ } from '@wordpress/i18n';
 
 import { registerNavigationSpecialItem } from '../navigation/special-item';
+import { DarkModeIcon } from '../navigation/special-item-icons';
 import metadata from './block.json';
 
 registerNavigationSpecialItem( metadata, {
   defaultLabel: __( 'Dark Mode', 'nova-blocks' ),
   defaultVisualStyle: 'icon',
   panelTitle: __( 'Dark mode item', 'nova-blocks' ),
+  icon: DarkModeIcon,
 } );

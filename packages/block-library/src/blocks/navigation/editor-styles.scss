@@ -55,6 +55,36 @@
     }
   }
 
+  // Special items (search / cart / dark-mode) preview their icon + label + badge
+  // so the editor matches the rendered menu.
+  .nb-navigation-special-item__content {
+    display: inline-flex;
+    align-items: center;
+    gap: .4em;
+  }
+
+  .nb-navigation-special-item__icon {
+    display: inline-flex;
+    align-items: center;
+
+    svg {
+      display: block;
+      width: 1.15em;
+      height: 1.15em;
+    }
+  }
+
+  .nb-navigation-special-item__badge {
+    display: inline-block;
+    padding: 0 .45em;
+    font-size: .7em;
+    font-weight: 600;
+    line-height: 1.7;
+    color: #fff;
+    background: var(--wp-admin-theme-color, #3858e9);
+    border-radius: .8em;
+  }
+
   // Show the projected badge in the editor (the frontend renders it via the
   // Anima walker). The data attribute is added by badge-filter.js.
   .wp-block-navigation-item.has-nb-badge {
