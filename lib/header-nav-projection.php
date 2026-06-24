@@ -384,9 +384,17 @@ function novablocks_header_nav_menu_items_to_blocks( array $items ): array {
 
 /**
  * Whether the block-based header navigation editing + projection is enabled.
+ *
+ * Defaults to on when the active theme opts in with
+ * `add_theme_support( 'novablocks-block-navigation' )` — so themes designed for
+ * it (e.g. Anima) get it by default and other themes don't. The
+ * `novablocks/enable_block_nav_editing` filter stays an explicit override to
+ * force it on or off regardless of theme support.
  */
 function novablocks_header_nav_block_editing_enabled(): bool {
-	return (bool) apply_filters( 'novablocks/enable_block_nav_editing', false );
+	$enabled = (bool) current_theme_supports( 'novablocks-block-navigation' );
+
+	return (bool) apply_filters( 'novablocks/enable_block_nav_editing', $enabled );
 }
 
 /**
