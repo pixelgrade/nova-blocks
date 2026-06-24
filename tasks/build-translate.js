@@ -46,11 +46,22 @@ function generatePotFile (done) {
     log.error('Could not generate the pot file since the wp command is missing. Please install the WP CLI!')
     log.error('The build task will continue.')
   } else {
-    cp.execSync('wp i18n make-pot ../build/' + slug + '/ ../build/' + slug + '/languages/' + slug + '.pot',
-      {
-        stdio: 'inherit' // Use the same console as the io for the child process.
-      }
-    );
+    try {
+      cp.execSync('wp i18n make-pot ../build/' + slug + '/ ../build/' + slug + '/languages/' + slug + '.pot',
+        {
+          stdio: 'inherit' // Use the same console as the io for the child process.
+        }
+      );
+    } catch (err) {
+      // The `wp` command exists but failed to run (e.g. a broken PHP/WP-CLI
+      // install, or a missing shared library that makes PHP abort). The .pot
+      // file is non-essential for a working release, so log a warning and let
+      // the rest of the packaging pipeline (including the zip step) continue
+      // instead of crashing the whole build with an unhandled exception.
+      log.error('Could not generate the pot file: the `wp i18n make-pot` command failed.')
+      log.error(err && err.message ? err.message : String(err))
+      log.error('The build task will continue without an updated .pot file.')
+    }
   }
 
   return done();
