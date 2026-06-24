@@ -752,6 +752,43 @@ function novablocks_header_nav_maybe_seed(): void {
 }
 
 /**
+ * Projection output version. Bump whenever the block -> classic-menu mapping
+ * changes shape (a new class, meta, etc.) so already-projected sites re-project
+ * once on the next admin load instead of keeping stale menus.
+ *
+ *  - 1: initial projection
+ *  - 2: visual_style now also writes Anima's icon-only / no-icon class
+ */
+function novablocks_header_nav_projection_version(): int {
+	return 2;
+}
+
+/**
+ * Re-project every location's entity once after the projection output version
+ * changes, so existing generated menus pick up new logic without the user
+ * having to re-save each menu. Runs in admin, guarded by an option.
+ */
+function novablocks_header_nav_maybe_reproject(): void {
+	if ( ! novablocks_header_nav_block_editing_enabled() ) {
+		return;
+	}
+
+	$version = novablocks_header_nav_projection_version();
+
+	if ( (int) get_option( 'novablocks_header_nav_projection_version', 0 ) >= $version ) {
+		return;
+	}
+
+	foreach ( novablocks_header_nav_entity_map() as $location => $entity_id ) {
+		if ( get_post( (int) $entity_id ) instanceof WP_Post ) {
+			novablocks_header_nav_project_entity_to_menu( (int) $entity_id, (string) $location );
+		}
+	}
+
+	update_option( 'novablocks_header_nav_projection_version', $version );
+}
+
+/**
  * Save hook: re-project an entity when it is saved.
  *
  * @param int $post_id wp_navigation post id.
@@ -787,9 +824,11 @@ function novablocks_header_nav_register_projection(): void {
 	if ( is_admin() ) {
 		// Seed on admin_init (priority 20) so post types / taxonomies — including
 		// WooCommerce's product + product_cat — are registered and menu items
-		// resolve their titles/URLs. Localise the entity map afterwards, on
-		// enqueue_block_editor_assets, so it reflects the seeded entities.
+		// resolve their titles/URLs. Re-project (priority 21) after seeding so
+		// existing sites pick up projection changes. Localise the entity map
+		// afterwards, on enqueue_block_editor_assets, so it reflects the entities.
 		add_action( 'admin_init', 'novablocks_header_nav_maybe_seed', 20 );
+		add_action( 'admin_init', 'novablocks_header_nav_maybe_reproject', 21 );
 		add_action( 'enqueue_block_editor_assets', 'novablocks_header_nav_localize_editor_data', 20 );
 	}
 }
