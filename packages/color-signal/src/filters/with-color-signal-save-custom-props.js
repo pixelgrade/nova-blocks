@@ -1,21 +1,16 @@
 import { getSupports } from "@novablocks/block-editor";
 
-const normalizePxUnit = ( value ) => {
-  if ( typeof value === 'number' ) {
-    return `${ value }px`;
-  }
-
+// Emit this value unitless to match the editor preview
+// (with-color-signal-edit-custom-props), the PHP frontend render
+// (block-rendering.php), and the SCSS, which all consume --nb-emphasis-area as a
+// bare number inside calc( ... * 1% ). A `px` unit here produced invalid CSS and
+// drifted the saved markup away from older content (causing block-validation
+// "unexpected or invalid content" recovery in the editor).
+const toUnitless = ( value ) => {
   if ( typeof value === 'string' ) {
-    const trimmed = value.trim();
-
-    if ( trimmed.endsWith( 'px' ) ) {
-      return value;
-    }
-
+    const trimmed = value.trim().replace( /px$/, '' );
     const numericValue = Number( trimmed );
-    if ( ! Number.isNaN( numericValue ) ) {
-      return `${ numericValue }px`;
-    }
+    return Number.isNaN( numericValue ) ? value : `${ numericValue }`;
   }
 
   return value;
@@ -36,7 +31,7 @@ const withColorSignalSaveCustomProps = ( element, blockType, attributes ) => {
       ...element.props,
       style: {
         ...element.props?.style,
-        '--nb-emphasis-area': normalizePxUnit(
+        '--nb-emphasis-area': toUnitless(
           element.props?.style?.['--nb-emphasis-area'] ?? emphasisArea
         ),
       },

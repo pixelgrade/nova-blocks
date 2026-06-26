@@ -1,21 +1,16 @@
 import { getCardMediaPaddingTop } from "../index";
 
-const normalizePxUnit = ( value ) => {
-  if ( typeof value === 'number' ) {
-    return `${ value }px`;
-  }
-
+// Emit this value unitless to match the editor preview, the PHP frontend render
+// (block-rendering.php:507), and the SCSS, which consume
+// --nb-card-media-container-height as a bare number inside
+// calc( 10em + 20em * var(...) / 100 ). A `px` unit here produced invalid CSS
+// (length * length) and drifted the saved markup away from older content
+// (causing block-validation "unexpected or invalid content" recovery).
+const toUnitless = ( value ) => {
   if ( typeof value === 'string' ) {
-    const trimmed = value.trim();
-
-    if ( trimmed.endsWith( 'px' ) ) {
-      return value;
-    }
-
+    const trimmed = value.trim().replace( /px$/, '' );
     const numericValue = Number( trimmed );
-    if ( ! Number.isNaN( numericValue ) ) {
-      return `${ numericValue }px`;
-    }
+    return Number.isNaN( numericValue ) ? value : `${ numericValue }`;
   }
 
   return value;
@@ -54,7 +49,7 @@ export const getSpacingCSSProps = ( attributes, existingStyle = {} ) => {
     '--nb-block-bottom-spacing': blockBottomSpacing + '',
     '--nb-block-zindex': Math.max( 0, -1 * ( blockTopSpacing + blockBottomSpacing ) ),
     '--nb-card-content-area-width': `${ contentAreaWidth }%`,
-    '--nb-card-media-container-height': normalizePxUnit(
+    '--nb-card-media-container-height': toUnitless(
       existingStyle?.['--nb-card-media-container-height'] ?? mediaContainerHeight
     ),
     '--nb-card-content-padding-multiplier': contentPadding / 100,
