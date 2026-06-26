@@ -1,4 +1,4 @@
-import { getSnapClassname, maybeSnapFocalPoint } from "@novablocks/utils";
+import { getSnapClassname } from "@novablocks/utils";
 import { FocalPointPicker, PanelBody, RangeControl, ToggleControl } from "@wordpress/components";
 import { __ } from "@wordpress/i18n";
 import { getFocalPointImage } from '../utils';
@@ -58,16 +58,6 @@ const EndFramePanel = ( props ) => {
           height: parallaxFocalPointImage.height,
         } }
         value={ finalFocalPoint }
-        onChange={ finalFocalPoint => {
-          setAttributes( {
-            motionPreset: 'custom',
-            focalPoint: maybeSnapFocalPoint( {
-              x: finalFocalPoint.x,
-              y: focalPoint.y,
-            } ),
-            finalFocalPoint: maybeSnapFocalPoint( finalFocalPoint ),
-          } );
-        } }
         disabled
       />
       <RangeControl

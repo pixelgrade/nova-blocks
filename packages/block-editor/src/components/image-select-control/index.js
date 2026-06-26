@@ -1,8 +1,6 @@
 import classnames from 'classnames';
-import { useState } from '@wordpress/element';
 
 const ImageSelectControl = props => {
-  const [ active, setActive ] = useState( selected );
   const { options, selected } = props;
   const onChange = typeof props.onChange === "function" ? props.onChange : () => {};
 
@@ -15,7 +13,6 @@ const ImageSelectControl = props => {
             role={ "button" }
             aria-label={ option.label }
             onClick={ () => {
-              setActive( option.slug );
               onChange( option.slug );
             } }
             className={ classnames(

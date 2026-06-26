@@ -69,15 +69,6 @@ if ( ! class_exists( 'NovaBlocks_Comments_Starter' ) ) {
 				return '';
 			}
 
-			/* ==================================
-			 * RENDER THE COMMENTS STARTER MARKUP
-			 */
-
-			ob_start();
-
-			// Register our hooks just before rendering.
-			$this->register_hooks();
-
 			$conversation_starter_user_id = get_post_meta( $this->post->ID, 'nb_conversation_starter_user_id', true );
 
 			if ( empty( $conversation_starter_user_id ) ) {
@@ -95,6 +86,15 @@ if ( ! class_exists( 'NovaBlocks_Comments_Starter' ) ) {
 			$conversation_starter_subtitle = get_post_meta( $this->post->ID, 'nb_conversation_starter_subtitle', true );
 			// Replace any content tags present.
 			$conversation_starter_subtitle = novablocks_replace_content_tags( $conversation_starter_subtitle, $this->post->ID, $conversation_starter_user_id );
+
+			/* ==================================
+			 * RENDER THE COMMENTS STARTER MARKUP
+			 */
+
+			ob_start();
+
+			// Register our hooks just before rendering.
+			$this->register_hooks();
 
 			$conversation_starter_avatar = get_avatar( absint( $conversation_starter_user_id ), 120, '', '', [ 'class' => 'avatar', ] );
 			?>

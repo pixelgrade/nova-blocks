@@ -45,8 +45,12 @@ const ScrollingEffectPanel = ( props ) => {
             let newAttributes = { scrollingEffect };
 
             if ( scrollingEffect === 'doppler' && motionPreset !== 'custom' ) {
-              let newOption = motionPresetOptions.find( option => motionPreset === option.value );
-              newAttributes = Object.assign( newOption.preset, newAttributes );
+              const newOption = motionPresetOptions.find( option => motionPreset === option.value );
+
+              if ( newOption && newOption.preset ) {
+                newAttributes = Object.assign( {}, newOption.preset, newAttributes );
+              }
+
               newAttributes.minHeightFallback = 75;
             }
 

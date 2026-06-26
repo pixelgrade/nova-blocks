@@ -19,7 +19,7 @@ export const getDuotoneFilterSvg = ( colors, id ) => {
 
   return (
     `<svg
-      xmlnsXlink="http://www.w3.org/1999/xlink"
+      xmlns:xlink="http://www.w3.org/1999/xlink"
       viewBox="0 0 0 0"
       width="0"
       height="0"

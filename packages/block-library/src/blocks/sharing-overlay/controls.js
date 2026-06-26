@@ -1,4 +1,5 @@
 import { __ } from "@wordpress/i18n";
+import { TextControl } from "@wordpress/components";
 import { ControlsGroup, ControlsSection, ControlsTab, HeadingToolbar, ToggleGroup } from "@novablocks/block-editor";
 import services from "./services";
 
@@ -35,12 +36,20 @@ const Controls = ( props ) => {
 
   const {
     headingLevel,
-    showSocialIcons
+    showSocialIcons,
+    buttonLabel
   } = attributes;
 
   return (
     <ControlsSection id={ 'display' } label={ __( 'Display', '__plugin_txtd' ) }>
       <ControlsTab label={ __( 'Settings', '__plugin_txtd' ) }>
+        <ControlsGroup title={ __( 'Trigger button', '__plugin_txtd' ) }>
+          <TextControl
+            label={ __( 'Button Label', '__plugin_txtd' ) }
+            value={ buttonLabel }
+            onChange={ ( newLabel ) => setAttributes( { buttonLabel: newLabel } ) }
+          />
+        </ControlsGroup>
         <HeadingToolbar minLevel={ 2 } maxLevel={ 5 } selectedLevel={ headingLevel } onChange={ ( newLevel ) => setAttributes( { headingLevel: newLevel } ) } />
         <ControlsGroup title={ __( 'Set up sections for this block', '__plugin_txtd' ) }>
           <ToggleGroup

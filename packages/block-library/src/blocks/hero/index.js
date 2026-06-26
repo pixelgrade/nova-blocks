@@ -69,6 +69,7 @@ export const getLegacyHeroSupernovaItemAttributes = ( attributes ) => {
 		images: getLegacyHeroImages( attributes ),
 		colorSignal: attributes.colorSignal ?? 3,
 		paletteVariation: attributes.paletteVariation ?? 12,
+		scrollIndicatorBlock: attributes.scrollIndicatorBlock ?? false,
 		useSourceColorAsReference: false,
 	};
 };

@@ -98,6 +98,7 @@ function novablocks_get_legacy_hero_supernova_item_attributes( array $attributes
 			'images'                    => novablocks_get_legacy_hero_images( $attributes ),
 			'colorSignal'               => $attributes['colorSignal'] ?? 3,
 			'paletteVariation'          => $attributes['paletteVariation'] ?? 12,
+			'scrollIndicatorBlock'      => $attributes['scrollIndicatorBlock'] ?? false,
 			'useSourceColorAsReference' => false,
 		]
 	);

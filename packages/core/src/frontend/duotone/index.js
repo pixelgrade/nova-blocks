@@ -29,7 +29,6 @@ const getHexFromConfig = ( config ) => {
     const { from, to } = data.overlayFilterDuotoneConfig;
     const fromHex = getHexFromConfig( from );
     const toHex = getHexFromConfig( to );
-    console.log( from, to );
     const id = `novablocks-duotone-${ duotoneIncrement }`;
     duotoneIncrement = duotoneIncrement + 1;
     $obj.addClass( id );

@@ -29,7 +29,7 @@ const DopplerPresetsPanel = ( props ) => {
           let newOption = novablocksSettings.motionPresetOptions.find( option => motionPreset === option.value );
 
           if ( newOption && newOption.preset ) {
-            newAttributes = Object.assign( newOption.preset, newAttributes );
+            newAttributes = Object.assign( {}, newOption.preset, newAttributes );
           }
 
           setAttributes( newAttributes );

@@ -1,5 +1,5 @@
 import { __ } from "@wordpress/i18n";
-import { useMemo } from "@wordpress/element";
+import { useEffect, useMemo } from "@wordpress/element";
 import { ToggleControl } from '@wordpress/components';
 
 import { getControlsClasses, getPostsCount } from "@novablocks/utils";
@@ -22,17 +22,17 @@ const ParametricItemsCountControls = ( props ) => {
   } = attributes;
 
   const autoPostsCount = useMemo( () => {
-    const postsCount = getPostsCount( areaColumns );
+    return getPostsCount( areaColumns );
+  }, [ areaColumns ] );
 
-    // Update the attributes when the autoPostCount changes.
-    if ( automaticPostsNumber && postsToShow !== postsCount ) {
+  // Update the attributes when the autoPostCount changes.
+  useEffect( () => {
+    if ( automaticPostsNumber && postsToShow !== autoPostsCount ) {
       setAttributes({
-        "postsToShow": postsCount,
+        "postsToShow": autoPostsCount,
       });
     }
-
-    return postsCount;
-  }, [ areaColumns ] );
+  }, [ autoPostsCount, automaticPostsNumber, postsToShow ] );
 
   // Used to store previous values of postsToShow.
   const tempPostsToShow = useMemo( () => attributes.tempPostsToShow || postsToShow, [ attributes ] );

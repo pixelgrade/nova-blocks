@@ -36,7 +36,6 @@ const MediaCompositionControls = props => {
 		placementVariation,
 
 		// elements settings
-		imageResizing,
 		objectPosition,
 		imageRotation,
 	} = attributes;
@@ -53,7 +52,7 @@ const MediaCompositionControls = props => {
         <Notice
           key={ 'advanced-gallery-quick-start' }
           id={ 'novablocks-media-composition-quick-start' }
-          content={ <p><strong>{__('Quick start:', '__plugin_txtd')}</strong> {__( 'Set up your gallery layout using the presets list below and use the Customize tab to fine-tune the details.', '__plugin_txtd' )}</p> }
+          content={ <p><strong>{__('Quick start:', '__plugin_txtd')}</strong> {__( 'Set up your gallery layout using the presets list below and use the Settings tab to fine-tune the details.', '__plugin_txtd' )}</p> }
           dismissLabel={ __( '✔ Ok, I got it!', '__plugin_txtd' ) }
         />
         <PresetControl
@@ -61,20 +60,6 @@ const MediaCompositionControls = props => {
           options={ novablocksSettings.advancedGalleryPresetOptions }
           randomize={ getRandomAttributes }
           { ...props }
-        />
-      </ControlsTab>
-
-      <ControlsTab label={ __( 'Customize', '__plugin_txtd' ) } key={'media_composition_customize'}>
-        <RangeControl
-          key={ 'advanced-gallery-crop-style' }
-          label={ __( 'Images Crop Style', '__plugin_txtd' ) }
-          value={ imageResizing === 'cropped' ? 2 : 1 }
-          onChange={ cropStyle => {
-            setAttributes( { imageResizing: cropStyle === 2 ? 'cropped' : 'original' } );
-          } }
-          min={ 1 }
-          max={ 2 }
-          step={ 1 }
         />
       </ControlsTab>
 
@@ -152,7 +137,6 @@ const ImageResizingControls = ( props ) => {
   } = props;
 
   const {
-    containerHeight,
     imageResizing,
   } = attributes;
 
@@ -167,15 +151,6 @@ const ImageResizingControls = ( props ) => {
 
   return (
     <Fragment>
-      <RangeControl
-        key={ 'advanced-gallery-media-aspect-ratio' }
-        label={ __( 'Media Aspect Ratio', '__plugin_txtd' ) }
-        value={ containerHeight }
-        onChange={ containerHeight => setAttributes( { containerHeight } ) }
-        min={ 0 }
-        max={ 100 }
-        step={ 5 }
-      />
       <RadioControl
         key={ 'advanced-gallery-image-resizing' }
         label={ __( 'Image Resizing', '__plugin_txtd' ) }

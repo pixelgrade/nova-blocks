@@ -118,7 +118,7 @@ domReady( () => {
       toggle.dataset.novablocksFacetToggleBound = "true";
       toggle.dataset.toggled = "false";
 
-      toggle.addEventListener( 'click', () => {
+      const handleToggle = () => {
         const shouldOpen = toggle.dataset.toggled !== "true";
         toggle.dataset.toggled = shouldOpen ? "true" : "false";
 
@@ -130,6 +130,15 @@ domReady( () => {
 
           slideUp( hiddenBlock );
         } );
+      };
+
+      toggle.addEventListener( 'click', handleToggle );
+
+      toggle.addEventListener( 'keydown', ( event ) => {
+        if ( event.key === 'Enter' || event.key === ' ' || event.key === 'Spacebar' ) {
+          event.preventDefault();
+          handleToggle();
+        }
       } );
     } );
   } );

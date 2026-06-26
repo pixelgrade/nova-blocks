@@ -52,8 +52,8 @@ const initializeCarousels = () => {
         return $('<button type="button" />').html( sIndex );
       },
       mobileFirst: true,
-      dots: true,
-      arrows: false,
+      dots: showDots,
+      arrows: showArrows,
       infinite: true,
       slidesToShow: 1,
       slidesToScroll: 1,

@@ -32,7 +32,7 @@ class HeadingToolbar extends Component {
 		return (
 			<ToolbarGroup
 				icon={ <HeadingLevelIcon level={ selectedLevel } /> }
-				controls={ range( minLevel, maxLevel ).map(
+				controls={ range( minLevel, maxLevel + 1 ).map(
 					( index ) => this.createLevelControl( index, selectedLevel, onChange )
 				) } />
 		);

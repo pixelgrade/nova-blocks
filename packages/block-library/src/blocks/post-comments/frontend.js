@@ -12,6 +12,8 @@ const NOTIFICATION_VISIBLE_CLASS = 'notification--is-visible';
 
   const $notification = $('.novablocks-conversations__notification-text');
 
+  let notificationTimeout;
+
   bindEvents();
 
   highlightCommentOnClick();
@@ -88,10 +90,12 @@ const NOTIFICATION_VISIBLE_CLASS = 'notification--is-visible';
 
     $notification.removeClass(NOTIFICATION_VISIBLE_CLASS);
 
+    // Use `once` so the listener removes itself after the copy fires,
+    // otherwise a new listener would accumulate on every click.
     document.addEventListener('copy', function (e) {
       e.clipboardData.setData('text/plain', copyText);
       e.preventDefault()
-    }, true);
+    }, {capture: true, once: true});
 
     try {
       succeeded = document.execCommand('copy')
@@ -100,9 +104,14 @@ const NOTIFICATION_VISIBLE_CLASS = 'notification--is-visible';
     }
 
     if (succeeded) {
+      clearTimeout(notificationTimeout);
       setTimeout(function () {
         $notification.addClass(NOTIFICATION_VISIBLE_CLASS)
-      }, 0)
+      }, 0);
+      // Hide the notification again after a short while.
+      notificationTimeout = setTimeout(function () {
+        $notification.removeClass(NOTIFICATION_VISIBLE_CLASS)
+      }, 2000);
     }
   }
 

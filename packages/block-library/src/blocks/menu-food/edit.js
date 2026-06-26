@@ -5,6 +5,7 @@ import classnames from 'classnames';
  */
 import { Fragment, useCallback, useMemo } from '@wordpress/element';
 import { addFilter } from '@wordpress/hooks';
+import { createBlock } from '@wordpress/blocks';
 import { useDispatch } from "@wordpress/data";
 import { InnerBlocks, useBlockProps } from "@wordpress/block-editor";
 import { Button } from "@wordpress/components";

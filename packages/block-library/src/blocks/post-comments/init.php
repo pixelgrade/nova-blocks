@@ -51,6 +51,12 @@ if ( ! function_exists( 'novablocks_render_post_comments_block' ) ) {
 		// Maybe enqueue frontend-only scripts.
 		novablocks_maybe_enqueue_block_frontend_scripts( $block );
 
+		// When the block has the "User Background or Experience" field disabled,
+		// make sure the form renderer hides the commenter background field.
+		if ( isset( $attributes[ 'hasUserExperience' ] ) && false === $attributes[ 'hasUserExperience' ] ) {
+			$attributes[ 'commenterBackground' ] = false;
+		}
+
 		$post_comments_renderer = new NovaBlocks_Comments_Renderer( $block->context[ 'postId' ], $attributes, $content );
 
 		$classes = array( 'novablocks-conversations' );

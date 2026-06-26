@@ -34,7 +34,7 @@ const AdvancedGalleryItem = ( props ) => {
             </div>
           }
           {
-            typeof hasDescription &&
+            hasDescription &&
             <div className={ `novablocks-media-composition__grid-item-description` }
                  dangerouslySetInnerHTML={ { __html: imageDescription } }>
             </div>

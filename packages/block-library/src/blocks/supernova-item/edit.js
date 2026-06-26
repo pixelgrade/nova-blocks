@@ -141,7 +141,7 @@ const CardMedia = withScrollingEffect( props => {
   const scrollingEffect = useScrollingEffect();
 
   if ( Array.isArray( images ) && 1 === images.length ) {
-    <CardMediaWithShapeDecoration { ...props } />
+    return <CardMediaWithShapeDecoration { ...props } />;
   }
 
   return (

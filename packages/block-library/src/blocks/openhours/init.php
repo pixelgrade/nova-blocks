@@ -91,10 +91,13 @@ class NovaBlocks_OpenHours_Helper {
 		foreach ( $hours_json['timeframes'] as $timeframe ) {
 			if ( $compress_hours ) {
 				// if the compress_opening_hours option is true - return compressed array
-				$compressed_days          = $this->_parse_consecutive_days( $timeframe, $day_format, $hours_format );
-				$compressed_days_interval = array_values( $compressed_days );
+				$compressed_days = $this->_parse_consecutive_days( $timeframe, $day_format, $hours_format );
 
-				$schedule[ key( $compressed_days ) ] = $compressed_days_interval[0];
+				// _parse_consecutive_days can return multiple groups (a consecutive range
+				// plus one entry per non-consecutive day), so add all of them.
+				foreach ( $compressed_days as $compressed_key => $compressed_interval ) {
+					$schedule[ $compressed_key ] = $compressed_interval;
+				}
 			} else {
 				// Build the normal array schedule
 				foreach ( $timeframe['days'] as $day ) {
@@ -455,9 +458,14 @@ class NovaBlocks_OpenHours_Helper {
 	 *
 	 * @return array
 	 */
-	public function get_next_open_day( $today, $attributes ) {
+	public function get_next_open_day( $today, $attributes, $iterations = 0 ) {
 		$today    = (int) $today;
 		$schedule = $this->_get_schedule_array( $attributes );
+
+		// Guard against infinite recursion when the schedule is empty / every day is closed.
+		if ( empty( $schedule ) || $iterations >= 7 ) {
+			return [];
+		}
 
 		if ( $today === 7 ) {
 			$next_day = 1;
@@ -466,7 +474,7 @@ class NovaBlocks_OpenHours_Helper {
 		}
 
 		if ( ! isset( $schedule[ $next_day ] ) ) {
-			return $this->get_next_open_day( $next_day, $attributes );
+			return $this->get_next_open_day( $next_day, $attributes, $iterations + 1 );
 		}
 
 		$next_open_day = [ $next_day => $schedule[ $next_day ] ];

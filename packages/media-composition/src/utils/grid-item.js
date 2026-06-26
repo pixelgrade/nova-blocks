@@ -15,7 +15,7 @@ export class GridItemCollection {
 
     this.removeExtra();
 
-    if ( placementVariation === 1 || placementVariation === 2 ) {
+    if ( placementVariation === 1 || placementVariation === 3 ) {
       this.flipX();
     }
 

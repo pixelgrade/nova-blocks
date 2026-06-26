@@ -7,10 +7,10 @@ import { ControlsSection, ControlsTab } from "@novablocks/block-editor";
 
 const Edit = ( props ) => {
   const { attributes } = props;
-  const { sectionType } = attributes;
+  const { orientation, sectionType } = attributes;
 
   const blockProps = useBlockProps( {
-    className: `nb-facetwp-filter  nb-facetwp-filter--${ sectionType }`
+    className: `nb-facetwp-filter  nb-facetwp-filter--${ sectionType } nb-facetwp-filter--orientation-${ orientation }`
   } );
 
   const innerBlocksProps = useInnerBlocksProps( {

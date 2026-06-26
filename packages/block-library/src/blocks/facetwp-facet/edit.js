@@ -14,7 +14,7 @@ const useActiveFacet = ( attributes ) => {
   const settings = useSettings();
 
   return useMemo( () => {
-    const facets = settings?.facetwp_facets;
+    const facets = settings?.facetwp_facets || [];
     return facets.find( currentFacet => currentFacet.name === facet );
 
   }, [ facet ] )
@@ -24,7 +24,7 @@ const Edit = ( props ) => {
   const { attributes, setAttributes } = props;
   const { facet } = attributes;
   const settings = useSettings();
-  const facets = settings?.facetwp_facets;
+  const facets = settings?.facetwp_facets || [];
   const options = [];
   const [ showDropdown, setShowdropdown ] = useState( false );
 

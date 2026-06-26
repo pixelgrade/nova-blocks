@@ -30,16 +30,11 @@ if ( ! function_exists( 'novablocks_render_facetwp_toggle_block' ) ) {
 		$attributes_config = novablocks_get_facetwp_toggle_attributes();
 		$attributes        = novablocks_get_attributes_with_defaults( $attributes, $attributes_config );
 
-		$classes = [
-			'wp-block-buttons',
-			'nb-facetwp-toggle',
-		];
-
 		ob_start(); ?>
 
 		<div class="wp-block-buttons">
 			<div class="wp-block-button">
-				<div class="wp-block-button__link nb-facetwp-toggle">
+				<div class="wp-block-button__link nb-facetwp-toggle" role="button" tabindex="0">
 					<?php echo esc_html( $attributes['text'] ); ?>
 				</div>
 			</div>

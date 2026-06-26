@@ -39,6 +39,10 @@ domReady( () => {
       disableDefaultUI: !showControls,
       clickableIcons: false,
       keyboardShortcuts: false,
+      draggable: false,
+      gestureHandling: 'none',
+      scrollwheel: false,
+      disableDoubleClickZoom: true,
     };
 
     const map = new google.maps.Map( mapElement, mapOptions );
@@ -76,8 +80,9 @@ domReady( () => {
 
         mapElements.forEach( mapElement => {
           const attributes = getAttributes( mapElement );
-          const { styleData, markers, map, mapMarkers } = attributes;
+          const { styleData, markers } = attributes;
           const refId = mapElement.dataset.refId;
+          const { map, mapMarkers } = REFERENCES[ refId ];
 
           map.setOptions( { styles: getCompiledStyles( attributes, new_value ) } );
 

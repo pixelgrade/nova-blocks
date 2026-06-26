@@ -22,7 +22,7 @@
  * @return bool
  */
 function novablocks_handle_theme_supports( bool $supports, $args, $theme_features ): bool {
-	if ( empty( $args ) || empty( $theme_features ) ) {
+	if ( empty( $args ) ) {
 		return $supports;
 	}
 
@@ -30,18 +30,18 @@ function novablocks_handle_theme_supports( bool $supports, $args, $theme_feature
 		$args = [ $args ];
 	}
 
-	if ( is_array( $theme_features ) ) {
-		$theme_features = reset( $theme_features );
-	}
-	if ( is_string( $theme_features ) ) {
-		$theme_features = [ $theme_features ];
-	}
-	if ( ! is_array( $theme_features ) ) {
+	if ( ! is_array( $args ) ) {
 		return $supports;
 	}
 
+	// Delegate to the normalized block-support resolution so both the flat
+	// string-list and the structured (block-name keyed) add_theme_support
+	// declaration styles are handled consistently with block registration.
+	// The previous in_array() against the raw, unnormalized $theme_features
+	// failed for the structured ['hero' => [...]] form, where block names are
+	// array keys rather than values.
 	foreach ( $args as $arg ) {
-		if ( ! in_array( $arg, $theme_features ) ) {
+		if ( ! is_string( $arg ) || ! novablocks_is_block_supported( $arg ) ) {
 			return false;
 		}
 	}

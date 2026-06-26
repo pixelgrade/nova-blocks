@@ -38,18 +38,21 @@ if ( ! function_exists( 'novablocks_render_sidecar_block' ) ) {
 
 		$attributes_config = novablocks_get_sidecar_attributes();
 		$attributes        = novablocks_get_attributes_with_defaults( $attributes, $attributes_config );
-		$cssProps          = novablocks_get_space_and_sizing_css( $attributes );
+		$cssProps          = array_merge(
+			novablocks_get_space_and_sizing_css( $attributes ),
+			novablocks_get_color_signal_css( $attributes )
+		);
 
 		$cssProps[] = '--nb-sidecar-content-font-size-base: var(--nb-font-size-' . $attributes['contentFontSize'] . ')';
 		$cssProps[] = '--nb-sidecar-sidebar-font-size-base: var(--nb-font-size-' . $attributes['sidebarFontSize'] . ')';
 
-		$classes = [
+		$classes = array_merge( [
 			'nb-sidecar',
 			'nb-sidecar--sidebar-' . $attributes['sidebarPosition'],
 			'nb-sidecar--sidebar-' . $attributes['sidebarWidth'],
 			'nb-content-layout-grid',
 			'alignfull'
-		];
+		], novablocks_get_color_signal_classes( $attributes ) );
 
 		if ( ! empty( $attributes['lastItemIsSticky'] ) ) {
 			$classes[] = 'nb-sidecar--sticky-sidebar';

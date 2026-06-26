@@ -18,7 +18,7 @@ const PostCommentsEdit = props => {
   const { 
     context,
     attributes: {
-      hasUserExperience
+      hasUserExperience = true
     },
   } = props;
   const commentStatus = useSelect( select => select( 'core/editor' ).getEditedPostAttribute( 'comment_status' ) );
@@ -69,11 +69,13 @@ const PostCommentsEdit = props => {
             <textarea name="comment" id="comment" cols="30" rows="1" placeholder={__('Join the conversation, share your knowledge or ask a question...', '__plugin_txtd')}/>
           </p>
           <div className="second-column">
-            <p className="comment-form-background">
-              <label htmlFor="experience">{__('What is your expertise or qualification in this topic?', '__plugin_txtd')}</label>
-              <span className="field-description">{__('Example: Practical philosopher, therapist and writer.', '__plugin_txtd')}</span>
-              <input id="experience" name="experience" type="text" value="" size="30" maxLength="245" required="required" placeholder={__('Your relevant experience or expertise...', '__plugin_txtd')}/>
-            </p>
+            { hasUserExperience && (
+              <p className="comment-form-background">
+                <label htmlFor="experience">{__('What is your expertise or qualification in this topic?', '__plugin_txtd')}</label>
+                <span className="field-description">{__('Example: Practical philosopher, therapist and writer.', '__plugin_txtd')}</span>
+                <input id="experience" name="experience" type="text" value="" size="30" maxLength="245" required="required" placeholder={__('Your relevant experience or expertise...', '__plugin_txtd')}/>
+              </p>
+            ) }
             <p className="comment-form-author">
               <label htmlFor="author">{__('What is your name?', '__plugin_txtd')}</label>
               <span className="required">*</span>

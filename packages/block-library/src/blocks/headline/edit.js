@@ -30,7 +30,7 @@ const Controls = ( props ) => {
     <Fragment>
 
       <BlockControls>
-        <HeadingToolbar minLevel={ 2 } maxLevel={ 4 } selectedLevel={ level }
+        <HeadingToolbar minLevel={ 1 } maxLevel={ 6 } selectedLevel={ level }
                         onChange={ ( level ) => setAttributes( { level } ) }/>
         <AlignmentToolbar value={ textAlign } onChange={ textAlign => {
           setAttributes( { textAlign } )

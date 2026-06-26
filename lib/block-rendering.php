@@ -379,7 +379,7 @@ function novablocks_get_media_composition_markup( array $attributes, array $cont
 
 			$output .= '</div>' . PHP_EOL;
 
-			if ( $has_caption || $has_description ) {
+			if ( ! empty( $attributes['showDescription'] ) && ( $has_caption || $has_description ) ) {
 				$output .= '<div class="novablocks-media-composition__grid-item-info">';
 
 				if ( $has_caption ) {
@@ -1762,8 +1762,9 @@ function novablocks_get_card_items_markup( array $item_ids, array $attributes ):
 			case 'buttons':
 				$output .= novablocks_get_card_item_buttons( [
 					[
-						'text' => $attributes['buttonText'] ?? '',
-						'url'  => $attributes['buttonUrl']  ?? '',
+						'text'          => $attributes['buttonText'] ?? '',
+						'url'           => $attributes['buttonUrl']  ?? '',
+						'opensInNewTab' => ! empty( $attributes['buttonOpensInNewTab'] ),
 					],
 				], $attributes );
 				break;
@@ -1943,8 +1944,9 @@ function novablocks_get_card_contents( array $attributes, string $slot = 'full' 
 		$output .= novablocks_get_card_item_meta( $attributes['metaBelowContent'] ?? '', $attributes );
 		$output .= novablocks_get_card_item_buttons( [
 			[
-				'text' => $attributes['buttonText'],
-				'url'  => $attributes ['buttonUrl'],
+				'text'          => $attributes['buttonText'],
+				'url'           => $attributes ['buttonUrl'],
+				'opensInNewTab' => ! empty( $attributes['buttonOpensInNewTab'] ),
 			],
 		], $attributes );
 	}
@@ -2045,11 +2047,13 @@ function novablocks_get_card_item_buttons( array $buttons, array $attributes ): 
 			continue;
 		}
 
+		$target_attr = ! empty( $button['opensInNewTab'] ) ? ' target="_blank" rel="noopener noreferrer"' : '';
+
 	$output .= '<div class="wp-block-buttons" style="justify-content: ' . esc_attr( $justify_content ) . '">
       <div
         class="wp-block-button is-style-' . esc_attr( $attributes['buttonsStyle'] ) . ' sm-color-signal-1 sm-palette-1 sm-palette--shifted sm-variation-1 sm-light"
         data-palette="1" data-palette-variation="1" data-color-signal="1" data-use-source-color-as-reference="true">
-        <a class="wp-block-button__link" href="' . esc_url( $button['url'] ) . '">' . esc_html( $button_text ) . '</a>
+        <a class="wp-block-button__link" href="' . esc_url( $button['url'] ) . '"' . $target_attr . '>' . esc_html( $button_text ) . '</a>
       </div>
     </div>';
 	}

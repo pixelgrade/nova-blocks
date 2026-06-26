@@ -199,7 +199,7 @@ export const getProps = function( config, attributes, fixed ) {
 	return {
 	  fixed,
 		distance: distance,
-		parallaxAmount: fixed ? 1 - parallaxAmount : parallaxAmount,
+		parallaxAmount: userPrefersReducedMotion() ? 0 : ( fixed ? 1 - parallaxAmount : parallaxAmount ),
 		progress: progress,
 		width: containerBox.width * maxScale,
 		height: newImageHeight * maxScale,

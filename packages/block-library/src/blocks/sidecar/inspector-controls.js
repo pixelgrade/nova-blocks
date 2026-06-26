@@ -77,7 +77,11 @@ const SidecarInspectorControls = ( props ) => {
                   const sidebar = innerBlocks.find( block => block.attributes.areaName === 'sidebar' );
                   sidebarInnerBlocks.current = sidebar?.innerBlocks || [];
                   replaceInnerBlocks( clientId, innerBlocks.filter( block => block.attributes.areaName !== 'sidebar' ) );
-                } else {
+                } else if ( ! innerBlocks.some( block => block.attributes.areaName === 'sidebar' ) ) {
+                  // Only create a sidebar area when coming from 'none' (no area
+                  // exists). Switching directly left<->right just updates the
+                  // position attribute, matching the toolbar buttons, so we
+                  // avoid appending a duplicate sidebar area.
                   const sidebar = createBlock( 'novablocks/sidecar-area', { areaName: 'sidebar' }, sidebarInnerBlocks.current );
                   replaceInnerBlocks( clientId, innerBlocks.concat( [ sidebar ] ) );
                 }

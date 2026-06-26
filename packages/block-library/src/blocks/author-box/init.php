@@ -98,7 +98,7 @@ if ( ! function_exists( 'novablocks_get_the_author_info_box' ) ) {
 			>';
 
 		// The author avatar
-		$author_avatar = get_avatar( get_the_author_meta( 'user_email' ), 100 );
+		$author_avatar = get_avatar( $post->post_author, 100 );
 		if ( ! empty( $author_avatar ) ) {
 			$author_details .= '<div class="nb-author-box__avatar">' . $author_avatar . '</div>';
 		}
@@ -146,13 +146,46 @@ if ( ! function_exists( 'novablocks_get_author_bio_links' ) ) {
 		// Get link to the author archive page.
 		$user_posts = get_author_posts_url( get_the_author_meta( 'ID', $post->post_author ) );
 
-		$str     = wp_remote_fopen( 'https://www.gravatar.com/' . md5( strtolower( trim( get_the_author_meta( 'user_email' ) ) ) ) . '.json' );
-		$profile = json_decode( $str, true );
+		// Get the author's email to build the Gravatar profile request.
+		$user_email = get_the_author_meta( 'user_email', $post->post_author );
+		$email_hash = md5( strtolower( trim( $user_email ) ) );
+
+		// Fetch the Gravatar profile (and its bio links) using a cached, time-limited request
+		// so we don't perform a blocking, uncached HTTP call on every render.
+		$transient_key  = 'novablocks_gravatar_profile_' . $email_hash;
+		$cached_profile = get_transient( $transient_key );
+
+		if ( false !== $cached_profile ) {
+			$profile = $cached_profile;
+		} else {
+			$profile = [];
+
+			if ( ! empty( $user_email ) ) {
+				$response = wp_safe_remote_get(
+					'https://www.gravatar.com/' . $email_hash . '.json',
+					[ 'timeout' => 2 ]
+				);
+
+				if ( ! is_wp_error( $response ) && 200 === wp_remote_retrieve_response_code( $response ) ) {
+					$decoded = json_decode( wp_remote_retrieve_body( $response ), true );
+
+					if ( is_array( $decoded ) ) {
+						$profile = $decoded;
+					}
+				}
+			}
+
+			// Cache the result (even an empty array) to avoid repeating the request on every render.
+			set_transient( $transient_key, $profile, 12 * HOUR_IN_SECONDS );
+		}
+
+		// Get the author's display name from the rendered post context.
+		$author_name = get_the_author_meta( 'display_name', $post->post_author );
 
 		$markup .= "<div class=\"nb-author-box__links h6\">\n";
 
 		/* translators: %s: the author name */
-		$markup .= '<a class="nb-author-box__social-link" href="' . esc_url( $user_posts ) . '" rel="author" title="' . esc_attr( sprintf( esc_html__( 'View all posts by %s', '__components_txtd' ), get_the_author() ) ) . '">' . esc_html__( 'All articles', '__components_txtd' ) . '</a><span class="nb-author-box__separator"></span>';
+		$markup .= '<a class="nb-author-box__social-link" href="' . esc_url( $user_posts ) . '" rel="author" title="' . esc_attr( sprintf( esc_html__( 'View all posts by %s', '__components_txtd' ), $author_name ) ) . '">' . esc_html__( 'All articles', '__components_txtd' ) . '</a><span class="nb-author-box__separator"></span>';
 
 		if ( is_array( $profile ) && ! empty( $profile['entry'][0]['urls'] ) ) {
 			foreach ( $profile['entry'][0]['urls'] as $link ) {

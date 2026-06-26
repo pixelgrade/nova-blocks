@@ -192,14 +192,14 @@ import { __ } from '@wordpress/i18n';
 		if ( isMobileDevice() ) {
 			links.push( {
 				label: 'Messenger',
-				url: '#',
+				url: `fb-messenger://share/?link=${ encodeURIComponent( url ) }`,
 				icon: 'messenger',
 			} );
 		}
 
 		links.push( {
 			label: 'Email',
-			url: `mailto:?subject=${ title }&body=${ url }`,
+			url: `mailto:?subject=${ encodeURIComponent( title ) }&body=${ encodeURIComponent( url ) }`,
 			icon: 'email',
 		} );
 
@@ -298,22 +298,37 @@ import { __ } from '@wordpress/i18n';
 
 				$notification.removeClass( visibleClassName );
 
-				input.focus();
-				input.setSelectionRange( 0, input.value.length );
-				input.blur();
-
-				let succeeded;
-
-				try {
-					succeeded = document.execCommand( 'copy' );
-				} catch (err) {
-					succeeded = false;
-				}
-
-				if ( succeeded ) {
+				const showNotification = function() {
 					setTimeout( function() {
 						$notification.addClass( visibleClassName );
 					}, 0 );
+				};
+
+				// Fallback for browsers without the async Clipboard API:
+				// select the text, copy while it is still selected, then blur.
+				const copyWithExecCommand = function() {
+					let succeeded;
+
+					input.focus();
+					input.setSelectionRange( 0, input.value.length );
+
+					try {
+						succeeded = document.execCommand( 'copy' );
+					} catch (err) {
+						succeeded = false;
+					}
+
+					input.blur();
+
+					if ( succeeded ) {
+						showNotification();
+					}
+				};
+
+				if ( window.navigator && window.navigator.clipboard && window.navigator.clipboard.writeText ) {
+					window.navigator.clipboard.writeText( input.value ).then( showNotification, copyWithExecCommand );
+				} else {
+					copyWithExecCommand();
 				}
 			}
 		} ] );

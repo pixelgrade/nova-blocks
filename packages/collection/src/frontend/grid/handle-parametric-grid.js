@@ -123,7 +123,7 @@ export const handleParametricGrid = ( grid, block, attributes ) => {
 
           if ( header && ! below( 'lap' ) && attributes.headerPosition === addedCards - area.postsCount + i + 1 ) {
             const wrapper = document.createElement( 'div' );
-            const newHeader = header.cloneElement( true );
+            const newHeader = header.cloneNode( true );
             addClass( wrapper, 'nb-grid__item js-collection-element-clone' );
             wrapper.appendChild( newHeader );
             $area.appendChild( wrapper );
@@ -145,7 +145,7 @@ export const handleParametricGrid = ( grid, block, attributes ) => {
     applyCSS( grid, {
       display: '',
       gridTemplateColumns: '',
-      gridTemplateRowss: '',
+      gridTemplateRows: '',
     } );
 
     posts.forEach( post => {

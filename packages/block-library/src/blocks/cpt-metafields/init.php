@@ -65,8 +65,12 @@ if ( ! function_exists( 'novablocks_render_cpt_metafields_block' ) ) {
 
 		$classes = [
 			'nb-cpt-metafields',
-			'align' . $attributes['align']
 		];
+
+		$align = isset( $attributes['align'] ) ? $attributes['align'] : '';
+		if ( ! empty( $align ) ) {
+			$classes[] = 'align' . $align;
+		}
 
 		ob_start(); ?>
 

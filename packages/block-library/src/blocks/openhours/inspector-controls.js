@@ -169,39 +169,39 @@ const AvailableTagsModal = () => {
               <th>Description</th>
             </tr>
             <tr>
-              <td>{ "{ time }" }</td>
+              <td>{ "{time}" }</td>
               <td>Will be replaced by&nbsp;the current WordPress installation time.</td>
             </tr>
             <tr>
-              <td>{ "{ today }" }</td>
+              <td>{ "{today}" }</td>
               <td>Will be replaced by the name of the current day.</td>
             </tr>
             <tr>
-              <td>{ "{ today - opening - time }" }</td>
+              <td>{ "{today-opening-time}" }</td>
               <td>Will be replaced by the current day’s opening time.</td>
             </tr>
             <tr>
-              <td>{ "{ today - closing - time }" }</td>
+              <td>{ "{today-closing-time}" }</td>
               <td>Will be replaced by the current day’s closing time.</td>
             </tr>
             <tr>
-              <td>{ "{ today - timeframe }" }</td>
+              <td>{ "{today-timeframe}" }</td>
               <td>Will be replaced by the current day’s open-closed timeframe.</td>
             </tr>
             <tr>
-              <td>{ "{ next - opening - day }" }</td>
+              <td>{ "{next-opening-day}" }</td>
               <td>Will be replaced by the next day’s (in which you will be open) name.</td>
             </tr>
             <tr>
-              <td>{ "{ next - opening - time }" }</td>
+              <td>{ "{next-opening-time}" }</td>
               <td>Will be replaced by the opening time of your next open day.</td>
             </tr>
             <tr>
-              <td>{ "{ next - closing - time }" }</td>
+              <td>{ "{next-closing-time}" }</td>
               <td>Will be replaced by the closing time of your next open day.</td>
             </tr>
             <tr>
-              <td>{ "{ next - opening - timeframe }" }</td>
+              <td>{ "{next-opening-timeframe}" }</td>
               <td>Will be replaced by the open-closed timeframe of your next open day.</td>
             </tr>
             </tbody>

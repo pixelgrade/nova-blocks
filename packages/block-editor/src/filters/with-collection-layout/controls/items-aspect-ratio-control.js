@@ -9,7 +9,7 @@ const PRESETS = [
 ];
 
 const PRESET_VALUES = {
-  square:    { thumbnailAspectRatio: 50, thumbnailAspectRatioString: 'portrait', imageResizing: 'cropped' },
+  square:    { thumbnailAspectRatio: 50, thumbnailAspectRatioString: 'square', imageResizing: 'cropped' },
   landscape: { thumbnailAspectRatio: 42, thumbnailAspectRatioString: 'landscape', imageResizing: 'cropped' },
   portrait:  { thumbnailAspectRatio: 67, thumbnailAspectRatioString: 'portrait', imageResizing: 'cropped' },
   original:  { thumbnailAspectRatioString: 'original' },

@@ -11,13 +11,16 @@ const SharingEdit = ( props ) => {
 
   const {
     isSelected,
+    attributes,
   } = props;
+
+  const { buttonLabel } = attributes;
 
   return (
     <Fragment>
       <div className="wp-block-buttons">
         <div className="wp-block-button">
-          <button className="wp-block-button__link">View sharing options</button>
+          <button className="wp-block-button__link">{ buttonLabel }</button>
         </div>
       </div>
       { isSelected && <SharingOverlayPreview { ...props } /> }
@@ -67,7 +70,7 @@ const SharingOverlayPreview = ( props ) => {
               <SharingButton icon={ 'email' } label={ 'Email' } />
             </div>
           </SharingItemsGroup> }
-          { showSocialIcons && ( showTwitter || showFacebook || showLinkedin ) &&
+          { showSocialIcons && ( showTwitter || showFacebook || showLinkedin || showPinterest || showWhatsapp ) &&
             <SharingItemsGroup title={ 'Share publicly on social networks' }>
               <div className="novablocks-sharing__list">
                 { showTwitter && <SharingButton icon={ 'twitter' } label={ 'Twitter' } /> }

@@ -211,7 +211,7 @@ export const removeSmallestColumn = ( areaColumns ) => {
   let indexToRemove = data[0].index;
 
   if ( data[0].area.nth === 1 ) {
-    indexToRemove = data[data.length].index;
+    indexToRemove = data[data.length - 1].index;
   }
 
   areaColumns.splice( indexToRemove, 1 );

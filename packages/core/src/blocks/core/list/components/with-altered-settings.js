@@ -16,6 +16,10 @@ export const withAlteredSettings = ( settings ) => {
         type: 'string',
         default: 'is-style-no-connection'
       },
+      listItemsCount: {
+        type: 'number',
+        default: 0
+      },
     },
     supports: {
       ...settings.supports,
