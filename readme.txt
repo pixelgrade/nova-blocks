@@ -114,6 +114,16 @@ Yes! Nova Block's core features are free to use.
 
 == Changelog ==
 
+= 2.1.19 =
+* New: Edit the header navigation directly in the block editor — inline core/navigation editing projected into the menu system, plus special items (search, cart, dark mode), menu-item badges, icon/label display modes, and inline core/site-logo.
+* New: Cloud-served block pattern library with free/premium tiering.
+* New: FacetWP Pager block and FacetWP pagination support inside Supernova Query Loops.
+* Fix: Restore scrolling effects (Parallax/Doppler) on custom post type pages, where a null reference could abort the frontend collection, shape, and scrolling engines.
+* Fix: Resolve "unexpected or invalid content" recovery on enhanced core blocks (Separator, Group, Columns) by serializing the `--nb-card-media-container-height` and `--nb-emphasis-area` sizing variables unitless to match the frontend render, with an automatic one-time content migration for existing content.
+* Fix: Match the editor Parallax/Doppler preview enlargement and focal point to the frontend by measuring the canvas viewport instead of the full scroll content height.
+* Fix: A broad round of editor and frontend fixes across Cards Collection, Food Menu, Author Box, Post Comments, Sharing, Media Composition, OpenHours, FacetWP, Google Map, and the augmented core blocks (parametric grid crash, dead/duplicate controls, missing guards, and several editor/frontend mismatches).
+* Fix: Mobile Parallax viewport height and mobile menu open-color contrast.
+
 = 2.1.18 =
 * Compatibility: Move Nova block metadata and manual registrations to Block API v3 for WordPress 7.0 iframe editor readiness.
 * New: Add legacy Hero block compatibility.
