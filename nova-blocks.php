@@ -81,6 +81,7 @@ require_once dirname( __FILE__ ) . '/lib/block-rendering.php';
 require_once dirname( __FILE__ ) . '/lib/post-format-card-blueprints.php';
 require_once dirname( __FILE__ ) . '/lib/client-assets.php';
 require_once dirname( __FILE__ ) . '/lib/deprecated.php';
+require_once dirname( __FILE__ ) . '/lib/content-normalization.php';
 require_once dirname( __FILE__ ) . '/lib/header-nav-projection.php';
 
 // Register header navigation projection hooks (no-op unless the
