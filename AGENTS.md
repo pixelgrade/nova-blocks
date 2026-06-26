@@ -144,11 +144,17 @@ When a GitHub issue is fixed and the work is considered done:
 
 ### SVN Authentication
 - Username: `babbardel`
-- Password: `TPjLCUPxK!J9uk01`
 - SVN URL: `https://plugins.svn.wordpress.org/nova-blocks`
-- **IMPORTANT:** `--non-interactive` does NOT work for commits. Must use `--force-interactive` with password piped via echo:
+- **Credentials are NOT stored in this public repo.** WordPress.org now requires an **app-specific SVN password** (the old account password no longer authenticates SVN commits). Keep `babbardel`'s SVN app password in the gitignored private overlay `.env.local` (synced from the `nova-blocks-private` repo):
+  ```
+  NOVABLOCKS_WPORG_SVN_USER=babbardel
+  NOVABLOCKS_WPORG_SVN_APP_PASSWORD=svn_…   # app password from wordpress.org → Account → SVN
+  ```
+- **IMPORTANT:** `--non-interactive` fails (`svn: E215004: Authentication failed`). Use `--force-interactive` and feed the app password + username over stdin (svn prompts Password → Username; `--username` sets the default). Load the creds from the private overlay first:
   ```bash
-  echo 'TPjLCUPxK!J9uk01' | svn ci -m "message" --username babbardel --force-interactive
+  set -a; . ./.env.local; set +a   # run from the plugin dir, before any `cd`
+  printf '%s\n%s\n%s\n' "$NOVABLOCKS_WPORG_SVN_APP_PASSWORD" "$NOVABLOCKS_WPORG_SVN_USER" "$NOVABLOCKS_WPORG_SVN_APP_PASSWORD" \
+    | svn ci -m "message" --username "$NOVABLOCKS_WPORG_SVN_USER" --force-interactive --no-auth-cache
   ```
 
 ### Steps
@@ -168,14 +174,16 @@ cd /tmp/nova-blocks-svn
 svn add trunk/* --force
 svn status trunk | grep '^!' | awk '{print $2}' | xargs -I{} svn rm {}
 
-# 4. Review and commit trunk
+# 4. Review and commit trunk (creds loaded from .env.local — see SVN Authentication above)
 svn status trunk
-echo 'TPjLCUPxK!J9uk01' | svn ci -m "Release X.Y.Z - description" --username babbardel --force-interactive
+printf '%s\n%s\n%s\n' "$NOVABLOCKS_WPORG_SVN_APP_PASSWORD" "$NOVABLOCKS_WPORG_SVN_USER" "$NOVABLOCKS_WPORG_SVN_APP_PASSWORD" \
+  | svn ci -m "Release X.Y.Z - description" --username "$NOVABLOCKS_WPORG_SVN_USER" --force-interactive --no-auth-cache
 
 # 5. Update or create version tag (delete old tag if it exists from previous release)
 svn rm tags/X.Y.Z 2>/dev/null  # ignore error if tag doesn't exist yet
 svn cp trunk tags/X.Y.Z
-echo 'TPjLCUPxK!J9uk01' | svn ci -m "Tagging version X.Y.Z" --username babbardel --force-interactive
+printf '%s\n%s\n%s\n' "$NOVABLOCKS_WPORG_SVN_APP_PASSWORD" "$NOVABLOCKS_WPORG_SVN_USER" "$NOVABLOCKS_WPORG_SVN_APP_PASSWORD" \
+  | svn ci -m "Tagging version X.Y.Z" --username "$NOVABLOCKS_WPORG_SVN_USER" --force-interactive --no-auth-cache
 ```
 
 ## Version Bump Checklist
