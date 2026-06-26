@@ -397,6 +397,17 @@ export const resizeDropcap = dropcap => {
 export const getAttributes = element => {
   const attributes = {};
 
+  // Guard against a null/dataset-less element. Frontend callers derive the block
+  // via `container.closest( '[data-…]' )`, which returns null when a matching
+  // ancestor is absent (e.g. a stray .novablocks-doppler__wrapper rendered by a
+  // CPT template outside a [data-scrolling-effect] block). Without this guard a
+  // single such element threw `Cannot read properties of null (reading 'dataset')`,
+  // aborting getContainers()/the whole parallax, collection-grid and shape-modeling
+  // engines for the entire page.
+  if ( ! element || ! element.dataset ) {
+    return attributes;
+  }
+
   Object.keys( element.dataset ).forEach( key => {
     try {
       attributes[ key ] = JSON.parse( element.dataset[ key ] );
