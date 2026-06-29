@@ -23,6 +23,7 @@
 		"queryId",
 		"query",
 		"queryContext",
+		"templateSlug",
 		"displayLayout"
 	],
 	"supports": {

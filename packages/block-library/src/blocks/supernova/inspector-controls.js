@@ -28,12 +28,14 @@ const Controls = ( props ) => {
     columns
   } = attributes;
 
-  // Hide the "Collection" section when there is
-  // a single item in a single column
-  // Examples: Media Card, Hero Card
   if ( postsToShow === 1 && columns === 1 ) {
     return null;
   }
+
+  const contentTypeOptions = [
+    { label: __( 'Pre-defined fields', '__plugin_txtd' ), value: 'fields' },
+    { label: __( 'Custom Blocks', '__plugin_txtd' ), value: 'custom' },
+  ];
 
   return (
     <ControlsSection
@@ -46,13 +48,8 @@ const Controls = ( props ) => {
           key={ 'collection-content-type' }
           label={ __( 'Content Type', '__plugin_txtd' ) }
           value={ contentType }
-          options={ [
-            { label: __( 'Pre-defined fields', '__plugin_txtd' ), value: 'fields' },
-            { label: __( 'Custom Blocks', '__plugin_txtd' ), value: 'custom' },
-          ] }
-          onChange={ contentType => {
-            setAttributes( { contentType } );
-          } }
+          options={ contentTypeOptions }
+          onChange={ contentType => setAttributes( { contentType } ) }
         />
       </ControlsTab>
     </ControlsSection>

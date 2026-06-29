@@ -38,6 +38,10 @@ import { withShapeModelingDecoration } from "@novablocks/shape-modeling";
 
 import { getNewDefaults } from "./utils";
 import BlockControls from './block-controls';
+import {
+  isCurrentItemFeaturedImageMediaSource,
+  useCurrentItemFeaturedImage,
+} from '../supernova/utils/current-item-featured-image';
 
 const SupernovaItemEdit = props => {
   const { attributes, setControlsVisibility, clientId } = props;
@@ -137,16 +141,24 @@ const SupernovaItemEdit = props => {
 const CardMedia = withScrollingEffect( props => {
 
   const { attributes } = props;
-  const { images } = attributes;
+  const usesCurrentItemFeaturedImage = isCurrentItemFeaturedImageMediaSource( attributes );
+  const currentItemFeaturedImage = useCurrentItemFeaturedImage( props.context, usesCurrentItemFeaturedImage );
+  const images = usesCurrentItemFeaturedImage
+    ? ( currentItemFeaturedImage ? [ currentItemFeaturedImage ] : [] )
+    : attributes.images;
   const scrollingEffect = useScrollingEffect();
 
+  if ( usesCurrentItemFeaturedImage && ! currentItemFeaturedImage ) {
+    return null;
+  }
+
   if ( Array.isArray( images ) && 1 === images.length ) {
-    return <CardMediaWithShapeDecoration { ...props } />;
+    return <CardMediaWithShapeDecoration { ...props } media={ images[0] } />;
   }
 
   return (
     <div style={ scrollingEffect?.style }>
-      <MediaCompositionPreview { ...props } />
+      <MediaCompositionPreview { ...props } attributes={ { ...attributes, images } } />
     </div>
   );
 } );
@@ -154,7 +166,7 @@ const CardMedia = withScrollingEffect( props => {
 const CardMediaWithShapeDecoration = withShapeModelingDecoration( props => {
   const { attributes } = props;
   const { images } = attributes;
-  const media = normalizeMedia( images[ 0 ] );
+  const media = normalizeMedia( props.media || images[ 0 ] );
   const scrollingEffect = useScrollingEffect();
 
   return (

@@ -23,6 +23,7 @@ export const AdvancedGalleryChangeMediaToolbar = withVisibility( 'media-composit
 
 	const {
 		onSelectImages,
+		onSelectCurrentItemFeaturedImage,
 		attributes,
     context,
 	} = props;
@@ -68,6 +69,16 @@ export const AdvancedGalleryChangeMediaToolbar = withVisibility( 'media-composit
                 <MenuItem onClick={ open }>{ __( 'Add Video', '__plugin_txtd' ) }</MenuItem>
               ) }
             />
+            { onSelectCurrentItemFeaturedImage && (
+              <MenuItem
+                onClick={ () => {
+                  onSelectCurrentItemFeaturedImage();
+                  onClose();
+                } }
+              >
+                { __( 'Featured image from current item', '__plugin_txtd' ) }
+              </MenuItem>
+            ) }
           </NavigableMenu>
         ) }
       />

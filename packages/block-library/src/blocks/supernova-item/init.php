@@ -82,7 +82,8 @@ if ( ! function_exists( 'novablocks_render_supernova_item_block' ) ) {
 		}
 
 		$has_any_content = ! empty( $card_content ) || ! empty( $content_before_media );
-		$media   = novablocks_get_media_composition_markup( $attributes, [
+		$media_attributes = novablocks_get_card_media_source_attributes( $attributes, $block );
+		$media   = novablocks_get_media_composition_markup( $media_attributes, [
 			'companionContent' => ( novablocks_show_card_contents( $attributes ) && $has_any_content )
 		] );
 		$media_markup = novablocks_get_collection_card_media_markup_wrapped( $media );

@@ -27,6 +27,7 @@ import {
 } from './components';
 
 import { compileSupernovaItemAttributes } from './utils';
+import { CURRENT_ITEM_FEATURED_IMAGE_MEDIA_SOURCE } from './utils/current-item-featured-image';
 
 const normalizeVariationValue = ( value ) => ( value + 11 ) % 12 + 1;
 
@@ -130,14 +131,33 @@ const getHealedSlideshowHeroContentSignalAttributes = ( attributes ) => {
 };
 
 const ChangeMediaBlockControls = ( props ) => {
-  const { clientId } = props;
+  const { clientId, setAttributes } = props;
   const innerBlocks = useInnerBlocks( clientId );
   const { updateBlockAttributes } = useDispatch( 'core/block-editor' );
   const onSelectImages = useCallback( images => {
     normalizeImages( images ).then( newImages => {
-      updateBlockAttributes( innerBlocks[0].clientId, { images: newImages } );
+      const firstInnerBlock = innerBlocks[0];
+
+      setAttributes( { mediaSource: 'manual' } );
+      if ( firstInnerBlock ) {
+        updateBlockAttributes( firstInnerBlock.clientId, {
+          images: newImages,
+          mediaSource: 'manual',
+        } );
+      }
     } );
-  } );
+  }, [ innerBlocks, setAttributes, updateBlockAttributes ] );
+
+  const onSelectCurrentItemFeaturedImage = useCallback( () => {
+    const firstInnerBlock = innerBlocks[0];
+
+    setAttributes( { mediaSource: CURRENT_ITEM_FEATURED_IMAGE_MEDIA_SOURCE } );
+    if ( firstInnerBlock ) {
+      updateBlockAttributes( firstInnerBlock.clientId, {
+        mediaSource: CURRENT_ITEM_FEATURED_IMAGE_MEDIA_SOURCE,
+      } );
+    }
+  }, [ innerBlocks, setAttributes, updateBlockAttributes ] );
 
   if ( 1 !== innerBlocks.length ) {
     return null;
@@ -147,9 +167,11 @@ const ChangeMediaBlockControls = ( props ) => {
     ...props,
     attributes: {
       ...props.attributes,
-      images: innerBlocks[0].attributes.images
+      images: innerBlocks[0].attributes.images,
+      mediaSource: innerBlocks[0].attributes.mediaSource || props.attributes.mediaSource,
     },
     onSelectImages,
+    onSelectCurrentItemFeaturedImage,
   };
 
   return (
@@ -255,7 +277,7 @@ const SupernovaEdit = props => {
   // since right now it is deduced from the fact that the Supernova block is or is not inside a query block.
   if ( isDescendentOfQueryLoop && attributes.contentType !== 'auto' ) {
     setAttributes( { contentType: 'auto' } );
-  } else if ( !isDescendentOfQueryLoop && ![ 'fields', 'custom', ].includes( attributes.contentType ) ) {
+  } else if ( !isDescendentOfQueryLoop && ![ 'fields', 'custom' ].includes( attributes.contentType ) ) {
     setAttributes( { contentType: 'fields' } );
   }
 
@@ -274,7 +296,6 @@ const SupernovaEdit = props => {
 
   // Either lock or unlock nb-supernova-items depending on whether we are in a query or not.
   if ( isDescendentOfQueryLoop ) {
-    // If we use a query to get posts, the inner nb-supernova-items need to be locked.
     useInnerBlocksLock( clientId, { remove: true, move: true }, attributes, 'novablocks/supernova-item' );
   } else {
     // @todo Maybe we should just always lock nb-supernova-items since we have controls for number of items?
@@ -308,13 +329,14 @@ const SupernovaEdit = props => {
 
   ({ posts } = useSelect(
     ( select ) => {
+      const { getEntityRecords, getTaxonomies } = select( coreStore );
+
       if ( !isDescendentOfQueryLoop ) {
         return {
           posts: false,
         };
       }
 
-      const { getEntityRecords, getTaxonomies } = select( coreStore );
       const query = {
         postType: postType || 'post',
         offset: perPage ? perPage * (page - 1) + offset : 0,

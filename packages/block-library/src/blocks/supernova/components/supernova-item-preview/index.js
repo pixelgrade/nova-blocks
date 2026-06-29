@@ -9,6 +9,11 @@ import { MediaCompositionPreview } from '@novablocks/media-composition';
 import { getColorSignalClassnames, normalizeMedia } from '@novablocks/utils';
 import { useScrollingEffect, withScrollingEffect } from "@novablocks/scrolling-effect";
 
+import {
+  isCurrentItemFeaturedImageMediaSource,
+  useCurrentItemFeaturedImage,
+} from '../../utils/current-item-featured-image';
+
 const SupernovaItemPreview = props => {
 
   const { attributes } = props;
@@ -33,10 +38,19 @@ const SupernovaItemPreview = props => {
 
 const MediaCompositionOrFirstMedia = withScrollingEffect( props => {
   const { attributes } = props;
-  const { images, showMedia } = attributes;
+  const { showMedia } = attributes;
   const scrollingEffect = useScrollingEffect();
+  const usesCurrentItemFeaturedImage = isCurrentItemFeaturedImageMediaSource( attributes );
+  const currentItemFeaturedImage = useCurrentItemFeaturedImage( props.context, usesCurrentItemFeaturedImage );
+  const images = usesCurrentItemFeaturedImage
+    ? ( currentItemFeaturedImage ? [ currentItemFeaturedImage ] : [] )
+    : attributes.images;
 
   if ( !showMedia ) {
+    return null;
+  }
+
+  if ( usesCurrentItemFeaturedImage && ! currentItemFeaturedImage ) {
     return null;
   }
 
@@ -50,7 +64,7 @@ const MediaCompositionOrFirstMedia = withScrollingEffect( props => {
 
   return (
     <div style={ scrollingEffect?.style }>
-      <MediaCompositionPreview { ...props } />
+      <MediaCompositionPreview { ...props } attributes={ { ...attributes, images } } />
     </div>
   );
 } );

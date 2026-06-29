@@ -26,3 +26,30 @@ test('editor heals stale slideshow hero content signal 0 states before preview r
     /useEffect\(\s*\(\) => \{[\s\S]*?if \( healedSlideshowHeroAttributes \) \{[\s\S]*?setAttributes\( healedSlideshowHeroAttributes \);[\s\S]*?\}[\s\S]*?\},\s*\[ healedSlideshowHeroAttributes, setAttributes \]\s*\);/
   );
 });
+
+test('editor keeps custom Cards Collection in card layout while allowing current item featured media', () => {
+  assert.doesNotMatch(
+    source,
+    /contentType === 'current-post'/
+  );
+
+  assert.match(
+    source,
+    /!\[ 'fields', 'custom' \]\.includes\( attributes\.contentType \)/
+  );
+
+  assert.match(
+    source,
+    /onSelectCurrentItemFeaturedImage/
+  );
+
+  assert.match(
+    source,
+    /mediaSource:\s*CURRENT_ITEM_FEATURED_IMAGE_MEDIA_SOURCE/
+  );
+
+  assert.match(
+    source,
+    /inQuery\s*\?\s*<PostsCollectionLayout[\s\S]*?:\s*<CardsCollectionLayout/
+  );
+});

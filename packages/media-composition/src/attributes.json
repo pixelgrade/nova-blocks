@@ -6,6 +6,10 @@
 			"type": "object"
 		}
 	},
+	"mediaSource": {
+		"type": "string",
+		"default": "manual"
+	},
 	"stylePreset": {
 		"type": "string",
 		"default": "the-cloud-atlas"

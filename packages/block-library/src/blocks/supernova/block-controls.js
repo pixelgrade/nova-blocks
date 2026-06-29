@@ -71,10 +71,12 @@ const InnerBlocksControls = ( props ) => {
 
   const onSelectImages = useCallback( images => {
     const newInnerBlocks = innerBlocks.slice();
+    setAttributes( { mediaSource: 'manual' } );
 
     const collection = images.map( image => {
       const block = createBlock( 'novablocks/supernova-item', {
         ...innerBlockAttributes,
+        mediaSource: 'manual',
         defaultsGenerated: true
       } );
 
@@ -87,11 +89,14 @@ const InnerBlocksControls = ( props ) => {
 
     collection.forEach( ( [ childClientId, image ] ) => {
       normalizeImage( image ).then( newImage => {
-        updateBlockAttributes( childClientId, { images: [ newImage ] } );
+        updateBlockAttributes( childClientId, {
+          images: [ newImage ],
+          mediaSource: 'manual',
+        } );
       } );
     } );
 
-  }, [ clientId, innerBlocks ] );
+  }, [ clientId, innerBlocks, innerBlockAttributes, replaceInnerBlocks, setAttributes, updateBlockAttributes ] );
 
   const addNewCard = useCallback( () => {
     const newInnerBlocks = innerBlocks.slice();

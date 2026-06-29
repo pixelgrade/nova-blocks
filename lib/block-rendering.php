@@ -646,6 +646,64 @@ if ( ! function_exists( 'novablocks_get_collection_output' ) ) {
 	}
 }
 
+function novablocks_resolve_current_item_post( $block ) {
+	$post_id = 0;
+
+	if ( $block instanceof WP_Block && ! empty( $block->context['postId'] ) ) {
+		$post_id = absint( $block->context['postId'] );
+	}
+
+	if ( $post_id ) {
+		$post = get_post( $post_id );
+		return $post instanceof WP_Post ? $post : null;
+	}
+
+	$post = get_post();
+
+	return $post instanceof WP_Post ? $post : null;
+}
+
+function novablocks_get_current_item_featured_image_media( $block ): array {
+	$post = novablocks_resolve_current_item_post( $block );
+
+	if ( ! $post instanceof WP_Post ) {
+		return [];
+	}
+
+	$thumbnail_id = get_post_thumbnail_id( $post );
+	if ( empty( $thumbnail_id ) ) {
+		return [];
+	}
+
+	$url = wp_get_attachment_image_url( $thumbnail_id, 'novablocks_large' );
+	if ( empty( $url ) ) {
+		$url = wp_get_attachment_url( $thumbnail_id );
+	}
+
+	if ( empty( $url ) ) {
+		return [];
+	}
+
+	return [
+		'type' => 'image',
+		'id'   => $thumbnail_id,
+		'url'  => $url,
+		'alt'  => get_post_meta( $thumbnail_id, '_wp_attachment_image_alt', true ),
+	];
+}
+
+function novablocks_get_card_media_source_attributes( array $attributes, $block ): array {
+	if ( ( $attributes['mediaSource'] ?? 'manual' ) !== 'current-item-featured-image' ) {
+		return $attributes;
+	}
+
+	$current_item_media = novablocks_get_current_item_featured_image_media( $block );
+
+	$attributes['images'] = empty( $current_item_media ) ? [] : [ $current_item_media ];
+
+	return $attributes;
+}
+
 function novablocks_render_scroll_indicator( array $attributes ) {
 	if ( empty( $attributes['scrollIndicatorBlock'] ) ) {
 		return;
