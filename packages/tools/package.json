@@ -24,5 +24,13 @@
 		"@wordpress/i18n": "^4.6.0",
 		"@wordpress/icons": "^8.2.0",
 		"@wordpress/plugins": "^4.4.0"
+	},
+	"overrides": {
+		"lodash": "^4.18.1",
+		"yaml": "^1.10.3",
+		"diff": "^4.0.4",
+		"moment": "^2.29.4",
+		"moment-timezone": "^0.5.35",
+		"@babel/runtime": "^7.26.10"
 	}
 }

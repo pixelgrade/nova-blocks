@@ -21,5 +21,9 @@
 		"@wordpress/api-fetch": "^6.3.0",
 		"@wordpress/data": "^5.2.0",
 		"colord": "^2.9.2"
+	},
+	"overrides": {
+		"lodash": "^4.18.1",
+		"@babel/runtime": "^7.26.10"
 	}
 }

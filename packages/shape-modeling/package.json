@@ -25,5 +25,12 @@
 		"@wordpress/i18n": "^4.6.0",
 		"fast-mersenne-twister": "^1.0.3",
 		"react-spring": "^9.4.4"
+	},
+	"overrides": {
+		"lodash": "^4.18.1",
+		"yaml": "^1.10.3",
+		"moment": "^2.29.4",
+		"moment-timezone": "^0.5.35",
+		"@babel/runtime": "^7.26.10"
 	}
 }
