@@ -131,6 +131,25 @@ git clone git@github.com:<you>/nova-blocks-private.git /path/to/nova-blocks-priv
 bin/bootstrap-private --source-dir /path/to/nova-blocks-private
 ```
 
+## Cross-Stack Strategy Decisions
+
+When Nova Blocks work changes or settles product, business, positioning, monetization, Pixelgrade.com, Pixelgrade LT vs Pixelgrade Plus, starter strategy, or cross-repo LT stack architecture, save the durable decision in the central strategy folder:
+
+`/Users/georgeolaru/Developer/pixelsite/master-strategy/`
+
+Before making or changing those decisions, read:
+- `/Users/georgeolaru/Developer/pixelsite/master-strategy/README.md`
+- `/Users/georgeolaru/Developer/pixelsite/master-strategy/decisions/README.md`
+- `/Users/georgeolaru/Developer/pixelsite/master-strategy/pixelgrade-lt-stack-strategy.md`
+- `/Users/georgeolaru/Developer/pixelsite/master-strategy/source-index.md`
+
+For any meaningful cross-stack strategy decision:
+- Create a dated note in `/Users/georgeolaru/Developer/pixelsite/master-strategy/decisions/YYYY-MM-DD-short-title.md` using the template in `decisions/README.md`.
+- Update `source-index.md` when the decision depends on a new source document, repo note, issue, or public reference.
+- Update `pixelgrade-lt-stack-strategy.md` only when the decision changes the central strategy.
+
+Keep implementation details, tests, and repo-specific plans in the repo where the work happens. Keep cross-stack product direction, positioning, monetization, and Pixelgrade.com strategy in `pixelsite/master-strategy`.
+
 ## Issue Resolution Workflow
 
 When a GitHub issue is fixed and the work is considered done:
