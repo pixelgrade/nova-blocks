@@ -55,12 +55,12 @@ function nb_rows_to_items( array $rows ): array {
 }
 
 $tree = [
-	nb_block( 'core/navigation-link', [ 'label' => 'Home', 'url' => '/', 'kind' => 'custom' ] ),
+	nb_block( 'core/navigation-link', [ 'label' => 'Home', 'url' => '/', 'kind' => 'custom', 'className' => 'is-cta-button is-external-link' ] ),
 	nb_block( 'core/navigation-submenu', [
-		'label' => 'About', 'url' => '/about', 'kind' => 'post-type', 'type' => 'page', 'id' => 12, 'novablocksBadge' => 'New',
+		'label' => 'About', 'url' => '/about', 'kind' => 'post-type', 'type' => 'page', 'id' => 12, 'novablocksBadge' => 'New', 'className' => 'is-external-link',
 	], [
 		nb_block( 'core/navigation-link', [ 'label' => 'Team', 'url' => '/about/team', 'kind' => 'post-type', 'type' => 'page', 'id' => 13, 'opensInNewTab' => true, 'rel' => 'noopener' ] ),
-		nb_block( 'core/navigation-link', [ 'label' => 'Docs', 'url' => 'https://docs.example.com', 'kind' => 'custom' ] ),
+		nb_block( 'core/navigation-link', [ 'label' => 'Docs', 'url' => 'https://docs.example.com', 'kind' => 'custom', 'className' => 'is-external-link' ] ),
 	] ),
 	nb_block( 'core/navigation-link', [ 'label' => 'Blog', 'url' => '/blog', 'kind' => 'post-type', 'type' => 'page', 'id' => 20 ] ),
 	nb_block( 'novablocks/navigation-search' ),
@@ -88,6 +88,9 @@ if ( $forward1 !== $forward2 ) {
 nb_assert( 6 === count( $blocks2 ), 'reverse rebuilds six top-level blocks' );
 nb_assert( 'core/navigation-submenu' === $blocks2[1]['blockName'], 'About rebuilt as a submenu' );
 nb_assert( 2 === count( $blocks2[1]['innerBlocks'] ), 'About submenu keeps its two children' );
+nb_assert( 'is-cta-button is-external-link' === ( $blocks2[0]['attrs']['className'] ?? null ), 'Home custom classes survive reverse rebuild' );
+nb_assert( 'is-external-link' === ( $blocks2[1]['attrs']['className'] ?? null ), 'submenu custom classes survive reverse rebuild' );
+nb_assert( 'is-external-link' === ( $blocks2[1]['innerBlocks'][1]['attrs']['className'] ?? null ), 'child link custom classes survive reverse rebuild' );
 nb_assert( 'novablocks/navigation-cart' === $blocks2[4]['blockName'], 'cart special item recognised by its class' );
 nb_assert( '3' === ( $blocks2[4]['attrs']['novablocksBadge'] ?? null ), 'cart badge preserved through the round-trip' );
 

@@ -128,11 +128,18 @@ function nb_block( string $name, array $attrs = [], array $inner = [] ): array {
 }
 
 $tree = [
-	nb_block( 'core/navigation-link', [ 'label' => 'Home', 'url' => '/', 'kind' => 'custom' ] ),
+	nb_block( 'core/navigation-link', [ 'label' => 'Home', 'url' => '/', 'kind' => 'custom', 'className' => 'is-cta-button is-external-link' ] ),
 	nb_block( 'core/navigation-submenu', [
 		'label' => 'About', 'url' => '/about', 'kind' => 'post-type', 'type' => 'page', 'id' => 12, 'novablocksBadge' => 'New',
 	], [
 		nb_block( 'core/navigation-link', [ 'label' => 'Team', 'url' => '/about/team', 'kind' => 'post-type', 'type' => 'page', 'id' => 13 ] ),
+	] ),
+	nb_block( 'core/navigation-link', [
+		'label'                 => 'Styled',
+		'url'                   => '/styled',
+		'kind'                  => 'custom',
+		'className'             => 'is-cta-button no-icon',
+		'novablocksVisualStyle' => 'label',
 	] ),
 	nb_block( 'novablocks/navigation-search' ),
 	nb_block( 'novablocks/navigation-cart' ),
@@ -150,8 +157,8 @@ nb_assert_same( 1, count( $GLOBALS['store']['nav_menus'] ), 'one generated menu 
 $menu_id = $GLOBALS['store']['nav_menus'][0]->term_id;
 nb_assert_same( 'primary', get_term_meta( $menu_id, '_novablocks_generated_for', true ), 'menu stamped with ownership for the location' );
 
-// Five rows -> five menu items written.
-nb_assert_same( 5, count( $GLOBALS['store']['item_order'] ), 'five menu items written' );
+// Six rows -> six menu items written.
+nb_assert_same( 6, count( $GLOBALS['store']['item_order'] ), 'six menu items written' );
 
 // Parent linking: Team's parent-id is About's created id.
 $about = nb_args_by_title( 'About' );
@@ -167,6 +174,13 @@ nb_assert_same( 12, $about['args']['menu-item-object-id'], 'about object id' );
 
 // Badge meta written on the About item.
 nb_assert_same( 'New', $GLOBALS['store']['post_meta'][ $about['id'] ]['_menu_item_badge'] ?? null, 'about badge meta written' );
+
+// Custom classes from block className are written into menu-item-classes.
+$home = nb_args_by_title( 'Home' );
+nb_assert_same( 'is-cta-button is-external-link', $home['args']['menu-item-classes'], 'home keeps custom classes' );
+
+$styled = nb_args_by_title( 'Styled' );
+nb_assert_same( 'is-cta-button no-icon', $styled['args']['menu-item-classes'], 'visual-style derived class is merged and de-duped' );
 
 // Special item classes preserved (the 1:1 hook for the Anima walker / CSS).
 $search = nb_args_by_title( 'Search' );

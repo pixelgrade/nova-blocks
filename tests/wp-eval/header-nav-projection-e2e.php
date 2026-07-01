@@ -74,9 +74,10 @@ try {
 	$created_menus[] = $src;
 
 	$home = wp_update_nav_menu_item( $src, 0, [
-		'menu-item-title'  => 'E2E Home',
-		'menu-item-url'    => home_url( '/' ),
-		'menu-item-status' => 'publish',
+		'menu-item-title'   => 'E2E Home',
+		'menu-item-url'     => home_url( '/' ),
+		'menu-item-status'  => 'publish',
+		'menu-item-classes' => 'is-cta-button',
 	] );
 	update_post_meta( $home, '_menu_item_badge', 'New' );
 
@@ -90,6 +91,7 @@ try {
 		'menu-item-url'       => home_url( '/shop/child/' ),
 		'menu-item-status'    => 'publish',
 		'menu-item-parent-id' => $shop,
+		'menu-item-classes'   => 'is-external-link',
 	] );
 	$searchitem = wp_update_nav_menu_item( $src, 0, [
 		'menu-item-title'   => 'Search',
@@ -120,6 +122,8 @@ try {
 	nbe_assert( false !== strpos( $entity->post_content, 'E2E Shop' ), 'entity captured the submenu parent' );
 	nbe_assert( false !== strpos( $entity->post_content, 'E2E Child' ), 'entity captured the submenu child (innerContent)' );
 	nbe_assert( false !== strpos( $entity->post_content, 'navigation-search' ), 'entity captured the search special item' );
+	nbe_assert( false !== strpos( $entity->post_content, 'is-cta-button' ), 'entity captured the CTA className' );
+	nbe_assert( false !== strpos( $entity->post_content, 'is-external-link' ), 'entity captured the external-link className' );
 
 	/* 3. Render the generated menu and assert the frontend markup. */
 	$gen = null;
@@ -141,6 +145,8 @@ try {
 	nbe_assert( false !== strpos( $html, 'menu-item-has-children' ), 'rendered menu marks the submenu parent' );
 	nbe_assert( false !== strpos( $html, 'sub-menu' ), 'rendered menu has a sub-menu list' );
 	nbe_assert( false !== strpos( $html, 'E2E Child' ), 'rendered menu includes the submenu child' );
+	nbe_assert( false !== strpos( $html, 'is-cta-button' ), 'rendered menu keeps the CTA class' );
+	nbe_assert( false !== strpos( $html, 'is-external-link' ), 'rendered menu keeps the external-link class' );
 	nbe_assert( false !== strpos( $html, 'menu-item--search' ), 'rendered menu keeps the search special-item class' );
 	nbe_assert( false !== strpos( $html, 'icon-only' ), 'icon visual-style projects Anima\'s icon-only class (hides the label)' );
 	nbe_assert( false !== strpos( $html, 'New' ), 'rendered menu includes the badge text' );

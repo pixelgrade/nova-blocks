@@ -46,9 +46,10 @@ function nb_block( string $name, array $attrs = [], array $inner = [] ): array {
 
 $tree = [
 	nb_block( 'core/navigation-link', [
-		'label' => 'Home',
-		'url'   => '/',
-		'kind'  => 'custom',
+		'label'     => 'Home',
+		'url'       => '/',
+		'kind'      => 'custom',
+		'className' => 'is-cta-button is-external-link is-cta-button',
 	] ),
 	nb_block( 'core/navigation-submenu', [
 		'label'          => 'About',
@@ -57,6 +58,7 @@ $tree = [
 		'type'           => 'page',
 		'id'             => 12,
 		'novablocksBadge' => 'New',
+		'className'      => 'is-external-link',
 	], [
 		nb_block( 'core/navigation-link', [
 			'label' => 'Team',
@@ -88,7 +90,7 @@ nb_assert_same( 'custom', $home['type'], 'home type' );
 nb_assert_same( 'custom', $home['object'], 'home object' );
 nb_assert_same( 0, $home['object_id'], 'home object_id' );
 nb_assert_same( '', $home['badge'], 'home no badge' );
-nb_assert_same( [], $home['classes'], 'home no classes' );
+nb_assert_same( [ 'is-cta-button', 'is-external-link' ], $home['classes'], 'home custom classes' );
 nb_assert_same( [], $home['children'], 'home no children' );
 
 // 2. About (post_type submenu with badge + child)
@@ -98,6 +100,7 @@ nb_assert_same( 'post_type', $about['type'], 'about type' );
 nb_assert_same( 'page', $about['object'], 'about object' );
 nb_assert_same( 12, $about['object_id'], 'about object_id' );
 nb_assert_same( 'New', $about['badge'], 'about badge' );
+nb_assert_same( [ 'is-external-link' ], $about['classes'], 'about custom classes' );
 nb_assert_same( 1, count( $about['children'] ), 'about has one child' );
 
 $team = $about['children'][0];
@@ -184,6 +187,17 @@ $not_special = novablocks_header_nav_item_to_block( [
 	'classes' => [ 'menu-item--dark-mode' ], // missing js-sm-dark-mode-toggle
 ] );
 nb_assert_same( 'core/navigation-link', $not_special['blockName'], 'partial marker class stays a normal link' );
+nb_assert( ! isset( $not_special['attrs']['className'] ), 'projection-owned marker class is stripped from normal link className' );
+
+$styled_link = novablocks_header_nav_item_to_block( [
+	'title'        => 'Styled Link',
+	'url'          => '/styled',
+	'type'         => 'custom',
+	'classes'      => [ 'is-cta-button', 'icon-only', 'is-external-link', 'no-icon', 'is-cta-button' ],
+	'visual_style' => 'icon',
+] );
+nb_assert_same( 'core/navigation-link', $styled_link['blockName'], 'custom classes do not make a link special' );
+nb_assert_same( 'is-cta-button is-external-link', $styled_link['attrs']['className'] ?? null, 'seed keeps custom classes and strips projection-owned classes' );
 
 // Serialization guard: a submenu rebuilt from items must carry an innerContent
 // placeholder per child, or serialize_blocks() drops the children (self-closing).

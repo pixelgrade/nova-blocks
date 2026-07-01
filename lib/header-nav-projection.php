@@ -83,6 +83,65 @@ function novablocks_header_nav_descriptor_defaults(): array {
 }
 
 /**
+ * Split a block className string into a stable, de-duplicated class list.
+ *
+ * @param string $class_name Space-separated CSS classes.
+ * @return string[]
+ */
+function novablocks_header_nav_split_class_name( string $class_name ): array {
+	$classes = preg_split( '/\s+/', trim( $class_name ) );
+
+	return novablocks_header_nav_unique_classes( false === $classes ? [] : $classes );
+}
+
+/**
+ * Normalise and de-duplicate CSS class lists while preserving first-seen order.
+ *
+ * @param array $classes CSS classes.
+ * @return string[]
+ */
+function novablocks_header_nav_unique_classes( array $classes ): array {
+	$classes = array_map( static function ( $class ) {
+		return trim( (string) $class );
+	}, $classes );
+
+	$classes = array_filter( $classes, static function ( string $class ): bool {
+		return '' !== $class;
+	} );
+
+	return array_values( array_unique( $classes ) );
+}
+
+/**
+ * CSS classes owned by the projection/theme bridge, not by user-authored
+ * Navigation block className.
+ *
+ * @return string[]
+ */
+function novablocks_header_nav_projection_owned_classes(): array {
+	$classes = [ 'icon-only', 'no-icon' ];
+
+	foreach ( novablocks_header_nav_special_items() as $config ) {
+		$classes = array_merge( $classes, $config['classes'] );
+	}
+
+	return novablocks_header_nav_unique_classes( $classes );
+}
+
+/**
+ * Return only user-authored classes that should be exposed as block className.
+ *
+ * @param array $classes Classic menu item classes.
+ * @return string[]
+ */
+function novablocks_header_nav_user_classes( array $classes ): array {
+	return array_values( array_diff(
+		novablocks_header_nav_unique_classes( $classes ),
+		novablocks_header_nav_projection_owned_classes()
+	) );
+}
+
+/**
  * Map a single parsed block to a menu-item descriptor (or null if the block is
  * not projectable).
  *
@@ -102,7 +161,12 @@ function novablocks_header_nav_block_to_descriptor( array $block ): ?array {
 	$special = novablocks_header_nav_special_items();
 
 	if ( isset( $special[ $name ] ) ) {
-		$config = $special[ $name ];
+		$config  = $special[ $name ];
+		$classes = $config['classes'];
+
+		if ( isset( $attrs['className'] ) ) {
+			$classes = array_merge( $classes, novablocks_header_nav_split_class_name( (string) $attrs['className'] ) );
+		}
 
 		return array_merge( $defaults, [
 			'title'        => isset( $attrs['label'] ) && '' !== $attrs['label'] ? $attrs['label'] : $config['title'],
@@ -110,7 +174,7 @@ function novablocks_header_nav_block_to_descriptor( array $block ): ?array {
 			'type'         => 'custom',
 			'object'       => 'custom',
 			'object_id'    => 0,
-			'classes'      => $config['classes'],
+			'classes'      => novablocks_header_nav_unique_classes( $classes ),
 			'badge'        => isset( $attrs['novablocksBadge'] ) ? (string) $attrs['novablocksBadge'] : '',
 			'visual_style' => isset( $attrs['novablocksVisualStyle'] ) && '' !== $attrs['novablocksVisualStyle'] ? (string) $attrs['novablocksVisualStyle'] : $config['visual_style'],
 			'source_block' => $name,
@@ -153,6 +217,7 @@ function novablocks_header_nav_block_to_descriptor( array $block ): ?array {
 			'xfn'          => $attrs['rel'] ?? '',
 			'description'  => $attrs['description'] ?? '',
 			'attr_title'   => $attrs['title'] ?? '',
+			'classes'      => isset( $attrs['className'] ) ? novablocks_header_nav_split_class_name( (string) $attrs['className'] ) : [],
 			'badge'        => isset( $attrs['novablocksBadge'] ) ? (string) $attrs['novablocksBadge'] : '',
 			'visual_style' => isset( $attrs['novablocksVisualStyle'] ) ? (string) $attrs['novablocksVisualStyle'] : '',
 			'source_block' => $name,
@@ -268,11 +333,15 @@ function novablocks_header_nav_item_to_block( array $item, array $children = [] 
 	// Special item?
 	$special = novablocks_header_nav_match_special( $classes );
 	if ( '' !== $special ) {
-		$config = novablocks_header_nav_special_items()[ $special ];
-		$attrs  = [];
+		$config       = novablocks_header_nav_special_items()[ $special ];
+		$attrs        = [];
+		$user_classes = novablocks_header_nav_user_classes( $classes );
 
 		if ( ( $item['title'] ?? '' ) !== $config['title'] && '' !== ( $item['title'] ?? '' ) ) {
 			$attrs['label'] = $item['title'];
+		}
+		if ( ! empty( $user_classes ) ) {
+			$attrs['className'] = implode( ' ', $user_classes );
 		}
 		if ( '' !== $badge ) {
 			$attrs['novablocksBadge'] = $badge;
@@ -329,6 +398,11 @@ function novablocks_header_nav_item_to_block( array $item, array $children = [] 
 	}
 	if ( '' !== $visual_style ) {
 		$attrs['novablocksVisualStyle'] = $visual_style;
+	}
+
+	$user_classes = novablocks_header_nav_user_classes( $classes );
+	if ( ! empty( $user_classes ) ) {
+		$attrs['className'] = implode( ' ', $user_classes );
 	}
 
 	return [
@@ -523,12 +597,13 @@ function novablocks_header_nav_apply_rows_to_menu( array $rows, string $location
 		// (Anima_Admin_Nav_Menus::setup_nav_menu_item): icon-only hides the
 		// label (text-indent), no-icon hides the icon. Anima only adds these to
 		// its own `custom-pxg` items, so we add them here for the projected ones.
-		$classes = $row['classes'];
+		$classes = novablocks_header_nav_unique_classes( $row['classes'] ?? [] );
 		if ( 'icon' === $row['visual_style'] ) {
 			$classes[] = 'icon-only';
 		} elseif ( 'label' === $row['visual_style'] ) {
 			$classes[] = 'no-icon';
 		}
+		$classes = novablocks_header_nav_unique_classes( $classes );
 
 		$item_id = wp_update_nav_menu_item( $menu_id, $reuse_id, [
 			'menu-item-title'       => $row['title'],
@@ -638,7 +713,7 @@ function novablocks_header_nav_normalize_menu_item( $item ): array {
 		'xfn'         => (string) $item->xfn,
 		'description' => (string) $item->description,
 		'attr_title'  => (string) $item->attr_title,
-		'classes'     => array_values( array_filter( (array) $item->classes ) ),
+		'classes'     => novablocks_header_nav_unique_classes( (array) $item->classes ),
 		'badge'       => (string) get_post_meta( $item->ID, '_menu_item_badge', true ),
 		'visual_style' => (string) get_post_meta( $item->ID, '_menu_item_visual_style', true ),
 	];
@@ -758,9 +833,10 @@ function novablocks_header_nav_maybe_seed(): void {
  *
  *  - 1: initial projection
  *  - 2: visual_style now also writes Anima's icon-only / no-icon class
+ *  - 3: user-authored navigation item className is projected and seeded
  */
 function novablocks_header_nav_projection_version(): int {
-	return 2;
+	return 3;
 }
 
 /**
