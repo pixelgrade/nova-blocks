@@ -24,6 +24,13 @@ const withColorSignalSaveCustomProps = ( element, blockType, attributes ) => {
     return element;
   }
 
+  // Content saved before the space-and-sizing feature existed carries none of
+  // the --nb-* custom properties; leave it untouched (see
+  // with-legacy-spacing-markup).
+  if ( attributes?.metadata?.__novablocksLegacySpacing?.noSpacingMarkup ) {
+    return element;
+  }
+
   const { emphasisArea } = attributes;
 
   return Object.assign( {}, element, {

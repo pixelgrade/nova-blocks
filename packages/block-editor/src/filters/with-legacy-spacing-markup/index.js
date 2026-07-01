@@ -1,26 +1,15 @@
 import { addFilter } from '@wordpress/hooks';
 
-const LEGACY_SPACE_BLOCKS = [ 'core/group', 'core/columns', 'core/separator' ];
+import legacySpacingDetectionModule from './detect-legacy-spacing';
+
+const { detectLegacySpacingFlags } = legacySpacingDetectionModule;
 
 const withLegacySpacingMetadata = ( blockAttributes, blockType, innerHTML ) => {
-  if ( ! LEGACY_SPACE_BLOCKS.includes( blockType?.name ) || typeof innerHTML !== 'string' ) {
+  const legacyFlags = detectLegacySpacingFlags( blockType?.name, innerHTML );
+
+  if ( ! legacyFlags ) {
     return blockAttributes;
   }
-
-  // Only annotate blocks that carry legacy NB spacing custom properties.
-  if ( ! innerHTML.includes( '--nb-emphasis-top-spacing' ) ) {
-    return blockAttributes;
-  }
-
-  const hasAspectRatioVar = innerHTML.includes( '--nb-card-media-aspect-ratio' );
-  const hasMinHeightFallbackVar = innerHTML.includes( '--nb-min-height-fallback' );
-  const hasZIndexPx = /--nb-block-zindex:\s*[^;]*px\s*;/i.test( innerHTML );
-
-  const legacyFlags = {
-    missingAspectRatioVar: ! hasAspectRatioVar,
-    missingMinHeightFallbackVar: ! hasMinHeightFallbackVar,
-    zIndexSerializedAsPx: hasZIndexPx,
-  };
 
   return {
     ...blockAttributes,

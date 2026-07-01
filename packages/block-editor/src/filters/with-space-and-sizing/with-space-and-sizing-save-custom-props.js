@@ -9,8 +9,16 @@ const withSpaceAndSizingSaveCustomProps = ( extraProps, blockType, attributes ) 
     return extraProps;
   }
 
-  const spacingCSSProps = getSpacingCSSProps( attributes, extraProps?.style );
   const legacySpacingFlags = attributes?.metadata?.__novablocksLegacySpacing;
+
+  // Content saved before this feature existed carries none of the --nb-*
+  // custom properties; leave it untouched instead of injecting a manufactured
+  // default set that drifts from its own (styleless) stored markup.
+  if ( legacySpacingFlags?.noSpacingMarkup ) {
+    return extraProps;
+  }
+
+  const spacingCSSProps = getSpacingCSSProps( attributes, extraProps?.style );
 
   if ( legacySpacingFlags?.missingAspectRatioVar ) {
     delete spacingCSSProps['--nb-card-media-aspect-ratio'];

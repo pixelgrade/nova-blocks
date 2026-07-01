@@ -46,6 +46,9 @@ for f in tests/node/*.cjs; do
 	run "$( basename "$f" )" node "$f"
 done
 
+echo "== filter JS tests =="
+run "detect-legacy-spacing (node:test)" node --test packages/block-editor/src/filters/with-legacy-spacing-markup/detect-legacy-spacing.test.js
+
 echo "== header JS tests =="
 run "layout-definitions (node:test)" node --test packages/block-library/src/blocks/header/layout-definitions.test.js
 run "header frontend (jest)" npx --no-install jest packages/block-library/src/blocks/header/frontend/components/index.test.js
