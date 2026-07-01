@@ -3,7 +3,7 @@ Contributors: pixelgrade, vlad.olaru, babbardel, razvanonofrei, gorby31
 Tags: blocks, gutenberg, gutenberg blocks, page builder, full site editing
 Requires at least: 5.9
 Tested up to: 7.0
-Stable tag: 2.1.20
+Stable tag: 2.1.21
 Requires PHP: 7.4
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -113,6 +113,10 @@ Yes! Nova Block's core features are free to use.
 3. Slideshow Me the Way block options
 
 == Changelog ==
+
+= 2.1.21 =
+* Fix: Resolve the remaining "unexpected or invalid content" block recovery on enhanced core blocks (Group, Columns, Separator) for content saved before the space-and-sizing feature existed, by leaving markup that carries no Nova sizing variables untouched instead of injecting a manufactured default set that no longer matched the stored output.
+* Improved: Preserve user-authored CSS classes on header navigation items through the block-editor navigation round-trip, so custom classes (for example call-to-action or external-link styles) survive projecting to and from the menu system.
 
 = 2.1.20 =
 * New: Add a "Featured image from current item" media source for Supernova/Cards Collection cards, allowing custom card content to use the current post/page featured image.
