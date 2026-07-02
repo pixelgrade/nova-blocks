@@ -144,7 +144,7 @@ if ( ! function_exists ('novablocks_replace_content_tags' ) ) {
 	 *
 	 * @return string
 	 */
-	function novablocks_replace_content_tags( string $content, int $post_id = null, int $user_id = null ): string {
+	function novablocks_replace_content_tags( string $content, ?int $post_id = null, ?int $user_id = null ): string {
 		$original_content = $content;
 
 		// Allow others to alter the content before we do our work
