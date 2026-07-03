@@ -1,114 +1,256 @@
 // Plus gating trial chrome. Native editor tokens only — the pill and accents
 // follow --wp-admin-theme-color; never hardcode brand hex here.
+//
+// The visual/interaction spec is SHARED with Style Manager — see
+// pixelgrade-plus/docs/plus-gating-ui-contract.md. Every rule below mirrors an
+// sm-tap-* / sm-save-plus rule in style-manager/src/_js/site-editor/style.scss
+// one to one; improve them in lockstep so both products keep one language.
 
+// Shared "Plus" pill — solid editor-accent, white text, small caps. Rides
+// gated entry points (radio options, toggles) and the intro banner alike.
 .nb-plus-badge {
 	display: inline-block;
-	padding: 0.1em 0.65em 0.18em;
+	flex: 0 0 auto;
 	margin-left: 0.5em;
-	border-radius: 999em;
-	background: var(--wp-admin-theme-color, #3858e9);
-	color: #fff;
 	font-size: 10px;
 	font-weight: 600;
-	line-height: 1.5;
-	letter-spacing: 0.03em;
+	line-height: 1;
+	letter-spacing: 0.04em;
 	text-transform: uppercase;
+	padding: 3px 7px;
+	border-radius: 9px;
+	color: #fff;
+	background: var(--wp-admin-theme-color, #3858e9);
 	vertical-align: middle;
 }
 
 .nb-plus-gate {
-	position: relative;
 
-	&__content {
-		position: relative;
-	}
-
-	&.is-covered {
-		// Room for the scrim message even over short control groups.
-		min-height: 140px;
-	}
-
-	&.is-covered &__content {
-		opacity: 0.4;
-		filter: saturate(0.6);
-		// Backup for browsers/portals where the inert property doesn't stick.
-		pointer-events: none;
-		user-select: none;
-	}
-
-	&__scrim {
-		position: absolute;
-		inset: 0;
-		z-index: 2;
+	// The persistent intro, in normal flow ABOVE the controls — covers nothing.
+	// Quiet + WP-core-feeling: flat, full-width, a hairline rule, no shadow.
+	// Carries the badge + copy + learn-more; .is-revealed swaps the invitation
+	// for the accent trial reminder after the user opts in.
+	&__intro {
 		display: flex;
-		flex-direction: column;
 		align-items: center;
-		justify-content: center;
-		gap: 12px;
-		padding: 16px;
-		text-align: center;
-		background: linear-gradient(rgba(255, 255, 255, 0.55), rgba(255, 255, 255, 0.9));
+		flex-wrap: wrap;
+		gap: 6px 10px;
+		padding: 12px 16px;
+		border-bottom: 1px solid #e0e0e0;
+		// A slight, consistent tint marks this out as the Plus area. color-mix
+		// (not rgba(var(--rgb))) because Nova's section drawers override only the
+		// SOLID --wp-admin-theme-color per section — the tint must follow it.
+		background: color-mix(in srgb, var(--wp-admin-theme-color, #3858e9) 5%, transparent);
+
+		.nb-plus-badge {
+			margin-left: 0;
+		}
 	}
 
-	&__note {
-		max-width: 32em;
+	&__intro-text {
+		flex: 1 1 100%;
+		min-width: 0;
+		margin: 0;
 		font-size: 12px;
 		line-height: 1.5;
 		color: #1e1e1e;
 	}
 
-	&__note .nb-plus-badge {
-		margin: 0 0 6px;
-		display: inline-block;
-	}
-
-	&__note-text {
-		display: block;
-	}
-
-	&__button.components-button.is-primary {
-		display: inline-flex;
-		align-items: center;
-		gap: 6px;
-	}
-
-	// The sidebar is ~264px wide: badge + link share the top row, the note
-	// text gets its own full-width row below.
-	&__banner {
-		display: flex;
-		flex-wrap: wrap;
-		align-items: center;
-		gap: 4px 8px;
-		margin-bottom: 12px;
-		padding: 8px 12px;
+	&__intro-link {
+		flex: 0 0 auto;
 		font-size: 12px;
-		line-height: 1.5;
-		border-left: 3px solid var(--wp-admin-theme-color, #3858e9);
-		background: rgba(var(--wp-admin-theme-color--rgb, 56, 88, 233), 0.06);
-	}
-
-	&__banner .nb-plus-badge {
-		margin-left: 0;
-		flex: none;
-	}
-
-	&__banner-text {
-		flex: 1 1 100%;
-		order: 3;
-	}
-
-	&__link {
-		flex: none;
-		margin-left: auto;
+		font-weight: 500;
 		text-decoration: none;
+		color: var(--wp-admin-theme-color, #3858e9);
+
+		&:hover,
+		&:focus {
+			text-decoration: underline;
+		}
 	}
 
-	// The soft "this is a sandbox" texture behind revealed controls.
-	&.is-playing > &__content {
-		background-image: repeating-linear-gradient(
-			-45deg,
-			transparent 0 12px,
-			rgba(var(--wp-admin-theme-color--rgb, 56, 88, 233), 0.035) 12px 24px
-		);
+	// State 2 (playing): a distinct accent bar so the box change is unmistakable
+	// the moment the user starts playing. WP-core tokens only.
+	&__intro.is-revealed {
+		background: var(--wp-admin-theme-color, #3858e9);
+		border-bottom-color: transparent;
+
+		.nb-plus-badge {
+			color: var(--wp-admin-theme-color, #3858e9);
+			background: #fff;
+		}
+
+		.nb-plus-gate__intro-text {
+			color: #fff;
+		}
+
+		.nb-plus-gate__intro-link {
+			color: #fff;
+			text-decoration: underline;
+		}
+	}
+
+	// The positioned host the scrim is anchored to.
+	&__host {
+		position: relative;
+
+		// Room for the full-width button even over short control groups.
+		&.is-covered {
+			min-height: 80px;
+		}
+
+		// State 2 (playing): a soft, honest diagonal "you're in a sandbox; this
+		// isn't saved" texture across the now-live but gated controls. Rendered
+		// as a translucent overlay (pointer-events: none) ABOVE the controls so
+		// it reads UNIFORMLY even where a control paints its own background.
+		&.is-playing::after {
+			content: "";
+			position: absolute;
+			inset: 0;
+			z-index: 2;
+			pointer-events: none;
+			background-image: repeating-linear-gradient(
+				45deg,
+				color-mix(in srgb, var(--wp-admin-theme-color, #3858e9) 5%, transparent) 0 10px,
+				transparent 10px 20px
+			);
+		}
+	}
+
+	// The controls underneath while covered: dimmed and visually "asleep". They
+	// are also made inert in JS (out of the tab order / a11y tree); the
+	// pointer-events guard is a belt-and-suspenders for engines without `inert`.
+	&__content.is-covered {
+		pointer-events: none;
+		opacity: 0.45;
+		filter: saturate(0.85);
+		user-select: none;
+		transition: opacity 0.2s ease, filter 0.2s ease;
+	}
+
+	// The soft scrim over the controls — ONLY the button floats on it. The
+	// controls read clearly through the light blur; an invitation, not a wall.
+	&__scrim {
+		position: absolute;
+		inset: 0;
+		z-index: 6;
+		display: block;
+		padding: 20px 16px;
+		background: rgba(255, 255, 255, 0.4);
+		backdrop-filter: blur(1.5px);
+		-webkit-backdrop-filter: blur(1.5px);
+		opacity: 1;
+		transition: opacity 0.25s ease;
+
+		&.is-leaving {
+			opacity: 0;
+			pointer-events: none;
+		}
+	}
+
+	// Full-width primary CTA with breathing room (the scrim padding), floating
+	// near the top of the covered area and following a long scroll.
+	&__button.components-button.is-primary {
+		position: sticky;
+		top: 16px;
+		display: flex;
+		align-items: center;
+		gap: 7px;
+		width: 100%;
+		justify-content: center;
+		min-height: 40px;
+	}
+
+	&__button-icon {
+		flex: 0 0 auto;
+		// Inherits the button's text colour (white on the primary CTA).
+	}
+}
+
+// Respect reduced-motion: drop the blur + fade, keep the (instant) state change.
+@media (prefers-reduced-motion: reduce) {
+	.nb-plus-gate__scrim {
+		backdrop-filter: none;
+		-webkit-backdrop-filter: none;
+		transition: none;
+	}
+
+	.nb-plus-gate__content.is-covered {
+		transition: none;
+	}
+}
+
+// ---------------------------------------------------------------------------
+// "Save · Plus" save-button affordance (plus-gating/save-affordance.js).
+// The Plus purple is intentionally distinct from the editor accent so the
+// gated-only save state is unmistakable; it is the SAME purple Style Manager
+// ships, overridable through the shared custom property chain.
+// ---------------------------------------------------------------------------
+
+@keyframes nb-save-plus-twinkle {
+	0%,
+	100% {
+		opacity: 1;
+		transform: scale(1);
+	}
+
+	50% {
+		opacity: 0.6;
+		transform: scale(0.82);
+	}
+}
+
+.nb-save-plus__spark {
+	flex: 0 0 auto;
+	transform-origin: center;
+	animation: nb-save-plus-twinkle 2.4s ease-in-out infinite;
+}
+
+.nb-save-plus__pill {
+	flex: 0 0 auto;
+	margin-left: 8px;
+	font-size: 9px;
+	font-weight: 600;
+	line-height: 1;
+	letter-spacing: 0.05em;
+	text-transform: uppercase;
+	padding: 2px 6px;
+	border-radius: 8px;
+	color: var(--nb-plus-purple, var(--sm-plus-purple, #7c3aed));
+	background: #fff;
+}
+
+// Gated-only pending edits — the button recoloured to Plus purple. Unlike SM
+// (where the entity stays clean and the click opens an upsell), the click here
+// performs the REAL save: the server reverts/preview-persists the gated values
+// and the post-save snackbar tells the truth about it.
+.editor-post-publish-button__button.nb-save-plus {
+	background: var(--nb-plus-purple, var(--sm-plus-purple, #7c3aed));
+	color: #fff;
+
+	.nb-save-plus__spark {
+		margin-right: 6px;
+		// Inherits the button's white text colour via fill: currentColor.
+	}
+
+	&:hover,
+	&:focus {
+		background: var(--nb-plus-purple-dark, var(--sm-plus-purple-dark, #6d28d9));
+		color: #fff;
+	}
+}
+
+// Mixed free + gated edits — native Save kept intact; a quiet, glowing sparkle
+// marks that part of what's being saved needs Plus.
+.editor-post-publish-button__button.nb-save-plus--hint {
+	.nb-save-plus__spark {
+		margin-right: 6px;
+		filter: drop-shadow(0 0 3px rgba(124, 58, 237, 0.75));
+	}
+}
+
+@media (prefers-reduced-motion: reduce) {
+	.nb-save-plus__spark {
+		animation: none;
 	}
 }

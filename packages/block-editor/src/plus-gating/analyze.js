@@ -208,3 +208,154 @@ const isPresetAuthoredMotion = ( attrs, motionPresetOptions ) => {
 
   return Object.keys( option.preset ).every( ( key ) => valuesMatch( attrs[ key ], option.preset[ key ] ) );
 };
+
+/**
+ * Whether the edited tree carries locked render-gated values the saved tree
+ * does not already hold — i.e. render-gated refinements pending on the next
+ * save (they WILL persist, previewing only). Same value-whitelist semantics
+ * as the save-guard side: a persisted gated value re-applied elsewhere is
+ * grandfathered, not pending.
+ */
+export const hasPendingRenderGatedValues = ( editedBlocks, savedBlocks, plus, motionPresetOptions = [] ) => {
+  const gates = lockedGates( plus, 'render' );
+
+  if ( ! gates.length ) {
+    return false;
+  }
+
+  // The saved tree's render-gated values, per attribute (the whitelist).
+  const saved = {};
+
+  walkBlocks( savedBlocks, ( block ) => {
+    gates.forEach( ( gate ) => {
+      if ( ! gate.blocks.includes( getName( block ) ) ) {
+        return;
+      }
+
+      const attrs = getAttrs( block );
+
+      gate.attributes.forEach( ( attribute ) => {
+        if ( attribute in attrs ) {
+          saved[ attribute ] = saved[ attribute ] || [];
+          saved[ attribute ].push( attrs[ attribute ] );
+        }
+      } );
+    } );
+  } );
+
+  let pending = false;
+
+  walkBlocks( editedBlocks, ( block ) => {
+    if ( pending ) {
+      return;
+    }
+
+    gates.forEach( ( gate ) => {
+      if ( pending || ! gate.blocks.includes( getName( block ) ) ) {
+        return;
+      }
+
+      const attrs = getAttrs( block );
+
+      if ( gate.attributes.includes( 'motionPreset' ) ) {
+        if ( isPresetAuthoredMotion( attrs, motionPresetOptions ) ) {
+          const allowed = ( saved.motionPreset || [] ).some( ( value ) => valuesMatch( attrs.motionPreset, value ) );
+          pending = pending || ! allowed;
+        }
+
+        return;
+      }
+
+      pending = pending || gate.attributes.some( ( attribute ) => {
+        if ( ! ( attribute in attrs ) || ! isGatedValue( gate, attribute, attrs[ attribute ] ) ) {
+          return false;
+        }
+
+        return ! ( saved[ attribute ] || [] ).some( ( value ) => valuesMatch( attrs[ attribute ], value ) );
+      } );
+    } );
+  } );
+
+  return pending;
+};
+
+/**
+ * Whether ANY locked gated change is pending on the next save — the
+ * Save · Plus decoration trigger (both enforcement classes).
+ */
+export const hasPendingGatedChanges = ( editedBlocks, savedBlocks, plus, motionPresetOptions = [] ) => {
+  return hasRevertedSaveGuardedValues( editedBlocks, savedBlocks, plus )
+    || hasPendingRenderGatedValues( editedBlocks, savedBlocks, plus, motionPresetOptions );
+};
+
+/**
+ * The union of every locked gate's attributes, per block name — what
+ * stripGatedAttributes() removes.
+ */
+const lockedAttributesByBlock = ( plus ) => {
+  const map = {};
+
+  [ ...lockedGates( plus, 'render' ), ...lockedGates( plus, 'save-guard' ) ].forEach( ( gate ) => {
+    gate.blocks.forEach( ( name ) => {
+      map[ name ] = map[ name ] || new Set();
+      gate.attributes.forEach( ( attribute ) => map[ name ].add( attribute ) );
+    } );
+  } );
+
+  return map;
+};
+
+/**
+ * Deep-clones a block tree with every locked gate's attributes removed from
+ * matching blocks — the "free remainder" used to tell gated-only edits apart
+ * from mixed ones. Stripping is deliberately unconditional (gated or not):
+ * symmetric on both trees, so a free-valued edit to a gate-listed attribute
+ * (e.g. a start-frame focal point) simply doesn't count as a free change —
+ * the affordance degrades toward the stronger treatment, never lies about
+ * gated content.
+ */
+export const stripGatedAttributes = ( blocks, plus ) => {
+  const stripMap = lockedAttributesByBlock( plus );
+
+  const stripBlock = ( block ) => {
+    const strip = stripMap[ getName( block ) ];
+    const attrs = getAttrs( block );
+    const kept = {};
+
+    Object.keys( attrs ).forEach( ( attribute ) => {
+      if ( ! strip || ! strip.has( attribute ) ) {
+        kept[ attribute ] = attrs[ attribute ];
+      }
+    } );
+
+    return {
+      name: getName( block ),
+      attributes: kept,
+      innerBlocks: ( block?.innerBlocks || [] ).map( stripBlock ),
+    };
+  };
+
+  return ( blocks || [] ).map( stripBlock );
+};
+
+/**
+ * Structural equality of two block trees: names, attributes (valuesMatch),
+ * and inner-block recursion. Both trees should come from parse() so default
+ * attributes are elided consistently on each side.
+ */
+export const blockTreesMatch = ( a, b ) => {
+  const listA = a || [];
+  const listB = b || [];
+
+  if ( listA.length !== listB.length ) {
+    return false;
+  }
+
+  return listA.every( ( blockA, index ) => {
+    const blockB = listB[ index ];
+
+    return getName( blockA ) === getName( blockB )
+      && valuesMatch( getAttrs( blockA ), getAttrs( blockB ) )
+      && blockTreesMatch( blockA?.innerBlocks, blockB?.innerBlocks );
+  } );
+};

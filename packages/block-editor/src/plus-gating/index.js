@@ -15,6 +15,7 @@ import { parse } from '@wordpress/blocks';
 import { dispatch, select, subscribe } from '@wordpress/data';
 
 import { hasLockedRenderGatedValues, hasRevertedSaveGuardedValues } from './analyze';
+import { initPlusSaveAffordance } from './save-affordance';
 
 const NOTICE_ID = 'novablocks-plus-save-notice';
 
@@ -68,6 +69,15 @@ const notifyAfterSave = () => {
 // the stack overflows.
 if ( typeof window !== 'undefined' && ! window.__novablocksPlusSaveNoticesRegistered ) {
   window.__novablocksPlusSaveNoticesRegistered = true;
+
+  // The pre-save "Save · Plus" button affordance (no-op when unlocked). The
+  // payload is localized before this bundle runs; fall back to a late init
+  // for safety if it somehow isn't yet.
+  if ( getPlusPayload() ) {
+    initPlusSaveAffordance( getPlusPayload() );
+  } else {
+    window.addEventListener( 'load', () => initPlusSaveAffordance( getPlusPayload() ), { once: true } );
+  }
 
   let wasSaving = false;
 

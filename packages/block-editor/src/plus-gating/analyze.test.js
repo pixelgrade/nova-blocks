@@ -1,7 +1,11 @@
 import {
+  blockTreesMatch,
   collectSaveGuardedValues,
   hasLockedRenderGatedValues,
+  hasPendingGatedChanges,
+  hasPendingRenderGatedValues,
   hasRevertedSaveGuardedValues,
+  stripGatedAttributes,
   valuesMatch,
 } from './analyze';
 
@@ -189,5 +193,113 @@ describe( 'collectSaveGuardedValues', () => {
 
     expect( values.scrollingEffect ).toEqual( [ 'doppler' ] );
     expect( values.pile3dEffect ).toEqual( [ true ] );
+  } );
+} );
+
+describe( 'hasPendingRenderGatedValues', () => {
+  test( 'flags newly authored parametric layouts', () => {
+    const edited = [ parsedBlock( { layoutStyle: 'parametric' } ) ];
+    const saved = [ parsedBlock( {} ) ];
+
+    expect( hasPendingRenderGatedValues( edited, saved, PLUS, MOTION_PRESETS ) ).toBe( true );
+  } );
+
+  test( 'grandfathers render-gated values already persisted', () => {
+    const edited = [ parsedBlock( { layoutStyle: 'parametric' } ) ];
+    const saved = [ parsedBlock( { layoutStyle: 'parametric' } ) ];
+
+    expect( hasPendingRenderGatedValues( edited, saved, PLUS, MOTION_PRESETS ) ).toBe( false );
+  } );
+
+  test( 'flags a newly picked named motion preset, not a persisted one', () => {
+    const presetAttrs = {
+      scrollingEffect: 'doppler',
+      motionPreset: 'standard-dynamic',
+      focalPoint: { x: 0.5, y: 0 },
+      finalFocalPoint: { x: 0.5, y: 1 },
+      initialBackgroundScale: 1.75,
+      finalBackgroundScale: 1,
+      followThroughStart: true,
+      followThroughEnd: true,
+    };
+    const edited = [ parsedBlock( presetAttrs ) ];
+
+    expect( hasPendingRenderGatedValues( edited, [ parsedBlock( {} ) ], PLUS, MOTION_PRESETS ) ).toBe( true );
+    expect( hasPendingRenderGatedValues( edited, [ parsedBlock( presetAttrs ) ], PLUS, MOTION_PRESETS ) ).toBe( false );
+  } );
+
+  test( 'ignores custom motion — free per the settled split', () => {
+    const edited = [
+      parsedBlock( { scrollingEffect: 'doppler', motionPreset: 'custom', initialBackgroundScale: 1.4 } ),
+    ];
+
+    expect( hasPendingRenderGatedValues( edited, [ parsedBlock( {} ) ], PLUS, MOTION_PRESETS ) ).toBe( false );
+  } );
+} );
+
+describe( 'hasPendingGatedChanges', () => {
+  test( 'covers both enforcement classes', () => {
+    const saved = [ parsedBlock( {} ) ];
+
+    expect( hasPendingGatedChanges( [ parsedBlock( { pile3dEffect: true } ) ], saved, PLUS, MOTION_PRESETS ) ).toBe( true );
+    expect( hasPendingGatedChanges( [ parsedBlock( { layoutStyle: 'parametric' } ) ], saved, PLUS, MOTION_PRESETS ) ).toBe( true );
+    expect( hasPendingGatedChanges( [ parsedBlock( { gridGap: 45 } ) ], saved, PLUS, MOTION_PRESETS ) ).toBe( false );
+  } );
+} );
+
+describe( 'stripGatedAttributes + blockTreesMatch (gated-only vs mixed)', () => {
+  test( 'a gated-only edit leaves the free remainder identical', () => {
+    const edited = [ parsedBlock( { gridGap: 45, pile3dEffect: true } ) ];
+    const saved = [ parsedBlock( { gridGap: 45 } ) ];
+
+    expect( blockTreesMatch(
+      stripGatedAttributes( edited, PLUS ),
+      stripGatedAttributes( saved, PLUS )
+    ) ).toBe( true );
+  } );
+
+  test( 'a free edit next to a gated one reads as mixed', () => {
+    const edited = [ parsedBlock( { gridGap: 60, pile3dEffect: true } ) ];
+    const saved = [ parsedBlock( { gridGap: 45 } ) ];
+
+    expect( blockTreesMatch(
+      stripGatedAttributes( edited, PLUS ),
+      stripGatedAttributes( saved, PLUS )
+    ) ).toBe( false );
+  } );
+
+  test( 'structure changes (added blocks) read as mixed', () => {
+    const edited = [ parsedBlock( {} ), parsedBlock( {}, 'core/paragraph' ) ];
+    const saved = [ parsedBlock( {} ) ];
+
+    expect( blockTreesMatch(
+      stripGatedAttributes( edited, PLUS ),
+      stripGatedAttributes( saved, PLUS )
+    ) ).toBe( false );
+  } );
+
+  test( 'strips gated attributes from nested inner blocks too', () => {
+    const edited = [
+      parsedBlock( {}, 'core/query', [
+        parsedBlock( { scrollingEffect: 'doppler' }, 'novablocks/supernova-item' ),
+      ] ),
+    ];
+    const saved = [
+      parsedBlock( {}, 'core/query', [
+        parsedBlock( {}, 'novablocks/supernova-item' ),
+      ] ),
+    ];
+
+    expect( blockTreesMatch(
+      stripGatedAttributes( edited, PLUS ),
+      stripGatedAttributes( saved, PLUS )
+    ) ).toBe( true );
+  } );
+
+  test( 'does not strip anything when entitlements are unlocked', () => {
+    const unlocked = { ...PLUS, locked: { advanced_block_controls: false, motion_controls: false } };
+    const edited = [ parsedBlock( { pile3dEffect: true } ) ];
+
+    expect( stripGatedAttributes( edited, unlocked )[ 0 ].attributes.pile3dEffect ).toBe( true );
   } );
 } );

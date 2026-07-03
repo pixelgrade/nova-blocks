@@ -519,6 +519,9 @@ function novablocks_get_plus_settings_payload(): array {
 		'bannerText'        => esc_html__( "Trying these out — if they fit, Pixelgrade Plus makes them live. If not, your design system's just as powerful without them.", '__plugin_txtd' ),
 		'savedPreviewOnly'  => esc_html__( 'Saved. Your Plus refinements are previewing in the editor — Pixelgrade Plus takes them live.', '__plugin_txtd' ),
 		'savedWithoutGated' => esc_html__( 'Saved — the Plus options you were trying stay preview-only for now.', '__plugin_txtd' ),
+		// The Save · Plus button's accessible name while only Plus refinements
+		// are pending (the visible label stays the native Save/Update).
+		'saveAriaGatedOnly' => esc_html__( 'Save · Plus — the refinements you are trying need Pixelgrade Plus', '__plugin_txtd' ),
 		'gates'             => $gates,
 	];
 }

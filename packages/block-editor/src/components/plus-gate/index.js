@@ -4,14 +4,19 @@
  *
  * Presentation only: locked controls stay fully usable as a live sandbox and
  * the real gate is intrinsic, server-side (lib/plus-gating.php). Copy is
- * canonical in pixelgrade-plus/docs/plus-gating-copy.md and arrives through
- * the localized `plus` payload (wp.novaBlocks.settings.plus).
+ * canonical in pixelgrade-plus/docs/plus-gating-copy.md and the shared UI
+ * spec both plugins pin to is pixelgrade-plus/docs/plus-gating-ui-contract.md;
+ * strings arrive through the localized `plus` payload (wp.novaBlocks.settings.plus).
  *
- * Interaction contract (ported from SM's try-and-play.js):
- * - Covered state: soft scrim + the gate's overlayNote + a primary
- *   "Play with these options ▶" button over inert controls.
- * - Revealed state: fully interactive controls + a slim persistent banner
- *   carrying the gate's while-playing note + an `is-playing` texture.
+ * Structure (mirrors SM's try-and-play.js one to one):
+ * - A persistent intro in normal flow ABOVE the controls — badge + copy +
+ *   learn-more, covering nothing. Before reveal it carries the invitation;
+ *   after reveal the SAME element flips to the accent-filled trial reminder.
+ * - A soft, blurred scrim over the controls with ONLY a full-width primary
+ *   "Play with these options ▶" button floating on it.
+ * - Reveal: the scrim fades out, controls return to the tab order, focus
+ *   moves to the first control, and the host shows the diagonal sandbox
+ *   texture while playing.
  * - Re-disclosure: sessionStorage keyed by gate id + performance.timeOrigin,
  *   so tab switches don't re-prompt but fresh loads do.
  */
@@ -25,6 +30,10 @@ const REVEAL_EVENT = 'novablocks:plus-gate-reveal';
 // Constant for the life of the document, unique per load — survives tab
 // switches, re-discloses on fresh loads.
 const LOAD_NONCE = Math.round( window.performance?.timeOrigin || 0 );
+
+// Honour the scrim's 0.25s fade, but never strand it if transitionend doesn't
+// fire (reduced motion, hidden tab, display:none).
+const SCRIM_FADE_FALLBACK = 400;
 
 const storageKey = ( gateId ) => `${ STORAGE_PREFIX }${ LOAD_NONCE }:${ gateId }`;
 
@@ -71,7 +80,7 @@ export const PlusBadge = ( { gateId } ) => {
 };
 
 const PlayIcon = () => (
-  <svg className="nb-plus-gate__play-icon" width="16" height="16" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+  <svg className="nb-plus-gate__button-icon" width="18" height="18" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
     <path d="M8 5v14l11-7z" fill="currentColor" />
   </svg>
 );
@@ -83,14 +92,20 @@ const PlayIcon = () => (
 const TryAndPlay = ( { gateId, children } ) => {
   const { plus, gate, locked } = usePlusGate( gateId );
   const [ revealed, setRevealed ] = useState( () => wasRevealed( gateId ) );
+  // The scrim outlives the reveal by one fade: mounted -> leaving -> gone.
+  const [ scrimLeaving, setScrimLeaving ] = useState( false );
+  const [ scrimGone, setScrimGone ] = useState( () => wasRevealed( gateId ) );
   const contentRef = useRef( null );
+  const scrimRef = useRef( null );
 
   // Keep simultaneous mounts of the same gate in sync (e.g. the parametric
-  // Presets and Settings tabs) so one reveal covers the whole boundary.
+  // Presets and Settings tabs) so one reveal covers the whole boundary. Only
+  // the mount the user actually clicked moves focus.
   useEffect( () => {
     const onReveal = ( event ) => {
       if ( event?.detail?.gateId === gateId ) {
         setRevealed( true );
+        setScrimLeaving( true );
       }
     };
 
@@ -106,10 +121,47 @@ const TryAndPlay = ( { gateId, children } ) => {
     }
   } );
 
+  // Retire the leaving scrim after its fade (or the fallback timeout).
+  useEffect( () => {
+    if ( ! scrimLeaving || scrimGone ) {
+      return;
+    }
+
+    const remove = () => setScrimGone( true );
+    const node = scrimRef.current;
+    const timer = window.setTimeout( remove, SCRIM_FADE_FALLBACK );
+
+    if ( node ) {
+      node.addEventListener( 'transitionend', remove, { once: true } );
+    }
+
+    return () => {
+      window.clearTimeout( timer );
+
+      if ( node ) {
+        node.removeEventListener( 'transitionend', remove );
+      }
+    };
+  }, [ scrimLeaving, scrimGone ] );
+
   const reveal = useCallback( () => {
     persistReveal( gateId );
     setRevealed( true );
+    setScrimLeaving( true );
     window.dispatchEvent( new CustomEvent( REVEAL_EVENT, { detail: { gateId } } ) );
+
+    // Move focus into the controls so keyboard users land where they can act,
+    // instead of being stranded on a button that just vanished. Deferred so
+    // the re-render has dropped `inert` first.
+    window.requestAnimationFrame( () => {
+      const focusable = contentRef.current?.querySelector(
+        'input, select, textarea, button, a[href], [tabindex]:not([tabindex="-1"])'
+      );
+
+      if ( focusable && typeof focusable.focus === 'function' ) {
+        focusable.focus();
+      }
+    } );
   }, [ gateId ] );
 
   if ( ! locked ) {
@@ -117,33 +169,31 @@ const TryAndPlay = ( { gateId, children } ) => {
   }
 
   return (
-    <div className={ 'nb-plus-gate' + ( revealed ? ' is-playing' : ' is-covered' ) }>
-      { revealed && (
-        <div className="nb-plus-gate__banner" role="note">
-          <span className="nb-plus-badge">{ plus.badge }</span>
-          <span className="nb-plus-gate__banner-text">{ gate.note || plus.bannerText }</span>
-          { !! plus.upsellUrl && (
-            <a className="nb-plus-gate__link" href={ plus.upsellUrl } target="_blank" rel="noreferrer noopener">
-              { plus.learnMore }
-            </a>
-          ) }
-        </div>
-      ) }
-      <div className="nb-plus-gate__content" ref={ contentRef }>
-        { children }
+    <div className="nb-plus-gate">
+      <div className={ 'nb-plus-gate__intro' + ( revealed ? ' is-revealed' : '' ) } role="note">
+        <span className="nb-plus-badge">{ plus.badge }</span>
+        <span className="nb-plus-gate__intro-text">
+          { revealed ? ( gate.note || plus.bannerText ) : gate.overlayNote }
+        </span>
+        { !! plus.upsellUrl && (
+          <a className="nb-plus-gate__intro-link" href={ plus.upsellUrl } target="_blank" rel="noreferrer noopener">
+            { plus.learnMore } &rarr;
+          </a>
+        ) }
       </div>
-      { ! revealed && (
-        <div className="nb-plus-gate__scrim">
-          <div className="nb-plus-gate__note" role="note">
-            <span className="nb-plus-badge">{ plus.badge }</span>
-            <span className="nb-plus-gate__note-text">{ gate.overlayNote }</span>
-          </div>
-          <Button variant="primary" className="nb-plus-gate__button" onClick={ reveal }>
-            { plus.buttonLabel }
-            <PlayIcon />
-          </Button>
+      <div className={ 'nb-plus-gate__host' + ( revealed ? ' is-playing' : ' is-covered' ) }>
+        <div className={ 'nb-plus-gate__content' + ( revealed ? '' : ' is-covered' ) } ref={ contentRef }>
+          { children }
         </div>
-      ) }
+        { ! scrimGone && (
+          <div className={ 'nb-plus-gate__scrim' + ( scrimLeaving ? ' is-leaving' : '' ) } ref={ scrimRef } role="group">
+            <Button variant="primary" className="nb-plus-gate__button" onClick={ reveal }>
+              { plus.buttonLabel }
+              <PlayIcon />
+            </Button>
+          </div>
+        ) }
+      </div>
     </div>
   );
 };
