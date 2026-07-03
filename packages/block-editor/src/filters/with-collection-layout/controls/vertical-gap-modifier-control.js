@@ -16,7 +16,7 @@ const VerticalGapModifierControl = ( props ) => {
       onChange={ ( nextVerticalGapModifier ) => {
         setAttributes( { verticalGapModifier: nextVerticalGapModifier } );
       } }
-      label={ __( 'Vertical Gap Modifier', '__plugin_txtd' ) }
+      label={ __( 'Vertical Gap', '__plugin_txtd' ) }
       min={ 0.5 }
       max={ 2 }
       step={ 0.5 }

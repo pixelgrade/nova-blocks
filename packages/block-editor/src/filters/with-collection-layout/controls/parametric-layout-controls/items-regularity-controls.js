@@ -1,5 +1,5 @@
 import { __ } from "@wordpress/i18n";
-import { RangeControl } from '@wordpress/components';
+import { RangeControl, ToggleControl } from '@wordpress/components';
 
 import { ControlsGroup } from "../../../../components";
 
@@ -11,6 +11,7 @@ const ItemsRegularityControls = props => {
   } = props;
 
   const {
+    balancemdandiw,
     imageweightleft,
     imageweightright,
     metadetailsleft,
@@ -62,6 +63,13 @@ const ItemsRegularityControls = props => {
         } }
         min={ 0 }
         max={ 10 }
+      />
+      <ToggleControl
+        label={ __( 'Balance Meta and Image', '__plugin_txtd' ) }
+        checked={ balancemdandiw }
+        onChange={ () => {
+          setAttributes( { balancemdandiw: ! balancemdandiw } );
+        } }
       />
     </ControlsGroup>
   )

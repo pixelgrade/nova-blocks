@@ -1,6 +1,6 @@
 import { __ } from "@wordpress/i18n";
 import { useCallback } from "@wordpress/element";
-import { RangeControl } from '@wordpress/components';
+import { RangeControl, ToggleControl } from '@wordpress/components';
 
 import { clamp } from "@novablocks/utils";
 
@@ -13,10 +13,12 @@ const BreakingTheGridControls = ( props ) => {
   } = props;
 
   const {
+    boostfeature,
     featuresize,
     featureposition,
     fragmentation,
     hierarchycrossing,
+    subfeature,
   } = attributes;
 
   const getMinFeatureSize = useCallback( () => 1, [] );
@@ -86,6 +88,20 @@ const BreakingTheGridControls = ( props ) => {
         } }
         min={ 0 }
         max={ 200 }
+      />
+      <ToggleControl
+        label={ __( 'Boost Featured Area Emphasis', '__plugin_txtd' ) }
+        checked={ boostfeature }
+        onChange={ () => {
+          setAttributes( { boostfeature: ! boostfeature } );
+        } }
+      />
+      <ToggleControl
+        label={ __( 'Display Sub-featured Area', '__plugin_txtd' ) }
+        checked={ subfeature }
+        onChange={ () => {
+          setAttributes( { subfeature: ! subfeature } );
+        } }
       />
     </ControlsGroup>
   )

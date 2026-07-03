@@ -1,10 +1,7 @@
 import { __ } from "@wordpress/i18n";
-import { RangeControl } from '@wordpress/components';
+import { RangeControl, ToggleControl } from '@wordpress/components';
 
 import { ControlsGroup } from "../../../../components";
-
-import ItemsGapControls from "../items-gap-control";
-import VerticalGapModifierControl from "../vertical-gap-modifier-control";
 
 const GridAnatomyControls = ( props ) => {
 
@@ -16,6 +13,7 @@ const GridAnatomyControls = ( props ) => {
   const {
     featuresize,
     featureposition,
+    flipcolsrows,
     gridcolumns,
     gridrows,
   } = attributes;
@@ -51,8 +49,13 @@ const GridAnatomyControls = ( props ) => {
         min={ 1 }
         max={ 12 }
       />
-      <ItemsGapControls { ...props } />
-      <VerticalGapModifierControl { ...props } />
+      <ToggleControl
+        label={ __( 'Flip Columns & Rows', '__plugin_txtd' ) }
+        checked={ flipcolsrows }
+        onChange={ () => {
+          setAttributes( { flipcolsrows: ! flipcolsrows } );
+        } }
+      />
     </ControlsGroup>
   )
 };
