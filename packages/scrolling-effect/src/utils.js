@@ -1,6 +1,8 @@
 const userPrefersReducedMotion = ( () => {
   const query = window.matchMedia( '(prefers-reduced-motion: reduce)' );
-  let matches = false;
+  // Seed from the current preference; the change listener alone misses users
+  // who already had reduced motion enabled when the page loaded.
+  let matches = !! query.matches;
   const check = ( eventOrQuery ) => {
     matches = !! eventOrQuery.matches;
   }
