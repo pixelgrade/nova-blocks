@@ -452,13 +452,19 @@ add_action( 'rest_api_init', 'novablocks_register_plus_save_guards' );
  *
  * Presentation data only — the editor trial UI reads it; enforcement never
  * trusts the client.
+ *
+ * COPY IS CANONICAL in pixelgrade-plus/docs/plus-gating-copy.md — edit there
+ * first, then sync here. The honesty clause differs by enforcement class:
+ * render-gated notes say the live site keeps the free rendering (values DO
+ * persist and come alive on upgrade); save-guarded notes say changes aren't
+ * saved (they truly never persist while locked).
  */
 function novablocks_get_plus_settings_payload(): array {
 	$gate_copy = [
 		'parametric-layout' => [
 			'label'       => esc_html__( 'Parametric Grid layouts', '__plugin_txtd' ),
-			'overlayNote' => esc_html__( 'The Parametric Grid composes whole layouts from a few dials — featured areas, fragmentation, rhythm — with twelve presets to start from.', '__plugin_txtd' ),
-			'note'        => esc_html__( "Take the Parametric Grid for a spin — presets and dials reshape the layout live. Changes here aren't saved to your site; authoring parametric layouts is part of Pixelgrade Plus.", '__plugin_txtd' ),
+			'overlayNote' => esc_html__( 'The Parametric Grid composes whole layouts from a few dials — featured areas, fragmentation, rhythm — with curated presets to start from.', '__plugin_txtd' ),
+			'note'        => esc_html__( 'Take the Parametric Grid for a spin — presets and dials reshape the layout live. Your live site keeps the Classic layout for now; Pixelgrade Plus takes this one live.', '__plugin_txtd' ),
 		],
 		'pile-3d-grid'      => [
 			'label'       => esc_html__( '3D Grid', '__plugin_txtd' ),
@@ -478,7 +484,7 @@ function novablocks_get_plus_settings_payload(): array {
 		'motion-presets'    => [
 			'label'       => esc_html__( 'Motion presets', '__plugin_txtd' ),
 			'overlayNote' => esc_html__( 'Motion presets are curated Doppler moves — a start frame, an end frame, and the glide between them — applied in one click.', '__plugin_txtd' ),
-			'note'        => esc_html__( "Try the motion presets live — each one re-frames the scroll cinematics instantly. Changes here aren't saved; one-click motion presets are part of Pixelgrade Plus.", '__plugin_txtd' ),
+			'note'        => esc_html__( 'Try the motion presets live — each one re-frames the scroll cinematics instantly. Your live site keeps its current motion for now; Pixelgrade Plus makes the preset live.', '__plugin_txtd' ),
 		],
 	];
 
@@ -496,13 +502,16 @@ function novablocks_get_plus_settings_payload(): array {
 	}
 
 	return [
-		'locked'      => novablocks_get_plus_locked_entitlements(),
-		'upsellUrl'   => novablocks_plus_upsell_url(),
-		'productName' => esc_html__( 'Pixelgrade Plus', '__plugin_txtd' ),
-		'badge'       => esc_html__( 'Plus', '__plugin_txtd' ),
-		'learnMore'   => esc_html__( 'Learn more', '__plugin_txtd' ),
-		'buttonLabel' => esc_html__( 'Play with these options', '__plugin_txtd' ),
-		'bannerText'  => esc_html__( "Trying these out — if they fit, Pixelgrade Plus makes them live. If not, your design system's just as powerful without them.", '__plugin_txtd' ),
-		'gates'       => $gates,
+		'locked'            => novablocks_get_plus_locked_entitlements(),
+		'upsellUrl'         => novablocks_plus_upsell_url(),
+		'productName'       => esc_html__( 'Pixelgrade Plus', '__plugin_txtd' ),
+		'badge'             => esc_html__( 'Plus', '__plugin_txtd' ),
+		'learnMore'         => esc_html__( 'Learn more', '__plugin_txtd' ),
+		'getPlusLabel'      => esc_html__( 'Get Plus', '__plugin_txtd' ),
+		'buttonLabel'       => esc_html__( 'Play with these options', '__plugin_txtd' ),
+		'bannerText'        => esc_html__( "Trying these out — if they fit, Pixelgrade Plus makes them live. If not, your design system's just as powerful without them.", '__plugin_txtd' ),
+		'savedPreviewOnly'  => esc_html__( 'Saved. Your Plus refinements are previewing in the editor — Pixelgrade Plus takes them live.', '__plugin_txtd' ),
+		'savedWithoutGated' => esc_html__( 'Saved — the Plus options you were trying stay preview-only for now.', '__plugin_txtd' ),
+		'gates'             => $gates,
 	];
 }
