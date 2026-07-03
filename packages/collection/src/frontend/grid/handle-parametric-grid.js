@@ -87,7 +87,7 @@ export const handleParametricGrid = ( grid, block, attributes ) => {
     if ( header && ( below( 'lap' ) || attributes.headerPosition === 0 ) ) {
       const newHeader = header.cloneNode( true );
       addClass( newHeader, 'js-collection-element-clone' );
-      body.insertAdjacentElement( 'beforeStart', newHeader );
+      body.insertAdjacentElement( 'beforebegin', newHeader );
     }
 
     for ( let i = 0; i < areaColumns.length; i ++ ) {

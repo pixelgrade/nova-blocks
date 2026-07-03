@@ -2,6 +2,8 @@ import { __ } from '@wordpress/i18n';
 import { Button, RadioControl } from '@wordpress/components';
 import { Fragment, useCallback, useMemo } from '@wordpress/element';
 
+import { useSettings } from '../../hooks';
+
 const PresetControl = ( props ) => {
 
 	const {
@@ -12,6 +14,9 @@ const PresetControl = ( props ) => {
     setAttributes,
 	} = props;
 
+  const novablocksSettings = useSettings();
+  const debug = !! novablocksSettings?.debug;
+
 	const randomizeAttributes = useCallback( () => {
 	  if ( typeof randomize === "function" ) {
       return randomize();
@@ -20,7 +25,9 @@ const PresetControl = ( props ) => {
   }, [ randomize ] );
 
   const presetOptions = useMemo( () => {
-    const presetOptions = Array.isArray( options ) ? options.slice() : [];
+    // Presets marked as in-development stay hidden outside debug mode.
+    const presetOptions = ( Array.isArray( options ) ? options.slice() : [] )
+      .filter( option => debug || option?.status !== 'development' );
 
     if ( typeof randomize !== "undefined" ) {
 
@@ -33,7 +40,7 @@ const PresetControl = ( props ) => {
     }
 
     return presetOptions;
-  }, [ options, randomize ] );
+  }, [ options, randomize, debug ] );
 
 	const selectedPreset = useMemo( () => {
 	  return getSelectedPreset( presetOptions, attributes );
