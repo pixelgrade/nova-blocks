@@ -51,6 +51,10 @@ if ( ! function_exists( 'novablocks_render_supernova_item_block' ) ) {
 		$attributes_config = novablocks_get_supernova_item_attributes();
 		$attributes        = novablocks_get_attributes_with_defaults( $attributes, $attributes_config );
 
+		// Intrinsic Plus enforcement: normalize locked premium values before they
+		// reach data-* attributes, classes, CSS props, or markup (lib/plus-gating.php).
+		$attributes = novablocks_normalize_locked_block_attributes( $attributes );
+
 		$content_before_media = '';
 
 		if ( ! empty( $attributes['contentType'] ) && 'fields' === $attributes['contentType'] ) {

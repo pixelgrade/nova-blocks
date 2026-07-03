@@ -101,66 +101,7 @@ function novablocks_get_block_editor_settings(): array {
 				'value' => 'custom',
 			],
 		],
-		'motionPresetOptions'          => [
-			[
-				'label'  => 'Standard Dynamic',
-				'value'  => 'standard-dynamic',
-				'preset' => [
-					'focalPoint'             => [
-						'x' => 0.5,
-						'y' => 0,
-					],
-					'finalFocalPoint'        => [
-						'x' => 0.5,
-						'y' => 1,
-					],
-					'initialBackgroundScale' => 1.75,
-					'finalBackgroundScale'   => 1,
-					'followThroughStart'     => true,
-					'followThroughEnd'       => true,
-				],
-			],
-			[
-				'label'  => 'Pull Focus',
-				'value'  => 'pull-focus',
-				'preset' => [
-					'focalPoint'             => [
-						'x' => 0.5,
-						'y' => 0.5,
-					],
-					'finalFocalPoint'        => [
-						'x' => 0.5,
-						'y' => 1,
-					],
-					'initialBackgroundScale' => 1,
-					'finalBackgroundScale'   => 1.75,
-					'followThroughStart'     => true,
-					'followThroughEnd'       => true,
-				],
-			],
-			[
-				'label'  => 'Static Reveal',
-				'value'  => 'static-reveal',
-				'preset' => [
-					'focalPoint'             => [
-						'x' => 0.5,
-						'y' => 0.5,
-					],
-					'finalFocalPoint'        => [
-						'x' => 0.5,
-						'y' => 0.5,
-					],
-					'initialBackgroundScale' => 1.75,
-					'finalBackgroundScale'   => 1,
-					'followThroughStart'     => true,
-					'followThroughEnd'       => true,
-				],
-			],
-			[
-				'label' => 'Custom',
-				'value' => 'custom',
-			],
-		],
+		'motionPresetOptions'          => novablocks_get_motion_preset_options(),
 		'advancedGalleryPresetOptions' => novablocks_get_media_composition_markup_presets(),
 		'blobPresetOptions'            => novablocks_get_blob_presets(),
 		'scrollingEffectOptions'       => [
@@ -188,11 +129,81 @@ function novablocks_get_block_editor_settings(): array {
 	$settings = apply_filters( 'novablocks/block_editor_initial_settings', $settings );
 	$settings = apply_filters( 'novablocks_block_editor_settings', $settings );
 
-	if ( ! novablocks_motion_controls_are_unlocked() ) {
-		$settings['motionPresetOptions'] = [];
-	}
+	// The live-trial model keeps gated options (e.g. motion presets) present in
+	// the editor as a sandbox; enforcement is intrinsic and server-side — see
+	// lib/plus-gating.php. The payload below drives the trial presentation.
+	$settings['plus'] = novablocks_get_plus_settings_payload();
 
 	return $settings;
+}
+
+/**
+ * The named Doppler motion presets (curated one-click bundles).
+ *
+ * Kept as a standalone source of truth: the editor settings expose it, and
+ * the Plus render enforcement classifies preset-authored frames against it.
+ */
+function novablocks_get_motion_preset_options(): array {
+	return [
+		[
+			'label'  => 'Standard Dynamic',
+			'value'  => 'standard-dynamic',
+			'preset' => [
+				'focalPoint'             => [
+					'x' => 0.5,
+					'y' => 0,
+				],
+				'finalFocalPoint'        => [
+					'x' => 0.5,
+					'y' => 1,
+				],
+				'initialBackgroundScale' => 1.75,
+				'finalBackgroundScale'   => 1,
+				'followThroughStart'     => true,
+				'followThroughEnd'       => true,
+			],
+		],
+		[
+			'label'  => 'Pull Focus',
+			'value'  => 'pull-focus',
+			'preset' => [
+				'focalPoint'             => [
+					'x' => 0.5,
+					'y' => 0.5,
+				],
+				'finalFocalPoint'        => [
+					'x' => 0.5,
+					'y' => 1,
+				],
+				'initialBackgroundScale' => 1,
+				'finalBackgroundScale'   => 1.75,
+				'followThroughStart'     => true,
+				'followThroughEnd'       => true,
+			],
+		],
+		[
+			'label'  => 'Static Reveal',
+			'value'  => 'static-reveal',
+			'preset' => [
+				'focalPoint'             => [
+					'x' => 0.5,
+					'y' => 0.5,
+				],
+				'finalFocalPoint'        => [
+					'x' => 0.5,
+					'y' => 0.5,
+				],
+				'initialBackgroundScale' => 1.75,
+				'finalBackgroundScale'   => 1,
+				'followThroughStart'     => true,
+				'followThroughEnd'       => true,
+			],
+		],
+		[
+			'label' => 'Custom',
+			'value' => 'custom',
+		],
+	];
 }
 
 function novablocks_get_blob_presets(): array {

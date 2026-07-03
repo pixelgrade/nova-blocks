@@ -62,6 +62,10 @@ if ( ! function_exists( 'novablocks_render_supernova_block' ) ) {
 		$attributes_config = novablocks_get_supernova_attributes();
 		$attributes        = novablocks_get_attributes_with_defaults( $attributes, $attributes_config );
 
+		// Intrinsic Plus enforcement: normalize locked premium values before they
+		// reach data-* attributes, classes, CSS props, or markup (lib/plus-gating.php).
+		$attributes = novablocks_normalize_locked_block_attributes( $attributes );
+
 		// Older slideshow heroes can drift to contentColorSignal 0, which masks media on stacked query slides.
 		if ( novablocks_should_heal_slideshow_hero_content_signal( $attributes ) ) {
 			$attributes['contentColorSignal']     = 3;
