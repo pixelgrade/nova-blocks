@@ -29,21 +29,29 @@ const useScrollContainer = () => {
 
   useEffect( () => {
     const update = () => setScrollContainer( resolveScrollContainer() );
+
+    let iframe = document.querySelector( 'iframe[name="editor-canvas"]' );
+    iframe?.addEventListener( 'load', update );
     update();
 
-    // Re-resolve when iframe appears or changes (created dynamically by WP).
+    // Re-resolve ONLY when the canvas iframe element itself changes (WP
+    // creates and swaps it dynamically). resolveScrollContainer() reads
+    // geometry (getScrollContainer), so calling it on every body mutation
+    // forces a reflow per mutation per mounted hook — with several
+    // scrolling-effect blocks that stalls the editor for hundreds of ms on
+    // any DOM change. A querySelector identity check reads no layout.
     const observer = new MutationObserver( () => {
-      const newContainer = resolveScrollContainer();
-      setScrollContainer( prev => {
-        // Only update state if the container actually changed.
-        return prev === newContainer ? prev : newContainer;
-      } );
+      const nextIframe = document.querySelector( 'iframe[name="editor-canvas"]' );
+      if ( nextIframe === iframe ) {
+        return;
+      }
+      iframe?.removeEventListener( 'load', update );
+      iframe = nextIframe;
+      iframe?.addEventListener( 'load', update );
+      update();
     } );
 
     observer.observe( document.body, { childList: true, subtree: true } );
-
-    const iframe = document.querySelector( 'iframe[name="editor-canvas"]' );
-    iframe?.addEventListener( 'load', update );
 
     return () => {
       observer.disconnect();
