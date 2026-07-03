@@ -281,6 +281,37 @@ novablocks_plus_assert(
 	'Gated values on nested supernova items must be reverted.'
 );
 
+// The supernova edit propagates collection attributes to its supernova-item
+// children, so newly authored depth values land on ITEMS too — the pile gates
+// must cover the item block or the copies persist while locked (leak found
+// live 2026-07-03 during the reorg verification).
+$propagated_blocks = [
+	novablocks_plus_make_block(
+		[ 'pile3dEffect' => true, 'pileParallaxAmount' => 78 ],
+		'novablocks/supernova',
+		[
+			novablocks_plus_make_block(
+				[ 'pile3dEffect' => true, 'pileParallaxAmount' => 78, 'cardLayout' => 'stacked' ],
+				'novablocks/supernova-item'
+			),
+		]
+	),
+];
+$result     = novablocks_apply_plus_save_guard_to_blocks( $propagated_blocks, [], $all_locked );
+$item_attrs = $result['blocks'][0]['innerBlocks'][0]['attrs'];
+novablocks_plus_assert( ! isset( $item_attrs['pile3dEffect'] ), 'Depth values propagated onto supernova items must be reverted while locked.' );
+novablocks_plus_assert( ! isset( $item_attrs['pileParallaxAmount'] ), 'Grid parallax propagated onto supernova items must be reverted while locked.' );
+novablocks_plus_assert_same( 'stacked', $item_attrs['cardLayout'], 'Free item attributes must never be touched by the save guard.' );
+
+// ...while grandfathered item values (imported starter shape) keep re-saving.
+$item_whitelist = novablocks_collect_plus_gated_attribute_values( $propagated_blocks );
+novablocks_plus_assert(
+	in_array( 78, $item_whitelist['pileParallaxAmount'] ?? [], true ),
+	'The whitelist collector must walk item-level depth values (grandfathering).'
+);
+$result = novablocks_apply_plus_save_guard_to_blocks( $propagated_blocks, $item_whitelist, $all_locked );
+novablocks_plus_assert_same( false, $result['changed'], 'Grandfathered item-level depth values must re-save untouched.' );
+
 // Unlocked: the guard never touches anything.
 $result = novablocks_apply_plus_save_guard_to_blocks( $new_blocks, [], $all_unlocked );
 novablocks_plus_assert_same( false, $result['changed'], 'Unlocked saves must pass through the guard untouched.' );

@@ -89,10 +89,16 @@ function novablocks_get_plus_block_gates(): array {
 			'gated_values' => [ 'layoutStyle' => [ 'parametric' ] ],
 			'defaults'    => [ 'layoutStyle' => 'classic' ],
 		],
+		// Card blocks included deliberately (like the doppler gate): the
+		// supernova edit propagates collection attributes down to its
+		// supernova-item children, so item-level copies of the depth values
+		// must be guarded too or they persist while locked. Grandfathered
+		// item values stay safe — the whitelist collector walks the same
+		// block lists, so previously persisted item values keep re-saving.
 		'pile-3d-grid'      => [
 			'entitlement' => 'advanced_block_controls',
 			'enforcement' => 'save-guard',
-			'blocks'      => $supernova_blocks,
+			'blocks'      => $card_blocks,
 			'attributes'  => [ 'pile3dEffect', 'pile3dTarget', 'pile3dTargetRule' ],
 			'defaults'    => [
 				'pile3dEffect'     => false,
@@ -103,7 +109,7 @@ function novablocks_get_plus_block_gates(): array {
 		'pile-parallax'     => [
 			'entitlement' => 'advanced_block_controls',
 			'enforcement' => 'save-guard',
-			'blocks'      => $supernova_blocks,
+			'blocks'      => $card_blocks,
 			'attributes'  => [ 'pileParallaxAmount' ],
 			'defaults'    => [ 'pileParallaxAmount' => 0 ],
 		],
@@ -471,17 +477,17 @@ function novablocks_get_plus_settings_payload(): array {
 		'pile-3d-grid'      => [
 			'label'       => esc_html__( '3D Grid', '__plugin_txtd' ),
 			'overlayNote' => esc_html__( 'The 3D Grid lifts alternating cards toward the viewer for a sculpted, layered collection.', '__plugin_txtd' ),
-			'note'        => esc_html__( "Try the 3D Grid live — the pattern updates as you flip the rules. Changes here aren't saved; the 3D Grid is part of Pixelgrade Plus.", '__plugin_txtd' ),
+			'note'        => esc_html__( "Try the 3D Grid live — the pattern updates as you flip the rules. Changes here aren’t saved; the 3D Grid is part of Pixelgrade Plus.", '__plugin_txtd' ),
 		],
 		'pile-parallax'     => [
 			'label'       => esc_html__( 'Grid Parallax', '__plugin_txtd' ),
 			'overlayNote' => esc_html__( 'Grid parallax drifts cards at different speeds while visitors scroll, giving the collection gentle depth.', '__plugin_txtd' ),
-			'note'        => esc_html__( "Try the grid parallax live in the preview. Changes here aren't saved; grid parallax is part of Pixelgrade Plus.", '__plugin_txtd' ),
+			'note'        => esc_html__( "Try the grid parallax live in the preview. Changes here aren’t saved; grid parallax is part of Pixelgrade Plus.", '__plugin_txtd' ),
 		],
 		'doppler'           => [
 			'label'       => esc_html__( 'Doppler scrolling', '__plugin_txtd' ),
 			'overlayNote' => esc_html__( 'Doppler moves your media between two framed moments — focal point and zoom — as visitors scroll.', '__plugin_txtd' ),
-			'note'        => esc_html__( "Try Doppler live — frames and motion update as you preview the scroll. Changes here aren't saved; Doppler scrolling is part of Pixelgrade Plus.", '__plugin_txtd' ),
+			'note'        => esc_html__( "Try Doppler live — frames and motion update as you preview the scroll. Changes here aren’t saved; Doppler scrolling is part of Pixelgrade Plus.", '__plugin_txtd' ),
 		],
 		'motion-presets'    => [
 			'label'       => esc_html__( 'Motion presets', '__plugin_txtd' ),
@@ -508,6 +514,37 @@ function novablocks_get_plus_settings_payload(): array {
 		];
 	}
 
+	// Presentation-only trial boundaries — Try & Play rooms whose chrome
+	// spans multiple enforcement gates (the Cards depth room, the motion
+	// recipes group). Enforcement never reads these: the `presentation`
+	// class and empty attribute lists keep them out of the save guard,
+	// render normalization, and the editor honesty classification.
+	$presentation_gates = [
+		'stacked-depth'  => [
+			'entitlement' => 'advanced_block_controls',
+			'blocks'      => [ 'novablocks/supernova' ],
+			'label'       => esc_html__( 'Stacked depth', '__plugin_txtd' ),
+			'overlayNote' => esc_html__( 'Scaled card layers plus a gentle scroll parallax between them — the stacked-depth look for Classic Grid and Masonry collections.', '__plugin_txtd' ),
+			'note'        => esc_html__( "Try the stacked depth live — layers and drift update as you dial. Changes here aren’t saved; stacked depth is part of Pixelgrade Plus.", '__plugin_txtd' ),
+		],
+		'motion-recipes' => [
+			'entitlement' => 'motion_controls',
+			'blocks'      => [ 'novablocks/supernova' ],
+			'label'       => esc_html__( 'Motion presets', '__plugin_txtd' ),
+			'overlayNote' => esc_html__( 'One-click motion for your collection — cinematic Doppler moves for the media, stacked drift for the cards.', '__plugin_txtd' ),
+			'note'        => esc_html__( 'Trying motion presets — they restyle the preview instantly. Making them live on your site is part of Pixelgrade Plus.', '__plugin_txtd' ),
+		],
+	];
+
+	foreach ( $presentation_gates as $gate_id => $gate ) {
+		$gates[ $gate_id ] = array_merge( $gate, [
+			'enforcement' => 'presentation',
+			'attributes'  => [],
+			'defaults'    => [],
+			'gatedValues' => null,
+		] );
+	}
+
 	return [
 		'locked'            => novablocks_get_plus_locked_entitlements(),
 		'upsellUrl'         => novablocks_plus_upsell_url(),
@@ -516,7 +553,7 @@ function novablocks_get_plus_settings_payload(): array {
 		'learnMore'         => esc_html__( 'Learn more', '__plugin_txtd' ),
 		'getPlusLabel'      => esc_html__( 'Get Plus', '__plugin_txtd' ),
 		'buttonLabel'       => esc_html__( 'Play with these options', '__plugin_txtd' ),
-		'bannerText'        => esc_html__( "Trying these out — if they fit, Pixelgrade Plus makes them live. If not, your design system's just as powerful without them.", '__plugin_txtd' ),
+		'bannerText'        => esc_html__( "Trying these out — if they fit, Pixelgrade Plus makes them live. If not, your design system’s just as powerful without them.", '__plugin_txtd' ),
 		'savedPreviewOnly'  => esc_html__( 'Saved. Your Plus refinements are previewing in the editor — Pixelgrade Plus takes them live.', '__plugin_txtd' ),
 		'savedWithoutGated' => esc_html__( 'Saved — the Plus options you were trying stay preview-only for now.', '__plugin_txtd' ),
 		// The Save · Plus button's accessible name while only Plus refinements
