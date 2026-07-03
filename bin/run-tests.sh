@@ -48,6 +48,7 @@ done
 
 echo "== filter JS tests =="
 run "detect-legacy-spacing (node:test)" node --test packages/block-editor/src/filters/with-legacy-spacing-markup/detect-legacy-spacing.test.js
+run "plus gating analyze (jest)" npx --no-install jest packages/block-editor/src/plus-gating/analyze.test.js
 
 echo "== header JS tests =="
 run "layout-definitions (node:test)" node --test packages/block-library/src/blocks/header/layout-definitions.test.js

@@ -1,0 +1,114 @@
+// Plus gating trial chrome. Native editor tokens only — the pill and accents
+// follow --wp-admin-theme-color; never hardcode brand hex here.
+
+.nb-plus-badge {
+	display: inline-block;
+	padding: 0.1em 0.65em 0.18em;
+	margin-left: 0.5em;
+	border-radius: 999em;
+	background: var(--wp-admin-theme-color, #3858e9);
+	color: #fff;
+	font-size: 10px;
+	font-weight: 600;
+	line-height: 1.5;
+	letter-spacing: 0.03em;
+	text-transform: uppercase;
+	vertical-align: middle;
+}
+
+.nb-plus-gate {
+	position: relative;
+
+	&__content {
+		position: relative;
+	}
+
+	&.is-covered {
+		// Room for the scrim message even over short control groups.
+		min-height: 140px;
+	}
+
+	&.is-covered &__content {
+		opacity: 0.4;
+		filter: saturate(0.6);
+		// Backup for browsers/portals where the inert property doesn't stick.
+		pointer-events: none;
+		user-select: none;
+	}
+
+	&__scrim {
+		position: absolute;
+		inset: 0;
+		z-index: 2;
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		justify-content: center;
+		gap: 12px;
+		padding: 16px;
+		text-align: center;
+		background: linear-gradient(rgba(255, 255, 255, 0.55), rgba(255, 255, 255, 0.9));
+	}
+
+	&__note {
+		max-width: 32em;
+		font-size: 12px;
+		line-height: 1.5;
+		color: #1e1e1e;
+	}
+
+	&__note .nb-plus-badge {
+		margin: 0 0 6px;
+		display: inline-block;
+	}
+
+	&__note-text {
+		display: block;
+	}
+
+	&__button.components-button.is-primary {
+		display: inline-flex;
+		align-items: center;
+		gap: 6px;
+	}
+
+	// The sidebar is ~264px wide: badge + link share the top row, the note
+	// text gets its own full-width row below.
+	&__banner {
+		display: flex;
+		flex-wrap: wrap;
+		align-items: center;
+		gap: 4px 8px;
+		margin-bottom: 12px;
+		padding: 8px 12px;
+		font-size: 12px;
+		line-height: 1.5;
+		border-left: 3px solid var(--wp-admin-theme-color, #3858e9);
+		background: rgba(var(--wp-admin-theme-color--rgb, 56, 88, 233), 0.06);
+	}
+
+	&__banner .nb-plus-badge {
+		margin-left: 0;
+		flex: none;
+	}
+
+	&__banner-text {
+		flex: 1 1 100%;
+		order: 3;
+	}
+
+	&__link {
+		flex: none;
+		margin-left: auto;
+		text-decoration: none;
+	}
+
+	// The soft "this is a sandbox" texture behind revealed controls.
+	&.is-playing > &__content {
+		background-image: repeating-linear-gradient(
+			-45deg,
+			transparent 0 12px,
+			rgba(var(--wp-admin-theme-color--rgb, 56, 88, 233), 0.035) 12px 24px
+		);
+	}
+}

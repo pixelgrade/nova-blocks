@@ -85,6 +85,8 @@ function novablocks_get_plus_block_gates(): array {
 			'enforcement' => 'render',
 			'blocks'      => $supernova_blocks,
 			'attributes'  => [ 'layoutStyle' ],
+			// Classic, masonry, and carousel stay free; only parametric is gated.
+			'gated_values' => [ 'layoutStyle' => [ 'parametric' ] ],
 			'defaults'    => [ 'layoutStyle' => 'classic' ],
 		],
 		'pile-3d-grid'      => [
@@ -495,6 +497,11 @@ function novablocks_get_plus_settings_payload(): array {
 			'enforcement' => $gate['enforcement'],
 			'blocks'      => $gate['blocks'],
 			'attributes'  => $gate['attributes'],
+			// Presentation-only mirrors of the enforcement classification, so
+			// the editor honesty layer (post-save notices) can tell gated
+			// values from free/grandfathered ones. Never trusted server-side.
+			'defaults'    => $gate['defaults'],
+			'gatedValues' => $gate['gated_values'] ?? null,
 			'label'       => $gate_copy[ $gate_id ]['label'] ?? '',
 			'overlayNote' => $gate_copy[ $gate_id ]['overlayNote'] ?? '',
 			'note'        => $gate_copy[ $gate_id ]['note'] ?? '',

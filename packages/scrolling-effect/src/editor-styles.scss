@@ -82,9 +82,8 @@
 	}
 }
 
-.novablocks-scrolling-effect [value="doppler"] + label {
-	@include pro-feature-label;
-}
+// The Doppler "Pro" pill used to be hardcoded CSS here; it is now the
+// entitlement-aware <PlusBadge> rendered in the option label.
 
 .nb-scrolling-preview-control {
   margin-bottom: 24px;

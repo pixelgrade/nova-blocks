@@ -1,6 +1,8 @@
 import { ToggleControl, SelectControl } from "@wordpress/components";
 import { __ } from "@wordpress/i18n";
 
+import { PlusBadge } from "../../../components";
+
 const TARGET_OPTIONS = [
   { label: __( 'Individual items', '__plugin_txtd' ), value: 'item' },
   { label: __( 'Columns', '__plugin_txtd' ), value: 'column' },
@@ -17,7 +19,7 @@ const Pile3dGridControls = ( { attributes, setAttributes } ) => {
   return (
     <>
       <ToggleControl
-        label={ __( 'Enable 3D Grid', '__plugin_txtd' ) }
+        label={ <>{ __( 'Enable 3D Grid', '__plugin_txtd' ) }<PlusBadge gateId={ 'pile-3d-grid' } /></> }
         checked={ pile3dEffect }
         onChange={ ( value ) => setAttributes( { pile3dEffect: value } ) }
       />

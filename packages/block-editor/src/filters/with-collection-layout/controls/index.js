@@ -4,6 +4,7 @@ import {
   ControlsSection,
   ControlsTab,
   PresetControl,
+  TryAndPlay,
 } from "../../../components";
 
 import presets from "./presets";
@@ -39,12 +40,14 @@ const Controls = ( props ) => {
       {
         'parametric' === layoutStyle &&
         <ControlsTab label={ __( 'Presets', '__plugin_txtd' ) }>
-          <PresetControl
-            label={ __( 'Choose a layout preset:', '__plugin_txtd' ) }
-            options={ presets }
-            randomize={ getRandomAttributes }
-            { ...props }
-          />
+          <TryAndPlay gateId={ 'parametric-layout' }>
+            <PresetControl
+              label={ __( 'Choose a layout preset:', '__plugin_txtd' ) }
+              options={ presets }
+              randomize={ getRandomAttributes }
+              { ...props }
+            />
+          </TryAndPlay>
         </ControlsTab>
       }
       <ControlsTab label={ __( 'Settings', '__plugin_txtd' ) }>

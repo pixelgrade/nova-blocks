@@ -5,6 +5,8 @@ import {
   getOptimalHeaderPosition,
 } from "@novablocks/utils";
 
+import { TryAndPlay } from "../../../../components";
+
 import DebugControls from './debug-controls';
 import BlockHeaderControls from './block-header-controls';
 import BreakingTheGridControls from './breaking-the-grid-controls';
@@ -31,15 +33,17 @@ const ParametricLayoutControls = ( props ) => {
   };
 
   return (
-    <Fragment>
-      <DebugControls { ...newProps } />
-      <GridAnatomyControls { ...newProps } />
-      <BreakingTheGridControls { ...newProps } />
-      <ParametricItemsCountControls { ...newProps } />
-      <ItemsRegularityControls { ...newProps } />
-      <MiscellaneousParametersControls { ...newProps } />
-      <BlockHeaderControls { ...newProps } />
-    </Fragment>
+    <TryAndPlay gateId={ 'parametric-layout' }>
+      <Fragment>
+        <DebugControls { ...newProps } />
+        <GridAnatomyControls { ...newProps } />
+        <BreakingTheGridControls { ...newProps } />
+        <ParametricItemsCountControls { ...newProps } />
+        <ItemsRegularityControls { ...newProps } />
+        <MiscellaneousParametersControls { ...newProps } />
+        <BlockHeaderControls { ...newProps } />
+      </Fragment>
+    </TryAndPlay>
   )
 };
 

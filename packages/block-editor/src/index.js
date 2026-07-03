@@ -1,5 +1,6 @@
 import './preferences';
 import './cleanup-site-editor-entity-edits';
+import './plus-gating';
 
 export * from './components';
 export * from './filters';

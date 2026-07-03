@@ -13,6 +13,7 @@ export { default as InnerBlocksPreview } from './inner-blocks-preview';
 export { default as Notice } from "./notice";
 export { default as ParametricGrid } from "./parametric-grid";
 export { default as PresetControl } from "./preset-control";
+export { default as TryAndPlay, PlusBadge, usePlusGate } from "./plus-gate";
 export { default as SignalControl } from "./signal-control";
 export { default as TextPlaceholder } from './text-placeholder';
 export { default as ToggleGroup } from "./toggle-group";

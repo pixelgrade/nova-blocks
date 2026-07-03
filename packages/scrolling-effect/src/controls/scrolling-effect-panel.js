@@ -1,7 +1,7 @@
 import { __ } from "@wordpress/i18n";
 import { RadioControl } from "@wordpress/components";
 
-import { ControlsSection, ControlsTab, useSettings, useSupports } from "@novablocks/block-editor";
+import { ControlsSection, ControlsTab, PlusBadge, useSettings, useSupports } from "@novablocks/block-editor";
 
 const ScrollingEffectPanel = ( props ) => {
 
@@ -25,7 +25,7 @@ const ScrollingEffectPanel = ( props ) => {
 
   if ( supports?.novaBlocks?.scrollingEffect === true || supports?.novaBlocks?.scrollingEffect?.doppler === true ) {
     scrollingEffectOptions.push( {
-      label: __( 'Doppler by Pixelgrade ®', '__plugin_txtd' ),
+      label: <>{ __( 'Doppler by Pixelgrade ®', '__plugin_txtd' ) }<PlusBadge gateId={ 'doppler' } /></>,
       value: 'doppler'
     } );
   }
