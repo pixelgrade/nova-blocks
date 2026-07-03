@@ -1,0 +1,170 @@
+/**
+ * Visual preset cards (Composition presets, motion recipes) and the
+ * layout-style tiles. Tokens only — accents come from the active drawer
+ * (`--nb-section-controls-accent`), never hardcoded brand colors.
+ */
+
+.nb-preset-cards {
+  margin-bottom: 16px;
+}
+
+.nb-preset-cards__label {
+  display: block;
+  margin-bottom: 8px;
+  font-size: 11px;
+  font-weight: 500;
+  line-height: 1.4;
+  text-transform: uppercase;
+}
+
+.nb-preset-cards__grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+}
+
+.nb-preset-card {
+  display: block;
+  width: 100%;
+  padding: 7px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  background: #fff;
+  font-family: inherit;
+  text-align: left;
+  cursor: pointer;
+  transition: border-color 0.12s ease, box-shadow 0.12s ease;
+
+  &:hover {
+    border-color: #949494;
+  }
+
+  &:focus-visible {
+    outline: 2px solid var(--nb-section-controls-accent, currentColor);
+    outline-offset: 1px;
+  }
+
+  &.is-selected {
+    border-color: var(--nb-section-controls-accent, currentColor);
+    box-shadow: 0 0 0 1px var(--nb-section-controls-accent, currentColor);
+  }
+}
+
+.nb-preset-thumb {
+  display: block;
+  width: 100%;
+  height: auto;
+  border-radius: 3px;
+  background: #f4f4f6;
+}
+
+.nb-preset-card__name {
+  display: block;
+  margin-top: 6px;
+  font-size: 12px;
+  font-weight: 600;
+  line-height: 1.3;
+}
+
+.nb-preset-card__sub {
+  display: block;
+  margin-top: 1px;
+  font-size: 11px;
+  line-height: 1.35;
+  opacity: 0.65;
+}
+
+.nb-preset-cards__randomize {
+  margin-top: 10px;
+}
+
+/* ---------- layout-style tiles (Composition tab) ---------- */
+
+.nb-style-tiles {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+  margin-bottom: 16px;
+}
+
+.nb-style-tile {
+  position: relative;
+  display: block;
+  width: 100%;
+  padding: 7px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  background: #fff;
+  font-family: inherit;
+  text-align: center;
+  cursor: pointer;
+  transition: border-color 0.12s ease, box-shadow 0.12s ease;
+
+  &:hover {
+    border-color: #949494;
+  }
+
+  &:focus-visible {
+    outline: 2px solid var(--nb-section-controls-accent, currentColor);
+    outline-offset: 1px;
+  }
+
+  &.is-selected {
+    border-color: var(--nb-section-controls-accent, currentColor);
+    box-shadow: 0 0 0 1px var(--nb-section-controls-accent, currentColor);
+  }
+
+  .nb-plus-badge {
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    margin: 0;
+  }
+}
+
+.nb-style-tile__name {
+  display: block;
+  margin-top: 5px;
+  font-size: 11.5px;
+  font-weight: 600;
+  line-height: 1.3;
+}
+
+/* ---------- tab context lines & hints ---------- */
+
+.nb-settings-context {
+  margin: 0 0 14px;
+  font-size: 12px;
+  line-height: 1.5;
+  opacity: 0.85;
+}
+
+.nb-settings-hint {
+  margin: -4px 0 12px;
+  font-size: 12px;
+  line-height: 1.5;
+  opacity: 0.7;
+}
+
+/* ---------- subtle cross-section shortcut ---------- */
+
+.nb-section-link {
+  display: block;
+  margin: 4px 0 12px;
+  padding: 0;
+  border: 0;
+  background: none;
+  font-family: inherit;
+  font-size: 12px;
+  line-height: 1.4;
+  text-align: left;
+  opacity: 0.75;
+  cursor: pointer;
+
+  &:hover,
+  &:focus-visible {
+    opacity: 1;
+    text-decoration: underline;
+    color: var(--nb-section-controls-accent, currentColor);
+  }
+}

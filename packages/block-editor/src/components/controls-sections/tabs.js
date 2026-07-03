@@ -21,11 +21,11 @@ const ACCENT_COLORS = [ 'rgb(142,101,192)', 'rgb(0,202,182)', 'rgb(222,22,81)' ]
 
 const getTabAccentColor = ( label ) => {
 
-	if ( __( 'Presets', '__plugin_txtd' ) === label ) {
+	if ( __( 'Presets', '__plugin_txtd' ) === label || __( 'Composition', '__plugin_txtd' ) === label ) {
 		return ACCENT_COLORS[0];
 	}
 
-	if ( __( 'Customize', '__plugin_txtd' ) === label ) {
+	if ( __( 'Customize', '__plugin_txtd' ) === label || __( 'Media', '__plugin_txtd' ) === label ) {
 		return ACCENT_COLORS[1];
 	}
 
