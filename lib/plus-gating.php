@@ -527,6 +527,16 @@ function novablocks_get_plus_settings_payload(): array {
 			'overlayNote' => esc_html__( 'Scaled card layers plus a gentle scroll parallax between them — the stacked-depth look for Classic Grid and Masonry collections.', '__plugin_txtd' ),
 			'note'        => esc_html__( "Try the stacked depth live — layers and drift update as you dial. Changes here aren’t saved; stacked depth is part of Pixelgrade Plus.", '__plugin_txtd' ),
 		],
+		// The Parametric flavour of the depth room: drift only — parametric
+		// markup can't honour the 3D odd/even pattern, so the copy promises
+		// only the parallax.
+		'parametric-depth' => [
+			'entitlement' => 'advanced_block_controls',
+			'blocks'      => [ 'novablocks/supernova' ],
+			'label'       => esc_html__( 'Depth Parallax', '__plugin_txtd' ),
+			'overlayNote' => esc_html__( 'A gentle scroll drift between the cards of your Parametric composition — editorial depth without touching the layout.', '__plugin_txtd' ),
+			'note'        => esc_html__( "Trying Depth Parallax — the drift updates as you dial. Changes here aren’t saved; Depth Parallax is part of Pixelgrade Plus.", '__plugin_txtd' ),
+		],
 		'motion-recipes' => [
 			'entitlement' => 'motion_controls',
 			'blocks'      => [ 'novablocks/supernova' ],

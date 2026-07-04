@@ -87,6 +87,11 @@ const SettingsTab = ( props ) => {
           { __( 'Looking for 3D Grid & Depth Parallax? Motion & Effects', '__plugin_txtd' ) }
         </SectionLink>
       ) }
+      { isParametric && (
+        <SectionLink sectionId={ 'scrolling-effect' }>
+          { __( 'Looking for Depth Parallax? Motion & Effects', '__plugin_txtd' ) }
+        </SectionLink>
+      ) }
     </>
   );
 };

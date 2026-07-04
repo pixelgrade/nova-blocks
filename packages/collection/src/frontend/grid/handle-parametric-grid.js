@@ -18,6 +18,23 @@ import {
 
 const defaultBlockWidth = 1152; // magic
 
+const LAYOUT_EVENT_NAME = 'nb:parametric-layout';
+const BASE_LAYOUT_EVENT_NAME = 'nb:layout';
+
+// Scroll-effect runtimes (Anima's pile parallax) cache element references and
+// measured positions, so every rebuild must announce itself — mirroring the
+// masonry engine's layout events.
+const dispatchLayoutEvents = ( block, grid ) => {
+	window.dispatchEvent( new CustomEvent( LAYOUT_EVENT_NAME, {
+		detail: {
+			block,
+			grid,
+		},
+	} ) );
+
+	window.dispatchEvent( new Event( BASE_LAYOUT_EVENT_NAME ) );
+};
+
 export const handleParametricGrid = ( grid, block, attributes ) => {
   const posts = Array.from( grid.children );
   const header = block.querySelector( '.nb-collection__header' );
@@ -137,19 +154,24 @@ export const handleParametricGrid = ( grid, block, attributes ) => {
 
       grid.appendChild( $column );
     }
+
+    dispatchLayoutEvents( block, grid );
   }
 
   function recreateLayout() {
+    // Clear scroll-effect transforms before the cards are serialized below,
+    // so a mid-drift parallax offset never gets baked into the rebuilt DOM.
+    posts.forEach( post => {
+      post.style.transform = '';
+      removeClass( post, 'nb-card--landscape nb-card--portrait' );
+    } );
+
     grid.innerHTML = posts.reduce( ( html, post ) => html + post.outerHTML, '' );
 
     applyCSS( grid, {
       display: '',
       gridTemplateColumns: '',
       gridTemplateRows: '',
-    } );
-
-    posts.forEach( post => {
-      removeClass( post, 'nb-card--landscape nb-card--portrait' );
     } );
 
     createLayout();

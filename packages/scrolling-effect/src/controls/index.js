@@ -6,7 +6,9 @@
  * - Media: the image inside each card (effect radio + Start/End frames).
  * - Cards: the cards themselves (3D Grid + Depth Parallax, moved here from
  *   Collection Layout) — everything on it is Plus, so locked it reads as
- *   ONE Try & Play room, mirroring Collection Layout's Fine-tune.
+ *   ONE Try & Play room, mirroring Collection Layout's Fine-tune. Stacked
+ *   Classic Grid and Masonry get the full room; Parametric gets Depth
+ *   Parallax only (see cards-depth-support.js for why 3D is excluded).
  *
  * The section id stays `scrolling-effect` (visibility contracts, drawer
  * links); only the presentation is new. Blocks without collection depth
@@ -24,6 +26,7 @@ import {
 
 import MediaTab from "./media-tab";
 import MotionRecipes, { getScrollingEffectSupports } from "./motion-recipes";
+import { getCardsDepthSupport } from "./cards-depth-support";
 import DepthControls from "./depth-controls";
 import StartFramePanel from "./start-frame-panel";
 import EndFramePanel from "./end-frame-panel";
@@ -35,8 +38,7 @@ const Controls = ( props ) => {
   const supports = useSupports( name );
   const { hasCollectionDepth } = getScrollingEffectSupports( supports );
 
-  const isStackedGrid = [ 'classic', 'masonry' ].includes( attributes.layoutStyle )
-    && 'stacked' === attributes.cardLayout;
+  const { showDepthControls, show3dToggle, gateId } = getCardsDepthSupport( attributes );
 
   return (
     <ControlsSection
@@ -61,14 +63,14 @@ const Controls = ( props ) => {
           <p className="nb-settings-context">
             { __( 'These effects move and stack the cards themselves — independent of what the media does inside them.', '__plugin_txtd' ) }
           </p>
-          { isStackedGrid ? (
-            <TryAndPlay gateId={ 'stacked-depth' }>
-              <DepthControls { ...props } />
+          { showDepthControls ? (
+            <TryAndPlay gateId={ gateId }>
+              <DepthControls { ...props } show3d={ show3dToggle } />
               <PreviewScrollingButton { ...props } />
             </TryAndPlay>
           ) : (
             <p className="nb-settings-hint">
-              { __( 'Card depth applies to stacked Classic Grid and Masonry collections — pick a Depth preset in Collection Layout → Composition to set one up in one click.', '__plugin_txtd' ) }
+              { __( 'Card depth applies to stacked Classic Grid and Masonry collections, and Depth Parallax to Parametric grids — pick a Depth preset in Collection Layout → Composition to set one up in one click.', '__plugin_txtd' ) }
             </p>
           ) }
         </ControlsTab>

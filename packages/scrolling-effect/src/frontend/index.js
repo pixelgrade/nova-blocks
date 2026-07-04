@@ -27,6 +27,7 @@ const initialize = () => {
   window.addEventListener( 'resize', debouncedUpdateAllContainersState );
   window.addEventListener( 'nb:slick-update', updateAllContainersState );
   window.addEventListener( 'nb:masonry-layout', updateAllContainersState );
+  window.addEventListener( 'nb:parametric-layout', updateAllContainersState );
   window.addEventListener( 'load', updateAllContainersState );
 
   const parallaxUpdateLoop = () => {

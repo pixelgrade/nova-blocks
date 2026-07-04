@@ -4,6 +4,10 @@
  * fine-tuning. Everything on this tab is Plus, so the tab-level TryAndPlay
  * room provides the gating chrome — no per-control pills needed.
  *
+ * `show3d` hides the 3D Grid toggle for compositions whose markup can't
+ * honour the odd/even sibling pattern (Parametric) — they get the
+ * structure-agnostic Depth Parallax dial only.
+ *
  * "Depth Parallax" is the renamed "Parallax Scrolling" (pileParallaxAmount
  * unchanged) — the old name collided with the free Media parallax one tab
  * over. The Anima theme implements the scroll-linked movement.
@@ -21,17 +25,19 @@ const RULE_OPTIONS = [
   { label: __( 'Even', '__plugin_txtd' ), value: 'even' },
 ];
 
-const DepthControls = ( { attributes, setAttributes } ) => {
+const DepthControls = ( { attributes, setAttributes, show3d = true } ) => {
   const { pile3dEffect, pile3dTarget, pile3dTargetRule, pileParallaxAmount } = attributes;
 
   return (
     <>
-      <ToggleControl
-        label={ __( 'Enable 3D Grid', '__plugin_txtd' ) }
-        checked={ pile3dEffect }
-        onChange={ ( value ) => setAttributes( { pile3dEffect: value } ) }
-      />
-      { pile3dEffect && (
+      { show3d && (
+        <ToggleControl
+          label={ __( 'Enable 3D Grid', '__plugin_txtd' ) }
+          checked={ pile3dEffect }
+          onChange={ ( value ) => setAttributes( { pile3dEffect: value } ) }
+        />
+      ) }
+      { show3d && pile3dEffect && (
         <>
           <SelectControl
             label={ __( 'Apply the rules on', '__plugin_txtd' ) }

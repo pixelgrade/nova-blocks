@@ -223,6 +223,36 @@ export const DEPTH_PRESETS = {
       pileParallaxAmount: 78,
     },
   } ],
+  // Drift-only: parametric markup nests items per-area, which breaks the 3D
+  // odd/even sibling pattern. Anatomy mirrors the "Aristotle" parametric
+  // preset (L13) so the drift lands on a proven composition.
+  parametric: [ {
+    label: 'Layered Editorial',
+    sub: 'Depth parallax',
+    value: 'depth-layered-editorial',
+    thumb: { kind: 'depth' },
+    preset: {
+      layoutStyle: 'parametric',
+      postsToShow: 6,
+      gridcolumns: 5,
+      gridrows: 4,
+      featuresize: 2,
+      featureposition: 2,
+      fragmentation: 0,
+      imageweightleft: 1,
+      imageweightright: 0,
+      metadetailsleft: 6,
+      metadetailsright: 3,
+      boostfeature: false,
+      subfeature: false,
+      balancemdandiw: false,
+      hierarchycrossing: 0,
+      flipcolsrows: false,
+      headerPosition: 0,
+      pile3dEffect: false,
+      pileParallaxAmount: 78,
+    },
+  } ],
 };
 
 /**

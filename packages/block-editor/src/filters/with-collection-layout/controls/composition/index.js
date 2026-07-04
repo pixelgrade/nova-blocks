@@ -107,7 +107,8 @@ const CompositionTab = ( props ) => {
       ) }
       { !! depthPresets && (
         <>
-          <TryAndPlay gateId={ 'stacked-depth' }>
+          { /* Parametric's depth room is drift-only, with its own trial copy. */ }
+          <TryAndPlay gateId={ 'parametric' === layoutStyle ? 'parametric-depth' : 'stacked-depth' }>
             <PresetCardsControl
               label={ __( 'Depth presets', '__plugin_txtd' ) }
               options={ depthPresets }

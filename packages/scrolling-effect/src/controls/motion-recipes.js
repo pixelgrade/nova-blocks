@@ -93,6 +93,10 @@ const MotionRecipes = ( props ) => {
 
   const supportsStackedDrift = hasCollectionDepth
     && [ 'classic', 'masonry' ].includes( attributes.layoutStyle );
+  // Parametric markup can't honour the 3D odd/even pattern, but the drift
+  // itself is structure-agnostic — it gets a parallax-only cards recipe.
+  const supportsEditorialDrift = hasCollectionDepth
+    && 'parametric' === attributes.layoutStyle;
 
   if ( supportsStackedDrift ) {
     gatedRecipes.push( {
@@ -111,6 +115,20 @@ const MotionRecipes = ( props ) => {
     } );
   }
 
+  if ( supportsEditorialDrift ) {
+    gatedRecipes.push( {
+      label: __( 'Editorial Drift', '__plugin_txtd' ),
+      sub: __( 'Cards · depth parallax', '__plugin_txtd' ),
+      value: 'motion-editorial-drift',
+      thumbnail: <CardsMotionThumb />,
+      preset: {
+        scrollingEffect: 'static',
+        pile3dEffect: false,
+        pileParallaxAmount: 78,
+      },
+    } );
+  }
+
   return (
     <>
       <PresetCardsControl
@@ -123,9 +141,9 @@ const MotionRecipes = ( props ) => {
           <PresetCardsControl options={ gatedRecipes } { ...props } />
         </TryAndPlay>
       ) }
-      { hasCollectionDepth && ! supportsStackedDrift && (
+      { hasCollectionDepth && ! supportsStackedDrift && ! supportsEditorialDrift && (
         <p className="nb-settings-hint">
-          { __( '“Stacked Drift” appears for Classic Grid and Masonry collections.', '__plugin_txtd' ) }
+          { __( '“Stacked Drift” appears for Classic Grid and Masonry collections; “Editorial Drift” for Parametric grids.', '__plugin_txtd' ) }
         </p>
       ) }
       <p className="nb-settings-hint">

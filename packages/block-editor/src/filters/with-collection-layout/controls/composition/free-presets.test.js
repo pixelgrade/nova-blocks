@@ -76,6 +76,19 @@ describe( 'depth presets', () => {
       expect( option.preset.pileParallaxAmount ).toBe( 78 );
     }
   );
+
+  // Parametric markup nests items per-area, which breaks the 3D odd/even
+  // sibling pattern — its depth preset is drift-only, never 3D.
+  test.each( DEPTH_PRESETS.parametric.map( ( preset ) => [ preset.label, preset ] ) )(
+    '%s writes a drift-only bundle on a parametric composition',
+    ( label, option ) => {
+      expect( option.preset.layoutStyle ).toBe( 'parametric' );
+      expect( option.preset.pileParallaxAmount ).toBe( 78 );
+      expect( option.preset.pile3dEffect ).toBe( false );
+      expect( option.preset.pile3dTarget ).toBeUndefined();
+      expect( option.preset.pile3dTargetRule ).toBeUndefined();
+    }
+  );
 } );
 
 describe( 'layout preset resets', () => {
