@@ -207,6 +207,9 @@ const SupernovaPreview = props => {
   const contentType = inQuery ? 'auto' : attributes?.contentType || 'fields';
 
   const contentAlign = getAlignFromMatrix( attributes?.contentPosition );
+  const supportsPile3dEffect = [ 'classic', 'masonry' ].includes( layoutStyle )
+    && cardLayout === 'stacked'
+    && !! pile3dEffect;
 
   const className = classnames(
     'nb-supernova',
@@ -222,9 +225,9 @@ const SupernovaPreview = props => {
     { 'nb-supernova--aspect-ratio-original': thumbnailAspectRatioString === 'original' },
     { 'nb-supernova--pile-parallax': pileParallaxAmount > 0 },
     { [ `nb-supernova--card-description-size-${ cardDescriptionSize }` ]: !! cardDescriptionSize && cardDescriptionSize !== 'normal' },
-    { 'nb-supernova--pile-3d': !! pile3dEffect },
-    { [ `nb-supernova--pile-3d-target-${ attributes.pile3dTarget }` ]: !! pile3dEffect },
-    { [ `nb-supernova--pile-3d-rule-${ attributes.pile3dTargetRule }` ]: !! pile3dEffect },
+    { 'nb-supernova--pile-3d': supportsPile3dEffect },
+    { [ `nb-supernova--pile-3d-target-${ attributes.pile3dTarget }` ]: supportsPile3dEffect },
+    { [ `nb-supernova--pile-3d-rule-${ attributes.pile3dTargetRule }` ]: supportsPile3dEffect },
     props.className,
     'alignfull'
   );

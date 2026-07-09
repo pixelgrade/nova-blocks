@@ -316,4 +316,21 @@ novablocks_plus_assert_same( false, $result['changed'], 'Grandfathered item-leve
 $result = novablocks_apply_plus_save_guard_to_blocks( $new_blocks, [], $all_unlocked );
 novablocks_plus_assert_same( false, $result['changed'], 'Unlocked saves must pass through the guard untouched.' );
 
+$payload = novablocks_get_plus_settings_payload();
+novablocks_plus_assert_same(
+	'presentation',
+	$payload['gates']['parametric-depth']['enforcement'] ?? null,
+	'The Parametric depth room must be presentation-only, not a save/render enforcement gate.'
+);
+novablocks_plus_assert_same(
+	'advanced_block_controls',
+	$payload['gates']['parametric-depth']['entitlement'] ?? null,
+	'The Parametric depth room must follow the advanced block controls entitlement.'
+);
+novablocks_plus_assert_same(
+	[],
+	$payload['gates']['parametric-depth']['attributes'] ?? null,
+	'Presentation-only rooms must not advertise gated attributes to the save honesty layer.'
+);
+
 echo "plus gating contract ok\n";

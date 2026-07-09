@@ -50,6 +50,16 @@ echo "== filter JS tests =="
 run "detect-legacy-spacing (node:test)" node --test packages/block-editor/src/filters/with-legacy-spacing-markup/detect-legacy-spacing.test.js
 run "plus gating analyze (jest)" npx --no-install jest packages/block-editor/src/plus-gating/analyze.test.js
 run "collection free presets (jest)" npx --no-install jest packages/block-editor/src/filters/with-collection-layout/controls/composition/free-presets.test.js
+run "collection style tiles (node:test)" node --test packages/block-editor/src/filters/with-collection-layout/controls/composition/style-tiles.test.js
+run "collection layout custom properties (node:test)" node --test packages/block-editor/src/filters/with-collection-layout/get-collection-layout-custom-properties.test.js
+run "server collection layout css (node:test)" env NB_PHP_CLI="$PHP" node --test lib/block-rendering.collection-layout-css.test.js
+run "parametric layout events (node:test)" node --test packages/collection/src/frontend/grid/parametric-layout-events.test.js
+run "cards depth support (jest)" npx --no-install jest packages/scrolling-effect/src/controls/cards-depth-support.test.js
+run "motion recipe gates (node:test)" node --test packages/scrolling-effect/src/controls/motion-recipes-gates.test.js
+run "empty hero media placeholder (jest)" npx --no-install jest packages/block-library/src/blocks/supernova/utils/empty-hero-media-placeholder.test.js
+run "supernova-item media placeholder wiring (node:test)" node --test packages/block-library/src/blocks/supernova-item/edit.test.js
+run "supernova edit contracts (node:test)" node --test packages/block-library/src/blocks/supernova/edit.test.js
+run "supernova pile 3D styles (node:test)" node --test packages/block-library/src/blocks/supernova/collection-style.test.js packages/block-library/src/blocks/supernova/editor-styles.test.js
 run "vertical gap + settings tab (node:test)" node --test packages/block-editor/src/filters/with-collection-layout/controls/vertical-gap-modifier-control.test.js
 
 echo "== header JS tests =="

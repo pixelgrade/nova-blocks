@@ -1,7 +1,8 @@
 import { useSelect } from '@wordpress/data';
 import { store as coreStore } from '@wordpress/core-data';
 
-export const CURRENT_ITEM_FEATURED_IMAGE_MEDIA_SOURCE = 'current-item-featured-image';
+export { CURRENT_ITEM_FEATURED_IMAGE_MEDIA_SOURCE } from './media-source-constants';
+import { CURRENT_ITEM_FEATURED_IMAGE_MEDIA_SOURCE } from './media-source-constants';
 
 const TEMPLATE_POST_TYPES = [
   'wp_template',

@@ -3,8 +3,9 @@
  *
  * Curated one-click motion, each recipe tagged by its SUBJECT: "Media"
  * recipes move the image inside each card; "Cards" recipes move the cards
- * themselves. Free recipes (Still, Soft Parallax) sit fully native; the
- * Doppler bundles and the stacked-depth recipe are one Try & Play boundary.
+ * themselves. Free recipes (Still, Soft Parallax) sit fully native; Doppler
+ * bundles use the motion-recipes Try & Play boundary, while card-depth
+ * recipes use the same advanced-controls gates as their save enforcement.
  *
  * Recipes are whole bundles: each one writes the full motion story for its
  * subject and resets the other, so combinations remain the dials' job
@@ -67,7 +68,9 @@ const MotionRecipes = ( props ) => {
     },
   ];
 
-  const gatedRecipes = [];
+  const dopplerRecipes = [];
+  const stackedDepthRecipes = [];
+  const editorialDriftRecipes = [];
 
   if ( hasDoppler ) {
     ( novablocksSettings.motionPresetOptions || [] ).forEach( ( option ) => {
@@ -75,7 +78,7 @@ const MotionRecipes = ( props ) => {
         return;
       }
 
-      gatedRecipes.push( {
+      dopplerRecipes.push( {
         label: option.label,
         sub: __( 'Media · Doppler', '__plugin_txtd' ),
         value: `motion-doppler-${ option.value }`,
@@ -99,7 +102,7 @@ const MotionRecipes = ( props ) => {
     && 'parametric' === attributes.layoutStyle;
 
   if ( supportsStackedDrift ) {
-    gatedRecipes.push( {
+    stackedDepthRecipes.push( {
       label: __( 'Stacked Drift', '__plugin_txtd' ),
       sub: __( 'Cards · depth + parallax', '__plugin_txtd' ),
       value: 'motion-stacked-drift',
@@ -116,7 +119,7 @@ const MotionRecipes = ( props ) => {
   }
 
   if ( supportsEditorialDrift ) {
-    gatedRecipes.push( {
+    editorialDriftRecipes.push( {
       label: __( 'Editorial Drift', '__plugin_txtd' ),
       sub: __( 'Cards · depth parallax', '__plugin_txtd' ),
       value: 'motion-editorial-drift',
@@ -136,9 +139,19 @@ const MotionRecipes = ( props ) => {
         options={ freeRecipes }
         { ...props }
       />
-      { !! gatedRecipes.length && (
+      { !! dopplerRecipes.length && (
         <TryAndPlay gateId={ 'motion-recipes' }>
-          <PresetCardsControl options={ gatedRecipes } { ...props } />
+          <PresetCardsControl options={ dopplerRecipes } { ...props } />
+        </TryAndPlay>
+      ) }
+      { !! stackedDepthRecipes.length && (
+        <TryAndPlay gateId={ 'stacked-depth' }>
+          <PresetCardsControl options={ stackedDepthRecipes } { ...props } />
+        </TryAndPlay>
+      ) }
+      { !! editorialDriftRecipes.length && (
+        <TryAndPlay gateId={ 'parametric-depth' }>
+          <PresetCardsControl options={ editorialDriftRecipes } { ...props } />
         </TryAndPlay>
       ) }
       { hasCollectionDepth && ! supportsStackedDrift && ! supportsEditorialDrift && (

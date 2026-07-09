@@ -42,22 +42,29 @@ import {
   isCurrentItemFeaturedImageMediaSource,
   useCurrentItemFeaturedImage,
 } from '../supernova/utils/current-item-featured-image';
+import { shouldSuppressEmptyHeroMediaPlaceholder } from '../supernova/utils/empty-hero-media-placeholder';
 
 const SupernovaItemEdit = props => {
   const { attributes, setControlsVisibility, clientId } = props;
   const { showMedia, mediaPosition, cardLayout, contentType } = attributes;
   const parent = useSelect( select =>{
-    const { getBlockParents } = select( 'core/block-editor' );
+    const { getBlock, getBlockParents } = select( 'core/block-editor' );
     const parents = getBlockParents( clientId ).slice();
 
     if ( parents.length ) {
-      return parents[ parents.length - 1 ];
+      const parentClientId = parents[ parents.length - 1 ];
+
+      return {
+        clientId: parentClientId,
+        attributes: getBlock( parentClientId )?.attributes || {},
+      };
     }
 
     return null;
   }, [ clientId ] );
 
-  const innerBlocks = useInnerBlocks( parent );
+  const parentAttributes = parent?.attributes || {};
+  const innerBlocks = useInnerBlocks( parent?.clientId );
   const selectParentCondition = useMemo( () => {
     return 1 === innerBlocks.length;
   }, [ innerBlocks ] );
@@ -99,7 +106,7 @@ const SupernovaItemEdit = props => {
 
   const renderMedia = () => (
     <CardMediaWrapper { ...props }>
-      <CardMedia { ...props } />
+      <CardMedia { ...props } parentAttributes={ parentAttributes } />
     </CardMediaWrapper>
   );
 
@@ -140,15 +147,19 @@ const SupernovaItemEdit = props => {
 
 const CardMedia = withScrollingEffect( props => {
 
-  const { attributes } = props;
+  const { attributes, parentAttributes } = props;
   const usesCurrentItemFeaturedImage = isCurrentItemFeaturedImageMediaSource( attributes );
   const currentItemFeaturedImage = useCurrentItemFeaturedImage( props.context, usesCurrentItemFeaturedImage );
   const images = usesCurrentItemFeaturedImage
     ? ( currentItemFeaturedImage ? [ currentItemFeaturedImage ] : [] )
-    : attributes.images;
+    : attributes.images || [];
   const scrollingEffect = useScrollingEffect();
 
   if ( usesCurrentItemFeaturedImage && ! currentItemFeaturedImage ) {
+    return null;
+  }
+
+  if ( shouldSuppressEmptyHeroMediaPlaceholder( attributes, images, parentAttributes ) ) {
     return null;
   }
 

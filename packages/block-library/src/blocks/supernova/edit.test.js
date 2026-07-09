@@ -53,3 +53,15 @@ test('editor keeps custom Cards Collection in card layout while allowing current
     /inQuery\s*\?\s*<PostsCollectionLayout[\s\S]*?:\s*<CardsCollectionLayout/
   );
 });
+
+test('editor ignores stale 3D grid state outside stacked Classic Grid and Masonry layouts', () => {
+  assert.match(
+    source,
+    /const supportsPile3dEffect = \[ 'classic', 'masonry' \]\.includes\( layoutStyle \)\s*&& cardLayout === 'stacked'\s*&& !! pile3dEffect;/
+  );
+
+  assert.match(
+    source,
+    /\{ 'nb-supernova--pile-3d': supportsPile3dEffect \}/
+  );
+});

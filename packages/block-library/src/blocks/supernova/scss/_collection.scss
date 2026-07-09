@@ -166,7 +166,7 @@
   }
 }
 
-.nb-supernova--pile-3d.nb-supernova--card-layout-stacked {
+.nb-supernova--pile-3d:where(.nb-supernova--layout-classic, .nb-supernova--layout-masonry).nb-supernova--card-layout-stacked {
   .nb-collection__layout-item {
     display: grid;
     justify-items: center;

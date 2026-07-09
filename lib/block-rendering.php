@@ -541,18 +541,26 @@ function novablocks_get_sizing_css( array $attributes ): array {
 	return $props;
 }
 
+function novablocks_supports_pile_3d_effect( array $attributes ): bool {
+	return ! empty( $attributes['pile3dEffect'] )
+	       && in_array( $attributes['layoutStyle'] ?? '', [ 'classic', 'masonry' ], true )
+	       && ( $attributes['cardLayout'] ?? '' ) === 'stacked';
+}
+
 function novablocks_get_collection_layout_css( array $attributes ): array {
+	$supports_pile_3d_effect = novablocks_supports_pile_3d_effect( $attributes );
+
 	return [
 		'--nb-collection-columns-count: ' . $attributes['columns'],
 		'--nb-grid-spacing-modifier: ' . $attributes['gridGap'],
-		'--nb-grid-spacing-multiplier: ' . ( ! empty( $attributes['pile3dEffect'] ) ? 2 : 1 ),
+		'--nb-grid-spacing-multiplier: ' . ( $supports_pile_3d_effect ? 2 : 1 ),
 		'--nb-grid-row-spacing-multiplier: ' . ( $attributes['verticalGapModifier'] ?? 1 ),
-		'--nb-pile-3d-scale: ' . ( ! empty( $attributes['pile3dEffect'] ) ? '0.82' : '1' ),
+		'--nb-pile-3d-scale: ' . ( $supports_pile_3d_effect ? '0.82' : '1' ),
 	];
 }
 
 function novablocks_get_collection_layout_classes( array $attributes ): array {
-	if ( empty( $attributes['pile3dEffect'] ) ) {
+	if ( ! novablocks_supports_pile_3d_effect( $attributes ) ) {
 		return [];
 	}
 

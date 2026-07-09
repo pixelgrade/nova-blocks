@@ -22,6 +22,17 @@ export const STYLE_LABELS = {
   parametric: __( 'Parametric Grid', '__plugin_txtd' ),
 };
 
+const getStyleTileAttributes = ( layoutStyle ) => {
+  if ( 'parametric' === layoutStyle ) {
+    return {
+      layoutStyle,
+      pile3dEffect: false,
+    };
+  }
+
+  return { layoutStyle };
+};
+
 const StyleTiles = ( { attributes, setAttributes } ) => {
   const { layoutStyle, columns, postsToShow } = attributes;
 
@@ -40,7 +51,7 @@ const StyleTiles = ( { attributes, setAttributes } ) => {
           key={ tile.value }
           className={ 'nb-style-tile' + ( layoutStyle === tile.value ? ' is-selected' : '' ) }
           aria-pressed={ layoutStyle === tile.value }
-          onClick={ () => setAttributes( { layoutStyle: tile.value } ) }
+          onClick={ () => setAttributes( getStyleTileAttributes( tile.value ) ) }
         >
           { 'parametric' === tile.value && <PlusBadge gateId={ 'parametric-layout' } /> }
           { tile.thumbnail }

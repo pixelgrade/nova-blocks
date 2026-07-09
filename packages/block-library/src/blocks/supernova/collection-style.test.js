@@ -9,6 +9,6 @@ const styleSource = fs.readFileSync(stylePath, 'utf8');
 test('pile 3D stacked collections normalize item wrapper tracks before shrinking cards', () => {
   assert.match(
     styleSource,
-    /\.nb-supernova--pile-3d\.nb-supernova--card-layout-stacked\s*\{[\s\S]*?\.nb-collection__layout-item\s*\{[\s\S]*?padding-left:\s*0\s*!important;[\s\S]*?padding-right:\s*0\s*!important;[\s\S]*?grid-template-columns:\s*minmax\(0,\s*1fr\)\s*!important;/
+    /\.nb-supernova--pile-3d:where\(\.nb-supernova--layout-classic,\s*\.nb-supernova--layout-masonry\)\.nb-supernova--card-layout-stacked\s*\{[\s\S]*?\.nb-collection__layout-item\s*\{[\s\S]*?padding-left:\s*0\s*!important;[\s\S]*?padding-right:\s*0\s*!important;[\s\S]*?grid-template-columns:\s*minmax\(0,\s*1fr\)\s*!important;/
   );
 } );
