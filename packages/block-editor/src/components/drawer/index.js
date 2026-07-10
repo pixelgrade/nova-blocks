@@ -38,7 +38,7 @@ const Drawers = ( ownProps ) => {
   }, [ existingDrawer ] );
 
 	const ref = useRef( null );
-	const [ refMap ] = useState( () => new WeakMap() );
+	const [ activePanelElement, setActivePanelElement ] = useState( null );
 
 	const noop = () => {};
 	const onOpen = typeof ownProps.onOpen === 'function' ? ownProps.onOpen : noop;
@@ -48,22 +48,32 @@ const Drawers = ( ownProps ) => {
 		return !! ref.current ? ref.current.clientHeight : 0;
 	};
 
-	const getActiveDrawerTitleHeight = () => {
-	  const drawerPanel = drawerPanels.find( drawerPanel => drawerPanel.props.id === lastActiveDrawerId );
-		const activeRef = refMap.get( drawerPanel );
-		return !! activeRef ? activeRef.clientHeight : 0;
+	const getActiveDrawerPanelHeight = () => {
+		return !! activePanelElement ? activePanelElement.clientHeight : 0;
 	};
 
 	const updateHeight = () => {
 		const drawerListHeight = getDrawerListHeight();
-		const drawerPanelHeight = getActiveDrawerTitleHeight();
+		const drawerPanelHeight = getActiveDrawerPanelHeight();
 
 		// If the drawer is open, the height of the wrapper should be the height of the drawer panel.
 		setWrapperHeight( (!!open ? drawerPanelHeight : drawerListHeight) || 'auto' );
 	};
 
-	// This hook updates the height of the collapsible to match the height of the content
-	useLayoutEffect( updateHeight, [ open ] );
+	// Track the actual active panel instead of transient React element identities. The panel DOM
+	// node usually survives block-selection changes, while its controls and height do not.
+	useLayoutEffect( () => {
+		updateHeight();
+
+		if ( ! open || ! activePanelElement ) {
+			return undefined;
+		}
+
+		const observer = new window.ResizeObserver( updateHeight );
+		observer.observe( activePanelElement );
+
+		return () => observer.disconnect();
+	}, [ open, lastActiveDrawerId, activePanelElement ] );
 
 	// Translate the drawer to the left when the menu button is clicked.
 	const transform = open ? 'translate3d(-100%,0,0)' : 'translate3d(0%,0,0)';
@@ -126,7 +136,7 @@ const Drawers = ( ownProps ) => {
             }
 
 						return (
-							<div key={ `drawer_panel_${ drawerPanel.props.id }` } className={ className } ref={ ref => ref && refMap.set( drawerPanel, ref ) }>
+							<div key={ `drawer_panel_${ drawerPanel.props.id }` } className={ className } ref={ setActivePanelElement }>
 								<DrawerWithProps { ...drawerPanel.props } isActive={ lastActiveDrawerId === drawerPanel.props.id } goBack={ () => {
 									setOpen( false );
 									onClose();

@@ -20,6 +20,8 @@ import {
   EmphasisAreaControl,
 } from "../components";
 
+import { ColorSignalPracticeGuide } from "../onboarding";
+
 const Controls = withColorSignalProps( props => {
   return (
     <ControlsSection id={ 'color-signal' } label={ __( 'Color Signal', '__plugin_txtd' ) } order={ 10 } key={'color_signal_controls_section'}>
@@ -37,6 +39,7 @@ const Controls = withColorSignalProps( props => {
         <EmphasisAreaControl { ...props } key={'emphasis_area'}/>
         <ColorSignalCustomizeControls.Slot key={'color_signal_customize'}/>
         <PalettePicker { ...props } />
+        <ColorSignalPracticeGuide key={'color_signal_practice_guide'} />
         <ColorReferenceToggleControl { ...props } key={'color_reference_toggle'}/>
       </ControlsTab>
       <ControlsTab label={ __( 'Settings', '__plugin_txtd' ) } key={'color_signal_settings_tab'}>

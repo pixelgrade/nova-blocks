@@ -49,6 +49,8 @@ done
 echo "== filter JS tests =="
 run "detect-legacy-spacing (node:test)" node --test packages/block-editor/src/filters/with-legacy-spacing-markup/detect-legacy-spacing.test.js
 run "plus gating analyze (jest)" npx --no-install jest packages/block-editor/src/plus-gating/analyze.test.js
+run "drawer panel height (jest)" npx --no-install jest packages/block-editor/src/components/drawer/index.test.js
+run "color signal onboarding (jest)" npx --no-install jest packages/color-signal/src/onboarding/build-guide-content.test.js packages/color-signal/src/onboarding/derive-steps.test.js packages/color-signal/src/onboarding/guide-session.test.js packages/color-signal/src/onboarding/practice-section.test.js
 run "collection free presets (jest)" npx --no-install jest packages/block-editor/src/filters/with-collection-layout/controls/composition/free-presets.test.js
 run "collection style tiles (node:test)" node --test packages/block-editor/src/filters/with-collection-layout/controls/composition/style-tiles.test.js
 run "collection layout custom properties (node:test)" node --test packages/block-editor/src/filters/with-collection-layout/get-collection-layout-custom-properties.test.js
