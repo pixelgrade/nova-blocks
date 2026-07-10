@@ -1,4 +1,4 @@
-import { addClass, below, removeClass } from "@novablocks/utils";
+import { addClass, below, calculateFitColumnCount, removeClass } from "@novablocks/utils";
 
 const {
   calculateColumnWidth,
@@ -6,6 +6,20 @@ const {
   normalizeColumnCount,
   shouldRelayoutForTransitionProperty,
 } = require( './masonry-layout-engine' );
+
+const COLUMN_CLASSNAME_PATTERN = /(^|\s)nb-collection__layout-item--col-\S+/g;
+
+const clearItemColumnClasses = ( item ) => {
+  item.className = item.className.replace( COLUMN_CLASSNAME_PATTERN, '' ).trim();
+};
+
+const applyItemColumnClasses = ( item, columnIndex ) => {
+  clearItemColumnClasses( item );
+  item.classList.add(
+    `nb-collection__layout-item--col-${ columnIndex }`,
+    `nb-collection__layout-item--col-${ columnIndex % 2 === 0 ? 'even' : 'odd' }`
+  );
+};
 
 const READY_CLASSNAME = 'nb-collection__layout--masonry-ready';
 const LAYOUT_EVENT_NAME = 'nb:masonry-layout';
@@ -28,6 +42,7 @@ const clearItemStyles = ( item ) => {
   item.style.left = '';
   item.style.width = '';
   item.style.transform = '';
+  clearItemColumnClasses( item );
 };
 
 const getComputedGap = ( value, fallbackValue ) => {
@@ -114,18 +129,27 @@ export const handleMasonryGrid = ( grid, block, attributes ) => {
       return;
     }
 
-    const activeColumns = below( 'tablet' )
-      ? 1
-      : normalizeColumnCount( attributes.columns );
+    const containerWidth = grid.getBoundingClientRect().width;
+    const { columnGap, rowGap } = getGridGaps( grid );
+
+    // Fit-based responsive columns (columnsFitMinWidth > 0): the container
+    // decides how many min-width columns fit, capped at the authored count.
+    // Without it, keep the legacy rule: authored columns, 1 below tablet.
+    const fitMinWidth = Number.parseFloat( attributes.columnsFitMinWidth ) || 0;
+    const activeColumns = fitMinWidth > 0
+      ? calculateFitColumnCount( {
+          containerWidth,
+          columnGap,
+          minColumnWidth: fitMinWidth,
+          maxColumns: attributes.columns,
+        } )
+      : ( below( 'tablet' ) ? 1 : normalizeColumnCount( attributes.columns ) );
 
     if ( activeColumns <= 1 ) {
       resetLayout();
       addClass( block, 'novablocks-block--ready' );
       return;
     }
-
-    const containerWidth = grid.getBoundingClientRect().width;
-    const { columnGap, rowGap } = getGridGaps( grid );
     const columnWidth = calculateColumnWidth( {
       containerWidth,
       columnCount: activeColumns,
@@ -141,7 +165,7 @@ export const handleMasonryGrid = ( grid, block, attributes ) => {
     } );
 
     const itemHeights = items.map( item => item.getBoundingClientRect().height );
-    const { positions, containerHeight } = calculateMasonryLayout( {
+    const { positions, columnIndexes, containerHeight } = calculateMasonryLayout( {
       containerWidth,
       columnCount: activeColumns,
       columnGap,
@@ -151,6 +175,7 @@ export const handleMasonryGrid = ( grid, block, attributes ) => {
 
     positions.forEach( ( { x, y }, index ) => {
       items[ index ].style.transform = `translate(${ x }px, ${ y }px)`;
+      applyItemColumnClasses( items[ index ], columnIndexes[ index ] );
     } );
 
     grid.style.height = `${ containerHeight }px`;

@@ -11,6 +11,14 @@
 		"type": "number",
 		"default": 3
 	},
+	"columnsFitMinWidth": {
+		"type": "number",
+		"default": 0
+	},
+	"cardHoverEffect": {
+		"type": "string",
+		"default": "none"
+	},
 	"gridGap": {
 		"type": "number",
 		"default": 50

@@ -56,6 +56,23 @@ test('calculateMasonryLayout returns a simple stacked layout when only one colum
   assert.equal( layout.containerHeight, 440 );
 } );
 
+test('calculateMasonryLayout reports the column index of every placed item', () => {
+  const layout = calculateMasonryLayout( {
+    containerWidth: 320,
+    columnCount: 3,
+    columnGap: 10,
+    rowGap: 20,
+    itemHeights: [ 100, 220, 80, 120, 120 ],
+  } );
+
+  // Mirrors the positions assertion above: items land in columns
+  // 0, 1, 2, then the shortest (2), then the shortest (0).
+  assert.deepEqual( layout.columnIndexes, [ 0, 1, 2, 2, 0 ] );
+} );
+
+// calculateFitColumnCount moved to @novablocks/utils (fit-columns) with its
+// jest suite — the editor and frontend now share that single implementation.
+
 test('shouldRelayoutForTransitionProperty targets geometry-affecting transitions only', () => {
   assert.equal( shouldRelayoutForTransitionProperty( 'width' ), true );
   assert.equal( shouldRelayoutForTransitionProperty( 'height' ), true );

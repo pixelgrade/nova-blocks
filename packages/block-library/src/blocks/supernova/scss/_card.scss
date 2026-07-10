@@ -162,6 +162,42 @@
   }
 }
 
+// ------ #ORIGINAL ASPECT RATIO (natural media flow)
+// With the "Original" items aspect ratio the media must dictate its own
+// height instead of filling a fixed ratio box: drop the :before ratio box and
+// undo the absolute cover positioning of the media chain so the image's
+// natural height flows into the card (masonry-friendly). Stacked cards keep
+// their frame behavior (content overlays media — handled by the theme layer),
+// and cards with scrolling effects keep the cover chain the Doppler runtime
+// measures against.
+.nb-supernova--aspect-ratio-original
+.nb-supernova-item--scrolling-effect-none:not(.nb-supernova-item--layout-stacked) {
+
+  .nb-supernova-item__media-aspect-ratio {
+    min-height: 0;
+
+    &:before {
+      content: none;
+    }
+
+    > * {
+      position: static;
+      height: auto;
+    }
+  }
+
+  .novablocks-doppler__wrapper,
+  .nb-supernova-item__media-doppler {
+    position: static;
+    height: auto;
+  }
+
+  .nb-supernova-item__media[class] {
+    height: auto;
+    object-fit: unset;
+  }
+}
+
 // ------ #CARD MEDIA
 .nb-supernova-item__media-wrapper {
   position: relative;

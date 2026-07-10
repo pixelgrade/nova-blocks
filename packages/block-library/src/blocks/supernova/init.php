@@ -126,6 +126,12 @@ if ( ! function_exists( 'novablocks_render_supernova_block' ) ) {
 			$classes[] = 'nb-supernova--pile-parallax';
 		}
 
+		// Card hover effect: Nova ships no effect CSS of its own — the class is
+		// a stable hook themes implement (e.g. Anima's meta-reveal treatment).
+		if ( ! empty( $attributes['cardHoverEffect'] ) && $attributes['cardHoverEffect'] !== 'none' ) {
+			$classes[] = 'nb-supernova--card-hover-' . sanitize_html_class( $attributes['cardHoverEffect'] );
+		}
+
 		// Author-picked card description size override. 'normal' keeps the
 		// layout-aware default; other values scale via --font-size-modifier.
 		if ( ! empty( $attributes['cardDescriptionSize'] ) && $attributes['cardDescriptionSize'] !== 'normal' ) {

@@ -1,3 +1,5 @@
+import { _x } from "@wordpress/i18n";
+
 import {
   Fragment
 } from "@wordpress/element";
@@ -110,6 +112,31 @@ export const getMetadata = ( post, meta ) => {
       return !! categoryId && <Category termId={ categoryId } postType={post.type} />;
     case 'comments':
       return !!post?.id && <Comments postId={ post.id } />;
+    case 'author-date': {
+      // Mirrors the frontend's "By {author} / {date}" combined meta.
+      const combinedDateFormat = getDateSettings().formats.date;
+
+      if ( ! post?.author && ! post?.date_gmt ) {
+        return null;
+      }
+
+      return (
+        <Fragment>
+          { !! post?.author && (
+            <Fragment>
+              { _x( 'By', 'card author and date meta', '__plugin_txtd' ) }{ ' ' }
+              <Author userId={ post.author } />
+            </Fragment>
+          ) }
+          { !! post?.author && !! post?.date_gmt && ' / ' }
+          { !! post?.date_gmt && (
+            <time dateTime={ format( 'c', post.date_gmt ) }>
+              { dateI18n( combinedDateFormat, post.date_gmt ) }
+            </time>
+          ) }
+        </Fragment>
+      );
+    }
     case 'date':
       const dateFormat = getDateSettings().formats.date;
 
@@ -166,6 +193,11 @@ export const sanitizeMediaResponse = ( mediaObject ) => {
     type: mediaObject?.media_type,
     width: mediaObject?.media_details?.sizes?.novablocks_large?.width || mediaObject?.media_details?.width,
     height: mediaObject?.media_details?.sizes?.novablocks_large?.height || mediaObject?.media_details?.height,
+    // Original attachment dimensions — the media-ratio expression classes
+    // must classify from the ORIGINAL ratio (PHP mirrors this via
+    // wp_get_attachment_metadata), not from a possibly-cropped size.
+    originalWidth: mediaObject?.media_details?.width,
+    originalHeight: mediaObject?.media_details?.height,
     url: mediaObject?.media_details?.sizes?.novablocks_large?.source_url || mediaObject?.source_url,
     alt: mediaObject?.media_details?.alt || mediaObject?.alt || '',
   }

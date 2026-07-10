@@ -9,30 +9,37 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
+/**
+ * The format → blueprint template-part slug map. Themes can extend it (e.g.
+ * add a `link` or `video` blueprint) via the
+ * `novablocks/post_format_card_blueprints` filter; every slug must point to a
+ * theme template part whose content passes the blueprint validation
+ * (a novablocks/supernova wrapping a novablocks/supernova-item).
+ */
+function novablocks_get_post_format_card_blueprint_map(): array {
+	$map = apply_filters( 'novablocks/post_format_card_blueprints', [
+		'quote' => 'card-quote',
+		'image' => 'card-image',
+	] );
+
+	return is_array( $map ) ? array_filter( $map, 'is_string' ) : [];
+}
+
 function novablocks_get_post_format_card_blueprint_slug( array $profile ): string {
 	$format = $profile['format'] ?? '';
+	$map    = novablocks_get_post_format_card_blueprint_map();
 
-	if ( 'quote' === $format ) {
-		return 'card-quote';
-	}
-
-	if ( 'image' === $format ) {
-		return 'card-image';
-	}
-
-	return '';
+	return isset( $map[ $format ] ) ? $map[ $format ] : '';
 }
 
 function novablocks_get_post_format_card_blueprint_format( string $slug ): string {
-	if ( 'card-quote' === $slug ) {
-		return 'quote';
+	if ( '' === $slug ) {
+		return '';
 	}
 
-	if ( 'card-image' === $slug ) {
-		return 'image';
-	}
+	$format = array_search( $slug, novablocks_get_post_format_card_blueprint_map(), true );
 
-	return '';
+	return is_string( $format ) ? $format : '';
 }
 
 function novablocks_get_post_format_card_blueprint( string $slug ): ?array {

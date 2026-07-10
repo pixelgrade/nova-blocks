@@ -68,6 +68,7 @@ const calculateMasonryLayout = ( {
     columnGap: normalizedColumnGap,
   } );
   const columnHeights = Array.from( { length: normalizedColumns }, () => 0 );
+  const columnIndexes = [];
 
   const positions = itemHeights.map( itemHeight => {
     const normalizedItemHeight = normalizeContainerWidth( itemHeight );
@@ -75,6 +76,7 @@ const calculateMasonryLayout = ( {
     const x = ( columnWidth + normalizedColumnGap ) * columnIndex;
 
     columnHeights[ columnIndex ] = y + normalizedItemHeight + normalizedRowGap;
+    columnIndexes.push( columnIndex );
 
     return { x, y };
   } );
@@ -85,9 +87,15 @@ const calculateMasonryLayout = ( {
   return {
     columnWidth,
     positions,
+    columnIndexes,
     containerHeight,
   };
 };
+
+// Fit-based responsive column derivation lives in `@novablocks/utils`
+// (`fit-columns`) so both the editor preview and the frontend handler share
+// one ESM implementation — this file stays CommonJS for the node:test suite
+// and must not be pulled into ESM bundles.
 
 const shouldRelayoutForTransitionProperty = ( propertyName ) => {
   const normalizedProperty = String( propertyName || '' ).trim().toLowerCase();

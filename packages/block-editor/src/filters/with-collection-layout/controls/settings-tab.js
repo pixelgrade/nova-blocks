@@ -7,7 +7,7 @@
  * radio used to do).
  */
 import { __, sprintf } from '@wordpress/i18n';
-import { RadioControl } from '@wordpress/components';
+import { RadioControl, RangeControl, SelectControl, ToggleControl } from '@wordpress/components';
 import { createInterpolateElement } from '@wordpress/element';
 
 import { ControlsGroup, SectionLink } from '../../../components';
@@ -21,11 +21,13 @@ import { STYLE_LABELS } from './composition/style-tiles';
 
 const SettingsTab = ( props ) => {
   const { attributes, setAttributes } = props;
-  const { layoutStyle, carouselLayout, postsToShow, automaticPostsNumber } = attributes;
+  const { layoutStyle, carouselLayout, postsToShow, automaticPostsNumber, columnsFitMinWidth, cardHoverEffect } = attributes;
 
   const isParametric = 'parametric' === layoutStyle;
   const isCarousel = 'carousel' === layoutStyle;
+  const isMasonry = 'masonry' === layoutStyle;
   const isGrid = 'classic' === layoutStyle || 'masonry' === layoutStyle;
+  const fitColumnsOn = !! columnsFitMinWidth && columnsFitMinWidth > 0;
 
   return (
     <>
@@ -49,6 +51,30 @@ const SettingsTab = ( props ) => {
           </p>
         ) }
         { isGrid && <ItemsPerRowControl { ...props } /> }
+        { isMasonry && (
+          <ToggleControl
+            key={ 'columns-fit-toggle' }
+            label={ __( 'Fit Columns to Width', '__plugin_txtd' ) }
+            help={ __( 'Show as many columns as comfortably fit the available width, up to Items per Row — instead of the fixed count with a single column on small screens.', '__plugin_txtd' ) }
+            checked={ fitColumnsOn }
+            onChange={ ( value ) => {
+              setAttributes( { columnsFitMinWidth: value ? 400 : 0 } );
+            } }
+          />
+        ) }
+        { isMasonry && fitColumnsOn && (
+          <RangeControl
+            key={ 'columns-fit-min-width' }
+            label={ __( 'Minimum Column Width (px)', '__plugin_txtd' ) }
+            value={ columnsFitMinWidth }
+            onChange={ ( value ) => {
+              setAttributes( { columnsFitMinWidth: value } );
+            } }
+            min={ 280 }
+            max={ 600 }
+            step={ 10 }
+          />
+        ) }
         { isCarousel && 'fixed' === carouselLayout && <ItemsPerRowControl { ...props } /> }
         { isParametric && (
           <p className="nb-settings-hint">
@@ -63,6 +89,19 @@ const SettingsTab = ( props ) => {
       { isGrid && (
         <ControlsGroup title={ __( 'Media', '__plugin_txtd' ) }>
           <ItemsAspectRatioControl { ...props } />
+          <SelectControl
+            key={ 'card-hover-effect' }
+            label={ __( 'Card Hover Effect', '__plugin_txtd' ) }
+            help={ __( 'A presentation hook styled by the active theme.', '__plugin_txtd' ) }
+            value={ cardHoverEffect || 'none' }
+            onChange={ ( value ) => {
+              setAttributes( { cardHoverEffect: value } );
+            } }
+            options={ [
+              { label: __( 'None', '__plugin_txtd' ), value: 'none' },
+              { label: __( 'Meta Reveal', '__plugin_txtd' ), value: 'reveal' },
+            ] }
+          />
         </ControlsGroup>
       ) }
       { isCarousel && (

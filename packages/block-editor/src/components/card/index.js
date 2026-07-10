@@ -55,7 +55,10 @@ export const Card = ( props ) => {
     getAreaClassnameByWidthRatio( 1 / columns )
   );
 
-  const classNames = layoutStyle !== 'parametric' ? extraClassNames : defaultClassNames;
+  const classNames = classnames(
+    layoutStyle !== 'parametric' ? extraClassNames : defaultClassNames,
+    props.className
+  );
 
   const children = flattenCardChildren( props.children );
   const mediaChildren = children.filter( child => child.type === CardMediaWrapper );

@@ -643,9 +643,21 @@ if ( ! function_exists( 'novablocks_get_collection_output' ) ) {
 			</div>';
 		}
 
+		/**
+		 * Let themes prepend non-card bricks inside the layout container,
+		 * BEFORE the card items — e.g. a site-header brick that the masonry
+		 * engine packs like any other item (the Patch-style header-in-grid).
+		 * Markup must be one or more `.nb-collection__layout-item` elements.
+		 */
+		$leading_items = apply_filters( 'novablocks/collection_leading_items_markup', '', $attributes, $block );
+
+		if ( ! is_string( $leading_items ) ) {
+			$leading_items = '';
+		}
+
 		$output .= '<div class="nb-collection__body">
 				<div class="' . esc_attr( join( ' ', $layout_classes ) ) . '">
-					' . $content . '
+					' . $leading_items . $content . '
 				</div>
 			</div>';
 		$output .= '</div>';
@@ -1871,6 +1883,120 @@ function novablocks_get_card_item_combined_meta( string $first, string $second, 
 		. '</p>';
 }
 
+/**
+ * Card expression classes: expose a post card's media orientation and content
+ * length as card-level modifier classes so themes can build ratio-adaptive
+ * card designs (collage/masonry grids). Thresholds mirror the legacy Patch
+ * theme contract and are filterable via `novablocks/card_expression_thresholds`.
+ */
+function novablocks_get_card_expression_thresholds(): array {
+	$defaults = [
+		'media'       => [ 'tall' => 0.5625, 'portrait' => 0.75, 'square' => 1.34, 'landscape' => 1.78 ],
+		'title'       => [ 'short' => 30, 'medium' => 60 ],
+		'description' => [ 'short' => 100, 'medium' => 200 ],
+	];
+
+	$thresholds = apply_filters( 'novablocks/card_expression_thresholds', $defaults );
+
+	return is_array( $thresholds ) ? array_replace_recursive( $defaults, $thresholds ) : $defaults;
+}
+
+function novablocks_classify_card_media_ratio( $ratio, array $thresholds = null ): string {
+	if ( null === $thresholds ) {
+		$all        = novablocks_get_card_expression_thresholds();
+		$thresholds = $all['media'];
+	}
+
+	$ratio = (float) $ratio;
+
+	if ( $ratio <= 0 ) {
+		return 'landscape';
+	}
+
+	if ( $ratio < $thresholds['tall'] ) {
+		return 'tall';
+	}
+
+	if ( $ratio < $thresholds['portrait'] ) {
+		return 'portrait';
+	}
+
+	if ( $ratio <= $thresholds['square'] ) {
+		return 'square';
+	}
+
+	if ( $ratio <= $thresholds['landscape'] ) {
+		return 'landscape';
+	}
+
+	return 'wide';
+}
+
+function novablocks_classify_card_text_length( $text, array $thresholds ): string {
+	$text = trim( strip_tags( (string) $text ) );
+
+	if ( '' === $text ) {
+		return 'none';
+	}
+
+	$length = function_exists( 'mb_strlen' ) ? mb_strlen( $text ) : strlen( $text );
+
+	if ( $length < $thresholds['short'] ) {
+		return 'short';
+	}
+
+	if ( $length < $thresholds['medium'] ) {
+		return 'medium';
+	}
+
+	return 'long';
+}
+
+function novablocks_get_card_expression_classes_from_values( array $values ): array {
+	$thresholds = novablocks_get_card_expression_thresholds();
+	$classes    = [];
+
+	$width  = isset( $values['media_width'] ) ? (float) $values['media_width'] : 0;
+	$height = isset( $values['media_height'] ) ? (float) $values['media_height'] : 0;
+
+	if ( $width > 0 && $height > 0 ) {
+		$classes[] = 'nb-card--media-' . novablocks_classify_card_media_ratio( $width / $height, $thresholds['media'] );
+	} else {
+		$classes[] = 'nb-card--no-media';
+	}
+
+	$classes[] = 'nb-card--title-' . novablocks_classify_card_text_length( $values['title'] ?? '', $thresholds['title'] );
+	$classes[] = 'nb-card--description-' . novablocks_classify_card_text_length( $values['description'] ?? '', $thresholds['description'] );
+
+	return $classes;
+}
+
+function novablocks_get_post_card_expression_classes( $post, array $attributes ): array {
+	$width      = 0;
+	$height     = 0;
+	$show_media = ! isset( $attributes['showMedia'] ) || ! empty( $attributes['showMedia'] );
+
+	if ( $show_media ) {
+		$thumbnail_id = get_post_thumbnail_id( $post );
+
+		if ( $thumbnail_id ) {
+			$metadata = wp_get_attachment_metadata( $thumbnail_id );
+
+			if ( is_array( $metadata ) ) {
+				$width  = $metadata['width'] ?? 0;
+				$height = $metadata['height'] ?? 0;
+			}
+		}
+	}
+
+	return novablocks_get_card_expression_classes_from_values( [
+		'media_width'  => $width,
+		'media_height' => $height,
+		'title'        => get_the_title( $post ),
+		'description'  => get_the_excerpt( $post ),
+	] );
+}
+
 function novablocks_get_collection_card_markup_from_post( $post, array $attributes ): string {
 
 	// Resolve the effective element order (elementOrder attribute or legacy
@@ -1920,7 +2046,7 @@ function novablocks_get_collection_card_markup_from_post( $post, array $attribut
 	$profile = apply_filters( 'novablocks/post_card_profile', [], $post, $attributes );
 
 	$render_data = [
-		'card_classes'         => [],
+		'card_classes'         => novablocks_get_post_card_expression_classes( $post, $attributes ),
 		'card_attributes'      => $attributes,
 		'media_markup'         => $media_markup,
 		'content_markup'       => $card_content,
@@ -2418,6 +2544,18 @@ function novablocks_get_post_card_meta( $post, $meta ) {
 
 	if ( $meta === 'date' ) {
 		return esc_html( get_the_date( '', $post ) );
+	}
+
+	if ( $meta === 'author-date' ) {
+		$author = get_the_author_meta( 'display_name', $post->post_author );
+		$date   = get_the_date( '', $post );
+
+		return sprintf(
+			/* translators: 1: author display name, 2: post date. */
+			esc_html_x( 'By %1$s / %2$s', 'card author and date meta', '__plugin_txtd' ),
+			esc_html( $author ),
+			esc_html( $date )
+		);
 	}
 
 	if ( $meta === 'tags' ) {

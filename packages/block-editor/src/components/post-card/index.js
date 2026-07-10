@@ -18,7 +18,7 @@ import {
   CardMediaWrapper,
 } from "../index";
 
-import { resizeDropcap } from "@novablocks/utils";
+import { getCardExpressionClassesFromValues, resizeDropcap } from "@novablocks/utils";
 
 import {
   ELEMENT,
@@ -124,6 +124,15 @@ export const PostCard = withMedia( props => {
   const primaryMeta   = getMetadata( post, primaryMetadata );
   const secondaryMeta = getMetadata( post, secondaryMetadata );
 
+  // Mirror the frontend's card expression classes (media ratio + content
+  // length) so ratio-adaptive theme styling matches editor and frontend.
+  const expressionClasses = getCardExpressionClassesFromValues( {
+    mediaWidth: showMedia ? props.media?.originalWidth : 0,
+    mediaHeight: showMedia ? props.media?.originalHeight : 0,
+    title: post?.title?.raw || '',
+    description: stripHTML( post?.excerpt?.rendered || '' ),
+  } ).join( ' ' );
+
   const renderMediaWrapper = () => (
     showMedia && props.media
       ? (
@@ -224,7 +233,7 @@ export const PostCard = withMedia( props => {
 
   if ( splitAroundMedia ) {
     return (
-      <Card { ...props } key={ 'card_post_' + post.id }>
+      <Card { ...props } className={ expressionClasses } key={ 'card_post_' + post.id }>
         { renderContentWrapper( beforeMediaIds, 'nb-supernova-item__content--before-media' ) }
         { renderMediaWrapper() }
         { renderContentWrapper( afterMediaIds,  'nb-supernova-item__content--after-media' ) }

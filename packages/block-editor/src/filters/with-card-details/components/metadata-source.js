@@ -21,6 +21,7 @@ const MetadataSource = ( props ) => {
   const metaSourceOptions = [
     { label: __( 'None', '__plugin_txtd' ), value: 'none' },
     { label: __( 'Author', '__plugin_txtd' ), value: 'author' },
+    { label: __( 'Author & Date', '__plugin_txtd' ), value: 'author-date' },
     { label: __( 'Category', '__plugin_txtd' ), value: 'category' },
     { label: __( 'Comments', '__plugin_txtd' ), value: 'comments' },
     { label: __( 'Date', '__plugin_txtd' ), value: 'date' },

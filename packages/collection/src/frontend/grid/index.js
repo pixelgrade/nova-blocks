@@ -5,6 +5,8 @@ import { handleClassicGrid } from "./handle-classic-grid";
 import { handleMasonryGrid } from "./handle-masonry-grid";
 import { handleParametricGrid } from "./handle-parametric-grid";
 
+import { initLoadMore } from "../load-more";
+
 domReady( () => {
 
   if ( IS_EDITOR || IS_CUSTOMIZER ) {
@@ -29,6 +31,8 @@ domReady( () => {
       handleMasonryGrid( grid, block, attributes );
     }
   } );
+
+  initLoadMore();
 
   const resize = new CustomEvent( 'nb:layout' );
   window.dispatchEvent( resize );
