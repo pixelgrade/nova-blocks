@@ -47,26 +47,46 @@ for f in tests/node/*.cjs; do
 done
 
 echo "== filter JS tests =="
-run "detect-legacy-spacing (node:test)" node --test packages/block-editor/src/filters/with-legacy-spacing-markup/detect-legacy-spacing.test.js
+run "detect-legacy-spacing (jest)" npx --no-install jest packages/block-editor/src/filters/with-legacy-spacing-markup/detect-legacy-spacing.test.js
+run "custom defaults hook (node:test)" node --test packages/block-editor/src/hooks/use-custom-defaults/index.test.js
+run "inner blocks count undo history (node:test)" node --test packages/block-editor/src/hooks/use-inner-blocks-count/index.test.js
 run "plus gating analyze (jest)" npx --no-install jest packages/block-editor/src/plus-gating/analyze.test.js
 run "drawer panel height (jest)" npx --no-install jest packages/block-editor/src/components/drawer/index.test.js
+run "announcement block id persistence (jest)" npx --no-install jest packages/block-library/src/blocks/announcement-bar/block-id.test.js
 run "color signal onboarding (jest)" npx --no-install jest packages/color-signal/src/onboarding/build-guide-content.test.js packages/color-signal/src/onboarding/derive-steps.test.js packages/color-signal/src/onboarding/guide-session.test.js packages/color-signal/src/onboarding/practice-section.test.js
 run "collection free presets (jest)" npx --no-install jest packages/block-editor/src/filters/with-collection-layout/controls/composition/free-presets.test.js
+run "card metadata style control (node:test)" node --test packages/block-editor/src/filters/with-card-details/metadata-style-control.test.js
 run "collection style tiles (node:test)" node --test packages/block-editor/src/filters/with-collection-layout/controls/composition/style-tiles.test.js
+run "collection layout recipe controls (node:test)" node --test packages/block-editor/src/filters/with-collection-layout/controls/composition/layout-recipe-controls.test.js
+run "collection layout recipes (jest)" npx --no-install jest packages/block-editor/src/filters/with-collection-layout/controls/composition/layout-recipes.test.js
 run "collection layout custom properties (node:test)" node --test packages/block-editor/src/filters/with-collection-layout/get-collection-layout-custom-properties.test.js
 run "server collection layout css (node:test)" env NB_PHP_CLI="$PHP" node --test lib/block-rendering.collection-layout-css.test.js
 run "parametric layout events (node:test)" node --test packages/collection/src/frontend/grid/parametric-layout-events.test.js
+run "masonry layout engine (node:test)" node --test packages/collection/src/frontend/grid/masonry-layout-engine.test.js
+run "masonry layout events (node:test)" node --test packages/collection/src/frontend/grid/masonry-layout-events.test.js
+run "collection external participant (jest)" npx --no-install jest packages/collection/src/components/external-layout-participant/index.test.js
+run "collection load-more payload (jest)" npx --no-install jest packages/collection/src/frontend/load-more/extract-payload.test.js
+run "post card rendering contracts (jest)" npx --no-install jest packages/block-editor/src/components/post-card/index.contract.test.js
+run "legacy Color Signal markup (node:test)" node --test packages/color-signal/src/filters/legacy-markup.test.js
 run "cards depth support (jest)" npx --no-install jest packages/scrolling-effect/src/controls/cards-depth-support.test.js
 run "motion recipe gates (node:test)" node --test packages/scrolling-effect/src/controls/motion-recipes-gates.test.js
+run "placeholder image fallback (jest)" npx --no-install jest packages/block-editor/src/components/get-placeholder-images/index.test.js
 run "empty hero media placeholder (jest)" npx --no-install jest packages/block-library/src/blocks/supernova/utils/empty-hero-media-placeholder.test.js
+run "unique placeholder image selection (jest)" npx --no-install jest packages/block-library/src/blocks/supernova/utils/placeholder-image-selection.test.js
+run "cards collection placeholder defaults (node:test)" node --test packages/block-library/src/blocks/supernova/components/not-posts-collection-layout/index.test.js
+run "cards collection add controls (node:test)" node --test packages/block-library/src/blocks/supernova/block-controls.test.js
 run "supernova-item media placeholder wiring (node:test)" node --test packages/block-library/src/blocks/supernova-item/edit.test.js
+run "supernova-item placeholder defaults (node:test)" node --test packages/block-library/src/blocks/supernova-item/utils.test.js
 run "supernova edit contracts (node:test)" node --test packages/block-library/src/blocks/supernova/edit.test.js
 run "supernova pile 3D styles (node:test)" node --test packages/block-library/src/blocks/supernova/collection-style.test.js packages/block-library/src/blocks/supernova/editor-styles.test.js
 run "vertical gap + settings tab (node:test)" node --test packages/block-editor/src/filters/with-collection-layout/controls/vertical-gap-modifier-control.test.js
+run "sharing color-signal attributes (node:test)" node --test packages/block-library/src/blocks/sharing-overlay/block.test.js
+run "core list counter defaults (jest)" npx --no-install jest packages/core/src/blocks/core/list/utils.test.js packages/core/src/blocks/core/list/components/with-altered-settings.test.js packages/core/src/blocks/core/list/legacy-markup.test.js
 
 echo "== header JS tests =="
 run "layout-definitions (node:test)" node --test packages/block-library/src/blocks/header/layout-definitions.test.js
-run "header frontend (jest)" npx --no-install jest packages/block-library/src/blocks/header/frontend/components/index.test.js
+run "header styles (node:test)" node --test packages/block-library/src/blocks/header/style.test.js
+run "header frontend (jest)" npx --no-install jest packages/block-library/src/blocks/header/frontend/components/index.test.js packages/block-library/src/blocks/header/frontend/components/menu-toggle.test.js
 
 rm -f "$tmp"
 
