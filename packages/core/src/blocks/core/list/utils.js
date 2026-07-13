@@ -12,6 +12,7 @@ export const getListClassname = ( attributes ) => {
 
 export const getListStyle = ( attributes ) => {
   const { values, start, listItemsCount = 0 } = attributes;
+  const listStart = Number.isFinite( start ) ? start : 1;
 
   // Legacy lists keep their items in the `values` attribute as serialized
   // `<li>` markup. Modern lists (WP 7.0+) store items as inner core/list-item
@@ -26,7 +27,7 @@ export const getListStyle = ( attributes ) => {
 
   const style = {};
 
-  style[ '--nb-list-start-at' ] = `${ start - 1 }`;
+  style[ '--nb-list-start-at' ] = `${ listStart - 1 }`;
   style[ '--nb-list-items-count' ] = `${ listCount + 1 }`;
 
   return style;

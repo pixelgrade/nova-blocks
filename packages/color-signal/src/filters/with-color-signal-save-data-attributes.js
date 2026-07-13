@@ -2,6 +2,11 @@ import { getSupports } from "@novablocks/block-editor";
 
 const withColorSignalSaveDataAttributes = ( element, blockType, attributes ) => {
 
+  if ( attributes?.metadata?.__novablocksLegacySpacing?.noSpacingMarkup
+    && ! attributes?.metadata?.__novablocksLegacySpacing?.hasColorSignalMarkup ) {
+    return element;
+  }
+
   const supports = getSupports( blockType.name );
 
   if ( ! element || ! supports?.novaBlocks?.colorSignal ) {

@@ -1,8 +1,6 @@
 import { addFilter } from '@wordpress/hooks';
 
-import legacySpacingDetectionModule from './detect-legacy-spacing';
-
-const { detectLegacySpacingFlags } = legacySpacingDetectionModule;
+import { detectLegacySpacingFlags } from './detect-legacy-spacing';
 
 const withLegacySpacingMetadata = ( blockAttributes, blockType, innerHTML ) => {
   const legacyFlags = detectLegacySpacingFlags( blockType?.name, innerHTML );

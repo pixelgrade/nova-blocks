@@ -20,9 +20,13 @@ const withSpaceAndSizingSaveCustomProps = ( extraProps, blockType, attributes ) 
 
   const spacingCSSProps = getSpacingCSSProps( attributes, extraProps?.style );
 
-  if ( legacySpacingFlags?.missingAspectRatioVar ) {
-    delete spacingCSSProps['--nb-card-media-aspect-ratio'];
-  }
+	if ( legacySpacingFlags?.missingAspectRatioVar ) {
+		delete spacingCSSProps['--nb-card-media-aspect-ratio'];
+
+		if ( legacySpacingFlags?.legacyCardMediaPaddingTop ) {
+			spacingCSSProps['--nb-card-media-padding-top'] = legacySpacingFlags.legacyCardMediaPaddingTop;
+		}
+	}
 
   if ( legacySpacingFlags?.missingMinHeightFallbackVar ) {
     delete spacingCSSProps['--nb-min-height-fallback'];

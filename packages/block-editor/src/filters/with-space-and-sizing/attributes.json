@@ -9,7 +9,7 @@
 	},
 	"thumbnailAspectRatio": {
 		"type": "number",
-		"default": 50
+		"default": 42
 	},
 	"imageResizing": {
 		"type": "string",
