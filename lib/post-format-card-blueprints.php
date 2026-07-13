@@ -146,6 +146,47 @@ function novablocks_validate_post_format_card_quote_blueprint( array $blueprint 
 	return novablocks_validate_post_format_card_blueprint( $blueprint );
 }
 
+/**
+ * Expose the active theme's resolved blueprint overrides to editor previews.
+ *
+ * Collection attributes remain authoritative in the editor. These payloads
+ * contain only the template-part overrides that PHP applies on the frontend,
+ * allowing JavaScript to merge them over each Collection's live attributes.
+ *
+ * @return array<string, array<string, mixed>>
+ */
+function novablocks_get_post_format_card_blueprint_editor_settings(): array {
+	$settings = [];
+
+	foreach ( novablocks_get_post_format_card_blueprint_map() as $format => $slug ) {
+		$blueprint = novablocks_get_post_format_card_blueprint( $slug );
+
+		if ( empty( $blueprint ) ) {
+			continue;
+		}
+
+		$resolved_root  = novablocks_get_post_format_blueprint_root_attributes( [], $blueprint );
+		$resolved_item  = novablocks_get_post_format_blueprint_item_attributes( [], $blueprint, false );
+		$root_keys      = array_merge(
+			novablocks_get_post_format_blueprint_root_override_keys(),
+			[ 'contentType', 'showCollectionTitle', 'showCollectionSubtitle', 'title', 'subtitle', 'cardLayout', 'contentPosition', 'className' ]
+		);
+		$item_keys      = array_merge(
+			novablocks_get_post_format_blueprint_item_override_keys(),
+			[ 'colorSignal', 'className' ]
+		);
+
+		$settings[ $format ] = [
+			'format'         => $format,
+			'slug'           => $slug,
+			'rootAttributes' => array_intersect_key( $resolved_root, array_flip( $root_keys ) ),
+			'itemAttributes' => array_intersect_key( $resolved_item, array_flip( $item_keys ) ),
+		];
+	}
+
+	return $settings;
+}
+
 function novablocks_find_first_named_block( array $blocks, string $block_name ): ?array {
 	foreach ( $blocks as $block ) {
 		if ( $block_name === ( $block['blockName'] ?? null ) ) {
@@ -296,6 +337,24 @@ function novablocks_get_quote_blueprint_root_data_attribute_names(): array {
 	return novablocks_get_post_format_blueprint_root_data_attribute_names();
 }
 
+function novablocks_get_post_format_blueprint_root_override_keys(): array {
+	return array_merge(
+		[
+			'palette',
+			'paletteVariation',
+			'colorSignal',
+			'contentPaletteVariation',
+			'contentColorSignal',
+			'useSourceColorAsReference',
+			'emphasisArea',
+			'contentPadding',
+			'imagePadding',
+			'className',
+		],
+		novablocks_get_post_format_blueprint_media_context_attribute_keys()
+	);
+}
+
 function novablocks_get_post_format_blueprint_root_attributes( array $attributes, array $blueprint ): array {
 	$root_attributes = $attributes;
 	$blueprint_root  = $blueprint['root_attrs'] ?? [];
@@ -303,23 +362,7 @@ function novablocks_get_post_format_blueprint_root_attributes( array $attributes
 	$authored_root   = is_array( $blueprint['root_block']['attrs'] ?? null ) ? $blueprint['root_block']['attrs'] : [];
 	$authored_item   = is_array( $blueprint['item_block']['attrs'] ?? null ) ? $blueprint['item_block']['attrs'] : [];
 
-	$root_override_keys = [
-		'palette',
-		'paletteVariation',
-		'colorSignal',
-		'contentPaletteVariation',
-		'contentColorSignal',
-		'useSourceColorAsReference',
-		'emphasisArea',
-		'contentPadding',
-		'imagePadding',
-		'className',
-	];
-
-	$root_override_keys = array_merge(
-		$root_override_keys,
-		novablocks_get_post_format_blueprint_media_context_attribute_keys()
-	);
+	$root_override_keys = novablocks_get_post_format_blueprint_root_override_keys();
 
 	foreach ( $root_override_keys as $key ) {
 		if ( array_key_exists( $key, $authored_root ) ) {
@@ -348,11 +391,8 @@ function novablocks_get_quote_blueprint_root_attributes( array $attributes, arra
 	return novablocks_get_post_format_blueprint_root_attributes( $attributes, $blueprint );
 }
 
-function novablocks_get_post_format_blueprint_item_attributes( array $attributes, array $blueprint ): array {
-	$item_attributes = $attributes;
-	$blueprint_item  = $blueprint['item_attrs'] ?? [];
-
-	$item_override_keys = [
+function novablocks_get_post_format_blueprint_item_override_keys(): array {
+	return [
 		'cardLayout',
 		'contentPosition',
 		'contentPadding',
@@ -377,6 +417,13 @@ function novablocks_get_post_format_blueprint_item_attributes( array $attributes
 		'emphasisArea',
 		'className',
 	];
+}
+
+function novablocks_get_post_format_blueprint_item_attributes( array $attributes, array $blueprint, bool $include_surface_style_props = true ): array {
+	$item_attributes = $attributes;
+	$blueprint_item  = $blueprint['item_attrs'] ?? [];
+
+	$item_override_keys = novablocks_get_post_format_blueprint_item_override_keys();
 
 	foreach ( $item_override_keys as $key ) {
 		if ( array_key_exists( $key, $blueprint_item ) ) {
@@ -393,7 +440,9 @@ function novablocks_get_post_format_blueprint_item_attributes( array $attributes
 	// doesn't apply the same signal twice.
 	$item_attributes['colorSignal'] = 0;
 
-	$item_attributes['surfaceStyleProps'] = novablocks_get_post_format_blueprint_item_style_props( $item_attributes );
+	if ( $include_surface_style_props ) {
+		$item_attributes['surfaceStyleProps'] = novablocks_get_post_format_blueprint_item_style_props( $item_attributes );
+	}
 
 	return $item_attributes;
 }

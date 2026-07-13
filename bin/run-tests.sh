@@ -62,8 +62,11 @@ run "collection layout recipes (jest)" npx --no-install jest packages/block-edit
 run "collection layout custom properties (node:test)" node --test packages/block-editor/src/filters/with-collection-layout/get-collection-layout-custom-properties.test.js
 run "server collection layout css (node:test)" env NB_PHP_CLI="$PHP" node --test lib/block-rendering.collection-layout-css.test.js
 run "parametric layout events (node:test)" node --test packages/collection/src/frontend/grid/parametric-layout-events.test.js
-run "masonry layout engine (node:test)" node --test packages/collection/src/frontend/grid/masonry-layout-engine.test.js
+run "masonry layout engine (jest)" npx --no-install jest packages/collection/src/frontend/grid/masonry-layout-engine.test.js
 run "masonry layout events (node:test)" node --test packages/collection/src/frontend/grid/masonry-layout-events.test.js
+run "masonry layout lifecycle (jest)" npx --no-install jest packages/collection/src/frontend/grid/handle-masonry-grid.test.js
+run "editor masonry layout (jest)" npx --no-install jest packages/collection/src/components/masonry-layout/editor-layout.test.js
+run "editor query post order (jest)" npx --no-install jest packages/block-library/src/blocks/supernova/editor-post-order.test.js
 run "collection external participant (jest)" npx --no-install jest packages/collection/src/components/external-layout-participant/index.test.js
 run "collection load-more payload (jest)" npx --no-install jest packages/collection/src/frontend/load-more/extract-payload.test.js
 run "post card rendering contracts (jest)" npx --no-install jest packages/block-editor/src/components/post-card/index.contract.test.js
@@ -78,7 +81,7 @@ run "cards collection add controls (node:test)" node --test packages/block-libra
 run "supernova-item media placeholder wiring (node:test)" node --test packages/block-library/src/blocks/supernova-item/edit.test.js
 run "supernova-item placeholder defaults (node:test)" node --test packages/block-library/src/blocks/supernova-item/utils.test.js
 run "supernova edit contracts (node:test)" node --test packages/block-library/src/blocks/supernova/edit.test.js
-run "supernova pile 3D styles (node:test)" node --test packages/block-library/src/blocks/supernova/collection-style.test.js packages/block-library/src/blocks/supernova/editor-styles.test.js
+run "supernova card and pile 3D styles (node:test)" node --test packages/block-library/src/blocks/supernova/card-style.test.js packages/block-library/src/blocks/supernova/collection-style.test.js packages/block-library/src/blocks/supernova/editor-styles.test.js
 run "vertical gap + settings tab (node:test)" node --test packages/block-editor/src/filters/with-collection-layout/controls/vertical-gap-modifier-control.test.js
 run "sharing color-signal attributes (node:test)" node --test packages/block-library/src/blocks/sharing-overlay/block.test.js
 run "core list counter defaults (jest)" npx --no-install jest packages/core/src/blocks/core/list/utils.test.js packages/core/src/blocks/core/list/components/with-altered-settings.test.js packages/core/src/blocks/core/list/legacy-markup.test.js

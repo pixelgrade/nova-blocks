@@ -46,7 +46,13 @@ import {
   CardMediaWrapper,
 } from "../index";
 
-import { getCardExpressionClassesFromValues, resizeDropcap } from "@novablocks/utils";
+import {
+  getCardExpressionClassesFromValues,
+  getColorSignalClassnames,
+  getOverlayFilterCSSProps,
+  getSpacingCSSProps,
+  resizeDropcap,
+} from "@novablocks/utils";
 
 import {
   ELEMENT,
@@ -55,6 +61,19 @@ import {
 } from "../../filters/with-card-details/components/element-order-utils";
 
 import { getMetadata, sanitizeMediaResponse } from './utils';
+
+const joinClassNames = ( ...classNames ) => classNames.filter( Boolean ).join( ' ' );
+
+const getPostFormatBlueprintStyle = attributes => ( {
+  '--nb-media-composition-gap': `${ attributes?.elementsDistance || 0 }px`,
+  ...getOverlayFilterCSSProps( attributes ),
+  ...getSpacingCSSProps( attributes ),
+  '--nb-collection-columns-count': attributes?.columns,
+  '--nb-grid-spacing-modifier': attributes?.gridGap,
+  '--nb-grid-spacing-multiplier': 1,
+  '--nb-grid-row-spacing-multiplier': attributes?.verticalGapModifier,
+  '--nb-pile-3d-scale': 1,
+} );
 
 const withMedia = withSelect( ( select, ownProps ) => {
   const { getMedia } = select( 'core' );
@@ -168,27 +187,7 @@ export const PostCardComponent = props => {
     description: stripHTML( post?.excerpt?.rendered || '' ),
   } ), getPostFormatClass( post ) ].join( ' ' );
 
-  // Post-format blueprints are rendered in PHP on the frontend. Give Quote
-  // posts an equivalent semantic preview so theme utilities can apply the
-  // same quote/citation token roles in the editor instead of showing a normal
-  // image card with the title as a slab.
   const quoteParts = post?.format === 'quote' ? extractPostQuote( post ) : null;
-  if ( quoteParts?.quote ) {
-    return (
-      <Card
-        { ...props }
-        attributes={ { ...attributes, cardLayout: 'stacked' } }
-        media={ null }
-        className={ expressionClasses }
-        key={ 'card_post_' + post.id }
-      >
-        <blockquote className="wp-block-quote is-style-plain">
-          <p>{ quoteParts.quote }</p>
-          { quoteParts.citation && <cite>{ quoteParts.citation }</cite> }
-        </blockquote>
-      </Card>
-    );
-  }
 
   const renderMediaWrapper = () => (
     showMedia && props.media
@@ -250,7 +249,9 @@ export const PostCardComponent = props => {
       if ( id === ELEMENT.TITLE ) {
         elements.push(
           <CardTitle show={ showTitle } attributes={ attributes } key={ key }>
-            { post?.title?.raw || '' }
+            <span className="nb-supernova-item__link">
+              { post?.title?.raw || '' }
+            </span>
           </CardTitle>
         );
         continue;
@@ -280,13 +281,101 @@ export const PostCardComponent = props => {
     return elements;
   };
 
-  const renderContentWrapper = ( ids, extraClassName ) => (
-    <CardContentWrapper { ...props } extraClassName={ extraClassName } key={ 'card_post_content_' + post.id + '_' + extraClassName }>
+  const renderContentWrapper = ( ids, extraClassName, contentAttributes = attributes ) => (
+    <CardContentWrapper { ...props } attributes={ contentAttributes } extraClassName={ extraClassName } key={ 'card_post_content_' + post.id + '_' + extraClassName }>
       <div className="nb-supernova-item__inner-container" key={ 'card_post_inner_' + post.id + '_' + extraClassName }>
         { renderContentItems( ids ) }
       </div>
     </CardContentWrapper>
   );
+
+  // PHP renders format-specific cards through the active theme's template
+  // part. Mirror that resolved blueprint in the editor so masonry measures the
+  // same surface, media and quote layers instead of a media-less approximation.
+  const postFormatBlueprint = quoteParts?.quote
+    ? props.postFormatCardBlueprints?.quote
+    : null;
+  if ( quoteParts?.quote && postFormatBlueprint ) {
+    const rootBlueprintAttributes = postFormatBlueprint.rootAttributes || {};
+    const itemBlueprintAttributes = postFormatBlueprint.itemAttributes || {};
+    const rootAttributes = {
+      ...attributes,
+      ...rootBlueprintAttributes,
+      className: joinClassNames( attributes.className, rootBlueprintAttributes.className ),
+    };
+    const itemAttributes = {
+      ...attributes,
+      ...itemBlueprintAttributes,
+      className: joinClassNames( attributes.className, itemBlueprintAttributes.className ),
+      colorSignal: 0,
+    };
+    const rootAlign = String( rootAttributes.contentPosition || 'center center' ).split( /\s+/ );
+    const rootClassName = joinClassNames(
+      'nb-supernova',
+      'nb-post-format-card-blueprint',
+      'nb-post-format-card-blueprint--quote',
+      `nb-supernova--content-type-${ rootAttributes.contentType || 'custom' }`,
+      `nb-supernova--card-layout-${ itemAttributes.cardLayout || 'stacked' }`,
+      'nb-supernova--1-columns',
+      `nb-supernova--valign-${ rootAlign[0] || 'center' }`,
+      `nb-supernova--halign-${ rootAlign[1] || 'center' }`,
+      expressionClasses,
+      rootAttributes.className,
+      getColorSignalClassnames( rootAttributes, true )
+    );
+    const itemClassName = joinClassNames(
+      'nb-supernova-item',
+      `nb-supernova-item--layout-${ itemAttributes.cardLayout || 'stacked' }`,
+      `nb-supernova-item--scrolling-effect-${ itemAttributes.scrollingEffect || 'static' }`,
+      `nb-supernova-item--aspect-ratio-${ itemAttributes.thumbnailAspectRatioString || 'landscape' }`,
+      expressionClasses,
+      itemAttributes.className,
+      getColorSignalClassnames( itemAttributes, true )
+    );
+
+    return (
+      <div className={ rootClassName } style={ { ...getPostFormatBlueprintStyle( rootAttributes ), display: 'block' } } key={ 'card_post_blueprint_' + post.id }>
+        <div className={ itemClassName } style={ getPostFormatBlueprintStyle( itemAttributes ) }>
+          <div className="nb-supernova-item__frame">
+            { beforeMediaIds.length > 0 && renderContentWrapper( beforeMediaIds, 'nb-supernova-item__content--before-media', itemAttributes ) }
+            { showMedia && props.media && (
+              <CardMediaWrapper { ...props } attributes={ itemAttributes } key={ 'card_post_blueprint_media_' + post.id }>
+                <PostCardLetter { ...props } attributes={ itemAttributes } />
+                <Media { ...props } attributes={ itemAttributes } key={ 'card_post_blueprint_image_' + post.id } />
+              </CardMediaWrapper>
+            ) }
+            <CardContentWrapper { ...props } attributes={ itemAttributes } extraClassName="nb-supernova-item__content--after-media">
+              <div className="nb-supernova-item__inner-container">
+                <blockquote className="wp-block-quote is-style-plain">
+                  <p>{ quoteParts.quote }</p>
+                  { quoteParts.citation && <cite>{ quoteParts.citation }</cite> }
+                </blockquote>
+              </div>
+            </CardContentWrapper>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  // Themes without a valid Quote blueprint keep a semantic, non-media
+  // fallback rather than dropping the post from the editor preview.
+  if ( quoteParts?.quote ) {
+    return (
+      <Card
+        { ...props }
+        attributes={ { ...attributes, cardLayout: 'stacked' } }
+        media={ null }
+        className={ expressionClasses }
+        key={ 'card_post_' + post.id }
+      >
+        <blockquote className="wp-block-quote is-style-plain">
+          <p>{ quoteParts.quote }</p>
+          { quoteParts.citation && <cite>{ quoteParts.citation }</cite> }
+        </blockquote>
+      </Card>
+    );
+  }
 
   if ( splitAroundMedia ) {
     return (

@@ -1,32 +1,88 @@
-const test = require( 'node:test' );
-const assert = require( 'node:assert/strict' );
-const fs = require( 'node:fs' );
-const path = require( 'node:path' );
+/**
+ * @jest-environment jsdom
+ */
 
-const masonryLayoutSource = fs.readFileSync(
-	path.join( __dirname, 'index.js' ),
-	'utf8'
-);
+import React from 'react';
+import { act } from 'react-dom/test-utils';
+import { render, unmountComponentAtNode } from 'react-dom';
 
-test( 'editor masonry layout keeps multiple columns via an explicit grid wrapper', () => {
-	assert.match( masonryLayoutSource, /const authoredColumns = Math\.max\( parseInt\( columns, 10 \) \|\| 1, 1 \);/ );
-	assert.match( masonryLayoutSource, /const editorLayoutStyle = \{/ );
-	assert.match( masonryLayoutSource, /display:\s*'grid'/ );
-	assert.match( masonryLayoutSource, /gridTemplateColumns:\s*`repeat\(\$\{ normalizedColumns \}, minmax\(0, 1fr\)\)`/ );
-	assert.match( masonryLayoutSource, /columnGap:\s*'var\(--nb-grid-spacing\)'/ );
-	assert.doesNotMatch( masonryLayoutSource, /gap:\s*'var\(--nb-grid-spacing\)'/ );
-} );
+jest.mock( '@wordpress/element', () => require( 'react' ) );
 
-test( 'editor masonry layout mirrors the frontend fit-based responsive columns', () => {
-	// Same engine function as the frontend (dual-runtime parity).
-	assert.match( masonryLayoutSource, /calculateFitColumnCount/ );
-	assert.match( masonryLayoutSource, /columnsFitMinWidth/ );
-	// Fit mode measures the real container width and column gap.
-	assert.match( masonryLayoutSource, /ResizeObserver/ );
-	assert.match( masonryLayoutSource, /gap:\s*Number\.parseFloat\( styles\.columnGap \) \|\| 0,?/ );
-} );
+jest.mock( '@novablocks/utils', () => ( {
+  calculateFitColumnCount: jest.fn( () => 3 ),
+} ) );
 
-test( 'editor masonry layout exposes column parity classes for column-aware theme styling', () => {
-	assert.match( masonryLayoutSource, /nb-collection__layout-column--col-\$\{ index \}/ );
-	assert.match( masonryLayoutSource, /nb-collection__layout-column--col-\$\{ index % 2 === 0 \? 'even' : 'odd' \}/ );
+jest.mock( '../../frontend/grid/handle-masonry-grid', () => ( {
+  handleMasonryGrid: jest.fn(),
+} ) );
+
+import { handleMasonryGrid } from '../../frontend/grid/handle-masonry-grid';
+import MasonryLayout from './index';
+
+const renderFixture = ( container, attributes, childIds ) => {
+  act( () => {
+    render(
+      <section data-layout-style="masonry">
+        <MasonryLayout className="nb-collection__layout nb-collection__layout--masonry" attributes={ attributes }>
+          { childIds.map( childId => (
+            <div className="nb-collection__layout-item" data-child-id={ childId } key={ childId } />
+          ) ) }
+        </MasonryLayout>
+      </section>,
+      container
+    );
+  } );
+};
+
+describe( 'editor MasonryLayout', () => {
+  let container;
+  let controller;
+
+  beforeEach( () => {
+    container = document.createElement( 'div' );
+    document.body.appendChild( container );
+    controller = {
+      destroy: jest.fn(),
+      refresh: jest.fn(),
+      update: jest.fn(),
+    };
+    handleMasonryGrid.mockReset();
+    handleMasonryGrid.mockReturnValue( controller );
+  } );
+
+  afterEach( () => {
+    act( () => {
+      unmountComponentAtNode( container );
+    } );
+    container.remove();
+  } );
+
+  test( 'renders direct children in source order without column-major wrappers', () => {
+    renderFixture( container, { columns: 3, columnsFitMinWidth: 350 }, [ 'header', 'a', 'b', 'c' ] );
+    const grid = container.querySelector( '.nb-collection__layout' );
+
+    expect( grid.querySelectorAll( ':scope > .nb-collection__layout-column' ) ).toHaveLength( 0 );
+    expect( Array.from( grid.children ).map( child => child.dataset.childId ) ).toEqual( [ 'header', 'a', 'b', 'c' ] );
+  } );
+
+  test( 'updates one shared controller and destroys it only when the editor layout unmounts', () => {
+    const firstAttributes = { columns: 3, columnsFitMinWidth: 350 };
+    renderFixture( container, firstAttributes, [ 'header', 'a', 'b' ] );
+    const grid = container.querySelector( '.nb-collection__layout' );
+    const block = grid.closest( '[data-layout-style]' );
+
+    expect( handleMasonryGrid ).toHaveBeenLastCalledWith( grid, block, firstAttributes );
+    expect( controller.destroy ).not.toHaveBeenCalled();
+
+    const nextAttributes = { columns: 4, columnsFitMinWidth: 350 };
+    renderFixture( container, nextAttributes, [ 'header', 'a', 'b', 'c' ] );
+
+    expect( handleMasonryGrid ).toHaveBeenLastCalledWith( grid, block, nextAttributes );
+    expect( controller.destroy ).not.toHaveBeenCalled();
+
+    act( () => {
+      unmountComponentAtNode( container );
+    } );
+    expect( controller.destroy ).toHaveBeenCalledTimes( 1 );
+  } );
 } );

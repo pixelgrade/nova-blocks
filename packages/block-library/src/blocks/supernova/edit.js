@@ -28,6 +28,7 @@ import {
 
 import { compileSupernovaItemAttributes } from './utils';
 import { CURRENT_ITEM_FEATURED_IMAGE_MEDIA_SOURCE } from './utils/current-item-featured-image';
+import { orderEditorPostsLikeFrontend } from './editor-post-order';
 
 const normalizeVariationValue = ( value ) => ( value + 11 ) % 12 + 1;
 
@@ -210,6 +211,7 @@ const SupernovaPreview = props => {
 
   const contentAlign = getAlignFromMatrix( attributes?.contentPosition );
   const collectionLayoutRecipes = settings?.collectionLayoutRecipes;
+  const postFormatCardBlueprints = settings?.postFormatCardBlueprints;
   const activeLayoutRecipe = Array.isArray( collectionLayoutRecipes )
     ? collectionLayoutRecipes.find( recipe => recipe.id === attributes.layoutRecipe && recipe.baseLayout === attributes.layoutStyle )
     : null;
@@ -262,7 +264,7 @@ const SupernovaPreview = props => {
         { 0 === headerPosition && ( showCollectionTitle || showCollectionSubtitle ) &&
           <CollectionHeader { ...props } key={ 'collection_header_' + clientId }/> }
         { inQuery
-          ? <PostsCollectionLayout { ...props } collectionLayoutRecipes={ collectionLayoutRecipes } key={ 'posts_collection_layout_' + clientId }/>
+          ? <PostsCollectionLayout { ...props } collectionLayoutRecipes={ collectionLayoutRecipes } postFormatCardBlueprints={ postFormatCardBlueprints } key={ 'posts_collection_layout_' + clientId }/>
           : <CardsCollectionLayout { ...props } collectionLayoutRecipes={ collectionLayoutRecipes } key={ 'cards_collection_layout_' + clientId }/> }
       </Collection>
     </div>
@@ -444,6 +446,8 @@ const SupernovaEdit = props => {
       postIdsToExclude,
     ]
   ));
+
+  posts = orderEditorPostsLikeFrontend( posts, { page, sticky } );
 
   // If Supernova is a descendent of a Query Loop and it is the only one of its kind,
   // sync the Query Loop's perPage and Supernova's postsToShow.

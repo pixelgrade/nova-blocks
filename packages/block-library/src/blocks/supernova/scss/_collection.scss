@@ -153,12 +153,6 @@
   grid-template-columns: repeat(var(--nb-collection-columns, 1), 1fr);
 }
 
-.nb-collection__layout-column {
-  display: flex;
-  flex-direction: column;
-  gap: var(--nb-grid-row-spacing);
-}
-
 @mixin pile-3d-small-card {
   > .nb-supernova-item {
     height: auto;

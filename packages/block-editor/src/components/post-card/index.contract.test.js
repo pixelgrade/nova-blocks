@@ -15,6 +15,9 @@ jest.mock( '@novablocks/utils', () => ( {
 	getCardExpressionClassesFromValues: values => values.mediaWidth
 		? [ 'nb-card--media-landscape', 'nb-card--title-short' ]
 		: [ 'nb-card--no-media', 'nb-card--title-short' ],
+	getColorSignalClassnames: () => '',
+	getOverlayFilterCSSProps: () => ( {} ),
+	getSpacingCSSProps: () => ( {} ),
 	resizeDropcap: jest.fn(),
 } ), { virtual: true } );
 
@@ -25,7 +28,14 @@ jest.mock( '../index', () => ( {
 	CardDescription: ( { children } ) => <div className="nb-card__description">{ children }</div>,
 	CardFooter: ( { children } ) => <div>{ children }</div>,
 	CardButton: ( { children } ) => <button>{ children }</button>,
-	CardContentWrapper: ( { children, extraClassName } ) => <div className={ extraClassName }>{ children }</div>,
+	CardContentWrapper: ( { attributes = {}, children, extraClassName } ) => {
+		const [ vertical = 'center', horizontal = 'center' ] = String( attributes.contentPosition || 'center center' ).split( /\s+/ );
+		return (
+			<div className={ `nb-supernova-item__content nb-supernova-item__content--valign-${ vertical } nb-supernova-item__content--halign-${ horizontal } ${ extraClassName || '' }` }>
+				{ children }
+			</div>
+		);
+	},
 	CardMediaWrapper: ( { children } ) => <div className="nb-supernova-item__media-wrapper">{ children }</div>,
 } ) );
 
@@ -117,6 +127,20 @@ describe( 'PostCard expression-class integration', () => {
 		expect( container.querySelector( '.nb-card__read-more' ) ).toBeNull();
 	} );
 
+	test( 'uses an inert frontend-equivalent block wrapper around post titles', () => {
+		mockGetVisibleOrder.mockReturnValue( [ 'media', 'title', 'description' ] );
+
+		act( () => {
+			render( <PostCardComponent attributes={ baseAttributes } post={ basePost } />, container );
+		} );
+
+		const titleLink = container.querySelector( '.nb-card__title > .nb-supernova-item__link' );
+		expect( titleLink ).not.toBeNull();
+		expect( titleLink.tagName ).toBe( 'SPAN' );
+		expect( titleLink.textContent ).toBe( basePost.title.raw );
+		expect( titleLink.closest( 'a' ) ).toBeNull();
+	} );
+
 	test( 'renders the media Read More affordance only for a registered capable recipe', () => {
 		mockGetVisibleOrder.mockReturnValue( [ 'media', 'title' ] );
 		const attributes = {
@@ -162,5 +186,60 @@ describe( 'PostCard expression-class integration', () => {
 		expect( container.firstElementChild.classList.contains( 'format-quote' ) ).toBe( true );
 		expect( container.querySelector( 'blockquote p' ).textContent ).toBe( 'Design needs delight.' );
 		expect( container.querySelector( 'blockquote cite' ).textContent ).toBe( 'Massimo Vignelli' );
+	} );
+
+	test( 'renders Quote posts through the theme blueprint structure and featured media', () => {
+		mockGetVisibleOrder.mockReturnValue( [ 'meta-primary', 'media', 'description' ] );
+		const post = {
+			...basePost,
+			format: 'quote',
+			content: {
+				raw: '<blockquote><p>Design needs delight.</p><cite>Massimo Vignelli</cite></blockquote>',
+			},
+		};
+		const attributes = {
+			...baseAttributes,
+			showMedia: true,
+			className: 'collection-custom-class',
+			contentPosition: 'bottom right',
+		};
+
+		act( () => {
+			render(
+				<PostCardComponent
+					attributes={ attributes }
+					post={ post }
+					media={ { url: 'quote.jpg', width: 1200, height: 722, originalWidth: 1200, originalHeight: 722 } }
+					postFormatCardBlueprints={ {
+						quote: {
+							rootAttributes: { className: 'card-trait-landscape card-variant-quote' },
+							itemAttributes: {
+								cardLayout: 'stacked',
+								className: 'quote-item-blueprint',
+								contentPosition: 'middle center',
+							},
+						},
+					} }
+				/>,
+				container
+			);
+		} );
+
+		const blueprint = container.querySelector( '.nb-post-format-card-blueprint--quote' );
+		expect( blueprint ).not.toBeNull();
+		expect( blueprint.style.display ).toBe( 'block' );
+		expect( blueprint.classList.contains( 'card-variant-quote' ) ).toBe( true );
+		expect( blueprint.classList.contains( 'collection-custom-class' ) ).toBe( true );
+		const item = blueprint.querySelector( '.nb-supernova-item.format-quote' );
+		expect( item ).not.toBeNull();
+		expect( item.classList.contains( 'collection-custom-class' ) ).toBe( true );
+		expect( item.classList.contains( 'quote-item-blueprint' ) ).toBe( true );
+		expect( blueprint.querySelector( '.nb-supernova-item__content--before-media' ) ).toEqual(
+			expect.objectContaining( {
+				className: expect.stringContaining( 'nb-supernova-item__content--valign-middle' ),
+			} )
+		);
+		expect( blueprint.querySelector( '.nb-supernova-item__content--before-media' ).classList.contains( 'nb-supernova-item__content--halign-center' ) ).toBe( true );
+		expect( blueprint.querySelector( '.nb-supernova-item__media-wrapper img' ).getAttribute( 'src' ) ).toBe( 'quote.jpg' );
 	} );
 } );

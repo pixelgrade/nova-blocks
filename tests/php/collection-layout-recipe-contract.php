@@ -164,6 +164,11 @@ if ( false === strpos( $editor_settings_source, "'collectionLayoutRecipes'" )
 	throw new RuntimeException( 'Editor settings must derive collectionLayoutRecipes from the authoritative PHP registry.' );
 }
 
+if ( false === strpos( $editor_settings_source, "'postFormatCardBlueprints'" )
+	|| false === strpos( $editor_settings_source, 'novablocks_get_post_format_card_blueprint_editor_settings()' ) ) {
+	throw new RuntimeException( 'Editor settings must expose the theme-resolved post-format card blueprints.' );
+}
+
 $attributes = [
 	'layoutStyle'        => 'masonry',
 	'layoutRecipe'       => 'anima-collage',

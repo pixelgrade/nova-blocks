@@ -13,4 +13,13 @@ describe( 'calculateFitColumnCount', () => {
     expect( calculateFitColumnCount( { containerWidth: 500, columnGap: 24, minColumnWidth: 0, maxColumns: 4 } ) ).toBe( 4 );
     expect( calculateFitColumnCount( { containerWidth: 500, columnGap: 24, minColumnWidth: -10, maxColumns: 4 } ) ).toBe( 4 );
   } );
+
+  test( 'reproduces the audited Anima Collage threshold boundaries', () => {
+    expect( calculateFitColumnCount( { containerWidth: 699.296875, minColumnWidth: 350, maxColumns: 4 } ) ).toBe( 1 );
+    expect( calculateFitColumnCount( { containerWidth: 700.25, minColumnWidth: 350, maxColumns: 4 } ) ).toBe( 2 );
+    expect( calculateFitColumnCount( { containerWidth: 1049.125, minColumnWidth: 350, maxColumns: 4 } ) ).toBe( 2 );
+    expect( calculateFitColumnCount( { containerWidth: 1050.078125, minColumnWidth: 350, maxColumns: 4 } ) ).toBe( 3 );
+    expect( calculateFitColumnCount( { containerWidth: 1399.8125, minColumnWidth: 350, maxColumns: 4 } ) ).toBe( 3 );
+    expect( calculateFitColumnCount( { containerWidth: 1400.71875, minColumnWidth: 350, maxColumns: 4 } ) ).toBe( 4 );
+  } );
 } );

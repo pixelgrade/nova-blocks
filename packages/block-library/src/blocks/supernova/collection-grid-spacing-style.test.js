@@ -22,8 +22,5 @@ test('grid-based collection layouts split the base gap into column and row spaci
     /\.nb-collection__layout--masonry\s*\{[\s\S]*?column-gap:\s*var\(--nb-grid-spacing\);[\s\S]*?row-gap:\s*var\(--nb-grid-row-spacing\);/
   );
 
-  assert.match(
-    styleSource,
-    /\.nb-collection__layout-column\s*\{[\s\S]*?gap:\s*var\(--nb-grid-row-spacing\);/
-  );
+  assert.doesNotMatch( styleSource, /\.nb-collection__layout-column\s*\{/ );
 });

@@ -1,5 +1,5 @@
-const test = require('node:test');
-const assert = require('node:assert/strict');
+const assert = require('assert').strict;
+const fs = require('fs');
 
 const {
   calculateColumnWidth,
@@ -7,6 +7,17 @@ const {
   getMasonryLayoutItems,
   shouldRelayoutForTransitionProperty,
 } = require('./masonry-layout-engine');
+
+test('engine uses ESM exports so editor and frontend webpack graphs share it safely', () => {
+  const source = fs.readFileSync( require.resolve('./masonry-layout-engine'), 'utf8' );
+
+  assert.doesNotMatch(
+    source,
+    /\b(?:module\.)?exports\s*(?:\.|=)/,
+    'webpack treats the engine as a harmony module when MasonryLayout imports the frontend handler, so CommonJS exports are unavailable in the editor bundle'
+  );
+  assert.match( source, /export\s*\{[\s\S]*calculateMasonryLayout[\s\S]*\}/ );
+} );
 
 test('getMasonryLayoutItems reflects hidden changes on every call', () => {
   const visibleCard = {

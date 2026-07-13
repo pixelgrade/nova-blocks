@@ -45,6 +45,9 @@ function novablocks_get_block_editor_settings(): array {
 	$settings = [
 		'debug'                        => defined( 'NOVABLOCKS_DEBUG' ) && NOVABLOCKS_DEBUG,
 		'collectionLayoutRecipes'      => novablocks_get_collection_layout_recipes(),
+		'postFormatCardBlueprints'     => function_exists( 'novablocks_get_post_format_card_blueprint_editor_settings' )
+			? novablocks_get_post_format_card_blueprint_editor_settings()
+			: [],
 		'usePostMetaAttributes'        => defined( 'NOVABLOCKS_USE_POST_META_ATTRIBUTES' ) && NOVABLOCKS_USE_POST_META_ATTRIBUTES,
 		'minimumHeightOptions'         => [
 			[

@@ -346,9 +346,13 @@
   height: 100%;
 }
 
-// Link added over the card content
-a.nb-supernova-item__link {
+// Frontend links and the inert editor title wrapper share the same block geometry.
+.nb-supernova-item__link {
   display: block;
+  // Gutenberg applies `overflow-wrap: break-word` inside editor canvases. That
+  // changes how title line boxes flow beside Collage media floats, so restore
+  // the frontend value on both real links and the inert editor wrapper.
+  overflow-wrap: normal;
 
   &-overlay {
     position: absolute;

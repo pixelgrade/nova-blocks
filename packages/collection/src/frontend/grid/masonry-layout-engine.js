@@ -61,16 +61,20 @@ const calculateMasonryLayout = ( {
   columnGap = 0,
   rowGap = 0,
   gap = columnGap,
+  columnWidth: suppliedColumnWidth,
   itemHeights = [],
 } ) => {
   const normalizedColumns = normalizeColumnCount( columnCount );
   const normalizedColumnGap = normalizeGap( columnGap ?? gap );
   const normalizedRowGap = normalizeGap( rowGap );
-  const columnWidth = calculateColumnWidth( {
-    containerWidth,
-    columnCount: normalizedColumns,
-    columnGap: normalizedColumnGap,
-  } );
+  const parsedColumnWidth = Number.parseFloat( suppliedColumnWidth );
+  const columnWidth = Number.isFinite( parsedColumnWidth ) && parsedColumnWidth >= 0
+    ? parsedColumnWidth
+    : calculateColumnWidth( {
+        containerWidth,
+        columnCount: normalizedColumns,
+        columnGap: normalizedColumnGap,
+      } );
   const columnHeights = Array.from( { length: normalizedColumns }, () => 0 );
   const columnIndexes = [];
 
@@ -98,8 +102,8 @@ const calculateMasonryLayout = ( {
 
 // Fit-based responsive column derivation lives in `@novablocks/utils`
 // (`fit-columns`) so both the editor preview and the frontend handler share
-// one ESM implementation — this file stays CommonJS for the node:test suite
-// and must not be pulled into ESM bundles.
+// one ESM implementation. Keep this module ESM because the same dependency
+// graph is bundled for both the editor component and the frontend runtime.
 
 const shouldRelayoutForTransitionProperty = ( propertyName ) => {
   const normalizedProperty = String( propertyName || '' ).trim().toLowerCase();
@@ -129,7 +133,7 @@ const shouldRelayoutForTransitionProperty = ( propertyName ) => {
   ].some( token => normalizedProperty === token || normalizedProperty.startsWith( `${ token }-` ) );
 };
 
-module.exports = {
+export {
   calculateColumnWidth,
   calculateMasonryLayout,
   getMasonryLayoutItems,

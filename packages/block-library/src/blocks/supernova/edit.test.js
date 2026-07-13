@@ -112,6 +112,18 @@ test('editor forwards registered layout recipes to both collection layout branch
   );
 } );
 
+test('editor forwards resolved post-format card blueprints to post collections', () => {
+  assert.match(
+    source,
+    /const postFormatCardBlueprints = settings\?\.postFormatCardBlueprints;/
+  );
+
+  assert.match(
+    source,
+    /<PostsCollectionLayout \{ \.\.\.props \} collectionLayoutRecipes=\{ collectionLayoutRecipes \} postFormatCardBlueprints=\{ postFormatCardBlueprints \}/
+  );
+} );
+
 test('editor resolves inherited card metadata style without coupling it to Meta Reveal', () => {
 	assert.match(
 		source,
