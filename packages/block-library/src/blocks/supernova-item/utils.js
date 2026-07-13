@@ -1,14 +1,14 @@
-import { useMemo } from "@wordpress/element";
-
-import { getRandomArrayFromArray, getRandomBetween } from "@novablocks/utils";
+import { getRandomBetween } from "@novablocks/utils";
 import { getPlaceholderImages } from "@novablocks/block-editor";
 import { getRandomAttributes } from "@novablocks/media-composition";
 
-export async function getNewDefaults( attributes ) {
+import { getUniquePlaceholderImages } from "../supernova/utils";
+
+export async function getNewDefaults( attributes, usedImages = [] ) {
   const { multiplePlaceholderImages } = attributes;
   const numberOfImages = multiplePlaceholderImages ? getRandomBetween( 2, 4 ) : 1;
   const placeholderImages = await getPlaceholderImages();
-  const randomImages = getRandomArrayFromArray( placeholderImages, numberOfImages );
+  const randomImages = getUniquePlaceholderImages( placeholderImages, usedImages, numberOfImages );
   const randomAttributes = getRandomAttributes();
 
   randomImages.forEach( image => {

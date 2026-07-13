@@ -24,6 +24,11 @@ export { default as VariationPicker } from "./variation-picker";
 export { default as withVisibility } from "./with-visibility";
 export { default as insertTemplate } from './insert-template';
 export { default as getPlaceholderImages } from './get-placeholder-images';
+export {
+	isLocalPlaceholderImage,
+	resolveLocalPlaceholderImage,
+	resolveLocalPlaceholderImages,
+} from './get-placeholder-images';
 
 export * from './card';
 export * from './normalize-images';

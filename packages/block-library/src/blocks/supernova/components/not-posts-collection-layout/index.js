@@ -3,10 +3,11 @@ import { useDispatch } from "@wordpress/data";
 import { useEffect, useRef } from "@wordpress/element";
 
 import { getPlaceholderImages, useInnerBlocks } from "@novablocks/block-editor";
-import { CollectionBody } from "@novablocks/collection";
-import { getRandomArrayFromArray, needsPreview } from "@novablocks/utils";
+import { CollectionBody, CollectionLeadingItems } from "@novablocks/collection";
+import { needsPreview } from "@novablocks/utils";
 
 import { SupernovaItemPreview } from "../index";
+import { getUniquePlaceholderImages, getUsedPlaceholderImages } from "../../utils";
 
 const CardsCollectionEdit = ( props ) => {
 
@@ -18,8 +19,13 @@ const CardsCollectionEdit = ( props ) => {
     templateInsertUpdatesSelection: false
   } );
 
+  const { children, ...collectionInnerBlocksProps } = innerBlocksProps;
+
   return (
-    <CollectionBody { ...props } { ...innerBlocksProps } key={'body'} />
+    <CollectionBody { ...props } { ...collectionInnerBlocksProps } key={'body'}>
+      <CollectionLeadingItems attributes={ props.attributes } />
+      { children }
+    </CollectionBody>
   )
 };
 
@@ -29,6 +35,7 @@ const CardsCollectionPreview = ( props ) => {
 
   return (
     <CollectionBody { ...props } key={ 'body' }>
+      <CollectionLeadingItems attributes={ props.attributes } />
       { innerBlocks.map( innerBlock =>
         <SupernovaItemPreview { ...innerBlock } parentAttributes={ props.attributes } context={ props.context } key={ 'collection_item_preview_' + innerBlock.clientId } /> )
       }
@@ -43,6 +50,11 @@ async function getRandomImages() {
   return placeholderImages;
 }
 
+const hasGeneratedImageDefaults = block =>
+  !! block.attributes.defaultsGenerated &&
+  Array.isArray( block.attributes.images ) &&
+  !! block.attributes.images.length;
+
 const CardsCollectionLayout = props => {
   const { attributes, clientId } = props;
   const innerBlocks = useInnerBlocks( clientId );
@@ -54,13 +66,20 @@ const CardsCollectionLayout = props => {
     if ( ! allDefaultsGenerated.current ) {
 
       if ( needsPreview( attributes ) ) {
-        const defaultsGenerated = innerBlocks.every( block => block.attributes.defaultsGenerated );
+        const defaultsGenerated = innerBlocks.every( hasGeneratedImageDefaults );
 
         if ( ! defaultsGenerated ) {
           getRandomImages().then( placeholderImages => {
+            if ( ! Array.isArray( placeholderImages ) || ! placeholderImages.length ) {
+              return;
+            }
+
+            const usedImages = getUsedPlaceholderImages( innerBlocks );
+
             innerBlocks.forEach( block => {
-              if ( ! block.attributes.defaultsGenerated ) {
-                const images = getRandomArrayFromArray( placeholderImages, 1 );
+              if ( ! hasGeneratedImageDefaults( block ) ) {
+                const images = getUniquePlaceholderImages( placeholderImages, usedImages, 1 );
+                usedImages.push( ...images );
                 updateBlockAttributes( block.clientId, { defaultsGenerated: true, images } );
               }
             } );

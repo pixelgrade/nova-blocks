@@ -1,7 +1,7 @@
 /**
  * WordPress dependencies
  */
-import { Fragment, useEffect, useMemo, useState } from '@wordpress/element';
+import { Fragment, useCallback, useEffect, useMemo, useState } from '@wordpress/element';
 import { Popover } from '@wordpress/components';
 import { useSelect } from '@wordpress/data';
 
@@ -32,6 +32,7 @@ import {
   useInnerBlocks,
   useSelectParent,
   useCustomDefaults,
+  resolveLocalPlaceholderImages,
 } from "@novablocks/block-editor";
 
 import { withShapeModelingDecoration } from "@novablocks/shape-modeling";
@@ -39,10 +40,22 @@ import { withShapeModelingDecoration } from "@novablocks/shape-modeling";
 import { getNewDefaults } from "./utils";
 import BlockControls from './block-controls';
 import {
+  getUsedPlaceholderImages,
+} from '../supernova/utils';
+import {
   isCurrentItemFeaturedImageMediaSource,
   useCurrentItemFeaturedImage,
 } from '../supernova/utils/current-item-featured-image';
 import { shouldSuppressEmptyHeroMediaPlaceholder } from '../supernova/utils/empty-hero-media-placeholder';
+
+const shouldGenerateSupernovaItemDefaults = attributes =>
+  ! attributes.defaultsGenerated ||
+  (
+    attributes.showMedia &&
+    ! isCurrentItemFeaturedImageMediaSource( attributes ) &&
+    Array.isArray( attributes.images ) &&
+    ! attributes.images.length
+  );
 
 const SupernovaItemEdit = props => {
   const { attributes, setControlsVisibility, clientId } = props;
@@ -65,12 +78,18 @@ const SupernovaItemEdit = props => {
 
   const parentAttributes = parent?.attributes || {};
   const innerBlocks = useInnerBlocks( parent?.clientId );
+  const siblingImages = useMemo( () => getUsedPlaceholderImages(
+    innerBlocks.filter( block => block.clientId !== clientId )
+  ), [ clientId, innerBlocks ] );
+  const getUniqueNewDefaults = useCallback( nextAttributes => {
+    return getNewDefaults( nextAttributes, siblingImages );
+  }, [ siblingImages ] );
   const selectParentCondition = useMemo( () => {
     return 1 === innerBlocks.length;
   }, [ innerBlocks ] );
 
   useSelectParent( props, selectParentCondition );
-  useCustomDefaults( clientId, attributes, getNewDefaults );
+  useCustomDefaults( clientId, attributes, getUniqueNewDefaults, shouldGenerateSupernovaItemDefaults );
 
   useEffect( () => {
     setControlsVisibility( {
@@ -150,9 +169,10 @@ const CardMedia = withScrollingEffect( props => {
   const { attributes, parentAttributes } = props;
   const usesCurrentItemFeaturedImage = isCurrentItemFeaturedImageMediaSource( attributes );
   const currentItemFeaturedImage = useCurrentItemFeaturedImage( props.context, usesCurrentItemFeaturedImage );
-  const images = usesCurrentItemFeaturedImage
+  const rawImages = usesCurrentItemFeaturedImage
     ? ( currentItemFeaturedImage ? [ currentItemFeaturedImage ] : [] )
     : attributes.images || [];
+  const images = resolveLocalPlaceholderImages( rawImages, attributes );
   const scrollingEffect = useScrollingEffect();
 
   if ( usesCurrentItemFeaturedImage && ! currentItemFeaturedImage ) {
@@ -248,7 +268,7 @@ const SupernovaItemContent = ( props ) => {
         elements.push(
           <div key={ `meta-combined-${ i }` } className="nb-card__meta-combined">
             <RichText
-              className="nb-card__meta is-style-meta"
+              className={ `nb-card__meta is-style-meta nb-card__meta--${ primaryFirst ? 'primary' : 'secondary' }` }
               placeholder={ primaryFirst ? 'Primary metadata' : 'Secondary metadata' }
               tagName="span"
               value={ primaryFirst ? metaAboveTitle : metaBelowContent }
@@ -257,7 +277,7 @@ const SupernovaItemContent = ( props ) => {
             />
             <span className="nb-card__meta-separator" aria-hidden="true" />
             <RichText
-              className="nb-card__meta is-style-meta"
+              className={ `nb-card__meta is-style-meta nb-card__meta--${ primaryFirst ? 'secondary' : 'primary' }` }
               placeholder={ primaryFirst ? 'Secondary metadata' : 'Primary metadata' }
               tagName="span"
               value={ primaryFirst ? metaBelowContent : metaAboveTitle }
@@ -274,7 +294,7 @@ const SupernovaItemContent = ( props ) => {
         elements.push(
           <RichText
             key={ `meta-primary-${ i }` }
-            className="nb-card__meta is-style-meta"
+            className="nb-card__meta is-style-meta nb-card__meta--primary"
             placeholder="Primary metadata"
             tagName="p"
             value={ metaAboveTitle }
@@ -289,7 +309,7 @@ const SupernovaItemContent = ( props ) => {
         elements.push(
           <RichText
             key={ `meta-secondary-${ i }` }
-            className="nb-card__meta is-style-meta"
+            className="nb-card__meta is-style-meta nb-card__meta--secondary"
             placeholder="Secondary metadata"
             tagName="p"
             value={ metaBelowContent }
@@ -388,15 +408,17 @@ const SupernovaItemContent = ( props ) => {
         ( id === ELEMENT.META_PRIMARY   && list[ i + 1 ] === ELEMENT.META_SECONDARY ) ||
         ( id === ELEMENT.META_SECONDARY && list[ i + 1 ] === ELEMENT.META_PRIMARY   )
       ) ) {
-        const primaryFirst = id === ELEMENT.META_PRIMARY;
-        const firstText  = metaPlaceholder( primaryFirst ? primaryMetadata : secondaryMetadata );
-        const secondText = metaPlaceholder( primaryFirst ? secondaryMetadata : primaryMetadata );
-        if ( firstText || secondText ) {
-          elements.push(
-            <p key={ `meta-combined-${ i }` } className="nb-card__meta is-style-meta nb-card__meta-combined is-placeholder">
-              { firstText && <span className="nb-card__meta--primary">{ firstText }</span> }
-              { firstText && secondText && <span className="nb-card__meta-separator" aria-hidden="true" /> }
-              { secondText && <span className="nb-card__meta--secondary">{ secondText }</span> }
+            const primaryFirst = id === ELEMENT.META_PRIMARY;
+            const firstText  = metaPlaceholder( primaryFirst ? primaryMetadata : secondaryMetadata );
+            const secondText = metaPlaceholder( primaryFirst ? secondaryMetadata : primaryMetadata );
+            const firstRole  = primaryFirst ? 'primary' : 'secondary';
+            const secondRole = primaryFirst ? 'secondary' : 'primary';
+            if ( firstText || secondText ) {
+              elements.push(
+                <p key={ `meta-combined-${ i }` } className="nb-card__meta is-style-meta nb-card__meta-combined is-placeholder">
+                  { firstText && <span className={ `nb-card__meta--${ firstRole }` }>{ firstText }</span> }
+                  { firstText && secondText && <span className="nb-card__meta-separator" aria-hidden="true" /> }
+                  { secondText && <span className={ `nb-card__meta--${ secondRole }` }>{ secondText }</span> }
             </p>
           );
         }
@@ -407,7 +429,7 @@ const SupernovaItemContent = ( props ) => {
       if ( id === ELEMENT.META_PRIMARY ) {
         const text = metaPlaceholder( primaryMetadata );
         if ( text ) {
-          elements.push( <p key={ key } className="nb-card__meta is-style-meta is-placeholder">{ text }</p> );
+              elements.push( <p key={ key } className="nb-card__meta is-style-meta nb-card__meta--primary is-placeholder">{ text }</p> );
         }
         continue;
       }
@@ -415,7 +437,7 @@ const SupernovaItemContent = ( props ) => {
       if ( id === ELEMENT.META_SECONDARY ) {
         const text = metaPlaceholder( secondaryMetadata );
         if ( text ) {
-          elements.push( <p key={ key } className="nb-card__meta is-style-meta is-placeholder">{ text }</p> );
+              elements.push( <p key={ key } className="nb-card__meta is-style-meta nb-card__meta--secondary is-placeholder">{ text }</p> );
         }
         continue;
       }

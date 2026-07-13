@@ -17,16 +17,22 @@ import {
   ToolbarButton,
 } from '@wordpress/components';
 
-import { useDispatch } from '@wordpress/data';
+import { useDispatch, useRegistry } from '@wordpress/data';
 
 import {
   CustomMenuItem,
+  getPlaceholderImages,
   normalizeImage,
   useInnerBlocks
 } from "@novablocks/block-editor";
 
 import FlipMediaControls from './controls/flip-media-controls';
-import { compileSupernovaItemAttributes } from './utils';
+import {
+  compileSupernovaItemAttributes,
+  getUniquePlaceholderImages,
+  getUsedPlaceholderImages,
+} from './utils';
+import { getNewDefaults } from '../supernova-item/utils';
 
 const ALLOWED_MEDIA_TYPES = [ 'image', 'video' ];
 
@@ -61,13 +67,23 @@ const QueryControls = ( props ) => {
 const InnerBlocksControls = ( props ) => {
 
   const { attributes, setAttributes, clientId, inQuery } = props;
-  const { align, postsToShow } = attributes;
+  const { align } = attributes;
   const innerBlocks = useInnerBlocks( clientId );
   const { replaceInnerBlocks, updateBlockAttributes } = useDispatch( 'core/block-editor' );
+  const registry = useRegistry();
 
   const innerBlockAttributes = useMemo( () => {
     return compileSupernovaItemAttributes( attributes );
   }, [ attributes ] );
+
+  const insertCard = useCallback( block => {
+    const newInnerBlocks = [ ...innerBlocks, block ];
+
+    registry.batch( () => {
+      replaceInnerBlocks( clientId, newInnerBlocks );
+      updateBlockAttributes( clientId, { postsToShow: newInnerBlocks.length } );
+    } );
+  }, [ clientId, innerBlocks, registry, replaceInnerBlocks, updateBlockAttributes ] );
 
   const onSelectImages = useCallback( images => {
     const newInnerBlocks = innerBlocks.slice();
@@ -98,13 +114,29 @@ const InnerBlocksControls = ( props ) => {
 
   }, [ clientId, innerBlocks, innerBlockAttributes, replaceInnerBlocks, setAttributes, updateBlockAttributes ] );
 
-  const addNewCard = useCallback( () => {
-    const newInnerBlocks = innerBlocks.slice();
+  const addNewCard = useCallback( async () => {
     const lastBlock = innerBlocks[ innerBlocks.length - 1 ];
-    const newBlock = cloneBlock( lastBlock );
-    newInnerBlocks.push( newBlock );
-    replaceInnerBlocks( clientId, newInnerBlocks );
-  }, [ innerBlocks, postsToShow ] );
+    const placeholderImages = await getPlaceholderImages();
+    const usedImages = getUsedPlaceholderImages( innerBlocks );
+    const images = getUniquePlaceholderImages( placeholderImages, usedImages, 1 );
+    const newBlock = cloneBlock( lastBlock, {
+      images,
+      defaultsGenerated: true,
+    } );
+    insertCard( newBlock );
+  }, [ innerBlocks, insertCard ] );
+
+  const addBlankCard = useCallback( async () => {
+    const usedImages = getUsedPlaceholderImages( innerBlocks );
+    const defaults = await getNewDefaults( innerBlockAttributes, usedImages );
+    const newBlock = createBlock( 'novablocks/supernova-item', {
+      ...innerBlockAttributes,
+      ...defaults,
+      defaultsGenerated: true,
+    } );
+
+    insertCard( newBlock );
+  }, [ innerBlocks, innerBlockAttributes, insertCard ] );
 
   if ( inQuery ) {
     return null;
@@ -141,7 +173,7 @@ const InnerBlocksControls = ( props ) => {
                 </CustomMenuItem>
                 <CustomMenuItem
                   onClick={ () => {
-                    setAttributes( { postsToShow: postsToShow + 1 } );
+                    addBlankCard();
                     onClose();
                   } }
                   icon={ plus }
