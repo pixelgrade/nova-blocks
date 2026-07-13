@@ -1,4 +1,5 @@
 import { useDispatch } from '@wordpress/data';
+import isShallowEqual from '@wordpress/is-shallow-equal';
 import { useEffect } from '@wordpress/element';
 
 import { useInnerBlocks } from '../../hooks';
@@ -14,7 +15,9 @@ const useInnerBlocksLock = ( clientId, lockSettings, attributes, innerBlockName 
         return;
       }
 
-      updateBlockAttributes( innerBlock.clientId, { lock: lockSettings } );
+      if ( ! isShallowEqual( innerBlock.attributes.lock, lockSettings ) ) {
+        updateBlockAttributes( innerBlock.clientId, { lock: lockSettings } );
+      }
     } );
   }, [ attributes ] );
 };

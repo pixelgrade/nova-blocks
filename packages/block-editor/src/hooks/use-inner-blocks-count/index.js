@@ -6,7 +6,7 @@ import { useInnerBlocks } from "../../hooks";
 
 const useInnerBlocksCount = ( clientId, postsToShow, innerBlockName, innerBlockAttributes ) => {
   const itemsCount = useSelect( select => select( 'core/block-editor' ).getBlockCount( clientId ), [ clientId ] );
-  const { replaceInnerBlocks, updateBlockAttributes } = useDispatch( 'core/block-editor' );
+  const { replaceInnerBlocks, updateBlockAttributes, __unstableMarkNextChangeAsNotPersistent } = useDispatch( 'core/block-editor' );
   const innerBlocks = useInnerBlocks( clientId );
 
   const innerBlocksCount = useRef( innerBlocks.length );
@@ -19,8 +19,11 @@ const useInnerBlocksCount = ( clientId, postsToShow, innerBlockName, innerBlockA
       if ( innerBlocks.length !== innerBlocksCount.current ) {
         // inner blocks changed
         innerBlocksCount.current = innerBlocks.length;
+        if ( postsToShowValue.current !== innerBlocks.length ) {
+          __unstableMarkNextChangeAsNotPersistent();
+          updateBlockAttributes( clientId, { postsToShow: innerBlocks.length } );
+        }
         postsToShowValue.current = innerBlocks.length;
-        updateBlockAttributes( clientId, { postsToShow: innerBlocks.length } );
       } else {
         // postsToShow changed
         innerBlocksCount.current = postsToShow;
@@ -34,11 +37,12 @@ const useInnerBlocksCount = ( clientId, postsToShow, innerBlockName, innerBlockA
           }
         }
 
+        __unstableMarkNextChangeAsNotPersistent();
         replaceInnerBlocks( clientId, newInnerBlocks );
       }
     }
 
-  }, [ postsToShow, innerBlocks ] );
+  }, [ postsToShow, innerBlocks, clientId, innerBlockAttributes, innerBlockName, itemsCount, replaceInnerBlocks, updateBlockAttributes, __unstableMarkNextChangeAsNotPersistent ] );
 };
 
 export default useInnerBlocksCount;
