@@ -1,0 +1,139 @@
+// The desktop content layout of a Header Row. Consumed twice:
+// - style.scss applies it above `lap` (the frontend desktop composition);
+// - editor-styles.scss applies it at ANY canvas width, because the editor
+//   never renders the real mobile header (compact bar + overlay) — without
+//   the pin, a narrow canvas shows desktop markup restyled by the mobile row
+//   CSS, which matches neither the desktop nor the mobile frontend.
+@mixin nb-header-row-desktop-layout {
+
+  .nb-header-row__inner-container[class] > .wp-block {
+    display: flex;
+    column-gap: var(--nb-navigation-item-spacing);
+    align-items: center;
+
+    > :first-child:not(:last-child),
+    > :last-child:not(:first-child) {
+      flex: 1 1 50%;
+    }
+
+    > :only-child,
+    > :not(:first-child):not(:last-child) {
+      flex: 1 0 auto;
+    }
+
+    > * {
+      justify-content: var(--justify-content, center);
+    }
+
+    > :first-child:not(:last-child) {
+      --justify-content: flex-start;
+    }
+
+    > :last-child:not(:first-child) {
+      --justify-content: flex-end;
+    }
+
+    > [class*='branding'],
+    > .wp-block-site-logo,
+    > .c-logo--site-logo {
+
+      &[class][class][class] {
+        flex-basis: auto;
+      }
+    }
+
+    > [class*='nb-navigation'] {
+        &[class][class][class] {
+          flex-grow: 1;
+        }
+    }
+  }
+
+  // Overwrite navigation item spacing for non-primary rows
+  .nb-header[class] .nb-header-row:not(.nb-header-row--primary) {
+    --nb-navigation-item-spacing: 1.25em;
+  }
+
+  :is(.nb-header-logo-left-center-right, .nb-header[data-layout='logo-left-center-right'], #more.specific) {
+
+    .nb-header-row__inner-container[class] > .wp-block {
+
+      > :first-child:not(:last-child),
+      > :last-child:not(:first-child) {
+        flex: 1 1 0;
+        min-width: 0;
+      }
+
+      > :not(:first-child):not(:last-child) {
+        flex: 0 1 auto;
+        min-width: 0;
+      }
+
+      > :first-child[class*='branding']:not(:last-child),
+      > :first-child.wp-block-site-logo:not(:last-child),
+      > :first-child.c-logo--site-logo:not(:last-child) {
+
+        &[class][class][class] {
+          flex: 1 1 0;
+        }
+      }
+
+      > :not(:first-child):not(:last-child)[class*='nb-navigation'] {
+
+        &[class][class][class] {
+          flex: 0 1 auto;
+        }
+      }
+    }
+  }
+
+  // Attribute-driven content layout overrides. The defaults (`row` direction,
+  // empty alignment, single navigation column) emit none of these classes, so
+  // the positional first/last/center distribution above stays the baseline.
+  .nb-header-row--direction-column[class] .nb-header-row__inner-container[class] > .wp-block {
+    display: block;
+  }
+
+  @each $align, $justify, $text in ('start', flex-start, left), ('center', center, center), ('end', flex-end, right) {
+
+    .nb-header-row--align-#{$align}[class] .nb-header-row__inner-container[class] > .wp-block {
+      justify-content: $justify;
+      text-align: $text;
+
+      > * {
+        --justify-content: #{$justify};
+      }
+    }
+  }
+
+  // Lay the row's navigation menus out on a fixed column grid. The grid is
+  // applied to the menu list itself (not the row container) so the menu items
+  // are what split into columns.
+  .nb-header-row--nav-columns-2 { --nb-navigation-columns: 2; }
+  .nb-header-row--nav-columns-3 { --nb-navigation-columns: 3; }
+
+  :is(.nb-header-row--nav-columns-2, .nb-header-row--nav-columns-3) .nb-navigation :is(ul.menu, .menu > ul, .wp-block-navigation__container) {
+    display: grid;
+    grid-template-columns: repeat(var(--nb-navigation-columns, 2), minmax(0, 1fr));
+    gap: 0 var(--nb-navigation-item-spacing, 1em);
+    justify-content: stretch;
+    // The tracks span the full row, so the row's Content Alignment positions
+    // the menu items INSIDE their cells (flex-start/flex-end compute to
+    // start/end for justify-items); stretch keeps the default full-cell look.
+    justify-items: var(--justify-content, stretch);
+    width: 100%;
+
+    > :is(li, .wp-block-navigation-item) {
+      min-width: 0;
+      margin: 0;
+    }
+  }
+
+  // Editor parity: the inline-editing core/navigation wrapper shrink-wraps its
+  // content; stretch it so the column grid resolves against the row width like
+  // the frontend menu list does.
+  :is(.nb-header-row--nav-columns-2, .nb-header-row--nav-columns-3) .nb-navigation .wp-block-navigation {
+    width: 100%;
+    min-width: 0;
+  }
+}

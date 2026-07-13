@@ -9,6 +9,9 @@ import { useEffect } from "@wordpress/element";
 /**
  * Internal dependencies.
  */
+import HeaderRowInspectorControls from './inspector-controls';
+import { getHeaderRowLayoutClassnames, getHeaderRowLayoutStyle } from './layout-classes';
+
 // `core/site-logo` is the inline-editable logo going forward; `novablocks/logo`
 // stays allowed so existing headers (serialized with it) keep working.
 const ALLOWED_BLOCKS = [ 'core/site-logo', 'novablocks/logo', 'novablocks/navigation' ];
@@ -40,13 +43,19 @@ const HeaderRowEdit = withControlsVisibility( props => {
     className: classnames(
       'nb-header-row',
       {
-        [ `nb-header--${ slug }` ]: !! slug
+        // Match the PHP render (`nb-header-row--{slug}`) so slug-scoped rules
+        // (skin rhythm, primary-row spacing) apply in the editor canvas too.
+        [ `nb-header-row--${ slug }` ]: !! slug
       },
+      getHeaderRowLayoutClassnames( attributes ),
       getColorSignalClassnames( attributes, true ),
       props.className,
       `alignfull`
     ),
-    style: props.style,
+    style: {
+      ...props.style,
+      ...getHeaderRowLayoutStyle( attributes ),
+    },
   } );
 
   const fakeBlockClassname = classnames(
@@ -62,6 +71,7 @@ const HeaderRowEdit = withControlsVisibility( props => {
 
   return (
     <div { ...blockProps }>
+      <HeaderRowInspectorControls { ...props } />
       <div className="nb-header-row__inner-container">
         <div { ...innerBlockProps } className={ fakeBlockClassname } />
       </div>

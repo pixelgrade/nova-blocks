@@ -451,7 +451,9 @@ add_filter( 'block_editor_settings_all', 'novablocks_add_site_editor_preview_fal
  */
 function novablocks_get_site_editor_preview_fallback_styles(): string {
 	return <<<'CSS'
-@media only screen and (min-width:1024px) {
+/* No media query: editor canvases and preview iframes always show the DESKTOP
+   header composition — the real mobile header is never rendered there, and a
+   narrow canvas (open sidebar, small window) must not flip the preview. */
 	.nb-header-row__inner-container[class] > .wp-block {
 		display: flex;
 		column-gap: var(--nb-navigation-item-spacing);
@@ -488,6 +490,54 @@ function novablocks_get_site_editor_preview_fallback_styles(): string {
 		flex-grow: 1;
 	}
 
+	.nb-header-row--direction-column[class] .nb-header-row__inner-container[class] > .wp-block {
+		display: block;
+	}
+
+	.nb-header-row--align-start[class] .nb-header-row__inner-container[class] > .wp-block {
+		justify-content: flex-start;
+		text-align: left;
+	}
+
+	.nb-header-row--align-start[class] .nb-header-row__inner-container[class] > .wp-block > * {
+		--justify-content: flex-start;
+	}
+
+	.nb-header-row--align-center[class] .nb-header-row__inner-container[class] > .wp-block {
+		justify-content: center;
+		text-align: center;
+	}
+
+	.nb-header-row--align-center[class] .nb-header-row__inner-container[class] > .wp-block > * {
+		--justify-content: center;
+	}
+
+	.nb-header-row--align-end[class] .nb-header-row__inner-container[class] > .wp-block {
+		justify-content: flex-end;
+		text-align: right;
+	}
+
+	.nb-header-row--align-end[class] .nb-header-row__inner-container[class] > .wp-block > * {
+		--justify-content: flex-end;
+	}
+
+	.nb-header-row--nav-columns-2 { --nb-navigation-columns: 2; }
+	.nb-header-row--nav-columns-3 { --nb-navigation-columns: 3; }
+
+	:is(.nb-header-row--nav-columns-2, .nb-header-row--nav-columns-3) .nb-navigation :is(ul.menu, .menu > ul, .wp-block-navigation__container) {
+		display: grid;
+		grid-template-columns: repeat(var(--nb-navigation-columns, 2), minmax(0, 1fr));
+		gap: 0 var(--nb-navigation-item-spacing, 1em);
+		justify-content: stretch;
+		justify-items: var(--justify-content, stretch);
+		width: 100%;
+	}
+
+	:is(.nb-header-row--nav-columns-2, .nb-header-row--nav-columns-3) .nb-navigation :is(ul.menu, .menu > ul, .wp-block-navigation__container) > :is(li, .wp-block-navigation-item) {
+		min-width: 0;
+		margin: 0;
+	}
+
 	.nb-navigation {
 		display: flex;
 		justify-content: var(--justify-content, center);
@@ -499,7 +549,6 @@ function novablocks_get_site_editor_preview_fallback_styles(): string {
 		column-gap: var(--nb-navigation-item-spacing);
 		justify-content: var(--justify-content, center);
 	}
-}
 
 .nb-navigation .menu > ul,
 .nb-navigation ul.menu {

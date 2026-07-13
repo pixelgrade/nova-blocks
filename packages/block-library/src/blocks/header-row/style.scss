@@ -1,30 +1,39 @@
+@import 'scss/desktop-layout';
+
+// The mobile row composition is frontend-only: the editor canvas never renders
+// the real mobile header (compact bar + overlay), so a below-`lap` canvas must
+// keep previewing the desktop composition instead of this hybrid restyle.
+// editor-styles.scss pins the desktop layout at any canvas width.
 @include below(lap) {
 
-  .nb-header-row {
-    display: flex;
-    flex-direction: column;
+  body:not(.editor-styles-wrapper) {
 
-    --header-background-opacity: 0;
+    .nb-header-row {
+      display: flex;
+      flex-direction: column;
 
-    --nb-block-top-spacing: 0 !important;
-    --nb-block-bottom-spacing: 0 !important;
-    --nb-emphasis-top-spacing: 0 !important;
-    --nb-emphasis-bottom-spacing: 0 !important;
+      --header-background-opacity: 0;
 
-    .nb-navigation--primary {
+      --nb-block-top-spacing: 0 !important;
+      --nb-block-bottom-spacing: 0 !important;
+      --nb-emphasis-top-spacing: 0 !important;
+      --nb-emphasis-bottom-spacing: 0 !important;
+
+      .nb-navigation--primary {
+        order: -1;
+      }
+    }
+
+    :is(.nb-header-row, .more.specfic) {
+      --sm-current-bg-color: inherit;
+      --sm-current-fg1-color: inherit;
+      --sm-current-fg2-color: inherit;
+      --sm-current-accent-color: inherit;
+    }
+
+    .nb-header-row--primary {
       order: -1;
     }
-  }
-
-  :is(.nb-header-row, .more.specfic) {
-    --sm-current-bg-color: inherit;
-    --sm-current-fg1-color: inherit;
-    --sm-current-fg2-color: inherit;
-    --sm-current-accent-color: inherit;
-  }
-
-  .nb-header-row--primary {
-    order: -1;
   }
 }
 
@@ -54,87 +63,7 @@
 }
 
 @include above(lap) {
-
-  .nb-header-row__inner-container[class] > .wp-block {
-    display: flex;
-    column-gap: var(--nb-navigation-item-spacing);
-    align-items: center;
-
-    > :first-child:not(:last-child),
-    > :last-child:not(:first-child) {
-      flex: 1 1 50%;
-    }
-
-    > :only-child,
-    > :not(:first-child):not(:last-child) {
-      flex: 1 0 auto;
-    }
-
-    > * {
-      justify-content: var(--justify-content, center);
-    }
-
-    > :first-child:not(:last-child) {
-      --justify-content: flex-start;
-    }
-
-    > :last-child:not(:first-child) {
-      --justify-content: flex-end;
-    }
-    
-    > [class*='branding'],
-    > .wp-block-site-logo,
-    > .c-logo--site-logo {
-
-      &[class][class][class] {
-        flex-basis: auto;
-      }
-    }
-
-    > [class*='nb-navigation'] {
-        &[class][class][class] {
-          flex-grow: 1;
-        }
-    }
-  }
-
-  // Overwrite navigation item spacing for non-primary rows
-  .nb-header[class] .nb-header-row:not(.nb-header-row--primary) {
-    --nb-navigation-item-spacing: 1.25em;
-  }
-
-  :is(.nb-header-logo-left-center-right, .nb-header[data-layout='logo-left-center-right'], #more.specific) {
-
-    .nb-header-row__inner-container[class] > .wp-block {
-
-      > :first-child:not(:last-child),
-      > :last-child:not(:first-child) {
-        flex: 1 1 0;
-        min-width: 0;
-      }
-
-      > :not(:first-child):not(:last-child) {
-        flex: 0 1 auto;
-        min-width: 0;
-      }
-
-      > :first-child[class*='branding']:not(:last-child),
-      > :first-child.wp-block-site-logo:not(:last-child),
-      > :first-child.c-logo--site-logo:not(:last-child) {
-
-        &[class][class][class] {
-          flex: 1 1 0;
-        }
-      }
-
-      > :not(:first-child):not(:last-child)[class*='nb-navigation'] {
-
-        &[class][class][class] {
-          flex: 0 1 auto;
-        }
-      }
-    }
-  }
+  @include nb-header-row-desktop-layout;
 }
 
 // core/site-logo height parity with novablocks/logo. The logo block's own
@@ -146,6 +75,10 @@
   align-items: center;
   justify-content: var(--justify-content, center);
   flex-shrink: 0;
+  // Parity with novablocks/logo: a large Logo Height in a narrow header caps
+  // at the container width instead of overflowing it.
+  max-width: 100%;
+  min-width: 0;
 
   img {
     display: block;

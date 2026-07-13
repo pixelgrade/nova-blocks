@@ -18,6 +18,42 @@ function novablocks_get_header_row_attributes(): array {
 	] );
 }
 
+if ( ! function_exists( 'novablocks_get_header_row_layout_classes' ) ) {
+
+	/**
+	 * Derives the attribute-driven content layout classes for a Header Row.
+	 *
+	 * Default values (`row` direction, empty alignment, single navigation
+	 * column) emit no classes, so rows saved before these attributes existed
+	 * keep the positional first/last/center child distribution.
+	 *
+	 * Mirrors the class derivation in `edit.js`.
+	 *
+	 * @param array $attributes
+	 *
+	 * @return string[]
+	 */
+	function novablocks_get_header_row_layout_classes( array $attributes ): array {
+		$classes = [];
+
+		if ( 'column' === ( $attributes['contentDirection'] ?? 'row' ) ) {
+			$classes[] = 'nb-header-row--direction-column';
+		}
+
+		$alignment = $attributes['contentAlignment'] ?? '';
+		if ( in_array( $alignment, [ 'start', 'center', 'end' ], true ) ) {
+			$classes[] = 'nb-header-row--align-' . $alignment;
+		}
+
+		$columns = (int) ( $attributes['navigationColumns'] ?? 1 );
+		if ( $columns >= 2 ) {
+			$classes[] = 'nb-header-row--nav-columns-' . min( $columns, 3 );
+		}
+
+		return $classes;
+	}
+}
+
 if ( ! function_exists( 'novablocks_render_header_row_block' ) ) {
 
 	/**
@@ -53,6 +89,8 @@ if ( ! function_exists( 'novablocks_render_header_row_block' ) ) {
 			$classes[] = 'nb-header-row--' . $attributes['slug'];
 		}
 
+		$classes = array_merge( $classes, novablocks_get_header_row_layout_classes( $attributes ) );
+
 		if ( ! empty( $attributes['className'] ) ) {
 			$classes[] = $attributes['className'];
 		}
@@ -61,6 +99,11 @@ if ( ! function_exists( 'novablocks_render_header_row_block' ) ) {
 			novablocks_get_spacing_css( $attributes ),
 			novablocks_get_sizing_css( $attributes )
 		);
+
+		$linkVerticalSpacing = $attributes['navigationLinkVerticalSpacing'] ?? 75;
+		if ( is_numeric( $linkVerticalSpacing ) && 75 !== (int) $linkVerticalSpacing ) {
+			$spacingProps[] = '--nb-navigation-link-vertical-spacing-setting: ' . (int) $linkVerticalSpacing;
+		}
 
 		$style               = join( '; ', $spacingProps ) . '; ';
 		$blockPaletteClasses = novablocks_get_color_signal_classes( $attributes );

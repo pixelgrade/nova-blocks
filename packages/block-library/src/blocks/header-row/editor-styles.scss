@@ -1,0 +1,51 @@
+@import 'scss/desktop-layout';
+
+// The editor canvas always previews the DESKTOP header composition, no matter
+// how narrow the canvas iframe is (a narrow window or an open settings sidebar
+// easily pushes it below `lap`). The real mobile header is a separate
+// PHP/JS-generated composition (compact bar + menu overlay) that the editor
+// never renders, so letting the mobile row CSS kick in below `lap` would show
+// a hybrid that matches neither frontend. style.scss scopes the mobile rules
+// to the frontend; this pins the desktop layout at any canvas width.
+
+// The desktop navigation flow, normally applied above `lap` by the navigation
+// block's stylesheet; scoped under .nb-header-row since header rows are the
+// navigation block's only allowed parent. Declared BEFORE the layout mixin so
+// the columns grid (equal specificity) wins for rows that opt into columns.
+.nb-header-row .nb-navigation {
+  display: flex;
+  justify-content: var(--justify-content, center);
+
+  :is(ul.menu, .menu > ul) {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: var(--justify-content, center);
+  }
+}
+
+@include nb-header-row-desktop-layout;
+
+// The core Navigation editor adds a later flex declaration to its editable
+// container. Keep Header Row's explicit column choice authoritative in the
+// preview, including narrow Site Editor iframes.
+:is(.nb-header-row--nav-columns-2, .nb-header-row--nav-columns-3)[class]
+  .nb-navigation
+  .wp-block-navigation__container[class] {
+  display: grid !important;
+  grid-template-columns: repeat(var(--nb-navigation-columns, 2), minmax(0, 1fr));
+  gap: 0 var(--nb-navigation-item-spacing, 1em);
+  justify-content: stretch;
+  justify-items: var(--justify-content, stretch);
+  width: 100%;
+
+  > .wp-block-navigation-item {
+    min-width: 0;
+    margin: 0;
+  }
+}
+
+// Keep the desktop logo height below `lap` too (the frontend swaps to the
+// mobile logo height there).
+.nb-header-row .wp-block-site-logo img[class] {
+  height: calc(var(--nb-header-logo-height-setting) * 1px);
+}

@@ -18,5 +18,21 @@
 	"align": {
 		"type": "string",
 		"default": "full"
+	},
+	"contentDirection": {
+		"type": "string",
+		"default": "row"
+	},
+	"contentAlignment": {
+		"type": "string",
+		"default": ""
+	},
+	"navigationColumns": {
+		"type": "number",
+		"default": 1
+	},
+	"navigationLinkVerticalSpacing": {
+		"type": "number",
+		"default": 75
 	}
 }

@@ -14,6 +14,39 @@
   --header-background-opacity: 1;
 }
 
+// Desktop-composition pin: rows flow as stacked blocks at any canvas width
+// (the frontend's below-`lap` flex/reorder is scoped out of editors).
+.nb-header__inner-container {
+  width: 100%;
+}
+
+// Core's editor wrappers can retain the frontend mobile `order: -1` rule
+// after an iframe crosses the lap breakpoint. The editor always previews the
+// authored desktop row order; the real mobile composition is PHP-generated.
+.nb-header__inner-container > .nb-header-row--primary[class] {
+  order: 0;
+}
+
+// Progressive canvas selection (structure before content):
+//   click 1 selects the Header, click 2 a Header Row, click 3 the row's
+//   content (menu, logo). Implemented purely with pointer-events keyed on the
+//   selection classes Gutenberg maintains, so List View, the breadcrumb, the
+//   toolbar parent selector, and the inspector Rows navigator keep working —
+//   an inert element passes the click to the nearest interactive ancestor and
+//   Gutenberg selects that ancestor's block.
+//
+// While the selection is outside the Header, everything inside it is inert.
+.nb-header:not(.is-selected):not(.has-child-selected) .nb-header__inner-container * {
+  pointer-events: none;
+}
+
+// While the Header (or something inside it) is selected, rows are clickable
+// but a not-yet-entered row's content stays inert; the row that owns the
+// selection is fully interactive for inline editing.
+.nb-header:is(.is-selected, .has-child-selected) .nb-header-row:not(.is-selected):not(.has-child-selected) .nb-header-row__inner-container * {
+  pointer-events: none;
+}
+
 .nb-header-layout-placeholder {
   padding-top: 24px;
   padding-bottom: 24px;

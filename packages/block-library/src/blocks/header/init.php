@@ -59,6 +59,11 @@ if ( ! function_exists( 'novablocks_render_header_block' ) ) {
 			'alignfull',
 		];
 
+		if ( ! empty( $attributes['className'] ) ) {
+			$custom_classes = array_map( 'sanitize_html_class', preg_split( '/\s+/', trim( $attributes['className'] ) ) );
+			$classes        = array_merge( $classes, array_filter( $custom_classes ) );
+		}
+
 		$spacingProps = array_merge(
 			novablocks_get_spacing_css( $attributes ),
 			novablocks_get_sizing_css( $attributes ),
@@ -80,12 +85,19 @@ if ( ! function_exists( 'novablocks_render_header_block' ) ) {
 		];
 
 		$toggleClasses = array_merge( $toggleClasses, $blockPaletteClasses );
+		$mobile_menu_id = empty( $novablocks_responsive_navigation_outputted ) ? 'nova-mobile-menu' : '';
 
 		if ( empty( $novablocks_responsive_navigation_outputted ) ) { ?>
 
-			<input class="c-menu-toggle__checkbox" id="nova-menu-toggle" type="checkbox" autocomplete="off">
+			<input class="c-menu-toggle__checkbox" aria-hidden="true" tabindex="-1" id="nova-menu-toggle" type="checkbox" autocomplete="off">
 
-			<label class="<?php echo esc_attr( join( ' ', $toggleClasses ) ); ?>" for="nova-menu-toggle">
+			<button
+				class="<?php echo esc_attr( join( ' ', $toggleClasses ) ); ?>"
+				type="button"
+				data-menu-toggle-checkbox="nova-menu-toggle"
+				aria-expanded="false"
+				aria-controls="<?php echo esc_attr( $mobile_menu_id ); ?>"
+			>
                 <span class="c-menu-toggle__wrap">
                     <span class="c-menu-toggle__icon">
                         <b class="c-menu-toggle__slice c-menu-toggle__slice--top"></b>
@@ -95,12 +107,13 @@ if ( ! function_exists( 'novablocks_render_header_block' ) ) {
                     <span
 						class="c-menu-toggle__label screen-reader-text"><?php esc_html_e( 'Menu', '__plugin_txtd' ); ?></span>
                 </span>
-			</label>
+			</button>
 
 			<?php $novablocks_responsive_navigation_outputted = true;
 		} ?>
 
 		<div
+			<?php if ( ! empty( $mobile_menu_id ) ) { ?>id="<?php echo esc_attr( $mobile_menu_id ); ?>"<?php } ?>
 			class="<?php echo esc_attr( join( ' ', $classes ) ); ?>"
 			style="<?php echo esc_attr( $style ); ?>"
 			<?php echo join( ' ', $data_attributes ); ?>

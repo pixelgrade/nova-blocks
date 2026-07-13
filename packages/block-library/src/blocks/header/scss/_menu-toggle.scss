@@ -12,22 +12,27 @@
 
 .c-menu-toggle {
 
-  // overwrite display flex inherited from label
+  // overwrite display flex inherited from shared button styles
   @include below(lap) {
     display: block !important;
   }
 
   width: auto !important;
+  min-width: 48px;
+  min-height: 48px;
 
   position: fixed;
   top: 0;
   left: 0;
   z-index: 2300;
 
-	font-size: 1rem;
+  font-size: 1rem;
 
   margin: 0 !important;
+  padding: 0 !important;
+  border: 0;
   background: none !important;
+  appearance: none;
 
   .c-menu-toggle__checkbox:checked ~ & {
     @include mobile-menu-open-color-scheme;
@@ -44,6 +49,11 @@
       transform: rotate(-45deg);
     }
   }
+}
+
+.c-menu-toggle:focus-visible {
+  outline: 2px solid currentColor;
+  outline-offset: -4px;
 }
 
 .c-menu-toggle__slice {

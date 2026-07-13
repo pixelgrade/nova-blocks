@@ -2,10 +2,11 @@
  * WordPress dependencies
  */
 import classnames from 'classnames';
-import { registerBlockType } from '@wordpress/blocks';
+import { createBlock, registerBlockType } from '@wordpress/blocks';
 import ServerSideRender from '@wordpress/server-side-render';
-import { useLayoutEffect, useRef } from '@wordpress/element';
+import { useEffect, useLayoutEffect, useRef } from '@wordpress/element';
 import { useBlockProps, useInnerBlocksProps } from '@wordpress/block-editor';
+import { useDispatch, useSelect } from '@wordpress/data';
 
 /**
  * Internal dependencies
@@ -70,8 +71,42 @@ const LegacyNavigationPreview = ( props ) => {
  * (see lib/header-nav-projection.php). overlayMenu:'never' suppresses core's own
  * responsive overlay since Nova's mobile menu drives the frontend.
  */
-const NavigationEntityEdit = ( { attributes: blockAttributes, navRef } ) => {
+const NavigationEntityEdit = ( { attributes: blockAttributes, navRef, clientId } ) => {
   const { slug } = blockAttributes;
+
+  // Self-heal against entity content round-trips. The Site Editor's block
+  // sync occasionally rebuilds the template part tree by RE-PARSING the
+  // serialized content (observed on the second consecutive attribute edit
+  // anywhere in the part). Because this block saves no markup (save: false),
+  // the parsed tree has no core/navigation child, and resetBlocks wipes it
+  // from the canvas until a full reload. Re-seed the template whenever the
+  // child goes missing, without registering an undo level.
+  const blockCount = useSelect(
+    select => select( 'core/block-editor' ).getBlockCount( clientId ),
+    [ clientId ]
+  );
+  const { replaceInnerBlocks, __unstableMarkNextChangeAsNotPersistent } = useDispatch( 'core/block-editor' );
+  const lastReseedRef = useRef( 0 );
+
+  useEffect( () => {
+    if ( blockCount !== 0 || ! navRef ) {
+      return;
+    }
+    // Guard against a sync feedback loop: at most one re-seed per second.
+    const now = Date.now();
+    if ( now - lastReseedRef.current < 1000 ) {
+      return;
+    }
+    lastReseedRef.current = now;
+
+    __unstableMarkNextChangeAsNotPersistent();
+    replaceInnerBlocks( clientId, [ createBlock( 'core/navigation', {
+      ref: navRef,
+      overlayMenu: 'never',
+      templateLock: false,
+      lock: { move: true, remove: true },
+    } ) ], false );
+  }, [ blockCount, navRef, clientId, replaceInnerBlocks, __unstableMarkNextChangeAsNotPersistent ] );
 
   const blockProps = useBlockProps( {
     className: classnames( 'nb-navigation', {

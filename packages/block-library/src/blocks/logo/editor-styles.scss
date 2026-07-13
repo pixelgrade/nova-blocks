@@ -2,6 +2,19 @@
 	pointer-events: none;
 }
 
+// Desktop-composition pin (parity with header-row/editor-styles.scss): the
+// canvas previews the desktop header at any width, so the Logo Height setting
+// must drive the preview even when a narrow canvas iframe drops below the
+// frontend's mobile breakpoints — otherwise Mobile Logo Height silently takes
+// over the editor preview.
+:is(.site-logo, .specificity.x2.x3) img {
+	--nb-current-logo-height-setting: var(--nb-header-logo-height-setting);
+}
+
+:is(.site-title, .specificity.x2) {
+	font-size: calc(var(--nb-header-logo-height-setting) * 1px);
+}
+
 //[data-type="novablocks/logo"] {
 //
 //  > div:not([class]) {

@@ -76,6 +76,7 @@ const HeaderLayoutPlaceholder = ( { clientId, name, setAttributes } ) => {
 						onKeyDown={ ( event ) => onCardKeyDown( event, definition ) }
 						aria-label={ sprintf(
 							/* translators: %s: header layout title. */
+							/* translators: %s: header layout label. */
 							__( 'Use %s layout', '__plugin_txtd' ),
 							definition.title
 						) }

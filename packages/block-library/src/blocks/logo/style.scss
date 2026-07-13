@@ -1,8 +1,21 @@
 :is(.site-logo, .specificity.x2) {
   --nb-current-logo-height-setting: var(--nb-header-logo-height-setting);
 
+  // The Logo Height setting sets the rendered height, but must never push the
+  // logo outside its container: every wrapper caps at the available width so
+  // the image's own max-width + object-fit scale the logo down proportionally
+  // instead of overflowing. Height effectively becomes a maximum once the
+  // container width runs out.
+  max-width: 100%;
+  min-width: 0;
+
+  > * {
+    max-width: 100%;
+  }
+
   a {
     display: block;
+    max-width: 100%;
   }
 
   img {
@@ -38,6 +51,11 @@
   justify-content: var(--justify-content, center);
   align-items: center;
   flex-shrink: 0;
+
+  // Even with flex-shrink 0, the branding box must not outgrow its container
+  // when a large Logo Height meets a narrow header (see .site-logo above).
+  max-width: 100%;
+  min-width: 0;
 
   z-index: 1;
 }

@@ -41,6 +41,23 @@ test('generated mobile header lets stylesheet safe-area padding override copied 
   );
 } );
 
+test('shared mobile menu button has a 48px target and a visible keyboard focus treatment', () => {
+  assert.match(
+    menuToggleSource,
+    /\.c-menu-toggle\s*\{[\s\S]*?min-width:\s*48px;[\s\S]*?min-height:\s*48px;/
+  );
+
+  assert.match(
+    menuToggleSource,
+    /\.c-menu-toggle\s*\{[\s\S]*?padding:\s*0\s*!important;[\s\S]*?appearance:\s*none;/
+  );
+
+  assert.match(
+    menuToggleSource,
+    /\.c-menu-toggle:focus-visible\s*\{[\s\S]*?outline:\s*(?!none)[^;]+;[\s\S]*?outline-offset:\s*[^;]+;/
+  );
+} );
+
 test('open mobile menu uses the source-shifted palette variation instead of a hard-coded color pair', () => {
   const [ mobileMenuOpenMixinSource = '' ] = mixinsSource.match(
     /@mixin\s+mobile-menu-open-color-scheme\s*\{[\s\S]*?\n\}/

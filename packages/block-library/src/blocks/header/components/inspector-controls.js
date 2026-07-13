@@ -2,7 +2,7 @@
  * WordPress dependencies
  */
 import { __ } from '@wordpress/i18n';
-import { RadioControl, RangeControl } from '@wordpress/components';
+import { BaseControl, Button, RadioControl, RangeControl } from '@wordpress/components';
 import { useSelect, useDispatch } from "@wordpress/data";
 import { useState, useCallback, createInterpolateElement } from '@wordpress/element';
 
@@ -24,7 +24,7 @@ const HeaderInspectorControls = ( props ) => {
   const { clientId } = props;
   const innerBlocks = useInnerBlocks( clientId );
 
-  const { updateBlockAttributes } = useDispatch( 'core/block-editor' );
+  const { updateBlockAttributes, selectBlock } = useDispatch( 'core/block-editor' );
   const updateNextStickyRow = useCallback( nextStickyRowClientId => {
     innerBlocks.forEach( block => {
       updateBlockAttributes( block.clientId, {
@@ -91,11 +91,65 @@ const HeaderInspectorControls = ( props ) => {
           /> }
         </ControlsGroup>
 
+        <HeaderRowsNavigator rows={ rows } selectBlock={ selectBlock } />
+
         <HeaderOptions { ...props } />
 
       </ControlsTab>
     </ControlsSection>
   )
+};
+
+// Friendly names for the blocks a row can host, shown as each row's summary.
+const ROW_CONTENT_LABELS = {
+  'core/site-logo': __( 'Logo', '__plugin_txtd' ),
+  'novablocks/logo': __( 'Logo', '__plugin_txtd' ),
+  'novablocks/navigation': __( 'Navigation', '__plugin_txtd' ),
+};
+
+/**
+ * Lists the header's rows and selects one on click. Canvas clicks land on the
+ * deepest editable block (usually the menu), so rows are hard to discover from
+ * the canvas alone; the Header inspector is Nova's configuration hub for the
+ * whole header, making it the natural place to surface them.
+ */
+const HeaderRowsNavigator = ( { rows, selectBlock } ) => {
+
+  if ( ! rows.length ) {
+    return null;
+  }
+
+  return (
+    <ControlsGroup>
+      <BaseControl
+        id={ 'nb-header-rows-navigator' }
+        label={ __( 'Header Rows', '__plugin_txtd' ) }
+        help={ __( 'This header is composed of rows. Select a row to adjust its layout, content alignment, and navigation options.', '__plugin_txtd' ) }
+        __nextHasNoMarginBottom={ true }
+      >
+        <div style={ { display: 'flex', flexDirection: 'column', gap: '8px', marginTop: '8px' } }>
+          { rows.map( row => {
+            const summary = row.innerBlocks
+              .map( block => ROW_CONTENT_LABELS[ block.name ] )
+              .filter( Boolean )
+              .join( ', ' );
+
+            return (
+              <Button
+                key={ row.clientId }
+                variant={ 'secondary' }
+                onClick={ () => selectBlock( row.clientId ) }
+                style={ { width: '100%', height: 'auto', padding: '8px 12px', display: 'flex', justifyContent: 'space-between', gap: '8px' } }
+              >
+                <span>{ capitalizeFirstLetter( row.attributes.label || row.attributes.slug || __( 'Row', '__plugin_txtd' ) ) }</span>
+                { !! summary && <span style={ { opacity: 0.6, fontSize: '11px' } }>{ summary }</span> }
+              </Button>
+            );
+          } ) }
+        </div>
+      </BaseControl>
+    </ControlsGroup>
+  );
 };
 
 const HeaderOptions = ( props ) => {

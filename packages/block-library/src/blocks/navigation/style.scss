@@ -2,10 +2,19 @@ $arrow-down-svg-path: './arrow-down.svg';
 
 .nb-navigation {
   --navigation-item-sub-elements-spacing: 7px;
-  --nb-navigation-item-padding-y: .75em;
+  // The setting is authored on the parent Header Row (Navigation Link Vertical
+  // Spacing, hundredths of an em); 75 keeps the historical .75em default.
+  --nb-navigation-item-padding-y: calc(var(--nb-navigation-link-vertical-spacing-setting, 75) * 0.01em);
 
   :is(ul.menu, .menu > ul) {
     column-gap: var(--nb-navigation-item-spacing);
+  }
+
+  // Editor parity: inline menu editing renders core/navigation markup instead
+  // of wp_nav_menu, so mirror the link density there too.
+  .wp-block-navigation__container a {
+    padding-top: var(--nb-navigation-item-padding-y);
+    padding-bottom: var(--nb-navigation-item-padding-y);
   }
 
   @include above(lap) {

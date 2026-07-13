@@ -77,9 +77,12 @@
   }
 }
 
+// Frontend-only: the editor canvas always previews the desktop composition
+// (see header-row/editor-styles.scss), so the mobile stacking must not kick in
+// when a narrow canvas iframe drops below `lap`.
 @include below(lap) {
 
-  .nb-header__inner-container {
+  body:not(.editor-styles-wrapper) .nb-header__inner-container {
     display: flex;
     flex-direction: column;
 
