@@ -43,6 +43,10 @@ if ( ! function_exists( 'novablocks_render_facetwp_facet_block' ) ) {
 			}
 		}
 
+		if ( ! is_array( $activeFacet ) ) {
+			return '';
+		}
+
 		if ( $attributes['hideCounts'] ) {
 			$classes[] = 'nb-facetwp-facet--hide-counts';
 		}

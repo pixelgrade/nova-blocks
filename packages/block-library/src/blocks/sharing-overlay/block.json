@@ -13,6 +13,7 @@
 		"html": false,
 		"novaBlocks": {
 			"colorSignal": {
+				"attributes": true,
 				"controls": true
 			}
 		}

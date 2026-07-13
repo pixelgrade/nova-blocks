@@ -16,9 +16,23 @@ if ( empty( $posts ) ) {
 $post          = $posts[0];
 $previous_post = $GLOBALS['post'] ?? null;
 $original      = get_post_meta( $post->ID, '_project_color', true );
+$had_original  = metadata_exists( 'post', $post->ID, '_project_color' );
 
 update_post_meta( $post->ID, '_project_color', '#123456' );
 
+// Keep the live-site fixture clean even when a later assertion or bootstrap
+// error stops the contract before its normal teardown.
+register_shutdown_function(
+	static function () use ( $post, $original, $had_original ) {
+		if ( $had_original ) {
+			update_post_meta( $post->ID, '_project_color', $original );
+		} else {
+			delete_post_meta( $post->ID, '_project_color' );
+		}
+	}
+);
+
+require_once ABSPATH . 'wp-admin/includes/class-wp-screen.php';
 require_once ABSPATH . 'wp-admin/includes/screen.php';
 set_current_screen( 'post' );
 
@@ -60,7 +74,11 @@ if ( $previous_post instanceof WP_Post ) {
 	wp_reset_postdata();
 }
 
-update_post_meta( $post->ID, '_project_color', $original );
+if ( $had_original ) {
+	update_post_meta( $post->ID, '_project_color', $original );
+} else {
+	delete_post_meta( $post->ID, '_project_color' );
+}
 
 if ( null === $previous_get_post ) {
 	unset( $_GET['post'] );

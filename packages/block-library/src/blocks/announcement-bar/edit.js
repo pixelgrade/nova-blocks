@@ -9,6 +9,9 @@ import { BaseControl, TextControl, ToggleControl } from "@wordpress/components";
 import { __ } from "@wordpress/i18n";
 import { useEffect } from '@wordpress/element';
 import { useBlockProps, useInnerBlocksProps } from "@wordpress/block-editor";
+import { useSelect } from '@wordpress/data';
+
+import { getAnnouncementBlockId } from './block-id';
 
 const ALLOWED_BLOCKS = [ 'novablocks/openhours', 'core/paragraph' ];
 const ANNOUNCEMENT_BAR_TEMPLATE = [ [ 'novablocks/openhours', { openHoursStyle: 'status',  } ] ];
@@ -19,6 +22,7 @@ const Edit = ( props ) => {
     clientId,
     className,
     attributes: {
+      blockId,
       url,
       opensInNewTab,
     },
@@ -26,10 +30,25 @@ const Edit = ( props ) => {
     isSelected,
   } = props;
 
-  // Whenever the block clientId changes, update the blockId attribute.
+  const matchingClientIds = useSelect( select => {
+    const editor = select( 'core/block-editor' );
+
+    return editor.getClientIdsWithDescendants().filter( currentClientId => {
+      const block = editor.getBlock( currentClientId );
+
+      return block?.name === 'novablocks/announcement-bar' && block.attributes.blockId === blockId;
+    } );
+  }, [ blockId ] );
+
+  // Keep a saved dismissal-cookie ID stable across reloads. A new or duplicated
+  // block receives its own client ID so two bars cannot share dismissal state.
   useEffect( () => {
-    setAttributes( { blockId: clientId } );
-  }, [ clientId ] );
+    const nextBlockId = getAnnouncementBlockId( blockId, clientId, matchingClientIds );
+
+    if ( nextBlockId !== blockId ) {
+      setAttributes( { blockId: nextBlockId } );
+    }
+  }, [ blockId, clientId, matchingClientIds ] );
 
   const blockProps = useBlockProps({
     className: classnames(
