@@ -5,6 +5,34 @@ const stripHTML = ( html ) => {
   doc.body.innerHTML = html;
   return doc.body.textContent || '';
 };
+
+export const getPostFormatClass = post => {
+  const format = String( post?.format || 'standard' )
+    .toLowerCase()
+    .replace( /[^a-z0-9_-]/g, '' );
+
+  return `format-${ format || 'standard' }`;
+};
+
+export const extractPostQuote = post => {
+  const html = post?.content?.raw || post?.content?.rendered || '';
+  if ( ! html ) {
+    return { quote: '', citation: '' };
+  }
+
+  const doc = document.implementation.createHTMLDocument( '' );
+  doc.body.innerHTML = html;
+  const blockquote = doc.querySelector( 'blockquote' );
+
+  if ( ! blockquote ) {
+    return { quote: '', citation: '' };
+  }
+
+  return {
+    quote: blockquote.querySelector( 'p' )?.textContent?.trim() || '',
+    citation: blockquote.querySelector( 'cite' )?.textContent?.trim() || '',
+  };
+};
 import { Fragment, useEffect, useRef } from '@wordpress/element';
 
 import {
@@ -67,9 +95,13 @@ export const PostCardMedia = ( props ) => {
 };
 
 export const PostCardLetter = props => {
-  const { post } = props;
+  const { attributes, collectionLayoutRecipes, post } = props;
   const postTitle = post?.title?.raw || '';
   const ref = useRef( null );
+  const activeRecipe = Array.isArray( collectionLayoutRecipes )
+    ? collectionLayoutRecipes.find( recipe => recipe?.id === attributes?.layoutRecipe && recipe?.baseLayout === attributes?.layoutStyle )
+    : null;
+  const showReadMoreAffordance = !! activeRecipe?.capabilities?.readMoreAffordance;
 
   if ( ! postTitle ) {
     return null;
@@ -84,11 +116,14 @@ export const PostCardLetter = props => {
   return (
     <div className="nb-supernova-item__dropcap-wrapper sm-variation-11">
       <span className="nb-supernova-item__dropcap" ref={ ref }>{ postTitle.substring(0, 1) }</span>
+      { showReadMoreAffordance && (
+        <span className="nb-card__read-more nb-supernova-item__dropcap-more">{ __( 'Read More', '__plugin_txtd' ) }</span>
+      ) }
     </div>
   )
 }
 
-export const PostCard = withMedia( props => {
+export const PostCardComponent = props => {
 
   const {
     attributes,
@@ -126,12 +161,34 @@ export const PostCard = withMedia( props => {
 
   // Mirror the frontend's card expression classes (media ratio + content
   // length) so ratio-adaptive theme styling matches editor and frontend.
-  const expressionClasses = getCardExpressionClassesFromValues( {
+  const expressionClasses = [ ...getCardExpressionClassesFromValues( {
     mediaWidth: showMedia ? props.media?.originalWidth : 0,
     mediaHeight: showMedia ? props.media?.originalHeight : 0,
     title: post?.title?.raw || '',
     description: stripHTML( post?.excerpt?.rendered || '' ),
-  } ).join( ' ' );
+  } ), getPostFormatClass( post ) ].join( ' ' );
+
+  // Post-format blueprints are rendered in PHP on the frontend. Give Quote
+  // posts an equivalent semantic preview so theme utilities can apply the
+  // same quote/citation token roles in the editor instead of showing a normal
+  // image card with the title as a slab.
+  const quoteParts = post?.format === 'quote' ? extractPostQuote( post ) : null;
+  if ( quoteParts?.quote ) {
+    return (
+      <Card
+        { ...props }
+        attributes={ { ...attributes, cardLayout: 'stacked' } }
+        media={ null }
+        className={ expressionClasses }
+        key={ 'card_post_' + post.id }
+      >
+        <blockquote className="wp-block-quote is-style-plain">
+          <p>{ quoteParts.quote }</p>
+          { quoteParts.citation && <cite>{ quoteParts.citation }</cite> }
+        </blockquote>
+      </Card>
+    );
+  }
 
   const renderMediaWrapper = () => (
     showMedia && props.media
@@ -249,7 +306,7 @@ export const PostCard = withMedia( props => {
   const trailingMedia = hasMedia && mediaIndex === order.length - 1;
 
   return (
-    <Card { ...props } key={ 'card_post_' + post.id }>
+    <Card { ...props } className={ expressionClasses } key={ 'card_post_' + post.id }>
       { hasMedia && ! trailingMedia && renderMediaWrapper() }
       <div className="nb-supernova-item__inner-container" key={ 'card_post_innercontainer_' + post.id }>
         { renderContentItems( allContentIds ) }
@@ -257,6 +314,8 @@ export const PostCard = withMedia( props => {
       { trailingMedia && renderMediaWrapper() }
     </Card>
   );
-} );
+};
+
+export const PostCard = withMedia( PostCardComponent );
 
 export default PostCard;

@@ -24,6 +24,28 @@ test( 'masonry dispatches a layout event after cards are positioned', () => {
   assert.match( masonrySource, /window\.dispatchEvent\(\s*new Event\(\s*BASE_LAYOUT_EVENT_NAME\s*\)\s*\)/ );
 } );
 
+test( 'masonry dispatches its layout events after resetting to one-column flow', () => {
+  assert.match(
+    masonrySource,
+    /if \( activeColumns <= 1 \) \{[\s\S]*?resetLayout\(\);[\s\S]*?dispatchLayoutEvents\( block, grid, \{ activeColumns \} \);[\s\S]*?return;/
+  );
+  assert.match(
+    masonrySource,
+    /dispatchLayoutEvents\( block, grid, \{ activeColumns \} \);/
+  );
+} );
+
+test( 'masonry excludes hidden external participants without charging a row gap', () => {
+  assert.match(
+    masonrySource,
+    /const allItems = Array\.from\( grid\.children \)[\s\S]*?const layout = \(\) => \{[\s\S]*?const items = getMasonryLayoutItems\( allItems \);/
+  );
+  assert.match(
+    masonrySource,
+    /new MutationObserver\( scheduleLayout \)[\s\S]*?attributeFilter: \[ 'hidden' \]/
+  );
+} );
+
 test( 'scrolling effect refreshes cached container boxes after masonry layout updates', () => {
   assert.match(
     scrollingEffectSource,

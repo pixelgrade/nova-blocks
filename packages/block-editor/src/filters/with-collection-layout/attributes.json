@@ -7,6 +7,14 @@
 		"type": "string",
 		"default": "classic"
 	},
+	"layoutRecipe": {
+		"type": "string",
+		"default": ""
+	},
+	"headerIntegration": {
+		"type": "string",
+		"default": "standard"
+	},
 	"columns": {
 		"type": "number",
 		"default": 3

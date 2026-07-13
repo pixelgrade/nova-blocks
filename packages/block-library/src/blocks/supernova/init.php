@@ -72,7 +72,7 @@ if ( ! function_exists( 'novablocks_render_supernova_block' ) ) {
 			$attributes['contentPaletteVariation'] = novablocks_get_content_variation( $attributes );
 		}
 
-		$data_attributes_array = array_map( 'novablocks_camel_case_to_kebab_case', array_keys( $attributes ) );
+		$data_attributes_array = array_map( 'novablocks_camel_case_to_kebab_case', novablocks_get_supernova_data_attribute_names( $attributes ) );
 
 		$data_attributes = novablocks_get_data_attributes( $data_attributes_array, $attributes );
 
@@ -99,8 +99,10 @@ if ( ! function_exists( 'novablocks_render_supernova_block' ) ) {
 			'nb-supernova--align-' . $attributes['align'],
 			'alignfull',
 		],
-			novablocks_get_color_signal_classes( $attributes ),
-			novablocks_get_grid_area_fallback_classnames( $attributes )
+			 novablocks_get_color_signal_classes( $attributes ),
+			 novablocks_get_grid_area_fallback_classnames( $attributes ),
+			 novablocks_get_collection_layout_recipe_classes( $attributes ),
+			 novablocks_get_card_metadata_style_classes( $attributes )
 		);
 
 		// Output the Additional CSS class(es) of the block

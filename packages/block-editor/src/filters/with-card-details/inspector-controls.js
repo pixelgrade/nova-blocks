@@ -10,6 +10,7 @@ import {
   CollectionTitleLevel,
   ElementOrder,
   MetadataSource,
+  MetadataStyle,
 } from "./components";
 
 const InspectorControls = ( props ) => {
@@ -45,12 +46,15 @@ const InspectorControls = ( props ) => {
 
 const AppearanceTab = withVisibility( 'card-details-content' )( props => {
   return (
-    <ControlsGroup title={ __( 'Typography', '__plugin_txtd' ) }>
-      <CollectionTitleLevel { ...props } />
-      <CardTitleLevel { ...props } />
-      <CardDescriptionSize { ...props } />
-      <ButtonsStyle { ...props } />
-    </ControlsGroup>
+    <>
+      <ControlsGroup title={ __( 'Typography', '__plugin_txtd' ) }>
+        <CollectionTitleLevel { ...props } />
+        <CardTitleLevel { ...props } />
+        <CardDescriptionSize { ...props } />
+        <ButtonsStyle { ...props } />
+      </ControlsGroup>
+      <MetadataStyle { ...props } />
+    </>
   );
 } );
 

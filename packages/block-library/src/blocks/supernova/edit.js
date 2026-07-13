@@ -11,7 +11,7 @@ import { Fragment, useCallback, memo, useEffect, useMemo } from '@wordpress/elem
 /**
  * Internal dependencies
  */
-import { useMeta, useInnerBlocksCount, useInnerBlocks, useInnerBlocksLock, normalizeImages } from '@novablocks/block-editor';
+import { useMeta, useInnerBlocksCount, useInnerBlocks, useInnerBlocksLock, useSettings, normalizeImages } from '@novablocks/block-editor';
 import { Collection, CollectionHeader } from '@novablocks/collection';
 import { BlockControls as MediaCompositionBlockControls } from '@novablocks/media-composition';
 
@@ -187,6 +187,8 @@ const SupernovaPreview = props => {
     inQuery,
   } = props;
 
+  const settings = useSettings();
+
   const {
     align,
     columns,
@@ -207,6 +209,19 @@ const SupernovaPreview = props => {
   const contentType = inQuery ? 'auto' : attributes?.contentType || 'fields';
 
   const contentAlign = getAlignFromMatrix( attributes?.contentPosition );
+  const collectionLayoutRecipes = settings?.collectionLayoutRecipes;
+  const activeLayoutRecipe = Array.isArray( collectionLayoutRecipes )
+    ? collectionLayoutRecipes.find( recipe => recipe.id === attributes.layoutRecipe && recipe.baseLayout === attributes.layoutStyle )
+    : null;
+  const layoutRecipe = activeLayoutRecipe?.id || '';
+  const headerIntegration = activeLayoutRecipe?.capabilities?.headerIntegration
+    ? attributes.headerIntegration || 'standard'
+    : undefined;
+  const cardMetadataStyle = attributes.cardMetadataStyle === 'inherit'
+    ? activeLayoutRecipe
+      ? settings?.cardMetadataStyleDefault || 'plain'
+      : 'plain'
+    : attributes.cardMetadataStyle;
   const supportsPile3dEffect = [ 'classic', 'masonry' ].includes( layoutStyle )
     && cardLayout === 'stacked'
     && !! pile3dEffect;
@@ -216,6 +231,7 @@ const SupernovaPreview = props => {
     `nb-supernova--content-type-${ contentType }`,
     `nb-supernova--card-layout-${ cardLayout }`,
     `nb-supernova--layout-${ layoutStyle }`,
+    { [ `nb-supernova--layout-recipe-${ layoutRecipe }` ]: !! layoutRecipe },
     `nb-supernova--${ columns }-columns`,
     `nb-supernova--valign-${ contentAlign[ 0 ] }`,
     `nb-supernova--halign-${ contentAlign[ 1 ] }`,
@@ -223,6 +239,7 @@ const SupernovaPreview = props => {
     { 'nb-supernova--show-pagination': showPagination },
     { [ `nb-supernova--carousel-layout-${ carouselLayout }` ]: layoutStyle === 'carousel' },
     { 'nb-supernova--aspect-ratio-original': thumbnailAspectRatioString === 'original' },
+    { [ `nb-supernova--card-metadata-style-${ cardMetadataStyle }` ]: cardMetadataStyle === 'accent-label' },
     { [ `nb-supernova--card-hover-${ attributes.cardHoverEffect }` ]: !! attributes.cardHoverEffect && attributes.cardHoverEffect !== 'none' },
     { 'nb-supernova--pile-parallax': pileParallaxAmount > 0 },
     { [ `nb-supernova--card-description-size-${ cardDescriptionSize }` ]: !! cardDescriptionSize && cardDescriptionSize !== 'normal' },
@@ -236,16 +253,17 @@ const SupernovaPreview = props => {
   const blockProps = useBlockProps( {
     className: className,
     style: props.style,
+    'data-header-integration': headerIntegration,
   } );
 
   return (
     <div { ...blockProps }>
-      <Collection { ...props } key={ 'collection_' + clientId }>
+      <Collection { ...props } collectionLayoutRecipes={ collectionLayoutRecipes } key={ 'collection_' + clientId }>
         { 0 === headerPosition && ( showCollectionTitle || showCollectionSubtitle ) &&
           <CollectionHeader { ...props } key={ 'collection_header_' + clientId }/> }
         { inQuery
-          ? <PostsCollectionLayout { ...props } key={ 'posts_collection_layout_' + clientId }/>
-          : <CardsCollectionLayout { ...props } key={ 'cards_collection_layout_' + clientId }/> }
+          ? <PostsCollectionLayout { ...props } collectionLayoutRecipes={ collectionLayoutRecipes } key={ 'posts_collection_layout_' + clientId }/>
+          : <CardsCollectionLayout { ...props } collectionLayoutRecipes={ collectionLayoutRecipes } key={ 'cards_collection_layout_' + clientId }/> }
       </Collection>
     </div>
   );

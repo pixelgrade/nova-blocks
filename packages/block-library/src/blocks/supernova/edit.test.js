@@ -65,3 +65,64 @@ test('editor ignores stale 3D grid state outside stacked Classic Grid and Masonr
     /\{ 'nb-supernova--pile-3d': supportsPile3dEffect \}/
   );
 });
+
+test('editor exposes only a registered layout recipe class without replacing the Masonry engine class', () => {
+  assert.match(
+    source,
+    /`nb-supernova--layout-\$\{ layoutStyle \}`/
+  );
+
+  assert.match(
+    source,
+    /settings\?\.collectionLayoutRecipes[\s\S]*?recipe\.id === attributes\.layoutRecipe/
+  );
+
+  assert.match(
+    source,
+    /const layoutRecipe = activeLayoutRecipe\?\.id \|\| '';[\s\S]*?`nb-supernova--layout-recipe-\$\{ layoutRecipe \}`[\s\S]*?!! layoutRecipe/
+  );
+} );
+
+test('editor exposes Header Integration only for a registered capable recipe', () => {
+	assert.match(
+		source,
+		/const headerIntegration = activeLayoutRecipe\?\.capabilities\?\.headerIntegration[\s\S]*?attributes\.headerIntegration \|\| 'standard'[\s\S]*?: undefined/
+	);
+
+  assert.match(
+    source,
+    /useBlockProps\( \{[\s\S]*?'data-header-integration': headerIntegration/
+  );
+} );
+
+test('editor forwards registered layout recipes to both collection layout branches', () => {
+  assert.match(
+    source,
+    /const collectionLayoutRecipes = settings\?\.collectionLayoutRecipes;/
+  );
+
+  assert.match(
+    source,
+    /<PostsCollectionLayout \{ \.\.\.props \} collectionLayoutRecipes=\{ collectionLayoutRecipes \}/
+  );
+
+  assert.match(
+    source,
+    /<CardsCollectionLayout \{ \.\.\.props \} collectionLayoutRecipes=\{ collectionLayoutRecipes \}/
+  );
+} );
+
+test('editor resolves inherited card metadata style without coupling it to Meta Reveal', () => {
+	assert.match(
+		source,
+		/const settings = useSettings\(\);[\s\S]*?const cardMetadataStyle = attributes\.cardMetadataStyle === 'inherit'[\s\S]*?activeLayoutRecipe[\s\S]*?settings\?\.cardMetadataStyleDefault \|\| 'plain'[\s\S]*?: 'plain'/
+	);
+  assert.match(
+    source,
+    /`nb-supernova--card-metadata-style-\$\{ cardMetadataStyle \}`[\s\S]*?cardMetadataStyle === 'accent-label'/
+  );
+  assert.match(
+    source,
+    /`nb-supernova--card-hover-\$\{ attributes\.cardHoverEffect \}`[\s\S]*?attributes\.cardHoverEffect !== 'none'/
+  );
+} );

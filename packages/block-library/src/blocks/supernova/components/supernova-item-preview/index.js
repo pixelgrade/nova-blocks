@@ -3,6 +3,7 @@ import {
   CardFieldsPreview,
   CardMediaWrapper,
   InnerBlocksPreview,
+  resolveLocalPlaceholderImages,
 } from '@novablocks/block-editor';
 
 import { MediaCompositionPreview } from '@novablocks/media-composition';
@@ -43,9 +44,10 @@ const MediaCompositionOrFirstMedia = withScrollingEffect( props => {
   const scrollingEffect = useScrollingEffect();
   const usesCurrentItemFeaturedImage = isCurrentItemFeaturedImageMediaSource( attributes );
   const currentItemFeaturedImage = useCurrentItemFeaturedImage( props.context, usesCurrentItemFeaturedImage );
-  const images = usesCurrentItemFeaturedImage
+  const rawImages = usesCurrentItemFeaturedImage
     ? ( currentItemFeaturedImage ? [ currentItemFeaturedImage ] : [] )
     : attributes.images || [];
+  const images = resolveLocalPlaceholderImages( rawImages, attributes );
 
   if ( !showMedia ) {
     return null;

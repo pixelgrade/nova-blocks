@@ -21,6 +21,8 @@ export const extractLoadMorePayload = ( htmlText, { queryIndex = 0 } = {} ) => {
   }
 
   const items = [ ...query.querySelectorAll( '.nb-collection__layout-item' ) ]
+    .filter( item => ! item.hasAttribute( 'data-nb-external-participant' ) )
+    .filter( item => ! item.hasAttribute( 'data-nb-collection-item-role' ) )
     .filter( item => ! LEADING_ITEM_CLASSNAMES.some( className => item.classList.contains( className ) ) )
     .map( item => item.outerHTML );
 

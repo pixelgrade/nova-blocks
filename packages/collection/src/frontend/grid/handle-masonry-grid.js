@@ -3,6 +3,7 @@ import { addClass, below, calculateFitColumnCount, removeClass } from "@novabloc
 const {
   calculateColumnWidth,
   calculateMasonryLayout,
+  getMasonryLayoutItems,
   normalizeColumnCount,
   shouldRelayoutForTransitionProperty,
 } = require( './masonry-layout-engine' );
@@ -25,11 +26,12 @@ const READY_CLASSNAME = 'nb-collection__layout--masonry-ready';
 const LAYOUT_EVENT_NAME = 'nb:masonry-layout';
 const BASE_LAYOUT_EVENT_NAME = 'nb:layout';
 
-const dispatchLayoutEvents = ( block, grid ) => {
+const dispatchLayoutEvents = ( block, grid, layoutDetail = {} ) => {
 	window.dispatchEvent( new CustomEvent( LAYOUT_EVENT_NAME, {
 		detail: {
 			block,
 			grid,
+			...layoutDetail,
 		},
 	} ) );
 
@@ -105,9 +107,9 @@ export const handleMasonryGrid = ( grid, block, attributes ) => {
     grid.__nbDestroyMasonryLayout();
   }
 
-  const items = Array.from( grid.children ).filter( item => item.classList.contains( 'nb-collection__layout-item' ) );
+  const allItems = Array.from( grid.children ).filter( item => item.classList.contains( 'nb-collection__layout-item' ) );
 
-  if ( ! items.length ) {
+  if ( ! allItems.length ) {
     addClass( block, 'novablocks-block--ready' );
     return;
   }
@@ -115,17 +117,29 @@ export const handleMasonryGrid = ( grid, block, attributes ) => {
   let frameId = null;
   let containerObserver = null;
   let itemObserver = null;
+  let itemStateObserver = null;
   let destroyed = false;
   let onTransitionComplete = null;
 
   const resetLayout = () => {
     removeClass( grid, READY_CLASSNAME );
     grid.style.height = '';
-    items.forEach( clearItemStyles );
+    allItems.forEach( clearItemStyles );
   };
 
   const layout = () => {
     if ( destroyed ) {
+      return;
+    }
+
+    const items = getMasonryLayoutItems( allItems );
+
+    allItems.filter( item => ! items.includes( item ) ).forEach( clearItemStyles );
+
+    if ( ! items.length ) {
+      resetLayout();
+      addClass( block, 'novablocks-block--ready' );
+      dispatchLayoutEvents( block, grid, { activeColumns: 0 } );
       return;
     }
 
@@ -148,6 +162,7 @@ export const handleMasonryGrid = ( grid, block, attributes ) => {
     if ( activeColumns <= 1 ) {
       resetLayout();
       addClass( block, 'novablocks-block--ready' );
+      dispatchLayoutEvents( block, grid, { activeColumns } );
       return;
     }
     const columnWidth = calculateColumnWidth( {
@@ -181,7 +196,7 @@ export const handleMasonryGrid = ( grid, block, attributes ) => {
     grid.style.height = `${ containerHeight }px`;
     addClass( grid, READY_CLASSNAME );
     addClass( block, 'novablocks-block--ready' );
-    dispatchLayoutEvents( block, grid );
+    dispatchLayoutEvents( block, grid, { activeColumns } );
   };
 
   const scheduleLayout = () => {
@@ -200,7 +215,16 @@ export const handleMasonryGrid = ( grid, block, attributes ) => {
     containerObserver.observe( grid );
 
     itemObserver = new ResizeObserver( scheduleLayout );
-    items.forEach( item => itemObserver.observe( item ) );
+    allItems.forEach( item => itemObserver.observe( item ) );
+  }
+
+  if ( typeof MutationObserver === 'function' ) {
+    itemStateObserver = new MutationObserver( scheduleLayout );
+    itemStateObserver.observe( grid, {
+      attributes: true,
+      attributeFilter: [ 'hidden' ],
+      subtree: true,
+    } );
   }
 
   onTransitionComplete = ( event ) => {
@@ -220,7 +244,7 @@ export const handleMasonryGrid = ( grid, block, attributes ) => {
   grid.addEventListener( 'transitionend', onTransitionComplete );
   grid.addEventListener( 'transitioncancel', onTransitionComplete );
 
-  waitForMedia( items ).finally( scheduleLayout );
+  waitForMedia( getMasonryLayoutItems( allItems ) ).finally( scheduleLayout );
 
   grid.__nbDestroyMasonryLayout = () => {
     destroyed = true;
@@ -235,6 +259,10 @@ export const handleMasonryGrid = ( grid, block, attributes ) => {
 
     if ( itemObserver ) {
       itemObserver.disconnect();
+    }
+
+    if ( itemStateObserver ) {
+      itemStateObserver.disconnect();
     }
 
     if ( onTransitionComplete ) {

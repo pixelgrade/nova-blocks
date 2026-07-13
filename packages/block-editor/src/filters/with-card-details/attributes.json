@@ -35,6 +35,10 @@
 		"type": "string",
 		"default": "date"
 	},
+	"cardMetadataStyle": {
+		"type": "string",
+		"default": "inherit"
+	},
 	"buttonsStyle": {
 		"type": "string",
 		"default": "text"

@@ -8,12 +8,18 @@
 import { __ } from '@wordpress/i18n';
 
 import { PlusBadge, withVisibility } from '../../../../components';
+import { useSettings } from '../../../../hooks';
 import {
   ClassicThumb,
   MasonryThumb,
   CarouselThumb,
   ParametricThumb,
 } from '../../../../components/preset-cards/thumbnails';
+import {
+  getLayoutRecipeSelection,
+  getSelectedCompositionId,
+  normalizeLayoutRecipes,
+} from './layout-recipes';
 
 export const STYLE_LABELS = {
   classic: __( 'Classic Grid', '__plugin_txtd' ),
@@ -26,22 +32,49 @@ const getStyleTileAttributes = ( layoutStyle ) => {
   if ( 'parametric' === layoutStyle ) {
     return {
       layoutStyle,
+      layoutRecipe: '',
+      headerIntegration: 'standard',
       pile3dEffect: false,
     };
   }
 
-  return { layoutStyle };
+  return { layoutStyle, layoutRecipe: '', headerIntegration: 'standard' };
+};
+
+const getRecipeThumbnail = ( recipe, attributes ) => {
+  switch ( recipe.thumbnail ) {
+    case 'classic':
+      return <ClassicThumb columns={ attributes.columns } count={ attributes.postsToShow } />;
+    case 'carousel':
+      return <CarouselThumb visible={ attributes.columns } variable={ 'variable' === attributes.carouselLayout } />;
+    case 'parametric':
+      return <ParametricThumb preset={ { ...attributes, ...recipe.defaults } } />;
+    case 'masonry':
+    default:
+      return <MasonryThumb columns={ attributes.columns } />;
+  }
 };
 
 const StyleTiles = ( { attributes, setAttributes } ) => {
-  const { layoutStyle, columns, postsToShow } = attributes;
+  const settings = useSettings();
+  const recipes = normalizeLayoutRecipes( settings?.collectionLayoutRecipes );
+  const { columns, postsToShow } = attributes;
+  const selectedCompositionId = getSelectedCompositionId( attributes, recipes );
 
-  const tiles = [
+  const builtInTiles = [
     { value: 'classic', thumbnail: <ClassicThumb columns={ columns } count={ postsToShow } /> },
     { value: 'masonry', thumbnail: <MasonryThumb columns={ columns } /> },
     { value: 'carousel', thumbnail: <CarouselThumb visible={ columns } variable={ 'variable' === attributes.carouselLayout } /> },
     { value: 'parametric', thumbnail: <ParametricThumb preset={ attributes } /> },
   ];
+  const recipeTiles = recipes.map( recipe => ( {
+    value: recipe.id,
+    label: recipe.label,
+    gateId: recipe.gateId,
+    recipe,
+    thumbnail: getRecipeThumbnail( recipe, attributes ),
+  } ) );
+  const tiles = [ ...builtInTiles, ...recipeTiles ];
 
   return (
     <div className="nb-style-tiles" role="group" aria-label={ __( 'Composition', '__plugin_txtd' ) }>
@@ -49,13 +82,17 @@ const StyleTiles = ( { attributes, setAttributes } ) => {
         <button
           type="button"
           key={ tile.value }
-          className={ 'nb-style-tile' + ( layoutStyle === tile.value ? ' is-selected' : '' ) }
-          aria-pressed={ layoutStyle === tile.value }
-          onClick={ () => setAttributes( getStyleTileAttributes( tile.value ) ) }
+          className={ 'nb-style-tile' + ( selectedCompositionId === tile.value ? ' is-selected' : '' ) }
+          aria-pressed={ selectedCompositionId === tile.value }
+          onClick={ () => setAttributes( tile.recipe
+            ? getLayoutRecipeSelection( tile.recipe )
+            : getStyleTileAttributes( tile.value ) ) }
         >
-          { 'parametric' === tile.value && <PlusBadge gateId={ 'parametric-layout' } /> }
+          { ( 'parametric' === tile.value || tile.gateId ) && (
+            <PlusBadge gateId={ tile.gateId || 'parametric-layout' } />
+          ) }
           { tile.thumbnail }
-          <span className="nb-style-tile__name">{ STYLE_LABELS[ tile.value ] }</span>
+          <span className="nb-style-tile__name">{ tile.label || STYLE_LABELS[ tile.value ] }</span>
         </button>
       ) ) }
     </div>

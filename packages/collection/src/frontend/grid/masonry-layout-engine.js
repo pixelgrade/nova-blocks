@@ -28,6 +28,10 @@ const normalizeContainerWidth = ( containerWidth ) => {
   return parsedValue;
 };
 
+const getMasonryLayoutItems = ( items ) => Array.from( items || [] ).filter( item => (
+  item.classList.contains( 'nb-collection__layout-item' ) && ! item.hidden
+) );
+
 const calculateColumnWidth = ( {
   containerWidth,
   columnCount,
@@ -128,6 +132,7 @@ const shouldRelayoutForTransitionProperty = ( propertyName ) => {
 module.exports = {
   calculateColumnWidth,
   calculateMasonryLayout,
+  getMasonryLayoutItems,
   normalizeColumnCount,
   shouldRelayoutForTransitionProperty,
 };

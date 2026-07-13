@@ -12,6 +12,8 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
+require_once __DIR__ . '/collection-layout-recipes.php';
+
 function novablocks_plus_entitlement_bridge_is_available(): bool {
 	$available = function_exists( 'has_filter' ) && false !== has_filter( 'pixelgrade/has_entitlement' );
 
@@ -42,6 +44,7 @@ function novablocks_get_block_editor_settings(): array {
 
 	$settings = [
 		'debug'                        => defined( 'NOVABLOCKS_DEBUG' ) && NOVABLOCKS_DEBUG,
+		'collectionLayoutRecipes'      => novablocks_get_collection_layout_recipes(),
 		'usePostMetaAttributes'        => defined( 'NOVABLOCKS_USE_POST_META_ATTRIBUTES' ) && NOVABLOCKS_USE_POST_META_ATTRIBUTES,
 		'minimumHeightOptions'         => [
 			[

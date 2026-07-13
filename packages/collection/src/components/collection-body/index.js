@@ -1,6 +1,7 @@
 import { getColorSignalClassnames } from "@novablocks/utils";
 
 import { CollectionLayout } from '../index';
+import { ExternalLayoutParticipant } from '../index';
 import { ScrollIndicator } from '../index';
 
 const CollectionBody = ( props ) => {
@@ -15,7 +16,10 @@ const CollectionBody = ( props ) => {
 
   return (
     <div className={ `nb-collection__body` }>
-      <CollectionLayout { ...props } key={ 'layout' } />
+      <CollectionLayout { ...props } key={ 'layout' }>
+        <ExternalLayoutParticipant attributes={ attributes } recipes={ props.collectionLayoutRecipes } />
+        { props.children }
+      </CollectionLayout>
       <ScrollIndicator { ...props } className={ contentClassNames } key={ 'scroll' } />
     </div>
   );

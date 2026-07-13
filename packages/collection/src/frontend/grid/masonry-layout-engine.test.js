@@ -4,8 +4,28 @@ const assert = require('node:assert/strict');
 const {
   calculateColumnWidth,
   calculateMasonryLayout,
+  getMasonryLayoutItems,
   shouldRelayoutForTransitionProperty,
 } = require('./masonry-layout-engine');
+
+test('getMasonryLayoutItems reflects hidden changes on every call', () => {
+  const visibleCard = {
+    hidden: false,
+    classList: { contains: className => className === 'nb-collection__layout-item' },
+  };
+  const externalProxy = {
+    hidden: true,
+    classList: { contains: className => className === 'nb-collection__layout-item' },
+  };
+  const items = [ visibleCard, externalProxy ];
+
+  assert.deepEqual( getMasonryLayoutItems( items ), [ visibleCard ] );
+
+  visibleCard.hidden = true;
+  externalProxy.hidden = false;
+
+  assert.deepEqual( getMasonryLayoutItems( items ), [ externalProxy ] );
+} );
 
 test('calculateColumnWidth subtracts gutters before dividing by the active column count', () => {
   assert.equal(

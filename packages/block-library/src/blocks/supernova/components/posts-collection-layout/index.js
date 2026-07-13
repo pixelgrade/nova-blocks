@@ -1,7 +1,7 @@
 import { Spinner } from '@wordpress/components';
 import { __ } from '@wordpress/i18n';
 import { useInnerBlocks } from '@novablocks/block-editor';
-import { CollectionBody } from '@novablocks/collection';
+import { CollectionBody, CollectionLeadingItems } from '@novablocks/collection';
 import { PostCard } from '../index';
 
 const PostsCollectionLayout = props => {
@@ -22,6 +22,7 @@ const PostsCollectionLayout = props => {
 
   return (
     <CollectionBody {...props} key={'body_' + clientId}>
+      <CollectionLeadingItems attributes={ attributes } />
       {!posts
         ? <Spinner/>
         : !posts.length

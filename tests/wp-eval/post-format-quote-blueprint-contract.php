@@ -25,21 +25,24 @@ $active_blueprint_mode  = 'valid';
 
 $attributes = [
 	'showMedia'               => true,
-	'showMeta'                => false,
+	'showMeta'                => true,
 	'showTitle'               => true,
 	'showSubtitle'            => false,
 	'showDescription'         => true,
 	'showButtons'             => false,
-	'primaryMetadata'         => 'none',
-	'secondaryMetadata'       => 'none',
+	'primaryMetadata'         => 'category',
+	'secondaryMetadata'       => 'author',
 	'metadataPosition'        => 'below-title',
+	'elementOrder'            => [ 'meta-primary', 'meta-secondary', 'media', 'title', 'subtitle', 'description', 'buttons' ],
 	'cardTitleLevel'          => 3,
 	'cardTitleFontSize'       => 'regular',
 	'contentPosition'         => 'top left',
 	'contentPadding'          => 0,
+	'elementsDistance'        => 20,
 	'blockTopSpacing'         => 0,
 	'blockBottomSpacing'      => 0,
 	'columns'                 => 1,
+	'gridGap'                 => 50,
 	'cardLayout'              => 'vertical',
 	'palette'                 => 1,
 	'colorSignal'             => 0,
@@ -344,6 +347,14 @@ try {
 
 	if ( false === strpos( $valid_markup, 'is-style-editorial' ) ) {
 		novablocks_fail_post_format_quote_blueprint_contract( 'Expected Quote blueprint cards to preserve the quote block style class.' );
+	}
+
+	if ( false === strpos( $valid_markup, 'nb-supernova-item__content--before-media' ) ) {
+		novablocks_fail_post_format_quote_blueprint_contract( 'Expected Quote blueprint cards to preserve metadata ordered before Media.' );
+	}
+
+	if ( false === strpos( $valid_markup, 'nb-card__meta' ) ) {
+		novablocks_fail_post_format_quote_blueprint_contract( 'Expected Quote blueprint cards to render their live post metadata.' );
 	}
 
 	$active_blueprint_mode = 'valid';

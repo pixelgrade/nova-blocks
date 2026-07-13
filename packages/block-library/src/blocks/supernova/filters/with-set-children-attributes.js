@@ -1,5 +1,6 @@
 import { useCallback } from "@wordpress/element";
 import { useDispatch, useSelect } from "@wordpress/data";
+import isShallowEqual from '@wordpress/is-shallow-equal';
 
 import { getAlignFromMatrix } from "@novablocks/utils";
 import { useInnerBlocks } from "@novablocks/block-editor";
@@ -39,7 +40,9 @@ const withSetChildrenAttributes = OriginalComponent => {
 
       if ( Array.isArray( innerBlocks ) ) {
         innerBlocks.filter( block => block.name === 'novablocks/supernova-item' ).forEach( block => {
-          updateBlockAttributes( block.clientId, newAttributes );
+          if ( ! isShallowEqual( block.attributes, newAttributes ) ) {
+            updateBlockAttributes( block.clientId, newAttributes );
+          }
 
           if ( attributes.contentPosition ) {
             const contentBlocks = getBlock( block.clientId ).innerBlocks;

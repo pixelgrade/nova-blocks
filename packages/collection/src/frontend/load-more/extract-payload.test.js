@@ -44,4 +44,28 @@ describe( 'extractLoadMorePayload', () => {
     expect( extractLoadMorePayload( html, { queryIndex: 1 } ).items[ 0 ] ).toContain( 'Other' );
     expect( extractLoadMorePayload( html, { queryIndex: 5 } ).items ).toHaveLength( 0 );
   } );
+
+  test( 'excludes every semantic leading item without knowing provider classes', () => {
+    const html = page( { items: [ 'One' ] } ).replace(
+      '<div class="nb-collection__layout-item nb-collection__layout-item--header-brick"><div>BRAND</div></div>',
+      '<div class="nb-collection__layout-item custom-provider" data-nb-collection-item-role="site-header"><div>BRAND</div></div>'
+    );
+
+    const { items } = extractLoadMorePayload( html );
+
+    expect( items ).toHaveLength( 1 );
+    expect( items[ 0 ] ).toContain( 'One' );
+  } );
+
+  test( 'excludes the external Header participant proxy', () => {
+    const html = page( { items: [ 'One' ] } ).replace(
+      '<div class="nb-collection__layout-item nb-collection__layout-item--header-brick"><div>BRAND</div></div>',
+      '<div class="nb-collection__layout-item nb-collection__layout-item--external" data-nb-external-participant="site-header" aria-hidden="true"></div>'
+    );
+
+    const { items } = extractLoadMorePayload( html );
+
+    expect( items ).toHaveLength( 1 );
+    expect( items[ 0 ] ).toContain( 'One' );
+  } );
 } );

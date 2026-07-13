@@ -9,6 +9,7 @@
 import { __, sprintf } from '@wordpress/i18n';
 import { useMemo } from '@wordpress/element';
 
+import { useSettings } from '../../../../hooks';
 import {
   PresetCardsControl,
   SectionLink,
@@ -25,6 +26,7 @@ import {
 import parametricPresets from '../presets';
 import { getRandomAttributes } from '../../utils';
 import StyleTiles, { STYLE_LABELS } from './style-tiles';
+import { getActiveLayoutRecipe, normalizeLayoutRecipes } from './layout-recipes';
 import {
   CLASSIC_PRESETS,
   MASONRY_PRESETS,
@@ -70,17 +72,22 @@ const FREE_PRESETS = {
 const CompositionTab = ( props ) => {
   const { attributes } = props;
   const { layoutStyle } = attributes;
+  const settings = useSettings();
+  const recipes = normalizeLayoutRecipes( settings?.collectionLayoutRecipes );
+  const activeRecipe = getActiveLayoutRecipe( attributes, recipes );
 
   const freePresets = useMemo(
-    () => ( FREE_PRESETS[ layoutStyle ] ? withThumbnails( FREE_PRESETS[ layoutStyle ] ) : null ),
-    [ layoutStyle ]
+    () => ( activeRecipe ? null : FREE_PRESETS[ layoutStyle ]
+      ? withThumbnails( FREE_PRESETS[ layoutStyle ] )
+      : null ),
+    [ activeRecipe, layoutStyle ]
   );
   const depthPresets = useMemo(
     () => ( DEPTH_PRESETS[ layoutStyle ] ? withThumbnails( DEPTH_PRESETS[ layoutStyle ] ) : null ),
     [ layoutStyle ]
   );
 
-  const styleLabel = STYLE_LABELS[ layoutStyle ] || layoutStyle;
+  const styleLabel = activeRecipe?.label || STYLE_LABELS[ layoutStyle ] || layoutStyle;
   /* translators: %s: the selected composition (layout style) name. */
   const presetsLabel = sprintf( __( '%s presets', '__plugin_txtd' ), styleLabel );
 
@@ -97,7 +104,7 @@ const CompositionTab = ( props ) => {
             { ...props }
           />
         </TryAndPlay>
-      ) : (
+      ) : !! freePresets && (
         <PresetCardsControl
           label={ presetsLabel }
           options={ freePresets }
