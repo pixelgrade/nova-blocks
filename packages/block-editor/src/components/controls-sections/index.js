@@ -138,6 +138,18 @@ const ControlsSectionsComponent = ( props ) => {
 const ControlsSections = ( props ) => {
 
 	const { name: blockName } = props;
+	const { isSelected } = useBlockEditContext();
+
+	// Only the selected block may own the ControlsSections Slot. Before the
+	// placement split this invariant came for free: the Slot lived inside an
+	// <InspectorControls> fill, which only mounts for the selected block.
+	// Rendered unconditionally, every block instance would register a
+	// duplicate Slot and an arbitrary one would win, orphaning the fills of
+	// every other block (observed: core/group losing its sections while a
+	// Supernova on the same page kept them).
+	if ( ! isSelected ) {
+		return null;
+	}
 
 	return (
 		<ControlsSectionsSlot>
