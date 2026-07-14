@@ -45,6 +45,7 @@ const MediaCompositionControls = props => {
       id={ 'media-composition' }
       label={ __( 'Media Composition', '__plugin_txtd' ) }
       group={ __( 'Card Anatomy', '__plugin_txtd' ) }
+      placement={ 'settings' }
       order={ 15 }
       key={ clientId + '_media-composition-controls-section' }>
 

@@ -31,6 +31,7 @@ const PostCommentsInspectorControls = ( props ) => {
         order={ 10 }
         label={ __( 'Elements Visibility', '__plugin_txtd' ) }
         group={ __( 'Block Anatomy', '__plugin_txtd' ) }
+        placement={ 'settings' }
         key={ 'post_comments' }>
         <ControlsTab label={ __( 'Settings', '__plugin_txtd' ) }>
           <ControlsGroup>

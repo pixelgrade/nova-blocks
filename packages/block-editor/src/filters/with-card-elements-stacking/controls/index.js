@@ -10,6 +10,7 @@ const Controls = ( props ) => {
     <ControlsSection
       id={ 'card-elements-stacking' }
       label={ __( 'Elements Stacking', '__plugin_txtd' ) }
+      placement={ 'settings' }
       order={ 55 }>
       <ControlsTab label={ __( 'Settings', '__plugin_txtd' ) }>
         <CardElementsStacking { ...props } />

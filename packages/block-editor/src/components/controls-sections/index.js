@@ -11,55 +11,34 @@ import {
 } from "../index";
 
 import { __ } from '@wordpress/i18n';
-import { useBlockEditContext } from '@wordpress/block-editor';
+import { InspectorControls, useBlockEditContext } from '@wordpress/block-editor';
 
 import {
   Children,
+  Fragment,
   useCallback, useContext,
-  useMemo,
 } from '@wordpress/element';
 
 /**
  * Internal dependencies
  */
 import { groupBy, orderBy } from 'lodash';
-import { getSectionsFromFills } from './utils';
+import { getSectionsFromFills, getControlsSectionsScopeKey, resolveControlsSectionPlacement } from './utils';
 import { ControlsSectionsSlot, ControlsSectionsFill } from "./controls-sections-slot-fill";
 import { DrawerContentSlot, DrawerContentFill } from "./drawer-content-slot-fill";
 
 import Cube from './cube';
 import { ActiveSectionTabs } from "./tabs";
 import ControlsVisibilityContext from "../../filters/with-controls-visibility/context";
+import ControlsSectionsScopeContext from "./scope-context";
 
 const ControlsSectionsComponent = ( props ) => {
 
-	const { sections } = props;
+	const { sections, placement, blockName } = props;
 
-	const advancedButton = useMemo( () => document.querySelector( '.block-editor-block-inspector__advanced' ), [] );
-	const advancedWrapper = useMemo( () => !! advancedButton && advancedButton.parentNode );
   const visibilityContext = useContext( ControlsVisibilityContext );
-
-	if ( !! advancedWrapper ) {
-		advancedWrapper.style.setProperty( 'transition', 'opacity .3s ease-out' );
-	}
-
-	const onOpen = useCallback( () => {
-		if ( !! advancedWrapper?.style ) {
-			advancedWrapper.style.setProperty( 'opacity', 1, );
-			requestAnimationFrame( () => {
-				advancedWrapper.style.setProperty( 'opacity', 0 );
-			} );
-		}
-	}, [ advancedWrapper ] );
-
-	const onClose = useCallback( () => {
-		if ( !! advancedWrapper?.style ) {
-			advancedWrapper.addEventListener( 'transitionend', () => {
-				advancedWrapper.style.removeProperty( 'height' );
-			}, { once: true } );
-			advancedWrapper.style.setProperty( 'opacity', 1 );
-		}
-	}, [ advancedWrapper ] );
+  const scopeKey = getControlsSectionsScopeKey( { placement, blockName } );
+  const scopeContextValue = { placement, blockName };
 
 	const groups = groupBy( sections, section => {
 		return !! section.props.group ? section.props.group : '';
@@ -99,60 +78,66 @@ const ControlsSectionsComponent = ( props ) => {
   }, [] );
 
 	return (
-		<div className="novablocks-sections">
-			<Drawers onOpen={ onOpen } onClose={ onClose }>
-				<DrawerListBefore>
-					<div className="novablocks-sections__header">
-						<div className="novablocks-sections__title">{ __( 'Design Customization', '__plugin_txtd' ) }</div>
-						<Cube />
-					</div>
-				</DrawerListBefore>
-				{
-					Object.keys( groups ).sort().map( key => {
-						const sections = groups[ key ];
-
-						return (
-							<DrawerList title={ key } key={ 'drawer_' + key }>
-								{ sections.map( ( section, index ) => {
-									const { id, label, order } = section.props;
-
-									return (
-										<Drawer
-											key={ 'drawer_' + key + '_section_' + id }
-                      id={ id }
-											title={ label }
-											order={ order }
-										/>
-									);
-								} ) }
-							</DrawerList>
-						)
-					} )
-				}
-				{
-					Object.keys( groups ).sort().map( key => {
-						const sections = groups[ key ];
-
-						return sections.map( ( section, index ) => {
-              const tabs = getCompiledTabs( section );
+		<ControlsSectionsScopeContext.Provider value={ scopeContextValue }>
+			<div className="novablocks-sections">
+				<Drawers scopeKey={ scopeKey }>
+					{ placement === 'styles' && (
+						<DrawerListBefore>
+							<div className="novablocks-sections__header">
+								<div className="novablocks-sections__title">{ __( 'Design Customization', '__plugin_txtd' ) }</div>
+								<Cube />
+							</div>
+						</DrawerListBefore>
+					) }
+					{
+						Object.keys( groups ).sort().map( key => {
+							const sections = groups[ key ];
 
 							return (
-										<DrawerPanel key={ 'drawer_panel_' + key + '_' + index } id={ section.props.id }>
-											<ActiveSectionTabs id={ section.props.id } title={ section.props.label } tabs={ tabs } />
-										</DrawerPanel>
-									)
-								} );
-					} )
-				}
-				<DrawerListAfter>
-					<DrawerContentSlot />
-				</DrawerListAfter>
-			</Drawers>
-		</div>
+								<DrawerList title={ key } key={ 'drawer_' + key }>
+									{ sections.map( ( section, index ) => {
+										const { id, label, order } = section.props;
+
+										return (
+											<Drawer
+												key={ 'drawer_' + key + '_section_' + id }
+                        id={ id }
+												title={ label }
+												order={ order }
+											/>
+										);
+									} ) }
+								</DrawerList>
+							)
+						} )
+					}
+					{
+						Object.keys( groups ).sort().map( key => {
+							const sections = groups[ key ];
+
+							return sections.map( ( section, index ) => {
+                const tabs = getCompiledTabs( section );
+
+								return (
+											<DrawerPanel key={ 'drawer_panel_' + key + '_' + index } id={ section.props.id }>
+												<ActiveSectionTabs id={ section.props.id } title={ section.props.label } tabs={ tabs } scopeKey={ scopeKey } />
+											</DrawerPanel>
+										)
+									} );
+						} )
+					}
+					<DrawerListAfter>
+						<DrawerContentSlot />
+					</DrawerListAfter>
+				</Drawers>
+			</div>
+		</ControlsSectionsScopeContext.Provider>
 	);
 };
 
 const ControlsSections = ( props ) => {
+
+	const { name: blockName } = props;
 
 	return (
 		<ControlsSectionsSlot>
@@ -163,7 +148,23 @@ const ControlsSections = ( props ) => {
 					return null;
 				}
 
-				return <ControlsSectionsComponent sections={ sections } />
+				const settingsSections = sections.filter( section => resolveControlsSectionPlacement( section.props ) === 'settings' );
+				const stylesSections = sections.filter( section => resolveControlsSectionPlacement( section.props ) === 'styles' );
+
+				return (
+					<Fragment>
+						{ !! settingsSections.length && (
+							<InspectorControls>
+								<ControlsSectionsComponent sections={ settingsSections } placement="settings" blockName={ blockName } />
+							</InspectorControls>
+						) }
+						{ !! stylesSections.length && (
+							<InspectorControls group="styles">
+								<ControlsSectionsComponent sections={ stylesSections } placement="styles" blockName={ blockName } />
+							</InspectorControls>
+						) }
+					</Fragment>
+				);
 			} }
 		</ControlsSectionsSlot>
 	);
@@ -178,10 +179,11 @@ const ControlsTab = ( props ) => {
 const ControlsSection = ( props ) => {
 
 	const { isSelected } = useBlockEditContext();
+	const placement = resolveControlsSectionPlacement( props );
 
 	return (
 		<ControlsSectionsFill>
-			{ isSelected && <div { ...props } /> }
+			{ isSelected && <div { ...props } placement={ placement } /> }
 		</ControlsSectionsFill>
 	)
 };

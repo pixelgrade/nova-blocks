@@ -56,6 +56,7 @@ const SidecarInspectorControls = ( props ) => {
         order={ 10 }
         label={ __( 'Sidecar Layout', '__plugin_txtd' ) }
         group={ __( 'Block Anatomy', '__plugin_txtd' ) }
+        placement={ 'settings' }
         key={ 'sidecar_layout' }>
         <ControlsTab label={ __( 'Settings', '__plugin_txtd' ) }>
 

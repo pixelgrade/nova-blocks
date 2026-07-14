@@ -32,6 +32,7 @@ const InspectorControls = ( props ) => {
       id={ 'card-layout' }
       label={ __( 'Content Details', '__plugin_txtd' ) }
       group={ __( 'Card Anatomy', '__plugin_txtd' ) }
+      placement={ 'settings' }
       order={ 20 }>
       <ControlsTab label={ __( 'Appearance', '__plugin_txtd' ) }>
         <AppearanceTab { ...props } />

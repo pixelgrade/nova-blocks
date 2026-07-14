@@ -42,6 +42,7 @@ const Controls = ( props ) => {
       id={ 'content-type' }
       label={ __( 'Content Type', '__plugin_txtd' ) }
       group={ __( 'Card Anatomy', '__plugin_txtd' ) }
+      placement={ 'settings' }
       order={ 100 }>
       <ControlsTab label={ __( 'Settings', '__plugin_txtd' ) }>
         <SelectControl

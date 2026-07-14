@@ -11,6 +11,7 @@ const CardElementsDisplaySection = ( props ) => {
       id={'elements-visibility'}
       label={__( 'Elements Visibility', '__plugin_txtd' )}
       group={__( 'Card Anatomy', '__plugin_txtd' )}
+      placement={'settings'}
       order={10}>
       <ControlsTab label={__( 'Settings', '__plugin_txtd' )}>
         <ControlsGroup title={__( 'Setup what content elements to show for each card.', '__plugin_txtd' )}>
