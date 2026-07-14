@@ -19,3 +19,34 @@ test('card-depth motion recipes use advanced-controls trial gates', () => {
     /<TryAndPlay gateId=\{ 'parametric-depth' \}>[\s\S]*?options=\{ editorialDriftRecipes \}/
   );
 });
+
+test('the gated recipe groups merge into one Try & Play boundary per tab', () => {
+  // A single group wraps every gated recipe block (one boundary per tab).
+  const groupMatches = source.match(/<TryAndPlayGroup gateIds=\{/g) || [];
+  assert.equal(groupMatches.length, 1);
+  assert.match(
+    source,
+    /<TryAndPlayGroup gateIds=\{[\s\S]*?<TryAndPlay gateId=\{ 'motion-recipes' \}>[\s\S]*?<TryAndPlay gateId=\{ 'stacked-depth' \}>[\s\S]*?<TryAndPlay gateId=\{ 'parametric-depth' \}>[\s\S]*?<\/TryAndPlayGroup>/
+  );
+
+  // Only groups that actually render join the boundary — a gate the user
+  // never sees must not get pre-revealed by the group CTA.
+  assert.match(source, /dopplerRecipes\.length \? \[ 'motion-recipes' \] : \[\]/);
+  assert.match(source, /stackedDepthRecipes\.length \? \[ 'stacked-depth' \] : \[\]/);
+  assert.match(source, /editorialDriftRecipes\.length \? \[ 'parametric-depth' \] : \[\]/);
+});
+
+test('each merged group keeps its own uppercase label inside the boundary', () => {
+  assert.match(
+    source,
+    /<PresetCardsControl label=\{ __\( 'Cinematic presets', '__plugin_txtd' \) \} options=\{ dopplerRecipes \}/
+  );
+  assert.match(
+    source,
+    /<PresetCardsControl label=\{ __\( 'Depth presets', '__plugin_txtd' \) \} options=\{ stackedDepthRecipes \}/
+  );
+  assert.match(
+    source,
+    /<PresetCardsControl label=\{ __\( 'Depth presets', '__plugin_txtd' \) \} options=\{ editorialDriftRecipes \}/
+  );
+});

@@ -14,6 +14,7 @@ import {
   PresetCardsControl,
   SectionLink,
   TryAndPlay,
+  TryAndPlayGroup,
 } from '../../../../components';
 import {
   ClassicThumb,
@@ -91,20 +92,12 @@ const CompositionTab = ( props ) => {
   /* translators: %s: the selected composition (layout style) name. */
   const presetsLabel = sprintf( __( '%s presets', '__plugin_txtd' ), styleLabel );
 
+  const depthGateId = 'parametric' === layoutStyle ? 'parametric-depth' : 'stacked-depth';
+
   return (
     <>
       <StyleTiles { ...props } />
-      { 'parametric' === layoutStyle ? (
-        <TryAndPlay gateId={ 'parametric-layout' }>
-          <PresetCardsControl
-            label={ presetsLabel }
-            options={ PARAMETRIC_PRESETS }
-            randomize={ getRandomAttributes }
-            resets={ LAYOUT_PRESET_RESETS }
-            { ...props }
-          />
-        </TryAndPlay>
-      ) : !! freePresets && (
+      { 'parametric' !== layoutStyle && !! freePresets && (
         <PresetCardsControl
           label={ presetsLabel }
           options={ freePresets }
@@ -112,20 +105,39 @@ const CompositionTab = ( props ) => {
           { ...props }
         />
       ) }
-      { !! depthPresets && (
-        <>
-          { /* Parametric's depth room is drift-only, with its own trial copy. */ }
-          <TryAndPlay gateId={ 'parametric' === layoutStyle ? 'parametric-depth' : 'stacked-depth' }>
+      { /* One boundary per tab: free controls sit above; the gated tail
+           (parametric presets and/or depth presets) merges into a single
+           Try & Play boundary while locked (ui-contract "merged groups"). */ }
+      <TryAndPlayGroup gateIds={ [
+        ...( 'parametric' === layoutStyle ? [ 'parametric-layout' ] : [] ),
+        ...( depthPresets ? [ depthGateId ] : [] ),
+      ] }>
+        { 'parametric' === layoutStyle && (
+          <TryAndPlay gateId={ 'parametric-layout' }>
+            <PresetCardsControl
+              label={ presetsLabel }
+              options={ PARAMETRIC_PRESETS }
+              randomize={ getRandomAttributes }
+              resets={ LAYOUT_PRESET_RESETS }
+              { ...props }
+            />
+          </TryAndPlay>
+        ) }
+        { /* Parametric's depth room is drift-only, with its own trial copy. */ }
+        { !! depthPresets && (
+          <TryAndPlay gateId={ depthGateId }>
             <PresetCardsControl
               label={ __( 'Depth presets', '__plugin_txtd' ) }
               options={ depthPresets }
               { ...props }
             />
           </TryAndPlay>
-          <SectionLink sectionId={ 'scrolling-effect' }>
-            { __( 'Dial in the depth in Motion & Effects', '__plugin_txtd' ) }
-          </SectionLink>
-        </>
+        ) }
+      </TryAndPlayGroup>
+      { !! depthPresets && (
+        <SectionLink sectionId={ 'scrolling-effect' }>
+          { __( 'Dial in the depth in Motion & Effects', '__plugin_txtd' ) }
+        </SectionLink>
       ) }
     </>
   );

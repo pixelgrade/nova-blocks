@@ -14,6 +14,7 @@
 import { parse } from '@wordpress/blocks';
 import { dispatch, select, subscribe } from '@wordpress/data';
 
+import { plusUpsellUrl } from '../components/plus-gate';
 import { hasLockedRenderGatedValues, hasRevertedSaveGuardedValues } from './analyze';
 import { initPlusSaveAffordance } from './save-affordance';
 
@@ -39,11 +40,14 @@ const notifyAfterSave = () => {
   const motionPresetOptions = window.wp?.novaBlocks?.settings?.motionPresetOptions || [];
 
   let message = null;
+  let context = '';
 
   if ( hasRevertedSaveGuardedValues( editorBlocks, savedBlocks, plus ) ) {
     message = plus.savedWithoutGated;
+    context = 'saved-without-gated';
   } else if ( hasLockedRenderGatedValues( savedBlocks, plus, motionPresetOptions ) ) {
     message = plus.savedPreviewOnly;
+    context = 'saved-preview-only';
   }
 
   if ( ! message ) {
@@ -54,7 +58,10 @@ const notifyAfterSave = () => {
     id: NOTICE_ID,
     type: 'snackbar',
     actions: plus.upsellUrl
-      ? [ { label: plus.getPlusLabel || 'Get Plus', url: plus.upsellUrl } ]
+      ? [ {
+          label: plus.getPlusLabel || 'Get Plus',
+          url: plusUpsellUrl( plus, { medium: 'save-plus', content: context } ),
+        } ]
       : [],
   } );
 };

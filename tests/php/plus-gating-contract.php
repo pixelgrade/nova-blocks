@@ -332,5 +332,9 @@ novablocks_plus_assert_same(
 	$payload['gates']['parametric-depth']['attributes'] ?? null,
 	'Presentation-only rooms must not advertise gated attributes to the save honesty layer.'
 );
+novablocks_plus_assert(
+	is_string( $payload['groupOverlayNote'] ?? null ) && '' !== $payload['groupOverlayNote'],
+	'The merged Try & Play boundary needs its generic invitation copy (groupOverlayNote) in the payload.'
+);
 
 echo "plus gating contract ok\n";

@@ -18,6 +18,7 @@ import {
   MediaMotionThumb,
   PresetCardsControl,
   TryAndPlay,
+  TryAndPlayGroup,
   useSettings,
   useSupports,
 } from '@novablocks/block-editor';
@@ -139,21 +140,33 @@ const MotionRecipes = ( props ) => {
         options={ freeRecipes }
         { ...props }
       />
-      { !! dopplerRecipes.length && (
-        <TryAndPlay gateId={ 'motion-recipes' }>
-          <PresetCardsControl options={ dopplerRecipes } { ...props } />
-        </TryAndPlay>
-      ) }
-      { !! stackedDepthRecipes.length && (
-        <TryAndPlay gateId={ 'stacked-depth' }>
-          <PresetCardsControl options={ stackedDepthRecipes } { ...props } />
-        </TryAndPlay>
-      ) }
-      { !! editorialDriftRecipes.length && (
-        <TryAndPlay gateId={ 'parametric-depth' }>
-          <PresetCardsControl options={ editorialDriftRecipes } { ...props } />
-        </TryAndPlay>
-      ) }
+      { /* One boundary per tab: while locked, every gated recipe group below
+           merges into a single Try & Play boundary (ui-contract "merged
+           groups"); the per-gate TryAndPlay wrappers stay so each gate keeps
+           its solo chrome anywhere the group doesn't cover it. Only the
+           groups that actually render join the boundary — never pre-reveal a
+           gate the user hasn't seen. */ }
+      <TryAndPlayGroup gateIds={ [
+        ...( dopplerRecipes.length ? [ 'motion-recipes' ] : [] ),
+        ...( stackedDepthRecipes.length ? [ 'stacked-depth' ] : [] ),
+        ...( editorialDriftRecipes.length ? [ 'parametric-depth' ] : [] ),
+      ] }>
+        { !! dopplerRecipes.length && (
+          <TryAndPlay gateId={ 'motion-recipes' }>
+            <PresetCardsControl label={ __( 'Cinematic presets', '__plugin_txtd' ) } options={ dopplerRecipes } { ...props } />
+          </TryAndPlay>
+        ) }
+        { !! stackedDepthRecipes.length && (
+          <TryAndPlay gateId={ 'stacked-depth' }>
+            <PresetCardsControl label={ __( 'Depth presets', '__plugin_txtd' ) } options={ stackedDepthRecipes } { ...props } />
+          </TryAndPlay>
+        ) }
+        { !! editorialDriftRecipes.length && (
+          <TryAndPlay gateId={ 'parametric-depth' }>
+            <PresetCardsControl label={ __( 'Depth presets', '__plugin_txtd' ) } options={ editorialDriftRecipes } { ...props } />
+          </TryAndPlay>
+        ) }
+      </TryAndPlayGroup>
       { hasCollectionDepth && ! supportsStackedDrift && ! supportsEditorialDrift && (
         <p className="nb-settings-hint">
           { __( '“Stacked Drift” appears for Classic Grid and Masonry collections; “Editorial Drift” for Parametric grids.', '__plugin_txtd' ) }

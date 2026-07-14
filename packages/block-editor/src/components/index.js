@@ -16,7 +16,7 @@ export { default as PresetControl } from "./preset-control";
 export { default as PresetCardsControl } from "./preset-cards";
 export { MediaMotionThumb, CardsMotionThumb } from "./preset-cards/thumbnails";
 export { default as SectionLink } from "./section-link";
-export { default as TryAndPlay, PlusBadge, usePlusGate } from "./plus-gate";
+export { default as TryAndPlay, TryAndPlayGroup, PlusBadge, usePlusGate } from "./plus-gate";
 export { default as SignalControl } from "./signal-control";
 export { default as TextPlaceholder } from './text-placeholder';
 export { default as ToggleGroup } from "./toggle-group";

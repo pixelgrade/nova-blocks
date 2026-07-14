@@ -51,6 +51,7 @@ run "detect-legacy-spacing (jest)" npx --no-install jest packages/block-editor/s
 run "custom defaults hook (node:test)" node --test packages/block-editor/src/hooks/use-custom-defaults/index.test.js
 run "inner blocks count undo history (node:test)" node --test packages/block-editor/src/hooks/use-inner-blocks-count/index.test.js
 run "plus gating analyze (jest)" npx --no-install jest packages/block-editor/src/plus-gating/analyze.test.js
+run "plus gate merged boundary (node:test)" node --test packages/block-editor/src/components/plus-gate/group.test.js
 run "drawer panel height (jest)" npx --no-install jest packages/block-editor/src/components/drawer/index.test.js
 run "announcement block id persistence (jest)" npx --no-install jest packages/block-library/src/blocks/announcement-bar/block-id.test.js
 run "color signal onboarding (jest)" npx --no-install jest packages/color-signal/src/onboarding/build-guide-content.test.js packages/color-signal/src/onboarding/derive-steps.test.js packages/color-signal/src/onboarding/guide-session.test.js packages/color-signal/src/onboarding/practice-section.test.js
