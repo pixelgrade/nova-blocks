@@ -32,7 +32,19 @@ const addNovaBlocksSupport = ( settings ) => {
           paletteVariationClassname: true,
           colorSignalClassname: true,
         },
-        spaceAndSizing: true,
+        // Boolean-true-equivalent object (attributes + controls both on),
+        // plus the Stage 1 opt-out for the "Content Area Padding" control:
+        // --nb-card-content-padding-multiplier has no CSS consumer on
+        // Group (only supernova's _card.scss and contextual-post-card's
+        // style.scss read it) — see
+        // with-space-and-sizing/controls/is-content-padding-control-visible.js.
+        // The contentPadding attribute itself stays registered; only the
+        // control's render is gated.
+        spaceAndSizing: {
+          attributes: true,
+          controls: true,
+          contentPadding: false,
+        },
       }
     },
   };

@@ -9,7 +9,7 @@
  * License: GPLv2 or later
  * License URI: http://www.gnu.org/licenses/gpl-2.0.txt
  * Text Domain: __plugin_txtd
- * Requires at least: 5.9
+ * Requires at least: 7.0
  * Tested up to: 7.0
  * Requires PHP: 7.4
  * GitHub Plugin URI: pixelgrade/nova-blocks
@@ -74,6 +74,7 @@ require_once dirname( __FILE__ ) . '/lib/extras.php';
 require_once dirname( __FILE__ ) . '/lib/setup.php';
 require_once dirname( __FILE__ ) . '/lib/rest-api.php';
 require_once dirname( __FILE__ ) . '/lib/theme-supports.php';
+require_once dirname( __FILE__ ) . '/lib/core-tools-ownership.php';
 require_once dirname( __FILE__ ) . '/lib/collection-layout-recipes.php';
 require_once dirname( __FILE__ ) . '/lib/block-editor-settings.php';
 require_once dirname( __FILE__ ) . '/lib/plus-gating.php';
