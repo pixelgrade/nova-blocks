@@ -11,7 +11,16 @@ const addNovaBlocksSupport = ( settings ) => {
     supports: {
       ...settings.supports,
       novaBlocks: {
-        spaceAndSizing: true,
+        // Boolean-true-equivalent object (attributes + controls both on),
+        // plus the Stage 1 opt-out for the "Content Area Padding" control —
+        // same no-op rationale as Group; Columns has no dedicated SCSS
+        // file at all, so contentPadding never reaches CSS. See
+        // with-space-and-sizing/controls/is-content-padding-control-visible.js.
+        spaceAndSizing: {
+          attributes: true,
+          controls: true,
+          contentPadding: false,
+        },
       }
     },
   };
