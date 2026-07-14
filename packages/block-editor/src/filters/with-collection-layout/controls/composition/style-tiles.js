@@ -11,6 +11,7 @@ import { PlusBadge, withVisibility } from '../../../../components';
 import { useSettings } from '../../../../hooks';
 import {
   ClassicThumb,
+  CollageThumb,
   MasonryThumb,
   CarouselThumb,
   ParametricThumb,
@@ -43,6 +44,8 @@ const getStyleTileAttributes = ( layoutStyle ) => {
 
 const getRecipeThumbnail = ( recipe, attributes ) => {
   switch ( recipe.thumbnail ) {
+    case 'collage':
+      return <CollageThumb />;
     case 'classic':
       return <ClassicThumb columns={ attributes.columns } count={ attributes.postsToShow } />;
     case 'carousel':

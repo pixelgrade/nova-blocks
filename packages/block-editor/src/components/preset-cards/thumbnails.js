@@ -104,6 +104,22 @@ export const MasonryThumb = ( { columns = 3 } ) => {
   return <Thumb>{ cells }</Thumb>;
 };
 
+/**
+ * Measured from Anima Collage at a 1400px viewport: the integrated Header
+ * occupies the first track, two cards start in tracks two and three, and the
+ * next three enter with alternating horizontal offsets. The first content
+ * card carries the accent.
+ */
+export const CollageThumb = () => (
+  <Thumb>
+    <Cell x={ 21 } y={ 2 } width={ 17 } height={ 16 } accent />
+    <Cell x={ 40 } y={ 4 } width={ 17 } height={ 15 } />
+    <Cell x={ 2 } y={ 18 } width={ 18 } height={ 11 } />
+    <Cell x={ 23 } y={ 20 } width={ 17 } height={ 11 } />
+    <Cell x={ 40 } y={ 21 } width={ 16 } height={ 18 } />
+  </Thumb>
+);
+
 export const CarouselThumb = ( { visible = 3, variable = false } ) => {
   const widths = variable
     ? [ 22, 13, 18, 22 ]
