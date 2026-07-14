@@ -3,7 +3,7 @@ Contributors: pixelgrade, vlad.olaru, babbardel, razvanonofrei, gorby31
 Tags: blocks, gutenberg, gutenberg blocks, page builder, full site editing
 Requires at least: 7.0
 Tested up to: 7.0
-Stable tag: 2.1.23
+Stable tag: 2.2.0
 Requires PHP: 7.4
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -113,6 +113,12 @@ Yes! Nova Block's core features are free to use.
 3. Slideshow Me the Way block options
 
 == Changelog ==
+
+= 2.2.0 =
+* New: Nova Blocks now owns the design decisions it already makes. On enhanced core blocks, the core design tools that Nova Blocks functionally replaces are switched off so two systems no longer fight over the same block: text/background/link color and vertical margins on Group, background color and margins on Separator, text/background color on Buttons, text color on List, and margins on Columns. Everything Nova Blocks does not replace (padding, block spacing, typography, Columns colors, List background) stays untouched.
+* New: `novablocks/core_tools_availability` filter for adjusting which core design tools are managed by Nova Blocks.
+* Improved: The minimum required WordPress version is now 7.0.
+* Fix: Cards Collection editor previews.
 
 = 2.1.21 =
 * Fix: Resolve the remaining "unexpected or invalid content" block recovery on enhanced core blocks (Group, Columns, Separator) for content saved before the space-and-sizing feature existed, by leaving markup that carries no Nova sizing variables untouched instead of injecting a manufactured default set that no longer matched the stored output.
