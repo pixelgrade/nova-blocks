@@ -171,7 +171,10 @@
 // and cards with scrolling effects keep the cover chain the Doppler runtime
 // measures against.
 .nb-supernova--aspect-ratio-original
-.nb-supernova-item--scrolling-effect-none:not(.nb-supernova-item--layout-stacked) {
+.nb-supernova-item:is(
+  .nb-supernova-item--scrolling-effect-static,
+  .nb-supernova-item--scrolling-effect-none
+):not(.nb-supernova-item--layout-stacked) {
 
   .nb-supernova-item__media-aspect-ratio {
     min-height: 0;
@@ -192,7 +195,9 @@
     height: auto;
   }
 
-  .nb-supernova-item__media[class] {
+  .nb-supernova-item__media[class][class] {
+    position: static;
+    width: 100%;
     height: auto;
     object-fit: unset;
   }

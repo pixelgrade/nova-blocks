@@ -37,7 +37,9 @@ const CardsCollectionPreview = ( props ) => {
     <CollectionBody { ...props } key={ 'body' }>
       <CollectionLeadingItems attributes={ props.attributes } />
       { innerBlocks.map( innerBlock =>
-        <SupernovaItemPreview { ...innerBlock } parentAttributes={ props.attributes } context={ props.context } key={ 'collection_item_preview_' + innerBlock.clientId } /> )
+        <div className={ 'nb-collection__layout-item' } key={ 'collection_layout_item_' + innerBlock.clientId }>
+          <SupernovaItemPreview { ...innerBlock } parentAttributes={ props.attributes } context={ props.context } />
+        </div> )
       }
     </CollectionBody>
   )
@@ -58,39 +60,39 @@ const hasGeneratedImageDefaults = block =>
 const CardsCollectionLayout = props => {
   const { attributes, clientId } = props;
   const innerBlocks = useInnerBlocks( clientId );
-  const allDefaultsGenerated = useRef( false );
+  const isGeneratingDefaults = useRef( false );
   const { updateBlockAttributes } = useDispatch( 'core/block-editor' );
 
   useEffect( () => {
-
-    if ( ! allDefaultsGenerated.current ) {
-
-      if ( needsPreview( attributes ) ) {
-        const defaultsGenerated = innerBlocks.every( hasGeneratedImageDefaults );
-
-        if ( ! defaultsGenerated ) {
-          getRandomImages().then( placeholderImages => {
-            if ( ! Array.isArray( placeholderImages ) || ! placeholderImages.length ) {
-              return;
-            }
-
-            const usedImages = getUsedPlaceholderImages( innerBlocks );
-
-            innerBlocks.forEach( block => {
-              if ( ! hasGeneratedImageDefaults( block ) ) {
-                const images = getUniquePlaceholderImages( placeholderImages, usedImages, 1 );
-                usedImages.push( ...images );
-                updateBlockAttributes( block.clientId, { defaultsGenerated: true, images } );
-              }
-            } );
-          } );
-        }
-      }
-
-      allDefaultsGenerated.current = true;
+    if ( ! needsPreview( attributes ) || isGeneratingDefaults.current ) {
+      return;
     }
 
-  }, [ attributes, innerBlocks ] )
+    const blocksMissingDefaults = innerBlocks.filter( block => ! hasGeneratedImageDefaults( block ) );
+
+    if ( ! blocksMissingDefaults.length ) {
+      return;
+    }
+
+    isGeneratingDefaults.current = true;
+
+    getRandomImages().then( placeholderImages => {
+      if ( ! Array.isArray( placeholderImages ) || ! placeholderImages.length ) {
+        return;
+      }
+
+      const usedImages = getUsedPlaceholderImages( innerBlocks );
+
+      blocksMissingDefaults.forEach( block => {
+        const images = getUniquePlaceholderImages( placeholderImages, usedImages, 1 );
+        usedImages.push( ...images );
+        updateBlockAttributes( block.clientId, { defaultsGenerated: true, images } );
+      } );
+    } ).finally( () => {
+      isGeneratingDefaults.current = false;
+    } );
+
+  }, [ attributes, innerBlocks, updateBlockAttributes ] )
 
   if ( needsPreview( attributes ) && attributes.preview ) {
     return (

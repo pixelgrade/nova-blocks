@@ -25,12 +25,12 @@ test('Cards Collection preview treats generated empty image defaults as stale', 
 
   assert.match(
     source,
-    /const defaultsGenerated = innerBlocks\.every\( hasGeneratedImageDefaults \);/
+    /const blocksMissingDefaults = innerBlocks\.filter\( block => ! hasGeneratedImageDefaults\( block \) \);/
   );
 
   assert.match(
     source,
-    /if \( ! hasGeneratedImageDefaults\( block \) \) \{[\s\S]*?updateBlockAttributes\( block\.clientId,\s*\{ defaultsGenerated:\s*true,\s*images \}\s*\);/
+    /blocksMissingDefaults\.forEach\( block => \{[\s\S]*?updateBlockAttributes\( block\.clientId,\s*\{ defaultsGenerated:\s*true,\s*images \}\s*\);/
   );
 });
 
@@ -43,5 +43,29 @@ test('Cards Collection preview assigns placeholder images without repeating unti
   assert.match(
     source,
     /const images = getUniquePlaceholderImages\( placeholderImages,\s*usedImages,\s*1 \);[\s\S]*?usedImages\.push\( \.\.\.images \);[\s\S]*?updateBlockAttributes\( block\.clientId,\s*\{ defaultsGenerated:\s*true,\s*images \}\s*\);/
+  );
+});
+
+test('Cards Collection preview initializes image defaults for cards added after the first render', () => {
+  assert.doesNotMatch(
+    source,
+    /allDefaultsGenerated/
+  );
+
+  assert.match(
+    source,
+    /const blocksMissingDefaults = innerBlocks\.filter\( block => ! hasGeneratedImageDefaults\( block \) \);/
+  );
+
+  assert.match(
+    source,
+    /isGeneratingDefaults\.current = true;[\s\S]*?getRandomImages\(\)[\s\S]*?\.finally\( \(\) => \{[\s\S]*?isGeneratingDefaults\.current = false;/
+  );
+});
+
+test('Cards Collection preview wraps every manual card as a collection layout item', () => {
+  assert.match(
+    source,
+    /innerBlocks\.map\( innerBlock =>[\s\S]*?<div className=\{ 'nb-collection__layout-item' \} key=\{ 'collection_layout_item_' \+ innerBlock\.clientId \}>[\s\S]*?<SupernovaItemPreview[\s\S]*?<\/div>/
   );
 });
