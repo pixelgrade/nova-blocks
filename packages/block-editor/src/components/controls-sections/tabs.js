@@ -49,14 +49,18 @@ const ActiveSectionTabs = ( props ) => {
 		tabs,
 		goBack,
 		updateHeight,
-    isActive
+    isActive,
+    scopeKey,
 	} = props;
 
   if ( ! tabs.length ) {
 		return null;
 	}
 
-  const memoryStateKey = useMemo( () => `activeTab:${ id || title }`, [ id, title ] );
+  const memoryStateKey = useMemo( () => {
+    const sectionKey = id || title;
+    return scopeKey ? `activeTab:${ scopeKey }:${ sectionKey }` : `activeTab:${ sectionKey }`;
+  }, [ id, title, scopeKey ] );
   const [ activeTabLabel, setActiveTabLabel ] = useMemoryState( memoryStateKey, tabs[0].props.label );
 
   useEffect( () => {

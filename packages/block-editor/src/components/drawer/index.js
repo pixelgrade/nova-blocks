@@ -14,20 +14,34 @@ import { useMemoryState } from '../../index';
 
 const Drawers = ( ownProps ) => {
 
-  const { children } = ownProps;
+  const { children, scopeKey } = ownProps;
 	const childrenArray = Children.toArray( children );
 	const drawerLists = childrenArray.filter( child => child.type === DrawerList );
 	const drawerPanels = childrenArray.filter( child => child.type === DrawerPanel );
   const beforeChildren = children.filter( child => child.type === DrawerListBefore );
 
-	const [ open, setOpen ] = useMemoryState( 'drawerOpen' );
-	const [ lastActiveDrawerId, setLastActiveDrawerId ] = useMemoryState( 'drawerActiveId' );
-	const [ wrapperHeight, setWrapperHeight ] = useMemoryState( 'drawerHeight', 0 );
+  // Scoped per block-type + inspector tab (Settings vs Styles) so the same
+  // block type keeps remembering its open section, without leaking state
+  // into a different block type or the other tab.
+  const openKey = scopeKey ? `drawerOpen:${ scopeKey }` : 'drawerOpen';
+  const activeIdKey = scopeKey ? `drawerActiveId:${ scopeKey }` : 'drawerActiveId';
 
+	const [ open, setOpen ] = useMemoryState( openKey );
+	const [ lastActiveDrawerId, setLastActiveDrawerId ] = useMemoryState( activeIdKey );
+	// Height is never persisted across selections — always measured fresh on
+	// mount, then kept in sync by the ResizeObserver below. Starting from
+	// `undefined` (instead of a stale/shared value) avoids a flash of
+	// clipped content before the first measurement lands.
+	const [ wrapperHeight, setWrapperHeight ] = useState( undefined );
+
+	// Graceful reset: if the remembered active id doesn't exist in the
+	// current section list (block type changed, or a section is
+	// conditionally absent), fall back to the closed list state instead of
+	// rendering an empty panel.
 	const existingDrawer = useMemo( () => drawerLists.some( drawerList => {
 		const drawers = getDrawersFromList( drawerList );
 		return drawers.some( drawer => drawer?.props?.id === lastActiveDrawerId );
-	} ), [ drawerLists ] );
+	} ), [ drawerLists, lastActiveDrawerId ] );
 
 	useLayoutEffect( () => {
 
@@ -39,10 +53,6 @@ const Drawers = ( ownProps ) => {
 
 	const ref = useRef( null );
 	const [ activePanelElement, setActivePanelElement ] = useState( null );
-
-	const noop = () => {};
-	const onOpen = typeof ownProps.onOpen === 'function' ? ownProps.onOpen : noop;
-	const onClose = typeof ownProps.onClose === 'function' ? ownProps.onClose : noop;
 
 	const getDrawerListHeight = () => {
 		return !! ref.current ? ref.current.clientHeight : 0;
@@ -112,7 +122,6 @@ const Drawers = ( ownProps ) => {
 												onClick={ () => {
 													setLastActiveDrawerId( id );
 													setOpen( true );
-													onOpen();
 												} } />
 										)
 									} )
@@ -139,7 +148,6 @@ const Drawers = ( ownProps ) => {
 							<div key={ `drawer_panel_${ drawerPanel.props.id }` } className={ className } ref={ setActivePanelElement }>
 								<DrawerWithProps { ...drawerPanel.props } isActive={ lastActiveDrawerId === drawerPanel.props.id } goBack={ () => {
 									setOpen( false );
-									onClose();
 								} } updateHeight={ updateHeight } />
 							</div>
 						)

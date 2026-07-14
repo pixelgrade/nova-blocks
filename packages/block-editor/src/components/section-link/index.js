@@ -6,13 +6,21 @@
  * Drives the same memory-state keys the Drawers component reads, so the
  * navigation is native to the drawer framework.
  */
-import { useCallback } from '@wordpress/element';
+import { useCallback, useContext } from '@wordpress/element';
 
 import { useMemoryState } from '../../index';
+import ControlsSectionsScopeContext from '../controls-sections/scope-context';
+import { getControlsSectionsScopeKey } from '../controls-sections/utils';
 
 const SectionLink = ( { sectionId, children } ) => {
-  const [ , setActiveDrawerId ] = useMemoryState( 'drawerActiveId' );
-  const [ , setDrawerOpen ] = useMemoryState( 'drawerOpen' );
+  // Deep-links only ever point at another section in the same tab (Settings
+  // or Styles) for the same block type, so it reads/writes the exact same
+  // scoped memory-state keys the Drawers instance around it uses.
+  const scope = useContext( ControlsSectionsScopeContext );
+  const scopeKey = getControlsSectionsScopeKey( scope );
+
+  const [ , setActiveDrawerId ] = useMemoryState( `drawerActiveId:${ scopeKey }` );
+  const [ , setDrawerOpen ] = useMemoryState( `drawerOpen:${ scopeKey }` );
 
   const openSection = useCallback( () => {
     setActiveDrawerId( sectionId );

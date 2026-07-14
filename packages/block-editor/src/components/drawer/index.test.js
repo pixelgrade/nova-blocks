@@ -20,8 +20,8 @@ const DrawerControls = ( { panelHeight, goBack } ) => (
 	</div>
 );
 
-const DrawerFixture = ( { panelHeight, spacePanelHeight = 480 } ) => (
-	<Drawers>
+const DrawerFixture = ( { panelHeight, spacePanelHeight = 480, scopeKey } ) => (
+	<Drawers scopeKey={ scopeKey }>
 		<DrawerList>
 			<Drawer id="color-signal" title="Color Signal" />
 			<Drawer id="space-and-sizing" title="Space and Sizing" />
@@ -29,6 +29,19 @@ const DrawerFixture = ( { panelHeight, spacePanelHeight = 480 } ) => (
 		<DrawerPanel id="color-signal">
 			<DrawerControls panelHeight={ panelHeight } />
 		</DrawerPanel>
+		<DrawerPanel id="space-and-sizing">
+			<DrawerControls panelHeight={ spacePanelHeight } />
+		</DrawerPanel>
+	</Drawers>
+);
+
+// A block-type change (or a conditionally-absent section) can leave a
+// section list that no longer contains the remembered active drawer id.
+const DrawerFixtureWithoutColorSignal = ( { spacePanelHeight = 480, scopeKey } ) => (
+	<Drawers scopeKey={ scopeKey }>
+		<DrawerList>
+			<Drawer id="space-and-sizing" title="Space and Sizing" />
+		</DrawerList>
 		<DrawerPanel id="space-and-sizing">
 			<DrawerControls panelHeight={ spacePanelHeight } />
 		</DrawerPanel>
@@ -52,11 +65,15 @@ describe( 'Drawers', () => {
 		ResizeObserverOriginal = window.ResizeObserver;
 		window.ResizeObserver = class ResizeObserver {
 			constructor( callback ) {
+				this.callback = callback;
 				resizeObserverCallbacks.push( callback );
 			}
 
 			observe() {}
-			disconnect() {}
+
+			disconnect() {
+				resizeObserverCallbacks = resizeObserverCallbacks.filter( callback => callback !== this.callback );
+			}
 		};
 
 		Object.defineProperty( HTMLElement.prototype, 'clientHeight', {
@@ -155,5 +172,88 @@ describe( 'Drawers', () => {
 			);
 		} );
 		expect( drawers.style.height ).toBe( '80px' );
+	} );
+
+	it( 'resets to the closed list state when the remembered active id no longer exists', () => {
+		act( () => {
+			render( <DrawerFixture panelHeight={ 220 } scopeKey="styles:novablocks/supernova" />, container );
+		} );
+
+		act( () => {
+			container.querySelector( '.novablocks-drawer' ).dispatchEvent(
+				new MouseEvent( 'click', { bubbles: true } )
+			);
+		} );
+		expect( container.querySelector( '.novablocks-drawers' ).style.height ).toBe( '220px' );
+
+		// Simulate the block type changing (or the section becoming
+		// conditionally absent): the "color-signal" drawer disappears from
+		// the section list while the memory store still points at it. This
+		// swaps the root component, so React mounts a brand new DOM node —
+		// re-query it rather than reuse the (now detached) old reference.
+		act( () => {
+			render(
+				<DrawerFixtureWithoutColorSignal spacePanelHeight={ 480 } scopeKey="styles:novablocks/supernova" />,
+				container
+			);
+		} );
+		triggerResize();
+
+		const drawersAfterReset = container.querySelector( '.novablocks-drawers' );
+		expect( container.querySelector( '.novablocks-drawers__panel' ) ).toBeNull();
+		expect( drawersAfterReset.style.height ).toBe( '80px' );
+	} );
+
+	it( 'scopes drawer state per scope key so different blocks/tabs never leak into each other', () => {
+		const ScopedFixtures = () => (
+			<div>
+				<div className="scope-a">
+					<DrawerFixture panelHeight={ 220 } scopeKey="styles:novablocks/group" />
+				</div>
+				<div className="scope-b">
+					<DrawerFixture panelHeight={ 220 } scopeKey="settings:novablocks/supernova" />
+				</div>
+			</div>
+		);
+
+		act( () => {
+			render( <ScopedFixtures />, container );
+		} );
+
+		const scopeADrawers = container.querySelector( '.scope-a .novablocks-drawers' );
+		const scopeBDrawers = container.querySelector( '.scope-b .novablocks-drawers' );
+
+		act( () => {
+			container.querySelector( '.scope-a .novablocks-drawer' ).dispatchEvent(
+				new MouseEvent( 'click', { bubbles: true } )
+			);
+		} );
+
+		expect( scopeADrawers.style.height ).toBe( '220px' );
+		// The un-opened scope stays on its (unmeasured, non-clipping) list view.
+		expect( scopeBDrawers.querySelector( '.novablocks-drawers__panel' ) ).toBeNull();
+	} );
+
+	it( 'retains open state across unmount/remount within the same scope', () => {
+		act( () => {
+			render( <DrawerFixture panelHeight={ 220 } scopeKey="styles:novablocks/card" />, container );
+		} );
+
+		act( () => {
+			container.querySelector( '.novablocks-drawer' ).dispatchEvent(
+				new MouseEvent( 'click', { bubbles: true } )
+			);
+		} );
+		expect( container.querySelector( '.novablocks-drawers__panel' ) ).not.toBeNull();
+
+		act( () => {
+			unmountComponentAtNode( container );
+		} );
+
+		act( () => {
+			render( <DrawerFixture panelHeight={ 220 } scopeKey="styles:novablocks/card" />, container );
+		} );
+
+		expect( container.querySelector( '.novablocks-drawers__panel' ) ).not.toBeNull();
 	} );
 } );
