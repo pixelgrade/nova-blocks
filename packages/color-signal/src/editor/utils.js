@@ -87,6 +87,40 @@ export const getSignalChangeAttributes = ( attributes, clientId, nextSignal ) =>
   };
 };
 
+/**
+ * The Content Area counterpart of `getSignalChangeAttributes()`: given a
+ * block's current (live) attributes, compute the attribute patch to apply when
+ * the user picks a new `contentColorSignal` level — whether from the sidebar
+ * stepper (`ContentColorSignalControl`) or the block toolbar cycler.
+ *
+ * This is the exact logic `ContentColorSignalControl`'s inline `onChange` used
+ * to perform: the content signal is computed relative to the block's own
+ * absolute variation (not the parent's, which is why — unlike the block-level
+ * helper — `clientId` is not consulted; it is kept in the signature for
+ * symmetry with `getSignalChangeAttributes`), and `contentPaletteVariation` is
+ * recomputed alongside `contentColorSignal` so the two never drift apart.
+ *
+ * Callers are expected to feed the returned patch into `updateBlock()` (from
+ * `withColorSignalProps`) with its default flags — the sidebar control passes
+ * no extra arguments, and the toolbar must match it exactly.
+ *
+ * @param attributes the block's current (live) attributes
+ * @param clientId the block's clientId (unused — see above)
+ * @param nextSignal the desired contentColorSignal value (0-3)
+ * @returns {{contentColorSignal: number, contentPaletteVariation: number}}
+ */
+export const getContentSignalChangeAttributes = ( attributes, clientId, nextSignal ) => {
+  const { palette, contentPaletteVariation } = attributes;
+  const absoluteVariation = getAbsoluteColorVariation( attributes );
+  const nextContentPaletteVariation = computeColorSignal( absoluteVariation, nextSignal, palette, contentPaletteVariation );
+  const finalContentPaletteVariation = removeSiteVariationOffset( nextContentPaletteVariation );
+
+  return {
+    contentColorSignal: nextSignal,
+    contentPaletteVariation: finalContentPaletteVariation,
+  };
+};
+
 export const getUpdatedAttributes = ( attributes, clientId, newAttributes = {}, stickySourceColor = true, useSourceOnSameVariation = false, useSourceOnSameSignal = false ) => {
   // prepare attribute values to be used in computing next attributes
   const nextAttributes = Object.assign( {}, attributes, newAttributes );

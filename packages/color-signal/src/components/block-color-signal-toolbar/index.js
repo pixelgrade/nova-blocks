@@ -4,7 +4,7 @@ import { ToolbarButton } from "@wordpress/components";
 
 import { useSupports } from "@novablocks/block-editor";
 
-import { getSignalChangeAttributes } from "../../editor/utils";
+import { getContentSignalChangeAttributes, getSignalChangeAttributes } from "../../editor/utils";
 import withColorSignalProps from "../with-color-signal-props";
 import { getColorSignalLevels, COLOR_SIGNAL_LEVEL_LABELS } from "./get-color-signal-levels";
 import ColorSignalToolbarIcon from "./icon";
@@ -23,7 +23,7 @@ import ColorSignalToolbarIcon from "./icon";
 const BlockColorSignalToolbar = withColorSignalProps( ( props ) => {
 
   const { attributes, clientId, updateBlock, name } = props;
-  const { colorSignal } = attributes;
+  const { colorSignal, contentColorSignal } = attributes;
 
   const supports = useSupports( name );
   const colorSignalSupport = supports?.novaBlocks?.colorSignal;
@@ -46,6 +46,24 @@ const BlockColorSignalToolbar = withColorSignalProps( ( props ) => {
   const currentIndex = levels.findIndex( ( level ) => level.value === colorSignal );
   const nextLevel = levels[ ( currentIndex + 1 ) % levels.length ] || levels[ 0 ];
 
+  // EXPERIMENT: a Content Area Color Signal cycler alongside the block one,
+  // for blocks that opt into a distinct content-area signal
+  // (`supports.novaBlocks.colorSignal.contentColorSignal === true` — this is
+  // deliberately NOT enabled by the boolean `true` supports shorthand, exactly
+  // like the sidebar's ContentColorSignalControl gate is written today; the
+  // toolbar pair must show/hide together with the sidebar pair).
+  //
+  // Levels: the content signal has no min/max sub-flags today —
+  // `minColorSignal`/`maxColorSignal` clamp the BLOCK signal only — so we pass
+  // the boolean shorthand to getColorSignalLevels() to get the full unclamped
+  // None..High range. If content-specific clamps are ever introduced
+  // (e.g. `minContentColorSignal`), thread them through here.
+  const showContentSignal = colorSignalSupport?.contentColorSignal === true;
+  const contentLevels = getColorSignalLevels( true );
+  const currentContentLabel = COLOR_SIGNAL_LEVEL_LABELS[ contentColorSignal ] ?? COLOR_SIGNAL_LEVEL_LABELS[ 0 ];
+  const currentContentIndex = contentLevels.findIndex( ( level ) => level.value === contentColorSignal );
+  const nextContentLevel = contentLevels[ ( currentContentIndex + 1 ) % contentLevels.length ] || contentLevels[ 0 ];
+
   return (
     <BlockControls group="other">
       <ToolbarButton
@@ -60,6 +78,23 @@ const BlockColorSignalToolbar = withColorSignalProps( ( props ) => {
           updateBlock( getSignalChangeAttributes( attributes, clientId, nextLevel.value ), true, true );
         } }
       />
+      { showContentSignal && (
+        <ToolbarButton
+          icon={ <ColorSignalToolbarIcon level={ contentColorSignal } scope="content" /> }
+          label={ sprintf(
+            /* translators: 1: current Content Area Color Signal level; 2: the level a click switches to */
+            __( 'Content Area Color Signal: %1$s — click for %2$s', '__plugin_txtd' ),
+            currentContentLabel,
+            nextContentLevel.label
+          ) }
+          onClick={ () => {
+            // Same helper as the sidebar's ContentColorSignalControl, with the
+            // same default updateBlock() flags — do not add the source-color
+            // flags used by the block-level cycler above.
+            updateBlock( getContentSignalChangeAttributes( attributes, clientId, nextContentLevel.value ) );
+          } }
+        />
+      ) }
     </BlockControls>
   );
 } );

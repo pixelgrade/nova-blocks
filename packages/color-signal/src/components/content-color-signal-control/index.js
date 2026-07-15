@@ -6,16 +6,13 @@ import {
   useSupports
 } from "@novablocks/block-editor";
 
-import {
-  computeColorSignal,
-  getAbsoluteColorVariation,
-  getMaxSignal,
-  removeSiteVariationOffset,
-} from "../../utils";
+import { getContentSignalChangeAttributes } from "../../editor/utils";
+
+import { getMaxSignal } from "../../utils";
 
 const ContentColorSignalControl = ( props ) => {
 
-  const { attributes, updateBlock, name } = props;
+  const { attributes, updateBlock, name, clientId } = props;
   const { contentColorSignal, palette } = attributes;
   const supports = useSupports( name );
   const colorSignalSupport = supports?.novaBlocks?.colorSignal;
@@ -31,15 +28,7 @@ const ContentColorSignalControl = ( props ) => {
                        max={ getMaxSignal( palette ) }
                        signal={ contentColorSignal }
                        onChange={ contentColorSignal => {
-                       const { contentPaletteVariation } = attributes;
-                       const absoluteVariation = getAbsoluteColorVariation( attributes );
-                       const nextContentPaletteVariation = computeColorSignal( absoluteVariation, contentColorSignal, palette, contentPaletteVariation );
-                       const finalContentPaletteVariation = removeSiteVariationOffset( nextContentPaletteVariation );
-
-                       updateBlock( {
-                         contentColorSignal: contentColorSignal,
-                         contentPaletteVariation: finalContentPaletteVariation,
-                       } )
+                       updateBlock( getContentSignalChangeAttributes( attributes, clientId, contentColorSignal ) )
                      } } />
     </ControlsGroup>
   )
