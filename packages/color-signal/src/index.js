@@ -8,6 +8,7 @@ import { getUpdatedAttributes } from "./editor/utils";
 import withColorSignalAttributes from "./filters/with-color-signal-attributes";
 import withColorSignalsDeprecated from "./filters/with-color-signal-deprecated";
 import withColorSignalControls from "./filters/with-color-signal-controls";
+import withColorSignalToolbar from "./filters/with-color-signal-toolbar";
 import withColorSignalEditClassnames from "./filters/with-color-signal-edit-classnames";
 import withColorSignalSaveClassnames from "./filters/with-color-signal-save-classnames";
 import withColorSignalSaveDataAttributes from "./filters/with-color-signal-save-data-attributes";
@@ -17,6 +18,7 @@ import withSpaceAndSizingSaveCustomProps from "./filters/with-color-signal-save-
 addFilter( 'blocks.registerBlockType', 'novablocks/with-color-signal-attributes', withColorSignalAttributes );
 addFilter( 'blocks.registerBlockType', 'novablocks/with-color-signal-deprecated', withColorSignalsDeprecated );
 addFilter( 'editor.BlockEdit', 'novablocks/with-color-signal-controls', withColorSignalControls );
+addFilter( 'editor.BlockEdit', 'novablocks/with-color-signal-toolbar', withColorSignalToolbar );
 addFilter( 'editor.BlockEdit', 'novablocks/with-color-signal-edit-custom-props', withColorSignalEditCustomProps );
 addFilter( 'editor.BlockListBlock', 'novablocks/with-color-signal-edit-classnames', withColorSignalEditClassnames );
 addFilter( 'blocks.getSaveContent.extraProps', 'novablocks/with-color-signal-save-classnames', withColorSignalSaveClassnames, 1 );
