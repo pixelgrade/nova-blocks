@@ -56,6 +56,7 @@ run "drawer panel height (jest)" npx --no-install jest packages/block-editor/src
 run "group Density removal (jest)" npx --no-install jest packages/block-editor/src/filters/with-space-and-sizing/density-removal.test.js
 run "announcement block id persistence (jest)" npx --no-install jest packages/block-library/src/blocks/announcement-bar/block-id.test.js
 run "color signal onboarding (jest)" npx --no-install jest packages/color-signal/src/onboarding/build-guide-content.test.js packages/color-signal/src/onboarding/derive-steps.test.js packages/color-signal/src/onboarding/guide-session.test.js packages/color-signal/src/onboarding/practice-section.test.js
+run "color toolbar cycling (jest)" npx --no-install jest packages/color-signal/src/components/block-color-signal-toolbar/get-color-signal-levels.test.js packages/color-signal/src/components/palette-picker/palette-options.test.js
 run "collection free presets (jest)" npx --no-install jest packages/block-editor/src/filters/with-collection-layout/controls/composition/free-presets.test.js
 run "card metadata style control (node:test)" node --test packages/block-editor/src/filters/with-card-details/metadata-style-control.test.js
 run "collection style tiles (node:test)" node --test packages/block-editor/src/filters/with-collection-layout/controls/composition/style-tiles.test.js

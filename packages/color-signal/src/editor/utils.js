@@ -87,6 +87,33 @@ export const getSignalChangeAttributes = ( attributes, clientId, nextSignal ) =>
   };
 };
 
+/**
+ * Compute the attribute patch used by both the sidebar palette picker and the
+ * toolbar palette cycler.
+ */
+export const getPaletteChangeAttributes = ( attributes, clientId, nextPalette, stickySourceColor ) => {
+  const { palette, useSourceColorAsReference } = attributes;
+
+  if ( nextPalette === palette && stickySourceColor ) {
+    const referenceVariation = getParentVariation( clientId );
+    const sourceIndex = getSourceIndexFromPaletteId( palette );
+    const nextSourceColorAsReference = ! useSourceColorAsReference;
+    const absoluteVariation = sourceIndex + 1;
+    const nextVariation = nextSourceColorAsReference ? 1 : absoluteVariation;
+    const nextSignal = getSignalRelativeToVariation( addSiteVariationOffset( absoluteVariation ), referenceVariation, palette );
+
+    return {
+      useSourceColorAsReference: nextSourceColorAsReference,
+      paletteVariation: nextVariation,
+      colorSignal: nextSignal,
+    };
+  }
+
+  return {
+    palette: nextPalette,
+  };
+};
+
 export const getUpdatedAttributes = ( attributes, clientId, newAttributes = {}, stickySourceColor = true, useSourceOnSameVariation = false, useSourceOnSameSignal = false ) => {
   // prepare attribute values to be used in computing next attributes
   const nextAttributes = Object.assign( {}, attributes, newAttributes );

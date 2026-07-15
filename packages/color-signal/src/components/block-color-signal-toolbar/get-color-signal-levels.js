@@ -15,12 +15,12 @@ const DEFAULT_MAX = COLOR_SIGNAL_LEVEL_LABELS.length - 1;
 
 /**
  * Build the list of selectable Color Signal levels for a block's toolbar
- * dropdown, clamped to the block's `minColorSignal` / `maxColorSignal`
+ * control, clamped to the block's `minColorSignal` / `maxColorSignal`
  * support declarations (e.g. core/button and core/separator declare
  * `minColorSignal: 1`, so "None" must never be offered for them).
  *
  * This mirrors the min/max clamping `SignalControl` applies to the sidebar
- * stepper's +/- buttons, so the toolbar dropdown and the sidebar always agree
+ * stepper's +/- buttons, so the toolbar control and the sidebar always agree
  * on which levels exist for a given block.
  *
  * @param colorSignalSupport the block's `supports.novaBlocks.colorSignal`
@@ -48,4 +48,25 @@ export const getColorSignalLevels = ( colorSignalSupport ) => {
   }
 
   return levels;
+};
+
+/**
+ * Return the level a single toolbar click should activate.
+ *
+ * The cycle wraps inside the already-clamped level list. If the current value
+ * falls outside that list (for example after a block support change), recover
+ * to the first valid level instead of emitting an unsupported value.
+ *
+ * @param {{value: number, label: string}[]} levels Valid levels for the block.
+ * @param {number} currentValue The block's current Color Signal value.
+ * @returns {{value: number, label: string}|undefined} The next valid level.
+ */
+export const getNextColorSignalLevel = ( levels, currentValue ) => {
+  if ( ! levels.length ) {
+    return undefined;
+  }
+
+  const currentIndex = levels.findIndex( level => level.value === currentValue );
+
+  return levels[ ( currentIndex + 1 ) % levels.length ] || levels[ 0 ];
 };

@@ -1,16 +1,10 @@
 import { ColorPicker, ControlsGroup, useSettings, withVisibility } from "@novablocks/block-editor";
 
-import { isFunctionalPalette } from "@novablocks/utils";
-
 import {
-  getParentVariation,
+  getPaletteChangeAttributes,
 } from "../../editor/utils";
 
-import {
-  addSiteVariationOffset,
-  getSignalRelativeToVariation,
-  getSourceIndexFromPaletteId,
-} from "../../utils";
+import { getVisiblePalettes } from "./palette-options";
 
 const PalettePicker = ( props ) => {
 
@@ -24,35 +18,12 @@ const PalettePicker = ( props ) => {
 
   const novablocksSettings = useSettings();
 
-  const palettes = Array.isArray( novablocksSettings?.palettes ) ? novablocksSettings.palettes : [];
   const { palette, paletteVariation, useSourceColorAsReference } = attributes;
 
-  const functionalColors = palettes.filter( palette => isFunctionalPalette( palette ) );
-  const brandColors = palettes.filter( palette => ! isFunctionalPalette( palette ) );
-  const visiblePalettes = showFunctionalColors ? functionalColors : brandColors;
+  const visiblePalettes = getVisiblePalettes( novablocksSettings?.palettes, showFunctionalColors );
 
   const onPaletteChange = nextPalette => {
-
-    if ( nextPalette === palette && stickySourceColor ) {
-      const referenceVariation = getParentVariation( clientId );
-      const sourceIndex = getSourceIndexFromPaletteId( palette );
-      const nextSourceColorAsReference = ! useSourceColorAsReference;
-      const absoluteVariation = sourceIndex + 1;
-      const nextVariation = nextSourceColorAsReference ? 1 : absoluteVariation;
-      const nextSignal = getSignalRelativeToVariation( addSiteVariationOffset( absoluteVariation ), referenceVariation, palette );
-
-      updateBlock( {
-        useSourceColorAsReference: nextSourceColorAsReference,
-        paletteVariation: nextVariation,
-        colorSignal: nextSignal,
-      } );
-
-    } else {
-      updateBlock( {
-        palette: nextPalette
-      } );
-
-    }
+    updateBlock( getPaletteChangeAttributes( attributes, clientId, nextPalette, stickySourceColor ) );
   };
 
   const options = visiblePalettes.map( palette => {
