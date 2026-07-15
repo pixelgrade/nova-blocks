@@ -41,7 +41,7 @@ const Controls = ( props ) => {
   } = attributes;
 
   return (
-    <ControlsSection id={ 'display' } label={ __( 'Display', '__plugin_txtd' ) }>
+    <ControlsSection id={ 'display' } label={ __( 'Display', '__plugin_txtd' ) } placement={ 'settings' }>
       <ControlsTab label={ __( 'Settings', '__plugin_txtd' ) }>
         <ControlsGroup title={ __( 'Trigger button', '__plugin_txtd' ) }>
           <TextControl

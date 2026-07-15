@@ -33,7 +33,7 @@ const HeaderRowInspectorControls = ( props ) => {
   } = attributes;
 
   return (
-    <ControlsSection id={ 'row-layout' } label={ __( 'Row Layout', '__plugin_txtd' ) } key={ 'header_row_layout' }>
+    <ControlsSection id={ 'row-layout' } label={ __( 'Row Layout', '__plugin_txtd' ) } placement={ 'settings' } key={ 'header_row_layout' }>
       <ControlsTab label={ __( 'Settings', '__plugin_txtd' ) } key={ 'header_row_layout_settings' }>
         <ControlsGroup>
           { innerBlocksCount > 1 && <RadioControl

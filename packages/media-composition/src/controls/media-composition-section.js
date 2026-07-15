@@ -53,7 +53,7 @@ const MediaCompositionControls = props => {
         <Notice
           key={ 'advanced-gallery-quick-start' }
           id={ 'novablocks-media-composition-quick-start' }
-          content={ <p><strong>{__('Quick start:', '__plugin_txtd')}</strong> {__( 'Set up your gallery layout using the presets list below and use the Settings tab to fine-tune the details.', '__plugin_txtd' )}</p> }
+          content={ <p><strong>{__('Quick start:', '__plugin_txtd')}</strong> {__( 'Set up your gallery layout using the presets list below and fine-tune the details in this section’s Settings tab.', '__plugin_txtd' )}</p> }
           dismissLabel={ __( '✔ Ok, I got it!', '__plugin_txtd' ) }
         />
         <PresetControl

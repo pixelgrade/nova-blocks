@@ -71,7 +71,7 @@ const InspectorControls = ( props ) => {
 
 	return (
 		<Fragment>
-			<ControlsSection id="contextual-post-card-setup" label={ __( 'Setup', '__plugin_txtd' ) }>
+			<ControlsSection id="contextual-post-card-setup" label={ __( 'Setup', '__plugin_txtd' ) } placement={ 'settings' }>
 				<ControlsTab label={ __( 'Settings', '__plugin_txtd' ) }>
 					<ControlsGroup>
 						<RadioControl
@@ -112,7 +112,7 @@ const InspectorControls = ( props ) => {
 				</ControlsTab>
 			</ControlsSection>
 
-			<ControlsSection id="contextual-post-card-content" label={ __( 'Content', '__plugin_txtd' ) }>
+			<ControlsSection id="contextual-post-card-content" label={ __( 'Content', '__plugin_txtd' ) } placement={ 'settings' }>
 				<ControlsTab label={ __( 'Settings', '__plugin_txtd' ) }>
 					<ControlsGroup>
 						<TextControl

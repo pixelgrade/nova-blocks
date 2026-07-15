@@ -56,7 +56,7 @@ const PagerInspectorControls = ( props ) => {
 	];
 
 	return (
-		<ControlsSection id={ 'setup' } label={ __( 'Setup', '__plugin_txtd' ) }>
+		<ControlsSection id={ 'setup' } label={ __( 'Setup', '__plugin_txtd' ) } placement={ 'settings' }>
 			<ControlsTab label={ __( 'Settings', '__plugin_txtd' ) }>
 				<SelectControl
 					label={ __( 'Pager Facet', '__plugin_txtd' ) }

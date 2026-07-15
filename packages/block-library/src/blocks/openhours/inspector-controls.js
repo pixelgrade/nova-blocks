@@ -38,7 +38,7 @@ const OpenHoursInspectorControls = props => {
 
 	return (
 		<Fragment>
-			<ControlsSection id={ 'setup' } label={ __( 'Setup', '__plugin_txtd' ) }>
+			<ControlsSection id={ 'setup' } label={ __( 'Setup', '__plugin_txtd' ) } placement={ 'settings' }>
 				<ControlsTab label={ __( 'Settings', '__plugin_txtd' ) }>
 					<TextareaControl
 						key={ 'openhours-schedule-controls' }
@@ -57,7 +57,7 @@ const OpenHoursInspectorControls = props => {
 					</div>
 				</ControlsTab>
 			</ControlsSection>
-			<ControlsSection id={ 'display' } label={ __( 'Display', '__plugin_txtd' ) }>
+			<ControlsSection id={ 'display' } label={ __( 'Display', '__plugin_txtd' ) } placement={ 'settings' }>
 				<ControlsTab label={ __( 'Settings', '__plugin_txtd' ) }>
 					<RadioControl
 						key={ 'openhours-display-controls' }

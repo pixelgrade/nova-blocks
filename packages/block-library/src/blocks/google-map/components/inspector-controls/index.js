@@ -74,7 +74,7 @@ const InspectorControls = ( props ) => {
             />
           </ControlsTab>
         </ControlsSection>
-        <ControlsSection id={ 'setup' } label={ __( 'Setup', '__plugin_txtd' ) }>
+        <ControlsSection id={ 'setup' } label={ __( 'Setup', '__plugin_txtd' ) } placement={ 'settings' }>
           <ControlsTab label={ __( 'Settings', '__plugin_txtd' ) }>
             <ControlsGroup title={ __( 'Map Markers', '__plugin_txtd' ) }>
               <MarkersList { ...props } />

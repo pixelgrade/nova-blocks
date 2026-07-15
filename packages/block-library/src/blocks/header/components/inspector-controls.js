@@ -51,7 +51,7 @@ const HeaderInspectorControls = ( props ) => {
   const customizerHeaderLink = novablocks_urls.novablocks_customizer_header_link;
 
   return (
-    <ControlsSection id={ 'layout' } label={ __( 'Header Layout', '__plugin_txtd' ) } key={'header_layout'}>
+    <ControlsSection id={ 'layout' } label={ __( 'Header Layout', '__plugin_txtd' ) } placement={ 'settings' } key={'header_layout'}>
       <ControlsTab label={ __( 'Settings', '__plugin_txtd' ) } key={'header_layout_settings'}>
         <ControlsGroup>
         <Notice

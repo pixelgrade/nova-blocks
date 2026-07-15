@@ -17,7 +17,7 @@ const FoodMenuInspectorControls = function( props ) {
 	} = props;
 
 	return (
-		<ControlsSection id={ 'layout' } label={ __( 'Layout', '__plugin_txtd' ) }>
+		<ControlsSection id={ 'layout' } label={ __( 'Layout', '__plugin_txtd' ) } placement={ 'settings' }>
 			<ControlsTab label={ __( 'Settings', '__plugin_txtd' ) }>
 				<ToggleControl
 					label={__( '2 columns', '__plugin_txtd' )}

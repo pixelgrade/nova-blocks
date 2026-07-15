@@ -49,7 +49,7 @@ const FilterInspectorControls = ( props ) => {
   const { orientation, sectionType } = attributes;
 
   return (
-    <ControlsSection id={ 'setup' } label={ __( 'Setup', '__plugin_txtd' ) }>
+    <ControlsSection id={ 'setup' } label={ __( 'Setup', '__plugin_txtd' ) } placement={ 'settings' }>
       <ControlsTab label={ __( 'Settings', '__plugin_txtd' ) }>
         <RadioControl
           label={ __( 'Filter Section Type', '__plugin_txtd' ) }

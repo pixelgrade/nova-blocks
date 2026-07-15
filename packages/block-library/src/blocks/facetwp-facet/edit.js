@@ -76,7 +76,7 @@ const FacetInspectorControls = ( props ) => {
   const { hideLabels, hideCounts } = attributes;
 
   return (
-    <ControlsSection id={ 'setup' } label={ __( 'Setup', '__plugin_txtd' ) }>
+    <ControlsSection id={ 'setup' } label={ __( 'Setup', '__plugin_txtd' ) } placement={ 'settings' }>
       <ControlsTab label={ __( 'Settings', '__plugin_txtd' ) }>
         <ToggleControl
           label={__( 'Hide Label', '__plugin_txtd' )}

@@ -32,7 +32,7 @@ const OpenTableInspectorControls = function( props ) {
 	return (
 		<Fragment>
 
-			<ControlsSection id={ 'setup' } label={ __( 'Setup', '__plugin_txtd' ) }>
+			<ControlsSection id={ 'setup' } label={ __( 'Setup', '__plugin_txtd' ) } placement={ 'settings' }>
 				<ControlsTab label={ __( 'Settings', '__plugin_txtd' ) }>
 					<TextControl
 						key={ 'opentable-restaurant-id-controls' }
@@ -61,7 +61,7 @@ const OpenTableInspectorControls = function( props ) {
 				</ControlsTab>
 			</ControlsSection>
 
-			<ControlsSection id={ 'layout' } label={ __( 'Layout', '__plugin_txtd' ) }>
+			<ControlsSection id={ 'layout' } label={ __( 'Layout', '__plugin_txtd' ) } placement={ 'settings' }>
 				<ControlsTab label={ __( 'Customize', '__plugin_txtd' ) }>
 					<RadioControl
 						key={ 'opentable-layout-controls' }
