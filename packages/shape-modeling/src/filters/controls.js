@@ -1,8 +1,10 @@
 import { __ } from '@wordpress/i18n';
 
 import {
+  buildPresetDefinitions,
   ControlsSection,
   ControlsTab,
+  getManagedAttributes,
   PresetControl,
   useSettings,
   withVisibility
@@ -19,6 +21,20 @@ import { getRandomAttributes } from "../utils";
 const Controls = ( props ) => {
 
   const novablocksSettings = useSettings();
+  const blobPresetOptions = novablocksSettings.blobPresetOptions;
+
+  // Stage 3a managed-bundle retrofit: shape presets are intentionally
+  // partial (e.g. "Rectangle" only asserts blobsEnableMask/
+  // blobsEnableDecoration; the shape-detail attributes are implied "off").
+  // Before this retrofit, clicking a partial preset left whatever a
+  // previously-applied preset had set on the omitted attributes untouched
+  // (e.g. switching from "MX37: Stones" to "Rectangle" kept every
+  // blobMask*/blob*/displacement value from Stones). The managed set below
+  // is the union across ALL blob presets, so applying a partial preset now
+  // clears those attributes back to their registered defaults instead —
+  // see the commit message for the exact attribute list.
+  const { definitions } = buildPresetDefinitions( blobPresetOptions );
+  const managedAttributes = getManagedAttributes( definitions );
 
 	return (
 		<ControlsSection
@@ -31,7 +47,8 @@ const Controls = ( props ) => {
 				<PresetControl
 					key={ 'blob-style-preset' }
 					label={ __( 'Choose a shape preset:', '__plugin_txtd' ) }
-					options={ novablocksSettings.blobPresetOptions }
+					options={ blobPresetOptions }
+					managedAttributes={ managedAttributes }
 					randomize={ getRandomAttributes }
           { ...props }
 				/>
