@@ -5,8 +5,10 @@
 //
 // The `scope` prop distinguishes the two toolbar controls:
 // - 'block' (default): the plain bars, unchanged.
-// - 'content': the SAME bars, scaled down, inside an inset rounded-rectangle
-//   stroke frame — reading as "the signal inside the block's content area".
+// - 'content': the SAME bars, scaled down, inside corner brackets — a
+//   selection-marquee reading of "the region inside the block". Chosen over a
+//   full rounded-rect frame (which can misread as an input field) in the
+//   icon exploration: .ai/playground/color-signal-icon-ideas.html, variant A.
 const VIEWBOX_SIZE = 24;
 
 const BAR_GEOMETRY = {
@@ -25,14 +27,25 @@ const BAR_GEOMETRY = {
   },
 };
 
-// Inset frame for the 'content' scope: stroke-only rounded rectangle.
-const CONTENT_FRAME = {
-  x: 3.5,
-  y: 4,
-  width: 17,   // x: 3.5 .. 20.5
-  height: 16,  // y: 4 .. 20
-  rx: 2.5,
+// Corner brackets for the 'content' scope: four L-shaped marks at the corners
+// of the (inset) region box, like a crop/selection marquee.
+const CONTENT_BRACKETS = {
+  left: 4,
+  right: 20,
+  top: 4,
+  bottom: 20,
+  length: 4.2,
   strokeWidth: 1.5,
+};
+
+const contentBracketsPath = () => {
+  const { left: L, right: R, top: T, bottom: B, length: len } = CONTENT_BRACKETS;
+  return [
+    `M${ L + len } ${ T } H${ L } V${ T + len }`,
+    `M${ R - len } ${ T } H${ R } V${ T + len }`,
+    `M${ L } ${ B - len } V${ B } H${ L + len }`,
+    `M${ R } ${ B - len } V${ B } H${ R - len }`,
+  ].join( ' ' );
 };
 
 const ColorSignalToolbarIcon = ( { level = 0, scope = 'block' } ) => {
@@ -52,15 +65,12 @@ const ColorSignalToolbarIcon = ( { level = 0, scope = 'block' } ) => {
       focusable="false"
     >
       { scope === 'content' && (
-        <rect
-          x={ CONTENT_FRAME.x }
-          y={ CONTENT_FRAME.y }
-          width={ CONTENT_FRAME.width }
-          height={ CONTENT_FRAME.height }
-          rx={ CONTENT_FRAME.rx }
+        <path
+          d={ contentBracketsPath() }
           fill="none"
           stroke="currentColor"
-          strokeWidth={ CONTENT_FRAME.strokeWidth }
+          strokeWidth={ CONTENT_BRACKETS.strokeWidth }
+          strokeLinecap="round"
         />
       ) }
       { heights.map( ( height, index ) => {
