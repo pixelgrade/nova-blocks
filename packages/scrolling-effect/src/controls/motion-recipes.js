@@ -9,16 +9,26 @@
  *
  * Recipes are whole bundles: each one writes the full motion story for its
  * subject and resets the other, so combinations remain the dials' job
- * (Media / Cards tabs), not the presets'.
+ * (Media / Cards tabs), not the presets'. Since the Stage 3a retrofit that
+ * contract is enforced by the managed-bundle preset engine: the family's
+ * managed set is the union of every attribute any rendered recipe writes,
+ * applying a recipe clears the managed attributes it omits (back to their
+ * registered defaults), and selection/Custom is derived tab-wide — never
+ * stored. Plus gating is untouched: the engine runs inside the same
+ * PresetCardsControl instances the TryAndPlay boundaries already wrap.
  */
 import { __ } from '@wordpress/i18n';
 
 import {
+  buildPresetDefinitions,
   CardsMotionThumb,
+  deriveActivePresetId,
+  getManagedAttributes,
   MediaMotionThumb,
   PresetCardsControl,
   TryAndPlay,
   TryAndPlayGroup,
+  useRegisteredAttributeDefaults,
   useSettings,
   useSupports,
 } from '@novablocks/block-editor';
@@ -43,6 +53,7 @@ const MotionRecipes = ( props ) => {
   const { attributes, name } = props;
   const supports = useSupports( name );
   const novablocksSettings = useSettings();
+  const registeredDefaults = useRegisteredAttributeDefaults( name );
 
   const { hasDoppler, hasCollectionDepth } = getScrollingEffectSupports( supports );
 
@@ -133,11 +144,31 @@ const MotionRecipes = ( props ) => {
     } );
   }
 
+  // Stage 3a managed-bundle retrofit: the recipe family is the whole tab
+  // (free + Cinematic + Depth groups render as separate card grids, but a
+  // recipe is one complete motion decision across the union of everything
+  // any of them writes). Every group receives the SAME managed boundary, so
+  // clicking any recipe also clears what another group's recipe left behind
+  // (e.g. "Still" after a Doppler recipe clears the focal/scale/motionPreset
+  // story instead of leaving it stale). Selection/Custom is derived once,
+  // tab-wide, and the shared hint below replaces the per-grid one.
+  const allRecipes = [
+    ...freeRecipes,
+    ...dopplerRecipes,
+    ...stackedDepthRecipes,
+    ...editorialDriftRecipes,
+  ];
+  const { definitions } = buildPresetDefinitions( allRecipes );
+  const managedAttributes = getManagedAttributes( definitions );
+  const activeRecipeId = deriveActivePresetId( definitions, attributes, registeredDefaults );
+
   return (
     <>
       <PresetCardsControl
         label={ __( 'Motion presets', '__plugin_txtd' ) }
         options={ freeRecipes }
+        managedAttributes={ managedAttributes }
+        hideCustomHint
         { ...props }
       />
       { /* One boundary per tab: while locked, every gated recipe group below
@@ -153,20 +184,23 @@ const MotionRecipes = ( props ) => {
       ] }>
         { !! dopplerRecipes.length && (
           <TryAndPlay gateId={ 'motion-recipes' }>
-            <PresetCardsControl label={ __( 'Cinematic presets', '__plugin_txtd' ) } options={ dopplerRecipes } { ...props } />
+            <PresetCardsControl label={ __( 'Cinematic presets', '__plugin_txtd' ) } options={ dopplerRecipes } managedAttributes={ managedAttributes } hideCustomHint { ...props } />
           </TryAndPlay>
         ) }
         { !! stackedDepthRecipes.length && (
           <TryAndPlay gateId={ 'stacked-depth' }>
-            <PresetCardsControl label={ __( 'Depth presets', '__plugin_txtd' ) } options={ stackedDepthRecipes } { ...props } />
+            <PresetCardsControl label={ __( 'Depth presets', '__plugin_txtd' ) } options={ stackedDepthRecipes } managedAttributes={ managedAttributes } hideCustomHint { ...props } />
           </TryAndPlay>
         ) }
         { !! editorialDriftRecipes.length && (
           <TryAndPlay gateId={ 'parametric-depth' }>
-            <PresetCardsControl label={ __( 'Depth presets', '__plugin_txtd' ) } options={ editorialDriftRecipes } { ...props } />
+            <PresetCardsControl label={ __( 'Depth presets', '__plugin_txtd' ) } options={ editorialDriftRecipes } managedAttributes={ managedAttributes } hideCustomHint { ...props } />
           </TryAndPlay>
         ) }
       </TryAndPlayGroup>
+      { null === activeRecipeId && (
+        <p className="nb-settings-hint">{ __( 'Custom', '__plugin_txtd' ) }</p>
+      ) }
       { hasCollectionDepth && ! supportsStackedDrift && ! supportsEditorialDrift && (
         <p className="nb-settings-hint">
           { __( '“Stacked Drift” appears for Classic Grid and Masonry collections; “Editorial Drift” for Parametric grids.', '__plugin_txtd' ) }

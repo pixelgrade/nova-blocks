@@ -76,6 +76,8 @@ run "post card rendering contracts (jest)" npx --no-install jest packages/block-
 run "legacy Color Signal markup (node:test)" node --test packages/color-signal/src/filters/legacy-markup.test.js
 run "cards depth support (jest)" npx --no-install jest packages/scrolling-effect/src/controls/cards-depth-support.test.js
 run "motion recipe gates (node:test)" node --test packages/scrolling-effect/src/controls/motion-recipes-gates.test.js
+run "preset engine managed bundles (jest)" npx --no-install jest packages/block-editor/src/preset-engine packages/block-editor/src/components/preset-control packages/block-editor/src/components/preset-cards packages/block-editor/src/filters/with-space-and-sizing/controls/space-and-sizing-presets.test.js packages/scrolling-effect/src/controls/motion-recipes-managed.test.js
+run "motion recipes managed contract (node:test)" node --test packages/scrolling-effect/src/controls/motion-recipes-managed-contract.test.js
 run "placeholder image fallback (jest)" npx --no-install jest packages/block-editor/src/components/get-placeholder-images/index.test.js
 run "empty hero media placeholder (jest)" npx --no-install jest packages/block-library/src/blocks/supernova/utils/empty-hero-media-placeholder.test.js
 run "unique placeholder image selection (jest)" npx --no-install jest packages/block-library/src/blocks/supernova/utils/placeholder-image-selection.test.js
