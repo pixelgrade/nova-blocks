@@ -3,7 +3,7 @@ Contributors: pixelgrade, vlad.olaru, babbardel, razvanonofrei, gorby31
 Tags: blocks, gutenberg, gutenberg blocks, page builder, full site editing
 Requires at least: 7.0
 Tested up to: 7.0
-Stable tag: 2.2.0
+Stable tag: 2.3.0
 Requires PHP: 7.4
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -113,6 +113,13 @@ Yes! Nova Block's core features are free to use.
 3. Slideshow Me the Way block options
 
 == Changelog ==
+
+= 2.3.0 =
+* New: Design Customization now lives in the Styles tab of the block inspector — where WordPress puts design tools — while structural sections (Elements Visibility, Content Type, block Setup/Layout sections) render in the Settings tab.
+* New: A block toolbar "color trio" on enhanced blocks — click-to-cycle controls for Color Signal, Content Area Color Signal (Cards Collection), and Color Palette, with icons that display the current state (the palette dot wears your palette's actual color).
+* New: Elements Stacking is now an inline "Card Layout" panel with a core-style icon control, instead of a drill-in section.
+* Improved: Drawer navigation remembers your place per block type and per tab, and resets gracefully when sections change.
+* Fix: Section state no longer leaks between different block types in the inspector.
 
 = 2.2.0 =
 * New: Nova Blocks now owns the design decisions it already makes. On enhanced core blocks, the core design tools that Nova Blocks functionally replaces are switched off so two systems no longer fight over the same block: text/background/link color and vertical margins on Group, background color and margins on Separator, text/background color on Buttons, text color on List, and margins on Columns. Everything Nova Blocks does not replace (padding, block spacing, typography, Columns colors, List background) stays untouched.
