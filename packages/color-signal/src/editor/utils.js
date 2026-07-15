@@ -52,6 +52,41 @@ export const getParentVariation = ( clientId ) => {
   return getSiteColorVariation();
 };
 
+/**
+ * Given a block's current (live) attributes, compute the attribute patch that
+ * should be applied when the user picks a new `colorSignal` level — whether
+ * from the sidebar stepper (`BlockColorSignalControl`) or the block toolbar
+ * dropdown (`BlockColorSignalToolbar`).
+ *
+ * This is the exact logic `BlockColorSignalControl`'s `onSignalChange` used to
+ * inline. It is extracted here so both surfaces stay byte-for-byte identical —
+ * neither one may drift into just setting `colorSignal` without also
+ * recomputing `paletteVariation` from the palette + reference variation.
+ *
+ * Callers are expected to feed the returned patch into `updateBlock()` (from
+ * `withColorSignalProps`) with `useSourceOnSameVariation` and
+ * `useSourceOnSameSignal` both `true`, which runs it back through
+ * `getUpdatedAttributes()` below to keep `colorSignal`, `paletteVariation`, and
+ * `contentPaletteVariation` in sync.
+ *
+ * @param attributes the block's current (live) attributes
+ * @param clientId the block's clientId
+ * @param nextSignal the desired colorSignal value (0-3)
+ * @returns {{paletteVariation: number, useSourceColorAsReference: boolean}}
+ */
+export const getSignalChangeAttributes = ( attributes, clientId, nextSignal ) => {
+  const { palette } = attributes;
+  const referenceVariation = getParentVariation( clientId );
+  const absoluteVariation = getAbsoluteColorVariation( attributes );
+  const nextVariation = computeColorSignal( referenceVariation, nextSignal, palette, absoluteVariation );
+  const finalVariation = removeSiteVariationOffset( nextVariation );
+
+  return {
+    paletteVariation: finalVariation,
+    useSourceColorAsReference: false,
+  };
+};
+
 export const getUpdatedAttributes = ( attributes, clientId, newAttributes = {}, stickySourceColor = true, useSourceOnSameVariation = false, useSourceOnSameSignal = false ) => {
   // prepare attribute values to be used in computing next attributes
   const nextAttributes = Object.assign( {}, attributes, newAttributes );
