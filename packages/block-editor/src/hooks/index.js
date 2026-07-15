@@ -9,6 +9,7 @@ export { default as useInnerBlocksLock } from './use-inner-blocks-lock';
 export { default as useMemoryState } from './use-memory-state';
 export { default as useMeta } from './use-meta';
 export { default as useOnScroll } from './use-on-scroll';
+export { default as useRegisteredAttributeDefaults } from './use-registered-attribute-defaults';
 export { default as useResizeObserver } from './use-resize-observer';
 export { default as useSupports } from './use-supports';
 export { default as useSettings } from './use-settings';

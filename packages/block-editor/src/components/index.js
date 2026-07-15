@@ -12,7 +12,7 @@ export { default as ImageSelectControl } from './image-select-control';
 export { default as InnerBlocksPreview } from './inner-blocks-preview';
 export { default as Notice } from "./notice";
 export { default as ParametricGrid } from "./parametric-grid";
-export { default as PresetControl } from "./preset-control";
+export { default as PresetControl, buildPresetDefinitions } from "./preset-control";
 export { default as PresetCardsControl } from "./preset-cards";
 export { MediaMotionThumb, CardsMotionThumb } from "./preset-cards/thumbnails";
 export { default as SectionLink } from "./section-link";
