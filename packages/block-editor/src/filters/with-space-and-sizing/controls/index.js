@@ -5,6 +5,7 @@ import { ControlsGroup, ControlsSection, ControlsTab, withVisibility } from "../
 import { useSpacingIsZeroedByAncestor } from "../../../hooks";
 
 import SpaceAndSizingPresets from './space-and-sizing-presets';
+import DensityControl from './density';
 
 import CardSpacingCustomize from './card-spacing-customize';
 import CardSpacingSettings from './card-spacing-settings';
@@ -49,6 +50,7 @@ const SpaceAndSizingControls = ( props ) => {
       </ControlsTab>
       <ControlsTab id="space-and-sizing-customize" label={ __( 'Customize', '__plugin_txtd' ) }>
         <SpacingZeroedNotice clientId={ props.clientId } />
+        <DensityControl key={ 'density' } { ...props } />
         <CardSpacingCustomize key={ 'card-spacing-customize' } { ...props } />
         <ImageContainerHeightCustomize key={ 'image-container-customize' } { ...props } />
         <VisualBalanceCustomize key={ 'visual-balance-customize' } { ...props } />

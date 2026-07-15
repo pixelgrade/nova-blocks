@@ -53,6 +53,9 @@ run "inner blocks count undo history (node:test)" node --test packages/block-edi
 run "plus gating analyze (jest)" npx --no-install jest packages/block-editor/src/plus-gating/analyze.test.js
 run "plus gate merged boundary (node:test)" node --test packages/block-editor/src/components/plus-gate/group.test.js
 run "drawer panel height (jest)" npx --no-install jest packages/block-editor/src/components/drawer/index.test.js
+run "group Density serialization (jest)" npx --no-install jest packages/block-editor/src/filters/with-space-and-sizing/density-serialization.test.js --transformIgnorePatterns='node_modules/(?!(@wordpress|memize)/)'
+run "group Density wiring (jest)" npx --no-install jest packages/block-editor/src/filters/with-space-and-sizing/density-wiring.test.js
+run "group Density styles (jest)" npx --no-install jest packages/core/src/scss/components/spacing/density.test.js
 run "announcement block id persistence (jest)" npx --no-install jest packages/block-library/src/blocks/announcement-bar/block-id.test.js
 run "color signal onboarding (jest)" npx --no-install jest packages/color-signal/src/onboarding/build-guide-content.test.js packages/color-signal/src/onboarding/derive-steps.test.js packages/color-signal/src/onboarding/guide-session.test.js packages/color-signal/src/onboarding/practice-section.test.js
 run "collection free presets (jest)" npx --no-install jest packages/block-editor/src/filters/with-collection-layout/controls/composition/free-presets.test.js
