@@ -3,14 +3,9 @@ import { useCallback } from "@wordpress/element";
 
 import { SignalControl } from "@novablocks/block-editor";
 
-import { getParentVariation } from "../../editor/utils";
+import { getSignalChangeAttributes } from "../../editor/utils";
 
-import {
-  computeColorSignal,
-  getAbsoluteColorVariation,
-  getMaxSignal,
-  removeSiteVariationOffset
-} from "../../utils";
+import { getMaxSignal } from "../../utils";
 
 const BlockColorSignal = props => {
 
@@ -26,17 +21,8 @@ const BlockColorSignal = props => {
   } = attributes;
 
   const onSignalChange = useCallback( nextSignal => {
-    const referenceVariation = getParentVariation( clientId );
-    const absoluteVariation = getAbsoluteColorVariation( attributes );
-    const nextVariation = computeColorSignal( referenceVariation, nextSignal, palette, absoluteVariation );
-    const finalVariation = removeSiteVariationOffset( nextVariation );
-
-    updateBlock( {
-      paletteVariation: finalVariation,
-      useSourceColorAsReference: false,
-    }, true, true );
-
-  }, [ attributes, clientId, palette, updateBlock ] );
+    updateBlock( getSignalChangeAttributes( attributes, clientId, nextSignal ), true, true );
+  }, [ attributes, clientId, updateBlock ] );
 
   return (
     <SignalControl
