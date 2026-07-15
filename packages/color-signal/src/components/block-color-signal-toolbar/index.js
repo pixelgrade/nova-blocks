@@ -2,12 +2,19 @@ import { __, sprintf } from "@wordpress/i18n";
 import { BlockControls } from "@wordpress/block-editor";
 import { ToolbarButton } from "@wordpress/components";
 
-import { useSupports } from "@novablocks/block-editor";
+import { useSettings, useSupports } from "@novablocks/block-editor";
 
-import { getContentSignalChangeAttributes, getSignalChangeAttributes } from "../../editor/utils";
+import { getContentSignalChangeAttributes, getPaletteChangeAttributes, getSignalChangeAttributes } from "../../editor/utils";
 import withColorSignalProps from "../with-color-signal-props";
+import {
+  getNextPalette,
+  getPaletteDisplayColor,
+  getPaletteLabel,
+  getVisiblePalettes,
+} from "../palette-picker/palette-options";
 import { getColorSignalLevels, COLOR_SIGNAL_LEVEL_LABELS } from "./get-color-signal-levels";
 import ColorSignalToolbarIcon from "./icon";
+import PaletteToolbarIcon from "./palette-icon";
 
 /**
  * Block toolbar control for Color Signal. Follows core's alignment-button
@@ -22,8 +29,10 @@ import ColorSignalToolbarIcon from "./icon";
  */
 const BlockColorSignalToolbar = withColorSignalProps( ( props ) => {
 
-  const { attributes, clientId, updateBlock, name } = props;
-  const { colorSignal, contentColorSignal } = attributes;
+  const { attributes, clientId, updateBlock, name, showFunctionalColors, stickySourceColor } = props;
+  const { colorSignal, contentColorSignal, palette } = attributes;
+
+  const novablocksSettings = useSettings();
 
   const supports = useSupports( name );
   const colorSignalSupport = supports?.novaBlocks?.colorSignal;
@@ -64,6 +73,25 @@ const BlockColorSignalToolbar = withColorSignalProps( ( props ) => {
   const currentContentIndex = contentLevels.findIndex( ( level ) => level.value === contentColorSignal );
   const nextContentLevel = contentLevels[ ( currentContentIndex + 1 ) % contentLevels.length ] || contentLevels[ 0 ];
 
+  // EXPERIMENT: a Color Palette cycler completing the color trio. It steps
+  // through the exact palette option set the sidebar PalettePicker shows for
+  // this block (same getVisiblePalettes helper, same showFunctionalColors
+  // memory state from withColorSignalProps), and applies the exact same
+  // change logic (getPaletteChangeAttributes with default updateBlock flags).
+  //
+  // Note: the cycler always advances to a DIFFERENT palette, so
+  // getPaletteChangeAttributes' same-palette branch (the stickySourceColor
+  // "shifted"/source-as-reference toggle) is unreachable from here by
+  // construction — that behavior remains sidebar-only, where re-clicking the
+  // selected swatch triggers it.
+  const visiblePalettes = getVisiblePalettes( novablocksSettings?.palettes, showFunctionalColors );
+  const showPaletteCycler = visiblePalettes.length >= 2;
+  const currentPalette = visiblePalettes.find( ( paletteConfig ) => `${ paletteConfig.id }` === `${ palette }` )
+    || ( Array.isArray( novablocksSettings?.palettes )
+      ? novablocksSettings.palettes.find( ( paletteConfig ) => `${ paletteConfig.id }` === `${ palette }` )
+      : undefined );
+  const nextPalette = getNextPalette( visiblePalettes, palette );
+
   return (
     <BlockControls group="other">
       <ToolbarButton
@@ -92,6 +120,22 @@ const BlockColorSignalToolbar = withColorSignalProps( ( props ) => {
             // same default updateBlock() flags — do not add the source-color
             // flags used by the block-level cycler above.
             updateBlock( getContentSignalChangeAttributes( attributes, clientId, nextContentLevel.value ) );
+          } }
+        />
+      ) }
+      { showPaletteCycler && nextPalette && (
+        <ToolbarButton
+          icon={ <PaletteToolbarIcon color={ getPaletteDisplayColor( currentPalette ) } /> }
+          label={ sprintf(
+            /* translators: 1: current Color Palette label; 2: the palette a click switches to */
+            __( 'Color Palette: %1$s — click for %2$s', '__plugin_txtd' ),
+            getPaletteLabel( currentPalette ) || getPaletteLabel( { id: palette } ),
+            getPaletteLabel( nextPalette )
+          ) }
+          onClick={ () => {
+            // Same helper + default updateBlock() flags as the sidebar's
+            // PalettePicker onPaletteChange.
+            updateBlock( getPaletteChangeAttributes( attributes, clientId, `${ nextPalette.id }`, stickySourceColor ) );
           } }
         />
       ) }

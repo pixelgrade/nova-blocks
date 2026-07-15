@@ -121,6 +121,53 @@ export const getContentSignalChangeAttributes = ( attributes, clientId, nextSign
   };
 };
 
+/**
+ * The palette counterpart of `getSignalChangeAttributes()`: given a block's
+ * current (live) attributes, compute the attribute patch to apply when the
+ * user picks a palette — whether from the sidebar swatch grid
+ * (`PalettePicker`) or the block toolbar palette cycler.
+ *
+ * This is the exact logic `PalettePicker`'s inline `onPaletteChange` used to
+ * perform, including its special same-palette branch: re-picking the block's
+ * current palette while the block declares `stickySourceColor` support
+ * toggles `useSourceColorAsReference` (the "shifted" palette behavior) and
+ * recomputes `paletteVariation` + `colorSignal` around the palette's source
+ * color. Picking a different palette simply patches `palette` and lets
+ * `getUpdatedAttributes()` (via `updateBlock()`) recompute everything else.
+ *
+ * Callers are expected to feed the returned patch into `updateBlock()` (from
+ * `withColorSignalProps`) with its default flags — the sidebar picker passes
+ * no extra arguments, and the toolbar must match it exactly.
+ *
+ * @param attributes the block's current (live) attributes
+ * @param clientId the block's clientId
+ * @param nextPalette the picked palette id, as a string
+ * @param stickySourceColor the block's resolved `stickySourceColor` support flag
+ * @returns {Object} the attribute patch for updateBlock()
+ */
+export const getPaletteChangeAttributes = ( attributes, clientId, nextPalette, stickySourceColor ) => {
+  const { palette, useSourceColorAsReference } = attributes;
+
+  if ( nextPalette === palette && stickySourceColor ) {
+    const referenceVariation = getParentVariation( clientId );
+    const sourceIndex = getSourceIndexFromPaletteId( palette );
+    const nextSourceColorAsReference = ! useSourceColorAsReference;
+    const absoluteVariation = sourceIndex + 1;
+    const nextVariation = nextSourceColorAsReference ? 1 : absoluteVariation;
+    const nextSignal = getSignalRelativeToVariation( addSiteVariationOffset( absoluteVariation ), referenceVariation, palette );
+
+    return {
+      useSourceColorAsReference: nextSourceColorAsReference,
+      paletteVariation: nextVariation,
+      colorSignal: nextSignal,
+    };
+  }
+
+  return {
+    palette: nextPalette,
+  };
+};
+
 export const getUpdatedAttributes = ( attributes, clientId, newAttributes = {}, stickySourceColor = true, useSourceOnSameVariation = false, useSourceOnSameSignal = false ) => {
   // prepare attribute values to be used in computing next attributes
   const nextAttributes = Object.assign( {}, attributes, newAttributes );
