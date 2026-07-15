@@ -1,6 +1,6 @@
 import { __, sprintf } from "@wordpress/i18n";
 import { BlockControls } from "@wordpress/block-editor";
-import { ToolbarDropdownMenu } from "@wordpress/components";
+import { ToolbarButton } from "@wordpress/components";
 
 import { useSupports } from "@novablocks/block-editor";
 
@@ -38,24 +38,27 @@ const BlockColorSignalToolbar = withColorSignalProps( ( props ) => {
 
   const currentLabel = COLOR_SIGNAL_LEVEL_LABELS[ colorSignal ] ?? COLOR_SIGNAL_LEVEL_LABELS[ 0 ];
 
+  // EXPERIMENT (feel-test vs the dropdown variant on design/toolbar-signal):
+  // plain click advances the signal one level, wrapping within the block's
+  // valid range. Safe-by-construction — every level is a guaranteed-good
+  // state — but trades away the visible option map and adds a High→None
+  // wrap jump. Keep whichever variant wins the hands-on comparison.
+  const currentIndex = levels.findIndex( ( level ) => level.value === colorSignal );
+  const nextLevel = levels[ ( currentIndex + 1 ) % levels.length ] || levels[ 0 ];
+
   return (
     <BlockControls group="other">
-      <ToolbarDropdownMenu
+      <ToolbarButton
         icon={ <ColorSignalToolbarIcon level={ colorSignal } /> }
         label={ sprintf(
-          /* translators: %s: current Color Signal level, e.g. "Low" */
-          __( 'Color Signal: %s', '__plugin_txtd' ),
-          currentLabel
+          /* translators: 1: current Color Signal level; 2: the level a click switches to */
+          __( 'Color Signal: %1$s — click for %2$s', '__plugin_txtd' ),
+          currentLabel,
+          nextLevel.label
         ) }
-        controls={ levels.map( ( level ) => ( {
-          title: level.label,
-          icon: <ColorSignalToolbarIcon level={ level.value } />,
-          role: 'menuitemradio',
-          isActive: level.value === colorSignal,
-          onClick: () => {
-            updateBlock( getSignalChangeAttributes( attributes, clientId, level.value ), true, true );
-          },
-        } ) ) }
+        onClick={ () => {
+          updateBlock( getSignalChangeAttributes( attributes, clientId, nextLevel.value ), true, true );
+        } }
       />
     </BlockControls>
   );
