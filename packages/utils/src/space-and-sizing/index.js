@@ -1,5 +1,17 @@
 import { getCardMediaPaddingTop } from "../index";
 
+export const DENSITY_VALUES = [ 's', 'm', 'l', 'xl' ];
+
+export const isDensityValue = value => DENSITY_VALUES.includes( value );
+
+export const getDensityClassName = ( blockName, density ) => {
+  if ( blockName !== 'core/group' || ! isDensityValue( density ) ) {
+    return undefined;
+  }
+
+  return `nb-density-${ density }`;
+};
+
 // Emit this value unitless to match the editor preview, the PHP frontend render
 // (block-rendering.php:507), and the SCSS, which consume
 // --nb-card-media-container-height as a bare number inside
@@ -35,9 +47,11 @@ export const getSpacingCSSProps = ( attributes, existingStyle = {} ) => {
     thumbnailAspectRatioString,
     spacingModifier,
     spacingMultiplierOverride,
+    density,
   } = attributes;
 
   const isOriginalAspectRatio = thumbnailAspectRatioString === 'original';
+  const hasDensity = isDensityValue( density );
 
   const emphasisTopSpacingValue = verticalAlignment === 'top' ? Math.abs(emphasisTopSpacing) : emphasisTopSpacing;
   const emphasisBottomSpacingValue = verticalAlignment === 'bottom' ? Math.abs(emphasisBottomSpacing) : emphasisBottomSpacing;
@@ -65,7 +79,11 @@ export const getSpacingCSSProps = ( attributes, existingStyle = {} ) => {
     '--nb-card-layout-gap-modifier': layoutGutter / 100,
     '--nb-min-height-fallback': minHeightFallback,
     '--nb-minimum-container-height': minHeightFallback + 'vh',
-    '--nb-spacing-modifier': spacingModifier + '',
-    '--nb-spacing-multiplier-override': spacingMultiplierOverride + '',
+    ...( hasDensity && spacingModifier === 1 ? {} : {
+      '--nb-spacing-modifier': spacingModifier + '',
+    } ),
+    ...( hasDensity && spacingMultiplierOverride === 1 ? {} : {
+      '--nb-spacing-multiplier-override': spacingMultiplierOverride + '',
+    } ),
   }
 };
