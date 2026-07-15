@@ -213,6 +213,16 @@ When changing the version number, update ALL of these:
 - [ ] `readme.txt` → `Stable tag: X.Y.Z`
 - [ ] `readme.txt` → `Tested up to: X.Y`
 
+## Preset Engine (Managed Bundles)
+
+All preset UIs must run through the managed-bundle engine at `packages/block-editor/src/preset-engine/` (pure functions: `getPresetApplyPatch`, `deriveActivePresetId`, `getManagedAttributes`). The contract, decided after an adversarial design review (full rationale in `.ai/design-customization/preset-engine.md` and `stage-3a-preset-semantics.md`):
+
+- A preset definition is `{ id, version, managedAttributes, values }`, immutable per `id+version` — a changed published preset gets a NEW version, never a rewrite.
+- Applying a preset is ONE `setAttributes()` patch: write every declared value, clear (`undefined`) every managed attribute the preset omits, preserve everything outside the managed set. No follow-up attribute writes (one-step undo is guaranteed by this shape).
+- The active preset is DERIVED by comparing attributes (normalized through registered defaults) against definitions — never stored. No match = the first-class **Custom** state. Do not add a stored `presetId`: attributes carry no provenance, so stored identity drifts into a lie on the first fine-tune.
+- `PresetControl` engages the engine only when passed a `managedAttributes` prop; callers without it are untouched. Migrated families: Space and Sizing (no behavior change), Shape Modeling (partial presets now intentionally clear omitted managed attributes — e.g. Rectangle clears the 13 shape-detail attrs a richer preset left behind). Motion recipes are NOT yet migrated.
+- Every definition in a family must declare the SAME `managedAttributes` set — it is the family's complete capability domain.
+
 ## Cards Collection Hover Border Integration
 
 - The Pile-style hover frame for stacked Cards Collection blocks is driven by the `overlayFilterHoverBorderSize` attribute under `Overlay Filter`, not by page transitions.
