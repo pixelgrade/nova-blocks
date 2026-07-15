@@ -1,6 +1,4 @@
-import classnames from 'classnames';
-
-import { getDensityClassName, getSpacingCSSProps } from "@novablocks/utils";
+import { getSpacingCSSProps } from "@novablocks/utils";
 import { getSupports } from "../../utils";
 
 const withSpaceAndSizingSaveCustomProps = ( extraProps, blockType, attributes ) => {
@@ -11,22 +9,16 @@ const withSpaceAndSizingSaveCustomProps = ( extraProps, blockType, attributes ) 
     return extraProps;
   }
 
-  const densityClassName = getDensityClassName( blockType.name, attributes?.density );
-  const propsWithDensity = densityClassName ? {
-    ...extraProps,
-    className: classnames( extraProps.className, densityClassName ),
-  } : extraProps;
-
   const legacySpacingFlags = attributes?.metadata?.__novablocksLegacySpacing;
 
   // Content saved before this feature existed carries none of the --nb-*
   // custom properties; leave it untouched instead of injecting a manufactured
   // default set that drifts from its own (styleless) stored markup.
   if ( legacySpacingFlags?.noSpacingMarkup ) {
-    return propsWithDensity;
+    return extraProps;
   }
 
-  const spacingCSSProps = getSpacingCSSProps( attributes, propsWithDensity?.style );
+  const spacingCSSProps = getSpacingCSSProps( attributes, extraProps?.style );
 
 	if ( legacySpacingFlags?.missingAspectRatioVar ) {
 		delete spacingCSSProps['--nb-card-media-aspect-ratio'];
@@ -48,9 +40,9 @@ const withSpaceAndSizingSaveCustomProps = ( extraProps, blockType, attributes ) 
   }
 
   return {
-    ...propsWithDensity,
+    ...extraProps,
     style: {
-      ...propsWithDensity?.style,
+      ...extraProps?.style,
       ...spacingCSSProps
     },
   }

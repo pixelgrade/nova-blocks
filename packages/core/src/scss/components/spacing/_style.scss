@@ -41,28 +41,8 @@
   --nb-block-top-spacing: 0;
 }
 
-:is(
-  [style*="--nb-spacing-modifier"],
-  .wp-block-group.nb-density-s,
-  .wp-block-group.nb-density-m,
-  .wp-block-group.nb-density-l,
-  .wp-block-group.nb-density-xl
-) {
+[style*="--nb-spacing-modifier"] {
   @include block-spacing-modifier;
-}
-
-$nb-density-multipliers: (
-  s: 0.5,
-  m: 1,
-  l: 1.5,
-  xl: 2,
-);
-
-@each $density, $multiplier in $nb-density-multipliers {
-  .wp-block-group.nb-density-#{$density} {
-    --nb-spacing-modifier: #{$multiplier};
-    --nb-spacing-multiplier-override: #{$multiplier};
-  }
 }
 
 /**

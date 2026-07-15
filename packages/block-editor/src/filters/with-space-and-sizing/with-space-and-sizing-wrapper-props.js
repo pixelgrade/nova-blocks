@@ -2,7 +2,7 @@ import { createHigherOrderComponent } from "@wordpress/compose";
 import { useSelect } from "@wordpress/data";
 import { store as preferencesStore } from '@wordpress/preferences';
 import classnames from 'classnames';
-import { getDensityClassName, getSpacingCSSProps } from "@novablocks/utils";
+import { getSpacingCSSProps } from "@novablocks/utils";
 
 import { useSupports } from "../../hooks";
 import { useMemoryState } from "../../hooks";
@@ -20,7 +20,6 @@ const withBlockListWrapperProps = createHigherOrderComponent( ( BlockListBlock )
   return ( props ) => {
     const { attributes, isSelected } = props;
     const supports = useSupports( props.name );
-    const densityClassName = getDensityClassName( props.name, attributes?.density );
     const [ activeDrawerId ] = useMemoryState( 'drawerActiveId' );
     const showSpaceAndSizingPreview = useSelect( ( select ) => {
       return select( preferencesStore ).get(
@@ -49,7 +48,6 @@ const withBlockListWrapperProps = createHigherOrderComponent( ( BlockListBlock )
       },
       className: classnames(
         wrapperProps?.className,
-        densityClassName,
         'novablocks-space-and-sizing-preview',
         {
           'novablocks-space-and-sizing-preview--visible': previewState.isPreviewVisible,

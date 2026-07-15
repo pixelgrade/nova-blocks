@@ -1,8 +1,6 @@
 import attributes from "./attributes.json";
 
-import { DENSITY_VALUES } from '@novablocks/utils';
-
-const withSpaceAndSizingAttributes = ( block, name = block.name ) => {
+const withSpaceAndSizingAttributes = ( block ) => {
 
   const spacingSupports = block?.supports?.novaBlocks?.spaceAndSizing;
 
@@ -14,13 +12,7 @@ const withSpaceAndSizingAttributes = ( block, name = block.name ) => {
     ...block,
     attributes: {
       ...block.attributes,
-      ...attributes,
-      ...( name === 'core/group' ? {
-        density: {
-          type: 'string',
-          enum: DENSITY_VALUES,
-        },
-      } : {} ),
+      ...attributes
     }
   };
 };
