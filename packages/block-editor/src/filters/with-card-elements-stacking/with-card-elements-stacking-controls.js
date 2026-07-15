@@ -1,6 +1,6 @@
 import { createHigherOrderComponent } from "@wordpress/compose";
 import { Fragment } from "@wordpress/element";
-import Controls from "./controls";
+import CardElementsStackingInspectorControls from "./inspector-controls";
 import { useSupports } from "../../hooks";
 
 const withCardElementsStackingControls = createHigherOrderComponent( OriginalComponent => {
@@ -15,7 +15,7 @@ const withCardElementsStackingControls = createHigherOrderComponent( OriginalCom
 
     return (
       <Fragment>
-        <Controls { ...props } />
+        <CardElementsStackingInspectorControls { ...props } />
         <OriginalComponent { ...props } />
       </Fragment>
     )
