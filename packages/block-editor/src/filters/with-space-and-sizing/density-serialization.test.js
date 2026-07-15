@@ -119,6 +119,18 @@ test( 'registers no-default Density only on core/group', () => {
 	expect( columns.attributes.density ).toBeUndefined();
 } );
 
+test( 'uses the registerBlockType name argument when settings omit name', () => {
+	const settings = withSpaceAndSizingAttributes( {
+		attributes: {},
+		supports: { novaBlocks: { spaceAndSizing: true } },
+	}, 'core/group' );
+
+	expect( settings.attributes.density ).toEqual( {
+		type: 'string',
+		enum: densityValues,
+	} );
+} );
+
 test( 'keeps undefined-Density Group serialization byte-identical to the generated fixture', () => {
 	expect( serializeGroup( {} ) ).toBe( fixture );
 	expect( serializeGroup( { density: undefined } ) ).toBe( fixture );
