@@ -120,6 +120,24 @@ export const CollageThumb = () => (
   </Thumb>
 );
 
+/**
+ * The Broadsheet front page schematized: a two-track lead story (accent) with
+ * its excerpt columns beneath, single-column stories beside it, and the
+ * briefs rail on the far track under a thin masthead rule.
+ */
+export const BroadsheetThumb = () => (
+  <Thumb>
+    <Cell x={ 2 } y={ 2 } width={ 56 } height={ 2 } />
+    <Cell x={ 2 } y={ 7 } width={ 27 } height={ 15 } accent />
+    <Cell x={ 2 } y={ 24 } width={ 12.5 } height={ 14 } />
+    <Cell x={ 16.5 } y={ 24 } width={ 12.5 } height={ 14 } />
+    <Cell x={ 31 } y={ 7 } width={ 12.5 } height={ 31 } />
+    <Cell x={ 45.5 } y={ 7 } width={ 12.5 } height={ 9 } />
+    <Cell x={ 45.5 } y={ 18 } width={ 12.5 } height={ 9 } />
+    <Cell x={ 45.5 } y={ 29 } width={ 12.5 } height={ 9 } />
+  </Thumb>
+);
+
 export const CarouselThumb = ( { visible = 3, variable = false } ) => {
   const widths = variable
     ? [ 22, 13, 18, 22 ]

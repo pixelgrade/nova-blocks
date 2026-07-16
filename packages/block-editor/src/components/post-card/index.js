@@ -180,11 +180,14 @@ export const PostCardComponent = props => {
 
   // Mirror the frontend's card expression classes (media ratio + content
   // length) so ratio-adaptive theme styling matches editor and frontend.
+  const postDateTimestamp = Date.parse( post?.date_gmt );
   const expressionClasses = [ ...getCardExpressionClassesFromValues( {
     mediaWidth: showMedia ? props.media?.originalWidth : 0,
     mediaHeight: showMedia ? props.media?.originalHeight : 0,
     title: post?.title?.raw || '',
     description: stripHTML( post?.excerpt?.rendered || '' ),
+    postTimestamp: Number.isFinite( postDateTimestamp ) ? Math.round( postDateTimestamp / 1000 ) : 0,
+    newestTimestamp: Number( props.collectionNewestPostTimestamp ) || 0,
   } ), getPostFormatClass( post ) ].join( ' ' );
 
   const quoteParts = post?.format === 'quote' ? extractPostQuote( post ) : null;

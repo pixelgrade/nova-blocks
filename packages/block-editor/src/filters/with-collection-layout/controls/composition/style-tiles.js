@@ -10,6 +10,7 @@ import { __ } from '@wordpress/i18n';
 import { PlusBadge, withVisibility } from '../../../../components';
 import { useSettings } from '../../../../hooks';
 import {
+  BroadsheetThumb,
   ClassicThumb,
   CollageThumb,
   MasonryThumb,
@@ -44,6 +45,8 @@ const getStyleTileAttributes = ( layoutStyle ) => {
 
 const getRecipeThumbnail = ( recipe, attributes ) => {
   switch ( recipe.thumbnail ) {
+    case 'broadsheet':
+      return <BroadsheetThumb />;
     case 'collage':
       return <CollageThumb />;
     case 'classic':

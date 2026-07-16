@@ -101,4 +101,47 @@ describe( 'getCardExpressionClassesFromValues', () => {
     expect( classes ).toContain( 'nb-card--media-wide' );
     expect( classes ).toContain( 'nb-card--title-none' );
   } );
+
+  // Recency is anchored to the newest post in the same rendered collection —
+  // never the wall clock. Timestamps are UNIX seconds (PHP mirror parity).
+  describe( 'recency (nb-card--fresh)', () => {
+    const newest = 1700000000;
+    const day = 86400;
+
+    test( 'exactly at the 30-day edge is still fresh (<= boundary)', () => {
+      const classes = getCardExpressionClassesFromValues( {
+        postTimestamp: newest - 30 * day,
+        newestTimestamp: newest,
+      } );
+
+      expect( classes ).toContain( 'nb-card--fresh' );
+    } );
+
+    test( 'a second past the window is stale', () => {
+      const classes = getCardExpressionClassesFromValues( {
+        postTimestamp: newest - 30 * day - 1,
+        newestTimestamp: newest,
+      } );
+
+      expect( classes ).not.toContain( 'nb-card--fresh' );
+    } );
+
+    test( 'the newest post is fresh', () => {
+      const classes = getCardExpressionClassesFromValues( {
+        postTimestamp: newest,
+        newestTimestamp: newest,
+      } );
+
+      expect( classes ).toContain( 'nb-card--fresh' );
+    } );
+
+    test( 'fails closed without both timestamps (legacy callers unchanged)', () => {
+      expect( getCardExpressionClassesFromValues( { postTimestamp: newest } ) )
+        .not.toContain( 'nb-card--fresh' );
+      expect( getCardExpressionClassesFromValues( { newestTimestamp: newest } ) )
+        .not.toContain( 'nb-card--fresh' );
+      expect( getCardExpressionClassesFromValues( {} ) )
+        .not.toContain( 'nb-card--fresh' );
+    } );
+  } );
 } );
