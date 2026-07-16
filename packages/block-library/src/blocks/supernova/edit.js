@@ -19,6 +19,7 @@ import { getAlignFromMatrix } from '@novablocks/utils';
 
 import BlockControls from './block-controls';
 import InspectorControls from './inspector-controls';
+import CardStyleControls from './card-styles/controls';
 
 import {
   PostsCollectionLayout,
@@ -507,6 +508,7 @@ const SupernovaEdit = props => {
       <SupernovaPreview { ...props } attributes={ previewAttributes } posts={ posts } inQuery={ isDescendentOfQueryLoop } key={ 'preview' }/>
       <BlockControls { ...props } inQuery={ isDescendentOfQueryLoop } key={ 'block-controls' }/>
       <InspectorControls { ...props } inQuery={ isDescendentOfQueryLoop } key={ 'inspector-controls' }/>
+      <CardStyleControls { ...props } key={ 'card-style-controls' }/>
       <ChangeMediaBlockControls { ...props } key={ 'media-composition-block-controls' }/>
     </Fragment>
   );

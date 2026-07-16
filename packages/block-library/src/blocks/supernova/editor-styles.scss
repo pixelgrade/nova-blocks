@@ -64,3 +64,103 @@
   padding-right: 0 !important;
   grid-template-columns: minmax(0, 1fr) !important;
 }
+
+/* ---------- Card Style preset tiles (Stage 3a Phase 3) ---------- */
+/* Painted inline from the live palettes payload by CardStyleThumb;
+   only the schematic media + content structure lives here. */
+
+.nb-card-style-thumb {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  height: 64px;
+  padding: 6px;
+  background: #f0f0f1;
+  border-radius: 3px;
+}
+
+.nb-card-style-thumb__media {
+  position: relative;
+  display: block;
+  overflow: hidden;
+  flex: 1 1 55%;
+  height: 100%;
+  border-radius: 2px;
+}
+
+.nb-card-style-thumb__media.is-shape-mask {
+  border-radius: 46% 54% 60% 40% / 50% 45% 55% 50%;
+}
+
+.nb-card-style-thumb__overlay {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+}
+
+.nb-card-style-thumb__content {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 3px;
+  flex: 1 1 45%;
+  padding: 6px;
+  border-radius: 2px;
+}
+
+.nb-card-style-thumb__title {
+  width: 70%;
+  height: 4px;
+  border-radius: 2px;
+}
+
+.nb-card-style-thumb__line {
+  width: 90%;
+  height: 2px;
+  border-radius: 2px;
+  opacity: 0.5;
+}
+
+.nb-card-style-thumb__cta {
+  width: 40%;
+  height: 3px;
+  border-radius: 2px;
+}
+
+.nb-card-style-thumb--vertical {
+  flex-direction: column;
+}
+
+.nb-card-style-thumb--vertical .nb-card-style-thumb__media {
+  width: 100%;
+  flex: 1 1 auto;
+}
+
+.nb-card-style-thumb--vertical .nb-card-style-thumb__content {
+  width: 100%;
+  flex: 0 0 auto;
+}
+
+.nb-card-style-thumb--stacked {
+  position: relative;
+}
+
+.nb-card-style-thumb--stacked .nb-card-style-thumb__media {
+  position: absolute;
+  top: 6px;
+  right: 6px;
+  bottom: 6px;
+  left: 6px;
+  height: auto;
+  flex: none;
+}
+
+.nb-card-style-thumb--stacked .nb-card-style-thumb__content {
+  position: relative;
+  z-index: 1;
+  width: 62%;
+  flex: 0 0 auto;
+}
