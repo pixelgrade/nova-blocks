@@ -5,7 +5,7 @@ const {
   HEADER_LAYOUT_DEFINITIONS,
 } = require('./layout-definitions');
 
-test('exports the five header layout definitions used by the chooser', () => {
+test('exports the six header layout definitions used by the chooser', () => {
   assert.deepEqual(
     HEADER_LAYOUT_DEFINITIONS.map( ( definition ) => definition.name ),
     [
@@ -14,6 +14,7 @@ test('exports the five header layout definitions used by the chooser', () => {
       'logo-center',
       'logo-center-two-rows',
       'logo-center-three-rows',
+      'editorial-masthead',
     ]
   );
 } );
@@ -51,6 +52,11 @@ test('provides short chooser titles and descriptions for each layout', () => {
         title: 'Three Rows',
         description: 'Top secondary navigation, centered logo row, and primary navigation below.',
       },
+      {
+        name: 'editorial-masthead',
+        title: 'Editorial Masthead',
+        description: 'Fitted text wordmark and ruled tagline above the primary navigation.',
+      },
     ]
   );
 } );
@@ -85,17 +91,58 @@ const collectBlockNames = ( blocks ) => {
   return names;
 };
 
-test('uses the inline-editable core/site-logo in every layout template', () => {
-  HEADER_LAYOUT_DEFINITIONS.forEach( ( definition ) => {
-    const names = collectBlockNames( definition.innerBlocks );
+test('keeps image-logo layouts on the inline-editable core/site-logo', () => {
+  HEADER_LAYOUT_DEFINITIONS
+    .filter( ( definition ) => definition.name !== 'editorial-masthead' )
+    .forEach( ( definition ) => {
+      const names = collectBlockNames( definition.innerBlocks );
 
-    assert.ok(
-      names.includes( 'core/site-logo' ),
-      `${ definition.name } should use core/site-logo`
-    );
-    assert.ok(
-      ! names.includes( 'novablocks/logo' ),
-      `${ definition.name } should not use the legacy novablocks/logo`
-    );
-  } );
+      assert.ok(
+        names.includes( 'core/site-logo' ),
+        `${ definition.name } should use core/site-logo`
+      );
+      assert.ok(
+        ! names.includes( 'novablocks/logo' ),
+        `${ definition.name } should not use the legacy novablocks/logo`
+      );
+    } );
+} );
+
+const findBlock = ( blocks, targetName ) => {
+  for ( const entry of blocks ) {
+    if ( ! Array.isArray( entry ) ) {
+      continue;
+    }
+
+    const [ name, attributes = {}, children = [] ] = entry;
+    if ( name === targetName ) {
+      return { name, attributes, children };
+    }
+
+    const childMatch = findBlock( children, targetName );
+    if ( childMatch ) {
+      return childMatch;
+    }
+  }
+
+  return null;
+};
+
+test('composes the Editorial Masthead from semantic identity blocks and reusable styles', () => {
+  const definition = HEADER_LAYOUT_DEFINITIONS.find( ( item ) => item.name === 'editorial-masthead' );
+  const identity = findBlock( definition.innerBlocks, 'novablocks/site-identity' );
+  const title = findBlock( definition.innerBlocks, 'core/site-title' );
+  const tagline = findBlock( definition.innerBlocks, 'core/site-tagline' );
+  const rows = definition.innerBlocks.filter( ( [ name ] ) => name === 'novablocks/header-row' );
+
+  assert.equal( definition.icon, 'logoCenterTwoRows' );
+  assert.equal( identity.attributes.identityWidth, 395 );
+  assert.equal( title.attributes.level, 0 );
+  assert.equal( title.attributes.fitText, true );
+  assert.equal( title.attributes.fitTextWidth, 800 );
+  assert.match( title.attributes.className, /\bis-style-wordmark\b/ );
+  assert.equal( title.attributes.style.typography.letterSpacing, '-0.055em' );
+  assert.match( tagline.attributes.className, /\bis-style-ruled-label\b/ );
+  assert.equal( tagline.attributes.style.typography.letterSpacing, '0.32em' );
+  assert.match( rows[1][1].className, /\bis-style-rule-above\b/ );
 } );

@@ -22,8 +22,9 @@ class HeaderMobile extends HeaderBase {
     this.createMobileHeader();
 
     const logoRow = this.parent.rows.find( row => {
-      // `.site-logo` = novablocks/logo, `.wp-block-site-logo` = core/site-logo.
-      return row.element.querySelector( '.site-logo, .wp-block-site-logo' );
+      // Image logos and Nova's semantic text-based Site Identity can all be
+      // the source palette for the generated mobile brand.
+      return row.element.querySelector( '.site-logo, .wp-block-site-logo, .c-branding' );
     } );
 
     this.headerClasses = getColorSetClasses( this.parent.element ).join( ' ' );
@@ -57,7 +58,26 @@ class HeaderMobile extends HeaderBase {
     this.element.setAttribute( 'style', this.parent.element.getAttribute( 'style' ) );
     this.element.style.removeProperty( 'padding-top' );
     addClass( this.element, 'nb-header--transparent' );
-    this.copyElementFromParent( '.c-branding' );
+    const mobileBrand = this.copyElementFromParent( '.c-branding' );
+
+    if ( mobileBrand ) {
+      addClass( mobileBrand, 'nb-header__mobile-brand' );
+
+      // Fit Text's frontend directives have already initialized against the
+      // desktop measure. The mobile clone intentionally uses the compact
+      // mobile logo-height token instead of retaining that stale font size.
+      const fittedTitle = mobileBrand.querySelector( '.wp-block-site-title.has-fit-text' );
+
+      if ( fittedTitle ) {
+        fittedTitle.style.removeProperty( 'font-size' );
+        Array.from( fittedTitle.attributes ).forEach( attribute => {
+          if ( attribute.name.startsWith( 'data-wp-' ) ) {
+            fittedTitle.removeAttribute( attribute.name );
+          }
+        } );
+      }
+    }
+
     this.copyElementFromParent( '.menu-item--cart' );
     this.menuToggle.element.insertAdjacentElement( 'afterend', this.element );
     this.createButtonMenu();
@@ -192,6 +212,8 @@ class HeaderMobile extends HeaderBase {
     if ( elementClone ) {
       this.element.appendChild( elementClone );
     }
+
+    return elementClone;
   }
 }
 

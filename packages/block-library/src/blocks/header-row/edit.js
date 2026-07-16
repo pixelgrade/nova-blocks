@@ -14,7 +14,12 @@ import { getHeaderRowLayoutClassnames, getHeaderRowLayoutStyle } from './layout-
 
 // `core/site-logo` is the inline-editable logo going forward; `novablocks/logo`
 // stays allowed so existing headers (serialized with it) keep working.
-const ALLOWED_BLOCKS = [ 'core/site-logo', 'novablocks/logo', 'novablocks/navigation' ];
+const ALLOWED_BLOCKS = [
+  'core/site-logo',
+  'novablocks/logo',
+  'novablocks/site-identity',
+  'novablocks/navigation',
+];
 
 const withControlsVisibility = Component => {
 

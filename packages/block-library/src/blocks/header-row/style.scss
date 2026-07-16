@@ -52,6 +52,22 @@
   padding-right: 0;
 }
 
+.nb-header-row.is-style-rule-above .nb-header-row__inner-container {
+  position: relative;
+
+  &:before {
+    content: "";
+    position: absolute;
+    z-index: 1;
+    inset-block-start: 0;
+    inset-inline: 0;
+    block-size: 1px;
+    background: currentColor;
+    opacity: 0.2;
+    pointer-events: none;
+  }
+}
+
 .nb-header-row__inner-container[class] > .wp-block.alignfull {
 
   // __inner-container > .alignfull usually has negativ margins

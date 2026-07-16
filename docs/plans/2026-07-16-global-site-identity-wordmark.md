@@ -4,7 +4,7 @@
 
 **Goal:** Extend the semantic Site Title and Site Tagline blocks so a global Nova header recipe can reproduce Hive's fitted wordmark, ruled tagline, and navigation separator.
 
-**Architecture:** Enable core Fit Text on `core/site-title`, store only a responsive maximum width, and render that width consistently in editor and frontend. Add reusable block styles plus a thin `novablocks/site-identity` composition block that owns the shared title/tagline measure. Compose those pieces in a new Header layout definition.
+**Architecture:** Enable core Fit Text on `core/site-title`, store only a responsive maximum width, and give fitted titles a dedicated flex measurement wrapper in editor and frontend. Add reusable block styles plus a thin `novablocks/site-identity` composition block that owns the shared title/tagline measure. Compose those pieces in a new Header layout definition with a compact mobile treatment.
 
 **Tech Stack:** WordPress 7 block editor APIs, React, Sass, PHP render filters, Node test runner/Jest, WordPress build scripts.
 
@@ -18,7 +18,7 @@
 - Create: `lib/site-title.php`
 - Modify: `nova-blocks.php`
 
-1. Write a contract test asserting Nova enables `supports.typography.fitText`, registers a numeric `fitTextWidth`, ignores invalid widths, clamps valid widths, and adds the CSS custom property without destroying existing markup or styles.
+1. Write a contract test asserting Nova enables `supports.typography.fitText`, registers a numeric `fitTextWidth`, omits unsafe invalid widths, clamps valid widths, and creates the flex measurement wrapper without destroying existing markup or styles.
 2. Run the PHP contract and confirm it fails because the integration does not exist.
 3. Implement the metadata and render filters with a small width-normalization helper.
 4. Run the contract and the fast PHP suite.
@@ -56,7 +56,7 @@
 1. Write a block contract for metadata, attributes, allowed inner blocks, default template, and saved class/style hooks.
 2. Run it and confirm failure.
 3. Register a static composition block with Site Title and Site Tagline InnerBlocks.
-4. Add the shared width control and full-width brand-wrapper styling.
+4. Add the shared width control, full-width brand-wrapper styling, level-0 Site Title default, and compact mobile presentation.
 5. Run the focused test and package tests.
 
 ## Task 4: Add the Header Row separator style
@@ -93,4 +93,3 @@
 4. Verify in the Site Editor that Site Title exposes Fit Text and Wordmark Width, the global styles appear, and the Editorial Masthead inserts valid blocks without recovery prompts.
 5. Verify the frontend at desktop and narrow widths, including a long title and a removed tagline.
 6. Inspect git diff for unrelated or generated changes and run the fast suite once more.
-

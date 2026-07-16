@@ -164,6 +164,73 @@ const HEADER_LAYOUT_DEFINITIONS = [
         ] ],
     ],
   },
+  {
+    name: 'editorial-masthead',
+    icon: 'logoCenterTwoRows',
+    title: __( 'Editorial Masthead', '__plugin_txtd' ),
+    description: __( 'Fitted text wordmark and ruled tagline above the primary navigation.', '__plugin_txtd' ),
+    attributes: {
+      layout: 'editorial-masthead',
+      logoHeight: 105,
+      stickyHeaderSpacingMultiplier: 0.25,
+    },
+    innerBlocks: [
+      [ 'novablocks/header-row', {
+        slug: 'logo',
+        label: __( 'Site Identity / Wordmark', '__plugin_txtd' ),
+        blockTopSpacing: 0,
+        blockBottomSpacing: 0,
+        emphasisTopSpacing: 3,
+        emphasisBottomSpacing: 2,
+      },
+        [
+          [ 'novablocks/site-identity', {
+            identityWidth: 395,
+          }, [
+            [ 'core/site-title', {
+              className: 'is-style-wordmark',
+              level: 0,
+              fitText: true,
+              fitTextWidth: 800,
+              textAlign: 'center',
+              style: {
+                typography: {
+                  fontWeight: '900',
+                  letterSpacing: '-0.055em',
+                  lineHeight: '1',
+                  textTransform: 'uppercase',
+                },
+              },
+            } ],
+            [ 'core/site-tagline', {
+              className: 'is-style-ruled-label',
+              fontSize: 'small',
+              textAlign: 'center',
+              style: {
+                typography: {
+                  letterSpacing: '0.32em',
+                  lineHeight: '1',
+                  textTransform: 'uppercase',
+                },
+              },
+            } ],
+          ] ],
+        ] ],
+      [ 'novablocks/header-row', {
+        slug: 'primary',
+        label: __( 'Primary Navigation', '__plugin_txtd' ),
+        className: 'is-style-rule-above',
+        isPrimary: true,
+        blockTopSpacing: 0,
+        blockBottomSpacing: 0,
+        emphasisTopSpacing: 1,
+        emphasisBottomSpacing: 1,
+      },
+        [
+          [ 'novablocks/navigation', { slug: 'primary' } ],
+        ] ],
+    ],
+  },
 ];
 
 module.exports = {

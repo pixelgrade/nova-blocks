@@ -1,0 +1,22 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/block.json",
+	"apiVersion": 3,
+	"name": "novablocks/site-identity",
+	"parent": [ "novablocks/header-row" ],
+	"title": "Site Identity",
+	"category": "nova-blocks",
+	"description": "Group a fitted Site Title and Site Tagline into one shared brand width.",
+	"keywords": [ "branding", "logo", "site title", "tagline", "wordmark" ],
+	"textdomain": "nova-blocks",
+	"attributes": {
+		"identityWidth": {
+			"type": "number",
+			"default": 395
+		}
+	},
+	"supports": {
+		"align": false,
+		"html": false,
+		"reusable": false
+	}
+}

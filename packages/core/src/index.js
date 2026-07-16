@@ -99,3 +99,5 @@ import "./blocks/core/list";
 import "./blocks/core/query";
 import "./blocks/core/quote";
 import "./blocks/core/separator";
+import "./blocks/core/site-tagline";
+import "./blocks/core/site-title";

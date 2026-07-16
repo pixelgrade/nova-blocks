@@ -41,6 +41,35 @@ test('generated mobile header lets stylesheet safe-area padding override copied 
   );
 } );
 
+test('generated mobile header uses text-based Site Identity as its color source', () => {
+  assert.match(
+    headerMobileJsSource,
+    /querySelector\(\s*'\.site-logo, \.wp-block-site-logo, \.c-branding'\s*\)/
+  );
+} );
+
+test('generated mobile header marks text branding as a compact static clone', () => {
+  assert.match(
+    headerMobileJsSource,
+    /const mobileBrand = this\.copyElementFromParent\( '\.c-branding' \)/
+  );
+
+  assert.match(
+    headerMobileJsSource,
+    /addClass\( mobileBrand, 'nb-header__mobile-brand' \)/
+  );
+
+  assert.match(
+    headerMobileJsSource,
+    /fittedTitle\.style\.removeProperty\( 'font-size' \)/
+  );
+
+  assert.match(
+    headerMobileJsSource,
+    /attribute\.name\.startsWith\( 'data-wp-' \)/
+  );
+} );
+
 test('shared mobile menu button has a 48px target and a visible keyboard focus treatment', () => {
   assert.match(
     menuToggleSource,

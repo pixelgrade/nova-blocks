@@ -1,0 +1,55 @@
+.nb-site-identity {
+	display: flex;
+	align-items: center;
+	justify-content: var(--justify-content, center);
+	flex-shrink: 0;
+	inline-size: 100%;
+	max-inline-size: 100%;
+	min-inline-size: 0;
+}
+
+.nb-site-identity__inner {
+	display: flex;
+	flex-direction: column;
+	align-items: stretch;
+	gap: calc(var(--nb-spacing) * 0.75);
+	inline-size: min(100%, var(--nb-site-identity-width, 395px));
+	max-inline-size: 100%;
+	min-inline-size: 0;
+	text-align: center;
+
+	> .nb-site-title-fit-container {
+		inline-size: 100%;
+	}
+}
+
+// The generated mobile header uses a compact text mark rather than cloning the
+// full desktop masthead. Reserve balanced space for menu/cart controls, hide
+// the ruled descriptor, and use the existing mobile logo-height setting.
+.nb-header--mobile .nb-site-identity {
+	flex-shrink: 1;
+	inline-size: min(100%, var(--nb-site-identity-width, 395px));
+	max-inline-size: calc(100% - 7rem);
+
+	.nb-site-identity__inner {
+		gap: 0;
+		inline-size: 100%;
+	}
+
+	.wp-block-site-tagline {
+		display: none;
+	}
+
+	.nb-site-title-fit-container {
+		inline-size: 100%;
+		overflow: hidden;
+	}
+
+	.wp-block-site-title {
+		overflow: hidden;
+		font-size: calc(var(--nb-mobile-header-logo-height-setting, 30) * 1px) !important;
+		line-height: 1;
+		text-overflow: ellipsis;
+		white-space: nowrap;
+	}
+}

@@ -1,0 +1,17 @@
+.wp-block-site-tagline.is-style-ruled-label {
+	display: flex;
+	align-items: center;
+	inline-size: 100%;
+	gap: calc(var(--nb-spacing) * 0.75);
+	margin-block: 0;
+	white-space: nowrap;
+
+	&:before,
+	&:after {
+		content: "";
+		flex: 1 1 auto;
+		block-size: 1px;
+		background: currentColor;
+		opacity: 0.45;
+	}
+}

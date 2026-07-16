@@ -3,7 +3,7 @@
  */
 import { __ } from '@wordpress/i18n';
 import { addFilter } from '@wordpress/hooks';
-import { registerBlockType } from '@wordpress/blocks';
+import { registerBlockStyle, registerBlockType } from '@wordpress/blocks';
 import { InnerBlocks } from "@wordpress/block-editor";
 import { select } from "@wordpress/data";
 
@@ -18,6 +18,11 @@ import attributesOverwrite from "./attributes-overwrite.json";
 import metadata from './block.json';
 
 const { name: BLOCK_NAME } = metadata;
+
+registerBlockStyle( BLOCK_NAME, {
+  name: 'rule-above',
+  label: __( 'Rule Above', '__plugin_txtd' ),
+} );
 
 const overwriteAttributes = ( settings ) => {
 

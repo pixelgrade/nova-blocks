@@ -61,6 +61,10 @@ function novablocks_get_theme_support(): array {
 			'name'    => 'header-row',
 			'enabled' => true,
 		],
+		'site-identity'  => [
+			'name'    => 'site-identity',
+			'enabled' => true,
+		],
 		'supernova'      => [
 			'name'    => 'supernova',
 			'enabled' => true,
