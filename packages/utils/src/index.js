@@ -321,8 +321,8 @@ export const isFunctionalPalette = palette => {
   return id.charAt(0) === '_';
 };
 
-export const IS_EDITOR = document.body.classList.contains( 'block-editor-page' );
-export const IS_CUSTOMIZER = document.body.classList.contains( 'wp-customizer' );
+export const IS_EDITOR = document.body?.classList.contains( 'block-editor-page' );
+export const IS_CUSTOMIZER = document.body?.classList.contains( 'wp-customizer' );
 
 export const getPreviewAttributes = ( attributes ) => {
 

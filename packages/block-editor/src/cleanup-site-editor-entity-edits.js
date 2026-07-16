@@ -3,7 +3,7 @@ import { dispatch, select, subscribe } from '@wordpress/data';
 const SITE_EDITOR_ENTITY_NAMES = [ 'wp_template', 'wp_template_part' ];
 
 export const isSiteEditor = () => {
-  return window.pagenow === 'site-editor' || document.body.classList.contains( 'site-editor-php' );
+  return window.pagenow === 'site-editor' || document.body?.classList.contains( 'site-editor-php' );
 };
 
 const getContentString = ( content, record ) => {
