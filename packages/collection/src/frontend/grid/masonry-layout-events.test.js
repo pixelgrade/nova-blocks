@@ -2,6 +2,7 @@ const test = require( 'node:test' );
 const assert = require( 'node:assert/strict' );
 const fs = require( 'node:fs' );
 const path = require( 'node:path' );
+const { discoverTestManifest } = require( '../../../../../bin/test-manifest.cjs' );
 
 const masonrySource = fs.readFileSync(
   path.join( __dirname, 'handle-masonry-grid.js' ),
@@ -13,15 +14,14 @@ const scrollingEffectSource = fs.readFileSync(
   'utf8'
 );
 
-const testRunnerSource = fs.readFileSync(
-  path.join( __dirname, '../../../../../bin/run-tests.sh' ),
-  'utf8'
-);
-
 test( 'the behavioral Masonry lifecycle suite is part of the fast test runner', () => {
-  assert.match(
-    testRunnerSource,
-    /handle-masonry-grid\.test\.js/
+  const root = path.resolve( __dirname, '../../../../..' );
+  const manifest = discoverTestManifest( root );
+
+  assert.ok(
+    manifest.jestMainTests.includes(
+      'packages/collection/src/frontend/grid/handle-masonry-grid.test.js'
+    )
   );
 } );
 

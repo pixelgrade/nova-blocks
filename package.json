@@ -29,7 +29,10 @@
 		"zip": "gulp zip",
 		"preinstall": "cd ./node-tasks/ && npm install && node ./lock_node_version.js",
 		"postinstall": "node ./bin/packages/install.js && node ./bin/patch-node22-compat.js",
-		"test": "bash ./bin/run-tests.sh"
+		"test": "npm run test:fast",
+		"test:fast": "bash ./bin/run-tests.sh",
+		"test:all": "npm run test:fast && npm run test:wp",
+		"test:wp": "bash ./bin/run-wp-tests.sh"
 	},
 	"dependencies": {
 		"@novablocks/block-editor": "file:packages/block-editor",
