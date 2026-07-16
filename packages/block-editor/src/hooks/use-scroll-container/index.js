@@ -25,7 +25,7 @@ const resolveScrollContainer = () => {
 };
 
 const useScrollContainer = () => {
-  const [ scrollContainer, setScrollContainer ] = useState( null );
+  const [ scrollContainer, setScrollContainer ] = useState( resolveScrollContainer );
 
   useEffect( () => {
     const update = () => setScrollContainer( resolveScrollContainer() );

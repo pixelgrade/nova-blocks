@@ -23,7 +23,11 @@ const getViewportHeight = ( element ) => {
 };
 
 const useScrollContainerBox = ( element ) => {
-  const [ box, setBox ] = useState( null );
+  const [ box, setBox ] = useState( () => element ? {
+    top: 0,
+    left: 0,
+    height: getViewportHeight( element ),
+  } : null );
   const [ setNode, entry ] = useResizeObserver();
 
   const updateBox = useCallback( () => {

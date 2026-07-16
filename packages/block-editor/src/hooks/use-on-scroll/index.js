@@ -1,20 +1,24 @@
-import { useEffect } from "@wordpress/element";
+import { useLayoutEffect } from "@wordpress/element";
 
 const useOnScroll = ( element, onScroll ) => {
 
-  useEffect( () => {
-    if ( element ) {
-      element.addEventListener( 'scroll', onScroll );
+  useLayoutEffect( () => {
+    const scrollTarget = element?.ownerDocument?.scrollingElement === element
+      ? element.ownerDocument
+      : element;
+
+    if ( scrollTarget ) {
+      scrollTarget.addEventListener( 'scroll', onScroll );
     }
 
     return (
       () => {
-        if ( element ) {
-          element.removeEventListener( 'scroll', onScroll );
+        if ( scrollTarget ) {
+          scrollTarget.removeEventListener( 'scroll', onScroll );
         }
       }
     )
-  }, [ element ] );
+  }, [ element, onScroll ] );
 };
 
 export default useOnScroll;

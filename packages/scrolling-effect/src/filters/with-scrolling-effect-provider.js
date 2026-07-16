@@ -1,4 +1,4 @@
-import { useCallback, useContext, useEffect, useMemo, useRef, useState } from "@wordpress/element";
+import { flushSync, useCallback, useContext, useEffect, useLayoutEffect, useMemo, useRef, useState } from "@wordpress/element";
 import { createHigherOrderComponent } from "@wordpress/compose";
 
 import {
@@ -32,7 +32,9 @@ const withDopplerProvider = createHigherOrderComponent( WrappedComponent => {
 
     const onScroll = useCallback( () => {
       if ( containerRef.current ) {
-        setContainerBox( containerRef.current.getBoundingClientRect() );
+        flushSync( () => {
+          setContainerBox( containerRef.current.getBoundingClientRect() );
+        } );
       }
     }, [ containerRef ] );
 
@@ -44,11 +46,13 @@ const withDopplerProvider = createHigherOrderComponent( WrappedComponent => {
       }
     }, [ containerRef ] );
 
-    useEffect( () => {
-      setContainerBox( containerResizeEntry.contentRect );
+    useLayoutEffect( () => {
+      if ( containerRef.current ) {
+        setContainerBox( containerRef.current.getBoundingClientRect() );
+      }
     }, [ containerResizeEntry ] );
 
-    useEffect( () => {
+    useLayoutEffect( () => {
 
       if ( containerBox && scrollContainerBox ) {
 
