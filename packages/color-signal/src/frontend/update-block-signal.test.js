@@ -19,6 +19,7 @@ jest.mock( '../utils', () => ( {
 		`sm-variation-${ attributes.paletteVariation }`,
 		`sm-color-signal-${ attributes.colorSignal }`,
 	].filter( Boolean ).join( ' ' ),
+	isColorSignalActive: () => true,
 	getSourceIndexFromPaletteId: () => 0,
 	removeSiteVariationOffset: value => value,
 	resolveColorSignalContext: ( attributes, parentContext, inheritParentPalette ) => ( {
@@ -89,6 +90,47 @@ describe( 'updateBlockSignal', () => {
 
 		expect( list.dataset.palette ).toBe( '2' );
 		expect( list.classList.contains( 'sm-palette-2' ) ).toBe( true );
+	} );
+
+	it( 'inherits the parent palette when dynamic markup declares that intent', () => {
+		document.body.innerHTML = `
+			<div class="sm-palette-2 sm-variation-8 sm-color-signal-1"
+				data-palette="2" data-palette-variation="8" data-color-signal="1">
+				<div class="wp-block-post-terms sm-palette-1 sm-variation-1 sm-color-signal-1"
+					data-palette="1" data-palette-variation="1" data-color-signal="1"
+					data-inherit-parent-palette="true"></div>
+			</div>
+		`;
+
+		const surface = document.body.firstElementChild;
+		const terms = surface.firstElementChild;
+
+		updateBlockSignal( surface, 1 );
+
+		expect( terms.dataset.palette ).toBe( '2' );
+		expect( terms.classList.contains( 'sm-palette-2' ) ).toBe( true );
+	} );
+
+	it( 'preserves an explicit palette override for dynamic markup', () => {
+		document.body.innerHTML = `
+			<div class="sm-palette-2 sm-variation-8 sm-color-signal-1"
+				data-palette="2" data-palette-variation="8" data-color-signal="1">
+				<div class="wp-block-post-terms sm-palette-3 sm-variation-1 sm-color-signal-1"
+					data-palette="3" data-palette-variation="1" data-color-signal="1"
+					data-inherit-parent-palette="true"
+					data-palette-inheritance-attribute="useParentPalette"
+					data-use-parent-palette="false"></div>
+			</div>
+		`;
+
+		const surface = document.body.firstElementChild;
+		const terms = surface.firstElementChild;
+
+		updateBlockSignal( surface, 1 );
+
+		expect( terms.dataset.palette ).toBe( '3' );
+		expect( terms.classList.contains( 'sm-palette-3' ) ).toBe( true );
+		expect( terms.dataset.useParentPalette ).toBe( 'false' );
 	} );
 
 	it( 'preserves the valid zero signal when a List inherits its parent palette', () => {

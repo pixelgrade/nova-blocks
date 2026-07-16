@@ -1,4 +1,5 @@
 import { useCallback } from "@wordpress/element";
+import { select } from "@wordpress/data";
 
 import { useMemoryState } from "@novablocks/block-editor";
 import { useSupports } from "@novablocks/block-editor";
@@ -7,6 +8,7 @@ import { useCurrentColorSignalAttributes } from "../use-current-color-signal-att
 import {
   getUpdatedAttributes
 } from "../../editor/utils";
+import { getColorSignalAdoptionAttributes } from "../../editor/core-color-adoption";
 import {
   shouldInheritParentPalette,
   supportsPaletteSelection,
@@ -17,15 +19,15 @@ const withColorSignalProps = OriginalComponent => {
   return props => {
 
     const { attributes, setAttributes, clientId } = props;
-    const currentAttributes = useCurrentColorSignalAttributes( clientId, attributes );
+    const supports = useSupports( props.name );
+    const colorSignalSupport = supports?.novaBlocks?.colorSignal;
+    const currentAttributes = useCurrentColorSignalAttributes( clientId, attributes, colorSignalSupport?.activationAttribute );
     const liveAttributes = {
       ...attributes,
       ...currentAttributes,
     };
     const memoryStateKey = clientId ? `showFunctionalColors:${ clientId }` : `showFunctionalColors:${ props.name }`;
     const [ showFunctionalColors, setShowFunctionalColors ] = useMemoryState( memoryStateKey, false );
-    const supports = useSupports( props.name );
-    const colorSignalSupport = supports?.novaBlocks?.colorSignal;
     const stickySourceColor = colorSignalSupport?.stickySourceColor !== false;
     const paletteInheritanceAttribute = colorSignalSupport?.paletteInheritanceAttribute;
     const inheritParentPalette = shouldInheritParentPalette( colorSignalSupport, currentAttributes );
@@ -33,7 +35,16 @@ const withColorSignalProps = OriginalComponent => {
     const paletteSelectionEnabled = supportsPaletteSelection( colorSignalSupport );
 
     const updateBlock = useCallback( ( newAttributes, useSourceOnSameVariation = false, useSourceOnSameSignal = false ) => {
-      const requestedAttributes = { ...newAttributes };
+      const storedAttributes = clientId
+        ? select( 'core/block-editor' )?.getBlockAttributes?.( clientId )
+        : undefined;
+      const adoptionSourceAttributes = storedAttributes && 'object' === typeof storedAttributes
+        ? { ...liveAttributes, ...storedAttributes }
+        : liveAttributes;
+      const requestedAttributes = {
+        ...newAttributes,
+        ...getColorSignalAdoptionAttributes( adoptionSourceAttributes, colorSignalSupport ),
+      };
 
       if ( paletteInheritanceAttribute
         && Object.prototype.hasOwnProperty.call( requestedAttributes, 'palette' )
@@ -53,14 +64,18 @@ const withColorSignalProps = OriginalComponent => {
           : ( currentAttributes[ paletteInheritanceAttribute ] ?? nextInheritance );
       }
 
-      setAttributes( updatedAttributes );
-    }, [ clientId, colorSignalSupport, currentAttributes, minColorSignal, paletteInheritanceAttribute, setAttributes, stickySourceColor ] );
+      setAttributes( {
+        ...requestedAttributes,
+        ...updatedAttributes,
+      } );
+    }, [ clientId, colorSignalSupport, currentAttributes, liveAttributes, minColorSignal, paletteInheritanceAttribute, setAttributes, stickySourceColor ] );
 
     return (
       <OriginalComponent
         { ...props }
         attributes={ liveAttributes }
         updateBlock={ updateBlock }
+        inheritParentPalette={ inheritParentPalette }
         stickySourceColor={ stickySourceColor }
         paletteSelectionEnabled={ paletteSelectionEnabled }
         showFunctionalColors={ showFunctionalColors }

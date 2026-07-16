@@ -1,4 +1,5 @@
 import { getSupports } from "@novablocks/block-editor";
+import { isColorSignalActive } from "../utils";
 
 const withColorSignalSaveDataAttributes = ( element, blockType, attributes ) => {
 
@@ -10,6 +11,10 @@ const withColorSignalSaveDataAttributes = ( element, blockType, attributes ) => 
   const supports = getSupports( blockType.name );
 
   if ( ! element || ! supports?.novaBlocks?.colorSignal ) {
+    return element;
+  }
+
+  if ( ! isColorSignalActive( supports.novaBlocks.colorSignal, attributes ) ) {
     return element;
   }
 

@@ -29,7 +29,7 @@ import PaletteToolbarIcon from "./palette-icon";
  */
 const BlockColorSignalToolbar = withColorSignalProps( ( props ) => {
 
-  const { attributes, clientId, updateBlock, name, paletteSelectionEnabled, showFunctionalColors, stickySourceColor } = props;
+  const { attributes, clientId, updateBlock, name, inheritParentPalette, paletteSelectionEnabled, showFunctionalColors, stickySourceColor } = props;
   const { colorSignal, contentColorSignal, palette } = attributes;
 
   const novablocksSettings = useSettings();
@@ -103,7 +103,7 @@ const BlockColorSignalToolbar = withColorSignalProps( ( props ) => {
           nextLevel.label
         ) }
         onClick={ () => {
-          updateBlock( getSignalChangeAttributes( attributes, clientId, nextLevel.value ), true, true );
+          updateBlock( getSignalChangeAttributes( attributes, clientId, nextLevel.value, inheritParentPalette ), true, true );
         } }
       />
       { showContentSignal && (

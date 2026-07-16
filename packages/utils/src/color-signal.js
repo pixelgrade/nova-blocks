@@ -114,6 +114,27 @@ export const supportsPaletteSelection = ( colorSignalSupport ) => (
 );
 
 /**
+ * Resolve whether a Color Signal block is active.
+ *
+ * Existing block families are always active. Dynamic core adapters may name
+ * an opt-in attribute so legacy markup stays untouched until the user makes
+ * an explicit Color Signal change.
+ *
+ * @param {Object|boolean} colorSignalSupport Block color-signal support config.
+ * @param {Object} attributes Block attributes or a DOM dataset.
+ * @returns {boolean} Whether Color Signal owns the block's color output.
+ */
+export const isColorSignalActive = ( colorSignalSupport, attributes = {} ) => {
+  const activationAttribute = colorSignalSupport?.activationAttribute;
+
+  if ( ! activationAttribute ) {
+    return true;
+  }
+
+  return true === attributes?.[ activationAttribute ] || 'true' === attributes?.[ activationAttribute ];
+};
+
+/**
  *
  * @param attributes block's attributes
  * @param supports blockType's supports; it can be set to true to assume colorSignal support is fully enabled
@@ -123,6 +144,10 @@ export const getColorSignalClassnames = ( attributes, supports ) => {
   const { palette, paletteVariation, useSourceColorAsReference, colorSignal } = attributes;
   const colorSignalSupport = supports?.novaBlocks?.colorSignal;
   const newClassnames = [];
+
+  if ( supports !== true && colorSignalSupport && ! isColorSignalActive( colorSignalSupport, attributes ) ) {
+    return '';
+  }
 
   if ( supports === true || colorSignalSupport === true || colorSignalSupport?.paletteClassname ) {
     newClassnames.push( `sm-palette-${ palette }` );
@@ -154,8 +179,34 @@ export const getContentColorsSignalClassnames = ( attributes, supports ) => {
   return getColorSignalClassnames( newAttributes, supports );
 };
 
+export const getColorPalettesConfig = () => {
+  const runtimePalettes = window.styleManager?.colorsConfig;
+
+  if ( Array.isArray( runtimePalettes ) && runtimePalettes.length ) {
+    return runtimePalettes;
+  }
+
+  try {
+    const editorPalettes = window.wp?.data?.select?.( 'novablocks' )?.getSettings?.()?.palettes;
+
+    if ( Array.isArray( editorPalettes ) && editorPalettes.length ) {
+      return editorPalettes;
+    }
+  } catch {
+    // The novablocks store is editor-only and may not be registered yet.
+  }
+
+  return Array.isArray( runtimePalettes ) ? runtimePalettes : [];
+};
+
+export const resolveColorPaletteId = ( paletteId, fallbackPaletteId = '1' ) => {
+  const palette = getColorPalettesConfig().find( candidate => `${ candidate.id }` === `${ paletteId }` );
+
+  return palette ? `${ palette.id }` : `${ fallbackPaletteId }`;
+};
+
 export const getPaletteConfig = ( paletteId ) => {
-  const config = window.styleManager?.colorsConfig || [];
+  const config = getColorPalettesConfig();
 
   return config.find( palette => `${ palette.id }` === `${ paletteId }` );
 }

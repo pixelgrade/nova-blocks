@@ -8,7 +8,9 @@ import {
   computeColorSignal,
   getAbsoluteColorVariation,
   getSignalRelativeToVariation,
+  isColorSignalActive,
   removeSiteVariationOffset,
+  resolveColorPaletteId,
   resolveColorSignalContext,
   shouldInheritParentPalette,
 } from "./utils";
@@ -52,7 +54,8 @@ const updateBlock = ( block ) => {
 
   const supports = getSupports( block.name );
 
-  if ( supports?.novaBlocks?.colorSignal ) {
+  if ( supports?.novaBlocks?.colorSignal
+    && isColorSignalActive( supports.novaBlocks.colorSignal, block.attributes ) ) {
     const { updateBlockAttributes } = dispatch( 'core/block-editor' );
     const { attributes, clientId } = block;
     const { colorSignal, paletteVariation, useSourceColorAsReference } = attributes;
@@ -65,18 +68,9 @@ const updateBlock = ( block ) => {
     const resolvedContext = resolveColorSignalContext( attributes, parentContext, inheritParentPalette );
     const effectiveUseSourceColorAsReference = resolvedContext.useSourceColorAsReference;
 
-    const config = window.styleManager?.colorsConfig || [];
-
-    // make sure we're using an actual palette
-    const palette = ( () => {
-      const palette = config.find( palette => `${ palette.id }` === `${ resolvedContext.palette }` );
-
-      if ( ! palette ) {
-        return '1';
-      }
-
-      return `${ palette.id }`;
-    } )();
+    // Make sure we're using an actual palette from either the runtime payload
+    // or the Site Editor's Nova settings store.
+    const palette = resolveColorPaletteId( resolvedContext.palette );
 
     const { getBlockParents, getBlock } = select( 'core/block-editor' );
     const parents = getBlockParents( clientId ).slice();

@@ -4,7 +4,7 @@ import { useSupports } from "@novablocks/block-editor";
 
 import "./update-blocks";
 import { getUpdatedAttributes } from "./editor/utils";
-import { shouldInheritParentPalette } from "./utils";
+import { isColorSignalActive, shouldInheritParentPalette } from "./utils";
 
 import withColorSignalAttributes from "./filters/with-color-signal-attributes";
 import withColorSignalsDeprecated from "./filters/with-color-signal-deprecated";
@@ -38,7 +38,7 @@ const withUpdatedAttributes = ( BlockEdit ) => {
     const minColorSignal = colorSignalSupport?.minColorSignal || 0;
 
     useEffect( () => {
-      if ( colorSignalSupport ) {
+      if ( colorSignalSupport && isColorSignalActive( colorSignalSupport, attributes ) ) {
         const updatedAttributes = getUpdatedAttributes( attributes, clientId, {}, stickySourceColor, false, false, inheritParentPalette, minColorSignal );
 
         if ( paletteInheritanceAttribute && typeof attributes[ paletteInheritanceAttribute ] !== 'boolean' ) {

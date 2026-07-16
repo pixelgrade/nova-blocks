@@ -72,12 +72,20 @@ export const getParentVariation = ( clientId ) => {
  * @param attributes the block's current (live) attributes
  * @param clientId the block's clientId
  * @param nextSignal the desired colorSignal value (0-3)
+ * @param inheritParentPalette whether the surrounding palette owns this block
  * @returns {{paletteVariation: number, useSourceColorAsReference: boolean}}
  */
-export const getSignalChangeAttributes = ( attributes, clientId, nextSignal ) => {
-  const { palette } = attributes;
-  const referenceVariation = getParentVariation( clientId );
-  const absoluteVariation = getAbsoluteColorVariation( attributes );
+export const getSignalChangeAttributes = ( attributes, clientId, nextSignal, inheritParentPalette = false ) => {
+  const parentContext = getParentColorContext( clientId );
+  const resolvedContext = resolveColorSignalContext( attributes, parentContext, inheritParentPalette );
+  const referenceVariation = resolvedContext.parentVariation;
+  const palette = resolvedContext.palette;
+  const effectiveAttributes = {
+    ...attributes,
+    palette,
+    useSourceColorAsReference: resolvedContext.useSourceColorAsReference,
+  };
+  const absoluteVariation = getAbsoluteColorVariation( effectiveAttributes );
   const nextVariation = computeColorSignal( referenceVariation, nextSignal, palette, absoluteVariation );
   const finalVariation = removeSiteVariationOffset( nextVariation );
 

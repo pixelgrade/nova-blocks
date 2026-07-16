@@ -1,10 +1,13 @@
-import { getSignals } from "@novablocks/utils";
+import { getColorPalettesConfig, getSignals } from "@novablocks/utils";
 
 export {
   clampColorSignal,
+  getColorPalettesConfig,
   getColorSignalClassnames,
   getNearestColorSignalContext,
+  isColorSignalActive,
   resolveColorSignalContext,
+  resolveColorPaletteId,
   shouldInheritParentPalette,
   supportsPaletteSelection,
 } from "@novablocks/utils";
@@ -51,7 +54,7 @@ export const getSiteColorVariation = ( () => {
 } )();
 
 export const getPaletteConfig = ( palette ) => {
-  const palettes = window.styleManager?.colorsConfig || [];
+  const palettes = getColorPalettesConfig();
 
   if ( ! Array.isArray( palettes ) || ! palettes.length ) {
     return { sourceIndex: 6 }

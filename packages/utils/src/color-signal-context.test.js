@@ -8,11 +8,52 @@ window.matchMedia = window.matchMedia || jest.fn( () => ( {
 
 const {
 	clampColorSignal,
+	getColorPalettesConfig,
 	getNearestColorSignalContext,
+	isColorSignalActive,
 	resolveColorSignalContext,
+	resolveColorPaletteId,
 	shouldInheritParentPalette,
 	supportsPaletteSelection,
 } = require( './color-signal' );
+
+describe( 'editor palette configuration', () => {
+	const originalStyleManager = window.styleManager;
+	const originalWp = window.wp;
+
+	afterEach( () => {
+		window.styleManager = originalStyleManager;
+		window.wp = originalWp;
+	} );
+
+	it( 'falls back to Nova editor settings when the top-window Style Manager payload is empty', () => {
+		const palettes = [ { id: 1 }, { id: 2 } ];
+		window.styleManager = { colorsConfig: [] };
+		window.wp = {
+			data: {
+				select: () => ( {
+					getSettings: () => ( { palettes } ),
+				} ),
+			},
+		};
+
+		expect( getColorPalettesConfig() ).toBe( palettes );
+		expect( resolveColorPaletteId( '2' ) ).toBe( '2' );
+	} );
+} );
+
+describe( 'isColorSignalActive', () => {
+	it( 'requires the configured activation attribute for opt-in blocks', () => {
+		const support = { activationAttribute: 'useColorSignal' };
+
+		expect( isColorSignalActive?.( support, {} ) ).toBe( false );
+		expect( isColorSignalActive?.( support, { useColorSignal: true } ) ).toBe( true );
+	} );
+
+	it( 'keeps existing block families active by default', () => {
+		expect( isColorSignalActive?.( { controls: true }, {} ) ).toBe( true );
+	} );
+} );
 
 describe( 'clampColorSignal', () => {
 	it( 'honors a block family minimum', () => {

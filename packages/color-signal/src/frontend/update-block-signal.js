@@ -10,6 +10,7 @@ import {
   getAbsoluteColorVariation,
   getColorSignalClassnames,
   getSourceIndexFromPaletteId,
+  isColorSignalActive,
   removeSiteVariationOffset,
   resolveColorSignalContext,
   shouldInheritParentPalette,
@@ -25,7 +26,15 @@ const COLOR_SIGNAL_SELECTOR = '[data-color-signal]';
 export const updateBlockSignal = ( block, parentVariation, parentPalette ) => {
   const attributes = block.dataset;
   const innerBlocks = Array.from( block.children );
-  const colorSignalSupport = block.classList.contains( 'wp-block-button' )
+  const dynamicPaletteInheritanceAttribute = attributes?.paletteInheritanceAttribute;
+  const colorSignalSupport = 'true' === attributes?.inheritParentPalette
+    ? {
+      inheritParentPalette: true,
+      ...( dynamicPaletteInheritanceAttribute ? {
+        paletteInheritanceAttribute: dynamicPaletteInheritanceAttribute,
+      } : {} ),
+    }
+    : block.classList.contains( 'wp-block-button' )
     ? {
       inheritParentPalette: true,
       minColorSignal: 1,
@@ -40,6 +49,13 @@ export const updateBlockSignal = ( block, parentVariation, parentPalette ) => {
           legacyInheritedPalette: '1',
         }
         : {};
+
+  if ( ! isColorSignalActive( colorSignalSupport, attributes ) ) {
+    innerBlocks.forEach( innerBlock => {
+      updateBlockSignal( innerBlock, parentVariation, parentPalette );
+    } );
+    return;
+  }
   const inheritParentPalette = shouldInheritParentPalette( colorSignalSupport, attributes );
   const storedColorSignal = parseInt( attributes?.colorSignal, 10 );
   const colorSignal = clampColorSignal( storedColorSignal, colorSignalSupport );

@@ -13,6 +13,7 @@ const BlockColorSignal = props => {
     attributes,
     updateBlock,
     clientId,
+    inheritParentPalette,
   } = props;
 
   const {
@@ -21,8 +22,8 @@ const BlockColorSignal = props => {
   } = attributes;
 
   const onSignalChange = useCallback( nextSignal => {
-    updateBlock( getSignalChangeAttributes( attributes, clientId, nextSignal ), true, true );
-  }, [ attributes, clientId, updateBlock ] );
+    updateBlock( getSignalChangeAttributes( attributes, clientId, nextSignal, inheritParentPalette ), true, true );
+  }, [ attributes, clientId, inheritParentPalette, updateBlock ] );
 
   return (
     <SignalControl
