@@ -9,7 +9,7 @@ import {
 } from '@wordpress/components';
 import { __ } from '@wordpress/i18n';
 
-import { getIdentityWidthStyle } from './dimensions';
+import { getIdentityEditorWidthStyle } from './dimensions';
 
 const ALLOWED_BLOCKS = [ 'core/site-title', 'core/site-tagline' ];
 
@@ -47,7 +47,7 @@ const SiteIdentityEdit = ( { attributes, clientId, setAttributes } ) => {
 	const { identityWidth = 395 } = attributes;
 	const blockProps = useBlockProps( {
 		className: 'nb-site-identity c-branding',
-		style: getIdentityWidthStyle( identityWidth ),
+		style: getIdentityEditorWidthStyle( identityWidth ),
 	} );
 	const innerBlocksProps = useInnerBlocksProps( {
 		className: 'nb-site-identity__inner',

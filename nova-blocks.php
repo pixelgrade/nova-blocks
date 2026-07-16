@@ -76,6 +76,7 @@ require_once dirname( __FILE__ ) . '/lib/rest-api.php';
 require_once dirname( __FILE__ ) . '/lib/theme-supports.php';
 require_once dirname( __FILE__ ) . '/lib/core-tools-ownership.php';
 require_once dirname( __FILE__ ) . '/lib/site-title.php';
+require_once dirname( __FILE__ ) . '/lib/site-identity.php';
 require_once dirname( __FILE__ ) . '/lib/collection-layout-recipes.php';
 require_once dirname( __FILE__ ) . '/lib/block-editor-settings.php';
 require_once dirname( __FILE__ ) . '/lib/plus-gating.php';

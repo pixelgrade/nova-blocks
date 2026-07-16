@@ -9,11 +9,41 @@
 }
 
 .nb-site-identity__inner {
+	// Treat the configured identity width as the known value at Anima's fluid
+	// typography breakpoint. Reusing the same minimum, breakpoint, and slope
+	// tokens gives the wordmark the Display-heading resize curve without
+	// changing the typography context consumed by core Fit Text.
+	--nb-site-identity-x0: var(--theme-font-size-minimum-value-breakpoint, 320);
+	--nb-site-identity-y0: var(--theme-font-size-minimum-value, 16);
+	--nb-site-identity-x1: var(--theme-font-size-breakpoint, 1440);
+	--nb-site-identity-y1: var(--nb-site-identity-width-value, 395);
+	--nb-site-identity-y0-fluid: calc(
+		var(--nb-site-identity-y1) -
+			(var(--nb-site-identity-y1) - var(--nb-site-identity-y0)) *
+			var(--theme-font-size-slope-adjust, 0.6)
+	);
+	--nb-site-identity-slope: calc(
+		(var(--nb-site-identity-y1) - var(--nb-site-identity-y0-fluid)) /
+			(var(--nb-site-identity-x1) - var(--nb-site-identity-x0))
+	);
+	--nb-site-identity-offset: calc(
+		var(--nb-site-identity-y0-fluid) -
+			var(--nb-site-identity-slope) * var(--nb-site-identity-x0)
+	);
+	--nb-site-identity-fluid-width: calc(
+		var(--nb-site-identity-slope) * 100vw +
+			var(--nb-site-identity-offset) * 1px
+	);
+
 	display: flex;
 	flex-direction: column;
 	align-items: stretch;
 	gap: calc(var(--nb-spacing) * 0.75);
-	inline-size: min(100%, var(--nb-site-identity-width, 395px));
+	inline-size: min(
+		100%,
+		var(--nb-site-identity-width, 395px),
+		var(--nb-site-identity-fluid-width)
+	);
 	max-inline-size: 100%;
 	min-inline-size: 0;
 	text-align: center;

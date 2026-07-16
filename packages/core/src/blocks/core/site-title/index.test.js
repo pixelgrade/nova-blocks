@@ -73,3 +73,12 @@ test( 'keeps linked Site Title typography on the element resized by Fit Text', (
 	assert.match( source, /&\.has-fit-text[\s\S]*:where\(a\)[\s\S]*letter-spacing:\s*inherit/ );
 	assert.match( source, /&\.has-fit-text[\s\S]*:where\(a\)[\s\S]*white-space:\s*inherit\s*!important/ );
 } );
+
+test( 'keeps the semantic Site Title family visible through Anima editor paragraph resets', () => {
+	const source = read( '_style.scss' );
+
+	assert.match(
+		source,
+		/\.editor-styles-wrapper\[class\] p\.wp-block-site-title\s*\{[\s\S]*font-family:\s*var\(--theme-site-title-font-family\)/
+	);
+} );

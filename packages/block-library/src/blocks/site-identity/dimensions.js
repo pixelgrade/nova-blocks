@@ -11,3 +11,12 @@ export const normalizeIdentityWidth = ( width ) => {
 export const getIdentityWidthStyle = ( width ) => ( {
 	'--nb-site-identity-width': `${ normalizeIdentityWidth( width ) }px`,
 } );
+
+export const getIdentityEditorWidthStyle = ( width ) => {
+	const normalizedWidth = normalizeIdentityWidth( width );
+
+	return {
+		...getIdentityWidthStyle( normalizedWidth ),
+		'--nb-site-identity-width-value': normalizedWidth,
+	};
+};

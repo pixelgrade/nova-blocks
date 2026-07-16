@@ -40,11 +40,33 @@ test( 'saves the branding hook, width variable, and constrained inner container'
 	assert.match( dimensionsSource, /'--nb-site-identity-width'/ );
 	assert.match( saveSource, /nb-site-identity__inner/ );
 	assert.match( saveSource, /<InnerBlocks\.Content/ );
-	assert.match( styleSource, /inline-size:\s*min\(100%, var\(--nb-site-identity-width, 395px\)\)/ );
+	assert.match( styleSource, /inline-size:\s*min\([\s\S]*--nb-site-identity-fluid-width/ );
 	assert.match( styleSource, /> \.nb-site-title-fit-container[\s\S]*inline-size:\s*100%/ );
 	assert.match( styleSource, /\.nb-header--mobile \.nb-site-identity[\s\S]*max-inline-size:\s*calc\(100% - 7rem\)/ );
 	assert.match( styleSource, /\.nb-header--mobile[\s\S]*\.wp-block-site-tagline[\s\S]*display:\s*none/ );
 	assert.match( styleSource, /--nb-mobile-header-logo-height-setting/ );
+} );
+
+test( 'scales the identity width with the theme fluid typography curve', () => {
+	const editSource = read( 'edit.js' );
+	const saveSource = read( 'save.js' );
+	const styleSource = read( 'style.scss' );
+	const dimensionsSource = read( 'dimensions.js' );
+
+	assert.match( dimensionsSource, /export const getIdentityEditorWidthStyle/ );
+	assert.match( dimensionsSource, /'--nb-site-identity-width-value'/ );
+	assert.match( editSource, /getIdentityEditorWidthStyle\( identityWidth \)/ );
+	assert.match( saveSource, /getIdentityWidthStyle\( identityWidth \)/ );
+	assert.doesNotMatch( saveSource, /getIdentityEditorWidthStyle/ );
+	assert.match( styleSource, /--theme-font-size-minimum-value-breakpoint/ );
+	assert.match( styleSource, /--theme-font-size-minimum-value/ );
+	assert.match( styleSource, /--theme-font-size-breakpoint/ );
+	assert.match( styleSource, /--theme-font-size-slope-adjust/ );
+	assert.match( styleSource, /--nb-site-identity-fluid-width/ );
+	assert.match(
+		styleSource,
+		/inline-size:\s*min\([\s\S]*var\(--nb-site-identity-width, 395px\)[\s\S]*var\(--nb-site-identity-fluid-width\)[\s\S]*\)/
+	);
 } );
 
 test( 'keeps Site Identity enabled for every Nova-compatible header', () => {
