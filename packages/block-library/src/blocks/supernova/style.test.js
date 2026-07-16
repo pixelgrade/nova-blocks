@@ -17,3 +17,10 @@ test('carousel blocks with no block color signal still mask stacked slide layers
     /&\.nb-supernova--layout-carousel\s+\.nb-supernova-item\.sm-color-signal-0\s+\.nb-supernova-item__frame\s*>\s*:is\(\.nb-supernova-item__content,\s*\.nb-supernova-item__media-wrapper\)\s*\{[\s\S]*?background-color:\s*var\(--sm-current-bg-color,\s*var\(--nb-bg-color\)\);/
   );
 } );
+
+test('doppler keeps content in the first viewport while the card owns the doubled runway', () => {
+  assert.match(
+    styleSource,
+    /&\.nb-supernova-item--scrolling-effect-doppler\s*\{[\s\S]*?>\s*\.nb-supernova-item__frame\s*>\s*\.nb-supernova-item__content\s*\{[\s\S]*?align-self:\s*start\s*!important;/
+  );
+} );

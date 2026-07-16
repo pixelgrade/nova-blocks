@@ -53,6 +53,13 @@
 
   &.nb-supernova-item--scrolling-effect-doppler {
     --aspect-ratio-multiplier: 0.5;
+
+    // The editor models Doppler as a card twice as tall as its regular
+    // preview. Keep content aligned inside the first half of that runway.
+    > .nb-supernova-item__frame > .nb-supernova-item__content {
+      align-self: start !important;
+      min-height: 50% !important;
+    }
   }
 }
 

@@ -33,6 +33,13 @@
   &.nb-supernova-item--scrolling-effect-doppler {
     --nb-block-minimum-height: calc(2 * var(--nb-minimum-container-height));
 
+    // Doppler doubles the media runway, but content alignment still belongs to
+    // the first viewport. Grid-based theme layers may stretch both children;
+    // opt the content layer out while retaining its one-viewport min-height.
+    > .nb-supernova-item__frame > .nb-supernova-item__content {
+      align-self: start !important;
+    }
+
     [data-min-height-fallback]:not([data-min-height-fallback="0"]) & {
       --nb-block-content-min-height: var(--nb-block-full-height);
     }
