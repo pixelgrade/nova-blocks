@@ -28,6 +28,10 @@ export const extendSiteTitleSettings = ( settings, name ) => {
 				type: 'number',
 				default: 395,
 			},
+			fitTextContentRevision: {
+				type: 'string',
+				role: 'local',
+			},
 		},
 	};
 };

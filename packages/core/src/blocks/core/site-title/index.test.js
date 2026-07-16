@@ -23,6 +23,22 @@ test( 'registers the editor controls and wrapper integrations', () => {
 	assert.match( source, /editor\.BlockListBlock[\s\S]*withSiteTitleWrapper/ );
 } );
 
+test( 'invalidates native Fit Text when the global Site Title content changes', () => {
+	const settingsSource = read( 'index.js' );
+	const controlsSource = read( 'with-site-title-controls.js' );
+
+	assert.match(
+		settingsSource,
+		/fitTextContentRevision:[\s\S]*type: 'string'[\s\S]*role: 'local'/
+	);
+	assert.match( controlsSource, /getEditedEntityRecord\( 'root', 'site' \)/ );
+	assert.match( controlsSource, /__unstableMarkNextChangeAsNotPersistent/ );
+	assert.match(
+		controlsSource,
+		/setAttributes\( \{ fitTextContentRevision: siteTitle \} \)/
+	);
+} );
+
 test( 'shows Wordmark Width only for a fitted Site Title', () => {
 	const source = read( 'with-site-title-controls.js' );
 
