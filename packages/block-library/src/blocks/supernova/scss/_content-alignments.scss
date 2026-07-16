@@ -25,7 +25,10 @@
   }
 }
 
-.nb-supernova-item__inner-container[class] > * {
+// Keep the matrix alignment stronger than the generic content-width rule in
+// core/group/style.scss. That rule intentionally carries three class-worth of
+// specificity and can load after this file in both editor and frontend CSS.
+.nb-supernova-item__inner-container[class][class] > * {
 
   .nb-supernova--halign-left & {
     margin-left: 0;
@@ -61,4 +64,4 @@
   [aria-label="Grid view"] {
     display: none;
   }
-} 
+}
