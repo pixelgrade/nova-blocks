@@ -12,6 +12,7 @@ const StartFramePanel = ( props ) => {
   const {
     attributes,
     setAttributes,
+    setScrollingEffectPreviewAttributes = () => {},
     focalPointImage,
   } = props;
 
@@ -58,6 +59,19 @@ const StartFramePanel = ( props ) => {
 
   let className = classNames.join( ' ' );
 
+  const getFocalPointAttributes = nextFocalPoint => ( {
+    motionPreset: 'custom',
+    focalPoint: maybeSnapFocalPoint( nextFocalPoint ),
+    finalFocalPoint: maybeSnapFocalPoint( {
+      x: nextFocalPoint.x,
+      y: finalFocalPoint.y,
+    } ),
+  } );
+
+  const previewFocalPoint = nextFocalPoint => {
+    setScrollingEffectPreviewAttributes( getFocalPointAttributes( nextFocalPoint ) );
+  };
+
   return (
     <PanelBody
       title={ panelTitle }
@@ -71,15 +85,13 @@ const StartFramePanel = ( props ) => {
           height: parallaxFocalPointImage.height,
         } }
         value={ focalPoint }
-        onChange={ focalPoint => {
-          setAttributes( {
-            motionPreset: 'custom',
-            focalPoint: maybeSnapFocalPoint( focalPoint ),
-            finalFocalPoint: maybeSnapFocalPoint( {
-              x: focalPoint.x,
-              y: finalFocalPoint.y,
-            } ),
-          } );
+        onDragStart={ previewFocalPoint }
+        onDrag={ previewFocalPoint }
+        onChange={ nextFocalPoint => {
+          const nextAttributes = getFocalPointAttributes( nextFocalPoint );
+
+          setScrollingEffectPreviewAttributes( nextAttributes );
+          setAttributes( nextAttributes );
         } }
       />
       <RangeControl

@@ -1,4 +1,4 @@
-import { getSnapClassname } from "@novablocks/utils";
+import { getSnapClassname, maybeSnapFocalPoint } from "@novablocks/utils";
 import { FocalPointPicker, PanelBody, RangeControl, ToggleControl } from "@wordpress/components";
 import { __ } from "@wordpress/i18n";
 import { getFocalPointImage } from '../utils';
@@ -9,13 +9,14 @@ const EndFramePanel = ( props ) => {
   const {
     attributes,
     setAttributes,
+    setScrollingEffectPreviewAttributes = () => {},
     focalPointImage
   } = props;
 
   const {
     media,
-    focalPoint,
-    finalFocalPoint,
+    focalPoint = { x: 0.5, y: 0.5 },
+    finalFocalPoint = { x: 0.5, y: 0.5 },
     finalBackgroundScale,
     followThroughEnd,
     scrollingEffect,
@@ -39,10 +40,23 @@ const EndFramePanel = ( props ) => {
     'novablocks-focal-point-picker',
     `novablocks-focal-point-picker--${ scrollingEffect }`,
     'novablocks-focal-point-picker--end',
-    getSnapClassname( focalPoint ),
+    getSnapClassname( finalFocalPoint ),
   ];
 
   let className = classNames.join( ' ' );
+
+  const getFocalPointAttributes = nextFinalFocalPoint => ( {
+    motionPreset: 'custom',
+    focalPoint: maybeSnapFocalPoint( {
+      x: nextFinalFocalPoint.x,
+      y: focalPoint.y,
+    } ),
+    finalFocalPoint: maybeSnapFocalPoint( nextFinalFocalPoint ),
+  } );
+
+  const previewFocalPoint = nextFinalFocalPoint => {
+    setScrollingEffectPreviewAttributes( getFocalPointAttributes( nextFinalFocalPoint ) );
+  };
 
   return (
 
@@ -58,7 +72,14 @@ const EndFramePanel = ( props ) => {
           height: parallaxFocalPointImage.height,
         } }
         value={ finalFocalPoint }
-        disabled
+        onDragStart={ previewFocalPoint }
+        onDrag={ previewFocalPoint }
+        onChange={ nextFinalFocalPoint => {
+          const nextAttributes = getFocalPointAttributes( nextFinalFocalPoint );
+
+          setScrollingEffectPreviewAttributes( nextAttributes );
+          setAttributes( nextAttributes );
+        } }
       />
       <RangeControl
         label={ 'Zoom' }

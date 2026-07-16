@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useRef, useState } from "@wordpress/element";
+import { useCallback, useContext, useEffect, useMemo, useRef, useState } from "@wordpress/element";
 import { createHigherOrderComponent } from "@wordpress/compose";
 
 import {
@@ -9,6 +9,7 @@ import {
 } from "@novablocks/block-editor";
 
 import DopplerContext from "../context";
+import ScrollingEffectPreviewContext from "../preview-context";
 import { getStyles, getState } from "../utils";
 
 const withDopplerProvider = createHigherOrderComponent( WrappedComponent => {
@@ -18,6 +19,11 @@ const withDopplerProvider = createHigherOrderComponent( WrappedComponent => {
     const [ contextValue, setContextValue ] = useState( {} );
 
     const { attributes } = props;
+    const previewAttributes = useContext( ScrollingEffectPreviewContext );
+    const effectiveAttributes = useMemo( () => previewAttributes ? {
+      ...attributes,
+      ...previewAttributes,
+    } : attributes, [ attributes, previewAttributes ] );
     const scrollContainer = useScrollContainer();
     const scrollContainerBox = useScrollContainerBox( scrollContainer );
 
@@ -51,9 +57,9 @@ const withDopplerProvider = createHigherOrderComponent( WrappedComponent => {
           containerBox: containerBox,
         } );
 
-        const dopplerState = getState( config, attributes );
+        const dopplerState = getState( config, effectiveAttributes );
         const newConfig = Object.assign( {}, config, dopplerState );
-        const style = getStyles( newConfig, attributes );
+        const style = getStyles( newConfig, effectiveAttributes );
 
         const newContextValue = {
           style: style,
@@ -65,7 +71,7 @@ const withDopplerProvider = createHigherOrderComponent( WrappedComponent => {
         setContextValue( newContextValue );
       }
 
-    }, [ containerBox, scrollContainerBox, attributes, containerRef, scrollContainer ] );
+    }, [ containerBox, scrollContainerBox, effectiveAttributes, containerRef, scrollContainer ] );
 
     return (
       <div className={ `novablocks-doppler__mask novablocks-doppler__wrapper` } ref={ containerRef }>
