@@ -5,6 +5,7 @@ import {
   ControlsSection,
   ControlsTab,
   Notice,
+  PresetCardsControl,
 } from "@novablocks/block-editor";
 
 import {
@@ -21,10 +22,31 @@ import {
 } from "../components";
 
 import { ColorSignalPracticeGuide } from "../onboarding";
+import { RowSurfaceThumb, useRowSurfaces } from "../presets";
 
 const Controls = withColorSignalProps( props => {
+  // Row Surfaces (Stage 3a Phase 3): managed-bundle surface tiles, rendered
+  // as the FIRST tab only for blocks with a roster in the family registry
+  // (core/group today) and outside contentColorSignal-forcing parents — see
+  // use-row-surfaces.js. `null` keeps every other block's section unchanged.
+  const rowSurfaces = useRowSurfaces( props );
+
   return (
     <ControlsSection id={ 'color-signal' } label={ __( 'Color Signal', '__plugin_txtd' ) } order={ 10 } key={'color_signal_controls_section'}>
+      { !! rowSurfaces && (
+        <ControlsTab label={ __( 'Presets', '__plugin_txtd' ) } key={'color_signal_presets_tab'}>
+          <PresetCardsControl
+            key={ 'row-surface-presets' }
+            label={ __( 'Surface presets', '__plugin_txtd' ) }
+            options={ rowSurfaces.options.map( ( option ) => ( {
+              ...option,
+              thumbnail: <RowSurfaceThumb palette={ option.palette } variation={ option.variation } />,
+            } ) ) }
+            managedAttributes={ rowSurfaces.managedAttributes }
+            { ...props }
+          />
+        </ControlsTab>
+      ) }
       <ControlsTab label={ __( 'Customize', '__plugin_txtd' ) } key={'color_signal_customize_tab'}>
         <Notice
           key={ 'color-signal-quick-start' }

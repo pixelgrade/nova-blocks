@@ -99,3 +99,36 @@
     display: block;
   }
 }
+
+/* ---------- Row Surface preset tiles (Stage 3a Phase 3) ---------- */
+/* Painted inline from the live palettes payload (bg/fg1/accent of the
+   target variation) by RowSurfaceThumb; only structure lives here. */
+
+.nb-row-surface-thumb {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 3px;
+  height: 64px;
+  border: 1px solid rgba(0, 0, 0, 0.08);
+}
+
+.nb-row-surface-thumb__eyebrow {
+  width: 22px;
+  height: 3px;
+  border-radius: 2px;
+  opacity: 0.75;
+}
+
+.nb-row-surface-thumb__headline {
+  font-size: 15px;
+  font-weight: 700;
+  line-height: 1;
+}
+
+.nb-row-surface-thumb__rule {
+  width: 26px;
+  height: 2px;
+  border-radius: 2px;
+}

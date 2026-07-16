@@ -47,3 +47,4 @@ const withUpdatedAttributes = ( BlockEdit ) => {
 addFilter( 'editor.BlockEdit', 'novablocks/with-updated-attributes', withUpdatedAttributes );
 
 export * from './utils';
+export * from './presets';
