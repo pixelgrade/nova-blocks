@@ -268,3 +268,18 @@ describe( 'documented new clears', () => {
 		expect( patch.pile3dEffect ).toBe( true );
 	} );
 } );
+
+describe( 'structural boundary invariant', () => {
+	const { getStructuralBoundaryViolations } = require( '../../../block-editor/src/preset-engine/structural-attributes' );
+
+	test.each( [
+		[ 'stacked depth collection', { hasDepth: true, hasDoppler: true, layoutStyle: 'classic', cardLayout: 'stacked' } ],
+		[ 'non-stacked classic collection', { hasDepth: true, hasDoppler: true, layoutStyle: 'classic', cardLayout: 'horizontal' } ],
+		[ 'parametric collection', { hasDepth: true, hasDoppler: true, layoutStyle: 'parametric' } ],
+		[ 'doppler-only block', { hasDepth: false, hasDoppler: true } ],
+	] )( 'the Motion family never half-owns structure (%s)', ( _label, blockShape ) => {
+		const { definitions } = familyFor( blockShape );
+
+		expect( getStructuralBoundaryViolations( definitions ) ).toEqual( [] );
+	} );
+} );

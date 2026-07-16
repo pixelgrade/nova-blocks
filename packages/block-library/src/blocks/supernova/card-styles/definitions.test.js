@@ -252,3 +252,11 @@ describe( 'apply→derive roundtrip', () => {
 		expect( deriveActivePresetId( definitionsFor( 8 ), appliedOnLight, REGISTERED_DEFAULTS ) ).toBeNull();
 	} );
 } );
+
+describe( 'structural boundary invariant', () => {
+	const { getStructuralBoundaryViolations } = require( '../../../../../block-editor/src/preset-engine/structural-attributes' );
+
+	test( 'every tile declares cardLayout explicitly — structure is written, never cleared', () => {
+		expect( getStructuralBoundaryViolations( definitionsFor( 1 ) ) ).toEqual( [] );
+	} );
+} );
