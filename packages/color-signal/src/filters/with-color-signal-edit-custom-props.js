@@ -1,5 +1,6 @@
 import { createHigherOrderComponent } from "@wordpress/compose";
 import { useSupports } from "@novablocks/block-editor";
+import { isColorSignalActive } from "../utils";
 
 const withColorSignalEditCustomProps = createHigherOrderComponent( OriginalComponent => {
 
@@ -11,7 +12,8 @@ const withColorSignalEditCustomProps = createHigherOrderComponent( OriginalCompo
 
     const style = props.style ? props.style : {};
 
-    if ( !! supports?.novaBlocks?.colorSignal ) {
+    if ( !! supports?.novaBlocks?.colorSignal
+      && isColorSignalActive( supports.novaBlocks.colorSignal, attributes ) ) {
 
       let colorSignal = {
         '--nb-emphasis-area': emphasisArea

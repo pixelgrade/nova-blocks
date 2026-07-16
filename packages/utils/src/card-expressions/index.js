@@ -14,6 +14,7 @@ export const CARD_EXPRESSION_THRESHOLDS = {
   media: { tall: 0.5625, portrait: 0.75, square: 1.34, landscape: 1.78 },
   title: { short: 30, medium: 60 },
   description: { short: 100, medium: 200 },
+  recency: { freshDays: 30 },
 };
 
 export const classifyCardMediaRatio = ( ratio, thresholds = CARD_EXPRESSION_THRESHOLDS.media ) => {
@@ -79,6 +80,19 @@ export const getCardExpressionClassesFromValues = ( values, thresholds = CARD_EX
 
   classes.push( `nb-card--title-${ classifyCardTextLength( values?.title, thresholds.title ) }` );
   classes.push( `nb-card--description-${ classifyCardTextLength( values?.description, thresholds.description ) }` );
+
+  // Recency is anchored to the newest post in the same rendered collection
+  // (never the wall clock) so the class set stays deterministic per content
+  // set and page-cache-stable. Both timestamps are UNIX seconds, matching the
+  // PHP mirror's strtotime() values.
+  const postTimestamp = Number( values?.postTimestamp ) || 0;
+  const newestTimestamp = Number( values?.newestTimestamp ) || 0;
+  const freshDays = thresholds.recency?.freshDays ?? CARD_EXPRESSION_THRESHOLDS.recency.freshDays;
+
+  if ( postTimestamp > 0 && newestTimestamp > 0
+    && ( newestTimestamp - postTimestamp ) <= freshDays * 86400 ) {
+    classes.push( 'nb-card--fresh' );
+  }
 
   return classes;
 };

@@ -3,12 +3,15 @@ import { getSupports } from "@novablocks/block-editor";
 
 import {
   addSiteVariationOffset,
+  clampColorSignal,
   computeColorSignal,
   getAbsoluteColorVariation,
   getSignalRelativeToVariation,
   getSiteColorVariation,
+  getNearestColorSignalContext,
   getSourceIndexFromPaletteId,
-  removeSiteVariationOffset
+  removeSiteVariationOffset,
+  resolveColorSignalContext,
 } from "../utils";
 
 /**
@@ -18,38 +21,35 @@ import {
  * @param clientId
  * @returns {number|*}
  */
-export const getParentVariation = ( clientId ) => {
+export const getParentColorContext = ( clientId ) => {
   const blockEditorSelect = select( 'core/block-editor' );
   const { getBlockParents, getBlock, getSelectedBlockClientId } = blockEditorSelect || {};
 
   if ( typeof getBlockParents !== 'function' || typeof getBlock !== 'function' ) {
-    return getSiteColorVariation();
+    return {
+      palette: undefined,
+      variation: getSiteColorVariation(),
+    };
   }
 
   const resolvedClientId = clientId || getSelectedBlockClientId();
   const blockParents = resolvedClientId ? getBlockParents( resolvedClientId ) : undefined;
   const parents = Array.isArray( blockParents ) ? blockParents.slice() : [];
+  const parentBlocks = parents.reverse().map( parentClientId => getBlock( parentClientId ) ).filter( Boolean );
+  const parentContext = getNearestColorSignalContext(
+    parentBlocks,
+    name => !! getSupports( name )?.novaBlocks?.colorSignal,
+    getAbsoluteColorVariation
+  );
 
-  // Loop through parents array until we find a block with Color Signal component enabled
-  while ( parents.length ) {
-    const parentClientId = parents.pop();
-    const parentBlock = getBlock( parentClientId );
-    const parentAttributes = parentBlock?.attributes;
+  return parentContext || {
+    palette: undefined,
+    variation: getSiteColorVariation(),
+  };
+};
 
-    if ( ! parentBlock?.name || ! parentAttributes ) {
-      continue;
-    }
-
-    const supports = getSupports( parentBlock.name );
-
-    // if this parent supports colorSignal return it's absolute paletteVariation
-    if ( supports?.novaBlocks?.colorSignal ) {
-      return getAbsoluteColorVariation( parentAttributes );
-    }
-  }
-
-  // return the Palette Basis Offset value
-  return getSiteColorVariation();
+export const getParentVariation = ( clientId ) => {
+  return getParentColorContext( clientId ).variation;
 };
 
 /**
@@ -72,12 +72,20 @@ export const getParentVariation = ( clientId ) => {
  * @param attributes the block's current (live) attributes
  * @param clientId the block's clientId
  * @param nextSignal the desired colorSignal value (0-3)
+ * @param inheritParentPalette whether the surrounding palette owns this block
  * @returns {{paletteVariation: number, useSourceColorAsReference: boolean}}
  */
-export const getSignalChangeAttributes = ( attributes, clientId, nextSignal ) => {
-  const { palette } = attributes;
-  const referenceVariation = getParentVariation( clientId );
-  const absoluteVariation = getAbsoluteColorVariation( attributes );
+export const getSignalChangeAttributes = ( attributes, clientId, nextSignal, inheritParentPalette = false ) => {
+  const parentContext = getParentColorContext( clientId );
+  const resolvedContext = resolveColorSignalContext( attributes, parentContext, inheritParentPalette );
+  const referenceVariation = resolvedContext.parentVariation;
+  const palette = resolvedContext.palette;
+  const effectiveAttributes = {
+    ...attributes,
+    palette,
+    useSourceColorAsReference: resolvedContext.useSourceColorAsReference,
+  };
+  const absoluteVariation = getAbsoluteColorVariation( effectiveAttributes );
   const nextVariation = computeColorSignal( referenceVariation, nextSignal, palette, absoluteVariation );
   const finalVariation = removeSiteVariationOffset( nextVariation );
 
@@ -168,17 +176,28 @@ export const getPaletteChangeAttributes = ( attributes, clientId, nextPalette, s
   };
 };
 
-export const getUpdatedAttributes = ( attributes, clientId, newAttributes = {}, stickySourceColor = true, useSourceOnSameVariation = false, useSourceOnSameSignal = false ) => {
+export const getUpdatedAttributes = ( attributes, clientId, newAttributes = {}, stickySourceColor = true, useSourceOnSameVariation = false, useSourceOnSameSignal = false, inheritParentPalette = false, minColorSignal = 0 ) => {
   // prepare attribute values to be used in computing next attributes
   const nextAttributes = Object.assign( {}, attributes, newAttributes );
-  const { palette, useSourceColorAsReference } = nextAttributes;
 
   // find out the the reference (parent) color variation to compute signal on
-  const referenceVariation = getParentVariation( clientId );
+  const parentContext = getParentColorContext( clientId );
+  const resolvedContext = resolveColorSignalContext( nextAttributes, parentContext, inheritParentPalette );
+  const referenceVariation = resolvedContext.parentVariation;
+  const palette = resolvedContext.palette;
+  const useSourceColorAsReference = resolvedContext.useSourceColorAsReference;
+
+  Object.assign( nextAttributes, {
+    palette,
+    useSourceColorAsReference,
+  } );
 
   // find out the next absolute value of the paletteVariation attribute
   const absoluteVariation = getAbsoluteColorVariation( nextAttributes );
-  const nextSignal = getSignalRelativeToVariation( absoluteVariation, referenceVariation, palette );
+  const nextSignal = clampColorSignal(
+    getSignalRelativeToVariation( absoluteVariation, referenceVariation, palette ),
+    { minColorSignal }
+  );
 
   const computedVariation = computeColorSignal( referenceVariation, nextSignal, palette, absoluteVariation );
   const nextVariation = removeSiteVariationOffset( computedVariation );

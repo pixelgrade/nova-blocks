@@ -11,6 +11,9 @@ const {
 
 const expectedCompatibilityTests = [
 	'packages/block-editor/src/components/post-card/utils.test.js',
+	'packages/color-signal/src/components/use-current-color-signal-attributes.test.js',
+	'packages/color-signal/src/components/with-color-signal-props/index.test.js',
+	'packages/color-signal/src/filters/with-color-signal-controls-memo.test.js',
 	'packages/scrolling-effect/src/controls/end-frame-panel-live-preview.test.js',
 	'packages/scrolling-effect/src/controls/start-frame-panel-live-preview.test.js',
 	'packages/scrolling-effect/src/filters/with-scrolling-effect-controls.test.js',

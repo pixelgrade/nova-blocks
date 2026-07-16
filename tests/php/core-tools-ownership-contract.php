@@ -82,6 +82,13 @@ $expected_overrides = [
 			'text' => false,
 		],
 	],
+	'core/post-terms' => [
+		'color' => [
+			'text'       => false,
+			'background' => false,
+			'link'       => false,
+		],
+	],
 ];
 
 $overrides = novablocks_get_core_tools_availability_overrides();

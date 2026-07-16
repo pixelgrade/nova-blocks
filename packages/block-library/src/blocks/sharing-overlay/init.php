@@ -15,7 +15,7 @@ function novablocks_get_sharing_overlay_attributes() {
 		'packages/block-library/src/blocks/sharing-overlay/attributes.json',
 
 		'packages/color-signal/src/attributes.json',
-		'packages/color-signal/src/attributes-alt.json',
+		'packages/block-library/src/blocks/sharing-overlay/attributes-overwrite.json',
 	] );
 
 }

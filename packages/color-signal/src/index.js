@@ -4,6 +4,7 @@ import { useSupports } from "@novablocks/block-editor";
 
 import "./update-blocks";
 import { getUpdatedAttributes } from "./editor/utils";
+import { isColorSignalActive, shouldInheritParentPalette } from "./utils";
 
 import withColorSignalAttributes from "./filters/with-color-signal-attributes";
 import withColorSignalsDeprecated from "./filters/with-color-signal-deprecated";
@@ -30,11 +31,20 @@ const withUpdatedAttributes = ( BlockEdit ) => {
   return props => {
     const { attributes, setAttributes, clientId } = props;
     const supports = useSupports( props.name );
-    const stickySourceColor = supports?.novaBlocks?.colorSignal?.stickySourceColor !== false;
+    const colorSignalSupport = supports?.novaBlocks?.colorSignal;
+    const stickySourceColor = colorSignalSupport?.stickySourceColor !== false;
+    const paletteInheritanceAttribute = colorSignalSupport?.paletteInheritanceAttribute;
+    const inheritParentPalette = shouldInheritParentPalette( colorSignalSupport, attributes );
+    const minColorSignal = colorSignalSupport?.minColorSignal || 0;
 
     useEffect( () => {
-      if ( supports?.novaBlocks?.colorSignal ) {
-        const updatedAttributes = getUpdatedAttributes( attributes, clientId, {}, stickySourceColor );
+      if ( colorSignalSupport && isColorSignalActive( colorSignalSupport, attributes ) ) {
+        const updatedAttributes = getUpdatedAttributes( attributes, clientId, {}, stickySourceColor, false, false, inheritParentPalette, minColorSignal );
+
+        if ( paletteInheritanceAttribute && typeof attributes[ paletteInheritanceAttribute ] !== 'boolean' ) {
+          updatedAttributes[ paletteInheritanceAttribute ] = inheritParentPalette;
+        }
+
         setAttributes( updatedAttributes );
       }
     }, [] );

@@ -2,12 +2,17 @@ import { dispatch, select, subscribe } from "@wordpress/data";
 
 import { getSupports } from "@novablocks/block-editor";
 
-import { getParentVariation } from "./editor/utils";
+import { getParentColorContext } from "./editor/utils";
 import {
+  clampColorSignal,
   computeColorSignal,
   getAbsoluteColorVariation,
   getSignalRelativeToVariation,
+  isColorSignalActive,
   removeSiteVariationOffset,
+  resolveColorPaletteId,
+  resolveColorSignalContext,
+  shouldInheritParentPalette,
 } from "./utils";
 
 ( () => {
@@ -49,23 +54,23 @@ const updateBlock = ( block ) => {
 
   const supports = getSupports( block.name );
 
-  if ( supports?.novaBlocks?.colorSignal ) {
+  if ( supports?.novaBlocks?.colorSignal
+    && isColorSignalActive( supports.novaBlocks.colorSignal, block.attributes ) ) {
     const { updateBlockAttributes } = dispatch( 'core/block-editor' );
     const { attributes, clientId } = block;
     const { colorSignal, paletteVariation, useSourceColorAsReference } = attributes;
+    const colorSignalSupport = supports.novaBlocks.colorSignal;
+    const paletteInheritanceAttribute = colorSignalSupport?.paletteInheritanceAttribute;
+    const inheritParentPalette = shouldInheritParentPalette( colorSignalSupport, attributes );
+    const inheritanceNeedsMigration = paletteInheritanceAttribute
+      && typeof attributes[ paletteInheritanceAttribute ] !== 'boolean';
+    const parentContext = getParentColorContext( clientId );
+    const resolvedContext = resolveColorSignalContext( attributes, parentContext, inheritParentPalette );
+    const effectiveUseSourceColorAsReference = resolvedContext.useSourceColorAsReference;
 
-    const config = window.styleManager?.colorsConfig || [];
-
-    // make sure we're using an actual palette
-    const palette = ( () => {
-      const palette = config.find( palette => `${ palette.id }` === `${ attributes.palette }` );
-
-      if ( ! palette ) {
-        return 1;
-      }
-
-      return palette.id;
-    } )();
+    // Make sure we're using an actual palette from either the runtime payload
+    // or the Site Editor's Nova settings store.
+    const palette = resolveColorPaletteId( resolvedContext.palette );
 
     const { getBlockParents, getBlock } = select( 'core/block-editor' );
     const parents = getBlockParents( clientId ).slice();
@@ -87,12 +92,33 @@ const updateBlock = ( block ) => {
         const { contentColorSignal, contentPaletteVariation } = parentBlock.attributes;
 
         // @todo check if computed signal of contentPaletteVariation is the same as contentColorSignal
-        if ( paletteVariation !== contentPaletteVariation ) {
-          updateBlockAttributes( clientId, {
-            colorSignal: contentColorSignal,
-            paletteVariation: contentPaletteVariation,
-            useSourceColorAsReference: false,
-          } );
+        const nextContentColorSignal = clampColorSignal( contentColorSignal, colorSignalSupport );
+        const nextContentPaletteVariation = nextContentColorSignal === contentColorSignal
+          ? contentPaletteVariation
+          : removeSiteVariationOffset( computeColorSignal(
+            resolvedContext.parentVariation,
+            nextContentColorSignal,
+            palette,
+            contentPaletteVariation
+          ) );
+
+        if ( paletteVariation !== nextContentPaletteVariation
+          || colorSignal !== nextContentColorSignal
+          || ( inheritParentPalette && attributes.palette !== palette )
+          || useSourceColorAsReference !== effectiveUseSourceColorAsReference
+          || inheritanceNeedsMigration ) {
+          const patch = {
+            palette,
+            colorSignal: nextContentColorSignal,
+            paletteVariation: nextContentPaletteVariation,
+            useSourceColorAsReference: effectiveUseSourceColorAsReference,
+          };
+
+          if ( inheritanceNeedsMigration ) {
+            patch[ paletteInheritanceAttribute ] = inheritParentPalette;
+          }
+
+          updateBlockAttributes( clientId, patch );
         }
 
         updateInnerBlocks( block );
@@ -101,19 +127,40 @@ const updateBlock = ( block ) => {
       }
     }
 
-    const parentVariation = getParentVariation( clientId );
-    const absoluteVariation = getAbsoluteColorVariation( attributes );
-    const nextVariation = computeColorSignal( parentVariation, colorSignal, palette, absoluteVariation );
+    const parentVariation = resolvedContext.parentVariation;
+    const effectiveAttributes = {
+      ...attributes,
+      palette,
+      useSourceColorAsReference: effectiveUseSourceColorAsReference,
+    };
+    const absoluteVariation = getAbsoluteColorVariation( effectiveAttributes );
+    const effectiveColorSignal = clampColorSignal( colorSignal, colorSignalSupport );
+    const nextVariation = computeColorSignal( parentVariation, effectiveColorSignal, palette, absoluteVariation );
 
-    const nextColorSignal = useSourceColorAsReference ? getSignalRelativeToVariation( absoluteVariation, parentVariation, palette ) : colorSignal;
-    const finalVariation = useSourceColorAsReference ? 1 : removeSiteVariationOffset( nextVariation );
+    const nextColorSignal = clampColorSignal(
+      effectiveUseSourceColorAsReference ? getSignalRelativeToVariation( absoluteVariation, parentVariation, palette ) : effectiveColorSignal,
+      colorSignalSupport
+    );
+    const finalVariation = effectiveUseSourceColorAsReference ? 1 : removeSiteVariationOffset( nextVariation );
 
     // dispatch new attributes only if the new paletteVariation value differs from the current one
-    if ( paletteVariation !== finalVariation || colorSignal !== nextColorSignal ) {
-      updateBlockAttributes( clientId, {
+    if ( attributes.palette !== palette
+      || paletteVariation !== finalVariation
+      || colorSignal !== nextColorSignal
+      || useSourceColorAsReference !== effectiveUseSourceColorAsReference
+      || inheritanceNeedsMigration ) {
+      const patch = {
+        palette,
         colorSignal: nextColorSignal,
         paletteVariation: finalVariation,
-      } );
+        useSourceColorAsReference: effectiveUseSourceColorAsReference,
+      };
+
+      if ( inheritanceNeedsMigration ) {
+        patch[ paletteInheritanceAttribute ] = inheritParentPalette;
+      }
+
+      updateBlockAttributes( clientId, patch );
     }
   }
 

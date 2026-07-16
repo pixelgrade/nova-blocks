@@ -2623,6 +2623,7 @@ function novablocks_get_card_expression_thresholds(): array {
 		'media'       => [ 'tall' => 0.5625, 'portrait' => 0.75, 'square' => 1.34, 'landscape' => 1.78 ],
 		'title'       => [ 'short' => 30, 'medium' => 60 ],
 		'description' => [ 'short' => 100, 'medium' => 200 ],
+		'recency'     => [ 'fresh_days' => 30 ],
 	];
 
 	$thresholds = apply_filters( 'novablocks/card_expression_thresholds', $defaults );
@@ -2697,6 +2698,17 @@ function novablocks_get_card_expression_classes_from_values( array $values ): ar
 	$classes[] = 'nb-card--title-' . novablocks_classify_card_text_length( $values['title'] ?? '', $thresholds['title'] );
 	$classes[] = 'nb-card--description-' . novablocks_classify_card_text_length( $values['description'] ?? '', $thresholds['description'] );
 
+	// Recency is anchored to the newest post in the same rendered collection
+	// (never the wall clock) so the class set stays deterministic per content
+	// set and page-cache-stable. Both timestamps are UNIX seconds.
+	$post_timestamp   = isset( $values['post_timestamp'] ) ? (int) $values['post_timestamp'] : 0;
+	$newest_timestamp = isset( $values['newest_timestamp'] ) ? (int) $values['newest_timestamp'] : 0;
+
+	if ( $post_timestamp > 0 && $newest_timestamp > 0
+	     && ( $newest_timestamp - $post_timestamp ) <= $thresholds['recency']['fresh_days'] * 86400 ) {
+		$classes[] = 'nb-card--fresh';
+	}
+
 	return $classes;
 }
 
@@ -2719,10 +2731,12 @@ function novablocks_get_post_card_expression_classes( $post, array $attributes )
 	}
 
 	return novablocks_get_card_expression_classes_from_values( [
-		'media_width'  => $width,
-		'media_height' => $height,
-		'title'        => get_the_title( $post ),
-		'description'  => get_the_excerpt( $post ),
+		'media_width'      => $width,
+		'media_height'     => $height,
+		'title'            => get_the_title( $post ),
+		'description'      => get_the_excerpt( $post ),
+		'post_timestamp'   => isset( $post->post_date_gmt ) ? (int) strtotime( (string) $post->post_date_gmt ) : 0,
+		'newest_timestamp' => isset( $attributes['_collectionNewestPostTimestamp'] ) ? (int) $attributes['_collectionNewestPostTimestamp'] : 0,
 	] );
 }
 
@@ -3075,6 +3089,32 @@ function novablocks_get_posts_collection_cards_markup( array $attributes, $conte
 	if ( ! $query->have_posts() ) {
 		return $output;
 	}
+
+	// The recency card-expression class is anchored to the newest post of the
+	// WHOLE query, not the current page's batch — otherwise page 2 / Load More
+	// batches would re-anchor to their own newest and mark old posts fresh. A
+	// one-post date-ordered probe keeps that anchor stable across pagination.
+	// The underscore key never reaches markup — root data-* attributes were
+	// already emitted from the block's own attributes.
+	$newest_timestamp = 0;
+	$anchor_vars      = array_merge( $query->query_vars, [
+		'posts_per_page'         => 1,
+		'paged'                  => 1,
+		'offset'                 => 0,
+		'orderby'                => 'date',
+		'order'                  => 'DESC',
+		'ignore_sticky_posts'    => true,
+		'no_found_rows'          => true,
+		'update_post_meta_cache' => false,
+		'update_post_term_cache' => false,
+	] );
+	$anchor_query     = new WP_Query( $anchor_vars );
+
+	if ( ! empty( $anchor_query->posts[0]->post_date_gmt ) ) {
+		$newest_timestamp = (int) strtotime( (string) $anchor_query->posts[0]->post_date_gmt );
+	}
+
+	$attributes['_collectionNewestPostTimestamp'] = $newest_timestamp;
 
 	while ( $query->have_posts() ) {
 		$post = $query->next_post();

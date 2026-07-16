@@ -8,11 +8,27 @@ const withColorSignalAttributes = ( settings ) => {
     return settings;
   }
 
+  const activationAttribute = colorSignalSupport?.activationAttribute;
+  const activationAttributes = activationAttribute ? {
+    [ activationAttribute ]: {
+      type: 'boolean',
+      default: false,
+    },
+  } : {};
+  const paletteInheritanceAttribute = colorSignalSupport?.paletteInheritanceAttribute;
+  const paletteInheritanceAttributes = paletteInheritanceAttribute ? {
+    [ paletteInheritanceAttribute ]: {
+      type: 'boolean',
+    },
+  } : {};
+
   return {
     ...settings,
     attributes: {
       ...settings.attributes,
       ...attributes,
+      ...activationAttributes,
+      ...paletteInheritanceAttributes,
     }
   };
 };

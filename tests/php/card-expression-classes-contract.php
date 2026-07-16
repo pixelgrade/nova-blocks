@@ -12,6 +12,9 @@
  *                      < landscape <= 1.78 < wide
  *   title chars:       short < 30 <= medium < 60 <= long
  *   description chars: short < 100 <= medium < 200 <= long
+ *   recency:           fresh when newest - post <= fresh_days * 86400
+ *                      (UNIX seconds, anchored to the newest post in the same
+ *                      rendered collection — never the wall clock)
  *
  * Run standalone: php tests/php/card-expression-classes-contract.php
  */
@@ -104,5 +107,43 @@ $classes = novablocks_get_card_expression_classes_from_values( [
 
 nb_expect( in_array( 'nb-card--media-wide', $classes, true ), 'Expected nb-card--media-wide (2:1).' );
 nb_expect( in_array( 'nb-card--title-none', $classes, true ), 'Expected nb-card--title-none for empty title.' );
+
+// --- Recency classification (collection-anchored, pure) ---
+
+$newest    = 1700000000;
+$fresh_day = 86400;
+
+// Exactly at the 30-day edge = fresh (<= boundary, mirroring the JS).
+$classes = novablocks_get_card_expression_classes_from_values( [
+	'post_timestamp'   => $newest - 30 * $fresh_day,
+	'newest_timestamp' => $newest,
+] );
+nb_expect( in_array( 'nb-card--fresh', $classes, true ), 'Exactly 30 days behind the newest post is still fresh.' );
+
+// One second past the edge = stale.
+$classes = novablocks_get_card_expression_classes_from_values( [
+	'post_timestamp'   => $newest - 30 * $fresh_day - 1,
+	'newest_timestamp' => $newest,
+] );
+nb_expect( ! in_array( 'nb-card--fresh', $classes, true ), 'A second past the 30-day window is stale.' );
+
+// The newest post itself is fresh.
+$classes = novablocks_get_card_expression_classes_from_values( [
+	'post_timestamp'   => $newest,
+	'newest_timestamp' => $newest,
+] );
+nb_expect( in_array( 'nb-card--fresh', $classes, true ), 'The newest post is fresh.' );
+
+// Missing either timestamp → never fresh (fails closed; legacy callers
+// without recency values keep their exact class set).
+$classes = novablocks_get_card_expression_classes_from_values( [
+	'post_timestamp' => $newest,
+] );
+nb_expect( ! in_array( 'nb-card--fresh', $classes, true ), 'No newest anchor → no fresh class.' );
+
+$classes = novablocks_get_card_expression_classes_from_values( [
+	'newest_timestamp' => $newest,
+] );
+nb_expect( ! in_array( 'nb-card--fresh', $classes, true ), 'No post timestamp → no fresh class.' );
 
 echo "card expression classes contract ok\n";

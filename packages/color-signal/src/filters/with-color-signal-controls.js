@@ -16,6 +16,7 @@ const COLOR_SIGNAL_ATTR_KEYS = [
   'contentColorSignal',
   'contentPaletteVariation',
   'emphasisArea',
+  'useParentPalette',
 ];
 
 /**
@@ -35,10 +36,11 @@ const COLOR_SIGNAL_ATTR_KEYS = [
  * doubt: a missed re-render would leave stale UI; an extra re-render is a perf
  * regression but not a correctness bug.
  */
-const arePropsEqualForControls = ( prev, next ) => {
+export const arePropsEqualForControls = ( prev, next ) => {
   if ( prev.isSelected !== next.isSelected ) return false;
   if ( prev.clientId !== next.clientId ) return false;
   if ( prev.name !== next.name ) return false;
+  if ( prev.colorSignalActivationAttribute !== next.colorSignalActivationAttribute ) return false;
 
   const prevAttrs = prev.attributes;
   const nextAttrs = next.attributes;
@@ -52,6 +54,9 @@ const arePropsEqualForControls = ( prev, next ) => {
     const key = COLOR_SIGNAL_ATTR_KEYS[ i ];
     if ( prevAttrs[ key ] !== nextAttrs[ key ] ) return false;
   }
+
+  const activationAttribute = next.colorSignalActivationAttribute;
+  if ( activationAttribute && prevAttrs[ activationAttribute ] !== nextAttrs[ activationAttribute ] ) return false;
 
   return true;
 };
@@ -71,7 +76,10 @@ const withColorSignalControls = createHigherOrderComponent( OriginalComponent =>
 
     return (
       <Fragment>
-        <MemoizedControls { ...props } />
+        <MemoizedControls
+          { ...props }
+          colorSignalActivationAttribute={ colorSignalSupport?.activationAttribute }
+        />
         <OriginalComponent { ...props } />
       </Fragment>
     );

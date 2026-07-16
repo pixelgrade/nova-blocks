@@ -5,11 +5,15 @@ import { addClass, removeClass, toggleClass } from "@novablocks/utils";
 
 import {
   addSiteVariationOffset,
+  clampColorSignal,
   computeColorSignal,
   getAbsoluteColorVariation,
   getColorSignalClassnames,
   getSourceIndexFromPaletteId,
-  removeSiteVariationOffset
+  isColorSignalActive,
+  removeSiteVariationOffset,
+  resolveColorSignalContext,
+  shouldInheritParentPalette,
 } from "../utils";
 
 const COLOR_SIGNAL_SELECTOR = '[data-color-signal]';
@@ -17,21 +21,63 @@ const COLOR_SIGNAL_SELECTOR = '[data-color-signal]';
 /**
  * @param block current element
  * @param parentVariation reference color variation
+ * @param parentPalette reference color palette
  */
-export const updateBlockSignal = ( block, parentVariation ) => {
+export const updateBlockSignal = ( block, parentVariation, parentPalette ) => {
   const attributes = block.dataset;
-  const { palette, useSourceColorAsReference } = attributes;
-  const colorSignal = parseInt( attributes?.colorSignal, 10 );
   const innerBlocks = Array.from( block.children );
+  const dynamicPaletteInheritanceAttribute = attributes?.paletteInheritanceAttribute;
+  const colorSignalSupport = 'true' === attributes?.inheritParentPalette
+    ? {
+      inheritParentPalette: true,
+      ...( dynamicPaletteInheritanceAttribute ? {
+        paletteInheritanceAttribute: dynamicPaletteInheritanceAttribute,
+      } : {} ),
+    }
+    : block.classList.contains( 'wp-block-button' )
+    ? {
+      inheritParentPalette: true,
+      minColorSignal: 1,
+    }
+    : block.classList.contains( 'wp-block-list' ) || block.classList.contains( 'nb-list' )
+      ? { inheritParentPalette: true }
+      : block.classList.contains( 'wp-block-separator' )
+        ? {
+          inheritParentPalette: true,
+          minColorSignal: 1,
+          paletteInheritanceAttribute: 'useParentPalette',
+          legacyInheritedPalette: '1',
+        }
+        : {};
+
+  if ( ! isColorSignalActive( colorSignalSupport, attributes ) ) {
+    innerBlocks.forEach( innerBlock => {
+      updateBlockSignal( innerBlock, parentVariation, parentPalette );
+    } );
+    return;
+  }
+  const inheritParentPalette = shouldInheritParentPalette( colorSignalSupport, attributes );
+  const storedColorSignal = parseInt( attributes?.colorSignal, 10 );
+  const colorSignal = clampColorSignal( storedColorSignal, colorSignalSupport );
+  const resolvedContext = resolveColorSignalContext( attributes, {
+    palette: parentPalette,
+    variation: parentVariation,
+  }, inheritParentPalette );
+  const { palette, useSourceColorAsReference } = resolvedContext;
 
   if ( ! attributes?.colorSignal ) {
     innerBlocks.forEach( innerBlock => {
-      updateBlockSignal( innerBlock, parentVariation );
+      updateBlockSignal( innerBlock, parentVariation, parentPalette );
     } );
     return;
   }
 
-  const absoluteVariation = getAbsoluteColorVariation( attributes );
+  const effectiveAttributes = {
+    ...attributes,
+    palette,
+    useSourceColorAsReference,
+  };
+  const absoluteVariation = getAbsoluteColorVariation( effectiveAttributes );
   const nextVariation = computeColorSignal( parentVariation, colorSignal, palette, absoluteVariation );
   const finalVariation = useSourceColorAsReference ? 1 : removeSiteVariationOffset( nextVariation );
   const sourceIndex = getSourceIndexFromPaletteId( palette );
@@ -40,8 +86,9 @@ export const updateBlockSignal = ( block, parentVariation ) => {
   const classes = Array.from( block.classList );
   const paletteClassname = classes.find( classname => classname.indexOf( 'sm-palette-' ) > -1 );
   const paletteVariationClassname = classes.find( classname => classname.indexOf( 'sm-variation-' ) > -1 );
+  const colorSignalClassname = classes.find( classname => classname.indexOf( 'sm-color-signal-' ) > -1 );
 
-  removeClass( block, `${ paletteClassname } ${ paletteVariationClassname } sm-palette--shifted` );
+  removeClass( block, `${ paletteClassname } ${ paletteVariationClassname } ${ colorSignalClassname } sm-palette--shifted` );
 
   const newClassnames = getColorSignalClassnames( {
     palette,
@@ -56,8 +103,21 @@ export const updateBlockSignal = ( block, parentVariation ) => {
   toggleClass( block, 'sm-light', isLight );
   toggleClass( block, 'sm-dark', ! isLight );
 
+  block.dataset.palette = `${ palette }`;
+  block.dataset.paletteVariation = `${ finalVariation }`;
+  block.dataset.colorSignal = `${ colorSignal }`;
+  if ( useSourceColorAsReference ) {
+    block.dataset.useSourceColorAsReference = 'true';
+  } else {
+    delete block.dataset.useSourceColorAsReference;
+  }
+
+  if ( colorSignalSupport.paletteInheritanceAttribute ) {
+    block.dataset[ colorSignalSupport.paletteInheritanceAttribute ] = `${ inheritParentPalette }`;
+  }
+
   innerBlocks.forEach( innerBlock => {
-    updateBlockSignal( innerBlock, finalAbsoluteVariation );
+    updateBlockSignal( innerBlock, finalAbsoluteVariation, palette );
   } );
 };
 

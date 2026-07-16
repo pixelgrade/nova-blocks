@@ -8,23 +8,28 @@ const KEYS = [
   'contentColorSignal',
   'contentPaletteVariation',
   'emphasisArea',
+  'useParentPalette',
 ];
 
-const pickCurrentAttributes = ( currentBlockAttributes = {}, fallbackAttributes = {} ) => {
-  return KEYS.reduce( ( result, key ) => {
+export const pickCurrentAttributes = ( currentBlockAttributes = {}, fallbackAttributes = {}, activationAttribute ) => {
+  const keys = activationAttribute && ! KEYS.includes( activationAttribute )
+    ? [ ...KEYS, activationAttribute ]
+    : KEYS;
+
+  return keys.reduce( ( result, key ) => {
     result[ key ] = currentBlockAttributes?.[ key ] ?? fallbackAttributes?.[ key ];
 
     return result;
   }, {} );
 };
 
-export const useCurrentColorSignalAttributes = ( clientId, attributes ) => {
+export const useCurrentColorSignalAttributes = ( clientId, attributes, activationAttribute ) => {
   return useSelect( select => {
     const blockEditorSelect = select( 'core/block-editor' );
     const currentBlock = clientId ? blockEditorSelect.getBlock( clientId ) : undefined;
     const currentBlockAttributes = currentBlock?.attributes || blockEditorSelect.getSelectedBlock()?.attributes;
 
-    return pickCurrentAttributes( currentBlockAttributes, attributes );
+    return pickCurrentAttributes( currentBlockAttributes, attributes, activationAttribute );
   }, [
     clientId,
     attributes.palette,
@@ -34,5 +39,8 @@ export const useCurrentColorSignalAttributes = ( clientId, attributes ) => {
     attributes.contentColorSignal,
     attributes.contentPaletteVariation,
     attributes.emphasisArea,
+    attributes.useParentPalette,
+    activationAttribute,
+    activationAttribute ? attributes?.[ activationAttribute ] : undefined,
   ] );
 };

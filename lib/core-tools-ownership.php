@@ -37,7 +37,7 @@
  *   padding additionally has no per-block Nova lever at all. Core stays
  *   the owner (addendum §3).
  * - `blockGap`, `typography`, `border`, `backgroundImage`, `gradients`:
- *   no Nova replacement exists for any of these on any of the seven
+ *   no Nova replacement exists for any of these on any of the
  *   augmented core blocks (addendum §3-4). Gradients are already
  *   suppressed by anima-lt's own theme.json (`defaultGradients:false`,
  *   `customGradient:false`); this file doesn't need to touch them, but see
@@ -139,6 +139,16 @@ function novablocks_get_core_tools_availability_overrides(): array {
 		'core/list'      => [
 			'color' => [
 				'text' => false,
+			],
+		],
+		// Post Terms adopts wrapper-level Color Signal explicitly. Existing
+		// text/background/link values continue to render until the first
+		// Color Signal interaction clears them in the same attribute patch.
+		'core/post-terms' => [
+			'color' => [
+				'text'       => false,
+				'background' => false,
+				'link'       => false,
 			],
 		],
 	];

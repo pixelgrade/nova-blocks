@@ -42,3 +42,18 @@ test( 'serializes NaN only while validating the legacy deprecation', () => {
 	expect( current.style[ '--nb-list-start-at' ] ).toBe( '0' );
 	expect( current.reversed ).toBe( true );
 } );
+
+test( 'inherits the surrounding palette instead of owning stale palette classes', () => {
+	const settings = withAlteredSettings( {
+		name: 'core/list',
+		attributes: {},
+		supports: {},
+		deprecated: [],
+		save: jest.fn(),
+	} );
+
+	expect( settings.supports.novaBlocks.colorSignal ).toMatchObject( {
+		inheritParentPalette: true,
+		stickySourceColor: false,
+	} );
+} );
