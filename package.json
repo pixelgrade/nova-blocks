@@ -27,6 +27,7 @@
 		"dev:packages": "node ./bin/packages/watch.js",
 		"prezip": "npm run build",
 		"zip": "gulp zip",
+		"postzip": "NB_ZIP_EXPECT_FRESH=1 bash ./bin/verify-zip.sh",
 		"preinstall": "cd ./node-tasks/ && npm install && node ./lock_node_version.js",
 		"postinstall": "node ./bin/packages/install.js && node ./bin/patch-node22-compat.js",
 		"test": "npm run test:fast",

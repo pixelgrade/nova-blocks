@@ -54,6 +54,8 @@ What `npm run zip` does internally:
 Output zip location: **one directory up** from the plugin (e.g., `.../plugins/nova-blocks-2-1-10.zip`)
 
 ### Verify the zip before releasing:
+
+`npm run zip` now verifies its own artifact: the `postzip` hook runs `bin/verify-zip.sh` (size floor, `build/` present, private-file deny-list, version-field sync, `.pot` + text-domain replacement, freshness) and fails the whole command on a bad zip. Run `bash bin/verify-zip.sh [zip]` to re-verify any artifact standalone. The manual commands below remain as the reference for what is being checked:
 ```bash
 # Should be ~1MB (NOT ~270KB — that means build/ is missing)
 ls -la ../nova-blocks-X-Y-Z.zip
@@ -456,7 +458,8 @@ CSS that works in the Site Editor may not work in the Post Editor due to the `bo
 
 - [ ] Source changes committed and pushed to `main`
 - [ ] Build completes without errors (`npm run zip` with Node 22)
-- [ ] Zip verified: ~1MB, has `build/`, no `CLAUDE.md`, correct version fields
+- [ ] Zip verified: `bin/verify-zip.sh` passed (runs automatically as `postzip`)
+- [ ] Fresh-site smoke passed: `bash bin/run-fresh-site-smoke.sh` (fresh WP install + stack activation + seam assertions; needs the Local site running)
 - [ ] GitHub: tag updated, release asset uploaded, release notes current
 - [ ] SVN: trunk committed, tag created/updated
 - [ ] Verify on https://wordpress.org/plugins/nova-blocks/ (may take a few minutes to update)
