@@ -1,6 +1,13 @@
 import { getSignals } from "@novablocks/utils";
 
-export { getColorSignalClassnames } from "@novablocks/utils";
+export {
+  clampColorSignal,
+  getColorSignalClassnames,
+  getNearestColorSignalContext,
+  resolveColorSignalContext,
+  shouldInheritParentPalette,
+  supportsPaletteSelection,
+} from "@novablocks/utils";
 
 // Helper function to get current Palette Config,
 // and generate a default, if a palette does not exist.

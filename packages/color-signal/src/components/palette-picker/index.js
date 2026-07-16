@@ -12,11 +12,16 @@ const PalettePicker = ( props ) => {
     attributes,
     updateBlock,
     clientId,
+    paletteSelectionEnabled,
     showFunctionalColors,
     stickySourceColor
   } = props;
 
   const novablocksSettings = useSettings();
+
+  if ( paletteSelectionEnabled === false ) {
+    return null;
+  }
 
   const { palette, paletteVariation, useSourceColorAsReference } = attributes;
 

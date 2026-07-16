@@ -64,6 +64,7 @@ export const withAlteredSettings = ( settings ) => {
           functionalColors: false,
           paletteClassname: true,
           paletteVariationClassname: false,
+          inheritParentPalette: true,
           stickySourceColor: false,
         },
       }

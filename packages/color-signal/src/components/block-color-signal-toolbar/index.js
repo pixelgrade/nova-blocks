@@ -29,7 +29,7 @@ import PaletteToolbarIcon from "./palette-icon";
  */
 const BlockColorSignalToolbar = withColorSignalProps( ( props ) => {
 
-  const { attributes, clientId, updateBlock, name, showFunctionalColors, stickySourceColor } = props;
+  const { attributes, clientId, updateBlock, name, paletteSelectionEnabled, showFunctionalColors, stickySourceColor } = props;
   const { colorSignal, contentColorSignal, palette } = attributes;
 
   const novablocksSettings = useSettings();
@@ -85,7 +85,7 @@ const BlockColorSignalToolbar = withColorSignalProps( ( props ) => {
   // construction — that behavior remains sidebar-only, where re-clicking the
   // selected swatch triggers it.
   const visiblePalettes = getVisiblePalettes( novablocksSettings?.palettes, showFunctionalColors );
-  const showPaletteCycler = visiblePalettes.length >= 2;
+  const showPaletteCycler = paletteSelectionEnabled !== false && visiblePalettes.length >= 2;
   const currentPalette = visiblePalettes.find( ( paletteConfig ) => `${ paletteConfig.id }` === `${ palette }` )
     || ( Array.isArray( novablocksSettings?.palettes )
       ? novablocksSettings.palettes.find( ( paletteConfig ) => `${ paletteConfig.id }` === `${ palette }` )

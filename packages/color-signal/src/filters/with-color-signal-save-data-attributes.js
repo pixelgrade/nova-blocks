@@ -18,6 +18,12 @@ const withColorSignalSaveDataAttributes = ( element, blockType, attributes ) => 
     'data-palette-variation': attributes?.paletteVariation,
     'data-color-signal': attributes?.colorSignal,
   };
+  const inheritanceAttribute = supports.novaBlocks.colorSignal?.paletteInheritanceAttribute;
+
+  if ( inheritanceAttribute && typeof attributes?.[ inheritanceAttribute ] === 'boolean' ) {
+    const dataAttribute = inheritanceAttribute.replace( /([A-Z])/g, '-$1' ).toLowerCase();
+    newProps[ `data-${ dataAttribute }` ] = attributes[ inheritanceAttribute ] ? 'true' : 'false';
+  }
 
   if ( attributes.useSourceColorAsReference ) {
     Object.assign( newProps, {
