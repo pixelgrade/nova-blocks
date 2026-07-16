@@ -106,8 +106,12 @@ const MotionRecipes = ( props ) => {
     } );
   }
 
+  // Element Stacking is a structural Card Layout decision, not a Motion
+  // capability. Offer the 3D recipe only when that prerequisite is already
+  // satisfied, and never pull `cardLayout` into this family's managed set.
   const supportsStackedDrift = hasCollectionDepth
-    && [ 'classic', 'masonry' ].includes( attributes.layoutStyle );
+    && [ 'classic', 'masonry' ].includes( attributes.layoutStyle )
+    && attributes.cardLayout === 'stacked';
   // Parametric markup can't honour the 3D odd/even pattern, but the drift
   // itself is structure-agnostic — it gets a parallax-only cards recipe.
   const supportsEditorialDrift = hasCollectionDepth
@@ -121,7 +125,6 @@ const MotionRecipes = ( props ) => {
       thumbnail: <CardsMotionThumb />,
       preset: {
         scrollingEffect: 'static',
-        cardLayout: 'stacked',
         pile3dEffect: true,
         pile3dTarget: 'item',
         pile3dTargetRule: 'odd',
@@ -203,7 +206,7 @@ const MotionRecipes = ( props ) => {
       ) }
       { hasCollectionDepth && ! supportsStackedDrift && ! supportsEditorialDrift && (
         <p className="nb-settings-hint">
-          { __( '“Stacked Drift” appears for Classic Grid and Masonry collections; “Editorial Drift” for Parametric grids.', '__plugin_txtd' ) }
+          { __( '“Stacked Drift” appears for stacked Classic Grid and Masonry collections; “Editorial Drift” for Parametric grids.', '__plugin_txtd' ) }
         </p>
       ) }
       <p className="nb-settings-hint">

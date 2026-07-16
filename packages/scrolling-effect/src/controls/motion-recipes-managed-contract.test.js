@@ -22,6 +22,14 @@ test('the tab builds ONE family boundary from the union of every rendered recipe
   assert.match(source, /const managedAttributes = getManagedAttributes\( definitions \)/);
 });
 
+test('Element Stacking stays outside the Motion family boundary', () => {
+  assert.match(
+    source,
+    /const supportsStackedDrift = hasCollectionDepth[\s\S]*?attributes\.cardLayout\s*===\s*'stacked'/
+  );
+  assert.doesNotMatch(source, /cardLayout:\s*'stacked'/);
+});
+
 test('every PresetCardsControl group gets the shared boundary and defers the Custom hint to the tab', () => {
   const controls = source.match(/<PresetCardsControl[\s\S]*?\/>/g) || [];
   assert.equal(controls.length, 4); // free + cinematic + stacked depth + editorial depth

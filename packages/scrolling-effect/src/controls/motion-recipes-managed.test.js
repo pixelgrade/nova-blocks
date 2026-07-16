@@ -45,7 +45,7 @@ const MOTION_PRESET_OPTIONS = [
 	{ label: 'Custom', value: 'custom' },
 ];
 
-const buildRecipes = ( { hasDepth, hasDoppler, layoutStyle } ) => {
+const buildRecipes = ( { hasDepth, hasDoppler, layoutStyle, cardLayout } ) => {
 	const depthResets = hasDepth ? DEPTH_RESETS : {};
 
 	const recipes = [
@@ -71,12 +71,11 @@ const buildRecipes = ( { hasDepth, hasDoppler, layoutStyle } ) => {
 		} );
 	}
 
-	if ( hasDepth && [ 'classic', 'masonry' ].includes( layoutStyle ) ) {
+	if ( hasDepth && [ 'classic', 'masonry' ].includes( layoutStyle ) && cardLayout === 'stacked' ) {
 		recipes.push( {
 			value: 'motion-stacked-drift',
 			preset: {
 				scrollingEffect: 'static',
-				cardLayout: 'stacked',
 				pile3dEffect: true,
 				pile3dTarget: 'item',
 				pile3dTargetRule: 'odd',
@@ -126,14 +125,34 @@ const familyFor = ( shape ) => {
 };
 
 describe( 'managed boundary per block shape', () => {
-	test( 'depth collection, classic/masonry layout: 14 attributes', () => {
-		const { managedAttributes } = familyFor( { hasDepth: true, hasDoppler: true, layoutStyle: 'classic' } );
+	test( 'stacked depth collection, classic/masonry layout: 13 motion attributes', () => {
+		const { managedAttributes } = familyFor( {
+			hasDepth: true,
+			hasDoppler: true,
+			layoutStyle: 'classic',
+			cardLayout: 'stacked',
+		} );
 
 		expect( managedAttributes.slice().sort() ).toEqual( [
 			'scrollingEffect', 'pile3dEffect', 'pileParallaxAmount',
 			...DOPPLER_KEYS,
-			'cardLayout', 'pile3dTarget', 'pile3dTargetRule',
+			'pile3dTarget', 'pile3dTargetRule',
 		].slice().sort() );
+		expect( managedAttributes ).not.toContain( 'cardLayout' );
+	} );
+
+	test( 'non-stacked classic/masonry layout does not offer the stacked recipe or manage Element Stacking', () => {
+		const { definitions, managedAttributes } = familyFor( {
+			hasDepth: true,
+			hasDoppler: true,
+			layoutStyle: 'classic',
+			cardLayout: 'horizontal',
+		} );
+
+		expect( definitions.map( ( definition ) => definition.id ) ).not.toContain( 'motion-stacked-drift' );
+		expect( managedAttributes ).not.toContain( 'cardLayout' );
+		expect( managedAttributes ).not.toContain( 'pile3dTarget' );
+		expect( managedAttributes ).not.toContain( 'pile3dTargetRule' );
 	} );
 
 	test( 'depth collection, parametric layout: no stacked-only keys (11 attributes)', () => {
@@ -155,7 +174,12 @@ describe( 'managed boundary per block shape', () => {
 	} );
 
 	test( 'the preset-less "Custom" PHP option never becomes a recipe definition', () => {
-		const { definitions } = familyFor( { hasDepth: true, hasDoppler: true, layoutStyle: 'classic' } );
+		const { definitions } = familyFor( {
+			hasDepth: true,
+			hasDoppler: true,
+			layoutStyle: 'classic',
+			cardLayout: 'stacked',
+		} );
 
 		expect( definitions.map( ( d ) => d.id ) ).toEqual( [
 			'motion-still', 'motion-soft-parallax',
@@ -166,7 +190,7 @@ describe( 'managed boundary per block shape', () => {
 } );
 
 describe( 'tab-wide derived selection (Custom state)', () => {
-	const shape = { hasDepth: true, hasDoppler: true, layoutStyle: 'classic' };
+	const shape = { hasDepth: true, hasDoppler: true, layoutStyle: 'classic', cardLayout: 'stacked' };
 
 	test( 'a fresh default block derives as "Still" (defaults-normalized match), not Custom', () => {
 		const { definitions } = familyFor( shape );
@@ -195,9 +219,9 @@ describe( 'tab-wide derived selection (Custom state)', () => {
 } );
 
 describe( 'documented new clears', () => {
-	const shape = { hasDepth: true, hasDoppler: true, layoutStyle: 'classic' };
+	const shape = { hasDepth: true, hasDoppler: true, layoutStyle: 'classic', cardLayout: 'stacked' };
 
-	test( '"Still" now clears the full doppler story and the stacked keys it used to leave stale', () => {
+	test( '"Still" clears the full doppler story and stacked-motion keys without changing Element Stacking', () => {
 		const { definitions } = familyFor( shape );
 		const still = definitions.find( ( d ) => d.id === 'motion-still' );
 
@@ -213,21 +237,22 @@ describe( 'documented new clears', () => {
 			finalBackgroundScale: undefined,
 			followThroughStart: undefined,
 			followThroughEnd: undefined,
-			cardLayout: undefined,
 			pile3dTarget: undefined,
 			pile3dTargetRule: undefined,
 		} );
+		expect( getPresetApplyPatch( still ) ).not.toHaveProperty( 'cardLayout' );
 	} );
 
-	test( 'a Doppler recipe now clears the stacked-only keys "Stacked Drift" left behind', () => {
+	test( 'a Doppler recipe clears the stacked-motion keys without changing Element Stacking', () => {
 		const { definitions } = familyFor( shape );
 		const doppler = definitions.find( ( d ) => d.id === 'motion-doppler-standard-dynamic' );
 		const patch = getPresetApplyPatch( doppler );
 
-		[ 'cardLayout', 'pile3dTarget', 'pile3dTargetRule' ].forEach( ( key ) => {
+		[ 'pile3dTarget', 'pile3dTargetRule' ].forEach( ( key ) => {
 			expect( key in patch ).toBe( true );
 			expect( patch[ key ] ).toBeUndefined();
 		} );
+		expect( patch ).not.toHaveProperty( 'cardLayout' );
 	} );
 
 	test( '"Stacked Drift" now clears the doppler story instead of leaving it configured', () => {
@@ -239,7 +264,7 @@ describe( 'documented new clears', () => {
 			expect( key in patch ).toBe( true );
 			expect( patch[ key ] ).toBeUndefined();
 		} );
-		expect( patch.cardLayout ).toBe( 'stacked' );
+		expect( patch ).not.toHaveProperty( 'cardLayout' );
 		expect( patch.pile3dEffect ).toBe( true );
 	} );
 } );

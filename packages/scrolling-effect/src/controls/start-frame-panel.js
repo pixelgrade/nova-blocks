@@ -16,10 +16,14 @@ const StartFramePanel = ( props ) => {
     focalPointImage,
   } = props;
 
+  // Managed presets clear omitted attributes to `undefined` in memory; the
+  // registered defaults only return after reparse. Normalize here so both the
+  // render and the picker's onChange (which reads finalFocalPoint.y) stay
+  // valid inside that window.
   const {
     media,
-    focalPoint,
-    finalFocalPoint,
+    focalPoint = { x: 0.5, y: 0.5 },
+    finalFocalPoint = { x: 0.5, y: 0.5 },
     initialBackgroundScale,
     followThroughStart,
     scrollingEffect,

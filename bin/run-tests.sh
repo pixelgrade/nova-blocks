@@ -78,6 +78,8 @@ run "cards depth support (jest)" npx --no-install jest packages/scrolling-effect
 run "motion recipe gates (node:test)" node --test packages/scrolling-effect/src/controls/motion-recipes-gates.test.js
 run "preset engine managed bundles (jest)" npx --no-install jest packages/block-editor/src/preset-engine packages/block-editor/src/components/preset-control packages/block-editor/src/components/preset-cards packages/block-editor/src/filters/with-space-and-sizing/controls/space-and-sizing-presets.test.js packages/scrolling-effect/src/controls/motion-recipes-managed.test.js
 run "motion recipes managed contract (node:test)" node --test packages/scrolling-effect/src/controls/motion-recipes-managed-contract.test.js
+run "focal point preset-clear guard (jest)" npx --no-install jest packages/utils/src/focal-point.test.js
+run "start frame panel contract (node:test)" node --test packages/scrolling-effect/src/controls/start-frame-panel-contract.test.js
 run "focal point live drag preview (jest)" npx --no-install jest packages/scrolling-effect/src/controls/start-frame-panel-live-preview.test.js packages/scrolling-effect/src/controls/end-frame-panel-live-preview.test.js packages/scrolling-effect/src/filters/with-scrolling-effect-controls.test.js packages/scrolling-effect/src/filters/with-scrolling-effect-provider.test.js --runInBand --modulePathIgnorePatterns=/packages/block-library/
 run "color tile definition builders (jest)" npx --no-install jest packages/color-signal/src/presets/resolve-color-tile-values.test.js packages/block-library/src/blocks/supernova/card-styles/definitions.test.js
 run "preset tiles wiring contracts (node:test)" node --test packages/color-signal/src/presets/row-surfaces-wiring.test.js packages/block-library/src/blocks/supernova/card-styles/wiring.test.js
@@ -89,6 +91,7 @@ run "cards collection add controls (node:test)" node --test packages/block-libra
 run "supernova-item media placeholder wiring (node:test)" node --test packages/block-library/src/blocks/supernova-item/edit.test.js
 run "supernova-item placeholder defaults (node:test)" node --test packages/block-library/src/blocks/supernova-item/utils.test.js
 run "supernova edit contracts (node:test)" node --test packages/block-library/src/blocks/supernova/edit.test.js
+run "supernova content alignments css (jest)" npx --no-install jest packages/block-library/src/blocks/supernova/content-alignments.test.js
 run "supernova card and pile 3D styles (node:test)" node --test packages/block-library/src/blocks/supernova/card-style.test.js packages/block-library/src/blocks/supernova/collection-style.test.js packages/block-library/src/blocks/supernova/editor-styles.test.js
 run "vertical gap + settings tab (node:test)" node --test packages/block-editor/src/filters/with-collection-layout/controls/vertical-gap-modifier-control.test.js
 run "sharing color-signal attributes (node:test)" node --test packages/block-library/src/blocks/sharing-overlay/block.test.js

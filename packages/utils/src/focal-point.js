@@ -26,6 +26,13 @@ export const maybeSnapFocalPoint = function( focalPoint, snapValues = defaultSna
 export const getSnapClassname = focalPoint => {
   const classNames = [];
 
+  // Managed presets clear omitted attributes with `undefined`. WordPress
+  // restores the registered focal-point default after serialization, but the
+  // current editor render must remain valid while that clear is in memory.
+  if ( ! focalPoint || typeof focalPoint !== 'object' ) {
+    return '';
+  }
+
   if ( defaultSnapValues.x.includes( parseFloat( focalPoint.x ) ) ) {
     classNames.push( 'is-snapped-x' );
   }
