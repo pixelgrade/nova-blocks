@@ -11,7 +11,7 @@ const BASE_LAYOUT_EVENT_NAME = 'nb:layout';
 const CONTROLLER_PROPERTY = '__nbLatticeLayoutController';
 const DESTROY_PROPERTY = '__nbDestroyLatticeLayout';
 const DEFAULT_GAP = 26;
-const DEFAULT_CAPTION_HEIGHT = 72;
+const DEFAULT_CAPTION_HEIGHT = 50;
 const MUTATION_OPTIONS = {
   attributes: true,
   attributeFilter: [ 'class', 'hidden' ],

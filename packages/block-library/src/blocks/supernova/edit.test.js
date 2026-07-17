@@ -95,6 +95,18 @@ test('editor exposes Header Integration only for a registered capable recipe', (
   );
 } );
 
+test('editor projects the active registered placement strategy block-locally', () => {
+  assert.match(
+    source,
+    /const layoutStrategy = activeLayoutRecipe\?\.layoutStrategy === 'lattice'[\s\S]*?\? 'lattice'[\s\S]*?: undefined/
+  );
+
+  assert.match(
+    source,
+    /useBlockProps\( \{[\s\S]*?'data-layout-style': layoutStyle,[\s\S]*?'data-layout-strategy': layoutStrategy/
+  );
+} );
+
 test('editor forwards registered layout recipes to both collection layout branches', () => {
   assert.match(
     source,

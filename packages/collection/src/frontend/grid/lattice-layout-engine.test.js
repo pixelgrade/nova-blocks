@@ -55,6 +55,16 @@ describe( 'getLatticePreferredSpan', () => {
     expect( getLatticePreferredSpan( item( 'tall', 'nb-card--media-tall' ), 1 ) )
       .toEqual( { columnSpan: 1, rowSpan: 1 } );
   } );
+
+  test( 'reads expression classes from the rendered card inside a layout wrapper', () => {
+    const wrapper = document.createElement( 'div' );
+    const card = document.createElement( 'article' );
+    card.className = 'nb-supernova-item nb-card--media-wide';
+    wrapper.appendChild( card );
+
+    expect( getLatticePreferredSpan( wrapper, 5 ) )
+      .toEqual( { columnSpan: 3, rowSpan: 1 } );
+  } );
 } );
 
 describe( 'getResponsiveLatticeColumnCount', () => {

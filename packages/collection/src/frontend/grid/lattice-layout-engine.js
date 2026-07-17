@@ -10,7 +10,13 @@ const normalizeLatticeColumnCount = ( columnCount ) => {
 
 const hasClass = ( item, className ) => {
   if ( item?.classList?.contains ) {
-    return item.classList.contains( className );
+    if ( item.classList.contains( className ) ) {
+      return true;
+    }
+
+    if ( 'function' === typeof item.querySelector ) {
+      return null !== item.querySelector( `.${ className }` );
+    }
   }
 
   const classNames = Array.isArray( item?.classNames )

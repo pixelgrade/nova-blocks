@@ -9,6 +9,7 @@ export { default as ExternalLayoutParticipant } from './external-layout-particip
 
 export { default as CarouselLayout } from './carousel-layout';
 export { default as ClassicLayout } from './classic-layout';
+export { default as LatticeLayout } from './lattice-layout';
 export { default as MasonryLayout } from './masonry-layout';
 export { default as ParametricLayout } from './parametric-layout';
 export { default as ScrollIndicator } from './scroll-indicator';

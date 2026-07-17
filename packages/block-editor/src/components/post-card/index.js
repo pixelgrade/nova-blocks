@@ -188,7 +188,9 @@ export const PostCardComponent = props => {
     description: stripHTML( post?.excerpt?.rendered || '' ),
     postTimestamp: Number.isFinite( postDateTimestamp ) ? Math.round( postDateTimestamp / 1000 ) : 0,
     newestTimestamp: Number( props.collectionNewestPostTimestamp ) || 0,
-  } ), getPostFormatClass( post ) ].join( ' ' );
+  } ), getPostFormatClass( post ), post?.sticky ? 'is-sticky-post' : '' ]
+    .filter( Boolean )
+    .join( ' ' );
 
   const quoteParts = post?.format === 'quote' ? extractPostQuote( post ) : null;
 

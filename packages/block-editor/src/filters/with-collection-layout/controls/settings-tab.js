@@ -27,6 +27,18 @@ const SettingsTab = ( props ) => {
   const settings = useSettings();
   const recipes = normalizeLayoutRecipes( settings?.collectionLayoutRecipes );
   const activeRecipe = getActiveLayoutRecipe( attributes, recipes );
+  const recipeColumnsRange = activeRecipe?.capabilities?.columnsRange;
+  const requestedColumnsMin = Number( recipeColumnsRange?.min );
+  const requestedColumnsMax = Number( recipeColumnsRange?.max );
+  const columnsRange = {
+    min: Number.isFinite( requestedColumnsMin ) ? Math.max( 1, requestedColumnsMin ) : 1,
+    max: Number.isFinite( requestedColumnsMax ) ? Math.max( 1, requestedColumnsMax ) : 4,
+  };
+  columnsRange.max = Math.max( columnsRange.min, columnsRange.max );
+  const supportsItemsGap = false !== activeRecipe?.capabilities?.itemsGap;
+  const supportsVerticalGap = false !== activeRecipe?.capabilities?.verticalGap;
+  const supportsAspectRatio = false !== activeRecipe?.capabilities?.aspectRatio;
+  const supportsHoverEffect = false !== activeRecipe?.capabilities?.hoverEffect;
 
   const isParametric = 'parametric' === layoutStyle;
   const isCarousel = 'carousel' === layoutStyle;
@@ -79,7 +91,7 @@ const SettingsTab = ( props ) => {
             { __( 'Items Count is synced to the grid’s capacity (Auto-count is on in Fine-tune).', '__plugin_txtd' ) }
           </p>
         ) }
-        { isGrid && <ItemsPerRowControl { ...props } /> }
+        { isGrid && <ItemsPerRowControl { ...props } min={ columnsRange.min } max={ columnsRange.max } /> }
         { isMasonry && (
           <ToggleControl
             key={ 'columns-fit-toggle' }
@@ -111,26 +123,30 @@ const SettingsTab = ( props ) => {
           </p>
         ) }
       </ControlsGroup>
-      <ControlsGroup title={ __( 'Spacing & Rhythm', '__plugin_txtd' ) }>
-        <ItemsGapControls { ...props } />
-        { ! isCarousel && <VerticalGapModifierControl { ...props } /> }
-      </ControlsGroup>
-      { isGrid && (
+      { ( supportsItemsGap || ( supportsVerticalGap && ! isCarousel ) ) && (
+        <ControlsGroup title={ __( 'Spacing & Rhythm', '__plugin_txtd' ) }>
+          { supportsItemsGap && <ItemsGapControls { ...props } /> }
+          { supportsVerticalGap && ! isCarousel && <VerticalGapModifierControl { ...props } /> }
+        </ControlsGroup>
+      ) }
+      { isGrid && ( supportsAspectRatio || supportsHoverEffect ) && (
         <ControlsGroup title={ __( 'Media', '__plugin_txtd' ) }>
-          <ItemsAspectRatioControl { ...props } />
-          <SelectControl
-            key={ 'card-hover-effect' }
-            label={ __( 'Card Hover Effect', '__plugin_txtd' ) }
-            help={ __( 'A presentation hook styled by the active theme.', '__plugin_txtd' ) }
-            value={ cardHoverEffect || 'none' }
-            onChange={ ( value ) => {
-              setAttributes( { cardHoverEffect: value } );
-            } }
-            options={ [
-              { label: __( 'None', '__plugin_txtd' ), value: 'none' },
-              { label: __( 'Meta Reveal', '__plugin_txtd' ), value: 'reveal' },
-            ] }
-          />
+          { supportsAspectRatio && <ItemsAspectRatioControl { ...props } /> }
+          { supportsHoverEffect && (
+            <SelectControl
+              key={ 'card-hover-effect' }
+              label={ __( 'Card Hover Effect', '__plugin_txtd' ) }
+              help={ __( 'A presentation hook styled by the active theme.', '__plugin_txtd' ) }
+              value={ cardHoverEffect || 'none' }
+              onChange={ ( value ) => {
+                setAttributes( { cardHoverEffect: value } );
+              } }
+              options={ [
+                { label: __( 'None', '__plugin_txtd' ), value: 'none' },
+                { label: __( 'Meta Reveal', '__plugin_txtd' ), value: 'reveal' },
+              ] }
+            />
+          ) }
         </ControlsGroup>
       ) }
       { isCarousel && (

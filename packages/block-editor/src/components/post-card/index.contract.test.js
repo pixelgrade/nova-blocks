@@ -105,6 +105,22 @@ describe( 'PostCard expression-class integration', () => {
 		);
 	} );
 
+	test( 'mirrors the frontend sticky class for Lattice feature plates', () => {
+		mockGetVisibleOrder.mockReturnValue( [ 'media', 'title' ] );
+
+		act( () => {
+			render(
+				<PostCardComponent
+					attributes={ baseAttributes }
+					post={ { ...basePost, sticky: true } }
+				/>,
+				container
+			);
+		} );
+
+		expect( container.firstElementChild.classList.contains( 'is-sticky-post' ) ).toBe( true );
+	} );
+
 	test( 'renders expression classes when content is split around media', () => {
 		mockGetVisibleOrder.mockReturnValue( [ 'meta-primary', 'media', 'title' ] );
 		const attributes = { ...baseAttributes, showMedia: true };

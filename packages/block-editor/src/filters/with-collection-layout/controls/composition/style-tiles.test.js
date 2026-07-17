@@ -38,6 +38,16 @@ test('renders Collage recipes with the measured 1400px composition thumbnail', (
   );
 } );
 
+test('renders Lattice recipes with the five-column Gallery thumbnail', () => {
+  assert.match( source, /LatticeThumb,/ );
+  assert.match( source, /case 'lattice':\s*return <LatticeThumb \/>/ );
+  assert.match( thumbnailSource, /export const LatticeThumb = \(\) =>/ );
+  assert.match(
+    thumbnailSource,
+    /<Cell x=\{ 2 \} y=\{ 2 \} width=\{ 21\.6 \} height=\{ 22 \} accent \/>[\s\S]*?<Cell x=\{ 25\.6 \} y=\{ 2 \} width=\{ 9\.8 \} height=\{ 10 \} \/>[\s\S]*?<Cell x=\{ 37\.4 \} y=\{ 2 \} width=\{ 9\.8 \} height=\{ 22 \} \/>[\s\S]*?<Cell x=\{ 25\.6 \} y=\{ 26 \} width=\{ 33\.4 \} height=\{ 12 \} \/>/
+  );
+} );
+
 test('selecting a built-in composition clears a previously selected recipe', () => {
   assert.match(
     source,

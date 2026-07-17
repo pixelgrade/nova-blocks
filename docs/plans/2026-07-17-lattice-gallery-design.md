@@ -92,7 +92,7 @@ The controller derives the live column width from the collection width, effectiv
 column width * 4 / 3 + fixed caption-band height
 ```
 
-Anima's recipe scope applies the fixed gap and caption height. Cards fill their assigned rectangle. Image wrappers and images fill the available media area, and images use `object-fit: cover`. Existing Nova focal-point `object-position` values are preserved.
+Anima's recipe scope applies the fixed gap and the playground's `50px` caption height. Cards fill their assigned rectangle. Image wrappers and images fill the available media area, and images use `object-fit: cover`. Existing Nova focal-point `object-position` values are preserved.
 
 The caption band contains the title and primary date metadata. The recipe defaults hide descriptions, subtitles, buttons, and secondary metadata. The date is small uppercase type. Quote and media-less posts become internal typographic plates, while media cards retain the shared caption baseline.
 

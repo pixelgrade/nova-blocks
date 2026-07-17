@@ -97,7 +97,7 @@ const createFixture = ( {
   grid.className = 'nb-collection__layout';
   grid.style.columnGap = '26px';
   grid.style.rowGap = '26px';
-  grid.style.setProperty( '--nb-lattice-caption-height', '72px' );
+  grid.style.setProperty( '--nb-lattice-caption-height', '50px' );
   grid.getBoundingClientRect = () => rectangle( width );
 
   classes.forEach( ( className, index ) => {
@@ -180,11 +180,11 @@ describe( 'handleLatticeGrid', () => {
     expect( items[2].style.gridColumn ).toBe( '3 / span 2' );
     expect( items[2].style.gridRow ).toBe( '1 / span 1' );
     expect( grid.style.gridTemplateColumns ).toBe( 'repeat(4, minmax(0, 1fr))' );
-    expect( Number.parseFloat( grid.style.gridAutoRows ) ).toBeCloseTo( 404 );
+    expect( Number.parseFloat( grid.style.gridAutoRows ) ).toBeCloseTo( 382 );
     expect( detail ).toEqual( expect.objectContaining( {
       activeColumns: 4,
       columnWidth: 249,
-      rowHeight: 404,
+      rowHeight: 382,
       grid,
       block,
     } ) );

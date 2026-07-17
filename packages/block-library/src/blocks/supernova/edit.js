@@ -217,6 +217,9 @@ const SupernovaPreview = props => {
     ? collectionLayoutRecipes.find( recipe => recipe.id === attributes.layoutRecipe && recipe.baseLayout === attributes.layoutStyle )
     : null;
   const layoutRecipe = activeLayoutRecipe?.id || '';
+  const layoutStrategy = activeLayoutRecipe?.layoutStrategy === 'lattice'
+    ? 'lattice'
+    : undefined;
   const headerIntegration = activeLayoutRecipe?.capabilities?.headerIntegration
     ? attributes.headerIntegration || 'standard'
     : undefined;
@@ -256,6 +259,8 @@ const SupernovaPreview = props => {
   const blockProps = useBlockProps( {
     className: className,
     style: props.style,
+    'data-layout-style': layoutStyle,
+    'data-layout-strategy': layoutStrategy,
     'data-header-integration': headerIntegration,
   } );
 

@@ -121,6 +121,23 @@ export const CollageThumb = () => (
 );
 
 /**
+ * The Gallery Lattice reference: five shared columns and three shelves, with
+ * one 2x2 feature, a tall card, and a final panorama closing the wall.
+ */
+export const LatticeThumb = () => (
+  <Thumb>
+    <Cell x={ 2 } y={ 2 } width={ 21.6 } height={ 22 } accent />
+    <Cell x={ 25.6 } y={ 2 } width={ 9.8 } height={ 10 } />
+    <Cell x={ 37.4 } y={ 2 } width={ 9.8 } height={ 22 } />
+    <Cell x={ 49.2 } y={ 2 } width={ 8.8 } height={ 10 } />
+    <Cell x={ 25.6 } y={ 14 } width={ 9.8 } height={ 10 } />
+    <Cell x={ 49.2 } y={ 14 } width={ 8.8 } height={ 10 } />
+    <Cell x={ 2 } y={ 26 } width={ 21.6 } height={ 12 } />
+    <Cell x={ 25.6 } y={ 26 } width={ 33.4 } height={ 12 } />
+  </Thumb>
+);
+
+/**
  * The Broadsheet front page schematized: a two-track lead story (accent) with
  * its excerpt columns beneath, single-column stories beside it, and the
  * briefs rail on the far track under a thin masthead rule.

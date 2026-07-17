@@ -13,6 +13,7 @@ import {
   BroadsheetThumb,
   ClassicThumb,
   CollageThumb,
+  LatticeThumb,
   MasonryThumb,
   CarouselThumb,
   ParametricThumb,
@@ -49,6 +50,8 @@ const getRecipeThumbnail = ( recipe, attributes ) => {
       return <BroadsheetThumb />;
     case 'collage':
       return <CollageThumb />;
+    case 'lattice':
+      return <LatticeThumb />;
     case 'classic':
       return <ClassicThumb columns={ attributes.columns } count={ attributes.postsToShow } />;
     case 'carousel':
