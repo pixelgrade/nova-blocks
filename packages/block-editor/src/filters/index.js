@@ -3,6 +3,7 @@ import "./with-card-details"; // @todo use supports API
 import "./with-card-elements-visibility";
 import "./with-content-position-matrix";
 import "./with-controls-sections";
+import "./with-selection-stable-collection-controls";
 import "./with-controls-visibility";
 import "./with-deprecated-image";
 import "./with-deprecated-group";
