@@ -10,7 +10,7 @@ import { __ } from '@wordpress/i18n';
 
 export const withSiteTaglineControls = createHigherOrderComponent( ( BlockEdit ) => {
 	return ( props ) => {
-		const { attributes, name, setAttributes } = props;
+		const { attributes, clientId, name, setAttributes } = props;
 		const hasRuledLabel = ( attributes.className || '' ).split( /\s+/ ).includes( 'is-style-ruled-label' );
 
 		if ( 'core/site-tagline' !== name || ! hasRuledLabel ) {
@@ -24,6 +24,7 @@ export const withSiteTaglineControls = createHigherOrderComponent( ( BlockEdit )
 					<ControlsTab label={ __( 'Settings', '__plugin_txtd' ) }>
 						<ControlsGroup>
 							<RuleControls
+								clientId={ clientId }
 								ruleWeight={ attributes.ruleWeight }
 								ruleStrength={ attributes.ruleStrength }
 								setAttributes={ setAttributes }

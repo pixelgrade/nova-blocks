@@ -16,4 +16,7 @@ test( 'offers token-preserving rule weight and strength controls', () => {
 	assert.match( source, /Subtle[\s\S]*value: 'subtle'/ );
 	assert.match( source, /Strong[\s\S]*value: 'strong'/ );
 	assert.match( source, /Solid[\s\S]*value: 'solid'/ );
+	assert.match( source, /useRegistry/ );
+	assert.match( source, /clientId/ );
+	assert.match( source, /preserveBlockSelectionWhileApplying/ );
 } );

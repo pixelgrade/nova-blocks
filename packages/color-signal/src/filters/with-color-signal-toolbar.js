@@ -20,13 +20,11 @@ const withColorSignalToolbar = createHigherOrderComponent( OriginalComponent => 
     // without touching this filter — on by default.
     const toolbarEnabled = colorSignalSupport?.toolbar !== false;
 
-    if ( ! props.isSelected || ! hasControls || ! toolbarEnabled ) {
-      return <OriginalComponent { ...props } />
-    }
+    const showToolbar = props.isSelected && hasControls && toolbarEnabled;
 
     return (
       <Fragment>
-        <BlockColorSignalToolbar { ...props } />
+        { showToolbar && <BlockColorSignalToolbar { ...props } /> }
         <OriginalComponent { ...props } />
       </Fragment>
     );

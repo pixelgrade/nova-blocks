@@ -92,6 +92,7 @@ const HeaderRowInspectorControls = ( props ) => {
           <ControlsTab label={ __( 'Settings', '__plugin_txtd' ) } key={ 'header_row_rule_settings' }>
             <ControlsGroup>
               <RuleControls
+                clientId={ clientId }
                 ruleWeight={ ruleWeight }
                 ruleStrength={ ruleStrength }
                 setAttributes={ setAttributes }
