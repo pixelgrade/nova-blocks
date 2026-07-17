@@ -1,5 +1,6 @@
 const DEFAULT_PULL_FORWARD_WINDOW = 3;
 const DEFAULT_PHONE_BREAKPOINT = 600;
+const DEFAULT_COMPACT_BREAKPOINT = 768;
 const DEFAULT_TABLET_BREAKPOINT = 1024;
 
 const normalizeLatticeColumnCount = ( columnCount ) => {
@@ -61,6 +62,7 @@ const getResponsiveLatticeColumnCount = ( {
   authoredColumns,
   viewportWidth,
   phoneBreakpoint = DEFAULT_PHONE_BREAKPOINT,
+  compactBreakpoint = DEFAULT_COMPACT_BREAKPOINT,
   tabletBreakpoint = DEFAULT_TABLET_BREAKPOINT,
 } ) => {
   const normalizedColumns = normalizeLatticeColumnCount( authoredColumns );
@@ -70,8 +72,12 @@ const getResponsiveLatticeColumnCount = ( {
     return 1;
   }
 
-  if ( Number.isFinite( normalizedViewportWidth ) && normalizedViewportWidth < tabletBreakpoint ) {
+  if ( Number.isFinite( normalizedViewportWidth ) && normalizedViewportWidth < compactBreakpoint ) {
     return Math.min( normalizedColumns, 2 );
+  }
+
+  if ( Number.isFinite( normalizedViewportWidth ) && normalizedViewportWidth < tabletBreakpoint ) {
+    return Math.min( normalizedColumns, 3 );
   }
 
   return normalizedColumns;

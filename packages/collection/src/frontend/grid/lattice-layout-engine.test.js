@@ -68,9 +68,11 @@ describe( 'getLatticePreferredSpan', () => {
 } );
 
 describe( 'getResponsiveLatticeColumnCount', () => {
-  test( 'uses the authored desktop count, two tablet columns, and one phone column', () => {
+  test( 'uses authored desktop columns, then three, two, and one progressive reading columns', () => {
     expect( getResponsiveLatticeColumnCount( { authoredColumns: 5, viewportWidth: 1280 } ) ).toBe( 5 );
-    expect( getResponsiveLatticeColumnCount( { authoredColumns: 6, viewportWidth: 900 } ) ).toBe( 2 );
+    expect( getResponsiveLatticeColumnCount( { authoredColumns: 6, viewportWidth: 987 } ) ).toBe( 3 );
+    expect( getResponsiveLatticeColumnCount( { authoredColumns: 6, viewportWidth: 900 } ) ).toBe( 3 );
+    expect( getResponsiveLatticeColumnCount( { authoredColumns: 6, viewportWidth: 700 } ) ).toBe( 2 );
     expect( getResponsiveLatticeColumnCount( { authoredColumns: 6, viewportWidth: 599 } ) ).toBe( 1 );
   } );
 

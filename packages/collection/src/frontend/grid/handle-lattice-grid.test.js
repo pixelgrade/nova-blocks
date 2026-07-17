@@ -202,7 +202,7 @@ describe( 'handleLatticeGrid', () => {
     expect( block.classList.contains( 'novablocks-block--ready' ) ).toBe( true );
   } );
 
-  test( 'uses two tablet columns and a one-module phone reading flow', () => {
+  test( 'progresses through three and two tablet columns before the one-module phone flow', () => {
     const { block, grid, items } = createFixture( { width: 526 } );
     let detail;
     window.addEventListener( 'nb:lattice-layout', event => {
@@ -211,6 +211,15 @@ describe( 'handleLatticeGrid', () => {
 
     Object.defineProperty( window, 'innerWidth', { configurable: true, value: 900 } );
     const controller = handleLatticeGrid( grid, block, { columns: 5 } );
+    flushAnimationFrames();
+
+    expect( detail.activeColumns ).toBe( 3 );
+    expect( grid.style.gridTemplateColumns ).toBe( 'repeat(3, minmax(0, 1fr))' );
+    expect( items[0].style.gridColumn ).toBe( '1 / span 2' );
+    expect( items[3].style.gridColumn ).toBe( '3 / span 1' );
+
+    Object.defineProperty( window, 'innerWidth', { configurable: true, value: 700 } );
+    window.dispatchEvent( new Event( 'resize' ) );
     flushAnimationFrames();
 
     expect( detail.activeColumns ).toBe( 2 );
