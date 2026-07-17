@@ -75,6 +75,11 @@ if ( ! function_exists( 'novablocks_render_supernova_block' ) ) {
 		$data_attributes_array = array_map( 'novablocks_camel_case_to_kebab_case', novablocks_get_supernova_data_attribute_names( $attributes ) );
 
 		$data_attributes = novablocks_get_data_attributes( $data_attributes_array, $attributes );
+		$layout_strategy = novablocks_get_collection_layout_strategy( $attributes );
+
+		if ( '' !== $layout_strategy ) {
+			$data_attributes[] = 'data-layout-strategy="' . esc_attr( $layout_strategy ) . '"';
+		}
 
 		if (
 			$attributes['columns'] === 1 &&

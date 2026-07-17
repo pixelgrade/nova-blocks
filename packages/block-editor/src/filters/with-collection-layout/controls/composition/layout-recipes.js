@@ -1,4 +1,5 @@
 const SUPPORTED_BASE_LAYOUTS = [ 'classic', 'masonry', 'carousel', 'parametric' ];
+const SUPPORTED_LAYOUT_STRATEGIES = [ 'lattice' ];
 const RECIPE_ID_PATTERN = /^[a-z0-9]+(?:-[a-z0-9]+)*$/;
 
 export const normalizeLayoutRecipes = ( recipes ) => {
@@ -14,6 +15,9 @@ export const normalizeLayoutRecipes = ( recipes ) => {
     const id = 'string' === typeof recipe.id ? recipe.id.trim() : '';
     const label = 'string' === typeof recipe.label ? recipe.label.trim() : '';
     const baseLayout = 'string' === typeof recipe.baseLayout ? recipe.baseLayout.trim() : '';
+    const layoutStrategy = 'string' === typeof recipe.layoutStrategy
+      ? recipe.layoutStrategy.trim()
+      : '';
 
     if (
       ! RECIPE_ID_PATTERN.test( id ) ||
@@ -28,6 +32,9 @@ export const normalizeLayoutRecipes = ( recipes ) => {
       id,
       label,
       baseLayout,
+      layoutStrategy: SUPPORTED_LAYOUT_STRATEGIES.includes( layoutStrategy )
+        ? layoutStrategy
+        : '',
       thumbnail: 'string' === typeof recipe.thumbnail && recipe.thumbnail
         ? recipe.thumbnail
         : baseLayout,

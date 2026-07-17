@@ -2,6 +2,7 @@ import domReady from '@wordpress/dom-ready';
 import { getAttributes, IS_CUSTOMIZER, IS_EDITOR } from "@novablocks/utils";
 
 import { handleClassicGrid } from "./handle-classic-grid";
+import { handleLatticeGrid } from "./handle-lattice-grid";
 import { handleMasonryGrid } from "./handle-masonry-grid";
 import { handleParametricGrid } from "./handle-parametric-grid";
 
@@ -19,7 +20,9 @@ domReady( () => {
     const block = grid.closest( '[data-layout-style]' );
     const attributes = getAttributes( block );
 
-    if ( [ 'classic', 'carousel' ].includes( attributes.layoutStyle ) ) {
+    if ( 'lattice' === attributes.layoutStrategy ) {
+      handleLatticeGrid( grid, block, attributes );
+    } else if ( [ 'classic', 'carousel' ].includes( attributes.layoutStyle ) ) {
       handleClassicGrid( grid, block, attributes );
     }
 

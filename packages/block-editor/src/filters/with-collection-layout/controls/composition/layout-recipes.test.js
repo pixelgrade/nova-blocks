@@ -27,8 +27,31 @@ describe( 'collection layout recipes', () => {
   test( 'normalizes an Anima recipe without adding a Plus gate', () => {
     expect( normalizeLayoutRecipes( [ animaRecipe ] ) ).toEqual( [ {
       ...animaRecipe,
+      layoutStrategy: '',
       gateId: '',
     } ] );
+  } );
+
+  test( 'normalizes only the supported Lattice placement strategy', () => {
+    const recipes = normalizeLayoutRecipes( [
+      {
+        ...animaRecipe,
+        id: 'anima-lattice',
+        label: 'Lattice',
+        baseLayout: 'classic',
+        layoutStrategy: 'lattice',
+      },
+      {
+        ...animaRecipe,
+        id: 'unsafe-strategy',
+        label: 'Unsafe strategy',
+        baseLayout: 'classic',
+        layoutStrategy: 'masonry<script>',
+      },
+    ] );
+
+    expect( recipes[0].layoutStrategy ).toBe( 'lattice' );
+    expect( recipes[1].layoutStrategy ).toBe( '' );
   } );
 
   test( 'persists recipe identity independently from the base layout', () => {

@@ -18,6 +18,7 @@ function novablocks_get_collection_layout_recipes(): array {
 	}
 
 	$supported_layouts = [ 'classic', 'masonry', 'carousel', 'parametric' ];
+	$supported_strategies = [ 'lattice' ];
 	$normalized        = [];
 	$registered_ids    = [];
 
@@ -29,6 +30,7 @@ function novablocks_get_collection_layout_recipes(): array {
 		$id          = is_string( $recipe['id'] ?? null ) ? trim( $recipe['id'] ) : '';
 		$label       = is_string( $recipe['label'] ?? null ) ? trim( $recipe['label'] ) : '';
 		$base_layout = is_string( $recipe['baseLayout'] ?? null ) ? trim( $recipe['baseLayout'] ) : '';
+		$layout_strategy = is_string( $recipe['layoutStrategy'] ?? null ) ? trim( $recipe['layoutStrategy'] ) : '';
 
 		if ( ! preg_match( '/^[a-z0-9]+(?:-[a-z0-9]+)*$/', $id )
 			|| '' === $label
@@ -41,6 +43,7 @@ function novablocks_get_collection_layout_recipes(): array {
 			'id'           => $id,
 			'label'        => $label,
 			'baseLayout'   => $base_layout,
+			'layoutStrategy' => in_array( $layout_strategy, $supported_strategies, true ) ? $layout_strategy : '',
 			'thumbnail'    => is_string( $recipe['thumbnail'] ?? null ) && '' !== $recipe['thumbnail'] ? $recipe['thumbnail'] : $base_layout,
 			'defaults'     => is_array( $recipe['defaults'] ?? null ) ? $recipe['defaults'] : [],
 			'capabilities' => is_array( $recipe['capabilities'] ?? null ) ? $recipe['capabilities'] : [],
@@ -87,6 +90,18 @@ function novablocks_get_active_collection_layout_recipe( array $attributes ): ?a
 	}
 
 	return $recipe;
+}
+
+/**
+ * Returns the placement strategy declared by the active registered recipe.
+ *
+ * @param array $attributes Collection attributes.
+ * @return string Supported strategy name, or an empty string for the base layout.
+ */
+function novablocks_get_collection_layout_strategy( array $attributes ): string {
+	$recipe = novablocks_get_active_collection_layout_recipe( $attributes );
+
+	return is_array( $recipe ) ? (string) ( $recipe['layoutStrategy'] ?? '' ) : '';
 }
 
 /**

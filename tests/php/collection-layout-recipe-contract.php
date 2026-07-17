@@ -11,6 +11,14 @@ function apply_filters( $hook, $value, ...$args ) {
 	if ( 'novablocks_collection_layout_recipes' === $hook ) {
 		return [
 			[
+				'id'             => 'anima-lattice',
+				'label'          => 'Lattice',
+				'baseLayout'     => 'classic',
+				'layoutStrategy' => 'lattice',
+				'thumbnail'      => 'lattice',
+				'defaults'       => [ 'columns' => 5 ],
+			],
+			[
 				'id'           => 'anima-collage',
 				'label'        => 'Collage Grid',
 				'baseLayout'   => 'masonry',
@@ -36,6 +44,12 @@ function apply_filters( $hook, $value, ...$args ) {
 				'id'         => 'unsupported-layout',
 				'label'      => 'Unsupported layout',
 				'baseLayout' => 'collage',
+			],
+			[
+				'id'             => 'unsafe-strategy',
+				'label'          => 'Unsafe strategy',
+				'baseLayout'     => 'classic',
+				'layoutStrategy' => 'masonry<script>',
 			],
 		];
 	}
@@ -76,11 +90,41 @@ if ( ! function_exists( 'novablocks_get_collection_layout_recipe_classes' ) ) {
 }
 
 $recipes = novablocks_get_collection_layout_recipes();
-if ( 1 !== count( $recipes )
-	|| 'anima-collage' !== ( $recipes[0]['id'] ?? null )
-	|| 'masonry' !== ( $recipes[0]['baseLayout'] ?? null )
-	|| 'Collage Grid' !== ( $recipes[0]['label'] ?? null ) ) {
+if ( 3 !== count( $recipes )
+	|| 'anima-lattice' !== ( $recipes[0]['id'] ?? null )
+	|| 'lattice' !== ( $recipes[0]['layoutStrategy'] ?? null )
+	|| 'anima-collage' !== ( $recipes[1]['id'] ?? null )
+	|| 'masonry' !== ( $recipes[1]['baseLayout'] ?? null )
+	|| 'Collage Grid' !== ( $recipes[1]['label'] ?? null )
+	|| '' !== ( $recipes[2]['layoutStrategy'] ?? null ) ) {
 	throw new RuntimeException( 'Registry must reject invalid recipes and keep the first valid recipe for duplicate IDs.' );
+}
+
+if ( ! function_exists( 'novablocks_get_collection_layout_strategy' ) ) {
+	throw new RuntimeException( 'Expected an authoritative collection layout strategy helper.' );
+}
+
+if ( 'lattice' !== novablocks_get_collection_layout_strategy(
+	[
+		'layoutStyle'  => 'classic',
+		'layoutRecipe' => 'anima-lattice',
+	]
+) ) {
+	throw new RuntimeException( 'The active Lattice recipe must project its registered placement strategy.' );
+}
+
+if ( '' !== novablocks_get_collection_layout_strategy(
+	[
+		'layoutStyle'  => 'classic',
+		'layoutRecipe' => 'unsafe-strategy',
+	]
+) || '' !== novablocks_get_collection_layout_strategy(
+	[
+		'layoutStyle'  => 'masonry',
+		'layoutRecipe' => 'anima-lattice',
+	]
+) ) {
+	throw new RuntimeException( 'Unknown strategies and recipe/base-layout mismatches must preserve Classic fallback behavior.' );
 }
 
 $recipe = novablocks_get_collection_layout_recipe( 'anima-collage' );
@@ -192,6 +236,11 @@ if ( ! in_array( '--nb-grid-spacing-modifier: 35', $css, true )
 $supernova_source = file_get_contents( __DIR__ . '/../../packages/block-library/src/blocks/supernova/init.php' );
 if ( false === strpos( $supernova_source, 'novablocks_get_supernova_data_attribute_names' ) ) {
 	throw new RuntimeException( 'Supernova rendering must explicitly suppress inactive recipe defaults from legacy root markup.' );
+}
+
+if ( false === strpos( $supernova_source, 'novablocks_get_collection_layout_strategy' )
+	|| false === strpos( $supernova_source, 'data-layout-strategy' ) ) {
+	throw new RuntimeException( 'Supernova rendering must project an active registered placement strategy block-locally.' );
 }
 
 $legacy_data_attributes = novablocks_get_supernova_data_attribute_names(
