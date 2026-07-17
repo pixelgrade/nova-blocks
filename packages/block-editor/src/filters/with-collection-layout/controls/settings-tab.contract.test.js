@@ -19,9 +19,8 @@ test( 'Settings derives the active recipe column range and hides seam-breaking c
   assert.match( settingsSource, /const supportsItemsGap = false !== activeRecipe\?\.capabilities\?\.itemsGap/ );
   assert.match( settingsSource, /const supportsVerticalGap = false !== activeRecipe\?\.capabilities\?\.verticalGap/ );
   assert.match( settingsSource, /const supportsAspectRatio = false !== activeRecipe\?\.capabilities\?\.aspectRatio/ );
-  assert.match( settingsSource, /const supportsHoverEffect = false !== activeRecipe\?\.capabilities\?\.hoverEffect/ );
   assert.match( settingsSource, /supportsItemsGap && <ItemsGapControls/ );
   assert.match( settingsSource, /supportsVerticalGap && ! isCarousel && <VerticalGapModifierControl/ );
-  assert.match( settingsSource, /supportsAspectRatio && <ItemsAspectRatioControl/ );
-  assert.match( settingsSource, /supportsHoverEffect && \(/ );
+  assert.match( settingsSource, /isGrid && supportsAspectRatio && \([\s\S]*?<ItemsAspectRatioControl/ );
+  assert.doesNotMatch( settingsSource, /supportsHoverEffect|cardHoverEffect|Card Hover Effect/ );
 } );

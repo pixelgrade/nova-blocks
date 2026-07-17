@@ -23,7 +23,7 @@ import { getActiveLayoutRecipe, normalizeLayoutRecipes } from './composition/lay
 
 const SettingsTab = ( props ) => {
   const { attributes, setAttributes } = props;
-  const { layoutStyle, carouselLayout, postsToShow, automaticPostsNumber, columnsFitMinWidth, cardHoverEffect, headerIntegration } = attributes;
+  const { layoutStyle, carouselLayout, postsToShow, automaticPostsNumber, columnsFitMinWidth, headerIntegration } = attributes;
   const settings = useSettings();
   const recipes = normalizeLayoutRecipes( settings?.collectionLayoutRecipes );
   const activeRecipe = getActiveLayoutRecipe( attributes, recipes );
@@ -38,7 +38,6 @@ const SettingsTab = ( props ) => {
   const supportsItemsGap = false !== activeRecipe?.capabilities?.itemsGap;
   const supportsVerticalGap = false !== activeRecipe?.capabilities?.verticalGap;
   const supportsAspectRatio = false !== activeRecipe?.capabilities?.aspectRatio;
-  const supportsHoverEffect = false !== activeRecipe?.capabilities?.hoverEffect;
 
   const isParametric = 'parametric' === layoutStyle;
   const isCarousel = 'carousel' === layoutStyle;
@@ -129,24 +128,9 @@ const SettingsTab = ( props ) => {
           { supportsVerticalGap && ! isCarousel && <VerticalGapModifierControl { ...props } /> }
         </ControlsGroup>
       ) }
-      { isGrid && ( supportsAspectRatio || supportsHoverEffect ) && (
+      { isGrid && supportsAspectRatio && (
         <ControlsGroup title={ __( 'Media', '__plugin_txtd' ) }>
-          { supportsAspectRatio && <ItemsAspectRatioControl { ...props } /> }
-          { supportsHoverEffect && (
-            <SelectControl
-              key={ 'card-hover-effect' }
-              label={ __( 'Card Hover Effect', '__plugin_txtd' ) }
-              help={ __( 'A presentation hook styled by the active theme.', '__plugin_txtd' ) }
-              value={ cardHoverEffect || 'none' }
-              onChange={ ( value ) => {
-                setAttributes( { cardHoverEffect: value } );
-              } }
-              options={ [
-                { label: __( 'None', '__plugin_txtd' ), value: 'none' },
-                { label: __( 'Meta Reveal', '__plugin_txtd' ), value: 'reveal' },
-              ] }
-            />
-          ) }
+          <ItemsAspectRatioControl { ...props } />
         </ControlsGroup>
       ) }
       { isCarousel && (
