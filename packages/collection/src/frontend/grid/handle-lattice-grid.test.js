@@ -148,6 +148,11 @@ describe( 'handleLatticeGrid', () => {
   } );
 
   afterEach( () => {
+    document.querySelectorAll( '.nb-collection__layout' ).forEach( grid => {
+      if ( 'function' === typeof grid.__nbDestroyLatticeLayout ) {
+        grid.__nbDestroyLatticeLayout();
+      }
+    } );
     window.ResizeObserver = originalResizeObserver;
     window.MutationObserver = originalMutationObserver;
 
@@ -212,7 +217,9 @@ describe( 'handleLatticeGrid', () => {
     expect( grid.style.gridTemplateColumns ).toBe( 'repeat(2, minmax(0, 1fr))' );
 
     Object.defineProperty( window, 'innerWidth', { configurable: true, value: 375 } );
-    controller.refresh();
+    window.dispatchEvent( new Event( 'resize' ) );
+
+    expect( animationFrames.size ).toBe( 1 );
     flushAnimationFrames();
 
     expect( detail.activeColumns ).toBe( 1 );
@@ -221,6 +228,30 @@ describe( 'handleLatticeGrid', () => {
       expect( card.style.gridColumn ).toBe( '1 / span 1' );
       expect( card.style.gridRow ).toMatch( /^\d+ \/ span 1$/ );
     } );
+  } );
+
+  test( 'accepts an updated explicit content order for retained and inserted editor cards', () => {
+    const { block, grid, items } = createFixture();
+    items.forEach( ( item, index ) => {
+      item.dataset.nbLatticeSourceIndex = String( index );
+    } );
+    const controller = handleLatticeGrid( grid, block, { columns: 4 } );
+    flushAnimationFrames();
+
+    const inserted = document.createElement( 'article' );
+    inserted.className = 'nb-collection__layout-item nb-card--media-square';
+    inserted.dataset.cardId = 'f';
+    grid.appendChild( inserted );
+
+    [ items[2], inserted, items[0], items[1], items[3], items[4] ].forEach( ( item, index ) => {
+      item.dataset.nbLatticeSourceIndex = String( index );
+    } );
+    controller.refresh();
+    flushAnimationFrames();
+    controller.destroy();
+
+    expect( Array.from( grid.children ).map( child => child.dataset.cardId ) )
+      .toEqual( [ 'c', 'f', 'a', 'b', 'd', 'e' ] );
   } );
 
   test( 'captures appended Load More cards in source order and relayouts through one observer frame', () => {
@@ -255,6 +286,8 @@ describe( 'handleLatticeGrid', () => {
     expect( grid.style.gridTemplateColumns ).toBe( '' );
     expect( grid.style.gridAutoRows ).toBe( '' );
     expect( grid.classList.contains( 'nb-collection__layout--lattice-ready' ) ).toBe( false );
+    window.dispatchEvent( new Event( 'resize' ) );
+    expect( animationFrames.size ).toBe( 0 );
     items.forEach( card => {
       expect( card.style.gridColumn ).toBe( '' );
       expect( card.style.gridRow ).toBe( '' );

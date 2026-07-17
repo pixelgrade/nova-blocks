@@ -114,3 +114,14 @@
 6. With Playwriter, verify frontend and editor mixed-card fixtures at desktop, tablet, and phone widths. Measure the 26px gaps, shared shelf coordinates, fixed caption heights, responsive column counts, DOM/keyboard order, focal-point `object-position`, and recipe isolation.
 7. Exercise Load More and a resize cycle. Confirm no interior holes and no stale inline state when switching away from Lattice.
 8. Use the verification-before-completion workflow, commit with `Fixes #556` and `Fixes #567` in the respective repositories, push the verified changes, comment evidence on both issues, and close them only after the pushed commits are present.
+
+## Verification record
+
+- Nova `npm test`: all PHP contracts, Node contracts, Jest tests, and Jest compatibility tests passed.
+- Nova `npm run zip`: production packages compiled and `verify-zip` passed with 422 build entries, fresh metadata, and no private/development files.
+- Anima `node --test test/*.test.js`: 173 tests passed; the standalone PHP recipe contract and PHP syntax checks passed.
+- Anima `npm run build:wporg`: production JavaScript, styles, translations, expanded WordPress.org assets, and the release zip built successfully.
+- Editor QA: Lattice selected as a five-column Classic recipe; the columns control exposed its two-to-six range and seam-breaking controls stayed hidden.
+- Frontend QA: measured 5/2/1 columns at 1600/900/390px, 26px seams, shared shelves, complete row-major occupancy before the trailing edge, placement-order DOM, and no browser console errors.
+- Mutation QA: an appended sixteenth card relaid out automatically with no interior holes, retained visual/DOM order, and preserved a custom `object-position` value.
+- Review follow-up: explicit editor source indices handle retained/new query-order changes, viewport resize is observed alongside container resize, and sticky titles stay single-line so the fixed date shelf cannot be clipped.

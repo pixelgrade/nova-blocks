@@ -78,6 +78,18 @@ const createLatticeGridController = ( grid, initialBlock, initialAttributes ) =>
 
   const captureSourceIndexes = () => {
     const items = getDirectLayoutItems( grid );
+    let highestExplicitIndex = -1;
+
+    items.forEach( item => {
+      const explicitIndex = Number.parseInt( item.dataset?.nbLatticeSourceIndex, 10 );
+
+      if ( Number.isInteger( explicitIndex ) && explicitIndex >= 0 ) {
+        sourceIndexes.set( item, explicitIndex );
+        highestExplicitIndex = Math.max( highestExplicitIndex, explicitIndex );
+      }
+    } );
+
+    nextSourceIndex = Math.max( nextSourceIndex, highestExplicitIndex + 1 );
 
     items.forEach( item => {
       if ( ! sourceIndexes.has( item ) ) {
@@ -223,9 +235,8 @@ const createLatticeGridController = ( grid, initialBlock, initialAttributes ) =>
 
     if ( resizeObserver ) {
       resizeObserver.disconnect();
-    } else {
-      ownerWindow.removeEventListener( 'resize', scheduleLayout );
     }
+    ownerWindow.removeEventListener( 'resize', scheduleLayout );
 
     if ( mutationObserver ) {
       mutationObserver.disconnect();
@@ -257,9 +268,8 @@ const createLatticeGridController = ( grid, initialBlock, initialAttributes ) =>
   if ( 'function' === typeof ResizeObserverConstructor ) {
     resizeObserver = new ResizeObserverConstructor( scheduleLayout );
     resizeObserver.observe( grid );
-  } else {
-    ownerWindow.addEventListener( 'resize', scheduleLayout );
   }
+  ownerWindow.addEventListener( 'resize', scheduleLayout );
 
   if ( 'function' === typeof MutationObserverConstructor ) {
     mutationObserver = new MutationObserverConstructor( refresh );

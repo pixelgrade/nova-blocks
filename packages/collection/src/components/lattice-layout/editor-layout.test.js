@@ -76,4 +76,19 @@ describe( 'editor LatticeLayout', () => {
     } );
     expect( controller.destroy ).toHaveBeenCalledTimes( 1 );
   } );
+
+  test( 'projects the current React content order for retained and inserted cards', () => {
+    renderFixture( container, { columns: 5 }, [ 'a', 'b', 'c' ] );
+    renderFixture( container, { columns: 5 }, [ 'c', 'd', 'a' ] );
+
+    const grid = container.querySelector( '.nb-collection__layout' );
+    expect( Array.from( grid.children ).map( child => ( {
+      id: child.dataset.childId,
+      sourceIndex: child.dataset.nbLatticeSourceIndex,
+    } ) ) ).toEqual( [
+      { id: 'c', sourceIndex: '0' },
+      { id: 'd', sourceIndex: '1' },
+      { id: 'a', sourceIndex: '2' },
+    ] );
+  } );
 } );

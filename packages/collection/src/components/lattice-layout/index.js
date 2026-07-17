@@ -1,9 +1,13 @@
-import { Children, useLayoutEffect, useRef } from '@wordpress/element';
+import { Children, cloneElement, isValidElement, useLayoutEffect, useRef } from '@wordpress/element';
 
 import { handleLatticeGrid } from '../../frontend/grid/handle-lattice-grid';
 
 const LatticeLayout = ( props ) => {
-  const children = Children.toArray( props.children );
+  const children = Children.toArray( props.children ).map( ( child, sourceIndex ) => (
+    isValidElement( child )
+      ? cloneElement( child, { 'data-nb-lattice-source-index': sourceIndex } )
+      : child
+  ) );
   const containerRef = useRef( null );
   const controllerRef = useRef( null );
 
