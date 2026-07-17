@@ -62,4 +62,26 @@ describe( 'getHeaderRowLayoutStyle', () => {
     expect( getHeaderRowLayoutStyle( { navigationLinkVerticalSpacing: 0 } ) )
       .toEqual( { '--nb-navigation-link-vertical-spacing-setting': 0 } );
   } );
+
+  it( 'emits semantic rule overrides while leaving curated defaults token-driven', () => {
+    expect( getHeaderRowLayoutStyle( { ruleWeight: 1, ruleStrength: 'subtle' } ) )
+      .toEqual( {} );
+    expect( getHeaderRowLayoutStyle( { ruleWeight: 2, ruleStrength: 'strong' } ) )
+      .toEqual( {
+        '--nb-header-row-rule-weight': '2px',
+        '--nb-header-row-rule-color': 'var(--nb-rule-strong-color)',
+      } );
+    expect( getHeaderRowLayoutStyle( { ruleWeight: 4, ruleStrength: 'solid' } ) )
+      .toEqual( {
+        '--nb-header-row-rule-weight': '4px',
+        '--nb-header-row-rule-color': 'currentColor',
+      } );
+  } );
+
+  it( 'clamps rule weight and rejects unknown strength roles', () => {
+    expect( getHeaderRowLayoutStyle( { ruleWeight: 20, ruleStrength: 'brandish' } ) )
+      .toEqual( { '--nb-header-row-rule-weight': '4px' } );
+    expect( getHeaderRowLayoutStyle( { ruleWeight: 'heavy', ruleStrength: 'strong' } ) )
+      .toEqual( { '--nb-header-row-rule-color': 'var(--nb-rule-strong-color)' } );
+  } );
 } );

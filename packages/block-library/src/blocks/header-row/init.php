@@ -54,6 +54,30 @@ if ( ! function_exists( 'novablocks_get_header_row_layout_classes' ) ) {
 	}
 }
 
+if ( ! function_exists( 'novablocks_get_header_row_rule_css' ) ) {
+
+	/**
+	 * Derive safe inline custom properties for Header Row rule controls.
+	 *
+	 * @param array $attributes Header Row attributes.
+	 * @return string[]
+	 */
+	function novablocks_get_header_row_rule_css( array $attributes ): array {
+		$properties = novablocks_get_rule_style_properties(
+			$attributes,
+			'--nb-header-row-rule',
+			'subtle'
+		);
+
+		$css = [];
+		foreach ( $properties as $property => $value ) {
+			$css[] = $property . ': ' . $value;
+		}
+
+		return $css;
+	}
+}
+
 if ( ! function_exists( 'novablocks_render_header_row_block' ) ) {
 
 	/**
@@ -97,7 +121,8 @@ if ( ! function_exists( 'novablocks_render_header_row_block' ) ) {
 
 		$spacingProps = array_merge(
 			novablocks_get_spacing_css( $attributes ),
-			novablocks_get_sizing_css( $attributes )
+			novablocks_get_sizing_css( $attributes ),
+			novablocks_get_header_row_rule_css( $attributes )
 		);
 
 		$linkVerticalSpacing = $attributes['navigationLinkVerticalSpacing'] ?? 75;

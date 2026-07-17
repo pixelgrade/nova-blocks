@@ -34,5 +34,13 @@
 	"navigationLinkVerticalSpacing": {
 		"type": "number",
 		"default": 75
+	},
+	"ruleWeight": {
+		"type": "number",
+		"default": 1
+	},
+	"ruleStrength": {
+		"type": "string",
+		"default": "subtle"
 	}
 }

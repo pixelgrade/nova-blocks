@@ -61,9 +61,8 @@
     z-index: 1;
     inset-block-start: 0;
     inset-inline: 0;
-    block-size: 1px;
-    background: currentColor;
-    opacity: 0.2;
+    block-size: var(--nb-header-row-rule-weight, var(--nb-rule-weight));
+    background: var(--nb-header-row-rule-color, var(--nb-rule-color));
     pointer-events: none;
   }
 }

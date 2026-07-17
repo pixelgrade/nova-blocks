@@ -24,4 +24,11 @@
   --nb-accent-color: var(--sm-current-accent-color, #203AB6);
   --nb-fg1-color: var(--sm-current-fg1-color, #272743);
   --nb-fg2-color: var(--sm-current-fg2-color, #000043);
+
+  // Shared line-drawing mechanics. Style Manager owns the contextual divider
+  // colors; Nova owns how blocks consume them and keeps palette-aware fallbacks
+  // for sites where Style Manager is inactive or predates these roles.
+  --nb-rule-weight: 1px;
+  --nb-rule-color: var(--sm-current-divider-color, color-mix(in srgb, currentColor 20%, transparent));
+  --nb-rule-strong-color: var(--sm-current-divider-strong-color, color-mix(in srgb, currentColor 45%, transparent));
 }

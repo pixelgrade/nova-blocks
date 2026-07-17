@@ -10,8 +10,7 @@
 	&:after {
 		content: "";
 		flex: 1 1 auto;
-		block-size: 1px;
-		background: currentColor;
-		opacity: 0.45;
+		block-size: var(--nb-site-tagline-rule-weight, var(--nb-rule-weight));
+		background: var(--nb-site-tagline-rule-color, var(--nb-rule-strong-color));
 	}
 }

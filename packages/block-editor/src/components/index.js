@@ -14,6 +14,7 @@ export { default as Notice } from "./notice";
 export { default as ParametricGrid } from "./parametric-grid";
 export { default as PresetControl, buildPresetDefinitions } from "./preset-control";
 export { default as PresetCardsControl } from "./preset-cards";
+export { default as RuleControls } from "./rule-controls";
 export { MediaMotionThumb, CardsMotionThumb } from "./preset-cards/thumbnails";
 export { default as SectionLink } from "./section-link";
 export { default as TryAndPlay, TryAndPlayGroup, PlusBadge, usePlusGate } from "./plus-gate";

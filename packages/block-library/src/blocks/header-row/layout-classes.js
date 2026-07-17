@@ -27,12 +27,31 @@ export const getHeaderRowLayoutClassnames = ( attributes = {} ) => {
   return classes;
 };
 
+const RULE_STRENGTH_COLORS = {
+  subtle: 'var(--nb-rule-color)',
+  strong: 'var(--nb-rule-strong-color)',
+  solid: 'currentColor',
+};
+
 export const getHeaderRowLayoutStyle = ( attributes = {} ) => {
   const spacing = attributes.navigationLinkVerticalSpacing;
+  const style = {};
 
   if ( typeof spacing === 'number' && isFinite( spacing ) && Math.round( spacing ) !== 75 ) {
-    return { '--nb-navigation-link-vertical-spacing-setting': Math.round( spacing ) };
+    style[ '--nb-navigation-link-vertical-spacing-setting' ] = Math.round( spacing );
   }
 
-  return {};
+  if ( typeof attributes.ruleWeight === 'number' && isFinite( attributes.ruleWeight ) ) {
+    const ruleWeight = Math.min( 4, Math.max( 1, Math.round( attributes.ruleWeight ) ) );
+    if ( 1 !== ruleWeight ) {
+      style[ '--nb-header-row-rule-weight' ] = `${ ruleWeight }px`;
+    }
+  }
+
+  const ruleColor = RULE_STRENGTH_COLORS[ attributes.ruleStrength ];
+  if ( ruleColor && 'subtle' !== attributes.ruleStrength ) {
+    style[ '--nb-header-row-rule-color' ] = ruleColor;
+  }
+
+  return style;
 };

@@ -16,6 +16,7 @@
 
 define( 'ABSPATH', __DIR__ );
 
+require_once __DIR__ . '/../../lib/rule-styles.php';
 require_once __DIR__ . '/../../packages/block-library/src/blocks/header-row/init.php';
 
 function nb_expect( $condition, $message ) {
@@ -28,6 +29,22 @@ function nb_expect( $condition, $message ) {
 nb_expect(
 	[] === novablocks_get_header_row_layout_classes( [] ),
 	'Empty attributes emit no layout classes.'
+);
+
+nb_expect(
+	function_exists( 'novablocks_get_header_row_rule_css' ),
+	'Header Row must expose a frontend rule-style bridge.'
+);
+nb_expect(
+	[] === novablocks_get_header_row_rule_css( [ 'ruleWeight' => 1, 'ruleStrength' => 'subtle' ] ),
+	'Curated Header Row rule defaults must emit no inline overrides.'
+);
+nb_expect(
+	[
+		'--nb-header-row-rule-weight: 2px',
+		'--nb-header-row-rule-color: var(--nb-rule-strong-color)',
+	] === novablocks_get_header_row_rule_css( [ 'ruleWeight' => 2, 'ruleStrength' => 'strong' ] ),
+	'Header Row rule controls must reach the frontend CSS bridge.'
 );
 nb_expect(
 	[] === novablocks_get_header_row_layout_classes( [
