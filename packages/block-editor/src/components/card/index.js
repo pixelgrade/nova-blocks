@@ -55,15 +55,17 @@ export const Card = ( props ) => {
     getAreaClassnameByWidthRatio( 1 / columns )
   );
 
-  const classNames = classnames(
-    layoutStyle !== 'parametric' ? extraClassNames : defaultClassNames,
-    props.className
-  );
-
   const children = flattenCardChildren( props.children );
   const mediaChildren = children.filter( child => child.type === CardMediaWrapper );
   const contentWrapperChildren = children.filter( child => child.type === CardContentWrapper );
   const passedChildren = children.filter( child => child.type !== CardMediaWrapper && child.type !== CardContentWrapper );
+  const contentPlacements = contentWrapperChildren.map( child => child.props?.region?.placement );
+  const hasSplitContent = contentPlacements.includes( 'before-media' ) && contentPlacements.includes( 'after-media' );
+  const classNames = classnames(
+    layoutStyle !== 'parametric' ? extraClassNames : defaultClassNames,
+    hasSplitContent && 'nb-supernova-item--split-content',
+    props.className
+  );
 
   // When the caller provides explicit CardContentWrapper children, render
   // children in source order so the caller controls media/content ordering
@@ -91,7 +93,7 @@ export const Card = ( props ) => {
 
 export const CardContentWrapper = ( props ) => {
 
-  const { attributes, extraClassName } = props;
+  const { attributes, extraClassName, region } = props;
 
   const align = getAlignFromMatrix( attributes?.contentPosition );
 
@@ -99,6 +101,7 @@ export const CardContentWrapper = ( props ) => {
     `nb-supernova-item__content`,
     `nb-supernova-item__content--valign-${ align[0] }`,
     `nb-supernova-item__content--halign-${ align[1] }`,
+    region?.classNames,
     extraClassName,
   );
 

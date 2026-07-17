@@ -226,7 +226,7 @@ function novablocks_replace_first_named_block( array $blocks, string $block_name
 	return $blocks;
 }
 
-function novablocks_maybe_get_post_format_blueprint_card_markup( WP_Post $post, array $attributes, array $profile, string $content_before_media = '' ): ?string {
+function novablocks_maybe_get_post_format_blueprint_card_markup( WP_Post $post, array $attributes, array $profile, string $content_before_media = '', array $content_regions = [] ): ?string {
 	$format = $profile['format'] ?? '';
 
 	if ( ! in_array( $format, [ 'quote', 'image' ], true ) ) {
@@ -273,13 +273,13 @@ function novablocks_maybe_get_post_format_blueprint_card_markup( WP_Post $post, 
 	}
 
 	$media_markup = novablocks_get_post_format_blueprint_media_markup( $post, $item_attributes, $content_markup !== '' );
-	$item_markup  = novablocks_get_collection_card_surface_markup( $media_markup, $content_markup, $item_attributes, $content_before_media );
+	$item_markup  = novablocks_get_collection_card_surface_markup( $media_markup, $content_markup, $item_attributes, $content_before_media, $content_regions );
 
 	return novablocks_get_post_format_blueprint_supernova_markup( $root_attributes, $item_markup, $format );
 }
 
-function novablocks_maybe_get_quote_blueprint_card_markup( WP_Post $post, array $attributes, array $profile, string $content_before_media = '' ): ?string {
-	return novablocks_maybe_get_post_format_blueprint_card_markup( $post, $attributes, $profile, $content_before_media );
+function novablocks_maybe_get_quote_blueprint_card_markup( WP_Post $post, array $attributes, array $profile, string $content_before_media = '', array $content_regions = [] ): ?string {
+	return novablocks_maybe_get_post_format_blueprint_card_markup( $post, $attributes, $profile, $content_before_media, $content_regions );
 }
 
 function novablocks_get_post_format_blueprint_media_context_attribute_keys(): array {

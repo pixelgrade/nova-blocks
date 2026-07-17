@@ -56,6 +56,7 @@ import {
 
 import {
   ELEMENT,
+  getCardContentRegions,
   getVisibleOrder,
   metasAreAdjacent,
 } from "../../filters/with-card-details/components/element-order-utils";
@@ -167,13 +168,12 @@ export const PostCardComponent = props => {
   // in the fields-mode renderer.
   const order          = getVisibleOrder( attributes );
   const mediaIndex     = order.indexOf( ELEMENT.MEDIA );
-  const beforeMediaIds = mediaIndex >= 0
-    ? order.slice( 0, mediaIndex ).filter( id => id !== ELEMENT.MEDIA )
-    : [];
-  const afterMediaIds  = mediaIndex >= 0
-    ? order.slice( mediaIndex + 1 ).filter( id => id !== ELEMENT.MEDIA )
-    : order.filter( id => id !== ELEMENT.MEDIA );
-  const splitAroundMedia = showMedia && props.media && mediaIndex > 0 && mediaIndex < order.length - 1;
+  const hasMedia       = !! showMedia && !! props.media && mediaIndex >= 0;
+  const contentRegions = getCardContentRegions( order, { hasMedia } );
+  const beforeMediaRegion = contentRegions.find( region => region.placement === 'before-media' );
+  const afterMediaRegion = contentRegions.find( region => region.placement === 'after-media' );
+  const contentOnlyRegion = contentRegions.find( region => region.placement === 'content-only' );
+  const hasSplitContent = !! beforeMediaRegion && !! afterMediaRegion;
 
   const primaryMeta   = getMetadata( post, primaryMetadata );
   const secondaryMeta = getMetadata( post, secondaryMetadata );
@@ -286,10 +286,10 @@ export const PostCardComponent = props => {
     return elements;
   };
 
-  const renderContentWrapper = ( ids, extraClassName, contentAttributes = attributes ) => (
-    <CardContentWrapper { ...props } attributes={ contentAttributes } extraClassName={ extraClassName } key={ 'card_post_content_' + post.id + '_' + extraClassName }>
-      <div className="nb-supernova-item__inner-container" key={ 'card_post_inner_' + post.id + '_' + extraClassName }>
-        { renderContentItems( ids ) }
+  const renderContentWrapper = ( region, contentAttributes = attributes ) => (
+    <CardContentWrapper { ...props } attributes={ contentAttributes } region={ region } key={ 'card_post_content_' + post.id + '_' + region.placement }>
+      <div className="nb-supernova-item__inner-container" key={ 'card_post_inner_' + post.id + '_' + region.placement }>
+        { renderContentItems( region.items ) }
       </div>
     </CardContentWrapper>
   );
@@ -333,6 +333,7 @@ export const PostCardComponent = props => {
       `nb-supernova-item--layout-${ itemAttributes.cardLayout || 'stacked' }`,
       `nb-supernova-item--scrolling-effect-${ itemAttributes.scrollingEffect || 'static' }`,
       `nb-supernova-item--aspect-ratio-${ itemAttributes.thumbnailAspectRatioString || 'landscape' }`,
+      hasSplitContent && 'nb-supernova-item--split-content',
       expressionClasses,
       itemAttributes.className,
       getColorSignalClassnames( itemAttributes, true )
@@ -342,14 +343,21 @@ export const PostCardComponent = props => {
       <div className={ rootClassName } style={ { ...getPostFormatBlueprintStyle( rootAttributes ), display: 'block' } } key={ 'card_post_blueprint_' + post.id }>
         <div className={ itemClassName } style={ getPostFormatBlueprintStyle( itemAttributes ) }>
           <div className="nb-supernova-item__frame">
-            { beforeMediaIds.length > 0 && renderContentWrapper( beforeMediaIds, 'nb-supernova-item__content--before-media', itemAttributes ) }
+            { beforeMediaRegion && renderContentWrapper( beforeMediaRegion, itemAttributes ) }
             { showMedia && props.media && (
               <CardMediaWrapper { ...props } attributes={ itemAttributes } key={ 'card_post_blueprint_media_' + post.id }>
                 <PostCardLetter { ...props } attributes={ itemAttributes } />
                 <Media { ...props } attributes={ itemAttributes } key={ 'card_post_blueprint_image_' + post.id } />
               </CardMediaWrapper>
             ) }
-            <CardContentWrapper { ...props } attributes={ itemAttributes } extraClassName="nb-supernova-item__content--after-media">
+            <CardContentWrapper
+              { ...props }
+              attributes={ itemAttributes }
+              region={ afterMediaRegion || contentOnlyRegion || {
+                placement: 'after-media',
+                classNames: [ 'nb-supernova-item__content--after-media' ],
+              } }
+            >
               <div className="nb-supernova-item__inner-container">
                 <blockquote className="wp-block-quote is-style-plain">
                   <p>{ quoteParts.quote }</p>
@@ -382,30 +390,19 @@ export const PostCardComponent = props => {
     );
   }
 
-  if ( splitAroundMedia ) {
+  if ( hasMedia ) {
     return (
       <Card { ...props } className={ expressionClasses } key={ 'card_post_' + post.id }>
-        { renderContentWrapper( beforeMediaIds, 'nb-supernova-item__content--before-media' ) }
+        { beforeMediaRegion && renderContentWrapper( beforeMediaRegion ) }
         { renderMediaWrapper() }
-        { renderContentWrapper( afterMediaIds,  'nb-supernova-item__content--after-media' ) }
+        { afterMediaRegion && renderContentWrapper( afterMediaRegion ) }
       </Card>
     );
   }
 
-  // No middle-media split: render all non-media items in a single content
-  // block. Media sits before it (default), after it (trailing), or not at
-  // all (e.g., post has no featured image on a Quote post format).
-  const allContentIds = order.filter( id => id !== ELEMENT.MEDIA );
-  const hasMedia      = showMedia && props.media;
-  const trailingMedia = hasMedia && mediaIndex === order.length - 1;
-
   return (
     <Card { ...props } className={ expressionClasses } key={ 'card_post_' + post.id }>
-      { hasMedia && ! trailingMedia && renderMediaWrapper() }
-      <div className="nb-supernova-item__inner-container" key={ 'card_post_innercontainer_' + post.id }>
-        { renderContentItems( allContentIds ) }
-      </div>
-      { trailingMedia && renderMediaWrapper() }
+      { contentOnlyRegion && renderContentWrapper( contentOnlyRegion ) }
     </Card>
   );
 };

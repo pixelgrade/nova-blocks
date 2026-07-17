@@ -81,6 +81,7 @@ const createObserverHarness = () => {
 
 const createFixture = ( {
   width = 1074,
+  captionHeights = [],
   classes = [
     'is-sticky-post',
     'nb-card--media-wide',
@@ -92,25 +93,45 @@ const createFixture = ( {
   const block = document.createElement( 'section' );
   const grid = document.createElement( 'div' );
 
+  block.className = 'nb-supernova--card-layout-vertical';
   block.dataset.layoutStyle = 'classic';
   block.dataset.layoutStrategy = 'lattice';
   grid.className = 'nb-collection__layout';
   grid.style.columnGap = '26px';
   grid.style.rowGap = '26px';
   grid.style.setProperty( '--nb-lattice-caption-height', '50px' );
-  grid.getBoundingClientRect = () => rectangle( width );
+  let renderedWidth = width;
+  grid.getBoundingClientRect = () => rectangle( renderedWidth );
 
   classes.forEach( ( className, index ) => {
     const card = document.createElement( 'article' );
     card.className = `nb-collection__layout-item ${ className }`;
     card.dataset.cardId = String.fromCharCode( 97 + index );
+
+    if ( captionHeights[ index ] ) {
+      const caption = document.createElement( 'div' );
+      caption.className = 'nb-supernova-item__content--contains-title';
+      Object.defineProperty( caption, 'scrollHeight', {
+        configurable: true,
+        value: captionHeights[ index ],
+      } );
+      card.appendChild( caption );
+    }
+
     grid.appendChild( card );
   } );
 
   block.appendChild( grid );
   document.body.appendChild( block );
 
-  return { block, grid, items: Array.from( grid.children ) };
+  return {
+    block,
+    grid,
+    items: Array.from( grid.children ),
+    setRenderedWidth: nextWidth => {
+      renderedWidth = nextWidth;
+    },
+  };
 };
 
 describe( 'handleLatticeGrid', () => {
@@ -203,7 +224,7 @@ describe( 'handleLatticeGrid', () => {
   } );
 
   test( 'progresses through three and two tablet columns before the one-module phone flow', () => {
-    const { block, grid, items } = createFixture( { width: 526 } );
+    const { block, grid, items, setRenderedWidth } = createFixture( { width: 900 } );
     let detail;
     window.addEventListener( 'nb:lattice-layout', event => {
       detail = event.detail;
@@ -218,6 +239,7 @@ describe( 'handleLatticeGrid', () => {
     expect( items[0].style.gridColumn ).toBe( '1 / span 2' );
     expect( items[3].style.gridColumn ).toBe( '3 / span 1' );
 
+    setRenderedWidth( 700 );
     Object.defineProperty( window, 'innerWidth', { configurable: true, value: 700 } );
     window.dispatchEvent( new Event( 'resize' ) );
     flushAnimationFrames();
@@ -225,6 +247,7 @@ describe( 'handleLatticeGrid', () => {
     expect( detail.activeColumns ).toBe( 2 );
     expect( grid.style.gridTemplateColumns ).toBe( 'repeat(2, minmax(0, 1fr))' );
 
+    setRenderedWidth( 375 );
     Object.defineProperty( window, 'innerWidth', { configurable: true, value: 375 } );
     window.dispatchEvent( new Event( 'resize' ) );
 
@@ -237,6 +260,41 @@ describe( 'handleLatticeGrid', () => {
       expect( card.style.gridColumn ).toBe( '1 / span 1' );
       expect( card.style.gridRow ).toMatch( /^\d+ \/ span 1$/ );
     } );
+  } );
+
+  test( 'uses the rendered Site Editor canvas instead of a misleading outer window width', () => {
+    const { block, grid } = createFixture( { width: 900 } );
+    let detail;
+    window.addEventListener( 'nb:lattice-layout', event => {
+      detail = event.detail;
+    }, { once: true } );
+
+    Object.defineProperty( window, 'innerWidth', { configurable: true, value: 375 } );
+    handleLatticeGrid( grid, block, { columns: 5 } );
+    flushAnimationFrames();
+
+    expect( detail.activeColumns ).toBe( 3 );
+    expect( grid.style.gridTemplateColumns ).toBe( 'repeat(3, minmax(0, 1fr))' );
+  } );
+
+  test( 'measures one shared caption shelf from real title regions before calculating rows', () => {
+    const { block, grid } = createFixture( {
+      captionHeights: [ 80, 250, 90, 120, 400 ],
+    } );
+    let detail;
+    window.addEventListener( 'nb:lattice-layout', event => {
+      detail = event.detail;
+    }, { once: true } );
+
+    const controller = handleLatticeGrid( grid, block, { columns: 4 } );
+    flushAnimationFrames();
+
+    expect( detail.captionHeight ).toBe( 250 );
+    expect( grid.style.getPropertyValue( '--nb-lattice-caption-height' ) ).toBe( '250px' );
+    expect( Number.parseFloat( grid.style.gridAutoRows ) ).toBeCloseTo( 582 );
+
+    controller.destroy();
+    expect( grid.style.getPropertyValue( '--nb-lattice-caption-height' ) ).toBe( '' );
   } );
 
   test( 'accepts an updated explicit content order for retained and inserted editor cards', () => {

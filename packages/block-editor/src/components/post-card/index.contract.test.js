@@ -28,10 +28,10 @@ jest.mock( '../index', () => ( {
 	CardDescription: ( { children } ) => <div className="nb-card__description">{ children }</div>,
 	CardFooter: ( { children } ) => <div>{ children }</div>,
 	CardButton: ( { children } ) => <button>{ children }</button>,
-	CardContentWrapper: ( { attributes = {}, children, extraClassName } ) => {
-		const [ vertical = 'center', horizontal = 'center' ] = String( attributes.contentPosition || 'center center' ).split( /\s+/ );
-		return (
-			<div className={ `nb-supernova-item__content nb-supernova-item__content--valign-${ vertical } nb-supernova-item__content--halign-${ horizontal } ${ extraClassName || '' }` }>
+	CardContentWrapper: ( { attributes = {}, children, extraClassName, region } ) => {
+			const [ vertical = 'center', horizontal = 'center' ] = String( attributes.contentPosition || 'center center' ).split( /\s+/ );
+			return (
+				<div className={ `nb-supernova-item__content nb-supernova-item__content--valign-${ vertical } nb-supernova-item__content--halign-${ horizontal } ${ extraClassName || '' } ${ region?.classNames?.join( ' ' ) || '' }` }>
 				{ children }
 			</div>
 		);
@@ -39,18 +39,15 @@ jest.mock( '../index', () => ( {
 	CardMediaWrapper: ( { children } ) => <div className="nb-supernova-item__media-wrapper">{ children }</div>,
 } ) );
 
-jest.mock( '../../filters/with-card-details/components/element-order-utils', () => ( {
-	ELEMENT: {
-		MEDIA: 'media',
-		META_PRIMARY: 'meta-primary',
-		META_SECONDARY: 'meta-secondary',
-		TITLE: 'title',
-		DESCRIPTION: 'description',
-		BUTTONS: 'buttons',
-	},
-	getVisibleOrder: ( ...args ) => mockGetVisibleOrder( ...args ),
-	metasAreAdjacent: () => false,
-} ) );
+jest.mock( '../../filters/with-card-details/components/element-order-utils', () => {
+	const actual = jest.requireActual( '../../filters/with-card-details/components/element-order-utils' );
+
+	return {
+		...actual,
+		getVisibleOrder: ( ...args ) => mockGetVisibleOrder( ...args ),
+		metasAreAdjacent: () => false,
+	};
+} );
 
 jest.mock( './utils', () => ( {
 	getMetadata: () => '',
@@ -141,6 +138,65 @@ describe( 'PostCard expression-class integration', () => {
 		);
 		expect( container.querySelector( '.nb-supernova-item__media-wrapper' ) ).not.toBeNull();
 		expect( container.querySelector( '.nb-card__read-more' ) ).toBeNull();
+	} );
+
+	test( 'emits a trailing caption region for the default media-first order', () => {
+		mockGetVisibleOrder.mockReturnValue( [ 'media', 'title', 'description' ] );
+		const attributes = { ...baseAttributes, showMedia: true };
+
+		act( () => {
+			render(
+				<PostCardComponent
+					attributes={ attributes }
+					post={ basePost }
+					media={ { originalWidth: 800, originalHeight: 600 } }
+				/>,
+				container
+			);
+		} );
+
+		const caption = container.querySelector( '.nb-supernova-item__content--after-media' );
+		expect( caption ).not.toBeNull();
+		expect( caption.classList ).toContain( 'nb-supernova-item__content--contains-title' );
+		expect( caption.classList ).toContain( 'nb-supernova-item__content--trailing-boundary' );
+	} );
+
+	test( 'emits isolated leading details and trailing caption regions around media', () => {
+		mockGetVisibleOrder.mockReturnValue( [ 'meta-primary', 'media', 'title' ] );
+		const attributes = { ...baseAttributes, showMedia: true, showMeta: true };
+
+		act( () => {
+			render(
+				<PostCardComponent
+					attributes={ attributes }
+					post={ basePost }
+					media={ { originalWidth: 800, originalHeight: 600 } }
+				/>,
+				container
+			);
+		} );
+
+		const leading = container.querySelector( '.nb-supernova-item__content--before-media' );
+		const caption = container.querySelector( '.nb-supernova-item__content--after-media' );
+		expect( leading.classList ).toContain( 'nb-supernova-item__content--details-only' );
+		expect( leading.classList ).toContain( 'nb-supernova-item__content--leading-boundary' );
+		expect( caption.classList ).toContain( 'nb-supernova-item__content--contains-title' );
+		expect( caption.classList ).toContain( 'nb-supernova-item__content--trailing-boundary' );
+	} );
+
+	test( 'collapses a missing-media post into one content-only semantic plate', () => {
+		mockGetVisibleOrder.mockReturnValue( [ 'media', 'title', 'description' ] );
+		const attributes = { ...baseAttributes, showMedia: true };
+
+		act( () => {
+			render( <PostCardComponent attributes={ attributes } post={ basePost } />, container );
+		} );
+
+		const content = container.querySelector( '.nb-supernova-item__content--content-only' );
+		expect( content ).not.toBeNull();
+		expect( content.classList ).toContain( 'nb-supernova-item__content--contains-title' );
+		expect( content.classList ).toContain( 'nb-supernova-item__content--leading-boundary' );
+		expect( content.classList ).toContain( 'nb-supernova-item__content--trailing-boundary' );
 	} );
 
 	test( 'uses an inert frontend-equivalent block wrapper around post titles', () => {
@@ -248,6 +304,7 @@ describe( 'PostCard expression-class integration', () => {
 		expect( blueprint.classList.contains( 'collection-custom-class' ) ).toBe( true );
 		const item = blueprint.querySelector( '.nb-supernova-item.format-quote' );
 		expect( item ).not.toBeNull();
+		expect( item.classList.contains( 'nb-supernova-item--split-content' ) ).toBe( true );
 		expect( item.classList.contains( 'collection-custom-class' ) ).toBe( true );
 		expect( item.classList.contains( 'quote-item-blueprint' ) ).toBe( true );
 		expect( blueprint.querySelector( '.nb-supernova-item__content--before-media' ) ).toEqual(
@@ -257,5 +314,38 @@ describe( 'PostCard expression-class integration', () => {
 		);
 		expect( blueprint.querySelector( '.nb-supernova-item__content--before-media' ).classList.contains( 'nb-supernova-item__content--halign-center' ) ).toBe( true );
 		expect( blueprint.querySelector( '.nb-supernova-item__media-wrapper img' ).getAttribute( 'src' ) ).toBe( 'quote.jpg' );
+	} );
+
+	test( 'collapses a media-less Quote blueprint into one content-only semantic region', () => {
+		mockGetVisibleOrder.mockReturnValue( [ 'media', 'title', 'description' ] );
+		const post = {
+			...basePost,
+			format: 'quote',
+			content: {
+				raw: '<blockquote><p>Design needs delight.</p><cite>Massimo Vignelli</cite></blockquote>',
+			},
+		};
+
+		act( () => {
+			render(
+				<PostCardComponent
+					attributes={ { ...baseAttributes, showMedia: true } }
+					post={ post }
+					postFormatCardBlueprints={ {
+						quote: {
+							rootAttributes: {},
+							itemAttributes: { cardLayout: 'stacked' },
+						},
+					} }
+				/>,
+				container
+			);
+		} );
+
+		const blueprint = container.querySelector( '.nb-post-format-card-blueprint--quote' );
+		const content = blueprint.querySelector( '.nb-supernova-item__content--content-only' );
+		expect( content ).not.toBeNull();
+		expect( content.classList ).toContain( 'nb-supernova-item__content--contains-title' );
+		expect( blueprint.querySelector( '.nb-supernova-item__content--after-media' ) ).toBeNull();
 	} );
 } );

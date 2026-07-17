@@ -90,3 +90,22 @@ test('Content Details metadata order preserves Primary and Secondary role classe
   assert.match(itemEditSource, /className="nb-card__meta is-style-meta nb-card__meta--primary"/);
   assert.match(itemEditSource, /className="nb-card__meta is-style-meta nb-card__meta--secondary"/);
 });
+
+test('editor fields and auto cards render through Nova semantic content regions', () => {
+  assert.match(
+    itemEditSource,
+    /getCardContentRegions/
+  );
+  assert.match(
+    itemEditSource,
+    /const contentRegions = getCardContentRegions\( order, \{ hasMedia \} \);/
+  );
+  assert.match(
+    itemEditSource,
+    /<CardContentWrapper[^>]*region=\{ region \}/
+  );
+  assert.doesNotMatch(
+    itemEditSource,
+    /splitAroundMedia/
+  );
+});

@@ -130,6 +130,75 @@ export function getVisibleOrder( attributes ) {
   return getEffectiveOrder( attributes ).filter( id => isVisible( id, attributes ) );
 }
 
+const DETAIL_IDS = new Set( [
+  ELEMENT.META_PRIMARY,
+  ELEMENT.META_SECONDARY,
+  ELEMENT.BUTTONS,
+] );
+
+/**
+ * Split a resolved visible card order into explicit content regions and attach
+ * stable semantic classes. Consumers must not infer these roles from incidental
+ * wrapper position: editor and PHP renderers both emit this contract.
+ *
+ * `hasMedia` describes whether Media actually renders, not merely whether the
+ * visibility toggle is enabled. A post without a featured image therefore
+ * becomes one content-only region even when `media` remains in elementOrder.
+ */
+export function getCardContentRegions( order, { hasMedia = true } = {} ) {
+  const resolvedOrder = Array.isArray( order ) ? order.filter( id => ALL_IDS.has( id ) ) : [];
+  const mediaIndex = hasMedia ? resolvedOrder.indexOf( ELEMENT.MEDIA ) : -1;
+  const boundaryOrder = mediaIndex >= 0
+    ? resolvedOrder
+    : resolvedOrder.filter( id => id !== ELEMENT.MEDIA );
+  const leadingItem = boundaryOrder[0];
+  const trailingItem = boundaryOrder[ boundaryOrder.length - 1 ];
+
+  const createRegion = ( items, placement ) => {
+    if ( ! items.length ) {
+      return null;
+    }
+
+    const classNames = [ `nb-supernova-item__content--${ placement }` ];
+
+    if ( items.includes( ELEMENT.TITLE ) ) {
+      classNames.push( 'nb-supernova-item__content--contains-title' );
+    }
+
+    if ( items.every( id => DETAIL_IDS.has( id ) ) ) {
+      classNames.push( 'nb-supernova-item__content--details-only' );
+    }
+
+    if ( items.includes( leadingItem ) ) {
+      classNames.push( 'nb-supernova-item__content--leading-boundary' );
+    }
+
+    if ( items.includes( trailingItem ) ) {
+      classNames.push( 'nb-supernova-item__content--trailing-boundary' );
+    }
+
+    return { placement, items, classNames };
+  };
+
+  if ( mediaIndex >= 0 ) {
+    return [
+      createRegion(
+        resolvedOrder.slice( 0, mediaIndex ).filter( id => id !== ELEMENT.MEDIA ),
+        'before-media'
+      ),
+      createRegion(
+        resolvedOrder.slice( mediaIndex + 1 ).filter( id => id !== ELEMENT.MEDIA ),
+        'after-media'
+      ),
+    ].filter( Boolean );
+  }
+
+  const contentItems = resolvedOrder.filter( id => id !== ELEMENT.MEDIA );
+  const contentRegion = createRegion( contentItems, 'content-only' );
+
+  return contentRegion ? [ contentRegion ] : [];
+}
+
 /**
  * Produce a new order that swaps the item at `index` with its neighbour in
  * `direction`. Returns null when the move is not possible (boundary).

@@ -27,6 +27,7 @@ import {
   CardContentWrapper,
   CardMediaWrapper,
   ELEMENT,
+  getCardContentRegions,
   getVisibleOrder,
   metasAreAdjacent,
   useInnerBlocks,
@@ -59,7 +60,7 @@ const shouldGenerateSupernovaItemDefaults = attributes =>
 
 const SupernovaItemEdit = props => {
   const { attributes, setControlsVisibility, clientId } = props;
-  const { showMedia, mediaPosition, cardLayout, contentType } = attributes;
+  const { showMedia, contentType } = attributes;
   const parent = useSelect( select =>{
     const { getBlock, getBlockParents } = select( 'core/block-editor' );
     const parents = getBlockParents( clientId ).slice();
@@ -114,14 +115,11 @@ const SupernovaItemEdit = props => {
   const useElementOrder = contentType === 'fields' || contentType === 'auto';
   const order           = useElementOrder ? getVisibleOrder( attributes ) : [];
   const mediaIndex      = order.indexOf( ELEMENT.MEDIA );
-  const contentItems    = order.filter( id => id !== ELEMENT.MEDIA );
-  const beforeMediaItems = mediaIndex > 0 ? order.slice( 0, mediaIndex ).filter( id => id !== ELEMENT.MEDIA ) : [];
-  const afterMediaItems  = mediaIndex >= 0 ? order.slice( mediaIndex + 1 ).filter( id => id !== ELEMENT.MEDIA ) : contentItems;
-
-  // Media sits between two content halves only when it's not first in the
-  // order and not last — otherwise the whole card renders as
-  // [media → content] or [content → media].
-  const splitAroundMedia = useElementOrder && showMedia && mediaIndex > 0 && mediaIndex < order.length - 1;
+  const hasMedia        = useElementOrder && showMedia && mediaIndex >= 0;
+  const contentRegions = getCardContentRegions( order, { hasMedia } );
+  const beforeMediaRegion = contentRegions.find( region => region.placement === 'before-media' );
+  const afterMediaRegion = contentRegions.find( region => region.placement === 'after-media' );
+  const contentOnlyRegion = contentRegions.find( region => region.placement === 'content-only' );
 
   const renderMedia = () => (
     <CardMediaWrapper { ...props }>
@@ -129,27 +127,25 @@ const SupernovaItemEdit = props => {
     </CardMediaWrapper>
   );
 
+  const renderContentRegion = region => (
+    <CardContentWrapper { ...props } region={ region } key={ region.placement }>
+      <SupernovaItemContent { ...props } items={ region.items } />
+    </CardContentWrapper>
+  );
+
   return (
     <Fragment>
       <div { ...blockProps }>
         <Card { ...props }>
           { useElementOrder ? (
-            splitAroundMedia ? (
+            hasMedia ? (
               <>
-                <CardContentWrapper { ...props } extraClassName="nb-supernova-item__content--before-media">
-                  <SupernovaItemContent { ...props } items={ beforeMediaItems } />
-                </CardContentWrapper>
+                { beforeMediaRegion && renderContentRegion( beforeMediaRegion ) }
                 { renderMedia() }
-                <CardContentWrapper { ...props } extraClassName="nb-supernova-item__content--after-media">
-                  <SupernovaItemContent { ...props } items={ afterMediaItems } />
-                </CardContentWrapper>
+                { afterMediaRegion && renderContentRegion( afterMediaRegion ) }
               </>
             ) : (
-              <>
-                { showMedia && mediaIndex === 0 && renderMedia() }
-                <SupernovaItemContent { ...props } items={ contentItems } />
-                { showMedia && mediaIndex === order.length - 1 && renderMedia() }
-              </>
+              contentOnlyRegion && renderContentRegion( contentOnlyRegion )
             )
           ) : (
             <>

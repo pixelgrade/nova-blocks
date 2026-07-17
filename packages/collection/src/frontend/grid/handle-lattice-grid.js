@@ -12,6 +12,8 @@ const CONTROLLER_PROPERTY = '__nbLatticeLayoutController';
 const DESTROY_PROPERTY = '__nbDestroyLatticeLayout';
 const DEFAULT_GAP = 26;
 const DEFAULT_CAPTION_HEIGHT = 50;
+const CAPTION_HEIGHT_PROPERTY = '--nb-lattice-caption-height';
+const CAPTION_REGION_SELECTOR = '.nb-supernova-item__content--contains-title';
 const MUTATION_OPTIONS = {
   attributes: true,
   attributeFilter: [ 'class', 'hidden' ],
@@ -45,6 +47,40 @@ const calculateLatticeGeometry = ( {
   const rowHeight = columnWidth * 4 / 3 + captionHeight;
 
   return { columnWidth, rowHeight };
+};
+
+const measureSharedCaptionHeight = ( grid, block ) => {
+  // Read the recipe/theme baseline without a stale measurement from a previous
+  // layout pass. The semantic title region may then raise that one shared shelf
+  // when authored typography or a narrow module needs more room.
+  grid.style.removeProperty( CAPTION_HEIGHT_PROPERTY );
+
+  const computedStyles = grid.ownerDocument.defaultView.getComputedStyle( grid );
+  const baselineHeight = parseLength(
+    computedStyles.getPropertyValue( CAPTION_HEIGHT_PROPERTY ),
+    DEFAULT_CAPTION_HEIGHT
+  );
+  const usesCaptionShelf = block.classList.contains( 'nb-supernova--card-layout-vertical' ) ||
+    block.classList.contains( 'nb-supernova--card-layout-vertical-reverse' );
+
+  if ( ! usesCaptionShelf ) {
+    return baselineHeight;
+  }
+
+  const measuredHeight = Array.from( grid.querySelectorAll( CAPTION_REGION_SELECTOR ) )
+    .filter( region => {
+      const item = region.closest( '.nb-collection__layout-item' );
+
+      return ! item?.hidden && ! region.closest( '.nb-card--no-media, .format-quote' );
+    } )
+    .reduce( ( height, region ) => Math.max( height, region.scrollHeight ), baselineHeight );
+  const captionHeight = Math.ceil( measuredHeight );
+
+  if ( captionHeight > baselineHeight ) {
+    grid.style.setProperty( CAPTION_HEIGHT_PROPERTY, `${ captionHeight }px` );
+  }
+
+  return captionHeight;
 };
 
 const createLatticeGridController = ( grid, initialBlock, initialAttributes ) => {
@@ -136,6 +172,7 @@ const createLatticeGridController = ( grid, initialBlock, initialAttributes ) =>
     getDirectLayoutItems( grid ).forEach( clearItemStyles );
     grid.style.gridTemplateColumns = '';
     grid.style.gridAutoRows = '';
+    grid.style.removeProperty( CAPTION_HEIGHT_PROPERTY );
     removeClass( grid, READY_CLASSNAME );
   };
 
@@ -147,17 +184,14 @@ const createLatticeGridController = ( grid, initialBlock, initialAttributes ) =>
     const allItems = captureSourceIndexes();
     restoreSourceOrder();
     const visibleItems = sortBySourceIndex( allItems ).filter( item => ! item.hidden );
-    const activeColumns = getResponsiveLatticeColumnCount( {
-      authoredColumns: attributes.columns,
-      viewportWidth: ownerWindow.innerWidth,
-    } );
     const computedStyles = ownerWindow.getComputedStyle( grid );
     const columnGap = parseLength( computedStyles.columnGap, parseLength( computedStyles.gap, DEFAULT_GAP ) );
-    const captionHeight = parseLength(
-      computedStyles.getPropertyValue( '--nb-lattice-caption-height' ),
-      DEFAULT_CAPTION_HEIGHT
-    );
+    const captionHeight = measureSharedCaptionHeight( grid, block );
     const containerWidth = grid.getBoundingClientRect().width;
+    const activeColumns = getResponsiveLatticeColumnCount( {
+      authoredColumns: attributes.columns,
+      viewportWidth: containerWidth || ownerWindow.innerWidth,
+    } );
     const { columnWidth, rowHeight } = calculateLatticeGeometry( {
       containerWidth,
       columnCount: activeColumns,

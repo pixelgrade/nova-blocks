@@ -2249,7 +2249,7 @@ function novablocks_get_area_classname_by_width_ratio( $ratio ): string {
 	return 'nb-grid__area--width-full';
 }
 
-function novablocks_get_collection_card_surface_markup( string $media, string $content, array $attributes, string $content_before_media = '' ): string {
+function novablocks_get_collection_card_surface_markup( string $media, string $content, array $attributes, string $content_before_media = '', array $content_regions = [] ): string {
 
 	// Make sure that the defaults are in place.
 	$attributes = wp_parse_args( $attributes, [
@@ -2257,6 +2257,14 @@ function novablocks_get_collection_card_surface_markup( string $media, string $c
 	] );
 
 	$cardClasses = [ 'nb-supernova-item', ];
+	$content_region_placements = array_values( array_filter( array_map( function ( $region ) {
+		return is_array( $region ) ? ( $region['placement'] ?? null ) : null;
+	}, $content_regions ) ) );
+
+	if ( in_array( 'before-media', $content_region_placements, true )
+		&& in_array( 'after-media', $content_region_placements, true ) ) {
+		$cardClasses[] = 'nb-supernova-item--split-content';
+	}
 
 	if ( ! empty( $attributes['cardLayout'] ) ) {
 		$cardClasses[] = 'nb-supernova-item--layout-' . $attributes['cardLayout'];
@@ -2283,6 +2291,20 @@ function novablocks_get_collection_card_surface_markup( string $media, string $c
 
 	$contentClasses = [ 'nb-supernova-item__content', ];
 	$surface_style_props = [];
+	$regions_by_placement = [];
+
+	foreach ( $content_regions as $region ) {
+		if ( is_array( $region ) && ! empty( $region['placement'] ) ) {
+			$regions_by_placement[ $region['placement'] ] = $region;
+		}
+	}
+
+	$get_region_classes = function ( string $placement ) use ( $regions_by_placement ): array {
+		$region = $regions_by_placement[ $placement ] ?? [];
+		return ! empty( $region['classNames'] ) && is_array( $region['classNames'] )
+			? array_values( array_filter( array_map( 'sanitize_html_class', $region['classNames'] ) ) )
+			: [];
+	};
 
 	if ( ! empty( $attributes['surfaceStyleProps'] ) && is_array( $attributes['surfaceStyleProps'] ) ) {
 		$surface_style_props = array_values( array_filter( $attributes['surfaceStyleProps'] ) );
@@ -2333,7 +2355,13 @@ function novablocks_get_collection_card_surface_markup( string $media, string $c
 			<div class="nb-supernova-item__frame">
 			<?php } ?>
 			<?php if ( novablocks_show_card_contents( $attributes ) && ! empty( $content_before_media ) ) { ?>
-				<div class="<?php echo esc_attr( join( ' ', $contentClasses ) ); ?> nb-supernova-item__content--before-media">
+				<?php
+				$before_classes = $get_region_classes( 'before-media' );
+				if ( empty( $before_classes ) ) {
+					$before_classes[] = 'nb-supernova-item__content--before-media';
+				}
+				?>
+				<div class="<?php echo esc_attr( join( ' ', array_merge( $contentClasses, $before_classes ) ) ); ?>">
 					<div class="nb-supernova-item__inner-container">
 						<?php echo $content_before_media; ?>
 					</div>
@@ -2343,7 +2371,16 @@ function novablocks_get_collection_card_surface_markup( string $media, string $c
 				echo $media;
 			}
 			if ( novablocks_show_card_contents( $attributes ) && ! empty( $content ) ) { ?>
-				<div class="<?php echo esc_attr( join( ' ', $contentClasses ) ); ?><?php echo ! empty( $content_before_media ) ? ' nb-supernova-item__content--after-media' : ''; ?>">
+				<?php
+				$main_classes = $get_region_classes( 'after-media' );
+				if ( empty( $main_classes ) ) {
+					$main_classes = $get_region_classes( 'content-only' );
+				}
+				if ( empty( $main_classes ) && ! empty( $content_before_media ) ) {
+					$main_classes[] = 'nb-supernova-item__content--after-media';
+				}
+				?>
+				<div class="<?php echo esc_attr( join( ' ', array_merge( $contentClasses, $main_classes ) ) ); ?>">
 					<div class="nb-supernova-item__inner-container">
 						<?php
 						echo $content;
@@ -2361,8 +2398,8 @@ function novablocks_get_collection_card_surface_markup( string $media, string $c
 	return ob_get_clean();
 }
 
-function novablocks_get_collection_card_markup( string $media, string $content, array $attributes, string $content_before_media = '' ): string {
-	$surface_markup = novablocks_get_collection_card_surface_markup( $media, $content, $attributes, $content_before_media );
+function novablocks_get_collection_card_markup( string $media, string $content, array $attributes, string $content_before_media = '', array $content_regions = [] ): string {
+	$surface_markup = novablocks_get_collection_card_surface_markup( $media, $content, $attributes, $content_before_media, $content_regions );
 
 	ob_start(); ?>
 
@@ -2503,6 +2540,79 @@ function novablocks_get_visible_card_element_order( array $attributes ): array {
 			return novablocks_is_card_element_visible( $id, $attributes );
 		}
 	) );
+}
+
+/**
+ * Split a resolved visible card order into stable semantic content regions.
+ *
+ * This mirrors the editor's getCardContentRegions() helper. Themes may consume
+ * the emitted classes, but must not infer card anatomy from wrapper position.
+ * `$has_media` means Media actually renders; a missing featured image collapses
+ * into one content-only region even when `media` remains in elementOrder.
+ */
+function novablocks_get_card_content_regions( array $order, bool $has_media = true ): array {
+	$valid_ids      = novablocks_card_element_ids();
+	$resolved_order = array_values( array_filter( $order, function ( $id ) use ( $valid_ids ) {
+		return is_string( $id ) && in_array( $id, $valid_ids, true );
+	} ) );
+	$media_index    = $has_media ? array_search( 'media', $resolved_order, true ) : false;
+	$boundary_order = false !== $media_index
+		? $resolved_order
+		: array_values( array_filter( $resolved_order, function ( $id ) { return 'media' !== $id; } ) );
+	$leading_item   = $boundary_order[0] ?? null;
+	$trailing_item  = ! empty( $boundary_order ) ? $boundary_order[ count( $boundary_order ) - 1 ] : null;
+	$detail_ids     = [ 'meta-primary', 'meta-secondary', 'buttons' ];
+
+	$create_region = function ( array $items, string $placement ) use ( $leading_item, $trailing_item, $detail_ids ) {
+		if ( empty( $items ) ) {
+			return null;
+		}
+
+		$class_names = [ 'nb-supernova-item__content--' . $placement ];
+
+		if ( in_array( 'title', $items, true ) ) {
+			$class_names[] = 'nb-supernova-item__content--contains-title';
+		}
+
+		if ( empty( array_diff( $items, $detail_ids ) ) ) {
+			$class_names[] = 'nb-supernova-item__content--details-only';
+		}
+
+		if ( null !== $leading_item && in_array( $leading_item, $items, true ) ) {
+			$class_names[] = 'nb-supernova-item__content--leading-boundary';
+		}
+
+		if ( null !== $trailing_item && in_array( $trailing_item, $items, true ) ) {
+			$class_names[] = 'nb-supernova-item__content--trailing-boundary';
+		}
+
+		return [
+			'placement'  => $placement,
+			'items'      => $items,
+			'classNames' => $class_names,
+		];
+	};
+
+	if ( false !== $media_index ) {
+		$before_items = array_values( array_filter(
+			array_slice( $resolved_order, 0, $media_index ),
+			function ( $id ) { return 'media' !== $id; }
+		) );
+		$after_items = array_values( array_filter(
+			array_slice( $resolved_order, $media_index + 1 ),
+			function ( $id ) { return 'media' !== $id; }
+		) );
+
+		return array_values( array_filter( [
+			$create_region( $before_items, 'before-media' ),
+			$create_region( $after_items, 'after-media' ),
+		] ) );
+	}
+
+	$content_items  = array_values( array_filter( $resolved_order, function ( $id ) { return 'media' !== $id; } ) );
+	$content_region = $create_region( $content_items, 'content-only' );
+
+	return null !== $content_region ? [ $content_region ] : [];
 }
 
 /**
@@ -2746,22 +2856,18 @@ function novablocks_get_collection_card_markup_from_post( $post, array $attribut
 	// derivation) and split content around Media the same way the fields-mode
 	// render does, so Query Loop cards honour the Content Details reorder UI.
 	$order                = novablocks_get_visible_card_element_order( $attributes );
-	$media_index          = array_search( 'media', $order, true );
+	$has_renderable_media = ! empty( $attributes['showMedia'] ) && ! empty( get_post_thumbnail_id( $post ) );
+	$content_regions      = novablocks_get_card_content_regions( $order, $has_renderable_media );
 	$content_before_media = '';
 	$card_content         = '';
 
-	if ( $media_index !== false && $media_index > 0 && $media_index < count( $order ) - 1 ) {
-		$before_ids           = array_slice( $order, 0, $media_index );
-		$after_ids            = array_slice( $order, $media_index + 1 );
-		$content_before_media = novablocks_get_post_card_items_markup( $post, $before_ids, $attributes );
-		$card_content         = novablocks_get_post_card_items_markup( $post, $after_ids,  $attributes );
-	} else {
-		$content_ids  = array_values( array_filter( $order, function ( $id ) { return $id !== 'media'; } ) );
-		$card_content = novablocks_get_post_card_items_markup( $post, $content_ids, $attributes );
+	foreach ( $content_regions as $region ) {
+		$region_markup = novablocks_get_post_card_items_markup( $post, $region['items'], $attributes );
 
-		if ( $media_index !== false && $media_index === count( $order ) - 1 && ! empty( $attributes['showMedia'] ) ) {
-			$content_before_media = $card_content;
-			$card_content         = '';
+		if ( 'before-media' === $region['placement'] ) {
+			$content_before_media = $region_markup;
+		} else {
+			$card_content = $region_markup;
 		}
 	}
 
@@ -2794,6 +2900,7 @@ function novablocks_get_collection_card_markup_from_post( $post, array $attribut
 		'media_markup'         => $media_markup,
 		'content_markup'       => $card_content,
 		'content_before_media' => $content_before_media,
+		'content_regions'      => $content_regions,
 	];
 
 	$render_data = apply_filters( 'novablocks/post_card_render_data', $render_data, $post, $attributes, $profile );
@@ -2808,7 +2915,8 @@ function novablocks_get_collection_card_markup_from_post( $post, array $attribut
 		get_post( $post ),
 		$render_data['card_attributes'],
 		$profile,
-		$render_data['content_before_media'] ?? ''
+		$render_data['content_before_media'] ?? '',
+		$render_data['content_regions'] ?? []
 	);
 
 	if ( is_string( $blueprint_markup ) && '' !== $blueprint_markup ) {
@@ -2819,7 +2927,8 @@ function novablocks_get_collection_card_markup_from_post( $post, array $attribut
 		$render_data['media_markup'],
 		$render_data['content_markup'],
 		$render_data['card_attributes'],
-		$render_data['content_before_media'] ?? ''
+		$render_data['content_before_media'] ?? '',
+		$render_data['content_regions'] ?? []
 	);
 }
 
