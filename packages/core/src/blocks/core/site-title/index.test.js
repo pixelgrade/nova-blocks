@@ -90,6 +90,15 @@ test( 'keeps linked Site Title typography on the element resized by Fit Text', (
 	assert.match( source, /&\.has-fit-text[\s\S]*:where\(a\)[\s\S]*white-space:\s*inherit\s*!important/ );
 } );
 
+test( 'keeps linked wordmarks shrink-wrapped for native Fit Text measurement', () => {
+	const source = read( '_style.scss' );
+
+	assert.match(
+		source,
+		/&\.is-style-wordmark[\s\S]*:where\(a\)[\s\S]*display:\s*inline-block/
+	);
+} );
+
 test( 'keeps the semantic Site Title family visible through Anima editor paragraph resets', () => {
 	const source = read( '_style.scss' );
 

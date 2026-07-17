@@ -63,7 +63,10 @@
 		white-space: nowrap;
 
 		:where(a) {
-			display: block;
+			// Core Fit Text measures the selected text range against the integer
+			// client width. Keep the link shrink-wrapped so fractional container
+			// widths do not make that range appear wider at every font size.
+			display: inline-block;
 			color: inherit;
 			text-decoration: none;
 		}
