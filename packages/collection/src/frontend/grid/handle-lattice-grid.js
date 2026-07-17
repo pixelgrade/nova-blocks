@@ -12,6 +12,7 @@ const CONTROLLER_PROPERTY = '__nbLatticeLayoutController';
 const DESTROY_PROPERTY = '__nbDestroyLatticeLayout';
 const DEFAULT_GAP = 26;
 const DEFAULT_CAPTION_HEIGHT = 50;
+const WIDTH_CHANGE_EPSILON = 0.5;
 const CAPTION_HEIGHT_PROPERTY = '--nb-lattice-caption-height';
 const CAPTION_REGION_SELECTOR = '.nb-supernova-item__content--contains-title';
 const MUTATION_OPTIONS = {
@@ -30,6 +31,12 @@ const parseLength = ( value, fallback = 0 ) => {
 const getDirectLayoutItems = ( grid ) => Array.from( grid.children ).filter( item => (
   item.classList.contains( 'nb-collection__layout-item' )
 ) );
+
+const normalizeObservedClassNames = value => String( value || '' )
+  .split( /\s+/ )
+  .filter( className => className && READY_CLASSNAME !== className )
+  .sort()
+  .join( ' ' );
 
 const clearItemStyles = ( item ) => {
   item.style.gridColumn = '';
@@ -95,6 +102,7 @@ const createLatticeGridController = ( grid, initialBlock, initialAttributes ) =>
   let frameId = null;
   let resizeObserver = null;
   let mutationObserver = null;
+  let lastContainerWidth = null;
   let destroyed = false;
 
   const requestFrame = callback => ownerWindow.requestAnimationFrame( callback );
@@ -188,6 +196,7 @@ const createLatticeGridController = ( grid, initialBlock, initialAttributes ) =>
     const columnGap = parseLength( computedStyles.columnGap, parseLength( computedStyles.gap, DEFAULT_GAP ) );
     const captionHeight = measureSharedCaptionHeight( grid, block );
     const containerWidth = grid.getBoundingClientRect().width;
+    lastContainerWidth = containerWidth;
     const activeColumns = getResponsiveLatticeColumnCount( {
       authoredColumns: attributes.columns,
       viewportWidth: containerWidth || ownerWindow.innerWidth,
@@ -214,8 +223,13 @@ const createLatticeGridController = ( grid, initialBlock, initialAttributes ) =>
     } );
     hiddenItems.forEach( clearItemStyles );
 
-    addClass( grid, READY_CLASSNAME );
-    addClass( block, 'novablocks-block--ready' );
+    if ( ! grid.classList.contains( READY_CLASSNAME ) ) {
+      addClass( grid, READY_CLASSNAME );
+    }
+
+    if ( ! block.classList.contains( 'novablocks-block--ready' ) ) {
+      addClass( block, 'novablocks-block--ready' );
+    }
     dispatchLayoutEvents( {
       ...result,
       activeColumns,
@@ -237,10 +251,42 @@ const createLatticeGridController = ( grid, initialBlock, initialAttributes ) =>
     } );
   };
 
+  const scheduleLayoutForResize = entries => {
+    const gridEntry = Array.from( entries || [] ).find( entry => entry.target === grid );
+    const observedWidth = parseLength(
+      gridEntry?.contentRect?.width,
+      grid.getBoundingClientRect().width
+    );
+
+    if ( null !== lastContainerWidth &&
+      Math.abs( observedWidth - lastContainerWidth ) < WIDTH_CHANGE_EPSILON ) {
+      return;
+    }
+
+    scheduleLayout();
+  };
+
   const refresh = () => {
     captureSourceIndexes();
     scheduleLayout();
     return controller;
+  };
+
+  const refreshForMutations = records => {
+    const mutations = Array.from( records || [] );
+    const onlyOwnReadyClassChanged = mutations.length > 0 && mutations.every( record => (
+      'attributes' === record.type &&
+      grid === record.target &&
+      'class' === record.attributeName &&
+      normalizeObservedClassNames( record.oldValue ) ===
+        normalizeObservedClassNames( grid.getAttribute( 'class' ) )
+    ) );
+
+    if ( onlyOwnReadyClassChanged ) {
+      return controller;
+    }
+
+    return refresh();
   };
 
   const update = ( nextBlock, nextAttributes ) => {
@@ -300,13 +346,13 @@ const createLatticeGridController = ( grid, initialBlock, initialAttributes ) =>
   captureSourceIndexes();
 
   if ( 'function' === typeof ResizeObserverConstructor ) {
-    resizeObserver = new ResizeObserverConstructor( scheduleLayout );
+    resizeObserver = new ResizeObserverConstructor( scheduleLayoutForResize );
     resizeObserver.observe( grid );
   }
   ownerWindow.addEventListener( 'resize', scheduleLayout );
 
   if ( 'function' === typeof MutationObserverConstructor ) {
-    mutationObserver = new MutationObserverConstructor( refresh );
+    mutationObserver = new MutationObserverConstructor( refreshForMutations );
     observeMutations();
   }
 

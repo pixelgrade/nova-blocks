@@ -44,8 +44,8 @@ const createObserverHarness = () => {
       this.observed.clear();
     }
 
-    trigger() {
-      this.callback( [] );
+    trigger( entries = [] ) {
+      this.callback( entries );
     }
   }
 
@@ -275,6 +275,64 @@ describe( 'handleLatticeGrid', () => {
 
     expect( detail.activeColumns ).toBe( 3 );
     expect( grid.style.gridTemplateColumns ).toBe( 'repeat(3, minmax(0, 1fr))' );
+  } );
+
+  test( 'ignores height-only grid resizes after layout while retaining width reactivity', () => {
+    const { block, grid, setRenderedWidth } = createFixture( { width: 1074 } );
+    let layoutCount = 0;
+    window.addEventListener( 'nb:lattice-layout', () => {
+      layoutCount++;
+    } );
+
+    handleLatticeGrid( grid, block, { columns: 5 } );
+    flushAnimationFrames();
+
+    expect( layoutCount ).toBe( 1 );
+
+    observerHarness.resizeObservers[0].trigger( [ {
+      target: grid,
+      contentRect: rectangle( 1074, 2400 ),
+    } ] );
+
+    expect( animationFrames.size ).toBe( 0 );
+    expect( layoutCount ).toBe( 1 );
+
+    setRenderedWidth( 900 );
+    observerHarness.resizeObservers[0].trigger( [ {
+      target: grid,
+      contentRect: rectangle( 900, 2400 ),
+    } ] );
+
+    expect( animationFrames.size ).toBe( 1 );
+    flushAnimationFrames();
+    expect( layoutCount ).toBe( 2 );
+  } );
+
+  test( 'ignores its own ready-class mutation but retains card classification reactivity', () => {
+    const { block, grid, items } = createFixture();
+
+    handleLatticeGrid( grid, block, { columns: 5 } );
+    flushAnimationFrames();
+
+    observerHarness.mutationObservers[0].trigger( [ {
+      type: 'attributes',
+      target: grid,
+      attributeName: 'class',
+      oldValue: grid.className,
+    } ] );
+
+    expect( animationFrames.size ).toBe( 0 );
+
+    const oldClassName = items[1].className;
+    items[1].classList.add( 'nb-card--media-tall' );
+    observerHarness.mutationObservers[0].trigger( [ {
+      type: 'attributes',
+      target: items[1],
+      attributeName: 'class',
+      oldValue: oldClassName,
+    } ] );
+
+    expect( animationFrames.size ).toBe( 1 );
   } );
 
   test( 'measures one shared caption shelf from real title regions before calculating rows', () => {
