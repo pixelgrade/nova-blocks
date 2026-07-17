@@ -34,6 +34,21 @@ export NVM_DIR="/Users/georgeolaru/.nvm" && source "/Users/georgeolaru/.nvm/nvm.
 - `--legacy-peer-deps` is configured in `.npmrc` — no manual flag needed when running `npm install`.
 - A postinstall patch script (`bin/patch-node22-compat.js`) runs automatically after `npm install` to patch webpack 4 for Node 22 compatibility.
 
+## Development Verification Matrix
+
+Choose checks by the behavior changed; release-only checks are not required for every edit.
+
+| Change | Required verification |
+| --- | --- |
+| Pure JS helper or editor component | Targeted Jest/Node test, then `npm test` before commit |
+| PHP rendering or registration | Targeted standalone PHP contract, then `npm test` |
+| Editor interaction or CSS | Automated contract plus a live Site Editor check; also test the Post Editor when the rule is shared |
+| Frontend rendering or token behavior | Automated contract plus computed runtime values on `style-manager.local` |
+| Runtime JS/CSS bundle | `npm run build` under Node 22 and a live browser reload |
+| Release artifact | Full release checklist below, beginning with `npm run zip` under Node 22 |
+
+`npm test` is the canonical local suite. `bin/run-fast-tests.cjs` discovers and groups standalone PHP contracts, native `node:test` files, ordinary Jest tests, and the narrow compatibility Jest bucket. Use `npm run test:wp` only for contracts that need a live WordPress install.
+
 ## Build & Create Release Zip
 
 Single command does everything (build + zip):
@@ -133,6 +148,14 @@ git clone git@github.com:<you>/nova-blocks-private.git /path/to/nova-blocks-priv
 bin/bootstrap-private --source-dir /path/to/nova-blocks-private
 ```
 
+## Documentation Ownership
+
+- Keep `AGENTS.md` limited to stable, mandatory procedures and architectural contracts that affect future changes.
+- Keep detailed research, implementation rationale, environment snapshots, and active project status in `.ai/`; link to those documents instead of copying them into this file.
+- Keep `.claude/napkin.md` as a short action-oriented runbook for surprising, recurring gotchas. It is not an issue timeline or a second copy of `AGENTS.md`.
+- Put public implementation designs in `docs/plans/`; put private or cross-repo working material in `.ai/`.
+- Date environment-specific observations and verify them at runtime before relying on them. Avoid undated words such as “currently” for facts that can change with WordPress, Studio, or plugin versions.
+
 ## Cross-Stack Strategy Decisions
 
 When Nova Blocks work changes or settles product, business, positioning, monetization, Pixelgrade.com, Pixelgrade LT vs Pixelgrade Plus, starter strategy, or cross-repo LT stack architecture, save the durable decision in the central strategy folder:
@@ -217,13 +240,13 @@ When changing the version number, update ALL of these:
 
 ## Preset Engine (Managed Bundles)
 
-All preset UIs must run through the managed-bundle engine at `packages/block-editor/src/preset-engine/` (pure functions: `getPresetApplyPatch`, `deriveActivePresetId`, `getManagedAttributes`). The contract, decided after an adversarial design review (full rationale in `.ai/design-customization/preset-engine.md` and `stage-3a-preset-semantics.md`):
+All preset UIs must run through `packages/block-editor/src/preset-engine/`. Full rationale, family status, and migration history live in `.ai/design-customization/preset-engine.md` and `.ai/design-customization/stage-3a-preset-semantics.md`.
 
 - A preset definition is `{ id, version, managedAttributes, values }`, immutable per `id+version` — a changed published preset gets a NEW version, never a rewrite.
 - Applying a preset is ONE `setAttributes()` patch: write every declared value, clear (`undefined`) every managed attribute the preset omits, preserve everything outside the managed set. No follow-up attribute writes (one-step undo is guaranteed by this shape).
 - The active preset is DERIVED by comparing attributes (normalized through registered defaults) against definitions — never stored. No match = the first-class **Custom** state. Do not add a stored `presetId`: attributes carry no provenance, so stored identity drifts into a lie on the first fine-tune.
-- `PresetControl` engages the engine only when passed a `managedAttributes` prop; callers without it are untouched. Migrated families: Space and Sizing (no behavior change), Shape Modeling (partial presets now intentionally clear omitted managed attributes — e.g. Rectangle clears the 13 shape-detail attrs a richer preset left behind), and Motion & Effects recipes (via the engine-aware `PresetCardsControl`). New tile families on the engine: Row Surfaces (Color Signal Presets tab) and Card Styles (supernova). Current family status lives in `.ai/design-customization/preset-engine.md`.
 - Every definition in a family must declare the SAME `managedAttributes` set — it is the family's complete capability domain.
+- Structural attributes may be managed only when every definition writes an explicit value; never clear structure implicitly.
 
 ## Cards Collection Hover Border Integration
 
@@ -235,224 +258,45 @@ All preset UIs must run through the managed-bundle engine at `packages/block-edi
 
 ## Header Template-Part Pattern Compatibility
 
-### WooCommerce header patterns in the Header Design picker
-- The Site Editor `Template Part > Design` picker includes any registered patterns with `blockTypes: core/template-part/header`, including plugin patterns.
-- WooCommerce registers header presets under these slugs:
-  - `woocommerce-blocks/header-centered-menu`
-  - `woocommerce-blocks/header-distraction-free`
-  - `woocommerce-blocks/header-essential`
-  - `woocommerce-blocks/header-large`
-  - `woocommerce-blocks/header-minimal`
-
-### Why they were removed
-- Nova augments `core/group`, `core/columns`, and `core/separator` save output with extra `sm-*` classes, `data-*` attributes, and `--nb-*` inline styles.
-- WooCommerce header patterns serialize plain core markup, so in the Header Design preview iframe they revalidate as invalid and show `Block contains unexpected or invalid content.`
-- The chosen fix was the smallest practical one: hide those broken presets instead of trying to make Nova's custom core block serialization backward-compatible with third-party static pattern HTML.
-
-### Current implementation
-- Nova unregisters the five WooCommerce header pattern slugs in `lib/block-patterns.php` on `init` priority `100`.
-- The list can be adjusted via the `novablocks/incompatible_template_part_patterns` filter.
-- This decision was implemented while fixing issue `#494` in commit `7e0b0902` (`Hide incompatible WooCommerce header patterns`).
+- The Header Design picker includes every pattern registered for `core/template-part/header`, including third-party patterns.
+- Nova augments saved `core/group`, `core/columns`, and `core/separator` markup. Plain WooCommerce header patterns therefore revalidate as invalid after Nova filters run.
+- `lib/block-patterns.php` unregisters the five incompatible WooCommerce header patterns on `init` priority `100`. Adjust the list only through `novablocks/incompatible_template_part_patterns`.
+- If this compatibility strategy changes, preserve existing serialized core-block markup through deprecations or migrations; do not merely expose patterns that still fail validation. Historical context: issue `#494`, commit `7e0b0902`.
 
 ## Separator Styling Architecture
 
-The separator block (`core/separator`) uses `currentColor` inheritance for all its parts:
-- `.c-separator__line` (left/right lines)
-- `.c-separator__arrow` (left/right arrows)
-- `.c-separator__symbol` (center icon/fleuron)
-
-All parts inherit `color` from the parent `.wp-block-separator` element.
-
-### CSS variable chain
-- `--nb-accent-color` is defined as `var(--sm-current-accent-color, #203AB6)` in `packages/core/src/scss/_variables.scss`
-- `--sm-current-accent-color` comes from Style Manager (the Anima theme's color system)
-- They are effectively the same when Style Manager is active
-
-### Nova Blocks separator styles (`packages/core/src/blocks/core/separator/_style.scss`)
-- Default: `color: var(--nb-bg-color)` — all parts are background-colored
-- Dark mode: `color: var(--nb-accent-color)` — all parts are accent-colored
-- Inside hero/supernova: `color: var(--nb-accent-color)` — matches the theme's symbol override
-
-### Anima theme overrides (compiled CSS, no SCSS source)
-- **Frontend** (`dist/css/blocks/style.css`): Sets `.c-separator__symbol { color: var(--sm-current-accent-color) }` inside `.novablocks-hero__inner-container` — overrides ONLY the symbol
-- **Editor** (`dist/css/blocks/editor.css`): Does NOT have this symbol override — so all parts match naturally
-- **Components** (`dist/css/theme/components.css`): Sets `.novablocks-hero .c-separator__symbol { opacity: 1 }` (opacity only, no color)
-
-### Key insight for future separator bugs
-If lines/arrows and symbol colors mismatch, check whether the Anima theme is overriding `.c-separator__symbol` color without also overriding the parent `.wp-block-separator` color. The fix belongs in Nova Blocks' `_style.scss` since the theme CSS is pre-compiled with no SCSS source.
-
-### Color Signal classes
-Generated by `novablocks_get_color_signal_classes()` in PHP and `getColorSignalClassnames()` in JS:
-- `sm-palette-{n}`, `sm-variation-{n}`, `sm-color-signal-{n}`
-- Default separator: `colorSignal: 3`, `paletteVariation: 12`
-
-### Separator markup (from Anima theme `inc/integrations/novablocks.php`)
-```html
-<div class="c-separator">
-  <div class="c-separator__arrow c-separator__arrow--left"></div>
-  <div class="c-separator__line c-separator__line--left"></div>
-  <div class="c-separator__symbol"><span>{SVG}</span></div>
-  <div class="c-separator__line c-separator__line--right"></div>
-  <div class="c-separator__arrow c-separator__arrow--right"></div>
-</div>
-```
-
-Separator styles: `is-style-simple` (lines only), `is-style-decorative` (symbol only), `is-style-blank` (hidden spacer).
+- The parent `.wp-block-separator` owns `color`; lines, arrows, and the center symbol inherit through `currentColor`.
+- Keep the PHP and JS Color Signal class generation aligned. The default remains `colorSignal: 3`, `paletteVariation: 12`.
+- `--nb-accent-color` bridges to Style Manager's contextual `--sm-current-accent-color`; do not introduce a parallel hardcoded separator color.
+- If the lines and symbol diverge, inspect theme rules that color `.c-separator__symbol` directly. Fix the parent inheritance contract in `packages/core/src/blocks/core/separator/_style.scss` rather than compensating each child.
+- Styles remain `is-style-simple` (lines), `is-style-decorative` (symbol), and `is-style-blank` (spacer). Historical Anima override details belong in the relevant issue or `.ai/` investigation, not this runbook.
 
 ## Logo Loading Transition System (Anima Theme)
 
-Two independent controls in **Customizer → Style Manager → Motion**:
-- **Page Transition Style**: how pages swap during AJAX navigation (Border Iris or Slide Wipe)
-- **Logo Loading Style**: what shows on first site visit (Progress Bar or Cycling Images)
+This system is owned entirely by the Anima theme, not Nova Blocks. Keep only these cross-repo invariants here:
 
-All 4 combinations work. Both are AJAX page transition systems using Barba.js v2 + GSAP 3.
-
-### Page Transition Styles
-
-**Border Iris** (default) — ported from the [Pile theme](https://github.com/pixelgrade/pile):
-- Full-screen border overlay using `border-width` animation (iris wipe)
-- Page-to-page: border grows inward → swap content → border collapses outward (0.6s each, `quart.inOut`)
-- Card-expand variant: border positioned on clicked card → fills inward (0.4s) → scales to viewport (0.5s, `power3.inOut`)
-
-**Slide Wipe** — ported from the [Fargo theme](https://github.com/pixelgrade/fargo):
-- Horizontal slide wipe using `translateX` on `.c-loader` and `.c-loader__mask` in opposite directions
-- Slide animation: 1s `Quint.easeInOut` (`cubic-bezier(0.860, 0.000, 0.070, 1.000)`)
-- Page-to-page: loader slides in from left → swap content → loader slides out right
-
-### Logo Loading Styles
-
-**Progress Bar** (default) — ported from Pile:
-- White logo centered on accent-colored overlay inside a dark semi-transparent box (`rgba(0,0,0,0.2)`, `padding: 30px 60px`)
-- Uses the transparent header logo (`anima_transparent_logo`) when available, falls back to custom logo with `filter: brightness(0) invert(1)` to make it white
-- Two copies of the logo: hidden one inside `.border-logo-background` (sizes the box via `visibility: hidden` + `display: block` + `max-width: none`), visible one in `.border-logo` (on top)
-- White fill bar slides left-to-right inside the dark box as a pseudo-progress indicator (CSS `fillMe` keyframe, 10s)
-- Minimum display: 2.5s (CSS intro takes 0.8s for box growth + logo fade, then ~1.7s of visible fill progress)
-- Dismiss: fill snaps to 100% (0.3s, `circ.in`) → logo blends into white fill naturally → `is-loaded` added → box collapses (`scaleY→0`) → border collapses to 0
-- **Critical timing**: `is-loaded` body class must be deferred until AFTER `playProgressBarComplete()` finishes, because the CSS rule `.is-loaded .border-logo .logo { opacity: 0 }` would instantly hide the logo before the fill covers it
-
-**Cycling Images** — ported from Fargo:
-- Large SVG letter (first character of site title, or custom symbol via "Transition Symbol" field) centered on the overlay
-- Image patterns from random post featured images cycle inside the SVG letter every 300ms using **Snap.svg** (loaded from CDN)
-- The SVG letter uses the site's heading font: `font-family: var(--theme-heading-1-font-family, var(--sm-font-primary, 'Roboto', sans-serif))`, `font-size: 180px`, `font-weight: bold`
-- Minimum display: 0.9s (3 image swaps at 300ms each), max: 5s
-- Dismiss depends on page transition style (border collapse or slide out)
-
-### The 2×2 Matrix
-
-| Page Transition | Logo Loading | Overlay element | Dismiss | Min display |
-|---|---|---|---|---|
-| Border Iris | Progress Bar | `.c-page-transition-border` | Fill snaps → box collapses → border collapses | 2.5s |
-| Border Iris | Cycling Images | `.c-page-transition-border` | Stop patterns → hide logo → border collapses | 0.9s |
-| Slide Wipe | Progress Bar | `.c-loader` | Fill snaps → slides out right | 2.5s |
-| Slide Wipe | Cycling Images | `.c-loader` | Slides out right | 0.9s |
-
-PHP outputs the overlay element based on page transition style, and the content inside based on logo loading style (`anima_render_loading_content()`). JS reads both settings from `animaPageTransitions.pageTransitionStyle` and `animaPageTransitions.logoLoadingStyle`.
-
-### Architecture
-
-All page transitions code lives in the **Anima theme**, not in Nova Blocks or Style Manager:
-
-| Component | File | Purpose |
-|-----------|------|---------|
-| Customizer UI | `anima/inc/integrations/style-manager/motion.php` | Toggle + page transition radio + logo loading radio + symbol text |
-| PHP backend | `anima/inc/integrations/page-transitions.php` | Matrix markup, helpers, random images, body classes |
-| JS entry | `anima/src/js/page-transitions.js` → `components/page-transitions/index.js` | Barba init, 2×2 matrix dispatch |
-| Progress Bar loading | `components/page-transitions/loading-animation.js` | Fill bar + logo animations |
-| Border Iris transitions | `components/page-transitions/transitions.js` | Barba transition objects (border + card-expand) |
-| Slide Wipe loader | `components/page-transitions/slide-wipe-loader.js` | Snap.svg patterns, slide show/hide, wait-for-load timing |
-| Slide Wipe transitions | `components/page-transitions/slide-wipe-transitions.js` | Barba transition objects using slide wipe |
-| Shared utils | `components/page-transitions/utils.js` | Asset sync, body classes, component reinit |
-| Admin bar sync | `components/page-transitions/admin-bar.js` | WordPress admin bar after AJAX |
-| SCSS | `anima/src/scss/components/_page-transitions.scss` | Border overlay, slide loader, cycling images logo |
-| Asset registration | `anima/functions.php` | GSAP, Snap.svg (conditional on cycling_images), Barba (bundled) |
-
-### Key Implementation Details
-
-- **Snap.svg** (`0.5.1`) is only loaded when Cycling Images is active — registered conditionally as a dependency of `anima-page-transitions` based on `sm_logo_loading_style`.
-- **Random images** are sourced from posts with featured images (up to 5), cached via transient for 1 hour (`anima_slide_wipe_random_images`). Falls back to pages if no posts have thumbnails.
-- **Transition Symbol** option (`sm_transition_symbol`): accepts plain text (wrapped in SVG `<text>` at font-size 180) or raw inline SVG (passed through directly). Falls back to `anima_first_site_title_character()`.
-- Body classes: `has-page-transitions`, `has-page-transitions--{border_iris|slide_wipe}`, `has-logo-loading--{progress_bar|cycling_images}`.
-- **`is-loaded` timing is critical for Progress Bar**: must be deferred until after `playProgressBarComplete()` resolves, NOT added at init time. The CSS `.is-loaded .border-logo .logo { opacity: 0 }` fires instantly and would kill the logo before the fill bar covers it.
-- `waitForLoadThen(callback, customMinTime)` accepts a custom minimum: 2.5s for Progress Bar, default 0.9s for Cycling Images.
-- The hidden logo in `.border-logo-background` needs `visibility: hidden` + `display: block` + `max-width: none` + `opacity: 0` on the `<img>` to maintain its box model for sizing while being invisible and preventing flash during `scaleY` collapse.
-- Migration from old `sm_loading_transition_style` option is handled by `anima_migrate_loading_transition_style_option()` on `after_setup_theme` priority 15.
-
-### Customizer Options
-
-| Option ID | Type | Default | Purpose |
-|-----------|------|---------|---------|
-| `sm_page_transitions_enable` | `sm_toggle` | `false` | Master on/off for page transitions |
-| `sm_page_transition_style` | `sm_radio` | `border_iris` | Choose Border Iris or Slide Wipe |
-| `sm_logo_loading_style` | `sm_radio` | `progress_bar` | Choose Progress Bar or Cycling Images |
-| `sm_transition_symbol` | `text` | `''` (falls back to first site title character) | Custom symbol for Cycling Images |
-
-### Building the Anima Theme
-
-```bash
-cd /Users/georgeolaru/Local\ Sites/style-manager/app/public/wp-content/themes/anima
-export NVM_DIR="/Users/georgeolaru/.nvm" && source "/Users/georgeolaru/.nvm/nvm.sh" && nvm use 22
-npm run scripts        # JS only (webpack)
-npx gulp compile:styles  # SCSS only
-npm run build          # Full build + zip
-```
-
-### Design Plans
-
-- Decouple plan: `anima/plans/2026-03-22-decouple-transition-and-loading-styles.md`
-- Original implementation plan: `anima/plans/2026-03-22-logo-loading-transition-styles.md`
-- Original page transitions design: `anima/plans/2026-02-25-page-transitions-design.md`
+- Page transition style and logo loading style are independent controls; preserve all four combinations.
+- For Progress Bar loading, add `is-loaded` only after `playProgressBarComplete()` resolves or the logo disappears before the fill covers it.
+- Snap.svg and Cycling Images assets remain conditional on the selected loading style.
+- Implementation architecture, timing tables, option IDs, and build instructions live with Anima in `plans/2026-03-22-decouple-transition-and-loading-styles.md`, `plans/2026-03-22-logo-loading-transition-styles.md`, and `plans/2026-02-25-page-transitions-design.md`.
 
 ## Editor CSS: Iframed vs Non-Iframed Post Editor
 
-### The two editor contexts
+- The Site Editor is iframe-based. The Post Editor's iframe/rendering mode depends on WordPress version, post type, rendering mode, and meta boxes; do not encode a site snapshot as a universal rule.
+- Inspect the actual document before debugging. In an iframe, `editor-styles-wrapper` is commonly on `<body>`; in a non-iframe editor it may be on an inner `<div>`.
+- Shared editor CSS must target `.editor-styles-wrapper`, never `body.editor-styles-wrapper`, unless the rule is intentionally iframe-only.
+- Verify shared editor CSS in both the Site Editor and Post Editor. Record the observed rendering mode with environment/version-specific findings.
+- In stacked-card editor layout, preserve `overflow: hidden` and `min-width: 0` on `.nb-supernova-item__frame`; they prevent implicit-grid max-content expansion from extreme aspect ratios.
+- Keep the `page` post type excluded from `NovaBlocks_Comments_Post_Meta`; active meta boxes can affect Post Editor rendering mode.
 
-WordPress has two editing contexts with different CSS environments:
-- **Site Editor** (`site-editor.php`): Always iframed. `<body>` has `editor-styles-wrapper` class. Clean CSS isolation.
-- **Post Editor** (`post.php`): Non-iframed by default (`renderingMode: "post-only"`). `.editor-styles-wrapper` is on a `<div>`, not `<body>`. Admin CSS can bleed in.
-
-### What enables the iframe in Post Editor
-
-Three conditions must ALL be met:
-1. `add_theme_support('editor-styles')` — Anima adds this unconditionally in `anima_setup()`
-2. No active meta boxes — meta boxes force the editor out of iframe mode (they need direct DOM access)
-3. The rendering mode must be `template-locked` or `all` (not `post-only`, which is the default for pages)
-
-Even with all three, WP 7.0 still uses `post-only` mode for pages, so the Post Editor typically remains non-iframed.
-
-### CSS selector implications
-
-**Never use `body.editor-styles-wrapper` in editor-targeted CSS.** It only matches in the iframed Site Editor. Use `.editor-styles-wrapper` instead — it matches in both contexts.
-
-The Anima theme's `src/scss/utility/_items-aspect-ratio.scss` handles editor CSS for Nova Blocks cards. If adding new editor-only rules there, use `.editor-styles-wrapper` (not `body.editor-styles-wrapper`).
-
-### Stacked card editor layout (editor-styles.scss)
-
-Nova Blocks' `editor-styles.scss` (in `packages/block-library/src/blocks/supernova/`) overrides the frontend stacked card layout for the editor:
-- Sets `position: static !important` on media wrapper and content (instead of `position: absolute` from `@include cover`)
-- Uses CSS Grid `grid-area: 1/1` for stacking instead of absolute positioning
-- Applies `aspect-ratio` based on `--nb-min-height-fallback` to control card height
-
-**Critical constraint**: The `overflow: hidden` and `min-width: 0` on `.nb-supernova-item__frame` prevent a CSS Grid auto-sizing explosion where the implicit grid track expands to ~33 million pixels. This happens when the media wrapper's extreme `aspect-ratio` (from `minHeightFallback=0`) produces an enormous `max-content` width. Without these constraints, card content gets pushed millions of pixels off-screen.
-
-### Discussion Extra Details meta box
-
-The `NovaBlocks_Comments_Post_Meta` class registers a "Discussion Extra Details" meta box on any post type supporting comments. The `page` post type is excluded (`$excluded_post_types`) to avoid blocking the iframed Post Editor.
-
-### Testing editor CSS changes
-
-When testing editor CSS, always verify in BOTH:
-1. Post Editor on a page (`post.php?post=X&action=edit`) — non-iframed
-2. Site Editor on a template (`site-editor.php?canvas=edit&p=...`) — iframed
-
-CSS that works in the Site Editor may not work in the Post Editor due to the `body.editor-styles-wrapper` selector issue.
-
-## WordPress Studio (localhost:8888)
+## WordPress Studio (localhost:8888, verified 2026-07-17)
 
 - The Studio site at `localhost:8888` serves from `/Users/georgeolaru/Studio/pile-lt-starter/`
 - Uses the `wp-code-mirror` plugin to rsync the Anima theme and plugins (Nova Blocks, Style Manager, Pixelgrade Care, wp-code-mirror) from the `style-manager.local` site
 - Config at `/Users/georgeolaru/Studio/pile-lt-starter/wp-content/uploads/wp-code-mirror/config/`
 - Studio's WASM PHP runtime may cache bytecode — restart via `studio site stop --path /Users/georgeolaru/Studio/pile-lt-starter && studio site start --path /Users/georgeolaru/Studio/pile-lt-starter` to pick up PHP changes
 - Studio CLI: `/usr/local/bin/studio`
+- Treat these paths and ports as an environment snapshot: verify the running site and code-mirror target before changing files.
 
 ## Full Release Checklist
 
