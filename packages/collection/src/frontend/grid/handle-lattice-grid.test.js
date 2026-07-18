@@ -238,12 +238,14 @@ describe( 'handleLatticeGrid', () => {
     } ).rowHeight ).toBeCloseTo( expectedRowHeight );
   } );
 
-  test( 'passes every authored Fine-tune value into geometry and placement', () => {
+  test( 'passes every classification-native Fine-tune value into geometry and placement', () => {
     const { block, grid, items } = createFixture( {
       classes: [
         'is-sticky-post',
-        'nb-card--media-wide',
-        'nb-card--media-tall',
+        'nb-card--media-landscape',
+        'nb-card--media-portrait',
+        'nb-card--no-media',
+        'format-quote',
       ],
     } );
     let detail;
@@ -252,26 +254,27 @@ describe( 'handleLatticeGrid', () => {
     }, { once: true } );
 
     handleLatticeGrid( grid, block, {
-      columns: 5,
+      columns: 6,
       latticeModuleShape: 'square',
-      latticePackingWindow: 0,
-      latticeStickyFeatureSize: 1,
-      latticeTallMediaSpan: 1,
-      latticePanoramaSpan: 2,
+      latticeLandscapeSpan: 1,
+      latticePortraitSpan: 2,
+      latticeTextPlateSpan: 2,
+      latticeQuoteSpan: 1,
     } );
     flushAnimationFrames();
 
     expect( detail.moduleShape ).toBe( 'square' );
-    expect( detail.rowHeight ).toBeCloseTo( 244 );
-    expect( detail.placements.map( placement => [
-      placement.item,
-      placement.columnSpan,
-      placement.rowSpan,
-    ] ) ).toEqual( [
-      [ items[0], 1, 1 ],
-      [ items[1], 2, 1 ],
-      [ items[2], 1, 1 ],
-    ] );
+    expect( detail.rowHeight ).toBeCloseTo( 207.333 );
+    expect( detail.placements.find( placement => placement.item === items[0] ) )
+      .toEqual( expect.objectContaining( { columnSpan: 2, rowSpan: 2 } ) );
+    expect( detail.placements.find( placement => placement.item === items[1] ) )
+      .toEqual( expect.objectContaining( { columnSpan: 1, rowSpan: 1 } ) );
+    expect( detail.placements.find( placement => placement.item === items[2] ) )
+      .toEqual( expect.objectContaining( { columnSpan: 1, rowSpan: 2 } ) );
+    expect( detail.placements.find( placement => placement.item === items[3] ) )
+      .toEqual( expect.objectContaining( { columnSpan: 2, rowSpan: 1 } ) );
+    expect( detail.placements.find( placement => placement.item === items[4] ) )
+      .toEqual( expect.objectContaining( { columnSpan: 1, rowSpan: 1 } ) );
   } );
 
   test( 'progresses through three and two tablet columns before the one-module phone flow', () => {

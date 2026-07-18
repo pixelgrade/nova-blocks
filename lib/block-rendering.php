@@ -192,10 +192,14 @@ function novablocks_get_supernova_data_attribute_names( array $attributes ): arr
 		'cardHoverEffect'          => 'none' !== ( $attributes['cardHoverEffect'] ?? 'none' ),
 		'cardMetadataStyle'        => 'inherit' !== ( $attributes['cardMetadataStyle'] ?? 'inherit' ),
 		'latticeModuleShape'       => $is_lattice,
-		'latticePackingWindow'     => $is_lattice,
-		'latticeStickyFeatureSize' => $is_lattice,
-		'latticeTallMediaSpan'     => $is_lattice,
-		'latticePanoramaSpan'      => $is_lattice,
+		'latticeLandscapeSpan'     => $is_lattice,
+		'latticePortraitSpan'      => $is_lattice,
+		'latticeTextPlateSpan'     => $is_lattice,
+		'latticeQuoteSpan'         => $is_lattice,
+		'latticePackingWindow'     => false,
+		'latticeStickyFeatureSize' => false,
+		'latticeTallMediaSpan'     => false,
+		'latticePanoramaSpan'      => false,
 	];
 
 	return array_values(

@@ -43,9 +43,10 @@ const hasClass = ( item, className ) => {
 };
 
 const getLatticePreferredSpan = ( item, columnCount, {
-  stickyFeatureSize = 2,
-  tallMediaSpan = 2,
-  panoramaSpan = 3,
+  landscapeSpan = 2,
+  portraitSpan = 1,
+  textPlateSpan = 1,
+  quoteSpan = 2,
 } = {} ) => {
   const normalizedColumns = normalizeLatticeColumnCount( columnCount );
 
@@ -55,23 +56,26 @@ const getLatticePreferredSpan = ( item, columnCount, {
 
   let columnSpan = 1;
   let rowSpan = 1;
-  const normalizedStickyFeatureSize = normalizeLatticeSpanPreference( stickyFeatureSize, [ 1, 2 ], 2 );
-  const normalizedTallMediaSpan = normalizeLatticeSpanPreference( tallMediaSpan, [ 1, 2 ], 2 );
-  const normalizedPanoramaSpan = normalizeLatticeSpanPreference( panoramaSpan, [ 2, 3 ], 3 );
+  const normalizedLandscapeSpan = normalizeLatticeSpanPreference( landscapeSpan, [ 1, 2 ], 2 );
+  const normalizedPortraitSpan = normalizeLatticeSpanPreference( portraitSpan, [ 1, 2 ], 1 );
+  const normalizedTextPlateSpan = normalizeLatticeSpanPreference( textPlateSpan, [ 1, 2 ], 1 );
+  const normalizedQuoteSpan = normalizeLatticeSpanPreference( quoteSpan, [ 1, 2 ], 2 );
 
   if ( hasClass( item, 'is-sticky-post' ) ) {
-    columnSpan = normalizedStickyFeatureSize;
-    rowSpan = normalizedStickyFeatureSize;
+    columnSpan = 2;
+    rowSpan = 2;
   } else if ( hasClass( item, 'format-quote' ) ) {
-    columnSpan = 2;
+    columnSpan = normalizedQuoteSpan;
   } else if ( hasClass( item, 'nb-card--no-media' ) ) {
-    columnSpan = 1;
+    columnSpan = normalizedTextPlateSpan;
   } else if ( hasClass( item, 'nb-card--media-wide' ) ) {
-    columnSpan = normalizedPanoramaSpan;
+    columnSpan = 3;
   } else if ( hasClass( item, 'nb-card--media-landscape' ) ) {
-    columnSpan = 2;
+    columnSpan = normalizedLandscapeSpan;
   } else if ( hasClass( item, 'nb-card--media-tall' ) ) {
-    rowSpan = normalizedTallMediaSpan;
+    rowSpan = 2;
+  } else if ( hasClass( item, 'nb-card--media-portrait' ) ) {
+    rowSpan = normalizedPortraitSpan;
   }
 
   return {
@@ -223,16 +227,18 @@ const calculateLatticeLayout = ( {
   items = [],
   columnCount,
   pullForwardWindow = DEFAULT_PULL_FORWARD_WINDOW,
-  stickyFeatureSize = 2,
-  tallMediaSpan = 2,
-  panoramaSpan = 3,
+  landscapeSpan = 2,
+  portraitSpan = 1,
+  textPlateSpan = 1,
+  quoteSpan = 2,
 } ) => {
   const normalizedColumns = normalizeLatticeColumnCount( columnCount );
   const normalizedPullForwardWindow = normalizeLatticePullForwardWindow( pullForwardWindow );
   const spanPreferences = {
-    stickyFeatureSize,
-    tallMediaSpan,
-    panoramaSpan,
+    landscapeSpan,
+    portraitSpan,
+    textPlateSpan,
+    quoteSpan,
   };
   const queue = Array.from( items || [] ).map( ( item, sourceIndex ) => ( {
     item,

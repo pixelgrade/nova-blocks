@@ -47,6 +47,22 @@
 		"type": "number",
 		"default": 3
 	},
+	"latticeLandscapeSpan": {
+		"type": "number",
+		"default": 2
+	},
+	"latticePortraitSpan": {
+		"type": "number",
+		"default": 1
+	},
+	"latticeTextPlateSpan": {
+		"type": "number",
+		"default": 1
+	},
+	"latticeQuoteSpan": {
+		"type": "number",
+		"default": 2
+	},
 	"gridGap": {
 		"type": "number",
 		"default": 50

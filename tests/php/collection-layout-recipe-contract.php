@@ -249,6 +249,10 @@ foreach ( [
 	'latticeStickyFeatureSize' => 2,
 	'latticeTallMediaSpan'     => 2,
 	'latticePanoramaSpan'      => 3,
+	'latticeLandscapeSpan'     => 2,
+	'latticePortraitSpan'      => 1,
+	'latticeTextPlateSpan'     => 1,
+	'latticeQuoteSpan'         => 2,
 ] as $attribute => $default ) {
 	if ( $default !== ( $layout_attributes[ $attribute ]['default'] ?? null ) ) {
 		throw new RuntimeException( 'Missing stable Lattice engine attribute default: ' . $attribute );
@@ -310,6 +314,10 @@ $legacy_data_attributes = novablocks_get_supernova_data_attribute_names(
 		'latticeStickyFeatureSize' => 2,
 		'latticeTallMediaSpan' => 2,
 		'latticePanoramaSpan' => 3,
+		'latticeLandscapeSpan' => 2,
+		'latticePortraitSpan' => 1,
+		'latticeTextPlateSpan' => 1,
+		'latticeQuoteSpan' => 2,
 	]
 );
 
@@ -317,7 +325,7 @@ if ( [ 'columns', 'layoutStyle' ] !== $legacy_data_attributes ) {
 	throw new RuntimeException( 'Legacy Collection data attribute names must remain exactly unchanged by inactive recipe defaults.' );
 }
 
-foreach ( [ 'layoutRecipe', 'headerIntegration', 'columnsFitMinWidth', 'cardHoverEffect', 'cardMetadataStyle', 'latticeModuleShape', 'latticePackingWindow', 'latticeStickyFeatureSize', 'latticeTallMediaSpan', 'latticePanoramaSpan' ] as $new_default_attribute ) {
+foreach ( [ 'layoutRecipe', 'headerIntegration', 'columnsFitMinWidth', 'cardHoverEffect', 'cardMetadataStyle', 'latticeModuleShape', 'latticePackingWindow', 'latticeStickyFeatureSize', 'latticeTallMediaSpan', 'latticePanoramaSpan', 'latticeLandscapeSpan', 'latticePortraitSpan', 'latticeTextPlateSpan', 'latticeQuoteSpan' ] as $new_default_attribute ) {
 	if ( in_array( $new_default_attribute, $legacy_data_attributes, true ) ) {
 		throw new RuntimeException( sprintf( 'Legacy root markup must not gain data-%s from an inactive default.', $new_default_attribute ) );
 	}
@@ -345,16 +353,22 @@ $lattice_data_attributes = novablocks_get_supernova_data_attribute_names(
 		'layoutStyle'               => 'classic',
 		'layoutRecipe'              => 'anima-lattice',
 		'latticeModuleShape'        => 'square',
-		'latticePackingWindow'      => 0,
-		'latticeStickyFeatureSize'  => 1,
-		'latticeTallMediaSpan'      => 1,
-		'latticePanoramaSpan'       => 2,
+		'latticeLandscapeSpan'      => 1,
+		'latticePortraitSpan'       => 2,
+		'latticeTextPlateSpan'      => 2,
+		'latticeQuoteSpan'          => 1,
 	]
 );
 
-foreach ( [ 'latticeModuleShape', 'latticePackingWindow', 'latticeStickyFeatureSize', 'latticeTallMediaSpan', 'latticePanoramaSpan' ] as $lattice_attribute ) {
+foreach ( [ 'latticeModuleShape', 'latticeLandscapeSpan', 'latticePortraitSpan', 'latticeTextPlateSpan', 'latticeQuoteSpan' ] as $lattice_attribute ) {
 	if ( ! in_array( $lattice_attribute, $lattice_data_attributes, true ) ) {
 		throw new RuntimeException( sprintf( 'An active Lattice recipe must emit data-%s.', $lattice_attribute ) );
+	}
+}
+
+foreach ( [ 'latticePackingWindow', 'latticeStickyFeatureSize', 'latticeTallMediaSpan', 'latticePanoramaSpan' ] as $retired_lattice_attribute ) {
+	if ( in_array( $retired_lattice_attribute, $lattice_data_attributes, true ) ) {
+		throw new RuntimeException( sprintf( 'Retired Lattice tuning data must not leak as data-%s.', $retired_lattice_attribute ) );
 	}
 }
 

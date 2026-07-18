@@ -226,10 +226,10 @@ const createLatticeGridController = ( grid, initialBlock, initialAttributes ) =>
     const result = calculateLatticeLayout( {
       items: visibleItems,
       columnCount: activeColumns,
-      pullForwardWindow: attributes.latticePackingWindow,
-      stickyFeatureSize: attributes.latticeStickyFeatureSize,
-      tallMediaSpan: attributes.latticeTallMediaSpan,
-      panoramaSpan: attributes.latticePanoramaSpan,
+      landscapeSpan: attributes.latticeLandscapeSpan,
+      portraitSpan: attributes.latticePortraitSpan,
+      textPlateSpan: attributes.latticeTextPlateSpan,
+      quoteSpan: attributes.latticeQuoteSpan,
     } );
     const hiddenItems = sortBySourceIndex( allItems ).filter( item => item.hidden );
 

@@ -66,23 +66,28 @@ describe( 'getLatticePreferredSpan', () => {
       .toEqual( { columnSpan: 3, rowSpan: 1 } );
   } );
 
-  test( 'lets recipe attributes tune only sticky, tall, and panorama expression spans', () => {
+  test( 'lets recipe attributes tune the classifications present in ordinary collections', () => {
     const options = {
-      stickyFeatureSize: 1,
-      tallMediaSpan: 1,
-      panoramaSpan: 2,
+      landscapeSpan: 1,
+      portraitSpan: 2,
+      textPlateSpan: 2,
+      quoteSpan: 1,
     };
 
     expect( getLatticePreferredSpan( item( 'sticky', 'is-sticky-post' ), 5, options ) )
-      .toEqual( { columnSpan: 1, rowSpan: 1 } );
+      .toEqual( { columnSpan: 2, rowSpan: 2 } );
     expect( getLatticePreferredSpan( item( 'tall', 'nb-card--media-tall' ), 5, options ) )
-      .toEqual( { columnSpan: 1, rowSpan: 1 } );
+      .toEqual( { columnSpan: 1, rowSpan: 2 } );
     expect( getLatticePreferredSpan( item( 'wide', 'nb-card--media-wide' ), 5, options ) )
-      .toEqual( { columnSpan: 2, rowSpan: 1 } );
+      .toEqual( { columnSpan: 3, rowSpan: 1 } );
     expect( getLatticePreferredSpan( item( 'quote', 'format-quote' ), 5, options ) )
+      .toEqual( { columnSpan: 1, rowSpan: 1 } );
+    expect( getLatticePreferredSpan( item( 'text', 'nb-card--no-media' ), 5, options ) )
       .toEqual( { columnSpan: 2, rowSpan: 1 } );
     expect( getLatticePreferredSpan( item( 'landscape', 'nb-card--media-landscape' ), 5, options ) )
-      .toEqual( { columnSpan: 2, rowSpan: 1 } );
+      .toEqual( { columnSpan: 1, rowSpan: 1 } );
+    expect( getLatticePreferredSpan( item( 'portrait', 'nb-card--media-portrait' ), 5, options ) )
+      .toEqual( { columnSpan: 1, rowSpan: 2 } );
   } );
 } );
 
@@ -182,19 +187,22 @@ describe( 'calculateLatticeLayout', () => {
     expectNoInteriorHoles( placements, 4 );
   } );
 
-  test( 'applies tuned spans through the complete deterministic packing pass', () => {
+  test( 'applies classification-native spans through the complete deterministic packing pass', () => {
     const cards = [
       item( 'feature', 'is-sticky-post' ),
-      item( 'panorama', 'nb-card--media-wide' ),
-      item( 'tall', 'nb-card--media-tall' ),
+      item( 'landscape', 'nb-card--media-landscape' ),
+      item( 'portrait', 'nb-card--media-portrait' ),
+      item( 'text', 'nb-card--no-media' ),
+      item( 'quote', 'format-quote' ),
     ];
 
     const { placements } = calculateLatticeLayout( {
       items: cards,
-      columnCount: 5,
-      stickyFeatureSize: 1,
-      tallMediaSpan: 1,
-      panoramaSpan: 2,
+      columnCount: 6,
+      landscapeSpan: 1,
+      portraitSpan: 2,
+      textPlateSpan: 2,
+      quoteSpan: 1,
     } );
 
     expect( placements.map( placement => [
@@ -202,9 +210,11 @@ describe( 'calculateLatticeLayout', () => {
       placement.columnSpan,
       placement.rowSpan,
     ] ) ).toEqual( [
-      [ 'feature', 1, 1 ],
-      [ 'panorama', 2, 1 ],
-      [ 'tall', 1, 1 ],
+      [ 'feature', 2, 2 ],
+      [ 'landscape', 1, 1 ],
+      [ 'portrait', 1, 2 ],
+      [ 'text', 2, 1 ],
+      [ 'quote', 1, 1 ],
     ] );
   } );
 
