@@ -28,6 +28,7 @@ describe( 'collection layout recipes', () => {
     expect( normalizeLayoutRecipes( [ animaRecipe ] ) ).toEqual( [ {
       ...animaRecipe,
       layoutStrategy: '',
+      fineTune: [],
       gateId: '',
     } ] );
   } );
@@ -54,11 +55,87 @@ describe( 'collection layout recipes', () => {
     expect( recipes[1].layoutStrategy ).toBe( '' );
   } );
 
+  test( 'normalizes data-only recipe Fine-tune groups and rejects unsafe controls', () => {
+    const [ recipe ] = normalizeLayoutRecipes( [ {
+      ...animaRecipe,
+      id: 'anima-lattice',
+      label: 'Lattice',
+      baseLayout: 'classic',
+      layoutStrategy: 'lattice',
+      fineTune: [
+        {
+          label: 'Lattice Anatomy',
+          controls: [
+            {
+              attribute: 'latticeModuleShape',
+              type: 'radio',
+              label: 'Module Shape',
+              help: 'Shape every shared media module.',
+              options: [
+                { label: 'Portrait 3:4', value: 'portrait' },
+                { label: 'Square 1:1', value: 'square' },
+              ],
+            },
+            {
+              attribute: 'latticePackingWindow',
+              type: 'range',
+              label: 'Packing Flexibility',
+              min: 0,
+              max: 6,
+              step: 1,
+            },
+            {
+              attribute: 'unsafe attribute',
+              type: 'component',
+              label: 'Unsafe',
+            },
+          ],
+        },
+        { label: 'Empty', controls: [] },
+      ],
+    } ] );
+
+    expect( recipe.fineTune ).toEqual( [ {
+      label: 'Lattice Anatomy',
+      controls: [
+        {
+          attribute: 'latticeModuleShape',
+          type: 'radio',
+          label: 'Module Shape',
+          help: 'Shape every shared media module.',
+          options: [
+            { label: 'Portrait 3:4', value: 'portrait' },
+            { label: 'Square 1:1', value: 'square' },
+          ],
+        },
+        {
+          attribute: 'latticePackingWindow',
+          type: 'range',
+          label: 'Packing Flexibility',
+          help: '',
+          min: 0,
+          max: 6,
+          step: 1,
+        },
+      ],
+    } ] );
+  } );
+
   test( 'persists recipe identity independently from the base layout', () => {
     expect( layoutAttributes.layoutRecipe ).toEqual( {
       type: 'string',
       default: '',
     } );
+  } );
+
+  test( 'registers stable Lattice engine attributes with legacy-compatible defaults', () => {
+    expect( layoutAttributes ).toEqual( expect.objectContaining( {
+      latticeModuleShape: { type: 'string', default: 'portrait' },
+      latticePackingWindow: { type: 'number', default: 3 },
+      latticeStickyFeatureSize: { type: 'number', default: 2 },
+      latticeTallMediaSpan: { type: 'number', default: 2 },
+      latticePanoramaSpan: { type: 'number', default: 3 },
+    } ) );
   } );
 
   test( 'selecting a recipe preserves its editable defaults but pins its engine and identity', () => {

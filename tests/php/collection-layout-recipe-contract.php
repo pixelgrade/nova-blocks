@@ -17,6 +17,35 @@ function apply_filters( $hook, $value, ...$args ) {
 				'layoutStrategy' => 'lattice',
 				'thumbnail'      => 'lattice',
 				'defaults'       => [ 'columns' => 5 ],
+				'fineTune'       => [
+					[
+						'label'    => 'Lattice Anatomy',
+						'controls' => [
+							[
+								'attribute' => 'latticeModuleShape',
+								'type'      => 'radio',
+								'label'     => 'Module Shape',
+								'options'   => [
+									[ 'label' => 'Portrait 3:4', 'value' => 'portrait' ],
+									[ 'label' => 'Square 1:1', 'value' => 'square' ],
+								],
+							],
+							[
+								'attribute' => 'latticePackingWindow',
+								'type'      => 'range',
+								'label'     => 'Packing Flexibility',
+								'min'       => 0,
+								'max'       => 6,
+								'step'      => 1,
+							],
+							[
+								'attribute' => 'unsafe attribute',
+								'type'      => 'component',
+								'label'     => 'Unsafe',
+							],
+						],
+					],
+				],
 			],
 			[
 				'id'           => 'anima-collage',
@@ -98,6 +127,17 @@ if ( 3 !== count( $recipes )
 	|| 'Collage Grid' !== ( $recipes[1]['label'] ?? null )
 	|| '' !== ( $recipes[2]['layoutStrategy'] ?? null ) ) {
 	throw new RuntimeException( 'Registry must reject invalid recipes and keep the first valid recipe for duplicate IDs.' );
+}
+
+$fine_tune = $recipes[0]['fineTune'] ?? [];
+if ( 1 !== count( $fine_tune )
+	|| 'Lattice Anatomy' !== ( $fine_tune[0]['label'] ?? null )
+	|| 2 !== count( $fine_tune[0]['controls'] ?? [] )
+	|| 'latticeModuleShape' !== ( $fine_tune[0]['controls'][0]['attribute'] ?? null )
+	|| 'radio' !== ( $fine_tune[0]['controls'][0]['type'] ?? null )
+	|| 'latticePackingWindow' !== ( $fine_tune[0]['controls'][1]['attribute'] ?? null )
+	|| 6 !== ( $fine_tune[0]['controls'][1]['max'] ?? null ) ) {
+	throw new RuntimeException( 'Recipe Fine-tune groups must be normalized as safe data-only controls.' );
 }
 
 if ( ! function_exists( 'novablocks_get_collection_layout_strategy' ) ) {
@@ -202,6 +242,19 @@ if ( 'inherit' !== ( $card_details_attributes['cardMetadataStyle']['default'] ??
 	throw new RuntimeException( 'Card metadata style must default to the site-wide setting.' );
 }
 
+$layout_attributes = json_decode( file_get_contents( __DIR__ . '/../../packages/block-editor/src/filters/with-collection-layout/attributes.json' ), true );
+foreach ( [
+	'latticeModuleShape'       => 'portrait',
+	'latticePackingWindow'     => 3,
+	'latticeStickyFeatureSize' => 2,
+	'latticeTallMediaSpan'     => 2,
+	'latticePanoramaSpan'      => 3,
+] as $attribute => $default ) {
+	if ( $default !== ( $layout_attributes[ $attribute ]['default'] ?? null ) ) {
+		throw new RuntimeException( 'Missing stable Lattice engine attribute default: ' . $attribute );
+	}
+}
+
 $editor_settings_source = file_get_contents( __DIR__ . '/../../lib/block-editor-settings.php' );
 if ( false === strpos( $editor_settings_source, "'collectionLayoutRecipes'" )
 	|| false === strpos( $editor_settings_source, 'novablocks_get_collection_layout_recipes()' ) ) {
@@ -252,6 +305,11 @@ $legacy_data_attributes = novablocks_get_supernova_data_attribute_names(
 		'columnsFitMinWidth' => 0,
 		'cardHoverEffect'    => 'none',
 		'cardMetadataStyle'  => 'inherit',
+		'latticeModuleShape' => 'portrait',
+		'latticePackingWindow' => 3,
+		'latticeStickyFeatureSize' => 2,
+		'latticeTallMediaSpan' => 2,
+		'latticePanoramaSpan' => 3,
 	]
 );
 
@@ -259,7 +317,7 @@ if ( [ 'columns', 'layoutStyle' ] !== $legacy_data_attributes ) {
 	throw new RuntimeException( 'Legacy Collection data attribute names must remain exactly unchanged by inactive recipe defaults.' );
 }
 
-foreach ( [ 'layoutRecipe', 'headerIntegration', 'columnsFitMinWidth', 'cardHoverEffect', 'cardMetadataStyle' ] as $new_default_attribute ) {
+foreach ( [ 'layoutRecipe', 'headerIntegration', 'columnsFitMinWidth', 'cardHoverEffect', 'cardMetadataStyle', 'latticeModuleShape', 'latticePackingWindow', 'latticeStickyFeatureSize', 'latticeTallMediaSpan', 'latticePanoramaSpan' ] as $new_default_attribute ) {
 	if ( in_array( $new_default_attribute, $legacy_data_attributes, true ) ) {
 		throw new RuntimeException( sprintf( 'Legacy root markup must not gain data-%s from an inactive default.', $new_default_attribute ) );
 	}
@@ -279,6 +337,24 @@ $active_data_attributes = novablocks_get_supernova_data_attribute_names(
 foreach ( [ 'layoutRecipe', 'headerIntegration', 'columnsFitMinWidth', 'cardHoverEffect', 'cardMetadataStyle' ] as $active_attribute ) {
 	if ( ! in_array( $active_attribute, $active_data_attributes, true ) ) {
 		throw new RuntimeException( sprintf( 'An active recipe value must emit data-%s.', $active_attribute ) );
+	}
+}
+
+$lattice_data_attributes = novablocks_get_supernova_data_attribute_names(
+	[
+		'layoutStyle'               => 'classic',
+		'layoutRecipe'              => 'anima-lattice',
+		'latticeModuleShape'        => 'square',
+		'latticePackingWindow'      => 0,
+		'latticeStickyFeatureSize'  => 1,
+		'latticeTallMediaSpan'      => 1,
+		'latticePanoramaSpan'       => 2,
+	]
+);
+
+foreach ( [ 'latticeModuleShape', 'latticePackingWindow', 'latticeStickyFeatureSize', 'latticeTallMediaSpan', 'latticePanoramaSpan' ] as $lattice_attribute ) {
+	if ( ! in_array( $lattice_attribute, $lattice_data_attributes, true ) ) {
+		throw new RuntimeException( sprintf( 'An active Lattice recipe must emit data-%s.', $lattice_attribute ) );
 	}
 }
 

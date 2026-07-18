@@ -27,6 +27,26 @@
 		"type": "string",
 		"default": "none"
 	},
+	"latticeModuleShape": {
+		"type": "string",
+		"default": "portrait"
+	},
+	"latticePackingWindow": {
+		"type": "number",
+		"default": 3
+	},
+	"latticeStickyFeatureSize": {
+		"type": "number",
+		"default": 2
+	},
+	"latticeTallMediaSpan": {
+		"type": "number",
+		"default": 2
+	},
+	"latticePanoramaSpan": {
+		"type": "number",
+		"default": 3
+	},
 	"gridGap": {
 		"type": "number",
 		"default": 50

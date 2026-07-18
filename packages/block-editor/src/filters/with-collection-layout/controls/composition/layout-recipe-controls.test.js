@@ -5,6 +5,7 @@ const path = require( 'node:path' );
 
 const compositionSource = fs.readFileSync( path.join( __dirname, 'index.js' ), 'utf8' );
 const settingsSource = fs.readFileSync( path.join( __dirname, '../settings-tab.js' ), 'utf8' );
+const controlsSource = fs.readFileSync( path.join( __dirname, '../index.js' ), 'utf8' );
 
 test( 'composition and settings identify the active registered recipe by its own label', () => {
   [ compositionSource, settingsSource ].forEach( source => {
@@ -45,4 +46,12 @@ test( 'Fit Columns restores the active recipe minimum width with a safe generic 
     settingsSource,
     /setAttributes\( \{ columnsFitMinWidth: value \? fitColumnsDefault : 0 \} \)/
   );
+} );
+
+test( 'a recipe-declared Fine-tune model opens the generic Fine-tune tab', () => {
+  assert.match( controlsSource, /normalizeLayoutRecipes/ );
+  assert.match( controlsSource, /getActiveLayoutRecipe/ );
+  assert.match( controlsSource, /activeRecipe\?\.fineTune\?\.length/ );
+  assert.match( controlsSource, /<RecipeFineTuneControls[\s\S]*?recipe=\{ activeRecipe \}/ );
+  assert.doesNotMatch( controlsSource, /anima-lattice/ );
 } );

@@ -1,6 +1,106 @@
 const SUPPORTED_BASE_LAYOUTS = [ 'classic', 'masonry', 'carousel', 'parametric' ];
 const SUPPORTED_LAYOUT_STRATEGIES = [ 'lattice' ];
 const RECIPE_ID_PATTERN = /^[a-z0-9]+(?:-[a-z0-9]+)*$/;
+const CONTROL_ATTRIBUTE_PATTERN = /^[a-z][A-Za-z0-9]*$/;
+const SUPPORTED_FINE_TUNE_CONTROL_TYPES = [ 'radio', 'range' ];
+
+const normalizeFineTuneOptions = ( options ) => {
+  if ( ! Array.isArray( options ) ) {
+    return [];
+  }
+
+  const registeredValues = new Set();
+
+  return options.reduce( ( normalized, option ) => {
+    const label = 'string' === typeof option?.label ? option.label.trim() : '';
+    const value = option?.value;
+    const isSupportedValue = 'string' === typeof value ||
+      ( 'number' === typeof value && Number.isFinite( value ) );
+    const valueKey = `${ typeof value }:${ value }`;
+
+    if ( ! label || ! isSupportedValue || registeredValues.has( valueKey ) ) {
+      return normalized;
+    }
+
+    registeredValues.add( valueKey );
+    normalized.push( { label, value } );
+
+    return normalized;
+  }, [] );
+};
+
+const normalizeFineTuneControl = ( control ) => {
+  if ( ! control || 'object' !== typeof control ) {
+    return null;
+  }
+
+  const attribute = 'string' === typeof control.attribute ? control.attribute.trim() : '';
+  const type = 'string' === typeof control.type ? control.type.trim() : '';
+  const label = 'string' === typeof control.label ? control.label.trim() : '';
+  const help = 'string' === typeof control.help ? control.help.trim() : '';
+
+  if (
+    ! CONTROL_ATTRIBUTE_PATTERN.test( attribute ) ||
+    ! SUPPORTED_FINE_TUNE_CONTROL_TYPES.includes( type ) ||
+    ! label
+  ) {
+    return null;
+  }
+
+  if ( 'radio' === type ) {
+    const options = normalizeFineTuneOptions( control.options );
+
+    return options.length >= 2
+      ? { attribute, type, label, help, options }
+      : null;
+  }
+
+  const min = Number( control.min );
+  const max = Number( control.max );
+  const step = undefined === control.step ? 1 : Number( control.step );
+
+  if ( ! Number.isFinite( min ) || ! Number.isFinite( max ) || min > max ||
+    ! Number.isFinite( step ) || step <= 0 ) {
+    return null;
+  }
+
+  return { attribute, type, label, help, min, max, step };
+};
+
+export const normalizeRecipeFineTune = ( groups ) => {
+  if ( ! Array.isArray( groups ) ) {
+    return [];
+  }
+
+  const registeredAttributes = new Set();
+
+  return groups.reduce( ( normalized, group ) => {
+    const label = 'string' === typeof group?.label ? group.label.trim() : '';
+
+    if ( ! label || ! Array.isArray( group.controls ) ) {
+      return normalized;
+    }
+
+    const controls = group.controls.reduce( ( groupControls, control ) => {
+      const normalizedControl = normalizeFineTuneControl( control );
+
+      if ( ! normalizedControl || registeredAttributes.has( normalizedControl.attribute ) ) {
+        return groupControls;
+      }
+
+      registeredAttributes.add( normalizedControl.attribute );
+      groupControls.push( normalizedControl );
+
+      return groupControls;
+    }, [] );
+
+    if ( controls.length ) {
+      normalized.push( { label, controls } );
+    }
+
+    return normalized;
+  }, [] );
+};
 
 export const normalizeLayoutRecipes = ( recipes ) => {
   if ( ! Array.isArray( recipes ) ) {
@@ -44,6 +144,7 @@ export const normalizeLayoutRecipes = ( recipes ) => {
       capabilities: recipe.capabilities && 'object' === typeof recipe.capabilities
         ? { ...recipe.capabilities }
         : {},
+      fineTune: normalizeRecipeFineTune( recipe.fineTune ),
       gateId: 'string' === typeof recipe.gateId ? recipe.gateId : '',
     } );
 

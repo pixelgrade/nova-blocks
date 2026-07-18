@@ -12,6 +12,12 @@ const CONTROLLER_PROPERTY = '__nbLatticeLayoutController';
 const DESTROY_PROPERTY = '__nbDestroyLatticeLayout';
 const DEFAULT_GAP = 26;
 const DEFAULT_CAPTION_HEIGHT = 50;
+const DEFAULT_MODULE_SHAPE = 'portrait';
+const MODULE_ASPECT_RATIOS = {
+  portrait: 3 / 4,
+  square: 1,
+  landscape: 5 / 4,
+};
 const WIDTH_CHANGE_EPSILON = 0.5;
 const CAPTION_HEIGHT_PROPERTY = '--nb-lattice-caption-height';
 const CAPTION_REGION_SELECTOR = '.nb-supernova-item__content--contains-title';
@@ -43,17 +49,25 @@ const clearItemStyles = ( item ) => {
   item.style.gridRow = '';
 };
 
+const normalizeLatticeModuleShape = value => (
+  Object.prototype.hasOwnProperty.call( MODULE_ASPECT_RATIOS, value )
+    ? value
+    : DEFAULT_MODULE_SHAPE
+);
+
 const calculateLatticeGeometry = ( {
   containerWidth,
   columnCount,
   columnGap,
   captionHeight,
+  moduleShape = DEFAULT_MODULE_SHAPE,
 } ) => {
   const totalGapWidth = Math.max( columnCount - 1, 0 ) * columnGap;
   const columnWidth = Math.max( ( containerWidth - totalGapWidth ) / columnCount, 0 );
-  const rowHeight = columnWidth * 4 / 3 + captionHeight;
+  const normalizedModuleShape = normalizeLatticeModuleShape( moduleShape );
+  const rowHeight = columnWidth / MODULE_ASPECT_RATIOS[ normalizedModuleShape ] + captionHeight;
 
-  return { columnWidth, rowHeight };
+  return { columnWidth, moduleShape: normalizedModuleShape, rowHeight };
 };
 
 const measureSharedCaptionHeight = ( grid, block ) => {
@@ -202,15 +216,20 @@ const createLatticeGridController = ( grid, initialBlock, initialAttributes ) =>
       authoredColumns: attributes.columns,
       viewportWidth: containerWidth || ownerWindow.innerWidth,
     } );
-    const { columnWidth, rowHeight } = calculateLatticeGeometry( {
+    const { columnWidth, moduleShape, rowHeight } = calculateLatticeGeometry( {
       containerWidth,
       columnCount: activeColumns,
       columnGap,
       captionHeight,
+      moduleShape: attributes.latticeModuleShape,
     } );
     const result = calculateLatticeLayout( {
       items: visibleItems,
       columnCount: activeColumns,
+      pullForwardWindow: attributes.latticePackingWindow,
+      stickyFeatureSize: attributes.latticeStickyFeatureSize,
+      tallMediaSpan: attributes.latticeTallMediaSpan,
+      panoramaSpan: attributes.latticePanoramaSpan,
     } );
     const hiddenItems = sortBySourceIndex( allItems ).filter( item => item.hidden );
 
@@ -237,6 +256,7 @@ const createLatticeGridController = ( grid, initialBlock, initialAttributes ) =>
       captionHeight,
       columnGap,
       columnWidth,
+      moduleShape,
       rowHeight,
     } );
 
@@ -389,4 +409,5 @@ const handleLatticeGrid = ( grid, block, attributes ) => {
 export {
   calculateLatticeGeometry,
   handleLatticeGrid,
+  normalizeLatticeModuleShape,
 };

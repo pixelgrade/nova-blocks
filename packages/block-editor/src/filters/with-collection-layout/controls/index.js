@@ -5,9 +5,9 @@
  *   Free compositions stay fully native; the parametric presets and the
  *   depth presets are Try & Play boundaries.
  * - Settings: the current composition's everyday dials, free in every mode.
- * - Fine-tune: the parametric engine room — exists ONLY while the
- *   Parametric composition is active (the tab you earn by choosing it),
- *   and is one whole Try & Play room when locked.
+ * - Fine-tune: the active layout engine's structural parameters. Parametric
+ *   owns its established room; registered recipes may declare additional
+ *   data-only controls without coupling the editor to a recipe identifier.
  *
  * 3D Grid + Depth Parallax moved OUT of this section into Motion & Effects
  * (they are effects on the cards, not layout fine-tuning); subtle
@@ -20,10 +20,16 @@ import {
   ControlsTab,
   TryAndPlay,
 } from "../../../components";
+import { useSettings } from '../../../hooks';
 
 import CompositionTab from "./composition";
 import SettingsTab from "./settings-tab";
 import ParametricLayoutControls from "./parametric-layout-controls";
+import RecipeFineTuneControls from './recipe-fine-tune-controls';
+import {
+  getActiveLayoutRecipe,
+  normalizeLayoutRecipes,
+} from './composition/layout-recipes';
 
 const Controls = ( props ) => {
 
@@ -34,6 +40,11 @@ const Controls = ( props ) => {
       columns
     },
   } = props;
+  const settings = useSettings();
+  const recipes = normalizeLayoutRecipes( settings?.collectionLayoutRecipes );
+  const activeRecipe = getActiveLayoutRecipe( props.attributes, recipes );
+  const hasParametricFineTune = 'parametric' === layoutStyle;
+  const hasRecipeFineTune = !! activeRecipe?.fineTune?.length;
 
   // Hide the "Collection" section when there is
   // a single item in a single column
@@ -54,11 +65,16 @@ const Controls = ( props ) => {
         <SettingsTab { ...props } />
       </ControlsTab>
       {
-        'parametric' === layoutStyle &&
+        ( hasParametricFineTune || hasRecipeFineTune ) &&
         <ControlsTab label={ __( 'Fine-tune', '__plugin_txtd' ) }>
-          <TryAndPlay gateId={ 'parametric-layout' }>
-            <ParametricLayoutControls { ...props } />
-          </TryAndPlay>
+          { hasParametricFineTune && (
+            <TryAndPlay gateId={ 'parametric-layout' }>
+              <ParametricLayoutControls { ...props } />
+            </TryAndPlay>
+          ) }
+          { hasRecipeFineTune && (
+            <RecipeFineTuneControls { ...props } recipe={ activeRecipe } />
+          ) }
         </ControlsTab>
       }
     </ControlsSection>

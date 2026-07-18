@@ -6,6 +6,155 @@
  */
 
 /**
+ * Normalizes the options of a recipe-declared radio control.
+ *
+ * @param mixed $options Candidate options.
+ * @return array Safe radio options.
+ */
+function novablocks_normalize_collection_layout_recipe_fine_tune_options( $options ): array {
+	if ( ! is_array( $options ) ) {
+		return [];
+	}
+
+	$normalized        = [];
+	$registered_values = [];
+
+	foreach ( $options as $option ) {
+		if ( ! is_array( $option ) ) {
+			continue;
+		}
+
+		$label = is_string( $option['label'] ?? null ) ? trim( $option['label'] ) : '';
+		$value = $option['value'] ?? null;
+
+		if ( '' === $label || ( ! is_string( $value ) && ! is_int( $value ) && ! is_float( $value ) ) ) {
+			continue;
+		}
+
+		$value_key = gettype( $value ) . ':' . (string) $value;
+		if ( isset( $registered_values[ $value_key ] ) ) {
+			continue;
+		}
+
+		$registered_values[ $value_key ] = true;
+		$normalized[]                    = [
+			'label' => $label,
+			'value' => $value,
+		];
+	}
+
+	return $normalized;
+}
+
+/**
+ * Normalizes one data-only recipe Fine-tune control.
+ *
+ * @param mixed $control Candidate control.
+ * @return array|null Safe control, or null when unsupported.
+ */
+function novablocks_normalize_collection_layout_recipe_fine_tune_control( $control ): ?array {
+	if ( ! is_array( $control ) ) {
+		return null;
+	}
+
+	$attribute = is_string( $control['attribute'] ?? null ) ? trim( $control['attribute'] ) : '';
+	$type      = is_string( $control['type'] ?? null ) ? trim( $control['type'] ) : '';
+	$label     = is_string( $control['label'] ?? null ) ? trim( $control['label'] ) : '';
+	$help      = is_string( $control['help'] ?? null ) ? trim( $control['help'] ) : '';
+
+	if ( ! preg_match( '/^[a-z][A-Za-z0-9]*$/', $attribute )
+		|| ! in_array( $type, [ 'radio', 'range' ], true )
+		|| '' === $label ) {
+		return null;
+	}
+
+	if ( 'radio' === $type ) {
+		$options = novablocks_normalize_collection_layout_recipe_fine_tune_options( $control['options'] ?? null );
+
+		if ( count( $options ) < 2 ) {
+			return null;
+		}
+
+		return [
+			'attribute' => $attribute,
+			'type'      => $type,
+			'label'     => $label,
+			'help'      => $help,
+			'options'   => $options,
+		];
+	}
+
+	if ( ! is_numeric( $control['min'] ?? null ) || ! is_numeric( $control['max'] ?? null ) ) {
+		return null;
+	}
+
+	$min  = 0 + $control['min'];
+	$max  = 0 + $control['max'];
+	$step = isset( $control['step'] ) && is_numeric( $control['step'] ) ? 0 + $control['step'] : 1;
+
+	if ( $min > $max || $step <= 0 ) {
+		return null;
+	}
+
+	return [
+		'attribute' => $attribute,
+		'type'      => $type,
+		'label'     => $label,
+		'help'      => $help,
+		'min'       => $min,
+		'max'       => $max,
+		'step'      => $step,
+	];
+}
+
+/**
+ * Normalizes data-only Fine-tune groups declared by a collection recipe.
+ *
+ * @param mixed $groups Candidate groups.
+ * @return array Safe Fine-tune groups.
+ */
+function novablocks_normalize_collection_layout_recipe_fine_tune( $groups ): array {
+	if ( ! is_array( $groups ) ) {
+		return [];
+	}
+
+	$normalized            = [];
+	$registered_attributes = [];
+
+	foreach ( $groups as $group ) {
+		if ( ! is_array( $group ) ) {
+			continue;
+		}
+
+		$label = is_string( $group['label'] ?? null ) ? trim( $group['label'] ) : '';
+		if ( '' === $label || ! is_array( $group['controls'] ?? null ) ) {
+			continue;
+		}
+
+		$controls = [];
+		foreach ( $group['controls'] as $control ) {
+			$normalized_control = novablocks_normalize_collection_layout_recipe_fine_tune_control( $control );
+
+			if ( null === $normalized_control || isset( $registered_attributes[ $normalized_control['attribute'] ] ) ) {
+				continue;
+			}
+
+			$registered_attributes[ $normalized_control['attribute'] ] = true;
+			$controls[]                                                   = $normalized_control;
+		}
+
+		if ( ! empty( $controls ) ) {
+			$normalized[] = [
+				'label'    => $label,
+				'controls' => $controls,
+			];
+		}
+	}
+
+	return $normalized;
+}
+
+/**
  * Returns normalized theme/plugin collection layout recipes.
  *
  * @return array Registered recipes.
@@ -47,6 +196,7 @@ function novablocks_get_collection_layout_recipes(): array {
 			'thumbnail'    => is_string( $recipe['thumbnail'] ?? null ) && '' !== $recipe['thumbnail'] ? $recipe['thumbnail'] : $base_layout,
 			'defaults'     => is_array( $recipe['defaults'] ?? null ) ? $recipe['defaults'] : [],
 			'capabilities' => is_array( $recipe['capabilities'] ?? null ) ? $recipe['capabilities'] : [],
+			'fineTune'     => novablocks_normalize_collection_layout_recipe_fine_tune( $recipe['fineTune'] ?? null ),
 			'gateId'       => is_string( $recipe['gateId'] ?? null ) ? $recipe['gateId'] : '',
 		];
 		$registered_ids[ $id ] = true;

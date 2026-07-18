@@ -9,7 +9,7 @@ jest.mock( '@novablocks/utils', () => ( {
   removeClass: ( element, className ) => element.classList.remove( className ),
 } ) );
 
-import { handleLatticeGrid } from './handle-lattice-grid';
+import { calculateLatticeGeometry, handleLatticeGrid } from './handle-lattice-grid';
 
 const rectangle = ( width = 0, height = 0 ) => ( {
   x: 0,
@@ -222,6 +222,56 @@ describe( 'handleLatticeGrid', () => {
     expect( events ).toEqual( [ 'detailed', 'generic' ] );
     expect( grid.classList.contains( 'nb-collection__layout--lattice-ready' ) ).toBe( true );
     expect( block.classList.contains( 'novablocks-block--ready' ) ).toBe( true );
+  } );
+
+  test.each( [
+    [ 'portrait', 382 ],
+    [ 'square', 299 ],
+    [ 'landscape', 249.2 ],
+  ] )( 'uses the %s shared module shape while preserving the caption shelf', ( moduleShape, expectedRowHeight ) => {
+    expect( calculateLatticeGeometry( {
+      containerWidth: 1074,
+      columnCount: 4,
+      columnGap: 26,
+      captionHeight: 50,
+      moduleShape,
+    } ).rowHeight ).toBeCloseTo( expectedRowHeight );
+  } );
+
+  test( 'passes every authored Fine-tune value into geometry and placement', () => {
+    const { block, grid, items } = createFixture( {
+      classes: [
+        'is-sticky-post',
+        'nb-card--media-wide',
+        'nb-card--media-tall',
+      ],
+    } );
+    let detail;
+    window.addEventListener( 'nb:lattice-layout', event => {
+      detail = event.detail;
+    }, { once: true } );
+
+    handleLatticeGrid( grid, block, {
+      columns: 5,
+      latticeModuleShape: 'square',
+      latticePackingWindow: 0,
+      latticeStickyFeatureSize: 1,
+      latticeTallMediaSpan: 1,
+      latticePanoramaSpan: 2,
+    } );
+    flushAnimationFrames();
+
+    expect( detail.moduleShape ).toBe( 'square' );
+    expect( detail.rowHeight ).toBeCloseTo( 244 );
+    expect( detail.placements.map( placement => [
+      placement.item,
+      placement.columnSpan,
+      placement.rowSpan,
+    ] ) ).toEqual( [
+      [ items[0], 1, 1 ],
+      [ items[1], 2, 1 ],
+      [ items[2], 1, 1 ],
+    ] );
   } );
 
   test( 'progresses through three and two tablet columns before the one-module phone flow', () => {

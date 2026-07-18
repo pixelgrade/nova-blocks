@@ -182,14 +182,20 @@ function novablocks_get_data_attributes( array $data_attributes_array, array $at
 function novablocks_get_supernova_data_attribute_names( array $attributes ): array {
 	$names         = array_keys( $attributes );
 	$active_recipe = novablocks_get_active_collection_layout_recipe( $attributes );
+	$is_lattice    = null !== $active_recipe && 'lattice' === ( $active_recipe['layoutStrategy'] ?? '' );
 	$conditional   = [
-		'layoutRecipe'       => null !== $active_recipe,
-		'headerIntegration'  => null !== $active_recipe
+		'layoutRecipe'             => null !== $active_recipe,
+		'headerIntegration'        => null !== $active_recipe
 			&& ! empty( $active_recipe['capabilities']['headerIntegration'] )
 			&& 'grid-item' === ( $attributes['headerIntegration'] ?? 'standard' ),
-		'columnsFitMinWidth' => (float) ( $attributes['columnsFitMinWidth'] ?? 0 ) > 0,
-		'cardHoverEffect'    => 'none' !== ( $attributes['cardHoverEffect'] ?? 'none' ),
-		'cardMetadataStyle'  => 'inherit' !== ( $attributes['cardMetadataStyle'] ?? 'inherit' ),
+		'columnsFitMinWidth'       => (float) ( $attributes['columnsFitMinWidth'] ?? 0 ) > 0,
+		'cardHoverEffect'          => 'none' !== ( $attributes['cardHoverEffect'] ?? 'none' ),
+		'cardMetadataStyle'        => 'inherit' !== ( $attributes['cardMetadataStyle'] ?? 'inherit' ),
+		'latticeModuleShape'       => $is_lattice,
+		'latticePackingWindow'     => $is_lattice,
+		'latticeStickyFeatureSize' => $is_lattice,
+		'latticeTallMediaSpan'     => $is_lattice,
+		'latticePanoramaSpan'      => $is_lattice,
 	];
 
 	return array_values(

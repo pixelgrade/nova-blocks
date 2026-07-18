@@ -65,6 +65,25 @@ describe( 'getLatticePreferredSpan', () => {
     expect( getLatticePreferredSpan( wrapper, 5 ) )
       .toEqual( { columnSpan: 3, rowSpan: 1 } );
   } );
+
+  test( 'lets recipe attributes tune only sticky, tall, and panorama expression spans', () => {
+    const options = {
+      stickyFeatureSize: 1,
+      tallMediaSpan: 1,
+      panoramaSpan: 2,
+    };
+
+    expect( getLatticePreferredSpan( item( 'sticky', 'is-sticky-post' ), 5, options ) )
+      .toEqual( { columnSpan: 1, rowSpan: 1 } );
+    expect( getLatticePreferredSpan( item( 'tall', 'nb-card--media-tall' ), 5, options ) )
+      .toEqual( { columnSpan: 1, rowSpan: 1 } );
+    expect( getLatticePreferredSpan( item( 'wide', 'nb-card--media-wide' ), 5, options ) )
+      .toEqual( { columnSpan: 2, rowSpan: 1 } );
+    expect( getLatticePreferredSpan( item( 'quote', 'format-quote' ), 5, options ) )
+      .toEqual( { columnSpan: 2, rowSpan: 1 } );
+    expect( getLatticePreferredSpan( item( 'landscape', 'nb-card--media-landscape' ), 5, options ) )
+      .toEqual( { columnSpan: 2, rowSpan: 1 } );
+  } );
 } );
 
 describe( 'getResponsiveLatticeColumnCount', () => {
@@ -135,6 +154,58 @@ describe( 'calculateLatticeLayout', () => {
       pulledForward: true,
       sourceIndex: 2,
     } );
+  } );
+
+  test( 'honors a zero-card pull-forward window without changing top-left packing', () => {
+    const cards = [
+      item( 'feature', 'is-sticky-post' ),
+      item( 'wide', 'nb-card--media-wide' ),
+      item( 'landscape', 'nb-card--media-landscape' ),
+      item( 'square', 'nb-card--media-square' ),
+    ];
+
+    const { placements } = calculateLatticeLayout( {
+      items: cards,
+      columnCount: 4,
+      pullForwardWindow: 0,
+    } );
+
+    expect( placements.slice( 0, 2 ).map( placement => placement.item.id ) )
+      .toEqual( [ 'feature', 'wide' ] );
+    expect( placements[1] ).toMatchObject( {
+      row: 1,
+      column: 3,
+      columnSpan: 2,
+      pulledForward: false,
+      demoted: true,
+    } );
+    expectNoInteriorHoles( placements, 4 );
+  } );
+
+  test( 'applies tuned spans through the complete deterministic packing pass', () => {
+    const cards = [
+      item( 'feature', 'is-sticky-post' ),
+      item( 'panorama', 'nb-card--media-wide' ),
+      item( 'tall', 'nb-card--media-tall' ),
+    ];
+
+    const { placements } = calculateLatticeLayout( {
+      items: cards,
+      columnCount: 5,
+      stickyFeatureSize: 1,
+      tallMediaSpan: 1,
+      panoramaSpan: 2,
+    } );
+
+    expect( placements.map( placement => [
+      placement.item.id,
+      placement.columnSpan,
+      placement.rowSpan,
+    ] ) ).toEqual( [
+      [ 'feature', 1, 1 ],
+      [ 'panorama', 2, 1 ],
+      [ 'tall', 1, 1 ],
+    ] );
   } );
 
   test( 'never looks beyond the three-card pull-forward window', () => {

@@ -1,4 +1,5 @@
 const DEFAULT_PULL_FORWARD_WINDOW = 3;
+const MAX_PULL_FORWARD_WINDOW = 6;
 const DEFAULT_PHONE_BREAKPOINT = 600;
 const DEFAULT_COMPACT_BREAKPOINT = 768;
 const DEFAULT_TABLET_BREAKPOINT = 1024;
@@ -7,6 +8,20 @@ const normalizeLatticeColumnCount = ( columnCount ) => {
   const parsedValue = parseInt( columnCount, 10 );
 
   return Number.isFinite( parsedValue ) && parsedValue > 0 ? parsedValue : 1;
+};
+
+const normalizeLatticePullForwardWindow = ( value ) => {
+  const parsedValue = Number.parseInt( value, 10 );
+
+  return Number.isFinite( parsedValue )
+    ? Math.min( Math.max( parsedValue, 0 ), MAX_PULL_FORWARD_WINDOW )
+    : DEFAULT_PULL_FORWARD_WINDOW;
+};
+
+const normalizeLatticeSpanPreference = ( value, allowedValues, fallback ) => {
+  const parsedValue = Number.parseInt( value, 10 );
+
+  return allowedValues.includes( parsedValue ) ? parsedValue : fallback;
 };
 
 const hasClass = ( item, className ) => {
@@ -27,7 +42,11 @@ const hasClass = ( item, className ) => {
   return classNames.includes( className );
 };
 
-const getLatticePreferredSpan = ( item, columnCount ) => {
+const getLatticePreferredSpan = ( item, columnCount, {
+  stickyFeatureSize = 2,
+  tallMediaSpan = 2,
+  panoramaSpan = 3,
+} = {} ) => {
   const normalizedColumns = normalizeLatticeColumnCount( columnCount );
 
   if ( 1 === normalizedColumns ) {
@@ -36,20 +55,23 @@ const getLatticePreferredSpan = ( item, columnCount ) => {
 
   let columnSpan = 1;
   let rowSpan = 1;
+  const normalizedStickyFeatureSize = normalizeLatticeSpanPreference( stickyFeatureSize, [ 1, 2 ], 2 );
+  const normalizedTallMediaSpan = normalizeLatticeSpanPreference( tallMediaSpan, [ 1, 2 ], 2 );
+  const normalizedPanoramaSpan = normalizeLatticeSpanPreference( panoramaSpan, [ 2, 3 ], 3 );
 
   if ( hasClass( item, 'is-sticky-post' ) ) {
-    columnSpan = 2;
-    rowSpan = 2;
+    columnSpan = normalizedStickyFeatureSize;
+    rowSpan = normalizedStickyFeatureSize;
   } else if ( hasClass( item, 'format-quote' ) ) {
     columnSpan = 2;
   } else if ( hasClass( item, 'nb-card--no-media' ) ) {
     columnSpan = 1;
   } else if ( hasClass( item, 'nb-card--media-wide' ) ) {
-    columnSpan = 3;
+    columnSpan = normalizedPanoramaSpan;
   } else if ( hasClass( item, 'nb-card--media-landscape' ) ) {
     columnSpan = 2;
   } else if ( hasClass( item, 'nb-card--media-tall' ) ) {
-    rowSpan = 2;
+    rowSpan = normalizedTallMediaSpan;
   }
 
   return {
@@ -201,8 +223,17 @@ const calculateLatticeLayout = ( {
   items = [],
   columnCount,
   pullForwardWindow = DEFAULT_PULL_FORWARD_WINDOW,
+  stickyFeatureSize = 2,
+  tallMediaSpan = 2,
+  panoramaSpan = 3,
 } ) => {
   const normalizedColumns = normalizeLatticeColumnCount( columnCount );
+  const normalizedPullForwardWindow = normalizeLatticePullForwardWindow( pullForwardWindow );
+  const spanPreferences = {
+    stickyFeatureSize,
+    tallMediaSpan,
+    panoramaSpan,
+  };
   const queue = Array.from( items || [] ).map( ( item, sourceIndex ) => ( {
     item,
     sourceIndex,
@@ -213,14 +244,18 @@ const calculateLatticeLayout = ( {
   while ( queue.length ) {
     const position = getFirstGap( occupied, normalizedColumns );
     const maximumCandidateIndex = Math.min(
-      Math.max( parseInt( pullForwardWindow, 10 ) || 0, 0 ),
+      normalizedPullForwardWindow,
       queue.length - 1
     );
     let selectedIndex = -1;
     let selectedSpan = null;
 
     for ( let index = 0; index <= maximumCandidateIndex; index++ ) {
-      const preferredSpan = getLatticePreferredSpan( queue[ index ].item, normalizedColumns );
+      const preferredSpan = getLatticePreferredSpan(
+        queue[ index ].item,
+        normalizedColumns,
+        spanPreferences
+      );
 
       if ( spanFits( occupied, normalizedColumns, position, preferredSpan ) ) {
         selectedIndex = index;
@@ -231,14 +266,22 @@ const calculateLatticeLayout = ( {
 
     if ( -1 === selectedIndex ) {
       selectedIndex = 0;
-      const preferredSpan = getLatticePreferredSpan( queue[0].item, normalizedColumns );
+      const preferredSpan = getLatticePreferredSpan(
+        queue[0].item,
+        normalizedColumns,
+        spanPreferences
+      );
       selectedSpan = getLatticeDemotions( preferredSpan ).find( span => (
         spanFits( occupied, normalizedColumns, position, span )
       ) ) || { columnSpan: 1, rowSpan: 1 };
     }
 
     const [ selected ] = queue.splice( selectedIndex, 1 );
-    const preferredSpan = getLatticePreferredSpan( selected.item, normalizedColumns );
+    const preferredSpan = getLatticePreferredSpan(
+      selected.item,
+      normalizedColumns,
+      spanPreferences
+    );
     const placement = {
       item: selected.item,
       sourceIndex: selected.sourceIndex,
@@ -275,4 +318,5 @@ export {
   getLatticePreferredSpan,
   getResponsiveLatticeColumnCount,
   normalizeLatticeColumnCount,
+  normalizeLatticePullForwardWindow,
 };
