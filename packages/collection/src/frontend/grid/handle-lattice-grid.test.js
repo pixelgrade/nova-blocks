@@ -113,7 +113,8 @@ const createFixture = ( {
       caption.className = 'nb-supernova-item__content--contains-title';
       Object.defineProperty( caption, 'scrollHeight', {
         configurable: true,
-        value: captionHeights[ index ],
+        get: () => 'function' === typeof captionHeights[ index ] ?
+          captionHeights[ index ]() : captionHeights[ index ],
       } );
       card.appendChild( caption );
     }
@@ -306,6 +307,41 @@ describe( 'handleLatticeGrid', () => {
     expect( animationFrames.size ).toBe( 1 );
     flushAnimationFrames();
     expect( layoutCount ).toBe( 2 );
+  } );
+
+  test( 'settles a responsive caption measurement once after the rendered width changes', () => {
+    let measuredCaptionHeight = 50;
+    const { block, grid, setRenderedWidth } = createFixture( {
+      width: 1074,
+      captionHeights: [ () => measuredCaptionHeight ],
+    } );
+    const captionHeights = [];
+    window.addEventListener( 'nb:lattice-layout', event => {
+      captionHeights.push( event.detail.captionHeight );
+    } );
+
+    handleLatticeGrid( grid, block, { columns: 5 } );
+    flushAnimationFrames();
+
+    expect( captionHeights ).toEqual( [ 50 ] );
+
+    setRenderedWidth( 375 );
+    measuredCaptionHeight = 271;
+    window.dispatchEvent( new Event( 'resize' ) );
+    flushAnimationFrames();
+
+    expect( captionHeights ).toEqual( [ 50, 271 ] );
+    expect( animationFrames.size ).toBe( 1 );
+
+    measuredCaptionHeight = 82;
+    flushAnimationFrames();
+
+    expect( captionHeights ).toEqual( [ 50, 271, 82 ] );
+    expect( grid.style.getPropertyValue( '--nb-lattice-caption-height' ) ).toBe( '82px' );
+    expect( animationFrames.size ).toBe( 0 );
+
+    flushAnimationFrames();
+    expect( captionHeights ).toEqual( [ 50, 271, 82 ] );
   } );
 
   test( 'ignores its own ready-class mutation but retains card classification reactivity', () => {

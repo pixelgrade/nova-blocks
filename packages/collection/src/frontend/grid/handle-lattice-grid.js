@@ -103,6 +103,7 @@ const createLatticeGridController = ( grid, initialBlock, initialAttributes ) =>
   let resizeObserver = null;
   let mutationObserver = null;
   let lastContainerWidth = null;
+  let settleAfterResize = false;
   let destroyed = false;
 
   const requestFrame = callback => ownerWindow.requestAnimationFrame( callback );
@@ -238,6 +239,11 @@ const createLatticeGridController = ( grid, initialBlock, initialAttributes ) =>
       columnWidth,
       rowHeight,
     } );
+
+    if ( settleAfterResize ) {
+      settleAfterResize = false;
+      scheduleLayout();
+    }
   };
 
   const scheduleLayout = () => {
@@ -263,6 +269,12 @@ const createLatticeGridController = ( grid, initialBlock, initialAttributes ) =>
       return;
     }
 
+    settleAfterResize = true;
+    scheduleLayout();
+  };
+
+  const scheduleLayoutForViewportResize = () => {
+    settleAfterResize = true;
     scheduleLayout();
   };
 
@@ -307,6 +319,7 @@ const createLatticeGridController = ( grid, initialBlock, initialAttributes ) =>
     }
 
     destroyed = true;
+    settleAfterResize = false;
 
     if ( null !== frameId ) {
       cancelFrame( frameId );
@@ -316,7 +329,7 @@ const createLatticeGridController = ( grid, initialBlock, initialAttributes ) =>
     if ( resizeObserver ) {
       resizeObserver.disconnect();
     }
-    ownerWindow.removeEventListener( 'resize', scheduleLayout );
+    ownerWindow.removeEventListener( 'resize', scheduleLayoutForViewportResize );
 
     if ( mutationObserver ) {
       mutationObserver.disconnect();
@@ -349,7 +362,7 @@ const createLatticeGridController = ( grid, initialBlock, initialAttributes ) =>
     resizeObserver = new ResizeObserverConstructor( scheduleLayoutForResize );
     resizeObserver.observe( grid );
   }
-  ownerWindow.addEventListener( 'resize', scheduleLayout );
+  ownerWindow.addEventListener( 'resize', scheduleLayoutForViewportResize );
 
   if ( 'function' === typeof MutationObserverConstructor ) {
     mutationObserver = new MutationObserverConstructor( refreshForMutations );
