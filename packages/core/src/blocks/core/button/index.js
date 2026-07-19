@@ -14,6 +14,7 @@ const addNovaBlocksSupport = ( settings ) => {
       novaBlocks: {
         colorSignal: {
           attributes: true,
+          activationAttribute: 'useColorSignal',
           controls: true,
           functionalColors: true,
           paletteClassname: true,

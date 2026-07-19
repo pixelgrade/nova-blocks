@@ -124,6 +124,7 @@ Yes! Nova Block's core features are free to use.
 * Fix: Lattice now settles after responsive changes, remains idle after layout, preserves hover transitions, and measures captions from semantic card regions.
 * Fix: Stabilize scrolling media during editor selection and restore Hero content alignment and Doppler viewport positioning.
 * Fix: Keep legacy alignment and spacing compatibility state from rewriting Core block markup or leaking into saved template metadata.
+* Fix: Keep ordinary Core Buttons byte-valid until Color Signal is explicitly enabled.
 
 = 2.3.0 =
 * New: Design Customization now lives in the Styles tab of the block inspector — where WordPress puts design tools — while structural sections (Elements Visibility, Content Type, block Setup/Layout sections) render in the Settings tab.

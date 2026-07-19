@@ -9,7 +9,7 @@ require( './index' );
 const getFilter = namespace => addFilter.mock.calls.find( call => call[ 1 ] === namespace )[ 2 ];
 
 describe( 'core/button Color Signal support', () => {
-	it( 'inherits the surrounding palette and disables sticky source colors', () => {
+	it( 'keeps Color Signal opt-in while inheriting the surrounding palette', () => {
 		const addNovaBlocksSupport = getFilter( 'novablocks/button/alter-support' );
 		const settings = addNovaBlocksSupport( {
 			name: 'core/button',
@@ -17,6 +17,7 @@ describe( 'core/button Color Signal support', () => {
 		} );
 
 		expect( settings.supports.novaBlocks.colorSignal ).toMatchObject( {
+			activationAttribute: 'useColorSignal',
 			inheritParentPalette: true,
 			stickySourceColor: false,
 		} );
