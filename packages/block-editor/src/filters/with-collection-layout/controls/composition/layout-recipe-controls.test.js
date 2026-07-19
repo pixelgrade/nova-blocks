@@ -22,6 +22,14 @@ test( 'a registered recipe does not inherit unrelated base-layout preset cards',
   );
 } );
 
+test( 'a recipe can remove depth presets inherited from its base layout', () => {
+  assert.match( compositionSource, /layoutRecipeSupports\( attributes, recipes, 'pile3d' \)/ );
+  assert.match(
+    compositionSource,
+    /supportsPile3d && DEPTH_PRESETS\[ layoutStyle \]/
+  );
+} );
+
 test( 'a capable recipe exposes a generic standard-versus-layout Header integration control', () => {
   assert.match( settingsSource, /activeRecipe\?\.capabilities\?\.headerIntegration/ );
   assert.match( settingsSource, /label=\{ __\( 'Header Integration'/ );

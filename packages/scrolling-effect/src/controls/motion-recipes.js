@@ -24,7 +24,9 @@ import {
   CardsMotionThumb,
   deriveActivePresetId,
   getManagedAttributes,
+  layoutRecipeSupports,
   MediaMotionThumb,
+  normalizeLayoutRecipes,
   PresetCardsControl,
   TryAndPlay,
   TryAndPlayGroup,
@@ -55,7 +57,10 @@ const MotionRecipes = ( props ) => {
   const novablocksSettings = useSettings();
   const registeredDefaults = useRegisteredAttributeDefaults( name );
 
-  const { hasDoppler, hasCollectionDepth } = getScrollingEffectSupports( supports );
+  const recipes = normalizeLayoutRecipes( novablocksSettings?.collectionLayoutRecipes );
+  const supportsPile3d = layoutRecipeSupports( attributes, recipes, 'pile3d' );
+  const { hasDoppler, hasCollectionDepth: blockSupportsCollectionDepth } = getScrollingEffectSupports( supports );
+  const hasCollectionDepth = blockSupportsCollectionDepth && supportsPile3d;
 
   // Blocks without collection depth don't carry the pile attributes at all,
   // so their recipe bundles must not reference them.

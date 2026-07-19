@@ -12,11 +12,11 @@ const thumbnailSource = fs.readFileSync(
 test('selecting the Parametric style tile clears stale 3D grid state', () => {
   assert.match(
     source,
-    /const getStyleTileAttributes = \( layoutStyle \) => \{[\s\S]*?'parametric' === layoutStyle[\s\S]*?pile3dEffect:\s*false/
+    /getLayoutStyleSelection\( tile\.value, recipes \)/
   );
   assert.match(
     source,
-    /onClick=\{ \(\) => setAttributes\( tile\.recipe[\s\S]*?: getStyleTileAttributes\( tile\.value \) \) \}/
+    /onClick=\{ \(\) => setAttributes\( tile\.recipe[\s\S]*?: getLayoutStyleSelection\( tile\.value, recipes \) \) \}/
   );
 });
 
@@ -25,7 +25,7 @@ test('renders registered layout recipes as first-class composition tiles', () =>
   assert.match( source, /normalizeLayoutRecipes\( settings\?\.collectionLayoutRecipes \)/ );
   assert.match( source, /getSelectedCompositionId\( attributes, recipes \)/ );
   assert.match( source, /recipes\.map/ );
-  assert.match( source, /getLayoutRecipeSelection\( tile\.recipe \)/ );
+  assert.match( source, /getLayoutRecipeSelection\( tile\.recipe, recipes \)/ );
 } );
 
 test('renders Collage recipes with the measured 1400px composition thumbnail', () => {
@@ -51,6 +51,6 @@ test('renders Lattice recipes with the five-column Gallery thumbnail', () => {
 test('selecting a built-in composition clears a previously selected recipe', () => {
   assert.match(
     source,
-    /return \{ layoutStyle, layoutRecipe: '', headerIntegration: 'standard' \}/
+    /getLayoutStyleSelection\( tile\.value, recipes \)/
   );
 } );

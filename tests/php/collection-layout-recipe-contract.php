@@ -17,6 +17,7 @@ function apply_filters( $hook, $value, ...$args ) {
 				'layoutStrategy' => 'lattice',
 				'thumbnail'      => 'lattice',
 				'defaults'       => [ 'columns' => 5 ],
+				'capabilities'   => [ 'pile3d' => false ],
 				'fineTune'       => [
 					[
 						'label'    => 'Lattice Anatomy',
@@ -114,6 +115,10 @@ if ( ! function_exists( 'novablocks_collection_layout_recipe_supports' ) ) {
 	throw new RuntimeException( 'Expected a collection layout recipe capability helper.' );
 }
 
+if ( ! function_exists( 'novablocks_collection_layout_recipe_allows' ) ) {
+	throw new RuntimeException( 'Expected a collection layout recipe rendering-capability helper.' );
+}
+
 if ( ! function_exists( 'novablocks_get_collection_layout_recipe_classes' ) ) {
 	throw new RuntimeException( 'Expected a collection layout recipe class helper.' );
 }
@@ -187,6 +192,45 @@ if ( ! novablocks_collection_layout_recipe_supports( $registered_attributes, 'he
 	|| novablocks_collection_layout_recipe_supports( $registered_attributes, 'unknownCapability' )
 	|| novablocks_collection_layout_recipe_supports( [ 'layoutRecipe' => 'missing-recipe' ], 'headerIntegration' ) ) {
 	throw new RuntimeException( 'Recipe capabilities must resolve only from an authoritative registered recipe.' );
+}
+
+$lattice_attributes = [
+	'layoutStyle'        => 'classic',
+	'layoutRecipe'       => 'anima-lattice',
+	'columns'            => 5,
+	'gridGap'            => 26,
+	'verticalGapModifier' => 1,
+	'pile3dEffect'       => true,
+	'pileParallaxAmount' => 78,
+	'pile3dTarget'       => 'item',
+	'pile3dTargetRule'   => 'odd',
+	'cardLayout'         => 'stacked',
+];
+
+if ( novablocks_collection_layout_recipe_allows( $lattice_attributes, 'pile3d' )
+	|| novablocks_supports_pile_3d_effect( $lattice_attributes )
+	|| novablocks_supports_pile_parallax( $lattice_attributes )
+	|| [] !== novablocks_get_collection_layout_classes( $lattice_attributes )
+	|| in_array( '--nb-grid-spacing-multiplier: 2', novablocks_get_collection_layout_css( $lattice_attributes ), true )
+	|| in_array( '--nb-pile-3d-scale: 0.82', novablocks_get_collection_layout_css( $lattice_attributes ), true ) ) {
+	throw new RuntimeException( 'An active recipe that disables pile3d must suppress stale depth attributes at render time.' );
+}
+
+$legacy_depth_attributes = [
+	'layoutStyle'        => 'classic',
+	'layoutRecipe'       => '',
+	'columns'            => 3,
+	'gridGap'            => 100,
+	'verticalGapModifier' => 1.5,
+	'pile3dEffect'       => true,
+	'pileParallaxAmount' => 78,
+	'cardLayout'         => 'stacked',
+];
+
+if ( ! novablocks_collection_layout_recipe_allows( $legacy_depth_attributes, 'pile3d' )
+	|| ! novablocks_supports_pile_3d_effect( $legacy_depth_attributes )
+	|| ! novablocks_supports_pile_parallax( $legacy_depth_attributes ) ) {
+	throw new RuntimeException( 'Legacy and built-in compositions must retain their existing depth behavior.' );
 }
 
 $classes = novablocks_get_collection_layout_recipe_classes(
@@ -298,6 +342,10 @@ if ( false === strpos( $supernova_source, 'novablocks_get_supernova_data_attribu
 if ( false === strpos( $supernova_source, 'novablocks_get_collection_layout_strategy' )
 	|| false === strpos( $supernova_source, 'data-layout-strategy' ) ) {
 	throw new RuntimeException( 'Supernova rendering must project an active registered placement strategy block-locally.' );
+}
+
+if ( false === strpos( $supernova_source, 'novablocks_supports_pile_parallax( $attributes )' ) ) {
+	throw new RuntimeException( 'Supernova rendering must apply recipe depth capabilities to persisted parallax attributes.' );
 }
 
 $legacy_data_attributes = novablocks_get_supernova_data_attribute_names(

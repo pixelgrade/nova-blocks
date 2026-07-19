@@ -20,6 +20,9 @@ import {
   ControlsSection,
   ControlsTab,
   TryAndPlay,
+  layoutRecipeSupports,
+  normalizeLayoutRecipes,
+  useSettings,
   useSupports,
   withVisibility,
 } from "@novablocks/block-editor";
@@ -36,7 +39,11 @@ const Controls = ( props ) => {
 
   const { attributes, name } = props;
   const supports = useSupports( name );
-  const { hasCollectionDepth } = getScrollingEffectSupports( supports );
+  const settings = useSettings();
+  const recipes = normalizeLayoutRecipes( settings?.collectionLayoutRecipes );
+  const supportsPile3d = layoutRecipeSupports( attributes, recipes, 'pile3d' );
+  const { hasCollectionDepth: blockSupportsCollectionDepth } = getScrollingEffectSupports( supports );
+  const hasCollectionDepth = blockSupportsCollectionDepth && supportsPile3d;
 
   const { showDepthControls, show3dToggle, gateId } = getCardsDepthSupport( attributes );
 

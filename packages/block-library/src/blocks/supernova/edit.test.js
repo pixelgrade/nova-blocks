@@ -54,15 +54,25 @@ test('editor keeps custom Cards Collection in card layout while allowing current
   );
 });
 
-test('editor ignores stale 3D grid state outside stacked Classic Grid and Masonry layouts', () => {
+test('editor ignores stale collection depth state outside supported structures and recipes', () => {
   assert.match(
     source,
-    /const supportsPile3dEffect = \[ 'classic', 'masonry' \]\.includes\( layoutStyle \)\s*&& cardLayout === 'stacked'\s*&& !! pile3dEffect;/
+    /const supportsPile3d = activeLayoutRecipe\?\.capabilities\?\.pile3d !== false;/
+  );
+
+  assert.match(
+    source,
+    /const supportsPile3dEffect = supportsPile3d\s*&& \[ 'classic', 'masonry' \]\.includes\( layoutStyle \)\s*&& cardLayout === 'stacked'\s*&& !! pile3dEffect;/
   );
 
   assert.match(
     source,
     /\{ 'nb-supernova--pile-3d': supportsPile3dEffect \}/
+  );
+
+  assert.match(
+    source,
+    /\{ 'nb-supernova--pile-parallax': supportsPile3d && pileParallaxAmount > 0 \}/
   );
 });
 

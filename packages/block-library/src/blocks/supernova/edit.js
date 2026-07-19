@@ -228,7 +228,9 @@ const SupernovaPreview = props => {
       ? settings?.cardMetadataStyleDefault || 'plain'
       : 'plain'
     : attributes.cardMetadataStyle;
-  const supportsPile3dEffect = [ 'classic', 'masonry' ].includes( layoutStyle )
+  const supportsPile3d = activeLayoutRecipe?.capabilities?.pile3d !== false;
+  const supportsPile3dEffect = supportsPile3d
+    && [ 'classic', 'masonry' ].includes( layoutStyle )
     && cardLayout === 'stacked'
     && !! pile3dEffect;
 
@@ -247,7 +249,7 @@ const SupernovaPreview = props => {
     { 'nb-supernova--aspect-ratio-original': thumbnailAspectRatioString === 'original' },
     { [ `nb-supernova--card-metadata-style-${ cardMetadataStyle }` ]: cardMetadataStyle === 'accent-label' },
     { [ `nb-supernova--card-hover-${ attributes.cardHoverEffect }` ]: !! attributes.cardHoverEffect && attributes.cardHoverEffect !== 'none' },
-    { 'nb-supernova--pile-parallax': pileParallaxAmount > 0 },
+    { 'nb-supernova--pile-parallax': supportsPile3d && pileParallaxAmount > 0 },
     { [ `nb-supernova--card-description-size-${ cardDescriptionSize }` ]: !! cardDescriptionSize && cardDescriptionSize !== 'normal' },
     { 'nb-supernova--pile-3d': supportsPile3dEffect },
     { [ `nb-supernova--pile-3d-target-${ attributes.pile3dTarget }` ]: supportsPile3dEffect },

@@ -19,7 +19,11 @@ import ItemsGapControls from './items-gap-control';
 import VerticalGapModifierControl from './vertical-gap-modifier-control';
 import ItemsAspectRatioControl from './items-aspect-ratio-control';
 import { STYLE_LABELS } from './composition/style-tiles';
-import { getActiveLayoutRecipe, normalizeLayoutRecipes } from './composition/layout-recipes';
+import {
+  getActiveLayoutRecipe,
+  layoutRecipeSupports,
+  normalizeLayoutRecipes,
+} from './composition/layout-recipes';
 
 const SettingsTab = ( props ) => {
   const { attributes, setAttributes } = props;
@@ -38,6 +42,7 @@ const SettingsTab = ( props ) => {
   const supportsItemsGap = false !== activeRecipe?.capabilities?.itemsGap;
   const supportsVerticalGap = false !== activeRecipe?.capabilities?.verticalGap;
   const supportsAspectRatio = false !== activeRecipe?.capabilities?.aspectRatio;
+  const supportsPile3d = layoutRecipeSupports( attributes, recipes, 'pile3d' );
 
   const isParametric = 'parametric' === layoutStyle;
   const isCarousel = 'carousel' === layoutStyle;
@@ -150,9 +155,14 @@ const SettingsTab = ( props ) => {
           />
         </ControlsGroup>
       ) }
-      { isGrid && (
+      { isGrid && supportsPile3d && (
         <SectionLink sectionId={ 'scrolling-effect' }>
           { __( 'Looking for 3D Grid & Depth Parallax? Motion & Effects', '__plugin_txtd' ) }
+        </SectionLink>
+      ) }
+      { isGrid && ! supportsPile3d && (
+        <SectionLink sectionId={ 'scrolling-effect' }>
+          { __( 'Looking for media motion? Motion & Effects', '__plugin_txtd' ) }
         </SectionLink>
       ) }
       { isParametric && (

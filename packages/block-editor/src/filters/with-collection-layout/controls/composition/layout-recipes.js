@@ -1,3 +1,5 @@
+import { getPresetApplyPatch } from '../../../../preset-engine';
+
 const SUPPORTED_BASE_LAYOUTS = [ 'classic', 'masonry', 'carousel', 'parametric' ];
 const SUPPORTED_LAYOUT_STRATEGIES = [ 'lattice' ];
 const RECIPE_ID_PATTERN = /^[a-z0-9]+(?:-[a-z0-9]+)*$/;
@@ -152,21 +154,60 @@ export const normalizeLayoutRecipes = ( recipes ) => {
   }, [] );
 };
 
-export const getLayoutRecipeSelection = ( recipe ) => ( {
-  ...( recipe?.defaults || {} ),
+export const getLayoutRecipeManagedAttributes = ( recipes ) => {
+  const managedAttributes = [];
+  const registeredAttributes = new Set();
+
+  ( Array.isArray( recipes ) ? recipes : [] ).forEach( recipe => {
+    Object.keys( recipe?.defaults || {} ).forEach( attribute => {
+      if ( ! registeredAttributes.has( attribute ) ) {
+        registeredAttributes.add( attribute );
+        managedAttributes.push( attribute );
+      }
+    } );
+  } );
+
+  return managedAttributes;
+};
+
+const getLayoutRecipeResetPatch = ( recipe, recipes ) => getPresetApplyPatch( {
+  id: recipe?.id || '',
+  managedAttributes: getLayoutRecipeManagedAttributes( recipes ),
+  values: recipe?.defaults || {},
+} );
+
+export const getLayoutRecipeSelection = ( recipe, recipes = [ recipe ] ) => ( {
+  ...getLayoutRecipeResetPatch( recipe, recipes ),
+  ...( false === recipe?.capabilities?.pile3d
+    ? { pile3dEffect: false, pileParallaxAmount: 0 }
+    : {} ),
   layoutStyle: recipe?.baseLayout || 'classic',
   layoutRecipe: recipe?.id || '',
 } );
 
-export const getSelectedCompositionId = ( attributes, recipes ) => {
-  const layoutRecipe = attributes?.layoutRecipe || '';
-  const hasRecipe = recipes.some( recipe => recipe.id === layoutRecipe );
+export const getLayoutStyleSelection = ( layoutStyle, recipes ) => ( {
+  ...getLayoutRecipeResetPatch( null, recipes ),
+  layoutStyle,
+  layoutRecipe: '',
+  headerIntegration: 'standard',
+  ...( 'parametric' === layoutStyle ? { pile3dEffect: false } : {} ),
+} );
 
-  return hasRecipe ? layoutRecipe : attributes?.layoutStyle;
+export const getSelectedCompositionId = ( attributes, recipes ) => {
+  const activeRecipe = getActiveLayoutRecipe( attributes, recipes );
+
+  return activeRecipe ? activeRecipe.id : attributes?.layoutStyle;
 };
 
 export const getActiveLayoutRecipe = ( attributes, recipes ) => {
   const layoutRecipe = attributes?.layoutRecipe || '';
+  const layoutStyle = attributes?.layoutStyle || '';
 
-  return recipes.find( recipe => recipe.id === layoutRecipe ) || null;
+  return recipes.find( recipe => recipe.id === layoutRecipe && recipe.baseLayout === layoutStyle ) || null;
+};
+
+export const layoutRecipeSupports = ( attributes, recipes, capability ) => {
+  const activeRecipe = getActiveLayoutRecipe( attributes, recipes );
+
+  return ! activeRecipe || false !== activeRecipe?.capabilities?.[ capability ];
 };

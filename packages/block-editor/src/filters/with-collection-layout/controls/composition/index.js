@@ -27,7 +27,11 @@ import {
 import parametricPresets from '../presets';
 import { getRandomAttributes } from '../../utils';
 import StyleTiles, { STYLE_LABELS } from './style-tiles';
-import { getActiveLayoutRecipe, normalizeLayoutRecipes } from './layout-recipes';
+import {
+  getActiveLayoutRecipe,
+  layoutRecipeSupports,
+  normalizeLayoutRecipes,
+} from './layout-recipes';
 import {
   CLASSIC_PRESETS,
   MASONRY_PRESETS,
@@ -76,6 +80,7 @@ const CompositionTab = ( props ) => {
   const settings = useSettings();
   const recipes = normalizeLayoutRecipes( settings?.collectionLayoutRecipes );
   const activeRecipe = getActiveLayoutRecipe( attributes, recipes );
+  const supportsPile3d = layoutRecipeSupports( attributes, recipes, 'pile3d' );
 
   const freePresets = useMemo(
     () => ( activeRecipe ? null : FREE_PRESETS[ layoutStyle ]
@@ -84,8 +89,10 @@ const CompositionTab = ( props ) => {
     [ activeRecipe, layoutStyle ]
   );
   const depthPresets = useMemo(
-    () => ( DEPTH_PRESETS[ layoutStyle ] ? withThumbnails( DEPTH_PRESETS[ layoutStyle ] ) : null ),
-    [ layoutStyle ]
+    () => ( supportsPile3d && DEPTH_PRESETS[ layoutStyle ]
+      ? withThumbnails( DEPTH_PRESETS[ layoutStyle ] )
+      : null ),
+    [ layoutStyle, supportsPile3d ]
   );
 
   const styleLabel = activeRecipe?.label || STYLE_LABELS[ layoutStyle ] || layoutStyle;

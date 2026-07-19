@@ -1,7 +1,9 @@
 import {
   getActiveLayoutRecipe,
   getLayoutRecipeSelection,
+  getLayoutStyleSelection,
   getSelectedCompositionId,
+  layoutRecipeSupports,
   normalizeLayoutRecipes,
 } from './layout-recipes';
 import layoutAttributes from '../../attributes.json';
@@ -16,6 +18,7 @@ describe( 'collection layout recipes', () => {
       columns: 4,
       columnsFitMinWidth: 420,
       thumbnailAspectRatioString: 'original',
+      cardHoverEffect: 'reveal',
     },
     capabilities: {
       headerIntegration: true,
@@ -152,8 +155,50 @@ describe( 'collection layout recipes', () => {
       columns: 4,
       columnsFitMinWidth: 420,
       thumbnailAspectRatioString: 'original',
+      cardHoverEffect: 'reveal',
       layoutStyle: 'masonry',
       layoutRecipe: 'anima-collage',
+    } );
+  } );
+
+  test( 'selecting a recipe clears defaults owned only by another registered recipe', () => {
+    const recipes = normalizeLayoutRecipes( [
+      animaRecipe,
+      {
+        id: 'anima-broadsheet',
+        label: 'Broadsheet',
+        baseLayout: 'classic',
+        defaults: {
+          columns: 4,
+          gridGap: 30,
+          verticalGapModifier: 1.5,
+        },
+      },
+    ] );
+
+    expect( getLayoutRecipeSelection( recipes[1], recipes ) ).toStrictEqual( {
+      columns: 4,
+      columnsFitMinWidth: undefined,
+      thumbnailAspectRatioString: undefined,
+      gridGap: 30,
+      verticalGapModifier: 1.5,
+      cardHoverEffect: undefined,
+      layoutStyle: 'classic',
+      layoutRecipe: 'anima-broadsheet',
+    } );
+  } );
+
+  test( 'selecting a built-in style clears every registered recipe-owned default in one patch', () => {
+    const recipes = normalizeLayoutRecipes( [ animaRecipe ] );
+
+    expect( getLayoutStyleSelection( 'classic', recipes ) ).toStrictEqual( {
+      columns: undefined,
+      columnsFitMinWidth: undefined,
+      thumbnailAspectRatioString: undefined,
+      cardHoverEffect: undefined,
+      layoutStyle: 'classic',
+      layoutRecipe: '',
+      headerIntegration: 'standard',
     } );
   } );
 
@@ -179,6 +224,38 @@ describe( 'collection layout recipes', () => {
       layoutStyle: 'masonry',
       layoutRecipe: 'missing-recipe',
     }, recipes ) ).toBeNull();
+
+    expect( getActiveLayoutRecipe( {
+      layoutStyle: 'classic',
+      layoutRecipe: 'anima-collage',
+    }, recipes ) ).toBeNull();
+  } );
+
+  test( 'an active recipe can explicitly disable a base-layout capability', () => {
+    const recipes = normalizeLayoutRecipes( [ {
+      ...animaRecipe,
+      capabilities: { pile3d: false },
+    } ] );
+
+    expect( layoutRecipeSupports( {
+      layoutStyle: 'masonry',
+      layoutRecipe: 'anima-collage',
+    }, recipes, 'pile3d' ) ).toBe( false );
+
+    expect( layoutRecipeSupports( {
+      layoutStyle: 'classic',
+      layoutRecipe: 'anima-collage',
+    }, recipes, 'pile3d' ) ).toBe( true );
+
+    expect( layoutRecipeSupports( {
+      layoutStyle: 'masonry',
+      layoutRecipe: '',
+    }, recipes, 'pile3d' ) ).toBe( true );
+
+    expect( getLayoutRecipeSelection( recipes[0], recipes ) ).toEqual( expect.objectContaining( {
+      pile3dEffect: false,
+      pileParallaxAmount: 0,
+    } ) );
   } );
 
   test( 'rejects malformed recipes and unsupported base layouts', () => {

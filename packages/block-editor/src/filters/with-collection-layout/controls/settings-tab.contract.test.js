@@ -24,3 +24,10 @@ test( 'Settings derives the active recipe column range and hides seam-breaking c
   assert.match( settingsSource, /isGrid && supportsAspectRatio && \([\s\S]*?<ItemsAspectRatioControl/ );
   assert.doesNotMatch( settingsSource, /supportsHoverEffect|cardHoverEffect|Card Hover Effect/ );
 } );
+
+test( 'Settings does not advertise card depth when the active recipe disables it', () => {
+  assert.match( settingsSource, /layoutRecipeSupports\( attributes, recipes, 'pile3d' \)/ );
+  assert.match( settingsSource, /isGrid && supportsPile3d && \(/ );
+  assert.match( settingsSource, /isGrid && ! supportsPile3d && \(/ );
+  assert.match( settingsSource, /Looking for media motion\? Motion & Effects/ );
+} );

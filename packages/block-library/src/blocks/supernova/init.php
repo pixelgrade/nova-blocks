@@ -129,7 +129,7 @@ if ( ! function_exists( 'novablocks_render_supernova_block' ) ) {
 			$classes[] = 'nb-supernova--aspect-ratio-original';
 		}
 
-		if ( ! empty( $attributes['pileParallaxAmount'] ) && $attributes['pileParallaxAmount'] > 0 ) {
+		if ( novablocks_supports_pile_parallax( $attributes ) ) {
 			$classes[] = 'nb-supernova--pile-parallax';
 		}
 

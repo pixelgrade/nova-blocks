@@ -1,12 +1,16 @@
-const supportsPile3dEffect = ( { layoutStyle, cardLayout, pile3dEffect } ) => {
-  return [ 'classic', 'masonry' ].includes( layoutStyle )
+const supportsPile3dEffect = (
+  { layoutStyle, cardLayout, pile3dEffect },
+  { supportsPile3d = true } = {}
+) => {
+  return supportsPile3d
+    && [ 'classic', 'masonry' ].includes( layoutStyle )
     && 'stacked' === cardLayout
     && !! pile3dEffect;
 };
 
-const getCollectionLayoutCustomProperties = ( attributes ) => {
+const getCollectionLayoutCustomProperties = ( attributes, options ) => {
   const { columns, gridGap, verticalGapModifier } = attributes;
-  const hasPile3dEffect = supportsPile3dEffect( attributes );
+  const hasPile3dEffect = supportsPile3dEffect( attributes, options );
 
   return {
     '--nb-collection-columns-count': columns,

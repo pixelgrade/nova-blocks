@@ -20,6 +20,7 @@ import {
 } from '../../../../components/preset-cards/thumbnails';
 import {
   getLayoutRecipeSelection,
+  getLayoutStyleSelection,
   getSelectedCompositionId,
   normalizeLayoutRecipes,
 } from './layout-recipes';
@@ -29,19 +30,6 @@ export const STYLE_LABELS = {
   masonry: __( 'Masonry', '__plugin_txtd' ),
   carousel: __( 'Carousel', '__plugin_txtd' ),
   parametric: __( 'Parametric Grid', '__plugin_txtd' ),
-};
-
-const getStyleTileAttributes = ( layoutStyle ) => {
-  if ( 'parametric' === layoutStyle ) {
-    return {
-      layoutStyle,
-      layoutRecipe: '',
-      headerIntegration: 'standard',
-      pile3dEffect: false,
-    };
-  }
-
-  return { layoutStyle, layoutRecipe: '', headerIntegration: 'standard' };
 };
 
 const getRecipeThumbnail = ( recipe, attributes ) => {
@@ -94,8 +82,8 @@ const StyleTiles = ( { attributes, setAttributes } ) => {
           className={ 'nb-style-tile' + ( selectedCompositionId === tile.value ? ' is-selected' : '' ) }
           aria-pressed={ selectedCompositionId === tile.value }
           onClick={ () => setAttributes( tile.recipe
-            ? getLayoutRecipeSelection( tile.recipe )
-            : getStyleTileAttributes( tile.value ) ) }
+            ? getLayoutRecipeSelection( tile.recipe, recipes )
+            : getLayoutStyleSelection( tile.value, recipes ) ) }
         >
           { ( 'parametric' === tile.value || tile.gateId ) && (
             <PlusBadge gateId={ tile.gateId || 'parametric-layout' } />

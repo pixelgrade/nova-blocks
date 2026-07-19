@@ -1043,9 +1043,16 @@ function novablocks_get_sizing_css( array $attributes ): array {
 }
 
 function novablocks_supports_pile_3d_effect( array $attributes ): bool {
-	return ! empty( $attributes['pile3dEffect'] )
+	return novablocks_collection_layout_recipe_allows( $attributes, 'pile3d' )
+	       && ! empty( $attributes['pile3dEffect'] )
 	       && in_array( $attributes['layoutStyle'] ?? '', [ 'classic', 'masonry' ], true )
 	       && ( $attributes['cardLayout'] ?? '' ) === 'stacked';
+}
+
+function novablocks_supports_pile_parallax( array $attributes ): bool {
+	return novablocks_collection_layout_recipe_allows( $attributes, 'pile3d' )
+	       && ! empty( $attributes['pileParallaxAmount'] )
+	       && $attributes['pileParallaxAmount'] > 0;
 }
 
 function novablocks_get_collection_layout_css( array $attributes ): array {

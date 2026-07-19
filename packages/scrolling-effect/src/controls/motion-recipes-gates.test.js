@@ -4,6 +4,25 @@ const fs = require('node:fs');
 const path = require('node:path');
 
 const source = fs.readFileSync(path.join(__dirname, 'motion-recipes.js'), 'utf8');
+const controlsSource = fs.readFileSync(path.join(__dirname, 'index.js'), 'utf8');
+
+test('the active collection recipe capability governs every cards-motion surface', () => {
+  [ source, controlsSource ].forEach((currentSource) => {
+    assert.match(currentSource, /normalizeLayoutRecipes/);
+    assert.match(currentSource, /layoutRecipeSupports/);
+    assert.match(currentSource, /collectionLayoutRecipes/);
+    assert.match(currentSource, /'pile3d'/);
+  });
+
+  assert.match(
+    source,
+    /const hasCollectionDepth = blockSupportsCollectionDepth && supportsPile3d/
+  );
+  assert.match(
+    controlsSource,
+    /const hasCollectionDepth = blockSupportsCollectionDepth && supportsPile3d/
+  );
+});
 
 test('card-depth motion recipes use advanced-controls trial gates', () => {
   assert.match(

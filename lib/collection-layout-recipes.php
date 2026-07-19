@@ -229,6 +229,10 @@ function novablocks_get_collection_layout_recipe( string $recipe_id ): ?array {
  */
 function novablocks_get_active_collection_layout_recipe( array $attributes ): ?array {
 	$recipe_id = is_string( $attributes['layoutRecipe'] ?? null ) ? $attributes['layoutRecipe'] : '';
+	if ( '' === $recipe_id ) {
+		return null;
+	}
+
 	$recipe    = novablocks_get_collection_layout_recipe( $recipe_id );
 
 	if ( null === $recipe ) {
@@ -265,4 +269,22 @@ function novablocks_collection_layout_recipe_supports( array $attributes, string
 	$recipe = novablocks_get_active_collection_layout_recipe( $attributes );
 
 	return null !== $recipe && ! empty( $recipe['capabilities'][ $capability ] );
+}
+
+/**
+ * Checks whether an active recipe permits a rendering capability.
+ *
+ * Built-in layouts and recipes that do not explicitly disable a capability
+ * retain the existing rendering behavior. This differs from
+ * novablocks_collection_layout_recipe_supports(), which checks whether a
+ * recipe explicitly opts into a capability.
+ *
+ * @param array  $attributes Collection attributes.
+ * @param string $capability Capability key.
+ * @return bool Whether rendering may use the capability.
+ */
+function novablocks_collection_layout_recipe_allows( array $attributes, string $capability ): bool {
+	$recipe = novablocks_get_active_collection_layout_recipe( $attributes );
+
+	return null === $recipe || false !== ( $recipe['capabilities'][ $capability ] ?? null );
 }
