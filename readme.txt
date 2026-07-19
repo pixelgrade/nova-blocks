@@ -3,7 +3,7 @@ Contributors: pixelgrade, vlad.olaru, babbardel, razvanonofrei, gorby31
 Tags: blocks, gutenberg, gutenberg blocks, page builder, full site editing
 Requires at least: 7.0
 Tested up to: 7.0
-Stable tag: 2.3.0
+Stable tag: 2.4.0
 Requires PHP: 7.4
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -113,6 +113,17 @@ Yes! Nova Block's core features are free to use.
 3. Slideshow Me the Way block options
 
 == Changelog ==
+
+= 2.4.0 =
+* New: Lattice and Broadsheet composition recipes for Cards Collection, including responsive Lattice placement, caption shelves, and recipe-declared Fine-tune controls.
+* New: A managed preset engine for Space and Sizing, Shape Modeling, Motion and Effects, Color Signal row surfaces, and Cards Collection card styles. Preset changes now clear stale managed values in one undo-safe update.
+* New: Global Site Identity, Site Title, and Site Tagline design support, including responsive text wordmarks and semantic header divider controls.
+* New: Live focal-point previews while adjusting scrolling-media start and end frames.
+* Improved: Cards Collection composition changes reset recipe-owned attributes and honor each recipe's depth capabilities across controls, editor rendering, and frontend rendering.
+* Improved: Color Signal inheritance, Post Terms color controls, card semantic regions, and editor selection stability across shared design controls.
+* Fix: Lattice now settles after responsive changes, remains idle after layout, preserves hover transitions, and measures captions from semantic card regions.
+* Fix: Stabilize scrolling media during editor selection and restore Hero content alignment and Doppler viewport positioning.
+* Fix: Keep legacy alignment and spacing compatibility state from rewriting Core block markup or leaking into saved template metadata.
 
 = 2.3.0 =
 * New: Design Customization now lives in the Styles tab of the block inspector — where WordPress puts design tools — while structural sections (Elements Visibility, Content Type, block Setup/Layout sections) render in the Settings tab.

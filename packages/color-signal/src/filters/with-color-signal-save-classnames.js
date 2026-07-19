@@ -5,8 +5,8 @@ import { getSupports } from "@novablocks/block-editor";
 import { getColorSignalClassnames } from "../utils";
 
 const withColorSignalSaveClassnames = ( extraProps, blockType, attributes ) => {
-  if ( attributes?.metadata?.__novablocksLegacySpacing?.noSpacingMarkup
-    && ! attributes?.metadata?.__novablocksLegacySpacing?.hasColorSignalMarkup ) {
+  if ( attributes?.__novablocksLegacySpacing?.noSpacingMarkup
+    && ! attributes?.__novablocksLegacySpacing?.hasColorSignalMarkup ) {
     return extraProps;
   }
 

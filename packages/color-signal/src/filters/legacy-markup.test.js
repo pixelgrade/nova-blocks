@@ -15,13 +15,13 @@ const dataAttributesSource = fs.readFileSync(
 test( 'Color Signal class augmentation preserves styleless legacy markup', () => {
   assert.match(
     classnamesSource,
-    /if \( attributes\?\.metadata\?\.__novablocksLegacySpacing\?\.noSpacingMarkup[\s\S]*?! attributes\?\.metadata\?\.__novablocksLegacySpacing\?\.hasColorSignalMarkup \) \{[\s\S]*?return extraProps;[\s\S]*?\}/
+    /if \( attributes\?\.__novablocksLegacySpacing\?\.noSpacingMarkup[\s\S]*?! attributes\?\.__novablocksLegacySpacing\?\.hasColorSignalMarkup \) \{[\s\S]*?return extraProps;[\s\S]*?\}/
   );
 } );
 
 test( 'Color Signal data augmentation preserves styleless legacy markup', () => {
   assert.match(
     dataAttributesSource,
-    /if \( attributes\?\.metadata\?\.__novablocksLegacySpacing\?\.noSpacingMarkup[\s\S]*?! attributes\?\.metadata\?\.__novablocksLegacySpacing\?\.hasColorSignalMarkup \) \{[\s\S]*?return element;[\s\S]*?\}/
+    /if \( attributes\?\.__novablocksLegacySpacing\?\.noSpacingMarkup[\s\S]*?! attributes\?\.__novablocksLegacySpacing\?\.hasColorSignalMarkup \) \{[\s\S]*?return element;[\s\S]*?\}/
   );
 } );

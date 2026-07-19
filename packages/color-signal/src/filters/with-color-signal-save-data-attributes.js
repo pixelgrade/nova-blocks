@@ -3,8 +3,8 @@ import { isColorSignalActive } from "../utils";
 
 const withColorSignalSaveDataAttributes = ( element, blockType, attributes ) => {
 
-  if ( attributes?.metadata?.__novablocksLegacySpacing?.noSpacingMarkup
-    && ! attributes?.metadata?.__novablocksLegacySpacing?.hasColorSignalMarkup ) {
+  if ( attributes?.__novablocksLegacySpacing?.noSpacingMarkup
+    && ! attributes?.__novablocksLegacySpacing?.hasColorSignalMarkup ) {
     return element;
   }
 

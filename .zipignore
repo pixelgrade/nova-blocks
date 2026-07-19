@@ -52,6 +52,9 @@ tests
 **/tests
 Tests
 **/Tests
+**/*.test.js
+**/*.test.cjs
+**/*.test.php
 example
 **/example
 examples

@@ -9,7 +9,7 @@ const withSpaceAndSizingSaveCustomProps = ( extraProps, blockType, attributes ) 
     return extraProps;
   }
 
-  const legacySpacingFlags = attributes?.metadata?.__novablocksLegacySpacing;
+  const legacySpacingFlags = attributes?.__novablocksLegacySpacing;
 
   // Content saved before this feature existed carries none of the --nb-*
   // custom properties; leave it untouched instead of injecting a manufactured

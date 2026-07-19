@@ -69,7 +69,7 @@ else
 fi
 
 # --- Private/dev files must not ship ------------------------------------------
-DENYLIST='nova-blocks/AGENTS|nova-blocks/CLAUDE\.md|nova-blocks/\.ai/|nova-blocks/\.claude|nova-blocks/\.env|napkin\.md|nova-blocks/node_modules/|nova-blocks/\.git|nova-blocks/package\.json|nova-blocks/CHANGELOG\.md'
+DENYLIST='nova-blocks/AGENTS|nova-blocks/CLAUDE\.md|nova-blocks/\.ai/|nova-blocks/\.claude|nova-blocks/\.env|napkin\.md|nova-blocks/node_modules/|nova-blocks/\.git|nova-blocks/package\.json|nova-blocks/CHANGELOG\.md|nova-blocks/.+\.test\.(js|cjs|php)'
 LEAKS="$( printf '%s\n' "$LISTING" | grep -E "$DENYLIST" || true )"
 if [ -n "$LEAKS" ]; then
 	err "private/dev files leaked into the zip:"
