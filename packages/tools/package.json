@@ -18,11 +18,12 @@
 		"url": "https://github.com/pixelgrade/nova-blocks/issues"
 	},
 	"dependencies": {
-		"@wordpress/components": "^19.8.0",
-		"@wordpress/edit-post": "^6.3.0",
+		"@wordpress/block-editor": "^8.5.0",
+		"@wordpress/blocks": "^11.5.0",
+		"@wordpress/data": "^6.6.0",
 		"@wordpress/element": "^4.4.0",
 		"@wordpress/i18n": "^4.6.0",
-		"@wordpress/icons": "^8.2.0",
+		"@wordpress/notices": "^3.6.0",
 		"@wordpress/plugins": "^4.4.0"
 	},
 	"overrides": {

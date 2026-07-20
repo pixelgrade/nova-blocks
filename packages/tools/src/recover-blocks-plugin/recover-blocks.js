@@ -1,87 +1,29 @@
-const recursivelyRecoverInvalidBlockList = blocks => {
-  const _blocks = [ ...blocks ];
-  let recoveryCalled = false;
-  const recursivelyRecoverBlocks = willRecoverBlocks => {
-    willRecoverBlocks.forEach( _block => {
-      if ( isInvalid( _block ) ) {
-        recoveryCalled = true;
-        const newBlock = recoverBlock( _block );
-        for ( const key in newBlock ) {
-          _block[ key ] = newBlock[ key ]
-        }
-      }
+import { store as blockEditorStore } from '@wordpress/block-editor';
+import { createBlock } from '@wordpress/blocks';
+import { dispatch, select } from '@wordpress/data';
 
-      if ( _block.innerBlocks.length ) {
-        recursivelyRecoverBlocks( _block.innerBlocks )
-      }
-    } )
-  };
-
-  recursivelyRecoverBlocks( _blocks );
-  return [ _blocks, recoveryCalled ]
-};
-
-const recoverBlock = ( { name, attributes, innerBlocks } ) =>
-  wp.blocks.createBlock( name, attributes, innerBlocks );
-
-const recoverBlocks = blocks => {
-  return blocks.map( _block => {
-    const block = _block;
-
-    // If the block is a reusable block, recover the Stackable blocks inside it.
-    if ( _block.name === 'core/block' ) {
-      const { attributes: { ref } } = _block;
-      const parsedBlocks = wp.blocks.parse( wp.data.select( 'core' ).getEntityRecords( 'postType', 'wp_block', { include: [ ref ] } )?.[ 0 ]?.content?.raw ) || [];
-
-      const [ recoveredBlocks, recoveryCalled ] = recursivelyRecoverInvalidBlockList( parsedBlocks );
-
-      if ( recoveryCalled ) {
-        console.log( 'Stackable notice: block ' + block.name + ' (' + block.clientId + ') was auto-recovered, you should not see this after saving your page.' ); // eslint-disable-line no-console
-        return {
-          blocks: recoveredBlocks,
-          isReusable: true,
-          ref,
-        }
-      }
-    }
-
-    if ( block.innerBlocks && block.innerBlocks.length ) {
-      const newInnerBlocks = recoverBlocks( block.innerBlocks );
-      if ( newInnerBlocks.some( block => block.recovered ) ) {
-        block.innerBlocks = newInnerBlocks;
-        block.replacedClientId = block.clientId;
-        block.recovered = true
-      }
-    }
-
-    if ( ! block.isValid ) {
-      const newBlock = recoverBlock( block );
-      newBlock.replacedClientId = block.clientId;
-      newBlock.recovered = true;
-      console.log( 'Stackable notice: block ' + block.name + ' (' + block.clientId + ') was auto-recovered, you should not see this after saving your page.' ); // eslint-disable-line no-console
-
-      return newBlock
-    }
-
-    return block
-  } )
-};
-
+/**
+ * Re-create every invalid block from its parsed attributes and inner blocks —
+ * the same operation as core's per-block "Attempt recovery" button, applied to
+ * the whole document.
+ *
+ * Works on the live block-editor store; the editor store's block list selector
+ * must not be used here because on an unedited post it re-parses the content
+ * into a detached tree whose clientIds make replaceBlock a silent no-op.
+ *
+ * @return {number} The number of blocks a recovery was attempted for.
+ */
 export const recoverAllBlocks = () => {
-  // Recover all the blocks that we can find.
-  const mainBlocks = recoverBlocks( wp.data.select( 'core/editor' ).getEditorBlocks() );
-  // Replace the recovered blocks with the new ones.
-  mainBlocks.forEach( block => {
-    if ( block.isReusable && block.ref ) {
-      // Update the reusable blocks.
-      wp.data.dispatch( 'core' ).editEntityRecord( 'postType', 'wp_block', block.ref, { content: wp.blocks.serialize( block.blocks ) } ).then( () => {
-        // But don't save them, let the user do the saving themselves. Our goal is to get rid of the block error visually.
-        // dispatch( 'core' ).saveEditedEntityRecord( 'postType', 'wp_block', block.ref )
-      } )
-    }
+  const { getBlock, getClientIdsWithDescendants, isBlockValid } = select( blockEditorStore );
+  const { replaceBlock } = dispatch( blockEditorStore );
 
-    if ( block.recovered && block.replacedClientId ) {
-      wp.data.dispatch( 'core/block-editor' ).replaceBlock( block.replacedClientId, block )
-    }
-  } )
+  const invalidClientIds = getClientIdsWithDescendants().filter( clientId => ! isBlockValid( clientId ) );
+
+  // Deepest blocks first, so replacing a parent cannot orphan a pending child replacement.
+  invalidClientIds.slice().reverse().forEach( clientId => {
+    const { name, attributes, innerBlocks } = getBlock( clientId );
+    replaceBlock( clientId, createBlock( name, attributes, innerBlocks ) );
+  } );
+
+  return invalidClientIds.length;
 };
