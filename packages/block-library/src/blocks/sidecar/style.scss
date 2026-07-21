@@ -33,15 +33,8 @@
   order: -1;
 }
 
-.break-align-left {
-  --block-wide-start: ws;
-  --block-full-start: fs;
-}
-
-.break-align-right {
-  --block-wide-end: we;
-  --block-full-end: fe;
-}
+// The .break-align-* var rules live ONLY in core's _layout.scss now
+// (via the nb-break-align-vars mixin) — do not re-declare them here.
 
 // Default sidebar position is on the right, so it will be positioned between [ge] and block-limit-right.
 @include above(lap) {
@@ -80,6 +73,66 @@
       --block-content-end: we;
       //--block-right-start: var(--block-content-start);
     }
+  }
+
+  // Break-system layers 1 + 2 (zero runtime JS) — keep AFTER the
+  // position-narrowing rules above: the plain rail-absence rules tie them at
+  // (0,2,0) and must win by order once Phase 4 allows a position class and an
+  // absence class on the same side to coexist.
+  //
+  // Layer 1 (server-known): PHP emits nb-sidecar--no-left/right-rail when the
+  // side has no rail, so the missing side's break vars are open on the whole
+  // content area without measurement.
+  // Layer 2 (CSS-known): a rail that EXISTS but has no element children —
+  // `:not(:has(*))` rather than `:empty` because serialized block markup puts
+  // whitespace text nodes inside "empty" areas. With the current two-area
+  // model the side comes from the parent's position class.
+  // Layer 1 (server-known absence) and layer 2 (CSS-known empty rail).
+  // The contract is "this side's rail imposes NO narrowing", expressed with
+  // the `inherit` keyword — NEVER with the root lines (ws/fs/we/fe):
+  // a nested Sidecar's content area INHERITS the outer area's narrowing
+  // (e.g. wide-start: cs while an outer left rail is occupied), and an
+  // absence flip on the inner sidecar must let that outer constraint flow
+  // through, not blow past it (a hard `ws` here detached the nested-hive
+  // inner column from the outer rail's boundary — caught by the harness).
+  // In the two-area model a missing side is never the narrowed side, so the
+  // layer-1 rules are exact no-ops today; they are the stable per-side
+  // contract Phase 4's three-area model builds on (and the skip signal for
+  // the JS measurement layer).
+  .nb-sidecar--no-left-rail > .nb-sidecar-area--content {
+    --block-wide-start: inherit;
+    --block-full-start: inherit;
+  }
+
+  .nb-sidecar--no-right-rail > .nb-sidecar-area--content {
+    --block-wide-end: inherit;
+    --block-full-end: inherit;
+  }
+
+  // Layer 2: the rail exists but has no element children, so wide/full
+  // blocks may extend over it without JS. CAREFUL x3:
+  // - On positioned sidecars --block-content-start/end ALIAS the wide vars
+  //   (the :not(--sidebar-none) rule above), so flipping the narrowed side
+  //   must simultaneously pin that side's content var to its pre-flip value —
+  //   otherwise body copy reflows into the empty rail instead of only the
+  //   aligned blocks extending over it (identical geometry to what the JS
+  //   layer produces block by block is the contract here).
+  // - "no element children" must be `:not(:has(> .nb-sidecar-area--sidebar > *))`
+  //   on the SIDECAR — `:has()` may NOT nest inside `:has()` (the design
+  //   doc's literal `.nb-sidecar:has(> .rail:not(:has(*)))` is invalid CSS
+  //   and silently never matches; the no-js harness run caught it after the
+  //   JS layer had masked it), and `:empty` is defeated by the whitespace
+  //   text nodes serialized block markup leaves inside "empty" areas.
+  .nb-sidecar--sidebar-left:not(:has(> .nb-sidecar-area--sidebar > *)) > .nb-sidecar-area--content {
+    --block-wide-start: inherit;
+    --block-full-start: inherit;
+    --block-content-start: cs;
+  }
+
+  .nb-sidecar--sidebar-right:not(:has(> .nb-sidecar-area--sidebar > *)) > .nb-sidecar-area--content {
+    --block-wide-end: inherit;
+    --block-full-end: inherit;
+    --block-content-end: ce;
   }
 }
 

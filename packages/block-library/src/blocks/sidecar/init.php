@@ -54,6 +54,18 @@ if ( ! function_exists( 'novablocks_render_sidecar_block' ) ) {
 			'alignfull'
 		], novablocks_get_color_signal_classes( $attributes ) );
 
+		// Server-known rail absence (break-system layer 1): a rail that does
+		// not exist is known at render time, so CSS can flip that side's
+		// break vars with zero runtime JS. With the current two-area block
+		// model, absence is derived from sidebarPosition; once explicit
+		// per-side areas land (Phase 4) it derives from the actual areas.
+		if ( 'left' !== $attributes['sidebarPosition'] ) {
+			$classes[] = 'nb-sidecar--no-left-rail';
+		}
+		if ( 'right' !== $attributes['sidebarPosition'] ) {
+			$classes[] = 'nb-sidecar--no-right-rail';
+		}
+
 		if ( ! empty( $attributes['lastItemIsSticky'] ) ) {
 			$classes[] = 'nb-sidecar--sticky-sidebar';
 		}

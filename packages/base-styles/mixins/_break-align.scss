@@ -1,0 +1,20 @@
+// Break-align classes: the JS geometry layer (break-system layer 3) marks an
+// aligned block whose extension would not collide with rail content. The
+// classes flip that BLOCK's own break vars; the server-known (rail-absence
+// classes) and CSS-known (:has() empty-rail) layers flip the same vars at the
+// content-area level instead — see sidecar/style.scss.
+//
+// Single source: emitted ONCE from packages/core/src/scss/_layout.scss
+// (core styles load wherever blocks render, frontend and editor). Do not
+// re-declare these rules in block stylesheets.
+@mixin nb-break-align-vars {
+  .break-align-left {
+    --block-wide-start: ws;
+    --block-full-start: fs;
+  }
+
+  .break-align-right {
+    --block-wide-end: we;
+    --block-full-end: fe;
+  }
+}

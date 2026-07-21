@@ -34,6 +34,10 @@ const Edit = ( props ) => {
     'nb-content-layout-grid',
     {
       'nb-sidecar--sticky-sidebar': lastItemIsSticky === true,
+      // Server-known rail absence, mirrored from the PHP render
+      // (novablocks_render_sidecar_block) so canvas and frontend agree.
+      'nb-sidecar--no-left-rail': sidebarPosition !== 'left',
+      'nb-sidecar--no-right-rail': sidebarPosition !== 'right',
     },
     'alignfull'
   );

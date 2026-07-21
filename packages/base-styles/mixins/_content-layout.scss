@@ -7,6 +7,17 @@
   @each $side in left, right {
     --nb-sidecar-sidebar-#{$side}-gap: clamp(0px, var(--nb-sidecar-sidebar-#{$side}-width) * 999, var(--nb-sidecar-gap));
     --nb-sidecar-sidebar-#{$side}-max-width: calc(var(--nb-actual-container-width) * 0.5 - var(--nb-sidecar-gap) * 1.5);
+
+    // Template-facing rail track (Task 3.1 zeroing): the grid template reads
+    // THIS derived var, not the raw width var. Because every layout container
+    // re-derives it here, a root-level zeroing override can never inherit
+    // into descendant containers (they self-heal from the untouched raw
+    // vars). Rail-less roots set it to 0px — and ONLY it: the gap track and
+    // the content math keep deriving from the raw vars, so every referenced
+    // named line (ws, gs, cs … ce, ge, we) keeps its exact position and the
+    // collapsed rail width flows into the unreferenced frs/fre free-space
+    // tracks instead.
+    --nb-layout-rail-#{$side}: var(--nb-sidecar-sidebar-#{$side}-width);
   }
 
   // Content-width inversion (Task 2.2): the content width is derived FIRST,
@@ -91,7 +102,7 @@ $nb-layout-grid-parents: '.is-root-container, .edit-post-visual-editor__post-tit
   grid-column: fs / fe !important;
   grid-template-columns:
     [fs] var(--nb-sidecar-sides)
-    [ws] var(--nb-sidecar-sidebar-left-width)
+    [ws] var(--nb-layout-rail-left)
     [frs] 1fr
     [gs] var(--nb-sidecar-sidebar-left-gap)
     [cs] var(--nb-sidecar-content-left)
@@ -100,7 +111,7 @@ $nb-layout-grid-parents: '.is-root-container, .edit-post-visual-editor__post-tit
     [gce] var(--nb-sidecar-content-right)
     [ce] var(--nb-sidecar-sidebar-right-gap)
     [ge] 1fr
-    [fre] var(--nb-sidecar-sidebar-right-width)
+    [fre] var(--nb-layout-rail-right)
     [we] var(--nb-sidecar-sides)
     [fe];
   grid-auto-rows: min-content;

@@ -54,15 +54,7 @@
   @include nb-layout-settings;
 }
 
-.break-align-left {
-  --block-wide-start: ws;
-  --block-full-start: fs;
-}
-
-.break-align-right {
-  --block-wide-end: we;
-  --block-full-end: fe;
-}
+@include nb-break-align-vars;
 
 // This is where the grid magic starts.
 //
@@ -187,4 +179,26 @@
   .nb-supernova
 ) {
   @include nb-layout-subgrid-override;
+}
+
+// Rail-less roots reserve no rail tracks (Task 3.1, the design's "roots
+// without rails zero the rail track vars" end state). Zero ONLY the derived
+// template var: the gap tracks and the content math keep deriving from the
+// untouched raw width vars, so every named line the placement vars reference
+// (ws, gs, cs … ce, ge, we) keeps its baseline position — the collapsed rail
+// width flows into the unreferenced frs/fre free-space tracks. Descendant
+// layout containers re-derive --nb-layout-rail-* in nb-layout-settings from
+// the raw vars, so this override cannot inherit into Sidecars, Queries,
+// Supernovas, or card-internal instances. MUST stay after the container-union
+// emission above (same specificity; later source order wins on the roots).
+:is(
+  .is-root-container,
+  .edit-post-visual-editor__post-title-wrapper,
+  .wp-block-post-content,
+  .wp-block-template-part,
+  [data-block-name="woocommerce/legacy-template"],
+  [id="main"]
+) {
+  --nb-layout-rail-left: 0px;
+  --nb-layout-rail-right: 0px;
 }
