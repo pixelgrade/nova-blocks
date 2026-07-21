@@ -17,4 +17,20 @@
     --block-wide-end: we;
     --block-full-end: fe;
   }
+
+  // Per-block control (Task 3.3), serialized as nb-break-always: the same
+  // var flips the JS measurement would apply, forced. The flipped side
+  // derives from the block's own alignment — wide/full open BOTH sides,
+  // pull-outs open their own side. (nb-break-never is context-dependent —
+  // it re-asserts the position narrowing at block level — and lives with
+  // the sidecar styles, not here.)
+  :is(.alignwide, .alignfull, .alignleft).nb-break-always {
+    --block-wide-start: ws;
+    --block-full-start: fs;
+  }
+
+  :is(.alignwide, .alignfull, .alignright).nb-break-always {
+    --block-wide-end: we;
+    --block-full-end: fe;
+  }
 }

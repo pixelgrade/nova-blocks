@@ -134,6 +134,23 @@
     --block-full-end: inherit;
     --block-content-end: ce;
   }
+
+  // Per-block control (Task 3.3), serialized as nb-break-never: the block is
+  // pinned to its CONSTRAINED span — the position narrowing re-asserted at
+  // block level. This must defeat both the JS-added break-align-* classes on
+  // the same element ((0,3,0) beats their (0,1,0); the JS also skips
+  // decided blocks) and the area-level empty-rail :has() flips above (block
+  // proximity wins over inherited area values). Plain `inherit` would NOT
+  // work here: over an empty rail the area's values are the OPENED ones.
+  .nb-sidecar--sidebar-left > .nb-sidecar-area--content > .nb-break-never {
+    --block-wide-start: cs;
+    --block-full-start: cs;
+  }
+
+  .nb-sidecar--sidebar-right > .nb-sidecar-area--content > .nb-break-never {
+    --block-wide-end: ce;
+    --block-full-end: ce;
+  }
 }
 
 // Make last block from Sidebar Sticky

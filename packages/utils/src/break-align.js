@@ -41,7 +41,19 @@ export const getElementBreakClasses = ( block ) => {
   return breakClasses;
 }
 
+// Blocks whose break decision is authored (the per-block Auto/Always/Never
+// control serializes nb-break-always / nb-break-never) are DECIDED: the CSS
+// consumes the serialized class directly and measurement must not touch them.
+export const shouldMeasureBreakClasses = ( block ) => {
+  return ! block.classList.contains( 'nb-break-always' )
+    && ! block.classList.contains( 'nb-break-never' );
+};
+
 export const maybeAddBreakClassesToElement = ( block ) => {
+  if ( ! shouldMeasureBreakClasses( block ) ) {
+    return;
+  }
+
   const breakClasses = getElementBreakClasses( block );
 
   breakClasses.forEach( breakClass => {

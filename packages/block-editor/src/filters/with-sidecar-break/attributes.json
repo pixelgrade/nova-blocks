@@ -1,0 +1,7 @@
+{
+  "sidecarBreak": {
+    "type": "string",
+    "enum": [ "auto", "always", "never" ],
+    "default": "auto"
+  }
+}
