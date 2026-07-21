@@ -35,11 +35,23 @@
  *   .ai/sidecar-lab/runs/<label>/<slug>.<viewport>.png   full-page shot
  *   .ai/sidecar-lab/runs/<label>/meta.json               run-level stats
  *
- * Diff annotations: .ai/sidecar-lab/expected-changes.md — one difference
- * per line: `<slug> <viewport> <reason>` (`*` wildcards allowed for slug or
- * viewport; `#` comments and list bullets tolerated). Missing file = no
- * annotations. --diff exits 0 only when every differing page/viewport is
- * annotated.
+ * Diff annotations: .ai/sidecar-lab/expected-changes.md (override with the
+ * SIDECAR_LAB_EXPECTED env var) — one difference per line:
+ *
+ *   <slug> <viewport> [<kind>] <reason>
+ *
+ * kind ∈ gtc | rects | breaks | all (absent = all). `*` wildcards allowed
+ * for slug or viewport. `#` comments and `-` list bullets tolerated — do
+ * NOT bullet lines with `*`: a leading `* ` is parsed as a wildcard slug.
+ * Element-set and display changes have no dedicated kind; only a kind-less
+ * (all) annotation suppresses them. Unparseable lines emit a warning;
+ * annotations that matched nothing are listed after the diff (warning, not
+ * a failure). Missing file = no annotations.
+ *
+ * --diff loads the fixtures manifest and FAILS (exit 1) unless both runs
+ * are complete — pages x viewports captures present and a meta.json with
+ * zero failures — AND every differing capture is fully annotated. An empty
+ * or partial run dir can never diff clean.
  */
 
 import { execFileSync } from 'node:child_process';
@@ -53,15 +65,24 @@ const REPO_ROOT = path.resolve( __dirname, '..', '..' );
 const LAB_DIR = path.join( REPO_ROOT, '.ai', 'sidecar-lab' );
 const RUNS_DIR = path.join( LAB_DIR, 'runs' );
 const MANIFEST_PATH = process.env.SIDECAR_LAB_MANIFEST || path.join( LAB_DIR, 'fixtures-manifest.json' );
-const EXPECTED_PATH = path.join( LAB_DIR, 'expected-changes.md' );
+const EXPECTED_PATH = process.env.SIDECAR_LAB_EXPECTED || path.join( LAB_DIR, 'expected-changes.md' );
 
 const VIEWPORTS = [ 375, 1024, 1440, 2000 ];
 const VIEWPORT_HEIGHT = 1200;
 const SCREENSHOT_MAX_HEIGHT = 16000; // stay under Chromium's 16384px texture cap
 const EVAL_TIMEOUT_MS = 90000; // playwriter --timeout per capture
 const PROC_TIMEOUT_MS = 120000; // execFileSync hard cap per capture
-const RECT_TOLERANCE_PX = 1; // diff threshold on left/right/width
+const RECT_TOLERANCE_PX = 1; // diff threshold on each compared rect field
+// top/height are recorded in probes but deliberately NOT compared
+// (decision 2026-07-21): fresh runs vs baseline showed vertical-only
+// jitter above the 1px gate on tall pages at the 2000px viewport —
+// sub-tolerance drifts on individual figures accumulate down the page
+// into 1.5-1.8px top/height deltas. Horizontal fields were 68/68 stable
+// in every run pair. See README "Vertical geometry" for the evidence.
+const RECT_FIELDS = [ 'left', 'right', 'width' ];
 const GTC_TOLERANCE_PX = 0.5; // per-track tolerance for gridTemplateColumns
+const ANNOTATION_KINDS = [ 'gtc', 'rects', 'breaks', 'all' ];
+const MAX_CONSECUTIVE_FAILURES = 3; // fast-abort threshold for --run
 
 /* ------------------------------------------------------------------ *
  * In-page probe. Serialized with .toString() and executed as the ONLY
@@ -208,7 +229,9 @@ function buildCaptureCode( fixture, width, jsonPath, pngPath ) {
 		'if (!state.page || state.page.isClosed()) { state.page = await context.newPage(); }',
 		'const page = state.page;',
 		`await page.setViewportSize({ width: ${ width }, height: ${ VIEWPORT_HEIGHT } });`,
-		`await page.goto(${ JSON.stringify( fixture.url ) }, { waitUntil: 'load', timeout: 30000 });`,
+		`const resp = await page.goto(${ JSON.stringify( fixture.url ) }, { waitUntil: 'load', timeout: 30000 });`,
+		// A 404 template (or any error page) must never probe "successfully".
+		`if (!resp || resp.status() >= 400) { throw new Error('HTTP ' + (resp ? resp.status() : 'no response') + ' for ' + ${ JSON.stringify( fixture.url ) }); }`,
 		`const payload = await page.evaluate(${ novaProbe.toString() });`,
 		`payload.slug = ${ JSON.stringify( fixture.slug ) };`,
 		`payload.url = ${ JSON.stringify( fixture.url ) };`,
@@ -238,15 +261,30 @@ function buildCaptureCode( fixture, width, jsonPath, pngPath ) {
  * --run
  * ------------------------------------------------------------------ */
 
+// Run labels become path segments under RUNS_DIR — never accept separators
+// or traversal, and keep the charset boring so labels stay portable.
+function assertSafeLabel( label ) {
+	if ( ! label || ! /^[A-Za-z0-9][A-Za-z0-9._-]*$/.test( label ) || label.includes( '..' ) ) {
+		console.error( `Invalid run label "${ label }" — letters, digits, ".", "_", "-" only (no path separators, no "..").` );
+		process.exit( 1 );
+	}
+}
+
 function cmdRun( label, { force } ) {
 	if ( ! label || label.startsWith( '--' ) ) {
 		usage( 'Missing run label.' );
 	}
+	assertSafeLabel( label );
 	const manifest = JSON.parse( fs.readFileSync( MANIFEST_PATH, 'utf8' ) );
 	const runDir = path.join( RUNS_DIR, label );
-	if ( fs.existsSync( runDir ) && fs.readdirSync( runDir ).length > 0 && ! force ) {
-		console.error( `Run "${ label }" already exists at ${ runDir } — pass --force to overwrite.` );
-		process.exit( 1 );
+	if ( fs.existsSync( runDir ) && fs.readdirSync( runDir ).length > 0 ) {
+		if ( ! force ) {
+			console.error( `Run "${ label }" already exists at ${ runDir } — pass --force to overwrite.` );
+			process.exit( 1 );
+		}
+		// Stale files from a previous run would poison meta.json aggregation
+		// and diffs — --force always recaptures into an empty dir.
+		fs.rmSync( runDir, { recursive: true, force: true } );
 	}
 	fs.mkdirSync( runDir, { recursive: true } );
 
@@ -261,10 +299,28 @@ function cmdRun( label, { force } ) {
 	}
 	console.log( `Run "${ label }": ${ manifest.length } pages x ${ VIEWPORTS.length } viewports on headless session ${ sessionId }` );
 
+	const deleteSession = () => {
+		try {
+			playwriter( [ 'session', 'delete', sessionId ] );
+		} catch ( err ) {
+			console.warn( `Could not delete playwriter session ${ sessionId }: ${ err.message }` );
+		}
+	};
+	// Ctrl+C must not leak the headless session. Best-effort: the handler
+	// runs as soon as the current execFileSync capture returns.
+	const onSigint = () => {
+		console.error( '\nSIGINT — deleting playwriter session before exit.' );
+		deleteSession();
+		process.exit( 130 );
+	};
+	process.on( 'SIGINT', onSigint );
+
 	const failures = [];
 	let captures = 0;
+	let consecutiveFailures = 0;
+	let aborted = false;
 	try {
-		for ( const fixture of manifest ) {
+		outer: for ( const fixture of manifest ) {
 			for ( const width of VIEWPORTS ) {
 				const base = `${ fixture.slug }.${ width }`;
 				const jsonPath = path.join( runDir, base + '.json' );
@@ -296,18 +352,24 @@ function cmdRun( label, { force } ) {
 				}
 				if ( ok ) {
 					captures++;
+					consecutiveFailures = 0;
 				} else {
 					failures.push( { capture: base, error: String( lastError && lastError.message ).split( '\n' )[ 0 ] } );
 					console.error( `  ${ base }  FAILED: ${ String( lastError && lastError.message ).split( '\n' )[ 0 ] }` );
+					consecutiveFailures++;
+					if ( consecutiveFailures >= MAX_CONSECUTIVE_FAILURES ) {
+						// The environment is down, not one flaky page — abort
+						// instead of grinding through the rest of the matrix.
+						aborted = true;
+						console.error( `Aborting run after ${ consecutiveFailures } consecutive capture failures — fix the environment and recapture with --force.` );
+						break outer;
+					}
 				}
 			}
 		}
 	} finally {
-		try {
-			playwriter( [ 'session', 'delete', sessionId ] );
-		} catch ( err ) {
-			console.warn( `Could not delete playwriter session ${ sessionId }: ${ err.message }` );
-		}
+		process.removeListener( 'SIGINT', onSigint );
+		deleteSession();
 	}
 
 	// Run-level meta from the persisted probes.
@@ -336,36 +398,62 @@ function cmdRun( label, { force } ) {
 		settlementTimeouts,
 		imageTimeouts,
 		failures,
+		aborted,
 	};
 	fs.writeFileSync( path.join( runDir, 'meta.json' ), JSON.stringify( meta, null, 2 ) + '\n' );
-	console.log( `\nRun "${ label }" complete: ${ captures }/${ manifest.length * VIEWPORTS.length } captures, ${ elementsTotal } probed elements, ${ settlementTimeouts.length } settlement timeouts, ${ failures.length } failures.` );
+	console.log( `\nRun "${ label }" ${ aborted ? 'ABORTED' : 'complete' }: ${ captures }/${ manifest.length * VIEWPORTS.length } captures, ${ elementsTotal } probed elements, ${ settlementTimeouts.length } settlement timeouts, ${ failures.length } failures.` );
 	console.log( `Meta: ${ path.join( runDir, 'meta.json' ) }` );
-	process.exit( failures.length ? 1 : 0 );
+	process.exit( failures.length || aborted ? 1 : 0 );
 }
 
 /* ------------------------------------------------------------------ *
  * --diff
  * ------------------------------------------------------------------ */
 
+// Line grammar: `<slug> <viewport> [<kind>] <reason>`, kind ∈
+// ANNOTATION_KINDS (absent = all). Strip ONLY `-` markdown bullets — a
+// leading `* ` is the wildcard-slug syntax, not a bullet. Every non-comment
+// line that fails to parse gets a visible warning instead of vanishing.
 function loadAnnotations() {
 	if ( ! fs.existsSync( EXPECTED_PATH ) ) {
 		return [];
 	}
-	return fs.readFileSync( EXPECTED_PATH, 'utf8' ).split( '\n' )
-		.map( ( line ) => line.replace( /^[-*]\s+/, '' ).trim() )
-		.filter( ( line ) => line && ! line.startsWith( '#' ) )
-		.map( ( line ) => {
-			const m = line.match( /^(\S+)\s+(\S+)\s+(.+)$/ );
-			return m ? { slug: m[ 1 ], viewport: m[ 2 ], reason: m[ 3 ] } : null;
-		} )
-		.filter( Boolean );
-}
-
-function findAnnotation( annotations, slug, viewport ) {
-	return annotations.find( ( a ) =>
-		( a.slug === slug || a.slug === '*' )
-		&& ( a.viewport === String( viewport ) || a.viewport === '*' )
+	const annotations = [];
+	const warn = ( lineNo, raw, why ) => console.warn(
+		`WARNING: ${ path.basename( EXPECTED_PATH ) }:${ lineNo } unparseable annotation (${ why }; expected "<slug> <viewport> [<kind>] <reason>"): ${ raw.trim() }`
 	);
+	fs.readFileSync( EXPECTED_PATH, 'utf8' ).split( '\n' ).forEach( ( raw, idx ) => {
+		const line = raw.replace( /^\s*-\s+/, '' ).trim();
+		if ( ! line || line.startsWith( '#' ) ) {
+			return;
+		}
+		const tokens = line.split( /\s+/ );
+		const [ slug, viewport ] = tokens;
+		let kind = 'all';
+		let reasonTokens = tokens.slice( 2 );
+		if ( reasonTokens.length && ANNOTATION_KINDS.includes( reasonTokens[ 0 ] ) ) {
+			kind = reasonTokens[ 0 ];
+			reasonTokens = reasonTokens.slice( 1 );
+		}
+		if ( ! slug || ! viewport || ! reasonTokens.length ) {
+			warn( idx + 1, raw, 'missing field' );
+			return;
+		}
+		if ( viewport !== '*' && ! /^\d+$/.test( viewport ) ) {
+			warn( idx + 1, raw, `viewport "${ viewport }" is not a number or *` );
+			return;
+		}
+		annotations.push( {
+			slug,
+			viewport,
+			kind,
+			reason: reasonTokens.join( ' ' ),
+			line: idx + 1,
+			matched: 0,
+			suppressedKinds: new Set(),
+		} );
+	} );
+	return annotations;
 }
 
 function gtcEqual( a, b ) {
@@ -399,15 +487,19 @@ function setDiff( a, b ) {
 	};
 }
 
+// Every diff carries a kind so annotations can be scoped: 'breaks', 'gtc',
+// 'rects', or 'structure' (element-set/display changes — suppressible only
+// by a kind-less annotation, i.e. kind 'all').
 function comparePage( a, b ) {
 	const diffs = [];
+	const push = ( kind, message ) => diffs.push( { kind, message } );
 
 	const breaks = setDiff( a.breakClasses, b.breakClasses );
 	for ( const x of breaks.removed ) {
-		diffs.push( `break-class removed: ${ x }` );
+		push( 'breaks', `break-class removed: ${ x }` );
 	}
 	for ( const x of breaks.added ) {
-		diffs.push( `break-class added: ${ x }` );
+		push( 'breaks', `break-class added: ${ x }` );
 	}
 
 	const key = ( el ) => `${ el.role }|${ el.path }`;
@@ -415,12 +507,12 @@ function comparePage( a, b ) {
 	const mapB = new Map( b.elements.map( ( el ) => [ key( el ), el ] ) );
 	for ( const k of mapA.keys() ) {
 		if ( ! mapB.has( k ) ) {
-			diffs.push( `element missing in B: ${ k }` );
+			push( 'structure', `element missing in B: ${ k }` );
 		}
 	}
 	for ( const k of mapB.keys() ) {
 		if ( ! mapA.has( k ) ) {
-			diffs.push( `element only in B: ${ k }` );
+			push( 'structure', `element only in B: ${ k }` );
 		}
 	}
 	for ( const [ k, elA ] of mapA ) {
@@ -429,17 +521,16 @@ function comparePage( a, b ) {
 			continue;
 		}
 		if ( elA.display !== elB.display ) {
-			diffs.push( `display changed (${ k }): ${ elA.display } -> ${ elB.display }` );
+			push( 'structure', `display changed (${ k }): ${ elA.display } -> ${ elB.display }` );
 		}
 		if ( ! gtcEqual( elA.gridTemplateColumns, elB.gridTemplateColumns ) ) {
-			diffs.push( `gridTemplateColumns changed (${ k }):\n      A: ${ elA.gridTemplateColumns }\n      B: ${ elB.gridTemplateColumns }` );
+			push( 'gtc', `gridTemplateColumns changed (${ k }):\n      A: ${ elA.gridTemplateColumns }\n      B: ${ elB.gridTemplateColumns }` );
 		}
-		const rectFields = [ 'left', 'right', 'width' ];
-		const exceeded = rectFields
+		const exceeded = RECT_FIELDS
 			.map( ( f ) => ( { f, da: elA.rect[ f ], db: elB.rect[ f ], delta: Math.round( ( elB.rect[ f ] - elA.rect[ f ] ) * 10 ) / 10 } ) )
 			.filter( ( x ) => Math.abs( x.delta ) > RECT_TOLERANCE_PX );
 		if ( exceeded.length ) {
-			diffs.push( `rect changed (${ k }): ` + exceeded.map( ( x ) => `${ x.f } ${ x.da } -> ${ x.db } (d=${ x.delta }px)` ).join( ', ' ) );
+			push( 'rects', `rect changed (${ k }): ` + exceeded.map( ( x ) => `${ x.f } ${ x.da } -> ${ x.db } (d=${ x.delta }px)` ).join( ', ' ) );
 		}
 	}
 	return diffs;
@@ -449,6 +540,8 @@ function cmdDiff( labelA, labelB ) {
 	if ( ! labelA || ! labelB ) {
 		usage( '--diff needs two run labels.' );
 	}
+	assertSafeLabel( labelA );
+	assertSafeLabel( labelB );
 	const dirA = path.join( RUNS_DIR, labelA );
 	const dirB = path.join( RUNS_DIR, labelB );
 	for ( const [ label, dir ] of [ [ labelA, dirA ], [ labelB, dirB ] ] ) {
@@ -457,6 +550,33 @@ function cmdDiff( labelA, labelB ) {
 			process.exit( 1 );
 		}
 	}
+
+	// Completeness gate — an empty or partial run dir must never diff
+	// clean. Both runs must cover the full manifest x viewport matrix and
+	// carry a meta.json with zero failures.
+	const manifest = JSON.parse( fs.readFileSync( MANIFEST_PATH, 'utf8' ) );
+	const expectedCaptures = manifest.flatMap( ( fixture ) => VIEWPORTS.map( ( width ) => `${ fixture.slug }.${ width }` ) );
+	const completenessErrors = [];
+	for ( const [ label, dir ] of [ [ labelA, dirA ], [ labelB, dirB ] ] ) {
+		const missing = expectedCaptures.filter( ( c ) => ! fs.existsSync( path.join( dir, c + '.json' ) ) );
+		if ( missing.length ) {
+			const present = expectedCaptures.length - missing.length;
+			completenessErrors.push( `run "${ label }" is incomplete: ${ present }/${ expectedCaptures.length } manifest captures present (missing: ${ missing.slice( 0, 5 ).join( ', ' ) }${ missing.length > 5 ? `, … ${ missing.length - 5 } more` : '' })` );
+		}
+		const metaPath = path.join( dir, 'meta.json' );
+		if ( ! fs.existsSync( metaPath ) ) {
+			completenessErrors.push( `run "${ label }" has no meta.json — not a completed run` );
+		} else {
+			const meta = JSON.parse( fs.readFileSync( metaPath, 'utf8' ) );
+			if ( Array.isArray( meta.failures ) && meta.failures.length ) {
+				completenessErrors.push( `run "${ label }" meta.json lists ${ meta.failures.length } capture failure(s): ${ meta.failures.map( ( f ) => f.capture ).join( ', ' ) }` );
+			}
+			if ( meta.aborted ) {
+				completenessErrors.push( `run "${ label }" was aborted before completing` );
+			}
+		}
+	}
+
 	const listJson = ( dir ) => fs.readdirSync( dir ).filter( ( f ) => f.endsWith( '.json' ) && f !== 'meta.json' );
 	const files = Array.from( new Set( [ ...listJson( dirA ), ...listJson( dirB ) ] ) ).sort();
 	const annotations = loadAnnotations();
@@ -465,6 +585,14 @@ function cmdDiff( labelA, labelB ) {
 	console.log( `  A: ${ dirA }` );
 	console.log( `  B: ${ dirB }` );
 	console.log( `  ${ files.length } captures, ${ annotations.length } annotation(s) loaded\n` );
+
+	if ( completenessErrors.length ) {
+		console.log( 'COMPLETENESS FAILURE (diff exits 1 regardless of annotations):' );
+		for ( const e of completenessErrors ) {
+			console.log( `   ${ e }` );
+		}
+		console.log( '' );
+	}
 
 	let compared = 0;
 	let differing = 0;
@@ -481,7 +609,7 @@ function cmdDiff( labelA, labelB ) {
 		const inB = fs.existsSync( path.join( dirB, file ) );
 		let diffs;
 		if ( ! inA || ! inB ) {
-			diffs = [ `capture missing in run "${ inA ? labelB : labelA }"` ];
+			diffs = [ { kind: 'structure', message: `capture missing in run "${ inA ? labelB : labelA }"` } ];
 		} else {
 			const a = JSON.parse( fs.readFileSync( path.join( dirA, file ), 'utf8' ) );
 			const b = JSON.parse( fs.readFileSync( path.join( dirB, file ), 'utf8' ) );
@@ -495,15 +623,36 @@ function cmdDiff( labelA, labelB ) {
 			continue;
 		}
 		differing++;
-		const annotation = findAnnotation( annotations, slug, viewport );
-		if ( annotation ) {
-			annotated++;
-		} else {
-			unannotated++;
-		}
-		console.log( `== ${ slug } @ ${ viewport } ==  ${ annotation ? `[annotated: ${ annotation.reason }]` : '[UNANNOTATED]' }` );
+		// Per-diff suppression: an annotation covers a diff only when its
+		// kind matches (or it is kind-less = all). One capture can carry
+		// several annotations of different kinds.
+		const applicable = annotations.filter( ( a ) =>
+			( a.slug === slug || a.slug === '*' )
+			&& ( a.viewport === String( viewport ) || a.viewport === '*' )
+		);
+		const suppressed = [];
+		const unsuppressed = [];
 		for ( const d of diffs ) {
-			console.log( `   ${ d }` );
+			const ann = applicable.find( ( a ) => a.kind === 'all' || a.kind === d.kind );
+			if ( ann ) {
+				ann.matched++;
+				ann.suppressedKinds.add( d.kind );
+				suppressed.push( { d, ann } );
+			} else {
+				unsuppressed.push( d );
+			}
+		}
+		if ( unsuppressed.length ) {
+			unannotated++;
+		} else {
+			annotated++;
+		}
+		console.log( `== ${ slug } @ ${ viewport } ==  ${ unsuppressed.length ? '[UNANNOTATED]' : '[annotated]' }` );
+		for ( const { d, ann } of suppressed ) {
+			console.log( `   [suppressed:${ ann.kind } "${ ann.reason }"] ${ d.message }` );
+		}
+		for ( const d of unsuppressed ) {
+			console.log( `   UNANNOTATED [${ d.kind }] ${ d.message }` );
 		}
 		console.log( '' );
 	}
@@ -516,8 +665,26 @@ function cmdDiff( labelA, labelB ) {
 		console.log( '' );
 	}
 
-	console.log( `Summary: ${ compared } compared, ${ differing } with differences (${ annotated } annotated, ${ unannotated } UNANNOTATED) -> ${ unannotated ? 'FAIL' : 'OK' }` );
-	process.exit( unannotated ? 1 : 0 );
+	const used = annotations.filter( ( a ) => a.matched > 0 );
+	if ( used.length ) {
+		console.log( 'Annotations that suppressed differences (kind scope shown):' );
+		for ( const a of used ) {
+			console.log( `   ${ a.slug } ${ a.viewport } [${ a.kind }] "${ a.reason }" -> ${ a.matched } diff(s), kinds suppressed: ${ Array.from( a.suppressedKinds ).join( ', ' ) }` );
+		}
+		console.log( '' );
+	}
+	const stale = annotations.filter( ( a ) => a.matched === 0 );
+	if ( stale.length ) {
+		console.log( 'WARNING: stale annotations — matched no difference in this diff (prune or fix them):' );
+		for ( const a of stale ) {
+			console.log( `   ${ path.basename( EXPECTED_PATH ) }:${ a.line }  ${ a.slug } ${ a.viewport } [${ a.kind }] ${ a.reason }` );
+		}
+		console.log( '' );
+	}
+
+	const fail = unannotated > 0 || completenessErrors.length > 0;
+	console.log( `Summary: ${ compared } compared, ${ differing } with differences (${ annotated } fully annotated, ${ unannotated } UNANNOTATED), ${ completenessErrors.length } completeness error(s) -> ${ fail ? 'FAIL' : 'OK' }` );
+	process.exit( fail ? 1 : 0 );
 }
 
 /* ------------------------------------------------------------------ */
