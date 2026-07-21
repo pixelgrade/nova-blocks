@@ -34,7 +34,7 @@ stable).
   gradient, rule-of-thirds lines, center circle, distinct corner markers,
   200px ticks) so cropping/mirroring/scaling regressions are visible in
   screenshots. Slug: `sidecar-lab-fixture`.
-- **16 published pages**, slug prefix `sidecar-lab-`, grouped one page per
+- **17 published pages**, slug prefix `sidecar-lab-`, grouped one page per
   matrix *family* (each family page carries the full content-variant battery
   as successive sections — wide image, full image, alignleft, alignright,
   Group-wrapped wide image, captioned image — over body copy long enough to
@@ -48,9 +48,10 @@ stable).
   | `left-empty-rail` | left rail present but EMPTY (Phase 3 `:has()` target) |
   | `right-small`, `right-medium`, `right-large` | right rail x widths; short/long rail fill |
   | `right-small-sticky`, `right-medium-sticky` | right rail + sticky |
+  | `right-large-sticky-long` | right rail, large width, sticky last item AFTER long rail content (different sticky offset math) |
   | `right-empty-rail` | right rail present but EMPTY |
   | `right-long-rail` | rail longer than content (overflow edge) |
-  | `nested-hive` | both rails via nesting: outer left sidecar > content holds inner right sidecar with rail content + sticky last item |
+  | `nested-hive` | both rails via nesting: outer left sidecar with its OWN sticky rail (short paragraph + sticky Group spanning the nested block) > content holds inner right sidecar with rail content + sticky last item. A direct three-area fixture (single block, both rails) will be ADDED when Phase 4's explicit area names land. |
   | `nested-deep` | 3 authored nesting levels: left/large > right/medium > left/small |
 
   The `break {auto, always, never}` axis of the design-doc matrix is Phase 3

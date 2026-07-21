@@ -16,7 +16,7 @@
  * Manifest: .ai/sidecar-lab/fixtures-manifest.json (repo-relative; resolved
  * from this file's location, overridable via SIDECAR_LAB_MANIFEST env var).
  *
- * Matrix covered (grouped into ~16 family pages, not one page per combo):
+ * Matrix covered (grouped into 17 family pages, not one page per combo):
  *   rails    {none, left, right, both-via-nesting}
  * x widths   {small, medium, large}
  * x sticky   {on, off}
@@ -239,6 +239,11 @@ function sl_group( string $inner ): string {
  * @param string      $content Content-area inner markup.
  * @param string|null $sidebar Sidebar-area inner markup; '' = present but
  *                             EMPTY rail; null = no sidebar area block.
+ *
+ * NOTE (empty rail): even with $sidebar === '', the rendered rail div
+ * contains WHITESPACE (the newlines around the serialized area comments
+ * survive into the dynamic block's $content), so Phase 3 empty-rail
+ * selectors must stay `:not(:has(*))`-based — `:empty` would NOT match.
  */
 function sl_sidecar( array $attrs, string $content, ?string $sidebar = null ): string {
 	$out = '<!-- wp:novablocks/sidecar ' . wp_json_encode( $attrs ) . " -->\n"
@@ -308,6 +313,24 @@ function sl_rail_sticky(): string {
 	return sl_short_paragraph( 'First rail item above the sticky block.' )
 		. sl_short_paragraph( 'Second rail item, still above the sticky block.' )
 		. sl_group( sl_heading( 'Sticky card', 3 ) . sl_short_paragraph( 'This Group is the last rail item, so it becomes sticky while the content scrolls.' ) );
+}
+
+/**
+ * Sticky rail with LONG content above the sticky last item — the sticky
+ * offset starts much further down than with three short items.
+ */
+function sl_rail_sticky_long( int $img ): string {
+	return sl_heading( 'Rail notes', 3 )
+		. sl_paragraphs( 6, 5 )
+		. sl_image( $img, '' )
+		. sl_paragraphs( 2, 1 )
+		. sl_group( sl_heading( 'Sticky card', 3 ) . sl_short_paragraph( 'This Group follows long rail content and is still the sticky last item.' ) );
+}
+
+/** Outer-Hive rail per the plan: one short paragraph + the sticky test block. */
+function sl_rail_hive_outer(): string {
+	return sl_short_paragraph( 'Outer rail note: a single short paragraph above the outer sticky test block.' )
+		. sl_group( sl_heading( 'Outer sticky card', 3 ) . sl_short_paragraph( 'This Group is the outer rail\'s last item; it must stay sticky while spanning the nested inner sidecar.' ) );
 }
 
 // -------------------------------------------------------------------------
@@ -414,20 +437,31 @@ function sl_page_definitions( int $img ): array {
 		),
 	];
 
+	$pages['right-large-sticky-long'] = [
+		'title'       => 'Sidecar Lab — Right Rail, Large, Sticky After Long Rail',
+		'description' => 'Right rail, large width, lastItemIsSticky:true with LONG rail content above the sticky last item (different sticky offset math than short rails); full content battery.',
+		'families'    => [ 'rail-right', 'width-large', 'sticky-on', 'rail-long', 'content-battery' ],
+		'content'     => sl_sidecar( [ 'sidebarPosition' => 'right', 'sidebarWidth' => 'large', 'lastItemIsSticky' => true ], $battery, sl_rail_sticky_long( $img ) ),
+	];
+
 	// --- Both rails via nesting (Hive) --------------------------------------
+	// Per the plan: the OUTER left sidecar carries the sticky (rail: one short
+	// paragraph + sticky test block) — an outer sticky spanning a nested inner
+	// sidecar is a distinct measurement scenario. The inner right sidecar
+	// keeps its own sticky too.
 	$pages['nested-hive'] = [
 		'title'       => 'Sidecar Lab — Nested Hive',
-		'description' => 'Both rails via nesting: outer sidebarPosition:left sidecar (short rail) whose content area holds an inner sidebarPosition:right sidecar with rail content and a sticky last item.',
+		'description' => 'Both rails via nesting: outer sidebarPosition:left sidecar with lastItemIsSticky:true (rail: short paragraph + sticky Group spanning the nested inner sidecar) whose content area holds an inner sidebarPosition:right sidecar with rail content and its own sticky last item.',
 		'families'    => [ 'rail-nested', 'nested-hive', 'rail-left', 'rail-right', 'sticky-on', 'content-reduced' ],
 		'content'     => sl_sidecar(
-			[ 'sidebarPosition' => 'left', 'sidebarWidth' => 'medium' ],
+			[ 'sidebarPosition' => 'left', 'sidebarWidth' => 'medium', 'lastItemIsSticky' => true ],
 			sl_paragraphs( 1, 0 )
 			. sl_sidecar(
 				[ 'sidebarPosition' => 'right', 'sidebarWidth' => 'small', 'lastItemIsSticky' => true ],
 				sl_content_battery_reduced( $img ),
 				sl_rail_sticky()
 			),
-			sl_rail_short()
+			sl_rail_hive_outer()
 		),
 	];
 
