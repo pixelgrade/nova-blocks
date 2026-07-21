@@ -55,12 +55,15 @@ Track derivation flips: `--nb-content-width` becomes the source of truth and rai
 
 Sticky rail: the fade gains `visibility: hidden` and `pointer-events: none` (transitioned), and the RAF scroll loop is replaced with an IntersectionObserver between the sticky item and broken blocks.
 
-## Pull-outs (alignleft/right into the rail)
+## Pull-outs (alignleft/right: wrap, anchor, and rail escape)
 
-Floats cannot work today because every block is a grid item. Staged honestly:
+Floats cannot work on grid items, so the grid engine can only produce *bands* (a paragraph squeezed beside the image for its whole length, dead space under the image). Scope expanded 2026-07-21 at George's request (text-wrap and mid-start asks, with screenshots on the right-medium and left-small fixtures):
 
-- **Now:** keep grid placement but kill the `span 5` magic number — in Auto mode the measurement JS computes the real row span from following siblings; Always/Never apply here too; the `+`-sibling adjustment rules get tests.
-- **Later (explicitly out of v1 scope):** PHP-side flow segmentation — group consecutive plain blocks into a single grid item that is a real flow context where floats work at any height. The only genuine fix until CSS exclusions exist; deserves its own design round because of editor parity.
+- **Baseline behavior (unchanged default):** grid placement, but the `span 5` magic number dies — in Auto mode the measurement JS computes the real row span from following siblings; Always/Never apply; the `+`-sibling adjustment rules get tests.
+- **Text wrap: Beside / Around (new, opt-in per aligned block).** *Around* uses **flow segmentation**: PHP groups the aligned block plus the following run of plain flow blocks (paragraphs, lists, headings) into ONE grid item spanning the content range that is a normal flow container; inside it the image gets a real CSS float, so text wraps beside AND continues under it. Rail escape still composes: track widths are known CSS vars, so a computed negative outer margin pulls the float over the rail (the classic Hive technique). Editor parity caveat, accepted for v1: the editor cannot re-wrap sibling blocks, so it shows the *Beside* approximation while the frontend renders the true wrap — stated in the control's help text; deeper editor parity is its own later design round.
+- **New placements, not a modifier (George's direction, 2026-07-21).** Core Left/Right stay untouched as the defaults with today's semantics (content-edge anchor, auto-break over the rail). The mid-start behavior ships as *additional named placements* in the alignment vocabulary — working names **Left Content / Right Content**: the pull-out is bounded by the content column's center line (`cs → cc` / `cc → ce`, lines the nested-sidecar rules already use), with text taking the other half and, in *Around* mode, wrapping underneath (`width: 50%` + negative outer margin when floated). Serialized as a Nova placement class; core's `align` attribute is never repurposed.
+- **Alignment-vocabulary rethink is a Phase 4b design gate.** Before implementing, the full set (Left, Right, Wide, Full + new placements — possibly explicit rail placements replacing today's emergent "jump into the rail") gets one dedicated design round with George. Curated named placements only, never raw offset fields; *Text wrap* stays an orthogonal modifier applying to any left/right-family placement.
+- **Fixture sequencing:** wrap/anchor fixtures are NEW capabilities with no old behavior to preserve; they get added only after the Phase 2 ship decision re-establishes the canonical baseline on the new engine (the differ's completeness check forbids growing the manifest mid-comparison).
 
 ## Fixes ledger (all ship with the rewrite)
 

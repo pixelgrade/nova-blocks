@@ -198,6 +198,30 @@ Managed set: `sidebarPosition` (legacy), per-side rail width/existence, gutter o
 
 ---
 
+## Phase 4b — Pull-out styles (added 2026-07-21; see design doc "Pull-outs")
+
+### Task 4b.1: Flow segmentation + Text wrap: Around
+
+**Files:**
+- Create: `lib/flow-segments.php` (render-time grouping of an aligned block + following plain flow blocks into one `.nb-flow-segment` grid item)
+- Modify: sidecar/area render path to apply segmentation only when a contained aligned block opts into `Around`
+- Test: `tests/php/flow-segments-contract.php` (create — grouping boundaries: stops at next aligned/wide/full/nested block; segment spans content range; float classes emitted)
+
+TDD the grouping rules first (contract), then the SCSS: real `float` inside `.nb-flow-segment`, rail escape via computed negative outer margins using the track vars. Editor renders the Beside approximation — the control's help text says so (accepted v1 divergence; deeper parity is a later design round).
+
+### Task 4b.2: New content placements (Left Content / Right Content)
+
+**DESIGN GATE FIRST:** present George a short options round rethinking the full alignment vocabulary (core Left/Right/Wide/Full untouched as defaults + new curated placements; consider explicit rail placements replacing the emergent rail-jump) before implementing. Decisions recorded in the design doc.
+
+**Files (after the gate):**
+- Extend: `packages/block-editor/src/filters/with-sidecar-break/` (same filter family as Task 3.3) with `sidecarWrap: beside|around` and a placement attribute (e.g. `sidecarPlacement: left-content|right-content`), serialized as Nova classes — core's `align` attribute is never repurposed; toolbar UI presented natively beside core align controls (registration + deprecation rules per napkin apply)
+- SCSS: `right-content` = `grid-column: cc / ce` band (mirrored for left) in Beside mode; `width: 50%` + negative outer margin in Around mode
+- Test: extend the Task 3.3 Jest gating tests + PHP class-emission contract
+
+### Task 4b.3: New fixtures + extended baseline
+
+Add wrap/anchor fixture pages to the generator ONLY after the Phase 2 ship decision re-baselines on the new engine (differ completeness forbids growing the manifest mid-comparison): new pages exercise all four Anchor × Wrap combinations at all rail states, then `--run` a new canonical baseline including them.
+
 ## Phase 5 — Group pass-through + container-list unification
 
 ### Task 5.1: Single container-list source

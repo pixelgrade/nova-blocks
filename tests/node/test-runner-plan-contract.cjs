@@ -61,12 +61,33 @@ test( 'the compatibility Jest bucket carries only the required resolver flags', 
 	} );
 	const compatibility = plan.jest.find( command => 'Jest compatibility' === command.label );
 
-	assert.ok( compatibility.args.includes( '--modulePathIgnorePatterns=/packages/block-library/' ) );
+	assert.ok(
+		compatibility.args.includes(
+			'--modulePathIgnorePatterns=/packages/block-library/|/\\.claude/'
+		)
+	);
 	assert.ok(
 		compatibility.args.includes(
 			'--transformIgnorePatterns=node_modules/(?!(@wordpress/i18n|memize)/)'
 		)
 	);
+} );
+
+test( 'every Jest bucket ignores agent worktrees under .claude', () => {
+	const plan = buildRunPlan( {
+		root,
+		manifest: discoverTestManifest( root ),
+		phpCli: '/test/php',
+	} );
+
+	plan.jest.forEach( command => {
+		assert.ok(
+			command.args.some( arg =>
+				arg.startsWith( '--modulePathIgnorePatterns=' ) && arg.includes( '/\\.claude/' )
+			),
+			`${ command.label } must ignore .claude worktrees in jest-haste-map`
+		);
+	} );
 } );
 
 test( 'the runner captures real child-process output and exit status', async () => {
