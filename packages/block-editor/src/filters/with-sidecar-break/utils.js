@@ -1,16 +1,32 @@
 /**
  * Per-block break control (Task 3.3): pure predicates shared by the
- * attribute registration, the inspector control gating, and the save filter.
+ * attribute registration and the inspector control.
  *
- * The target set is exactly the aligned-capable core blocks Nova already
- * augments with attributes (audited 2026-07-21: core/image via
- * with-deprecated-image, core/group via with-deprecated-group; no other core
- * block carries Nova-registered attributes).
+ * Serialization route (review round 2026-07-21): the class is written into
+ * the block's `className` ATTRIBUTE on control interaction (the
+ * with-font-size-picker precedent) — there is NO save filter. That gives
+ * byte-identity for default-valued blocks by construction, puts the class on
+ * the editor-canvas wrapper automatically (canvas parity), and keeps saved
+ * markup valid if Nova is deactivated (the class lives inside the block's
+ * own attribute, not in filtered save output).
+ *
+ * Target set: the aligned-capable core blocks. image/group support
+ * pull-outs; quote/pullquote align all four ways; heading/paragraph break
+ * as wide/full only. Nova already registers attributes on all of these
+ * (image/group via the deprecation filters; quote, pullquote, heading and
+ * paragraph carry the fontSize attribute via with-font-size-picker).
  */
 
-export const SIDECAR_BREAK_BLOCKS = [ 'core/image', 'core/group' ];
+export const SIDECAR_BREAK_ALIGNMENTS_BY_BLOCK = {
+	'core/image': [ 'wide', 'full', 'left', 'right' ],
+	'core/group': [ 'wide', 'full', 'left', 'right' ],
+	'core/quote': [ 'wide', 'full', 'left', 'right' ],
+	'core/pullquote': [ 'wide', 'full', 'left', 'right' ],
+	'core/heading': [ 'wide', 'full' ],
+	'core/paragraph': [ 'wide', 'full' ],
+};
 
-export const SIDECAR_BREAK_ALIGNMENTS = [ 'wide', 'full', 'left', 'right' ];
+export const SIDECAR_BREAK_BLOCKS = Object.keys( SIDECAR_BREAK_ALIGNMENTS_BY_BLOCK );
 
 export const SIDECAR_BREAK_CLASSES = {
 	always: 'nb-break-always',
@@ -20,38 +36,53 @@ export const SIDECAR_BREAK_CLASSES = {
 /**
  * A block can carry the control when it is a target block with a breakable
  * alignment. (The sidecar-context half of the gate is a separate, editor-only
- * question — see isInsideSidecarContent.)
+ * question — see isDirectSidecarContentChild.)
  */
 export const isSidecarBreakEligible = ( blockName, attributes ) => {
-	return SIDECAR_BREAK_BLOCKS.includes( blockName )
-		&& SIDECAR_BREAK_ALIGNMENTS.includes( attributes?.align );
+	const alignments = SIDECAR_BREAK_ALIGNMENTS_BY_BLOCK[ blockName ];
+	return !! alignments && alignments.includes( attributes?.align );
 };
 
 /**
- * Whether a parent chain (ordered ancestor info: { name, attributes })
- * contains a Sidecar CONTENT area. Rails are deliberately excluded — rail
- * children do not participate in the alignment system.
+ * Whether the DIRECT parent is a Sidecar CONTENT area — matching what the
+ * CSS placement rules and the measurement layer act on today (direct grid
+ * children of the content area). Rails are excluded: rail children do not
+ * participate in the alignment system. Phase 5 (Group pass-through) will
+ * revisit the depth of this gate once Group children join the shared grid.
  */
-export const isInsideSidecarContent = ( parentChain ) => {
-	return ( parentChain || [] ).some( ( parent ) =>
-		parent?.name === 'novablocks/sidecar-area'
-		&& parent?.attributes?.areaName === 'content'
-	);
+export const isDirectSidecarContentChild = ( parent ) => {
+	return parent?.name === 'novablocks/sidecar-area'
+		&& parent?.attributes?.areaName === 'content';
 };
 
 /**
- * The serialized class for a block's sidecarBreak attribute — or null.
+ * The serialized class for a sidecarBreak value — or null for `auto`, a
+ * missing value, and anything unknown (the default path serializes NOTHING).
+ */
+export const getSidecarBreakClass = ( sidecarBreak ) => {
+	return SIDECAR_BREAK_CLASSES[ sidecarBreak ] || null;
+};
+
+/**
+ * Returns the block's next `className` attribute for a sidecarBreak value:
+ * strips any existing nb-break-* marker, appends the new one when the value
+ * is non-default, and returns undefined instead of an empty string so the
+ * className attribute is REMOVED rather than serialized empty.
  *
- * CRITICAL serialization rule: `auto` (the default), a missing attribute,
- * and any unknown value derive NO class, so default-valued blocks save
- * byte-identical markup to an unfiltered save and existing content can
- * never invalidate (napkin: Execution & Validation #5 — no deprecation
- * needed for the default path).
+ * Sync policy: the sidecarBreak attribute is the source of truth and this
+ * helper runs ONLY on control interaction. If the user hand-edits the class
+ * out of (or into) the Additional CSS Classes field, nothing fights them
+ * reactively — the next control interaction re-syncs.
  */
-export const getSidecarBreakClass = ( blockName, attributes ) => {
-	if ( ! isSidecarBreakEligible( blockName, attributes ) ) {
-		return null;
+export const replaceSidecarBreakClass = ( className, sidecarBreak ) => {
+	const cleaned = ( className || '' )
+		.split( /\s+/ )
+		.filter( ( c ) => c && c !== SIDECAR_BREAK_CLASSES.always && c !== SIDECAR_BREAK_CLASSES.never );
+
+	const nextClass = getSidecarBreakClass( sidecarBreak );
+	if ( nextClass ) {
+		cleaned.push( nextClass );
 	}
 
-	return SIDECAR_BREAK_CLASSES[ attributes?.sidecarBreak ] || null;
+	return cleaned.length ? cleaned.join( ' ' ) : undefined;
 };
