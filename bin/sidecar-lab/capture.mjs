@@ -140,7 +140,10 @@ async function novaProbe( noJs ) {
 	// buildCaptureCode); here we only await the engine-resolved fonts
 	// promise and record image counts.
 	if ( noJs ) {
-		await document.fonts.ready;
+		// fonts.ready is uncapped here and in-page sleep() cannot fire with
+		// scripts disabled — the DRIVER polls document.fonts.status with a
+		// bounded wait before this evaluate; only record the outcome.
+		settlement.fontsTimedOut = document.fonts.status !== 'loaded';
 		const imgsNoJs = Array.prototype.slice.call( document.images );
 		settlement.imagesTotal = imgsNoJs.length;
 		settlement.imagesIncomplete = imgsNoJs.filter( ( img ) => ! ( img.complete && img.naturalWidth > 0 ) ).length;
@@ -283,6 +286,8 @@ function buildCaptureCode( fixture, width, jsonPath, pngPath, noJs = false ) {
 		// bounded image-completeness poll run from the driver; the probe
 		// evaluate afterwards awaits only microtask-resolved promises.
 		...( noJs ? [
+			// Bounded driver-side fonts wait (the probe cannot cap it in-page).
+			'for (let i = 0; i < 25; i++) { const st = await page.evaluate(() => document.fonts.status); if (st === "loaded") break; await page.waitForTimeout(200); }',
 			'const docH = await page.evaluate(() => Math.max(document.documentElement.scrollHeight - window.innerHeight, 0));',
 			`for (let y = 0; y <= docH; y += ${ VIEWPORT_HEIGHT }) { await page.evaluate((yy) => window.scrollTo(0, yy), y); await page.waitForTimeout(60); }`,
 			'await page.evaluate(() => window.scrollTo(0, 0));',
@@ -624,6 +629,7 @@ function cmdDiff( labelA, labelB ) {
 	const manifest = JSON.parse( fs.readFileSync( MANIFEST_PATH, 'utf8' ) );
 	const expectedCaptures = manifest.flatMap( ( fixture ) => VIEWPORTS.map( ( width ) => `${ fixture.slug }.${ width }` ) );
 	const completenessErrors = [];
+	const runNoJs = {};
 	for ( const [ label, dir ] of [ [ labelA, dirA ], [ labelB, dirB ] ] ) {
 		const missing = expectedCaptures.filter( ( c ) => ! fs.existsSync( path.join( dir, c + '.json' ) ) );
 		if ( missing.length ) {
@@ -641,7 +647,11 @@ function cmdDiff( labelA, labelB ) {
 			if ( meta.aborted ) {
 				completenessErrors.push( `run "${ label }" was aborted before completing` );
 			}
+			runNoJs[ label ] = !! meta.noJs;
 		}
+	}
+	if ( runNoJs[ labelA ] !== runNoJs[ labelB ] ) {
+		console.log( `WARNING: runs differ in --no-js mode ("${ labelA }": ${ runNoJs[ labelA ] ? 'no-js' : 'js' }, "${ labelB }": ${ runNoJs[ labelB ] ? 'no-js' : 'js' }) — break-class and pull-out geometry diffs are EXPECTED; this comparison is analysis-only and must not gate a ship decision.` );
 	}
 
 	const listJson = ( dir ) => fs.readdirSync( dir ).filter( ( f ) => f.endsWith( '.json' ) && f !== 'meta.json' );

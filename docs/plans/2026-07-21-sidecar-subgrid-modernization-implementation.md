@@ -165,6 +165,8 @@ Per the design doc's "Editor canvas preview" section: with the Desktop device pr
 
 ### Task 3.4: Measurement v2 (`auto` mode only)
 
+Carried from the 3.1/3.2 review: (a) the JS layer should SKIP blocks whose rail the `:has()` layer covers on the frontend — closes the only known no-JS divergence (nested empty-rail inside an occupied outer rail); (b) BUT the editor canvas can never match the `:has()` rule (appender elements make rails non-empty), so the editor measurement path must still measure `:has()`-covered rails — do not share the skip predicate blindly between runtimes.
+
 **Files:**
 - Rewrite: `packages/utils/src/break-align.js` + `packages/core/src/frontend/break-align/handle-aligned-blocks/index.js`
 - Test: `packages/utils/src/break-align.test.js` (create — jsdom caveats: stub `getComputedStyle`, use `style.removeProperty`)
@@ -227,7 +229,7 @@ TDD the grouping rules first (contract), then the SCSS: real `float` inside `.nb
 
 ### Task 4b.3: New fixtures + extended baseline
 
-Add fixture pages to the generator ONLY at the post-ship-decision re-baseline (differ completeness forbids growing the manifest mid-comparison): (a) placement × wrap combinations at all rail states, (b) **a query-loop fixture and a supernova fixture** — ship-decision condition 2: these pass-through consumers currently have zero harness coverage; (c) **a header-nested-grid fixture** — header rows locally override `--nb-wrapper-sides-spacings`, an uncovered substitution-context edge from Task 2.2 review. Then `--run` a new canonical baseline including them.
+Add fixture pages to the generator ONLY at the post-ship-decision re-baseline (differ completeness forbids growing the manifest mid-comparison): (a) placement × wrap combinations at all rail states, (b) **a query-loop fixture and a supernova fixture** — ship-decision condition 2: these pass-through consumers currently have zero harness coverage; (c) **a header-nested-grid fixture** — header rows locally override `--nb-wrapper-sides-spacings`, an uncovered substitution-context edge from Task 2.2 review; (d) **probe ROOT containers' `gridTemplateColumns`** in the harness — rail zeroing on roots is currently verified only indirectly through subgridded fixtures. Then `--run` a new canonical baseline including them.
 
 ## Phase 5 — Group pass-through + container-list unification
 
