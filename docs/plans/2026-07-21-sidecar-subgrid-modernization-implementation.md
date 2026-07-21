@@ -131,6 +131,14 @@ Apply `nb-layout-root` to: `.is-root-container`, `.wp-block-post-content`, `.wp-
 
 ## Phase 3 — Hybrid break system + fixes ledger (TDD throughout)
 
+### Task 3.0: Engine editor smoke (ship-decision condition — FIRST)
+
+Redeploy the worktree's subgrid build to the lab site (watcher stopped, backup, restore protocol as in Task 2.1), then verify fixture pages in BOTH the Site Editor and Post Editor canvases: grid intact, no collapsed/misplaced sidecar areas beyond known canvas-width behavior, no console errors. Record findings in `.ai/sidecar-lab/`; restore the site. Also address Task 2.1 review minors: remove or document the unused `nb-layout-passthrough` mixin wrapper; tighten the rect-identity phrasing in `.ai/sidecar-lab/expected-changes.md` (horizontal bitwise-equal; vertical within documented tolerance).
+
+### Task 3.0b: Editor canvas-width compensation (George's directive 2026-07-21)
+
+Per the design doc's "Editor canvas preview" section: with the Desktop device preview active the editor must keep the multi-column sidecar layout instead of collapsing at the canvas's media-query width. Investigate device-preview-keyed collapse vs container-relative sizing; clamp rail widths for narrow canvases; verify in both editors (napkin: Editor CSS iframed vs non-iframed rules apply).
+
 ### Task 3.1: PHP layer — rail-absence classes
 
 **Files:**
@@ -220,7 +228,7 @@ TDD the grouping rules first (contract), then the SCSS: real `float` inside `.nb
 
 ### Task 4b.3: New fixtures + extended baseline
 
-Add wrap/anchor fixture pages to the generator ONLY after the Phase 2 ship decision re-baselines on the new engine (differ completeness forbids growing the manifest mid-comparison): new pages exercise all four Anchor × Wrap combinations at all rail states, then `--run` a new canonical baseline including them.
+Add fixture pages to the generator ONLY at the post-ship-decision re-baseline (differ completeness forbids growing the manifest mid-comparison): (a) placement × wrap combinations at all rail states, (b) **a query-loop fixture and a supernova fixture** — ship-decision condition 2: these pass-through consumers currently have zero harness coverage. Then `--run` a new canonical baseline including them.
 
 ## Phase 5 — Group pass-through + container-list unification
 

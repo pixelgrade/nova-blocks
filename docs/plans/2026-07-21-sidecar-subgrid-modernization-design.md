@@ -27,7 +27,7 @@ Known defects (full study in the 2026-07-21 session; the ledger below carries ev
 Split the current mixin into two roles:
 
 - **`nb-layout-root`** — declares the 13 tracks and computes `nb-layout-settings`. Applied only where a coordinate system genuinely starts: root container, post content, template parts, and the intentionally independent small-scale instances (e.g. `supernova-item__inner-container`, which builds a card-internal mini grid and must NOT align with the page).
-- **`nb-layout-passthrough`** — `grid-template-columns: subgrid` spanning `fs / fe`. Applied to Sidecar, sidecar areas, query, page-level supernova, and (later phase) Group. Line names inherit natively; the perfect-overlap convention becomes a browser guarantee, and the `!important` pin plus per-container track math disappear.
+- **`nb-layout-passthrough`** — `grid-template-columns: subgrid`. **Narrowed by Task 2.1 evidence (permanent, not deferred):** the pass-through role applies only to *track-neutral* containers — `.nb-sidecar-area--content`, `.nb-sidecar--sidebar-none`, `.wp-block-query`, page-level `.nb-supernova`, and (later phase) Group. **Positioned sidecars stay track-declaring**: their width classes resize track vars locally, and subgrid inheritance cannot express nested layouts with different same-side rail widths at different depths (proven by the nested-deep fixture — custom properties don't flow upward). The modern rule is parent-scoped — `@supports (grid-template-columns: subgrid) { :is($nb-layout-grid-parents) > … }` — because `subgrid` on a non-grid-item computes to `none` and would collapse the layout (Anima's template-level Sidecar sits inside a non-grid `.wp-site-blocks`). Roots KEEP the `grid-column: fs/fe !important` pin: a root such as `.wp-block-post-content` can itself be a grid item of the template Sidecar's content area.
 
 Deliberate carry-overs:
 
@@ -38,6 +38,18 @@ Deliberate carry-overs:
 Fallback: all modern rules ship inside `@supports (grid-template-columns: subgrid)`; the current re-declared-grid math remains verbatim as the fallback, so pre-subgrid browsers render exactly today's output.
 
 Track derivation flips: `--nb-content-width` becomes the source of truth and rail track widths derive from it, replacing today's phantom-track subtraction (`_layout.scss:32-36`) that reserves invisible sidebar tracks on every page and forced Anima to reverse-engineer its reading column. Roots without rails zero the rail track vars explicitly. This is a cross-repo coordination point with Style Manager tokens and Anima (`--nb-container-width-setting`, `--nb-content-inset-setting`).
+
+### Ship decision — Task 2.1 (2026-07-21): in-place `@supports`, conditional
+
+Evidence (worktree commit `55afe4f0`, adversarially reviewed): fallback CSS byte-identical to the old engine except one 426-byte `@supports` rule in `build/core/style.css`; harness diff baseline↔subgrid exit 0 across all 68 captures with zero rect, break-class, element-set, or display differences (only kind-scoped `gtc` readout annotations, which structurally cannot mask geometry); 50/68 screenshots byte-identical, the remainder sub-pixel vertical drift within the documented tolerance. No v2 flag.
+
+Conditions carried forward: (1) **editor smoke in Site Editor AND Post Editor before Phase 3 builds on the engine** — `build/core/style.css` provably ships to editor canvases via `enqueue_block_assets`; (2) **query-loop and supernova fixtures at the next re-baseline** — those two pass-through consumers currently rest on track-neutrality reasoning alone; (3) this section records the positioned-sidecar narrowing.
+
+Known hazards (recorded, not blocking): third-party CSS that defeats `display: grid` on a container-union member (e.g. `#main { display: flex }` at (1,0,0) specificity) makes subgrid-capable browsers degrade *harder* (collapse) than fallback browsers (self-declared grid) — unreachable on the Anima stack, plausible on arbitrary wp.org installs. Subgrid items participate in the parent's *intrinsic* track sizing — the below-lap auto-track redistribution was proven geometry-neutral here, but it is the mechanism most likely to bite in overflow/min-content edge cases.
+
+## Editor canvas preview (added 2026-07-21, George's directive)
+
+The editor canvas is narrower than the frontend viewport (inspector sidebars eat width), so viewport-keyed breakpoints collapse the Sidecar to one column far too early — the desktop layout becomes un-previewable while the frontend is fine. Requirement: with the **Desktop device preview active, the editor renders the multi-column sidecar layout** (proportionally narrower tracks are acceptable); Tablet/Mobile previews key the collapse. Candidate mechanism: drive the collapse from the editor's device-preview state (and/or container-relative sizing) instead of raw canvas media queries, clamping rail widths so two-column geometry survives narrow canvases. Verify in both Site Editor and Post Editor.
 
 ## Block model and Layout Recipes
 
