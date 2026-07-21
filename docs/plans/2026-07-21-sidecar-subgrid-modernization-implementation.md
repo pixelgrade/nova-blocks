@@ -192,6 +192,8 @@ Remove `--body-font-size`/`--offset-addon` from `scss/_mixins.scss`; move `:root
 
 ### Task 4.1: Explicit area names with legacy mapping
 
+Carried from the 3.4 review: `shouldSkipForCssCoveredRails` and `getAdjacentSidebarBlocks` both take the FIRST rail child — under the three-area model (left AND right rails) both must go per-rail, or an empty first rail + occupied second rail skips incorrectly / misses obstacles.
+
 **Files:**
 - Modify: `packages/block-library/src/blocks/sidecar-area/init.php`, `edit.js`, `attributes.json`; `sidecar/init.php`, `edit.js`, `variations.js`
 - Test: extend `tests/php/sidecar-render-contract.php`
