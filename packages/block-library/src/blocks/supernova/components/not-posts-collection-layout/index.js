@@ -3,7 +3,7 @@ import { useDispatch } from "@wordpress/data";
 import { useEffect, useRef } from "@wordpress/element";
 
 import { getPlaceholderImages, useInnerBlocks } from "@novablocks/block-editor";
-import { CollectionBody, CollectionLeadingItems } from "@novablocks/collection";
+import { CollectionBody, CollectionLeadingItems, useEditorCollectionLeadingItems } from "@novablocks/collection";
 import { needsPreview } from "@novablocks/utils";
 
 import { SupernovaItemPreview } from "../index";
@@ -20,10 +20,12 @@ const CardsCollectionEdit = ( props ) => {
   } );
 
   const { children, ...collectionInnerBlocksProps } = innerBlocksProps;
+  const leadingItems = useEditorCollectionLeadingItems( props.attributes );
 
   return (
     <CollectionBody { ...props } { ...collectionInnerBlocksProps } key={'body'}>
-      <CollectionLeadingItems attributes={ props.attributes } />
+      { leadingItems.length > 0 &&
+        <CollectionLeadingItems attributes={ props.attributes } /> }
       { children }
     </CollectionBody>
   )
@@ -32,10 +34,12 @@ const CardsCollectionEdit = ( props ) => {
 const CardsCollectionPreview = ( props ) => {
   const { clientId } = props;
   const innerBlocks = useInnerBlocks( clientId );
+  const leadingItems = useEditorCollectionLeadingItems( props.attributes );
 
   return (
     <CollectionBody { ...props } key={ 'body' }>
-      <CollectionLeadingItems attributes={ props.attributes } />
+      { leadingItems.length > 0 &&
+        <CollectionLeadingItems attributes={ props.attributes } /> }
       { innerBlocks.map( innerBlock =>
         <div className={ 'nb-collection__layout-item' } key={ 'collection_layout_item_' + innerBlock.clientId }>
           <SupernovaItemPreview { ...innerBlock } parentAttributes={ props.attributes } context={ props.context } />

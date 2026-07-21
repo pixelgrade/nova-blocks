@@ -8,7 +8,7 @@ jest.mock( '@wordpress/data', () => ( {
   } ) ),
 } ) );
 
-import CollectionLeadingItems from './index';
+import CollectionLeadingItems, { useEditorCollectionLeadingItems } from './index';
 import { getEditorCollectionLeadingItems } from './get-editor-collection-leading-items';
 
 describe( 'collection leading items', () => {
@@ -79,6 +79,13 @@ describe( 'collection leading items', () => {
       markup: '0',
       requiredCollectionClassName: '0',
     } ) ] );
+  } );
+
+  test( 'editor hook resolves leading items only for supported flow layouts', () => {
+    mockSettings = { collectionLeadingItems: items };
+
+    expect( useEditorCollectionLeadingItems( { layoutStyle: 'carousel', className: 'has-theme-header' } ) ).toEqual( [] );
+    expect( useEditorCollectionLeadingItems( { layoutStyle: 'masonry', className: 'has-theme-header' } ).map( item => item.id ) ).toEqual( [ 'site-header' ] );
   } );
 
   test( 'renders semantic editor wrappers with trusted provider markup', () => {

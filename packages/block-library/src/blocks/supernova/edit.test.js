@@ -146,6 +146,23 @@ test('editor forwards resolved post-format card blueprints to post collections',
   );
 } );
 
+test('editor preview filters query posts with the dual-format tax query helper', () => {
+  assert.match(
+    source,
+    /import \{ buildEditorRestTaxQuery \} from '\.\/editor-tax-query';/
+  );
+
+  assert.match(
+    source,
+    /const builtTaxQuery = buildEditorRestTaxQuery\( taxQuery, taxonomies \);/
+  );
+
+  assert.doesNotMatch(
+    source,
+    /Object\.entries\( taxQuery \)/
+  );
+});
+
 test('editor resolves inherited card metadata style without coupling it to Meta Reveal', () => {
 	assert.match(
 		source,

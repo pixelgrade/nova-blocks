@@ -1,7 +1,7 @@
 import { Spinner } from '@wordpress/components';
 import { __ } from '@wordpress/i18n';
 import { useInnerBlocks } from '@novablocks/block-editor';
-import { CollectionBody, CollectionLeadingItems } from '@novablocks/collection';
+import { CollectionBody, CollectionLeadingItems, useEditorCollectionLeadingItems } from '@novablocks/collection';
 import { PostCard } from '../index';
 
 const PostsCollectionLayout = props => {
@@ -12,6 +12,7 @@ const PostsCollectionLayout = props => {
     paletteVariation: props.attributes.contentPaletteVariation,
     useSourceColorAsReference: false
   } );
+  const leadingItems = useEditorCollectionLeadingItems( attributes );
 
   const passedProps = Object.assign( {}, props, {
     attributes: attributes
@@ -32,7 +33,8 @@ const PostsCollectionLayout = props => {
 
   return (
     <CollectionBody {...props} key={'body_' + clientId}>
-      <CollectionLeadingItems attributes={ attributes } />
+      { leadingItems.length > 0 &&
+        <CollectionLeadingItems attributes={ attributes } /> }
       {!posts
         ? <Spinner/>
         : !posts.length

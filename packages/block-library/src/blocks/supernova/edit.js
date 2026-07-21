@@ -30,6 +30,7 @@ import {
 import { compileSupernovaItemAttributes } from './utils';
 import { CURRENT_ITEM_FEATURED_IMAGE_MEDIA_SOURCE } from './utils/current-item-featured-image';
 import { orderEditorPostsLikeFrontend } from './editor-post-order';
+import { buildEditorRestTaxQuery } from './editor-tax-query';
 
 const normalizeVariationValue = ( value ) => ( value + 11 ) % 12 + 1;
 
@@ -384,18 +385,7 @@ const SupernovaEdit = props => {
 
         // We have to build the tax query for the REST API and use as
         // keys the taxonomies `rest_base` with the `term ids` as values.
-        const builtTaxQuery = Object.entries( taxQuery ).reduce(
-          ( accumulator, [ taxonomySlug, terms ] ) => {
-            const taxonomy = taxonomies?.find(
-              ( { slug } ) => slug === taxonomySlug
-            );
-            if ( taxonomy?.rest_base ) {
-              accumulator[taxonomy?.rest_base] = terms;
-            }
-            return accumulator;
-          },
-          {}
-        );
+        const builtTaxQuery = buildEditorRestTaxQuery( taxQuery, taxonomies );
         if ( !!Object.keys( builtTaxQuery ).length ) {
           Object.assign( query, builtTaxQuery );
         }

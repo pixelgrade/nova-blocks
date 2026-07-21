@@ -5,9 +5,14 @@ import { getEditorCollectionLeadingItems } from './get-editor-collection-leading
 
 export { getEditorCollectionLeadingItems } from './get-editor-collection-leading-items';
 
-const CollectionLeadingItems = ( { attributes } ) => {
+export const useEditorCollectionLeadingItems = ( attributes ) => {
   const settings = useSelect( select => select( 'novablocks' ).getSettings(), [] );
-  const items = getEditorCollectionLeadingItems( settings?.collectionLeadingItems, attributes );
+
+  return getEditorCollectionLeadingItems( settings?.collectionLeadingItems, attributes );
+};
+
+const CollectionLeadingItems = ( { attributes } ) => {
+  const items = useEditorCollectionLeadingItems( attributes );
 
   return items.map( item => {
     const className = [

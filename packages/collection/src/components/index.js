@@ -4,7 +4,7 @@ export { default as CollectionSubtitle } from './collection-subtitle';
 export { default as CollectionHeader } from './collection-header';
 export { default as CollectionBody } from './collection-body';
 export { default as CollectionLayout } from './collection-layout';
-export { default as CollectionLeadingItems } from './collection-leading-items';
+export { default as CollectionLeadingItems, useEditorCollectionLeadingItems } from './collection-leading-items';
 export { default as ExternalLayoutParticipant } from './external-layout-participant';
 
 export { default as CarouselLayout } from './carousel-layout';

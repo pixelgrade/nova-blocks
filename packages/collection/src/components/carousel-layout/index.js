@@ -1,6 +1,8 @@
 import $ from 'jquery';
 import Slider from "react-slick";
 
+import { Children } from '@wordpress/element';
+
 
 const SliderArrow = ( props ) => {
 
@@ -79,8 +81,10 @@ const CarouselLayout = ( props ) => {
     settings.slidesToShow = columns;
   }
 
+  // react-slick turns EVERY child into a slide, including `false`/`null`
+  // conditionals; keep only renderable elements so nothing becomes a blank slide.
   return (
-    <Slider { ...settings } className={ props.className }>{ props.children }</Slider>
+    <Slider { ...settings } className={ props.className }>{ Children.toArray( props.children ) }</Slider>
   );
 };
 
