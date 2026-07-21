@@ -14,6 +14,15 @@ class HeaderBase {
     onScrollRAF( this.maybeUpdateStickyStyles.bind( this ) );
     const debouncedOnResize = debounce( this.onResize.bind( this ), 100 );
     window.addEventListener( 'resize', debouncedOnResize );
+
+    // Display webfonts and late assets can grow the header after the initial
+    // measurement without firing a window resize, leaving the neighbour
+    // padding compensation short of the final header height.
+    document.fonts?.ready?.then( () => this.onResize() );
+
+    if ( document.readyState !== 'complete' ) {
+      window.addEventListener( 'load', debouncedOnResize, { once: true } );
+    }
   }
 
   onResize() {

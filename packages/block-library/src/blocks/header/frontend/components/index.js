@@ -105,8 +105,8 @@ class Header extends HeaderBase {
 
     // cleanup previously added styles
     elementsStack.forEach( element => {
-      element.style.paddingTop = '';
-      element.style.marginTop = '';
+      element.style.removeProperty( 'padding-top' );
+      element.style.removeProperty( 'margin-top' );
     } );
 
     elementsStack.forEach( element => {
