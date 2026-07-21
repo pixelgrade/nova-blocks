@@ -51,6 +51,16 @@
 
 // This is where the grid magic starts.
 //
+// Every container below instantiates the Nova layout grid. Roots
+// (.is-root-container, .wp-block-post-content, .wp-block-template-part,
+// .edit-post-visual-editor__post-title-wrapper, [id="main"], the WooCommerce
+// legacy template) genuinely start a coordinate system. The rest are
+// pass-throughs whose re-declared grid is the pre-subgrid FALLBACK — their
+// modern half (grid-template-columns: subgrid) is layered on further down.
+// Positioned Sidecars (--sidebar-left/right) stay track-declaring for now:
+// their width classes resize tracks locally, which subgrid inheritance
+// cannot express (see _content-layout.scss role notes).
+//
 // "Break" classes are added via JS when the aligned block and a Sidebar
 // do not overlap, so there is space that the aligned block can fill.
 :is(
@@ -67,7 +77,7 @@
   .nb-supernova
 ) {
 
-  @include nb-content-layout-grid;
+  @include nb-layout-root;
 
   > :is(.alignleft, [data-align="left"], #specific),
   > :is(.alignright, [data-align="right"],  #specific) {
@@ -141,4 +151,25 @@
       }
     }
   }
+}
+
+// Pass-throughs: modern half of nb-layout-passthrough (the fallback half is
+// the shared nb-layout-root emission above). Where the browser supports
+// subgrid AND the element is a direct grid item of a Nova layout grid, the
+// re-declared tracks give way to the parent's real tracks and line names.
+// Track-neutral containers only: content areas, sidebar-less Sidecars, Query
+// wrappers, and page-level Supernova collections never resize track vars, so
+// inherited tracks are geometrically identical to the fallback re-declaration.
+// (A page-level .nb-supernova nested in a supernova-item inner container is
+// display:block !important there, so this template is inert for it; the
+// card-internal inner container itself stays a ROOT via the compatibility
+// nb-content-layout-grid mixin and is deliberately absent from
+// $nb-layout-grid-parents' passthrough consumers.)
+:is(
+  .nb-sidecar--sidebar-none,
+  .nb-sidecar-area--content,
+  .wp-block-query,
+  .nb-supernova
+) {
+  @include nb-layout-subgrid-override;
 }

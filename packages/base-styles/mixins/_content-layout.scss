@@ -26,8 +26,42 @@
 // gce - gap content end
 // The same thing applies for [cc] [ce].
 
+// ---------------------------------------------------------------------------
+// Layout engine roles (Sidecar Subgrid Modernization, Phase 2).
+//
+// - `nb-layout-root` declares the 13-line coordinate system: track math runs
+//   here, and here only. NOTE: the `grid-column: fs / fe !important` pin stays
+//   in the root role on purpose — a root can itself be a grid item of another
+//   Nova layout grid (e.g. `.wp-block-post-content` rendered inside a
+//   theme-template Sidecar's content area) and must still span the full range.
+// - `nb-layout-passthrough` is a root re-declaration (the pre-subgrid
+//   fallback, byte-identical to today's behavior) plus a scoped
+//   `grid-template-columns: subgrid` override for supporting browsers.
+//   The override applies ONLY when the element is a direct grid item of a
+//   known Nova layout grid ($nb-layout-grid-parents): `subgrid` on an element
+//   whose parent is not a grid container behaves as `none` and would collapse
+//   the layout (e.g. a template-level Sidecar whose parent `.wp-site-blocks`
+//   is not a grid keeps declaring its own tracks via the fallback).
+// - `nb-content-layout-grid` remains the compatibility entry with the
+//   original single-role behavior. Intentionally-independent small-scale
+//   instances (e.g. `supernova-item__inner-container`, a card-internal mini
+//   grid that must NOT align with the page) keep using it.
+//
+// Only containers that never resize tracks may take the passthrough role:
+// a subgridded element inherits the parent's resolved tracks, so local
+// `--nb-sidecar-*` width overrides (positioned Sidecars' width classes)
+// would silently stop applying. See docs/plans/2026-07-21-sidecar-subgrid-
+// modernization-design.md — "Engine architecture".
+// ---------------------------------------------------------------------------
+
+// Every selector that instantiates a Nova layout grid (root or pass-through).
+// Used to scope the subgrid override to elements that are actually grid items
+// of a Nova layout grid. Phase 5 (Task 5.1) unifies this list with the JS
+// container list in one generated constant.
+$nb-layout-grid-parents: '.is-root-container, .edit-post-visual-editor__post-title-wrapper, .wp-block-post-content, .wp-block-template-part, [data-block-name="woocommerce/legacy-template"], [id="main"], .nb-content-layout-grid, .nb-sidecar, .nb-sidecar-area--content, .wp-block-query, .nb-supernova';
+
 //noinspection ALL
-@mixin nb-content-layout-grid {
+@mixin nb-layout-root {
   @include nb-layout-settings;
 
   display: grid;
@@ -121,4 +155,32 @@
       display: block;
     }
   }
+}
+
+// Modern half of the pass-through role: inherit the parent grid's tracks and
+// line names instead of re-declaring them. Scoped to direct grid items of a
+// Nova layout grid (see $nb-layout-grid-parents note above). The extra parent
+// compound also outranks the root fallback's below-lap template re-declaration
+// at every breakpoint, so pass-throughs subgrid below lap too — they inherit
+// whatever template the root declares at that breakpoint.
+@mixin nb-layout-subgrid-override {
+  @supports (grid-template-columns: subgrid) {
+    :is(#{$nb-layout-grid-parents}) > & {
+      grid-template-columns: subgrid;
+    }
+  }
+}
+
+// Pass-through role: fallback = full root re-declaration (today's behavior),
+// modern = subgrid inheritance. Track math vars become inert on the modern
+// path; line names come from the parent grid.
+@mixin nb-layout-passthrough {
+  @include nb-layout-root;
+  @include nb-layout-subgrid-override;
+}
+
+// Compatibility entry: the original single-role mixin. Keeps the historical
+// behavior (declare tracks, pin to fs / fe) for independent instances.
+@mixin nb-content-layout-grid {
+  @include nb-layout-root;
 }
