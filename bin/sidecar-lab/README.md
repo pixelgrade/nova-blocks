@@ -1,10 +1,12 @@
-# sidecar-lab fixtures
+# sidecar-lab harness
 
-Fixture generator for the Sidecar Subgrid Modernization harness
-(`docs/plans/2026-07-21-sidecar-subgrid-modernization-implementation.md`,
-Task 1.2). It is the reproducible spec of the verification matrix from the
+Fixture generator (Task 1.2) + probe/screenshot capture harness (Task 1.3)
+for the Sidecar Subgrid Modernization plan
+(`docs/plans/2026-07-21-sidecar-subgrid-modernization-implementation.md`).
+The generator is the reproducible spec of the verification matrix from the
 design doc (`docs/plans/2026-07-21-sidecar-subgrid-modernization-design.md`,
-Verification section).
+Verification section); the capture harness is the before/after evidence
+engine for the Phase 2+ engine rewrite.
 
 ## Site
 
@@ -70,6 +72,74 @@ harness to:
 (array of `{ slug, url, description, families }`; `.ai/` is a private
 overlay and stays uncommitted). The path is resolved from the script's repo
 location; override with the `SIDECAR_LAB_MANIFEST` env var if needed.
+
+## Capture harness (`capture.mjs`)
+
+Probes + screenshots every manifest page across viewports 375 / 1024 /
+1440 / 2000 (height 1200), and diffs two runs. Node 22, plain ESM, no npm
+dependencies — it shells out to the `playwriter` CLI (headless Chrome; run
+`playwriter browser install` once if missing).
+
+```bash
+# Capture a run (68 page-loads with the 17-page manifest):
+node bin/sidecar-lab/capture.mjs --run baseline
+
+# Overwrite an existing run:
+node bin/sidecar-lab/capture.mjs --run baseline --force
+
+# Compare two runs (e.g. before/after an engine change):
+node bin/sidecar-lab/capture.mjs --diff baseline subgrid
+```
+
+Outputs land in `.ai/sidecar-lab/runs/<label>/` (private overlay, never
+committed): `<slug>.<viewport>.json` (probe), `<slug>.<viewport>.png`
+(full-page screenshot), and a run-level `meta.json` (date, engine label,
+page count, total probed elements, settlement/image timeouts, failures).
+
+Full-page screenshots are taken by growing the viewport to the document
+height (capped at 16000px) rather than Playwright's `fullPage: true` —
+Chromium's captureBeyondViewport discards decoded image data for
+offscreen images and paints them blank. The resize happens after the
+probe payload is collected and never changes the width, so it cannot
+affect probe data. Pages over the cap fall back to `fullPage: true` and
+carry `screenshotClamped: true` in their probe JSON.
+
+**What a probe records** — for every `.nb-sidecar`, `.nb-sidecar-area`,
+and `.alignwide/.alignfull/.alignleft/.alignright` element: a stable
+structural path (`tag:childIndex` chain from `<body>` — never "the first
+sidecar", because the Anima LT page template wraps post content in its own
+`sidebarPosition:none` sidecar on every page), className, computed
+`display`, `gridTemplateColumns` (grids only), and its bounding rect
+(left/right/width/top/height, 0.1px rounding). Page-level: the
+break-class inventory (`break-align-left/right` carriers by path) and the
+settlement flags.
+
+**Settlement protocol** (the current engine adds break classes via
+debounced JS after domReady — probing early poisons the data): wait for
+`document.fonts.ready`, scroll through the page to trigger lazy images
+and back to top, wait for every image to complete (bounded), then poll
+the page-wide break-class inventory until two consecutive samples 300ms
+apart are identical (cap 5s; a timeout sets `settlement.settled: false`
+and is listed in `meta.json` + warned about by `--diff`). All DOM reads
+for a page happen in ONE `page.evaluate`.
+
+**Diff semantics** (`--diff A B`): per capture it reports break-class
+inventory changes, element set changes, computed `display` changes,
+`gridTemplateColumns` changes (0.5px per-track numeric tolerance), and
+left/right/width rect deltas over 1px. Differences are acceptable only
+when annotated in `.ai/sidecar-lab/expected-changes.md` — one per line:
+`<slug> <viewport> <reason>` (`*` wildcard allowed for slug/viewport;
+missing file = no annotations). Exit code 0 only when every differing
+page/viewport is annotated. `--diff <label> <label>` (self-diff) must
+always report zero differences.
+
+**Playwriter specifics**: the run warms the relay with one sequential
+`session list` (concurrent first launches can race on `127.0.0.1:19988`),
+creates its own headless session with the repo root as CWD (the eval
+sandbox's `fs` is scoped to the session CWD — that is how probe JSONs get
+written), drives it with `-e` + `--timeout 90000` (the CLI's default 10s
+eval cap would kill the settlement protocol), retries each capture once
+after a `session reset`, and deletes the session when done.
 
 ## Environment facts the fixtures rely on (verified 2026-07-21)
 
