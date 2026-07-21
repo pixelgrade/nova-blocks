@@ -33,6 +33,21 @@
   --nb-sidecar-sidebar-right-width: var(--nb-sidecar-sidebar-small-width);
 
   --nb-container-width: calc(var(--nb-container-width-setting, 67) * var(--current-font-size, 16px));
+
+  // The consumer-facing content-width token (Task 2.2). Because a custom
+  // property substitutes its var() references at the element where it is
+  // DECLARED, this :root declaration always resolves with the default (small)
+  // rail budget — Sidecar width classes never alter what consumers
+  // (core/group children max-width, Anima theme.json contentSize) receive.
+  // The per-container track math derives from the live counterpart
+  // `--nb-sidecar-content-width` computed in nb-layout-settings
+  // (see _content-layout.scss).
+  // Zeroing the rail vars on rail-less roots (the design's end state) is
+  // deferred to the Phase 3 break-system rework: today the break placement
+  // vars (--block-left-end: gs / --block-right-start: ge) anchor broken
+  // aligned blocks to the rail-gap lines, and zeroed rails move those lines
+  // through subgridded chains; Task 3.1's rail-absence classes re-anchor
+  // them first.
   --nb-content-width: calc(var(--nb-container-width) - var(--nb-sidecar-sidebar-left-width) - var(--nb-sidecar-sidebar-left-gap) - var(--nb-sidecar-sidebar-right-width) - var(--nb-sidecar-sidebar-right-gap));
   --nb-sidecar-sides: max(var(--nb-wrapper-sides-spacings), calc((100% - var(--nb-container-width)) * 0.5));
 

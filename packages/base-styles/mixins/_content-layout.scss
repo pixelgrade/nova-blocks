@@ -7,8 +7,27 @@
   @each $side in left, right {
     --nb-sidecar-sidebar-#{$side}-gap: clamp(0px, var(--nb-sidecar-sidebar-#{$side}-width) * 999, var(--nb-sidecar-gap));
     --nb-sidecar-sidebar-#{$side}-max-width: calc(var(--nb-actual-container-width) * 0.5 - var(--nb-sidecar-gap) * 1.5);
-    --nb-sidecar-content-#{$side}: calc(50% - var(--nb-sidecar-sides) - var(--nb-sidecar-sidebar-#{$side}-width) - var(--nb-sidecar-sidebar-#{$side}-gap) - var(--nb-sidecar-gap) * 0.5);
   }
+
+  // Content-width inversion (Task 2.2): the content width is derived FIRST,
+  // and the content tracks hang off it; the rail vars are offsets, no longer
+  // the thing content is repeatedly subtracted from inside each track.
+  //
+  // This must re-substitute the live rail vars HERE (per container) rather
+  // than consume var(--nb-content-width): a custom property resolves its
+  // var() references at the element where it is DECLARED, so the :root token
+  // bakes in the default (small) rail widths and would ignore a Sidecar's
+  // width classes. The :root `--nb-content-width` token intentionally keeps
+  // that root-computed value for its consumers; this var is its live,
+  // viewport-responsive (actual-container-based) per-container counterpart.
+  --nb-sidecar-content-width: calc(var(--nb-actual-container-width) - var(--nb-sidecar-sidebar-left-width) - var(--nb-sidecar-sidebar-left-gap) - var(--nb-sidecar-sidebar-right-width) - var(--nb-sidecar-sidebar-right-gap));
+
+  // Each content half-track = half the content width (minus the center gap),
+  // shifted by half the rail-budget asymmetry so the center gap [gcs..gce]
+  // keeps sitting at the container's midline — algebraically identical to the
+  // previous `50% - sides - rail - rail-gap - gap/2` subtraction.
+  --nb-sidecar-content-left: calc(var(--nb-sidecar-content-width) * 0.5 - var(--nb-sidecar-gap) * 0.5 + (var(--nb-sidecar-sidebar-right-width) + var(--nb-sidecar-sidebar-right-gap) - var(--nb-sidecar-sidebar-left-width) - var(--nb-sidecar-sidebar-left-gap)) * 0.5);
+  --nb-sidecar-content-right: calc(var(--nb-sidecar-content-width) * 0.5 - var(--nb-sidecar-gap) * 0.5 + (var(--nb-sidecar-sidebar-left-width) + var(--nb-sidecar-sidebar-left-gap) - var(--nb-sidecar-sidebar-right-width) - var(--nb-sidecar-sidebar-right-gap)) * 0.5);
 }
 
 
@@ -174,6 +193,13 @@ $nb-layout-grid-parents: '.is-root-container, .edit-post-visual-editor__post-tit
 // Pass-through role: fallback = full root re-declaration (today's behavior),
 // modern = subgrid inheritance. Track math vars become inert on the modern
 // path; line names come from the parent grid.
+//
+// NOTE: currently has no direct consumer — _layout.scss composes the two
+// halves itself (one shared nb-layout-root emission for the whole container
+// union plus one nb-layout-subgrid-override on the pass-through subset) to
+// avoid emitting the ~60-line root body once per role. This mixin is the
+// canonical single-selector form of the role and the intended entry point
+// for future standalone pass-throughs (e.g. the Phase 5 Group conversion).
 @mixin nb-layout-passthrough {
   @include nb-layout-root;
   @include nb-layout-subgrid-override;
