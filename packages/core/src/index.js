@@ -2,7 +2,7 @@ import { dispatch } from '@wordpress/data';
 import { updateCategory } from '@wordpress/blocks';
 
 import { getEditorScrollContainer, getSvg } from '@novablocks/block-editor';
-import { debounce, cleanupBreakClasses, getContentBlocksArray, maybeAddBreakClassesToElement } from "@novablocks/utils";
+import { debounce, cleanupBreakClasses, runBreakAlignment } from "@novablocks/utils";
 
 import { observeAlignedBlockMutations } from './aligned-blocks-subscription';
 import iconSvg from './icon.svg';
@@ -22,9 +22,12 @@ export class novaBlocks {
 
 const handleAlignedBlocks = () => {
   const runAlignment = debounce( () => {
-    const contentBlocks = getContentBlocksArray();
     cleanupBreakClasses();
-    contentBlocks.forEach( maybeAddBreakClassesToElement );
+    // Editor path: the :has()-covered-rail skip stays DISABLED here — canvas
+    // rails contain block appenders (never element-empty), so the frontend
+    // skip condition cannot mirror the published :has() state and the canvas
+    // must keep measuring those blocks (Task 3.4 carried note).
+    runBreakAlignment( { skipCssCoveredRails: false } );
   }, 100 );
 
   let currentTarget = null;
