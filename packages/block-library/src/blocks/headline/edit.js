@@ -88,7 +88,7 @@ export default function HeadlineEdit( props ) {
           value={ primary }
           onChange={ ( value ) => setAttributes( { primary: value } ) }
           placeholder={ __( 'Write title…', '__plugin_txtd' ) }
-          allowedFormats={ [] }
+          allowedFormats={ [ 'core/bold', 'core/italic' ] }
         />
       </TagName>
       <Controls { ...props } />
