@@ -136,7 +136,9 @@ Redeploy the worktree's subgrid build to the lab site (watcher stopped, backup, 
 
 Per the design doc's "Editor canvas preview" section: with the Desktop device preview active the editor must keep the multi-column sidecar layout instead of collapsing at the canvas's media-query width. Investigate device-preview-keyed collapse vs container-relative sizing; clamp rail widths for narrow canvases; verify in both editors (napkin: Editor CSS iframed vs non-iframed rules apply).
 
-### Task 3.1: PHP layer — rail-absence classes
+### Task 3.1 + 3.2: DONE as built (`18775c3c`, worktree) — see design doc "Break system" layers 1–2 for the as-built record (inherit-keyword flips, per-container `--nb-layout-rail-*` zeroing, valid single-`:has()` selector + content-var pin, no-JS proof). Contract test: `tests/php/sidecar-render-contract.php`. Harness gained `--no-js` (driver-side waits only — script-disabled pages never fire timers/rAF).
+
+### Task 3.1 (original spec): PHP layer — rail-absence classes
 
 **Files:**
 - Test: `tests/php/sidecar-render-contract.php` (create — standalone contract, mock WP doubles per existing contracts)

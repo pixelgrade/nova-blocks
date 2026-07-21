@@ -5,8 +5,21 @@
  * Probes + screenshots every fixture page of the sidecar-lab Studio site
  * (see fixtures-manifest.json) across four viewports, and diffs two runs.
  *
- *   node bin/sidecar-lab/capture.mjs --run <label> [--force]
+ *   node bin/sidecar-lab/capture.mjs --run <label> [--force] [--no-js]
  *   node bin/sidecar-lab/capture.mjs --diff <labelA> <labelB>
+ *
+ * --no-js (Task 3.2): disables page script execution via CDP
+ * Emulation.setScriptExecutionDisabled BEFORE navigation, so probes measure
+ * the pure SSR + CSS layout (server-known rail-absence classes and the
+ * :has() empty-rail layer) with the JS break-measurement layer absent. The
+ * settlement protocol skips its break-class polling (there is nothing to
+ * settle) and records settlement.noJs / meta.noJs. Driver-initiated
+ * page.evaluate still runs — only page scripts are disabled — BUT page
+ * timers and requestAnimationFrame never fire in that state (microtasks
+ * do), so all sleep()-based settlement moves to the driver side and the
+ * probe awaits only engine/microtask-resolved promises. Diffs between a
+ * --no-js run and a JS run of the SAME engine are for analysis only — never
+ * gate on them (break classes and JS-driven placements legitimately differ).
  *
  * Requirements: Node 22, the `playwriter` CLI on PATH (headless Chrome
  * installed via `playwriter browser install`), and the fixture site up at
@@ -88,7 +101,7 @@ const MAX_CONSECUTIVE_FAILURES = 3; // fast-abort threshold for --run
  * In-page probe. Serialized with .toString() and executed as the ONLY
  * page.evaluate of a capture. Pure browser code — no outer-scope refs.
  * ------------------------------------------------------------------ */
-async function novaProbe() {
+async function novaProbe( noJs ) {
 	const SETTLE_POLL_MS = 300;
 	const SETTLE_CAP_MS = 5000;
 	const FONTS_CAP_MS = 5000;
@@ -113,11 +126,26 @@ async function novaProbe() {
 	const settlement = {
 		settled: false,
 		settleMs: null,
+		noJs: !! noJs,
 		fontsTimedOut: false,
 		imagesTimedOut: false,
 		imagesTotal: 0,
 		imagesIncomplete: 0,
 	};
+
+	// NO-JS MODE: with Emulation.setScriptExecutionDisabled, page TIMERS and
+	// requestAnimationFrame never fire (only microtasks run), so every
+	// sleep()-based wait below would hang the evaluate. The driver performs
+	// the scroll-through and image polling BEFORE this evaluate (see
+	// buildCaptureCode); here we only await the engine-resolved fonts
+	// promise and record image counts.
+	if ( noJs ) {
+		await document.fonts.ready;
+		const imgsNoJs = Array.prototype.slice.call( document.images );
+		settlement.imagesTotal = imgsNoJs.length;
+		settlement.imagesIncomplete = imgsNoJs.filter( ( img ) => ! ( img.complete && img.naturalWidth > 0 ) ).length;
+		settlement.imagesTimedOut = settlement.imagesIncomplete > 0;
+	} else {
 
 	// 1. Webfonts — break-align re-measures after fonts settle.
 	await Promise.race( [
@@ -151,27 +179,36 @@ async function novaProbe() {
 	] );
 	settlement.imagesIncomplete = imgs.filter( ( img ) => ! ( img.complete && img.naturalWidth > 0 ) ).length;
 
+	}
+
 	// 4. Break-class settlement: the engine adds break-align-left/right via
 	// debounced JS after domReady. Poll the page-wide inventory until two
 	// consecutive samples 300ms apart are identical (cap 5s, flag on cap).
+	// In --no-js mode there is no script to settle — skip the polling
+	// entirely (the inventory is still collected below; it should be empty).
 	const breakInventory = () => Array.prototype.map.call(
 		document.querySelectorAll( '.break-align-left, .break-align-right' ),
 		( el ) => pathOf( el )
 			+ '|' + ( el.classList.contains( 'break-align-left' ) ? 'L' : '' )
 			+ ( el.classList.contains( 'break-align-right' ) ? 'R' : '' )
 	).sort();
-	const settleStart = performance.now();
-	let prevSample = JSON.stringify( breakInventory() );
-	while ( performance.now() - settleStart < SETTLE_CAP_MS ) {
-		await sleep( SETTLE_POLL_MS );
-		const sample = JSON.stringify( breakInventory() );
-		if ( sample === prevSample ) {
-			settlement.settled = true;
-			break;
+	if ( noJs ) {
+		settlement.settled = true;
+		settlement.settleMs = 0;
+	} else {
+		const settleStart = performance.now();
+		let prevSample = JSON.stringify( breakInventory() );
+		while ( performance.now() - settleStart < SETTLE_CAP_MS ) {
+			await sleep( SETTLE_POLL_MS );
+			const sample = JSON.stringify( breakInventory() );
+			if ( sample === prevSample ) {
+				settlement.settled = true;
+				break;
+			}
+			prevSample = sample;
 		}
-		prevSample = sample;
+		settlement.settleMs = Math.round( performance.now() - settleStart );
 	}
-	settlement.settleMs = Math.round( performance.now() - settleStart );
 
 	// 5. Probe — every sidecar, every sidecar area, every aligned block.
 	window.scrollTo( 0, 0 );
@@ -224,15 +261,35 @@ function playwriter( args, opts = {} ) {
 	} );
 }
 
-function buildCaptureCode( fixture, width, jsonPath, pngPath ) {
+function buildCaptureCode( fixture, width, jsonPath, pngPath, noJs = false ) {
 	return [
 		'if (!state.page || state.page.isClosed()) { state.page = await context.newPage(); }',
 		'const page = state.page;',
+		// --no-js: disable page script execution BEFORE navigation via CDP.
+		// Driver page.evaluate calls (the probe below) still execute — the
+		// emulation flag only suppresses page-initiated scripts. The CDP
+		// session is re-created whenever the page object changed (fresh page
+		// or a session reset between retries).
+		...( noJs ? [
+			'if (!state.cdp || state.cdpFor !== page) { state.cdp = await context.newCDPSession(page); state.cdpFor = page; }',
+			"await state.cdp.send('Emulation.setScriptExecutionDisabled', { value: true });",
+		] : [] ),
 		`await page.setViewportSize({ width: ${ width }, height: ${ VIEWPORT_HEIGHT } });`,
 		`const resp = await page.goto(${ JSON.stringify( fixture.url ) }, { waitUntil: 'load', timeout: 30000 });`,
 		// A 404 template (or any error page) must never probe "successfully".
 		`if (!resp || resp.status() >= 400) { throw new Error('HTTP ' + (resp ? resp.status() : 'no response') + ' for ' + ${ JSON.stringify( fixture.url ) }); }`,
-		`const payload = await page.evaluate(${ novaProbe.toString() });`,
+		// Driver-side settlement for --no-js: page timers/rAF do not fire with
+		// scripts disabled, so the scroll-through (native lazy images) and the
+		// bounded image-completeness poll run from the driver; the probe
+		// evaluate afterwards awaits only microtask-resolved promises.
+		...( noJs ? [
+			'const docH = await page.evaluate(() => Math.max(document.documentElement.scrollHeight - window.innerHeight, 0));',
+			`for (let y = 0; y <= docH; y += ${ VIEWPORT_HEIGHT }) { await page.evaluate((yy) => window.scrollTo(0, yy), y); await page.waitForTimeout(60); }`,
+			'await page.evaluate(() => window.scrollTo(0, 0));',
+			'await page.waitForTimeout(150);',
+			'for (let i = 0; i < 40; i++) { const pending = await page.evaluate(() => Array.prototype.filter.call(document.images, (img) => !(img.complete && img.naturalWidth > 0)).length); if (!pending) break; await page.waitForTimeout(200); }',
+		] : [] ),
+		`const payload = await page.evaluate(${ novaProbe.toString() }, ${ noJs ? 'true' : 'false' });`,
 		`payload.slug = ${ JSON.stringify( fixture.slug ) };`,
 		`payload.url = ${ JSON.stringify( fixture.url ) };`,
 		`payload.viewport = ${ width };`,
@@ -250,7 +307,13 @@ function buildCaptureCode( fixture, width, jsonPath, pngPath ) {
 		`const shotHeight = Math.min(docHeight, ${ SCREENSHOT_MAX_HEIGHT });`,
 		`payload.screenshotClamped = docHeight > ${ SCREENSHOT_MAX_HEIGHT };`,
 		`await page.setViewportSize({ width: ${ width }, height: shotHeight });`,
-		"await page.evaluate(() => Promise.all(Array.prototype.map.call(document.images, (img) => img.decode ? img.decode().catch(() => {}) : null)).then(() => new Promise((r) => requestAnimationFrame(() => requestAnimationFrame(r)))));",
+		// rAF never fires with scripts disabled — use a driver wait instead.
+		...( noJs ? [
+			"await page.evaluate(() => Promise.all(Array.prototype.map.call(document.images, (img) => img.decode ? img.decode().catch(() => {}) : null)));",
+			'await page.waitForTimeout(150);',
+		] : [
+			"await page.evaluate(() => Promise.all(Array.prototype.map.call(document.images, (img) => img.decode ? img.decode().catch(() => {}) : null)).then(() => new Promise((r) => requestAnimationFrame(() => requestAnimationFrame(r)))));",
+		] ),
 		`await page.screenshot({ path: ${ JSON.stringify( pngPath ) }, fullPage: payload.screenshotClamped, scale: 'css' });`,
 		`require('fs').writeFileSync(${ JSON.stringify( jsonPath ) }, JSON.stringify(payload, null, 2) + '\\n');`,
 		"console.log('NBCAP ok settled=' + payload.settlement.settled + ' settleMs=' + payload.settlement.settleMs + ' elements=' + payload.elements.length + ' breaks=' + payload.breakClasses.length);",
@@ -270,7 +333,7 @@ function assertSafeLabel( label ) {
 	}
 }
 
-function cmdRun( label, { force } ) {
+function cmdRun( label, { force, noJs } ) {
 	if ( ! label || label.startsWith( '--' ) ) {
 		usage( 'Missing run label.' );
 	}
@@ -297,7 +360,7 @@ function cmdRun( label, { force } ) {
 		console.error( 'Could not parse playwriter session id from:\n' + created );
 		process.exit( 1 );
 	}
-	console.log( `Run "${ label }": ${ manifest.length } pages x ${ VIEWPORTS.length } viewports on headless session ${ sessionId }` );
+	console.log( `Run "${ label }": ${ manifest.length } pages x ${ VIEWPORTS.length } viewports on headless session ${ sessionId }${ noJs ? ' [NO-JS: page scripts disabled]' : '' }` );
 
 	const deleteSession = () => {
 		try {
@@ -325,7 +388,7 @@ function cmdRun( label, { force } ) {
 				const base = `${ fixture.slug }.${ width }`;
 				const jsonPath = path.join( runDir, base + '.json' );
 				const pngPath = path.join( runDir, base + '.png' );
-				const code = buildCaptureCode( fixture, width, jsonPath, pngPath );
+				const code = buildCaptureCode( fixture, width, jsonPath, pngPath, noJs );
 				let ok = false;
 				let lastError = null;
 				for ( let attempt = 1; attempt <= 2 && ! ok; attempt++ ) {
@@ -342,6 +405,9 @@ function cmdRun( label, { force } ) {
 						ok = true;
 					} catch ( err ) {
 						lastError = err;
+						if ( process.env.SIDECAR_LAB_DEBUG ) {
+							console.error( 'FULL ERROR:', err.message, '\nSTDERR:', String( err.stderr || '' ).slice( 0, 2000 ), '\nSTDOUT:', String( err.stdout || '' ).slice( 0, 2000 ) );
+						}
 						if ( attempt === 1 ) {
 							console.warn( `  ${ base }  attempt 1 failed (${ String( err.message ).split( '\n' )[ 0 ] }) — resetting session and retrying` );
 							try {
@@ -389,6 +455,7 @@ function cmdRun( label, { force } ) {
 	const meta = {
 		label,
 		engine: label,
+		noJs: !! noJs,
 		date: new Date().toISOString(),
 		pages: manifest.length,
 		viewports: VIEWPORTS,
@@ -694,14 +761,14 @@ function usage( message ) {
 		console.error( message + '\n' );
 	}
 	console.error( 'Usage:' );
-	console.error( '  node bin/sidecar-lab/capture.mjs --run <label> [--force]' );
+	console.error( '  node bin/sidecar-lab/capture.mjs --run <label> [--force] [--no-js]' );
 	console.error( '  node bin/sidecar-lab/capture.mjs --diff <labelA> <labelB>' );
 	process.exit( 1 );
 }
 
 const argv = process.argv.slice( 2 );
 if ( argv[ 0 ] === '--run' ) {
-	cmdRun( argv[ 1 ], { force: argv.includes( '--force' ) } );
+	cmdRun( argv[ 1 ], { force: argv.includes( '--force' ), noJs: argv.includes( '--no-js' ) } );
 } else if ( argv[ 0 ] === '--diff' ) {
 	cmdDiff( argv[ 1 ], argv[ 2 ] );
 } else {
