@@ -16,7 +16,6 @@ jest.mock( './index', () => ( {
 
 import {
 	shouldMeasureBreakClasses,
-	maybeAddBreakClassesToElement,
 	shouldSkipForCssCoveredRails,
 	computePulloutRowSpan,
 	measureBreakClassesPass,
@@ -86,22 +85,21 @@ describe( 'sidecar break control skip predicate', () => {
 	} );
 
 	it( 'never adds measured break classes to always/never blocks', () => {
+		const { content } = makeSidecar( { railChildren: 1 } );
 		const always = makeBlock( 'wp-block-image alignwide nb-break-always' );
 		const never = makeBlock( 'wp-block-image alignwide nb-break-never' );
 
-		document.body.appendChild( always );
-		document.body.appendChild( never );
+		setRect( always, { top: 500, bottom: 600, left: 0, right: 800, width: 800, height: 100 } );
+		setRect( never, { top: 700, bottom: 800, left: 0, right: 800, width: 800, height: 100 } );
+		content.appendChild( always );
+		content.appendChild( never );
 
-		maybeAddBreakClassesToElement( always );
-		maybeAddBreakClassesToElement( never );
+		measureBreakClassesPass( [ always, never ], { skipCssCoveredRails: false } );
 
 		expect( always.classList.contains( 'break-align-left' ) ).toBe( false );
 		expect( always.classList.contains( 'break-align-right' ) ).toBe( false );
 		expect( never.classList.contains( 'break-align-left' ) ).toBe( false );
 		expect( never.classList.contains( 'break-align-right' ) ).toBe( false );
-
-		always.remove();
-		never.remove();
 	} );
 } );
 
@@ -232,6 +230,69 @@ describe( 'batched read-then-write measurement (Task 3.4)', () => {
 
 		expect( wide.classList.contains( 'break-align-right' ) ).toBe( false );
 		expect( wide.classList.contains( 'break-align-left' ) ).toBe( true );
+	} );
+} );
+
+describe( 'seed+verify pass shape (Task 3.4 review pinning)', () => {
+	/**
+	 * Setup shared by both shape tests: a right sidecar whose block always
+	 * has its LEFT side blocked by an alignleft sibling (so a grant can only
+	 * ever be one-sided — the applied state {R} is distinguishable from the
+	 * temp-extended state {L,R}), and whose right-rail obstacle reports a
+	 * DIFFERENT box depending on the world it is read in:
+	 * - extended world (block carries BOTH temp classes): far away;
+	 * - settled world: colliding with the block's extended span.
+	 */
+	const makeShapeFixture = () => {
+		const { content, rail } = makeSidecar( { position: 'right', railChildren: 0 } );
+
+		const block = makeBlock( 'wp-block-image alignwide' );
+		setRect( block, { top: 0, bottom: 100, left: 0, right: 1200, width: 1200, height: 100 } );
+		content.appendChild( block );
+
+		const leftSibling = makeBlock( 'wp-block-image alignleft' );
+		setRect( leftSibling, { top: 0, bottom: 100, left: 0, right: 300, width: 300, height: 100 } );
+		content.appendChild( leftSibling );
+
+		const railChild = document.createElement( 'p' );
+		const railReads = [];
+		railChild.getBoundingClientRect = () => {
+			const extendedWorld = block.classList.contains( 'break-align-left' )
+				&& block.classList.contains( 'break-align-right' );
+			railReads.push( extendedWorld ? 'extended' : 'settled' );
+			return extendedWorld
+				? { top: 5000, bottom: 5100, left: 900, right: 1100, width: 200, height: 100 }
+				: { top: 20, bottom: 120, left: 900, right: 1100, width: 200, height: 100 };
+		};
+		rail.appendChild( railChild );
+
+		return { block, railReads };
+	};
+
+	it( 'measures obstacles in the temp-extended world on pass 1 and the settled world on pass 2', () => {
+		const { block, railReads } = makeShapeFixture();
+
+		runBreakAlignment( { skipCssCoveredRails: false, collect: () => [ block ] } );
+
+		// Pass 1 (seed): the rail obstacle was read while the block carried
+		// BOTH temp classes; pass 2 (verify): read before any temp write,
+		// with only the applied one-sided grant present. Swapping the pass
+		// contexts inverts this sequence.
+		expect( railReads ).toEqual( [ 'extended', 'settled' ] );
+	} );
+
+	it( 'verify trims a seed grant that collides in the settled world', () => {
+		const { block } = makeShapeFixture();
+
+		const passes = runBreakAlignment( { skipCssCoveredRails: false, collect: () => [ block ] } );
+
+		// Seed grants R (obstacle far away in the extended world -> changed),
+		// verify reads the settled world, finds the collision and trims it.
+		// With swapped contexts the cold pass already sees the collision,
+		// withholds, nothing changes, and only ONE pass runs.
+		expect( passes ).toBe( 2 );
+		expect( block.classList.contains( 'break-align-right' ) ).toBe( false );
+		expect( block.classList.contains( 'break-align-left' ) ).toBe( false );
 	} );
 } );
 

@@ -1,13 +1,10 @@
 @import 'scss/mixins';
 @import 'scss/utility';
 
-:root {
-  --nb-font-size-smallest: 0.82;
-  --nb-font-size-smaller: 0.93;
-  --nb-font-size-normal: 1;
-  --nb-font-size-larger: 1.12;
-  --nb-font-size-largest: 1.18;
-}
+// The --nb-font-size-* scale tokens moved to core's _layout.scss (Task 3.6):
+// they are consumed by the per-area font-size attributes and belong with the
+// engine's root tokens, not inside a block stylesheet that WP may inline
+// only where the block renders.
 
 .nb-sidecar-area {
 
@@ -168,6 +165,15 @@
 
         &.novablocks-hidden-block {
           opacity: 0;
+          // Task 3.5: a faded sticky must not intercept clicks meant for
+          // the broken block sliding underneath it (the original bug), and
+          // must leave the accessibility tree while invisible. The
+          // visibility flip is DELAYED until the opacity fade finishes so
+          // the fade-out still animates; on release the base transition
+          // (no visibility delay) restores it instantly for the fade-in.
+          visibility: hidden;
+          pointer-events: none;
+          transition: .2s opacity ease-out, visibility 0s .2s;
         }
       }
     }

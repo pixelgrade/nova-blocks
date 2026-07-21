@@ -11,6 +11,8 @@ import {
   runBreakAlignment,
 } from "@novablocks/utils";
 
+import { subscribeToDomChanges } from "../dom-change-subscription";
+
 // Frontend measurement options (Task 3.4): the CSS layers (server-known
 // rail-absence classes + the :has() empty-rail flip) already decide covered
 // wide/full blocks, so measurement skips them here. The editor path must
@@ -58,45 +60,21 @@ const remeasureOnImageSettle = ( onChange ) => {
     } );
 };
 
-// One delegated observer re-collects the overlap sets whenever the DOM
-// gains or loses ELEMENT nodes (replacing the old one-shot collection).
-// childList-only on purpose: our own writes are class/style mutations
-// (break classes, inline row spans) and the sticky-fade toggles are class
-// mutations too — none of them can self-trigger this observer.
-const observeDomChanges = ( onChange ) => {
-  if ( ! window.MutationObserver || ! document.body ) {
-    return;
-  }
-
-  const hasElementNodes = ( nodes ) => Array.prototype.some.call( nodes, node => node.nodeType === 1 );
-
-  const observer = new window.MutationObserver( mutations => {
-    const relevant = mutations.some( mutation =>
-      mutation.type === 'childList'
-      && ( hasElementNodes( mutation.addedNodes ) || hasElementNodes( mutation.removedNodes ) )
-    );
-
-    if ( relevant ) {
-      onChange();
-    }
-  } );
-
-  observer.observe( document.body, { childList: true, subtree: true } );
-};
-
 export const handleAlignedBlocks = () => {
 
   const onChange = debounce( resetAlignedBlocks, 200 );
 
   domReady( () => {
-    // Initial decisions run at domReady — BEFORE first paint, so applying
-    // the classes cannot shift rendered content (zero CLS cost). They may
-    // be computed against unsettled webfont metrics, which is why a
-    // correcting re-run follows at document.fonts.ready: it changes classes
-    // only when the pre-fonts decision was actually stale, so layout shifts
-    // happen exactly when the old engine would have silently kept a WRONG
-    // decision (the e04f2aea bug class). Promise chain — no async/await in
-    // frontend bundles: no regenerator runtime ships.
+    // Initial decisions run at domReady — the same runtime shape the old
+    // engine had, which in practice lands before first paint on this stack
+    // (measured CLS 0 with throttled webfonts) though that is not an
+    // absolute guarantee. They may be computed against unsettled webfont
+    // metrics, which is why a correcting re-run follows at
+    // document.fonts.ready: it changes classes only when the pre-fonts
+    // decision was actually stale, so layout shifts happen exactly when the
+    // old engine would have silently kept a WRONG decision (the e04f2aea
+    // bug class). Promise chain — no async/await in frontend bundles: no
+    // regenerator runtime ships.
     resetAlignedBlocks();
 
     if ( document.fonts && document.fonts.ready && typeof document.fonts.ready.then === 'function' ) {
@@ -104,7 +82,10 @@ export const handleAlignedBlocks = () => {
     }
 
     remeasureOnImageSettle( onChange );
-    observeDomChanges( onChange );
+    // Re-collect the overlap sets on element-level DOM change — via the
+    // SHARED delegated observer (dom-change-subscription), which
+    // structurally cannot self-trigger on our class/style writes.
+    subscribeToDomChanges( onChange );
     handleCustomizerChanges( onChange );
   } );
 

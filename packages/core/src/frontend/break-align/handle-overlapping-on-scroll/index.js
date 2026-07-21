@@ -1,7 +1,14 @@
 import domReady from "@wordpress/dom-ready";
-import { doOverlap, matches, onScrollRAF } from "@novablocks/utils";
+import { debounce, doOverlap, matches } from "@novablocks/utils";
+
+import { subscribeToDomChanges } from "../dom-change-subscription";
 
 const HIDDEN_BLOCK_CLASS = 'novablocks-hidden-block';
+
+// Fires per intersection event instead of per animation frame (Task 3.5:
+// the RAF scroll loop is gone). Fine-grained thresholds make the observer
+// report while an element's visible fraction changes during scroll.
+const IO_THRESHOLDS = Array.from( { length: 21 }, ( _, i ) => i / 20 );
 
 // This function will handle sticky block
 // behaviour on scroll.
@@ -63,17 +70,67 @@ export const getOverlappingSets = () => {
   }, [] );
 };
 
-// We are comparing sticky block top and bottom
-// with all content blocks, and if overlaps on scroll,
-// we are adding a class, which we will use to add opacity.
+// Observes every sticky item and every candidate block. Two observers per
+// set, each driving the same precise doOverlap() re-evaluation:
+// - a MOTION observer with fine thresholds fires while the sticky or a
+//   block changes its visible fraction (pre-stuck phase, clipped elements);
+// - a BAND observer watches the viewport cropped (negative rootMargin) to
+//   the sticky's stuck band, so blocks crossing that band fire even while
+//   fully visible — the case a plain visibility-ratio observer misses.
+// Events drive the checks; there is no frame loop.
+const observeOverlappingSets = ( overlappingSets ) => {
+  if ( ! window.IntersectionObserver ) {
+    return () => {};
+  }
+
+  const update = () => toggleOverlappingClassname( overlappingSets );
+  const disconnects = [];
+
+  overlappingSets.forEach( ( [ stickyElement, blocks ] ) => {
+    const motionObserver = new window.IntersectionObserver( update, { threshold: IO_THRESHOLDS } );
+    motionObserver.observe( stickyElement );
+    blocks.forEach( block => motionObserver.observe( block ) );
+    disconnects.push( () => motionObserver.disconnect() );
+
+    const stickyRect = stickyElement.getBoundingClientRect();
+    const stickyTop = parseFloat( window.getComputedStyle( stickyElement ).top ) || stickyRect.top || 0;
+    const viewportHeight = window.innerHeight || document.documentElement.clientHeight || 0;
+    const bottomInset = Math.max( 0, viewportHeight - ( stickyTop + stickyRect.height ) );
+
+    const bandObserver = new window.IntersectionObserver( update, {
+      rootMargin: `${ -Math.max( 0, stickyTop ) }px 0px ${ -bottomInset }px 0px`,
+      threshold: 0,
+    } );
+    blocks.forEach( block => bandObserver.observe( block ) );
+    disconnects.push( () => bandObserver.disconnect() );
+  } );
+
+  update();
+
+  return () => disconnects.forEach( disconnect => disconnect() );
+};
+
+// We are comparing the sticky block with all content blocks; while they
+// overlap we add a class that fades the sticky out and removes it from
+// hit-testing (visibility + pointer-events live in the sidecar stylesheet).
 export const handleOverlappingOnScroll = () => {
 
   domReady( () => {
-    const overlappingSets = getOverlappingSets();
+    let teardown = () => {};
 
-    onScrollRAF( () => {
-      toggleOverlappingClassname( overlappingSets );
-    } );
+    const setup = () => {
+      teardown();
+      teardown = observeOverlappingSets( getOverlappingSets() );
+    };
+
+    setup();
+
+    // Overlap sets follow DOM structure — re-collect via the SHARED
+    // delegated observer (no second MutationObserver of our own), and
+    // rebuild the band geometry when the viewport resizes.
+    const scheduleSetup = debounce( setup, 200 );
+    subscribeToDomChanges( scheduleSetup );
+    window.addEventListener( 'resize', scheduleSetup );
   } );
 
 };

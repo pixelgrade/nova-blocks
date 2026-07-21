@@ -1,4 +1,13 @@
 :root {
+  // Font-size scale tokens for the Sidecar per-area font-size attributes
+  // (moved here from the sidecar block stylesheet in Task 3.6 — engine root
+  // tokens must not depend on WP inlining a block stylesheet).
+  --nb-font-size-smallest: 0.82;
+  --nb-font-size-smaller: 0.93;
+  --nb-font-size-normal: 1;
+  --nb-font-size-larger: 1.12;
+  --nb-font-size-largest: 1.18;
+
   // Default position for blocks is between CS (content-start) and CE (content-end).
   --block-content-start: ws;
   --block-content-end: we;

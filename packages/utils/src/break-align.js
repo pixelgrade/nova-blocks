@@ -1,4 +1,4 @@
-import { addClass, removeClass, matches } from "./index";
+import { matches } from "./index";
 
 export const BREAK_LEFT_CLASS = 'break-align-left';
 export const BREAK_RIGHT_CLASS = 'break-align-right';
@@ -19,32 +19,6 @@ export const getAlignedSiblings = ( block, side ) => {
   const siblings = Array.from( block.parentElement.children ).filter( sibling => sibling !== block );
   return siblings.filter( sibling => { return sibling.classList.contains( `align${ side }` ) } );
 };
-
-export const getElementBreakClasses = ( block ) => {
-  const sidebarBlocks = getAdjacentSidebarBlocks( block );
-  const leftAlignedBlocks = getAlignedSiblings( block, 'left' );
-  const rightAlignedBlocks = getAlignedSiblings( block, 'right' );
-  const leftSidebarBlocks = sidebarBlocks.filter( obj => obj.side === 'left' ).map( obj => obj.element );
-  const rightSidebarBlocks = sidebarBlocks.filter( obj => obj.side === 'right' ).map( obj => obj.element );
-  const leftAlignedElements = leftAlignedBlocks.concat( leftSidebarBlocks );
-  const rightAlignedElements = rightAlignedBlocks.concat( rightSidebarBlocks );
-
-  const breakClasses = [];
-
-  addClass( block, `${ BREAK_LEFT_CLASS } ${ BREAK_RIGHT_CLASS }` )
-
-  if ( ! leftAlignedElements.some( alignedElement => doOverlap( alignedElement, block ) ) ) {
-    breakClasses.push( BREAK_LEFT_CLASS );
-  }
-
-  if ( ! rightAlignedElements.some( alignedElement => doOverlap( alignedElement, block ) ) ) {
-    breakClasses.push( BREAK_RIGHT_CLASS );
-  }
-
-  removeClass( block, `${ BREAK_LEFT_CLASS } ${ BREAK_RIGHT_CLASS }` )
-
-  return breakClasses;
-}
 
 // Blocks whose break decision is authored (the per-block Auto/Always/Never
 // control serializes nb-break-always / nb-break-never) are DECIDED: the CSS
@@ -91,18 +65,6 @@ export const shouldSkipForCssCoveredRails = ( block ) => {
   return insideSidecar;
 };
 
-export const maybeAddBreakClassesToElement = ( block ) => {
-  if ( ! shouldMeasureBreakClasses( block ) ) {
-    return;
-  }
-
-  const breakClasses = getElementBreakClasses( block );
-
-  breakClasses.forEach( breakClass => {
-    block.classList.add( breakClass );
-  } )
-}
-
 export const getAdjacentSidebarBlocks = ( block, sidebarBlocks = [] ) => {
   const sidecar = block.closest( '.nb-sidecar' );
 
@@ -126,23 +88,9 @@ export const getAdjacentSidebarBlocks = ( block, sidebarBlocks = [] ) => {
   return getAdjacentSidebarBlocks( sidecar.parentNode, sidebarBlocks.concat( newSidebarBlocks ) );
 };
 
-export const wouldOverlap = ( el1, el2 ) => {
-  const el1Box = el1.getBoundingClientRect();
-  const el2Box = el2.getBoundingClientRect();
-
-  const el1Style = getComputedStyle( el1 );
-  const el2Style = getComputedStyle( el2 );
-
-  const el1MarginBottom = Math.max( parseInt( el1Style.marginBottom ), parseInt( el2Style.marginTop ) );
-  const el2MarginBottom = Math.max( parseInt( el2Style.marginBottom ), parseInt( el1Style.marginTop ) );
-
-  return !( el2Box.bottom + el2MarginBottom <= el1Box.top ||
-            el2Box.top >= el1Box.bottom + el1MarginBottom );
-};
-
-// Helper function to check if two boxes
-// are overlapping. This is different compared to wouldOverlap()
-// because in this case height is not important.
+// Helper function to check if two boxes are overlapping — horizontal AND
+// vertical (compare boxesOverlapVertically for the vertical-only variant).
+// Consumed by the sticky-rail overlap module.
 export const doOverlap = ( el1, el2 ) => {
 
   const el1Box = el1.getBoundingClientRect();
