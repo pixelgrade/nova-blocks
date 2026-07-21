@@ -120,12 +120,9 @@ Apply `nb-layout-root` to: `.is-root-container`, `.wp-block-post-content`, `.wp-
 
 **Step 4: SHIP DECISION.** Parity → continue in-place. Real content breakage that can't be closed → wrap the subgrid block in a `.nb-layout-v2` opt-in class emitted by a Sidecar flag attribute, and record the decision + evidence in the design doc. Commit.
 
-### Task 2.2: Content-width inversion
+### Task 2.2: Content-width inversion — DONE as built (`315c718f`, reviewed)
 
-**Files:**
-- Modify: `packages/core/src/scss/_layout.scss:23-40` (derivation), coordinate tokens with Style Manager/Anima (cross-repo; load `pixelgrade-design-tokens` skill first)
-
-**Step 1:** Make `--nb-content-width` authoritative; derive `--nb-sidecar-content-left/right` from it; roots without rails zero `--nb-sidecar-sidebar-{left,right}-width` explicitly. **Step 2:** Harness diff (expect zero unannotated deltas — same computed geometry, different derivation). **Step 3:** On style-manager.local, verify Anima's reading column still matches (napkin: Anima Layout #3 documents the old workaround — it should become unnecessary; note that in the diff annotations). Commit.
+As-built record (differs from the original step wording — do not re-derive the old plan): a per-container `--nb-sidecar-content-width` drives both content half-tracks; the `:root` `--nb-content-width` token is byte-unchanged because custom properties substitute `var()` refs at the DECLARING element (a per-container consumer of the root token discards width classes — proven and reverted in iteration 1). Rail-var zeroing on rail-less roots is deferred INTO Task 3.1 (zeroing moves the `gs`/`ge` anchor lines of broken aligned blocks; safe only after rail-absence classes re-anchor the break vars). Anima's reading-column workaround stays until then. Harness: baseline↔task22 exit 0, zero new diffs. Follow-ups owed: one-page editor re-smoke on the task22 build at Phase 3's next deploy (the recorded smoke covered the 55afe4f0 build); a header-nested-grid fixture at re-baseline (header rows override `--nb-wrapper-sides-spacings`, an uncovered substitution-context edge).
 
 ---
 
@@ -228,7 +225,7 @@ TDD the grouping rules first (contract), then the SCSS: real `float` inside `.nb
 
 ### Task 4b.3: New fixtures + extended baseline
 
-Add fixture pages to the generator ONLY at the post-ship-decision re-baseline (differ completeness forbids growing the manifest mid-comparison): (a) placement × wrap combinations at all rail states, (b) **a query-loop fixture and a supernova fixture** — ship-decision condition 2: these pass-through consumers currently have zero harness coverage. Then `--run` a new canonical baseline including them.
+Add fixture pages to the generator ONLY at the post-ship-decision re-baseline (differ completeness forbids growing the manifest mid-comparison): (a) placement × wrap combinations at all rail states, (b) **a query-loop fixture and a supernova fixture** — ship-decision condition 2: these pass-through consumers currently have zero harness coverage; (c) **a header-nested-grid fixture** — header rows locally override `--nb-wrapper-sides-spacings`, an uncovered substitution-context edge from Task 2.2 review. Then `--run` a new canonical baseline including them.
 
 ## Phase 5 — Group pass-through + container-list unification
 
