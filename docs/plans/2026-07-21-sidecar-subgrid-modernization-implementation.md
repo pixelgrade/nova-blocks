@@ -222,9 +222,9 @@ Managed set: `sidebarPosition` (legacy), per-side rail width/existence, gutter o
 
 TDD the grouping rules first (contract), then the SCSS: real `float` inside `.nb-flow-segment`, rail escape via computed negative outer margins using the track vars. Editor renders the Beside approximation — the control's help text says so (accepted v1 divergence; deeper parity is a later design round).
 
-### Task 4b.2: New content placements (Left Content / Right Content)
+### Task 4b.2: New placements — GATE CLOSED 2026-07-22 (see design doc)
 
-**DESIGN GATE FIRST:** present George a short options round rethinking the full alignment vocabulary (core Left/Right/Wide/Full untouched as defaults + new curated placements; consider explicit rail placements replacing the emergent rail-jump) before implementing. Decisions recorded in the design doc.
+George picked: **Content Around** (left/right mirrors) and **Extend pull-out** only — both float-based, riding the Task 4b.1 flow-segment mechanism; no grid-band Beside, no Into Rail. Segments span the BODY edge. Attribute shape at implementation discretion (e.g. `sidecarPullout` with side from the align class), serialized via the className route per Task 3.3 precedent. Must handle: Anima's paragraph `clear: both` (neutralize inside segments), `is-resized` width pinning (override to fill), Extend margins derived from track vars.
 
 **Files (after the gate):**
 - Extend: `packages/block-editor/src/filters/with-sidecar-break/` (same filter family as Task 3.3) with `sidecarWrap: beside|around` and a placement attribute (e.g. `sidecarPlacement: left-content|right-content`), serialized as Nova classes — core's `align` attribute is never repurposed; toolbar UI presented natively beside core align controls (registration + deprecation rules per napkin apply)
