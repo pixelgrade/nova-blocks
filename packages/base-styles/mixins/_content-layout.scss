@@ -90,16 +90,12 @@
 // container list in one generated constant.
 $nb-layout-grid-parents: '.is-root-container, .edit-post-visual-editor__post-title-wrapper, .wp-block-post-content, .wp-block-template-part, [data-block-name="woocommerce/legacy-template"], [id="main"], .nb-content-layout-grid, .nb-sidecar, .nb-sidecar-area--content, .wp-block-query, .nb-supernova';
 
-//noinspection ALL
-@mixin nb-layout-root {
-  @include nb-layout-settings;
-
-  display: grid;
-  max-width: none;
-
-  // a grid inside another will only work if they're overlapping perfectly
-  // so we don't tweak selectors specificity when we know for sure this needs to span from [fs] to [fe]
-  grid-column: fs / fe !important;
+// The desktop 13-line coordinate template. Extracted so the editor canvas can
+// re-assert it on a positioned Sidecar below `lap` (narrow canvas under the
+// Desktop device preview) without touching the fallback/frontend cascade — see
+// sidecar/editor-styles.scss and Task 3.0b. Keeping ONE source of truth avoids
+// the template drifting between the engine and the editor pin.
+@mixin nb-layout-desktop-template-columns {
   grid-template-columns:
     [fs] var(--nb-sidecar-sides)
     [ws] var(--nb-layout-rail-left)
@@ -114,6 +110,39 @@ $nb-layout-grid-parents: '.is-root-container, .edit-post-visual-editor__post-tit
     [fre] var(--nb-layout-rail-right)
     [we] var(--nb-sidecar-sides)
     [fe];
+}
+
+// Desktop child placement: default content span plus the wide/full escapes.
+// Same extraction rationale as the template mixin — the editor pin re-asserts
+// these on the Sidecar and its content area to defeat the below-`lap`
+// `grid-column: ws / we` collapse.
+@mixin nb-layout-desktop-content-columns {
+  > * {
+    grid-column: var(--block-content-start) / var(--block-content-end);
+  }
+
+  // Align: WIDE
+  > :is(.alignwide, [data-align="wide"]) {
+    grid-column: var(--block-wide-start) / var(--block-wide-end);
+  }
+
+  // Align: FULL
+  > :is(.alignfull, [data-align="full"]) {
+    grid-column: var(--block-full-start) / var(--block-full-end);
+  }
+}
+
+//noinspection ALL
+@mixin nb-layout-root {
+  @include nb-layout-settings;
+
+  display: grid;
+  max-width: none;
+
+  // a grid inside another will only work if they're overlapping perfectly
+  // so we don't tweak selectors specificity when we know for sure this needs to span from [fs] to [fe]
+  grid-column: fs / fe !important;
+  @include nb-layout-desktop-template-columns;
   grid-auto-rows: min-content;
 
   // horizontally align images that can't be pulled to center
@@ -146,19 +175,7 @@ $nb-layout-grid-parents: '.is-root-container, .edit-post-visual-editor__post-tit
   }
   // --------------
 
-  > * {
-    grid-column: var(--block-content-start) / var(--block-content-end);
-  }
-
-  // Align: WIDE
-  > :is(.alignwide, [data-align="wide"]) {
-    grid-column: var(--block-wide-start) / var(--block-wide-end);
-  }
-
-  // Align: FULL
-  > :is(.alignfull, [data-align="full"]) {
-    grid-column: var(--block-full-start) / var(--block-full-end);
-  }
+  @include nb-layout-desktop-content-columns;
 
   @include below(lap) {
     grid-template-columns:

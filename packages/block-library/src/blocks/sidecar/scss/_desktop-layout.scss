@@ -1,0 +1,134 @@
+// Desktop Sidecar layout: areas side by side (grid-row 1), per-position content
+// and rail spans, and the zero-JS break layers (1: server-known rail absence,
+// 2: CSS-known empty rail) plus the per-block Never pin.
+//
+// Extracted from style.scss so BOTH runtimes can invoke it:
+// - style.scss wraps it in `@include above(lap)` (frontend + editor above lap) —
+//   byte-identical to the previous inline `@include above(lap) { … }` block.
+// - editor-styles.scss re-asserts it below `lap` for a positioned Sidecar under
+//   the Desktop device preview, so a narrow editor canvas keeps the multi-column
+//   preview (Task 3.0b). Tablet/Mobile previews carry a device attribute that
+//   excludes the pin, so they collapse naturally.
+//
+// Keep this the single source of truth — the editor pin must not diverge from
+// what the frontend renders above `lap`.
+@mixin nb-sidecar-desktop-layout {
+
+  .nb-sidecar-area {
+    grid-row: 1;
+    --nb-block-top-spacing: 0 !important;
+  }
+
+  .nb-sidecar:not(.nb-sidecar--sidebar-none) {
+
+    > .nb-sidecar-area--content {
+      --block-content-start: var(--block-wide-start);
+      --block-content-end: var(--block-wide-end);
+    }
+  }
+
+  .nb-sidecar--sidebar-left {
+
+    > .nb-sidecar-area--content {
+      --block-wide-start: cs;
+      --block-full-start: cs;
+    }
+
+    > .nb-sidecar-area--sidebar {
+      --block-content-start: ws;
+      --block-content-end: gs;
+    }
+  }
+
+  .nb-sidecar--sidebar-right {
+
+    > .nb-sidecar-area--content {
+      --block-wide-end: ce;
+      --block-full-end: ce;
+      //--block-left-end: var(--block-content-end);
+    }
+
+    > .nb-sidecar-area--sidebar {
+      --block-content-start: ge;
+      --block-content-end: we;
+      //--block-right-start: var(--block-content-start);
+    }
+  }
+
+  // Break-system layers 1 + 2 (zero runtime JS) — keep AFTER the
+  // position-narrowing rules above: the plain rail-absence rules tie them at
+  // (0,2,0) and must win by order once Phase 4 allows a position class and an
+  // absence class on the same side to coexist.
+  //
+  // Layer 1 (server-known): PHP emits nb-sidecar--no-left/right-rail when the
+  // side has no rail, so the missing side's break vars are open on the whole
+  // content area without measurement.
+  // Layer 2 (CSS-known): a rail that EXISTS but has no element children —
+  // `:not(:has(*))` rather than `:empty` because serialized block markup puts
+  // whitespace text nodes inside "empty" areas. With the current two-area
+  // model the side comes from the parent's position class.
+  // Layer 1 (server-known absence) and layer 2 (CSS-known empty rail).
+  // The contract is "this side's rail imposes NO narrowing", expressed with
+  // the `inherit` keyword — NEVER with the root lines (ws/fs/we/fe):
+  // a nested Sidecar's content area INHERITS the outer area's narrowing
+  // (e.g. wide-start: cs while an outer left rail is occupied), and an
+  // absence flip on the inner sidecar must let that outer constraint flow
+  // through, not blow past it (a hard `ws` here detached the nested-hive
+  // inner column from the outer rail's boundary — caught by the harness).
+  // In the two-area model a missing side is never the narrowed side, so the
+  // layer-1 rules are exact no-ops today; they are the stable per-side
+  // contract Phase 4's three-area model builds on (and the skip signal for
+  // the JS measurement layer).
+  .nb-sidecar--no-left-rail > .nb-sidecar-area--content {
+    --block-wide-start: inherit;
+    --block-full-start: inherit;
+  }
+
+  .nb-sidecar--no-right-rail > .nb-sidecar-area--content {
+    --block-wide-end: inherit;
+    --block-full-end: inherit;
+  }
+
+  // Layer 2: the rail exists but has no element children, so wide/full
+  // blocks may extend over it without JS. CAREFUL x3:
+  // - On positioned sidecars --block-content-start/end ALIAS the wide vars
+  //   (the :not(--sidebar-none) rule above), so flipping the narrowed side
+  //   must simultaneously pin that side's content var to its pre-flip value —
+  //   otherwise body copy reflows into the empty rail instead of only the
+  //   aligned blocks extending over it (identical geometry to what the JS
+  //   layer produces block by block is the contract here).
+  // - "no element children" must be `:not(:has(> .nb-sidecar-area--sidebar > *))`
+  //   on the SIDECAR — `:has()` may NOT nest inside `:has()` (the design
+  //   doc's literal `.nb-sidecar:has(> .rail:not(:has(*)))` is invalid CSS
+  //   and silently never matches; the no-js harness run caught it after the
+  //   JS layer had masked it), and `:empty` is defeated by the whitespace
+  //   text nodes serialized block markup leaves inside "empty" areas.
+  .nb-sidecar--sidebar-left:not(:has(> .nb-sidecar-area--sidebar > *)) > .nb-sidecar-area--content {
+    --block-wide-start: inherit;
+    --block-full-start: inherit;
+    --block-content-start: cs;
+  }
+
+  .nb-sidecar--sidebar-right:not(:has(> .nb-sidecar-area--sidebar > *)) > .nb-sidecar-area--content {
+    --block-wide-end: inherit;
+    --block-full-end: inherit;
+    --block-content-end: ce;
+  }
+
+  // Per-block control (Task 3.3), serialized as nb-break-never: the block is
+  // pinned to its CONSTRAINED span — the position narrowing re-asserted at
+  // block level. This must defeat both the JS-added break-align-* classes on
+  // the same element ((0,3,0) beats their (0,1,0); the JS also skips
+  // decided blocks) and the area-level empty-rail :has() flips above (block
+  // proximity wins over inherited area values). Plain `inherit` would NOT
+  // work here: over an empty rail the area's values are the OPENED ones.
+  .nb-sidecar--sidebar-left > .nb-sidecar-area--content > .nb-break-never {
+    --block-wide-start: cs;
+    --block-full-start: cs;
+  }
+
+  .nb-sidecar--sidebar-right > .nb-sidecar-area--content > .nb-break-never {
+    --block-wide-end: ce;
+    --block-full-end: ce;
+  }
+}
