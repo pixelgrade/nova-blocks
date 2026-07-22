@@ -19,6 +19,10 @@ jest.mock( '../dom-change-subscription', () => ( {
 	subscribeToDomChanges: jest.fn( () => () => {} ),
 } ) );
 
+jest.mock( '../settle-subscription', () => ( {
+	subscribeToSettleEvents: jest.fn( () => () => {} ),
+} ) );
+
 import { getOverlappingSets, toggleOverlappingClassname, handleOverlappingOnScroll } from './index';
 import { subscribeToDomChanges } from '../dom-change-subscription';
 
@@ -63,6 +67,26 @@ describe( 'overlap set collection', () => {
 		expect( sets.length ).toBe( 1 );
 		expect( sets[ 0 ][ 0 ] ).toBe( sticky );
 		expect( sets[ 0 ][ 1 ] ).toEqual( [ wide ] );
+	} );
+} );
+
+describe( 'overlap set collection with an empty rail', () => {
+	it( 'skips sticky-enabled sidecars whose rail has no elements instead of throwing', () => {
+		document.body.innerHTML = '';
+		const sidecar = document.createElement( 'div' );
+		sidecar.className = 'nb-sidecar nb-sidecar--sidebar-right nb-sidecar--sticky-sidebar';
+		const content = document.createElement( 'div' );
+		content.className = 'nb-sidecar-area nb-sidecar-area--content';
+		const rail = document.createElement( 'div' );
+		rail.className = 'nb-sidecar-area nb-sidecar-area--sidebar';
+		// Whitespace-only rail: no element children -> no sticky element.
+		rail.appendChild( document.createTextNode( '\n' ) );
+		sidecar.appendChild( content );
+		sidecar.appendChild( rail );
+		document.body.appendChild( sidecar );
+
+		expect( () => getOverlappingSets() ).not.toThrow();
+		expect( getOverlappingSets() ).toEqual( [] );
 	} );
 } );
 

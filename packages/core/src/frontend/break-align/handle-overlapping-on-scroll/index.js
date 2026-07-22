@@ -2,6 +2,7 @@ import domReady from "@wordpress/dom-ready";
 import { debounce, doOverlap, matches } from "@novablocks/utils";
 
 import { subscribeToDomChanges } from "../dom-change-subscription";
+import { subscribeToSettleEvents } from "../settle-subscription";
 
 const HIDDEN_BLOCK_CLASS = 'novablocks-hidden-block';
 
@@ -42,6 +43,13 @@ export const getOverlappingSets = () => {
   return sidebars.reduce( ( acc, sidebar ) => {
     const sidecar = sidebar.parentElement;
     const stickyElement = sidebar.lastElementChild;
+
+    // A sticky-enabled sidecar with an empty rail has no sticky element;
+    // observing null would throw and kill the resize/DOM re-collection.
+    if ( ! stickyElement ) {
+      return acc;
+    }
+
     const blockSelector = '.alignfull, .alignwide, .alignleft, .alignright';
     const blocks = Array.from( sidecar.querySelectorAll( blockSelector ) ).filter( block => {
       return ! matches( block, '.nb-sidecar' );
@@ -127,9 +135,12 @@ export const handleOverlappingOnScroll = () => {
 
     // Overlap sets follow DOM structure — re-collect via the SHARED
     // delegated observer (no second MutationObserver of our own), and
-    // rebuild the band geometry when the viewport resizes.
+    // rebuild the band geometry when the viewport resizes OR when
+    // late-arriving geometry settles (webfonts, pending images): the
+    // band was measured at domReady and would otherwise go stale.
     const scheduleSetup = debounce( setup, 200 );
     subscribeToDomChanges( scheduleSetup );
+    subscribeToSettleEvents( scheduleSetup );
     window.addEventListener( 'resize', scheduleSetup );
   } );
 
