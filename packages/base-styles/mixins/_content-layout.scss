@@ -86,9 +86,12 @@
 
 // Every selector that instantiates a Nova layout grid (root or pass-through).
 // Used to scope the subgrid override to elements that are actually grid items
-// of a Nova layout grid. Phase 5 (Task 5.1) unifies this list with the JS
-// container list in one generated constant.
-$nb-layout-grid-parents: '.is-root-container, .edit-post-visual-editor__post-title-wrapper, .wp-block-post-content, .wp-block-template-part, [data-block-name="woocommerce/legacy-template"], [id="main"], .nb-content-layout-grid, .nb-sidecar, .nb-sidecar-area--content, .wp-block-query, .nb-supernova';
+// of a Nova layout grid. Task 5.1 UNIFIED this list with the JS container list:
+// `$nb-layout-grid-parents` is now generated from the single source of truth,
+// `packages/utils/src/layout-containers.js`, by
+// `bin/generate-layout-containers.js` (run in build:packages). The two halves
+// are pinned equal by `packages/utils/src/layout-containers.test.js`.
+@import 'layout-containers.generated';
 
 // The desktop 13-line coordinate template. Extracted so the editor canvas can
 // re-assert it on a positioned Sidecar below `lap` (narrow canvas under the

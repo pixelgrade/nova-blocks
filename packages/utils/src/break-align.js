@@ -1,4 +1,5 @@
 import { matches } from "./index";
+import { LAYOUT_GRID_CONTAINERS } from "./layout-containers";
 
 export const BREAK_LEFT_CLASS = 'break-align-left';
 export const BREAK_RIGHT_CLASS = 'break-align-right';
@@ -380,19 +381,12 @@ export const runBreakAlignment = ( { skipCssCoveredRails = false, collect = getC
 };
 
 export const getContentBlocksArray = () => {
-  const gridSelectors = [
-    ".is-root-container",
-    ".wp-block-query",
-    ".wp-block-post-content",
-    ".wp-site-blocks",
-    ".wp-block-template-part",
-    ".nb-content-layout-grid",
-    ".nb-sidecar",
-    ".nb-sidecar-area--content",
-    ".nb-supernova",
-  ];
-
-  const mergedGridSelector = gridSelectors.join( ', ' );
+  // The Nova layout-grid container list is the single generated source of truth
+  // (Task 5.1): the SCSS `$nb-layout-grid-parents` union is emitted from this
+  // exact array, and layout-containers.test.js pins them equal. This replaced
+  // the drifted inline list (which carried a dead `.wp-site-blocks` and lacked
+  // `[id="main"]` / the editor + woocommerce roots).
+  const mergedGridSelector = LAYOUT_GRID_CONTAINERS.join( ', ' );
   const grids = Array.from( document.querySelectorAll( mergedGridSelector ) );
 
   const alignedElements = grids.reduce( ( acc, curr ) => {

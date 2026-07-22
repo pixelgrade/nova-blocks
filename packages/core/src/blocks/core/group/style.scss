@@ -123,3 +123,69 @@
 .wp-block-row--center {
   justify-content: center;
 }
+
+// -------------------------------------------------------------------------
+// Task 5.2: Group becomes a subgrid PASS-THROUGH.
+//
+// Under @supports, when a Group is a direct grid item of a Nova layout grid
+// ($nb-layout-grid-parents — the SAME single generated list the engine uses,
+// Task 5.1), it inherits the parent's tracks and line names via
+// `grid-template-columns: subgrid` and spans the full `fs / fe` range, so its
+// wide / full / aligned children escape to the sidecar's wide / full / rail
+// lines EXACTLY like a direct content child. Previously the max-width fallback
+// (kept below `@supports` for pre-subgrid browsers) capped them at the content /
+// container width, so a wide image inside a Group could never reach the grid's
+// wide lines.
+//
+// Track-neutrality invariant (design doc): the Group MUST NOT declare tracks —
+// `subgrid` INHERITS them, it does not re-declare. Row-variation / flex Groups
+// are excluded (they are not part of the reading-column flow). The Group must
+// span `fs / fe` for the subgrid to expose the out-of-content line names its
+// children need to escape to (a subgrid only exposes the parent lines within
+// its own span).
+//
+// SCOPE (Task 5.2 review): only groups in the CONTENT reading flow —
+// `.wp-block-post-content` and a Sidecar `.nb-sidecar-area--content`. NOT the
+// full `$nb-layout-grid-parents` union: that includes `.wp-block-template-part`,
+// and the theme's header/footer are core/group blocks — passing THOSE through
+// the grid repositioned the site header nav and footer columns on every page
+// (caught by the harness). Chrome groups stay on their constrained/flex layout;
+// only reading-flow content groups become pass-throughs.
+// ABOVE `lap` ONLY: the pass-through is a DESKTOP-grid feature. Below `lap` the
+// Sidecar collapses to a single column and there is nothing to escape into — the
+// max-width fallback is correct there. Gating to `above(lap)` also avoids a
+// mobile side-effect: a Group spanning `fs / fe` contributes to the collapsed
+// grid's `auto` ws/ge track sizing, which would nudge sibling left/right images
+// (caught by the harness at 375px).
+@include above(lap) {
+
+  @supports (grid-template-columns: subgrid) {
+
+    :is(.wp-block-post-content, .nb-sidecar-area--content) > .wp-block-group:not(.wp-block-row):not(.is-layout-flex) {
+      display: grid;
+      grid-column: fs / fe;
+      grid-template-columns: subgrid;
+      grid-auto-rows: min-content;
+
+      // Children are placed by the inherited grid, not the max-width fallback.
+      // `width: 100%` mirrors nb-layout-root's stretch (`> * { width: 100% }`)
+      // so a wide/full child FILLS its grid cell exactly like a direct content
+      // child, instead of sitting at its intrinsic width centered in the cell.
+      > * {
+        width: 100%;
+        max-width: none;
+        margin-left: 0;
+        margin-right: 0;
+        grid-column: var(--block-content-start) / var(--block-content-end);
+      }
+
+      > :is(.alignwide, [data-align="wide"]) {
+        grid-column: var(--block-wide-start) / var(--block-wide-end);
+      }
+
+      > :is(.alignfull, [data-align="full"]) {
+        grid-column: var(--block-full-start) / var(--block-full-end);
+      }
+    }
+  }
+}

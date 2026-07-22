@@ -79,19 +79,13 @@
 //
 // "Break" classes are added via JS when the aligned block and a Sidebar
 // do not overlap, so there is space that the aligned block can fill.
-:is(
-  .is-root-container,
-  .edit-post-visual-editor__post-title-wrapper,
-  .wp-block-post-content,
-  .wp-block-template-part,
-  [data-block-name="woocommerce/legacy-template"],
-  [id="main"],
-  .nb-content-layout-grid,
-  .nb-sidecar,
-  .nb-sidecar-area--content,
-  .wp-block-query,
-  .nb-supernova
-) {
+//
+// The container union is the single generated list `$nb-layout-grid-parents`
+// (Task 5.1 — source of truth: packages/utils/src/layout-containers.js; the JS
+// break-align consumer reads the same list). Keep the two subsets below
+// (subgrid pass-throughs, rail-zeroing roots) as their own purpose-specific
+// lists — they are proper subsets, not the drifted union.
+:is(#{$nb-layout-grid-parents}) {
 
   @include nb-layout-root;
 
@@ -218,4 +212,38 @@
 ) {
   --nb-layout-rail-left: 0px;
   --nb-layout-rail-right: 0px;
+}
+
+// Task 5.0 (header-nested-grid ruling — from the 4b.3 harness finding).
+//
+// A Nova layout grid must NOT establish inside a header row. `.nb-header-row`
+// sizes to max-content, so a nested grid's `--nb-actual-container-width`
+// (`min(--nb-container-width, 100% - --nb-wrapper-sides-spacings * 2)`) plus the
+// header's own `--nb-wrapper-sides-spacings` override blow up — the 4b.3
+// `header-nested-grid` fixture computed a ~3608px side track and overflowed to
+// ~8341px at 1440px. This is a %-math-in-max-content hazard (napkin Anima Layout
+// #4) SHARED by both engines: the `--nb-actual-container-width` derivation is in
+// the byte-identical fallback at `55afe4f0`, so the OLD engine broke identically
+// — it is not a subgrid-rewrite regression. And no shipped pattern nests a
+// Sidecar in a header row (Anima's header is a plain core/group; grep of
+// lib/patterns found none), so header rows were never a sanctioned grid context.
+//
+// Ruling: gate the grid OFF here — fall back to normal block flow — for every
+// union member AND the subgrid pass-through path (this rule is last, so it wins
+// the source-order tie against the subgrid override above). MUST stay at the end
+// of this file. The `header-nested-grid` fixture's now-sane geometry is the
+// regression pin (annotated intentional diff against baseline-v2).
+.nb-header-row :is(#{$nb-layout-grid-parents}) {
+  display: block;
+  grid-template-columns: none;
+  // Neutralize the root `grid-column: fs / fe !important` pin: fs/fe are not
+  // lines in the header-row's own grid, so span the full row instead of
+  // auto-placing into a single narrow column.
+  grid-column: 1 / -1 !important;
+  // The header row lays its items out with flex; a flex item defaults to
+  // min-width: auto (min-content), so the gated block would still be sized by
+  // its widest child (the wide image's intrinsic width) and overflow. Allow it
+  // to shrink to the row's width.
+  min-width: 0;
+  max-width: 100%;
 }
