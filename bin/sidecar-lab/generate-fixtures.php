@@ -16,14 +16,26 @@
  * Manifest: .ai/sidecar-lab/fixtures-manifest.json (repo-relative; resolved
  * from this file's location, overridable via SIDECAR_LAB_MANIFEST env var).
  *
- * Matrix covered (grouped into 17 family pages, not one page per combo):
- *   rails    {none, left, right, both-via-nesting}
+ * Matrix covered — 31 fixture pages (17 Phase 1-3 family pages + 14 Phase 4b
+ * re-baseline additions, Task 4b.3):
+ *   rails    {none, left, right, both-via-nesting, three-area}
  * x widths   {small, medium, large}
  * x sticky   {on, off}
  * x content  {wide img, full img, alignleft img, alignright img,
  *             Group-wrapped wide img, captioned img}
  * x rail fill {empty, short, long}
- * plus a nested-Hive page and a 3-level deep-nested page.
+ * plus nested-Hive, 3-level deep-nested, and the Phase 4b additions:
+ *   - pull-outs: Content Around / Extend, left+right, over filled AND empty
+ *     rails, plus a wrap-wins coexistence (Around + Never) page (a)
+ *   - per-block break: nb-break-always over a filled rail, nb-break-never over
+ *     an empty rail (e)
+ *   - three-area single-block Hive + none-position+legacy-sidebar edge (f)
+ *   - pass-through consumers: core/query loop + Supernova (b)
+ *   - header-nested grid: wrapper-sides substitution context (c) — currently
+ *     KNOWN-BROKEN (overflow), captured as a finding; see expected-changes.md
+ * Harness probe roles added for this baseline: `root` (post-content /
+ * template-part / #main — rail-var zeroing) and `passthrough` (.wp-block-query,
+ * .nb-supernova) — Task 4b.3 (d).
  *
  * NOTE (markup contract): novablocks/sidecar and novablocks/sidecar-area are
  * dynamic blocks (save = InnerBlocks.Content) — serialized markup is block
@@ -334,11 +346,132 @@ function sl_rail_hive_outer(): string {
 }
 
 // -------------------------------------------------------------------------
+// 2b. Phase 4b builders — pull-outs, per-block break, three areas, and the
+//     pass-through / substitution-context fixtures (Task 4b.3).
+// -------------------------------------------------------------------------
+
+/**
+ * A core/image carrying an alignleft/alignright plus a Nova marker class in its
+ * OWN className attribute (the Task 3.3/4b.2 serialization route). `$marker` is
+ * e.g. 'nb-wrap-around', 'nb-wrap-extend', 'nb-break-always', 'nb-break-never',
+ * or a space-separated combination (the wrap-wins coexistence pin).
+ */
+function sl_marked_image( int $id, string $align, string $marker ): string {
+	$src   = wp_get_attachment_image_url( $id, 'large' );
+	$attrs = [
+		'id'              => $id,
+		'sizeSlug'        => 'large',
+		'linkDestination' => 'none',
+		'align'           => $align,
+		'className'       => $marker,
+	];
+	$class = 'wp-block-image align' . $align . ' size-large';
+	$style = '';
+	// Resized floats so wrap text actually has something to flow around.
+	if ( in_array( $align, [ 'left', 'right' ], true ) ) {
+		$attrs['width'] = '420px';
+		$style          = ' style="width:420px"';
+		$class         .= ' is-resized';
+	}
+	$class .= ' ' . $marker;
+
+	return '<!-- wp:image ' . wp_json_encode( $attrs ) . " -->\n"
+		. '<figure class="' . $class . '"><img src="' . esc_url( $src ) . '" alt="Sidecar lab deterministic fixture" class="wp-image-' . $id . '"' . $style . '/></figure>' . "\n"
+		. "<!-- /wp:image -->\n\n";
+}
+
+/**
+ * Pull-out content: a plain "before" paragraph (a body-edge reference for the
+ * differ), then the marked image followed by the run of body copy the flow
+ * segmenter pulls under it (paragraphs wrap beside AND under on the frontend).
+ */
+function sl_pullout_content( int $id, string $align, string $marker ): string {
+	return sl_short_paragraph( 'Before the pull-out: a plain paragraph whose edges are the body-edge reference for the wrapped segment that follows.' )
+		. sl_marked_image( $id, $align, $marker )
+		. sl_paragraphs( 4, 2 );
+}
+
+/**
+ * A single Sidecar with THREE explicit areas (sidebar-left, content,
+ * sidebar-right) — the Hive-recipe shape. Area order mirrors the recipe
+ * reconciliation: left rail, content, right rail.
+ */
+function sl_sidecar_three( array $attrs, string $left, string $content, string $right ): string {
+	return '<!-- wp:novablocks/sidecar ' . wp_json_encode( $attrs ) . " -->\n"
+		. '<!-- wp:novablocks/sidecar-area {"areaName":"sidebar-left"} -->' . "\n" . $left . "<!-- /wp:novablocks/sidecar-area -->\n\n"
+		. '<!-- wp:novablocks/sidecar-area {"areaName":"content"} -->' . "\n" . $content . "<!-- /wp:novablocks/sidecar-area -->\n\n"
+		. '<!-- wp:novablocks/sidecar-area {"areaName":"sidebar-right"} -->' . "\n" . $right . "<!-- /wp:novablocks/sidecar-area -->\n\n"
+		. "<!-- /wp:novablocks/sidecar -->\n";
+}
+
+/** A core/query pass-through fixture over the deterministic lab posts. */
+function sl_query( array $post_ids ): string {
+	$include = implode( ',', array_map( 'intval', $post_ids ) );
+	$query   = [
+		'perPage'  => count( $post_ids ),
+		'pages'    => 0,
+		'offset'   => 0,
+		'postType' => 'post',
+		'order'    => 'desc',
+		'orderBy'  => 'date',
+		'inherit'  => false,
+		'include'  => $include,
+	];
+	return '<!-- wp:query {"queryId":4200,"query":' . wp_json_encode( $query ) . ',"displayLayout":{"type":"list"}} -->' . "\n"
+		. '<div class="wp-block-query">' . "\n"
+		. '<!-- wp:post-template -->' . "\n"
+		. '<!-- wp:post-title {"isLink":true} /-->' . "\n"
+		. '<!-- wp:post-excerpt /-->' . "\n"
+		. '<!-- wp:post-featured-image /-->' . "\n"
+		. '<!-- /wp:post-template -->' . "\n"
+		. '</div>' . "\n"
+		. "<!-- /wp:query -->\n";
+}
+
+/**
+ * A page-level Supernova (Cards Collection) pass-through fixture — static
+ * `fields` cards so it needs no posts and renders deterministically. The
+ * page-level `.nb-supernova` is a subgrid pass-through consumer (raised :is()
+ * specificity, 4.1 review Minor #3).
+ */
+function sl_supernova(): string {
+	$common = '"contentType":"fields","layoutStyle":"classic","columns":3,"postsToShow":3,"loadingMode":"manual","showButtons":false,"imageResizing":"original","thumbnailAspectRatio":25';
+	$item   = static function ( $title, $desc ) use ( $common ) {
+		return '<!-- wp:novablocks/supernova-item {"title":' . wp_json_encode( $title ) . ',"description":' . wp_json_encode( $desc ) . ',"defaultsGenerated":true,' . $common . '} /-->' . "\n";
+	};
+	return '<!-- wp:novablocks/supernova {"title":"Pass-through collection","subtitle":"Static fields","showSubtitle":false,' . $common . '} -->' . "\n"
+		. $item( 'First card', 'A deterministic static card in the Supernova pass-through fixture.' )
+		. $item( 'Second card', 'Another static card, no posts query, no remote images.' )
+		. $item( 'Third card', 'A third static card so the collection renders three columns.' )
+		. "<!-- /wp:novablocks/supernova -->\n";
+}
+
+/**
+ * A Nova Header whose header row locally overrides `--nb-wrapper-sides-spacings`
+ * (headerSidesSpacing), with a nested Sidecar inside it. This exercises the
+ * substitution-context edge from Task 2.2 review: the nested Nova layout grid
+ * computes `--nb-actual-container-width` under the header's overridden
+ * wrapper-sides value.
+ */
+function sl_header_nested( int $img ): string {
+	$inner_sidecar = sl_sidecar(
+		[ 'sidebarPosition' => 'right', 'sidebarWidth' => 'medium' ],
+		sl_paragraphs( 1, 2 ) . sl_image( $img, 'wide' ) . sl_paragraphs( 1, 3 ),
+		sl_rail_short()
+	);
+	return '<!-- wp:novablocks/header {"headerSidesSpacing":150} -->' . "\n"
+		. '<!-- wp:novablocks/header-row -->' . "\n"
+		. $inner_sidecar
+		. "<!-- /wp:novablocks/header-row -->\n"
+		. "<!-- /wp:novablocks/header -->\n";
+}
+
+// -------------------------------------------------------------------------
 // 3. Page matrix.
 // -------------------------------------------------------------------------
 
 /** @return array<string, array{title:string, description:string, families:string[], content:string}> keyed by slug */
-function sl_page_definitions( int $img ): array {
+function sl_page_definitions( int $img, array $post_ids = [] ): array {
 	$battery = sl_content_battery( $img );
 
 	$pages = [];
@@ -487,6 +620,127 @@ function sl_page_definitions( int $img ): array {
 		),
 	];
 
+	// =====================================================================
+	// Phase 4b re-baseline additions (Task 4b.3). NEW capabilities with no
+	// old-engine behavior to preserve — they enter the matrix now that
+	// baseline-v2 (new engine) is the canonical reference.
+	// =====================================================================
+
+	// --- (a) Pull-outs: Content Around / Extend, left+right, over filled AND
+	//         empty rails, plus the Never+wrap coexistence (wrap-wins) pin. ---
+	$pages['wrap-around-right'] = [
+		'title'       => 'Sidecar Lab — Wrap Around, Right rail',
+		'description' => 'Content Around pull-out (alignright + nb-wrap-around) over a FILLED right rail; text wraps beside AND under the float; segment aligns to the body edge.',
+		'families'    => [ 'rail-right', 'width-medium', 'pullout', 'wrap-around', 'align-right', 'rail-short' ],
+		'content'     => sl_sidecar( [ 'sidebarPosition' => 'right', 'sidebarWidth' => 'medium' ], sl_pullout_content( $img, 'right', 'nb-wrap-around' ), sl_rail_short() ),
+	];
+	$pages['wrap-around-left'] = [
+		'title'       => 'Sidecar Lab — Wrap Around, Left rail',
+		'description' => 'Content Around pull-out (alignleft + nb-wrap-around) over a FILLED left rail; mirror of wrap-around-right.',
+		'families'    => [ 'rail-left', 'width-medium', 'pullout', 'wrap-around', 'align-left', 'rail-short' ],
+		'content'     => sl_sidecar( [ 'sidebarPosition' => 'left', 'sidebarWidth' => 'medium' ], sl_pullout_content( $img, 'left', 'nb-wrap-around' ), sl_rail_short() ),
+	];
+	$pages['wrap-extend-right'] = [
+		'title'       => 'Sidecar Lab — Wrap Extend, Right rail',
+		'description' => 'Extend pull-out (alignright + nb-wrap-extend) over a FILLED right rail; the float is pulled over the rail toward the wide edge via track-var margins.',
+		'families'    => [ 'rail-right', 'width-medium', 'pullout', 'wrap-extend', 'align-right', 'rail-short' ],
+		'content'     => sl_sidecar( [ 'sidebarPosition' => 'right', 'sidebarWidth' => 'medium' ], sl_pullout_content( $img, 'right', 'nb-wrap-extend' ), sl_rail_short() ),
+	];
+	$pages['wrap-extend-left'] = [
+		'title'       => 'Sidecar Lab — Wrap Extend, Left rail',
+		'description' => 'Extend pull-out (alignleft + nb-wrap-extend) over a FILLED left rail; mirror of wrap-extend-right.',
+		'families'    => [ 'rail-left', 'width-medium', 'pullout', 'wrap-extend', 'align-left', 'rail-short' ],
+		'content'     => sl_sidecar( [ 'sidebarPosition' => 'left', 'sidebarWidth' => 'medium' ], sl_pullout_content( $img, 'left', 'nb-wrap-extend' ), sl_rail_short() ),
+	];
+	$pages['wrap-extend-empty-right'] = [
+		'title'       => 'Sidecar Lab — Wrap Extend over EMPTY Right rail',
+		'description' => 'Extend pull-out (alignright + nb-wrap-extend) over an EMPTY right rail; the track-var margin still resolves (rail width reserved) so the float pulls over the empty rail region.',
+		'families'    => [ 'rail-right', 'width-medium', 'pullout', 'wrap-extend', 'align-right', 'rail-empty' ],
+		'content'     => sl_sidecar( [ 'sidebarPosition' => 'right', 'sidebarWidth' => 'medium' ], sl_pullout_content( $img, 'right', 'nb-wrap-extend' ), '' ),
+	];
+	$pages['wrap-around-empty-left'] = [
+		'title'       => 'Sidecar Lab — Wrap Around over EMPTY Left rail',
+		'description' => 'Content Around pull-out (alignleft + nb-wrap-around) over an EMPTY left rail; the segment still body-edge-aligns and the float wraps beside/under.',
+		'families'    => [ 'rail-left', 'width-medium', 'pullout', 'wrap-around', 'align-left', 'rail-empty' ],
+		'content'     => sl_sidecar( [ 'sidebarPosition' => 'left', 'sidebarWidth' => 'medium' ], sl_pullout_content( $img, 'left', 'nb-wrap-around' ), '' ),
+	];
+	$pages['wrap-coexist-never-right'] = [
+		'title'       => 'Sidecar Lab — Wrap-wins coexistence (Around + Never)',
+		'description' => 'A block carrying BOTH nb-wrap-around AND nb-break-never over a filled right rail. Wrap-wins: it must render as Content Around (float in a .nb-flow-segment), the break class inert.',
+		'families'    => [ 'rail-right', 'width-medium', 'pullout', 'wrap-around', 'wrap-wins', 'break-never', 'align-right', 'rail-short' ],
+		'content'     => sl_sidecar( [ 'sidebarPosition' => 'right', 'sidebarWidth' => 'medium' ], sl_pullout_content( $img, 'right', 'nb-wrap-around nb-break-never' ), sl_rail_short() ),
+	];
+
+	// --- (e) Per-block break dimension: Always over a filled rail, Never over
+	//         an empty rail (Task 3.3 had zero automated visual coverage). ---
+	$pages['break-always-filled-right'] = [
+		'title'       => 'Sidecar Lab — Break Always over filled Right rail',
+		'description' => 'A wide image pinned nb-break-always over a FILLED right rail: it must extend over the rail regardless of measurement.',
+		'families'    => [ 'rail-right', 'width-medium', 'break-always', 'rail-long' ],
+		'content'     => sl_sidecar(
+			[ 'sidebarPosition' => 'right', 'sidebarWidth' => 'medium' ],
+			sl_paragraphs( 1, 1 ) . sl_marked_image( $img, 'wide', 'nb-break-always' ) . sl_paragraphs( 2, 2 ),
+			sl_rail_long( $img )
+		),
+	];
+	$pages['break-never-empty-right'] = [
+		'title'       => 'Sidecar Lab — Break Never over empty Right rail',
+		'description' => 'A wide image pinned nb-break-never over an EMPTY right rail: the layer-2 :has() flip would open the span, but Never must keep it CONSTRAINED (cs/ce).',
+		'families'    => [ 'rail-right', 'width-medium', 'break-never', 'rail-empty' ],
+		'content'     => sl_sidecar(
+			[ 'sidebarPosition' => 'right', 'sidebarWidth' => 'medium' ],
+			sl_paragraphs( 1, 1 ) . sl_marked_image( $img, 'wide', 'nb-break-never' ) . sl_paragraphs( 2, 2 ),
+			''
+		),
+	];
+
+	// --- (f) Three-area (single-block Hive) + the none-position+legacy-sidebar
+	//         back-compat edge (4.1 review Minor #1). ------------------------
+	$pages['three-area-hive'] = [
+		'title'       => 'Sidecar Lab — Three-area (single-block Hive)',
+		'description' => 'A single Sidecar with THREE explicit areas (sidebar-left + content + sidebar-right), sidebarPosition:none, small width. Both rails present -> neither absence class; content narrows on both sides.',
+		'families'    => [ 'rail-both', 'three-area', 'hive', 'width-small', 'rail-short', 'content-reduced' ],
+		'content'     => sl_sidecar_three(
+			[ 'sidebarPosition' => 'none', 'sidebarWidth' => 'small' ],
+			sl_rail_short(),
+			sl_content_battery_reduced( $img ),
+			sl_rail_short()
+		),
+	];
+	$pages['none-legacy-sidebar'] = [
+		'title'       => 'Sidecar Lab — None position + legacy sidebar area',
+		'description' => 'sidebarPosition:none PLUS a retained legacy `sidebar` area (back-compat edge, 4.1 review Minor #1): the presence-driven engine renders the present sidebar as a right rail (the old engine hid it).',
+		'families'    => [ 'rail-right', 'legacy-sidebar', 'none-position', 'width-medium', 'rail-short', 'content-reduced' ],
+		'content'     => sl_sidecar( [ 'sidebarPosition' => 'none', 'sidebarWidth' => 'medium' ], sl_content_battery_reduced( $img ), sl_rail_short() ),
+	];
+
+	// --- (b) Pass-through consumers: query-loop and Supernova (ship-decision
+	//         condition 2 — zero prior harness coverage). --------------------
+	if ( ! empty( $post_ids ) ) {
+		$pages['query-loop'] = [
+			'title'       => 'Sidecar Lab — Query Loop pass-through',
+			'description' => 'A core/query (inherit:false) over the deterministic lab posts. .wp-block-query is a subgrid pass-through consumer; it must resolve subgrid (or the fallback template) without collapsing or overflowing.',
+			'families'    => [ 'passthrough', 'query-loop', 'no-rail' ],
+			'content'     => sl_query( $post_ids ),
+		];
+	}
+	$pages['supernova'] = [
+		'title'       => 'Sidecar Lab — Supernova pass-through',
+		'description' => 'A page-level Supernova (Cards Collection) with static `fields` cards. .nb-supernova is a subgrid pass-through consumer under the raised :is() specificity (4.1 review Minor #3).',
+		'families'    => [ 'passthrough', 'supernova', 'no-rail' ],
+		'content'     => sl_supernova(),
+	];
+
+	// --- (c) Header-nested grid: a Nova header row overrides
+	//         --nb-wrapper-sides-spacings; a Sidecar nested inside computes its
+	//         tracks under that substitution (Task 2.2 review, uncovered edge). ---
+	$pages['header-nested-grid'] = [
+		'title'       => 'Sidecar Lab — Header-nested grid (wrapper-sides override)',
+		'description' => 'A novablocks/header (headerSidesSpacing:150 overrides --nb-wrapper-sides-spacings) with a novablocks/header-row containing a nested Sidecar. KNOWN-BROKEN as of baseline-v2 (Task 4b.3 finding): the header row is an unconstrained/max-content sizing context, so the nested grid\'s --nb-actual-container-width (100%-wrapper-sides*2) + the override blow up — the nested sidecar computes ~3608px sides and overflows to ~8341px wide at 1440px. Captured as-is; a Phase 5/6 fix (or an explicit sidecar-in-header-unsupported ruling) will show as an annotated diff. See expected-changes.md.',
+		'families'    => [ 'header-nested', 'substitution-context', 'known-broken', 'rail-right', 'width-medium' ],
+		'content'     => sl_header_nested( $img ),
+	];
+
 	return $pages;
 }
 
@@ -494,25 +748,45 @@ function sl_page_definitions( int $img ): array {
 // 4. Idempotent regeneration.
 // -------------------------------------------------------------------------
 
-// Delete every page whose slug starts with the prefix (any status, incl. trash).
-$all_pages = get_posts( [
-	'post_type'      => 'page',
+// Delete every page AND post whose slug starts with the prefix (any status,
+// incl. trash) — posts back the query-loop pass-through fixture.
+$all_posts = get_posts( [
+	'post_type'      => [ 'page', 'post' ],
 	'post_status'    => [ 'publish', 'draft', 'pending', 'private', 'future', 'trash' ],
 	'posts_per_page' => - 1,
 ] );
 $deleted   = 0;
-foreach ( $all_pages as $p ) {
+foreach ( $all_posts as $p ) {
 	if ( 0 === strpos( $p->post_name, SL_SLUG_PREFIX ) ) {
 		wp_delete_post( $p->ID, true );
 		$deleted ++;
 	}
 }
-echo 'Deleted ' . $deleted . " existing sidecar-lab page(s).\n";
+echo 'Deleted ' . $deleted . " existing sidecar-lab page(s)/post(s).\n";
 
 $attachment_id = sl_get_fixture_attachment_id();
 echo 'Fixture attachment ID: ' . $attachment_id . ' (' . wp_get_attachment_image_url( $attachment_id, 'full' ) . ")\n";
 
-$definitions = sl_page_definitions( $attachment_id );
+// Deterministic lab posts for the query-loop pass-through fixture (featured
+// image = the fixture attachment; excerpt is fixed text). Recreated each run.
+$post_ids = [];
+for ( $i = 1; $i <= 3; $i ++ ) {
+	$pid = wp_insert_post( [
+		'post_type'    => 'post',
+		'post_status'  => 'publish',
+		'post_name'    => SL_SLUG_PREFIX . 'post-' . $i,
+		'post_title'   => 'Sidecar Lab Post ' . $i,
+		'post_excerpt' => 'Deterministic excerpt for lab post ' . $i . ', used by the query-loop pass-through fixture.',
+		'post_content' => '<!-- wp:paragraph --><p>Body of deterministic lab post ' . $i . '.</p><!-- /wp:paragraph -->',
+	], true );
+	if ( ! is_wp_error( $pid ) ) {
+		set_post_thumbnail( $pid, $attachment_id );
+		$post_ids[] = (int) $pid;
+	}
+}
+echo 'Created ' . count( $post_ids ) . " lab post(s) for the query fixture.\n";
+
+$definitions = sl_page_definitions( $attachment_id, $post_ids );
 $manifest    = [];
 
 foreach ( $definitions as $slug_suffix => $def ) {

@@ -239,7 +239,13 @@ George picked: **Content Around** (left/right mirrors) and **Extend pull-out** o
 
 Add fixture pages to the generator ONLY at the post-ship-decision re-baseline (differ completeness forbids growing the manifest mid-comparison): (a) placement × wrap combinations at all rail states, (b) **a query-loop fixture and a supernova fixture** — ship-decision condition 2: these pass-through consumers currently have zero harness coverage; (c) **a header-nested-grid fixture** — header rows locally override `--nb-wrapper-sides-spacings`, an uncovered substitution-context edge from Task 2.2 review; (d) **probe ROOT containers' `gridTemplateColumns`** in the harness — rail zeroing on roots is currently verified only indirectly through subgridded fixtures; (e) **the per-block break dimension `{auto, always, never}`** — pages exercising `nb-break-always` over a filled rail and `nb-break-never` over an empty rail (Task 3.3 shipped with live manual verification only; Always/Never have zero automated visual coverage until this re-baseline); (f) **a three-area fixture and the none-position+legacy-sidebar edge fixture** (4.1 review Minor #1); (g) **Query/Supernova pass-through spot-check** under the raised :is() specificity (4.1 review Minor #3 — covered by (b)'s fixtures once added). Then `--run` a new canonical baseline including them.
 
+## Phase 4b.3 — DONE (2026-07-22): baseline-v2 is canonical — new engine, 31 fixtures, 124 captures, determinism re-proven; root probes confirm rail zeroing directly; old baseline + annotations archived. REAL BUG exposed and captured as known-broken: a Sidecar nested in a `novablocks/header-row` overflows (~8341px rect @1440 — the header row's max-content sizing context blows up the percentage track math). Lab standing state: new-engine build deployed, watcher deliberately STOPPED (see .ai/sidecar-lab/ENV.md).
+
 ## Phase 5 — Group pass-through + container-list unification
+
+### Task 5.0: Header-nested-grid ruling (from the 4b.3 finding)
+
+Determine whether the OLD engine also broke in this context (likely — %-math in max-content contexts is a known hazard); then either constrain the layout grid in header contexts (e.g. gate the grid off inside `novablocks/header-row`, or clamp `--nb-actual-container-width` there) or formally declare sidecar-in-header unsupported. Either outcome becomes an annotated intentional diff (or a doc'd non-support note) against baseline-v2.
 
 ### Task 5.1: Single container-list source
 

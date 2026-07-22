@@ -36,11 +36,16 @@ stable).
   gradient, rule-of-thirds lines, center circle, distinct corner markers,
   200px ticks) so cropping/mirroring/scaling regressions are visible in
   screenshots. Slug: `sidecar-lab-fixture`.
-- **17 published pages**, slug prefix `sidecar-lab-`, grouped one page per
-  matrix *family* (each family page carries the full content-variant battery
-  as successive sections — wide image, full image, alignleft, alignright,
+- **3 lab posts** (`sidecar-lab-post-1..3`) — deterministic posts (fixed
+  excerpt, featured image = the fixture attachment) backing the query-loop
+  pass-through fixture. Recreated each run; deleted by the same prefix sweep.
+- **31 published pages**, slug prefix `sidecar-lab-`. The first 17 are the
+  Phase 1-3 family pages (each carries the full content-variant battery as
+  successive sections — wide image, full image, alignleft, alignright,
   Group-wrapped wide image, captioned image — over body copy long enough to
-  wrap at 375px):
+  wrap at 375px). The remaining 14 are the Phase 4b re-baseline additions
+  (Task 4b.3): NEW capabilities with no old-engine behavior to preserve, added
+  now that **baseline-v2** (new engine) is the canonical reference.
 
   | Slug (`sidecar-lab-…`) | Covers |
   | --- | --- |
@@ -53,12 +58,25 @@ stable).
   | `right-large-sticky-long` | right rail, large width, sticky last item AFTER long rail content (different sticky offset math) |
   | `right-empty-rail` | right rail present but EMPTY |
   | `right-long-rail` | rail longer than content (overflow edge) |
-  | `nested-hive` | both rails via nesting: outer left sidecar with its OWN sticky rail (short paragraph + sticky Group spanning the nested block) > content holds inner right sidecar with rail content + sticky last item. A direct three-area fixture (single block, both rails) will be ADDED when Phase 4's explicit area names land. |
+  | `nested-hive` | both rails via nesting: outer left sidecar with its OWN sticky rail > content holds inner right sidecar with rail content + sticky last item |
   | `nested-deep` | 3 authored nesting levels: left/large > right/medium > left/small |
-
-  The `break {auto, always, never}` axis of the design-doc matrix is Phase 3
-  work (the `sidecarBreak` attribute does not exist yet) and gets fixtures
-  when that attribute lands.
+  | **Phase 4b — pull-outs (a)** | |
+  | `wrap-around-right`, `wrap-around-left` | Content Around float over a filled rail (text wraps beside AND under); left+right mirrors |
+  | `wrap-extend-right`, `wrap-extend-left` | Extend pull-out pulled over the rail toward the wide edge (track-var margins); left+right |
+  | `wrap-extend-empty-right` | Extend over an EMPTY rail (margin still resolves) |
+  | `wrap-around-empty-left` | Around over an EMPTY rail |
+  | `wrap-coexist-never-right` | a block with BOTH `nb-wrap-around` and `nb-break-never` — wrap-wins pin (renders as Around) |
+  | **Phase 4b — per-block break (e)** | |
+  | `break-always-filled-right` | `nb-break-always` wide image over a filled rail (extends regardless of measurement) |
+  | `break-never-empty-right` | `nb-break-never` wide image over an EMPTY rail (stays constrained despite the `:has()` flip) |
+  | **Phase 4b — three areas (f)** | |
+  | `three-area-hive` | single-block Hive: sidebar-left + content + sidebar-right (both rails, neither absence class) |
+  | `none-legacy-sidebar` | `sidebarPosition:none` + a retained legacy `sidebar` area — back-compat edge (renders as a right rail) |
+  | **Phase 4b — pass-throughs (b)** | |
+  | `query-loop` | core/query (inherit:false) over the lab posts — `.wp-block-query` subgrid pass-through |
+  | `supernova` | page-level Supernova, static `fields` cards — `.nb-supernova` subgrid pass-through |
+  | **Phase 4b — substitution context (c)** | |
+  | `header-nested-grid` | Sidecar nested in a `novablocks/header-row` (wrapper-sides override). **KNOWN-BROKEN as of baseline-v2** — overflows to ~8341px; a real Task 4b.3 finding, captured as-is (see `.ai/sidecar-lab/expected-changes.md`) |
 
 ## Manifest
 
@@ -92,6 +110,23 @@ node bin/sidecar-lab/capture.mjs --run baseline --force
 node bin/sidecar-lab/capture.mjs --diff baseline subgrid
 ```
 
+**Canonical baseline (from 2026-07-22, Task 4b.3 re-baseline):**
+**`baseline-v2`** — the NEW subgrid engine (worktree `ca276dea`) over the full
+31-page / 124-capture matrix. Phase 5+ diffs against it
+(`--diff baseline-v2 <run>`), and its annotations live in
+`.ai/sidecar-lab/expected-changes.md` (which starts empty — a fresh baseline
+needs none). The old `baseline` run (old engine, 17 pages) stays on disk as the
+historical record; its annotations moved to `expected-changes-old-baseline.md`
+and apply ONLY to `--diff baseline <old-run>` (pass it via
+`SIDECAR_LAB_EXPECTED=`). Old-vs-new baselines are never diffed. Determinism was
+re-proven the Phase-1 way: two independent full captures of `baseline-v2` diffed
+to zero differences.
+
+> **Lab standing state:** the sidecar-lab Studio site now runs the NEW-engine
+> build with its code-mirror **watcher STOPPED** (deliberate — Phase 5 diffs
+> successive new-engine builds against `baseline-v2`; a running watcher would
+> revert the deploy to `main`). See `.ai/sidecar-lab/ENV.md`.
+
 Run labels become directory names under `.ai/sidecar-lab/runs/` and are
 validated (letters, digits, `.`, `_`, `-`; no path separators, no `..`).
 A capture whose page load answers HTTP >= 400 is a capture failure (a 404
@@ -113,15 +148,25 @@ probe payload is collected and never changes the width, so it cannot
 affect probe data. Pages over the cap fall back to `fullPage: true` and
 carry `screenshotClamped: true` in their probe JSON.
 
-**What a probe records** — for every `.nb-sidecar`, `.nb-sidecar-area`,
-and `.alignwide/.alignfull/.alignleft/.alignright` element: a stable
-structural path (`tag:childIndex` chain from `<body>` — never "the first
-sidecar", because the Anima LT page template wraps post content in its own
+**What a probe records** — for every probed element: a stable structural
+path (`tag:childIndex` chain from `<body>` — never "the first sidecar",
+because the Anima LT page template wraps post content in its own
 `sidebarPosition:none` sidecar on every page), className, computed
 `display`, `gridTemplateColumns` (grids only), and its bounding rect
 (left/right/width/top/height, 0.1px rounding). Page-level: the
 break-class inventory (`break-align-left/right` carriers by path) and the
-settlement flags.
+settlement flags. Elements are collected by ROLE (the diff keys on
+`role|path`):
+
+- `sidecar` — every `.nb-sidecar`
+- `sidecar-area` — every `.nb-sidecar-area`
+- `aligned` — every `.alignwide/.alignfull/.alignleft/.alignright`
+- `root` (Task 4b.3 d) — `.wp-block-post-content`, `.wp-block-template-part`,
+  `[id="main"]`: the layout ROOTS, to probe rail-var zeroing directly (a
+  rail-less root reads `[ws] 0px`), previously only verified indirectly.
+- `passthrough` (Task 4b.3 b) — `.wp-block-query`, `.nb-supernova`: the
+  subgrid pass-through consumers, so their `grid-template-columns: subgrid`
+  resolution has structural coverage, not just screenshots.
 
 **Settlement protocol** (the current engine adds break classes via
 debounced JS after domReady — probing early poisons the data): wait for

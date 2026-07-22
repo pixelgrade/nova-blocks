@@ -241,6 +241,16 @@ async function novaProbe( noJs ) {
 		collect( '.nb-sidecar', 'sidecar' ),
 		collect( '.nb-sidecar-area', 'sidecar-area' ),
 		collect( '.alignwide, .alignfull, .alignleft, .alignright', 'aligned' ),
+		// Task 4b.3 (d): ROOT layout containers. Rail-var zeroing on roots was
+		// only verified indirectly through subgridded fixtures — probe their
+		// computed gridTemplateColumns directly (rail tracks should be 0 on a
+		// rail-less root). Keyed structurally by path like everything else.
+		collect( '.wp-block-post-content, .wp-block-template-part, [id="main"]', 'root' ),
+		// Task 4b.3 (b): subgrid PASS-THROUGH consumers (query loop + Supernova).
+		// These resolve `grid-template-columns: subgrid` (or the fallback
+		// template) under the raised :is() specificity — probe them so the
+		// pass-through contract has structural coverage, not just screenshots.
+		collect( '.wp-block-query, .nb-supernova', 'passthrough' ),
 	);
 
 	return {
