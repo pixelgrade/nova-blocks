@@ -67,11 +67,35 @@
 }
 
 
-// Sidebar width overrides
+// Sidebar width overrides.
+//
+// Legacy path (sidebarPosition-keyed): RETAINED so existing two-area content is
+// byte-identical. A positioned sidecar carries `--sidebar-left`/`--sidebar-right`
+// from its position, so this keeps firing for legacy content exactly as before.
 @each $size in small, medium, large {
   @each $side in left, right {
     .nb-sidecar--sidebar-#{$side}.nb-sidecar--sidebar-#{$size} {
       --nb-sidecar-sidebar-#{$side}-width: min(var(--nb-sidecar-sidebar-#{$side}-max-width), var(--nb-sidecar-sidebar-#{$size}-width));
     }
+  }
+}
+
+// Three-area path (rail-PRESENCE-keyed, matching Task 4.1's placement model in
+// _desktop-layout.scss): width follows the ACTUAL rail on each side, keyed on the
+// server-known absence classes, so a three-area Hive (sidebarPosition:none, hence
+// no `--sidebar-left`/`--sidebar-right`) resizes BOTH rails — the recipe's Sidebar
+// Size control now does real work instead of only flipping derivation to Custom.
+// For legacy content this matches the SAME elements as the position-keyed rule
+// above with IDENTICAL values (a positioned sidecar carries exactly one absence
+// class: a left sidecar has `--no-right-rail`, never `--no-left-rail`), so both
+// selectors fire together on the present side with the same value and computed
+// geometry is unchanged; the absent side is untouched (its rail var is zeroed by
+// the layer-1 absence class, Task 3.1).
+@each $size in small, medium, large {
+  .nb-sidecar--sidebar-#{$size}:not(.nb-sidecar--no-left-rail) {
+    --nb-sidecar-sidebar-left-width: min(var(--nb-sidecar-sidebar-left-max-width), var(--nb-sidecar-sidebar-#{$size}-width));
+  }
+  .nb-sidecar--sidebar-#{$size}:not(.nb-sidecar--no-right-rail) {
+    --nb-sidecar-sidebar-right-width: min(var(--nb-sidecar-sidebar-right-max-width), var(--nb-sidecar-sidebar-#{$size}-width));
   }
 }

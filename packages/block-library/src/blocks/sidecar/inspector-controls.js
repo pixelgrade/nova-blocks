@@ -109,7 +109,7 @@ const SidecarInspectorControls = ( props ) => {
             </ControlsGroup>
           }
 
-          <FontSizeControls { ...props } />
+          <FontSizeControls { ...props } hasRail={ hasRail } />
 
         </ControlsTab>
       </ControlsSection>
@@ -139,7 +139,7 @@ const SidecarInspectorControls = ( props ) => {
 
 const FontSizeControls = ( props ) => {
 
-  const { attributes, setAttributes } = props;
+  const { attributes, setAttributes, hasRail } = props;
   const { contentFontSize, sidebarFontSize } = attributes;
 
   const options = [
@@ -161,15 +161,17 @@ const FontSizeControls = ( props ) => {
           setAttributes( { contentFontSize } );
         } }
       />
-      <SelectControl
-        key={ 'sidecar-sidebar-font-controls' }
-        label={ __( 'Sidebar Font Size', '__plugin_txtd' ) }
-        value={ sidebarFontSize }
-        options={ options }
-        onChange={ sidebarFontSize => {
-          setAttributes( { sidebarFontSize } );
-        } }
-      />
+      { hasRail &&
+        <SelectControl
+          key={ 'sidecar-sidebar-font-controls' }
+          label={ __( 'Sidebar Font Size', '__plugin_txtd' ) }
+          value={ sidebarFontSize }
+          options={ options }
+          onChange={ sidebarFontSize => {
+            setAttributes( { sidebarFontSize } );
+          } }
+        />
+      }
     </ControlsGroup>
   )
 }

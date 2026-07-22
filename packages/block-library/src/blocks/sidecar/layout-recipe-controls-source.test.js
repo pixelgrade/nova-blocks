@@ -28,7 +28,9 @@ test( 'the managed decision is exactly one engine patch', () => {
 } );
 
 test( 'structure-matching apply is one setAttributes patch; structure-changing apply is one atomic replaceBlock', () => {
-  assert.match( source, /reconcileAreas\(\s*innerBlocks,\s*recipe,\s*patch\.sidebarPosition,\s*railStash\.current\s*\)/ );
+  assert.match( source, /reconcileAreas\(\s*innerBlocks,\s*recipe,\s*patch\.sidebarPosition\s*\)/ );
+  // No cross-apply stash survives the replaceBlock remount — one undo covers it.
+  assert.doesNotMatch( source, /railStash/ );
   const applyBody = source.slice( source.indexOf( 'const applyRecipe' ) );
 
   // Structure changes → replaceBlock swapping a fresh Sidecar that embeds the patch.

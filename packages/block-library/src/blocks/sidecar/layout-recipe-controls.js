@@ -23,7 +23,7 @@
  */
 import { __ } from '@wordpress/i18n';
 import { cloneBlock, createBlock } from '@wordpress/blocks';
-import { useCallback, useMemo, useRef } from '@wordpress/element';
+import { useCallback, useMemo } from '@wordpress/element';
 import { useDispatch } from '@wordpress/data';
 
 import {
@@ -127,13 +127,17 @@ const isArea = ( block ) => block.name === AREA;
  * structure already matches the target under the target position (attribute-only
  * apply). Preserved content is cloned, never destroyed.
  *
+ * A rail dropped by a recipe (e.g. Centered from Right Rail) loses its content
+ * on apply; a single undo restores it (the whole apply is one undo level), so no
+ * cross-apply stash is kept — a stash would have to survive the replaceBlock
+ * remount, which it cannot (new clientId), and one-undo already covers the case.
+ *
  * @param {Array}  innerBlocks    Current Sidecar children (block objects).
  * @param {Object} recipe         The target recipe (from LAYOUT_RECIPES).
  * @param {string} targetPosition The recipe's target sidebarPosition.
- * @param {Object} stash          Ref bag { left:[], right:[] } of removed rail content.
  * @return {?Array} New inner blocks, or null to skip the structural step.
  */
-const reconcileAreas = ( innerBlocks, recipe, targetPosition, stash ) => {
+const reconcileAreas = ( innerBlocks, recipe, targetPosition ) => {
   const areas = innerBlocks.filter( isArea );
   const contentBlock = areas.find( ( block ) => areaNameOf( block ) === 'content' );
   const railsWithSide = areas
@@ -171,8 +175,8 @@ const reconcileAreas = ( innerBlocks, recipe, targetPosition, stash ) => {
     }
   } );
 
-  // Pass 2 — fill any still-unmet side: re-home a spare rail's content, else
-  // restore stashed content, else a fresh empty explicit-side area.
+  // Pass 2 — fill any still-unmet side: re-home a spare rail's content (a side
+  // flip preserves that content), else a fresh empty explicit-side area.
   [ 'left', 'right' ].forEach( ( side ) => {
     if ( ! need[ side ] || assignment[ side ] ) {
       return;
@@ -183,19 +187,7 @@ const reconcileAreas = ( innerBlocks, recipe, targetPosition, stash ) => {
       assignment[ side ] = createBlock( AREA, { areaName: `sidebar-${ side }` }, spare.block.innerBlocks.map( cloneBlock ) );
       return;
     }
-    if ( Array.isArray( stash[ side ] ) && stash[ side ].length ) {
-      assignment[ side ] = createBlock( AREA, { areaName: `sidebar-${ side }` }, stash[ side ].map( cloneBlock ) );
-      return;
-    }
     assignment[ side ] = createBlock( AREA, { areaName: `sidebar-${ side }` } );
-  } );
-
-  // Stash the content of any rail we are dropping, so re-applying a recipe that
-  // wants that side restores it (mirrors the legacy position radio's ref).
-  railsWithSide.forEach( ( rail ) => {
-    if ( ! consumed.has( rail.block.clientId ) && rail.side ) {
-      stash[ rail.side ] = rail.block.innerBlocks;
-    }
   } );
 
   const content = contentBlock ? cloneBlock( contentBlock ) : createBlock( AREA, { areaName: 'content' } );
@@ -218,7 +210,6 @@ const SidecarLayoutRecipes = ( props ) => {
   const innerBlocks = useInnerBlocks( clientId );
   const registeredDefaults = useRegisteredAttributeDefaults( name );
   const { replaceBlock } = useDispatch( 'core/block-editor' );
-  const railStash = useRef( { left: [], right: [] } );
 
   // Live structural signature — rails resolved under the CURRENT position.
   const signature = useMemo( () => {
@@ -241,7 +232,7 @@ const SidecarLayoutRecipes = ( props ) => {
       attributes
     );
 
-    const reconciled = reconcileAreas( innerBlocks, recipe, patch.sidebarPosition, railStash.current );
+    const reconciled = reconcileAreas( innerBlocks, recipe, patch.sidebarPosition );
 
     if ( reconciled ) {
       // Structure changes: apply the managed patch AND the reconciled areas in
