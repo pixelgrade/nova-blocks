@@ -1,6 +1,7 @@
 @import 'scss/mixins';
 @import 'scss/utility';
 @import 'scss/desktop-layout';
+@import 'scss/pull-outs';
 
 // The --nb-font-size-* scale tokens moved to core's _layout.scss (Task 3.6):
 // they are consumed by the per-area font-size attributes and belong with the

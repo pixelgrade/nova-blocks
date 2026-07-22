@@ -85,6 +85,7 @@ require_once dirname( __FILE__ ) . '/lib/plus-gating.php';
 require_once dirname( __FILE__ ) . '/lib/block-patterns.php';
 require_once dirname( __FILE__ ) . '/lib/cloud-block-patterns.php';
 require_once dirname( __FILE__ ) . '/lib/block-rendering.php';
+require_once dirname( __FILE__ ) . '/lib/flow-segments.php';
 require_once dirname( __FILE__ ) . '/lib/post-format-card-blueprints.php';
 require_once dirname( __FILE__ ) . '/lib/client-assets.php';
 require_once dirname( __FILE__ ) . '/lib/deprecated.php';

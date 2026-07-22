@@ -1,9 +1,13 @@
 const {
 	SIDECAR_BREAK_BLOCKS,
+	SIDECAR_WRAP_BLOCKS,
 	isSidecarBreakEligible,
+	isSidecarWrapEligible,
 	isDirectSidecarContentChild,
 	getSidecarBreakClass,
 	replaceSidecarBreakClass,
+	getSidecarWrapClass,
+	replaceSidecarWrapClass,
 } = require( './utils' );
 
 describe( 'sidecar break eligibility (control gating)', () => {
@@ -71,5 +75,67 @@ describe( 'className attribute sync (serialization route)', () => {
 		const withAlways = replaceSidecarBreakClass( original, 'always' );
 		const withNever = replaceSidecarBreakClass( withAlways, 'never' );
 		expect( replaceSidecarBreakClass( withNever, 'auto' ) ).toBe( original );
+	} );
+} );
+
+describe( 'sidecar wrap eligibility (text-wrap control gating)', () => {
+	it( 'is eligible only for side-floatable blocks aligned left or right', () => {
+		expect( isSidecarWrapEligible( 'core/image', { align: 'left' } ) ).toBe( true );
+		expect( isSidecarWrapEligible( 'core/image', { align: 'right' } ) ).toBe( true );
+		expect( isSidecarWrapEligible( 'core/group', { align: 'right' } ) ).toBe( true );
+		expect( isSidecarWrapEligible( 'core/quote', { align: 'left' } ) ).toBe( true );
+		expect( isSidecarWrapEligible( 'core/pullquote', { align: 'right' } ) ).toBe( true );
+
+		// Wrap has no meaning on wide/full/center — the placement IS a float.
+		expect( isSidecarWrapEligible( 'core/image', { align: 'wide' } ) ).toBe( false );
+		expect( isSidecarWrapEligible( 'core/image', { align: 'full' } ) ).toBe( false );
+		expect( isSidecarWrapEligible( 'core/image', { align: 'center' } ) ).toBe( false );
+		expect( isSidecarWrapEligible( 'core/image', {} ) ).toBe( false );
+
+		// heading/paragraph break wide/full only — never wrap.
+		expect( isSidecarWrapEligible( 'core/heading', { align: 'left' } ) ).toBe( false );
+		expect( isSidecarWrapEligible( 'core/paragraph', { align: 'right' } ) ).toBe( false );
+
+		expect( SIDECAR_WRAP_BLOCKS ).toContain( 'core/image' );
+		expect( SIDECAR_WRAP_BLOCKS ).not.toContain( 'core/heading' );
+	} );
+} );
+
+describe( 'sidecar wrap class derivation', () => {
+	it( 'derives no class for none and unknown values', () => {
+		expect( getSidecarWrapClass( undefined ) ).toBe( null );
+		expect( getSidecarWrapClass( 'none' ) ).toBe( null );
+		expect( getSidecarWrapClass( 'beside' ) ).toBe( null );
+	} );
+
+	it( 'derives the serialized classes for around/extend', () => {
+		expect( getSidecarWrapClass( 'around' ) ).toBe( 'nb-wrap-around' );
+		expect( getSidecarWrapClass( 'extend' ) ).toBe( 'nb-wrap-extend' );
+	} );
+} );
+
+describe( 'sidecar wrap className attribute sync', () => {
+	it( 'leaves a missing className missing for none — byte-identity for default-valued blocks', () => {
+		expect( replaceSidecarWrapClass( undefined, 'none' ) ).toBe( undefined );
+		expect( replaceSidecarWrapClass( '', 'none' ) ).toBe( undefined );
+	} );
+
+	it( 'preserves foreign classes (and a co-existing break marker) untouched', () => {
+		expect( replaceSidecarWrapClass( 'is-style-rounded alignright', 'none' ) ).toBe( 'is-style-rounded alignright' );
+		expect( replaceSidecarWrapClass( 'alignright nb-break-never', 'around' ) ).toBe( 'alignright nb-break-never nb-wrap-around' );
+	} );
+
+	it( 'adds, swaps and removes the marker class', () => {
+		expect( replaceSidecarWrapClass( undefined, 'around' ) ).toBe( 'nb-wrap-around' );
+		expect( replaceSidecarWrapClass( 'nb-wrap-around', 'extend' ) ).toBe( 'nb-wrap-extend' );
+		expect( replaceSidecarWrapClass( 'nb-wrap-extend', 'none' ) ).toBe( undefined );
+		expect( replaceSidecarWrapClass( 'foo nb-wrap-around bar', 'none' ) ).toBe( 'foo bar' );
+	} );
+
+	it( 'round-trips cleanly (around -> extend -> none restores the original)', () => {
+		const original = 'alignright is-style-rounded';
+		const withAround = replaceSidecarWrapClass( original, 'around' );
+		const withExtend = replaceSidecarWrapClass( withAround, 'extend' );
+		expect( replaceSidecarWrapClass( withExtend, 'none' ) ).toBe( original );
 	} );
 } );

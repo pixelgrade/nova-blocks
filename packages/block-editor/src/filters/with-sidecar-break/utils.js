@@ -34,6 +34,28 @@ export const SIDECAR_BREAK_CLASSES = {
 };
 
 /**
+ * Text-wrap pull-out placements (Task 4b.2). Attribute-shape decision: ONE
+ * enum `sidecarWrap` = none | around | extend (default none, byte-identical),
+ * with the SIDE derived from the block's own core `align` (left/right) rather
+ * than a second attribute — a wrap only exists on a side-floated block, so the
+ * align already carries the side and a parallel placement attribute would be
+ * redundant and could drift out of sync with align. `none` serializes nothing;
+ * `around`/`extend` serialize `nb-wrap-around`/`nb-wrap-extend` into the
+ * block's own className (the Task 3.3 route), which the PHP flow-segment render
+ * reads to group the block + its trailing body copy into one floated segment.
+ *
+ * Only side-floatable blocks can wrap; heading/paragraph break wide/full only,
+ * so they are excluded. The gate additionally requires align left/right (see
+ * isSidecarWrapEligible).
+ */
+export const SIDECAR_WRAP_BLOCKS = [ 'core/image', 'core/group', 'core/quote', 'core/pullquote' ];
+
+export const SIDECAR_WRAP_CLASSES = {
+	around: 'nb-wrap-around',
+	extend: 'nb-wrap-extend',
+};
+
+/**
  * A block can carry the control when it is a target block with a breakable
  * alignment. (The sidecar-context half of the gate is a separate, editor-only
  * question — see isDirectSidecarContentChild.)
@@ -80,6 +102,48 @@ export const replaceSidecarBreakClass = ( className, sidecarBreak ) => {
 		.filter( ( c ) => c && c !== SIDECAR_BREAK_CLASSES.always && c !== SIDECAR_BREAK_CLASSES.never );
 
 	const nextClass = getSidecarBreakClass( sidecarBreak );
+	if ( nextClass ) {
+		cleaned.push( nextClass );
+	}
+
+	return cleaned.length ? cleaned.join( ' ' ) : undefined;
+};
+
+/**
+ * Whether a block can carry the text-wrap control: a side-floatable target
+ * block (SIDECAR_WRAP_BLOCKS) aligned left or right. Wrap has no meaning on
+ * wide/full/center — the placement IS a side float. (The sidecar-context half
+ * of the gate is the same editor-only parent check the break control uses.)
+ */
+export const isSidecarWrapEligible = ( blockName, attributes ) => {
+	if ( ! SIDECAR_WRAP_BLOCKS.includes( blockName ) ) {
+		return false;
+	}
+	return attributes?.align === 'left' || attributes?.align === 'right';
+};
+
+/**
+ * The serialized class for a sidecarWrap value — or null for `none`, a missing
+ * value, and anything unknown (the default path serializes NOTHING).
+ */
+export const getSidecarWrapClass = ( sidecarWrap ) => {
+	return SIDECAR_WRAP_CLASSES[ sidecarWrap ] || null;
+};
+
+/**
+ * Returns the block's next `className` attribute for a sidecarWrap value:
+ * strips any existing nb-wrap-* marker, appends the new one when non-default,
+ * and returns undefined instead of an empty string so the className attribute
+ * is REMOVED rather than serialized empty. Same sync policy as the break class:
+ * the attribute is the source of truth and this runs only on control
+ * interaction — a hand-edited class field is never fought reactively.
+ */
+export const replaceSidecarWrapClass = ( className, sidecarWrap ) => {
+	const cleaned = ( className || '' )
+		.split( /\s+/ )
+		.filter( ( c ) => c && c !== SIDECAR_WRAP_CLASSES.around && c !== SIDECAR_WRAP_CLASSES.extend );
+
+	const nextClass = getSidecarWrapClass( sidecarWrap );
 	if ( nextClass ) {
 		cleaned.push( nextClass );
 	}
