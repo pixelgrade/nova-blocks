@@ -234,6 +234,10 @@
 // of this file. The `header-nested-grid` fixture's now-sane geometry is the
 // regression pin (annotated intentional diff against baseline-v2).
 .nb-header-row :is(#{$nb-layout-grid-parents}) {
+  // Load-bearing: `display: block` (not `grid-template-columns`) is what wins.
+  // Once the container is `block` it is no longer a grid formatting context, so
+  // the `grid-template-columns` declarations below never have to out-rank the
+  // (0,3,0) subgrid pass-through branch — grid props are inert on a block box.
   display: block;
   grid-template-columns: none;
   // Neutralize the root `grid-column: fs / fe !important` pin: fs/fe are not

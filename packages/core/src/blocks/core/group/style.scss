@@ -157,11 +157,29 @@
 // mobile side-effect: a Group spanning `fs / fe` contributes to the collapsed
 // grid's `auto` ws/ge track sizing, which would nudge sibling left/right images
 // (caught by the harness at 375px).
+//
+// BOX-GROUP EXCLUSION (Task 5.2 gate, live-verified 2026-07-22): a Group that
+// renders its OWN visual box is a CONTAINER, not an escape vehicle — passing it
+// through makes its box span `fs / fe`, so its background/color-signal fill BLEEDS
+// full-viewport where it used to be content-width. Measured live (1440px,
+// post-content, no sidecar): a `.has-background` group painted its fill across
+// L0→R1440 (was content-width); an `sm-color-signal` group's box likewise spans
+// `fs / fe` (32px inset), so on a real Style-Manager site its `--sm-current-bg`
+// fill bleeds identically. So EXCLUDE the two selectable box signals — Nova color
+// signal (`[class*="sm-color-signal"]` except signal-0, which is transparent =
+// no box, still escapes) and core `.has-background`. Excluded groups keep the
+// max-width fallback (content-width box, no escape). NOTE: a purely inline-PADDED
+// group (core padding, no background) is NOT excludable by class AND is harmless
+// — verified live that a 60px-padded pass-through group did NOT offset its escaped
+// children (wide still at ws/we, body still at cs/ce): Chromium places subgrid
+// items on the PARENT grid's absolute line positions, so the subgrid's own padding
+// creates dead inset but never relocates the inherited track lines. With no
+// background it paints nothing, so there is no bleed to fix.
 @include above(lap) {
 
   @supports (grid-template-columns: subgrid) {
 
-    :is(.wp-block-post-content, .nb-sidecar-area--content) > .wp-block-group:not(.wp-block-row):not(.is-layout-flex) {
+    :is(.wp-block-post-content, .nb-sidecar-area--content) > .wp-block-group:not(.wp-block-row):not(.is-layout-flex):not(.has-background):not([class*="sm-color-signal"]:not(.sm-color-signal-0)) {
       display: grid;
       grid-column: fs / fe;
       grid-template-columns: subgrid;
