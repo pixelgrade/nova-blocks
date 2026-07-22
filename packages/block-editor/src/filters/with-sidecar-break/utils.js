@@ -150,3 +150,36 @@ export const replaceSidecarWrapClass = ( className, sidecarWrap ) => {
 
 	return cleaned.length ? cleaned.join( ' ' ) : undefined;
 };
+
+/** Whether a text-wrap placement (around/extend) is active. */
+export const isSidecarWrapActive = ( attributes ) => {
+	return [ 'around', 'extend' ].includes( attributes?.sidecarWrap );
+};
+
+/**
+ * The Sidecar Layout panel's control visibility for a block. Pure so the
+ * wrap-wins rule is unit-testable.
+ *
+ * WRAP-WINS (product ruling 2026-07-22): Never/Always + a wrap placement is
+ * contradictory — the wrap owns the geometry. When a wrap is active the
+ * "Extend over sidebar" (break) control is HIDDEN, so no new contradiction can
+ * be authored. The serialized `sidecarBreak` attribute is left untouched (no
+ * data loss); the break control reappears the moment wrap returns to `none`.
+ *
+ * Each control also shows whenever its own attribute carries a non-default
+ * value regardless of context, so a stranded decision always has UI to reset —
+ * EXCEPT the break control while a wrap is active (wrap-wins takes priority
+ * over even a stranded break decision; clearing wrap brings it back).
+ */
+export const getSidecarLayoutControlVisibility = ( { name, attributes, inSidecarContent } ) => {
+	const breakEligible = isSidecarBreakEligible( name, attributes );
+	const wrapEligible = isSidecarWrapEligible( name, attributes );
+	const hasActiveBreak = [ 'always', 'never' ].includes( attributes?.sidecarBreak );
+	const hasActiveWrap = [ 'around', 'extend' ].includes( attributes?.sidecarWrap );
+	const wrapActive = isSidecarWrapActive( attributes );
+
+	const showWrap = ( wrapEligible && inSidecarContent ) || hasActiveWrap;
+	const showBreak = ( ( breakEligible && inSidecarContent ) || hasActiveBreak ) && ! wrapActive;
+
+	return { showBreak, showWrap };
+};

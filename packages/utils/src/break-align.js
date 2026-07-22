@@ -23,9 +23,18 @@ export const getAlignedSiblings = ( block, side ) => {
 // Blocks whose break decision is authored (the per-block Auto/Always/Never
 // control serializes nb-break-always / nb-break-never) are DECIDED: the CSS
 // consumes the serialized class directly and measurement must not touch them.
+//
+// A text-wrap pull-out (nb-wrap-around / nb-wrap-extend, Task 4b.2) is ALSO
+// decided: the wrap placement owns the block's geometry (a real CSS float
+// inside a .nb-flow-segment on the frontend; the Beside approximation in the
+// editor). Measurement must never add break-align-* grid classes to it —
+// wrap wins over break by construction, and the "Extend over sidebar" control
+// is hidden while a wrap is active so no new contradiction can be authored.
 export const shouldMeasureBreakClasses = ( block ) => {
   return ! block.classList.contains( 'nb-break-always' )
-    && ! block.classList.contains( 'nb-break-never' );
+    && ! block.classList.contains( 'nb-break-never' )
+    && ! block.classList.contains( 'nb-wrap-around' )
+    && ! block.classList.contains( 'nb-wrap-extend' );
 };
 
 // FRONTEND-ONLY skip (Task 3.4): when every ancestor rail is either absent

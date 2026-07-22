@@ -84,32 +84,16 @@ if ( ! function_exists( 'novablocks_render_sidecar_area_block' ) ) {
 			$classes[] = 'nb-sidecar-area--content';
 			$classes[] = 'nb-content-layout-grid';
 
-			// Flow segmentation (Task 4b.1/4b.2 pull-outs): ONLY when a direct
-			// child opts into a wrap placement. The gate keeps this byte-neutral
-			// for every existing content area — no opt-in means `$content` is
-			// returned verbatim. When a pull-out is present we re-render the
-			// children, grouping each wrapping block + its trailing body-copy
-			// run into one `.nb-flow-segment` div so the image can float and the
-			// copy wrap beside AND under it. Indices align between the parsed
-			// innerBlocks (grouping metadata) and the live WP_Block inner blocks
-			// (rendered output).
-			$inner_parsed = ( isset( $block->parsed_block['innerBlocks'] ) && is_array( $block->parsed_block['innerBlocks'] ) )
-				? $block->parsed_block['innerBlocks']
-				: array();
-
-			if (
-				function_exists( 'novablocks_flow_segments_present' )
-				&& isset( $block->inner_blocks )
-				&& novablocks_flow_segments_present( $inner_parsed )
-			) {
-				$inner_blocks = $block->inner_blocks;
-				$content      = novablocks_render_flow_segments(
-					$inner_parsed,
-					static function ( $parsed, $index ) use ( $inner_blocks ) {
-						return isset( $inner_blocks[ $index ] ) ? $inner_blocks[ $index ]->render() : '';
-					}
-				);
-			}
+			// Flow segmentation (Task 4b.1/4b.2 pull-outs) does NOT happen here:
+			// this render callback receives `$content` already built from a
+			// single render pass of the inner blocks. Re-rendering here would
+			// double every inner block (running unique-ID / enqueue-once side
+			// effects twice). Instead the `pre_render_block` short-circuit in
+			// lib/flow-segments.php intercepts a pull-out content area BEFORE WP
+			// renders its inner blocks, renders each child exactly once, wraps
+			// the pull-out + its body-copy run in a `.nb-flow-segment`, and calls
+			// this same function with the assembled content — so this stays a
+			// pure wrapper and existing content is byte-identical either way.
 		} else {
 			$side = novablocks_resolve_sidecar_area_side( $area_name, $sidebar_position );
 

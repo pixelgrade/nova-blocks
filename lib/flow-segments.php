@@ -258,8 +258,10 @@ if ( ! function_exists( 'novablocks_render_flow_segments' ) ) {
 	 *
 	 * Segments wrap their blocks in a `.nb-flow-segment` div; passthroughs
 	 * render bare. The per-block renderer is injected so this stays pure and
-	 * testable — the sidecar-area render passes a closure over the live
-	 * `WP_Block` inner blocks (whose indices align with the parsed innerBlocks).
+	 * testable, and it is invoked EXACTLY ONCE per child index (single-render):
+	 * the `pre_render_block` integration below passes a renderer that calls the
+	 * core `render_block()` once per child, and WP's own inner-block render is
+	 * short-circuited, so each child renders exactly once in total.
 	 *
 	 * @param array[]  $blocks       Parsed block arrays (metadata for grouping).
 	 * @param callable $render_block fn( array $block, int $index ) : string.
@@ -285,4 +287,74 @@ if ( ! function_exists( 'novablocks_render_flow_segments' ) ) {
 
 		return $html;
 	}
+}
+
+if ( ! function_exists( 'novablocks_flow_segments_pre_render_block' ) ) {
+	/**
+	 * Render-once short-circuit for a Sidecar content area that contains a
+	 * pull-out.
+	 *
+	 * `pre_render_block` fires for every inner block BEFORE WordPress renders it
+	 * (WP_Block::render inner loop). Returning non-null makes WP use our output
+	 * and skip its own render of that block ENTIRELY — no inner-block render, no
+	 * second render callback. So for a pull-out content area we render each
+	 * child exactly once (via core `render_block()`), assemble the segments, and
+	 * wrap with the normal area classes. Every other block (and every
+	 * pull-out-free content area) returns null → WordPress renders it normally,
+	 * byte-for-byte unchanged.
+	 *
+	 * @param string|null   $pre_render   Short-circuit value from earlier filters.
+	 * @param array         $parsed_block The block about to render.
+	 * @param WP_Block|null $parent_block The parent block instance, if any.
+	 *
+	 * @return string|null
+	 */
+	function novablocks_flow_segments_pre_render_block( $pre_render, $parsed_block, $parent_block = null ) {
+		// Respect an earlier short-circuit and only act on Sidecar content areas.
+		if ( null !== $pre_render ) {
+			return $pre_render;
+		}
+		if ( empty( $parsed_block['blockName'] ) || 'novablocks/sidecar-area' !== $parsed_block['blockName'] ) {
+			return $pre_render;
+		}
+		$area_name = isset( $parsed_block['attrs']['areaName'] ) ? $parsed_block['attrs']['areaName'] : 'content';
+		if ( 'content' !== $area_name ) {
+			return $pre_render;
+		}
+
+		$inner = ( isset( $parsed_block['innerBlocks'] ) && is_array( $parsed_block['innerBlocks'] ) )
+			? $parsed_block['innerBlocks']
+			: array();
+
+		// No pull-out → hand back null so WordPress renders normally (the
+		// byte-neutral path; existing content is never touched).
+		if ( ! novablocks_flow_segments_present( $inner ) ) {
+			return $pre_render;
+		}
+
+		// Single render: each child through core render_block() exactly once.
+		$segmented = novablocks_render_flow_segments(
+			$inner,
+			static function ( $child, $index ) {
+				unset( $index );
+				return render_block( $child );
+			}
+		);
+
+		// A context-carrying instance for the wrapper (side classes + one enqueue).
+		// available_context may be null on some parents — WP_Block::__construct
+		// array_merges the context, so it must be an array.
+		$context = ( $parent_block instanceof WP_Block && is_array( $parent_block->available_context ) )
+			? $parent_block->available_context
+			: array();
+		$area_block = new WP_Block( $parsed_block, $context );
+
+		return novablocks_render_sidecar_area_block( $area_block->attributes, $segmented, $area_block );
+	}
+}
+
+// Registered at file load (this file is required from nova-blocks.php at plugin
+// bootstrap, before block init.php files). Priority 10, three args.
+if ( function_exists( 'add_filter' ) ) {
+	add_filter( 'pre_render_block', 'novablocks_flow_segments_pre_render_block', 10, 3 );
 }

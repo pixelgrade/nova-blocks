@@ -185,6 +185,30 @@ fs_assert_same( 'D3 g2 passthrough', [ 3 ], $groups[2]['indices'] );
 $groups = novablocks_compute_flow_segments( [ fs_paragraph(), fs_image( 'wide' ), fs_paragraph() ] );
 fs_assert_same( 'D4 all passthrough', [ 'passthrough', 'passthrough', 'passthrough' ], array_column( $groups, 'type' ) );
 
+// D5 edge: a trigger as the LAST block -> a single-index segment (no flow run).
+$groups = novablocks_compute_flow_segments( [
+	fs_paragraph(),                        // 0 passthrough
+	fs_image( 'right', 'nb-wrap-around' ), // 1 trigger, nothing follows
+] );
+fs_assert_same( 'D5 group count', 2, count( $groups ) );
+fs_assert_same( 'D5 g0 passthrough', 'passthrough', $groups[0]['type'] );
+fs_assert_same( 'D5 g1 single-index segment', 'segment', $groups[1]['type'] );
+fs_assert_same( 'D5 g1 indices', [ 1 ], $groups[1]['indices'] );
+
+// D6 edge: two ADJACENT triggers -> two separate single-index segments (the
+// second image is not a flow block, so it ends the first run and starts its own).
+$groups = novablocks_compute_flow_segments( [
+	fs_image( 'right', 'nb-wrap-around' ), // 0 trigger
+	fs_image( 'left', 'nb-wrap-extend' ),  // 1 trigger
+	fs_paragraph(),                        // 2 flow -> belongs to the SECOND segment
+] );
+fs_assert_same( 'D6 group count', 2, count( $groups ) );
+fs_assert_same( 'D6 g0 single-index segment', [ 0 ], $groups[0]['indices'] );
+fs_assert_same( 'D6 g0 side right', 'right', $groups[0]['side'] );
+fs_assert_same( 'D6 g1 segment [1,2]', [ 1, 2 ], $groups[1]['indices'] );
+fs_assert_same( 'D6 g1 side left', 'left', $groups[1]['side'] );
+fs_assert_same( 'D6 g1 mode extend', 'extend', $groups[1]['mode'] );
+
 /* -------------------------------------------------------------------------- *
  * E. Segment wrapper classes (side + mode signal for the SCSS).
  * -------------------------------------------------------------------------- */
@@ -238,6 +262,134 @@ fs_assert_same(
 	'[0:core/paragraph][1:core/image][2:core/paragraph]',
 	$html
 );
+
+// F3 SINGLE-RENDER: the assembler must invoke the per-block renderer EXACTLY
+// once per index — never twice (blocks with unique-ID / enqueue-once side
+// effects must not double). A counting renderer proves it.
+$render_counts = [];
+$counting = function ( $block, $index ) use ( &$render_counts ) {
+	$render_counts[ $index ] = ( isset( $render_counts[ $index ] ) ? $render_counts[ $index ] : 0 ) + 1;
+	return '[' . $index . ']';
+};
+novablocks_render_flow_segments(
+	[
+		fs_paragraph(),                        // 0 passthrough
+		fs_image( 'right', 'nb-wrap-around' ), // 1 trigger
+		fs_paragraph(),                        // 2 flow (in segment)
+		fs_paragraph(),                        // 3 flow (in segment)
+		fs_image( 'left', 'nb-wrap-extend' ),  // 4 trigger (single-index segment)
+	],
+	$counting
+);
+fs_assert_same( 'F3 every block rendered exactly once', [ 1, 1, 1, 1, 1 ], [
+	$render_counts[0] ?? 0, $render_counts[1] ?? 0, $render_counts[2] ?? 0, $render_counts[3] ?? 0, $render_counts[4] ?? 0,
+] );
+fs_assert_same( 'F3 total render calls == block count (no doubles)', 5, array_sum( $render_counts ) );
+
+/* -------------------------------------------------------------------------- *
+ * G. Render-once integration — the pre_render_block short-circuit renders each
+ *    child EXACTLY once (WP's own inner render is skipped) and returns null for
+ *    a pull-out-free area so WordPress renders it normally (byte-neutral).
+ * -------------------------------------------------------------------------- */
+
+// Minimal WP doubles for the sidecar-area wrapper render path.
+if ( ! class_exists( 'WP_Block' ) ) {
+	class WP_Block {
+		public $parsed_block;
+		public $context;
+		public $available_context;
+		public $attributes;
+		public function __construct( $parsed_block = [], $context = [] ) {
+			$this->parsed_block      = $parsed_block;
+			$this->context           = $context;
+			$this->available_context = $context;
+			$this->attributes        = isset( $parsed_block['attrs'] ) ? $parsed_block['attrs'] : [];
+		}
+	}
+}
+if ( ! function_exists( 'novablocks_merge_attributes_from_array' ) ) {
+	function novablocks_merge_attributes_from_array( $paths ) {
+		return [ 'areaName' => [ 'type' => 'string', 'default' => 'content' ] ];
+	}
+}
+if ( ! function_exists( 'novablocks_get_attributes_with_defaults' ) ) {
+	function novablocks_get_attributes_with_defaults( $attributes, $config ) {
+		foreach ( $config as $name => $def ) {
+			if ( ! array_key_exists( $name, $attributes ) ) {
+				$attributes[ $name ] = $def['default'];
+			}
+		}
+		return $attributes;
+	}
+}
+if ( ! function_exists( 'novablocks_maybe_enqueue_block_frontend_scripts' ) ) {
+	function novablocks_maybe_enqueue_block_frontend_scripts() {}
+}
+if ( ! function_exists( 'esc_attr' ) ) {
+	function esc_attr( $value ) { return htmlspecialchars( $value, ENT_QUOTES, 'UTF-8' ); }
+}
+
+// A counting core render_block() double.
+$GLOBALS['fs_render_block_calls'] = [];
+if ( ! function_exists( 'render_block' ) ) {
+	function render_block( $parsed ) {
+		$name = isset( $parsed['blockName'] ) ? $parsed['blockName'] : '?';
+		$GLOBALS['fs_render_block_calls'][] = $name;
+		return '<R:' . $name . '>';
+	}
+}
+
+require dirname( __DIR__, 2 ) . '/packages/block-library/src/blocks/sidecar-area/init.php';
+
+// G1: pull-out present -> short-circuits (non-null), each child render_block'd once.
+$GLOBALS['fs_render_block_calls'] = [];
+$content_parsed = [
+	'blockName'   => 'novablocks/sidecar-area',
+	'attrs'       => [ 'areaName' => 'content' ],
+	'innerBlocks' => [
+		fs_paragraph(),                        // 0
+		fs_image( 'right', 'nb-wrap-around' ), // 1 trigger
+		fs_paragraph(),                        // 2 flow
+	],
+];
+$parent = new WP_Block( [ 'blockName' => 'novablocks/sidecar' ], [ 'novablocks/sidebarPosition' => 'right' ] );
+$out    = novablocks_flow_segments_pre_render_block( null, $content_parsed, $parent );
+
+if ( ! is_string( $out ) || '' === $out ) {
+	fs_fail( 'G1: pull-out area must short-circuit to a rendered string' );
+}
+if ( false === strpos( (string) $out, 'nb-flow-segment' ) ) {
+	fs_fail( 'G1: short-circuit output must contain the segment wrapper' );
+}
+if ( false === strpos( (string) $out, 'nb-sidecar-area--content' ) ) {
+	fs_fail( 'G1: short-circuit output must carry the content-area classes' );
+}
+fs_assert_same( 'G1 each child render_block\'d exactly once (single render)', 3, count( $GLOBALS['fs_render_block_calls'] ) );
+$counts = array_count_values( $GLOBALS['fs_render_block_calls'] );
+fs_assert_same( 'G1 image rendered once', 1, $counts['core/image'] ?? 0 );
+fs_assert_same( 'G1 paragraphs rendered once each', 2, $counts['core/paragraph'] ?? 0 );
+
+// G2: NO pull-out -> returns null (WordPress renders normally; our code renders 0).
+$GLOBALS['fs_render_block_calls'] = [];
+$plain_parsed = [
+	'blockName'   => 'novablocks/sidecar-area',
+	'attrs'       => [ 'areaName' => 'content' ],
+	'innerBlocks' => [ fs_paragraph(), fs_image( 'wide' ), fs_paragraph() ],
+];
+$out2 = novablocks_flow_segments_pre_render_block( null, $plain_parsed, $parent );
+fs_assert_same( 'G2 pull-out-free area returns null (byte-neutral)', null, $out2 );
+fs_assert_same( 'G2 our code renders zero children on the neutral path', 0, count( $GLOBALS['fs_render_block_calls'] ) );
+
+// G3: not a content area (a rail) -> untouched (null), even with a stray wrap class.
+$rail_parsed = [
+	'blockName'   => 'novablocks/sidecar-area',
+	'attrs'       => [ 'areaName' => 'sidebar' ],
+	'innerBlocks' => [ fs_image( 'right', 'nb-wrap-around' ) ],
+];
+fs_assert_same( 'G3 rail area is never segmented', null, novablocks_flow_segments_pre_render_block( null, $rail_parsed, $parent ) );
+
+// G4: an earlier short-circuit value is respected (not overwritten).
+fs_assert_same( 'G4 respects a prior short-circuit', 'PRIOR', novablocks_flow_segments_pre_render_block( 'PRIOR', $content_parsed, $parent ) );
 
 if ( $failures ) {
 	foreach ( $failures as $failure ) {

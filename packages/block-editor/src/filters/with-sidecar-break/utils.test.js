@@ -8,6 +8,8 @@ const {
 	replaceSidecarBreakClass,
 	getSidecarWrapClass,
 	replaceSidecarWrapClass,
+	isSidecarWrapActive,
+	getSidecarLayoutControlVisibility,
 } = require( './utils' );
 
 describe( 'sidecar break eligibility (control gating)', () => {
@@ -137,5 +139,47 @@ describe( 'sidecar wrap className attribute sync', () => {
 		const withAround = replaceSidecarWrapClass( original, 'around' );
 		const withExtend = replaceSidecarWrapClass( withAround, 'extend' );
 		expect( replaceSidecarWrapClass( withExtend, 'none' ) ).toBe( original );
+	} );
+} );
+
+describe( 'wrap-wins control visibility (product ruling 2026-07-22)', () => {
+	const inContent = { name: 'core/image', inSidecarContent: true };
+
+	it( 'shows both controls for an aligned image in a sidecar with no wrap', () => {
+		const v = getSidecarLayoutControlVisibility( { ...inContent, attributes: { align: 'right' } } );
+		expect( v ).toEqual( { showBreak: true, showWrap: true } );
+	} );
+
+	it( 'HIDES the break control when a wrap placement is active (wrap wins)', () => {
+		expect( getSidecarLayoutControlVisibility( { ...inContent, attributes: { align: 'right', sidecarWrap: 'around' } } ) )
+			.toEqual( { showBreak: false, showWrap: true } );
+		expect( getSidecarLayoutControlVisibility( { ...inContent, attributes: { align: 'left', sidecarWrap: 'extend' } } ) )
+			.toEqual( { showBreak: false, showWrap: true } );
+	} );
+
+	it( 'wrap wins even over a stranded break decision (no new contradiction authorable)', () => {
+		const v = getSidecarLayoutControlVisibility( { ...inContent, attributes: { align: 'right', sidecarBreak: 'never', sidecarWrap: 'around' } } );
+		expect( v.showBreak ).toBe( false );
+		expect( v.showWrap ).toBe( true );
+	} );
+
+	it( 'the break control returns the moment wrap goes back to none (no data loss)', () => {
+		const v = getSidecarLayoutControlVisibility( { ...inContent, attributes: { align: 'right', sidecarBreak: 'never', sidecarWrap: 'none' } } );
+		expect( v.showBreak ).toBe( true );
+	} );
+
+	it( 'isSidecarWrapActive tracks the wrap enum', () => {
+		expect( isSidecarWrapActive( { sidecarWrap: 'around' } ) ).toBe( true );
+		expect( isSidecarWrapActive( { sidecarWrap: 'extend' } ) ).toBe( true );
+		expect( isSidecarWrapActive( { sidecarWrap: 'none' } ) ).toBe( false );
+		expect( isSidecarWrapActive( {} ) ).toBe( false );
+	} );
+
+	it( 'markup MAY still carry both markers (coexistence) — the UI, not the serializer, prevents new contradictions', () => {
+		// The class serializer does not fight coexisting markers; wrap-wins is a
+		// UI-level gate (getSidecarLayoutControlVisibility) plus the CSS/JS float
+		// ownership, not a class-stripping rule.
+		expect( replaceSidecarWrapClass( 'alignright nb-break-never', 'around' ) ).toBe( 'alignright nb-break-never nb-wrap-around' );
+		expect( replaceSidecarBreakClass( 'alignright nb-wrap-around', 'never' ) ).toBe( 'alignright nb-wrap-around nb-break-never' );
 	} );
 } );

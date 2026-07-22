@@ -140,6 +140,27 @@ describe( 'sidecar break control skip predicate', () => {
 		expect( never.classList.contains( 'break-align-left' ) ).toBe( false );
 		expect( never.classList.contains( 'break-align-right' ) ).toBe( false );
 	} );
+
+	// Wrap-wins (Task 4b.2): a text-wrap pull-out owns its own geometry (a float
+	// inside a .nb-flow-segment on the frontend), so measurement must treat it as
+	// DECIDED and never add break-align-* grid classes to it.
+	it( 'skips text-wrap pull-out blocks (nb-wrap-around / nb-wrap-extend)', () => {
+		expect( shouldMeasureBreakClasses( makeBlock( 'wp-block-image alignright nb-wrap-around' ) ) ).toBe( false );
+		expect( shouldMeasureBreakClasses( makeBlock( 'wp-block-image alignleft nb-wrap-extend' ) ) ).toBe( false );
+	} );
+
+	it( 'never adds measured break classes to a wrap pull-out (wrap wins over measurement)', () => {
+		const { content } = makeSidecar( { railChildren: 1 } );
+		const wrap = makeBlock( 'wp-block-image alignright nb-wrap-around' );
+
+		setRect( wrap, { top: 500, bottom: 700, left: 0, right: 800, width: 800, height: 200 } );
+		content.appendChild( wrap );
+
+		measureBreakClassesPass( [ wrap ], { skipCssCoveredRails: false } );
+
+		expect( wrap.classList.contains( 'break-align-left' ) ).toBe( false );
+		expect( wrap.classList.contains( 'break-align-right' ) ).toBe( false );
+	} );
 } );
 
 describe( 'frontend :has()-covered-rail skip (Task 3.4)', () => {

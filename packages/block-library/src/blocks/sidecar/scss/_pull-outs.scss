@@ -88,3 +88,13 @@
     }
   }
 }
+
+// Mobile safety: below `lap` the Sidecar collapses to one column and the float
+// rules above do NOT apply, so an `is-resized` pull-out keeps its authored pixel
+// width (e.g. 420px) and would overflow a 375px viewport. Cap it to the column.
+@include below(lap) {
+  .nb-flow-segment > :first-child img {
+    max-width: 100%;
+    height: auto;
+  }
+}

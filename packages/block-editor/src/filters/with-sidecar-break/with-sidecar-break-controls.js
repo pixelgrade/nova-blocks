@@ -15,6 +15,7 @@ import {
 	isDirectSidecarContentChild,
 	replaceSidecarBreakClass,
 	replaceSidecarWrapClass,
+	getSidecarLayoutControlVisibility,
 } from './utils';
 
 const SidecarBreakControls = ( { attributes, setAttributes, showBreak, showWrap } ) => {
@@ -90,8 +91,6 @@ const withSidecarBreakControls = createHigherOrderComponent( ( OriginalComponent
 		const { name, attributes, clientId } = props;
 		const breakEligible = isSidecarBreakEligible( name, attributes );
 		const wrapEligible = isSidecarWrapEligible( name, attributes );
-		const hasActiveBreak = [ 'always', 'never' ].includes( attributes?.sidecarBreak );
-		const hasActiveWrap = [ 'around', 'extend' ].includes( attributes?.sidecarWrap );
 
 		const inSidecarContent = useSelect( ( select ) => {
 			if ( ! breakEligible && ! wrapEligible ) {
@@ -107,8 +106,10 @@ const withSidecarBreakControls = createHigherOrderComponent( ( OriginalComponent
 			} );
 		}, [ clientId, breakEligible, wrapEligible ] );
 
-		const showBreak = ( breakEligible && inSidecarContent ) || hasActiveBreak;
-		const showWrap = ( wrapEligible && inSidecarContent ) || hasActiveWrap;
+		// WRAP-WINS: when a wrap placement is active the break control is hidden
+		// (see getSidecarLayoutControlVisibility). The sidecarBreak attribute is
+		// left untouched; the control returns when wrap goes back to none.
+		const { showBreak, showWrap } = getSidecarLayoutControlVisibility( { name, attributes, inSidecarContent } );
 		const showPanel = showBreak || showWrap;
 
 		return (
