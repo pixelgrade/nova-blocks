@@ -190,7 +190,9 @@ Remove `--body-font-size`/`--offset-addon` from `scss/_mixins.scss`; move `:root
 
 ## Phase 4 — Three areas + Layout Recipes
 
-### Task 4.1: Explicit area names with legacy mapping
+### Task 4.1: Explicit area names with legacy mapping — DONE as built (worktree `f7eef766`)
+
+As-built record (supersedes the step wording below): see the design doc "Block model and Layout Recipes" → "As built — Task 4.1" for the full account. Summary: legacy `sidebar` → side via WP block context (`providesContext`/`usesContext`), with an editor `useSelect` parent-read fallback and a shared PHP/JS resolver (legacy default side = right); rail-absence classes derived from the ACTUAL areas in both runtimes (three-area = neither absence class), two-area byte-identical; SCSS content-narrowing/rail-placement/layer-2/`nb-break-never` all rail-presence + per-side; the subgrid pass-through gate and editor desktop-preview pin re-keyed to the both-rails-absent signal; the carried per-rail fix landed in `break-align.js` with tests; a minimal three-area variation added. Contract `tests/php/sidecar-render-contract.php` extended; `--diff baseline task41` exits 0 (zero new diffs). No migration.
 
 Carried from the 3.4 review: `shouldSkipForCssCoveredRails` and `getAdjacentSidebarBlocks` both take the FIRST rail child — under the three-area model (left AND right rails) both must go per-rail, or an empty first rail + occupied second rail skips incorrectly / misses obstacles.
 
