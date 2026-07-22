@@ -248,6 +248,15 @@ All preset UIs must run through `packages/block-editor/src/preset-engine/`. Full
 - Every definition in a family must declare the SAME `managedAttributes` set — it is the family's complete capability domain.
 - Structural attributes may be managed only when every definition writes an explicit value; never clear structure implicitly.
 
+## Sidecar Layout Engine (modernized 2026-07-22; full contract in docs/plans/2026-07-21-sidecar-subgrid-modernization-design.md)
+
+- Two grid roles: `nb-layout-root` declares the 13-track editorial grid; track-neutral containers pass through via `grid-template-columns: subgrid` inside `@supports` (fallback = identical re-declared math). Positioned sidecars stay track-declaring. Never add padding/width/margin to a grid container in the chain — override track vars instead.
+- The container list is generated from `packages/utils/src/layout-containers.js` (single source; SCSS twin is generated + test-pinned). Edit only there.
+- Break decisions layer cheapest-first: PHP rail-absence classes → `:has()` empty-rail CSS → measured `auto`. Per-block controls: Extend over sidebar (Auto/Always/Never) and Text wrap (none/around/extend); wrap owns geometry over break; marker classes serialize via the className attribute — defaults serialize NOTHING (byte-identity; no deprecations needed).
+- Rails are inner-block AREAS (`sidebar-left`/`sidebar-right`; legacy `sidebar` maps at runtime from the parent position — never migrate content). Geometry is presence-driven; the `sidecar-layout` recipes family curates it (structure stays OUT of the managed patch; structure-changing applies use one atomic `replaceBlock` for one-step undo).
+- Boxed groups (background/color-signal) are containers, not escape vehicles; the layout grid is gated off inside header rows (`display:block` + `min-width:0` are load-bearing).
+- Verify layout changes with the sidecar-lab harness (`bin/sidecar-lab/`) against the canonical baseline (`.ai/sidecar-lab/runs/`, see README): a change ships only with a clean or fully-annotated diff.
+
 ## Cards Collection Hover Border Integration
 
 - The Pile-style hover frame for stacked Cards Collection blocks is driven by the `overlayFilterHoverBorderSize` attribute under `Overlay Filter`, not by page transitions.
