@@ -65,7 +65,7 @@ Verified live in both editors × Desktop/Tablet/Mobile at a 1020px canvas (brows
 
 ## Block model and Layout Recipes
 
-- `sidecar-area` gains `areaName: sidebar-left | sidebar-right`. Legacy `areaName: sidebar` remains valid forever: PHP render and the editor map it to a side from the parent's `sidebarPosition` at runtime. No content migration.
+- `sidecar-area` gains `areaName: sidebar-left | sidebar-right`. Legacy `areaName: sidebar` remains valid forever: PHP render and the editor map it to a side from the parent's `sidebarPosition` at runtime. No content migration. **Back-compat caveat (4.1 review):** the one edge outside the byte-identical envelope is pre-existing content with `sidebarPosition:none` PLUS a retained legacy sidebar area (reachable only by switching the radio to "none" while keeping the area) — old engine hid it, presence-driven engine renders it as a right rail. Low likelihood, arguably more correct (a present sidebar becomes visible); a fixture joins the matrix at the 4b.3 re-baseline.
 - The Sidecar block accepts up to three areas: optional left rail, content, optional right rail. Existing two-area content is untouched.
 - Geometry is a Preset Engine family (`sidecar-layout`). Managed attributes: rail existence and widths, asymmetric gutter offsets, sticky, content/rail font scales. Per the engine contract: every recipe declares the full managed set, the active recipe is derived by attribute comparison (never stored), applying is one `setAttributes()` patch, changed published recipes get new versions.
 - Launch recipes: **Centered**, **Right Rail**, **Left Rail**, **Hive** (narrow meta rail · content · rail — the classic Hive magazine layout in one block), **Offset Editorial** (asymmetric empty gutter with no left area).
