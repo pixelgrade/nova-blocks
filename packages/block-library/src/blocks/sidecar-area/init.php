@@ -16,6 +16,42 @@ function novablocks_get_sidecar_area_attributes() {
 
 }
 
+if ( ! function_exists( 'novablocks_resolve_sidecar_area_side' ) ) {
+
+	/**
+	 * Resolve a Sidecar Area to its rail side (Task 4.1, three-area model).
+	 *
+	 * Explicit per-side names (`sidebar-left` / `sidebar-right`) win directly.
+	 * The legacy `sidebar` name maps to a side at RUNTIME from the parent
+	 * Sidecar's `sidebarPosition` (delivered through block context), so no
+	 * saved content ever needs migrating. Anything else (content or an unknown
+	 * name) has no rail side.
+	 *
+	 * @param string $area_name        The area's `areaName` attribute.
+	 * @param string $sidebar_position Parent Sidecar `sidebarPosition`.
+	 *
+	 * @return string 'left', 'right', or '' (no rail side).
+	 */
+	function novablocks_resolve_sidecar_area_side( $area_name, $sidebar_position = '' ) {
+
+		if ( 'sidebar-left' === $area_name ) {
+			return 'left';
+		}
+
+		if ( 'sidebar-right' === $area_name ) {
+			return 'right';
+		}
+
+		if ( 'sidebar' === $area_name ) {
+			// Legacy single rail: the side comes from the parent position;
+			// the historical default (and the SCSS default) is the right rail.
+			return 'left' === $sidebar_position ? 'left' : 'right';
+		}
+
+		return '';
+	}
+}
+
 if ( ! function_exists( 'novablocks_render_sidecar_area_block' ) ) {
 
 	/**
@@ -37,13 +73,30 @@ if ( ! function_exists( 'novablocks_render_sidecar_area_block' ) ) {
 		$attributes_config = novablocks_get_sidecar_area_attributes();
 		$attributes        = novablocks_get_attributes_with_defaults( $attributes, $attributes_config );
 
-		$classes = [
-			'nb-sidecar-area',
-			'nb-sidecar-area--' . $attributes['areaName'],
-		];
+		$area_name        = $attributes['areaName'];
+		$sidebar_position = isset( $block->context['novablocks/sidebarPosition'] )
+			? $block->context['novablocks/sidebarPosition']
+			: '';
 
-		if ( $attributes['areaName'] === 'content' ) {
+		$classes = [ 'nb-sidecar-area' ];
+
+		if ( 'content' === $area_name ) {
+			$classes[] = 'nb-sidecar-area--content';
 			$classes[] = 'nb-content-layout-grid';
+		} else {
+			$side = novablocks_resolve_sidecar_area_side( $area_name, $sidebar_position );
+
+			if ( '' !== $side ) {
+				// Emit the resolved per-side class AND keep the legacy generic
+				// `nb-sidecar-area--sidebar` alongside it: the frontend/editor
+				// styling and the break-align JS still key some rules on the
+				// generic class during the two-area -> three-area transition.
+				$classes[] = 'nb-sidecar-area--sidebar';
+				$classes[] = 'nb-sidecar-area--sidebar-' . $side;
+			} else {
+				// Unknown area name: preserve the raw class for forward-compat.
+				$classes[] = 'nb-sidecar-area--' . $area_name;
+			}
 		}
 
 		return '<div class="' . esc_attr( join( ' ', $classes ) ) . '">' . $content . '</div>';

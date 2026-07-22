@@ -183,8 +183,14 @@
 // card-internal inner container itself stays a ROOT via the compatibility
 // nb-content-layout-grid mixin and is deliberately absent from
 // $nb-layout-grid-parents' passthrough consumers.)
+// A rail-less Sidecar is track-neutral (no rail budgets to resize), so it may
+// pass through. Task 4.1: the signal is BOTH rails absent (the server-known
+// presence classes), not `sidebarPosition:none` — a three-area sidecar (both
+// rails) must stay track-declaring regardless of its position value, and a
+// legacy sidebar-none sidecar carries both absence classes so this is
+// byte-identical for two-area content.
 :is(
-  .nb-sidecar--sidebar-none,
+  .nb-sidecar--no-left-rail.nb-sidecar--no-right-rail,
   .nb-sidecar-area--content,
   .wp-block-query,
   .nb-supernova

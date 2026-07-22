@@ -52,10 +52,15 @@ export const shouldSkipForCssCoveredRails = ( block ) => {
 
   while ( sidecar ) {
     insideSidecar = true;
-    const rail = Array.from( sidecar.children ).find( child => child.classList.contains( 'nb-sidecar-area--sidebar' ) );
+    // PER-RAIL (Task 4.1): a three-area sidecar has BOTH a left and a right
+    // rail. Check EVERY rail — if ANY existing rail has element children the
+    // CSS layers (layer-1 absence / layer-2 :has() empty) do not fully cover
+    // this block and it must be measured. Taking only the first rail child
+    // would falsely skip when an empty first rail sits beside an occupied
+    // second rail.
+    const rails = Array.from( sidecar.children ).filter( child => child.classList.contains( 'nb-sidecar-area--sidebar' ) );
 
-    if ( rail && rail.firstElementChild ) {
-      // A rail with element children — the CSS layers do not cover it.
+    if ( rails.some( rail => rail.firstElementChild ) ) {
       return false;
     }
 
@@ -72,18 +77,25 @@ export const getAdjacentSidebarBlocks = ( block, sidebarBlocks = [] ) => {
     return sidebarBlocks;
   }
 
-  const sidebar = Array.from( sidecar.children ).filter( child => child.classList.contains( 'nb-sidecar-area--sidebar' ) );
+  const rails = Array.from( sidecar.children ).filter( child => child.classList.contains( 'nb-sidecar-area--sidebar' ) );
 
-  if ( ! sidebar.length ) {
+  if ( ! rails.length ) {
     return sidebarBlocks;
   }
 
-  const newSidebarBlocks = Array.from( sidebar[0].children ).map( element => {
-    return {
-      element,
-      side: sidecar.classList.contains( 'nb-sidecar--sidebar-left' ) ? 'left' : 'right'
-    }
-  } );
+  // PER-RAIL (Task 4.1): collect obstacles from EVERY rail, and take each
+  // block's side from the RAIL's own resolved class — a three-area sidecar has
+  // both a left and a right rail under one `sidebarPosition`, so deriving the
+  // side from the sidecar's position class would mislabel one rail's blocks.
+  // The sidecar-position fallback covers any transitional rail that carries
+  // only the legacy generic class.
+  const newSidebarBlocks = rails.reduce( ( acc, rail ) => {
+    const side = rail.classList.contains( 'nb-sidecar-area--sidebar-left' ) ? 'left'
+      : rail.classList.contains( 'nb-sidecar-area--sidebar-right' ) ? 'right'
+      : ( sidecar.classList.contains( 'nb-sidecar--sidebar-left' ) ? 'left' : 'right' );
+
+    return acc.concat( Array.from( rail.children ).map( element => ( { element, side } ) ) );
+  }, [] );
 
   return getAdjacentSidebarBlocks( sidecar.parentNode, sidebarBlocks.concat( newSidebarBlocks ) );
 };

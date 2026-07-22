@@ -17,6 +17,7 @@ jest.mock( './index', () => ( {
 import {
 	shouldMeasureBreakClasses,
 	shouldSkipForCssCoveredRails,
+	getAdjacentSidebarBlocks,
 	computePulloutRowSpan,
 	measureBreakClassesPass,
 	runBreakAlignment,
@@ -72,6 +73,44 @@ const makeSidecar = ( { position = 'right', railChildren = 0 } = {} ) => {
 	sidecar.appendChild( rail );
 	document.body.appendChild( sidecar );
 	return { sidecar, content, rail };
+};
+
+/**
+ * Builds a THREE-area sidecar (left rail, content, right rail) with resolved
+ * per-side rail classes — the Task 4.1 block model. `position` is deliberately
+ * `none` by default: a three-area sidecar cannot express both rails through a
+ * single `sidebarPosition`, so the side must come from each rail's own class.
+ */
+const makeThreeAreaSidecar = ( { leftChildren = 0, rightChildren = 0, position = 'none' } = {} ) => {
+	const sidecar = document.createElement( 'div' );
+	sidecar.className = `nb-sidecar nb-sidecar--sidebar-${ position } nb-content-layout-grid`;
+
+	const leftRail = document.createElement( 'div' );
+	leftRail.className = 'nb-sidecar-area nb-sidecar-area--sidebar nb-sidecar-area--sidebar-left';
+	leftRail.appendChild( document.createTextNode( '\n' ) );
+
+	const content = document.createElement( 'div' );
+	content.className = 'nb-sidecar-area nb-sidecar-area--content nb-content-layout-grid';
+
+	const rightRail = document.createElement( 'div' );
+	rightRail.className = 'nb-sidecar-area nb-sidecar-area--sidebar nb-sidecar-area--sidebar-right';
+	rightRail.appendChild( document.createTextNode( '\n' ) );
+
+	const fill = ( rail, count, x ) => {
+		for ( let i = 0; i < count; i++ ) {
+			const p = document.createElement( 'p' );
+			setRect( p, { top: i * 100, bottom: i * 100 + 90, left: x, right: x + 200, width: 200, height: 90 } );
+			rail.appendChild( p );
+		}
+	};
+	fill( leftRail, leftChildren, 0 );
+	fill( rightRail, rightChildren, 900 );
+
+	sidecar.appendChild( leftRail );
+	sidecar.appendChild( content );
+	sidecar.appendChild( rightRail );
+	document.body.appendChild( sidecar );
+	return { sidecar, leftRail, content, rightRail };
 };
 
 describe( 'sidecar break control skip predicate', () => {
@@ -146,6 +185,24 @@ describe( 'frontend :has()-covered-rail skip (Task 3.4)', () => {
 		expect( shouldSkipForCssCoveredRails( pullout ) ).toBe( false );
 	} );
 
+	// Task 4.1 per-rail carry-over: an empty first rail beside an occupied
+	// second rail must NOT falsely skip (the old first-child check did).
+	it( 'does NOT skip when an empty left rail sits beside an occupied right rail (three-area)', () => {
+		const { content } = makeThreeAreaSidecar( { leftChildren: 0, rightChildren: 2 } );
+		const wide = makeBlock( 'wp-block-image alignwide' );
+		content.appendChild( wide );
+
+		expect( shouldSkipForCssCoveredRails( wide ) ).toBe( false );
+	} );
+
+	it( 'skips when BOTH rails of a three-area sidecar are element-empty', () => {
+		const { content } = makeThreeAreaSidecar( { leftChildren: 0, rightChildren: 0 } );
+		const wide = makeBlock( 'wp-block-image alignwide' );
+		content.appendChild( wide );
+
+		expect( shouldSkipForCssCoveredRails( wide ) ).toBe( true );
+	} );
+
 	it( 'is honored by the engine only when the frontend option is on', () => {
 		const { content } = makeSidecar( { railChildren: 0 } );
 		const wide = makeBlock( 'wp-block-image alignwide' );
@@ -159,6 +216,43 @@ describe( 'frontend :has()-covered-rail skip (Task 3.4)', () => {
 		measureBreakClassesPass( [ wide ], { skipCssCoveredRails: false } );
 		expect( wide.classList.contains( 'break-align-left' ) ).toBe( true );
 		expect( wide.classList.contains( 'break-align-right' ) ).toBe( true );
+	} );
+} );
+
+describe( 'per-rail obstacle collection (Task 4.1)', () => {
+	it( 'labels obstacles by each rail\'s own resolved side, not the sidecar position', () => {
+		const { content, rightRail } = makeThreeAreaSidecar( { leftChildren: 1, rightChildren: 1, position: 'none' } );
+		const wide = makeBlock( 'wp-block-image alignwide' );
+		content.appendChild( wide );
+
+		const obstacles = getAdjacentSidebarBlocks( wide );
+
+		// Both rails contribute, each labeled by its OWN class — even though
+		// the sidecar carries no position class (a three-area sidecar cannot
+		// encode both rails through a single sidebarPosition).
+		expect( obstacles.map( o => o.side ).sort() ).toEqual( [ 'left', 'right' ] );
+		expect( obstacles.find( o => o.element === rightRail.firstElementChild ).side ).toBe( 'right' );
+	} );
+
+	it( 'collects obstacles from BOTH rails (a single-rail read would miss the second)', () => {
+		const { content } = makeThreeAreaSidecar( { leftChildren: 2, rightChildren: 3 } );
+		const wide = makeBlock( 'wp-block-image alignwide' );
+		content.appendChild( wide );
+
+		const obstacles = getAdjacentSidebarBlocks( wide );
+		expect( obstacles.length ).toBe( 5 );
+		expect( obstacles.filter( o => o.side === 'left' ).length ).toBe( 2 );
+		expect( obstacles.filter( o => o.side === 'right' ).length ).toBe( 3 );
+	} );
+
+	it( 'still derives the side from the sidecar position for a legacy generic-only rail', () => {
+		const { content } = makeSidecar( { position: 'left', railChildren: 1 } );
+		const wide = makeBlock( 'wp-block-image alignwide' );
+		content.appendChild( wide );
+
+		const obstacles = getAdjacentSidebarBlocks( wide );
+		expect( obstacles.length ).toBe( 1 );
+		expect( obstacles[ 0 ].side ).toBe( 'left' );
 	} );
 } );
 

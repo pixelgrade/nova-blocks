@@ -27,6 +27,23 @@ const variations = [
     ],
     scope: [ 'block' ],
   }, {
+    // Task 4.1 (three-area block model): optional left rail, content, optional
+    // right rail. Uses EXPLICIT per-side area names so a single sidecar carries
+    // both rails (the layout is driven by rail presence, not sidebarPosition).
+    // The curated recipe picker that replaces these raw variations is Task 4.2.
+    name: 'both',
+    title: __( 'Left Rail, Content, and Right Rail', '__plugin_txtd' ),
+    icon: icons.sidebarBoth,
+    attributes: {
+      sidebarPosition: 'none',
+    },
+    innerBlocks: [
+      [ 'novablocks/sidecar-area', { areaName: 'sidebar-left' } ],
+      [ 'novablocks/sidecar-area', { areaName: 'content' } ],
+      [ 'novablocks/sidecar-area', { areaName: 'sidebar-right' } ],
+    ],
+    scope: [ 'block' ],
+  }, {
     name: 'none',
     isDefault: true,
     title: __( 'Centered Content with no Sidebar', '__plugin_txtd' ),
