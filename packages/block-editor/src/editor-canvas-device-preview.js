@@ -69,23 +69,28 @@ function getCanvasWrapper() {
 }
 
 let lastDevice = null;
+let lastWrapper = null;
 
 function apply() {
 	const device = getDeviceType();
 
 	// Edge-triggered: touch the DOM only when the preview device actually
-	// changes (a rare, explicit user action), never on every store tick. This
-	// keeps the subscription off the DOM-recalculation path (napkin: Editor
-	// Performance — no wp.data.subscribe layout storms).
+	// changes, never on every store tick (napkin: Editor Performance — no
+	// wp.data.subscribe layout storms). Two reconciliation rules keep the
+	// edge detection from stranding state:
+	// - lastDevice advances only AFTER a successful write, so a tick where
+	//   the canvas is mid-mount retries instead of skipping forever;
+	// - a non-Desktop preview re-stamps when its wrapper got replaced by a
+	//   canvas remount (cheap isConnected read; Desktop needs nothing — the
+	//   absent attribute IS the Desktop state on any fresh canvas).
 	if ( device === lastDevice ) {
-		return;
+		if ( device === 'Desktop' || ( lastWrapper && lastWrapper.isConnected ) ) {
+			return;
+		}
 	}
-	lastDevice = device;
 
 	const wrapper = getCanvasWrapper();
 	if ( ! wrapper ) {
-		// Canvas not mounted yet. Desktop (the default) needs no attribute; the
-		// next device change re-applies once the canvas exists.
 		return;
 	}
 
@@ -94,10 +99,14 @@ function apply() {
 	} else {
 		wrapper.setAttribute( ATTR, device );
 	}
+
+	lastDevice = device;
+	lastWrapper = wrapper;
 }
 
 if ( typeof window !== 'undefined' && ! window.__novablocksDevicePreviewBridge ) {
 	window.__novablocksDevicePreviewBridge = true;
-	subscribe( apply );
+	// Store-scoped: only core/editor state changes invoke the callback.
+	subscribe( apply, 'core/editor' );
 	apply();
 }
