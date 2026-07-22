@@ -1,0 +1,100 @@
+// Sidecar pull-outs (Task 4b.1 / 4b.2): float-based text wrap.
+//
+// `lib/flow-segments.php` groups a wrap-opted aligned block + its trailing run
+// of body copy into one `.nb-flow-segment` div. The segment is a plain content
+// grid child, so it spans the SAME body-edge range as surrounding body copy
+// (it inherits `grid-column: var(--block-content-start)/var(--block-content-end)`
+// from the content grid's `> *` rule — no special span needed). Inside it the
+// pull-out (always the segment's first child) floats, and the copy wraps beside
+// AND under it — the thing a grid item can never do.
+//
+// Two placements, both float-based (design gate closed 2026-07-22):
+// - Content Around: half-column float at the block's own side.
+// - Extend pull-out: a wider float pulled OVER the rail toward the wide edge via
+//   a negative outer margin derived from the TRACK VARS (rail width + rail gap,
+//   never hardcoded px) — the classic Hive move.
+//
+// Only above `lap`: below it the whole Sidecar collapses to one column, so a
+// float would fight the stack; the segment then just renders image-over-copy.
+@include above(lap) {
+
+  .nb-flow-segment {
+    // Establish a BFC so the float is contained within the segment's box for
+    // sizing (the next content block starts below it, never overlapping) while
+    // still allowing the Extend negative margin to paint over the rail —
+    // flow-root contains floats without clipping overflow.
+    display: flow-root;
+
+    // Anima sets `clear: both` on every `[class*=wp-block]` (common.css, and
+    // WP 7 tags core paragraphs `.wp-block-paragraph`); inside a segment that
+    // drops the copy below the float and silently kills the wrap. Anima's
+    // selector is (0,1,0), and it loads after this stylesheet, so a plain
+    // `.nb-flow-segment > *` (also (0,1,0)) loses on source order — the extra
+    // `.nb-sidecar-area--content` ancestor (a segment only ever renders there)
+    // raises this to (0,2,0) so it wins unconditionally.
+    .nb-sidecar-area--content & > * {
+      clear: none;
+    }
+
+    // The pull-out trigger is always the first child. `is-resized` images pin
+    // the <img> to an authored pixel width — override it to fill the float box
+    // so the placement, not the resize handle, decides the width.
+    > :first-child {
+      max-width: none;
+      margin-top: 0;
+
+      img {
+        width: 100%;
+        height: auto;
+      }
+    }
+  }
+
+  // Float side comes from the segment's resolved side class. Inner + bottom
+  // gap keeps the wrapped copy off the image.
+  .nb-flow-segment--right > :first-child {
+    float: right;
+    margin-left: var(--nb-sidecar-gap);
+    margin-bottom: var(--nb-sidecar-gap);
+  }
+
+  .nb-flow-segment--left > :first-child {
+    float: left;
+    margin-right: var(--nb-sidecar-gap);
+    margin-bottom: var(--nb-sidecar-gap);
+  }
+
+  // Content Around: bounded half-column float, no rail escape.
+  .nb-flow-segment--around > :first-child {
+    width: 50%;
+  }
+
+  // Extend pull-out: a slightly wider float whose OUTER edge is pulled over the
+  // rail toward the wide edge. The negative margin = that side's rail width +
+  // rail gap, both read from the derived track vars the content grid already
+  // resolves per container (never px). "at/near" the wide edge: the frs free
+  // track between the rail and the content column is 1fr and not addressable,
+  // so the edge lands over the rail, at or just inside the wide line.
+  .nb-flow-segment--extend {
+
+    &.nb-flow-segment--right > :first-child {
+      width: 52%;
+      margin-right: calc(-1 * (var(--nb-layout-rail-right) + var(--nb-sidecar-sidebar-right-gap)));
+    }
+
+    &.nb-flow-segment--left > :first-child {
+      width: 52%;
+      margin-left: calc(-1 * (var(--nb-layout-rail-left) + var(--nb-sidecar-sidebar-left-gap)));
+    }
+  }
+}
+
+// Mobile safety: below `lap` the Sidecar collapses to one column and the float
+// rules above do NOT apply, so an `is-resized` pull-out keeps its authored pixel
+// width (e.g. 420px) and would overflow a 375px viewport. Cap it to the column.
+@include below(lap) {
+  .nb-flow-segment > :first-child img {
+    max-width: 100%;
+    height: auto;
+  }
+}

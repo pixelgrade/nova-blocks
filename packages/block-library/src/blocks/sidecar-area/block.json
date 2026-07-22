@@ -16,7 +16,9 @@
 	],
 	"textdomain": "nova-blocks",
 	"attributes": {},
-	"usesContext": [],
+	"usesContext": [
+		"novablocks/sidebarPosition"
+	],
 	"supports": {
 		"html": false,
 		"reusable": false

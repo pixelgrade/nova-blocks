@@ -1,4 +1,50 @@
 @import 'scss/mixins';
+@import 'scss/desktop-layout';
+
+// ===== Task 3.0b: editor canvas-width compensation =====
+// The editor canvas iframe is narrower than the frontend viewport (editor chrome
+// + inspector sidebars), and for the Tablet/Mobile device previews WordPress
+// RESIZES the iframe to 780/360px. All three cases fire the below(`lap`) media
+// query INSIDE the iframe and collapse the Sidecar to one column — including
+// under the Desktop preview, where the desktop layout must stay previewable
+// (George's directive). Frontend is untouched: editor-styles.css never loads
+// on the front end.
+//
+// A device-preview signal is REQUIRED here — proven live: a Desktop preview at
+// an ~780px canvas is byte-indistinguishable inside the iframe from a Tablet
+// preview at 780px (identical iframe width, identical body classes, no
+// device class anywhere in the canvas document). So a tiny JS bridge
+// (packages/block-editor/src/editor-canvas-device-preview.js) reflects
+// core/editor's deviceType onto the canvas `.editor-styles-wrapper` as
+// `data-nb-device-preview`. The attribute is ABSENT for Desktop (the on-load
+// default), so this pin also holds before the bridge first writes.
+$nb-desktop-preview: '.editor-styles-wrapper:not([data-nb-device-preview="Tablet"]):not([data-nb-device-preview="Mobile"])';
+
+#{$nb-desktop-preview} {
+
+  // Re-declare the desktop coordinate template on railed Sidecars only.
+  // Rail-less Sidecars (both rails absent) stay single-column and keep their
+  // subgrid pass-through; a railed Sidecar's content area follows this template
+  // via its subgrid inheritance, so it does not need its own template
+  // re-declared. Task 4.1: gate on rail presence (both-absent), not
+  // `sidebarPosition:none`, so a three-area sidecar keeps its multi-column
+  // preview regardless of position value.
+  .nb-sidecar:not(.nb-sidecar--no-left-rail.nb-sidecar--no-right-rail) {
+    @include nb-layout-desktop-template-columns;
+  }
+
+  // Restore desktop child placement (defeats any below(`lap`) collapse of the
+  // area/content spans) on the Sidecar (its areas) and the content area (the
+  // content blocks plus their wide/full escapes).
+  .nb-sidecar:not(.nb-sidecar--no-left-rail.nb-sidecar--no-right-rail),
+  .nb-sidecar:not(.nb-sidecar--no-left-rail.nb-sidecar--no-right-rail) > .nb-sidecar-area--content {
+    @include nb-layout-desktop-content-columns;
+  }
+
+  // Areas side by side (grid-row 1), per-position content/rail spans, and the
+  // zero-JS break layers — the exact rules the frontend applies above `lap`.
+  @include nb-sidecar-desktop-layout;
+}
 
 .block-editor-block-list__layout.is-root-container {
 

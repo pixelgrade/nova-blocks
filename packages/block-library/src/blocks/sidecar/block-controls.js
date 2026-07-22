@@ -4,6 +4,7 @@
 import { __ } from '@wordpress/i18n';
 import { BlockControls } from '@wordpress/block-editor';
 import { ToolbarGroup, ToolbarButton } from '@wordpress/components';
+import { useInnerBlocks } from '@novablocks/block-editor';
 
 const SIDEBAR_ALIGNMENTS_CONTROLS = {
   left: {
@@ -18,10 +19,25 @@ const SIDEBAR_ALIGNMENTS_CONTROLS = {
 
 const SidecarBlockControls = function( props ) {
 
-  const { attributes, setAttributes } = props;
+  const { attributes, setAttributes, clientId } = props;
   const { sidebarPosition } = attributes;
 
-  if ( sidebarPosition === 'none' ) {
+  const innerBlocks = useInnerBlocks( clientId );
+
+  // The toolbar quick-flip writes ONLY sidebarPosition, which moves a legacy
+  // `sidebar` rail (its side is resolved from position) but NOT an explicit-named
+  // rail (`sidebar-left`/`sidebar-right`, placed by its own class). On an explicit
+  // rail it would leave the rail put while contradicting its class and dropping to
+  // Custom — so it is shown ONLY for legacy `sidebar`-area content, where it still
+  // works exactly as before. Explicit rails (recipe-created or three-area) change
+  // side through the Layout Recipe picker instead. (Task 4.2 review.)
+  const hasExplicitRail = innerBlocks.some(
+    ( block ) =>
+      block.name === 'novablocks/sidecar-area' &&
+      [ 'sidebar-left', 'sidebar-right' ].includes( block.attributes?.areaName )
+  );
+
+  if ( sidebarPosition === 'none' || hasExplicitRail ) {
     return null;
   }
 

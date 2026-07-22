@@ -7,8 +7,38 @@
   @each $side in left, right {
     --nb-sidecar-sidebar-#{$side}-gap: clamp(0px, var(--nb-sidecar-sidebar-#{$side}-width) * 999, var(--nb-sidecar-gap));
     --nb-sidecar-sidebar-#{$side}-max-width: calc(var(--nb-actual-container-width) * 0.5 - var(--nb-sidecar-gap) * 1.5);
-    --nb-sidecar-content-#{$side}: calc(50% - var(--nb-sidecar-sides) - var(--nb-sidecar-sidebar-#{$side}-width) - var(--nb-sidecar-sidebar-#{$side}-gap) - var(--nb-sidecar-gap) * 0.5);
+
+    // Template-facing rail track (Task 3.1 zeroing): the grid template reads
+    // THIS derived var, not the raw width var. Because every layout container
+    // re-derives it here, a root-level zeroing override can never inherit
+    // into descendant containers (they self-heal from the untouched raw
+    // vars). Rail-less roots set it to 0px — and ONLY it: the gap track and
+    // the content math keep deriving from the raw vars, so every referenced
+    // named line (ws, gs, cs … ce, ge, we) keeps its exact position and the
+    // collapsed rail width flows into the unreferenced frs/fre free-space
+    // tracks instead.
+    --nb-layout-rail-#{$side}: var(--nb-sidecar-sidebar-#{$side}-width);
   }
+
+  // Content-width inversion (Task 2.2): the content width is derived FIRST,
+  // and the content tracks hang off it; the rail vars are offsets, no longer
+  // the thing content is repeatedly subtracted from inside each track.
+  //
+  // This must re-substitute the live rail vars HERE (per container) rather
+  // than consume var(--nb-content-width): a custom property resolves its
+  // var() references at the element where it is DECLARED, so the :root token
+  // bakes in the default (small) rail widths and would ignore a Sidecar's
+  // width classes. The :root `--nb-content-width` token intentionally keeps
+  // that root-computed value for its consumers; this var is its live,
+  // viewport-responsive (actual-container-based) per-container counterpart.
+  --nb-sidecar-content-width: calc(var(--nb-actual-container-width) - var(--nb-sidecar-sidebar-left-width) - var(--nb-sidecar-sidebar-left-gap) - var(--nb-sidecar-sidebar-right-width) - var(--nb-sidecar-sidebar-right-gap));
+
+  // Each content half-track = half the content width (minus the center gap),
+  // shifted by half the rail-budget asymmetry so the center gap [gcs..gce]
+  // keeps sitting at the container's midline — algebraically identical to the
+  // previous `50% - sides - rail - rail-gap - gap/2` subtraction.
+  --nb-sidecar-content-left: calc(var(--nb-sidecar-content-width) * 0.5 - var(--nb-sidecar-gap) * 0.5 + (var(--nb-sidecar-sidebar-right-width) + var(--nb-sidecar-sidebar-right-gap) - var(--nb-sidecar-sidebar-left-width) - var(--nb-sidecar-sidebar-left-gap)) * 0.5);
+  --nb-sidecar-content-right: calc(var(--nb-sidecar-content-width) * 0.5 - var(--nb-sidecar-gap) * 0.5 + (var(--nb-sidecar-sidebar-left-width) + var(--nb-sidecar-sidebar-left-gap) - var(--nb-sidecar-sidebar-right-width) - var(--nb-sidecar-sidebar-right-gap)) * 0.5);
 }
 
 
@@ -26,19 +56,52 @@
 // gce - gap content end
 // The same thing applies for [cc] [ce].
 
-//noinspection ALL
-@mixin nb-content-layout-grid {
-  @include nb-layout-settings;
+// ---------------------------------------------------------------------------
+// Layout engine roles (Sidecar Subgrid Modernization, Phase 2).
+//
+// - `nb-layout-root` declares the 13-line coordinate system: track math runs
+//   here, and here only. NOTE: the `grid-column: fs / fe !important` pin stays
+//   in the root role on purpose — a root can itself be a grid item of another
+//   Nova layout grid (e.g. `.wp-block-post-content` rendered inside a
+//   theme-template Sidecar's content area) and must still span the full range.
+// - `nb-layout-passthrough` is a root re-declaration (the pre-subgrid
+//   fallback, byte-identical to today's behavior) plus a scoped
+//   `grid-template-columns: subgrid` override for supporting browsers.
+//   The override applies ONLY when the element is a direct grid item of a
+//   known Nova layout grid ($nb-layout-grid-parents): `subgrid` on an element
+//   whose parent is not a grid container behaves as `none` and would collapse
+//   the layout (e.g. a template-level Sidecar whose parent `.wp-site-blocks`
+//   is not a grid keeps declaring its own tracks via the fallback).
+// - `nb-content-layout-grid` remains the compatibility entry with the
+//   original single-role behavior. Intentionally-independent small-scale
+//   instances (e.g. `supernova-item__inner-container`, a card-internal mini
+//   grid that must NOT align with the page) keep using it.
+//
+// Only containers that never resize tracks may take the passthrough role:
+// a subgridded element inherits the parent's resolved tracks, so local
+// `--nb-sidecar-*` width overrides (positioned Sidecars' width classes)
+// would silently stop applying. See docs/plans/2026-07-21-sidecar-subgrid-
+// modernization-design.md — "Engine architecture".
+// ---------------------------------------------------------------------------
 
-  display: grid;
-  max-width: none;
+// Every selector that instantiates a Nova layout grid (root or pass-through).
+// Used to scope the subgrid override to elements that are actually grid items
+// of a Nova layout grid. Task 5.1 UNIFIED this list with the JS container list:
+// `$nb-layout-grid-parents` is now generated from the single source of truth,
+// `packages/utils/src/layout-containers.js`, by
+// `bin/generate-layout-containers.js` (run in build:packages). The two halves
+// are pinned equal by `packages/utils/src/layout-containers.test.js`.
+@import 'layout-containers.generated';
 
-  // a grid inside another will only work if they're overlapping perfectly
-  // so we don't tweak selectors specificity when we know for sure this needs to span from [fs] to [fe]
-  grid-column: fs / fe !important;
+// The desktop 13-line coordinate template. Extracted so the editor canvas can
+// re-assert it on a positioned Sidecar below `lap` (narrow canvas under the
+// Desktop device preview) without touching the fallback/frontend cascade — see
+// sidecar/editor-styles.scss and Task 3.0b. Keeping ONE source of truth avoids
+// the template drifting between the engine and the editor pin.
+@mixin nb-layout-desktop-template-columns {
   grid-template-columns:
     [fs] var(--nb-sidecar-sides)
-    [ws] var(--nb-sidecar-sidebar-left-width)
+    [ws] var(--nb-layout-rail-left)
     [frs] 1fr
     [gs] var(--nb-sidecar-sidebar-left-gap)
     [cs] var(--nb-sidecar-content-left)
@@ -47,9 +110,42 @@
     [gce] var(--nb-sidecar-content-right)
     [ce] var(--nb-sidecar-sidebar-right-gap)
     [ge] 1fr
-    [fre] var(--nb-sidecar-sidebar-right-width)
+    [fre] var(--nb-layout-rail-right)
     [we] var(--nb-sidecar-sides)
     [fe];
+}
+
+// Desktop child placement: default content span plus the wide/full escapes.
+// Same extraction rationale as the template mixin — the editor pin re-asserts
+// these on the Sidecar and its content area to defeat the below-`lap`
+// `grid-column: ws / we` collapse.
+@mixin nb-layout-desktop-content-columns {
+  > * {
+    grid-column: var(--block-content-start) / var(--block-content-end);
+  }
+
+  // Align: WIDE
+  > :is(.alignwide, [data-align="wide"]) {
+    grid-column: var(--block-wide-start) / var(--block-wide-end);
+  }
+
+  // Align: FULL
+  > :is(.alignfull, [data-align="full"]) {
+    grid-column: var(--block-full-start) / var(--block-full-end);
+  }
+}
+
+//noinspection ALL
+@mixin nb-layout-root {
+  @include nb-layout-settings;
+
+  display: grid;
+  max-width: none;
+
+  // a grid inside another will only work if they're overlapping perfectly
+  // so we don't tweak selectors specificity when we know for sure this needs to span from [fs] to [fe]
+  grid-column: fs / fe !important;
+  @include nb-layout-desktop-template-columns;
   grid-auto-rows: min-content;
 
   // horizontally align images that can't be pulled to center
@@ -82,19 +178,7 @@
   }
   // --------------
 
-  > * {
-    grid-column: var(--block-content-start) / var(--block-content-end);
-  }
-
-  // Align: WIDE
-  > :is(.alignwide, [data-align="wide"]) {
-    grid-column: var(--block-wide-start) / var(--block-wide-end);
-  }
-
-  // Align: FULL
-  > :is(.alignfull, [data-align="full"]) {
-    grid-column: var(--block-full-start) / var(--block-full-end);
-  }
+  @include nb-layout-desktop-content-columns;
 
   @include below(lap) {
     grid-template-columns:
@@ -121,4 +205,39 @@
       display: block;
     }
   }
+}
+
+// Modern half of the pass-through role: inherit the parent grid's tracks and
+// line names instead of re-declaring them. Scoped to direct grid items of a
+// Nova layout grid (see $nb-layout-grid-parents note above). The extra parent
+// compound also outranks the root fallback's below-lap template re-declaration
+// at every breakpoint, so pass-throughs subgrid below lap too — they inherit
+// whatever template the root declares at that breakpoint.
+@mixin nb-layout-subgrid-override {
+  @supports (grid-template-columns: subgrid) {
+    :is(#{$nb-layout-grid-parents}) > & {
+      grid-template-columns: subgrid;
+    }
+  }
+}
+
+// Pass-through role: fallback = full root re-declaration (today's behavior),
+// modern = subgrid inheritance. Track math vars become inert on the modern
+// path; line names come from the parent grid.
+//
+// NOTE: currently has no direct consumer — _layout.scss composes the two
+// halves itself (one shared nb-layout-root emission for the whole container
+// union plus one nb-layout-subgrid-override on the pass-through subset) to
+// avoid emitting the ~60-line root body once per role. This mixin is the
+// canonical single-selector form of the role and the intended entry point
+// for future standalone pass-throughs (e.g. the Phase 5 Group conversion).
+@mixin nb-layout-passthrough {
+  @include nb-layout-root;
+  @include nb-layout-subgrid-override;
+}
+
+// Compatibility entry: the original single-role mixin. Keeps the historical
+// behavior (declare tracks, pin to fs / fe) for independent instances.
+@mixin nb-content-layout-grid {
+  @include nb-layout-root;
 }

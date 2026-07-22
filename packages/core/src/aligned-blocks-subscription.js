@@ -64,6 +64,29 @@ const hasElementNodeMutation = ( nodes = [] ) => {
   return Array.from( nodes ).some( isElementNode );
 };
 
+const MEASUREMENT_OWNED_STYLE_PROPERTIES = new Set( [ 'grid-row-end' ] );
+
+// Normalizes a style attribute string with the measurement-owned properties
+// stripped, so two snapshots can be compared for "did anything ELSE change".
+const stripMeasurementOwnedStyles = ( styleText = '' ) => {
+  return String( styleText || '' )
+    .split( ';' )
+    .map( declaration => declaration.trim() )
+    .filter( Boolean )
+    .filter( declaration => {
+      const property = declaration.split( ':' )[ 0 ].trim().toLowerCase();
+      return ! MEASUREMENT_OWNED_STYLE_PROPERTIES.has( property );
+    } )
+    .join( ';' );
+};
+
+const isMeasurementOwnedStyleChange = ( mutation ) => {
+  const target = mutation.target;
+  const nextStyle = typeof target.getAttribute === 'function' ? target.getAttribute( 'style' ) : null;
+
+  return stripMeasurementOwnedStyles( mutation.oldValue ) === stripMeasurementOwnedStyles( nextStyle );
+};
+
 const shouldRealignForMutations = ( mutations = [] ) => {
   return Array.from( mutations ).some( mutation => {
     if ( mutation.type === 'childList' ) {
@@ -75,7 +98,18 @@ const shouldRealignForMutations = ( mutations = [] ) => {
     }
 
     if ( mutation.type === 'attributes' && mutation.attributeName === 'style' ) {
-      return isElementNode( mutation.target ) && tokenizeClasses( mutation.target.className ).some( className => {
+      if ( ! isElementNode( mutation.target ) ) {
+        return false;
+      }
+
+      // The measurement engine writes honest pull-out row spans as inline
+      // grid-row-end (Task 3.4). A style mutation whose only difference is
+      // that property is our own bookkeeping — reacting to it would loop.
+      if ( isMeasurementOwnedStyleChange( mutation ) ) {
+        return false;
+      }
+
+      return tokenizeClasses( mutation.target.className ).some( className => {
         return RELEVANT_CLASS_NAMES.has( className );
       } );
     }

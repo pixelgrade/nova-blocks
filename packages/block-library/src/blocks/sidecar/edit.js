@@ -27,6 +27,37 @@ const Edit = ( props ) => {
 
   const innerBlocks = useInnerBlocks( clientId );
 
+  // Rail presence is derived from the ACTUAL sidecar-area children (Task 4.1
+  // three-area model): each area resolves to a side (explicit
+  // sidebar-left/right, or the legacy `sidebar` mapped through sidebarPosition),
+  // so a three-area sidecar emits NEITHER absence class. Falls back to the
+  // position-derived rails when no areas are present yet. Mirrors the PHP
+  // render (novablocks_render_sidecar_block) so canvas and frontend agree.
+  const railPresence = innerBlocks.reduce( ( acc, block ) => {
+    if ( block.name !== 'novablocks/sidecar-area' ) {
+      return acc;
+    }
+
+    acc.found = true;
+    const area = block.attributes && block.attributes.areaName;
+    const side = area === 'sidebar-left' ? 'left'
+      : area === 'sidebar-right' ? 'right'
+      : area === 'sidebar' ? ( sidebarPosition === 'left' ? 'left' : 'right' )
+      : '';
+
+    if ( side === 'left' ) {
+      acc.left = true;
+    }
+    if ( side === 'right' ) {
+      acc.right = true;
+    }
+
+    return acc;
+  }, { left: false, right: false, found: false } );
+
+  const hasLeftRail = railPresence.found ? railPresence.left : sidebarPosition === 'left';
+  const hasRightRail = railPresence.found ? railPresence.right : sidebarPosition === 'right';
+
   const className = classnames(
     'nb-sidecar',
     `nb-sidecar--sidebar-${ sidebarPosition }`,
@@ -34,6 +65,8 @@ const Edit = ( props ) => {
     'nb-content-layout-grid',
     {
       'nb-sidecar--sticky-sidebar': lastItemIsSticky === true,
+      'nb-sidecar--no-left-rail': ! hasLeftRail,
+      'nb-sidecar--no-right-rail': ! hasRightRail,
     },
     'alignfull'
   );

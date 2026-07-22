@@ -18,4 +18,5 @@ import "./with-card-description-size";
 import "./with-collection-layout";
 import "./with-preview-attributes";
 import "./with-overlay-filter";
+import "./with-sidecar-break";
 import "./with-space-and-sizing";

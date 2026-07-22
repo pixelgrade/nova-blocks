@@ -9,6 +9,9 @@
 	"textdomain": "nova-blocks",
 	"attributes": {},
 	"usesContext": [],
+	"providesContext": {
+		"novablocks/sidebarPosition": "sidebarPosition"
+	},
 	"supports": {
 		"html": false,
 		"anchor": true,

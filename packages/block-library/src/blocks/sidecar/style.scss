@@ -1,21 +1,12 @@
 @import 'scss/mixins';
 @import 'scss/utility';
+@import 'scss/desktop-layout';
+@import 'scss/pull-outs';
 
-:root {
-  --nb-font-size-smallest: 0.82;
-  --nb-font-size-smaller: 0.93;
-  --nb-font-size-normal: 1;
-  --nb-font-size-larger: 1.12;
-  --nb-font-size-largest: 1.18;
-}
-
-.nb-sidecar-area {
-
-  @include above(lap) {
-    grid-row: 1;
-    --nb-block-top-spacing: 0 !important;
-  }
-}
+// The --nb-font-size-* scale tokens moved to core's _layout.scss (Task 3.6):
+// they are consumed by the per-area font-size attributes and belong with the
+// engine's root tokens, not inside a block stylesheet that WP may inline
+// only where the block renders.
 
 .nb-sidecar-area--sidebar {
   position: relative;
@@ -33,54 +24,17 @@
   order: -1;
 }
 
-.break-align-left {
-  --block-wide-start: ws;
-  --block-full-start: fs;
-}
+// The .break-align-* var rules live ONLY in core's _layout.scss now
+// (via the nb-break-align-vars mixin) — do not re-declare them here.
 
-.break-align-right {
-  --block-wide-end: we;
-  --block-full-end: fe;
-}
-
-// Default sidebar position is on the right, so it will be positioned between [ge] and block-limit-right.
+// Default sidebar position is on the right, so it will be positioned between
+// [ge] and block-limit-right. The desktop two-column layout (areas on grid-row
+// 1, per-position content/rail spans, and the zero-JS break layers) lives in
+// the shared nb-sidecar-desktop-layout mixin so the editor canvas can re-assert
+// it below `lap` under the Desktop device preview (Task 3.0b). Frontend output
+// is byte-identical to the previous inline `@include above(lap) { … }` block.
 @include above(lap) {
-
-  .nb-sidecar:not(.nb-sidecar--sidebar-none) {
-
-    > .nb-sidecar-area--content {
-      --block-content-start: var(--block-wide-start);
-      --block-content-end: var(--block-wide-end);
-    }
-  }
-
-  .nb-sidecar--sidebar-left {
-
-    > .nb-sidecar-area--content {
-      --block-wide-start: cs;
-      --block-full-start: cs;
-    }
-
-    > .nb-sidecar-area--sidebar {
-      --block-content-start: ws;
-      --block-content-end: gs;
-    }
-  }
-
-  .nb-sidecar--sidebar-right {
-
-    > .nb-sidecar-area--content {
-      --block-wide-end: ce;
-      --block-full-end: ce;
-      //--block-left-end: var(--block-content-end);
-    }
-
-    > .nb-sidecar-area--sidebar {
-      --block-content-start: ge;
-      --block-content-end: we;
-      //--block-right-start: var(--block-content-start);
-    }
-  }
+  @include nb-sidecar-desktop-layout;
 }
 
 // Make last block from Sidebar Sticky
@@ -98,6 +52,15 @@
 
         &.novablocks-hidden-block {
           opacity: 0;
+          // Task 3.5: a faded sticky must not intercept clicks meant for
+          // the broken block sliding underneath it (the original bug), and
+          // must leave the accessibility tree while invisible. The
+          // visibility flip is DELAYED until the opacity fade finishes so
+          // the fade-out still animates; on release the base transition
+          // (no visibility delay) restores it instantly for the fade-in.
+          visibility: hidden;
+          pointer-events: none;
+          transition: .2s opacity ease-out, visibility 0s .2s;
         }
       }
     }
@@ -105,11 +68,35 @@
 }
 
 
-// Sidebar width overrides
+// Sidebar width overrides.
+//
+// Legacy path (sidebarPosition-keyed): RETAINED so existing two-area content is
+// byte-identical. A positioned sidecar carries `--sidebar-left`/`--sidebar-right`
+// from its position, so this keeps firing for legacy content exactly as before.
 @each $size in small, medium, large {
   @each $side in left, right {
     .nb-sidecar--sidebar-#{$side}.nb-sidecar--sidebar-#{$size} {
       --nb-sidecar-sidebar-#{$side}-width: min(var(--nb-sidecar-sidebar-#{$side}-max-width), var(--nb-sidecar-sidebar-#{$size}-width));
     }
+  }
+}
+
+// Three-area path (rail-PRESENCE-keyed, matching Task 4.1's placement model in
+// _desktop-layout.scss): width follows the ACTUAL rail on each side, keyed on the
+// server-known absence classes, so a three-area Hive (sidebarPosition:none, hence
+// no `--sidebar-left`/`--sidebar-right`) resizes BOTH rails — the recipe's Sidebar
+// Size control now does real work instead of only flipping derivation to Custom.
+// For legacy content this matches the SAME elements as the position-keyed rule
+// above with IDENTICAL values (a positioned sidecar carries exactly one absence
+// class: a left sidecar has `--no-right-rail`, never `--no-left-rail`), so both
+// selectors fire together on the present side with the same value and computed
+// geometry is unchanged; the absent side is untouched (its rail var is zeroed by
+// the layer-1 absence class, Task 3.1).
+@each $size in small, medium, large {
+  .nb-sidecar--sidebar-#{$size}:not(.nb-sidecar--no-left-rail) {
+    --nb-sidecar-sidebar-left-width: min(var(--nb-sidecar-sidebar-left-max-width), var(--nb-sidecar-sidebar-#{$size}-width));
+  }
+  .nb-sidecar--sidebar-#{$size}:not(.nb-sidecar--no-right-rail) {
+    --nb-sidecar-sidebar-right-width: min(var(--nb-sidecar-sidebar-right-max-width), var(--nb-sidecar-sidebar-#{$size}-width));
   }
 }

@@ -1,4 +1,13 @@
 :root {
+  // Font-size scale tokens for the Sidecar per-area font-size attributes
+  // (moved here from the sidecar block stylesheet in Task 3.6 — engine root
+  // tokens must not depend on WP inlining a block stylesheet).
+  --nb-font-size-smallest: 0.82;
+  --nb-font-size-smaller: 0.93;
+  --nb-font-size-normal: 1;
+  --nb-font-size-larger: 1.12;
+  --nb-font-size-largest: 1.18;
+
   // Default position for blocks is between CS (content-start) and CE (content-end).
   --block-content-start: ws;
   --block-content-end: we;
@@ -33,41 +42,52 @@
   --nb-sidecar-sidebar-right-width: var(--nb-sidecar-sidebar-small-width);
 
   --nb-container-width: calc(var(--nb-container-width-setting, 67) * var(--current-font-size, 16px));
+
+  // The consumer-facing content-width token (Task 2.2). Because a custom
+  // property substitutes its var() references at the element where it is
+  // DECLARED, this :root declaration always resolves with the default (small)
+  // rail budget — Sidecar width classes never alter what consumers
+  // (core/group children max-width, Anima theme.json contentSize) receive.
+  // The per-container track math derives from the live counterpart
+  // `--nb-sidecar-content-width` computed in nb-layout-settings
+  // (see _content-layout.scss).
+  // Zeroing the rail vars on rail-less roots (the design's end state) is
+  // deferred to the Phase 3 break-system rework: today the break placement
+  // vars (--block-left-end: gs / --block-right-start: ge) anchor broken
+  // aligned blocks to the rail-gap lines, and zeroed rails move those lines
+  // through subgridded chains; Task 3.1's rail-absence classes re-anchor
+  // them first.
   --nb-content-width: calc(var(--nb-container-width) - var(--nb-sidecar-sidebar-left-width) - var(--nb-sidecar-sidebar-left-gap) - var(--nb-sidecar-sidebar-right-width) - var(--nb-sidecar-sidebar-right-gap));
   --nb-sidecar-sides: max(var(--nb-wrapper-sides-spacings), calc((100% - var(--nb-container-width)) * 0.5));
 
   @include nb-layout-settings;
 }
 
-.break-align-left {
-  --block-wide-start: ws;
-  --block-full-start: fs;
-}
-
-.break-align-right {
-  --block-wide-end: we;
-  --block-full-end: fe;
-}
+@include nb-break-align-vars;
 
 // This is where the grid magic starts.
 //
+// Every container below instantiates the Nova layout grid. Roots
+// (.is-root-container, .wp-block-post-content, .wp-block-template-part,
+// .edit-post-visual-editor__post-title-wrapper, [id="main"], the WooCommerce
+// legacy template) genuinely start a coordinate system. The rest are
+// pass-throughs whose re-declared grid is the pre-subgrid FALLBACK — their
+// modern half (grid-template-columns: subgrid) is layered on further down.
+// Positioned Sidecars (--sidebar-left/right) stay track-declaring for now:
+// their width classes resize tracks locally, which subgrid inheritance
+// cannot express (see _content-layout.scss role notes).
+//
 // "Break" classes are added via JS when the aligned block and a Sidebar
 // do not overlap, so there is space that the aligned block can fill.
-:is(
-  .is-root-container,
-  .edit-post-visual-editor__post-title-wrapper,
-  .wp-block-post-content,
-  .wp-block-template-part,
-  [data-block-name="woocommerce/legacy-template"],
-  [id="main"],
-  .nb-content-layout-grid,
-  .nb-sidecar,
-  .nb-sidecar-area--content,
-  .wp-block-query,
-  .nb-supernova
-) {
+//
+// The container union is the single generated list `$nb-layout-grid-parents`
+// (Task 5.1 — source of truth: packages/utils/src/layout-containers.js; the JS
+// break-align consumer reads the same list). Keep the two subsets below
+// (subgrid pass-throughs, rail-zeroing roots) as their own purpose-specific
+// lists — they are proper subsets, not the drifted union.
+:is(#{$nb-layout-grid-parents}) {
 
-  @include nb-content-layout-grid;
+  @include nb-layout-root;
 
   > :is(.alignleft, [data-align="left"], #specific),
   > :is(.alignright, [data-align="right"],  #specific) {
@@ -77,14 +97,16 @@
   }
 
   // Align: LEFT & RIGHT
-  > :is(.alignleft, [data-align="left"]).break-align-left,
-  > :is(.alignright, [data-align="right"]).break-align-right {
+  // The serialized nb-break-always class (per-block control, Task 3.3) is a
+  // forced twin of the measured break-align-* classes everywhere they appear.
+  > :is(.alignleft, [data-align="left"]):is(.break-align-left, .nb-break-always),
+  > :is(.alignright, [data-align="right"]):is(.break-align-right, .nb-break-always) {
     grid-row-end: span 5;
     align-self: flex-start;
   }
 
   // Align: LEFT
-  > :is(.alignleft, [data-align="left"]).break-align-left {
+  > :is(.alignleft, [data-align="left"]):is(.break-align-left, .nb-break-always) {
     grid-column: var(--block-left-start) / var(--block-left-end);
 
     + :not(:is(.alignright, [data-align="right"])) {
@@ -93,7 +115,7 @@
   }
 
   // Align: RIGHT
-  > :is(.alignright, [data-align="right"]).break-align-right {
+  > :is(.alignright, [data-align="right"]):is(.break-align-right, .nb-break-always) {
     grid-column: var(--block-right-start) / var(--block-right-end);
 
     + :not(:is(.alignleft, [data-align="left"])) {
@@ -124,7 +146,7 @@
       // aligned left/right to jump on top of the grid column
       // grid-auto-flow: dense;
 
-      > :is(.alignleft, [data-align="left"], .x2.specificity):not(.break-align-left) {
+      > :is(.alignleft, [data-align="left"], .x2.specificity):not(.break-align-left):not(.nb-break-always) {
         grid-column-end: gcs;
 
         + :not(:is(.alignright, [data-align="right"])) {
@@ -132,7 +154,7 @@
         }
       }
 
-      > :is(.alignright, [data-align="right"], .x2.specificity):not(.break-align-right) {
+      > :is(.alignright, [data-align="right"], .x2.specificity):not(.break-align-right):not(.nb-break-always) {
         grid-column-start: gce;
 
         + :not(:is(.alignleft, [data-align="left"])) {
@@ -141,4 +163,91 @@
       }
     }
   }
+}
+
+// Pass-throughs: modern half of nb-layout-passthrough (the fallback half is
+// the shared nb-layout-root emission above). Where the browser supports
+// subgrid AND the element is a direct grid item of a Nova layout grid, the
+// re-declared tracks give way to the parent's real tracks and line names.
+// Track-neutral containers only: content areas, sidebar-less Sidecars, Query
+// wrappers, and page-level Supernova collections never resize track vars, so
+// inherited tracks are geometrically identical to the fallback re-declaration.
+// (A page-level .nb-supernova nested in a supernova-item inner container is
+// display:block !important there, so this template is inert for it; the
+// card-internal inner container itself stays a ROOT via the compatibility
+// nb-content-layout-grid mixin and is deliberately absent from
+// $nb-layout-grid-parents' passthrough consumers.)
+// A rail-less Sidecar is track-neutral (no rail budgets to resize), so it may
+// pass through. Task 4.1: the signal is BOTH rails absent (the server-known
+// presence classes), not `sidebarPosition:none` — a three-area sidecar (both
+// rails) must stay track-declaring regardless of its position value, and a
+// legacy sidebar-none sidecar carries both absence classes so this is
+// byte-identical for two-area content.
+:is(
+  .nb-sidecar--no-left-rail.nb-sidecar--no-right-rail,
+  .nb-sidecar-area--content,
+  .wp-block-query,
+  .nb-supernova
+) {
+  @include nb-layout-subgrid-override;
+}
+
+// Rail-less roots reserve no rail tracks (Task 3.1, the design's "roots
+// without rails zero the rail track vars" end state). Zero ONLY the derived
+// template var: the gap tracks and the content math keep deriving from the
+// untouched raw width vars, so every named line the placement vars reference
+// (ws, gs, cs … ce, ge, we) keeps its baseline position — the collapsed rail
+// width flows into the unreferenced frs/fre free-space tracks. Descendant
+// layout containers re-derive --nb-layout-rail-* in nb-layout-settings from
+// the raw vars, so this override cannot inherit into Sidecars, Queries,
+// Supernovas, or card-internal instances. MUST stay after the container-union
+// emission above (same specificity; later source order wins on the roots).
+:is(
+  .is-root-container,
+  .edit-post-visual-editor__post-title-wrapper,
+  .wp-block-post-content,
+  .wp-block-template-part,
+  [data-block-name="woocommerce/legacy-template"],
+  [id="main"]
+) {
+  --nb-layout-rail-left: 0px;
+  --nb-layout-rail-right: 0px;
+}
+
+// Task 5.0 (header-nested-grid ruling — from the 4b.3 harness finding).
+//
+// A Nova layout grid must NOT establish inside a header row. `.nb-header-row`
+// sizes to max-content, so a nested grid's `--nb-actual-container-width`
+// (`min(--nb-container-width, 100% - --nb-wrapper-sides-spacings * 2)`) plus the
+// header's own `--nb-wrapper-sides-spacings` override blow up — the 4b.3
+// `header-nested-grid` fixture computed a ~3608px side track and overflowed to
+// ~8341px at 1440px. This is a %-math-in-max-content hazard (napkin Anima Layout
+// #4) SHARED by both engines: the `--nb-actual-container-width` derivation is in
+// the byte-identical fallback at `55afe4f0`, so the OLD engine broke identically
+// — it is not a subgrid-rewrite regression. And no shipped pattern nests a
+// Sidecar in a header row (Anima's header is a plain core/group; grep of
+// lib/patterns found none), so header rows were never a sanctioned grid context.
+//
+// Ruling: gate the grid OFF here — fall back to normal block flow — for every
+// union member AND the subgrid pass-through path (this rule is last, so it wins
+// the source-order tie against the subgrid override above). MUST stay at the end
+// of this file. The `header-nested-grid` fixture's now-sane geometry is the
+// regression pin (annotated intentional diff against baseline-v2).
+.nb-header-row :is(#{$nb-layout-grid-parents}) {
+  // Load-bearing: `display: block` (not `grid-template-columns`) is what wins.
+  // Once the container is `block` it is no longer a grid formatting context, so
+  // the `grid-template-columns` declarations below never have to out-rank the
+  // (0,3,0) subgrid pass-through branch — grid props are inert on a block box.
+  display: block;
+  grid-template-columns: none;
+  // Neutralize the root `grid-column: fs / fe !important` pin: fs/fe are not
+  // lines in the header-row's own grid, so span the full row instead of
+  // auto-placing into a single narrow column.
+  grid-column: 1 / -1 !important;
+  // The header row lays its items out with flex; a flex item defaults to
+  // min-width: auto (min-content), so the gated block would still be sized by
+  // its widest child (the wide image's intrinsic width) and overflow. Allow it
+  // to shrink to the row's width.
+  min-width: 0;
+  max-width: 100%;
 }

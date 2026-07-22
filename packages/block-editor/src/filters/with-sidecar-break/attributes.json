@@ -1,0 +1,12 @@
+{
+  "sidecarBreak": {
+    "type": "string",
+    "enum": [ "auto", "always", "never" ],
+    "default": "auto"
+  },
+  "sidecarWrap": {
+    "type": "string",
+    "enum": [ "none", "around", "extend" ],
+    "default": "none"
+  }
+}
