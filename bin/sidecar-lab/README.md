@@ -39,13 +39,15 @@ stable).
 - **3 lab posts** (`sidecar-lab-post-1..3`) — deterministic posts (fixed
   excerpt, featured image = the fixture attachment) backing the query-loop
   pass-through fixture. Recreated each run; deleted by the same prefix sweep.
-- **31 published pages**, slug prefix `sidecar-lab-`. The first 17 are the
+- **32 published pages**, slug prefix `sidecar-lab-`. The first 17 are the
   Phase 1-3 family pages (each carries the full content-variant battery as
   successive sections — wide image, full image, alignleft, alignright,
   Group-wrapped wide image, captioned image — over body copy long enough to
-  wrap at 375px). The remaining 14 are the Phase 4b re-baseline additions
+  wrap at 375px). The next 14 are the Phase 4b re-baseline additions
   (Task 4b.3): NEW capabilities with no old-engine behavior to preserve, added
-  now that **baseline-v2** (new engine) is the canonical reference.
+  when **baseline-v2** (new engine) became the canonical reference. The last
+  one (`color-signal-group`) is the Phase-5 Task-5.2-gate addition, added at the
+  **baseline-v2b** re-baseline.
 
   | Slug (`sidecar-lab-…`) | Covers |
   | --- | --- |
@@ -76,7 +78,9 @@ stable).
   | `query-loop` | core/query (inherit:false) over the lab posts — `.wp-block-query` subgrid pass-through |
   | `supernova` | page-level Supernova, static `fields` cards — `.nb-supernova` subgrid pass-through |
   | **Phase 4b — substitution context (c)** | |
-  | `header-nested-grid` | Sidecar nested in a `novablocks/header-row` (wrapper-sides override). **KNOWN-BROKEN as of baseline-v2** — overflows to ~8341px; a real Task 4b.3 finding, captured as-is (see `.ai/sidecar-lab/expected-changes.md`) |
+  | `header-nested-grid` | Sidecar nested in a `novablocks/header-row` (wrapper-sides override). Was **KNOWN-BROKEN in baseline-v2** (~8341px overflow); **FIXED in baseline-v2b** by the Task 5.0 header-row grid gate — now fits (~1376px). |
+  | **Phase 5 — Task 5.2 gate (b)** | |
+  | `color-signal-group` | No rail; a PLAIN group-wrapped wide (subgrid pass-through: escapes to ws/we) beside a COLOR-SIGNAL group-wrapped wide (a box group EXCLUDED from the pass-through: box stays content-width, background does not bleed, child stays constrained). The two wide-image rects differ — the exclusion regression pin. |
 
 ## Manifest
 
@@ -110,22 +114,27 @@ node bin/sidecar-lab/capture.mjs --run baseline --force
 node bin/sidecar-lab/capture.mjs --diff baseline subgrid
 ```
 
-**Canonical baseline (from 2026-07-22, Task 4b.3 re-baseline):**
-**`baseline-v2`** — the NEW subgrid engine (worktree `ca276dea`) over the full
-31-page / 124-capture matrix. Phase 5+ diffs against it
-(`--diff baseline-v2 <run>`), and its annotations live in
-`.ai/sidecar-lab/expected-changes.md` (which starts empty — a fresh baseline
-needs none). The old `baseline` run (old engine, 17 pages) stays on disk as the
-historical record; its annotations moved to `expected-changes-old-baseline.md`
-and apply ONLY to `--diff baseline <old-run>` (pass it via
-`SIDECAR_LAB_EXPECTED=`). Old-vs-new baselines are never diffed. Determinism was
-re-proven the Phase-1 way: two independent full captures of `baseline-v2` diffed
-to zero differences.
+**Canonical baseline (from 2026-07-22, Phase-5 Task-5.2-gate re-baseline):**
+**`baseline-v2b`** — the FINAL Phase-5 build (worktree HEAD of branch
+`worktree-agent-af18d9a23b30f81e4`: the Task 5.2 box-group-exclusion gate on top
+of `51d17de2`) over the full 32-page / 128-capture matrix. It bakes in all of
+Phase 5 (Task 5.0 header ruling, 5.1 container unification, 5.2 Group
+pass-through with the box-group exclusion) and adds the `color-signal-group`
+fixture. Phase 6+ diffs against it (`--diff baseline-v2b <run>`), and its
+annotations live in `.ai/sidecar-lab/expected-changes.md` (which starts empty —
+a fresh baseline needs none). Determinism was re-proven the Phase-1 way: two
+independent full captures of `baseline-v2b` diffed to zero differences.
 
-> **Lab standing state:** the sidecar-lab Studio site now runs the NEW-engine
-> build with its code-mirror **watcher STOPPED** (deliberate — Phase 5 diffs
-> successive new-engine builds against `baseline-v2`; a running watcher would
-> revert the deploy to `main`). See `.ai/sidecar-lab/ENV.md`.
+Archived predecessors, kept on disk (never deleted): **`baseline-v2`** (new
+engine, pre-5.2-gate, `ca276dea`, 31 pages) — the previous canonical, superseded
+here; and **`baseline`** (old engine, 17 pages) — the original historical record,
+whose annotations moved to `expected-changes-old-baseline.md` and apply ONLY to
+`--diff baseline <old-run>` (pass via `SIDECAR_LAB_EXPECTED=`). Baselines from
+different engines / matrices are never diffed against each other.
+
+> **Lab standing state:** the sidecar-lab Studio site now runs the FINAL Phase-5
+> (Task-5.2-gate) build with its code-mirror **watcher STOPPED** (deliberate — a
+> running watcher would revert the deploy to `main`). See `.ai/sidecar-lab/ENV.md`.
 
 Run labels become directory names under `.ai/sidecar-lab/runs/` and are
 validated (letters, digits, `.`, `_`, `-`; no path separators, no `..`).

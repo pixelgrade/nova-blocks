@@ -243,6 +243,20 @@ function sl_group( string $inner ): string {
 }
 
 /**
+ * A core/group carrying a Nova color-signal class (a group that renders its OWN
+ * visual box). Task 5.2 gate: such a group is EXCLUDED from the subgrid
+ * pass-through — it keeps the content-width max-width fallback so its box (and
+ * its Style-Manager background fill) does NOT bleed full-viewport, and its
+ * children do NOT escape to the grid's wide/full lines. Contrast with sl_group()
+ * (a plain group, which DOES pass through and escape).
+ */
+function sl_color_signal_group( string $inner ): string {
+	return '<!-- wp:group {"className":"sm-color-signal-2","layout":{"type":"constrained"}} -->' . "\n"
+		. '<div class="wp-block-group sm-color-signal-2 sm-palette-2">' . "\n" . $inner . "</div>\n"
+		. "<!-- /wp:group -->\n\n";
+}
+
+/**
  * novablocks/sidecar wrapping its area blocks. Both blocks are dynamic:
  * serialized markup is block comments around inner content only.
  * Content area first, sidebar second (variations.js order).
@@ -729,6 +743,26 @@ function sl_page_definitions( int $img, array $post_ids = [] ): array {
 		'description' => 'A page-level Supernova (Cards Collection) with static `fields` cards. .nb-supernova is a subgrid pass-through consumer under the raised :is() specificity (4.1 review Minor #3).',
 		'families'    => [ 'passthrough', 'supernova', 'no-rail' ],
 		'content'     => sl_supernova(),
+	];
+
+	// --- Phase 5 (Task 5.2 gate): color-signal Group pass-through exclusion. ---
+	//     A no-rail page holding a PLAIN group-wrapped wide (passes through and
+	//     escapes to the wide span) beside a COLOR-SIGNAL group-wrapped wide (a
+	//     box group: excluded from the pass-through, box stays content-width, its
+	//     wide child does NOT escape). Both wide images are probed as `aligned`;
+	//     their differing rects are the exclusion regression pin.
+	$pages['color-signal-group'] = [
+		'title'       => 'Sidecar Lab — Color-signal Group (pass-through exclusion)',
+		'description' => 'No rail (none/small). Content holds a PLAIN group-wrapped wide image (subgrid pass-through: escapes to the wide span ws/we) followed by a COLOR-SIGNAL group-wrapped wide image (a box group EXCLUDED from the pass-through, Task 5.2 gate: the box keeps content-width so a Style-Manager background fill does NOT bleed full-viewport, and its wide child stays constrained instead of escaping). The two wide-image rects differ; that divergence is the exclusion pin.',
+		'families'    => [ 'rail-none', 'width-small', 'group-passthrough', 'color-signal', 'box-group-exclusion' ],
+		'content'     => sl_sidecar(
+			[ 'sidebarPosition' => 'none', 'sidebarWidth' => 'small' ],
+			sl_heading( 'Plain group-wrapped wide' )
+			. sl_group( sl_image( $img, 'wide' ) . sl_paragraphs( 1, 2 ) )
+			. sl_heading( 'Color-signal group-wrapped wide' )
+			. sl_color_signal_group( sl_image( $img, 'wide' ) . sl_paragraphs( 1, 3 ) )
+			. sl_paragraphs( 1, 4 )
+		),
 	];
 
 	// --- (c) Header-nested grid: a Nova header row overrides
