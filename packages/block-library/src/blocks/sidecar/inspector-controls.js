@@ -2,12 +2,13 @@
  * WordPress dependencies
  */
 import { __ } from '@wordpress/i18n';
-import { RadioControl, ToggleControl, PanelBody, SelectControl } from '@wordpress/components';
+import { RadioControl, ToggleControl, SelectControl } from '@wordpress/components';
 import { InspectorControls } from '@wordpress/block-editor';
-import { Fragment, useRef } from "@wordpress/element";
+import { Fragment } from "@wordpress/element";
 import { ControlsGroup, ControlsSection, ControlsTab, useInnerBlocks } from "@novablocks/block-editor";
-import { useDispatch } from "@wordpress/data";
-import { createBlock } from '@wordpress/blocks';
+
+import SidecarLayoutRecipes from "./layout-recipe-controls";
+import { resolveSidecarAreaSide } from "./layout-recipes";
 
 const SidecarInspectorControls = ( props ) => {
 
@@ -24,9 +25,18 @@ const SidecarInspectorControls = ( props ) => {
     tagName: TagName = 'div'
   } = attributes;
 
-  const { replaceInnerBlocks } = useDispatch( 'core/block-editor' );
   const innerBlocks = useInnerBlocks( clientId );
-  const sidebarInnerBlocks = useRef( [] );
+
+  // Rail presence gates the fine-tuning controls (size / sticky) — they are
+  // meaningless without a rail. Derived from the ACTUAL area children (Task 4.1
+  // three-area model), so it stays correct for a three-area Hive whose
+  // sidebarPosition is 'none'. Mirrors edit.js / the PHP wrapper render.
+  const hasRail = innerBlocks.some( ( block ) => {
+    if ( block.name !== 'novablocks/sidecar-area' ) {
+      return false;
+    }
+    return resolveSidecarAreaSide( block.attributes?.areaName || 'content', sidebarPosition ) !== '';
+  } );
 
   const htmlElementMessages = {
     header: __(
@@ -60,55 +70,32 @@ const SidecarInspectorControls = ( props ) => {
         key={ 'sidecar_layout' }>
         <ControlsTab label={ __( 'Settings', '__plugin_txtd' ) }>
 
+          { /* Primary control: the curated Layout Recipe picker (Task 4.2).
+               It owns rail structure + the managed style attributes; the width /
+               sticky / font controls below are fine-tuning that push the block to
+               the Custom state when they diverge from a recipe. */ }
           <ControlsGroup>
-
-            <RadioControl
-              key={ 'sidecar-sidebar-position' }
-              label={ __( 'Sidebar Position', '__plugin_txtd' ) }
-              selected={ sidebarPosition }
-              options={
-                [
-                  { label: __( 'Show sidebar on left', '__plugin_txtd' ), value: 'left' },
-                  { label: __( 'Show sidebar on right', '__plugin_txtd' ), value: 'right' },
-                  { label: __( 'No sidebar', '__plugin_txtd' ), value: 'none' }
-                ]
-              }
-              onChange={ ( nextSidebarPosition ) => {
-                if ( nextSidebarPosition === 'none' ) {
-                  const sidebar = innerBlocks.find( block => block.attributes.areaName === 'sidebar' );
-                  sidebarInnerBlocks.current = sidebar?.innerBlocks || [];
-                  replaceInnerBlocks( clientId, innerBlocks.filter( block => block.attributes.areaName !== 'sidebar' ) );
-                } else if ( ! innerBlocks.some( block => block.attributes.areaName === 'sidebar' ) ) {
-                  // Only create a sidebar area when coming from 'none' (no area
-                  // exists). Switching directly left<->right just updates the
-                  // position attribute, matching the toolbar buttons, so we
-                  // avoid appending a duplicate sidebar area.
-                  const sidebar = createBlock( 'novablocks/sidecar-area', { areaName: 'sidebar' }, sidebarInnerBlocks.current );
-                  replaceInnerBlocks( clientId, innerBlocks.concat( [ sidebar ] ) );
-                }
-                setAttributes( { sidebarPosition: nextSidebarPosition } );
-              } }
-            />
-
-            <RadioControl
-              key={ 'sidecar-sidebar-controls' }
-              label={ __( 'Sidebar Size', '__plugin_txtd' ) }
-              selected={ sidebarWidth }
-              options={
-                [
-                  { label: __( 'Small', '__plugin_txtd' ), value: 'small' },
-                  { label: __( 'Medium', '__plugin_txtd' ), value: 'medium' },
-                  { label: __( 'Large', '__plugin_txtd' ), value: 'large' },
-                ]
-              }
-              onChange={ ( nextSidebarWidth ) => {
-                setAttributes( { sidebarWidth: nextSidebarWidth } );
-              } }
-            />
+            <SidecarLayoutRecipes { ...props } />
           </ControlsGroup>
 
-          { sidebarPosition !== 'none' &&
+          { hasRail &&
             <ControlsGroup>
+              <RadioControl
+                key={ 'sidecar-sidebar-controls' }
+                label={ __( 'Sidebar Size', '__plugin_txtd' ) }
+                selected={ sidebarWidth }
+                options={
+                  [
+                    { label: __( 'Small', '__plugin_txtd' ), value: 'small' },
+                    { label: __( 'Medium', '__plugin_txtd' ), value: 'medium' },
+                    { label: __( 'Large', '__plugin_txtd' ), value: 'large' },
+                  ]
+                }
+                onChange={ ( nextSidebarWidth ) => {
+                  setAttributes( { sidebarWidth: nextSidebarWidth } );
+                } }
+              />
+
               <ToggleControl
                 label={ __( 'Enable sticky sidebar on scroll', '__plugin_txtd' ) }
                 help={
