@@ -211,6 +211,8 @@ TDD: legacy `areaName:"sidebar"` + parent `sidebarPosition` renders `nb-sidecar-
 
 Managed set: `sidebarPosition` (legacy), per-side rail width/existence, gutter offsets, `lastItemIsSticky`, `contentFontSize`, `sidebarFontSize`. Recipes: Centered, Right Rail, Left Rail, Hive, Offset Editorial — every definition declares the full managed set; apply = one patch; active = derived. Verify one-step undo and clean save/reload in the Site Editor (napkin: Execution & Validation #6). Rebuild the Hive fixture with the single-block recipe and screenshot-compare against the nested-Hive fixture.
 
+**Task 5.1 + 5.2 DONE (worktree `51d17de2`)** — see design doc "As built — Phase 5". 5.1: single source `packages/utils/src/layout-containers.js` → generated `$nb-layout-grid-parents` (build:packages), consumed by `_layout.scss` + `break-align.js`, pinned by `layout-containers.test.js`; `.wp-site-blocks` vs `[id=main]` drift reconciled; frontend-neutral. 5.2: Group is a subgrid pass-through under `@supports` + `above(lap)`, scoped to content grids (NOT chrome), wide/full escapes like a direct child (measured 1125px == direct); `--diff baseline-v2 task5` exit 0 (16 annotated).
+
 ---
 
 ## Phase 4b — Pull-out styles (added 2026-07-21; see design doc "Pull-outs")
@@ -246,6 +248,8 @@ Add fixture pages to the generator ONLY at the post-ship-decision re-baseline (d
 ### Task 5.0: Header-nested-grid ruling (from the 4b.3 finding)
 
 Determine whether the OLD engine also broke in this context (likely — %-math in max-content contexts is a known hazard); then either constrain the layout grid in header contexts (e.g. gate the grid off inside `novablocks/header-row`, or clamp `--nb-actual-container-width` there) or formally declare sidecar-in-header unsupported. Either outcome becomes an annotated intentional diff (or a doc'd non-support note) against baseline-v2.
+
+**DONE (worktree `51d17de2`)** — see design doc "As built — Phase 5". Verdict: the OLD engine broke identically (the `--nb-actual-container-width` %-math is in the byte-identical fallback at `55afe4f0`). Ruling: header rows are not a sanctioned grid context — fix (a), gate the grid off inside `.nb-header-row` (`display:block` + `min-width:0`). Fixture fits (~1376px) instead of overflowing (~8341px); annotated in `expected-changes.md`.
 
 ### Task 5.1: Single container-list source
 
