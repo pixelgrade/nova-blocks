@@ -33,9 +33,16 @@
 
   --nb-content-inset-setting: 288;
 
-  --nb-sidecar-sidebar-small-width: calc(var(--nb-content-inset-setting) * var(--theme-body-final-font-size, 16px) / 16);
-  --nb-sidecar-sidebar-medium-width: calc(330 * var(--theme-body-final-font-size, 16px) / 16);
-  --nb-sidecar-sidebar-large-width: calc(400 * var(--theme-body-final-font-size, 16px) / 16);
+  // Rail scale bridge (Style Manager Layout section). SM emits the per-side
+  // Small/Medium/Large rail tokens once the user touches the Rail Scale control;
+  // until then the tokens are absent and each var() falls back to today's exact
+  // value — Small stays content-inset-derived (via --nb-content-inset-setting,
+  // which Anima maps to var(--sm-content-inset, 288)), Medium 330, Large 400 —
+  // so untouched rendering is byte-identical (legacy-until-touched). The
+  // font-size-relative calc shape is preserved.
+  --nb-sidecar-sidebar-small-width: calc(var(--sm-rail-small, var(--nb-content-inset-setting)) * var(--theme-body-final-font-size, 16px) / 16);
+  --nb-sidecar-sidebar-medium-width: calc(var(--sm-rail-medium, 330) * var(--theme-body-final-font-size, 16px) / 16);
+  --nb-sidecar-sidebar-large-width: calc(var(--sm-rail-large, 400) * var(--theme-body-final-font-size, 16px) / 16);
 
   // the unit is needed in order for the calc functions to work
   --nb-sidecar-sidebar-left-width: var(--nb-sidecar-sidebar-small-width);
