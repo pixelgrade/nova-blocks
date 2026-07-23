@@ -23,6 +23,7 @@
  */
 import { __ } from '@wordpress/i18n';
 import { cloneBlock, createBlock } from '@wordpress/blocks';
+import { Notice } from '@wordpress/components';
 import { useCallback, useMemo } from '@wordpress/element';
 import { useDispatch } from '@wordpress/data';
 
@@ -36,11 +37,13 @@ import {
 import {
   LAYOUT_RECIPES,
   SIDECAR_LAYOUT_MANAGED_ATTRIBUTES,
+  applySidecarLayoutChange,
+  doesSidecarSignatureConflictWithReservations,
   getCandidateDefinitions,
   getStructuralSignature,
   resolveSidecarAreaSide,
-  signaturesEqual,
 } from './layout-recipes';
+import useAncestorRailReservations from './use-ancestor-rail-reservations';
 
 /* ---------- schematic thumbnails (grey content · accent rails) ---------- */
 
@@ -119,95 +122,11 @@ const AREA = 'novablocks/sidecar-area';
 const areaNameOf = ( block ) => ( block.attributes && block.attributes.areaName ) || 'content';
 const isArea = ( block ) => block.name === AREA;
 
-/**
- * Reconcile the current rail AREAS to a recipe's structural signature, preferring
- * to preserve existing rail content and minimize churn. Returns a fresh ordered
- * inner-block array (every element `cloneBlock`/`createBlock`-fresh, so it is
- * safe to hand to `replaceBlock` with no clientId aliasing), or `null` when the
- * structure already matches the target under the target position (attribute-only
- * apply). Preserved content is cloned, never destroyed.
- *
- * A rail dropped by a recipe (e.g. Centered from Right Rail) loses its content
- * on apply; a single undo restores it (the whole apply is one undo level), so no
- * cross-apply stash is kept — a stash would have to survive the replaceBlock
- * remount, which it cannot (new clientId), and one-undo already covers the case.
- *
- * @param {Array}  innerBlocks    Current Sidecar children (block objects).
- * @param {Object} recipe         The target recipe (from LAYOUT_RECIPES).
- * @param {string} targetPosition The recipe's target sidebarPosition.
- * @return {?Array} New inner blocks, or null to skip the structural step.
- */
-const reconcileAreas = ( innerBlocks, recipe, targetPosition ) => {
-  const areas = innerBlocks.filter( isArea );
-  const contentBlock = areas.find( ( block ) => areaNameOf( block ) === 'content' );
-  const railsWithSide = areas
-    .filter( ( block ) => areaNameOf( block ) !== 'content' )
-    .map( ( block ) => ( {
-      block,
-      side: resolveSidecarAreaSide( areaNameOf( block ), targetPosition ),
-    } ) );
-
-  const currentSignature = getStructuralSignature( railsWithSide.map( ( rail ) => rail.side ) );
-
-  // Already the right shape under the target position → attributes only. This is
-  // the no-migration fast path for legacy two-area content (a legacy `sidebar`
-  // simply follows the new position).
-  if ( signaturesEqual( currentSignature, recipe.signature ) ) {
-    return null;
-  }
-
-  const need = { left: recipe.signature.hasLeft, right: recipe.signature.hasRight };
-  const consumed = new Set();
-  const assignment = { left: null, right: null };
-
-  // Pass 1 — each needed side claims an existing rail that already resolves to it
-  // (keeps the user's rail content in place; legacy areas are never renamed).
-  [ 'left', 'right' ].forEach( ( side ) => {
-    if ( ! need[ side ] ) {
-      return;
-    }
-    const exact = railsWithSide.find(
-      ( rail ) => rail.side === side && ! consumed.has( rail.block.clientId )
-    );
-    if ( exact ) {
-      consumed.add( exact.block.clientId );
-      assignment[ side ] = cloneBlock( exact.block );
-    }
-  } );
-
-  // Pass 2 — fill any still-unmet side: re-home a spare rail's content (a side
-  // flip preserves that content), else a fresh empty explicit-side area.
-  [ 'left', 'right' ].forEach( ( side ) => {
-    if ( ! need[ side ] || assignment[ side ] ) {
-      return;
-    }
-    const spare = railsWithSide.find( ( rail ) => ! consumed.has( rail.block.clientId ) );
-    if ( spare ) {
-      consumed.add( spare.block.clientId );
-      assignment[ side ] = createBlock( AREA, { areaName: `sidebar-${ side }` }, spare.block.innerBlocks.map( cloneBlock ) );
-      return;
-    }
-    assignment[ side ] = createBlock( AREA, { areaName: `sidebar-${ side }` } );
-  } );
-
-  const content = contentBlock ? cloneBlock( contentBlock ) : createBlock( AREA, { areaName: 'content' } );
-
-  const ordered = [];
-  if ( assignment.left ) {
-    ordered.push( assignment.left );
-  }
-  ordered.push( content );
-  if ( assignment.right ) {
-    ordered.push( assignment.right );
-  }
-
-  return ordered;
-};
-
 const SidecarLayoutRecipes = ( props ) => {
   const { attributes, setAttributes, clientId, name } = props;
 
   const innerBlocks = useInnerBlocks( clientId );
+  const ancestorRailReservations = useAncestorRailReservations( clientId );
   const registeredDefaults = useRegisteredAttributeDefaults( name );
   const { replaceBlock } = useDispatch( 'core/block-editor' );
 
@@ -226,28 +145,28 @@ const SidecarLayoutRecipes = ( props ) => {
     [ signature, attributes, registeredDefaults ]
   );
 
+  const hasAncestorRailConflict = doesSidecarSignatureConflictWithReservations(
+    signature,
+    ancestorRailReservations
+  );
+
   const applyRecipe = useCallback( ( recipe ) => {
     const patch = getPresetApplyPatch(
       { id: recipe.id, managedAttributes: SIDECAR_LAYOUT_MANAGED_ATTRIBUTES, values: recipe.values },
       attributes
     );
 
-    const reconciled = reconcileAreas( innerBlocks, recipe, patch.sidebarPosition );
-
-    if ( reconciled ) {
-      // Structure changes: apply the managed patch AND the reconciled areas in
-      // ONE atomic replaceBlock, so a single undo reverts both. Non-managed
-      // attributes (color signal, spacing, anchor, tagName…) are carried over.
-      replaceBlock(
-        clientId,
-        createBlock( 'novablocks/sidecar', { ...attributes, ...patch }, reconciled )
-      );
-      return;
-    }
-
-    // Structure already matches: one attribute patch (one undo), block identity
-    // and inner content preserved.
-    setAttributes( patch );
+    applySidecarLayoutChange( {
+      attributes,
+      clientId,
+      innerBlocks,
+      patch,
+      targetSignature: recipe.signature,
+      cloneBlock,
+      createBlock,
+      replaceBlock,
+      setAttributes,
+    } );
   }, [ attributes, innerBlocks, clientId, replaceBlock, setAttributes ] );
 
   return (
@@ -256,7 +175,12 @@ const SidecarLayoutRecipes = ( props ) => {
       <div className="nb-preset-cards__grid" role="group" aria-label={ __( 'Layout Recipe', '__plugin_txtd' ) }>
         { LAYOUT_RECIPES.map( ( recipe ) => {
           const isSelected = activeRecipeId === recipe.id;
+          const isUnavailable = doesSidecarSignatureConflictWithReservations(
+            recipe.signature,
+            ancestorRailReservations
+          );
           const meta = RECIPE_LABELS[ recipe.id ];
+          const descriptionId = `nb-sidecar-layout-recipe-${ clientId }-${ recipe.id }-description`;
 
           return (
             <button
@@ -264,15 +188,34 @@ const SidecarLayoutRecipes = ( props ) => {
               key={ recipe.id }
               className={ 'nb-preset-card' + ( isSelected ? ' is-selected' : '' ) }
               aria-pressed={ isSelected }
-              onClick={ () => applyRecipe( recipe ) }
+              aria-disabled={ isUnavailable }
+              aria-label={ meta.label }
+              aria-describedby={ descriptionId }
+              onClick={ () => {
+                if ( ! isUnavailable ) {
+                  applyRecipe( recipe );
+                }
+              } }
             >
               { RECIPE_THUMBNAILS[ recipe.id ] }
               <span className="nb-preset-card__name">{ meta.label }</span>
-              <span className="nb-preset-card__sub">{ meta.sub }</span>
+              <span id={ descriptionId } className="nb-preset-card__sub">
+                { isUnavailable
+                  ? __( 'Unavailable: parent rail', '__plugin_txtd' )
+                  : meta.sub }
+              </span>
             </button>
           );
         } ) }
       </div>
+      { hasAncestorRailConflict && (
+        <Notice status="warning" isDismissible={ false }>
+          { __(
+            'This Sidecar uses a rail reserved by a parent Sidecar and may overlap it. Choose an available layout.',
+            '__plugin_txtd'
+          ) }
+        </Notice>
+      ) }
       { null === activeRecipeId && (
         <p className="nb-settings-hint">{ __( 'Custom', '__plugin_txtd' ) }</p>
       ) }

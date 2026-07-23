@@ -27,27 +27,25 @@ test( 'the managed decision is exactly one engine patch', () => {
   );
 } );
 
-test( 'structure-matching apply is one setAttributes patch; structure-changing apply is one atomic replaceBlock', () => {
-  assert.match( source, /reconcileAreas\(\s*innerBlocks,\s*recipe,\s*patch\.sidebarPosition\s*\)/ );
+test( 'recipe apply uses the shared one-patch / one-replacement coordinator', () => {
+  assert.match( source, /applySidecarLayoutChange\(\s*\{/ );
+  assert.match( source, /targetSignature:\s*recipe\.signature/ );
   // No cross-apply stash survives the replaceBlock remount — one undo covers it.
   assert.doesNotMatch( source, /railStash/ );
   const applyBody = source.slice( source.indexOf( 'const applyRecipe' ) );
 
-  // Structure changes → replaceBlock swapping a fresh Sidecar that embeds the patch.
-  assert.match(
-    applyBody,
-    /replaceBlock\(\s*clientId,\s*createBlock\(\s*'novablocks\/sidecar',\s*\{\s*\.\.\.attributes,\s*\.\.\.patch\s*\},\s*reconciled\s*\)\s*\)/
-  );
-  // Structure matches → a single attribute patch (the fine-tune path).
-  assert.match( applyBody, /setAttributes\(\s*patch\s*\)/ );
+  assert.match( applyBody, /cloneBlock,/ );
+  assert.match( applyBody, /createBlock,/ );
+  assert.match( applyBody, /replaceBlock,/ );
+  assert.match( applyBody, /setAttributes,/ );
+  assert.doesNotMatch( applyBody, /reconcileAreas/ );
   // The rejected non-atomic sequence must not return.
   assert.doesNotMatch( source, /__unstableMarkNextChangeAsNotPersistent/ );
 } );
 
 test( 'structure is coordinated, never patched: the managed patch never carries an area attribute', () => {
   assert.doesNotMatch( source, /values:\s*\{[^}]*areaName/ );
-  // Rail structure moves via a coordinated replaceBlock, not the attribute patch.
-  assert.match( source, /replaceBlock\(/ );
+  assert.match( source, /applySidecarLayoutChange\(/ );
 } );
 
 test( 'no stored recipe identity: the derived id never becomes an attribute write', () => {
@@ -58,4 +56,35 @@ test( 'no stored recipe identity: the derived id never becomes an attribute writ
 test( 'renders one Custom hint, only when no recipe matches', () => {
   const hints = source.match( /null === activeRecipeId[\s\S]*?nb-settings-hint[\s\S]*?Custom/g ) || [];
   assert.equal( hints.length, 1 );
+} );
+
+test( 'recipes that request an ancestor-reserved rail are focusable but guarded with a visible reason', () => {
+  assert.match(
+    source,
+    /const ancestorRailReservations = useAncestorRailReservations\(\s*clientId\s*\)/
+  );
+  assert.match(
+    source,
+    /const isUnavailable = doesSidecarSignatureConflictWithReservations\(\s*recipe\.signature,\s*ancestorRailReservations\s*\)/
+  );
+  assert.match( source, /aria-disabled=\{\s*isUnavailable\s*\}/ );
+  assert.match( source, /aria-label=\{\s*meta\.label\s*\}/ );
+  assert.match( source, /aria-describedby=\{\s*descriptionId\s*\}/ );
+  assert.match(
+    source,
+    /onClick=\{\s*\(\)\s*=>\s*\{\s*if\s*\(\s*!\s*isUnavailable\s*\)\s*\{\s*applyRecipe\(\s*recipe\s*\)/
+  );
+  assert.match( source, /Unavailable: parent rail/ );
+} );
+
+test( 'an already-conflicting layout shows a non-dismissible warning without migrating it', () => {
+  assert.match(
+    source,
+    /const hasAncestorRailConflict = doesSidecarSignatureConflictWithReservations\(\s*signature,\s*ancestorRailReservations\s*\)/
+  );
+  assert.match(
+    source,
+    /hasAncestorRailConflict[\s\S]*?<Notice[\s\S]*?status="warning"[\s\S]*?isDismissible=\{\s*false\s*\}/
+  );
+  assert.doesNotMatch( source, /replaceBlock\([^)]*hasAncestorRailConflict/ );
 } );

@@ -18,8 +18,7 @@
  * managed ATTRIBUTE set contains NO structural attribute at all
  * (STRUCTURAL_ATTRIBUTES = cardLayout / layoutStyle / columns / contentType —
  * none are in this set), and rail structure is reconciled by an explicit,
- * coordinated `replaceInnerBlocks()` step (exactly like the pre-existing
- * position radio in inspector-controls.js), never cleared implicitly.
+ * coordinated atomic `replaceBlock()` step, never cleared implicitly.
  *
  * Therefore applying a recipe keeps structure OUT of the attribute patch and
  * uses whichever single-undo primitive fits (see layout-recipe-controls.js):
@@ -92,6 +91,194 @@ export const getStructuralSignature = ( areaSides ) => {
     hasLeft: sides.includes( 'left' ),
     hasRight: sides.includes( 'right' ),
   };
+};
+
+const AREA = 'novablocks/sidecar-area';
+const areaNameOf = ( block ) => ( block.attributes && block.attributes.areaName ) || 'content';
+const isArea = ( block ) => block.name === AREA;
+
+/**
+ * Return the actual side of a Sidecar that has exactly one resolved rail.
+ * No rail, two rails, or malformed duplicate rails are intentionally
+ * ambiguous and return `null`.
+ *
+ * @param {Array}  innerBlocks     Current Sidecar children.
+ * @param {string} sidebarPosition Parent Sidecar position for legacy areas.
+ * @return {?string} `left`, `right`, or null.
+ */
+export const getSingleRailSide = ( innerBlocks, sidebarPosition = '' ) => {
+  const sides = ( Array.isArray( innerBlocks ) ? innerBlocks : [] )
+    .filter( isArea )
+    .map( ( block ) => resolveSidecarAreaSide( areaNameOf( block ), sidebarPosition ) )
+    .filter( Boolean );
+
+  return sides.length === 1 ? sides[ 0 ] : null;
+};
+
+/**
+ * Collect the rail sides reserved by ancestor Sidecars. Structural presence is
+ * intentional: an empty ancestor rail still reserves its side so availability
+ * does not change later when content is inserted into that rail.
+ *
+ * @param {Array} ancestorSidecars Ancestor Sidecar block objects.
+ * @return {{ hasLeft: boolean, hasRight: boolean }}
+ */
+export const getReservedAncestorRailSides = ( ancestorSidecars ) => {
+  const sides = ( Array.isArray( ancestorSidecars ) ? ancestorSidecars : [] )
+    .filter( ( block ) => block && block.name === 'novablocks/sidecar' )
+    .reduce( ( reservedSides, block ) => {
+      const sidebarPosition = block.attributes && block.attributes.sidebarPosition;
+      const blockSides = ( Array.isArray( block.innerBlocks ) ? block.innerBlocks : [] )
+        .filter( isArea )
+        .map( ( area ) =>
+          resolveSidecarAreaSide( areaNameOf( area ), sidebarPosition )
+        )
+        .filter( Boolean );
+
+      return reservedSides.concat( blockSides );
+    }, [] );
+
+  return getStructuralSignature( sides );
+};
+
+/**
+ * Whether a proposed/current Sidecar signature requests a rail side already
+ * reserved by an ancestor Sidecar.
+ *
+ * @param {Object} signature    Sidecar `{ hasLeft, hasRight }` signature.
+ * @param {Object} reservations Ancestor `{ hasLeft, hasRight }` reservations.
+ * @return {boolean}
+ */
+export const doesSidecarSignatureConflictWithReservations = (
+  signature,
+  reservations
+) =>
+  !! (
+    signature &&
+    reservations &&
+    ( ( signature.hasLeft && reservations.hasLeft ) ||
+      ( signature.hasRight && reservations.hasRight ) )
+  );
+
+/**
+ * Reconcile Sidecar area blocks to a target rail signature while preserving
+ * existing rail attributes and content. Block construction is supplied by the
+ * caller so this domain module remains free of WordPress imports and directly
+ * testable.
+ *
+ * @param {Array}  innerBlocks      Current Sidecar children.
+ * @param {Object} targetSignature  Desired `{ hasLeft, hasRight }` shape.
+ * @param {string} targetPosition   Target sidebarPosition.
+ * @param {Function} cloneBlock     WordPress block clone primitive.
+ * @param {Function} createBlock    WordPress block creation primitive.
+ * @return {?Array} Reconciled area blocks, or null when structure already fits.
+ */
+export const reconcileSidecarAreas = (
+  innerBlocks,
+  targetSignature,
+  targetPosition,
+  cloneBlock,
+  createBlock
+) => {
+  const areas = innerBlocks.filter( isArea );
+  const contentBlock = areas.find( ( block ) => areaNameOf( block ) === 'content' );
+  const railsWithSide = areas
+    .filter( ( block ) => areaNameOf( block ) !== 'content' )
+    .map( ( block ) => ( {
+      block,
+      side: resolveSidecarAreaSide( areaNameOf( block ), targetPosition ),
+    } ) );
+
+  const currentSignature = getStructuralSignature( railsWithSide.map( ( rail ) => rail.side ) );
+
+  if ( signaturesEqual( currentSignature, targetSignature ) ) {
+    return null;
+  }
+
+  const need = { left: targetSignature.hasLeft, right: targetSignature.hasRight };
+  const consumed = new Set();
+  const assignment = { left: null, right: null };
+
+  [ 'left', 'right' ].forEach( ( side ) => {
+    if ( ! need[ side ] ) {
+      return;
+    }
+    const exact = railsWithSide.find(
+      ( rail ) => rail.side === side && ! consumed.has( rail.block.clientId )
+    );
+    if ( exact ) {
+      consumed.add( exact.block.clientId );
+      assignment[ side ] = cloneBlock( exact.block );
+    }
+  } );
+
+  [ 'left', 'right' ].forEach( ( side ) => {
+    if ( ! need[ side ] || assignment[ side ] ) {
+      return;
+    }
+    const spare = railsWithSide.find( ( rail ) => ! consumed.has( rail.block.clientId ) );
+    if ( spare ) {
+      consumed.add( spare.block.clientId );
+      assignment[ side ] = cloneBlock( spare.block, {
+        areaName: `sidebar-${ side }`,
+      } );
+      return;
+    }
+    assignment[ side ] = createBlock( AREA, { areaName: `sidebar-${ side }` } );
+  } );
+
+  const content = contentBlock
+    ? cloneBlock( contentBlock )
+    : createBlock( AREA, { areaName: 'content' } );
+
+  const ordered = [];
+  if ( assignment.left ) {
+    ordered.push( assignment.left );
+  }
+  ordered.push( content );
+  if ( assignment.right ) {
+    ordered.push( assignment.right );
+  }
+
+  return ordered;
+};
+
+/**
+ * Apply an attribute patch together with any required rail reconciliation.
+ * Structural changes use one `replaceBlock`; matching structures retain block
+ * identity and use one `setAttributes` patch.
+ *
+ * @param {Object} options Coordinated editor change inputs and primitives.
+ * @return {void}
+ */
+export const applySidecarLayoutChange = ( {
+  attributes,
+  clientId,
+  innerBlocks,
+  patch,
+  targetSignature,
+  cloneBlock,
+  createBlock,
+  replaceBlock,
+  setAttributes,
+} ) => {
+  const reconciled = reconcileSidecarAreas(
+    innerBlocks,
+    targetSignature,
+    patch.sidebarPosition,
+    cloneBlock,
+    createBlock
+  );
+
+  if ( reconciled ) {
+    replaceBlock(
+      clientId,
+      createBlock( 'novablocks/sidecar', { ...attributes, ...patch }, reconciled )
+    );
+    return;
+  }
+
+  setAttributes( patch );
 };
 
 /**

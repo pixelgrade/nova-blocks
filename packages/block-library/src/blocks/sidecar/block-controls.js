@@ -3,17 +3,34 @@
  */
 import { __ } from '@wordpress/i18n';
 import { BlockControls } from '@wordpress/block-editor';
+import { cloneBlock, createBlock } from '@wordpress/blocks';
 import { ToolbarGroup, ToolbarButton } from '@wordpress/components';
+import { useDispatch } from '@wordpress/data';
 import { useInnerBlocks } from '@novablocks/block-editor';
+
+import {
+  applySidecarLayoutChange,
+  doesSidecarSignatureConflictWithReservations,
+  getSingleRailSide,
+} from './layout-recipes';
+import useAncestorRailReservations from './use-ancestor-rail-reservations';
 
 const SIDEBAR_ALIGNMENTS_CONTROLS = {
   left: {
     icon: 'align-pull-left',
     label: __( 'Show Sidebar on Left Side', '__plugin_txtd' ),
+    unavailableDescription: __(
+      'Left sidebar unavailable because a parent Sidecar reserves this rail',
+      '__plugin_txtd'
+    ),
   },
   right: {
     icon: 'align-pull-right',
     label: __( 'Show Sidebar on Right Side', '__plugin_txtd' ),
+    unavailableDescription: __(
+      'Right sidebar unavailable because a parent Sidecar reserves this rail',
+      '__plugin_txtd'
+    ),
   },
 };
 
@@ -23,21 +40,16 @@ const SidecarBlockControls = function( props ) {
   const { sidebarPosition } = attributes;
 
   const innerBlocks = useInnerBlocks( clientId );
+  const ancestorRailReservations = useAncestorRailReservations( clientId );
+  const { replaceBlock } = useDispatch( 'core/block-editor' );
 
-  // The toolbar quick-flip writes ONLY sidebarPosition, which moves a legacy
-  // `sidebar` rail (its side is resolved from position) but NOT an explicit-named
-  // rail (`sidebar-left`/`sidebar-right`, placed by its own class). On an explicit
-  // rail it would leave the rail put while contradicting its class and dropping to
-  // Custom — so it is shown ONLY for legacy `sidebar`-area content, where it still
-  // works exactly as before. Explicit rails (recipe-created or three-area) change
-  // side through the Layout Recipe picker instead. (Task 4.2 review.)
-  const hasExplicitRail = innerBlocks.some(
-    ( block ) =>
-      block.name === 'novablocks/sidecar-area' &&
-      [ 'sidebar-left', 'sidebar-right' ].includes( block.attributes?.areaName )
-  );
+  // A single rail has an unambiguous mirror action. Its side comes from the
+  // actual area structure (explicit sidebar-left/right wins; a legacy `sidebar`
+  // follows sidebarPosition). Centered and dual-rail layouts stay with the full
+  // Layout Recipe picker because Left/Right is ambiguous for them.
+  const singleRailSide = getSingleRailSide( innerBlocks, sidebarPosition );
 
-  if ( sidebarPosition === 'none' || hasExplicitRail ) {
+  if ( null === singleRailSide ) {
     return null;
   }
 
@@ -45,14 +57,45 @@ const SidecarBlockControls = function( props ) {
     <BlockControls>
       <ToolbarGroup>
         { Object.keys( SIDEBAR_ALIGNMENTS_CONTROLS ).map( ( control ) => {
+          const targetSignature = {
+            hasLeft: control === 'left',
+            hasRight: control === 'right',
+          };
+          const isUnavailable =
+            control !== singleRailSide &&
+            doesSidecarSignatureConflictWithReservations(
+              targetSignature,
+              ancestorRailReservations
+            );
+
           return (
             <ToolbarButton
               icon={ SIDEBAR_ALIGNMENTS_CONTROLS[ control ].icon }
               label={ SIDEBAR_ALIGNMENTS_CONTROLS[ control ].label }
+              describedBy={
+                isUnavailable
+                  ? SIDEBAR_ALIGNMENTS_CONTROLS[ control ].unavailableDescription
+                  : undefined
+              }
               key={ control }
-              isActive={ control === sidebarPosition }
+              isActive={ control === singleRailSide }
+              isDisabled={ isUnavailable }
+              __experimentalIsFocusable={ isUnavailable }
               onClick={ () => {
-                setAttributes( { sidebarPosition: control } )
+                applySidecarLayoutChange( {
+                  attributes,
+                  clientId,
+                  innerBlocks,
+                  patch: { sidebarPosition: control },
+                  targetSignature: {
+                    hasLeft: control === 'left',
+                    hasRight: control === 'right',
+                  },
+                  cloneBlock,
+                  createBlock,
+                  replaceBlock,
+                  setAttributes,
+                } );
               } }
             />
           )

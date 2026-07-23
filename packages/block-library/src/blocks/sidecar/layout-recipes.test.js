@@ -19,8 +19,12 @@ import { getStructuralBoundaryViolations } from '../../../../block-editor/src/pr
 import {
   LAYOUT_RECIPES,
   SIDECAR_LAYOUT_MANAGED_ATTRIBUTES,
+  applySidecarLayoutChange,
+  doesSidecarSignatureConflictWithReservations,
   getCandidateDefinitions,
   getRecipeDefinitions,
+  getReservedAncestorRailSides,
+  getSingleRailSide,
   getStructuralSignature,
   resolveSidecarAreaSide,
 } from './layout-recipes';
@@ -34,6 +38,26 @@ const REGISTERED_DEFAULTS = {
   contentFontSize: 'normal',
   sidebarFontSize: 'normal',
 };
+
+const AREA = 'novablocks/sidecar-area';
+let nextClientId = 0;
+
+const makeBlock = ( name, attributes = {}, innerBlocks = [], clientId = `block-${ ++nextClientId }` ) => ( {
+  name,
+  attributes,
+  innerBlocks,
+  clientId,
+} );
+
+const cloneTestBlock = ( block, mergeAttributes = {} ) =>
+  makeBlock(
+    block.name,
+    { ...block.attributes, ...mergeAttributes },
+    block.innerBlocks.map( cloneTestBlock )
+  );
+
+const createTestBlock = ( name, attributes = {}, innerBlocks = [] ) =>
+  makeBlock( name, attributes, innerBlocks );
 
 describe( 'managed boundary', () => {
   test( 'the family manages exactly the five style attributes', () => {
@@ -192,6 +216,250 @@ describe( 'structural signature derives from resolved area sides', () => {
     expect(
       getStructuralSignature( [ '' ] )
     ).toEqual( { hasLeft: false, hasRight: false } );
+  } );
+} );
+
+describe( 'single-rail toolbar behavior', () => {
+  test( 'an explicit rail exposes its structural side independently of sidebarPosition', () => {
+    const left = [
+      makeBlock( AREA, { areaName: 'sidebar-left' } ),
+      makeBlock( AREA, { areaName: 'content' } ),
+    ];
+    const right = [
+      makeBlock( AREA, { areaName: 'content' } ),
+      makeBlock( AREA, { areaName: 'sidebar-right' } ),
+    ];
+
+    expect( getSingleRailSide( left, 'right' ) ).toBe( 'left' );
+    expect( getSingleRailSide( right, 'left' ) ).toBe( 'right' );
+  } );
+
+  test( 'a legacy generic rail follows sidebarPosition', () => {
+    const legacy = [
+      makeBlock( AREA, { areaName: 'content' } ),
+      makeBlock( AREA, { areaName: 'sidebar' } ),
+    ];
+
+    expect( getSingleRailSide( legacy, 'left' ) ).toBe( 'left' );
+    expect( getSingleRailSide( legacy, 'right' ) ).toBe( 'right' );
+  } );
+
+  test( 'no-rail and dual-rail structures have no unambiguous toolbar side', () => {
+    const centered = [
+      makeBlock( AREA, { areaName: 'content' } ),
+    ];
+    const hive = [
+      makeBlock( AREA, { areaName: 'sidebar-left' } ),
+      makeBlock( AREA, { areaName: 'content' } ),
+      makeBlock( AREA, { areaName: 'sidebar-right' } ),
+    ];
+
+    expect( getSingleRailSide( centered, 'none' ) ).toBeNull();
+    expect( getSingleRailSide( hive, 'none' ) ).toBeNull();
+  } );
+
+  test( 'flipping an explicit rail is one atomic replacement that preserves fine-tuning and rail content', () => {
+    const railContent = makeBlock( 'core/image', { id: 17 }, [], 'rail-image' );
+    const innerBlocks = [
+      makeBlock(
+        AREA,
+        {
+          areaName: 'sidebar-left',
+          className: 'rail-class',
+          lock: { move: true, remove: false },
+        },
+        [ railContent ],
+        'left-area'
+      ),
+      makeBlock( AREA, { areaName: 'content' }, [], 'content-area' ),
+    ];
+    const attributes = {
+      sidebarPosition: 'left',
+      sidebarWidth: 'small',
+      lastItemIsSticky: true,
+      colorSignal: 3,
+    };
+    const replaceBlock = jest.fn();
+    const setAttributes = jest.fn();
+
+    applySidecarLayoutChange( {
+      attributes,
+      clientId: 'sidecar',
+      innerBlocks,
+      patch: { sidebarPosition: 'right' },
+      targetSignature: { hasLeft: false, hasRight: true },
+      cloneBlock: cloneTestBlock,
+      createBlock: createTestBlock,
+      replaceBlock,
+      setAttributes,
+    } );
+
+    expect( setAttributes ).not.toHaveBeenCalled();
+    expect( replaceBlock ).toHaveBeenCalledTimes( 1 );
+    const [ replacedClientId, replacement ] = replaceBlock.mock.calls[ 0 ];
+    expect( replacedClientId ).toBe( 'sidecar' );
+    expect( replacement.attributes ).toEqual( {
+      sidebarPosition: 'right',
+      sidebarWidth: 'small',
+      lastItemIsSticky: true,
+      colorSignal: 3,
+    } );
+    expect( replacement.innerBlocks.map( ( block ) => block.attributes.areaName ) ).toEqual( [
+      'content',
+      'sidebar-right',
+    ] );
+    expect( replacement.innerBlocks[ 1 ].attributes ).toEqual( {
+      areaName: 'sidebar-right',
+      className: 'rail-class',
+      lock: { move: true, remove: false },
+    } );
+    expect( replacement.innerBlocks[ 1 ].innerBlocks[ 0 ].attributes ).toEqual( { id: 17 } );
+    expect( replacement.innerBlocks[ 1 ].innerBlocks[ 0 ] ).not.toBe( railContent );
+  } );
+
+  test( 'flipping a standard explicit Left Rail derives as Right Rail', () => {
+    const attributes = {
+      sidebarPosition: 'left',
+      sidebarWidth: 'medium',
+      lastItemIsSticky: false,
+      contentFontSize: 'normal',
+      sidebarFontSize: 'normal',
+    };
+    const replaceBlock = jest.fn();
+
+    applySidecarLayoutChange( {
+      attributes,
+      clientId: 'left-rail-sidecar',
+      innerBlocks: [
+        makeBlock( AREA, { areaName: 'sidebar-left' } ),
+        makeBlock( AREA, { areaName: 'content' } ),
+      ],
+      patch: { sidebarPosition: 'right' },
+      targetSignature: { hasLeft: false, hasRight: true },
+      cloneBlock: cloneTestBlock,
+      createBlock: createTestBlock,
+      replaceBlock,
+      setAttributes: jest.fn(),
+    } );
+
+    const replacement = replaceBlock.mock.calls[ 0 ][ 1 ];
+    const signature = getStructuralSignature(
+      replacement.innerBlocks.map( ( block ) =>
+        resolveSidecarAreaSide(
+          block.attributes.areaName,
+          replacement.attributes.sidebarPosition
+        )
+      )
+    );
+
+    expect(
+      deriveActivePresetId(
+        getCandidateDefinitions( signature ),
+        replacement.attributes,
+        REGISTERED_DEFAULTS
+      )
+    ).toBe( 'right-rail' );
+  } );
+
+  test( 'flipping a legacy generic rail remains an attribute-only change', () => {
+    const innerBlocks = [
+      makeBlock( AREA, { areaName: 'content' }, [], 'content-area' ),
+      makeBlock(
+        AREA,
+        { areaName: 'sidebar' },
+        [ makeBlock( 'core/paragraph', { content: 'Rail copy' } ) ],
+        'legacy-rail'
+      ),
+    ];
+    const replaceBlock = jest.fn();
+    const setAttributes = jest.fn();
+
+    applySidecarLayoutChange( {
+      attributes: { sidebarPosition: 'left', sidebarWidth: 'large' },
+      clientId: 'legacy-sidecar',
+      innerBlocks,
+      patch: { sidebarPosition: 'right' },
+      targetSignature: { hasLeft: false, hasRight: true },
+      cloneBlock: cloneTestBlock,
+      createBlock: createTestBlock,
+      replaceBlock,
+      setAttributes,
+    } );
+
+    expect( replaceBlock ).not.toHaveBeenCalled();
+    expect( setAttributes ).toHaveBeenCalledTimes( 1 );
+    expect( setAttributes ).toHaveBeenCalledWith( { sidebarPosition: 'right' } );
+  } );
+} );
+
+describe( 'ancestor rail reservations', () => {
+  test( 'an explicit empty ancestor rail still reserves its side', () => {
+    const ancestor = makeBlock(
+      'novablocks/sidecar',
+      { sidebarPosition: 'none' },
+      [
+        makeBlock( AREA, { areaName: 'content' } ),
+        makeBlock( AREA, { areaName: 'sidebar-right' } ),
+      ]
+    );
+
+    expect( getReservedAncestorRailSides( [ ancestor ] ) ).toEqual( {
+      hasLeft: false,
+      hasRight: true,
+    } );
+  } );
+
+  test( 'legacy ancestor rails reserve the side resolved from sidebarPosition', () => {
+    const leftAncestor = makeBlock(
+      'novablocks/sidecar',
+      { sidebarPosition: 'left' },
+      [
+        makeBlock( AREA, { areaName: 'sidebar' } ),
+        makeBlock( AREA, { areaName: 'content' } ),
+      ]
+    );
+    const rightAncestor = makeBlock(
+      'novablocks/sidecar',
+      { sidebarPosition: 'right' },
+      [
+        makeBlock( AREA, { areaName: 'content' } ),
+        makeBlock( AREA, { areaName: 'sidebar' } ),
+      ]
+    );
+
+    expect( getReservedAncestorRailSides( [ leftAncestor, rightAncestor ] ) ).toEqual( {
+      hasLeft: true,
+      hasRight: true,
+    } );
+  } );
+
+  test( 'only recipes requesting a reserved side conflict', () => {
+    const reservations = { hasLeft: false, hasRight: true };
+
+    expect(
+      doesSidecarSignatureConflictWithReservations(
+        { hasLeft: true, hasRight: false },
+        reservations
+      )
+    ).toBe( false );
+    expect(
+      doesSidecarSignatureConflictWithReservations(
+        { hasLeft: false, hasRight: true },
+        reservations
+      )
+    ).toBe( true );
+    expect(
+      doesSidecarSignatureConflictWithReservations(
+        { hasLeft: true, hasRight: true },
+        reservations
+      )
+    ).toBe( true );
+    expect(
+      doesSidecarSignatureConflictWithReservations(
+        { hasLeft: false, hasRight: false },
+        reservations
+      )
+    ).toBe( false );
   } );
 } );
 
