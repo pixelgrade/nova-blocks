@@ -1,15 +1,17 @@
 <?php
 /**
- * Contract: the Editorial Pair (corner-stagger) media-composition preset.
+ * Contract: the continuous Media Composition model (grid <-> chain).
  *
- * Pins the PHP side of the additive preset:
- *   - the preset option list exposes exactly one 'editorial-pair' entry, with
- *     stylePreset='editorial-pair' and elementsDistance=0 (corners touch);
- *   - every classic preset carries the shared 'the-cloud-atlas' stylePreset
- *     sentinel so switching away resets the placement math family;
+ * Pins the PHP side of the arrangement-driven design:
+ *   - `arrangement` is the single math selector: classic presets declare
+ *     'grid', the Editorial Pair bundle declares 'chain'. `stylePreset` is a
+ *     bundle-identity label and is NEVER the math selector (the removed fork);
+ *   - the Editorial Pair option is a bundle: arrangement='chain',
+ *     elementsDistance=0 (corners touch), placementVariation=25 (base form);
  *   - novablocks_get_media_composition_css() pins the CSS gap to 0 for the
- *     editorial preset (the JS twin getMediaCompositionCSSProps does the same),
- *     and keeps emitting elementsDistance px for every classic composition.
+ *     chain arrangement (the JS twin getMediaCompositionCSSProps does the same),
+ *     and keeps emitting elementsDistance px for the grid arrangement and for
+ *     legacy content without an arrangement.
  */
 
 define( 'ABSPATH', dirname( __DIR__, 2 ) . '/' );
@@ -71,42 +73,47 @@ $editorial = array_values( array_filter( $presets, static function ( $preset ) {
 
 novablocks_ep_assert_same( 1, count( $editorial ), 'There must be exactly one Editorial Pair preset.' );
 novablocks_ep_assert_same( 'Editorial Pair', $editorial[0]['label'], 'Editorial Pair must carry its display label.' );
-novablocks_ep_assert_same( 'editorial-pair', $editorial[0]['preset']['stylePreset'], 'Editorial Pair must set stylePreset=editorial-pair.' );
+novablocks_ep_assert_same( 'chain', $editorial[0]['preset']['arrangement'], 'Editorial Pair must set arrangement=chain.' );
+novablocks_ep_assert( ! isset( $editorial[0]['preset']['stylePreset'] ), 'Editorial Pair must NOT set stylePreset for math (it is a bundle label only).' );
 novablocks_ep_assert_same( 0, $editorial[0]['preset']['elementsDistance'], 'Editorial Pair default elementsDistance must be 0 (corners touch).' );
-novablocks_ep_assert_same( 25, $editorial[0]['preset']['placementVariation'], 'Editorial Pair default placementVariation must be 25 (small top-left).' );
+novablocks_ep_assert_same( 25, $editorial[0]['preset']['placementVariation'], 'Editorial Pair default placementVariation must be 25 (base form).' );
 
-// Every classic preset must carry the shared classic sentinel so switching
-// away from Editorial Pair resets the math family in a single apply.
+// Every classic preset must declare arrangement='grid' so switching away from
+// Editorial Pair resets the arrangement in a single apply.
 foreach ( $presets as $preset ) {
 	if ( 'editorial-pair' === $preset['value'] ) {
 		continue;
 	}
 	novablocks_ep_assert(
-		isset( $preset['preset']['stylePreset'] ) && 'the-cloud-atlas' === $preset['preset']['stylePreset'],
-		'Classic preset "' . $preset['value'] . '" must carry stylePreset=the-cloud-atlas.'
+		isset( $preset['preset']['arrangement'] ) && 'grid' === $preset['preset']['arrangement'],
+		'Classic preset "' . $preset['value'] . '" must declare arrangement=grid.'
+	);
+	novablocks_ep_assert(
+		! isset( $preset['preset']['stylePreset'] ),
+		'Classic preset "' . $preset['value'] . '" must NOT carry a stylePreset math sentinel.'
 	);
 }
 
-// Gap CSS twin.
-$editorial_css = novablocks_get_media_composition_css( [ 'stylePreset' => 'editorial-pair', 'elementsDistance' => 40 ] );
+// Gap CSS twin — keyed on arrangement.
+$chain_css = novablocks_get_media_composition_css( [ 'arrangement' => 'chain', 'elementsDistance' => 40 ] );
 novablocks_ep_assert_same(
 	[ '--nb-media-composition-gap: 0px' ],
-	$editorial_css,
-	'Editorial Pair must pin the CSS gap to 0 regardless of elementsDistance.'
+	$chain_css,
+	'The chain arrangement must pin the CSS gap to 0 regardless of elementsDistance.'
 );
 
-$classic_css = novablocks_get_media_composition_css( [ 'stylePreset' => 'the-cloud-atlas', 'elementsDistance' => 40 ] );
+$grid_css = novablocks_get_media_composition_css( [ 'arrangement' => 'grid', 'elementsDistance' => 40 ] );
 novablocks_ep_assert_same(
 	[ '--nb-media-composition-gap: 40px' ],
-	$classic_css,
-	'Classic compositions must keep emitting elementsDistance as the CSS gap.'
+	$grid_css,
+	'The grid arrangement must keep emitting elementsDistance as the CSS gap.'
 );
 
 $legacy_css = novablocks_get_media_composition_css( [ 'elementsDistance' => 20 ] );
 novablocks_ep_assert_same(
 	[ '--nb-media-composition-gap: 20px' ],
 	$legacy_css,
-	'Compositions without a stylePreset must keep the legacy gap behavior.'
+	'Compositions without an arrangement must keep the legacy gap behavior.'
 );
 
 echo "media-composition-editorial-pair-contract: OK\n";

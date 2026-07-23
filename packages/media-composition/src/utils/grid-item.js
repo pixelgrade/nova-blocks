@@ -1,77 +1,77 @@
 const GRID_ITEM_SIZE = 20;
 
-// --- Editorial Pair (corner-stagger) preset ---------------------------------
+// --- Chain arrangement (corner-chain / staircase) --------------------------
 //
-// A curated 2-image formation (formation.bio "pair" anatomy): a smaller
-// portrait image pinned top-left and a larger landscape image shifted right +
-// dropped so that image 2's top-left corner meets image 1's bottom-right
-// corner exactly. It reinterprets the shared attributes:
+// Media Composition has TWO arrangements, selected by the `arrangement`
+// attribute — a real point in the configuration span, NOT a preset fork:
 //
-//   elementsDistance -> DIAGONAL offset at the meeting corner
-//                       ( 0 = corners touch, + = gap, - = overlap )
-//   sizeContrast     -> how much smaller image 1 is than image 2
-//   placementVariation -> the four mirror forms (handled generically by the
-//                         collection's flipX/flipY, unchanged)
+//   "grid"  (default) — the classic 2-column placement math. Byte-identical
+//                       to what every classic preset has always produced.
+//   "chain"           — a generalized corner-chain: item N's top-left corner
+//                       is placed at item N-1's bottom-right corner, forming a
+//                       staircase. Aspect alternates portrait / landscape down
+//                       the chain for editorial rhythm.
 //
-// The layout is expressed in the SAME integer grid-line space used by the
-// classic math, but the two items carry per-item (non-square) spans, which is
-// the aspect extension of GridItem. This branch is purely additive: it only
-// runs when `stylePreset === EDITORIAL_PAIR_PRESET` AND there are exactly two
-// images; every other composition falls through to the untouched classic math.
-export const EDITORIAL_PAIR_PRESET = 'editorial-pair';
+// In "chain" all four shared sliders stay live and reinterpret cleanly:
+//   elementsDistance   -> the gap at each meeting corner
+//                         ( 0 = corners touch, + = gap, - = overlap )
+//   sizeContrast       -> the size progression along the chain: portrait
+//                         members recede while landscape members anchor,
+//                         deepening the alternating contrast
+//   placementVariation -> the four mirror forms (flipX / flipY, unchanged)
+//   positionShift      -> slides each stepped item ALONG its touching edge,
+//                         morphing strict corner-to-corner toward stacked
+//                         offset arrangements
+//
+// `stylePreset` is a bundle-identity label only and is never read here for
+// math. The Editorial Pair preset is simply a bundle that sets
+// arrangement:"chain" (plus tuned contrast / variation).
+const CHAIN_BASE_HEIGHT = 33;      // base item height in grid-line units
+const CHAIN_PORTRAIT_ASPECT = 0.65; // portrait members (even indices)
+const CHAIN_LANDSCAPE_ASPECT = 1.35; // landscape members (odd indices)
+const CHAIN_CONTRAST_K = 0.4;      // how strongly sizeContrast shrinks portraits
+const CHAIN_GAP_DIVISOR = 10;      // elementsDistance -> corner gap in grid units
+const CHAIN_SHIFT_MAX = 20;        // positionShift full -> slide along the edge
 
-// Large item (image 2): landscape 4:3, the fixed anchor of the pair.
-const EDITORIAL_LARGE_WIDTH = 44;
-const EDITORIAL_LARGE_HEIGHT = 33;
-// Small item (image 1): portrait; width derived from height by this ratio.
-const EDITORIAL_SMALL_ASPECT = 0.65;
-// How strongly sizeContrast (0..100) shrinks the small item's height.
-const EDITORIAL_CONTRAST_K = 0.4;
-// elementsDistance (px-ish) -> diagonal offset in grid units.
-const EDITORIAL_OFFSET_DIVISOR = 10;
+export const isChainArrangement = ( attributes ) =>
+  attributes?.arrangement === 'chain';
 
-export const isEditorialPair = ( attributes, imageCount ) =>
-  attributes?.stylePreset === EDITORIAL_PAIR_PRESET && imageCount === 2;
+// The (width, height) of a chain item, independent of its position. index 0 is
+// portrait; the aspect alternates every step. sizeContrast shrinks portraits
+// (landscapes keep anchoring the chain), which is the "size progression".
+export const getChainItemSize = ( index, attributes ) => {
+  const isPortrait = index % 2 === 0;
+  const aspect = isPortrait ? CHAIN_PORTRAIT_ASPECT : CHAIN_LANDSCAPE_ASPECT;
+  const sizeContrastNorm = ( attributes.sizeContrast || 0 ) / 100;
+  const heightScale = isPortrait ? ( 1 - CHAIN_CONTRAST_K * sizeContrastNorm ) : 1;
+  const height = Math.round( CHAIN_BASE_HEIGHT * heightScale );
+  const width = Math.round( height * aspect );
 
-// Returns the un-normalized { x, y, width, height } for an editorial item in
-// its base (small-top-left) orientation. index 0 = small, index 1 = large.
-export const getEditorialPlacement = ( index, attributes ) => {
-  const sizeContrast = attributes.sizeContrast || 0;
-  const elementsDistance = attributes.elementsDistance || 0;
-
-  const smallHeight = Math.round(
-    EDITORIAL_LARGE_HEIGHT * ( 1 - EDITORIAL_CONTRAST_K * ( sizeContrast / 100 ) )
-  );
-  const smallWidth = Math.round( smallHeight * EDITORIAL_SMALL_ASPECT );
-
-  // Diagonal offset at the meeting corner. 0 = corners touch exactly.
-  const offset = Math.round( elementsDistance / EDITORIAL_OFFSET_DIVISOR );
-
-  if ( index === 0 ) {
-    return { x: 1, y: 1, width: smallWidth, height: smallHeight };
-  }
-
-  // Image 2's top-left corner meets image 1's bottom-right corner ( + offset ).
-  return {
-    x: 1 + smallWidth + offset,
-    y: 1 + smallHeight + offset,
-    width: EDITORIAL_LARGE_WIDTH,
-    height: EDITORIAL_LARGE_HEIGHT,
-  };
+  return { width, height };
 };
 
 export class GridItemCollection {
 
   constructor( images, attributes ) {
+
+    if ( isChainArrangement( attributes ) ) {
+      this.buildChain( images, attributes );
+      return;
+    }
+
+    this.buildGrid( images, attributes );
+  }
+
+  // Classic grid placement — unchanged from the original implementation.
+  buildGrid( images, attributes ) {
     const placementVariation = attributes.placementVariation / 25 - 1;
-    const editorial = isEditorialPair( attributes, images.length );
 
     this.gridItems = images.map( ( image, index ) => {
       const groupStart = Math.floor( index / 4 ) * 4;
       const groupEnd = Math.min( groupStart + 4, images.length );
       const isGroupOfThree = groupEnd - groupStart === 3;
 
-      return new GridItem( image, index, attributes, isGroupOfThree, editorial );
+      return new GridItem( image, index, attributes, isGroupOfThree );
     } );
 
     this.removeExtra();
@@ -83,6 +83,54 @@ export class GridItemCollection {
     if ( placementVariation === 2 || placementVariation === 3 ) {
       this.flipY();
     }
+  }
+
+  // Corner-chain placement. Each item carries its own (non-square) span; the
+  // chain steps diagonally, and elementsDistance / positionShift shape the
+  // meeting corner. Mirrors reuse the same flipX / flipY as the grid.
+  buildChain( images, attributes ) {
+    const placementVariation = attributes.placementVariation / 25 - 1;
+    const gap = Math.round( ( attributes.elementsDistance || 0 ) / CHAIN_GAP_DIVISOR );
+    const slide = Math.round( ( ( attributes.positionShift || 0 ) / 100 ) * CHAIN_SHIFT_MAX );
+
+    this.gridItems = images.map( ( image, index ) =>
+      new GridItem( image, index, attributes, false, 'chain' ) );
+
+    // Cumulative stepping: item i's top-left corner meets item i-1's
+    // bottom-right corner (offset by the gap), then slides along the edge.
+    this.gridItems.forEach( ( item, index ) => {
+      if ( index === 0 ) {
+        item.x = 1;
+        item.y = 1;
+        return;
+      }
+
+      const prev = this.gridItems[ index - 1 ];
+      item.x = prev.x + prev.width + gap - slide;
+      item.y = prev.y + prev.height + gap;
+    } );
+
+    this.normalizeChain();
+
+    if ( placementVariation === 1 || placementVariation === 3 ) {
+      this.flipX();
+    }
+
+    if ( placementVariation === 2 || placementVariation === 3 ) {
+      this.flipY();
+    }
+  }
+
+  // Shift the whole chain so its top-left grid line sits at (1, 1). Unlike the
+  // grid's removeExtra, there is no group-of-four stacking to unwind here.
+  normalizeChain() {
+    const minX = Math.min( ...this.gridItems.map( gridItem => gridItem.x ) );
+    const minY = Math.min( ...this.gridItems.map( gridItem => gridItem.y ) );
+
+    this.gridItems.forEach( gridItem => {
+      gridItem.x = gridItem.x - minX + 1;
+      gridItem.y = gridItem.y - minY + 1;
+    } );
   }
 
   removeExtra() {
@@ -136,7 +184,7 @@ export class GridItemCollection {
 
 export class GridItem {
 
-  constructor( image, index, attributes, isGroupOfThree, editorial = false ) {
+  constructor( image, index, attributes, isGroupOfThree, arrangement = 'grid' ) {
     this.sizeContrast = attributes.sizeContrast / 20;
     this.positionShift = attributes.positionShift / 5;
     this.objectPosition = attributes.objectPosition;
@@ -146,20 +194,18 @@ export class GridItem {
     this.image = image;
     this.index = index;
 
-    // Editorial Pair takes an entirely separate placement path. It still needs
-    // col/row so getImageStyle() can resolve objectPosition; the small item
-    // reads as the top-left cell (col 0/row 0), the large item as the
-    // bottom-right cell (col 1/row 1).
-    if ( editorial ) {
+    // Chain items carry a per-item (non-square) span and are positioned by the
+    // collection's cumulative stepping pass; the constructor only resolves the
+    // size here. col / row alternate so getImageStyle() can still resolve
+    // objectPosition (odd items read as the mirrored cell).
+    if ( arrangement === 'chain' ) {
       this.col = index % 2;
       this.row = index % 2;
 
-      const placement = getEditorialPlacement( index, attributes );
+      const { width, height } = getChainItemSize( index, attributes );
 
-      this.x = placement.x;
-      this.y = placement.y;
-      this.width = placement.width;
-      this.height = placement.height;
+      this.width = width;
+      this.height = height;
 
       return;
     }

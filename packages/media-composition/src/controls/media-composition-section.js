@@ -30,23 +30,16 @@ const MediaCompositionControls = props => {
 
 	const {
 		// composition settings
+		arrangement = 'grid',
 		sizeContrast,
 		positionShift,
 		elementsDistance,
 		placementVariation,
-		stylePreset,
 
 		// elements settings
 		objectPosition,
 		imageRotation,
 	} = attributes;
-
-	const imageCount = ( attributes?.images || [] ).length;
-	// The Editorial Pair preset is a curated two-image formation. It stays
-	// visible in the picker for every count, but when the composition does not
-	// hold exactly two images we surface a hint (and the preview/frontend fall
-	// back to the classic grid) instead of silently hiding the option.
-	const editorialPairNeedsTwoImages = 'editorial-pair' === stylePreset && 2 !== imageCount;
 
   return (
     <ControlsSection
@@ -70,16 +63,20 @@ const MediaCompositionControls = props => {
           randomize={ getRandomAttributes }
           { ...props }
         />
-        {
-          editorialPairNeedsTwoImages &&
-          <p className="nb-settings-hint" key={ 'editorial-pair-two-images-hint' }>
-            { __( 'Editorial Pair is designed for exactly two images. Add or remove images to two to get the staggered pair; other counts fall back to the standard grid.', '__plugin_txtd' ) }
-          </p>
-        }
       </ControlsTab>
 
       <ControlsTab label={ __( 'Settings', '__plugin_txtd' ) } key={'media_composition_settings'}>
         <ControlsGroup title={ __( 'Gallery', '__plugin_txtd' ) }>
+          <RadioControl
+            key={ 'advanced-gallery-arrangement' }
+            label={ __( 'Arrangement', '__plugin_txtd' ) }
+            selected={ arrangement }
+            onChange={ arrangement => setAttributes( { arrangement } ) }
+            options={ [
+              { label: __( 'Grid', '__plugin_txtd' ), value: 'grid' },
+              { label: __( 'Chain', '__plugin_txtd' ), value: 'chain' },
+            ] }
+          />
           <RangeControl
             key={ 'advanced-gallery-size-contrast' }
             label={ __( 'Size Contrast', '__plugin_txtd' ) }

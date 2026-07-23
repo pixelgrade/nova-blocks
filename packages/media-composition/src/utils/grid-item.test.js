@@ -1,9 +1,7 @@
 import {
   GridItemCollection,
   GridItem,
-  getEditorialPlacement,
-  isEditorialPair,
-  EDITORIAL_PAIR_PRESET,
+  getChainItemSize,
 } from './grid-item';
 
 const img = ( id ) => ( { id } );
@@ -11,10 +9,11 @@ const images = ( n ) => Array.from( { length: n }, ( _, i ) => img( i + 1 ) );
 const boxes = ( coll ) => coll.gridItems.map( g => ( { x: g.x, y: g.y, width: g.width, height: g.height } ) );
 
 // ---------------------------------------------------------------------------
-// (a) Regression pins for the EXISTING classic presets.
+// (a) Regression pins for the EXISTING classic presets ("grid" arrangement).
 //
-// These are captured from the pre-change implementation. The editorial branch
-// is purely additive, so every classic composition must stay byte-identical.
+// These are captured from the pre-change implementation. The continuous model
+// only adds a second arrangement ("chain"); the default ("grid") must stay
+// byte-identical to the classic placement math for every composition.
 // ---------------------------------------------------------------------------
 
 const CLASSIC_ATTRS = {
@@ -49,134 +48,228 @@ describe( 'classic placement regression pins', () => {
     }
   }
 
-  test( 'a classic stylePreset value never triggers editorial math', () => {
+  test( 'a classic stylePreset value never triggers chain math', () => {
     const attrs = { ...CLASSIC_ATTRS.cloudAtlas, stylePreset: 'the-cloud-atlas' };
     const coll = new GridItemCollection( images( 2 ), attrs );
     expect( boxes( coll ) ).toEqual( CLASSIC_PINS.cloudAtlas_2 );
   } );
+
+  test( 'arrangement:"grid" is identical to the default (no arrangement)', () => {
+    const withGrid = boxes( new GridItemCollection( images( 5 ), { ...CLASSIC_ATTRS.cloudAtlas, arrangement: 'grid' } ) );
+    const withDefault = boxes( new GridItemCollection( images( 5 ), CLASSIC_ATTRS.cloudAtlas ) );
+    expect( withGrid ).toEqual( withDefault );
+    expect( withGrid ).toEqual( CLASSIC_PINS.cloudAtlas_5 );
+  } );
 } );
 
 // ---------------------------------------------------------------------------
-// (b) Editorial Pair preset.
+// (b) Chain arrangement (the generalized corner-chain / staircase).
+//
+// The old Editorial Pair "mode fork" is gone: `stylePreset` is a bundle label
+// only, never read for math. Placement is a point in the configuration span
+// selected by the `arrangement` attribute. The Editorial Pair preset is just
+// a bundle that sets arrangement:"chain".
+//
+// Model (base orientation, before mirrors), item i (0-based):
+//   isPortrait = i even -> aspect 0.65 ; else landscape aspect 1.35
+//   height     = round( 33 * heightScale ), heightScale shrinks portraits by
+//                sizeContrast (landscapes anchor the chain)
+//   width      = round( height * aspect )
+//   item 0 anchors at (1,1); item i's top-left corner is placed at item i-1's
+//   bottom-right corner, plus:
+//     gap   = round( elementsDistance / 10 )  applied to both axes
+//     slide = round( positionShift/100 * 20 ) slides the item left along the
+//             touching edge (corner-to-corner -> offset arrangements)
 // ---------------------------------------------------------------------------
 
-const EDITORIAL_BASE = {
-  stylePreset: EDITORIAL_PAIR_PRESET,
+const CHAIN_BASE = {
+  arrangement: 'chain',
   sizeContrast: 0,
   positionShift: 0,
   imageRotation: 0,
   elementsDistance: 0,   // 0 = corners touch exactly
-  placementVariation: 25, // base: small top-left, large bottom-right
+  placementVariation: 25, // base: first item top-left, chain steps down-right
   objectPosition: 50,
   imageResizing: 'cropped',
 };
 
-describe( 'editorial pair — eligibility', () => {
-  test( 'active only for exactly two images', () => {
-    expect( isEditorialPair( EDITORIAL_BASE, 2 ) ).toBe( true );
-    expect( isEditorialPair( EDITORIAL_BASE, 1 ) ).toBe( false );
-    expect( isEditorialPair( EDITORIAL_BASE, 3 ) ).toBe( false );
-    expect( isEditorialPair( { ...EDITORIAL_BASE, stylePreset: 'the-cloud-atlas' }, 2 ) ).toBe( false );
+describe( 'chain arrangement — selection', () => {
+  test( 'arrangement drives the math, not stylePreset', () => {
+    const chain = boxes( new GridItemCollection( images( 2 ), CHAIN_BASE ) );
+    const grid = boxes( new GridItemCollection( images( 2 ), { ...CHAIN_BASE, arrangement: 'grid' } ) );
+
+    // Chain yields per-item non-square (portrait/landscape) spans.
+    expect( chain[ 0 ].width ).not.toBe( chain[ 0 ].height );
+    // Grid yields the classic square items.
+    expect( grid.every( b => b.width === b.height ) ).toBe( true );
+
+    // A stylePreset value has no effect on the math in either arrangement.
+    const chainWithPreset = boxes( new GridItemCollection( images( 2 ), { ...CHAIN_BASE, stylePreset: 'editorial-pair' } ) );
+    expect( chainWithPreset ).toEqual( chain );
+    const chainOtherPreset = boxes( new GridItemCollection( images( 2 ), { ...CHAIN_BASE, stylePreset: 'the-cloud-atlas' } ) );
+    expect( chainOtherPreset ).toEqual( chain );
+  } );
+
+  test( 'undefined arrangement falls back to the classic grid', () => {
+    const { arrangement, ...noArrangement } = CHAIN_BASE;
+    const coll = new GridItemCollection( images( 2 ), noArrangement );
+    expect( boxes( coll ).every( b => b.width === b.height ) ).toBe( true );
   } );
 } );
 
-describe( 'editorial pair — corner touch at distance 0', () => {
-  test( 'image 2 top-left corner meets image 1 bottom-right corner exactly', () => {
-    const coll = new GridItemCollection( images( 2 ), EDITORIAL_BASE );
-    const [ small, large ] = coll.gridItems;
+describe( 'chain arrangement — the Editorial Pair proportions', () => {
+  test( 'two images: portrait (0.65) + landscape (1.35), corners meeting', () => {
+    const coll = new GridItemCollection( images( 2 ), CHAIN_BASE );
+    const [ first, second ] = coll.gridItems;
 
-    // Small item pinned top-left.
-    expect( { x: small.x, y: small.y } ).toEqual( { x: 1, y: 1 } );
+    // First item is portrait (narrower than tall).
+    expect( first.width ).toBeLessThan( first.height );
+    // Second item is landscape (wider than tall) and larger in area.
+    expect( second.width ).toBeGreaterThan( second.height );
+    expect( second.width * second.height ).toBeGreaterThan( first.width * first.height );
 
-    // Portrait (width span < height span).
-    expect( small.width ).toBeLessThan( small.height );
+    // Corner meets corner exactly.
+    expect( second.x ).toBe( first.x + first.width );
+    expect( second.y ).toBe( first.y + first.height );
 
-    // Image 1's bottom-right grid line == image 2's top-left grid line.
-    expect( large.x ).toBe( small.x + small.width );
-    expect( large.y ).toBe( small.y + small.height );
-
-    // Large item is landscape and larger than the small one.
-    expect( large.width ).toBeGreaterThan( large.height );
-    expect( large.width * large.height ).toBeGreaterThan( small.width * small.height );
-
-    // Exact coordinates for the calibrated default anatomy.
+    // Exact calibrated bundle anatomy.
     expect( boxes( coll ) ).toEqual( [
       { x: 1, y: 1, width: 21, height: 33 },
-      { x: 22, y: 34, width: 44, height: 33 },
+      { x: 22, y: 34, width: 45, height: 33 },
     ] );
   } );
 } );
 
-describe( 'editorial pair — elementsDistance sign', () => {
+describe( 'chain arrangement — corner-touch exactness at distance 0', () => {
+  for ( const n of [ 2, 3, 4 ] ) {
+    test( `${ n } images: every item's top-left meets the previous bottom-right`, () => {
+      const coll = new GridItemCollection( images( n ), CHAIN_BASE );
+      const items = coll.gridItems;
+      for ( let i = 1; i < items.length; i++ ) {
+        expect( items[ i ].x ).toBe( items[ i - 1 ].x + items[ i - 1 ].width );
+        expect( items[ i ].y ).toBe( items[ i - 1 ].y + items[ i - 1 ].height );
+      }
+    } );
+  }
+
+  test( 'exact staircase pins for 2, 3 and 4 images', () => {
+    expect( boxes( new GridItemCollection( images( 2 ), CHAIN_BASE ) ) ).toEqual( [
+      { x: 1, y: 1, width: 21, height: 33 },
+      { x: 22, y: 34, width: 45, height: 33 },
+    ] );
+    expect( boxes( new GridItemCollection( images( 3 ), CHAIN_BASE ) ) ).toEqual( [
+      { x: 1, y: 1, width: 21, height: 33 },
+      { x: 22, y: 34, width: 45, height: 33 },
+      { x: 67, y: 67, width: 21, height: 33 },
+    ] );
+    expect( boxes( new GridItemCollection( images( 4 ), CHAIN_BASE ) ) ).toEqual( [
+      { x: 1, y: 1, width: 21, height: 33 },
+      { x: 22, y: 34, width: 45, height: 33 },
+      { x: 67, y: 67, width: 21, height: 33 },
+      { x: 88, y: 100, width: 45, height: 33 },
+    ] );
+  } );
+} );
+
+describe( 'chain arrangement — aspect alternation (editorial rhythm)', () => {
+  test( 'portrait / landscape alternate down the chain', () => {
+    const items = new GridItemCollection( images( 4 ), CHAIN_BASE ).gridItems;
+    expect( items[ 0 ].width < items[ 0 ].height ).toBe( true );  // portrait
+    expect( items[ 1 ].width > items[ 1 ].height ).toBe( true );  // landscape
+    expect( items[ 2 ].width < items[ 2 ].height ).toBe( true );  // portrait
+    expect( items[ 3 ].width > items[ 3 ].height ).toBe( true );  // landscape
+  } );
+} );
+
+describe( 'chain arrangement — elementsDistance is the corner gap', () => {
   test( 'positive elementsDistance opens a diagonal gap (no overlap)', () => {
-    const coll = new GridItemCollection( images( 2 ), { ...EDITORIAL_BASE, elementsDistance: 40 } );
-    const [ small, large ] = coll.gridItems;
-    const offset = Math.round( 40 / 10 );
-    // Image 2 starts strictly past image 1's bottom-right corner.
-    expect( large.x ).toBe( small.x + small.width + offset );
-    expect( large.y ).toBe( small.y + small.height + offset );
-    expect( large.x ).toBeGreaterThan( small.x + small.width );
+    const coll = new GridItemCollection( images( 2 ), { ...CHAIN_BASE, elementsDistance: 40 } );
+    const [ first, second ] = coll.gridItems;
+    const gap = Math.round( 40 / 10 );
+    expect( second.x ).toBe( first.x + first.width + gap );
+    expect( second.y ).toBe( first.y + first.height + gap );
+    expect( second.x ).toBeGreaterThan( first.x + first.width );
   } );
 
   test( 'negative elementsDistance overlaps the corners', () => {
-    const coll = new GridItemCollection( images( 2 ), { ...EDITORIAL_BASE, elementsDistance: -20 } );
-    const [ small, large ] = coll.gridItems;
-    const offset = Math.round( -20 / 10 ); // -2
-    expect( large.x ).toBe( small.x + small.width + offset );
-    expect( large.y ).toBe( small.y + small.height + offset );
-    // Overlap: image 2 starts before image 1's right/bottom edge.
-    expect( large.x ).toBeLessThan( small.x + small.width );
-    expect( large.y ).toBeLessThan( small.y + small.height );
+    const coll = new GridItemCollection( images( 2 ), { ...CHAIN_BASE, elementsDistance: -20 } );
+    const [ first, second ] = coll.gridItems;
+    const gap = Math.round( -20 / 10 ); // -2
+    expect( second.x ).toBe( first.x + first.width + gap );
+    expect( second.y ).toBe( first.y + first.height + gap );
+    expect( second.x ).toBeLessThan( first.x + first.width );
+    expect( second.y ).toBeLessThan( first.y + first.height );
   } );
 } );
 
-describe( 'editorial pair — sizeContrast', () => {
-  test( 'higher sizeContrast shrinks the small item while the large item is fixed', () => {
-    const low = getEditorialPlacement( 0, { ...EDITORIAL_BASE, sizeContrast: 0 } );
-    const high = getEditorialPlacement( 0, { ...EDITORIAL_BASE, sizeContrast: 100 } );
-    const largeLow = getEditorialPlacement( 1, { ...EDITORIAL_BASE, sizeContrast: 0 } );
-    const largeHigh = getEditorialPlacement( 1, { ...EDITORIAL_BASE, sizeContrast: 100 } );
+describe( 'chain arrangement — sizeContrast is the size progression', () => {
+  test( 'higher sizeContrast shrinks the portrait members; landscapes anchor', () => {
+    const lowP = getChainItemSize( 0, { ...CHAIN_BASE, sizeContrast: 0 } );
+    const highP = getChainItemSize( 0, { ...CHAIN_BASE, sizeContrast: 100 } );
+    const lowL = getChainItemSize( 1, { ...CHAIN_BASE, sizeContrast: 0 } );
+    const highL = getChainItemSize( 1, { ...CHAIN_BASE, sizeContrast: 100 } );
 
-    expect( high.width ).toBeLessThan( low.width );
-    expect( high.height ).toBeLessThan( low.height );
+    // Portrait shrinks with contrast, keeping its portrait character.
+    expect( highP.width ).toBeLessThan( lowP.width );
+    expect( highP.height ).toBeLessThan( lowP.height );
+    expect( highP.width ).toBeLessThan( highP.height );
 
-    // The large item's own dimensions never change with sizeContrast.
-    expect( largeHigh.width ).toBe( largeLow.width );
-    expect( largeHigh.height ).toBe( largeLow.height );
+    // Landscape anchor never changes size with contrast.
+    expect( highL.width ).toBe( lowL.width );
+    expect( highL.height ).toBe( lowL.height );
 
-    // Portrait ratio preserved as it shrinks.
-    expect( high.width ).toBeLessThan( high.height );
-
-    // Corner still touches (offset 0) at max contrast.
-    const coll = new GridItemCollection( images( 2 ), { ...EDITORIAL_BASE, sizeContrast: 100 } );
-    const [ small, large ] = coll.gridItems;
-    expect( large.x ).toBe( small.x + small.width );
-    expect( large.y ).toBe( small.y + small.height );
+    // Corner still touches at max contrast.
+    const coll = new GridItemCollection( images( 2 ), { ...CHAIN_BASE, sizeContrast: 100 } );
+    const [ first, second ] = coll.gridItems;
+    expect( second.x ).toBe( first.x + first.width );
+    expect( second.y ).toBe( first.y + first.height );
   } );
 } );
 
-describe( 'editorial pair — placementVariation mirror forms', () => {
+describe( 'chain arrangement — positionShift slides along the touching edge (revived)', () => {
+  test( 'increasing positionShift slides each stepped item along its edge', () => {
+    const shift0 = new GridItemCollection( images( 2 ), { ...CHAIN_BASE, positionShift: 0 } ).gridItems;
+    const shift100 = new GridItemCollection( images( 2 ), { ...CHAIN_BASE, positionShift: 100 } ).gridItems;
+
+    // At shift 0 the corners touch exactly.
+    expect( shift0[ 1 ].x ).toBe( shift0[ 0 ].x + shift0[ 0 ].width );
+
+    // positionShift has an OBSERVABLE effect: the second item slides left along
+    // the shared edge (corner-to-corner morphs toward a stacked offset).
+    expect( shift100[ 1 ].x ).not.toBe( shift0[ 1 ].x );
+    expect( shift100[ 1 ].x ).toBeLessThan( shift0[ 1 ].x );
+
+    // The vertical meeting is preserved (top edge still meets the edge below).
+    expect( shift100[ 1 ].y ).toBe( shift0[ 1 ].y );
+  } );
+
+  test( 'positionShift is monotonic across the range', () => {
+    const xAt = ( positionShift ) =>
+      new GridItemCollection( images( 2 ), { ...CHAIN_BASE, positionShift } ).gridItems[ 1 ].x;
+    expect( xAt( 0 ) ).toBeGreaterThan( xAt( 50 ) );
+    expect( xAt( 50 ) ).toBeGreaterThan( xAt( 100 ) );
+  } );
+} );
+
+describe( 'chain arrangement — placementVariation mirror forms', () => {
   const cornerOf = ( coll ) => {
-    // Returns the small item's anchor quadrant relative to the large item.
-    const [ small, large ] = coll.gridItems;
+    const [ first, second ] = coll.gridItems;
     return {
-      smallLeftOfLarge: small.x < large.x,
-      smallAboveLarge: small.y < large.y,
+      firstLeftOfSecond: first.x < second.x,
+      firstAboveSecond: first.y < second.y,
     };
   };
 
   test( 'the four variations produce four distinct mirror forms', () => {
-    const v25 = cornerOf( new GridItemCollection( images( 2 ), { ...EDITORIAL_BASE, placementVariation: 25 } ) );
-    const v50 = cornerOf( new GridItemCollection( images( 2 ), { ...EDITORIAL_BASE, placementVariation: 50 } ) );
-    const v75 = cornerOf( new GridItemCollection( images( 2 ), { ...EDITORIAL_BASE, placementVariation: 75 } ) );
-    const v100 = cornerOf( new GridItemCollection( images( 2 ), { ...EDITORIAL_BASE, placementVariation: 100 } ) );
+    const v25 = cornerOf( new GridItemCollection( images( 2 ), { ...CHAIN_BASE, placementVariation: 25 } ) );
+    const v50 = cornerOf( new GridItemCollection( images( 2 ), { ...CHAIN_BASE, placementVariation: 50 } ) );
+    const v75 = cornerOf( new GridItemCollection( images( 2 ), { ...CHAIN_BASE, placementVariation: 75 } ) );
+    const v100 = cornerOf( new GridItemCollection( images( 2 ), { ...CHAIN_BASE, placementVariation: 100 } ) );
 
-    // 25: small top-left. 50: flipX -> small top-right.
-    // 75: flipY -> small bottom-left. 100: flipXY -> small bottom-right.
-    expect( v25 ).toEqual( { smallLeftOfLarge: true, smallAboveLarge: true } );
-    expect( v50 ).toEqual( { smallLeftOfLarge: false, smallAboveLarge: true } );
-    expect( v75 ).toEqual( { smallLeftOfLarge: true, smallAboveLarge: false } );
-    expect( v100 ).toEqual( { smallLeftOfLarge: false, smallAboveLarge: false } );
+    expect( v25 ).toEqual( { firstLeftOfSecond: true, firstAboveSecond: true } );
+    expect( v50 ).toEqual( { firstLeftOfSecond: false, firstAboveSecond: true } );
+    expect( v75 ).toEqual( { firstLeftOfSecond: true, firstAboveSecond: false } );
+    expect( v100 ).toEqual( { firstLeftOfSecond: false, firstAboveSecond: false } );
 
     const forms = [ v25, v50, v75, v100 ].map( JSON.stringify );
     expect( new Set( forms ).size ).toBe( 4 );
@@ -184,41 +277,47 @@ describe( 'editorial pair — placementVariation mirror forms', () => {
 
   test( 'mirror forms keep the corners touching', () => {
     for ( const placementVariation of [ 25, 50, 75, 100 ] ) {
-      const coll = new GridItemCollection( images( 2 ), { ...EDITORIAL_BASE, placementVariation } );
-      const [ a, b ] = coll.gridItems;
-      // The two items share exactly one corner: one item's edge lines coincide
-      // with the other's opposite edge lines.
-      const aRight = a.x + a.width, aBottom = a.y + a.height;
-      const bRight = b.x + b.width, bBottom = b.y + b.height;
-      const touchesX = ( a.x === bRight ) || ( b.x === aRight );
-      const touchesY = ( a.y === bBottom ) || ( b.y === aBottom );
-      expect( touchesX && touchesY ).toBe( true );
+      const coll = new GridItemCollection( images( 3 ), { ...CHAIN_BASE, placementVariation } );
+      const [ a, b, c ] = coll.gridItems;
+      const touch = ( p, q ) => {
+        const pRight = p.x + p.width, pBottom = p.y + p.height;
+        const qRight = q.x + q.width, qBottom = q.y + q.height;
+        const touchesX = ( p.x === qRight ) || ( q.x === pRight );
+        const touchesY = ( p.y === qBottom ) || ( q.y === pBottom );
+        return touchesX && touchesY;
+      };
+      expect( touch( a, b ) ).toBe( true );
+      expect( touch( b, c ) ).toBe( true );
     }
   } );
 } );
 
-describe( 'editorial pair — non-2 image counts fall back to classic math', () => {
-  test( 'one image renders as a single classic item', () => {
-    const coll = new GridItemCollection( images( 1 ), EDITORIAL_BASE );
-    // Classic single-item placement (square, top-left), not the editorial pair.
-    expect( boxes( coll ) ).toEqual( [ { x: 1, y: 1, width: 20, height: 20 } ] );
+describe( 'chain arrangement — graceful across image counts', () => {
+  test( 'one image renders a single portrait plate', () => {
+    const coll = new GridItemCollection( images( 1 ), CHAIN_BASE );
+    expect( boxes( coll ) ).toEqual( [ { x: 1, y: 1, width: 21, height: 33 } ] );
   } );
 
-  test( 'three images render as the classic grid (editorial ignored)', () => {
-    const editorialThree = boxes( new GridItemCollection( images( 3 ), EDITORIAL_BASE ) );
-    const classicThree = boxes( new GridItemCollection( images( 3 ), { ...EDITORIAL_BASE, stylePreset: 'the-cloud-atlas' } ) );
-    expect( editorialThree ).toEqual( classicThree );
-    // And none of them use the editorial landscape span.
-    expect( editorialThree.every( b => b.width === b.height ) ).toBe( true );
+  test( 'five images continue the alternating staircase (no cap)', () => {
+    const coll = new GridItemCollection( images( 5 ), CHAIN_BASE );
+    const items = coll.gridItems;
+    expect( items ).toHaveLength( 5 );
+    // Alternating aspect keeps going.
+    expect( items[ 4 ].width < items[ 4 ].height ).toBe( true ); // portrait again
+    // Still a valid touching chain.
+    for ( let i = 1; i < items.length; i++ ) {
+      expect( items[ i ].x ).toBe( items[ i - 1 ].x + items[ i - 1 ].width );
+      expect( items[ i ].y ).toBe( items[ i - 1 ].y + items[ i - 1 ].height );
+    }
   } );
 } );
 
-describe( 'editorial pair — GridItem carries per-item aspect + image style', () => {
+describe( 'chain arrangement — GridItem carries per-item aspect + image style', () => {
   test( 'getStyle emits non-square spans and getImageStyle resolves', () => {
-    const small = new GridItem( img( 1 ), 0, EDITORIAL_BASE, false, true );
-    const style = small.getStyle();
+    const item = new GridItem( img( 1 ), 0, CHAIN_BASE, false, 'chain' );
+    const style = item.getStyle();
     expect( style.gridColumnEnd ).toBe( 'span 21' );
     expect( style.gridRowEnd ).toBe( 'span 33' );
-    expect( small.getImageStyle().objectFit ).toBe( 'cover' );
+    expect( item.getImageStyle().objectFit ).toBe( 'cover' );
   } );
 } );
