@@ -34,11 +34,19 @@ const MediaCompositionControls = props => {
 		positionShift,
 		elementsDistance,
 		placementVariation,
+		stylePreset,
 
 		// elements settings
 		objectPosition,
 		imageRotation,
 	} = attributes;
+
+	const imageCount = ( attributes?.images || [] ).length;
+	// The Editorial Pair preset is a curated two-image formation. It stays
+	// visible in the picker for every count, but when the composition does not
+	// hold exactly two images we surface a hint (and the preview/frontend fall
+	// back to the classic grid) instead of silently hiding the option.
+	const editorialPairNeedsTwoImages = 'editorial-pair' === stylePreset && 2 !== imageCount;
 
   return (
     <ControlsSection
@@ -62,6 +70,12 @@ const MediaCompositionControls = props => {
           randomize={ getRandomAttributes }
           { ...props }
         />
+        {
+          editorialPairNeedsTwoImages &&
+          <p className="nb-settings-hint" key={ 'editorial-pair-two-images-hint' }>
+            { __( 'Editorial Pair is designed for exactly two images. Add or remove images to two to get the staggered pair; other counts fall back to the standard grid.', '__plugin_txtd' ) }
+          </p>
+        }
       </ControlsTab>
 
       <ControlsTab label={ __( 'Settings', '__plugin_txtd' ) } key={'media_composition_settings'}>
