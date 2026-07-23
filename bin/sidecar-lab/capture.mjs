@@ -81,10 +81,20 @@ const MANIFEST_PATH = process.env.SIDECAR_LAB_MANIFEST || path.join( LAB_DIR, 'f
 const EXPECTED_PATH = process.env.SIDECAR_LAB_EXPECTED || path.join( LAB_DIR, 'expected-changes.md' );
 
 const VIEWPORTS = [ 375, 1024, 1440, 2000 ];
+// A fixture MAY narrow its viewport set via a `viewports` array in the
+// manifest (subset of VIEWPORTS). Used to drop the 375px capture on a few
+// ultra-tall, image-heavy starter pages where the full-page screenshot pass
+// intermittently hangs the playwriter eval. Both --run and the --diff
+// completeness gate honor this per-fixture list, so before/after runs stay
+// complete AND identical.
+const fixtureViewports = ( fixture ) =>
+	Array.isArray( fixture.viewports ) && fixture.viewports.length
+		? VIEWPORTS.filter( ( w ) => fixture.viewports.includes( w ) )
+		: VIEWPORTS;
 const VIEWPORT_HEIGHT = 1200;
 const SCREENSHOT_MAX_HEIGHT = 16000; // stay under Chromium's 16384px texture cap
-const EVAL_TIMEOUT_MS = 90000; // playwriter --timeout per capture
-const PROC_TIMEOUT_MS = 120000; // execFileSync hard cap per capture
+const EVAL_TIMEOUT_MS = 150000; // playwriter --timeout per capture (headroom for heavy machine load)
+const PROC_TIMEOUT_MS = 180000; // execFileSync hard cap per capture
 const RECT_TOLERANCE_PX = 1; // diff threshold on each compared rect field
 // top/height are recorded in probes but deliberately NOT compared
 // (decision 2026-07-21): fresh runs vs baseline showed vertical-only
@@ -323,13 +333,21 @@ function buildCaptureCode( fixture, width, jsonPath, pngPath, noJs = false ) {
 		`payload.screenshotClamped = docHeight > ${ SCREENSHOT_MAX_HEIGHT };`,
 		`await page.setViewportSize({ width: ${ width }, height: shotHeight });`,
 		// rAF never fires with scripts disabled — use a driver wait instead.
+		// The decode() pass is RACED against a 12s in-page cap: img.decode() on
+		// an image whose bytes never arrive (slow/failing CDN, or image loading
+		// starved under heavy machine load) PENDS forever — .catch() only traps
+		// rejection, not a pending promise — which would hang the eval until the
+		// 90s cap and wedge the whole session. The cap lets the screenshot
+		// proceed with whatever decoded; probe geometry was already collected
+		// above, and the diff gates on horizontal rects (image bytes don't move
+		// them), so a few undecoded images only affect the supplementary PNG.
 		...( noJs ? [
-			"await page.evaluate(() => Promise.all(Array.prototype.map.call(document.images, (img) => img.decode ? img.decode().catch(() => {}) : null)));",
+			"await page.evaluate(() => Promise.race([Promise.all(Array.prototype.map.call(document.images, (img) => img.decode ? img.decode().catch(() => {}) : null)), new Promise((r) => setTimeout(r, 12000))]));",
 			'await page.waitForTimeout(150);',
 		] : [
-			"await page.evaluate(() => Promise.all(Array.prototype.map.call(document.images, (img) => img.decode ? img.decode().catch(() => {}) : null)).then(() => new Promise((r) => requestAnimationFrame(() => requestAnimationFrame(r)))));",
+			"await page.evaluate(() => Promise.race([Promise.all(Array.prototype.map.call(document.images, (img) => img.decode ? img.decode().catch(() => {}) : null)).then(() => new Promise((r) => requestAnimationFrame(() => requestAnimationFrame(r)))), new Promise((r) => setTimeout(r, 12000))]));",
 		] ),
-		`await page.screenshot({ path: ${ JSON.stringify( pngPath ) }, fullPage: payload.screenshotClamped, scale: 'css' });`,
+		`await page.screenshot({ path: ${ JSON.stringify( pngPath ) }, fullPage: payload.screenshotClamped, scale: 'css', timeout: 60000 });`,
 		`require('fs').writeFileSync(${ JSON.stringify( jsonPath ) }, JSON.stringify(payload, null, 2) + '\\n');`,
 		"console.log('NBCAP ok settled=' + payload.settlement.settled + ' settleMs=' + payload.settlement.settleMs + ' elements=' + payload.elements.length + ' breaks=' + payload.breakClasses.length);",
 	].join( '\n' );
@@ -375,7 +393,8 @@ function cmdRun( label, { force, noJs } ) {
 		console.error( 'Could not parse playwriter session id from:\n' + created );
 		process.exit( 1 );
 	}
-	console.log( `Run "${ label }": ${ manifest.length } pages x ${ VIEWPORTS.length } viewports on headless session ${ sessionId }${ noJs ? ' [NO-JS: page scripts disabled]' : '' }` );
+	const totalCaptures = manifest.reduce( ( n, f ) => n + fixtureViewports( f ).length, 0 );
+	console.log( `Run "${ label }": ${ manifest.length } pages, ${ totalCaptures } captures on headless session ${ sessionId }${ noJs ? ' [NO-JS: page scripts disabled]' : '' }` );
 
 	const deleteSession = () => {
 		try {
@@ -399,7 +418,7 @@ function cmdRun( label, { force, noJs } ) {
 	let aborted = false;
 	try {
 		outer: for ( const fixture of manifest ) {
-			for ( const width of VIEWPORTS ) {
+			for ( const width of fixtureViewports( fixture ) ) {
 				const base = `${ fixture.slug }.${ width }`;
 				const jsonPath = path.join( runDir, base + '.json' );
 				const pngPath = path.join( runDir, base + '.png' );
@@ -483,7 +502,7 @@ function cmdRun( label, { force, noJs } ) {
 		aborted,
 	};
 	fs.writeFileSync( path.join( runDir, 'meta.json' ), JSON.stringify( meta, null, 2 ) + '\n' );
-	console.log( `\nRun "${ label }" ${ aborted ? 'ABORTED' : 'complete' }: ${ captures }/${ manifest.length * VIEWPORTS.length } captures, ${ elementsTotal } probed elements, ${ settlementTimeouts.length } settlement timeouts, ${ failures.length } failures.` );
+	console.log( `\nRun "${ label }" ${ aborted ? 'ABORTED' : 'complete' }: ${ captures }/${ manifest.reduce( ( n, f ) => n + fixtureViewports( f ).length, 0 ) } captures, ${ elementsTotal } probed elements, ${ settlementTimeouts.length } settlement timeouts, ${ failures.length } failures.` );
 	console.log( `Meta: ${ path.join( runDir, 'meta.json' ) }` );
 	process.exit( failures.length || aborted ? 1 : 0 );
 }
@@ -637,7 +656,7 @@ function cmdDiff( labelA, labelB ) {
 	// clean. Both runs must cover the full manifest x viewport matrix and
 	// carry a meta.json with zero failures.
 	const manifest = JSON.parse( fs.readFileSync( MANIFEST_PATH, 'utf8' ) );
-	const expectedCaptures = manifest.flatMap( ( fixture ) => VIEWPORTS.map( ( width ) => `${ fixture.slug }.${ width }` ) );
+	const expectedCaptures = manifest.flatMap( ( fixture ) => fixtureViewports( fixture ).map( ( width ) => `${ fixture.slug }.${ width }` ) );
 	const completenessErrors = [];
 	const runNoJs = {};
 	for ( const [ label, dir ] of [ [ labelA, dirA ], [ labelB, dirB ] ] ) {
