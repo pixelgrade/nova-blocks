@@ -15,7 +15,18 @@ export const getRandomAttributes = () => {
 
 export const getMediaCompositionCSSProps = ( attributes ) => {
 
-  const { elementsDistance } = attributes;
+  const { elementsDistance, stylePreset } = attributes;
+
+  // The Editorial Pair preset reinterprets `elementsDistance` as a diagonal
+  // corner offset expressed in grid units (see grid-item.js), so the CSS gap
+  // — which would otherwise add a second, uniform spacing between every track
+  // — is pinned to 0 to keep the pair's corners meeting exactly. Mirror of the
+  // PHP twin novablocks_get_media_composition_css().
+  if ( stylePreset === 'editorial-pair' ) {
+    return {
+      '--nb-media-composition-gap': '0px'
+    }
+  }
 
 	return {
 		'--nb-media-composition-gap': `${ elementsDistance }px`

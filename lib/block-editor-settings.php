@@ -686,11 +686,17 @@ function novablocks_remove_preview_woocommerce_style_tags( string $styles_html )
 }
 
 function novablocks_get_media_composition_markup_presets(): array {
+	// `stylePreset` selects which placement math family runs in grid-item.js.
+	// Every classic preset carries the shared 'the-cloud-atlas' sentinel (also
+	// the attribute default), so switching AWAY from Editorial Pair resets the
+	// math family back to classic in one apply. Only 'editorial-pair' triggers
+	// the corner-stagger branch; every classic value falls through unchanged.
 	return [
 		[
 			'label'  => 'The Cloud Atlas',
 			'value'  => 'the-cloud-atlas',
 			'preset' => [
+				'stylePreset'        => 'the-cloud-atlas',
 				'sizeContrast'       => 0,
 				'positionShift'      => 0,
 				'imageRotation'      => 0,
@@ -702,6 +708,7 @@ function novablocks_get_media_composition_markup_presets(): array {
 			'label'  => 'Pride and Prejudice',
 			'value'  => 'pride-and-prejudice',
 			'preset' => [
+				'stylePreset'        => 'the-cloud-atlas',
 				'sizeContrast'       => 60,
 				'positionShift'      => 70,
 				'imageRotation'      => 0,
@@ -713,6 +720,7 @@ function novablocks_get_media_composition_markup_presets(): array {
 			'label'  => 'Brave New World',
 			'value'  => 'brave-new-world',
 			'preset' => [
+				'stylePreset'        => 'the-cloud-atlas',
 				'sizeContrast'       => 20,
 				'positionShift'      => 25,
 				'imageRotation'      => 0,
@@ -724,6 +732,7 @@ function novablocks_get_media_composition_markup_presets(): array {
 			'label'  => 'A Walk to Remember',
 			'value'  => 'a-walk-to-remember',
 			'preset' => [
+				'stylePreset'        => 'the-cloud-atlas',
 				'sizeContrast'       => 100,
 				'positionShift'      => 50,
 				'imageRotation'      => 0,
@@ -735,6 +744,7 @@ function novablocks_get_media_composition_markup_presets(): array {
 			'label'  => 'Racing in the Rain',
 			'value'  => 'racing-in-the-rain',
 			'preset' => [
+				'stylePreset'        => 'the-cloud-atlas',
 				'sizeContrast'       => 80,
 				'positionShift'      => 80,
 				'imageRotation'      => 0,
@@ -746,6 +756,7 @@ function novablocks_get_media_composition_markup_presets(): array {
 			'label'  => 'The Sun Also Rises',
 			'value'  => 'the-sun-also-rises',
 			'preset' => [
+				'stylePreset'        => 'the-cloud-atlas',
 				'sizeContrast'       => 20,
 				'positionShift'      => 75,
 				'imageRotation'      => 40,
@@ -757,11 +768,29 @@ function novablocks_get_media_composition_markup_presets(): array {
 			'label'  => 'Memoirs of a Geisha',
 			'value'  => 'memoirs-of-a-geisha',
 			'preset' => [
+				'stylePreset'        => 'the-cloud-atlas',
 				'sizeContrast'       => 80,
 				'positionShift'      => 0,
 				'imageRotation'      => 0,
 				'elementsDistance'   => 20,
 				'placementVariation' => 50,
+			],
+		],
+		[
+			// Curated 2-image formation (formation.bio "pair" anatomy): a small
+			// portrait pinned top-left, a larger landscape dropped to the right
+			// so their corners meet. Reinterprets elementsDistance as the
+			// diagonal corner offset (0 = touch). Falls back to the classic grid
+			// for any image count other than two; the editor gates it visibly.
+			'label'  => 'Editorial Pair',
+			'value'  => 'editorial-pair',
+			'preset' => [
+				'stylePreset'        => 'editorial-pair',
+				'sizeContrast'       => 0,
+				'positionShift'      => 0,
+				'imageRotation'      => 0,
+				'elementsDistance'   => 0,
+				'placementVariation' => 25,
 			],
 		],
 	];

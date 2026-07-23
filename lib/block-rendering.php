@@ -961,8 +961,16 @@ function novablocks_get_space_and_sizing_css( array $attributes, $advanced = fal
 }
 
 function novablocks_get_media_composition_css( array $attributes ): array {
+	// The Editorial Pair preset reinterprets `elementsDistance` as a diagonal
+	// corner offset handled in grid-item.js, so the uniform CSS gap is pinned
+	// to 0 to keep the pair's corners meeting. Twin of the JS
+	// getMediaCompositionCSSProps().
+	$gap = ( isset( $attributes['stylePreset'] ) && 'editorial-pair' === $attributes['stylePreset'] )
+		? 0
+		: $attributes['elementsDistance'];
+
 	return [
-		'--nb-media-composition-gap: ' . $attributes['elementsDistance'] . 'px',
+		'--nb-media-composition-gap: ' . $gap . 'px',
 	];
 }
 
