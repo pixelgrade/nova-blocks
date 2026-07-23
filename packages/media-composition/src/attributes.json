@@ -14,6 +14,10 @@
 		"type": "string",
 		"default": "the-cloud-atlas"
 	},
+	"arrangement": {
+		"type": "string",
+		"default": "grid"
+	},
 	"sizeContrast": {
 		"type": "number",
 		"default": 0

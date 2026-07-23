@@ -5,6 +5,7 @@ export * from './grid-item';
 
 export const getRandomAttributes = () => {
 	return {
+		arrangement: 'grid',
 		sizeContrast: getRandomBetween(0, 5) * 20,
 		positionShift: getRandomBetween(0, 20) * 5,
 		elementsDistance: getRandomBetween(0, 5) * 20,
@@ -15,14 +16,14 @@ export const getRandomAttributes = () => {
 
 export const getMediaCompositionCSSProps = ( attributes ) => {
 
-  const { elementsDistance, stylePreset } = attributes;
+  const { elementsDistance, arrangement } = attributes;
 
-  // The Editorial Pair preset reinterprets `elementsDistance` as a diagonal
-  // corner offset expressed in grid units (see grid-item.js), so the CSS gap
-  // — which would otherwise add a second, uniform spacing between every track
-  // — is pinned to 0 to keep the pair's corners meeting exactly. Mirror of the
-  // PHP twin novablocks_get_media_composition_css().
-  if ( stylePreset === 'editorial-pair' ) {
+  // In the "chain" arrangement `elementsDistance` is the diagonal corner gap,
+  // expressed in grid units and applied per meeting corner in grid-item.js.
+  // The uniform CSS grid gap — which would otherwise add a second, even spacing
+  // between every track — is pinned to 0 so the chain's corners meet exactly.
+  // Mirror of the PHP twin novablocks_get_media_composition_css().
+  if ( arrangement === 'chain' ) {
     return {
       '--nb-media-composition-gap': '0px'
     }

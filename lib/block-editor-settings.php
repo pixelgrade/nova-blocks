@@ -686,17 +686,18 @@ function novablocks_remove_preview_woocommerce_style_tags( string $styles_html )
 }
 
 function novablocks_get_media_composition_markup_presets(): array {
-	// `stylePreset` selects which placement math family runs in grid-item.js.
-	// Every classic preset carries the shared 'the-cloud-atlas' sentinel (also
-	// the attribute default), so switching AWAY from Editorial Pair resets the
-	// math family back to classic in one apply. Only 'editorial-pair' triggers
-	// the corner-stagger branch; every classic value falls through unchanged.
+	// `arrangement` selects which placement math runs in grid-item.js: 'grid'
+	// (the classic 2-column math, the attribute default) or 'chain' (the
+	// generalized corner-chain / staircase). Every preset declares it, so
+	// switching between a grid preset and the chain-based Editorial Pair resets
+	// the arrangement in one apply. `stylePreset` is a bundle-identity label
+	// only — it is never read for math (that was the removed mode fork).
 	return [
 		[
 			'label'  => 'The Cloud Atlas',
 			'value'  => 'the-cloud-atlas',
 			'preset' => [
-				'stylePreset'        => 'the-cloud-atlas',
+				'arrangement'        => 'grid',
 				'sizeContrast'       => 0,
 				'positionShift'      => 0,
 				'imageRotation'      => 0,
@@ -708,7 +709,7 @@ function novablocks_get_media_composition_markup_presets(): array {
 			'label'  => 'Pride and Prejudice',
 			'value'  => 'pride-and-prejudice',
 			'preset' => [
-				'stylePreset'        => 'the-cloud-atlas',
+				'arrangement'        => 'grid',
 				'sizeContrast'       => 60,
 				'positionShift'      => 70,
 				'imageRotation'      => 0,
@@ -720,7 +721,7 @@ function novablocks_get_media_composition_markup_presets(): array {
 			'label'  => 'Brave New World',
 			'value'  => 'brave-new-world',
 			'preset' => [
-				'stylePreset'        => 'the-cloud-atlas',
+				'arrangement'        => 'grid',
 				'sizeContrast'       => 20,
 				'positionShift'      => 25,
 				'imageRotation'      => 0,
@@ -732,7 +733,7 @@ function novablocks_get_media_composition_markup_presets(): array {
 			'label'  => 'A Walk to Remember',
 			'value'  => 'a-walk-to-remember',
 			'preset' => [
-				'stylePreset'        => 'the-cloud-atlas',
+				'arrangement'        => 'grid',
 				'sizeContrast'       => 100,
 				'positionShift'      => 50,
 				'imageRotation'      => 0,
@@ -744,7 +745,7 @@ function novablocks_get_media_composition_markup_presets(): array {
 			'label'  => 'Racing in the Rain',
 			'value'  => 'racing-in-the-rain',
 			'preset' => [
-				'stylePreset'        => 'the-cloud-atlas',
+				'arrangement'        => 'grid',
 				'sizeContrast'       => 80,
 				'positionShift'      => 80,
 				'imageRotation'      => 0,
@@ -756,7 +757,7 @@ function novablocks_get_media_composition_markup_presets(): array {
 			'label'  => 'The Sun Also Rises',
 			'value'  => 'the-sun-also-rises',
 			'preset' => [
-				'stylePreset'        => 'the-cloud-atlas',
+				'arrangement'        => 'grid',
 				'sizeContrast'       => 20,
 				'positionShift'      => 75,
 				'imageRotation'      => 40,
@@ -768,7 +769,7 @@ function novablocks_get_media_composition_markup_presets(): array {
 			'label'  => 'Memoirs of a Geisha',
 			'value'  => 'memoirs-of-a-geisha',
 			'preset' => [
-				'stylePreset'        => 'the-cloud-atlas',
+				'arrangement'        => 'grid',
 				'sizeContrast'       => 80,
 				'positionShift'      => 0,
 				'imageRotation'      => 0,
@@ -777,15 +778,15 @@ function novablocks_get_media_composition_markup_presets(): array {
 			],
 		],
 		[
-			// Curated 2-image formation (formation.bio "pair" anatomy): a small
-			// portrait pinned top-left, a larger landscape dropped to the right
-			// so their corners meet. Reinterprets elementsDistance as the
-			// diagonal corner offset (0 = touch). Falls back to the classic grid
-			// for any image count other than two; the editor gates it visibly.
+			// A bundle shortcut into the "chain" arrangement: a portrait pinned
+			// top-left with a larger landscape stepped down-right so their
+			// corners meet, generalizing to a staircase for 3+ images. This is
+			// just a point in the configuration span — every slider stays live
+			// and works at any image count.
 			'label'  => 'Editorial Pair',
 			'value'  => 'editorial-pair',
 			'preset' => [
-				'stylePreset'        => 'editorial-pair',
+				'arrangement'        => 'chain',
 				'sizeContrast'       => 0,
 				'positionShift'      => 0,
 				'imageRotation'      => 0,
