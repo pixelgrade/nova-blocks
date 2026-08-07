@@ -8,6 +8,7 @@ import { registerBlockType } from '@wordpress/blocks';
  * Internal dependencies
  */
 import iconSvg from '../icon.svg';
+import deprecated from './deprecated';
 import edit from './edit';
 import save from './save';
 import { getSvg } from "@novablocks/block-editor";
@@ -59,6 +60,7 @@ registerBlockType( 'novablocks/menu-food-item', {
 			default: true
 		},
 	},
+	deprecated,
 	edit,
 	save
 } );
