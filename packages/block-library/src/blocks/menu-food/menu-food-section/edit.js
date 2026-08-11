@@ -1,8 +1,7 @@
 /**
  * WordPress dependencies
  */
-
-import { Fragment } from '@wordpress/element';
+import { useBlockProps } from '@wordpress/block-editor';
 
 /**
  * Internal dependencies
@@ -10,10 +9,12 @@ import { Fragment } from '@wordpress/element';
 import FoodMenuSectionPreview from "./preview";
 
 const FoodMenuSectionEdit = function( props ) {
+	const blockProps = useBlockProps();
+
 	return (
-		<Fragment>
+		<div { ...blockProps }>
 			<FoodMenuSectionPreview {...props}/>
-		</Fragment>
+		</div>
 	);
 };
 

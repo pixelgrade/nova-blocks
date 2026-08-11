@@ -14,6 +14,17 @@ const manualRegistrations = [
 	'menu-food/menu-food-item/index.js',
 ];
 
+const nestedMenuBlockEdits = [
+	{
+		file: 'menu-food/menu-food-section/edit.js',
+		preview: 'FoodMenuSectionPreview',
+	},
+	{
+		file: 'menu-food/menu-food-item/edit.js',
+		preview: 'FoodMenuItemPreview',
+	},
+];
+
 test( 'all block metadata uses Block API v3', () => {
 	const blockJsonFiles = fs.readdirSync( blocksDir, { withFileTypes: true } )
 		.filter( entry => entry.isDirectory() )
@@ -37,6 +48,29 @@ test( 'manual block registrations use Block API v3', () => {
 			source,
 			/apiVersion:\s*3/,
 			`${ path.relative( projectRoot, file ) } should register apiVersion 3`
+		);
+	}
+} );
+
+test( 'nested Food Menu editors provide a selectable Block API v3 wrapper', () => {
+	for ( const { file: relativeFile, preview } of nestedMenuBlockEdits ) {
+		const file = path.join( blocksDir, relativeFile );
+		const source = fs.readFileSync( file, 'utf8' );
+
+		assert.match(
+			source,
+			/useBlockProps/,
+			`${ path.relative( projectRoot, file ) } should use editor block props`
+		);
+		assert.match(
+			source,
+			/const blockProps = useBlockProps\(\);/,
+			`${ path.relative( projectRoot, file ) } should resolve editor block props once`
+		);
+		assert.match(
+			source,
+			new RegExp( `<div\\s+\\{\\s*\\.\\.\\.blockProps\\s*\\}>\\s*<${ preview }[^>]*\\/>\\s*</div>` ),
+			`${ path.relative( projectRoot, file ) } should apply editor block props around its preview`
 		);
 	}
 } );

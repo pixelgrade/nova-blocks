@@ -3,7 +3,7 @@ Contributors: pixelgrade, vlad.olaru, babbardel, razvanonofrei, gorby31
 Tags: blocks, gutenberg, gutenberg blocks, page builder, full site editing
 Requires at least: 7.0
 Tested up to: 7.0
-Stable tag: 2.5.0
+Stable tag: 2.5.1
 Requires PHP: 7.4
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -113,6 +113,9 @@ Yes! Nova Block's core features are free to use.
 3. Slideshow Me the Way block options
 
 == Changelog ==
+
+= 2.5.1 =
+* Fix: Restore individual selection, block toolbars, appenders, and section layout for Food Menu sections and items in the block editor after the Block API v3 migration.
 
 = 2.5.0 =
 * Fix: Restore editor validation for Food Menu sections and items saved before the Block API v3 migration, preserving their nested content and one-step migration to the current markup.

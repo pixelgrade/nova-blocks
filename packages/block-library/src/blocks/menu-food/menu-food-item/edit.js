@@ -7,14 +7,17 @@ import InspectorControls from "./inspector-controls";
 /**
  * WordPress dependencies
  */
-import { 
-	Fragment
- } from '@wordpress/element';
+import { useBlockProps } from '@wordpress/block-editor';
+import { Fragment } from '@wordpress/element';
 
 const FoodMenuItem = function( props ) {
+	const blockProps = useBlockProps();
+
 	return (
 		<Fragment>
-			<FoodMenuItemPreview {...props}/>
+			<div { ...blockProps }>
+				<FoodMenuItemPreview {...props}/>
+			</div>
 			<InspectorControls {...props} />
 		</Fragment>
 	);
