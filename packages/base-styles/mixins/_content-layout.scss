@@ -171,6 +171,14 @@
     max-width: none;
   }
 
+  // WordPress emits the editor root's constrained-layout max-width rules
+  // after block styles. Match the editor context to outrank that dynamic rule
+  // while leaving Content / Wide / Full placement to the named grid lines.
+  .editor-styles-wrapper & > :not(.block-list-appender) {
+    width: 100%;
+    max-width: none;
+  }
+
   // overwrite default editor's styles on .editor-styles-wrapper .wp-block styles
   .editor-styles-wrapper & > .wp-block {
     margin-left: 0;
