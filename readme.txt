@@ -116,6 +116,7 @@ Yes! Nova Block's core features are free to use.
 
 = 2.5.1 =
 * Fix: Restore individual selection, block toolbars, appenders, and section layout for Food Menu sections and items in the block editor after the Block API v3 migration.
+* Fix: Prevent WordPress editor layout CSS from constraining Wide-grid blocks such as Food Menu to the narrow Content width, while preserving responsive behavior as editor panels narrow the canvas.
 
 = 2.5.0 =
 * Fix: Restore editor validation for Food Menu sections and items saved before the Block API v3 migration, preserving their nested content and one-step migration to the current markup.
