@@ -544,18 +544,11 @@ add_action( 'init', 'novablocks_register_block_types', 20 );
 if ( ! function_exists( 'novablocks_enqueue_packages_scripts' ) ) {
 
 	function novablocks_enqueue_packages_scripts() {
-		global $pagenow;
-
 		// For now, we will always enqueue the core scripts and styles.
 		wp_enqueue_style( 'novablocks-core-style' );
 
 		if ( novablocks_is_gutenberg() ) {
-			wp_enqueue_script( 'novablocks-core' );
 			wp_enqueue_style( 'novablocks-core-editor_style' );
-
-			if ( 'widgets.php' !== $pagenow ) {
-				wp_enqueue_script( 'novablocks-tools' );
-			}
 		}
 
 		if ( ! is_admin() )	{
@@ -564,6 +557,20 @@ if ( ! function_exists( 'novablocks_enqueue_packages_scripts' ) ) {
 	}
 }
 add_action( 'enqueue_block_assets', 'novablocks_enqueue_packages_scripts' );
+
+/**
+ * Enqueue editor-shell runtimes outside the block content iframe.
+ */
+function novablocks_enqueue_package_editor_scripts() {
+	global $pagenow;
+
+	wp_enqueue_script( 'novablocks-core' );
+
+	if ( 'widgets.php' !== $pagenow ) {
+		wp_enqueue_script( 'novablocks-tools' );
+	}
+}
+add_action( 'enqueue_block_editor_assets', 'novablocks_enqueue_package_editor_scripts' );
 
 /**
  * Dequeue frontend scripts and styles if they are not used.
