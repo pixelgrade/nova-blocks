@@ -2,7 +2,7 @@
 Contributors: pixelgrade, vlad.olaru, babbardel, razvanonofrei, gorby31
 Tags: blocks, gutenberg, gutenberg blocks, page builder, full site editing
 Requires at least: 7.0
-Tested up to: 7.0
+Tested up to: 7.1
 Stable tag: 2.5.1
 Requires PHP: 7.4
 License: GPLv2 or later
