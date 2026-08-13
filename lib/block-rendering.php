@@ -2766,7 +2766,7 @@ function novablocks_get_card_expression_thresholds(): array {
 	return is_array( $thresholds ) ? array_replace_recursive( $defaults, $thresholds ) : $defaults;
 }
 
-function novablocks_classify_card_media_ratio( $ratio, array $thresholds = null ): string {
+function novablocks_classify_card_media_ratio( $ratio, ?array $thresholds = null ): string {
 	if ( null === $thresholds ) {
 		$all        = novablocks_get_card_expression_thresholds();
 		$thresholds = $all['media'];
