@@ -39,6 +39,13 @@ const withSpaceAndSizingSaveCustomProps = ( extraProps, blockType, attributes ) 
     }
   }
 
+  if ( legacySpacingFlags?.mediaHeightSerializedAsPx ) {
+    const mediaHeight = parseFloat( spacingCSSProps['--nb-card-media-container-height'] );
+    if ( Number.isFinite( mediaHeight ) ) {
+      spacingCSSProps['--nb-card-media-container-height'] = `${ mediaHeight }px`;
+    }
+  }
+
   return {
     ...extraProps,
     style: {

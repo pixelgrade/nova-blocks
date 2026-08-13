@@ -27,6 +27,8 @@ export const detectLegacySpacingFlags = ( blockName, innerHTML ) => {
 	const hasAspectRatioVar = innerHTML.includes( '--nb-card-media-aspect-ratio' );
 	const hasMinHeightFallbackVar = innerHTML.includes( '--nb-min-height-fallback' );
 	const hasZIndexPx = /--nb-block-zindex:\s*[^;]*px\s*;/i.test( innerHTML );
+	const hasMediaHeightPx = /--nb-card-media-container-height:\s*[^;]*px\s*(?:;|["']|$)/i.test( innerHTML );
+	const hasEmphasisAreaPx = /--nb-emphasis-area:\s*[^;]*px\s*(?:;|["']|$)/i.test( innerHTML );
 	const legacyPaddingMatch = ! hasAspectRatioVar
 		? innerHTML.match( /--nb-card-media-padding-top:\s*([^;]+)\s*;/i )
 		: null;
@@ -35,6 +37,8 @@ export const detectLegacySpacingFlags = ( blockName, innerHTML ) => {
 		missingAspectRatioVar: ! hasAspectRatioVar,
 		missingMinHeightFallbackVar: ! hasMinHeightFallbackVar,
 		zIndexSerializedAsPx: hasZIndexPx,
+		mediaHeightSerializedAsPx: hasMediaHeightPx,
+		emphasisAreaSerializedAsPx: hasEmphasisAreaPx,
 		...( legacyPaddingMatch ? { legacyCardMediaPaddingTop: legacyPaddingMatch[1].trim() } : {} ),
 	};
 };

@@ -34,15 +34,17 @@ test('flags nothing (all-false) for current content that already carries every v
 
 	expect(
 		detectLegacySpacingFlags( 'core/group', innerHTML ),
-	).toEqual( {
+		).toEqual( {
 			missingAspectRatioVar: false,
 			missingMinHeightFallbackVar: false,
 			zIndexSerializedAsPx: false,
+			mediaHeightSerializedAsPx: false,
+			emphasisAreaSerializedAsPx: false,
 		} );
 });
 
 test('flags partial drift when some but not all newer vars are present', () => {
-	const innerHTML = '<div style="--nb-emphasis-top-spacing:0;--nb-card-media-padding-top:100%;--nb-block-zindex:0px;"></div>';
+	const innerHTML = '<div style="--nb-emphasis-top-spacing:0;--nb-card-media-container-height:50px;--nb-card-media-padding-top:100%;--nb-block-zindex:0px;--nb-emphasis-area:100px"></div>';
 
 	expect(
 		detectLegacySpacingFlags( 'core/separator', innerHTML ),
@@ -50,6 +52,8 @@ test('flags partial drift when some but not all newer vars are present', () => {
 			missingAspectRatioVar: true,
 			missingMinHeightFallbackVar: true,
 			zIndexSerializedAsPx: true,
+			mediaHeightSerializedAsPx: true,
+			emphasisAreaSerializedAsPx: true,
 			legacyCardMediaPaddingTop: '100%',
 		} );
 });

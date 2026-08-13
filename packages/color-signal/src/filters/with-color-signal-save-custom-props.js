@@ -7,6 +7,10 @@ import { getSupports } from "@novablocks/block-editor";
 // drifted the saved markup away from older content (causing block-validation
 // "unexpected or invalid content" recovery in the editor).
 const toUnitless = ( value ) => {
+  if ( typeof value === 'number' ) {
+    return Number.isFinite( value ) ? `${ value }` : value;
+  }
+
   if ( typeof value === 'string' ) {
     const trimmed = value.trim().replace( /px$/, '' );
     const numericValue = Number( trimmed );
@@ -32,15 +36,19 @@ const withColorSignalSaveCustomProps = ( element, blockType, attributes ) => {
   }
 
   const { emphasisArea } = attributes;
+  const emphasisAreaValue = toUnitless(
+    element.props?.style?.['--nb-emphasis-area'] ?? emphasisArea
+  );
+  const serializedEmphasisArea = attributes?.__novablocksLegacySpacing?.emphasisAreaSerializedAsPx
+    ? `${ emphasisAreaValue }px`
+    : emphasisAreaValue;
 
   return Object.assign( {}, element, {
     props: {
       ...element.props,
       style: {
         ...element.props?.style,
-        '--nb-emphasis-area': toUnitless(
-          element.props?.style?.['--nb-emphasis-area'] ?? emphasisArea
-        ),
+        '--nb-emphasis-area': serializedEmphasisArea,
       },
     }
   } );

@@ -7,6 +7,10 @@ import { getCardMediaPaddingTop } from "../index";
 // (length * length) and drifted the saved markup away from older content
 // (causing block-validation "unexpected or invalid content" recovery).
 const toUnitless = ( value ) => {
+  if ( typeof value === 'number' ) {
+    return Number.isFinite( value ) ? `${ value }` : value;
+  }
+
   if ( typeof value === 'string' ) {
     const trimmed = value.trim().replace( /px$/, '' );
     const numericValue = Number( trimmed );
