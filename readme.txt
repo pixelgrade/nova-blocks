@@ -3,7 +3,7 @@ Contributors: pixelgrade, vlad.olaru, babbardel, razvanonofrei, gorby31
 Tags: blocks, gutenberg, gutenberg blocks, page builder, full site editing
 Requires at least: 7.0
 Tested up to: 7.1
-Stable tag: 2.5.1
+Stable tag: 2.5.2
 Requires PHP: 7.4
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -113,6 +113,11 @@ Yes! Nova Block's core features are free to use.
 3. Slideshow Me the Way block options
 
 == Changelog ==
+
+= 2.5.2 =
+* Fix: Keep spacing and Color Signal values stable when WordPress 7.1 serializes block styles, while preserving legacy pixel-based content.
+* Fix: Load Nova editor runtimes in the WordPress editor shell instead of the content iframe.
+* Improved: Update editor controls and compatibility metadata for WordPress 7.1.
 
 = 2.5.1 =
 * Fix: Restore individual selection, block toolbars, appenders, and section layout for Food Menu sections and items in the block editor after the Block API v3 migration.
