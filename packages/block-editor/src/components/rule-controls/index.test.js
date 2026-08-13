@@ -10,7 +10,7 @@ test( 'offers token-preserving rule weight and strength controls', () => {
 	assert.match( source, /Rule Weight/ );
 	assert.match( source, /min=\{ 1 \}/ );
 	assert.match( source, /max=\{ 4 \}/ );
-	assert.match( source, /__next40pxDefaultSize/ );
+	assert.doesNotMatch( source, /__next40pxDefaultSize/ );
 	assert.match( source, /<RadioControl/ );
 	assert.match( source, /Rule Strength/ );
 	assert.match( source, /Subtle[\s\S]*value: 'subtle'/ );

@@ -23,7 +23,6 @@ const CardElementsDisplaySection = ( props ) => {
         <ControlsGroup title={__( 'Interaction', '__plugin_txtd' )}>
           <SelectControl
             key={ 'card-hover-effect' }
-            __next40pxDefaultSize
             label={__( 'Card Hover Effect', '__plugin_txtd' )}
             help={__( 'Reveal metadata or buttons when they sit at the first or last edge of a card. The active theme controls the motion.', '__plugin_txtd' )}
             value={attributes.cardHoverEffect || 'none'}

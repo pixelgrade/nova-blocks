@@ -26,7 +26,6 @@ const RecipeFineTuneControl = ( {
   if ( 'range' === control.type ) {
     return (
       <RangeControl
-        __next40pxDefaultSize
         help={ control.help || undefined }
         label={ control.label }
         max={ control.max }

@@ -38,7 +38,6 @@ const SidecarBreakControls = ( { attributes, setAttributes, showBreak, showWrap 
 						} ) }
 						isBlock
 						__nextHasNoMarginBottom
-						__next40pxDefaultSize
 						help={ __( 'Auto measures the available room next to the sidebar. Always and Never decide it, with no layout shift.', '__plugin_txtd' ) }
 					>
 						<ToggleGroupControlOption value="auto" label={ __( 'Auto', '__plugin_txtd' ) } />
@@ -56,7 +55,6 @@ const SidecarBreakControls = ( { attributes, setAttributes, showBreak, showWrap 
 						} ) }
 						isBlock
 						__nextHasNoMarginBottom
-						__next40pxDefaultSize
 						help={ __( 'Around wraps the text beside and under the image; Extend pulls it over the sidebar toward the page edge. The editor previews the beside layout — the published page renders the full wrap.', '__plugin_txtd' ) }
 					>
 						<ToggleGroupControlOption value="none" label={ __( 'None', '__plugin_txtd' ) } />

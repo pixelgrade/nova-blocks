@@ -26,7 +26,6 @@ const RuleControls = ( {
 				min={ 1 }
 				max={ 4 }
 				step={ 1 }
-				__next40pxDefaultSize
 				onChange={ value => updateAttributes( { ruleWeight: value } ) }
 			/>
 			<RadioControl
