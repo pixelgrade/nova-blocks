@@ -1,5 +1,5 @@
 {
-	"name": "@novablocks/block-editor",
+	"name": "@novablocks/block-library",
 	"version": "1.0.0",
 	"description": "Logic related to the block editor.",
 	"main": "build/index.js",

@@ -63,7 +63,7 @@ test( 'the compatibility Jest bucket carries only the required resolver flags', 
 
 	assert.ok(
 		compatibility.args.includes(
-			'--modulePathIgnorePatterns=/packages/block-library/|/\\.claude/'
+			'--modulePathIgnorePatterns=<rootDir>/packages/block-library/|<rootDir>/.claude/'
 		)
 	);
 	assert.ok(
@@ -83,7 +83,7 @@ test( 'every Jest bucket ignores agent worktrees under .claude', () => {
 	plan.jest.forEach( command => {
 		assert.ok(
 			command.args.some( arg =>
-				arg.startsWith( '--modulePathIgnorePatterns=' ) && arg.includes( '/\\.claude/' )
+				arg.startsWith( '--modulePathIgnorePatterns=' ) && arg.includes( '<rootDir>/.claude/' )
 			),
 			`${ command.label } must ignore .claude worktrees in jest-haste-map`
 		);
