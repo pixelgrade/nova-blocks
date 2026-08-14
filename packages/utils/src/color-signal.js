@@ -39,6 +39,23 @@ export const getNearestColorSignalContext = ( parents = [], hasColorSignal, getV
 };
 
 /**
+ * Whether a block with Color Signal support should establish the reference
+ * context used by its descendants.
+ *
+ * Composite controls can own a visual surface that is separate from their
+ * InnerBlocks. Those blocks still need their own Color Signal controls, but
+ * their descendants must remain relative to the surrounding page surface.
+ *
+ * @param {Object|boolean} colorSignalSupport Block Color Signal support.
+ * @returns {boolean} Whether descendants should use this block as context.
+ */
+export const providesColorSignalContext = ( colorSignalSupport ) => (
+  true === colorSignalSupport || (
+    !! colorSignalSupport && false !== colorSignalSupport.providesContext
+  )
+);
+
+/**
  * Resolve the palette inputs a color-signal block should use inside its
  * surrounding context.
  *

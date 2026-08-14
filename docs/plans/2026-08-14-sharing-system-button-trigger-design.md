@@ -69,6 +69,8 @@ JavaScript binds to the stable trigger wrapper and resolves its descendant `.wp-
 
 The frontend script continues to inject the Share icon into the actual button. Initialization remains idempotent so page transitions or repeated bundle evaluation cannot add duplicate icons or event handlers. Popup positioning uses the core Button wrapper when present and falls back to the trigger element for legacy markup.
 
+In the editor, the icon is a self-contained decorative SVG attached to the Button wrapper, outside the editable RichText node. It is positioned visually inside the trigger without using the Button's `::before` or `::after`, because themes such as Anima own those pseudo-elements for Primary, Secondary, and Text treatments. The decoration must never enter the Button's text attribute or serialized markup.
+
 No new overlay behavior is introduced. Close, outside-click, resize, copy-link, social sharing, email, and print behavior remain under the current Sharing System runtime.
 
 ## Styling Ownership

@@ -1,3 +1,36 @@
-.wp-block-buttons + .novablocks-sharing__wrap {
+.novablocks-sharing__trigger + .novablocks-sharing__wrap {
   margin-top: var(--nb-spacing);
+}
+
+.novablocks-sharing__trigger .wp-block-button.has-novablocks-sharing-trigger-icon {
+  position: relative;
+
+  > .novablocks-sharing__trigger-editor-icon {
+    position: absolute;
+    top: 50%;
+    inset-inline-start: var(--nb-sharing-trigger-padding-inline-start, 0px);
+    z-index: 1;
+
+    display: block;
+    width: 20px;
+    height: 20px;
+
+    color: var(--nb-sharing-trigger-icon-color, currentColor);
+    pointer-events: none;
+    transform: translateY(-50%);
+  }
+
+  > .wp-block-button__link {
+    padding-inline-start: calc(
+      var(--nb-sharing-trigger-padding-inline-start, 0px) +
+      20px +
+      var(--nb-sharing-overlay-spacing)
+    ) !important;
+  }
+}
+
+.novablocks-sharing__trigger .wp-block-button.is-measuring-novablocks-sharing-trigger {
+  > .wp-block-button__link {
+    transition: none !important;
+  }
 }
