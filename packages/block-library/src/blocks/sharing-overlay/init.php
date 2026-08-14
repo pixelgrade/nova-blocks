@@ -65,12 +65,18 @@ if ( ! function_exists( 'novablocks_render_sharing_overlay_block' ) ) {
 		} ?>
 
 		<div class="<?php echo esc_attr( join( ' ', $classes ) ); ?>" <?php echo join( ' ', $data_attributes ); ?>>
-			<div class="wp-block-buttons">
-				<div class="wp-block-button">
-					<button class="wp-block-button__link js-sharing-overlay-trigger">
-						<span class="novablocks-sharing__button-label"><?php echo esc_html( $attributes[ 'buttonLabel' ] ); ?></span>
-					</button>
-				</div>
+			<div class="novablocks-sharing__trigger">
+				<?php if ( '' !== trim( $content ) ) {
+					echo $content; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- Rendered inner block markup.
+				} else { ?>
+					<div class="wp-block-buttons">
+						<div class="wp-block-button">
+							<button class="wp-block-button__link js-sharing-overlay-trigger">
+								<span class="novablocks-sharing__button-label"><?php echo esc_html( $attributes[ 'buttonLabel' ] ); ?></span>
+							</button>
+						</div>
+					</div>
+				<?php } ?>
 			</div>
 			<div class="novablocks-sharing__overlay js-sharing-overlay">
 				<div class="novablocks-sharing__wrap" <?php echo join( ' ', $color_data_attributes ); ?>>
