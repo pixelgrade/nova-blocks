@@ -4,7 +4,7 @@
 	"name": "novablocks/sharing-overlay",
 	"title": "Sharing System",
 	"category": "nova-blocks",
-	"description": "Display a sharing button and overlay to make it easy for your readers to spread the word.",
+	"description": "Display a sharing overlay to help readers spread the word. Select the nested Button to style the trigger; this block's Color Signal styles the sharing overlay.",
 	"keywords": ["share", "social", "facebook", "twitter", "linkedin", "link", "copy", "email", "print", "clipboard"],
 	"textdomain": "nova-blocks",
 	"allowedBlocks": ["core/buttons"],

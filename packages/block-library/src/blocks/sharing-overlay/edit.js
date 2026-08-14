@@ -1,13 +1,69 @@
 import classnames from "classnames";
 
-import { Fragment } from "@wordpress/element";
+import { Fragment, useEffect, useRef } from "@wordpress/element";
 import { useInnerBlocksProps } from '@wordpress/block-editor';
 
 import { getIconSvg } from "@novablocks/block-editor";
+import { library as icons } from '@novablocks/icons';
 import { getColorSignalClassnames } from '@novablocks/utils';
 
 import Controls from './controls';
 import { createSharingTriggerTemplate } from './template';
+import {
+  getInlineSharingTriggerIcon,
+  getTransitionTime,
+  prependSharingTriggerEditorIcon,
+} from './trigger';
+
+const sharingTriggerIcon = getInlineSharingTriggerIcon( icons.share );
+const editorIconClass = 'novablocks-sharing__trigger-editor-icon';
+const editorButtonClass = 'has-novablocks-sharing-trigger-icon';
+const editorMeasureClass = 'is-measuring-novablocks-sharing-trigger';
+
+const getButtonClassSignature = button => Array.from( button.classList )
+  .filter( className => ! [ editorButtonClass, editorMeasureClass ].includes( className ) )
+  .sort()
+  .join( ' ' );
+
+const syncEditorIconColor = trigger => {
+  const button = trigger?.closest( '.wp-block-button' );
+  const icon = button?.querySelector( `:scope > .${ editorIconClass }` );
+  const view = trigger?.ownerDocument?.defaultView;
+  if ( ! button || ! icon || ! view ) {
+    return;
+  }
+
+  const color = view.getComputedStyle( trigger ).color;
+  if ( button.style.getPropertyValue( '--nb-sharing-trigger-icon-color' ) !== color ) {
+    button.style.setProperty( '--nb-sharing-trigger-icon-color', color );
+  }
+};
+
+const syncEditorIconLayout = ( trigger, force = false ) => {
+  const button = trigger?.closest( '.wp-block-button' );
+  const view = trigger?.ownerDocument?.defaultView;
+  if ( ! button || ! view ) {
+    return;
+  }
+
+  const classSignature = getButtonClassSignature( button );
+  if ( force || button.dataset.nbSharingTriggerClasses !== classSignature ) {
+    button.classList.add( editorMeasureClass );
+    button.classList.remove( editorButtonClass );
+    // Reading layout while transitions are disabled prevents measuring an
+    // interpolated padding value when a Button style changes.
+    trigger.getBoundingClientRect();
+    const triggerStyle = view.getComputedStyle( trigger );
+    if ( button.style.getPropertyValue( '--nb-sharing-trigger-padding-inline-start' ) !== triggerStyle.paddingInlineStart ) {
+      button.style.setProperty( '--nb-sharing-trigger-padding-inline-start', triggerStyle.paddingInlineStart );
+    }
+    button.dataset.nbSharingTriggerClasses = classSignature;
+    button.classList.add( editorButtonClass );
+    button.classList.remove( editorMeasureClass );
+  }
+
+  syncEditorIconColor( trigger );
+};
 
 const SharingEdit = ( props ) => {
 
@@ -17,13 +73,104 @@ const SharingEdit = ( props ) => {
   } = props;
 
   const { buttonLabel } = attributes;
+  const triggerRef = useRef();
   const innerBlocksProps = useInnerBlocksProps( {
     className: 'novablocks-sharing__trigger',
+    ref: triggerRef,
   }, {
     allowedBlocks: [ 'core/buttons' ],
     template: createSharingTriggerTemplate( buttonLabel ),
     templateLock: 'all',
   } );
+
+  useEffect( () => {
+    const triggerWrapper = triggerRef.current;
+    if ( ! triggerWrapper ) {
+      return undefined;
+    }
+
+    const view = triggerWrapper.ownerDocument.defaultView;
+    if ( ! view ) {
+      return undefined;
+    }
+
+    const decorateTrigger = ( forceLayout = false ) => {
+      const trigger = triggerWrapper.querySelector( '.wp-block-button__link' );
+      prependSharingTriggerEditorIcon( trigger, sharingTriggerIcon );
+      syncEditorIconLayout( trigger, forceLayout );
+    };
+
+    const cleanupDecoration = () => {
+      triggerWrapper.querySelectorAll( `.${ editorIconClass }` ).forEach( icon => icon.remove() );
+      triggerWrapper.querySelectorAll( `.${ editorButtonClass }, .${ editorMeasureClass }` ).forEach( button => {
+        button.classList.remove( editorButtonClass, editorMeasureClass );
+        button.style.removeProperty( '--nb-sharing-trigger-icon-color' );
+        button.style.removeProperty( '--nb-sharing-trigger-padding-inline-start' );
+        delete button.dataset.nbSharingTriggerClasses;
+      } );
+    };
+
+    let colorFrame;
+    let colorSyncUntil = 0;
+    const syncColorFrame = timestamp => {
+      const trigger = triggerWrapper.querySelector( '.wp-block-button__link' );
+      syncEditorIconColor( trigger );
+      if ( timestamp < colorSyncUntil ) {
+        colorFrame = view.requestAnimationFrame( syncColorFrame );
+      } else {
+        colorFrame = undefined;
+      }
+    };
+    const scheduleColorSync = () => {
+      const trigger = triggerWrapper.querySelector( '.wp-block-button__link' );
+      if ( ! trigger ) {
+        return;
+      }
+
+      const transitionTime = getTransitionTime( view.getComputedStyle( trigger ) );
+      colorSyncUntil = Math.max( colorSyncUntil, view.performance.now() + transitionTime + 32 );
+      if ( ! colorFrame ) {
+        colorFrame = view.requestAnimationFrame( syncColorFrame );
+      }
+    };
+
+    decorateTrigger();
+    scheduleColorSync();
+
+    const MutationObserver = view.MutationObserver;
+    if ( ! MutationObserver ) {
+      return cleanupDecoration;
+    }
+
+    const observer = new MutationObserver( mutations => {
+      const forceLayout = mutations.some( mutation => (
+        mutation.type === 'attributes' &&
+        mutation.attributeName === 'style' &&
+        mutation.target.classList.contains( 'wp-block-button__link' )
+      ) );
+      decorateTrigger( forceLayout );
+      scheduleColorSync();
+    } );
+    observer.observe( triggerWrapper, {
+      attributes: true,
+      attributeFilter: [ 'class', 'style' ],
+      childList: true,
+      subtree: true,
+    } );
+
+    [ 'pointerover', 'pointerout', 'focusin', 'focusout' ].forEach( eventName => {
+      triggerWrapper.addEventListener( eventName, scheduleColorSync );
+    } );
+
+    return () => {
+      observer.disconnect();
+      view.cancelAnimationFrame( colorFrame );
+      [ 'pointerover', 'pointerout', 'focusin', 'focusout' ].forEach( eventName => {
+        triggerWrapper.removeEventListener( eventName, scheduleColorSync );
+      } );
+      cleanupDecoration();
+    };
+  }, [] );
 
   return (
     <Fragment>

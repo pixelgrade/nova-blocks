@@ -17,11 +17,13 @@
 		> svg {
 			width: 20px;
 		}
-
-		> * + * {
-			margin-left: calc( var(--nb-spacing) / 3 );
-		}
 	}
+}
+
+.novablocks-sharing__trigger-icon {
+	flex: 0 0 auto;
+	width: 20px;
+	margin-inline-end: calc( var(--nb-spacing) / 3 );
 }
 
 .novablocks-sharing__overlay {

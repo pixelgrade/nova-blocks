@@ -11,6 +11,8 @@ test('Sharing System registers every color-signal attribute used by its editor a
 	assert.equal(metadata.supports.novaBlocks.colorSignal.attributes, true);
 	assert.equal(metadata.supports.novaBlocks.colorSignal.controls, true);
 	assert.equal(metadata.supports.novaBlocks.colorSignal.providesContext, false);
+	assert.match( metadata.description, /nested Button/i );
+	assert.match( metadata.description, /Color Signal styles the sharing overlay/i );
 });
 
 test('Sharing System owns one locked core Buttons trigger and saves its inner content', () => {
@@ -50,9 +52,21 @@ test('Sharing System editor preview spacing follows the trigger boundary', () =>
 	assert.doesNotMatch( styleSource, /\.wp-block-buttons\s*\+\s*\.novablocks-sharing__wrap/ );
 });
 
-test('Sharing System previews the automatic share icon without saving it into Button text', () => {
+test('Sharing System previews the automatic share icon without taking over Button pseudo-elements', () => {
+	const editSource = read( 'edit.js' );
 	const styleSource = read( 'editor-styles.scss' );
+	const frontendStyleSource = read( 'style.scss' );
 
-	assert.match( styleSource, /\.novablocks-sharing__trigger[\s\S]*\.wp-block-button__link[\s\S]*::before/ );
-	assert.match( styleSource, /mask(?:-image)?:\s*url\(/ );
+	assert.match( editSource, /prependSharingTriggerEditorIcon/ );
+	assert.match( editSource, /getInlineSharingTriggerIcon/ );
+	assert.match( editSource, /MutationObserver/ );
+	assert.match( editSource, /getTransitionTime/ );
+	assert.match( editSource, /const view = triggerWrapper\.ownerDocument\.defaultView/ );
+	assert.doesNotMatch( editSource, /triggerWrapper\.ownerDocument\.defaultView\.cancelAnimationFrame/ );
+	assert.match( styleSource, /has-novablocks-sharing-trigger-icon/ );
+	assert.match( styleSource, /is-measuring-novablocks-sharing-trigger[\s\S]*transition:\s*none\s*!important/ );
+	assert.match( styleSource, /padding-inline-start/ );
+	assert.doesNotMatch( styleSource, /\.wp-block-button__link(?::|[\s\S]{0,20}:):?before/ );
+	assert.doesNotMatch( styleSource, /\.wp-block-button__link(?::|[\s\S]{0,20}:):?after/ );
+	assert.match( frontendStyleSource, /^\.novablocks-sharing__trigger-icon[\s\S]*margin-inline-end/m );
 });

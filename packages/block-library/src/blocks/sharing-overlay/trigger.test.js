@@ -1,4 +1,35 @@
-import { findSharingTrigger, prependSharingTriggerIcon } from './trigger';
+import {
+	findSharingTrigger,
+	getInlineSharingTriggerIcon,
+	getTransitionTime,
+	prependSharingTriggerEditorIcon,
+	prependSharingTriggerIcon,
+} from './trigger';
+
+describe( 'getTransitionTime', () => {
+	it( 'returns the longest duration and matching delay in milliseconds', () => {
+		expect( getTransitionTime( {
+			transitionDuration: '100ms, 0.4s',
+			transitionDelay: '50ms',
+		} ) ).toBe( 450 );
+	} );
+} );
+
+describe( 'getInlineSharingTriggerIcon', () => {
+	it( 'turns sprite symbol data into self-contained SVG markup for editor iframes', () => {
+		const markup = getInlineSharingTriggerIcon( {
+			viewBox: '0 0 20 20',
+			content: '<symbol id="icons-share" viewBox="0 0 20 20"><path data-share-path="true" d="M1 1h18" /></symbol>',
+		} );
+		const container = document.createElement( 'div' );
+		container.innerHTML = markup;
+
+		expect( container.querySelector( 'svg[viewBox="0 0 20 20"]' ) ).not.toBeNull();
+		expect( container.querySelector( 'path[data-share-path="true"]' ) ).not.toBeNull();
+		expect( container.querySelector( 'symbol, use' ) ).toBeNull();
+		expect( getInlineSharingTriggerIcon( null ) ).toBe( '' );
+	} );
+} );
 
 describe( 'findSharingTrigger', () => {
 	it( 'returns the core Button link inside the stable trigger boundary', () => {
@@ -35,7 +66,7 @@ describe( 'findSharingTrigger', () => {
 
 describe( 'prependSharingTriggerIcon', () => {
 	it( 'prepends one hidden decorative icon before the authored label', () => {
-		document.body.innerHTML = '<button class="wp-block-button__link"><span>Share</span></button>';
+		document.body.innerHTML = '<button class="wp-block-button__link">Share</button>';
 		const trigger = document.querySelector( 'button' );
 		const iconMarkup = '<svg class="novablocks-icon" viewBox="0 0 20 20"><use href="#share" /></svg>';
 
@@ -45,8 +76,11 @@ describe( 'prependSharingTriggerIcon', () => {
 		expect( trigger.firstElementChild ).toBe( icon );
 		expect( icon.matches( 'svg.novablocks-sharing__trigger-icon' ) ).toBe( true );
 		expect( icon.getAttribute( 'aria-hidden' ) ).toBe( 'true' );
+		expect( icon.getAttribute( 'contenteditable' ) ).toBe( 'false' );
+		expect( icon.getAttribute( 'focusable' ) ).toBe( 'false' );
 		expect( trigger.querySelectorAll( ':scope > .novablocks-sharing__trigger-icon' ) ).toHaveLength( 1 );
-		expect( trigger.lastElementChild.textContent ).toBe( 'Share' );
+		expect( icon.nextSibling.nodeType ).toBe( Node.TEXT_NODE );
+		expect( icon.nextSibling.nodeValue ).toBe( 'Share' );
 	} );
 
 	it( 'does nothing without a trigger or icon element', () => {
@@ -57,5 +91,24 @@ describe( 'prependSharingTriggerIcon', () => {
 		expect( prependSharingTriggerIcon( trigger, '' ) ).toBeNull();
 		expect( prependSharingTriggerIcon( trigger, 'plain text' ) ).toBeNull();
 		expect( trigger.children ).toHaveLength( 0 );
+	} );
+} );
+
+describe( 'prependSharingTriggerEditorIcon', () => {
+	it( 'decorates the Button wrapper without mutating the RichText label', () => {
+		document.body.innerHTML = '<div class="wp-block-button"><div class="wp-block-button__link" contenteditable="true">Share</div></div>';
+		const trigger = document.querySelector( '.wp-block-button__link' );
+		const iconMarkup = '<svg viewBox="0 0 20 20"><path d="M1 1h18" /></svg>';
+
+		const icon = prependSharingTriggerEditorIcon( trigger, iconMarkup );
+		prependSharingTriggerEditorIcon( trigger, iconMarkup );
+
+		expect( trigger.innerHTML ).toBe( 'Share' );
+		expect( icon.parentElement ).toBe( trigger.parentElement );
+		expect( icon.nextElementSibling ).toBe( trigger );
+		expect( icon.matches( 'svg.novablocks-sharing__trigger-editor-icon' ) ).toBe( true );
+		expect( trigger.parentElement.querySelectorAll( ':scope > .novablocks-sharing__trigger-editor-icon' ) ).toHaveLength( 1 );
+		expect( icon.getAttribute( 'aria-hidden' ) ).toBe( 'true' );
+		expect( icon.getAttribute( 'focusable' ) ).toBe( 'false' );
 	} );
 } );

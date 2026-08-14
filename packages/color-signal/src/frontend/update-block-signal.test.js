@@ -11,7 +11,7 @@ jest.mock( '@novablocks/utils', () => ( {
 jest.mock( '../utils', () => ( {
 	addSiteVariationOffset: value => value,
 	clampColorSignal: ( value, support ) => Math.max( support.minColorSignal || 0, value ),
-	computeColorSignal: ( reference, signal ) => signal === 0 ? reference : 11,
+	computeColorSignal: jest.fn( ( reference, signal ) => signal === 0 ? reference : 11 ),
 	getAbsoluteColorVariation: attributes => parseInt( attributes.paletteVariation, 10 ),
 	getColorSignalClassnames: attributes => [
 		`sm-palette-${ attributes.palette }`,
@@ -42,9 +42,16 @@ jest.mock( '../utils', () => ( {
 } ) );
 
 const { updateBlockSignal } = require( './update-block-signal' );
+const { computeColorSignal } = require( '../utils' );
 
 describe( 'updateBlockSignal', () => {
+	beforeEach( () => {
+		computeColorSignal.mockClear();
+		computeColorSignal.mockImplementation( ( reference, signal ) => signal === 0 ? reference : 11 );
+	} );
+
 	it( 'keeps descendants relative to the surrounding surface across a transparent Color Signal boundary', () => {
+		computeColorSignal.mockImplementation( ( reference, signal ) => signal === 0 ? reference : reference + signal );
 		window.styleManager = {
 			colorsConfig: [ '1', '2' ].map( id => ( {
 				id,
@@ -57,19 +64,26 @@ describe( 'updateBlockSignal', () => {
 				data-palette="2" data-palette-variation="8" data-color-signal="3"
 				data-color-signal-context="transparent">
 				<div class="novablocks-sharing__trigger">
-					<div class="wp-block-button sm-palette-2 sm-variation-8 sm-color-signal-1"
+					<div class="wp-block-button sharing-low sm-palette-2 sm-variation-8 sm-color-signal-1"
 						data-palette="2" data-palette-variation="8" data-color-signal="1"></div>
+					<div class="wp-block-button sharing-high sm-palette-2 sm-variation-8 sm-color-signal-3"
+						data-palette="2" data-palette-variation="8" data-color-signal="3"></div>
 				</div>
 			</div>
 		`;
 
 		const sharing = document.body.firstElementChild;
-		const button = sharing.querySelector( '.wp-block-button' );
+		const lowButton = sharing.querySelector( '.sharing-low' );
+		const highButton = sharing.querySelector( '.sharing-high' );
 
 		updateBlockSignal( sharing, 1, '1' );
 
-		expect( button.dataset.palette ).toBe( '1' );
-		expect( button.classList.contains( 'sm-palette-1' ) ).toBe( true );
+		expect( lowButton.dataset.palette ).toBe( '1' );
+		expect( highButton.dataset.palette ).toBe( '1' );
+		expect( lowButton.dataset.paletteVariation ).toBe( '2' );
+		expect( highButton.dataset.paletteVariation ).toBe( '4' );
+		expect( computeColorSignal ).toHaveBeenCalledWith( 1, 1, '1', 8 );
+		expect( computeColorSignal ).toHaveBeenCalledWith( 1, 3, '1', 8 );
 	} );
 
 	it( 'resolves legacy Button markup against the nearest parent palette', () => {
