@@ -1,13 +1,14 @@
-import { useBlockProps, useInnerBlocksProps } from "@wordpress/block-editor";
+import { useBlockProps, useInnerBlocksProps, Warning } from "@wordpress/block-editor";
 import { Fragment } from "@wordpress/element";
 import { __ } from "@wordpress/i18n";
-import { RadioControl } from "@wordpress/components";
+import { Button, RadioControl } from "@wordpress/components";
 
-import { ControlsSection, ControlsTab } from "@novablocks/block-editor";
+import { ControlsSection, ControlsTab, useSettings } from "@novablocks/block-editor";
 
 const Edit = ( props ) => {
   const { attributes } = props;
   const { orientation, sectionType } = attributes;
+  const settings = useSettings();
 
   const blockProps = useBlockProps( {
     className: `nb-facetwp-filter  nb-facetwp-filter--${ sectionType } nb-facetwp-filter--orientation-${ orientation }`
@@ -23,6 +24,19 @@ const Edit = ( props ) => {
       'novablocks/facetwp-title',
     ]
   } );
+
+  if ( settings?.facetwp_available === false ) {
+    return (
+      <div { ...blockProps }>
+        <Warning>
+          <p>{ __( 'Advanced Filtering is unavailable because FacetWP is not active. The filtering controls stay hidden from visitors while the project listing remains visible.', '__plugin_txtd' ) }</p>
+          <Button href={ settings?.facetwp_setup_url } variant="primary">
+            { __( 'Open Site Setup', '__plugin_txtd' ) }
+          </Button>
+        </Warning>
+      </div>
+    );
+  }
 
   return (
     <Fragment>

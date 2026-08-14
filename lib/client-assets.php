@@ -427,7 +427,9 @@ function novablocks_register_block_types() {
 				true
 			);
 
-			$args[ $key ] = $handle;
+			if ( novablocks_should_attach_block_script( $block, $key ) ) {
+				$args[ $key ] = $handle;
+			}
 		}
 
 		// Possible stylesheets to be registered for each block.

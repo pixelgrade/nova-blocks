@@ -1,5 +1,5 @@
 import { useBlockProps, Warning } from "@wordpress/block-editor";
-import { SelectControl } from "@wordpress/components";
+import { Button, SelectControl } from "@wordpress/components";
 import { Fragment, useMemo } from "@wordpress/element";
 import { __ } from "@wordpress/i18n";
 
@@ -20,6 +20,19 @@ const Edit = ( props ) => {
 	const blockProps = useBlockProps( {
 		className: "nb-facetwp-pager wp-block-query-pagination"
 	} );
+
+	if ( settings?.facetwp_available === false ) {
+		return (
+			<nav { ...blockProps } aria-label={ __( 'FacetWP Pagination', '__plugin_txtd' ) }>
+				<Warning>
+					<p>{ __( 'Advanced Filtering is unavailable because FacetWP is not active. This pager stays hidden from visitors.', '__plugin_txtd' ) }</p>
+					<Button href={ settings?.facetwp_setup_url } variant="primary">
+						{ __( 'Open Site Setup', '__plugin_txtd' ) }
+					</Button>
+				</Warning>
+			</nav>
+		);
+	}
 
 	return (
 		<Fragment>
