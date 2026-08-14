@@ -169,4 +169,21 @@ describe( 'prependSharingTriggerEditorIcon', () => {
 		expect( button.style.getPropertyValue( '--nb-sharing-trigger-padding-inline-start' ) ).toBe( '' );
 		expect( button.dataset.nbSharingTriggerClasses ).toBeUndefined();
 	} );
+
+	it( 'does not mutate an already-clean hidden Button wrapper', () => {
+		document.body.innerHTML = '<div class="wp-block-button is-sharing-icon-hidden"><div class="wp-block-button__link" contenteditable="true">Share</div></div>';
+		const trigger = document.querySelector( '.wp-block-button__link' );
+		const button = trigger.parentElement;
+		const observer = new MutationObserver( () => {} );
+
+		observer.observe( button, {
+			attributes: true,
+			attributeFilter: [ 'class', 'style', 'data-nb-sharing-trigger-classes' ],
+			childList: true,
+		} );
+		removeSharingTriggerEditorIcon( trigger );
+
+		expect( observer.takeRecords() ).toHaveLength( 0 );
+		observer.disconnect();
+	} );
 } );

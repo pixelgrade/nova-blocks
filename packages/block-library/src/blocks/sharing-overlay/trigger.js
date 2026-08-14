@@ -122,10 +122,18 @@ const removeSharingTriggerEditorIcon = trigger => {
 	}
 
 	button.querySelectorAll( `:scope > .${ TRIGGER_EDITOR_ICON_CLASS }` ).forEach( icon => icon.remove() );
-	button.classList.remove( TRIGGER_EDITOR_BUTTON_CLASS, 'is-measuring-novablocks-sharing-trigger' );
-	button.style.removeProperty( '--nb-sharing-trigger-icon-color' );
-	button.style.removeProperty( '--nb-sharing-trigger-padding-inline-start' );
-	delete button.dataset.nbSharingTriggerClasses;
+	if ( button.classList.contains( TRIGGER_EDITOR_BUTTON_CLASS ) || button.classList.contains( 'is-measuring-novablocks-sharing-trigger' ) ) {
+		button.classList.remove( TRIGGER_EDITOR_BUTTON_CLASS, 'is-measuring-novablocks-sharing-trigger' );
+	}
+	if ( button.style.getPropertyValue( '--nb-sharing-trigger-icon-color' ) ) {
+		button.style.removeProperty( '--nb-sharing-trigger-icon-color' );
+	}
+	if ( button.style.getPropertyValue( '--nb-sharing-trigger-padding-inline-start' ) ) {
+		button.style.removeProperty( '--nb-sharing-trigger-padding-inline-start' );
+	}
+	if ( Object.prototype.hasOwnProperty.call( button.dataset, 'nbSharingTriggerClasses' ) ) {
+		delete button.dataset.nbSharingTriggerClasses;
+	}
 };
 
 export {
