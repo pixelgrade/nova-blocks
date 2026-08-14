@@ -31,6 +31,7 @@ const colorSignalSupport = {
 	paletteClassname: true,
 	paletteVariationClassname: true,
 	colorSignalClassname: true,
+	paletteInheritanceAttribute: 'useParentPalette',
 };
 
 const attributes = {
@@ -69,6 +70,7 @@ describe( 'core/button Color Signal save filters', () => {
 		const activeAttributes = {
 			...attributes,
 			useColorSignal: true,
+			useParentPalette: false,
 		};
 
 		expect( withColorSignalSaveClassnames(
@@ -89,6 +91,7 @@ describe( 'core/button Color Signal save filters', () => {
 				'data-palette': 1,
 				'data-palette-variation': 1,
 				'data-color-signal': 1,
+				'data-use-parent-palette': 'false',
 				'data-use-source-color-as-reference': true,
 			},
 		} );
