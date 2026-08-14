@@ -12,6 +12,7 @@ import { createSharingTriggerTemplate } from './template';
 import {
   getInlineSharingTriggerIcon,
   getTransitionTime,
+  needsSharingTriggerEditorLayout,
   prependSharingTriggerEditorIcon,
 } from './trigger';
 
@@ -47,7 +48,7 @@ const syncEditorIconLayout = ( trigger, force = false ) => {
   }
 
   const classSignature = getButtonClassSignature( button );
-  if ( force || button.dataset.nbSharingTriggerClasses !== classSignature ) {
+  if ( needsSharingTriggerEditorLayout( button, classSignature, force ) ) {
     button.classList.add( editorMeasureClass );
     button.classList.remove( editorButtonClass );
     // Reading layout while transitions are disabled prevents measuring an

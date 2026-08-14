@@ -1,5 +1,6 @@
 const TRIGGER_ICON_CLASS = 'novablocks-sharing__trigger-icon';
 const TRIGGER_EDITOR_ICON_CLASS = 'novablocks-sharing__trigger-editor-icon';
+const TRIGGER_EDITOR_BUTTON_CLASS = 'has-novablocks-sharing-trigger-icon';
 
 const getTransitionTime = style => {
 	const toMilliseconds = value => value.endsWith( 'ms' )
@@ -26,6 +27,14 @@ const getInlineSharingTriggerIcon = ( icon ) => {
 
 	return `<svg class="novablocks-icon" viewBox="${ icon.viewBox }">${ symbolContent[1] }</svg>`;
 };
+
+const needsSharingTriggerEditorLayout = ( button, classSignature, force = false ) => (
+	!! button && (
+		force ||
+		! button.classList.contains( TRIGGER_EDITOR_BUTTON_CLASS ) ||
+		button.dataset.nbSharingTriggerClasses !== classSignature
+	)
+);
 
 const findSharingTrigger = ( block ) => {
 	if ( ! block ) {
@@ -94,6 +103,7 @@ export {
 	findSharingTrigger,
 	getInlineSharingTriggerIcon,
 	getTransitionTime,
+	needsSharingTriggerEditorLayout,
 	prependSharingTriggerEditorIcon,
 	prependSharingTriggerIcon,
 };

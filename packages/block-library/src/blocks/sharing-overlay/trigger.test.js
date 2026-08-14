@@ -2,6 +2,7 @@ import {
 	findSharingTrigger,
 	getInlineSharingTriggerIcon,
 	getTransitionTime,
+	needsSharingTriggerEditorLayout,
 	prependSharingTriggerEditorIcon,
 	prependSharingTriggerIcon,
 } from './trigger';
@@ -19,15 +20,27 @@ describe( 'getInlineSharingTriggerIcon', () => {
 	it( 'turns sprite symbol data into self-contained SVG markup for editor iframes', () => {
 		const markup = getInlineSharingTriggerIcon( {
 			viewBox: '0 0 20 20',
-			content: '<symbol id="icons-share" viewBox="0 0 20 20"><path data-share-path="true" d="M1 1h18" /></symbol>',
+			content: '<symbol id="icons-share" viewBox="0 0 20 20"><path data-share-path="true" stroke="currentColor" d="M1 1h18" /></symbol>',
 		} );
 		const container = document.createElement( 'div' );
 		container.innerHTML = markup;
 
 		expect( container.querySelector( 'svg[viewBox="0 0 20 20"]' ) ).not.toBeNull();
-		expect( container.querySelector( 'path[data-share-path="true"]' ) ).not.toBeNull();
+		expect( container.querySelector( 'path[data-share-path="true"]' )?.getAttribute( 'stroke' ) ).toBe( 'currentColor' );
 		expect( container.querySelector( 'symbol, use' ) ).toBeNull();
 		expect( getInlineSharingTriggerIcon( null ) ).toBe( '' );
+	} );
+} );
+
+describe( 'needsSharingTriggerEditorLayout', () => {
+	it( 'rebuilds wrapper decoration when React drops only the imperative marker class', () => {
+		const button = document.createElement( 'div' );
+		button.className = 'wp-block-button has-novablocks-sharing-trigger-icon';
+		button.dataset.nbSharingTriggerClasses = 'wp-block-button';
+
+		expect( needsSharingTriggerEditorLayout( button, 'wp-block-button' ) ).toBe( false );
+		button.classList.remove( 'has-novablocks-sharing-trigger-icon' );
+		expect( needsSharingTriggerEditorLayout( button, 'wp-block-button' ) ).toBe( true );
 	} );
 } );
 
