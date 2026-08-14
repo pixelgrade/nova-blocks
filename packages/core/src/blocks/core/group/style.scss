@@ -15,11 +15,15 @@
   }
 }
 
-.wp-block-group[class*="sm-color-signal"]:not(.sm-color-signal-0) {
+.nb-supernova-item__inner-container {
   --nb-group-padding-toggle: 1;
 }
 
-.nb-supernova-item__inner-container {
+.nb-supernova-item__inner-container .wp-block-group {
+  --nb-group-padding-toggle: 0;
+}
+
+.wp-block-group[class*="sm-color-signal"]:not(.sm-color-signal-0) {
   --nb-group-padding-toggle: 1;
 }
 
