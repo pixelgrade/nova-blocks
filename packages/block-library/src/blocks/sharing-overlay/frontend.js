@@ -5,6 +5,7 @@ import { getIcon } from "@novablocks/icons";
 
 import Shariff from 'shariff';
 import services from './services';
+import { findSharingTrigger, prependSharingTriggerIcon } from './trigger';
 
 import { __ } from '@wordpress/i18n';
 
@@ -27,14 +28,15 @@ import { __ } from '@wordpress/i18n';
 
 		const $wrap = $overlay.find( '.novablocks-sharing__wrap' );
 		const $content = $overlay.find( '.novablocks-sharing__content' );
-		const $openButton = $block.find( '.js-sharing-overlay-trigger' );
+		const openButton = findSharingTrigger( obj );
+		const $openButton = $( openButton );
 		const $openButtonWrap = $openButton.closest( '.wp-block-button' );
     const $closeButton = $overlay.find( '.novablocks-sharing__close' );
 
     const $title = $( `<h${ attributes.headingLevel }>`, { class: 'novablocks-sharing__title' } ).text( __( 'Sharing Options', '__plugin_txtd' ) );
     const $footer = $( '<div>', { class: 'novablocks-sharing__footer' } ).text( __( 'Thanks for spreading the word!', '__plugin_txtd' ) );
 
-		$openButton.prepend( getIcon( 'share' ) );
+		prependSharingTriggerIcon( openButton, getIcon( 'share' ) );
     $closeButton.prepend( getIcon( 'cancel' ) );
 
 		if ( !! attributes.showCopy ) {
@@ -93,7 +95,8 @@ import { __ } from '@wordpress/i18n';
     const onResize = debounce( positionPopup, 100 );
 		$( window ).on( 'resize', onResize );
 
-		$openButton.on( 'click', function() {
+		$openButton.on( 'click', function( e ) {
+			e.preventDefault();
 			$overlay.addClass( 'is-visible' );
 
 			positionPopup();

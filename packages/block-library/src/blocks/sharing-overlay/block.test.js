@@ -31,3 +31,20 @@ test('Sharing System leaves the trigger label and appearance to the inner Button
 	assert.doesNotMatch( controlsSource, /TextControl/ );
 	assert.doesNotMatch( controlsSource, /Button Label/ );
 });
+
+test('Sharing System binds frontend behavior through the stable trigger boundary', () => {
+	const frontendSource = read( 'frontend.js' );
+
+	assert.match( frontendSource, /import \{ findSharingTrigger, prependSharingTriggerIcon \} from ['"]\.\/trigger['"]/ );
+	assert.match( frontendSource, /findSharingTrigger\( obj \)/ );
+	assert.match( frontendSource, /data-nb-sharing-initialized/ );
+	assert.match( frontendSource, /closest\( ['"]\.wp-block-button['"] \)/ );
+	assert.match( frontendSource, /\.on\( ['"]click['"], function\( e \) \{[\s\S]*e\.preventDefault\(\);[\s\S]*addClass\( ['"]is-visible['"] \)/ );
+});
+
+test('Sharing System editor preview spacing follows the trigger boundary', () => {
+	const styleSource = read( 'editor-styles.scss' );
+
+	assert.match( styleSource, /\.novablocks-sharing__trigger\s*\+\s*\.novablocks-sharing__wrap/ );
+	assert.doesNotMatch( styleSource, /\.wp-block-buttons\s*\+\s*\.novablocks-sharing__wrap/ );
+});
