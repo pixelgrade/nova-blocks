@@ -29,7 +29,9 @@
     --block-content-end: ce;
   }
 
-  --nb-sidecar-gap: calc(var(--nb-spacing) * 2);
+  // Style Manager may tune the content-to-rail gutter independently from the
+  // global rhythm. The fallback preserves the historical 2x spacing contract.
+  --nb-sidecar-gap: calc(var(--nb-spacing) * var(--sm-rail-gap, 2));
 
   --nb-content-inset-setting: 288;
 
