@@ -11,6 +11,7 @@ const {
 	getColorPalettesConfig,
 	getNearestColorSignalContext,
 	isColorSignalActive,
+	providesColorSignalContext,
 	resolveColorSignalContext,
 	resolveColorPaletteId,
 	shouldInheritParentPalette,
@@ -86,6 +87,14 @@ describe( 'getNearestColorSignalContext', () => {
 			palette: '2',
 			variation: 8,
 		} );
+	} );
+} );
+
+describe( 'providesColorSignalContext', () => {
+	it( 'allows composite controls to expose Color Signal without becoming a descendant context', () => {
+		expect( providesColorSignalContext?.( true ) ).toBe( true );
+		expect( providesColorSignalContext?.( { controls: true } ) ).toBe( true );
+		expect( providesColorSignalContext?.( { controls: true, providesContext: false } ) ).toBe( false );
 	} );
 } );
 

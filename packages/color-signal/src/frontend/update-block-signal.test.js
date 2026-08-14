@@ -44,6 +44,34 @@ jest.mock( '../utils', () => ( {
 const { updateBlockSignal } = require( './update-block-signal' );
 
 describe( 'updateBlockSignal', () => {
+	it( 'keeps descendants relative to the surrounding surface across a transparent Color Signal boundary', () => {
+		window.styleManager = {
+			colorsConfig: [ '1', '2' ].map( id => ( {
+				id,
+				variations: Array.from( { length: 12 }, () => ( { fg1: '#ffffff' } ) ),
+			} ) ),
+		};
+
+		document.body.innerHTML = `
+			<div class="sm-palette-2 sm-variation-8 sm-color-signal-3"
+				data-palette="2" data-palette-variation="8" data-color-signal="3"
+				data-color-signal-context="transparent">
+				<div class="novablocks-sharing__trigger">
+					<div class="wp-block-button sm-palette-2 sm-variation-8 sm-color-signal-1"
+						data-palette="2" data-palette-variation="8" data-color-signal="1"></div>
+				</div>
+			</div>
+		`;
+
+		const sharing = document.body.firstElementChild;
+		const button = sharing.querySelector( '.wp-block-button' );
+
+		updateBlockSignal( sharing, 1, '1' );
+
+		expect( button.dataset.palette ).toBe( '1' );
+		expect( button.classList.contains( 'sm-palette-1' ) ).toBe( true );
+	} );
+
 	it( 'resolves legacy Button markup against the nearest parent palette', () => {
 		window.styleManager = {
 			colorsConfig: [ '1', '2' ].map( id => ( {

@@ -15,7 +15,8 @@
 		"novaBlocks": {
 			"colorSignal": {
 				"attributes": true,
-				"controls": true
+				"controls": true,
+				"providesContext": false
 			}
 		}
 	}

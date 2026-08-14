@@ -123,6 +123,7 @@ $legacy_render = novablocks_render_sharing_overlay_block(
 
 assert_contract( str_contains( $legacy_render, '<div class="novablocks-sharing__trigger">' ), 'Legacy fallback must use the stable trigger wrapper.' );
 assert_contract( str_contains( $legacy_render, 'class="wp-block-button__link js-sharing-overlay-trigger"' ), 'Legacy fallback must retain its runtime selector.' );
+assert_contract( str_contains( $legacy_render, 'data-color-signal-context="transparent"' ), 'The Sharing System must not become the visible trigger Button\'s Color Signal context.' );
 assert_contract( str_contains( $legacy_render, '<span class="novablocks-sharing__button-label">Legacy &amp; Share</span>' ), 'Legacy fallback must retain and escape buttonLabel.' );
 assert_contract( str_contains( $legacy_render, '<div class="novablocks-sharing__overlay js-sharing-overlay">' ), 'Legacy fallback must retain the sharing overlay.' );
 assert_contract( ! str_contains( $legacy_render, 'Styled Share' ), 'Legacy fallback must not leak saved content from another render.' );

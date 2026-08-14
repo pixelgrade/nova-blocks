@@ -1,3 +1,19 @@
 .novablocks-sharing__trigger + .novablocks-sharing__wrap {
   margin-top: var(--nb-spacing);
 }
+
+// The runtime injects the semantic share icon without storing it in the
+// authored Button label. Mirror it with a decorative mask in the editor so
+// editing stays WYSIWYG and RichText remains plain text.
+.novablocks-sharing__trigger .wp-block-button__link::before {
+  content: "";
+  display: block;
+  flex: 0 0 20px;
+  width: 20px;
+  height: 20px;
+  margin-right: calc( var(--nb-spacing) / 3 );
+  background-color: currentColor;
+  -webkit-mask: url("data:image/svg+xml,%3Csvg viewBox='0 0 20 20' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath fill='none' stroke='black' stroke-width='1' d='M12 5.99939V1.99939L19 8.99939L12 15.9994V11.8994C7 11.8994 3.5 13.4994 1 16.9994C2 11.9994 5 6.99939 12 5.99939Z'/%3E%3C/svg%3E") center / contain no-repeat;
+  mask: url("data:image/svg+xml,%3Csvg viewBox='0 0 20 20' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath fill='none' stroke='black' stroke-width='1' d='M12 5.99939V1.99939L19 8.99939L12 15.9994V11.8994C7 11.8994 3.5 13.4994 1 16.9994C2 11.9994 5 6.99939 12 5.99939Z'/%3E%3C/svg%3E") center / contain no-repeat;
+  pointer-events: none;
+}

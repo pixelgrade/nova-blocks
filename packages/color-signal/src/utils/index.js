@@ -6,6 +6,7 @@ export {
   getColorSignalClassnames,
   getNearestColorSignalContext,
   isColorSignalActive,
+  providesColorSignalContext,
   resolveColorSignalContext,
   resolveColorPaletteId,
   shouldInheritParentPalette,

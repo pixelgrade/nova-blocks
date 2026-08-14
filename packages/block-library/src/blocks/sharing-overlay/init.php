@@ -55,6 +55,7 @@ if ( ! function_exists( 'novablocks_render_sharing_overlay_block' ) ) {
 		$color_data_attributes = novablocks_get_data_attributes( $color_data, $attributes );
 		$data_attributes[] = 'data-title="' . esc_attr( get_the_title() ) . '"';
 		$data_attributes[] = 'data-url="' . esc_url( get_permalink() ) . '"';
+		$data_attributes[] = 'data-color-signal-context="transparent"';
 
 		ob_start();
 

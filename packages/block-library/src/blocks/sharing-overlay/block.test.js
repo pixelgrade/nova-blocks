@@ -10,6 +10,7 @@ test('Sharing System registers every color-signal attribute used by its editor a
 
 	assert.equal(metadata.supports.novaBlocks.colorSignal.attributes, true);
 	assert.equal(metadata.supports.novaBlocks.colorSignal.controls, true);
+	assert.equal(metadata.supports.novaBlocks.colorSignal.providesContext, false);
 });
 
 test('Sharing System owns one locked core Buttons trigger and saves its inner content', () => {
@@ -47,4 +48,11 @@ test('Sharing System editor preview spacing follows the trigger boundary', () =>
 
 	assert.match( styleSource, /\.novablocks-sharing__trigger\s*\+\s*\.novablocks-sharing__wrap/ );
 	assert.doesNotMatch( styleSource, /\.wp-block-buttons\s*\+\s*\.novablocks-sharing__wrap/ );
+});
+
+test('Sharing System previews the automatic share icon without saving it into Button text', () => {
+	const styleSource = read( 'editor-styles.scss' );
+
+	assert.match( styleSource, /\.novablocks-sharing__trigger[\s\S]*\.wp-block-button__link[\s\S]*::before/ );
+	assert.match( styleSource, /mask(?:-image)?:\s*url\(/ );
 });

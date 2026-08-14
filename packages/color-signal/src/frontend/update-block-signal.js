@@ -116,8 +116,12 @@ export const updateBlockSignal = ( block, parentVariation, parentPalette ) => {
     block.dataset[ colorSignalSupport.paletteInheritanceAttribute ] = `${ inheritParentPalette }`;
   }
 
+  const providesContext = 'transparent' !== attributes.colorSignalContext;
+  const childParentVariation = providesContext ? finalAbsoluteVariation : parentVariation;
+  const childParentPalette = providesContext ? palette : parentPalette;
+
   innerBlocks.forEach( innerBlock => {
-    updateBlockSignal( innerBlock, finalAbsoluteVariation, palette );
+    updateBlockSignal( innerBlock, childParentVariation, childParentPalette );
   } );
 };
 
