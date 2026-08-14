@@ -180,6 +180,8 @@ if ( ! function_exists( 'novablocks_register_packages_scripts' ) ) {
 			// Register styles for the current package, if the files exist.
 			$style_path = $package_dir_absolute_path . 'style.css';
 			if ( file_exists( $style_path ) ) {
+				$style_version = filemtime( $style_path );
+
 				/**
 				 * Filters the stylesheet dependencies list before registering a package frontend stylesheet.
 				 *
@@ -194,7 +196,7 @@ if ( ! function_exists( 'novablocks_register_packages_scripts' ) ) {
 					$handle . '-style',
 					$package_dir_url . 'style.css',
 					$style_dependencies,
-					$version,
+					$style_version,
 					'screen'
 				);
 
@@ -205,6 +207,8 @@ if ( ! function_exists( 'novablocks_register_packages_scripts' ) ) {
 
 			$editor_styles_path = $package_dir_absolute_path . 'editor-styles.css';
 			if ( file_exists( $editor_styles_path ) ) {
+				$editor_style_version = filemtime( $editor_styles_path );
+
 				/**
 				 * Filters the stylesheet dependencies list before registering a package editor stylesheet.
 				 *
@@ -219,7 +223,7 @@ if ( ! function_exists( 'novablocks_register_packages_scripts' ) ) {
 					$handle . '-editor_style',
 					$package_dir_url . 'editor-styles.css',
 					$style_dependencies,
-					$version
+					$editor_style_version
 				);
 			}
 		}
