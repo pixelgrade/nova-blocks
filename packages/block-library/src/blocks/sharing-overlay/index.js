@@ -13,6 +13,7 @@ import iconSvg from './icon.svg';
 import edit from './edit';
 import attributes from './attributes';
 import attributesOverwrite from "./attributes-overwrite.json";
+import withSharingTriggerIconControl from './with-trigger-icon-control';
 
 const BLOCK_NAME = 'novablocks/sharing-overlay';
 
@@ -31,6 +32,7 @@ const overwriteAttributes = ( settings ) => {
   };
 };
 addFilter( 'blocks.registerBlockType', 'novablocks/sharing-overlay/attributes-overwrite', overwriteAttributes, Number.MAX_SAFE_INTEGER );
+addFilter( 'editor.BlockEdit', 'novablocks/sharing-overlay/trigger-icon-control', withSharingTriggerIconControl );
 
 registerBlockType( BLOCK_NAME, {
   icon: getSvg( iconSvg ),

@@ -1,6 +1,22 @@
 const TRIGGER_ICON_CLASS = 'novablocks-sharing__trigger-icon';
 const TRIGGER_EDITOR_ICON_CLASS = 'novablocks-sharing__trigger-editor-icon';
 const TRIGGER_EDITOR_BUTTON_CLASS = 'has-novablocks-sharing-trigger-icon';
+const TRIGGER_ICON_HIDDEN_CLASS = 'is-sharing-icon-hidden';
+
+const getSharingTriggerIconClassName = ( className = '', showIcon = true ) => {
+	const classes = className.split( /\s+/ ).filter( Boolean );
+	const nextClasses = classes.filter( value => value !== TRIGGER_ICON_HIDDEN_CLASS );
+
+	if ( ! showIcon ) {
+		nextClasses.push( TRIGGER_ICON_HIDDEN_CLASS );
+	}
+
+	return nextClasses.join( ' ' ) || undefined;
+};
+
+const isSharingTriggerIconVisible = trigger => (
+	! trigger?.closest( '.wp-block-button' )?.classList.contains( TRIGGER_ICON_HIDDEN_CLASS )
+);
 
 const getTransitionTime = style => {
 	const toMilliseconds = value => value.endsWith( 'ms' )
@@ -69,7 +85,7 @@ const createSharingTriggerIcon = ( trigger, iconMarkup, className ) => {
 };
 
 const prependSharingTriggerIcon = ( trigger, iconMarkup ) => {
-	if ( ! trigger || trigger.querySelector( `:scope > .${ TRIGGER_ICON_CLASS }` ) ) {
+	if ( ! trigger || ! isSharingTriggerIconVisible( trigger ) || trigger.querySelector( `:scope > .${ TRIGGER_ICON_CLASS }` ) ) {
 		return null;
 	}
 
@@ -85,7 +101,7 @@ const prependSharingTriggerIcon = ( trigger, iconMarkup ) => {
 
 const prependSharingTriggerEditorIcon = ( trigger, iconMarkup ) => {
 	const button = trigger?.closest( '.wp-block-button' );
-	if ( ! button || button.querySelector( `:scope > .${ TRIGGER_EDITOR_ICON_CLASS }` ) ) {
+	if ( ! button || ! isSharingTriggerIconVisible( trigger ) || button.querySelector( `:scope > .${ TRIGGER_EDITOR_ICON_CLASS }` ) ) {
 		return null;
 	}
 
@@ -99,11 +115,27 @@ const prependSharingTriggerEditorIcon = ( trigger, iconMarkup ) => {
 	return icon;
 };
 
+const removeSharingTriggerEditorIcon = trigger => {
+	const button = trigger?.closest( '.wp-block-button' );
+	if ( ! button ) {
+		return;
+	}
+
+	button.querySelectorAll( `:scope > .${ TRIGGER_EDITOR_ICON_CLASS }` ).forEach( icon => icon.remove() );
+	button.classList.remove( TRIGGER_EDITOR_BUTTON_CLASS, 'is-measuring-novablocks-sharing-trigger' );
+	button.style.removeProperty( '--nb-sharing-trigger-icon-color' );
+	button.style.removeProperty( '--nb-sharing-trigger-padding-inline-start' );
+	delete button.dataset.nbSharingTriggerClasses;
+};
+
 export {
 	findSharingTrigger,
 	getInlineSharingTriggerIcon,
+	getSharingTriggerIconClassName,
 	getTransitionTime,
+	isSharingTriggerIconVisible,
 	needsSharingTriggerEditorLayout,
 	prependSharingTriggerEditorIcon,
 	prependSharingTriggerIcon,
+	removeSharingTriggerEditorIcon,
 };
