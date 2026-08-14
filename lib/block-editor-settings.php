@@ -897,9 +897,26 @@ function novablocks_get_space_and_sizing_advanced_presets(): array {
 // Nova Blocks blocks control their own layout via CSS custom properties and
 // do not need this global override.
 
-function novablocks_get_facets() {
+/**
+ * Whether FacetWP's public rendering contract is available.
+ *
+ * Imported facet definitions can outlive the plugin itself. The shortcode is the
+ * capability Nova's dynamic blocks actually consume, so fail closed unless it is
+ * registered for this request.
+ */
+function novablocks_is_facetwp_available(): bool {
+	return function_exists( 'shortcode_exists' ) && shortcode_exists( 'facetwp' );
+}
+
+/**
+ * Read saved FacetWP definitions without deciding whether they are usable.
+ *
+ * Keep this private to Nova's availability-aware accessors: imported options may
+ * remain after FacetWP is removed and must never imply public availability.
+ */
+function novablocks_get_saved_facets(): array {
 	$facetwp_settings_option = get_option( 'facetwp_settings' );
-	$facetwp_settings = ( false !== $facetwp_settings_option ) ? json_decode( $facetwp_settings_option, true ) : [];
+	$facetwp_settings        = ( false !== $facetwp_settings_option ) ? json_decode( $facetwp_settings_option, true ) : [];
 
 	if ( ! isset( $facetwp_settings['facets'] ) ) {
 		$facetwp_settings['facets'] = [];
@@ -908,8 +925,34 @@ function novablocks_get_facets() {
 	return apply_filters( 'facetwp_facets', $facetwp_settings['facets'] );
 }
 
+/**
+ * Whether FacetWP is available to the block editor.
+ *
+ * Nova assembles its editor payload on init priority 11, before FacetWP creates
+ * its display object and shortcode on priority 20. A loaded FacetWP runtime is
+ * sufficient for the administrator-only editor preview, while public renderers
+ * continue to require the actual shortcode through
+ * {@see novablocks_is_facetwp_available()}.
+ */
+function novablocks_is_facetwp_editor_available(): bool {
+	return novablocks_is_facetwp_available()
+		|| ( defined( 'FACETWP_VERSION' ) && class_exists( 'FacetWP' ) );
+}
+
+function novablocks_get_facets() {
+	if ( ! novablocks_is_facetwp_available() ) {
+		return [];
+	}
+
+	return novablocks_get_saved_facets();
+}
+
 function novablocks_settings_add_facetwp_facets( $novablocks_settings ) {
-	$facets = novablocks_get_facets();
+	$editor_available                         = novablocks_is_facetwp_editor_available();
+	$novablocks_settings['facetwp_available'] = $editor_available;
+	$novablocks_settings['facetwp_setup_url'] = admin_url( 'admin.php?page=pixelgrade&tab=plugins&section=advanced-filtering' );
+
+	$facets = $editor_available ? novablocks_get_saved_facets() : [];
 
 	if ( ! empty( $facets ) ) {
 		$novablocks_settings[ 'facetwp_facets' ] = $facets;

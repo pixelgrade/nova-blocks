@@ -28,7 +28,11 @@ if ( ! function_exists( 'novablocks_render_facetwp_filter_block' ) ) {
 	 * @return false|string
 	 */
 	function novablocks_render_facetwp_filter_block( array $attributes, string $content, WP_Block $block ) {
-		novablocks_maybe_enqueue_block_frontend_scripts( $block );
+		if ( ! novablocks_is_facetwp_available() ) {
+			return '';
+		}
+
+		wp_enqueue_script( 'novablocks/facetwp-filter/frontend' );
 
 		$attributes_config = novablocks_get_facetwp_filter_attributes();
 		$attributes        = novablocks_get_attributes_with_defaults( $attributes, $attributes_config );
