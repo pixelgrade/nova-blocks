@@ -12,8 +12,10 @@ import { createSharingTriggerTemplate } from './template';
 import {
   getInlineSharingTriggerIcon,
   getTransitionTime,
+  isSharingTriggerIconVisible,
   needsSharingTriggerEditorLayout,
   prependSharingTriggerEditorIcon,
+  removeSharingTriggerEditorIcon,
 } from './trigger';
 
 const sharingTriggerIcon = getInlineSharingTriggerIcon( icons.share );
@@ -97,6 +99,11 @@ const SharingEdit = ( props ) => {
 
     const decorateTrigger = ( forceLayout = false ) => {
       const trigger = triggerWrapper.querySelector( '.wp-block-button__link' );
+      if ( ! isSharingTriggerIconVisible( trigger ) ) {
+        removeSharingTriggerEditorIcon( trigger );
+        return;
+      }
+
       prependSharingTriggerEditorIcon( trigger, sharingTriggerIcon );
       syncEditorIconLayout( trigger, forceLayout );
     };

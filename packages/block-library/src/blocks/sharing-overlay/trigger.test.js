@@ -1,11 +1,26 @@
 import {
+	getSharingTriggerIconClassName,
 	findSharingTrigger,
 	getInlineSharingTriggerIcon,
 	getTransitionTime,
+	isSharingTriggerIconVisible,
 	needsSharingTriggerEditorLayout,
 	prependSharingTriggerEditorIcon,
 	prependSharingTriggerIcon,
+	removeSharingTriggerEditorIcon,
 } from './trigger';
+
+describe( 'getSharingTriggerIconClassName', () => {
+	it( 'adds and removes only the negative icon marker', () => {
+		expect( getSharingTriggerIconClassName( 'is-style-secondary extra', false ) ).toBe(
+			'is-style-secondary extra is-sharing-icon-hidden'
+		);
+		expect( getSharingTriggerIconClassName( 'is-style-secondary is-sharing-icon-hidden extra', true ) ).toBe(
+			'is-style-secondary extra'
+		);
+		expect( getSharingTriggerIconClassName( 'is-sharing-icon-hidden', true ) ).toBeUndefined();
+	} );
+} );
 
 describe( 'getTransitionTime', () => {
 	it( 'returns the longest duration and matching delay in milliseconds', () => {
@@ -105,6 +120,15 @@ describe( 'prependSharingTriggerIcon', () => {
 		expect( prependSharingTriggerIcon( trigger, 'plain text' ) ).toBeNull();
 		expect( trigger.children ).toHaveLength( 0 );
 	} );
+
+	it( 'does not decorate a Button whose sharing icon is hidden', () => {
+		document.body.innerHTML = '<div class="wp-block-button is-sharing-icon-hidden"><button class="wp-block-button__link">Share</button></div>';
+		const trigger = document.querySelector( 'button' );
+
+		expect( isSharingTriggerIconVisible( trigger ) ).toBe( false );
+		expect( prependSharingTriggerIcon( trigger, '<svg viewBox="0 0 20 20"></svg>' ) ).toBeNull();
+		expect( trigger.children ).toHaveLength( 0 );
+	} );
 } );
 
 describe( 'prependSharingTriggerEditorIcon', () => {
@@ -123,5 +147,43 @@ describe( 'prependSharingTriggerEditorIcon', () => {
 		expect( trigger.parentElement.querySelectorAll( ':scope > .novablocks-sharing__trigger-editor-icon' ) ).toHaveLength( 1 );
 		expect( icon.getAttribute( 'aria-hidden' ) ).toBe( 'true' );
 		expect( icon.getAttribute( 'focusable' ) ).toBe( 'false' );
+	} );
+
+	it( 'removes editor decoration when the hidden marker appears', () => {
+		document.body.innerHTML = '<div class="wp-block-button"><div class="wp-block-button__link" contenteditable="true">Share</div></div>';
+		const trigger = document.querySelector( '.wp-block-button__link' );
+		const button = trigger.parentElement;
+
+		prependSharingTriggerEditorIcon( trigger, '<svg viewBox="0 0 20 20"></svg>' );
+		button.classList.add( 'has-novablocks-sharing-trigger-icon', 'is-sharing-icon-hidden' );
+		button.style.setProperty( '--nb-sharing-trigger-icon-color', 'red' );
+		button.style.setProperty( '--nb-sharing-trigger-padding-inline-start', '20px' );
+		button.dataset.nbSharingTriggerClasses = 'wp-block-button';
+
+		expect( prependSharingTriggerEditorIcon( trigger, '<svg viewBox="0 0 20 20"></svg>' ) ).toBeNull();
+		removeSharingTriggerEditorIcon( trigger );
+
+		expect( button.querySelector( '.novablocks-sharing__trigger-editor-icon' ) ).toBeNull();
+		expect( button.classList.contains( 'has-novablocks-sharing-trigger-icon' ) ).toBe( false );
+		expect( button.style.getPropertyValue( '--nb-sharing-trigger-icon-color' ) ).toBe( '' );
+		expect( button.style.getPropertyValue( '--nb-sharing-trigger-padding-inline-start' ) ).toBe( '' );
+		expect( button.dataset.nbSharingTriggerClasses ).toBeUndefined();
+	} );
+
+	it( 'does not mutate an already-clean hidden Button wrapper', () => {
+		document.body.innerHTML = '<div class="wp-block-button is-sharing-icon-hidden"><div class="wp-block-button__link" contenteditable="true">Share</div></div>';
+		const trigger = document.querySelector( '.wp-block-button__link' );
+		const button = trigger.parentElement;
+		const observer = new MutationObserver( () => {} );
+
+		observer.observe( button, {
+			attributes: true,
+			attributeFilter: [ 'class', 'style', 'data-nb-sharing-trigger-classes' ],
+			childList: true,
+		} );
+		removeSharingTriggerEditorIcon( trigger );
+
+		expect( observer.takeRecords() ).toHaveLength( 0 );
+		observer.disconnect();
 	} );
 } );

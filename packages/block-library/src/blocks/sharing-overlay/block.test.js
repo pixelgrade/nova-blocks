@@ -70,3 +70,18 @@ test('Sharing System previews the automatic share icon without taking over Butto
 	assert.doesNotMatch( styleSource, /\.wp-block-button__link(?::|[\s\S]{0,20}:):?after/ );
 	assert.match( frontendStyleSource, /^\.novablocks-sharing__trigger-icon[\s\S]*margin-inline-end/m );
 });
+
+test('Sharing System registers a contextual Button control for hiding its automatic icon', () => {
+	const indexSource = read( 'index.js' );
+	const editSource = read( 'edit.js' );
+	const frontendSource = read( 'frontend.js' );
+	const controlSource = read( 'with-trigger-icon-control.js' );
+
+	assert.match( indexSource, /withSharingTriggerIconControl/ );
+	assert.match( indexSource, /novablocks\/sharing-overlay\/trigger-icon-control/ );
+	assert.match( controlSource, /Show sharing icon/ );
+	assert.match( controlSource, /is-sharing-icon-hidden/ );
+	assert.match( editSource, /isSharingTriggerIconVisible/ );
+	assert.match( editSource, /removeSharingTriggerEditorIcon/ );
+	assert.match( frontendSource, /prependSharingTriggerIcon/ );
+});

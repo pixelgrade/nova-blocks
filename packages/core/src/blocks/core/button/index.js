@@ -22,6 +22,8 @@ const addNovaBlocksSupport = ( settings ) => {
           colorSignalClassname: true,
           minColorSignal: 1,
           inheritParentPalette: true,
+          paletteInheritanceAttribute: 'useParentPalette',
+          legacyInheritedPalette: '1',
           stickySourceColor: false,
         }
       }
