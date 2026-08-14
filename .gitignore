@@ -4,6 +4,7 @@
 **/build-style/
 /dist/
 tmp/
+.worktrees/
 
 /vendor/
 
