@@ -1,11 +1,13 @@
 import classnames from "classnames";
 
 import { Fragment } from "@wordpress/element";
+import { useInnerBlocksProps } from '@wordpress/block-editor';
 
 import { getIconSvg } from "@novablocks/block-editor";
 import { getColorSignalClassnames } from '@novablocks/utils';
 
 import Controls from './controls';
+import { createSharingTriggerTemplate } from './template';
 
 const SharingEdit = ( props ) => {
 
@@ -15,14 +17,17 @@ const SharingEdit = ( props ) => {
   } = props;
 
   const { buttonLabel } = attributes;
+  const innerBlocksProps = useInnerBlocksProps( {
+    className: 'novablocks-sharing__trigger',
+  }, {
+    allowedBlocks: [ 'core/buttons' ],
+    template: createSharingTriggerTemplate( buttonLabel ),
+    templateLock: 'all',
+  } );
 
   return (
     <Fragment>
-      <div className="wp-block-buttons">
-        <div className="wp-block-button">
-          <button className="wp-block-button__link">{ buttonLabel }</button>
-        </div>
-      </div>
+      <div { ...innerBlocksProps } />
       { isSelected && <SharingOverlayPreview { ...props } /> }
       <Controls { ...props } />
     </Fragment>
@@ -43,8 +48,7 @@ const SharingOverlayPreview = ( props ) => {
     showLinkedin,
     showPinterest,
     showWhatsapp,
-    headingLevel,
-    buttonLabel
+    headingLevel
   } = attributes;
 
   const classNames = classnames(

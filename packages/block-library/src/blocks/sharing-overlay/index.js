@@ -2,6 +2,7 @@
  * WordPress dependencies
  */
 import { registerBlockType } from '@wordpress/blocks';
+import { InnerBlocks } from '@wordpress/block-editor';
 import { getSvg } from "@novablocks/block-editor";
 import { addFilter } from "@wordpress/hooks";
 
@@ -35,7 +36,5 @@ registerBlockType( BLOCK_NAME, {
   icon: getSvg( iconSvg ),
 	attributes,
 	edit,
-	save: function() {
-		return null;
-	},
+	save: () => <InnerBlocks.Content />,
 } );
