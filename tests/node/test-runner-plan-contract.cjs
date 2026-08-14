@@ -5,6 +5,7 @@ const path = require( 'node:path' );
 const test = require( 'node:test' );
 
 const root = path.resolve( __dirname, '../..' );
+const escapeRegex = value => value.replace( /[-/\\^$*+?.()|[\]{}]/g, '\\$&' );
 const { discoverTestManifest } = require( '../../bin/test-manifest.cjs' );
 const {
 	buildRunPlan,
@@ -63,7 +64,7 @@ test( 'the compatibility Jest bucket carries only the required resolver flags', 
 
 	assert.ok(
 		compatibility.args.includes(
-			'--modulePathIgnorePatterns=<rootDir>/packages/block-library/|<rootDir>/.claude/'
+			'--modulePathIgnorePatterns=<rootDir>/packages/block-library/|<rootDir>/\\.claude/|<rootDir>/\\.worktrees/'
 		)
 	);
 	assert.ok(
@@ -73,7 +74,7 @@ test( 'the compatibility Jest bucket carries only the required resolver flags', 
 	);
 } );
 
-test( 'every Jest bucket ignores agent worktrees under .claude', () => {
+test( 'every Jest bucket ignores configured project-local agent worktrees', () => {
 	const plan = buildRunPlan( {
 		root,
 		manifest: discoverTestManifest( root ),
@@ -81,12 +82,21 @@ test( 'every Jest bucket ignores agent worktrees under .claude', () => {
 	} );
 
 	plan.jest.forEach( command => {
+		const ignoreArgument = command.args.find( arg => arg.startsWith( '--modulePathIgnorePatterns=' ) );
+		const ignorePattern = ignoreArgument
+			?.replace( '--modulePathIgnorePatterns=', '' )
+			.replaceAll( '<rootDir>', escapeRegex( root ) );
+		const ignoreRegex = new RegExp( ignorePattern );
+
+		assert.ok( ignoreArgument?.includes( '<rootDir>/\\.claude/' ) );
 		assert.ok(
-			command.args.some( arg =>
-				arg.startsWith( '--modulePathIgnorePatterns=' ) && arg.includes( '<rootDir>/.claude/' )
-			),
-			`${ command.label } must ignore .claude worktrees in jest-haste-map`
+			ignoreArgument?.includes( '<rootDir>/\\.worktrees/' ),
+			`${ command.label } must ignore .worktrees checkouts in jest-haste-map`
 		);
+		assert.equal( ignoreRegex.test( path.join( root, '.claude/worktrees/feature/package.json' ) ), true );
+		assert.equal( ignoreRegex.test( path.join( root, '.worktrees/feature/package.json' ) ), true );
+		assert.equal( ignoreRegex.test( path.join( root, 'xclaude/feature/package.json' ) ), false );
+		assert.equal( ignoreRegex.test( path.join( root, 'xworktrees/feature/package.json' ) ), false );
 	} );
 } );
 

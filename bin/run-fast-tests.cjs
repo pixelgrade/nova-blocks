@@ -41,16 +41,16 @@ const buildRunPlan = ( { root, manifest, phpCli } ) => ( {
 		],
 	},
 	jest: [
-		// Agent worktrees under .claude/worktrees/ duplicate every package.json,
-		// which collides in jest-haste-map's module map — keep them ignored.
+		// Project-local worktrees duplicate every package.json, which collides in
+		// jest-haste-map's module map — keep both supported locations ignored.
 		buildJestCommand( 'Jest', manifest.jestMainTests, [
-			'--modulePathIgnorePatterns=<rootDir>/.claude/',
+			'--modulePathIgnorePatterns=<rootDir>/\\.claude/|<rootDir>/\\.worktrees/',
 		] ),
 		buildJestCommand(
 			'Jest compatibility',
 			manifest.jestCompatibilityTests,
 			[
-				'--modulePathIgnorePatterns=<rootDir>/packages/block-library/|<rootDir>/.claude/',
+				'--modulePathIgnorePatterns=<rootDir>/packages/block-library/|<rootDir>/\\.claude/|<rootDir>/\\.worktrees/',
 				'--transformIgnorePatterns=node_modules/(?!(@wordpress/i18n|memize)/)',
 			]
 		),

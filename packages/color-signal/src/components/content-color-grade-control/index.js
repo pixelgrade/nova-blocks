@@ -1,7 +1,7 @@
-import { __ } from "@wordpress/i18n";
 import { useCallback } from "@wordpress/element";
 
 import { ColorGradesControl } from "../index";
+import { getContentColorSignalLabel } from "../content-color-signal-control";
 import { getAbsoluteColorVariation, getSignalRelativeToVariation } from "../../utils";
 import { useSupports } from "@novablocks/block-editor";
 
@@ -40,7 +40,7 @@ const ContentColorGradeControl = props => {
 
   return (
     <ColorGradesControl { ...props }
-                        label={ __( 'Content Area Color Signal', '__plugin_txtd' ) }
+                        label={ getContentColorSignalLabel( colorSignalSupport ) }
                         value={ contentPaletteVariation }
                         signal={ contentColorSignal }
                         useReference={ false }

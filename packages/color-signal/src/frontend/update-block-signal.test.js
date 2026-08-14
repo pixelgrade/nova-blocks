@@ -133,6 +133,33 @@ describe( 'updateBlockSignal', () => {
 		expect( terms.dataset.useParentPalette ).toBe( 'false' );
 	} );
 
+	it( 'resolves an independent term-link signal against its Post Terms wrapper palette', () => {
+		document.body.innerHTML = `
+			<div class="sm-palette-3 sm-variation-8 sm-color-signal-1"
+				data-palette="3" data-palette-variation="8" data-color-signal="1">
+				<div class="wp-block-post-terms sm-palette-1 sm-variation-1 sm-color-signal-1"
+					data-palette="1" data-palette-variation="1" data-color-signal="1"
+					data-inherit-parent-palette="true">
+					<a class="sm-palette-1 sm-variation-12 sm-color-signal-3"
+						data-palette="1" data-palette-variation="12" data-color-signal="3"
+						data-inherit-parent-palette="true">Animation</a>
+				</div>
+			</div>
+		`;
+
+		const surface = document.body.firstElementChild;
+		const terms = surface.firstElementChild;
+		const termLink = terms.firstElementChild;
+
+		updateBlockSignal( surface, 1 );
+
+		expect( terms.dataset.palette ).toBe( '3' );
+		expect( terms.dataset.colorSignal ).toBe( '1' );
+		expect( termLink.dataset.palette ).toBe( '3' );
+		expect( termLink.dataset.colorSignal ).toBe( '3' );
+		expect( termLink.classList.contains( 'sm-variation-11' ) ).toBe( true );
+	} );
+
 	it( 'preserves the valid zero signal when a List inherits its parent palette', () => {
 		document.body.innerHTML = `
 			<div class="sm-palette-2 sm-variation-8 sm-color-signal-0"

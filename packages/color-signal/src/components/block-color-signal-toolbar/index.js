@@ -6,6 +6,7 @@ import { useSettings, useSupports } from "@novablocks/block-editor";
 
 import { getContentSignalChangeAttributes, getPaletteChangeAttributes, getSignalChangeAttributes } from "../../editor/utils";
 import withColorSignalProps from "../with-color-signal-props";
+import { getContentColorSignalLabel } from "../content-color-signal-control";
 import {
   getNextPalette,
   getPaletteDisplayColor,
@@ -110,8 +111,9 @@ const BlockColorSignalToolbar = withColorSignalProps( ( props ) => {
         <ToolbarButton
           icon={ <ColorSignalToolbarIcon level={ contentColorSignal } scope="content" /> }
           label={ sprintf(
-            /* translators: 1: current Content Area Color Signal level; 2: the level a click switches to */
-            __( 'Content Area Color Signal: %1$s — click for %2$s', '__plugin_txtd' ),
+            /* translators: 1: content signal control label; 2: current level; 3: the level a click switches to */
+            __( '%1$s: %2$s — click for %3$s', '__plugin_txtd' ),
+            getContentColorSignalLabel( colorSignalSupport ),
             currentContentLabel,
             nextContentLevel.label
           ) }

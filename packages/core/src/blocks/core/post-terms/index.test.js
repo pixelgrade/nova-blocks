@@ -2,6 +2,10 @@ jest.mock( '@wordpress/hooks', () => ( {
 	addFilter: jest.fn(),
 } ) );
 
+jest.mock( '@wordpress/i18n', () => ( {
+	__: text => text,
+} ) );
+
 const { addFilter } = require( '@wordpress/hooks' );
 
 require( './index' );
@@ -16,9 +20,11 @@ describe( 'core/post-terms Color Signal support', () => {
 			supports: {},
 		} );
 
-			expect( settings.supports.novaBlocks.colorSignal ).toMatchObject( {
+		expect( settings.supports.novaBlocks.colorSignal ).toMatchObject( {
 			attributes: true,
 			controls: true,
+			contentColorSignal: true,
+			contentColorSignalLabel: 'Term Links Color Signal',
 			paletteClassname: true,
 			paletteVariationClassname: true,
 			colorSignalClassname: true,

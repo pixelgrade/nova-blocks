@@ -1,4 +1,5 @@
 import { addFilter } from '@wordpress/hooks';
+import { __ } from '@wordpress/i18n';
 
 export const addNovaBlocksSupport = ( settings ) => {
   if ( 'core/post-terms' !== settings.name ) {
@@ -14,6 +15,8 @@ export const addNovaBlocksSupport = ( settings ) => {
         colorSignal: {
           attributes: true,
           controls: true,
+          contentColorSignal: true,
+          contentColorSignalLabel: __( 'Term Links Color Signal', '__plugin_txtd' ),
           functionalColors: false,
           paletteClassname: true,
           paletteVariationClassname: true,

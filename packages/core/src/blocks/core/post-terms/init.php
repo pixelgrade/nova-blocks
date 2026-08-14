@@ -19,6 +19,7 @@ function novablocks_get_dynamic_core_color_signal_blocks(): array {
 		'core/post-terms' => [
 			'attributes'                => true,
 			'controls'                  => true,
+			'contentColorSignal'        => true,
 			'functionalColors'          => false,
 			'paletteClassname'          => true,
 			'paletteVariationClassname' => true,
@@ -165,6 +166,26 @@ function novablocks_render_dynamic_core_color_signal_block( string $block_conten
 
 	if ( ! empty( $attributes['useSourceColorAsReference'] ) ) {
 		$processor->set_attribute( 'data-use-source-color-as-reference', 'true' );
+	}
+
+	if ( 0 !== (int) $attributes['contentColorSignal'] ) {
+		$link_attributes                              = $attributes;
+		$link_attributes['colorSignal']               = $attributes['contentColorSignal'];
+		$link_attributes['paletteVariation']          = $attributes['contentPaletteVariation'];
+		$link_attributes['useSourceColorAsReference'] = false;
+		$link_classes                                 = novablocks_get_color_signal_classes( $link_attributes );
+		$link_classes[]                               = 'sm-color-signal-' . $link_attributes['colorSignal'];
+
+		while ( $processor->next_tag( 'a' ) ) {
+			foreach ( array_unique( $link_classes ) as $class_name ) {
+				$processor->add_class( $class_name );
+			}
+
+			$processor->set_attribute( 'data-palette', (string) $link_attributes['palette'] );
+			$processor->set_attribute( 'data-palette-variation', (string) $link_attributes['paletteVariation'] );
+			$processor->set_attribute( 'data-color-signal', (string) $link_attributes['colorSignal'] );
+			$processor->set_attribute( 'data-inherit-parent-palette', 'true' );
+		}
 	}
 
 	return $processor->get_updated_html();

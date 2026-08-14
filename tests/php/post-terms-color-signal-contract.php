@@ -53,23 +53,37 @@ class WP_HTML_Tag_Processor {
 	private string $opening_tag = '';
 	private string $tag_name = '';
 	private array $attributes = [];
+	private int $cursor = 0;
+	private int $tag_start = -1;
+	private int $tag_length = 0;
 
 	public function __construct( string $html ) {
 		$this->html = $html;
 	}
 
-	public function next_tag(): bool {
-		if ( ! preg_match( '/<([a-z][a-z0-9-]*)([^>]*)>/i', $this->html, $match ) ) {
+	public function next_tag( ?string $query = null ): bool {
+		$this->commit_current_tag();
+
+		$pattern = is_string( $query ) && '' !== $query
+			? '/<(' . preg_quote( $query, '/' ) . ')([^>]*)>/i'
+			: '/<([a-z][a-z0-9-]*)([^>]*)>/i';
+
+		if ( ! preg_match( $pattern, $this->html, $match, PREG_OFFSET_CAPTURE, $this->cursor ) ) {
 			return false;
 		}
 
-		$this->opening_tag = $match[0];
-		$this->tag_name    = $match[1];
-		preg_match_all( '/([a-z][a-z0-9-]*)="([^"]*)"/i', $match[2], $attribute_matches, PREG_SET_ORDER );
+		$this->opening_tag = $match[0][0];
+		$this->tag_name    = $match[1][0];
+		$this->tag_start   = $match[0][1];
+		$this->tag_length  = strlen( $this->opening_tag );
+		$this->attributes  = [];
+		preg_match_all( '/([a-z][a-z0-9-]*)="([^"]*)"/i', $match[2][0], $attribute_matches, PREG_SET_ORDER );
 
 		foreach ( $attribute_matches as $attribute_match ) {
 			$this->attributes[ $attribute_match[1] ] = $attribute_match[2];
 		}
+
+		$this->cursor = $this->tag_start + $this->tag_length;
 
 		return true;
 	}
@@ -90,6 +104,16 @@ class WP_HTML_Tag_Processor {
 	}
 
 	public function get_updated_html(): string {
+		$this->commit_current_tag();
+
+		return $this->html;
+	}
+
+	private function commit_current_tag(): void {
+		if ( $this->tag_start < 0 ) {
+			return;
+		}
+
 		$attributes = '';
 
 		foreach ( $this->attributes as $name => $value ) {
@@ -97,8 +121,13 @@ class WP_HTML_Tag_Processor {
 		}
 
 		$replacement = '<' . $this->tag_name . $attributes . '>';
-
-		return preg_replace( '/' . preg_quote( $this->opening_tag, '/' ) . '/', $replacement, $this->html, 1 );
+		$this->html   = substr_replace( $this->html, $replacement, $this->tag_start, $this->tag_length );
+		$this->cursor = $this->tag_start + strlen( $replacement );
+		$this->tag_start = -1;
+		$this->tag_length = 0;
+		$this->opening_tag = '';
+		$this->tag_name = '';
+		$this->attributes = [];
 	}
 }
 
@@ -126,6 +155,10 @@ novablocks_post_terms_assert(
 novablocks_post_terms_assert(
 	true === ( $registered['supports']['novaBlocks']['colorSignal']['inheritParentPalette'] ?? false ),
 	'The server support map must mirror inherited-palette editor behavior.'
+);
+novablocks_post_terms_assert(
+	true === ( $registered['supports']['novaBlocks']['colorSignal']['contentColorSignal'] ?? false ),
+	'The server support map must expose the independent term-link Color Signal.'
 );
 novablocks_post_terms_assert(
 	'boolean' === ( $registered['attributes']['useParentPalette']['type'] ?? null ),
@@ -175,6 +208,93 @@ foreach ( [
 	novablocks_post_terms_assert(
 		str_contains( $rendered, $expected_fragment ),
 		'Active Post Terms markup is missing: ' . $expected_fragment
+	);
+}
+
+$zero_link_content = '<div class="taxonomy-category wp-block-post-terms"><span class="wp-block-post-terms__prefix">Filed under </span><a href="/animation/">Animation</a><span class="wp-block-post-terms__separator"> · </span><a href="/film/">Film</a><span class="wp-block-post-terms__suffix">.</span></div>';
+$zero_link_rendered = novablocks_render_dynamic_core_color_signal_block(
+	$zero_link_content,
+	[
+		'blockName' => 'core/post-terms',
+		'attrs'     => [
+			'useColorSignal'       => true,
+			'palette'              => '2',
+			'paletteVariation'     => 8,
+			'colorSignal'          => 1,
+			'contentColorSignal'   => 0,
+			'contentPaletteVariation' => 8,
+		],
+	]
+);
+
+foreach ( [
+	'<a href="/animation/">Animation</a>',
+	'<a href="/film/">Film</a>',
+	'<span class="wp-block-post-terms__separator"> · </span>',
+] as $expected_fragment ) {
+	novablocks_post_terms_assert(
+		str_contains( $zero_link_rendered, $expected_fragment ),
+		'The default term-link signal must preserve inherited markup: ' . $expected_fragment
+	);
+}
+
+$independent_link_block = [
+	'blockName' => 'core/post-terms',
+	'attrs'     => [
+		'useColorSignal'          => true,
+		'palette'                 => '2',
+		'paletteVariation'        => 8,
+		'colorSignal'             => 1,
+		'contentColorSignal'      => 3,
+		'contentPaletteVariation' => 12,
+		'useParentPalette'        => false,
+	],
+];
+$independent_link_rendered = novablocks_render_dynamic_core_color_signal_block(
+	$zero_link_content,
+	$independent_link_block
+);
+
+preg_match( '/<div[^>]+>/', $independent_link_rendered, $wrapper_match );
+novablocks_post_terms_assert(
+	isset( $wrapper_match[0] )
+	&& str_contains( $wrapper_match[0], 'sm-variation-8' )
+	&& str_contains( $wrapper_match[0], 'sm-color-signal-1' )
+	&& str_contains( $wrapper_match[0], 'data-color-signal="1"' ),
+	'The independent term-link signal must not overwrite the wrapper signal.'
+);
+
+preg_match_all( '/<a[^>]+>/', $independent_link_rendered, $link_matches );
+novablocks_post_terms_assert(
+	2 === count( $link_matches[0] ),
+	'Every rendered term link must remain present.'
+);
+
+foreach ( $link_matches[0] as $link_markup ) {
+	foreach ( [
+		'sm-palette-2',
+		'sm-variation-12',
+		'sm-color-signal-3',
+		'data-palette="2"',
+		'data-palette-variation="12"',
+		'data-color-signal="3"',
+		'data-inherit-parent-palette="true"',
+	] as $expected_fragment ) {
+		novablocks_post_terms_assert(
+			str_contains( $link_markup, $expected_fragment ),
+			'Term link markup is missing: ' . $expected_fragment
+		);
+	}
+}
+
+foreach ( [
+	'<span class="wp-block-post-terms__prefix">Filed under </span>',
+	'<span class="wp-block-post-terms__separator"> · </span>',
+	'<span class="wp-block-post-terms__suffix">.</span>',
+] as $expected_fragment ) {
+	novablocks_post_terms_assert(
+		str_contains( $independent_link_rendered, $expected_fragment ),
+		'Decorating term links must preserve adjacent dynamic markup: ' . $expected_fragment
 	);
 }
 
