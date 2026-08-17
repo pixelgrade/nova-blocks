@@ -19,13 +19,13 @@ export const clampColorSignal = ( colorSignal, colorSignalSupport = {} ) => {
  * be skipped without coupling this utility to the block-editor data store.
  *
  * @param {Array} parents Parent blocks ordered nearest-first.
- * @param {Function} hasColorSignal Whether a block name owns Color Signal.
+ * @param {Function} hasColorSignal Whether a parent block owns an active Color Signal context.
  * @param {Function} getVariation Resolve a block's absolute variation.
  * @returns {{palette: *, variation: *}|null} The nearest context, if any.
  */
 export const getNearestColorSignalContext = ( parents = [], hasColorSignal, getVariation ) => {
   for ( const parent of parents ) {
-    if ( ! parent?.name || ! parent?.attributes || ! hasColorSignal( parent.name ) ) {
+    if ( ! parent?.name || ! parent?.attributes || ! hasColorSignal( parent.name, parent ) ) {
       continue;
     }
 

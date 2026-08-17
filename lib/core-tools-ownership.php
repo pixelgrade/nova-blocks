@@ -2,12 +2,12 @@
 /**
  * Own the core design tools Nova Blocks' own controls functionally replace.
  *
- * Stage 1 ("Own the decisions") of the Design Customization ownership
- * project: switches OFF core Color/Spacing tools for the concerns Nova
- * Blocks actually replaces with a working control + CSS mechanism, via the
- * `wp_theme_json_data_theme` availability filter. This is deliberately a
- * narrow, evidence-backed list — see the binding spec for the full audit
- * trail behind every entry:
+ * Introduced in Stage 1 ("Own the decisions") of the Design Customization
+ * ownership project, this switches OFF core Color/Spacing tools only for
+ * concerns Nova Blocks replaces with a working control + CSS mechanism, via
+ * the `wp_theme_json_data_theme` availability filter. The map remains a
+ * deliberately narrow, evidence-backed current contract. Its original audit
+ * trail lives in:
  *
  * - stage-0-review-addendum.md (binding — supersedes the matrix where they
  *   disagree; this is the Stage 1 "exit gate")
@@ -23,12 +23,13 @@
 
 /**
  * Pure function: the per-block core design-tools availability overrides
- * Nova Blocks owns as of Stage 1.
+ * Nova Blocks currently owns.
  *
  * Every entry here is backed by a confirmed, working Nova CSS/attribute
- * replacement (the addendum's "Final Stage 1 flag list"). Notably absent
- * by design, and must stay absent unless a future stage adds a real
- * replacement:
+ * replacement. The addendum's "Final Stage 1 flag list" remains the
+ * historical baseline; later ownership additions must carry their own
+ * runtime verification and stable architecture contract. Notably absent by
+ * design, and required to stay absent until Nova adds a real replacement:
  *
  * - `padding` (group/columns): the "Content Area Padding" control
  *   (`contentPadding` -> `--nb-card-content-padding-multiplier`) is a
@@ -72,14 +73,29 @@ function novablocks_get_core_tools_availability_overrides(): array {
 				'margin' => false,
 			],
 		],
-		// core/columns has no `novaBlocks.colorSignal` support object at
-		// all (color is entirely untouched by Nova on this block — stays
-		// core), but it does opt into the full `spaceAndSizing: true`
-		// bundle, so its spacing.margin gets the same real replacement as
-		// group's.
+		// The outer Columns container establishes a row-wide Color Signal
+		// context and retains the full spaceAndSizing bundle. Core padding,
+		// block gap, typography, and borders remain available; only the
+		// wrapper colors Color Signal replaces move to Nova ownership.
 		'core/columns'   => [
+			'color'   => [
+				'text'       => false,
+				'background' => false,
+				'link'       => false,
+			],
 			'spacing' => [
 				'margin' => false,
+			],
+		],
+		// Individual Column cells are opt-in Color Signal contexts that
+		// inherit the outer Columns palette until explicitly overridden.
+		// They do not receive Nova spacing controls, so all core spacing
+		// concerns remain available.
+		'core/column'    => [
+			'color' => [
+				'text'       => false,
+				'background' => false,
+				'link'       => false,
 			],
 		],
 		// core/separator explicitly disables core's `color.text` at the

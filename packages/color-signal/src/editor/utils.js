@@ -10,6 +10,7 @@ import {
   getSiteColorVariation,
   getNearestColorSignalContext,
   getSourceIndexFromPaletteId,
+  isColorSignalActive,
   providesColorSignalContext,
   removeSiteVariationOffset,
   resolveColorSignalContext,
@@ -39,7 +40,12 @@ export const getParentColorContext = ( clientId ) => {
   const parentBlocks = parents.reverse().map( parentClientId => getBlock( parentClientId ) ).filter( Boolean );
   const parentContext = getNearestColorSignalContext(
     parentBlocks,
-    name => providesColorSignalContext( getSupports( name )?.novaBlocks?.colorSignal ),
+    ( name, parentBlock ) => {
+      const colorSignalSupport = getSupports( name )?.novaBlocks?.colorSignal;
+
+      return providesColorSignalContext( colorSignalSupport )
+        && isColorSignalActive( colorSignalSupport, parentBlock.attributes );
+    },
     getAbsoluteColorVariation
   );
 

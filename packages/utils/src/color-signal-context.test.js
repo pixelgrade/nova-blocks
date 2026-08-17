@@ -88,6 +88,34 @@ describe( 'getNearestColorSignalContext', () => {
 			variation: 8,
 		} );
 	} );
+
+	it( 'lets the context predicate ignore an inactive opt-in ancestor', () => {
+		const parents = [
+			{
+				name: 'core/columns',
+				attributes: {
+					palette: '1',
+					paletteVariation: 3,
+				},
+			},
+			{
+				name: 'core/group',
+				attributes: {
+					palette: '2',
+					paletteVariation: 8,
+				},
+			},
+		];
+
+		expect( getNearestColorSignalContext?.(
+			parents,
+			( name, parent ) => name === 'core/group' || parent.attributes.useColorSignal === true,
+			attributes => attributes.paletteVariation
+		) ).toEqual( {
+			palette: '2',
+			variation: 8,
+		} );
+	} );
 } );
 
 describe( 'providesColorSignalContext', () => {

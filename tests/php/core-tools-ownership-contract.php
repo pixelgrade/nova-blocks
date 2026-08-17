@@ -1,14 +1,14 @@
 <?php
 /**
- * Contract: Stage 1 core design-tools ownership (lib/core-tools-ownership.php).
+ * Contract: current core design-tools ownership (lib/core-tools-ownership.php).
  *
- * Pins the exact per-block availability-override map against the binding
- * spec (.ai/design-customization/stage-0-review-addendum.md — "Final Stage 1
- * flag list") and the wp_theme_json_data_theme merge mechanism that applies
- * it. Also asserts padding/blockGap/typography/border/gradients are ABSENT
- * from the map everywhere, and that blocks with no Nova design-tools
- * replacement (core/column, core/list-item, core/quote, core/query) are not
- * present at all.
+ * Pins the exact per-block availability-override map and the
+ * wp_theme_json_data_theme merge mechanism that applies it. The original
+ * Stage 1 flag list is the historical baseline; later verified ownership
+ * additions are part of this same exact contract. Also asserts
+ * padding/blockGap/typography/border/gradients are ABSENT from the map
+ * everywhere, and that blocks with no Nova design-tools replacement
+ * (core/list-item, core/quote, core/query) are not present at all.
  */
 
 define( 'ABSPATH', dirname( __DIR__, 2 ) . '/' );
@@ -59,8 +59,20 @@ $expected_overrides = [
 		],
 	],
 	'core/columns'   => [
+		'color'   => [
+			'text'       => false,
+			'background' => false,
+			'link'       => false,
+		],
 		'spacing' => [
 			'margin' => false,
+		],
+	],
+	'core/column'    => [
+		'color' => [
+			'text'       => false,
+			'background' => false,
+			'link'       => false,
 		],
 	],
 	'core/separator' => [
@@ -103,7 +115,7 @@ novablocks_core_tools_assert_same(
 // Blocks with zero Nova design-tools replacement must not appear at all.
 // -----------------------------------------------------------------------------
 
-foreach ( [ 'core/column', 'core/list-item', 'core/quote', 'core/query' ] as $untouched_block ) {
+foreach ( [ 'core/list-item', 'core/quote', 'core/query' ] as $untouched_block ) {
 	novablocks_core_tools_assert(
 		! array_key_exists( $untouched_block, $overrides ),
 		"'{$untouched_block}' has no novaBlocks design-tools replacement and must not appear in the override map."
