@@ -12,10 +12,3 @@ test('getUpdatedAttributes preserves the explicit content color signal value', (
     /return\s*\{[\s\S]*contentColorSignal:\s*contentColorSignal,[\s\S]*contentPaletteVariation:\s*contentColorSignal === 0 \? finalVariation : nextContentVariation,[\s\S]*\}/
   );
 } );
-
-test('parent lookup skips Color Signal blocks that do not provide descendant context', () => {
-  assert.match(
-    utilsSource,
-    /providesColorSignalContext\(\s*getSupports\(\s*name\s*\)\?\.novaBlocks\?\.colorSignal\s*\)/
-  );
-} );

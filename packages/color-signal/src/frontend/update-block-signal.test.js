@@ -255,4 +255,44 @@ describe( 'updateBlockSignal', () => {
 		expect( separator.dataset.palette ).toBe( '3' );
 		expect( separator.dataset.useParentPalette ).toBe( 'false' );
 	} );
+
+	it( 'inherits the parent palette for an active Column cell', () => {
+		document.body.innerHTML = `
+			<div class="wp-block-columns sm-palette-2 sm-variation-8 sm-color-signal-1"
+				data-palette="2" data-palette-variation="8" data-color-signal="1">
+				<div class="wp-block-column sm-palette-1 sm-variation-1 sm-color-signal-1"
+					data-palette="1" data-palette-variation="1" data-color-signal="1"
+					data-use-parent-palette="true"></div>
+			</div>
+		`;
+
+		const columns = document.body.firstElementChild;
+		const column = columns.firstElementChild;
+
+		updateBlockSignal( columns, 1 );
+
+		expect( column.dataset.palette ).toBe( '2' );
+		expect( column.classList.contains( 'sm-palette-2' ) ).toBe( true );
+		expect( column.dataset.useParentPalette ).toBe( 'true' );
+	} );
+
+	it( 'preserves an explicit palette override for an active Column cell', () => {
+		document.body.innerHTML = `
+			<div class="wp-block-columns sm-palette-2 sm-variation-8 sm-color-signal-1"
+				data-palette="2" data-palette-variation="8" data-color-signal="1">
+				<div class="wp-block-column sm-palette-3 sm-variation-1 sm-color-signal-1"
+					data-palette="3" data-palette-variation="1" data-color-signal="1"
+					data-use-parent-palette="false"></div>
+			</div>
+		`;
+
+		const columns = document.body.firstElementChild;
+		const column = columns.firstElementChild;
+
+		updateBlockSignal( columns, 1 );
+
+		expect( column.dataset.palette ).toBe( '3' );
+		expect( column.classList.contains( 'sm-palette-3' ) ).toBe( true );
+		expect( column.dataset.useParentPalette ).toBe( 'false' );
+	} );
 } );

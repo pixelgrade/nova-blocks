@@ -115,6 +115,7 @@ Yes! Nova Block's core features are free to use.
 == Changelog ==
 
 = 2.5.3 =
+* New: Add opt-in Color Signal controls to Columns and individual Column blocks, with Column palettes inheriting from their parent Columns by default.
 * Fix: Avoid a PHP 8.4 deprecation when classifying card media ratios.
 
 = 2.5.2 =

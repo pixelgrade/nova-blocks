@@ -248,6 +248,14 @@ All preset UIs must run through `packages/block-editor/src/preset-engine/`. Full
 - Every definition in a family must declare the SAME `managedAttributes` set — it is the family's complete capability domain.
 - Structural attributes may be managed only when every definition writes an explicit value; never clear structure implicitly.
 
+## Columns Color Signal Architecture
+
+- `core/columns` and `core/column` both expose the full Color Signal controls through explicit `useColorSignal` activation. Untouched legacy blocks must serialize byte-identically until a Color Signal value is changed.
+- The outer `core/columns` block owns an independent palette context. Each inner `core/column` inherits that palette by default through `useParentPalette`, but may explicitly select its own palette.
+- Parent-context lookup must ignore inactive opt-in ancestors; an inactive Columns wrapper cannot hide an active Group or page context from descendants.
+- On first Color Signal change, clear conflicting core text/background/link color attributes in the same update. Core padding, block gap, typography, border, and Column sizing remain core-owned.
+- Do not expose Row Surface presets on either Columns level until preset application can activate Color Signal and clear conflicting core colors in the same atomic patch.
+
 ## Sidecar Layout Engine (modernized 2026-07-22; full contract in docs/plans/2026-07-21-sidecar-subgrid-modernization-design.md)
 
 - Two grid roles: `nb-layout-root` declares the 13-track editorial grid; track-neutral containers pass through via `grid-template-columns: subgrid` inside `@supports` (fallback = identical re-declared math). Positioned sidecars stay track-declaring. Never add padding/width/margin to a grid container in the chain — override track vars instead.

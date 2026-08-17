@@ -10,7 +10,7 @@ jest.mock( '@novablocks/utils', () => ( {
 	clampColorSignal: value => value,
 	getColorPalettesConfig: () => [],
 	getNearestColorSignalContext: ( parents, hasColorSignal, getVariation ) => {
-		const parent = parents.find( candidate => candidate?.name && candidate?.attributes && hasColorSignal( candidate.name ) );
+		const parent = parents.find( candidate => candidate?.name && candidate?.attributes && hasColorSignal( candidate.name, candidate ) );
 
 		return parent ? {
 			palette: parent.attributes.palette,
@@ -18,6 +18,7 @@ jest.mock( '@novablocks/utils', () => ( {
 		} : null;
 	},
 	getSignals: () => [ 1, 3, 8, 11 ],
+	isColorSignalActive: ( support, attributes ) => ! support.activationAttribute || attributes[ support.activationAttribute ] === true,
 	providesColorSignalContext: support => true === support || ( !! support && false !== support.providesContext ),
 } ) );
 
@@ -77,6 +78,53 @@ describe( 'getParentColorContext', () => {
 		} )[ name ] );
 
 		expect( getParentColorContext( 'button' ) ).toEqual( {
+			palette: '2',
+			variation: 8,
+		} );
+	} );
+
+	it( 'skips inactive opt-in Columns when resolving a Column cell context', () => {
+		const blocks = {
+			surface: {
+				name: 'core/group',
+				attributes: {
+					palette: '2',
+					paletteVariation: 8,
+					useSourceColorAsReference: false,
+				},
+			},
+			columns: {
+				name: 'core/columns',
+				attributes: {
+					palette: '1',
+					paletteVariation: 3,
+					useColorSignal: false,
+				},
+			},
+		};
+
+		select.mockReturnValue( {
+			getBlockParents: () => [ 'surface', 'columns' ],
+			getBlock: id => blocks[ id ],
+			getSelectedBlockClientId: () => 'column',
+		} );
+		getSupports.mockImplementation( name => ( {
+			'core/group': {
+				novaBlocks: {
+					colorSignal: { controls: true },
+				},
+			},
+			'core/columns': {
+				novaBlocks: {
+					colorSignal: {
+						controls: true,
+						activationAttribute: 'useColorSignal',
+					},
+				},
+			},
+		} )[ name ] );
+
+		expect( getParentColorContext( 'column' ) ).toEqual( {
 			palette: '2',
 			variation: 8,
 		} );

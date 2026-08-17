@@ -41,14 +41,20 @@ export const updateBlockSignal = ( block, parentVariation, parentPalette ) => {
     }
     : block.classList.contains( 'wp-block-list' ) || block.classList.contains( 'nb-list' )
       ? { inheritParentPalette: true }
-      : block.classList.contains( 'wp-block-separator' )
+      : block.classList.contains( 'wp-block-column' )
         ? {
           inheritParentPalette: true,
-          minColorSignal: 1,
           paletteInheritanceAttribute: 'useParentPalette',
           legacyInheritedPalette: '1',
         }
-        : {};
+        : block.classList.contains( 'wp-block-separator' )
+          ? {
+            inheritParentPalette: true,
+            minColorSignal: 1,
+            paletteInheritanceAttribute: 'useParentPalette',
+            legacyInheritedPalette: '1',
+          }
+          : {};
 
   if ( ! isColorSignalActive( colorSignalSupport, attributes ) ) {
     innerBlocks.forEach( innerBlock => {

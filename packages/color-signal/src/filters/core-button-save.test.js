@@ -31,6 +31,10 @@ const colorSignalSupport = {
 	paletteClassname: true,
 	paletteVariationClassname: true,
 	colorSignalClassname: true,
+};
+
+const inheritedColorSignalSupport = {
+	...colorSignalSupport,
 	paletteInheritanceAttribute: 'useParentPalette',
 };
 
@@ -41,27 +45,31 @@ const attributes = {
 	useSourceColorAsReference: true,
 };
 
-describe( 'core/button Color Signal save filters', () => {
+describe.each( [
+	[ 'core/button', inheritedColorSignalSupport, { 'data-use-parent-palette': 'false' } ],
+	[ 'core/columns', colorSignalSupport, {} ],
+	[ 'core/column', inheritedColorSignalSupport, { 'data-use-parent-palette': 'false' } ],
+] )( '%s opt-in Color Signal save filters', ( blockName, registeredSupport, inheritanceData ) => {
 	beforeEach( () => {
 		getSupports.mockReturnValue( {
 			novaBlocks: {
-				colorSignal: colorSignalSupport,
+				colorSignal: registeredSupport,
 			},
 		} );
 	} );
 
-	it( 'preserves the wrapper props of an unconfigured Core Button', () => {
-		const extraProps = { className: 'wp-block-button' };
+	it( 'preserves the wrapper props before Color Signal is activated', () => {
+		const extraProps = { className: `wp-block-${ blockName.replace( 'core/', '' ) }` };
 		const element = { props: extraProps };
 
 		expect( withColorSignalSaveClassnames(
 			extraProps,
-			{ name: 'core/button' },
+			{ name: blockName },
 			attributes
 		) ).toEqual( extraProps );
 		expect( withColorSignalSaveDataAttributes(
 			element,
-			{ name: 'core/button' },
+			{ name: blockName },
 			attributes
 		) ).toBe( element );
 	} );
@@ -74,24 +82,24 @@ describe( 'core/button Color Signal save filters', () => {
 		};
 
 		expect( withColorSignalSaveClassnames(
-			{ className: 'wp-block-button' },
-			{ name: 'core/button' },
+			{ className: `wp-block-${ blockName.replace( 'core/', '' ) }` },
+			{ name: blockName },
 			activeAttributes
 		) ).toEqual( {
-			className: 'wp-block-button sm-palette-1 sm-palette--shifted sm-variation-1 sm-color-signal-1',
+			className: `wp-block-${ blockName.replace( 'core/', '' ) } sm-palette-1 sm-palette--shifted sm-variation-1 sm-color-signal-1`,
 		} );
 
 		expect( withColorSignalSaveDataAttributes(
-			{ props: { className: 'wp-block-button' } },
-			{ name: 'core/button' },
+			{ props: { className: `wp-block-${ blockName.replace( 'core/', '' ) }` } },
+			{ name: blockName },
 			activeAttributes
 		) ).toEqual( {
 			props: {
-				className: 'wp-block-button',
+				className: `wp-block-${ blockName.replace( 'core/', '' ) }`,
 				'data-palette': 1,
 				'data-palette-variation': 1,
 				'data-color-signal': 1,
-				'data-use-parent-palette': 'false',
+				...inheritanceData,
 				'data-use-source-color-as-reference': true,
 			},
 		} );
