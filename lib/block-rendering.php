@@ -715,7 +715,7 @@ function novablocks_get_media_composition_markup( array $attributes, array $cont
 
 		$attachment       = false;
 		$attachment_image = false;
-		if ( is_numeric( $image['id'] ) && intval( $image['id'] ) > 0 ) {
+		if ( isset( $image['id'] ) && is_numeric( $image['id'] ) && intval( $image['id'] ) > 0 ) {
 			$attachment = get_post( $image['id'] );
 
 			if ( ! empty( $attachment ) && $attachment->post_type === 'attachment' ) {
