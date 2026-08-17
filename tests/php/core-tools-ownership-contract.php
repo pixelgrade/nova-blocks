@@ -108,7 +108,7 @@ $overrides = novablocks_get_core_tools_availability_overrides();
 novablocks_core_tools_assert_same(
 	$expected_overrides,
 	$overrides,
-	'The core-tools availability map must match the addendum\'s Final Stage 1 flag list exactly.'
+	'The core-tools availability map must match the current Nova ownership contract exactly.'
 );
 
 // -----------------------------------------------------------------------------
@@ -131,7 +131,8 @@ novablocks_core_tools_assert(
 
 // -----------------------------------------------------------------------------
 // Padding, blockGap, typography, border, gradients, duotone must be ABSENT
-// from every entry — Stage 1 only ever disables color.* and spacing.margin.
+// from every entry — the current contract only disables color.* and
+// spacing.margin where Nova provides the replacement.
 // -----------------------------------------------------------------------------
 
 $allowed_top_level_keys = [ 'color', 'spacing' ];
@@ -142,7 +143,7 @@ foreach ( $overrides as $block_name => $block_settings ) {
 	foreach ( array_keys( $block_settings ) as $top_level_key ) {
 		novablocks_core_tools_assert(
 			in_array( $top_level_key, $allowed_top_level_keys, true ),
-			"'{$block_name}' has an unexpected top-level settings key '{$top_level_key}' — Stage 1 only touches color/spacing."
+			"'{$block_name}' has an unexpected top-level settings key '{$top_level_key}' — the Nova ownership contract only touches color/spacing."
 		);
 	}
 
@@ -150,7 +151,7 @@ foreach ( $overrides as $block_name => $block_settings ) {
 		foreach ( array_keys( $block_settings['color'] ) as $color_key ) {
 			novablocks_core_tools_assert(
 				in_array( $color_key, $allowed_color_keys, true ),
-				"'{$block_name}' color.{$color_key} is not one of the Stage 1-approved concerns (text/background/link). " .
+				"'{$block_name}' color.{$color_key} is not one of the Nova-owned concerns (text/background/link). " .
 				"gradients/duotone must never be disabled here — anima-lt's own theme.json already suppresses them."
 			);
 		}
