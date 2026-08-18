@@ -192,12 +192,11 @@
 // rails) must stay track-declaring regardless of its position value, and a
 // legacy sidebar-none sidecar carries both absence classes so this is
 // byte-identical for two-area content.
-:is(
-  .nb-sidecar--no-left-rail.nb-sidecar--no-right-rail,
-  .nb-sidecar-area--content,
-  .wp-block-query,
-  .nb-supernova
-) {
+// The member list is the generated `$nb-layout-passthrough-containers` (single
+// source: packages/utils/src/layout-containers.js) — `core/group/style.scss`
+// repeats the same override for children of a qualified Group pass-through,
+// and the two must never drift.
+:is(#{$nb-layout-passthrough-containers}) {
   @include nb-layout-subgrid-override;
 }
 

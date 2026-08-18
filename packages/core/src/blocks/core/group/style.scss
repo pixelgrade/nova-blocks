@@ -208,6 +208,27 @@
       > :is(.alignfull, [data-align="full"]) {
         grid-column: var(--block-full-start) / var(--block-full-end);
       }
+
+      // A Group pass-through is deliberately absent from
+      // `$nb-layout-grid-parents` (it must never become a standalone layout
+      // root). Its direct track-neutral layout children therefore cannot use
+      // the engine's usual parent-scoped subgrid override
+      // (`_layout.scss`'s `nb-layout-subgrid-override` is scoped to
+      // `:is($nb-layout-grid-parents) > &`, so it never matches inside a
+      // Group). Keep that chain on the inherited tracks here instead of
+      // letting Query / Supernova / a rail-less Sidecar re-declare a second
+      // 13-track grid inside the Group.
+      // The member list is the SAME generated `$nb-layout-passthrough-containers`
+      // the engine uses, so the two override sites cannot drift.
+      // No specificity anchor is needed: the qualified-Group compound already
+      // outranks every competing `grid-template-columns` declaration (the root
+      // union is (0,1,0) — `[id="main"]` is an ATTRIBUTE selector, not an id —
+      // and neither the theme nor core block CSS declares this property on a
+      // Query / Supernova). Verified by a headless A/B of the full built
+      // bundle: computed tracks were identical with and without an anchor.
+      > :is(#{$nb-layout-passthrough-containers}) {
+        grid-template-columns: subgrid;
+      }
     }
   }
 }

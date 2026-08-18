@@ -56,3 +56,36 @@ export const LAYOUT_GRID_CONTAINERS = [
 
 /** The list as a single comma-joined selector string. */
 export const LAYOUT_GRID_SELECTOR = LAYOUT_GRID_CONTAINERS.join( ', ' );
+
+/**
+ * The PASS-THROUGH subset — the track-neutral containers that inherit the
+ * parent grid's tracks instead of starting a new coordinate system.
+ *
+ * A pass-through never resizes a track var, so `grid-template-columns: subgrid`
+ * is geometrically identical to its fallback re-declaration. A rail-less
+ * Sidecar qualifies through the server-known rail-absence classes (BOTH rails
+ * absent, not `sidebarPosition:none` — a three-area Sidecar must stay
+ * track-declaring). `.nb-sidecar` itself and the roots that own the coordinate
+ * system are deliberately absent.
+ *
+ * TWO SCSS consumers must agree on this list or nested chains break apart:
+ *   - `_layout.scss` applies `nb-layout-subgrid-override` to it, which is
+ *     scoped to direct children of `$nb-layout-grid-parents`.
+ *   - `blocks/core/group/style.scss` repeats the override for direct children
+ *     of a qualified Group pass-through. A Group is NOT in
+ *     `LAYOUT_GRID_CONTAINERS` (it must never become a standalone layout root),
+ *     so its own children cannot be reached by the scoped override above.
+ *
+ * `bin/generate-layout-containers.js` emits this as
+ * `$nb-layout-passthrough-containers`; `layout-containers.test.js` pins the JS
+ * and SCSS halves equal, exactly like the root union.
+ */
+export const LAYOUT_PASSTHROUGH_CONTAINERS = [
+	'.nb-sidecar--no-left-rail.nb-sidecar--no-right-rail',
+	'.nb-sidecar-area--content',
+	'.wp-block-query',
+	'.nb-supernova',
+];
+
+/** The pass-through list as a single comma-joined selector string. */
+export const LAYOUT_PASSTHROUGH_SELECTOR = LAYOUT_PASSTHROUGH_CONTAINERS.join( ', ' );
