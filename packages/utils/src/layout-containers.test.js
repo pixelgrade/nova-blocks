@@ -6,8 +6,7 @@ const path = require( 'node:path' );
 // Task 5.1: THE single Nova layout-grid container list has one source of truth
 // (packages/utils/src/layout-containers.js). bin/generate-layout-containers.js
 // emits the SCSS half (_layout-containers.generated.scss). This test pins the
-// two halves EQUAL so they can never drift again (the failure this replaces:
-// the napkin-recorded `.wp-site-blocks` vs `[id="main"]` divergence).
+// two halves EQUAL so they can never drift again.
 
 const SRC_JS = path.join( __dirname, 'layout-containers.js' );
 const SRC_SCSS = path.resolve( __dirname, '../../base-styles/_layout-containers.generated.scss' );
@@ -47,7 +46,7 @@ test( 'the JS and generated-SCSS layout-container lists are identical (no drift)
 	const js = jsContainers();
 	const scss = scssContainers();
 
-	assert.ok( js.length >= 11, 'expected the full container union in the JS source' );
+	assert.ok( js.length >= 10, 'expected the full container union in the JS source' );
 	assert.deepEqual(
 		scss,
 		js,
@@ -69,12 +68,19 @@ test( 'break-align.js consumes the shared list, not an inline one', () => {
 	);
 } );
 
-test( 'the reconciliation kept the authoritative members and dropped the dead one', () => {
+test( 'the root union keeps explicit Nova containers and rejects generic theme wrappers', () => {
 	const js = jsContainers();
+	const layout = fs.readFileSync( LAYOUT_SCSS, 'utf8' );
+	const layoutCode = layout.replace( /\/\/.*$/gm, '' );
 	// Dropped: `.wp-site-blocks` (wrapped template parts, never aligned children).
 	assert.ok( ! js.includes( '.wp-site-blocks' ), '`.wp-site-blocks` should be dropped' );
-	// Present: the frontend root the drop replaced, plus the core roots.
-	for ( const member of [ '[id="main"]', '.wp-block-post-content', '.nb-sidecar', '.nb-sidecar-area--content', '.wp-block-query', '.nb-supernova' ] ) {
+	// A classic theme's generic `main#main` wrapper does not opt into Nova's
+	// coordinate system. Treating it as a layout root collapses direct children
+	// into Nova's narrow content track at desktop widths (GitHub #608).
+	assert.doesNotMatch( layoutCode, /\[id\s*=\s*["']?main["']?\]/, '`[id="main"]` must not receive standalone layout-root styles' );
+	assert.ok( ! js.includes( '[id="main"]' ), '`[id="main"]` must not be a Nova layout root' );
+	// Explicit block-editor and Nova containers remain authoritative roots.
+	for ( const member of [ '.wp-block-post-content', '.nb-sidecar', '.nb-sidecar-area--content', '.wp-block-query', '.nb-supernova' ] ) {
 		assert.ok( js.includes( member ), `expected canonical member ${ member }` );
 	}
 	// A Group is a pass-through, NOT a track-declaring root — never in this list.

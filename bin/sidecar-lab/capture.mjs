@@ -255,7 +255,7 @@ async function novaProbe( noJs ) {
 		// only verified indirectly through subgridded fixtures — probe their
 		// computed gridTemplateColumns directly (rail tracks should be 0 on a
 		// rail-less root). Keyed structurally by path like everything else.
-		collect( '.wp-block-post-content, .wp-block-template-part, [id="main"]', 'root' ),
+		collect( '.wp-block-post-content, .wp-block-template-part', 'root' ),
 		// Task 4b.3 (b): subgrid PASS-THROUGH consumers (query loop + Supernova).
 		// These resolve `grid-template-columns: subgrid` (or the fallback
 		// template) under the raised :is() specificity — probe them so the

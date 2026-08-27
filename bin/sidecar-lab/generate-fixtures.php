@@ -31,11 +31,12 @@
  *     an empty rail (e)
  *   - three-area single-block Hive + none-position+legacy-sidebar edge (f)
  *   - pass-through consumers: core/query loop + Supernova (b)
- *   - header-nested grid: wrapper-sides substitution context (c) — currently
- *     KNOWN-BROKEN (overflow), captured as a finding; see expected-changes.md
+ *   - header-nested grid: wrapper-sides substitution context (c), kept inside
+ *     the fixed header-row grid gate
  * Harness probe roles added for this baseline: `root` (post-content /
- * template-part / #main — rail-var zeroing) and `passthrough` (.wp-block-query,
- * .nb-supernova) — Task 4b.3 (d).
+ * template-part — rail-var zeroing) and `passthrough` (.wp-block-query,
+ * .nb-supernova) — Task 4b.3 (d). Generic classic-theme `main#main` wrappers
+ * are deliberately excluded (GitHub #608).
  *
  * NOTE (markup contract): novablocks/sidecar and novablocks/sidecar-area are
  * dynamic blocks (save = InnerBlocks.Content) — serialized markup is block

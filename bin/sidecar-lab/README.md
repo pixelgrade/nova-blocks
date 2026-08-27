@@ -170,9 +170,11 @@ settlement flags. Elements are collected by ROLE (the diff keys on
 - `sidecar` — every `.nb-sidecar`
 - `sidecar-area` — every `.nb-sidecar-area`
 - `aligned` — every `.alignwide/.alignfull/.alignleft/.alignright`
-- `root` (Task 4b.3 d) — `.wp-block-post-content`, `.wp-block-template-part`,
-  `[id="main"]`: the layout ROOTS, to probe rail-var zeroing directly (a
-  rail-less root reads `[ws] 0px`), previously only verified indirectly.
+- `root` (Task 4b.3 d) — `.wp-block-post-content` and
+  `.wp-block-template-part`: the explicit layout ROOTS, to probe rail-var
+  zeroing directly (a rail-less root reads `[ws] 0px`), previously only
+  verified indirectly. Generic classic-theme `main#main` wrappers are
+  deliberately excluded (GitHub #608).
 - `passthrough` (Task 4b.3 b) — `.wp-block-query`, `.nb-supernova`: the
   subgrid pass-through consumers, so their `grid-template-columns: subgrid`
   resolution has structural coverage, not just screenshots.

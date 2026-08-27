@@ -25,11 +25,14 @@
  *   - DROPPED `.wp-site-blocks` (was JS-only): it wraps the template parts
  *     (header / main / footer) as its direct children, never aligned content
  *     blocks, so it never contributed a single aligned child to break-align —
- *     dead drift. The frontend layout root there is `[id="main"]`.
- *   - ADDED `.edit-post-visual-editor__post-title-wrapper`,
- *     `[data-block-name="woocommerce/legacy-template"]`, `[id="main"]` (were
- *     SCSS-only): genuine layout roots. Harmless in JS — a no-op when absent
- *     (the first is editor-only), correct when present.
+ *     dead drift.
+ *   - ADDED `.edit-post-visual-editor__post-title-wrapper` and
+ *     `[data-block-name="woocommerce/legacy-template"]` (were SCSS-only):
+ *     genuine layout roots. Harmless in JS — a no-op when absent (the first
+ *     is editor-only), correct when present.
+ *   - DROPPED `[id="main"]`: it is a generic classic-theme wrapper, not a
+ *     Nova/Anima marker. Making it a root collapses direct theme children into
+ *     Nova's content track at desktop widths (GitHub #608).
  * The canonical set is the SCSS `nb-layout-root` union (the authoritative
  * definition of "a Nova layout grid"), now shared by both runtimes.
  *
@@ -46,7 +49,6 @@ export const LAYOUT_GRID_CONTAINERS = [
 	'.wp-block-post-content',
 	'.wp-block-template-part',
 	'[data-block-name="woocommerce/legacy-template"]',
-	'[id="main"]',
 	'.nb-content-layout-grid',
 	'.nb-sidecar',
 	'.nb-sidecar-area--content',

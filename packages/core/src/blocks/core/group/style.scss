@@ -222,9 +222,8 @@
       // the engine uses, so the two override sites cannot drift.
       // No specificity anchor is needed: the qualified-Group compound already
       // outranks every competing `grid-template-columns` declaration (the root
-      // union is (0,1,0) — `[id="main"]` is an ATTRIBUTE selector, not an id —
-      // and neither the theme nor core block CSS declares this property on a
-      // Query / Supernova). Verified by a headless A/B of the full built
+      // union is (0,1,0), and neither the theme nor core block CSS declares
+      // this property on a Query / Supernova). Verified by a headless A/B of the full built
       // bundle: computed tracks were identical with and without an anchor.
       > :is(#{$nb-layout-passthrough-containers}) {
         grid-template-columns: subgrid;

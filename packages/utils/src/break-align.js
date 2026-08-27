@@ -385,7 +385,7 @@ export const getContentBlocksArray = () => {
   // (Task 5.1): the SCSS `$nb-layout-grid-parents` union is emitted from this
   // exact array, and layout-containers.test.js pins them equal. This replaced
   // the drifted inline list (which carried a dead `.wp-site-blocks` and lacked
-  // `[id="main"]` / the editor + woocommerce roots).
+  // the editor + woocommerce roots).
   const mergedGridSelector = LAYOUT_GRID_CONTAINERS.join( ', ' );
   const grids = Array.from( document.querySelectorAll( mergedGridSelector ) );
 

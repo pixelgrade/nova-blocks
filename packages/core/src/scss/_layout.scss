@@ -78,8 +78,8 @@
 //
 // Every container below instantiates the Nova layout grid. Roots
 // (.is-root-container, .wp-block-post-content, .wp-block-template-part,
-// .edit-post-visual-editor__post-title-wrapper, [id="main"], the WooCommerce
-// legacy template) genuinely start a coordinate system. The rest are
+// .edit-post-visual-editor__post-title-wrapper, the WooCommerce legacy
+// template) genuinely start a coordinate system. The rest are
 // pass-throughs whose re-declared grid is the pre-subgrid FALLBACK — their
 // modern half (grid-template-columns: subgrid) is layered on further down.
 // Positioned Sidecars (--sidebar-left/right) stay track-declaring for now:
@@ -215,8 +215,7 @@
   .edit-post-visual-editor__post-title-wrapper,
   .wp-block-post-content,
   .wp-block-template-part,
-  [data-block-name="woocommerce/legacy-template"],
-  [id="main"]
+  [data-block-name="woocommerce/legacy-template"]
 ) {
   --nb-layout-rail-left: 0px;
   --nb-layout-rail-right: 0px;

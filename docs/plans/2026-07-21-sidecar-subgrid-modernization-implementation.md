@@ -112,7 +112,7 @@ Fill in the full matrix exactly as listed in the design doc's Verification secti
 }
 ```
 
-Apply `nb-layout-root` to: `.is-root-container`, `.wp-block-post-content`, `.wp-block-template-part`, `.edit-post-visual-editor__post-title-wrapper`, `[id="main"]`, the WooCommerce legacy template, and `supernova-item__inner-container` (independent instance — must NOT subgrid). Apply `nb-layout-passthrough` to: `.nb-sidecar`, `.nb-sidecar-area--content`, `.wp-block-query`, page-level `.nb-supernova`.
+Apply `nb-layout-root` to: `.is-root-container`, `.wp-block-post-content`, `.wp-block-template-part`, `.edit-post-visual-editor__post-title-wrapper`, the WooCommerce legacy template, and `supernova-item__inner-container` (independent instance — must NOT subgrid). Generic classic-theme `[id="main"]` wrappers are explicitly excluded after GitHub #608. Apply `nb-layout-passthrough` to: `.nb-sidecar`, `.nb-sidecar-area--content`, `.wp-block-query`, page-level `.nb-supernova`.
 
 **Step 2:** Build (`npm run build`, Node 22) and deploy to `sidecar-lab` with the code-mirror watcher stopped (napkin guardrail). Run `node bin/sidecar-lab/capture.mjs --run subgrid && node bin/sidecar-lab/capture.mjs --diff baseline subgrid`.
 
@@ -211,7 +211,7 @@ TDD: legacy `areaName:"sidebar"` + parent `sidebarPosition` renders `nb-sidecar-
 
 Managed set: `sidebarPosition` (legacy), per-side rail width/existence, gutter offsets, `lastItemIsSticky`, `contentFontSize`, `sidebarFontSize`. Recipes: Centered, Right Rail, Left Rail, Hive, Offset Editorial — every definition declares the full managed set; apply = one patch; active = derived. Verify one-step undo and clean save/reload in the Site Editor (napkin: Execution & Validation #6). Rebuild the Hive fixture with the single-block recipe and screenshot-compare against the nested-Hive fixture.
 
-**Task 5.1 + 5.2 DONE (worktree `51d17de2`)** — see design doc "As built — Phase 5". 5.1: single source `packages/utils/src/layout-containers.js` → generated `$nb-layout-grid-parents` (build:packages), consumed by `_layout.scss` + `break-align.js`, pinned by `layout-containers.test.js`; `.wp-site-blocks` vs `[id=main]` drift reconciled; frontend-neutral. 5.2: Group is a subgrid pass-through under `@supports` + `above(lap)`, scoped to content grids (NOT chrome), wide/full escapes like a direct child (measured 1125px == direct); `--diff baseline-v2 task5` exit 0 (16 annotated).
+**Task 5.1 + 5.2 DONE (worktree `51d17de2`; root correction for #608 on 2026-08-27)** — see design doc "As built — Phase 5". 5.1: single source `packages/utils/src/layout-containers.js` → generated `$nb-layout-grid-parents` (build:packages), consumed by `_layout.scss` + `break-align.js`, pinned by `layout-containers.test.js`; `.wp-site-blocks` and generic `[id=main]` wrappers are excluded. 5.2: Group is a subgrid pass-through under `@supports` + `above(lap)`, scoped to content grids (NOT chrome), wide/full escapes like a direct child (measured 1125px == direct); `--diff baseline-v2 task5` exit 0 (16 annotated).
 
 ---
 
