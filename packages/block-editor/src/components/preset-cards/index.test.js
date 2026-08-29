@@ -96,7 +96,7 @@ describe( 'PresetCardsControl — managed mode', () => {
 		expect( container.textContent ).not.toContain( 'Custom' );
 	} );
 
-	test( 'clicking a card applies ONE engine patch: writes plus undefined-clears for omitted attrs', () => {
+	test( 'clicking a card applies ONE engine patch: writes plus default-restoring clears for omitted attrs', () => {
 		const setAttributes = jest.fn();
 		renderCards( {
 			attributes: { effect: 'doppler', depth: false, scale: 1.75 }, // currently Cinematic
@@ -111,7 +111,10 @@ describe( 'PresetCardsControl — managed mode', () => {
 		} );
 
 		expect( setAttributes ).toHaveBeenCalledTimes( 1 );
-		expect( setAttributes ).toHaveBeenCalledWith( { effect: 'static', depth: false, scale: undefined } );
+		// `scale` is omitted by "Still", so it clears back to its REGISTERED
+		// default (1) rather than a literal `undefined` — the live editor keeps
+		// `undefined` until a save + reparse, which blanks preview components.
+		expect( setAttributes ).toHaveBeenCalledWith( { effect: 'static', depth: false, scale: 1 } );
 	} );
 
 	test( 'managed apply ignores the legacy resets prop (clears subsume it)', () => {
@@ -129,7 +132,7 @@ describe( 'PresetCardsControl — managed mode', () => {
 			still.dispatchEvent( new MouseEvent( 'click', { bubbles: true } ) );
 		} );
 
-		expect( setAttributes ).toHaveBeenCalledWith( { effect: 'static', depth: false, scale: undefined } );
+		expect( setAttributes ).toHaveBeenCalledWith( { effect: 'static', depth: false, scale: 1 } );
 		expect( setAttributes.mock.calls[ 0 ][ 0 ] ).not.toHaveProperty( 'somethingElse' );
 	} );
 } );

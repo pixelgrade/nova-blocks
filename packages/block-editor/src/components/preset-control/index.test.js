@@ -102,7 +102,7 @@ describe( 'PresetControl — managed mode (managedAttributes prop present)', () 
 		expect( container.textContent ).toContain( 'Custom' );
 	} );
 
-	test( 'clicking a preset writes one patch that writes values and clears the omitted managed attribute', () => {
+	test( 'clicking a preset writes one patch that writes values and clears the omitted managed attribute to its registered default', () => {
 		const setAttributes = jest.fn();
 
 		act( () => {
@@ -126,7 +126,10 @@ describe( 'PresetControl — managed mode (managedAttributes prop present)', () 
 		} );
 
 		expect( setAttributes ).toHaveBeenCalledTimes( 1 );
-		expect( setAttributes ).toHaveBeenCalledWith( { a: 1, b: 2, c: undefined } );
+		// "balanced" omits c, so c clears back to its REGISTERED default (0)
+		// instead of a literal `undefined`, which the live editor would keep
+		// until a save + reparse.
+		expect( setAttributes ).toHaveBeenCalledWith( { a: 1, b: 2, c: 0 } );
 	} );
 
 	test( 'Custom state offers Surprise me! when randomize is available, and it is a single setAttributes call', () => {

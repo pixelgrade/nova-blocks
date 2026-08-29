@@ -153,7 +153,8 @@ const SidecarLayoutRecipes = ( props ) => {
   const applyRecipe = useCallback( ( recipe ) => {
     const patch = getPresetApplyPatch(
       { id: recipe.id, managedAttributes: SIDECAR_LAYOUT_MANAGED_ATTRIBUTES, values: recipe.values },
-      attributes
+      attributes,
+      registeredDefaults
     );
 
     applySidecarLayoutChange( {
@@ -167,7 +168,7 @@ const SidecarLayoutRecipes = ( props ) => {
       replaceBlock,
       setAttributes,
     } );
-  }, [ attributes, innerBlocks, clientId, replaceBlock, setAttributes ] );
+  }, [ attributes, innerBlocks, clientId, replaceBlock, setAttributes, registeredDefaults ] );
 
   return (
     <div className="nb-preset-cards">

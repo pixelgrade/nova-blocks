@@ -170,14 +170,14 @@ export const getLayoutRecipeManagedAttributes = ( recipes ) => {
   return managedAttributes;
 };
 
-const getLayoutRecipeResetPatch = ( recipe, recipes ) => getPresetApplyPatch( {
+const getLayoutRecipeResetPatch = ( recipe, recipes, registeredDefaults ) => getPresetApplyPatch( {
   id: recipe?.id || '',
   managedAttributes: getLayoutRecipeManagedAttributes( recipes ),
   values: recipe?.defaults || {},
-} );
+}, {}, registeredDefaults );
 
-export const getLayoutRecipeSelection = ( recipe, recipes = [ recipe ] ) => ( {
-  ...getLayoutRecipeResetPatch( recipe, recipes ),
+export const getLayoutRecipeSelection = ( recipe, recipes = [ recipe ], registeredDefaults ) => ( {
+  ...getLayoutRecipeResetPatch( recipe, recipes, registeredDefaults ),
   ...( false === recipe?.capabilities?.pile3d
     ? { pile3dEffect: false, pileParallaxAmount: 0 }
     : {} ),
@@ -185,8 +185,8 @@ export const getLayoutRecipeSelection = ( recipe, recipes = [ recipe ] ) => ( {
   layoutRecipe: recipe?.id || '',
 } );
 
-export const getLayoutStyleSelection = ( layoutStyle, recipes ) => ( {
-  ...getLayoutRecipeResetPatch( null, recipes ),
+export const getLayoutStyleSelection = ( layoutStyle, recipes, registeredDefaults ) => ( {
+  ...getLayoutRecipeResetPatch( null, recipes, registeredDefaults ),
   layoutStyle,
   layoutRecipe: '',
   headerIntegration: 'standard',

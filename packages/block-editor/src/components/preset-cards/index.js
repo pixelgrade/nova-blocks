@@ -107,12 +107,12 @@ const PresetCardsControl = ( props ) => {
         id: option.value,
         managedAttributes,
         values: option.preset || {},
-      }, attributes ) );
+      }, attributes, registeredDefaults ) );
       return;
     }
 
     setAttributes( Object.assign( {}, resets, option.preset ) );
-  }, [ resets, randomize, setAttributes, isManaged, managedAttributes, attributes ] );
+  }, [ resets, randomize, setAttributes, isManaged, managedAttributes, attributes, registeredDefaults ] );
 
   // Custom state (managed families only) — same minimal pattern as
   // PresetControl: no card is selected, plus a small reused

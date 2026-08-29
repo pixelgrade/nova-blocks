@@ -9,6 +9,7 @@ import { __ } from '@wordpress/i18n';
 
 import { PlusBadge, withVisibility } from '../../../../components';
 import { useSettings } from '../../../../hooks';
+import useRegisteredAttributeDefaults from '../../../../hooks/use-registered-attribute-defaults';
 import {
   BroadsheetThumb,
   ClassicThumb,
@@ -52,9 +53,12 @@ const getRecipeThumbnail = ( recipe, attributes ) => {
   }
 };
 
-const StyleTiles = ( { attributes, setAttributes } ) => {
+const StyleTiles = ( { attributes, setAttributes, name } ) => {
   const settings = useSettings();
   const recipes = normalizeLayoutRecipes( settings?.collectionLayoutRecipes );
+  // Cleared recipe-owned attributes must land on their registered defaults —
+  // a literal `undefined` survives in the live editor and blanks the preview.
+  const registeredDefaults = useRegisteredAttributeDefaults( name );
   const { columns, postsToShow } = attributes;
   const selectedCompositionId = getSelectedCompositionId( attributes, recipes );
 
@@ -82,8 +86,8 @@ const StyleTiles = ( { attributes, setAttributes } ) => {
           className={ 'nb-style-tile' + ( selectedCompositionId === tile.value ? ' is-selected' : '' ) }
           aria-pressed={ selectedCompositionId === tile.value }
           onClick={ () => setAttributes( tile.recipe
-            ? getLayoutRecipeSelection( tile.recipe, recipes )
-            : getLayoutStyleSelection( tile.value, recipes ) ) }
+            ? getLayoutRecipeSelection( tile.recipe, recipes, registeredDefaults )
+            : getLayoutStyleSelection( tile.value, recipes, registeredDefaults ) ) }
         >
           { ( 'parametric' === tile.value || tile.gateId ) && (
             <PlusBadge gateId={ tile.gateId || 'parametric-layout' } />

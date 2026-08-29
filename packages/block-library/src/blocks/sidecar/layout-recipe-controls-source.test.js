@@ -23,7 +23,7 @@ test( 'selection is DERIVED through the engine over the structurally-filtered ca
 test( 'the managed decision is exactly one engine patch', () => {
   assert.match(
     source,
-    /getPresetApplyPatch\(\s*\{\s*id:\s*recipe\.id,\s*managedAttributes:\s*SIDECAR_LAYOUT_MANAGED_ATTRIBUTES,\s*values:\s*recipe\.values\s*\},\s*attributes\s*\)/
+    /getPresetApplyPatch\(\s*\{\s*id:\s*recipe\.id,\s*managedAttributes:\s*SIDECAR_LAYOUT_MANAGED_ATTRIBUTES,\s*values:\s*recipe\.values\s*\},\s*attributes,\s*registeredDefaults\s*\)/
   );
 } );
 

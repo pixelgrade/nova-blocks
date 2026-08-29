@@ -202,6 +202,59 @@ describe( 'collection layout recipes', () => {
     } );
   } );
 
+  test( 'restores registered block defaults for cleared recipe-owned attributes', () => {
+    const recipes = normalizeLayoutRecipes( [ animaRecipe ] );
+    const registeredDefaults = {
+      columns: 3,
+      columnsFitMinWidth: 0,
+      thumbnailAspectRatioString: 'landscape',
+      cardHoverEffect: 'none',
+    };
+
+    expect( getLayoutStyleSelection( 'classic', recipes, registeredDefaults ) ).toStrictEqual( {
+      columns: 3,
+      columnsFitMinWidth: 0,
+      thumbnailAspectRatioString: 'landscape',
+      cardHoverEffect: 'none',
+      layoutStyle: 'classic',
+      layoutRecipe: '',
+      headerIntegration: 'standard',
+    } );
+  } );
+
+  test( 'writes recipe values and registered defaults for the cleared remainder', () => {
+    const recipes = normalizeLayoutRecipes( [
+      animaRecipe,
+      {
+        id: 'anima-broadsheet',
+        label: 'Broadsheet',
+        baseLayout: 'classic',
+        defaults: {
+          columns: 4,
+          gridGap: 30,
+          verticalGapModifier: 1.5,
+        },
+      },
+    ] );
+    const registeredDefaults = {
+      columns: 3,
+      columnsFitMinWidth: 0,
+      thumbnailAspectRatioString: 'landscape',
+      cardHoverEffect: 'none',
+    };
+
+    expect( getLayoutRecipeSelection( recipes[1], recipes, registeredDefaults ) ).toStrictEqual( {
+      columns: 4,
+      columnsFitMinWidth: 0,
+      thumbnailAspectRatioString: 'landscape',
+      gridGap: 30,
+      verticalGapModifier: 1.5,
+      cardHoverEffect: 'none',
+      layoutStyle: 'classic',
+      layoutRecipe: 'anima-broadsheet',
+    } );
+  } );
+
   test( 'uses the registered recipe as the selected composition without changing the base layout', () => {
     const recipes = normalizeLayoutRecipes( [ animaRecipe ] );
 

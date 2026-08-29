@@ -7,9 +7,9 @@
  *   - a preset definition is `{ id, version, managedAttributes, values }`,
  *     immutable per `id` + `version`;
  *   - applying a preset is ONE `setAttributes()` patch that writes every
- *     value the preset declares, clears (`undefined`) every managed
- *     attribute it omits, and leaves every attribute outside the managed
- *     set untouched;
+ *     value the preset declares, clears every managed attribute it omits
+ *     (back to its registered default, or `undefined` when no default is
+ *     known), and leaves every attribute outside the managed set untouched;
  *   - selection is derived, never stored: normalize each managed attribute
  *     through its registered default, strict-compare against each
  *     definition's complete value set, first exact match in definition
@@ -19,7 +19,7 @@
  * testable and safe to import from any family's controls (space-and-sizing,
  * shape-modeling, future families) without pulling in editor runtime code.
  */
-import { isEqual } from 'lodash';
+import { cloneDeep, isEqual } from 'lodash';
 
 /**
  * Resolves the union of every attribute declared across a family's preset
@@ -80,31 +80,59 @@ export const getManagedAttributes = ( definitions ) => {
 /**
  * Builds the single `setAttributes()` patch for applying a preset.
  *
- * The patch writes every value the definition declares and clears (with
- * `undefined`) every managed attribute the definition omits. It never
- * touches an attribute outside `definition.managedAttributes`, so merging
- * the patch over the block's current attributes automatically preserves
- * everything outside the family's declared domain.
+ * The patch writes every value the definition declares and clears every
+ * managed attribute the definition omits — restoring that attribute's
+ * REGISTERED DEFAULT when `registeredDefaults` knows one, and falling back
+ * to an explicit `undefined` when it does not. It never touches an
+ * attribute outside `definition.managedAttributes`, so merging the patch
+ * over the block's current attributes automatically preserves everything
+ * outside the family's declared domain.
+ *
+ * Why the defaults matter: in the LIVE editor a `undefined` written through
+ * `setAttributes()` stays a literal `undefined` on the block — registered
+ * block.json defaults only re-materialize when the post is saved and the
+ * markup is reparsed. Components that read a cleared attribute therefore see
+ * `undefined` (falsy) and can render nothing at all until a reload. Writing
+ * the registered default instead is serialization-neutral: WP's serializer
+ * omits any attribute whose value deep-equals its registered default, so the
+ * saved markup is byte-identical to the `undefined` clear. Preset detection
+ * is unaffected too — `deriveActivePresetId()` normalizes both sides of its
+ * comparison through the very same registered defaults.
+ *
+ * Defaults are deep-cloned: registry defaults for object/array attributes
+ * are shared references and must never leak into block state.
  *
  * `currentAttributes` is accepted for API symmetry with
  * `deriveActivePresetId()` and to leave room for a future no-op short
  * circuit; the returned patch does not depend on it today because a clear
- * is unconditional — a managed attribute the preset omits must always
- * become `undefined`, regardless of its current value.
+ * is unconditional — a managed attribute the preset omits must always be
+ * reset, regardless of its current value.
  *
  * @param {{id: string, managedAttributes?: string[], values?: Object}} definition
  * @param {Object} [currentAttributes] Unused today; see note above.
+ * @param {Object} [registeredDefaults] Map of attribute name to its
+ *                 registered default value (e.g. from the `core/blocks`
+ *                 registry). Omitted (or missing a key) = that attribute
+ *                 clears to an explicit `undefined`, as before.
  * @return {Object} The complete patch — safe to pass directly to a single
  *                   `setAttributes()` call.
  */
-export const getPresetApplyPatch = ( definition, currentAttributes = {} ) => { // eslint-disable-line no-unused-vars
+export const getPresetApplyPatch = ( definition, currentAttributes = {}, registeredDefaults ) => { // eslint-disable-line no-unused-vars
 	const managedAttributes = definition?.managedAttributes || [];
 	const values = definition?.values || {};
+	const defaults = registeredDefaults && 'object' === typeof registeredDefaults
+		? registeredDefaults
+		: {};
 	const patch = {};
 
 	managedAttributes.forEach( ( attribute ) => {
-		patch[ attribute ] = Object.prototype.hasOwnProperty.call( values, attribute )
-			? values[ attribute ]
+		if ( Object.prototype.hasOwnProperty.call( values, attribute ) ) {
+			patch[ attribute ] = values[ attribute ];
+			return;
+		}
+
+		patch[ attribute ] = undefined !== defaults[ attribute ]
+			? cloneDeep( defaults[ attribute ] )
 			: undefined;
 	} );
 

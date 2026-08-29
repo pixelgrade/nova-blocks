@@ -12,11 +12,11 @@ const thumbnailSource = fs.readFileSync(
 test('selecting the Parametric style tile clears stale 3D grid state', () => {
   assert.match(
     source,
-    /getLayoutStyleSelection\( tile\.value, recipes \)/
+    /getLayoutStyleSelection\( tile\.value, recipes, registeredDefaults \)/
   );
   assert.match(
     source,
-    /onClick=\{ \(\) => setAttributes\( tile\.recipe[\s\S]*?: getLayoutStyleSelection\( tile\.value, recipes \) \) \}/
+    /onClick=\{ \(\) => setAttributes\( tile\.recipe[\s\S]*?: getLayoutStyleSelection\( tile\.value, recipes, registeredDefaults \) \) \}/
   );
 });
 
@@ -25,7 +25,11 @@ test('renders registered layout recipes as first-class composition tiles', () =>
   assert.match( source, /normalizeLayoutRecipes\( settings\?\.collectionLayoutRecipes \)/ );
   assert.match( source, /getSelectedCompositionId\( attributes, recipes \)/ );
   assert.match( source, /recipes\.map/ );
-  assert.match( source, /getLayoutRecipeSelection\( tile\.recipe, recipes \)/ );
+  assert.match( source, /getLayoutRecipeSelection\( tile\.recipe, recipes, registeredDefaults \)/ );
+} );
+
+test('resolves cleared composition attributes through the registered block defaults', () => {
+  assert.match( source, /useRegisteredAttributeDefaults\( name \)/ );
 } );
 
 test('renders Collage recipes with the measured 1400px composition thumbnail', () => {
@@ -51,6 +55,6 @@ test('renders Lattice recipes with the five-column Gallery thumbnail', () => {
 test('selecting a built-in composition clears a previously selected recipe', () => {
   assert.match(
     source,
-    /getLayoutStyleSelection\( tile\.value, recipes \)/
+    /getLayoutStyleSelection\( tile\.value, recipes, registeredDefaults \)/
   );
 } );

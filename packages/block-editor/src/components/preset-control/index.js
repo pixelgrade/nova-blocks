@@ -97,14 +97,14 @@ const PresetControl = ( props ) => {
         values: option?.preset || {},
       };
 
-      setAttributes( getPresetApplyPatch( definition, attributes ) );
+      setAttributes( getPresetApplyPatch( definition, attributes, registeredDefaults ) );
       return;
     }
 
     const newAttributes = getNewAttributesFromPreset( preset, presetOptions );
     setAttributes( newAttributes );
 
-  }, [ presetOptions, isManaged, managedAttributes, attributes ] );
+  }, [ presetOptions, isManaged, managedAttributes, attributes, registeredDefaults ] );
 
   // Custom state (managed families only): no radio option matches, so none
   // is shown selected; this small hint makes that intentional instead of

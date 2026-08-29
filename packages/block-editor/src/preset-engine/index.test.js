@@ -134,6 +134,54 @@ describe( 'getPresetApplyPatch', () => {
 
 		expect( withCurrent ).toEqual( withoutCurrent );
 	} );
+
+	test( 'clears a managed attribute to its registered default when defaults are provided', () => {
+		// balanced omits c; with a defaults map the clear must materialize the
+		// registered default instead of a literal `undefined` (which the live
+		// editor keeps as-is until a save + reparse).
+		const patch = getPresetApplyPatch( DEFINITIONS[ 0 ], {}, REGISTERED_DEFAULTS );
+
+		expect( patch ).toStrictEqual( { a: 1, b: 2, c: 0 } );
+	} );
+
+	test( 'a value the definition declares still wins over the registered default', () => {
+		const patch = getPresetApplyPatch( DEFINITIONS[ 1 ], {}, REGISTERED_DEFAULTS );
+
+		expect( patch ).toStrictEqual( { a: 10, b: 20, c: 30 } );
+	} );
+
+	test( 'an attribute with no registered default still clears to an explicit undefined', () => {
+		const definition = {
+			id: 'partial-defaults',
+			managedAttributes: [ 'a', 'b', 'c' ],
+			values: {},
+		};
+
+		const patch = getPresetApplyPatch( definition, {}, { a: 5, b: undefined } );
+
+		expect( patch ).toStrictEqual( { a: 5, b: undefined, c: undefined } );
+		expect( 'b' in patch ).toBe( true );
+		expect( 'c' in patch ).toBe( true );
+	} );
+
+	test( 'deep-clones object and array registered defaults so the registry is never shared', () => {
+		const registeredDefaults = {
+			focalPoint: { x: 0.5, y: 0.5 },
+			stops: [ { position: 0 }, { position: 100 } ],
+		};
+
+		const patch = getPresetApplyPatch(
+			{ id: 'cloning', managedAttributes: [ 'focalPoint', 'stops' ], values: {} },
+			{},
+			registeredDefaults
+		);
+
+		expect( patch.focalPoint ).toEqual( registeredDefaults.focalPoint );
+		expect( patch.focalPoint ).not.toBe( registeredDefaults.focalPoint );
+		expect( patch.stops ).toEqual( registeredDefaults.stops );
+		expect( patch.stops ).not.toBe( registeredDefaults.stops );
+		expect( patch.stops[ 0 ] ).not.toBe( registeredDefaults.stops[ 0 ] );
+	} );
 } );
 
 describe( 'deriveActivePresetId', () => {
