@@ -455,7 +455,9 @@ const SupernovaEdit = props => {
     getClientIdsOfDescendants,
     getBlockName
   } = select( 'core/block-editor' );
-  const parentQueryClientId = getBlockParentsByBlockName( clientId, 'core/query' );
+  const queryParents = getBlockParentsByBlockName( clientId, 'core/query' );
+  // Closest ancestor Query — the parents list is top-down; undefined outside a Query.
+  const parentQueryClientId = queryParents[ queryParents.length - 1 ];
   if ( isDescendentOfQueryLoop ) {
     // Now, determine if there is only one Supernova descendent of the Query Loop.
     const parentQueryDescendantsClientIds = getClientIdsOfDescendants( [ parentQueryClientId ] );
@@ -473,11 +475,12 @@ const SupernovaEdit = props => {
 
   // First, change the Query Loop's perPage attribute when Supernova's postsToShow changes.
   useEffect( () => {
-    if ( syncQueryAndSupernova && !!parentQueryClientId && parseInt( attributes.postsToShow ) !== parseInt( perPage ) ) {
+    const nextPerPage = parseInt( attributes.postsToShow );
+    if ( syncQueryAndSupernova && !!parentQueryClientId && Number.isFinite( nextPerPage ) && nextPerPage !== parseInt( perPage ) ) {
       updateBlockAttributes( parentQueryClientId, {
         query: {
           ...context.query,
-          perPage: parseInt( attributes.postsToShow ),
+          perPage: nextPerPage,
         }
       } );
     }
@@ -485,9 +488,10 @@ const SupernovaEdit = props => {
 
   // Second, change the Supernova's postsToShow attribute when Query Loop's perPage changes.
   useEffect( () => {
-    if ( syncQueryAndSupernova && !!parentQueryClientId && parseInt( attributes.postsToShow ) !== parseInt( context.query.perPage ) ) {
+    const nextPostsToShow = parseInt( context.query?.perPage );
+    if ( syncQueryAndSupernova && !!parentQueryClientId && Number.isFinite( nextPostsToShow ) && parseInt( attributes.postsToShow ) !== nextPostsToShow ) {
       setAttributes( {
-        postsToShow: parseInt( context.query.perPage ),
+        postsToShow: nextPostsToShow,
       } );
     }
   }, [ context ] );

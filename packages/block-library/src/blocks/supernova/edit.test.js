@@ -163,6 +163,38 @@ test('editor preview filters query posts with the dual-format tax query helper',
   );
 });
 
+test('query perPage sync resolves the closest Query parent id, not the parents array', () => {
+  assert.match(
+    source,
+    /const queryParents = getBlockParentsByBlockName\( clientId, 'core\/query' \)/
+  );
+
+  assert.match(
+    source,
+    /const parentQueryClientId = queryParents\[ queryParents\.length - 1 \]/
+  );
+
+  assert.match(
+    source,
+    /getClientIdsOfDescendants\( \[ parentQueryClientId \] \)/
+  );
+
+  assert.match(
+    source,
+    /const nextPerPage = parseInt\( attributes\.postsToShow \);[\s\S]*?Number\.isFinite\( nextPerPage \)[\s\S]*?perPage: nextPerPage,/
+  );
+
+  assert.match(
+    source,
+    /const nextPostsToShow = parseInt\( context\.query\?\.perPage \);[\s\S]*?Number\.isFinite\( nextPostsToShow \)[\s\S]*?postsToShow: nextPostsToShow,/
+  );
+
+  assert.doesNotMatch(
+    source,
+    /const parentQueryClientId = getBlockParentsByBlockName\(/
+  );
+} );
+
 test('editor resolves inherited card metadata style without coupling it to Meta Reveal', () => {
 	assert.match(
 		source,
