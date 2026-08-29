@@ -2,7 +2,7 @@ import { __ } from "@wordpress/i18n";
 import { createHigherOrderComponent } from "@wordpress/compose";
 import { addFilter } from "@wordpress/hooks";
 import { Button, Toolbar } from "@wordpress/components";
-import { Fragment, useMemo, useCallback } from "@wordpress/element";
+import { Fragment, useMemo } from "@wordpress/element";
 import { BlockControls } from '@wordpress/block-editor';
 
 import { getPreviewAttributes, needsPreview } from "@novablocks/utils";
@@ -19,24 +19,11 @@ const withPreviewAttributes = BlockEdit => {
       return blocksWithPreview.includes( name ) && needsPreview( attributes );
     }, [ attributes, name ] );
 
-    const setAttribtues = useCallback( attributes => {
-
-      if ( ! blockNeedsPreview ) {
-        Object.assign( attributes, {
-          preview: false
-        } );
-      }
-
-      props.setAttribtues( attributes );
-
-    }, [ attributes ] );
-
     const newAttributes = useMemo( () => getPreviewAttributes( attributes ), [ attributes ] );
 
     const newProps = {
       ...props,
       attributes: newAttributes,
-      setAttribtues
     };
 
     if ( ! blockNeedsPreview ) {

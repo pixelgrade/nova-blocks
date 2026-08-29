@@ -181,12 +181,47 @@ test('query perPage sync resolves the closest Query parent id, not the parents a
 
   assert.match(
     source,
-    /const nextPerPage = parseInt\( attributes\.postsToShow \);[\s\S]*?Number\.isFinite\( nextPerPage \)[\s\S]*?perPage: nextPerPage,/
+    /const lastSyncedRef = useRef\( \{ postsToShow: undefined, perPage: undefined \} \)/
   );
 
   assert.match(
     source,
-    /const nextPostsToShow = parseInt\( context\.query\?\.perPage \);[\s\S]*?Number\.isFinite\( nextPostsToShow \)[\s\S]*?postsToShow: nextPostsToShow,/
+    /parseInt\( context\.query\?\.perPage \)/
+  );
+
+  assert.match(
+    source,
+    /Number\.isFinite\( currentPostsToShow \)/
+  );
+
+  assert.match(
+    source,
+    /Number\.isFinite\( currentPerPage \)/
+  );
+
+  assert.match(
+    source,
+    /lastSyncedRef\.current = \{ postsToShow: currentPostsToShow, perPage: currentPostsToShow \};\s*updateBlockAttributes\(/
+  );
+
+  assert.match(
+    source,
+    /lastSyncedRef\.current = \{ postsToShow: currentPerPage, perPage: currentPerPage \};\s*setAttributes\(/
+  );
+
+  assert.doesNotMatch(
+    source,
+    /const nextPerPage =/
+  );
+
+  assert.doesNotMatch(
+    source,
+    /const nextPostsToShow =/
+  );
+
+  assert.doesNotMatch(
+    source,
+    /\/\/ Second, change the Supernova's postsToShow/
   );
 
   assert.doesNotMatch(

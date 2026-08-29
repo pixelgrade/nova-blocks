@@ -6,7 +6,7 @@ import classnames from 'classnames';
 import { useBlockProps } from '@wordpress/block-editor';
 import { select, useDispatch, useSelect, withDispatch } from '@wordpress/data';
 import { store as coreStore } from '@wordpress/core-data';
-import { Fragment, useCallback, memo, useEffect, useMemo } from '@wordpress/element';
+import { Fragment, useCallback, memo, useEffect, useMemo, useRef } from '@wordpress/element';
 
 /**
  * Internal dependencies
@@ -473,28 +473,45 @@ const SupernovaEdit = props => {
   // We need to hook regardless to avoid error related to varying number of hooks.
   const { updateBlockAttributes } = useDispatch( 'core/block-editor' );
 
-  // First, change the Query Loop's perPage attribute when Supernova's postsToShow changes.
+  // Reconcile Items Count (postsToShow) and the Query Loop's perPage without the
+  // two-way-write loop: remember the last reconciled pair, work out which side
+  // actually moved, and let Items Count win deterministically when both did —
+  // two independent effects pushing in opposite directions swap the values on
+  // every commit until React aborts with a maximum-update-depth error.
+  const lastSyncedRef = useRef( { postsToShow: undefined, perPage: undefined } );
+
   useEffect( () => {
-    const nextPerPage = parseInt( attributes.postsToShow );
-    if ( syncQueryAndSupernova && !!parentQueryClientId && Number.isFinite( nextPerPage ) && nextPerPage !== parseInt( perPage ) ) {
+    if ( ! syncQueryAndSupernova || ! parentQueryClientId ) {
+      return;
+    }
+
+    const currentPostsToShow = parseInt( attributes.postsToShow );
+    const currentPerPage = parseInt( context.query?.perPage );
+    const lastSynced = lastSyncedRef.current;
+    const postsToShowMoved = Number.isFinite( currentPostsToShow ) && currentPostsToShow !== lastSynced.postsToShow;
+    const perPageMoved = Number.isFinite( currentPerPage ) && currentPerPage !== lastSynced.perPage;
+
+    if ( postsToShowMoved && currentPostsToShow !== currentPerPage ) {
+      lastSyncedRef.current = { postsToShow: currentPostsToShow, perPage: currentPostsToShow };
       updateBlockAttributes( parentQueryClientId, {
         query: {
           ...context.query,
-          perPage: nextPerPage,
+          perPage: currentPostsToShow,
         }
       } );
+      return;
     }
-  }, [ attributes ] );
 
-  // Second, change the Supernova's postsToShow attribute when Query Loop's perPage changes.
-  useEffect( () => {
-    const nextPostsToShow = parseInt( context.query?.perPage );
-    if ( syncQueryAndSupernova && !!parentQueryClientId && Number.isFinite( nextPostsToShow ) && parseInt( attributes.postsToShow ) !== nextPostsToShow ) {
+    if ( perPageMoved && currentPostsToShow !== currentPerPage ) {
+      lastSyncedRef.current = { postsToShow: currentPerPage, perPage: currentPerPage };
       setAttributes( {
-        postsToShow: nextPostsToShow,
+        postsToShow: currentPerPage,
       } );
+      return;
     }
-  }, [ context ] );
+
+    lastSyncedRef.current = { postsToShow: currentPostsToShow, perPage: currentPerPage };
+  }, [ attributes, context ] );
 
   const { markPostsAsDisplayed, markSpecificPostsAsDisplayed } = useDispatch( 'novablocks/displayed-posts' );
 
