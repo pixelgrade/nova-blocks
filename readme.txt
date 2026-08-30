@@ -3,7 +3,7 @@ Contributors: pixelgrade, vlad.olaru, babbardel, razvanonofrei, gorby31
 Tags: blocks, gutenberg, gutenberg blocks, page builder, full site editing
 Requires at least: 7.0
 Tested up to: 7.1
-Stable tag: 2.5.3
+Stable tag: 2.6.0
 Requires PHP: 7.4
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -114,8 +114,19 @@ Yes! Nova Block's core features are free to use.
 
 == Changelog ==
 
-= 2.5.3 =
+= 2.6.0 =
 * New: Add opt-in Color Signal controls to Columns and individual Column blocks, with Column palettes inheriting from their parent Columns by default.
+* New: Turn the Sharing System trigger into an editable Button block, with an icon visibility control, Button palette overrides, and icons preserved across Button styles.
+* New: Add an independent link Color Signal to the Post Terms block.
+* Fix: Keep the Cards Collection visible in the editor when switching Compositions — cleared layout options now restore their defaults immediately instead of blanking every card until the next reload.
+* Fix: Restore the two-way sync between the Cards Collection Items Count and the Query Loop's items per page, and prevent the sync from freezing the editor when both values change at once.
+* Fix: Show the real stored Composition and its presets in the inspector while a Cards Collection preview layout is in Edit Mode.
+* Fix: Keep Column text and link colors following the intended palette on the frontend.
+* Fix: Hide FacetWP filtering controls when FacetWP is not available, and guard the Media Composition attachment lookup against missing attachments.
+* Improved: Keep layout containers subgridded inside plain Groups, stop treating classic main wrappers as layout roots, and keep transparent card groups flush.
+* Improved: Consume the Style Manager rail gap token and version package stylesheets independently.
+
+= 2.5.3 =
 * Fix: Avoid a PHP 8.4 deprecation when classifying card media ratios.
 
 = 2.5.2 =
