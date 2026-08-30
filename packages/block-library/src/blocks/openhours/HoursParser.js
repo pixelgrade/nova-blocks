@@ -133,7 +133,10 @@ fourSq.util.HoursParser = {
       aliases.reverse();  // Need to have the largest alias first for replacing
       if (canonical && aliases) {
         _.each(aliases, function(alias) {
-          text = text.replace(new RegExp(alias, 'g'), canonical);
+          // Locale day names may contain regex metacharacters, so escape every
+          // alias here. English aliases contain none, so this is a no-op for them.
+          var pattern = fourSq.util.HoursParser.escapeRegExp(alias);
+          text = text.replace(new RegExp(pattern, 'g'), canonical);
         });
       }
       return canonical;
@@ -252,6 +255,39 @@ fourSq.util.HoursParser = {
   },
 
   /**
+   * @param {string} text
+   * @return {string} the text with every regex metacharacter escaped
+   */
+  escapeRegExp: function(text) {
+    return text.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+  },
+
+  /**
+   * The day names of the site locale, as WordPress exposes them.
+   * Both lists are SUNDAY-first, matching the wp.date l10n shape.
+   * Any failure means no locale data, i.e. English-only behavior.
+   *
+   * @return {{weekdays: Array.<string>, weekdaysShort: Array.<string>}}
+   */
+  localeDayNames: function() {
+    var names = {weekdays: [], weekdaysShort: []};
+    try {
+      var l10n = window.wp.date.getSettings().l10n;
+      if (l10n) {
+        if (_.isArray(l10n.weekdays)) {
+          names.weekdays = l10n.weekdays;
+        }
+        if (_.isArray(l10n.weekdaysShort)) {
+          names.weekdaysShort = l10n.weekdaysShort;
+        }
+      }
+    } catch (e) {
+      // No locale day names available; fall back to the English aliases only.
+    }
+    return names;
+  },
+
+  /**
    * @param {number} day starting at 1 for monday
    * @return {Array.<string>} all aliases of the day, sorted by length
    */
@@ -268,6 +304,28 @@ fourSq.util.HoursParser = {
       case 7: aliases = ['sundays','sunday','sunda','sund','sun','su']; break;
       default: return [];
     }
+
+    // Append the locale day names AFTER the English ones. _.sortBy is stable,
+    // so on a length tie the English token stays the canonical one, which keeps
+    // the canonicals unique across days.
+    var localeNames = fourSq.util.HoursParser.localeDayNames();
+    // The parser counts 1=Monday..7=Sunday, the locale lists are Sunday-first.
+    var localeIndex = day % 7;
+    _.each([localeNames.weekdays[localeIndex], localeNames.weekdaysShort[localeIndex]], function(name) {
+      if (typeof name !== 'string') {
+        return;
+      }
+      var lowered = name.toLowerCase();
+      // Also accept the unaccented spelling, so both "miércoles" and
+      // "miercoles" parse.
+      var stripped = lowered.normalize('NFD').replace(/[\u0300-\u036f]/g, '');
+      _.each([lowered, stripped], function(variant) {
+        if (variant && aliases.indexOf(variant) === -1) {
+          aliases.push(variant);
+        }
+      });
+    });
+
     return _.sortBy(aliases, function(alias) {
       return alias.length;
     });
