@@ -59,6 +59,14 @@
   .nb-collection__header[class] {
     padding-bottom: calc(-1 * var(--emphasis-top-spacing) * var(--nb-spacing));
   }
+
+  // A full-align collection spans the viewport, so nothing insets its header:
+  // the title/subtitle would sit flush against the browser edge (issue #420).
+  // Non-full aligns keep their gutter from the block's own inset.
+  &.nb-supernova--align-full .nb-collection__header[class] {
+    padding-left: var(--nb-wrapper-sides-spacings, var(--nb-spacing, 32px));
+    padding-right: var(--nb-wrapper-sides-spacings, var(--nb-spacing, 32px));
+  }
 }
 
 .nb-collection__inner-container {
