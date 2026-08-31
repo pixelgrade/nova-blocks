@@ -1,0 +1,22 @@
+{
+  "name": "@pixelgrade/agent-harness",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Headless, editor-equivalent block validator and canonical serializer behind `wp pixelgrade blocks validate|canonicalize`. Shipped SEPARATELY from the nova-blocks plugin (agentic-stack CONTRACT.md §3.11, Gate-1): its jsdom runtime is ~25MB and is installed on demand on the lab, agent hosts and CI.",
+  "license": "GPL-3.0-only",
+  "type": "commonjs",
+  "main": "lib/canonicalize.cjs",
+  "bin": {
+    "pixelgrade-agent-harness": "bin/harness.cjs"
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "scripts": {
+    "test": "node --test test/*.test.cjs",
+    "selftest": "node bin/harness.cjs --selftest"
+  },
+  "dependencies": {
+    "jsdom": "29.1.1"
+  }
+}

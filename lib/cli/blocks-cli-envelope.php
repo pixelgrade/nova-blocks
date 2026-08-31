@@ -2,11 +2,14 @@
 /**
  * Shared response envelope + house invariants for the `wp pixelgrade blocks` CLI subtree.
  *
- * Implements the agentic-stack contract's (`docs/plans/agentic-stack/CONTRACT.md` v0.3.5) §2 JSON
+ * Implements the agentic-stack contract's (`docs/plans/agentic-stack/CONTRACT.md` v0.3.11) §2 JSON
  * envelope (ok/code/summary/data/warnings/retryable) and the §3.0 "resolve the user first, never
- * auto-elevate" rule. Every `wp pixelgrade blocks …` command in this subtree is read-only
- * (§1.4/§4), so `persisted`/`unchanged`/`stripped` are never emitted here — those envelope keys
- * are writes-only per §2.
+ * auto-elevate" rule.
+ *
+ * `list`, `patterns` and `validate` are read-only; **`canonicalize` is destructive** and exits 2 in
+ * several branches. It reports what it wrote inside `data` (`updated`/`unchanged`/`refused`) rather
+ * than through the top-level `persisted`/`unchanged`/`stripped` keys, which §2 shapes for Style
+ * Manager's settings writes and which nothing here emits.
  *
  * @since   2.6.0
  * @license GPL-2.0-or-later
@@ -119,19 +122,17 @@ function novablocks_cli_require_capability( string $capability, array $assoc_arg
 /**
  * Build, print, and halt on the contract §2 envelope.
  *
- * `ok` is bound to the exit code, not to the outcome: `ok:true` maps to exit 0 or 2 (never used by
- * this read-only subtree today — both commands are 0/1/3), `ok:false` maps to exit 1 or 3. `code`
- * is never translated; `summary` and `warnings[].message` are.
+ * `ok` is bound to the exit code, not to the outcome: `ok:true` maps to exit 0 or 2, `ok:false` maps
+ * to exit 1 or 3. `code` is never translated; `summary` and `warnings[].message` are.
  *
  * @param bool     $ok         Whether the command's machinery completed.
  * @param string   $code       Stable machine token (never translated).
  * @param string   $summary    One translated human line.
  * @param array    $data       Command payload.
  * @param array    $warnings   Envelope warnings, each at least `{code, message}`.
- * @param int|null $exit_code  0/1/3 per contract §2 (this subtree never emits 2). Defaults to 0
- *                             (ok) / 1 (!ok).
- * @param array    $extra      Optional extra top-level keys — only `retryable` (bool) applies to
- *                              this read-only subtree; emitted only when present.
+ * @param int|null $exit_code  0/1/2/3 per contract §2. Defaults to 0 (ok) / 1 (!ok).
+ * @param array    $extra      Optional extra top-level keys — only `retryable` (bool) is used by
+ *                              this subtree today; emitted only when present.
  * @param array    $assoc_args The command's assoc_args (read here only for --format).
  */
 function novablocks_cli_emit( bool $ok, string $code, string $summary, array $data = [], array $warnings = [], ?int $exit_code = null, array $extra = [], array $assoc_args = [] ): void {
@@ -183,7 +184,10 @@ function novablocks_cli_render_table( array $envelope ): void {
 			$message = wp_json_encode( $warning );
 		}
 
-		\WP_CLI::warning( (string) $message );
+		// Warning lines interpolate values that can carry content-derived bytes — a harness error
+		// string, a post title, a filter's message — so they go through the same control-char strip
+		// as table cells (W6 M3). Nothing reaches the terminal un-stripped, uniformly.
+		\WP_CLI::warning( novablocks_cli_sanitize_table_string( $message ) );
 	}
 
 	$data = $envelope['data'] instanceof stdClass ? [] : $envelope['data'];
@@ -192,6 +196,8 @@ function novablocks_cli_render_table( array $envelope ): void {
 		novablocks_cli_render_blocks_table( $data['blocks'] );
 	} elseif ( ! empty( $data['patterns'] ) && is_array( $data['patterns'] ) ) {
 		novablocks_cli_render_patterns_table( $data['patterns'] );
+	} elseif ( ! empty( $data['posts'] ) && is_array( $data['posts'] ) ) {
+		novablocks_cli_render_posts_table( $data['posts'] );
 	}
 
 	if ( ! empty( $envelope['retryable'] ) ) {
@@ -253,6 +259,47 @@ function novablocks_cli_render_patterns_table( array $patterns ): void {
 	}
 
 	novablocks_cli_render_rows( $rows, [ 'name', 'title', 'source', 'tier', 'categories' ] );
+}
+
+/**
+ * Render `data.posts` as a table — the per-post row `validate` and `canonicalize` share.
+ *
+ * `validate` rows carry `invalid`; `canonicalize` rows carry `invalid_before`/`invalid_after` plus
+ * the §5 P3 rule (c) columns. Absent keys render empty rather than forcing two near-identical
+ * renderers.
+ *
+ * @param array $posts Post records.
+ */
+function novablocks_cli_render_posts_table( array $posts ): void {
+	$is_canonicalize = array_key_exists( 'invalid_after', (array) reset( $posts ) );
+
+	$keys = $is_canonicalize
+		? [ 'post_id', 'post_type', 'blocks', 'passes', 'invalid_before', 'invalid_after', 'changed', 'stable', 'text_ok' ]
+		: [ 'post_id', 'post_type', 'blocks', 'invalid' ];
+
+	$rows = [];
+	foreach ( $posts as $post ) {
+		$row = [
+			'post_id'   => novablocks_cli_sanitize_table_string( $post['post_id'] ?? '' ),
+			'post_type' => novablocks_cli_sanitize_table_string( $post['post_type'] ?? '' ),
+			'blocks'    => novablocks_cli_sanitize_table_string( $post['block_count'] ?? 0 ),
+		];
+
+		if ( $is_canonicalize ) {
+			$row['passes']         = novablocks_cli_sanitize_table_string( $post['passes'] ?? 0 );
+			$row['invalid_before'] = novablocks_cli_sanitize_table_string( $post['invalid_before'] ?? 0 );
+			$row['invalid_after']  = novablocks_cli_sanitize_table_string( $post['invalid_after'] ?? 0 );
+			$row['changed']        = ! empty( $post['changed'] ) ? 'yes' : 'no';
+			$row['stable']         = ! empty( $post['stable'] ) ? 'yes' : 'NO';
+			$row['text_ok']        = ! empty( $post['inner_text_preserved'] ) ? 'yes' : 'NO';
+		} else {
+			$row['invalid'] = novablocks_cli_sanitize_table_string( $post['invalid'] ?? 0 );
+		}
+
+		$rows[] = $row;
+	}
+
+	novablocks_cli_render_rows( $rows, $keys );
 }
 
 /**
