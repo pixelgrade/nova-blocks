@@ -813,9 +813,10 @@ function novablocks_cli_canonicalize_to_fixed_point( array $targets, string $sur
  * pass (compared by digest), and no nested `<p>` has appeared inside a paragraph relative to the
  * ORIGINAL count. Removing a nested `<p>` is the repair, not a finding, so only an increase counts.
  *
- * A missing digest is treated as safe — the fields are always present on a successful canonicalize
- * pass, and refusing every write on a schema surprise would turn a reporting gap into a different
- * kind of damage.
+ * FAIL CLOSED: a missing digest returns false, refusing the write. The fields are always present on
+ * a successful canonicalize pass with the protocol handshake in place, so this should be unreachable
+ * in practice — but for a separately-installed package, version skew is a routine failure mode, and a
+ * gate that cannot answer must not answer "safe".
  *
  * @param array $entry Accumulated per-post iteration state.
  *
@@ -825,11 +826,7 @@ function novablocks_cli_canonicalization_is_text_safe( array $entry ): bool {
 	$before = $entry['inner_text_before_sha1'] ?? null;
 	$after  = $entry['inner_text_after_sha1'] ?? null;
 
-	// FAIL CLOSED. A missing digest means the gate cannot answer, and a gate that cannot answer
-	// must not answer "safe" — the earlier reading ("a schema surprise shouldn't block writes")
-	// had it backwards for a separately-installed package, where version skew is the routine
-	// failure mode. With the protocol handshake in place this should be unreachable; if it is ever
-	// reached, refusing the write is the only honest outcome.
+	// FAIL CLOSED — see the docblock above; a missing digest refuses the write.
 	if ( null === $before || null === $after ) {
 		return false;
 	}
