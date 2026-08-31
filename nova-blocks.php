@@ -93,6 +93,10 @@ require_once dirname( __FILE__ ) . '/lib/deprecated.php';
 require_once dirname( __FILE__ ) . '/lib/content-normalization.php';
 require_once dirname( __FILE__ ) . '/lib/header-nav-projection.php';
 
+// `wp pixelgrade blocks …` — the agentic-stack contract's Nova Blocks introspection CLI.
+// Inert (and its files never even required) outside WP-CLI: see lib/cli/blocks-cli.php.
+require_once dirname( __FILE__ ) . '/lib/cli/blocks-cli.php';
+
 // Register header navigation projection hooks (no-op unless the
 // `novablocks/enable_block_nav_editing` feature flag is enabled). Seeding and the
 // editor map are wired to admin_init / enqueue_block_editor_assets from here.
