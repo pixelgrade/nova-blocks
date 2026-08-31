@@ -91,6 +91,10 @@ tmp
 **/tmp
 
 # Nova Blocks specifics
+# The W4 agent-harness is a SEPARATE agent-tools package (CONTRACT.md §3.11 / Gate-1):
+# its jsdom runtime is ~25MB and must never enter the plugin distributable.
+tools
+**/tools/agent-harness
 src/**/*.js
 src/vendor/trix
 bundlesize.config.json

@@ -192,6 +192,8 @@ function novablocks_cli_render_table( array $envelope ): void {
 		novablocks_cli_render_blocks_table( $data['blocks'] );
 	} elseif ( ! empty( $data['patterns'] ) && is_array( $data['patterns'] ) ) {
 		novablocks_cli_render_patterns_table( $data['patterns'] );
+	} elseif ( ! empty( $data['posts'] ) && is_array( $data['posts'] ) ) {
+		novablocks_cli_render_posts_table( $data['posts'] );
 	}
 
 	if ( ! empty( $envelope['retryable'] ) ) {
@@ -253,6 +255,45 @@ function novablocks_cli_render_patterns_table( array $patterns ): void {
 	}
 
 	novablocks_cli_render_rows( $rows, [ 'name', 'title', 'source', 'tier', 'categories' ] );
+}
+
+/**
+ * Render `data.posts` as a table — the per-post row `validate` and `canonicalize` share.
+ *
+ * `validate` rows carry `invalid`; `canonicalize` rows carry `invalid_before`/`invalid_after` plus
+ * the §5 P3 rule (c) columns. Absent keys render empty rather than forcing two near-identical
+ * renderers.
+ *
+ * @param array $posts Post records.
+ */
+function novablocks_cli_render_posts_table( array $posts ): void {
+	$is_canonicalize = array_key_exists( 'invalid_after', (array) reset( $posts ) );
+
+	$keys = $is_canonicalize
+		? [ 'post_id', 'post_type', 'blocks', 'invalid_before', 'invalid_after', 'changed', 'text_ok' ]
+		: [ 'post_id', 'post_type', 'blocks', 'invalid' ];
+
+	$rows = [];
+	foreach ( $posts as $post ) {
+		$row = [
+			'post_id'   => novablocks_cli_sanitize_table_string( $post['post_id'] ?? '' ),
+			'post_type' => novablocks_cli_sanitize_table_string( $post['post_type'] ?? '' ),
+			'blocks'    => novablocks_cli_sanitize_table_string( $post['block_count'] ?? 0 ),
+		];
+
+		if ( $is_canonicalize ) {
+			$row['invalid_before'] = novablocks_cli_sanitize_table_string( $post['invalid_before'] ?? 0 );
+			$row['invalid_after']  = novablocks_cli_sanitize_table_string( $post['invalid_after'] ?? 0 );
+			$row['changed']        = ! empty( $post['changed'] ) ? 'yes' : 'no';
+			$row['text_ok']        = ! empty( $post['inner_text_preserved'] ) ? 'yes' : 'NO';
+		} else {
+			$row['invalid'] = novablocks_cli_sanitize_table_string( $post['invalid'] ?? 0 );
+		}
+
+		$rows[] = $row;
+	}
+
+	novablocks_cli_render_rows( $rows, $keys );
 }
 
 /**
