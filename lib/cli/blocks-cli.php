@@ -2,7 +2,7 @@
 /**
  * WP-CLI subtree: `wp pixelgrade blocks …` — Nova Blocks introspection commands.
  *
- * Read-only slice of the agent-surface contract (`docs/plans/agentic-stack/CONTRACT.md` v0.3.5,
+ * The agent-surface contract's Nova Blocks slice (`docs/plans/agentic-stack/CONTRACT.md` v0.3.11,
  * §1.4): `list` (registered block types) and `patterns` (local + cloud block patterns). Per §1.4's
  * naming call, the subtree noun *is* `blocks`, so the registry listing is `wp pixelgrade blocks
  * list` (not `blocks blocks list`) and the pattern listing is `wp pixelgrade blocks patterns`.

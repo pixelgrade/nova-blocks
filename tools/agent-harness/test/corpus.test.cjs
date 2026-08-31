@@ -115,7 +115,8 @@ test( 'corpus parity against the site\'s own bundles', { skip }, async t => {
 
 		assert.deepStrictEqual( report.core_bundles_failed, [], 'every WP core bundle must load' );
 		assert.deepStrictEqual( report.nb_packages_failed, [], 'every Nova Blocks package bundle must load' );
-		assert.deepStrictEqual( report.nb_block_bundle_fallbacks, [], 'every NB block must self-register from its own bundle, never from metadata alone' );
+		// There is no fallback field to check any more: a bundle that fails to load now aborts the
+		// bootstrap outright, so simply GETTING a report proves every bundle loaded.
 		assert.strictEqual( report.novablocks_settings_hydrated, true );
 		assert.ok( report.registered_novablocks_block_types >= 30, `expected 30+ novablocks/* block types, got ${ report.registered_novablocks_block_types }` );
 	} );

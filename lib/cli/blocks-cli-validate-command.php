@@ -2,9 +2,21 @@
 /**
  * `wp pixelgrade blocks validate <post-id>…` — editor-equivalent block validation, headless.
  *
- * Contract (`docs/plans/agentic-stack/CONTRACT.md` v0.3.10) §1.4: capability `edit_posts`, reports
- * `data.invalid[]` as `{post_id, index, block_name, reason}`, exit **0 when zero invalid** and
- * **2 when any invalid**.
+ * Contract (`docs/plans/agentic-stack/CONTRACT.md` v0.3.11) §1.4: capability `edit_posts`, reports
+ * `data.invalid[]` as `{post_id, index, block_name, reason_code, reason}`, exit **0 when zero
+ * invalid** and **2 when any invalid**.
+ *
+ * Two hardening decisions worth stating, both from the W4 security review:
+ *
+ * - **A per-post `edit_post` gate.** §1.4 lists only the `edit_posts` floor for this verb, which is
+ *   enough while the caller is a shell. It is not enough once W7 exposes this as an MCP ability
+ *   where the acting user is genuinely restricted: without a per-post check, an agent confined to a
+ *   contributor could aim `validate` at any id, other users' private posts and pending drafts
+ *   included. The gate is strictly narrower than the contract's floor, so it cannot make the
+ *   command more permissive than §1.4 allows.
+ * - **Reasons quote no content.** The validator's own messages interpolate literal chunks of the
+ *   stored markup; those substitutions are redacted in the harness, so a reason carries the failure
+ *   shape (`reason_code`) and the block's identity, never its text.
  *
  * The point of the command is §3.9: `wp post create/update` bypasses Nova's REST Plus guard by
  * design and produces markup that renders but may parse invalid, so "it looks right on the front
@@ -53,13 +65,21 @@ if ( ! defined( 'ABSPATH' ) ) {
  * `ok` — every parsed block is valid. `invalid_blocks` — at least one block parses invalid (exit
  * 2; the findings are in `data.invalid[]`, this is NOT an error). `harness_unavailable` — the
  * agent-tools package or a Node binary is missing; the summary names the install step.
- * `invalid_params` — a bad id, an unknown post, or a `--post-type` mismatch. `permission_denied` —
- * see EXIT CODES.
+ * `invalid_params` — a bad id, an unknown post, or a `--post-type` mismatch. `harness_degraded` —
+ * an editor bundle failed to load, so the block registry is incomplete and no verdict would be
+ * trustworthy. `harness_timeout` — the harness exceeded its wall-clock budget and was terminated.
+ * `permission_denied` — see EXIT CODES.
+ *
+ * ## WARNINGS
+ *
+ * `preset_detected` — §3.8 pass-through. `third_party_editor_scripts` — another plugin or theme
+ * adds block-editor assets the harness does not load, so a `blocks.*` filter of theirs could make
+ * the real editor disagree with this verdict.
  *
  * ## EXIT CODES
  *
- * 0 zero invalid · 2 any invalid · 1 harness_unavailable / invalid_params / harness_failed ·
- * 3 permission_denied
+ * 0 zero invalid · 2 any invalid · 1 harness_unavailable / harness_degraded / harness_timeout /
+ * invalid_params / harness_failed · 3 permission_denied
  *
  * ## EXAMPLES
  *
@@ -74,7 +94,10 @@ if ( ! defined( 'ABSPATH' ) ) {
 function novablocks_cli_blocks_validate( $args, $assoc_args ) {
 	novablocks_cli_require_capability( 'edit_posts', $assoc_args );
 
-	$targets = novablocks_cli_resolve_target_posts( (array) $args, (array) $assoc_args );
+	// Per-post `edit_post` on a READ (security review F4). §1.4's floor is `edit_posts`; this is
+	// narrower, never wider, and is what keeps `validate` from becoming a read-oracle for posts the
+	// acting user cannot open — the semantics W7 inherits.
+	$targets = novablocks_cli_resolve_target_posts( (array) $args, (array) $assoc_args, 'edit_post' );
 
 	if ( is_wp_error( $targets ) ) {
 		novablocks_cli_emit_wp_error( $targets, $assoc_args );
@@ -110,10 +133,11 @@ function novablocks_cli_blocks_validate( $args, $assoc_args ) {
 		if ( is_array( $result ) && is_array( $result['invalid'] ?? null ) ) {
 			foreach ( $result['invalid'] as $entry ) {
 				$record = [
-					'post_id'    => $post_id,
-					'index'      => (int) ( $entry['index'] ?? -1 ),
-					'block_name' => (string) ( $entry['block_name'] ?? '' ),
-					'reason'     => (string) ( $entry['reason'] ?? '' ),
+					'post_id'     => $post_id,
+					'index'       => (int) ( $entry['index'] ?? -1 ),
+					'block_name'  => (string) ( $entry['block_name'] ?? '' ),
+					'reason_code' => (string) ( $entry['reason_code'] ?? 'block_validation_failed' ),
+					'reason'      => (string) ( $entry['reason'] ?? '' ),
 				];
 				$post_invalid[] = $record;
 				$invalid[]      = $record;
@@ -130,7 +154,10 @@ function novablocks_cli_blocks_validate( $args, $assoc_args ) {
 		];
 	}
 
-	$warnings = novablocks_cli_preset_warnings( $targets );
+	$warnings = array_merge(
+		novablocks_cli_preset_warnings( $targets ),
+		novablocks_cli_third_party_editor_warnings()
+	);
 
 	$data = [
 		'posts'   => $posts,
@@ -171,103 +198,6 @@ function novablocks_cli_blocks_validate( $args, $assoc_args ) {
 		$data,
 		$warnings,
 		2,
-		[],
-		$assoc_args
-	);
-}
-
-/**
- * Shape target records into the harness's `documents` array.
- *
- * @param array $targets Target records.
- *
- * @return array Documents.
- */
-function novablocks_cli_harness_documents( array $targets ): array {
-	$documents = [];
-
-	foreach ( $targets as $target ) {
-		$documents[] = [
-			'id'      => (int) $target['post_id'],
-			'content' => (string) $target['content'],
-		];
-	}
-
-	return $documents;
-}
-
-/**
- * Index a harness response's documents by id.
- *
- * @param array $response Harness response.
- *
- * @return array `[ id => document ]`.
- */
-function novablocks_cli_index_harness_documents( array $response ): array {
-	$by_id = [];
-
-	foreach ( (array) ( $response['documents'] ?? [] ) as $document ) {
-		if ( isset( $document['id'] ) ) {
-			$by_id[ (int) $document['id'] ] = $document;
-		}
-	}
-
-	return $by_id;
-}
-
-/**
- * Build the §3.8 `preset_detected` warnings for a target set.
- *
- * @param array $targets Target records.
- *
- * @return array Warnings.
- */
-function novablocks_cli_preset_warnings( array $targets ): array {
-	$presets = novablocks_cli_detect_presets( $targets );
-
-	if ( empty( $presets ) ) {
-		return [];
-	}
-
-	$tokens = [];
-	foreach ( $presets as $hits ) {
-		$tokens = array_merge( $tokens, $hits );
-	}
-
-	return [
-		[
-			'code'       => 'preset_detected',
-			'message'    => sprintf(
-				/* translators: 1: comma-separated post ids, 2: comma-separated attribute/class tokens. */
-				__( 'theme.json preset residue found in post(s) %1$s (%2$s). Passed through unchanged — this command never rewrites presets (§3.8) — but Pixelgrade surfaces are Color Signal, not presets.', '__plugin_txtd' ),
-				implode( ', ', array_keys( $presets ) ),
-				implode( ', ', array_values( array_unique( $tokens ) ) )
-			),
-			'post_ids'   => array_map( 'intval', array_keys( $presets ) ),
-			'attributes' => array_values( array_unique( $tokens ) ),
-		],
-	];
-}
-
-/**
- * Map a WP_Error from the shared resolution/invocation helpers onto the §2 envelope.
- *
- * `permission_denied` keeps exit 3 (§2's permission row); everything else is exit 1.
- *
- * @param WP_Error $error      The error.
- * @param array    $assoc_args The command's assoc_args (for --format).
- */
-function novablocks_cli_emit_wp_error( WP_Error $error, array $assoc_args ): void {
-	$code = $error->get_error_code();
-	$exit = 'permission_denied' === $code ? 3 : 1;
-
-	novablocks_cli_emit(
-		false,
-		(string) $code,
-		(string) $error->get_error_message(),
-		[ 'error_code' => (string) $code ],
-		[],
-		$exit,
 		[],
 		$assoc_args
 	);

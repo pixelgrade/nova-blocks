@@ -2,11 +2,14 @@
 /**
  * Shared response envelope + house invariants for the `wp pixelgrade blocks` CLI subtree.
  *
- * Implements the agentic-stack contract's (`docs/plans/agentic-stack/CONTRACT.md` v0.3.5) §2 JSON
+ * Implements the agentic-stack contract's (`docs/plans/agentic-stack/CONTRACT.md` v0.3.11) §2 JSON
  * envelope (ok/code/summary/data/warnings/retryable) and the §3.0 "resolve the user first, never
- * auto-elevate" rule. Every `wp pixelgrade blocks …` command in this subtree is read-only
- * (§1.4/§4), so `persisted`/`unchanged`/`stripped` are never emitted here — those envelope keys
- * are writes-only per §2.
+ * auto-elevate" rule.
+ *
+ * `list`, `patterns` and `validate` are read-only; **`canonicalize` is destructive** and exits 2 in
+ * several branches. It reports what it wrote inside `data` (`updated`/`unchanged`/`refused`) rather
+ * than through the top-level `persisted`/`unchanged`/`stripped` keys, which §2 shapes for Style
+ * Manager's settings writes and which nothing here emits.
  *
  * @since   2.6.0
  * @license GPL-2.0-or-later
@@ -119,19 +122,17 @@ function novablocks_cli_require_capability( string $capability, array $assoc_arg
 /**
  * Build, print, and halt on the contract §2 envelope.
  *
- * `ok` is bound to the exit code, not to the outcome: `ok:true` maps to exit 0 or 2 (never used by
- * this read-only subtree today — both commands are 0/1/3), `ok:false` maps to exit 1 or 3. `code`
- * is never translated; `summary` and `warnings[].message` are.
+ * `ok` is bound to the exit code, not to the outcome: `ok:true` maps to exit 0 or 2, `ok:false` maps
+ * to exit 1 or 3. `code` is never translated; `summary` and `warnings[].message` are.
  *
  * @param bool     $ok         Whether the command's machinery completed.
  * @param string   $code       Stable machine token (never translated).
  * @param string   $summary    One translated human line.
  * @param array    $data       Command payload.
  * @param array    $warnings   Envelope warnings, each at least `{code, message}`.
- * @param int|null $exit_code  0/1/3 per contract §2 (this subtree never emits 2). Defaults to 0
- *                             (ok) / 1 (!ok).
- * @param array    $extra      Optional extra top-level keys — only `retryable` (bool) applies to
- *                              this read-only subtree; emitted only when present.
+ * @param int|null $exit_code  0/1/2/3 per contract §2. Defaults to 0 (ok) / 1 (!ok).
+ * @param array    $extra      Optional extra top-level keys — only `retryable` (bool) is used by
+ *                              this subtree today; emitted only when present.
  * @param array    $assoc_args The command's assoc_args (read here only for --format).
  */
 function novablocks_cli_emit( bool $ok, string $code, string $summary, array $data = [], array $warnings = [], ?int $exit_code = null, array $extra = [], array $assoc_args = [] ): void {
@@ -183,7 +184,10 @@ function novablocks_cli_render_table( array $envelope ): void {
 			$message = wp_json_encode( $warning );
 		}
 
-		\WP_CLI::warning( (string) $message );
+		// Warning lines interpolate values that can carry content-derived bytes — a harness error
+		// string, a post title, a filter's message — so they go through the same control-char strip
+		// as table cells (W6 M3). Nothing reaches the terminal un-stripped, uniformly.
+		\WP_CLI::warning( novablocks_cli_sanitize_table_string( $message ) );
 	}
 
 	$data = $envelope['data'] instanceof stdClass ? [] : $envelope['data'];

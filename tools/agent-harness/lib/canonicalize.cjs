@@ -50,53 +50,44 @@ function flatten( blocks, out = [] ) {
 	return out;
 }
 
-/** Per-argument cap, so one `%o` of a whole block type cannot swamp the reason line. */
-const REASON_ARG_MAX = 160;
-const REASON_MAX = 500;
+const REASON_MAX = 300;
 
 /**
- * Render one `validationIssues` argument for interpolation.
- *
- * @param {*} value Argument value.
- *
- * @return {string} Short string form.
+ * Stable machine tokens for the block-validation failure modes `@wordpress/blocks` reports, keyed
+ * by a distinctive fragment of its message template. The template — never the substituted values —
+ * is what gets classified.
  */
-function reasonArg( value ) {
-	if ( undefined === value ) {
-		return '?';
-	}
-
-	let text;
-	if ( 'string' === typeof value ) {
-		text = value;
-	} else {
-		try {
-			text = JSON.stringify( value );
-		} catch ( error ) {
-			text = String( value );
-		}
-	}
-
-	text = String( text ).replace( /\s+/g, ' ' );
-
-	return text.length > REASON_ARG_MAX ? text.slice( 0, REASON_ARG_MAX ) + '…' : text;
-}
+const REASON_CODES = [
+	[ /expected token of type/i, 'token_mismatch' ],
+	[ /expected tag name/i, 'tag_name_mismatch' ],
+	[ /unexpected attribute/i, 'unexpected_attribute' ],
+	[ /expected attribute /i, 'attribute_value_mismatch' ],
+	[ /expected attributes/i, 'attribute_set_mismatch' ],
+	[ /expected end of content/i, 'unexpected_trailing_content' ],
+	[ /instead saw end of content/i, 'truncated_content' ],
+	[ /child order/i, 'child_order_mismatch' ],
+];
 
 /**
- * Summarize why a block failed validation, in one line.
+ * Summarize why a block failed validation — **without quoting any of its content**.
  *
  * `@wordpress/blocks` records each issue as `{ log, args }` where **`log` is a logger FUNCTION**
  * and the human message template is `args[0]`, with `args[1…]` as its substitutions. Stringifying
  * `log` yields the logger's source text, which is what a naive reading produces — so the template
  * is deliberately read off `args[0]`.
  *
- * The FIRST issue is the specific one ("Expected attribute `class` of value X, saw Y"); the last is
- * always the generic "Block validation failed for `%s` (%o)…" dump that carries the entire block
- * type object. Reporting the first is what makes the reason actionable.
+ * Those substitutions are literal chunks of the stored markup: attribute values, class strings, the
+ * generated and stored HTML. They are deliberately **redacted to `…`**. `validate` runs at the
+ * `edit_posts` floor and W7 will expose it as an MCP ability, so a reason must never become a way
+ * to read fragments of a post back out; the template plus a stable `code` says what went wrong
+ * without saying what the content is.
+ *
+ * The FIRST issue is the specific one; the last is always the generic "Block validation failed for
+ * `%s` (%o)…" dump carrying the entire block type object.
  *
  * @param {object} block A parsed block with `isValid === false`.
  *
- * @return {string} Reason.
+ * @return {{code: string, message: string}} Redacted reason.
  */
 function invalidReason( block ) {
 	const issues = block.validationIssues;
@@ -106,23 +97,30 @@ function invalidReason( block ) {
 		const template = 'string' === typeof args[ 0 ] ? args[ 0 ] : '';
 
 		if ( template ) {
-			let index = 1;
-			const text = template
-				.replace( /%[sdoOjif]/g, () => reasonArg( args[ index++ ] ) )
+			const message = template
+				.replace( /%[sdoOjif]/g, '…' )
 				.replace( /\s+/g, ' ' )
 				.trim();
 
-			if ( text ) {
-				return text.length > REASON_MAX ? text.slice( 0, REASON_MAX ) + '…' : text;
+			if ( message ) {
+				const match = REASON_CODES.find( ( [ pattern ] ) => pattern.test( template ) );
+
+				return {
+					code: match ? match[ 1 ] : 'block_validation_failed',
+					message: message.length > REASON_MAX ? message.slice( 0, REASON_MAX ) + '…' : message,
+				};
 			}
 		}
 	}
 
 	if ( block.name === 'core/missing' ) {
-		return 'block type not registered on this site';
+		return { code: 'unregistered_block', message: 'block type not registered on this site' };
 	}
 
-	return 'block validation failed (regenerated save output differs from the stored markup)';
+	return {
+		code: 'block_validation_failed',
+		message: 'block validation failed (regenerated save output differs from the stored markup)',
+	};
 }
 
 /**
@@ -138,10 +136,13 @@ function collectInvalid( blocks ) {
 
 	flat.forEach( ( block, index ) => {
 		if ( false === block.isValid ) {
+			const reason = invalidReason( block );
+
 			invalid.push( {
 				index,
 				block_name: String( block.name || 'unknown' ),
-				reason: invalidReason( block ),
+				reason_code: reason.code,
+				reason: reason.message,
 			} );
 		}
 	} );
@@ -201,6 +202,79 @@ function innerText( win, content ) {
 	host.innerHTML = String( content || '' ).replace( /<!--[\s\S]*?-->/g, '' );
 
 	return String( host.textContent || '' ).replace( /\s+/g, ' ' ).trim();
+}
+
+/**
+ * The visible-text length one block RENDERS on its own, children excluded.
+ *
+ * Deliberately measured by serializing the block with an empty `innerBlocks` and reading the text
+ * out of the result, rather than by summing its string attributes. Measuring attributes looked
+ * equivalent and is not: the nova-blocks#610 loss keeps the text sitting in the `content` attribute
+ * on both sides and drops it at SAVE time, so an attribute-based walk reported no per-block change
+ * on a document that had visibly lost 106 characters. What matters is what the block emits.
+ *
+ * Children are excluded so a parent does not double-count its descendants' text, which would
+ * attribute one loss to every ancestor.
+ *
+ * @param {object} context Bootstrapped harness (`{ win, wp }`).
+ * @param {object} block   A parsed block.
+ *
+ * @return {number} Visible-text length.
+ */
+function blockTextLength( context, block ) {
+	if ( ! block || ! block.name ) {
+		return 0;
+	}
+
+	try {
+		return innerText(
+			context.win,
+			context.wp.blocks.serialize( [ { ...block, innerBlocks: [] } ] )
+		).length;
+	} catch ( error ) {
+		// A block whose save() throws contributes no measurable text; that is a finding for the
+		// validity report, not a reason to abandon the whole attribution.
+		return 0;
+	}
+}
+
+/**
+ * Attribute a text loss to individual blocks by walking two trees in parallel.
+ *
+ * Recovery preserves tree shape — `createBlock( name, attributes, innerBlocks )` regenerates a
+ * block with the same name and the same children — so the depth-first index of a block is stable
+ * across the pass, and a positional walk is a faithful comparison rather than a heuristic. Where
+ * the shapes DO diverge (a block genuinely disappeared), the trailing entries are reported as
+ * fully lost, which is the honest reading.
+ *
+ * @param {object} context Bootstrapped harness (`{ win, wp }`).
+ * @param {Array}  before Parsed tree before the pass.
+ * @param {Array}  after  Parsed tree after the pass.
+ *
+ * @return {Array} `[{ index, name, lost_length }]`, only for blocks that lost text.
+ */
+function lostTextByBlock( context, before, after ) {
+	const flatBefore = flatten( before );
+	const flatAfter = flatten( after );
+	const lost = [];
+
+	flatBefore.forEach( ( block, index ) => {
+		const lengthBefore = blockTextLength( context, block );
+		const counterpart = flatAfter[ index ];
+		const lengthAfter = counterpart && counterpart.name === block.name
+			? blockTextLength( context, counterpart )
+			: 0;
+
+		if ( lengthAfter < lengthBefore ) {
+			lost.push( {
+				index,
+				name: String( block.name || 'unknown' ),
+				lost_length: lengthBefore - lengthAfter,
+			} );
+		}
+	} );
+
+	return lost;
 }
 
 /**
@@ -285,12 +359,19 @@ function processDocument( context, document, mode ) {
 	result.converged = 0 === invalidAfter.length;
 	result.nested_paragraphs_before = countNestedParagraphs( parsed );
 	result.nested_paragraphs_after = countNestedParagraphs( reparsed );
-	// Digests, not the text itself: the caller compares pass 1's `before` against the LAST pass's
-	// `after` to gate the cumulative rewrite, and shipping the full visible text of every document
-	// back through the pipe on every pass would grow the response without adding information.
+	// Digests gate, lengths report. The caller compares pass 1's `before` digest against the LAST
+	// pass's `after` digest to decide whether to write; shipping the full visible text of every
+	// document back on every pass would grow the response without adding information. The lengths
+	// are what the contract's `data.refused[]` payload needs, and they are two integers.
 	result.inner_text_before_sha1 = sha1( textBefore );
 	result.inner_text_after_sha1 = sha1( textAfter );
+	result.inner_text_before_length = textBefore.length;
+	result.inner_text_after_length = textAfter.length;
 	result.inner_text_preserved = textBefore === textAfter;
+
+	// The per-block attribution is only computed on a pass that actually lost text — it is a second
+	// walk of both trees, and there is nothing to attribute when nothing was lost.
+	result.lost_blocks = result.inner_text_preserved ? [] : lostTextByBlock( context, parsed, reparsed );
 
 	return result;
 }
@@ -303,6 +384,8 @@ module.exports = {
 	rebuild,
 	recover,
 	innerText,
+	blockTextLength,
+	lostTextByBlock,
 	countNestedParagraphs,
 	processDocument,
 };

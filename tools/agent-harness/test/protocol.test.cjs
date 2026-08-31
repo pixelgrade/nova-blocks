@@ -52,7 +52,7 @@ test( 'collectInvalid reports index, block name and a reason for every invalid b
 	// @wordpress/blocks actually records. Stringifying `log` would leak the logger's source.
 	const tree = [
 		{ name: 'core/group', isValid: true, innerBlocks: [
-			{ name: 'core/heading', isValid: false, validationIssues: [ { log: ( ...a ) => a, args: [ 'Expected tag name `%s`, instead saw `%s`', 'h2', 'h3' ] } ], innerBlocks: [] },
+			{ name: 'core/heading', isValid: false, validationIssues: [ { log: ( ...a ) => a, args: [ 'Expected tag name `%s`, instead saw `%s`.', 'h2', 'h3' ] } ], innerBlocks: [] },
 		] },
 		{ name: 'core/paragraph', isValid: false, innerBlocks: [] },
 	];
@@ -62,17 +62,48 @@ test( 'collectInvalid reports index, block name and a reason for every invalid b
 	assert.strictEqual( invalid.length, 2 );
 	assert.deepStrictEqual(
 		invalid[ 0 ],
-		{ index: 1, block_name: 'core/heading', reason: 'Expected tag name `h2`, instead saw `h3`' }
+		{
+			index: 1,
+			block_name: 'core/heading',
+			reason_code: 'tag_name_mismatch',
+			reason: 'Expected tag name `…`, instead saw `…`.',
+		}
 	);
 	assert.strictEqual( invalid[ 1 ].index, 2 );
 	assert.strictEqual( invalid[ 1 ].block_name, 'core/paragraph' );
+	assert.strictEqual( invalid[ 1 ].reason_code, 'block_validation_failed' );
 	assert.match( invalid[ 1 ].reason, /validation failed/ );
 } );
 
 test( 'invalidReason survives a malformed validationIssues entry rather than throwing', () => {
-	assert.match( lib.invalidReason( { name: 'core/x', validationIssues: [ {} ] } ), /validation failed/ );
-	assert.match( lib.invalidReason( { name: 'core/x', validationIssues: 'nonsense' } ), /validation failed/ );
-	assert.match( lib.invalidReason( { name: 'core/missing' } ), /not registered/ );
+	assert.match( lib.invalidReason( { name: 'core/x', validationIssues: [ {} ] } ).message, /validation failed/ );
+	assert.match( lib.invalidReason( { name: 'core/x', validationIssues: 'nonsense' } ).message, /validation failed/ );
+	assert.strictEqual( lib.invalidReason( { name: 'core/missing' } ).code, 'unregistered_block' );
+} );
+
+test( 'a reason NEVER quotes the stored content — every substitution is redacted', () => {
+	const secret = 'CONFIDENTIAL-DRAFT-TEXT';
+	const reason = lib.invalidReason( {
+		name: 'core/heading',
+		validationIssues: [ { log: () => {}, args: [ 'Expected attribute `%s` of value `%s`, saw `%s`.', 'class', secret, 'other' ] } ],
+	} );
+
+	assert.strictEqual( reason.code, 'attribute_value_mismatch' );
+	assert.strictEqual( reason.message, 'Expected attribute `…` of value `…`, saw `…`.' );
+	assert.ok( ! reason.message.includes( secret ), 'stored content must never reach a reason string' );
+	assert.ok( ! reason.message.includes( 'class' ), 'not even attribute names — a %s is a %s' );
+} );
+
+test( 'reason codes are stable machine tokens per failure mode', () => {
+	const codeFor = template => lib.invalidReason( { name: 'core/x', validationIssues: [ { log: () => {}, args: [ template ] } ] } ).code;
+
+	assert.strictEqual( codeFor( 'Expected token of type `%s` (%o), instead saw `%s` (%o).' ), 'token_mismatch' );
+	assert.strictEqual( codeFor( 'Expected tag name `%s`, instead saw `%s`.' ), 'tag_name_mismatch' );
+	assert.strictEqual( codeFor( 'Encountered unexpected attribute `%s`.' ), 'unexpected_attribute' );
+	assert.strictEqual( codeFor( 'Expected attributes %o, instead saw %o.' ), 'attribute_set_mismatch' );
+	assert.strictEqual( codeFor( 'Expected end of content, instead saw %o.' ), 'unexpected_trailing_content' );
+	assert.strictEqual( codeFor( 'Expected child order of %o, instead saw %o.' ), 'child_order_mismatch' );
+	assert.strictEqual( codeFor( 'Something entirely new happened.' ), 'block_validation_failed' );
 } );
 
 test( 'invalidReason never stringifies the logger function itself', () => {
@@ -81,25 +112,8 @@ test( 'invalidReason never stringifies the logger function itself', () => {
 		validationIssues: [ { log: ( message, ...args ) => console.error( message, ...args ), args: [ 'concrete message' ] } ],
 	} );
 
-	assert.strictEqual( reason, 'concrete message' );
-	assert.ok( ! reason.includes( '=>' ), 'the logger source must never leak into the reason' );
-} );
-
-test( 'invalidReason fills %s placeholders with "?" when args run out, never producing a raw format string', () => {
-	const reason = lib.invalidReason( { name: 'core/x', validationIssues: [ { log: () => {}, args: [ 'saw %s and %s', 'one' ] } ] } );
-
-	assert.strictEqual( reason, 'saw one and ?' );
-} );
-
-test( 'invalidReason caps a %o dump so one issue cannot swamp the envelope', () => {
-	const huge = { blob: 'y'.repeat( 5000 ) };
-	const reason = lib.invalidReason( {
-		name: 'core/x',
-		validationIssues: [ { log: () => {}, args: [ 'Block validation failed for `%s` (%o).', 'core/x', huge ] } ],
-	} );
-
-	assert.ok( reason.length <= 520, `reason must stay bounded, got ${ reason.length }` );
-	assert.ok( reason.includes( 'core/x' ) );
+	assert.strictEqual( reason.message, 'concrete message' );
+	assert.ok( ! reason.message.includes( '=>' ), 'the logger source must never leak into the reason' );
 } );
 
 test( 'invalidReason reports the FIRST issue — the specific one, not the generic trailing dump', () => {
@@ -111,7 +125,8 @@ test( 'invalidReason reports the FIRST issue — the specific one, not the gener
 		],
 	} );
 
-	assert.strictEqual( reason, 'Expected attribute `class` of value `a b`, saw `a`.' );
+	assert.strictEqual( reason.code, 'attribute_value_mismatch' );
+	assert.ok( ! reason.message.includes( 'a b' ) );
 } );
 
 test( 'recover rebuilds only invalid blocks, and still walks a valid parent for invalid children', () => {
@@ -176,7 +191,7 @@ test( 'countNestedParagraphs counts paragraphs whose stored content itself carri
 // ------------------------------------------------------------------------- processDocument
 
 /** A stubbed `wp` whose parse/serialize round-trip is deterministic and inspectable. */
-const stubContext = ( { parse, serialize } ) => {
+const stubContext = ( { parse, serialize, createBlock } ) => {
 	const win = new JSDOM( '<!doctype html><body></body>' ).window;
 	return {
 		win,
@@ -184,7 +199,7 @@ const stubContext = ( { parse, serialize } ) => {
 			blocks: {
 				parse,
 				serialize,
-				createBlock: ( name, attributes, innerBlocks ) => ( { name, attributes, innerBlocks, isValid: true } ),
+				createBlock: createBlock || ( ( name, attributes, innerBlocks ) => ( { name, attributes, innerBlocks, isValid: true } ) ),
 			},
 		},
 	};
@@ -419,4 +434,161 @@ test( 'sha1 is stable and content-addressed, so digests from different passes ar
 	assert.strictEqual( lib.sha1( 'abc' ), lib.sha1( 'abc' ) );
 	assert.notStrictEqual( lib.sha1( 'abc' ), lib.sha1( 'abd' ) );
 	assert.strictEqual( lib.sha1( 'abc' ).length, 40 );
+} );
+
+// -------------------------------------------------------------------- text-loss attribution
+
+// A stub context whose serialize() renders a block's own attributes — enough to exercise the
+// attribution logic without a WordPress install.
+const textContext = () => ( {
+	win: new JSDOM( '<!doctype html><body></body>' ).window,
+	wp: {
+		blocks: {
+			serialize: blocks => blocks.map( b => `<p>${ ( b.attributes && b.attributes.content ) || '' }</p>` ).join( '' ),
+		},
+	},
+} );
+
+test( 'blockTextLength measures what a block RENDERS, children excluded', () => {
+	const context = textContext();
+
+	assert.strictEqual( lib.blockTextLength( context, { name: 'core/paragraph', attributes: { content: 'abc' } } ), 3 );
+	assert.strictEqual( lib.blockTextLength( context, { name: 'core/paragraph', attributes: { content: '<em>hi</em>' } } ), 2, 'markup is stripped' );
+	assert.strictEqual( lib.blockTextLength( context, { name: 'core/spacer', attributes: {} } ), 0 );
+	assert.strictEqual( lib.blockTextLength( context, {} ), 0, 'a nameless entry measures nothing rather than throwing' );
+
+	// Children are excluded so one loss is not attributed to every ancestor.
+	const parent = { name: 'core/group', attributes: { content: 'ab' }, innerBlocks: [ { name: 'core/paragraph', attributes: { content: 'childtext' } } ] };
+	assert.strictEqual( lib.blockTextLength( context, parent ), 2 );
+} );
+
+test( 'blockTextLength survives a save() that throws', () => {
+	const context = { win: new JSDOM( '<!doctype html><body></body>' ).window, wp: { blocks: { serialize: () => {
+		throw new Error( 'save exploded' );
+	} } } };
+
+	assert.strictEqual( lib.blockTextLength( context, { name: 'core/x', attributes: {} } ), 0 );
+} );
+
+test( 'lostTextByBlock names the blocks that shrank, and only those', () => {
+	const context = textContext();
+	const before = [
+		{ name: 'core/heading', attributes: { content: 'Title' }, innerBlocks: [] },
+		{ name: 'core/paragraph', attributes: { content: 'a long paragraph' }, innerBlocks: [] },
+	];
+	const after = [
+		{ name: 'core/heading', attributes: { content: 'Title' }, innerBlocks: [] },
+		{ name: 'core/paragraph', attributes: { content: '' }, innerBlocks: [] },
+	];
+
+	assert.deepStrictEqual(
+		lib.lostTextByBlock( context, before, after ),
+		[ { index: 1, name: 'core/paragraph', lost_length: 16 } ]
+	);
+	assert.deepStrictEqual( lib.lostTextByBlock( context, before, before ), [], 'no loss, nothing named' );
+} );
+
+test( 'lostTextByBlock treats a block that vanished entirely as fully lost', () => {
+	const context = textContext();
+	const before = [ { name: 'core/paragraph', attributes: { content: 'gone' }, innerBlocks: [] } ];
+
+	assert.deepStrictEqual(
+		lib.lostTextByBlock( context, before, [] ),
+		[ { index: 0, name: 'core/paragraph', lost_length: 4 } ]
+	);
+} );
+
+test( 'canonicalize reports innerText LENGTHS and the losing blocks when text goes missing', () => {
+	// The nova-blocks#610 shape, modelled honestly: the REBUILD is what drops the content, so
+	// createBlock returns the block without it, and everything downstream follows from that.
+	const context = stubContext( {
+		// Input-sensitive, so the re-parse of the serialized output sees the emptied block — the
+		// document-level digests and the per-block walk must both be reading the SAME two trees.
+		parse: content => [ {
+			name: 'core/paragraph',
+			isValid: ! content.includes( 'kept text' ),
+			attributes: { content: content.includes( 'kept text' ) ? 'kept text' : '' },
+			innerBlocks: [],
+		} ],
+		createBlock: name => ( { name, attributes: { content: '' }, innerBlocks: [], isValid: true } ),
+		serialize: blocks => blocks
+			.map( b => `<!-- wp:paragraph --><p>${ ( b.attributes && b.attributes.content ) || '' }</p><!-- /wp:paragraph -->` )
+			.join( '' ),
+	} );
+
+	const result = lib.processDocument( context, { id: 1, content: '<!-- wp:paragraph --><p>kept text</p><!-- /wp:paragraph -->' }, 'canonicalize' );
+
+	assert.strictEqual( result.inner_text_preserved, false );
+	assert.strictEqual( result.inner_text_before_length, 9 );
+	assert.strictEqual( result.inner_text_after_length, 0 );
+	assert.deepStrictEqual( result.lost_blocks, [ { index: 0, name: 'core/paragraph', lost_length: 9 } ] );
+} );
+
+test( 'the per-block walk is skipped entirely when nothing was lost', () => {
+	const content = '<!-- wp:paragraph --><p>a</p><!-- /wp:paragraph -->';
+	const context = stubContext( {
+		parse: () => [ { name: 'core/paragraph', isValid: true, attributes: { content: 'a' }, innerBlocks: [] } ],
+		serialize: () => content,
+	} );
+
+	assert.deepStrictEqual( lib.processDocument( context, { id: 1, content }, 'canonicalize' ).lost_blocks, [] );
+} );
+
+// -------------------------------------------------------------------------- protocol handshake
+
+test( 'a protocol mismatch is refused before any bootstrap work', () => {
+	const { code, response } = run( {
+		protocol: 999,
+		mode: 'validate',
+		site_bundles_meta: { abspath: '/x', plugin_dir: '/y' },
+		documents: [],
+	} );
+
+	assert.strictEqual( code, 1 );
+	assert.strictEqual( response.ok, false );
+	assert.strictEqual( response.code, 'protocol_mismatch' );
+	assert.strictEqual( response.harness_protocol, 1 );
+	assert.strictEqual( response.requested_protocol, 999 );
+} );
+
+test( 'a matching protocol passes the handshake and proceeds to the real work', () => {
+	// Reaches the bootstrap and fails THERE (bad abspath), which is the proof it got past the gate.
+	const { response } = run( {
+		protocol: 1,
+		mode: 'validate',
+		site_bundles_meta: { abspath: '/definitely/not/a/wordpress/root/', plugin_dir: '/nope' },
+		documents: [],
+	} );
+
+	assert.notStrictEqual( response.code, 'protocol_mismatch' );
+	assert.match( response.error, /bootstrap failed/ );
+} );
+
+test( 'every response echoes the protocol so the caller can always check it', () => {
+	assert.strictEqual( run( '', [ '--selftest' ] ).response.protocol, 1 );
+	assert.strictEqual( run( '' ).response.protocol, 1 );
+	assert.strictEqual( run( '{bad' ).response.protocol, 1 );
+} );
+
+test( 'the harness exits promptly rather than relying on the event loop to drain', () => {
+	// A jsdom timer scheduled by an editor bundle must not be able to hold the pipes open after the
+	// answer is written — that is the wedge the PHP-side deadline exists to survive, and this is the
+	// belt to its braces.
+	const started = Date.now();
+	const { code } = run( '', [ '--selftest' ] );
+
+	assert.strictEqual( code, 0 );
+	assert.ok( Date.now() - started < 10000, 'the process must not linger after responding' );
+} );
+
+// ------------------------------------------------------------------ fail-closed bootstrap
+
+test( 'the loader exposes no metadata-fallback path — a failed bundle can never become a stub save', () => {
+	const source = require( 'node:fs' ).readFileSync( require( 'node:path' ).join( __dirname, '..', 'lib', 'loader.cjs' ), 'utf8' );
+
+	assert.ok(
+		! /save:\s*\(\)\s*=>\s*null/.test( source ),
+		'registering a failed block with a stub save() would silently serialize every instance of it EMPTY — a text-free block (image, spacer) would be destroyed with the innerText gate none the wiser'
+	);
+	assert.ok( /harnessDegraded/.test( source ), 'a failed bundle must raise a degraded-bootstrap error instead' );
 } );

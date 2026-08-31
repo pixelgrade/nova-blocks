@@ -8,6 +8,7 @@
  *
  * Request:
  *   {
+ *     "protocol": 1,                       // refused unless it matches this harness
  *     "mode": "validate" | "canonicalize",
  *     "site_bundles_meta": { "abspath": "…", "plugin_dir": "…", "site_url": "…" },
  *     "server_block_settings":    { … },   // get_block_editor_server_block_settings()
@@ -54,23 +55,43 @@ function readStdin() {
 }
 
 /**
- * Emit the response and exit.
+ * Emit the response and exit — hard.
+ *
+ * Setting `process.exitCode` and letting the event loop drain is not safe here. The loader runs the
+ * real editor bundles inside a `pretendToBeVisual` jsdom window, and any `setInterval` / rAF chain
+ * one of them scheduled keeps the process alive AFTER the answer is written: the pipes never reach
+ * EOF and the PHP side blocks with the response already sitting in its buffer. So the jsdom window
+ * is closed (which cancels its timers) and the process is exited from the write callback, which is
+ * what guarantees the bytes are flushed first.
  *
  * @param {object} payload  Response body.
  * @param {number} exitCode Process exit code.
  */
 function respond( payload, exitCode ) {
-	process.stdout.write( JSON.stringify( payload ) );
-	process.exitCode = exitCode;
+	if ( openWindow ) {
+		try {
+			openWindow.close();
+		} catch ( error ) {
+			// A window that refuses to close must not stop the response from being delivered.
+		}
+		openWindow = null;
+	}
+
+	process.stdout.write( JSON.stringify( payload ), () => process.exit( exitCode ) );
 }
+
+/** The jsdom window to tear down before exiting, once one exists. */
+let openWindow = null;
 
 /**
  * Emit a fatal response.
  *
  * @param {string} message Error message.
+ * @param {string} [code]  Machine token the PHP side branches on.
+ * @param {object} [extra] Extra top-level keys.
  */
-function fail( message ) {
-	respond( { ok: false, protocol: PROTOCOL_VERSION, error: message, documents: [] }, 1 );
+function fail( message, code = 'harness_failed', extra = {} ) {
+	respond( { ok: false, protocol: PROTOCOL_VERSION, code, error: message, documents: [], ...extra }, 1 );
 }
 
 async function main() {
@@ -104,6 +125,19 @@ async function main() {
 		return;
 	}
 
+	// Protocol handshake. The harness is a SEPARATELY installed package (Gate-1), so plugin/harness
+	// version skew is this architecture's routine failure mode, not an exotic one. Both sides
+	// declare the protocol they speak and a mismatch is refused up front, rather than surfacing
+	// later as missing fields that a fail-open reader would treat as "nothing to report".
+	if ( undefined !== request.protocol && request.protocol !== PROTOCOL_VERSION ) {
+		fail(
+			`protocol mismatch: the plugin speaks protocol ${ request.protocol }, this harness speaks ${ PROTOCOL_VERSION }`,
+			'protocol_mismatch',
+			{ harness_protocol: PROTOCOL_VERSION, requested_protocol: request.protocol }
+		);
+		return;
+	}
+
 	const mode = request.mode;
 	if ( 'validate' !== mode && 'canonicalize' !== mode ) {
 		fail( `unknown mode "${ String( mode ) }" (expected "validate" or "canonicalize")` );
@@ -133,9 +167,22 @@ async function main() {
 			verbose: !! process.env.PIXELGRADE_HARNESS_VERBOSE,
 		} );
 	} catch ( error ) {
+		if ( Array.isArray( error.harnessDegraded ) ) {
+			// A bundle that did not load means the block registry is incomplete, so "canonical" no
+			// longer means what it should. Both modes abort; neither degrades quietly.
+			fail(
+				String( error.message ).split( '\n' )[ 0 ],
+				'harness_degraded',
+				{ degraded_bundles: error.harnessDegraded }
+			);
+			return;
+		}
+
 		fail( `bootstrap failed: ${ String( error.message ).split( '\n' )[ 0 ] }` );
 		return;
 	}
+
+	openWindow = context.win;
 
 	const { processDocument } = require( '../lib/canonicalize.cjs' );
 	const results = [];
@@ -157,6 +204,7 @@ async function main() {
 		{
 			ok: true,
 			protocol: PROTOCOL_VERSION,
+			code: 'ok',
 			mode,
 			bootstrap: context.report,
 			documents: results,

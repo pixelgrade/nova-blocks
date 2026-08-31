@@ -3,7 +3,7 @@
  * `wp pixelgrade blocks canonicalize <post-id>…` — rewrite stored markup to what the editor would
  * save, and PROVE it by a fresh re-parse.
  *
- * Contract (`docs/plans/agentic-stack/CONTRACT.md` v0.3.10) §1.4: capability `edit_posts` PLUS a
+ * Contract (`docs/plans/agentic-stack/CONTRACT.md` v0.3.11) §1.4: capability `edit_posts` PLUS a
  * per-post `edit_post`; destructive, so `--yes` (§3.6); a **mandatory** re-parse after the write
  * reporting `data.invalid_before` / `invalid_after` and an `innerText` diff per post; exit **0 only
  * when `invalid_after == 0`**, **2 when some posts are still invalid**.
@@ -19,6 +19,8 @@
  *    legitimately does not converge (nova-blocks#610: a `core/paragraph` that was valid before the
  *    pass parses invalid after it — cross-checked in the real editor with identical before/after
  *    invalid lists). Looping until it "works" would either never terminate or mangle the document.
+ * 3. **A write is proven by reading it back, byte for byte.** Validity is not integrity: a kses
+ *    strip or a `content_save_pre` filter can mutate content and still leave it parseable.
  *
  * @since   2.6.0
  * @license GPL-2.0-or-later
@@ -77,16 +79,30 @@ if ( ! defined( 'ABSPATH' ) ) {
  * changed their visible text or introduced a nested `<p>` (exit 2; §5 P3 rule (c) enforced as a
  * cumulative pre-write gate). `not_yet_stable` — a post was still changing after the pass budget
  * and never reached a byte-stable fixed point (exit 2).
- * `harness_unavailable` — the agent-tools package, a Node binary, or
- * (`--via-editor`) the lab-only browser harness is absent. `confirmation_required` — a real write
- * under `--format=json|yaml` without `--yes`. `invalid_params` / `permission_denied` — see EXIT
- * CODES.
+ * `write_mutated` — the save path changed the content between `wp_update_post()` and
+ * `get_post()`: kses stripping markup the acting user may not author, a `content_save_pre` filter,
+ * or a slashing bug. The stored bytes are neither the original nor the canonical form, so this is
+ * an ERROR (exit 1), not a finding. `harness_degraded` — an editor bundle failed to load, so the
+ * block registry is incomplete; nothing is written. `harness_timeout` — the harness exceeded its
+ * wall-clock budget and was terminated; nothing is written. `harness_unavailable` — the agent-tools
+ * package, a Node binary, a protocol-version match, or (`--via-editor`) the lab-only browser
+ * harness is absent. `confirmation_required` — a real write under `--format=json|yaml` without
+ * `--yes`. `invalid_params` / `permission_denied` — see EXIT CODES.
  *
  * ## WARNINGS
  *
  * `not_yet_stable` — accompanies the code of the same name. `content_altered` /
  * `inner_text_changed` / `nested_paragraph_introduced` — the §5 P3 rule (c) guards.
  * `preset_detected` — §3.8 pass-through. `write_failed` — a post could not be rewritten.
+ * `third_party_editor_scripts` — another plugin or theme adds block-editor assets the harness does
+ * not load, so a `blocks.*` filter of theirs could make the real editor serialize differently.
+ *
+ * `data.refused[]` carries `{post_id, lost_length, blocks:[{index, name}]}` — the affected blocks
+ * and the would-be-lost character count, as §1.4's F-W4-2 ruling pins.
+ *
+ * **Nothing is written for a post that is refused or never stabilizes.** Both leave the stored
+ * content byte-identical, so an envelope that says "inspect this" leaves something intact to
+ * inspect. `--dry-run` predicts those cases the same way.
  *
  * Every entry in `data.posts[]` carries `passes` — how many canonicalization passes that document
  * needed — so the multi-pass fact stays visible even when the run exits 0.
@@ -94,8 +110,8 @@ if ( ! defined( 'ABSPATH' ) ) {
  * ## EXIT CODES
  *
  * 0 `invalid_after == 0`, every post byte-stable, nothing refused · 2 some posts still invalid /
- * refused to protect their text / never stabilized · 1
- * harness_unavailable / confirmation_required / invalid_params / harness_failed / write_failed ·
+ * refused to protect their text / never stabilized · 1 write_mutated / harness_unavailable /
+ * harness_degraded / harness_timeout / confirmation_required / invalid_params / harness_failed ·
  * 3 permission_denied
  *
  * ## EXAMPLES
@@ -167,6 +183,7 @@ function novablocks_cli_blocks_canonicalize( $args, $assoc_args ) {
 	$unchanged = [];
 	$failures  = [];
 	$refused   = [];
+	$mutated   = [];
 
 	foreach ( $targets as $target ) {
 		$post_id = (int) $target['post_id'];
@@ -197,6 +214,16 @@ function novablocks_cli_blocks_canonicalize( $args, $assoc_args ) {
 			continue;
 		}
 
+		// A document that never reached a fixed point within the budget gets NOTHING written.
+		// Writing its last intermediate would leave the post in a state that is neither what the
+		// author wrote nor canonical, while the envelope tells the operator to go and inspect it —
+		// inspect what, exactly? The same discipline `content_altered` already applies: when the
+		// command cannot finish the job, it leaves the evidence intact.
+		if ( ! $result['stable'] ) {
+			$unchanged[] = $post_id;
+			continue;
+		}
+
 		$canonical = (string) $result['canonical_content'];
 
 		// §3.5 / idempotence: write ONLY when the bytes actually differ. A canonical post
@@ -212,10 +239,18 @@ function novablocks_cli_blocks_canonicalize( $args, $assoc_args ) {
 			continue;
 		}
 
+		// `wp_update_post()` expects SLASHED data — `wp_insert_post()` runs `wp_unslash()` before the
+		// DB write — so an unslashed string silently loses every literal backslash on the way to
+		// disk. Canonical block markup is full of them by construction: `serializeAttributes()`
+		// escapes `--` as `--`, `<` as `<`, `&` as `&` inside every block
+		// comment. The house's own mandated inline form, `var(--sm-current-*-color)` (§3.8), hits
+		// that path. Without this call the canonicalizer corrupts precisely the content it exists
+		// to protect — and the corruption is invisible to every gate above, because it happens
+		// inside the write.
 		$saved = wp_update_post(
 			[
 				'ID'           => $post_id,
-				'post_content' => $canonical,
+				'post_content' => wp_slash( $canonical ),
 			],
 			true
 		);
@@ -223,6 +258,21 @@ function novablocks_cli_blocks_canonicalize( $args, $assoc_args ) {
 		if ( is_wp_error( $saved ) ) {
 			$failures[ $post_id ] = (string) $saved->get_error_message();
 			$unchanged[]          = $post_id;
+			continue;
+		}
+
+		// Read the post back and compare BYTES against what was handed to `wp_update_post()`, in
+		// its pre-slash form. The §3.9 re-parse proves validity, which is not the same thing: a
+		// save-path mutation that leaves the markup parseable — kses stripping an attribute for a
+		// user without `unfiltered_html`, a security plugin's `content_save_pre`, or a slashing
+		// bug landing inside HTML text — would sail through it and exit 0 with content that
+		// matches neither the original nor the canonical form. One comparison catches all three.
+		clean_post_cache( $post_id );
+		$stored = get_post( $post_id );
+		$stored = $stored instanceof WP_Post ? (string) $stored->post_content : '';
+
+		if ( $stored !== $canonical ) {
+			$mutated[ $post_id ] = strlen( $stored ) - strlen( $canonical );
 			continue;
 		}
 
@@ -239,10 +289,15 @@ function novablocks_cli_blocks_canonicalize( $args, $assoc_args ) {
 		$post_id = (int) $target['post_id'];
 
 		if ( $dry_run ) {
+			// Predict what a real run would LEAVE ON DISK, which for a refused or never-stable
+			// document is the original bytes — not the intermediate the loop happened to reach.
+			// Feeding the intermediate here made `--dry-run` report a different `code` and a
+			// different `invalid_after` than the real run on exactly the flagship #610 fixture,
+			// which is the opposite of "reports the predicted diff" (§3.6).
 			$result  = $first[ $post_id ] ?? null;
-			$content = is_array( $result ) && isset( $result['canonical_content'] )
-				? (string) $result['canonical_content']
-				: (string) $target['content'];
+			$written = is_array( $result ) && isset( $result['canonical_content'] )
+				&& ! empty( $result['text_safe'] ) && ! empty( $result['stable'] );
+			$content = $written ? (string) $result['canonical_content'] : (string) $target['content'];
 		} else {
 			// Bypass any object-cache copy of the pre-write post.
 			clean_post_cache( $post_id );
@@ -268,6 +323,45 @@ function novablocks_cli_blocks_canonicalize( $args, $assoc_args ) {
 	}
 
 	$second = novablocks_cli_index_harness_documents( $verify );
+
+	// A mutated write is an ERROR, not a finding: the database now holds something neither the
+	// author nor this command chose, and every downstream number would describe a document that no
+	// longer exists. Exit 1, name the posts and the byte delta, and stop.
+	if ( ! empty( $mutated ) ) {
+		$deltas = [];
+		foreach ( $mutated as $post_id => $delta ) {
+			$deltas[] = sprintf( '%d (%+d bytes)', $post_id, $delta );
+		}
+
+		novablocks_cli_emit(
+			false,
+			'write_mutated',
+			sprintf(
+				/* translators: %s: comma-separated "post id (+/-N bytes)" pairs. */
+				__( 'The save path changed the content on the way to the database for post(s) %s — what was stored is not what canonicalization produced. Likely causes: kses stripping markup the acting user may not author, a content_save_pre filter, or a slashing bug. Inspect before re-running.', '__plugin_txtd' ),
+				implode( ', ', $deltas )
+			),
+			[
+				'mutated' => array_map(
+					static function ( $post_id, $delta ) {
+						return [
+							'post_id'      => (int) $post_id,
+							'byte_delta'   => (int) $delta,
+						];
+					},
+					array_keys( $mutated ),
+					array_values( $mutated )
+				),
+				'updated' => array_values( $updated ),
+			],
+			[],
+			1,
+			[],
+			$assoc_args
+		);
+
+		return;
+	}
 
 	// ------------------------------------------------------------------------ the report
 	$posts           = [];
@@ -336,15 +430,41 @@ function novablocks_cli_blocks_canonicalize( $args, $assoc_args ) {
 		];
 	}
 
-	$warnings = novablocks_cli_preset_warnings( $targets );
+	// Contract §1.4 (F-W4-2, ratified in v0.3.11): a refused post is named "with the affected blocks
+	// and the would-be-lost text length". A bare id list would say a rewrite was declined without
+	// saying what it would have cost — which is the one thing an operator needs to judge it.
+	$refused_records = [];
+	foreach ( $refused as $post_id ) {
+		$entry  = $first[ $post_id ] ?? [];
+		$blocks = [];
+
+		foreach ( (array) ( $entry['lost_blocks'] ?? [] ) as $lost ) {
+			$blocks[] = [
+				'index' => (int) ( $lost['index'] ?? -1 ),
+				'name'  => (string) ( $lost['name'] ?? '' ),
+			];
+		}
+
+		$refused_records[] = [
+			'post_id'     => (int) $post_id,
+			'lost_length' => max( 0, (int) ( $entry['inner_text_before_length'] ?? 0 ) - (int) ( $entry['inner_text_after_length'] ?? 0 ) ),
+			'blocks'      => $blocks,
+		];
+	}
+
+	$warnings = array_merge(
+		novablocks_cli_preset_warnings( $targets ),
+		novablocks_cli_third_party_editor_warnings()
+	);
 
 	if ( ! empty( $refused ) ) {
 		$warnings[] = [
 			'code'     => 'content_altered',
 			'message'  => sprintf(
-				/* translators: %s: comma-separated post ids. */
-				__( 'Refused to rewrite post(s) %s: the canonical serialization would have changed their visible text or introduced a nested <p>. They are untouched and still need attention — usually a paragraph that nova-blocks#610 has double-wrapped, which an editor session must repair by hand.', '__plugin_txtd' ),
-				implode( ', ', $refused )
+				/* translators: 1: comma-separated post ids, 2: total characters that would have been lost. */
+				__( 'Refused to rewrite post(s) %1$s: the canonical serialization would have dropped %2$d character(s) of visible text or introduced a nested <p>. They are untouched and still need attention — usually a paragraph that nova-blocks#610 has double-wrapped, which an editor session must repair by hand. See data.refused[] for the affected blocks.', '__plugin_txtd' ),
+				implode( ', ', $refused ),
+				array_sum( array_column( $refused_records, 'lost_length' ) )
 			),
 			'post_ids' => $refused,
 		];
@@ -409,7 +529,7 @@ function novablocks_cli_blocks_canonicalize( $args, $assoc_args ) {
 		'invalid_after'  => $invalid_after,
 		'not_converged'  => $not_converged,
 		'not_yet_stable' => $not_stable,
-		'refused'        => array_values( $refused ),
+		'refused'        => $refused_records,
 		'harness'        => $verify['bootstrap'] ?? new stdClass(),
 	];
 
@@ -564,6 +684,9 @@ function novablocks_cli_canonicalize_to_fixed_point( array $targets ) {
 			'nested_paragraphs_after'  => 0,
 			'inner_text_before_sha1'   => null,
 			'inner_text_after_sha1'    => null,
+			'inner_text_before_length' => 0,
+			'inner_text_after_length'  => 0,
+			'lost_blocks'              => [],
 			'error'                    => null,
 		];
 	}
@@ -616,10 +739,16 @@ function novablocks_cli_canonicalize_to_fixed_point( array $targets ) {
 				$state[ $post_id ]['block_count']              = (int) ( $result['block_count'] ?? 0 );
 				$state[ $post_id ]['nested_paragraphs_before'] = (int) ( $result['nested_paragraphs_before'] ?? 0 );
 				$state[ $post_id ]['inner_text_before_sha1']   = $result['inner_text_before_sha1'] ?? null;
+				$state[ $post_id ]['inner_text_before_length'] = (int) ( $result['inner_text_before_length'] ?? 0 );
 			}
 
 			$state[ $post_id ]['nested_paragraphs_after'] = (int) ( $result['nested_paragraphs_after'] ?? 0 );
 			$state[ $post_id ]['inner_text_after_sha1']   = $result['inner_text_after_sha1'] ?? null;
+			$state[ $post_id ]['inner_text_after_length'] = (int) ( $result['inner_text_after_length'] ?? 0 );
+
+			if ( is_array( $result['lost_blocks'] ?? null ) && ! empty( $result['lost_blocks'] ) ) {
+				$state[ $post_id ]['lost_blocks'] = $result['lost_blocks'];
+			}
 
 			$canonical = (string) $result['canonical_content'];
 
@@ -678,7 +807,16 @@ function novablocks_cli_canonicalization_is_text_safe( array $entry ): bool {
 	$before = $entry['inner_text_before_sha1'] ?? null;
 	$after  = $entry['inner_text_after_sha1'] ?? null;
 
-	if ( null !== $before && null !== $after && $before !== $after ) {
+	// FAIL CLOSED. A missing digest means the gate cannot answer, and a gate that cannot answer
+	// must not answer "safe" — the earlier reading ("a schema surprise shouldn't block writes")
+	// had it backwards for a separately-installed package, where version skew is the routine
+	// failure mode. With the protocol handshake in place this should be unreachable; if it is ever
+	// reached, refusing the write is the only honest outcome.
+	if ( null === $before || null === $after ) {
+		return false;
+	}
+
+	if ( $before !== $after ) {
 		return false;
 	}
 

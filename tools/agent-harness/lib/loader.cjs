@@ -410,35 +410,31 @@ function bootstrap( options ) {
 				note( 'ssd merge failed for', meta.name, '::', String( error.message ).split( '\n' )[ 0 ] );
 			}
 
-			let mode = 'none';
 			let ok = false;
 			let err = null;
 
-			if ( fs.existsSync( scriptPath ) ) {
+			if ( ! fs.existsSync( scriptPath ) ) {
+				err = 'no editor bundle (build/block-library/blocks/<name>/index.js missing)';
+			} else {
 				try {
 					vm.runInContext( fs.readFileSync( scriptPath, 'utf8' ), vmctx, { filename: scriptPath } );
-					mode = 'bundle';
 					ok = !! win.wp.blocks.getBlockType( meta.name );
+					if ( ! ok ) {
+						err = 'the bundle evaluated but registered no block type';
+					}
 				} catch ( error ) {
 					err = String( error.message ).split( '\n' )[ 0 ];
 				}
 			}
 
-			if ( ! ok ) {
-				try {
-					if ( ! win.wp.blocks.getBlockType( meta.name ) ) {
-						win.wp.blocks.registerBlockType( meta, { edit: () => null, save: () => null } );
-						ok = !! win.wp.blocks.getBlockType( meta.name );
-						mode = err ? 'metadata-fallback-after-error' : 'metadata-fallback';
-					} else {
-						ok = true;
-					}
-				} catch ( error ) {
-					err = ( err ? err + ' | ' : '' ) + String( error.message ).split( '\n' )[ 0 ];
-				}
-			}
-
-			nbBlockResults.push( { name, blockName: meta.name, mode, ok, err } );
+			// There is deliberately NO metadata fallback here. Registering a block from its
+			// `block.json` with a stub save function would convert "this bundle failed to
+			// load" into "every stored instance of this block is invalid", and — in canonicalize
+			// mode — into "every stored instance is rebuilt through the stub and serialized
+			// empty". A block with no visible text (an image, a spacer, a media block) would be
+			// DESTROYED silently, because the innerText gate has no text to miss. The loader's own
+			// philosophy applies: fail loudly rather than serialize against a partial registry.
+			nbBlockResults.push( { name, blockName: meta.name, ok, err } );
 		}
 	}
 
@@ -463,7 +459,20 @@ function bootstrap( options ) {
 	}
 
 	const novablocksRegistered = registered.filter( name => name.startsWith( 'novablocks/' ) ).length;
-	const fallbackRegistrations = nbBlockResults.filter( r => r.mode.startsWith( 'metadata-fallback' ) ).map( r => r.blockName );
+
+	// Any bundle that did not load is a DEGRADED bootstrap, not a warning to note and continue
+	// past. The registry would then be missing a real `save()` — silently changing what "canonical"
+	// means for every document containing that block.
+	const degraded = []
+		.concat( coreFailed.map( handle => `wp core bundle "${ handle }"` ) )
+		.concat( nbFailed.map( pkg => `nova-blocks package "${ pkg }"` ) )
+		.concat( nbBlockResults.filter( r => ! r.ok ).map( r => `${ r.blockName } (${ r.err })` ) );
+
+	if ( degraded.length ) {
+		const error = new Error( `Harness degraded — ${ degraded.length } editor bundle(s) failed to load: ${ degraded.join( '; ' ) }. Refusing to validate or serialize against an incomplete block registry.` );
+		error.harnessDegraded = degraded;
+		throw error;
+	}
 
 	return {
 		win,
@@ -480,7 +489,6 @@ function bootstrap( options ) {
 			server_block_definitions: serverDefinitionCount,
 			novablocks_settings_hydrated: novablocksSettingsHydrated,
 			nb_block_bundles: nbBlockResults.length,
-			nb_block_bundle_fallbacks: fallbackRegistrations,
 			registered_block_types: registered.length,
 			registered_novablocks_block_types: novablocksRegistered,
 		},

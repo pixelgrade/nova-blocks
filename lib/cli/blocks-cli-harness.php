@@ -2,7 +2,7 @@
 /**
  * Agent-harness discovery and invocation for `wp pixelgrade blocks validate|canonicalize`.
  *
- * Per the agentic-stack contract (`docs/plans/agentic-stack/CONTRACT.md` v0.3.10) §3.11 and the
+ * Per the agentic-stack contract (`docs/plans/agentic-stack/CONTRACT.md` v0.3.11) §3.11 and the
  * Gate-1 packaging decision, **neither verb carries its runtime in the plugin**. The canonical
  * serializer/validator is a Node program whose dependency is `jsdom` (~25 MB with its transitive
  * tree) — not something a WordPress plugin should carry into every install for a capability almost
@@ -24,6 +24,16 @@
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
+
+/**
+ * The stdin/stdout protocol version this plugin speaks to the agent harness.
+ *
+ * Bump it whenever a field either side reads changes shape. Because the harness is a SEPARATELY
+ * installed package (§3.11 / Gate-1), version skew between plugin and harness is this
+ * architecture's routine failure mode: the handshake turns it into a named `harness_unavailable`
+ * instead of silently-absent fields that a lenient reader would treat as "nothing to report".
+ */
+const NOVABLOCKS_CLI_HARNESS_PROTOCOL = 1;
 
 /**
  * Where the agent-tools package lives, in §3.11's discovery order.
@@ -253,6 +263,7 @@ function novablocks_cli_harness_invoke( string $mode, array $documents ) {
 	}
 
 	$request = [
+		'protocol'          => NOVABLOCKS_CLI_HARNESS_PROTOCOL,
 		'mode'              => $mode,
 		'site_bundles_meta' => [
 			'abspath'    => ABSPATH,
@@ -279,6 +290,17 @@ function novablocks_cli_harness_invoke( string $mode, array $documents ) {
 		return new WP_Error( 'harness_unavailable', __( 'The agent harness could not be started.', '__plugin_txtd' ) );
 	}
 
+	if ( ! empty( $result['timed_out'] ) ) {
+		return new WP_Error(
+			'harness_timeout',
+			sprintf(
+				/* translators: %d: the wall-clock budget in seconds. */
+				__( 'The agent harness did not finish within %d seconds and was terminated. Nothing was written.', '__plugin_txtd' ),
+				(int) $result['timeout']
+			)
+		);
+	}
+
 	$decoded = json_decode( (string) $result['stdout'], true );
 
 	if ( ! is_array( $decoded ) ) {
@@ -292,9 +314,41 @@ function novablocks_cli_harness_invoke( string $mode, array $documents ) {
 		);
 	}
 
-	if ( empty( $decoded['ok'] ) ) {
+	// Protocol handshake (§3.11's "never a silent degrade", applied to the one failure mode a
+	// separately-installed package makes routine). A harness speaking a different protocol may
+	// omit fields this side reads — including the innerText digests the §5 P3 (c) gate depends on —
+	// so version skew is refused up front rather than discovered as absent data.
+	$protocol = isset( $decoded['protocol'] ) ? (int) $decoded['protocol'] : 0;
+
+	if ( NOVABLOCKS_CLI_HARNESS_PROTOCOL !== $protocol ) {
 		return new WP_Error(
-			'harness_failed',
+			'harness_unavailable',
+			sprintf(
+				/* translators: 1: plugin protocol, 2: harness protocol, 3: the install command. */
+				__( 'Agent-harness protocol mismatch: this plugin speaks protocol %1$d, the installed harness speaks %2$d. Update the agent-tools package: %3$s', '__plugin_txtd' ),
+				NOVABLOCKS_CLI_HARNESS_PROTOCOL,
+				$protocol,
+				sprintf( 'npm ci --omit=dev --prefix %s', $path )
+			)
+		);
+	}
+
+	if ( empty( $decoded['ok'] ) ) {
+		$code = isset( $decoded['code'] ) ? (string) $decoded['code'] : 'harness_failed';
+
+		if ( 'harness_degraded' === $code ) {
+			return new WP_Error(
+				'harness_degraded',
+				sprintf(
+					/* translators: %s: the harness's own description of the failed bundles. */
+					__( 'The agent harness could not load the site\'s full editor bundle set, so the block registry is incomplete and neither validation nor serialization would be trustworthy. Nothing was written. %s', '__plugin_txtd' ),
+					isset( $decoded['error'] ) ? (string) $decoded['error'] : ''
+				)
+			);
+		}
+
+		return new WP_Error(
+			'protocol_mismatch' === $code ? 'harness_unavailable' : 'harness_failed',
 			sprintf(
 				/* translators: %s: the harness's own error message. */
 				__( 'The agent harness failed: %s', '__plugin_txtd' ),
@@ -304,6 +358,30 @@ function novablocks_cli_harness_invoke( string $mode, array $documents ) {
 	}
 
 	return $decoded;
+}
+
+/**
+ * The wall-clock budget for one harness invocation, in seconds.
+ *
+ * Scales with the payload, because a 200-block page legitimately takes longer than a footer part,
+ * and is filterable for pathological corpora.
+ *
+ * @param int $payload_bytes Size of the request being sent.
+ *
+ * @return int Seconds.
+ */
+function novablocks_cli_harness_timeout( int $payload_bytes ): int {
+	$timeout = (int) max( 60, 30 + ceil( $payload_bytes / MB_IN_BYTES ) * 10 );
+
+	/**
+	 * Filters the wall-clock budget for one agent-harness invocation.
+	 *
+	 * @since 2.6.0
+	 *
+	 * @param int $timeout       Seconds.
+	 * @param int $payload_bytes Size of the request.
+	 */
+	return (int) apply_filters( 'novablocks/agent_harness_timeout', $timeout, $payload_bytes );
 }
 
 /**
@@ -342,6 +420,14 @@ function novablocks_cli_harness_exec( string $binary, array $args, string $stdin
 	$written = 0;
 	$length  = strlen( $stdin );
 
+	// A wall-clock deadline, not a per-wait one. `stream_select()` returns **0** on timeout, not
+	// `false`, so a `false` check never fires on a hang: a child that keeps its pipes open simply
+	// makes the loop re-select forever. And `proc_close()` blocks until the child exits, so
+	// breaking out of the loop is not enough either — the process has to be killed.
+	$timeout   = novablocks_cli_harness_timeout( $length );
+	$deadline  = microtime( true ) + $timeout;
+	$timed_out = false;
+
 	if ( 0 === $length ) {
 		// Nothing to send: close stdin at once so a child that waits on EOF (the harness's normal
 		// read path) is not left hanging on an empty request.
@@ -368,8 +454,23 @@ function novablocks_cli_harness_exec( string $binary, array $args, string $stdin
 			break;
 		}
 
-		if ( false === @stream_select( $read, $write, $except, 30 ) ) {
+		$remaining = $deadline - microtime( true );
+
+		if ( $remaining <= 0 ) {
+			$timed_out = true;
 			break;
+		}
+
+		$ready = @stream_select( $read, $write, $except, (int) max( 1, min( 5, ceil( $remaining ) ) ) );
+
+		if ( false === $ready ) {
+			break;
+		}
+
+		// 0 means "nothing became ready in that window" — normal while the harness is booting
+		// jsdom. It is progress toward the deadline, never a reason to spin freely.
+		if ( 0 === $ready ) {
+			continue;
 		}
 
 		foreach ( $write as $pipe ) {
@@ -415,6 +516,26 @@ function novablocks_cli_harness_exec( string $binary, array $args, string $stdin
 		}
 	}
 
+	if ( $timed_out ) {
+		// SIGTERM, a short grace period, then SIGKILL. Without the escalation a child that ignores
+		// or blocks on SIGTERM would still wedge `proc_close()` below.
+		@proc_terminate( $process, defined( 'SIGTERM' ) ? SIGTERM : 15 );
+
+		$grace = microtime( true ) + 5;
+		while ( microtime( true ) < $grace ) {
+			$status = @proc_get_status( $process );
+			if ( ! is_array( $status ) || empty( $status['running'] ) ) {
+				break;
+			}
+			usleep( 100000 );
+		}
+
+		$status = @proc_get_status( $process );
+		if ( is_array( $status ) && ! empty( $status['running'] ) ) {
+			@proc_terminate( $process, defined( 'SIGKILL' ) ? SIGKILL : 9 );
+		}
+	}
+
 	foreach ( [ 0, 1, 2 ] as $index ) {
 		if ( isset( $pipes[ $index ] ) && is_resource( $pipes[ $index ] ) ) {
 			fclose( $pipes[ $index ] );
@@ -424,9 +545,11 @@ function novablocks_cli_harness_exec( string $binary, array $args, string $stdin
 	$code = proc_close( $process );
 
 	return [
-		'code'   => $code,
-		'stdout' => $stdout,
-		'stderr' => $stderr,
+		'code'      => $code,
+		'stdout'    => $stdout,
+		'stderr'    => $stderr,
+		'timed_out' => $timed_out,
+		'timeout'   => $timeout,
 	];
 }
 
@@ -594,6 +717,170 @@ function novablocks_cli_collect_template_posts(): array {
 }
 
 /**
+ * Name every source, other than WordPress core and the verified Pixelgrade stack, that hooks
+ * `enqueue_block_editor_assets` on this site.
+ *
+ * This is the spike's own minimum mitigation for its highest-severity risk. The harness loads WP
+ * core plus Nova Blocks and nothing else, so a third-party plugin registering a
+ * `blocks.registerBlockType` or `blocks.getSaveContent.extraProps` filter would change what the
+ * real editor serializes while the harness carried on producing its own answer — parity would
+ * break **invisibly**. Detection does not fix that (loading arbitrary third-party editor bundles is
+ * a later lane), but it turns "wrong for no visible reason" into "wrong, and here is the suspect".
+ *
+ * Nothing is executed to find out: the hook's registered callbacks are resolved to their defining
+ * FILE by reflection, and the file path is matched against the allow-list. Running
+ * `do_action( 'enqueue_block_editor_assets' )` to enumerate handles would have side effects on a
+ * site this command is only supposed to read.
+ *
+ * The default allow-list records what the W4 spike verified by grep: on this stack, none of Anima
+ * LT, Style Manager, Pixelgrade Plus or Pixelgrade Assistant registers a `blocks.*` filter. It is
+ * filterable so a site that has verified another plugin can silence it deliberately, rather than
+ * learning to ignore a permanent warning.
+ *
+ * @return string[] Distinct source labels (plugin/theme directory names, or file paths).
+ */
+function novablocks_cli_third_party_editor_asset_sources(): array {
+	if ( empty( $GLOBALS['wp_filter']['enqueue_block_editor_assets'] ) ) {
+		return [];
+	}
+
+	$allowed = [ 'nova-blocks', 'style-manager', 'pixelgrade-plus', 'pixelgrade-assistant', 'anima' ];
+
+	/**
+	 * Filters the path fragments whose `enqueue_block_editor_assets` callbacks the agent harness
+	 * treats as verified-safe. WordPress core (`wp-includes`, `wp-admin`) is always allowed.
+	 *
+	 * @since 2.6.0
+	 *
+	 * @param string[] $allowed Path fragments.
+	 */
+	$allowed = (array) apply_filters( 'novablocks/agent_harness_editor_asset_allowlist', $allowed );
+	$allowed = array_merge( $allowed, [ 'wp-includes', 'wp-admin' ] );
+
+	$hook    = $GLOBALS['wp_filter']['enqueue_block_editor_assets'];
+	$sources = [];
+
+	foreach ( novablocks_cli_hook_callbacks( $hook ) as $callback ) {
+		$file = novablocks_cli_callback_file( $callback );
+
+		if ( '' === $file ) {
+			continue;
+		}
+
+		$normalized = str_replace( '\\', '/', $file );
+
+		foreach ( $allowed as $fragment ) {
+			if ( '' !== $fragment && false !== strpos( $normalized, '/' . $fragment ) ) {
+				continue 2;
+			}
+		}
+
+		$sources[ novablocks_cli_source_label( $normalized ) ] = true;
+	}
+
+	return array_keys( $sources );
+}
+
+/**
+ * Flatten a WP hook's registered callables, tolerating both `WP_Hook` and a plain priority array.
+ *
+ * @param mixed $hook The `$wp_filter` entry.
+ *
+ * @return array Callables.
+ */
+function novablocks_cli_hook_callbacks( $hook ): array {
+	$buckets = is_object( $hook ) && isset( $hook->callbacks ) ? $hook->callbacks : $hook;
+
+	if ( ! is_array( $buckets ) ) {
+		return [];
+	}
+
+	$callbacks = [];
+
+	foreach ( $buckets as $priority ) {
+		if ( ! is_array( $priority ) ) {
+			continue;
+		}
+		foreach ( $priority as $registered ) {
+			if ( isset( $registered['function'] ) ) {
+				$callbacks[] = $registered['function'];
+			}
+		}
+	}
+
+	return $callbacks;
+}
+
+/**
+ * Resolve a callable to the file that defines it.
+ *
+ * @param mixed $callback A WP hook callable.
+ *
+ * @return string Absolute file path, or '' when it cannot be resolved.
+ */
+function novablocks_cli_callback_file( $callback ): string {
+	try {
+		if ( is_string( $callback ) && false !== strpos( $callback, '::' ) ) {
+			$callback = explode( '::', $callback, 2 );
+		}
+
+		if ( is_array( $callback ) && 2 === count( $callback ) ) {
+			$reflection = new ReflectionMethod( is_object( $callback[0] ) ? get_class( $callback[0] ) : (string) $callback[0], (string) $callback[1] );
+		} elseif ( is_object( $callback ) && ! $callback instanceof Closure ) {
+			$reflection = new ReflectionMethod( $callback, '__invoke' );
+		} else {
+			$reflection = new ReflectionFunction( $callback );
+		}
+
+		return (string) $reflection->getFileName();
+	} catch ( Throwable $error ) {
+		// An unresolvable callback is not evidence of a third party; skip it rather than
+		// manufacturing a suspect.
+		return '';
+	}
+}
+
+/**
+ * Label a file by the plugin or theme directory it lives in.
+ *
+ * @param string $file Normalized absolute path.
+ *
+ * @return string Label.
+ */
+function novablocks_cli_source_label( string $file ): string {
+	if ( preg_match( '#/(?:plugins|themes|mu-plugins)/([^/]+)/#', $file, $matches ) ) {
+		return $matches[1];
+	}
+
+	return $file;
+}
+
+/**
+ * Build the `third_party_editor_scripts` warning, when there is anything to name.
+ *
+ * @return array Warnings (zero or one entry).
+ */
+function novablocks_cli_third_party_editor_warnings(): array {
+	$sources = novablocks_cli_third_party_editor_asset_sources();
+
+	if ( empty( $sources ) ) {
+		return [];
+	}
+
+	return [
+		[
+			'code'    => 'third_party_editor_scripts',
+			'message' => sprintf(
+				/* translators: %s: comma-separated plugin/theme names. */
+				__( 'These sources add block-editor assets the harness does not load: %s. If any of them registers a blocks.registerBlockType or blocks.getSaveContent filter, the real editor serializes differently from this result and the verdict is unreliable. Verify, then allow-list them via the "novablocks/agent_harness_editor_asset_allowlist" filter.', '__plugin_txtd' ),
+				implode( ', ', $sources )
+			),
+			'sources' => array_values( $sources ),
+		],
+	];
+}
+
+/**
  * Detect theme.json preset residue in content (contract §3.8).
  *
  * `validate` and `canonicalize` pass EXISTING content through: they neither reject nor rewrite
@@ -631,4 +918,107 @@ function novablocks_cli_detect_presets( array $targets ): array {
 	}
 
 	return $found;
+}
+
+// ---------------------------------------------------------------------------------------
+// Shared by both verbs. These live here rather than in either command file: `canonicalize`
+// consumes all of them, and defining them in `validate`'s file made the pair depend on
+// blocks-cli.php's require ORDER — a coupling nothing declared and nothing tested.
+// ---------------------------------------------------------------------------------------
+
+/**
+ * Shape target records into the harness's `documents` array.
+ *
+ * @param array $targets Target records.
+ *
+ * @return array Documents.
+ */
+function novablocks_cli_harness_documents( array $targets ): array {
+	$documents = [];
+
+	foreach ( $targets as $target ) {
+		$documents[] = [
+			'id'      => (int) $target['post_id'],
+			'content' => (string) $target['content'],
+		];
+	}
+
+	return $documents;
+}
+
+/**
+ * Index a harness response's documents by id.
+ *
+ * @param array $response Harness response.
+ *
+ * @return array `[ id => document ]`.
+ */
+function novablocks_cli_index_harness_documents( array $response ): array {
+	$by_id = [];
+
+	foreach ( (array) ( $response['documents'] ?? [] ) as $document ) {
+		if ( isset( $document['id'] ) ) {
+			$by_id[ (int) $document['id'] ] = $document;
+		}
+	}
+
+	return $by_id;
+}
+
+/**
+ * Build the §3.8 `preset_detected` warnings for a target set.
+ *
+ * @param array $targets Target records.
+ *
+ * @return array Warnings.
+ */
+function novablocks_cli_preset_warnings( array $targets ): array {
+	$presets = novablocks_cli_detect_presets( $targets );
+
+	if ( empty( $presets ) ) {
+		return [];
+	}
+
+	$tokens = [];
+	foreach ( $presets as $hits ) {
+		$tokens = array_merge( $tokens, $hits );
+	}
+
+	return [
+		[
+			'code'       => 'preset_detected',
+			'message'    => sprintf(
+				/* translators: 1: comma-separated post ids, 2: comma-separated attribute/class tokens. */
+				__( 'theme.json preset residue found in post(s) %1$s (%2$s). Passed through unchanged — this command never rewrites presets (§3.8) — but Pixelgrade surfaces are Color Signal, not presets.', '__plugin_txtd' ),
+				implode( ', ', array_keys( $presets ) ),
+				implode( ', ', array_values( array_unique( $tokens ) ) )
+			),
+			'post_ids'   => array_map( 'intval', array_keys( $presets ) ),
+			'attributes' => array_values( array_unique( $tokens ) ),
+		],
+	];
+}
+
+/**
+ * Map a WP_Error from the shared resolution/invocation helpers onto the §2 envelope.
+ *
+ * `permission_denied` keeps exit 3 (§2's permission row); everything else is exit 1.
+ *
+ * @param WP_Error $error      The error.
+ * @param array    $assoc_args The command's assoc_args (for --format).
+ */
+function novablocks_cli_emit_wp_error( WP_Error $error, array $assoc_args ): void {
+	$code = $error->get_error_code();
+	$exit = 'permission_denied' === $code ? 3 : 1;
+
+	novablocks_cli_emit(
+		false,
+		(string) $code,
+		(string) $error->get_error_message(),
+		[ 'error_code' => (string) $code ],
+		[],
+		$exit,
+		[],
+		$assoc_args
+	);
 }

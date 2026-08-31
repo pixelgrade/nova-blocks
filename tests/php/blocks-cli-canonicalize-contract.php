@@ -27,6 +27,7 @@ namespace WP_CLI\Utils {
 namespace {
 
 	define( 'ABSPATH', dirname( __DIR__, 2 ) . '/' );
+	defined( 'MB_IN_BYTES' ) || define( 'MB_IN_BYTES', 1024 * 1024 );
 
 	// ---------------------------------------------------------------------------------------
 	// WP_CLI stub.
@@ -99,6 +100,7 @@ namespace {
 	$GLOBALS['nbq_updates']       = [];
 	$GLOBALS['nbq_update_error']  = [];
 	$GLOBALS['nbq_filters']       = [];
+	$GLOBALS['nbq_save_filter']   = null;
 
 	class WP_Post {
 		public $ID;
@@ -185,6 +187,20 @@ namespace {
 
 	function clean_post_cache( $id ) {}
 
+	function wp_slash( $value ) {
+		return is_string( $value ) ? addslashes( $value ) : $value;
+	}
+
+	function wp_unslash( $value ) {
+		return is_string( $value ) ? stripslashes( $value ) : $value;
+	}
+
+	/**
+	 * Models core's actual behavior: `wp_insert_post()` runs `wp_unslash()` on the whole $postarr
+	 * before the DB write, so a caller that does NOT slash loses every literal backslash. Without
+	 * this the C1/F1 corruption is invisible to the suite — which is exactly how it shipped.
+	 * `$nbq_save_filter` stands in for kses / content_save_pre.
+	 */
 	function wp_update_post( $data, $wp_error = false ) {
 		$id = (int) $data['ID'];
 
@@ -192,8 +208,14 @@ namespace {
 			return new WP_Error( 'db_update_error', $GLOBALS['nbq_update_error'][ $id ] );
 		}
 
+		$content = wp_unslash( (string) $data['post_content'] );
+
+		if ( is_callable( $GLOBALS['nbq_save_filter'] ) ) {
+			$content = call_user_func( $GLOBALS['nbq_save_filter'], $content );
+		}
+
 		$GLOBALS['nbq_updates'][] = $id;
-		$GLOBALS['nbq_posts'][ $id ]->post_content = (string) $data['post_content'];
+		$GLOBALS['nbq_posts'][ $id ]->post_content = $content;
 
 		return $id;
 	}
@@ -254,6 +276,7 @@ namespace {
 		"if [ \"\$2\" = \"--selftest\" ]; then cat \"\$DIR/selftest.json\"; exit 0; fi\n" .
 		"REQ=\$(cat)\n" .
 		"printf '%s' \"\${#REQ}\" > \"\$DIR/last-request-bytes.txt\"\n" .
+		"[ -f \"\$DIR/sleep.txt\" ] && sleep \"\$(cat \"\$DIR/sleep.txt\")\"\n" .
 		"N=0\n" .
 		"[ -f \"\$DIR/calls.txt\" ] && N=\$(cat \"\$DIR/calls.txt\")\n" .
 		"N=\$((N+1))\n" .
@@ -282,7 +305,7 @@ namespace {
 	function nbq_response( $call, array $documents ) {
 		file_put_contents(
 			$GLOBALS['nbq_fake_dir'] . '/response-' . (int) $call . '.json',
-			json_encode( [ 'ok' => true, 'protocol' => 1, 'bootstrap' => [ 'registered_block_types' => 145 ], 'documents' => $documents ] )
+			json_encode( [ 'ok' => true, 'protocol' => $GLOBALS['nbq_protocol'], 'bootstrap' => [ 'registered_block_types' => 145 ], 'documents' => $documents ] )
 		);
 	}
 
@@ -296,6 +319,7 @@ namespace {
 		return is_file( $file ) ? (int) file_get_contents( $file ) : 0;
 	}
 
+	$GLOBALS['nbq_protocol']  = NOVABLOCKS_CLI_HARNESS_PROTOCOL;
 	$GLOBALS['nbq_fake_dir']  = $fake_dir;
 	$GLOBALS['nbq_fake_node'] = $fake_node;
 
@@ -304,6 +328,12 @@ namespace {
 	} );
 	add_filter( 'novablocks/agent_harness_path', function () {
 		return $GLOBALS['nbq_harness_path'] ?? $GLOBALS['nbq_fake_dir'];
+	} );
+	add_filter( 'novablocks/agent_harness_timeout', function ( $timeout ) {
+		return $GLOBALS['nbq_timeout'] ?? $timeout;
+	} );
+	add_filter( 'novablocks/agent_harness_editor_asset_allowlist', function ( $allowed ) {
+		return $GLOBALS['nbq_editor_allowlist'] ?? $allowed;
 	} );
 
 	// The probe requires <path>/bin/harness.cjs to exist.
@@ -322,6 +352,9 @@ namespace {
 	// Harness helpers.
 	// ---------------------------------------------------------------------------------------
 
+	function novablocks_cli_third_party_probe_allowed() {}
+	function novablocks_cli_third_party_probe_foreign() {}
+
 	function nbq_reset() {
 		WP_CLI::reset();
 		$GLOBALS['nbq_current_user'] = 1;
@@ -331,9 +364,14 @@ namespace {
 		$GLOBALS['nbq_template_ids'] = [];
 		$GLOBALS['nbq_updates']      = [];
 		$GLOBALS['nbq_update_error'] = [];
+		$GLOBALS['nbq_save_filter']  = null;
+		$GLOBALS['nbq_protocol']     = NOVABLOCKS_CLI_HARNESS_PROTOCOL;
 		$GLOBALS['nbq_harness_path'] = $GLOBALS['nbq_fake_dir'];
+		$GLOBALS['nbq_timeout']      = null;
+		$GLOBALS['nbq_editor_allowlist'] = null;
 		@unlink( $GLOBALS['nbq_fake_dir'] . '/last-request-bytes.txt' );
 		@unlink( $GLOBALS['nbq_fake_dir'] . '/calls.txt' );
+		@unlink( $GLOBALS['nbq_fake_dir'] . '/sleep.txt' );
 		foreach ( glob( $GLOBALS['nbq_fake_dir'] . '/response-*.json' ) as $stale ) {
 			@unlink( $stale );
 		}
@@ -403,13 +441,16 @@ namespace {
 	assert_true( false !== strpos( WP_CLI::$printed_value['summary'], '11' ), 'canonicalize: the denial names the offending post.' );
 	assert_same( [], $GLOBALS['nbq_updates'], 'canonicalize: one denied post blocks the WHOLE set — no partial write.' );
 
-	// `validate` is a read; contract §1.4 gives it `edit_posts` only, with no per-post meta-cap.
+	// `validate` also carries the per-post gate (security review F4). §1.4's floor is `edit_posts`;
+	// this is strictly narrower, and it is what stops the verb becoming a read-oracle for posts the
+	// acting user cannot open — the semantics W7 inherits when it exposes this as an ability.
 	nbq_reset();
 	nbq_post( 10, '<!-- wp:paragraph --><p>a</p><!-- /wp:paragraph -->' );
 	$GLOBALS['nbq_denied_posts'][10] = true;
 	nbq_response( 1, [ [ 'id' => 10, 'invalid' => [], 'block_count' => 1, 'converged' => true ] ] );
 	$exit = nbq_run( 'novablocks_cli_blocks_validate', [ 10 ], [ 'format' => 'json' ] );
-	assert_same( 0, $exit, 'validate: no per-post edit_post gate (contract §1.4 lists edit_posts only).' );
+	assert_same( 3, $exit, 'validate: a per-post edit_post denial must exit 3 — validate is not a read-oracle.' );
+	assert_same( 0, nbq_last_request_bytes(), 'validate: a per-post denial must never reach the harness.' );
 
 	echo "permission contract OK\n";
 
@@ -463,22 +504,23 @@ namespace {
 	nbq_post( 10, '<!-- wp:heading --><h2>a</h2><!-- /wp:heading -->' );
 	nbq_response(
 		1,
-		[ [ 'id' => 10, 'block_count' => 2, 'converged' => false, 'invalid' => [ [ 'index' => 1, 'block_name' => 'core/heading', 'reason' => 'tag mismatch' ] ] ] ]
+		[ [ 'id' => 10, 'block_count' => 2, 'converged' => false, 'invalid' => [ [ 'index' => 1, 'block_name' => 'core/heading', 'reason_code' => 'tag_name_mismatch', 'reason' => 'Expected tag name `…`, instead saw `…`.' ] ] ] ]
 	);
 	$exit = nbq_run( 'novablocks_cli_blocks_validate', [ 10 ], [ 'format' => 'json' ] );
 	assert_same( 2, $exit, 'validate: any invalid must exit 2.' );
 	assert_same( true, WP_CLI::$printed_value['ok'], 'validate: exit 2 stays ok:true (§2 — ok is bound to the exit code; findings are not failures).' );
 	assert_same( 'invalid_blocks', WP_CLI::$printed_value['code'], 'validate: invalid-blocks code.' );
 	assert_same(
-		[ 'post_id' => 10, 'index' => 1, 'block_name' => 'core/heading', 'reason' => 'tag mismatch' ],
+		[ 'post_id' => 10, 'index' => 1, 'block_name' => 'core/heading', 'reason_code' => 'tag_name_mismatch', 'reason' => 'Expected tag name `…`, instead saw `…`.' ],
 		WP_CLI::$printed_value['data']['invalid'][0],
-		'validate: data.invalid[] carries {post_id, index, block_name, reason} exactly (§1.4).'
+		'validate: data.invalid[] carries {post_id, index, block_name, reason_code, reason} exactly (§1.4).'
 	);
+	assert_true( false === strpos( wp_json_encode( WP_CLI::$printed_value['data']['invalid'] ), 'h3' ), 'validate: a reason never quotes the stored markup (security review F4).' );
 
 	// Table mode: same exit code, no print_value(), a rendered posts table.
 	nbq_reset();
 	nbq_post( 10, '<!-- wp:heading --><h2>a</h2><!-- /wp:heading -->' );
-	nbq_response( 1, [ [ 'id' => 10, 'block_count' => 2, 'converged' => false, 'invalid' => [ [ 'index' => 1, 'block_name' => 'core/heading', 'reason' => 'x' ] ] ] ] );
+	nbq_response( 1, [ [ 'id' => 10, 'block_count' => 2, 'converged' => false, 'invalid' => [ [ 'index' => 1, 'block_name' => 'core/heading', 'reason_code' => 'tag_name_mismatch', 'reason' => 'x' ] ] ] ] );
 	$exit = nbq_run( 'novablocks_cli_blocks_validate', [ 10 ], [] );
 	assert_same( 2, $exit, 'validate: table mode exit code is identical to json mode (§2).' );
 	assert_true( null === WP_CLI::$printed_value, 'validate: table mode never calls print_value().' );
@@ -566,6 +608,9 @@ namespace {
 				'canonical_content'        => $canonical_content,
 				'inner_text_before_sha1'   => 'TEXT',
 				'inner_text_after_sha1'    => 'TEXT',
+				'inner_text_before_length' => 100,
+				'inner_text_after_length'  => 100,
+				'lost_blocks'              => [],
 				'nested_paragraphs_before' => 0,
 				'nested_paragraphs_after'  => 0,
 			],
@@ -785,7 +830,11 @@ namespace {
 	nbq_stage_canonicalize(
 		[
 			[ nbq_pass( '<!-- wp:paragraph --><p><p>hello</p></p><!-- /wp:paragraph -->', [ 'nested_paragraphs_after' => 0 ] ) ],
-			[ nbq_pass( '<!-- wp:paragraph --><p></p><!-- /wp:paragraph -->', [ 'inner_text_after_sha1' => 'LOST' ] ) ],
+			[ nbq_pass( '<!-- wp:paragraph --><p></p><!-- /wp:paragraph -->', [
+				'inner_text_after_sha1'   => 'LOST',
+				'inner_text_after_length' => 94,
+				'lost_blocks'             => [ [ 'index' => 3, 'name' => 'core/paragraph', 'lost_length' => 6 ] ],
+			] ) ],
 		],
 		[ [ 'id' => 10, 'invalid' => [] ] ]
 	);
@@ -794,7 +843,12 @@ namespace {
 	assert_same( 'content_altered', WP_CLI::$printed_value['code'], 'canonicalize: text-loss code.' );
 	assert_same( [], $GLOBALS['nbq_updates'], 'canonicalize: a text-losing rewrite is REFUSED, not written and then regretted.' );
 	assert_same( $original, $GLOBALS['nbq_posts'][10]->post_content, 'canonicalize: the post is byte-identical after a refusal — the CUMULATIVE loss is caught even though pass 1 alone was safe.' );
-	assert_same( [ 10 ], WP_CLI::$printed_value['data']['refused'], 'canonicalize: data.refused names the post.' );
+	// Contract §1.4 F-W4-2 pins the payload: the affected blocks and the would-be-lost length.
+	assert_same(
+		[ [ 'post_id' => 10, 'lost_length' => 6, 'blocks' => [ [ 'index' => 3, 'name' => 'core/paragraph' ] ] ] ],
+		WP_CLI::$printed_value['data']['refused'],
+		'canonicalize: data.refused[] carries {post_id, lost_length, blocks:[{index,name}]} as v0.3.11 pins.'
+	);
 	assert_true( in_array( 'content_altered', nbq_warning_codes(), true ), 'canonicalize: the refusal is surfaced as a warning too.' );
 	assert_same( 3, nbq_harness_calls(), 'canonicalize: iteration stops as soon as the text is lost — no third pass on a doomed document.' );
 
@@ -838,6 +892,215 @@ namespace {
 	assert_same( $with_preset, $GLOBALS['nbq_posts'][10]->post_content, 'canonicalize: presets are passed through, never rewritten.' );
 
 	echo "text-preservation + preset contract OK\n";
+
+	// =======================================================================================
+	// Write integrity: slashing, and a byte-exact read-back of what actually landed.
+	// =======================================================================================
+
+	// C1/F1 regression. `wp_insert_post()` unslashes, so content handed over unslashed loses every
+	// literal backslash — and canonical markup is FULL of them: serializeAttributes() escapes `--`
+	// as \u002d\u002d, `<` as \u003c, `&` as \u0026 inside every block comment. The house's own
+	// mandated inline form, var(--sm-current-*-color) (§3.8), sits squarely on that path. The stub
+	// wp_update_post() models core's unslash, so this test fails loudly without wp_slash().
+	nbq_reset();
+	$escaped = '<!-- wp:paragraph {"style":{"color":{"text":"var(\u002d\u002dsm-current-accent-color)"}},"anchor":"a\u002d\u002db","content":"Fish \u0026 Chips \u003cem\u003eyes\u003c/em\u003e"} -->'
+		. '<p id="a--b" style="color:var(--sm-current-accent-color)">Fish &amp; Chips <em>yes</em></p><!-- /wp:paragraph -->';
+	assert_true( false !== strpos( $escaped, '\u002d' ), 'the escape fixture really does carry backslashes (guard against the fixture rotting).' );
+	nbq_post( 10, '<!-- wp:paragraph --><p>plain</p><!-- /wp:paragraph -->' );
+	nbq_stage_canonicalize(
+		[ [ nbq_pass( $escaped ) ], [ nbq_pass( $escaped ) ] ],
+		[ [ 'id' => 10, 'invalid' => [] ] ]
+	);
+	$exit = nbq_run( 'novablocks_cli_blocks_canonicalize', [ 10 ], [ 'format' => 'json', 'yes' => true ] );
+	assert_same( 0, $exit, 'canonicalize: escape-bearing canonical content writes cleanly.' );
+	assert_same(
+		$escaped,
+		$GLOBALS['nbq_posts'][10]->post_content,
+		'canonicalize: serialized-attribute escapes survive the write BYTE-FOR-BYTE — the content must be wp_slash()ed, because wp_insert_post() unslashes.'
+	);
+	assert_same( [ 10 ], WP_CLI::$printed_value['data']['updated'], 'canonicalize: the escape-bearing write counts as updated.' );
+
+	// F3: the read-back byte-compare. A save-path filter that mutates without invalidating — kses
+	// stripping markup the acting user may not author, a security plugin's content_save_pre, or a
+	// slashing bug landing inside HTML text — would otherwise exit 0 with content matching neither
+	// the original nor the canonical form.
+	nbq_reset();
+	$canonical = '<!-- wp:html --><iframe src="https://example.test"></iframe><!-- /wp:html -->';
+	nbq_post( 10, '<!-- wp:html --><p>before</p><!-- /wp:html -->' );
+	$GLOBALS['nbq_save_filter'] = static function ( $content ) {
+		return str_replace( '<iframe src="https://example.test"></iframe>', '', $content );
+	};
+	nbq_stage_canonicalize(
+		[ [ nbq_pass( $canonical ) ], [ nbq_pass( $canonical ) ] ],
+		[ [ 'id' => 10, 'invalid' => [] ] ]
+	);
+	$exit = nbq_run( 'novablocks_cli_blocks_canonicalize', [ 10 ], [ 'format' => 'json', 'yes' => true ] );
+	assert_same( 1, $exit, 'canonicalize: a save path that mutated the content is an ERROR, not a finding.' );
+	assert_same( false, WP_CLI::$printed_value['ok'], 'canonicalize: write_mutated is ok:false.' );
+	assert_same( 'write_mutated', WP_CLI::$printed_value['code'], 'canonicalize: write-mutation code.' );
+	assert_same( 10, WP_CLI::$printed_value['data']['mutated'][0]['post_id'], 'canonicalize: the mutated post is named.' );
+	assert_same( -44, WP_CLI::$printed_value["data"]["mutated"][0]["byte_delta"], 'canonicalize: the byte delta is reported so the operator can size the damage.' );
+	assert_same( [], WP_CLI::$printed_value['data']['updated'], 'canonicalize: a mutated write is never counted as a success.' );
+
+	echo "write-integrity contract OK\n";
+
+	// =======================================================================================
+	// Fail-closed paths: protocol skew, missing digests, degraded bundles, wall-clock deadline.
+	// =======================================================================================
+
+	// H3a: a harness speaking another protocol may omit fields this side reads — including the
+	// digests the §5 P3 (c) gate depends on — so skew is refused up front, not discovered as
+	// absent data. This is the routine failure mode of a separately-installed package.
+	nbq_reset();
+	nbq_post( 10, '<!-- wp:paragraph --><p>a</p><!-- /wp:paragraph -->' );
+	$GLOBALS['nbq_protocol'] = NOVABLOCKS_CLI_HARNESS_PROTOCOL + 1;
+	nbq_stage_canonicalize( [ [ nbq_pass( 'x' ) ] ], [ [ 'id' => 10, 'invalid' => [] ] ] );
+	$exit = nbq_run( 'novablocks_cli_blocks_canonicalize', [ 10 ], [ 'format' => 'json', 'yes' => true ] );
+	assert_same( 1, $exit, 'canonicalize: a protocol mismatch exits 1.' );
+	assert_same( 'harness_unavailable', WP_CLI::$printed_value['code'], 'canonicalize: protocol skew is harness_unavailable, not a mystery failure.' );
+	assert_true( false !== strpos( WP_CLI::$printed_value['summary'], 'npm ci' ), 'canonicalize: the skew summary names the update step.' );
+	assert_same( [], $GLOBALS['nbq_updates'], 'canonicalize: protocol skew writes nothing.' );
+
+	// H3b: the innerText gate FAILS CLOSED. A gate that cannot answer must not answer "safe".
+	nbq_reset();
+	$original = '<!-- wp:paragraph --><p>a</p><!-- /wp:paragraph -->';
+	nbq_post( 10, $original );
+	nbq_stage_canonicalize(
+		[ [ nbq_pass( 'rewritten', [ 'inner_text_before_sha1' => null, 'inner_text_after_sha1' => null ] ) ] ],
+		[ [ 'id' => 10, 'invalid' => [] ] ]
+	);
+	$exit = nbq_run( 'novablocks_cli_blocks_canonicalize', [ 10 ], [ 'format' => 'json', 'yes' => true ] );
+	assert_same( 2, $exit, 'canonicalize: absent digests exit 2, not 0.' );
+	assert_same( 'content_altered', WP_CLI::$printed_value['code'], 'canonicalize: absent digests are treated as a refusal.' );
+	assert_same( $original, $GLOBALS['nbq_posts'][10]->post_content, 'canonicalize: a gate that cannot answer must NOT report the write safe.' );
+
+	// H2: a bundle that fails to load means an incomplete registry, so "canonical" no longer means
+	// what it should. Both modes abort; neither degrades quietly into stub saves.
+	nbq_reset();
+	nbq_post( 10, '<!-- wp:paragraph --><p>a</p><!-- /wp:paragraph -->' );
+	file_put_contents(
+		$GLOBALS['nbq_fake_dir'] . '/response-1.json',
+		json_encode( [ 'ok' => false, 'protocol' => NOVABLOCKS_CLI_HARNESS_PROTOCOL, 'code' => 'harness_degraded', 'error' => 'novablocks/hero (lodash is not defined)', 'documents' => [] ] )
+	);
+	$exit = nbq_run( 'novablocks_cli_blocks_canonicalize', [ 10 ], [ 'format' => 'json', 'yes' => true ] );
+	assert_same( 1, $exit, 'canonicalize: a degraded harness exits 1.' );
+	assert_same( 'harness_degraded', WP_CLI::$printed_value['code'], 'canonicalize: degraded-bootstrap code.' );
+	assert_same( [], $GLOBALS['nbq_updates'], 'canonicalize: a degraded harness writes nothing.' );
+	assert_true( false !== strpos( WP_CLI::$printed_value['summary'], 'novablocks/hero' ), 'canonicalize: the degraded summary names the failed bundle.' );
+
+	nbq_reset();
+	nbq_post( 10, '<!-- wp:paragraph --><p>a</p><!-- /wp:paragraph -->' );
+	file_put_contents(
+		$GLOBALS['nbq_fake_dir'] . '/response-1.json',
+		json_encode( [ 'ok' => false, 'protocol' => NOVABLOCKS_CLI_HARNESS_PROTOCOL, 'code' => 'harness_degraded', 'error' => 'novablocks/hero (boom)', 'documents' => [] ] )
+	);
+	$exit = nbq_run( 'novablocks_cli_blocks_validate', [ 10 ], [ 'format' => 'json' ] );
+	assert_same( 1, $exit, 'validate: a degraded harness exits 1 too — a false verdict is worse than none.' );
+	assert_same( 'harness_degraded', WP_CLI::$printed_value['code'], 'validate: degraded-bootstrap code.' );
+
+	// F2: the wall-clock deadline. stream_select() returns 0 (not false) on timeout, so without an
+	// explicit budget a child that holds its pipes open makes the loop re-select forever.
+	nbq_reset();
+	nbq_post( 10, '<!-- wp:paragraph --><p>a</p><!-- /wp:paragraph -->' );
+	$GLOBALS['nbq_timeout'] = 1;
+	file_put_contents( $GLOBALS['nbq_fake_dir'] . '/sleep.txt', '10' );
+	nbq_response( 1, [ [ 'id' => 10, 'invalid' => [] ] ] );
+	$started = microtime( true );
+	$exit    = nbq_run( 'novablocks_cli_blocks_validate', [ 10 ], [ 'format' => 'json' ] );
+	$elapsed = microtime( true ) - $started;
+	assert_same( 1, $exit, 'validate: a hung harness exits 1 rather than wedging.' );
+	assert_same( 'harness_timeout', WP_CLI::$printed_value['code'], 'validate: timeout code.' );
+	assert_true( $elapsed < 9, 'validate: the child is TERMINATED at the deadline, not waited out (took ' . round( $elapsed, 1 ) . 's of a 10s sleep).' );
+
+	echo "fail-closed contract OK\n";
+
+	// =======================================================================================
+	// M-1 / M-2: an unstable document is left alone, and --dry-run predicts that correctly.
+	// =======================================================================================
+
+	nbq_reset();
+	$original = 'v0';
+	nbq_post( 10, $original );
+	nbq_stage_canonicalize(
+		[ [ nbq_pass( 'v1' ) ], [ nbq_pass( 'v2' ) ], [ nbq_pass( 'v3' ) ] ],
+		[ [ 'id' => 10, 'invalid' => [] ] ]
+	);
+	$exit = nbq_run( 'novablocks_cli_blocks_canonicalize', [ 10 ], [ 'format' => 'json', 'yes' => true ] );
+	assert_same( 2, $exit, 'canonicalize: an oscillating document exits 2.' );
+	assert_same( 'not_yet_stable', WP_CLI::$printed_value['code'], 'canonicalize: unstable code.' );
+	assert_same( [], $GLOBALS['nbq_updates'], 'canonicalize: an unstable document gets NOTHING written.' );
+	assert_same(
+		$original,
+		$GLOBALS['nbq_posts'][10]->post_content,
+		'canonicalize: "inspect this rather than re-running" must leave something intact to inspect — not a pass-3 intermediate that is neither authored nor canonical.'
+	);
+
+	// --dry-run must predict the same outcome. Feeding the verify pass an intermediate the real run
+	// would never write made dry-run report a different code and a different invalid_after than the
+	// real run on exactly the #610 fixture — the opposite of "reports the predicted diff" (§3.6).
+	nbq_reset();
+	$original = '<!-- wp:paragraph --><p>hello</p><!-- /wp:paragraph -->';
+	nbq_post( 10, $original );
+	nbq_stage_canonicalize(
+		[
+			[ nbq_pass( '<!-- wp:paragraph --><p><p>hello</p></p><!-- /wp:paragraph -->' ) ],
+			[ nbq_pass( '<!-- wp:paragraph --><p></p><!-- /wp:paragraph -->', [ 'inner_text_after_sha1' => 'LOST', 'inner_text_after_length' => 0 ] ) ],
+		],
+		[ [ 'id' => 10, 'invalid' => [] ] ]
+	);
+	$exit = nbq_run( 'novablocks_cli_blocks_canonicalize', [ 10 ], [ 'format' => 'json', 'dry-run' => true ] );
+	assert_same( 2, $exit, 'canonicalize --dry-run: a refusal is predicted as exit 2.' );
+	assert_same( 'content_altered', WP_CLI::$printed_value['code'], 'canonicalize --dry-run: predicts the SAME code the real run emits.' );
+	assert_same( [ 10 ], array_column( WP_CLI::$printed_value['data']['refused'], 'post_id' ), 'canonicalize --dry-run: predicts the refusal.' );
+	assert_same( [], $GLOBALS['nbq_updates'], 'canonicalize --dry-run: still writes nothing.' );
+	assert_same( 100, WP_CLI::$printed_value['data']['refused'][0]['lost_length'], 'canonicalize --dry-run: predicts the lost length too (nbq_pass defaults to 100 chars before, and this pass reports 0 after).' );
+
+	echo "unstable + dry-run parity contract OK\n";
+
+	// =======================================================================================
+	// F5 / M4: terminal safety for warning lines, and third-party editor-asset detection.
+	// =======================================================================================
+
+	nbq_reset();
+	nbq_post( 10, '<!-- wp:paragraph --><p>a</p><!-- /wp:paragraph -->' );
+	$GLOBALS['nbq_update_error'][10] = "boom\x1b[31mRED";
+	nbq_stage_canonicalize(
+		[ [ nbq_pass( 'x' ) ], [ nbq_pass( 'x' ) ] ],
+		[ [ 'id' => 10, 'invalid' => [] ] ]
+	);
+	$exit = nbq_run( 'novablocks_cli_blocks_canonicalize', [ 10 ], [] ); // table mode
+	$rendered = '';
+	foreach ( WP_CLI::$log as $entry ) {
+		$rendered .= is_string( $entry[1] ) ? $entry[1] : '';
+	}
+	assert_true( false === strpos( $rendered, "\x1b" ), 'warning lines are control-char stripped before reaching the terminal (F5) — the W6 rule applies to warnings, not just table cells.' );
+	assert_true( false !== strpos( $rendered, 'boom[31mRED' ), 'only the control BYTE is removed; the surrounding text survives.' );
+
+	// M4: the spike's highest-severity risk gets at least a named suspect. Detection resolves each
+	// enqueue_block_editor_assets callback to its defining FILE by reflection — nothing is executed.
+	nbq_reset();
+	assert_same( [], novablocks_cli_third_party_editor_asset_sources(), 'no editor-asset hooks means no suspects.' );
+
+	$GLOBALS['wp_filter']['enqueue_block_editor_assets'] = [
+		10 => [
+			[ 'function' => 'novablocks_cli_third_party_probe_allowed' ],
+			[ 'function' => 'novablocks_cli_third_party_probe_foreign' ],
+		],
+	];
+	$sources = novablocks_cli_third_party_editor_asset_sources();
+	assert_same( [], $sources, 'a callback defined inside this plugin is never a third party.' );
+
+	// Strip nova-blocks itself from the allow-list, to prove the detector fires at all rather than
+	// being permanently silent because everything happens to be allow-listed.
+	$GLOBALS['nbq_editor_allowlist'] = [];
+	$sources = novablocks_cli_third_party_editor_asset_sources();
+	assert_true( ! empty( $sources ), 'with the allow-list emptied, the detector names the source rather than staying silent.' );
+	$warnings = novablocks_cli_third_party_editor_warnings();
+	assert_same( 'third_party_editor_scripts', $warnings[0]['code'], 'the detector emits a named warning code.' );
+	assert_true( ! empty( $warnings[0]['sources'] ), 'the warning carries the suspects in data, not just in prose.' );
+	unset( $GLOBALS['wp_filter']['enqueue_block_editor_assets'] );
+
+	echo "terminal-safety + third-party-detection contract OK\n";
 
 	// =======================================================================================
 	// --via-editor — lab-only, per §3.11 (absorbed into harness_unavailable in v0.3.7).
