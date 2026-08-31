@@ -159,21 +159,62 @@ function novablocks_cli_blocks_canonicalize( $args, $assoc_args ) {
 		return;
 	}
 
+	novablocks_cli_emit_core_result(
+		novablocks_agent_blocks_canonicalize_core(
+			[
+				'targets' => $targets,
+				'dry_run' => $dry_run,
+			]
+		),
+		$assoc_args
+	);
+}
+
+/**
+ * The whole of `blocks canonicalize` from the harness probe onward, as a surface-agnostic core:
+ * the bounded fixed-point iteration, the pre-write refusal gates, **the write itself** —
+ * `wp_update_post()` + `wp_slash()` + the mandatory post-write byte-identity read-back — the fresh
+ * §3.9 re-parse, and the exit mapping. The WP-CLI callback above and
+ * `pixelgrade/canonicalize-post` (`lib/abilities/blocks-abilities.php`) both call THIS.
+ *
+ * Extracting the WRITE, not just the reporting around it, is the whole point (W7 / SHARED-SPEC §4):
+ * a second copy of a hundred lines that mutate `post_content` is where the ability and the command
+ * would quietly stop agreeing about refusals, `write_mutated`, and what is left on disk.
+ *
+ * What deliberately stays OUTSIDE this core, because it is a surface concern and not a rule about
+ * content: §3.6's confirmation (the CLI's `--yes`/`WP_CLI::confirm()`, the ability's `confirm:
+ * true`), `--format`, and `--via-editor`'s lab-only refusal — that flag has no ability equivalent
+ * at all, since a headless-Chrome fallback must not be reachable from an MCP client (§3.11).
+ *
+ * @param array $params `{ post_ids: int[], post_type?: ?string, all_parts?: bool, dry_run?: bool,
+ *                        targets?: array }`. `targets` short-circuits resolution for a caller that
+ *                        already resolved (the CLI does, to count posts for its confirmation
+ *                        prompt) — the resolution, cap gate included, is the same helper either way.
+ *
+ * @return array `{ exit, code, summary, data, warnings }`.
+ */
+function novablocks_agent_blocks_canonicalize_core( array $params ): array {
+	$dry_run = ! empty( $params['dry_run'] );
+
+	$targets = isset( $params['targets'] ) && is_array( $params['targets'] )
+		? $params['targets']
+		: novablocks_agent_blocks_resolve_targets( $params );
+
+	if ( is_wp_error( $targets ) ) {
+		return novablocks_agent_blocks_error_result( $targets );
+	}
+
 	$probe = novablocks_cli_harness_probe();
 
 	if ( empty( $probe['available'] ) ) {
-		novablocks_cli_harness_unavailable( $probe, $assoc_args );
-
-		return;
+		return novablocks_cli_harness_unavailable_result( $probe );
 	}
 
 	// --------------------------------------------- iterate to the fixed point (bounded, §1.4)
 	$iteration = novablocks_cli_canonicalize_to_fixed_point( $targets );
 
 	if ( is_wp_error( $iteration ) ) {
-		novablocks_cli_emit_wp_error( $iteration, $assoc_args );
-
-		return;
+		return novablocks_agent_blocks_error_result( $iteration );
 	}
 
 	$first = $iteration['posts'];
@@ -317,9 +358,7 @@ function novablocks_cli_blocks_canonicalize( $args, $assoc_args ) {
 	$verify = novablocks_cli_harness_invoke( 'validate', $verify_documents );
 
 	if ( is_wp_error( $verify ) ) {
-		novablocks_cli_emit_wp_error( $verify, $assoc_args );
-
-		return;
+		return novablocks_agent_blocks_error_result( $verify );
 	}
 
 	$second = novablocks_cli_index_harness_documents( $verify );
@@ -333,20 +372,20 @@ function novablocks_cli_blocks_canonicalize( $args, $assoc_args ) {
 			$deltas[] = sprintf( '%d (%+d bytes)', $post_id, $delta );
 		}
 
-		novablocks_cli_emit(
-			false,
-			'write_mutated',
-			sprintf(
+		return [
+			'exit'     => 1,
+			'code'     => 'write_mutated',
+			'summary'  => sprintf(
 				/* translators: %s: comma-separated "post id (+/-N bytes)" pairs. */
 				__( 'The save path changed the content on the way to the database for post(s) %s — what was stored is not what canonicalization produced. Likely causes: kses stripping markup the acting user may not author, a content_save_pre filter, or a slashing bug. Inspect before re-running.', '__plugin_txtd' ),
 				implode( ', ', $deltas )
 			),
-			[
+			'data'     => [
 				'mutated' => array_map(
 					static function ( $post_id, $delta ) {
 						return [
-							'post_id'      => (int) $post_id,
-							'byte_delta'   => (int) $delta,
+							'post_id'    => (int) $post_id,
+							'byte_delta' => (int) $delta,
 						];
 					},
 					array_keys( $mutated ),
@@ -354,13 +393,8 @@ function novablocks_cli_blocks_canonicalize( $args, $assoc_args ) {
 				),
 				'updated' => array_values( $updated ),
 			],
-			[],
-			1,
-			[],
-			$assoc_args
-		);
-
-		return;
+			'warnings' => [],
+		];
 	}
 
 	// ------------------------------------------------------------------------ the report
@@ -534,26 +568,21 @@ function novablocks_cli_blocks_canonicalize( $args, $assoc_args ) {
 	];
 
 	if ( ! empty( $invalid_after ) ) {
-		novablocks_cli_emit(
+		return [
 			// Exit 2 with `ok:true`: the machinery completed, and remaining invalid blocks are a
 			// finding the caller must inspect. Bug nova-blocks#610 lands here honestly.
-			true,
-			'invalid_blocks',
-			sprintf(
+			'exit'     => 2,
+			'code'     => 'invalid_blocks',
+			'summary'  => sprintf(
 				/* translators: 1: invalid block count after the write, 2: post count, 3: invalid count before. */
 				__( '%1$d invalid block(s) remain across %2$d post(s) after canonicalization (was %3$d). See data.invalid_after[] — these documents do not converge; do not re-run expecting a different result.', '__plugin_txtd' ),
 				count( $invalid_after ),
 				count( $not_converged ),
 				count( $invalid_before )
 			),
-			$data,
-			$warnings,
-			2,
-			[],
-			$assoc_args
-		);
-
-		return;
+			'data'     => $data,
+			'warnings' => $warnings,
+		];
 	}
 
 	if ( ! empty( $refused ) ) {
@@ -562,67 +591,52 @@ function novablocks_cli_blocks_canonicalize( $args, $assoc_args ) {
 		// re-read unchanged and is still invalid. Exit 2 either way: §2 defines exit 2 as
 		// "completed with findings the caller must inspect", and "we declined to rewrite your
 		// content" is exactly that.
-		novablocks_cli_emit(
-			true,
-			'content_altered',
-			sprintf(
+		return [
+			'exit'     => 2,
+			'code'     => 'content_altered',
+			'summary'  => sprintf(
 				/* translators: %d: number of refused posts. */
 				_n( '%d post was left untouched because canonicalizing it would have changed its visible text. See data.refused[].', '%d posts were left untouched because canonicalizing them would have changed their visible text. See data.refused[].', count( $refused ), '__plugin_txtd' ),
 				count( $refused )
 			),
-			$data,
-			$warnings,
-			2,
-			[],
-			$assoc_args
-		);
-
-		return;
+			'data'     => $data,
+			'warnings' => $warnings,
+		];
 	}
 
 	if ( ! empty( $not_stable ) ) {
-		novablocks_cli_emit(
-			true,
-			'not_yet_stable',
-			sprintf(
+		return [
+			'exit'     => 2,
+			'code'     => 'not_yet_stable',
+			'summary'  => sprintf(
 				/* translators: 1: number of unstable posts, 2: the pass budget. */
 				__( '%1$d post(s) never reached a byte-stable fixed point within %2$d passes. See data.not_yet_stable[].', '__plugin_txtd' ),
 				count( $not_stable ),
 				NOVABLOCKS_CLI_MAX_CANONICALIZE_PASSES
 			),
-			$data,
-			$warnings,
-			2,
-			[],
-			$assoc_args
-		);
-
-		return;
+			'data'     => $data,
+			'warnings' => $warnings,
+		];
 	}
 
 	if ( empty( $updated ) ) {
-		novablocks_cli_emit(
-			true,
-			'noop',
-			sprintf(
+		return [
+			'exit'     => 0,
+			'code'     => 'noop',
+			'summary'  => sprintf(
 				/* translators: %d: number of posts checked. */
 				_n( '%d post already canonical: nothing written, zero invalid on a fresh re-parse.', '%d posts already canonical: nothing written, zero invalid on a fresh re-parse.', count( $posts ), '__plugin_txtd' ),
 				count( $posts )
 			),
-			$data,
-			$warnings,
-			0,
-			[],
-			$assoc_args
-		);
-
-		return;
+			'data'     => $data,
+			'warnings' => $warnings,
+		];
 	}
 
-	novablocks_cli_emit(
-		true,
-		'ok',
-		sprintf(
+	return [
+		'exit'     => 0,
+		'code'     => 'ok',
+		'summary'  => sprintf(
 			$dry_run
 				/* translators: 1: number of posts that would change, 2: total posts. */
 				? __( '%1$d of %2$d post(s) would be rewritten (--dry-run: nothing was written). Zero invalid blocks predicted.', '__plugin_txtd' )
@@ -631,12 +645,9 @@ function novablocks_cli_blocks_canonicalize( $args, $assoc_args ) {
 			count( $updated ),
 			count( $posts )
 		),
-		$data,
-		$warnings,
-		0,
-		[],
-		$assoc_args
-	);
+		'data'     => $data,
+		'warnings' => $warnings,
+	];
 }
 
 /**

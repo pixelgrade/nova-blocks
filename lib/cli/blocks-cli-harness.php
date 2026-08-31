@@ -197,6 +197,21 @@ function novablocks_cli_harness_probe(): array {
  * @param string $extra      Optional extra sentence appended to the summary.
  */
 function novablocks_cli_harness_unavailable( array $probe, array $assoc_args, string $extra = '' ): void {
+	novablocks_cli_emit_core_result( novablocks_cli_harness_unavailable_result( $probe, $extra ), $assoc_args );
+}
+
+/**
+ * The §3.11 graceful-absence envelope as core-result pieces, so the CLI and W7's
+ * `pixelgrade/validate-post` / `pixelgrade/canonicalize-post` abilities report a missing harness
+ * with the identical code, summary and install step. `novablocks_cli_harness_unavailable()` above
+ * is now just this plus an emit.
+ *
+ * @param array  $probe A `novablocks_cli_harness_probe()` result.
+ * @param string $extra Optional extra sentence appended to the summary.
+ *
+ * @return array Core-result pieces.
+ */
+function novablocks_cli_harness_unavailable_result( array $probe, string $extra = '' ): array {
 	switch ( $probe['reason'] ) {
 		case 'no_node_binary':
 			$summary = __( 'No Node binary found. Set the PIXELGRADE_NODE_BINARY constant, filter "novablocks/node_binary", or put node on PATH.', '__plugin_txtd' );
@@ -225,21 +240,18 @@ function novablocks_cli_harness_unavailable( array $probe, array $assoc_args, st
 		$summary .= ' ' . $extra;
 	}
 
-	novablocks_cli_emit(
-		false,
-		'harness_unavailable',
-		$summary,
-		[
+	return [
+		'exit'     => 1,
+		'code'     => 'harness_unavailable',
+		'summary'  => $summary,
+		'data'     => [
 			'reason'       => (string) $probe['reason'],
 			'harness_path' => (string) $probe['path'],
 			'node_binary'  => (string) $probe['node'],
 			'install_step' => (string) $probe['install_step'],
 		],
-		[],
-		1,
-		[],
-		$assoc_args
-	);
+		'warnings' => [],
+	];
 }
 
 /**
@@ -665,6 +677,34 @@ function novablocks_cli_resolve_target_posts( array $args, array $assoc_args, st
 }
 
 /**
+ * Resolve targets from the abilities' TYPED parameter shape.
+ *
+ * A thin adapter, on purpose: `novablocks_cli_resolve_target_posts()` above stays the single
+ * implementation of id parsing, `--post-type` assertion, `--all-parts` expansion **and the
+ * per-post `edit_post` meta-cap loop** (§1.4 v0.3.12, which extends that gate to `validate` too).
+ * W7's permission callbacks and cores both come through here, so there is exactly one place where
+ * "may this user touch this post?" is answered for this subtree — never a second copy that could
+ * drift more permissive than the command.
+ *
+ * @param array  $params     `{ post_ids: int[], post_type?: ?string, all_parts?: bool }`.
+ * @param string $capability Per-post meta capability, or '' to skip the per-post check.
+ *
+ * @return array|WP_Error Target records, or WP_Error.
+ */
+function novablocks_agent_blocks_resolve_targets( array $params, string $capability = 'edit_post' ) {
+	$post_type = isset( $params['post_type'] ) && null !== $params['post_type'] ? (string) $params['post_type'] : '';
+
+	return novablocks_cli_resolve_target_posts(
+		array_values( (array) ( $params['post_ids'] ?? [] ) ),
+		[
+			'post-type' => $post_type,
+			'all-parts' => ! empty( $params['all_parts'] ),
+		],
+		$capability
+	);
+}
+
+/**
  * Every database-resident `wp_template` / `wp_template_part` belonging to the active theme.
  *
  * `--all-parts` exists because "the recurring failure is a missed footer part" (§1.4). Two
@@ -1008,17 +1048,5 @@ function novablocks_cli_preset_warnings( array $targets ): array {
  * @param array    $assoc_args The command's assoc_args (for --format).
  */
 function novablocks_cli_emit_wp_error( WP_Error $error, array $assoc_args ): void {
-	$code = $error->get_error_code();
-	$exit = 'permission_denied' === $code ? 3 : 1;
-
-	novablocks_cli_emit(
-		false,
-		(string) $code,
-		(string) $error->get_error_message(),
-		[ 'error_code' => (string) $code ],
-		[],
-		$exit,
-		[],
-		$assoc_args
-	);
+	novablocks_cli_emit_core_result( novablocks_agent_blocks_error_result( $error ), $assoc_args );
 }

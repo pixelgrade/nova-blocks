@@ -78,43 +78,66 @@ if ( ! defined( 'ABSPATH' ) ) {
 function novablocks_cli_blocks_list( $args, $assoc_args ) {
 	novablocks_cli_require_capability( 'edit_posts', $assoc_args );
 
-	if ( ! class_exists( 'WP_Block_Type_Registry' ) ) {
-		novablocks_cli_emit(
-			false,
-			'invalid_params',
-			__( 'The block type registry is unavailable (the block editor is not loaded).', '__plugin_txtd' ),
-			[],
-			[],
-			1,
-			[],
-			$assoc_args
-		);
+	novablocks_cli_emit_core_result(
+		novablocks_agent_blocks_list_core(
+			[
+				'namespace'  => (string) novablocks_cli_flag( $assoc_args, 'namespace', 'novablocks' ),
+				'attributes' => novablocks_cli_bool_flag( $assoc_args, 'attributes' ),
+				'supports'   => novablocks_cli_bool_flag( $assoc_args, 'supports' ),
+			]
+		),
+		$assoc_args
+	);
+}
 
-		return;
+/**
+ * The whole of `blocks list`, as a surface-agnostic core: registry filter, sort, and the §2
+ * envelope pieces. The WP-CLI callback above and `pixelgrade/list-blocks`
+ * (`lib/abilities/blocks-abilities.php`) both call THIS — there is no second implementation of
+ * the listing anywhere (W7 / SHARED-SPEC §4).
+ *
+ * The `namespace` enum is validated HERE rather than declared as a WP-CLI `options:` synopsis
+ * enum or a JSON-Schema `enum`, for the same reason on both surfaces (§2's flag-validation
+ * ruling): a rejection that happens before the callback runs produces a bare parameter error with
+ * no envelope to parse, and its ability equivalent — `ability_invalid_input` — is exactly as
+ * unhelpful. Naming the offending value and the accepted set is the contract.
+ *
+ * Capability resolution is deliberately NOT here: §3.0 belongs to the surface (the CLI halts with
+ * exit 3; the ability's `permission_callback` denies before `execute_callback` is ever reached).
+ *
+ * @param array $params `{ namespace?: string, attributes?: bool, supports?: bool }`.
+ *
+ * @return array `{ exit, code, summary, data, warnings }`.
+ */
+function novablocks_agent_blocks_list_core( array $params ): array {
+	if ( ! class_exists( 'WP_Block_Type_Registry' ) ) {
+		return [
+			'exit'     => 1,
+			'code'     => 'invalid_params',
+			'summary'  => __( 'The block type registry is unavailable (the block editor is not loaded).', '__plugin_txtd' ),
+			'data'     => [],
+			'warnings' => [],
+		];
 	}
 
-	$namespace = (string) novablocks_cli_flag( $assoc_args, 'namespace', 'novablocks' );
+	$namespace = isset( $params['namespace'] ) ? (string) $params['namespace'] : 'novablocks';
+
 	if ( ! in_array( $namespace, [ 'novablocks', 'core', 'all' ], true ) ) {
-		novablocks_cli_emit(
-			false,
-			'invalid_params',
-			sprintf(
+		return [
+			'exit'     => 1,
+			'code'     => 'invalid_params',
+			'summary'  => sprintf(
 				/* translators: %s: the offending --namespace value. */
 				__( 'Unknown --namespace value "%s". Expected novablocks|core|all.', '__plugin_txtd' ),
 				$namespace
 			),
-			[],
-			[],
-			1,
-			[],
-			$assoc_args
-		);
-
-		return;
+			'data'     => [],
+			'warnings' => [],
+		];
 	}
 
-	$include_attributes = novablocks_cli_bool_flag( $assoc_args, 'attributes' );
-	$include_supports    = novablocks_cli_bool_flag( $assoc_args, 'supports' );
+	$include_attributes = ! empty( $params['attributes'] );
+	$include_supports   = ! empty( $params['supports'] );
 
 	$blocks = [];
 	foreach ( WP_Block_Type_Registry::get_instance()->get_all_registered() as $name => $block_type ) {
@@ -138,25 +161,22 @@ function novablocks_cli_blocks_list( $args, $assoc_args ) {
 		}
 	);
 
-	novablocks_cli_emit(
-		true,
-		'ok',
-		sprintf(
+	return [
+		'exit'     => 0,
+		'code'     => 'ok',
+		'summary'  => sprintf(
 			/* translators: 1: number of block types, 2: --namespace value. */
 			_n( 'Found %1$d block type (namespace: %2$s).', 'Found %1$d block types (namespace: %2$s).', count( $blocks ), '__plugin_txtd' ),
 			count( $blocks ),
 			$namespace
 		),
-		[
+		'data'     => [
 			'namespace' => $namespace,
 			'count'     => count( $blocks ),
 			'blocks'    => $blocks,
 		],
-		[],
-		0,
-		[],
-		$assoc_args
-	);
+		'warnings' => [],
+	];
 }
 
 /**

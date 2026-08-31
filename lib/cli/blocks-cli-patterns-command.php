@@ -80,27 +80,54 @@ if ( ! defined( 'ABSPATH' ) ) {
 function novablocks_cli_blocks_patterns( $args, $assoc_args ) {
 	novablocks_cli_require_capability( 'edit_posts', $assoc_args );
 
-	$source = (string) novablocks_cli_flag( $assoc_args, 'source', 'all' );
+	novablocks_cli_emit_core_result(
+		novablocks_agent_blocks_patterns_core(
+			[
+				'source'  => (string) novablocks_cli_flag( $assoc_args, 'source', 'all' ),
+				'refresh' => novablocks_cli_bool_flag( $assoc_args, 'refresh' ),
+			]
+		),
+		$assoc_args
+	);
+}
+
+/**
+ * The whole of `blocks patterns`, as a surface-agnostic core: the source filter, the cloud fetch,
+ * and the **local-wins name-collision merge**. The WP-CLI callback above and
+ * `pixelgrade/list-patterns` (`lib/abilities/blocks-abilities.php`) both call THIS — the merge
+ * rule (§1.4: "the LOCAL pattern is authoritative") exists once (W7 / SHARED-SPEC §4).
+ *
+ * The `source` enum is validated here rather than by a synopsis enum or a JSON-Schema `enum`, per
+ * §2's flag-validation ruling — see the note on `novablocks_agent_blocks_list_core()`.
+ *
+ * **This core is `readonly` under §4's cache carve-out but is NOT write-free**: with
+ * `source=cloud|all`, a cache miss goes through `novablocks_cli_fetch_cloud_pattern_items()`,
+ * which writes the `novablocks_cloud_block_patterns` option pair the site itself reads. The
+ * ability description has to disclose that (§4 ‡); so does this comment, so nobody reading the
+ * code mistakes `readonly` for "touches nothing".
+ *
+ * @param array $params `{ source?: string, refresh?: bool }`.
+ *
+ * @return array `{ exit, code, summary, data, warnings, extra? }`.
+ */
+function novablocks_agent_blocks_patterns_core( array $params ): array {
+	$source = isset( $params['source'] ) ? (string) $params['source'] : 'all';
+
 	if ( ! in_array( $source, [ 'local', 'cloud', 'all' ], true ) ) {
-		novablocks_cli_emit(
-			false,
-			'invalid_params',
-			sprintf(
+		return [
+			'exit'     => 1,
+			'code'     => 'invalid_params',
+			'summary'  => sprintf(
 				/* translators: %s: the offending --source value. */
 				__( 'Unknown --source value "%s". Expected local|cloud|all.', '__plugin_txtd' ),
 				$source
 			),
-			[],
-			[],
-			1,
-			[],
-			$assoc_args
-		);
-
-		return;
+			'data'     => [],
+			'warnings' => [],
+		];
 	}
 
-	$refresh = novablocks_cli_bool_flag( $assoc_args, 'refresh' );
+	$refresh = ! empty( $params['refresh'] );
 
 	// Keyed by pattern name throughout. Local is collected FIRST and cloud never overwrites an
 	// already-present name (see the cloud branch below) — this mirrors
@@ -137,18 +164,14 @@ function novablocks_cli_blocks_patterns( $args, $assoc_args ) {
 		$fetch = novablocks_cli_fetch_cloud_pattern_items( $refresh );
 
 		if ( null === $fetch ) {
-			novablocks_cli_emit(
-				false,
-				'cloud_fetch_failed',
-				__( 'Could not reach Pixelgrade Cloud for block patterns. Nothing was returned.', '__plugin_txtd' ),
-				[ 'source' => $source ],
-				[],
-				1,
-				[ 'retryable' => true ],
-				$assoc_args
-			);
-
-			return;
+			return [
+				'exit'     => 1,
+				'code'     => 'cloud_fetch_failed',
+				'summary'  => __( 'Could not reach Pixelgrade Cloud for block patterns. Nothing was returned.', '__plugin_txtd' ),
+				'data'     => [ 'source' => $source ],
+				'warnings' => [],
+				'extra'    => [ 'retryable' => true ],
+			];
 		}
 
 		$allowed_tiers = function_exists( 'novablocks_get_allowed_cloud_block_pattern_tiers' )
@@ -175,26 +198,23 @@ function novablocks_cli_blocks_patterns( $args, $assoc_args ) {
 		}
 	);
 
-	novablocks_cli_emit(
-		true,
-		'ok',
-		sprintf(
+	return [
+		'exit'     => 0,
+		'code'     => 'ok',
+		'summary'  => sprintf(
 			/* translators: 1: number of patterns, 2: --source value. */
 			_n( 'Found %1$d block pattern (source: %2$s).', 'Found %1$d block patterns (source: %2$s).', count( $records ), '__plugin_txtd' ),
 			count( $records ),
 			$source
 		),
-		[
+		'data'     => [
 			'source'   => $source,
 			'refresh'  => $refresh,
 			'count'    => count( $records ),
 			'patterns' => $records,
 		],
-		[],
-		0,
-		[],
-		$assoc_args
-	);
+		'warnings' => [],
+	];
 }
 
 /**
