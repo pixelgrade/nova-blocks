@@ -95,7 +95,7 @@
 
   }
 
-  :is(.facetwp-type-radio) {
+  :is(.facetwp-type-checkboxes, .facetwp-type-radio) {
     display: flex;
     flex-wrap: wrap;
     gap: calc( var(--nb-spacing) * 0.5 );
@@ -112,7 +112,7 @@
     margin-bottom: var(--theme-spacing-smallest);
   }
 
-  :is(.facetwp-type-radio) {
+  :is(.facetwp-type-checkboxes, .facetwp-type-radio) {
     display: flex;
     flex-direction: column;
     gap: calc( var(--theme-spacing-smallest) * 0.5 );

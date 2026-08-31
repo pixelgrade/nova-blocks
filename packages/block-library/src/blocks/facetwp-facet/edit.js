@@ -1,6 +1,6 @@
 import { useBlockProps } from "@wordpress/block-editor";
 import ServerSideRender from "@wordpress/server-side-render";
-import { IconButton, SelectControl, ToggleControl, Toolbar } from "@wordpress/components";
+import { IconButton, RadioControl, ToggleControl, Toolbar } from "@wordpress/components";
 import { BlockControls } from "@wordpress/block-editor";
 import { Fragment, useEffect, useMemo, useState } from "@wordpress/element";
 import { __ } from "@wordpress/i18n";
@@ -73,11 +73,21 @@ const Edit = ( props ) => {
 
 const FacetInspectorControls = ( props ) => {
   const { attributes, setAttributes } = props;
-  const { hideLabels, hideCounts } = attributes;
+  const { choiceStyle, hideLabels, hideCounts } = attributes;
 
   return (
     <ControlsSection id={ 'setup' } label={ __( 'Setup', '__plugin_txtd' ) } placement={ 'settings' }>
       <ControlsTab label={ __( 'Settings', '__plugin_txtd' ) }>
+        <RadioControl
+          label={ __( 'Choice Style', '__plugin_txtd' ) }
+          selected={ choiceStyle }
+          options={ [
+            { label: __( 'Automatic', '__plugin_txtd' ), value: 'auto' },
+            { label: __( 'Controls', '__plugin_txtd' ), value: 'controls' },
+            { label: __( 'Text', '__plugin_txtd' ), value: 'text' },
+          ] }
+          onChange={ choiceStyle => setAttributes( { choiceStyle } ) }
+        />
         <ToggleControl
           label={__( 'Hide Label', '__plugin_txtd' )}
           checked={ hideLabels }
