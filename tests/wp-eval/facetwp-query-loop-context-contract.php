@@ -69,7 +69,9 @@ $capture_query = static function ( array $query, $block, int $page ) use ( &$cap
 
 add_filter( 'query_loop_block_query_vars', $capture_query, 100, 3 );
 
-render_block( novablocks_test_facetwp_query_tree( 'listing facetwp-template alignwide' ) );
+$marked_tree  = novablocks_test_facetwp_query_tree( 'listing facetwp-template alignwide' );
+$marked_block = new WP_Block( $marked_tree );
+$marked_block->render();
 
 if ( 1 !== count( $captures ) ) {
 	throw new RuntimeException( 'Expected the marked parsed tree to build exactly one Supernova query.' );
@@ -88,7 +90,9 @@ if ( 9 !== ( $captures[0]['query']['posts_per_page'] ?? null ) ) {
 }
 
 $captures = [];
-render_block( novablocks_test_facetwp_query_tree( 'listing alignwide' ) );
+$unmarked_tree  = novablocks_test_facetwp_query_tree( 'listing alignwide' );
+$unmarked_block = new WP_Block( $unmarked_tree );
+$unmarked_block->render();
 remove_filter( 'query_loop_block_query_vars', $capture_query, 100 );
 
 if ( 1 !== count( $captures ) ) {

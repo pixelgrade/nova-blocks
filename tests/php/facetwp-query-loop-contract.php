@@ -14,6 +14,7 @@ $GLOBALS['nb_test_failures'] = [];
 
 class WP_Block {
 	public $context = [];
+	public $parsed_block = [];
 }
 
 function add_filter( string $hook, string $callback, int $priority = 10, int $accepted_args = 1 ): void {
@@ -45,9 +46,10 @@ $group = [
 	],
 ];
 
-$marked = novablocks_mark_facetwp_query_loop_context( $group );
-nb_expect_same( true, $marked['innerBlocks'][0]['attrs']['query']['facetwp'] ?? null, 'A nested Query Loop with the exact template class must be marked.' );
-nb_expect_same( 9, $marked['innerBlocks'][0]['attrs']['query']['perPage'] ?? null, 'Marking must preserve existing Query Loop arguments.' );
+$query = $group['innerBlocks'][0];
+$marked = novablocks_mark_facetwp_query_loop_context( $query );
+nb_expect_same( true, $marked['attrs']['query']['facetwp'] ?? null, 'A Query Loop with the exact template class must be marked.' );
+nb_expect_same( 9, $marked['attrs']['query']['perPage'] ?? null, 'Marking must preserve existing Query Loop arguments.' );
 
 $partial_class = [
 	'blockName'   => 'core/query',
@@ -68,7 +70,20 @@ $parent_query = [
 	],
 	'innerBlocks' => [],
 ];
-nb_expect_same( $parent_query, novablocks_mark_facetwp_query_loop_context( $parent_query, null, $parent ), 'Nested render_block_data calls must not rescan their subtree.' );
+$nested_marked = novablocks_mark_facetwp_query_loop_context( $parent_query, null, $parent );
+nb_expect_same( true, $nested_marked['attrs']['query']['facetwp'] ?? null, 'A nested render_block_data call must mark its Query Loop across dynamic block boundaries.' );
+
+$parent->parsed_block = $parent_query;
+nb_expect_same( true, function_exists( 'novablocks_enable_facetwp_query_loop_child_context' ), 'Nova must register a Query Loop child-context bridge.' );
+if ( function_exists( 'novablocks_enable_facetwp_query_loop_child_context' ) ) {
+	$child_context = novablocks_enable_facetwp_query_loop_child_context(
+		[ 'query' => [ 'perPage' => 9 ] ],
+		[ 'blockName' => 'novablocks/supernova' ],
+		$parent
+	);
+	nb_expect_same( true, $child_context['query']['facetwp'] ?? null, 'A marked Query Loop must pass its opt-in across a dynamic parent boundary.' );
+	nb_expect_same( 9, $child_context['query']['perPage'] ?? null, 'The child-context bridge must preserve existing Query Loop arguments.' );
+}
 
 $query_block                    = new WP_Block();
 $query_block->context['query']  = [ 'facetwp' => true ];
@@ -83,6 +98,11 @@ nb_expect_same(
 	[ 'novablocks_mark_facetwp_query_loop_context', 10, 3 ],
 	$GLOBALS['nb_test_filters']['render_block_data'][1] ?? null,
 	'The context marker must receive the parent block argument.'
+);
+nb_expect_same(
+	[ 'novablocks_enable_facetwp_query_loop_child_context', 10, 3 ],
+	$GLOBALS['nb_test_filters']['render_block_context'][0] ?? null,
+	'The child-context bridge must receive the parent block argument.'
 );
 nb_expect_same(
 	[ 'novablocks_enable_facetwp_query_loop', 10, 3 ],

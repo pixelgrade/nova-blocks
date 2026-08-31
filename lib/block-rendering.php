@@ -53,7 +53,7 @@ function novablocks_fix_duplicate_classes_in_inner_content( $parsed_block ) {
 add_filter( 'render_block_data', 'novablocks_fix_duplicate_classes_in_inner_content', 5 );
 
 /**
- * Pass a marked Query Loop's filter opt-in through to its child blocks.
+ * Mark a Query Loop's filter opt-in before WordPress builds its child context.
  *
  * @param array         $parsed_block Parsed block data.
  * @param array|null    $source_block Unfiltered block data.
@@ -61,14 +61,8 @@ add_filter( 'render_block_data', 'novablocks_fix_duplicate_classes_in_inner_cont
  * @return array Filtered block data.
  */
 function novablocks_mark_facetwp_query_loop_context( $parsed_block, $source_block = null, $parent_block = null ) {
-	// WordPress calls this filter for every nested block. Traverse only once,
-	// from the top-level block, so nested trees are not repeatedly rescanned.
-	if ( null !== $parent_block ) {
-		return $parsed_block;
-	}
-
 	// Keep Nova-only sites entirely outside this integration, including the
-	// subtree traversal and the internal query-context attribute.
+	// internal query-context attribute.
 	if ( ! function_exists( 'FWP' ) ) {
 		return $parsed_block;
 	}
@@ -82,15 +76,41 @@ function novablocks_mark_facetwp_query_loop_context( $parsed_block, $source_bloc
 		}
 	}
 
-	if ( ! empty( $parsed_block['innerBlocks'] ) && is_array( $parsed_block['innerBlocks'] ) ) {
-		foreach ( $parsed_block['innerBlocks'] as $index => $inner_block ) {
-			$parsed_block['innerBlocks'][ $index ] = novablocks_mark_facetwp_query_loop_context( $inner_block );
-		}
-	}
-
 	return $parsed_block;
 }
 add_filter( 'render_block_data', 'novablocks_mark_facetwp_query_loop_context', 10, 3 );
+
+/**
+ * Carry a marked Query Loop's opt-in into child blocks across dynamic parents.
+ *
+ * WordPress prepares a nested block's context before `render_block_data` can
+ * update the parent Query block's attributes. Inject the marker into the child
+ * context directly so Nova collections build the query FacetWP should own.
+ *
+ * @param array         $context      Child block context.
+ * @param array         $parsed_block Parsed child block data.
+ * @param WP_Block|null $parent_block Parent block instance.
+ * @return array Filtered child block context.
+ */
+function novablocks_enable_facetwp_query_loop_child_context( $context, $parsed_block, $parent_block ) {
+	if ( ! function_exists( 'FWP' ) || ! $parent_block || 'core/query' !== ( $parent_block->parsed_block['blockName'] ?? '' ) ) {
+		return $context;
+	}
+
+	$class_name  = $parent_block->parsed_block['attrs']['className'] ?? '';
+	$class_names = is_string( $class_name ) ? preg_split( '/\s+/', trim( $class_name ) ) : [];
+
+	if ( in_array( 'facetwp-template', $class_names, true ) ) {
+		if ( empty( $context['query'] ) || ! is_array( $context['query'] ) ) {
+			$context['query'] = [];
+		}
+
+		$context['query']['facetwp'] = true;
+	}
+
+	return $context;
+}
+add_filter( 'render_block_context', 'novablocks_enable_facetwp_query_loop_child_context', 10, 3 );
 
 /**
  * Opt a marked Query Loop into FacetWP's custom-query detection.
