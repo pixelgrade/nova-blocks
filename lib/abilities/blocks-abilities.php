@@ -289,8 +289,11 @@ function novablocks_agent_blocks_execute_patterns( array $input = [] ) {
 function novablocks_agent_blocks_execute_validate( array $input = [] ) {
 	novablocks_agent_blocks_bootstrap();
 
+	$params            = novablocks_agent_blocks_target_params( $input );
+	$params['surface'] = 'ability';
+
 	return novablocks_agent_blocks_ability_result(
-		novablocks_agent_blocks_validate_core( novablocks_agent_blocks_target_params( $input ) )
+		novablocks_agent_blocks_validate_core( $params )
 	);
 }
 
@@ -311,6 +314,7 @@ function novablocks_agent_blocks_execute_canonicalize( array $input = [] ) {
 
 	$params            = novablocks_agent_blocks_target_params( $input );
 	$params['dry_run'] = ! empty( $input['dry_run'] );
+	$params['surface'] = 'ability';
 
 	$targets = novablocks_agent_blocks_resolve_targets( $params );
 

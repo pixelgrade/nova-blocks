@@ -187,14 +187,18 @@ function novablocks_cli_blocks_canonicalize( $args, $assoc_args ) {
  * at all, since a headless-Chrome fallback must not be reachable from an MCP client (§3.11).
  *
  * @param array $params `{ post_ids: int[], post_type?: ?string, all_parts?: bool, dry_run?: bool,
- *                        targets?: array }`. `targets` short-circuits resolution for a caller that
- *                        already resolved (the CLI does, to count posts for its confirmation
- *                        prompt) — the resolution, cap gate included, is the same helper either way.
+ *                        targets?: array, surface?: string }`. `targets` short-circuits resolution
+ *                        for a caller that already resolved (the CLI does, to count posts for its
+ *                        confirmation prompt) — the resolution, cap gate included, is the same
+ *                        helper either way. `surface` — `'cli'` (default) or `'ability'` — is
+ *                        forwarded only to the `harness_unavailable` wording (security review
+ *                        LOW-2 item 2): the machine `code`/`data.reason` are identical either way.
  *
  * @return array `{ exit, code, summary, data, warnings }`.
  */
 function novablocks_agent_blocks_canonicalize_core( array $params ): array {
 	$dry_run = ! empty( $params['dry_run'] );
+	$surface = isset( $params['surface'] ) ? (string) $params['surface'] : 'cli';
 
 	$targets = isset( $params['targets'] ) && is_array( $params['targets'] )
 		? $params['targets']
@@ -207,11 +211,11 @@ function novablocks_agent_blocks_canonicalize_core( array $params ): array {
 	$probe = novablocks_cli_harness_probe();
 
 	if ( empty( $probe['available'] ) ) {
-		return novablocks_cli_harness_unavailable_result( $probe );
+		return novablocks_cli_harness_unavailable_result( $probe, '', $surface );
 	}
 
 	// --------------------------------------------- iterate to the fixed point (bounded, §1.4)
-	$iteration = novablocks_cli_canonicalize_to_fixed_point( $targets );
+	$iteration = novablocks_cli_canonicalize_to_fixed_point( $targets, $surface );
 
 	if ( is_wp_error( $iteration ) ) {
 		return novablocks_agent_blocks_error_result( $iteration );
@@ -355,7 +359,7 @@ function novablocks_agent_blocks_canonicalize_core( array $params ): array {
 	// The verification pass runs in `validate` mode: byte-stability was already established by the
 	// iteration loop above, so all that is left to prove here is the §3.9 claim — zero invalid on a
 	// FRESH parse of what the database actually holds.
-	$verify = novablocks_cli_harness_invoke( 'validate', $verify_documents );
+	$verify = novablocks_cli_harness_invoke( 'validate', $verify_documents, $surface );
 
 	if ( is_wp_error( $verify ) ) {
 		return novablocks_agent_blocks_error_result( $verify );
@@ -673,11 +677,14 @@ const NOVABLOCKS_CLI_MAX_CANONICALIZE_PASSES = 3;
  * after pass 1 would tell an agent "done" about a document the very next `canonicalize` in its
  * pipeline would change again.
  *
- * @param array $targets Target records (`post_id`, `content`, …).
+ * @param array  $targets Target records (`post_id`, `content`, …).
+ * @param string $surface `'cli'` (default) or `'ability'` — forwarded to `novablocks_cli_harness_invoke()`
+ *                         so a mid-loop protocol-mismatch error is worded per surface (security
+ *                         review LOW-2 item 2).
  *
  * @return array|WP_Error `{ posts: [ post_id => result ], passes_run: int }`, or WP_Error.
  */
-function novablocks_cli_canonicalize_to_fixed_point( array $targets ) {
+function novablocks_cli_canonicalize_to_fixed_point( array $targets, string $surface = 'cli' ) {
 	$state = [];
 
 	foreach ( $targets as $target ) {
@@ -720,7 +727,7 @@ function novablocks_cli_canonicalize_to_fixed_point( array $targets ) {
 			break;
 		}
 
-		$response = novablocks_cli_harness_invoke( 'canonicalize', $documents );
+		$response = novablocks_cli_harness_invoke( 'canonicalize', $documents, $surface );
 
 		if ( is_wp_error( $response ) ) {
 			return $response;

@@ -125,13 +125,18 @@ function novablocks_cli_blocks_validate( $args, $assoc_args ) {
  *   where that matters, and the redaction is upstream of this assembly, so neither surface can
  *   leak by forgetting.
  *
- * @param array $params `{ post_ids: int[], post_type?: ?string, all_parts?: bool, targets?: array }`.
- *                       `targets` short-circuits resolution when the caller already resolved (the
- *                       CLI does not; `canonicalize` does, to count posts for its confirmation).
+ * @param array $params `{ post_ids: int[], post_type?: ?string, all_parts?: bool, targets?: array,
+ *                        surface?: string }`. `targets` short-circuits resolution when the caller
+ *                       already resolved (the CLI does not; `canonicalize` does, to count posts
+ *                       for its confirmation). `surface` — `'cli'` (default) or `'ability'` — is
+ *                       forwarded only to the `harness_unavailable` wording (security review LOW-2
+ *                       item 2): the machine `code`/`data.reason` are identical either way.
  *
  * @return array `{ exit, code, summary, data, warnings }`.
  */
 function novablocks_agent_blocks_validate_core( array $params ): array {
+	$surface = isset( $params['surface'] ) ? (string) $params['surface'] : 'cli';
+
 	$targets = isset( $params['targets'] ) && is_array( $params['targets'] )
 		? $params['targets']
 		: novablocks_agent_blocks_resolve_targets( $params );
@@ -143,10 +148,10 @@ function novablocks_agent_blocks_validate_core( array $params ): array {
 	$probe = novablocks_cli_harness_probe();
 
 	if ( empty( $probe['available'] ) ) {
-		return novablocks_cli_harness_unavailable_result( $probe );
+		return novablocks_cli_harness_unavailable_result( $probe, '', $surface );
 	}
 
-	$response = novablocks_cli_harness_invoke( 'validate', novablocks_cli_harness_documents( $targets ) );
+	$response = novablocks_cli_harness_invoke( 'validate', novablocks_cli_harness_documents( $targets ), $surface );
 
 	if ( is_wp_error( $response ) ) {
 		return novablocks_agent_blocks_error_result( $response );

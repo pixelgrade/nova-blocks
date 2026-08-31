@@ -336,6 +336,42 @@ namespace {
 	}
 
 	/**
+	 * Security review LOW-2 item 2: nothing an `edit_posts`-capable MCP client reads off an
+	 * ability may carry the server's absolute filesystem layout. Recurses through arrays (so a
+	 * whole `data` payload can be handed in directly) and, for every string found, refuses:
+	 * `ABSPATH`'s own value, the `PIXELGRADE_AGENT_HARNESS_PATH` constant this file deliberately
+	 * points at a distinctive absolute path, and — the general case a grep for the leak would
+	 * use — any run of two-or-more `/segment` path components (`/var/…`, `/Users/…`, the plugin
+	 * directory, or any other absolute path a future probe might embed).
+	 *
+	 * @param mixed  $value Summary string, or a `data` array (recursed).
+	 * @param string $label Assertion label prefix.
+	 */
+	function nba_assert_no_absolute_path( $value, string $label ): void {
+		if ( is_array( $value ) ) {
+			foreach ( $value as $key => $item ) {
+				nba_assert_no_absolute_path( $item, $label . '.' . $key );
+			}
+
+			return;
+		}
+
+		if ( ! is_string( $value ) ) {
+			return;
+		}
+
+		assert_true( false === strpos( $value, ABSPATH ), $label . ': must not contain ABSPATH.' );
+		assert_true(
+			false === strpos( $value, PIXELGRADE_AGENT_HARNESS_PATH ),
+			$label . ': must not contain the PIXELGRADE_AGENT_HARNESS_PATH constant value (the absolute harness directory).'
+		);
+		assert_true(
+			1 !== preg_match( '#(?:^|[\s(:=])/(?:[A-Za-z0-9_.-]+/)+[A-Za-z0-9_.-]*#', $value ),
+			$label . ': must not contain a leading-"/" filesystem path — found one in: ' . $value
+		);
+	}
+
+	/**
 	 * Compare payloads by their JSON encoding.
 	 *
 	 * `assert_same()` is strict, and the pinned payload carries `new stdClass()` for an empty
@@ -604,28 +640,57 @@ namespace {
 	assert_same( nba_json( $core['data'] ), nba_json( $cli['envelope']['data'] ), 'patterns: ability and command produce identical data for identical input.' );
 
 	// validate / canonicalize: with the harness absent, BOTH surfaces report the same §3.11
-	// graceful-absence envelope, which proves the shared core (and the shared install-step
-	// summary) rather than two hand-written near-misses.
-	$core    = novablocks_agent_blocks_validate_core( [ 'post_ids' => [ 10 ] ] );
-	$ability = call_user_func( $GLOBALS['nba_abilities']['pixelgrade/validate-post']['execute_callback'], [ 'post_ids' => [ 10 ] ] );
-	$cli     = nba_run_cli( 'novablocks_cli_blocks_validate', [ 10 ], [ 'format' => 'json' ] );
+	// graceful-absence CODE — the machine contract — through the SAME shared core, which is what
+	// proves there is no second hand-written near-miss. The human-facing summary/data are NOT
+	// identical between the two surfaces (security review LOW-2 item 2, fixed here): the CLI keeps
+	// its absolute-path operator guidance, and the ability gets install-step wording with no
+	// filesystem path, because that summary is what an `edit_posts`-capable remote MCP client
+	// reads off the whitelisted `validate-post`/`canonicalize-post` abilities.
+	$core_cli = novablocks_agent_blocks_validate_core( [ 'post_ids' => [ 10 ] ] );
+	$ability  = call_user_func( $GLOBALS['nba_abilities']['pixelgrade/validate-post']['execute_callback'], [ 'post_ids' => [ 10 ] ] );
+	$cli      = nba_run_cli( 'novablocks_cli_blocks_validate', [ 10 ], [ 'format' => 'json' ] );
 
-	assert_same( 'harness_unavailable', $core['code'], 'validate core: no harness installed → harness_unavailable.' );
+	assert_same( 'harness_unavailable', $core_cli['code'], 'validate core (cli surface): no harness installed → harness_unavailable.' );
 	assert_true( is_wp_error( $ability ), 'validate-post: harness_unavailable is ok:false, so it travels as a WP_Error.' );
-	assert_same( 'harness_unavailable', $ability->get_error_code(), 'validate-post: the ability reports the contract token.' );
-	assert_same( $core['summary'], $ability->get_error_message(), 'validate-post: the summary — install step included — comes from the shared core.' );
+	assert_same( 'harness_unavailable', $ability->get_error_code(), 'validate-post: the ability reports the SAME machine token as the CLI (the shared core, the shared "code").' );
 	assert_same( 1, $cli['exit'], 'validate CLI: harness_unavailable is exit 1.' );
-	assert_same( $core['summary'], $cli['envelope']['summary'], 'validate: CLI and ability name the same install step.' );
-	assert_same( nba_json( $core['data'] ), nba_json( $cli['envelope']['data'] ), 'validate: identical data on both surfaces.' );
-	assert_same( nba_json( $core['data'] ), nba_json( $ability->get_error_data()['data'] ), 'validate-post: the WP_Error carries the core data under "data".' );
+	assert_same( $core_cli['summary'], $cli['envelope']['summary'], 'validate: the CLI callback and a core call defaulting to the cli surface name the same install step.' );
+	assert_same( nba_json( $core_cli['data'] ), nba_json( $cli['envelope']['data'] ), 'validate: the CLI callback and a core call defaulting to the cli surface carry identical data.' );
 
-	$core    = novablocks_agent_blocks_canonicalize_core( [ 'post_ids' => [ 10 ], 'dry_run' => true ] );
-	$ability = call_user_func( $GLOBALS['nba_abilities']['pixelgrade/canonicalize-post']['execute_callback'], [ 'post_ids' => [ 10 ], 'dry_run' => true ] );
-	$cli     = nba_run_cli( 'novablocks_cli_blocks_canonicalize', [ 10 ], [ 'format' => 'json', 'dry-run' => true ] );
+	// The ability's summary/data must be produced by the SAME shared core called with the SAME
+	// probe, just a different surface — proving one rule, two wordings, not a second copy.
+	$core_ability = novablocks_agent_blocks_validate_core( [ 'post_ids' => [ 10 ], 'surface' => 'ability' ] );
+	assert_same( $core_ability['summary'], $ability->get_error_message(), 'validate-post: the ability summary comes from the shared core called with surface "ability".' );
+	assert_same( nba_json( $core_ability['data'] ), nba_json( $ability->get_error_data()['data'] ), 'validate-post: the WP_Error carries the ability-surface core data under "data".' );
+	assert_same( 'harness_unavailable', $core_ability['code'], 'validate core (ability surface): the code is unaffected by surface — only wording differs.' );
+	assert_same( $core_cli['code'], $core_ability['code'], 'validate: the machine "code" is IDENTICAL across surfaces; only summary/data wording differs.' );
+	assert_same( $core_cli['data']['reason'], $core_ability['data']['reason'], 'validate: data.reason (also machine-readable) is identical across surfaces.' );
 
-	assert_same( 'harness_unavailable', $core['code'], 'canonicalize core: no harness installed → harness_unavailable.' );
-	assert_same( 'harness_unavailable', $ability->get_error_code(), 'canonicalize-post: same token through the ability.' );
-	assert_same( $core['summary'], $cli['envelope']['summary'], 'canonicalize: CLI and ability share the core summary.' );
+	// The actual LOW-2 item 2 regression check: nothing that reaches an MCP client through the
+	// ability path may carry an absolute filesystem path — not the harness directory
+	// (PIXELGRADE_AGENT_HARNESS_PATH above, deliberately set to a distinctive absolute path), not
+	// ABSPATH, and no bare "/…" token anywhere in the summary or in any string value of `data`.
+	nba_assert_no_absolute_path( $ability->get_error_message(), 'validate-post ability summary' );
+	nba_assert_no_absolute_path( $ability->get_error_data()['data'], 'validate-post ability data' );
+	// … while still naming the install step, so the ability caller is not left with nothing to act on.
+	assert_true( false !== stripos( $ability->get_error_message(), 'npm ci' ), 'validate-post ability: the summary still names the install command.' );
+	assert_true( false !== stripos( $ability->get_error_message(), 'agent-harness' ), 'validate-post ability: the summary still names the package.' );
+
+	$core_cli = novablocks_agent_blocks_canonicalize_core( [ 'post_ids' => [ 10 ], 'dry_run' => true ] );
+	$ability  = call_user_func( $GLOBALS['nba_abilities']['pixelgrade/canonicalize-post']['execute_callback'], [ 'post_ids' => [ 10 ], 'dry_run' => true ] );
+	$cli      = nba_run_cli( 'novablocks_cli_blocks_canonicalize', [ 10 ], [ 'format' => 'json', 'dry-run' => true ] );
+
+	assert_same( 'harness_unavailable', $core_cli['code'], 'canonicalize core (cli surface): no harness installed → harness_unavailable.' );
+	assert_same( 'harness_unavailable', $ability->get_error_code(), 'canonicalize-post: same machine token through the ability.' );
+	assert_same( $core_cli['summary'], $cli['envelope']['summary'], 'canonicalize: the CLI callback and a core call defaulting to the cli surface share the summary.' );
+
+	$core_ability = novablocks_agent_blocks_canonicalize_core( [ 'post_ids' => [ 10 ], 'dry_run' => true, 'surface' => 'ability' ] );
+	assert_same( $core_ability['summary'], $ability->get_error_message(), 'canonicalize-post: the ability summary comes from the shared core called with surface "ability".' );
+	assert_same( $core_cli['code'], $core_ability['code'], 'canonicalize: the machine "code" is IDENTICAL across surfaces; only summary/data wording differs.' );
+
+	nba_assert_no_absolute_path( $ability->get_error_message(), 'canonicalize-post ability summary' );
+	nba_assert_no_absolute_path( $ability->get_error_data()['data'], 'canonicalize-post ability data' );
+	assert_true( false !== stripos( $ability->get_error_message(), 'npm ci' ), 'canonicalize-post ability: the summary still names the install command.' );
 
 	echo "execute parity contract OK\n";
 
