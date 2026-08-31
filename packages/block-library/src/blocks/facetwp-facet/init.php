@@ -34,8 +34,13 @@ if ( ! function_exists( 'novablocks_render_facetwp_facet_block' ) ) {
 		$attributes_config = novablocks_get_facetwp_facet_attributes();
 		$attributes        = novablocks_get_attributes_with_defaults( $attributes, $attributes_config );
 
+		$choice_style = in_array( $attributes['choiceStyle'], [ 'auto', 'controls', 'text' ], true )
+			? $attributes['choiceStyle']
+			: 'auto';
+
 		$classes = [
 			'nb-facetwp-facet',
+			'nb-facetwp-facet--choice-style-' . $choice_style,
 		];
 
 		$facets = novablocks_get_facets();

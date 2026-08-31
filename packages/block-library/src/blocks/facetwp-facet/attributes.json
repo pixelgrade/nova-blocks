@@ -10,5 +10,9 @@
 	"hideLabels": {
 		"type": "boolean",
 		"default": false
+	},
+	"choiceStyle": {
+		"type": "string",
+		"default": "auto"
 	}
 }
