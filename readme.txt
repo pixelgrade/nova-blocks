@@ -3,7 +3,7 @@ Contributors: pixelgrade, vlad.olaru, babbardel, razvanonofrei, gorby31
 Tags: blocks, gutenberg, gutenberg blocks, page builder, full site editing
 Requires at least: 7.0
 Tested up to: 7.1
-Stable tag: 2.6.0
+Stable tag: 2.6.1
 Requires PHP: 7.4
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -113,6 +113,9 @@ Yes! Nova Block's core features are free to use.
 3. Slideshow Me the Way block options
 
 == Changelog ==
+
+= 2.6.1 =
+* Fix: Let marked Query Loops use their own query with Pixelgrade Filters, including nested Cards Collections on singular pages.
 
 = 2.6.0 =
 * New: Add opt-in Color Signal controls to Columns and individual Column blocks, with Column palettes inheriting from their parent Columns by default.
