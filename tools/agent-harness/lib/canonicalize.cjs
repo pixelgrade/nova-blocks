@@ -18,6 +18,21 @@
 
 'use strict';
 
+const crypto = require( 'node:crypto' );
+
+/**
+ * Digest a string. Used for the innerText comparison, which is done by digest so a multi-pass
+ * caller can compare the FIRST pass's "before" against the LAST pass's "after" without the full
+ * visible text of every document travelling back through the pipe on every pass.
+ *
+ * @param {string} value Value.
+ *
+ * @return {string} Hex sha1.
+ */
+function sha1( value ) {
+	return crypto.createHash( 'sha1' ).update( String( value ), 'utf8' ).digest( 'hex' );
+}
+
 /**
  * Flatten a parsed block tree depth-first, the same order the editor's own block list uses, so an
  * `index` in a report is stable and addressable.
@@ -261,20 +276,27 @@ function processDocument( context, document, mode ) {
 	const reparsed = wp.blocks.parse( serialized );
 	const invalidAfter = collectInvalid( reparsed );
 
+	const textBefore = innerText( win, content );
+	const textAfter = innerText( win, serialized );
+
 	result.canonical_content = serialized;
 	result.changed = serialized !== content;
 	result.invalid_after_same_session = invalidAfter;
 	result.converged = 0 === invalidAfter.length;
 	result.nested_paragraphs_before = countNestedParagraphs( parsed );
 	result.nested_paragraphs_after = countNestedParagraphs( reparsed );
-	result.inner_text_before = innerText( win, content );
-	result.inner_text_after = innerText( win, serialized );
-	result.inner_text_preserved = result.inner_text_before === result.inner_text_after;
+	// Digests, not the text itself: the caller compares pass 1's `before` against the LAST pass's
+	// `after` to gate the cumulative rewrite, and shipping the full visible text of every document
+	// back through the pipe on every pass would grow the response without adding information.
+	result.inner_text_before_sha1 = sha1( textBefore );
+	result.inner_text_after_sha1 = sha1( textAfter );
+	result.inner_text_preserved = textBefore === textAfter;
 
 	return result;
 }
 
 module.exports = {
+	sha1,
 	flatten,
 	collectInvalid,
 	invalidReason,

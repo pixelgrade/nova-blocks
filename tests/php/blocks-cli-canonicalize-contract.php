@@ -272,11 +272,12 @@ namespace {
 	/**
 	 * Stage the harness response for the Nth invocation of this command run.
 	 *
-	 * `validate` invokes the harness once. `canonicalize` invokes it twice — pass 1 produces the
-	 * canonical content, pass 2 re-reads what landed in the database and both re-validates it and
-	 * re-serializes it (the byte-stability check). Both passes use mode "canonicalize", so the
-	 * stub dispatches on call order, which is also what lets a test make pass 2 disagree with
-	 * pass 1 — the whole point of the §3.9 fresh-re-parse proof.
+	 * `validate` invokes the harness once. `canonicalize` iterates to a byte-stable fixed point —
+	 * each pass feeding the previous pass's output back in, bounded at 3 — and then makes ONE more
+	 * invocation in `validate` mode over what the database actually holds. So the stub dispatches
+	 * on call order: calls 1..N are the canonicalization passes, call N+1 is the fresh re-parse.
+	 * That ordering is also what lets a test make the verification disagree with the passes, which
+	 * is the whole point of the §3.9 fresh-re-parse proof.
 	 */
 	function nbq_response( $call, array $documents ) {
 		file_put_contents(
@@ -542,6 +543,51 @@ namespace {
 	echo "target resolution contract OK\n";
 
 	// =======================================================================================
+	// Canonicalize helpers. The command iterates to a byte-stable fixed point (bounded at 3) and
+	// then makes ONE verification call in `validate` mode, so a scenario stages N pass responses
+	// followed by the verification response. A pass that returns the content it was given is what
+	// ends the loop.
+	// =======================================================================================
+
+	/**
+	 * Build one per-document canonicalize-pass result with sane defaults.
+	 *
+	 * The text gate reads DIGESTS, not the text: the command compares the first pass's `before`
+	 * against the last pass's `after`, so a test expresses "text was lost" by handing back a
+	 * different `inner_text_after_sha1`, and "text survived" by handing back the same one.
+	 */
+	function nbq_pass( $canonical_content, array $overrides = [] ) {
+		return array_merge(
+			[
+				'id'                       => 10,
+				'block_count'              => 1,
+				'invalid'                  => [],
+				'converged'                => true,
+				'canonical_content'        => $canonical_content,
+				'inner_text_before_sha1'   => 'TEXT',
+				'inner_text_after_sha1'    => 'TEXT',
+				'nested_paragraphs_before' => 0,
+				'nested_paragraphs_after'  => 0,
+			],
+			$overrides
+		);
+	}
+
+	/**
+	 * Stage a whole canonicalize run: the ordered canonicalization passes, then the verification.
+	 *
+	 * @param array $passes One document-list per pass, in order.
+	 * @param array $verify The `validate`-mode document list for the fresh re-parse.
+	 */
+	function nbq_stage_canonicalize( array $passes, array $verify ) {
+		$call = 0;
+		foreach ( $passes as $pass ) {
+			nbq_response( ++$call, $pass );
+		}
+		nbq_response( ++$call, $verify );
+	}
+
+	// =======================================================================================
 	// §3.6 — canonicalize is destructive: --yes, --dry-run, table-mode confirm.
 	// =======================================================================================
 
@@ -552,31 +598,35 @@ namespace {
 	assert_same( 'confirmation_required', WP_CLI::$printed_value['code'], 'canonicalize: confirmation code.' );
 	assert_same( [], $GLOBALS['nbq_updates'], 'canonicalize: an unconfirmed run writes nothing.' );
 	assert_same( 0, WP_CLI::$confirmed, 'canonicalize: json mode must NEVER prompt — a prompt corrupts the machine contract.' );
+	assert_same( 0, nbq_harness_calls(), 'canonicalize: an unconfirmed run must not even start the harness.' );
 
 	nbq_reset();
-	nbq_post( 10, '<!-- wp:paragraph --><p>a</p><!-- /wp:paragraph -->' );
-	nbq_response( 1, [ [ 'id' => 10, 'invalid' => [], 'block_count' => 1, 'converged' => true, 'canonical_content' => '<!-- wp:paragraph --><p>a</p><!-- /wp:paragraph -->', 'inner_text_preserved' => true, 'nested_paragraphs_before' => 0, 'nested_paragraphs_after' => 0 ] ] );
-	nbq_response( 2, [ [ 'id' => 10, 'invalid' => [], 'block_count' => 1 ] ] );
+	$already = '<!-- wp:paragraph --><p>a</p><!-- /wp:paragraph -->';
+	nbq_post( 10, $already );
+	nbq_stage_canonicalize( [ [ nbq_pass( $already ) ] ], [ [ 'id' => 10, 'invalid' => [], 'block_count' => 1 ] ] );
 	$exit = nbq_run( 'novablocks_cli_blocks_canonicalize', [ 10 ], [] ); // table mode, no --yes
 	assert_same( 0, $exit, 'canonicalize: table mode accepts an interactive confirmation instead of --yes.' );
 	assert_same( 1, WP_CLI::$confirmed, 'canonicalize: table mode prompts exactly once.' );
 
 	// --dry-run: never prompts, never requires --yes, never writes.
 	nbq_reset();
-	nbq_post( 10, '<!-- wp:paragraph --><p>a</p><!-- /wp:paragraph -->' );
-	nbq_response( 1, [ [ 'id' => 10, 'invalid' => [ [ 'index' => 0, 'block_name' => 'core/paragraph', 'reason' => 'x' ] ], 'block_count' => 1, 'converged' => true, 'canonical_content' => '<!-- wp:paragraph --><p>A</p><!-- /wp:paragraph -->', 'inner_text_preserved' => true, 'nested_paragraphs_before' => 0, 'nested_paragraphs_after' => 0 ] ] );
-	nbq_response( 2, [ [ 'id' => 10, 'invalid' => [] ] ] );
+	$original = '<!-- wp:paragraph --><p>a</p><!-- /wp:paragraph -->';
+	$fixed    = '<!-- wp:paragraph --><p>A</p><!-- /wp:paragraph -->';
+	nbq_post( 10, $original );
+	nbq_stage_canonicalize(
+		[
+			[ nbq_pass( $fixed, [ 'invalid' => [ [ 'index' => 0, 'block_name' => 'core/paragraph', 'reason' => 'x' ] ] ] ) ],
+			[ nbq_pass( $fixed ) ],
+		],
+		[ [ 'id' => 10, 'invalid' => [] ] ]
+	);
 	$exit = nbq_run( 'novablocks_cli_blocks_canonicalize', [ 10 ], [ 'format' => 'json', 'dry-run' => true ] );
 	assert_same( 0, $exit, 'canonicalize --dry-run: no --yes needed, exit 0.' );
 	assert_same( 0, WP_CLI::$confirmed, 'canonicalize --dry-run: never prompts.' );
 	assert_same( [], $GLOBALS['nbq_updates'], 'canonicalize --dry-run: writes nothing.' );
 	assert_same( true, WP_CLI::$printed_value['data']['dry_run'], 'canonicalize --dry-run: the envelope says so.' );
 	assert_same( [ 10 ], WP_CLI::$printed_value['data']['updated'], 'canonicalize --dry-run: reports what WOULD change.' );
-	assert_same(
-		'<!-- wp:paragraph --><p>a</p><!-- /wp:paragraph -->',
-		$GLOBALS['nbq_posts'][10]->post_content,
-		'canonicalize --dry-run: stored content is byte-identical afterwards.'
-	);
+	assert_same( $original, $GLOBALS['nbq_posts'][10]->post_content, 'canonicalize --dry-run: stored content is byte-identical afterwards.' );
 
 	echo "destructive-gate contract OK\n";
 
@@ -586,52 +636,53 @@ namespace {
 
 	nbq_reset();
 	nbq_post( 10, '<!-- wp:heading --><h2>a</h2><!-- /wp:heading -->' );
-	nbq_response(
-		1,
-		[ [
-			'id'                       => 10,
-			'block_count'              => 1,
-			'invalid'                  => [ [ 'index' => 0, 'block_name' => 'core/heading', 'reason' => 'tag mismatch' ] ],
-			'converged'                => true,
-			'canonical_content'        => '<!-- wp:heading {"level":2} --><h2 class="wp-block-heading">a</h2><!-- /wp:heading -->',
-			'inner_text_preserved'     => true,
-			'nested_paragraphs_before' => 0,
-			'nested_paragraphs_after'  => 0,
-		] ]
+	$canonical = '<!-- wp:heading {"level":2} --><h2 class="wp-block-heading">a</h2><!-- /wp:heading -->';
+	nbq_stage_canonicalize(
+		[
+			[ nbq_pass( $canonical, [ 'invalid' => [ [ 'index' => 0, 'block_name' => 'core/heading', 'reason' => 'tag mismatch' ] ] ] ) ],
+			[ nbq_pass( $canonical ) ],
+		],
+		[ [ 'id' => 10, 'invalid' => [], 'block_count' => 1 ] ]
 	);
-	nbq_response( 2, [ [ 'id' => 10, 'invalid' => [], 'block_count' => 1 ] ] );
 	$exit = nbq_run( 'novablocks_cli_blocks_canonicalize', [ 10 ], [ 'format' => 'json', 'yes' => true ] );
-	assert_same( 0, $exit, 'canonicalize: invalid_after == 0 exits 0.' );
+	assert_same( 0, $exit, 'canonicalize: invalid_after == 0 and byte-stable exits 0.' );
 	assert_same( 'ok', WP_CLI::$printed_value['code'], 'canonicalize: success code.' );
-	assert_same( [ 10 ], $GLOBALS['nbq_updates'], 'canonicalize: exactly one write.' );
-	assert_same(
-		'<!-- wp:heading {"level":2} --><h2 class="wp-block-heading">a</h2><!-- /wp:heading -->',
-		$GLOBALS['nbq_posts'][10]->post_content,
-		'canonicalize: the canonical content is what landed.'
-	);
+	assert_same( [ 10 ], $GLOBALS['nbq_updates'], 'canonicalize: exactly one write — the fixed point, not one write per pass.' );
+	assert_same( $canonical, $GLOBALS['nbq_posts'][10]->post_content, 'canonicalize: the canonical content is what landed.' );
 	assert_same( 1, count( WP_CLI::$printed_value['data']['invalid_before'] ), 'canonicalize: invalid_before is reported (§1.4 mandatory read-back).' );
 	assert_same( 10, WP_CLI::$printed_value['data']['invalid_before'][0]['post_id'], 'canonicalize: invalid_before entries carry post_id.' );
 	assert_same( [], WP_CLI::$printed_value['data']['invalid_after'], 'canonicalize: invalid_after is reported.' );
 	assert_same( true, WP_CLI::$printed_value['data']['posts'][0]['inner_text_preserved'], 'canonicalize: the innerText check is per post (§5 P3 (c)).' );
+	assert_same( true, WP_CLI::$printed_value['data']['posts'][0]['stable'], 'canonicalize: the post reached its fixed point.' );
+	assert_same( 2, WP_CLI::$printed_value['data']['posts'][0]['passes'], 'canonicalize: data.posts[].passes keeps the multi-pass fact visible.' );
 	assert_same( [ 10 ], WP_CLI::$printed_value['data']['updated'], 'canonicalize: updated list.' );
 
-	// Idempotence (§3.5): a canonical post canonicalizes to itself — no write, code noop, exit 0.
+	// invalid_before comes from the FIRST pass only. A later pass finding nothing invalid must not
+	// erase the finding that motivated the rewrite.
+	assert_same( 'core/heading', WP_CLI::$printed_value['data']['invalid_before'][0]['block_name'], 'canonicalize: invalid_before describes the ORIGINAL document.' );
+
+	// Idempotence (§3.5): a canonical post canonicalizes to itself on the first pass — no write,
+	// code noop, exit 0, and the loop stops after one pass.
 	nbq_reset();
 	$canonical = '<!-- wp:paragraph --><p>a</p><!-- /wp:paragraph -->';
 	nbq_post( 10, $canonical );
-	nbq_response( 1, [ [ 'id' => 10, 'block_count' => 1, 'invalid' => [], 'converged' => true, 'canonical_content' => $canonical, 'inner_text_preserved' => true, 'nested_paragraphs_before' => 0, 'nested_paragraphs_after' => 0 ] ] );
-	nbq_response( 2, [ [ 'id' => 10, 'invalid' => [], 'block_count' => 1 ] ] );
+	nbq_stage_canonicalize( [ [ nbq_pass( $canonical ) ] ], [ [ 'id' => 10, 'invalid' => [], 'block_count' => 1 ] ] );
 	$exit = nbq_run( 'novablocks_cli_blocks_canonicalize', [ 10 ], [ 'format' => 'json', 'yes' => true ] );
 	assert_same( 0, $exit, 'canonicalize: an idempotent second run exits 0.' );
 	assert_same( 'noop', WP_CLI::$printed_value['code'], 'canonicalize: an idempotent second run is a noop (§3.5).' );
 	assert_same( [], $GLOBALS['nbq_updates'], 'canonicalize: nothing is written when the bytes already match — no revision churn.' );
 	assert_same( [ 10 ], WP_CLI::$printed_value['data']['unchanged'], 'canonicalize: the post is reported unchanged.' );
+	assert_same( 1, WP_CLI::$printed_value['data']['posts'][0]['passes'], 'canonicalize: an already-canonical post costs exactly one pass.' );
+	assert_same( 2, nbq_harness_calls(), 'canonicalize: one pass plus one verification.' );
 
-	// nova-blocks#610: a non-converging document exits 2, honestly, and is not retried.
+	// A document still invalid on the fresh re-parse exits 2 (nova-blocks#610 class).
 	nbq_reset();
 	nbq_post( 10, '<!-- wp:paragraph --><p>x</p><!-- /wp:paragraph -->' );
-	nbq_response( 1, [ [ 'id' => 10, 'block_count' => 1, 'invalid' => [], 'converged' => false, 'canonical_content' => '<!-- wp:paragraph --><p>x </p><!-- /wp:paragraph -->', 'inner_text_preserved' => true, 'nested_paragraphs_before' => 0, 'nested_paragraphs_after' => 0 ] ] );
-	nbq_response( 2, [ [ 'id' => 10, 'invalid' => [ [ 'index' => 0, 'block_name' => 'core/paragraph', 'reason' => 'content mismatch' ] ] ] ] );
+	$drift = '<!-- wp:paragraph --><p>x </p><!-- /wp:paragraph -->';
+	nbq_stage_canonicalize(
+		[ [ nbq_pass( $drift, [ 'converged' => false ] ) ], [ nbq_pass( $drift, [ 'converged' => false ] ) ] ],
+		[ [ 'id' => 10, 'invalid' => [ [ 'index' => 0, 'block_name' => 'core/paragraph', 'reason' => 'content mismatch' ] ] ] ]
+	);
 	$exit = nbq_run( 'novablocks_cli_blocks_canonicalize', [ 10 ], [ 'format' => 'json', 'yes' => true ] );
 	assert_same( 2, $exit, 'canonicalize: a document still invalid after the write exits 2 (nova-blocks#610 class).' );
 	assert_same( true, WP_CLI::$printed_value['ok'], 'canonicalize: exit 2 stays ok:true.' );
@@ -641,38 +692,76 @@ namespace {
 	assert_true( false !== strpos( WP_CLI::$printed_value['summary'], 'do not re-run' ), 'canonicalize: the summary says not to retry.' );
 	assert_same( 0, WP_CLI::$printed_value['data']['posts'][0]['invalid_before'], 'canonicalize: #610 starts from zero invalid — that is the whole point of the case.' );
 
-	// The proof is the SECOND harness pass over what get_post() returns, not over the string just
+	// The proof is the verification pass over what get_post() returns, not over the string just
 	// handed to wp_update_post(). A filter that mangles content on save must be caught.
 	nbq_reset();
 	nbq_post( 10, '<!-- wp:paragraph --><p>a</p><!-- /wp:paragraph -->' );
-	nbq_response( 1, [ [ 'id' => 10, 'block_count' => 1, 'invalid' => [], 'converged' => true, 'canonical_content' => '<!-- wp:paragraph --><p>A</p><!-- /wp:paragraph -->', 'inner_text_preserved' => true, 'nested_paragraphs_before' => 0, 'nested_paragraphs_after' => 0 ] ] );
-	nbq_response( 2, [ [ 'id' => 10, 'invalid' => [ [ 'index' => 0, 'block_name' => 'core/paragraph', 'reason' => 'mangled on save' ] ] ] ] );
+	$fixed = '<!-- wp:paragraph --><p>A</p><!-- /wp:paragraph -->';
+	nbq_stage_canonicalize(
+		[ [ nbq_pass( $fixed ) ], [ nbq_pass( $fixed ) ] ],
+		[ [ 'id' => 10, 'invalid' => [ [ 'index' => 0, 'block_name' => 'core/paragraph', 'reason' => 'mangled on save' ] ] ] ]
+	);
 	$exit = nbq_run( 'novablocks_cli_blocks_canonicalize', [ 10 ], [ 'format' => 'json', 'yes' => true ] );
 	assert_same( 2, $exit, 'canonicalize: the fresh re-parse governs the exit code, not the same-session verdict (§3.9).' );
-	assert_same( 'mangled on save', WP_CLI::$printed_value['data']['invalid_after'][0]['reason'], 'canonicalize: invalid_after comes from the second pass.' );
+	assert_same( 'mangled on save', WP_CLI::$printed_value['data']['invalid_after'][0]['reason'], 'canonicalize: invalid_after comes from the verification pass.' );
 
 	// A failed write is surfaced, and does not get reported as a success.
 	nbq_reset();
 	nbq_post( 10, '<!-- wp:paragraph --><p>a</p><!-- /wp:paragraph -->' );
 	$GLOBALS['nbq_update_error'][10] = 'database is read-only';
-	nbq_response( 1, [ [ 'id' => 10, 'block_count' => 1, 'invalid' => [], 'converged' => true, 'canonical_content' => '<!-- wp:paragraph --><p>A</p><!-- /wp:paragraph -->', 'inner_text_preserved' => true, 'nested_paragraphs_before' => 0, 'nested_paragraphs_after' => 0 ] ] );
-	nbq_response( 2, [ [ 'id' => 10, 'invalid' => [] ] ] );
+	nbq_stage_canonicalize(
+		[ [ nbq_pass( $fixed ) ], [ nbq_pass( $fixed ) ] ],
+		[ [ 'id' => 10, 'invalid' => [] ] ]
+	);
 	$exit = nbq_run( 'novablocks_cli_blocks_canonicalize', [ 10 ], [ 'format' => 'json', 'yes' => true ] );
 	assert_true( in_array( 'write_failed', nbq_warning_codes(), true ), 'canonicalize: a failed write raises a write_failed warning.' );
 	assert_same( [], WP_CLI::$printed_value['data']['updated'], 'canonicalize: a failed write is not counted as updated.' );
 
 	echo "canonicalize write + proof contract OK\n";
 
-	// The proof costs exactly two harness invocations — one to canonicalize, one to re-read what
-	// landed. A third would mean the command is looping, which §1.4 forbids for non-converging
-	// documents; a single one would mean the "fresh re-parse" is same-session theatre.
+	// =======================================================================================
+	// Bounded iteration to the fixed point (§1.4 as amended v0.3.11).
+	// =======================================================================================
+
+	// The real P3-a shape: authored -> A -> B -> B. Three passes, all valid, exit 0 in ONE run.
 	nbq_reset();
-	nbq_post( 10, '<!-- wp:paragraph --><p>a</p><!-- /wp:paragraph -->' );
-	nbq_response( 1, [ [ 'id' => 10, 'block_count' => 1, 'invalid' => [], 'converged' => true, 'canonical_content' => '<!-- wp:paragraph --><p>A</p><!-- /wp:paragraph -->', 'inner_text_preserved' => true, 'nested_paragraphs_before' => 0, 'nested_paragraphs_after' => 0 ] ] );
-	nbq_response( 2, [ [ 'id' => 10, 'invalid' => [], 'changed' => false ] ] );
+	$authored = '<!-- wp:image {"id":20} --><figure class="wp-block-image aligncenter"></figure><!-- /wp:image -->';
+	$passA    = '<!-- wp:image {"id":20} --><figure class="wp-block-image aligncenter"></figure><!-- /wp:image --> ';
+	$passB    = '<!-- wp:image {"id":20,"className":"aligncenter"} --><figure class="wp-block-image aligncenter"></figure><!-- /wp:image -->';
+	nbq_post( 10, $authored );
+	nbq_stage_canonicalize(
+		[ [ nbq_pass( $passA ) ], [ nbq_pass( $passB ) ], [ nbq_pass( $passB ) ] ],
+		[ [ 'id' => 10, 'invalid' => [], 'block_count' => 1 ] ]
+	);
 	$exit = nbq_run( 'novablocks_cli_blocks_canonicalize', [ 10 ], [ 'format' => 'json', 'yes' => true ] );
-	assert_same( 0, $exit, 'canonicalize: the two-pass run succeeds.' );
-	assert_same( 2, nbq_harness_calls(), 'canonicalize: exactly two harness invocations — canonicalize, then a fresh re-read.' );
+	assert_same( 0, $exit, 'canonicalize: a document needing three passes still exits 0 in ONE command run.' );
+	assert_same( 'ok', WP_CLI::$printed_value['code'], 'canonicalize: three-pass convergence is a plain success.' );
+	assert_same( 3, WP_CLI::$printed_value['data']['posts'][0]['passes'], 'canonicalize: passes > 1 is recorded, so the multi-pass fact never disappears.' );
+	assert_same( true, WP_CLI::$printed_value['data']['posts'][0]['stable'], 'canonicalize: the document reached its fixed point.' );
+	assert_same( [], WP_CLI::$printed_value['data']['not_yet_stable'], 'canonicalize: nothing is left unstable.' );
+	assert_same(
+		$passB,
+		$GLOBALS['nbq_posts'][10]->post_content,
+		'canonicalize: the FIXED POINT is written — not the first pass, and not once per pass.'
+	);
+	assert_same( [ 10 ], $GLOBALS['nbq_updates'], 'canonicalize: three passes still produce exactly one write.' );
+	assert_same( 4, nbq_harness_calls(), 'canonicalize: three passes plus one verification.' );
+
+	// Still moving after the budget: exit 2, code not_yet_stable. That is oscillation, not slow
+	// convergence, so the command stops instead of iterating forever.
+	nbq_reset();
+	nbq_post( 10, 'v0' );
+	nbq_stage_canonicalize(
+		[ [ nbq_pass( 'v1' ) ], [ nbq_pass( 'v2' ) ], [ nbq_pass( 'v3' ) ] ],
+		[ [ 'id' => 10, 'invalid' => [] ] ]
+	);
+	$exit = nbq_run( 'novablocks_cli_blocks_canonicalize', [ 10 ], [ 'format' => 'json', 'yes' => true ] );
+	assert_same( 2, $exit, 'canonicalize: a document still changing after the pass budget exits 2.' );
+	assert_same( 'not_yet_stable', WP_CLI::$printed_value['code'], 'canonicalize: the unstable code.' );
+	assert_same( [ 10 ], WP_CLI::$printed_value['data']['not_yet_stable'], 'canonicalize: data names the unstable post.' );
+	assert_same( 3, WP_CLI::$printed_value['data']['posts'][0]['passes'], 'canonicalize: the budget is 3 passes, not more.' );
+	assert_same( 4, nbq_harness_calls(), 'canonicalize: the loop is BOUNDED — three passes, never a fourth.' );
+	assert_true( in_array( 'not_yet_stable', nbq_warning_codes(), true ), 'canonicalize: instability is also a warning.' );
 
 	nbq_reset();
 	nbq_post( 10, '<!-- wp:paragraph --><p>a</p><!-- /wp:paragraph -->' );
@@ -680,59 +769,43 @@ namespace {
 	$exit = nbq_run( 'novablocks_cli_blocks_validate', [ 10 ], [ 'format' => 'json' ] );
 	assert_same( 1, nbq_harness_calls(), 'validate: exactly one harness invocation — it writes nothing, so there is nothing to re-read.' );
 
-	// Byte-stability: canonicalization is not always a ONE-pass fixed point. WordPress promotes a
-	// class present in the saved markup but absent from the generated save output into an explicit
-	// className attribute on the next parse, so a valid first pass can still re-serialize longer.
-	// Measured on the P3-a fixture: 67,341 authored -> 64,661 -> 65,067 -> 65,067. That is a
-	// warning, never an error: the content IS valid, which is what the contract's exit codes gate
-	// on.
-	nbq_reset();
-	nbq_post( 10, '<!-- wp:columns --><div class="wp-block-columns is-not-stacked-on-mobile"></div><!-- /wp:columns -->' );
-	nbq_response( 1, [ [ 'id' => 10, 'block_count' => 1, 'invalid' => [], 'converged' => true, 'canonical_content' => '<!-- wp:columns --><div class="wp-block-columns is-not-stacked-on-mobile"></div><!-- /wp:columns -->x', 'inner_text_preserved' => true, 'nested_paragraphs_before' => 0, 'nested_paragraphs_after' => 0 ] ] );
-	nbq_response( 2, [ [ 'id' => 10, 'invalid' => [], 'changed' => true ] ] );
-	$exit = nbq_run( 'novablocks_cli_blocks_canonicalize', [ 10 ], [ 'format' => 'json', 'yes' => true ] );
-	assert_same( 0, $exit, 'canonicalize: a valid-but-not-yet-byte-stable result still exits 0 — validity is the gate (§1.4).' );
-	assert_true( in_array( 'not_yet_stable', nbq_warning_codes(), true ), 'canonicalize: instability is surfaced as a warning.' );
-	assert_same( [ 10 ], WP_CLI::$printed_value['data']['not_yet_stable'], 'canonicalize: data names the not-yet-stable posts.' );
-	assert_same( false, WP_CLI::$printed_value['data']['posts'][0]['stable'], 'canonicalize: per-post stable flag.' );
-
-	// A non-converging document is reported through `converged`, never double-counted as unstable.
-	nbq_reset();
-	nbq_post( 10, '<!-- wp:paragraph --><p>x</p><!-- /wp:paragraph -->' );
-	nbq_response( 1, [ [ 'id' => 10, 'block_count' => 1, 'invalid' => [], 'converged' => false, 'canonical_content' => '<!-- wp:paragraph --><p>x </p><!-- /wp:paragraph -->', 'inner_text_preserved' => true, 'nested_paragraphs_before' => 0, 'nested_paragraphs_after' => 0 ] ] );
-	nbq_response( 2, [ [ 'id' => 10, 'invalid' => [ [ 'index' => 0, 'block_name' => 'core/paragraph', 'reason' => 'y' ] ], 'changed' => true ] ] );
-	$exit = nbq_run( 'novablocks_cli_blocks_canonicalize', [ 10 ], [ 'format' => 'json', 'yes' => true ] );
-	assert_same( 2, $exit, 'canonicalize: a non-converging document still exits 2.' );
-	assert_same( [], WP_CLI::$printed_value['data']['not_yet_stable'], 'canonicalize: a non-converging document is NOT also reported as unstable — one finding, one report.' );
-
-	echo "two-pass + stability contract OK\n";
-
+	echo "bounded-iteration contract OK\n";
 
 	// =======================================================================================
-	// §5 P3 rule (c) warnings, and §3.8's pass-through-and-warn preset rule.
+	// §5 P3 rule (c) as a CUMULATIVE pre-write gate, and §3.8's pass-through preset rule.
 	// =======================================================================================
 
-	// §5 P3 rule (c) is a PRE-WRITE gate: a canonicalization that would lose visible text is
-	// refused outright, because reporting the loss afterwards cannot undo it.
+	// The text gate is cumulative: each pass is compared against the ORIGINAL, never against the
+	// pass before it. This is the nova-blocks#610 shape — pass 1 preserves the text, pass 2 (which
+	// rebuilds the double-wrapped paragraph) drops it. A per-pass check passes both passes
+	// individually and still loses the content.
 	nbq_reset();
 	$original = '<!-- wp:paragraph --><p>hello</p><!-- /wp:paragraph -->';
 	nbq_post( 10, $original );
-	nbq_response( 1, [ [ 'id' => 10, 'block_count' => 1, 'invalid' => [], 'converged' => true, 'canonical_content' => '<!-- wp:paragraph --><p>goodbye</p><!-- /wp:paragraph -->', 'inner_text_preserved' => false, 'nested_paragraphs_before' => 0, 'nested_paragraphs_after' => 0 ] ] );
-	nbq_response( 2, [ [ 'id' => 10, 'invalid' => [] ] ] );
+	nbq_stage_canonicalize(
+		[
+			[ nbq_pass( '<!-- wp:paragraph --><p><p>hello</p></p><!-- /wp:paragraph -->', [ 'nested_paragraphs_after' => 0 ] ) ],
+			[ nbq_pass( '<!-- wp:paragraph --><p></p><!-- /wp:paragraph -->', [ 'inner_text_after_sha1' => 'LOST' ] ) ],
+		],
+		[ [ 'id' => 10, 'invalid' => [] ] ]
+	);
 	$exit = nbq_run( 'novablocks_cli_blocks_canonicalize', [ 10 ], [ 'format' => 'json', 'yes' => true ] );
 	assert_same( 2, $exit, 'canonicalize: a text-losing rewrite exits 2 — never 0.' );
 	assert_same( 'content_altered', WP_CLI::$printed_value['code'], 'canonicalize: text-loss code.' );
 	assert_same( [], $GLOBALS['nbq_updates'], 'canonicalize: a text-losing rewrite is REFUSED, not written and then regretted.' );
-	assert_same( $original, $GLOBALS['nbq_posts'][10]->post_content, 'canonicalize: the post is byte-identical after a refusal.' );
+	assert_same( $original, $GLOBALS['nbq_posts'][10]->post_content, 'canonicalize: the post is byte-identical after a refusal — the CUMULATIVE loss is caught even though pass 1 alone was safe.' );
 	assert_same( [ 10 ], WP_CLI::$printed_value['data']['refused'], 'canonicalize: data.refused names the post.' );
 	assert_true( in_array( 'content_altered', nbq_warning_codes(), true ), 'canonicalize: the refusal is surfaced as a warning too.' );
+	assert_same( 3, nbq_harness_calls(), 'canonicalize: iteration stops as soon as the text is lost — no third pass on a doomed document.' );
 
 	// Introducing a nested <p> is refused on the same grounds.
 	nbq_reset();
 	$original = '<!-- wp:paragraph --><p>a</p><!-- /wp:paragraph -->';
 	nbq_post( 10, $original );
-	nbq_response( 1, [ [ 'id' => 10, 'block_count' => 1, 'invalid' => [], 'converged' => true, 'canonical_content' => '<!-- wp:paragraph --><p><p>a</p></p><!-- /wp:paragraph -->', 'inner_text_preserved' => true, 'nested_paragraphs_before' => 0, 'nested_paragraphs_after' => 1 ] ] );
-	nbq_response( 2, [ [ 'id' => 10, 'invalid' => [] ] ] );
+	nbq_stage_canonicalize(
+		[ [ nbq_pass( '<!-- wp:paragraph --><p><p>a</p></p><!-- /wp:paragraph -->', [ 'nested_paragraphs_after' => 1 ] ) ] ],
+		[ [ 'id' => 10, 'invalid' => [] ] ]
+	);
 	$exit = nbq_run( 'novablocks_cli_blocks_canonicalize', [ 10 ], [ 'format' => 'json', 'yes' => true ] );
 	assert_same( 2, $exit, 'canonicalize: introducing a nested <p> exits 2.' );
 	assert_same( [], $GLOBALS['nbq_updates'], 'canonicalize: introducing a nested <p> is refused, not written.' );
@@ -740,19 +813,25 @@ namespace {
 
 	// Removing a nested <p> is the fix, not a finding — it must not warn.
 	nbq_reset();
+	$repaired = '<!-- wp:paragraph --><p>a b</p><!-- /wp:paragraph -->';
 	nbq_post( 10, '<!-- wp:paragraph --><p>a <p>b</p></p><!-- /wp:paragraph -->' );
-	nbq_response( 1, [ [ 'id' => 10, 'block_count' => 1, 'invalid' => [], 'converged' => true, 'canonical_content' => '<!-- wp:paragraph --><p>a b</p><!-- /wp:paragraph -->', 'inner_text_preserved' => true, 'nested_paragraphs_before' => 1, 'nested_paragraphs_after' => 0 ] ] );
-	nbq_response( 2, [ [ 'id' => 10, 'invalid' => [] ] ] );
+	nbq_stage_canonicalize(
+		[
+			[ nbq_pass( $repaired, [ 'nested_paragraphs_before' => 1, 'nested_paragraphs_after' => 0 ] ) ],
+			[ nbq_pass( $repaired, [ 'nested_paragraphs_before' => 0, 'nested_paragraphs_after' => 0 ] ) ],
+		],
+		[ [ 'id' => 10, 'invalid' => [] ] ]
+	);
 	$exit = nbq_run( 'novablocks_cli_blocks_canonicalize', [ 10 ], [ 'format' => 'json', 'yes' => true ] );
 	assert_same( 0, $exit, 'canonicalize: removing a nested <p> is a clean run.' );
 	assert_true( ! in_array( 'nested_paragraph_introduced', nbq_warning_codes(), true ), 'canonicalize: removing a nested <p> must NOT warn — that is the repair.' );
+	assert_same( $repaired, $GLOBALS['nbq_posts'][10]->post_content, 'canonicalize: the repair is written.' );
 
 	// §3.8: existing presets are passed through untouched and warned about; the run still succeeds.
 	nbq_reset();
 	$with_preset = '<!-- wp:paragraph {"backgroundColor":"vivid-red"} --><p class="has-vivid-red-background-color">a</p><!-- /wp:paragraph -->';
 	nbq_post( 10, $with_preset );
-	nbq_response( 1, [ [ 'id' => 10, 'block_count' => 1, 'invalid' => [], 'converged' => true, 'canonical_content' => $with_preset, 'inner_text_preserved' => true, 'nested_paragraphs_before' => 0, 'nested_paragraphs_after' => 0 ] ] );
-	nbq_response( 2, [ [ 'id' => 10, 'invalid' => [] ] ] );
+	nbq_stage_canonicalize( [ [ nbq_pass( $with_preset ) ] ], [ [ 'id' => 10, 'invalid' => [] ] ] );
 	$exit = nbq_run( 'novablocks_cli_blocks_canonicalize', [ 10 ], [ 'format' => 'json', 'yes' => true ] );
 	assert_same( 0, $exit, 'canonicalize: a preset-bearing legacy post still canonicalizes and exits normally (§3.8 scope limit).' );
 	assert_true( in_array( 'preset_detected', nbq_warning_codes(), true ), 'canonicalize: presets are surfaced as a warning.' );

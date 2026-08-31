@@ -270,7 +270,7 @@ function novablocks_cli_render_posts_table( array $posts ): void {
 	$is_canonicalize = array_key_exists( 'invalid_after', (array) reset( $posts ) );
 
 	$keys = $is_canonicalize
-		? [ 'post_id', 'post_type', 'blocks', 'invalid_before', 'invalid_after', 'changed', 'text_ok' ]
+		? [ 'post_id', 'post_type', 'blocks', 'passes', 'invalid_before', 'invalid_after', 'changed', 'stable', 'text_ok' ]
 		: [ 'post_id', 'post_type', 'blocks', 'invalid' ];
 
 	$rows = [];
@@ -282,9 +282,11 @@ function novablocks_cli_render_posts_table( array $posts ): void {
 		];
 
 		if ( $is_canonicalize ) {
+			$row['passes']         = novablocks_cli_sanitize_table_string( $post['passes'] ?? 0 );
 			$row['invalid_before'] = novablocks_cli_sanitize_table_string( $post['invalid_before'] ?? 0 );
 			$row['invalid_after']  = novablocks_cli_sanitize_table_string( $post['invalid_after'] ?? 0 );
 			$row['changed']        = ! empty( $post['changed'] ) ? 'yes' : 'no';
+			$row['stable']         = ! empty( $post['stable'] ) ? 'yes' : 'NO';
 			$row['text_ok']        = ! empty( $post['inner_text_preserved'] ) ? 'yes' : 'NO';
 		} else {
 			$row['invalid'] = novablocks_cli_sanitize_table_string( $post['invalid'] ?? 0 );

@@ -75,27 +75,26 @@ if ( ! defined( 'ABSPATH' ) ) {
  * still parses invalid after the write, or a document did not converge (exit 2).
  * `content_altered` — one or more posts were LEFT UNTOUCHED because canonicalizing them would have
  * changed their visible text or introduced a nested `<p>` (exit 2; §5 P3 rule (c) enforced as a
- * pre-write gate). NOTE: this token is not in the contract's closed §2 code list and is flagged in
- * the W4 report for orchestrator ratification — the alternative was exiting 0 after destroying
- * text, which §5 P3 (c) forbids. `harness_unavailable` — the agent-tools package, a Node binary, or
+ * cumulative pre-write gate). `not_yet_stable` — a post was still changing after the pass budget
+ * and never reached a byte-stable fixed point (exit 2).
+ * `harness_unavailable` — the agent-tools package, a Node binary, or
  * (`--via-editor`) the lab-only browser harness is absent. `confirmation_required` — a real write
  * under `--format=json|yaml` without `--yes`. `invalid_params` / `permission_denied` — see EXIT
  * CODES.
  *
  * ## WARNINGS
  *
- * `not_yet_stable` — the post parses with zero invalid blocks but does not yet re-serialize to
- * itself, so a further run will still rewrite it. Canonicalization is not always a one-pass fixed
- * point: WordPress promotes a class present in the saved markup but absent from the generated save
- * output into an explicit `className` attribute on the next parse. Measured on the P3-a fixture,
- * 67,341 B authored -> 64,661 -> 65,067 -> 65,067 (stable at pass 3). Exit stays 0 — validity is
- * what §1.4 gates on. `inner_text_changed` / `nested_paragraph_introduced` — the §5 P3 rule (c)
- * guards. `preset_detected` — §3.8 pass-through. `write_failed` — a post could not be rewritten.
+ * `not_yet_stable` — accompanies the code of the same name. `content_altered` /
+ * `inner_text_changed` / `nested_paragraph_introduced` — the §5 P3 rule (c) guards.
+ * `preset_detected` — §3.8 pass-through. `write_failed` — a post could not be rewritten.
+ *
+ * Every entry in `data.posts[]` carries `passes` — how many canonicalization passes that document
+ * needed — so the multi-pass fact stays visible even when the run exits 0.
  *
  * ## EXIT CODES
  *
- * 0 `invalid_after == 0` and nothing refused · 2 some posts still invalid / did not converge / were
- * refused to protect their text · 1
+ * 0 `invalid_after == 0`, every post byte-stable, nothing refused · 2 some posts still invalid /
+ * refused to protect their text / never stabilized · 1
  * harness_unavailable / confirmation_required / invalid_params / harness_failed / write_failed ·
  * 3 permission_denied
  *
@@ -152,16 +151,16 @@ function novablocks_cli_blocks_canonicalize( $args, $assoc_args ) {
 		return;
 	}
 
-	// ------------------------------------------------------------------ pass 1: canonicalize
-	$response = novablocks_cli_harness_invoke( 'canonicalize', novablocks_cli_harness_documents( $targets ) );
+	// --------------------------------------------- iterate to the fixed point (bounded, §1.4)
+	$iteration = novablocks_cli_canonicalize_to_fixed_point( $targets );
 
-	if ( is_wp_error( $response ) ) {
-		novablocks_cli_emit_wp_error( $response, $assoc_args );
+	if ( is_wp_error( $iteration ) ) {
+		novablocks_cli_emit_wp_error( $iteration, $assoc_args );
 
 		return;
 	}
 
-	$first = novablocks_cli_index_harness_documents( $response );
+	$first = $iteration['posts'];
 
 	// ---------------------------------------------------------------------------- the write
 	$updated   = [];
@@ -179,17 +178,20 @@ function novablocks_cli_blocks_canonicalize( $args, $assoc_args ) {
 			continue;
 		}
 
-		// §5 P3 rule (c) is a PRE-WRITE gate, not a post-mortem. Reporting "we destroyed 106
-		// characters of your visible text" after the write is honest but useless — the content is
-		// already gone and the command has no way to put it back. So a canonicalization that would
-		// lose text, or introduce a nested <p>, is refused: the post is left exactly as it was and
-		// the run exits 2 with the post named.
+		// §5 P3 rule (c) is a PRE-WRITE gate, not a post-mortem, and it is applied to the
+		// CUMULATIVE result — the original stored text against the text after the last pass —
+		// never pass-by-pass. Reporting "we destroyed 106 characters of your visible text" after
+		// the write is honest but useless: the content is already gone and the command has no way
+		// to put it back. So a canonicalization that would lose text, or introduce a nested <p>,
+		// is refused outright: the post is left exactly as it was and the run exits 2.
 		//
-		// This is not hypothetical. Recovering a paragraph that nova-blocks#610 has double-wrapped
-		// (`<p …><p …>text</p></p>`, which parses VALID with the whole inner <p> captured as the
-		// content attribute) drops the inner content on rebuild. Measured on the P3-b about-merz
-		// fixture: two press-mention links, 106 characters of body text, silently removed.
-		if ( ! novablocks_cli_canonicalization_is_text_safe( $result ) ) {
+		// This is not hypothetical, and it is precisely why the check must be cumulative. Pass 1
+		// on the P3-b about-merz fixture preserves the text; pass 2, rebuilding the paragraph that
+		// nova-blocks#610 has double-wrapped (`<p …><p …>text</p></p>`, which parses VALID with
+		// the whole inner <p> captured as the content attribute), drops the inner content — two
+		// press-mention links, 106 characters of body text. A per-pass check passes both passes
+		// individually and still loses the text.
+		if ( ! $result['text_safe'] ) {
 			$refused[]   = $post_id;
 			$unchanged[] = $post_id;
 			continue;
@@ -254,18 +256,10 @@ function novablocks_cli_blocks_canonicalize( $args, $assoc_args ) {
 		];
 	}
 
-	// Pass 2 runs in `canonicalize` mode rather than `validate` mode. It writes nothing — the mode
-	// only decides what the harness COMPUTES — and it buys a second fact for free: whether the
-	// stored content re-serializes to itself. That matters because canonicalization is not always
-	// a one-pass fixed point. WordPress's own `fixCustomClassname` promotes a class present in the
-	// saved markup but absent from the generated save output into an explicit `className`
-	// attribute, so a first pass can emit valid markup whose re-parse captures new attributes and
-	// serializes 400 bytes longer. Measured on the P3-a fixture: 67,341 authored → 64,661 →
-	// 65,067 → 65,067 (fixed point at pass 3). The editor does exactly the same thing across two
-	// save sessions. Exit codes stay governed by `invalid_after` per §1.4; instability is a
-	// warning, because a document that parses clean IS canonical in the sense the contract gates
-	// on — it is just not yet byte-stable.
-	$verify = novablocks_cli_harness_invoke( 'canonicalize', $verify_documents );
+	// The verification pass runs in `validate` mode: byte-stability was already established by the
+	// iteration loop above, so all that is left to prove here is the §3.9 claim — zero invalid on a
+	// FRESH parse of what the database actually holds.
+	$verify = novablocks_cli_harness_invoke( 'validate', $verify_documents );
 
 	if ( is_wp_error( $verify ) ) {
 		novablocks_cli_emit_wp_error( $verify, $assoc_args );
@@ -301,8 +295,13 @@ function novablocks_cli_blocks_canonicalize( $args, $assoc_args ) {
 
 		$nested_before = (int) ( $one['nested_paragraphs_before'] ?? 0 );
 		$nested_after  = (int) ( $one['nested_paragraphs_after'] ?? 0 );
-		$text_ok       = (bool) ( $one['inner_text_preserved'] ?? true );
+		$text_ok       = ! empty( $one['text_safe'] );
 		$converged     = empty( $after );
+		// Byte-stability comes from the iteration loop: the document reached a pass whose output
+		// equalled its input, within the bound. A refused document is not "unstable" — its
+		// iteration was cut short deliberately — so it is reported through `refused` alone rather
+		// than double-counted.
+		$stable = ! empty( $one['stable'] ) || ! $text_ok;
 
 		if ( ! $converged ) {
 			$not_converged[] = $post_id;
@@ -315,13 +314,7 @@ function novablocks_cli_blocks_canonicalize( $args, $assoc_args ) {
 		if ( $nested_after > $nested_before ) {
 			$nested_p_added[] = $post_id;
 		}
-
-		// Byte-stability of what is now stored: pass 2 re-serialized it and reports whether that
-		// differed. Only meaningful when the document parses clean — a non-converging document is
-		// reported through `converged`, and calling it "unstable" as well would double-count one
-		// finding.
-		$stable = ! array_key_exists( 'changed', $two ) || ! $two['changed'];
-		if ( $converged && ! $stable ) {
+		if ( ! $stable ) {
 			$not_stable[] = $post_id;
 		}
 
@@ -330,6 +323,7 @@ function novablocks_cli_blocks_canonicalize( $args, $assoc_args ) {
 			'post_type'                => (string) $target['post_type'],
 			'origin'                   => (string) $target['origin'],
 			'block_count'              => (int) ( $one['block_count'] ?? 0 ),
+			'passes'                   => (int) ( $one['passes'] ?? 0 ),
 			'changed'                  => in_array( $post_id, $updated, true ),
 			'invalid_before'           => count( $before ),
 			'invalid_after'            => count( $after ),
@@ -372,9 +366,10 @@ function novablocks_cli_blocks_canonicalize( $args, $assoc_args ) {
 		$warnings[] = [
 			'code'     => 'not_yet_stable',
 			'message'  => sprintf(
-				/* translators: %s: comma-separated post ids. */
-				__( 'Post(s) %s now parse with zero invalid blocks but do not yet re-serialize to themselves — WordPress promotes classes found in the saved markup into explicit className attributes on the next parse. Run canonicalize once more to reach the byte-stable fixed point. This is not an error and the content is already valid.', '__plugin_txtd' ),
-				implode( ', ', $not_stable )
+				/* translators: 1: comma-separated post ids, 2: the pass budget. */
+				__( 'Post(s) %1$s were still changing after %2$d canonicalization passes and never reached a byte-stable fixed point. A document still moving at that point is oscillating, not converging slowly — inspect it rather than re-running.', '__plugin_txtd' ),
+				implode( ', ', $not_stable ),
+				NOVABLOCKS_CLI_MAX_CANONICALIZE_PASSES
 			),
 			'post_ids' => $not_stable,
 		];
@@ -465,6 +460,26 @@ function novablocks_cli_blocks_canonicalize( $args, $assoc_args ) {
 		return;
 	}
 
+	if ( ! empty( $not_stable ) ) {
+		novablocks_cli_emit(
+			true,
+			'not_yet_stable',
+			sprintf(
+				/* translators: 1: number of unstable posts, 2: the pass budget. */
+				__( '%1$d post(s) never reached a byte-stable fixed point within %2$d passes. See data.not_yet_stable[].', '__plugin_txtd' ),
+				count( $not_stable ),
+				NOVABLOCKS_CLI_MAX_CANONICALIZE_PASSES
+			),
+			$data,
+			$warnings,
+			2,
+			[],
+			$assoc_args
+		);
+
+		return;
+	}
+
 	if ( empty( $updated ) ) {
 		novablocks_cli_emit(
 			true,
@@ -505,29 +520,169 @@ function novablocks_cli_blocks_canonicalize( $args, $assoc_args ) {
 }
 
 /**
- * Whether a canonicalization may be written back, per §5 P3 rule (c).
+ * How many canonicalization passes one invocation may run before giving up (contract §1.4, as
+ * amended v0.3.11). Three is not arbitrary: the observed worst case in the lab corpus reaches its
+ * fixed point on the third pass (P3-a, 67,341 B authored → 64,661 → 65,067 → 65,067), and a
+ * document still moving after that is not converging slowly, it is oscillating.
+ */
+const NOVABLOCKS_CLI_MAX_CANONICALIZE_PASSES = 3;
+
+/**
+ * Iterate every target to its byte-stable fixed point, in memory, writing nothing.
  *
- * Two conditions, both computed by the harness on the pass that produced the content: the visible
- * text is unchanged, and no nested `<p>` appeared inside a paragraph. Removing a nested `<p>` is
- * the repair, not a finding, so only an INCREASE counts.
+ * Each pass is a **fresh harness invocation** whose input is the previous pass's output. A document
+ * leaves the working set as soon as a pass returns output identical to its input — that is the
+ * fixed point — or as soon as its CUMULATIVE text check fails, since continuing to iterate a
+ * document whose text is already lost only wastes passes on a result that will be refused anyway.
  *
- * A harness result missing these keys is treated as safe — the fields are always present on a
- * successful canonicalize pass, and refusing every write on a schema surprise would turn a
- * reporting gap into data loss of a different kind.
+ * Why this belongs inside one invocation rather than being an operator's job: canonicalization is
+ * not a one-pass fixed point. WordPress's own `fixCustomClassname` promotes a class present in the
+ * saved markup but absent from the generated save output into an explicit `className` attribute on
+ * the next parse, so pass 1 can emit perfectly valid markup that pass 2 still rewrites. Exiting 0
+ * after pass 1 would tell an agent "done" about a document the very next `canonicalize` in its
+ * pipeline would change again.
  *
- * @param array $result One harness document result from the canonicalize pass.
+ * @param array $targets Target records (`post_id`, `content`, …).
+ *
+ * @return array|WP_Error `{ posts: [ post_id => result ], passes_run: int }`, or WP_Error.
+ */
+function novablocks_cli_canonicalize_to_fixed_point( array $targets ) {
+	$state = [];
+
+	foreach ( $targets as $target ) {
+		$post_id = (int) $target['post_id'];
+
+		$state[ $post_id ] = [
+			'content'                  => (string) $target['content'],
+			'passes'                   => 0,
+			'stable'                   => false,
+			'active'                   => true,
+			'text_safe'                => true,
+			'invalid'                  => [],
+			'block_count'              => 0,
+			'nested_paragraphs_before' => 0,
+			'nested_paragraphs_after'  => 0,
+			'inner_text_before_sha1'   => null,
+			'inner_text_after_sha1'    => null,
+			'error'                    => null,
+		];
+	}
+
+	$passes_run = 0;
+
+	for ( $pass = 1; $pass <= NOVABLOCKS_CLI_MAX_CANONICALIZE_PASSES; $pass++ ) {
+		$documents = [];
+
+		foreach ( $state as $post_id => $entry ) {
+			if ( $entry['active'] ) {
+				$documents[] = [
+					'id'      => $post_id,
+					'content' => $entry['content'],
+				];
+			}
+		}
+
+		if ( empty( $documents ) ) {
+			break;
+		}
+
+		$response = novablocks_cli_harness_invoke( 'canonicalize', $documents );
+
+		if ( is_wp_error( $response ) ) {
+			return $response;
+		}
+
+		$passes_run++;
+		$results = novablocks_cli_index_harness_documents( $response );
+
+		foreach ( $documents as $document ) {
+			$post_id = (int) $document['id'];
+			$result  = $results[ $post_id ] ?? null;
+
+			$state[ $post_id ]['passes']++;
+
+			if ( ! is_array( $result ) || ! isset( $result['canonical_content'] ) ) {
+				$state[ $post_id ]['error']  = isset( $result['error'] )
+					? (string) $result['error']
+					: __( 'the harness returned no canonical content', '__plugin_txtd' );
+				$state[ $post_id ]['active'] = false;
+				continue;
+			}
+
+			// Facts about the ORIGINAL document come from the first pass only; the cumulative
+			// "after" facts are overwritten by each subsequent pass.
+			if ( 1 === $state[ $post_id ]['passes'] ) {
+				$state[ $post_id ]['invalid']                  = is_array( $result['invalid'] ?? null ) ? $result['invalid'] : [];
+				$state[ $post_id ]['block_count']              = (int) ( $result['block_count'] ?? 0 );
+				$state[ $post_id ]['nested_paragraphs_before'] = (int) ( $result['nested_paragraphs_before'] ?? 0 );
+				$state[ $post_id ]['inner_text_before_sha1']   = $result['inner_text_before_sha1'] ?? null;
+			}
+
+			$state[ $post_id ]['nested_paragraphs_after'] = (int) ( $result['nested_paragraphs_after'] ?? 0 );
+			$state[ $post_id ]['inner_text_after_sha1']   = $result['inner_text_after_sha1'] ?? null;
+
+			$canonical = (string) $result['canonical_content'];
+
+			// The cumulative §5 P3 (c) gate: original text vs text after this pass, and nested-<p>
+			// count against the ORIGINAL count (removing one is the repair, not a finding).
+			$text_safe = novablocks_cli_canonicalization_is_text_safe( $state[ $post_id ] );
+
+			if ( ! $text_safe ) {
+				$state[ $post_id ]['text_safe'] = false;
+				$state[ $post_id ]['active']    = false;
+				// The content is NOT advanced: `canonical_content` reports what the refused pass
+				// would have produced, but the post keeps whatever the last safe pass held.
+				$state[ $post_id ]['canonical_content'] = $state[ $post_id ]['content'];
+				continue;
+			}
+
+			if ( $canonical === $state[ $post_id ]['content'] ) {
+				$state[ $post_id ]['stable'] = true;
+				$state[ $post_id ]['active'] = false;
+			}
+
+			$state[ $post_id ]['content'] = $canonical;
+		}
+	}
+
+	$posts = [];
+
+	foreach ( $state as $post_id => $entry ) {
+		$entry['canonical_content'] = $entry['canonical_content'] ?? $entry['content'];
+		unset( $entry['active'] );
+		$posts[ $post_id ] = $entry;
+	}
+
+	return [
+		'posts'      => $posts,
+		'passes_run' => $passes_run,
+	];
+}
+
+/**
+ * Whether the CUMULATIVE canonicalization so far may be written back, per §5 P3 rule (c).
+ *
+ * Two conditions: the visible text of the original document still matches the text after the latest
+ * pass (compared by digest), and no nested `<p>` has appeared inside a paragraph relative to the
+ * ORIGINAL count. Removing a nested `<p>` is the repair, not a finding, so only an increase counts.
+ *
+ * A missing digest is treated as safe — the fields are always present on a successful canonicalize
+ * pass, and refusing every write on a schema surprise would turn a reporting gap into a different
+ * kind of damage.
+ *
+ * @param array $entry Accumulated per-post iteration state.
  *
  * @return bool
  */
-function novablocks_cli_canonicalization_is_text_safe( array $result ): bool {
-	if ( array_key_exists( 'inner_text_preserved', $result ) && ! $result['inner_text_preserved'] ) {
+function novablocks_cli_canonicalization_is_text_safe( array $entry ): bool {
+	$before = $entry['inner_text_before_sha1'] ?? null;
+	$after  = $entry['inner_text_after_sha1'] ?? null;
+
+	if ( null !== $before && null !== $after && $before !== $after ) {
 		return false;
 	}
 
-	$before = (int) ( $result['nested_paragraphs_before'] ?? 0 );
-	$after  = (int) ( $result['nested_paragraphs_after'] ?? 0 );
-
-	return $after <= $before;
+	return (int) $entry['nested_paragraphs_after'] <= (int) $entry['nested_paragraphs_before'];
 }
 
 /**

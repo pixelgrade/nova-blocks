@@ -128,6 +128,7 @@ test( 'corpus parity against the site\'s own bundles', { skip }, async t => {
 		assert.strictEqual( merz.invalid[ 0 ].block_name, 'core/heading' );
 		assert.strictEqual( merz.converged, true );
 		assert.strictEqual( merz.inner_text_preserved, true );
+		assert.strictEqual( merz.inner_text_before_sha1, merz.inner_text_after_sha1 );
 		assert.strictEqual( merz.nested_paragraphs_after, 0 );
 		assert.strictEqual(
 			merz.canonical_content.replace( /\s+$/, '' ),
@@ -147,6 +148,7 @@ test( 'corpus parity against the site\'s own bundles', { skip }, async t => {
 			'the #610 class is core/paragraph'
 		);
 		assert.strictEqual( probe.inner_text_preserved, true, 'even a non-converging pass must not lose text' );
+		assert.strictEqual( probe.inner_text_before_sha1, probe.inner_text_after_sha1 );
 	} );
 
 	await t.test( 'a validate pass over the produced markup agrees with the canonicalize pass', () => {

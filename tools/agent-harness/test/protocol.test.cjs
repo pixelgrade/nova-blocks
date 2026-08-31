@@ -231,6 +231,11 @@ test( 'canonicalize mode reports the same-session re-parse, the text check and t
 	assert.strictEqual( result.nested_paragraphs_before, 1 );
 	assert.strictEqual( result.nested_paragraphs_after, 0 );
 	assert.strictEqual( result.inner_text_preserved, true );
+	// The digests are what a multi-pass caller compares (first pass's `before` against the last
+	// pass's `after`), so they must be present and must agree with the boolean on a single pass.
+	assert.strictEqual( result.inner_text_before_sha1, result.inner_text_after_sha1 );
+	assert.match( result.inner_text_before_sha1, /^[0-9a-f]{40}$/ );
+	assert.strictEqual( result.inner_text_before, undefined, 'the raw text is never shipped back' );
 	assert.ok( result.canonical_content.includes( 'a b' ) );
 } );
 
@@ -392,4 +397,26 @@ test( 'the installed shims cover every browser API the WP bundles touch at modul
 	assert.strictEqual( typeof win.fetch, 'function' );
 	assert.strictEqual( typeof win.jQuery, 'function' );
 	assert.strictEqual( false, win.matchMedia( '(min-width: 100px)' ).matches );
+} );
+
+test( 'inner-text digests differ exactly when the visible text does', () => {
+	const context = stubContext( {
+		parse: () => [ { name: 'core/paragraph', isValid: false, attributes: { content: 'kept' }, innerBlocks: [] } ],
+		serialize: () => '<!-- wp:paragraph --><p>dropped</p><!-- /wp:paragraph -->',
+	} );
+
+	const result = lib.processDocument(
+		context,
+		{ id: 1, content: '<!-- wp:paragraph --><p>kept</p><!-- /wp:paragraph -->' },
+		'canonicalize'
+	);
+
+	assert.strictEqual( result.inner_text_preserved, false );
+	assert.notStrictEqual( result.inner_text_before_sha1, result.inner_text_after_sha1 );
+} );
+
+test( 'sha1 is stable and content-addressed, so digests from different passes are comparable', () => {
+	assert.strictEqual( lib.sha1( 'abc' ), lib.sha1( 'abc' ) );
+	assert.notStrictEqual( lib.sha1( 'abc' ), lib.sha1( 'abd' ) );
+	assert.strictEqual( lib.sha1( 'abc' ).length, 40 );
 } );
