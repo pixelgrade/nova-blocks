@@ -3,7 +3,7 @@ Contributors: pixelgrade, vlad.olaru, babbardel, razvanonofrei, gorby31
 Tags: blocks, gutenberg, gutenberg blocks, page builder, full site editing
 Requires at least: 7.0
 Tested up to: 7.1
-Stable tag: 2.6.2
+Stable tag: 2.6.3
 Requires PHP: 7.4
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -113,6 +113,9 @@ Yes! Nova Block's core features are free to use.
 3. Slideshow Me the Way block options
 
 == Changelog ==
+
+= 2.6.3 =
+* New: Let Pixelgrade Filters choices use automatic, design-system control, or indicatorless text styling, while preserving the established Mies treatment by default.
 
 = 2.6.2 =
 * Fix: Carry the Pixelgrade Filters opt-in through nested dynamic blocks so Cards Collections inside marked Query Loops filter correctly.
