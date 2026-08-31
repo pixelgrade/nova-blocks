@@ -127,6 +127,7 @@
 @media (pointer: coarse) {
   .nb-facetwp-facet :is(.facetwp-checkbox, .facetwp-radio) {
     min-block-size: 44px;
+    min-inline-size: 44px;
   }
 }
 

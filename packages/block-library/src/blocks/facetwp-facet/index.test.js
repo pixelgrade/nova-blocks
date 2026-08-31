@@ -48,7 +48,13 @@ test( 'Facet choices consume design-system controls and keep the Mies text treat
 	assert.match( style, /\[aria-checked=["']true["']\]/ );
 	assert.match( style, /\[aria-disabled=["']true["']\]/ );
 	assert.match( style, /@media\s*\(pointer:\s*coarse\)/ );
+	assert.match( style, /@media\s*\(pointer:\s*coarse\)[\s\S]*min-block-size:\s*44px/ );
+	assert.match( style, /@media\s*\(pointer:\s*coarse\)[\s\S]*min-inline-size:\s*44px/ );
 	assert.match( style, /@media\s*\(prefers-reduced-motion:\s*reduce\)/ );
+	assert.match(
+		style,
+		/:is\(\.facetwp-checkbox, \.facetwp-radio\)[\s\S]*background:\s*none\s*!important/,
+	);
 	assert.doesNotMatch( style, /checkbox\.png|radio\.png/ );
 
 	assert.match( filterStyle, /\.facetwp-type-checkboxes/ );
