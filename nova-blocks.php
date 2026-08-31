@@ -97,6 +97,12 @@ require_once dirname( __FILE__ ) . '/lib/header-nav-projection.php';
 // Inert (and its files never even required) outside WP-CLI: see lib/cli/blocks-cli.php.
 require_once dirname( __FILE__ ) . '/lib/cli/blocks-cli.php';
 
+// The same four verbs as WordPress Abilities (`pixelgrade/list-blocks`, `list-patterns`,
+// `validate-post`, `canonicalize-post`), wrapping the SAME shared cores the CLI calls. Guarded by
+// function_exists( 'wp_register_ability' ), so pre-6.9 sites are unaffected; the CLI cores load
+// lazily, only when an ability is actually invoked.
+require_once dirname( __FILE__ ) . '/lib/abilities/blocks-abilities.php';
+
 // Register header navigation projection hooks (no-op unless the
 // `novablocks/enable_block_nav_editing` feature flag is enabled). Seeding and the
 // editor map are wired to admin_init / enqueue_block_editor_assets from here.

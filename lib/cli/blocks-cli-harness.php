@@ -197,27 +197,91 @@ function novablocks_cli_harness_probe(): array {
  * @param string $extra      Optional extra sentence appended to the summary.
  */
 function novablocks_cli_harness_unavailable( array $probe, array $assoc_args, string $extra = '' ): void {
+	novablocks_cli_emit_core_result( novablocks_cli_harness_unavailable_result( $probe, $extra, 'cli' ), $assoc_args );
+}
+
+/**
+ * The install command as prose, shaped by surface (security review LOW-2 item 2).
+ *
+ * On the CLI, an operator at a shell benefits from the real, absolute `--prefix` — that is
+ * deliberate operator guidance and the landed `blocks-cli-*` contract tests pin its wording
+ * verbatim. Over the wp-abilities/MCP surface the SAME summary is what an `edit_posts`-capable
+ * remote client reads from the whitelisted `validate-post`/`canonicalize-post` abilities, and an
+ * absolute filesystem path there is a server-directory-layout disclosure to that client, not
+ * operator guidance. So the install command is named by PACKAGE and relative location on every
+ * surface except `cli`, never by the resolved absolute path.
+ *
+ * @param string $path    The probed absolute harness directory (used only when `$surface` is `cli`).
+ * @param string $surface `'cli'` or any other value (e.g. `'ability'`).
+ *
+ * @return string
+ */
+function novablocks_cli_harness_install_command_wording( string $path, string $surface ): string {
+	if ( 'cli' === $surface ) {
+		return sprintf( 'npm ci --omit=dev --prefix %s', $path );
+	}
+
+	return sprintf(
+		/* translators: %s: the npm package name. */
+		__( 'npm ci --omit=dev, run inside the plugin\'s "tools/agent-harness" directory (package %s)', '__plugin_txtd' ),
+		'@pixelgrade/agent-harness'
+	);
+}
+
+/**
+ * The §3.11 graceful-absence envelope as core-result pieces, so the CLI and W7's
+ * `pixelgrade/validate-post` / `pixelgrade/canonicalize-post` abilities report a missing harness
+ * with the identical `code` — the machine contract stays IDENTICAL on both surfaces — while the
+ * human-facing `summary` and `data` differ by `$surface` (security review LOW-2 item 2): the CLI
+ * keeps its existing absolute-path wording verbatim (pinned by the landed `blocks-cli-*` contract
+ * tests), while any other surface — the abilities go through this as `'ability'` — gets
+ * relative/install-step wording that names the package and the install command without the site's
+ * absolute directory layout. `novablocks_cli_harness_unavailable()` above is now just the CLI path
+ * plus an emit.
+ *
+ * @param array  $probe   A `novablocks_cli_harness_probe()` result.
+ * @param string $extra   Optional extra sentence appended to the summary.
+ * @param string $surface `'cli'` (default) or `'ability'`.
+ *
+ * @return array Core-result pieces.
+ */
+function novablocks_cli_harness_unavailable_result( array $probe, string $extra = '', string $surface = 'cli' ): array {
+	$is_cli        = ( 'cli' === $surface );
+	$install_step  = $is_cli ? (string) $probe['install_step'] : novablocks_cli_harness_install_command_wording( (string) $probe['path'], $surface );
+
 	switch ( $probe['reason'] ) {
 		case 'no_node_binary':
 			$summary = __( 'No Node binary found. Set the PIXELGRADE_NODE_BINARY constant, filter "novablocks/node_binary", or put node on PATH.', '__plugin_txtd' );
 			break;
 
 		case 'package_missing':
-			$summary = sprintf(
-				/* translators: 1: expected package directory, 2: the install command. */
-				__( 'The Pixelgrade agent-harness package is not installed at %1$s. It ships separately from the plugin — install it with: %2$s', '__plugin_txtd' ),
-				$probe['path'],
-				$probe['install_step']
-			);
+			$summary = $is_cli
+				? sprintf(
+					/* translators: 1: expected package directory, 2: the install command. */
+					__( 'The Pixelgrade agent-harness package is not installed at %1$s. It ships separately from the plugin — install it with: %2$s', '__plugin_txtd' ),
+					$probe['path'],
+					$install_step
+				)
+				: sprintf(
+					/* translators: %s: the install command. */
+					__( 'The Pixelgrade agent-harness package is not installed. It ships separately from the plugin, in the plugin\'s "tools/agent-harness" directory — install it with: %s', '__plugin_txtd' ),
+					$install_step
+				);
 			break;
 
 		default:
-			$summary = sprintf(
-				/* translators: 1: package directory, 2: the install command. */
-				__( 'The Pixelgrade agent-harness package at %1$s is present but its runtime does not load (dependencies not installed?). Install them with: %2$s', '__plugin_txtd' ),
-				$probe['path'],
-				$probe['install_step']
-			);
+			$summary = $is_cli
+				? sprintf(
+					/* translators: 1: package directory, 2: the install command. */
+					__( 'The Pixelgrade agent-harness package at %1$s is present but its runtime does not load (dependencies not installed?). Install them with: %2$s', '__plugin_txtd' ),
+					$probe['path'],
+					$install_step
+				)
+				: sprintf(
+					/* translators: %s: the install command. */
+					__( 'The Pixelgrade agent-harness package is present but its runtime does not load (dependencies not installed?). Install them with: %s', '__plugin_txtd' ),
+					$install_step
+				);
 			break;
 	}
 
@@ -225,21 +289,27 @@ function novablocks_cli_harness_unavailable( array $probe, array $assoc_args, st
 		$summary .= ' ' . $extra;
 	}
 
-	novablocks_cli_emit(
-		false,
-		'harness_unavailable',
-		$summary,
-		[
-			'reason'       => (string) $probe['reason'],
-			'harness_path' => (string) $probe['path'],
-			'node_binary'  => (string) $probe['node'],
-			'install_step' => (string) $probe['install_step'],
-		],
-		[],
-		1,
-		[],
-		$assoc_args
-	);
+	$data = [
+		'reason'       => (string) $probe['reason'],
+		'install_step' => $install_step,
+	];
+
+	// The absolute directory and the resolved Node binary path are operator-useful ONLY on the
+	// CLI (§3.11's "deliberate operator guidance"); on any other surface they are the exact
+	// server-directory-layout disclosure LOW-2 item 2 names, so they are omitted from `data` too —
+	// a path hidden from the summary but left in `data` would be the same leak one field over.
+	if ( $is_cli ) {
+		$data['harness_path'] = (string) $probe['path'];
+		$data['node_binary']  = (string) $probe['node'];
+	}
+
+	return [
+		'exit'     => 1,
+		'code'     => 'harness_unavailable',
+		'summary'  => $summary,
+		'data'     => $data,
+		'warnings' => [],
+	];
 }
 
 /**
@@ -251,10 +321,15 @@ function novablocks_cli_harness_unavailable( array $probe, array $assoc_args, st
  *
  * @param string $mode       `validate` or `canonicalize`.
  * @param array  $documents  `[ [ 'id' => …, 'content' => … ] ]`.
+ * @param string $surface    `'cli'` (default) or `'ability'` — see
+ *                            `novablocks_cli_harness_install_command_wording()`; governs only the
+ *                            wording of the protocol-mismatch error's install command below, the
+ *                            one other place this function's own message could carry the absolute
+ *                            harness path (security review LOW-2 item 2).
  *
  * @return array|WP_Error Decoded response, or WP_Error.
  */
-function novablocks_cli_harness_invoke( string $mode, array $documents ) {
+function novablocks_cli_harness_invoke( string $mode, array $documents, string $surface = 'cli' ) {
 	$path = novablocks_cli_harness_path();
 	$node = novablocks_cli_node_binary();
 
@@ -328,7 +403,7 @@ function novablocks_cli_harness_invoke( string $mode, array $documents ) {
 				__( 'Agent-harness protocol mismatch: this plugin speaks protocol %1$d, the installed harness speaks %2$d. Update the agent-tools package: %3$s', '__plugin_txtd' ),
 				NOVABLOCKS_CLI_HARNESS_PROTOCOL,
 				$protocol,
-				sprintf( 'npm ci --omit=dev --prefix %s', $path )
+				novablocks_cli_harness_install_command_wording( $path, $surface )
 			)
 		);
 	}
@@ -662,6 +737,34 @@ function novablocks_cli_resolve_target_posts( array $args, array $assoc_args, st
 	}
 
 	return array_values( $targets );
+}
+
+/**
+ * Resolve targets from the abilities' TYPED parameter shape.
+ *
+ * A thin adapter, on purpose: `novablocks_cli_resolve_target_posts()` above stays the single
+ * implementation of id parsing, `--post-type` assertion, `--all-parts` expansion **and the
+ * per-post `edit_post` meta-cap loop** (§1.4 v0.3.12, which extends that gate to `validate` too).
+ * W7's permission callbacks and cores both come through here, so there is exactly one place where
+ * "may this user touch this post?" is answered for this subtree — never a second copy that could
+ * drift more permissive than the command.
+ *
+ * @param array  $params     `{ post_ids: int[], post_type?: ?string, all_parts?: bool }`.
+ * @param string $capability Per-post meta capability, or '' to skip the per-post check.
+ *
+ * @return array|WP_Error Target records, or WP_Error.
+ */
+function novablocks_agent_blocks_resolve_targets( array $params, string $capability = 'edit_post' ) {
+	$post_type = isset( $params['post_type'] ) && null !== $params['post_type'] ? (string) $params['post_type'] : '';
+
+	return novablocks_cli_resolve_target_posts(
+		array_values( (array) ( $params['post_ids'] ?? [] ) ),
+		[
+			'post-type' => $post_type,
+			'all-parts' => ! empty( $params['all_parts'] ),
+		],
+		$capability
+	);
 }
 
 /**
@@ -1008,17 +1111,5 @@ function novablocks_cli_preset_warnings( array $targets ): array {
  * @param array    $assoc_args The command's assoc_args (for --format).
  */
 function novablocks_cli_emit_wp_error( WP_Error $error, array $assoc_args ): void {
-	$code = $error->get_error_code();
-	$exit = 'permission_denied' === $code ? 3 : 1;
-
-	novablocks_cli_emit(
-		false,
-		(string) $code,
-		(string) $error->get_error_message(),
-		[ 'error_code' => (string) $code ],
-		[],
-		$exit,
-		[],
-		$assoc_args
-	);
+	novablocks_cli_emit_core_result( novablocks_agent_blocks_error_result( $error ), $assoc_args );
 }

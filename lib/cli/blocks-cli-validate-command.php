@@ -94,31 +94,67 @@ if ( ! defined( 'ABSPATH' ) ) {
 function novablocks_cli_blocks_validate( $args, $assoc_args ) {
 	novablocks_cli_require_capability( 'edit_posts', $assoc_args );
 
-	// Per-post `edit_post` on a READ (security review F4). §1.4's floor is `edit_posts`; this is
-	// narrower, never wider, and is what keeps `validate` from becoming a read-oracle for posts the
-	// acting user cannot open — the semantics W7 inherits.
-	$targets = novablocks_cli_resolve_target_posts( (array) $args, (array) $assoc_args, 'edit_post' );
+	novablocks_cli_emit_core_result(
+		novablocks_agent_blocks_validate_core(
+			[
+				'post_ids'  => (array) $args,
+				'post_type' => (string) novablocks_cli_flag( $assoc_args, 'post-type', '' ),
+				'all_parts' => novablocks_cli_bool_flag( $assoc_args, 'all-parts' ),
+			]
+		),
+		$assoc_args
+	);
+}
+
+/**
+ * The whole of `blocks validate`, as a surface-agnostic core: target resolution (with the per-post
+ * `edit_post` gate), the harness probe and invocation, and the per-post record assembly. The
+ * WP-CLI callback above and `pixelgrade/validate-post` (`lib/abilities/blocks-abilities.php`) both
+ * call THIS (W7 / SHARED-SPEC §4).
+ *
+ * Two properties this core carries for BOTH surfaces:
+ *
+ * - **Per-post `edit_post` on a read** (security review F4, ratified as §1.4 v0.3.12). §1.4's floor
+ *   is `edit_posts`, which is enough while the caller is a shell. It is not enough once this is an
+ *   MCP ability where the acting user is genuinely restricted: without the per-post check, an agent
+ *   confined to a contributor could aim `validate` at any id, other users' private posts and
+ *   pending drafts included. The gate is strictly narrower than the contract's floor.
+ * - **No content excerpts** (§1.4 v0.3.12, contract-wide). A record carries `post_id`, `index`,
+ *   `block_name` and a `reason_code`; the validator's own messages, which interpolate literal
+ *   chunks of the stored markup, are redacted inside the harness. An MCP-exposed ability is exactly
+ *   where that matters, and the redaction is upstream of this assembly, so neither surface can
+ *   leak by forgetting.
+ *
+ * @param array $params `{ post_ids: int[], post_type?: ?string, all_parts?: bool, targets?: array,
+ *                        surface?: string }`. `targets` short-circuits resolution when the caller
+ *                       already resolved (the CLI does not; `canonicalize` does, to count posts
+ *                       for its confirmation). `surface` — `'cli'` (default) or `'ability'` — is
+ *                       forwarded only to the `harness_unavailable` wording (security review LOW-2
+ *                       item 2): the machine `code`/`data.reason` are identical either way.
+ *
+ * @return array `{ exit, code, summary, data, warnings }`.
+ */
+function novablocks_agent_blocks_validate_core( array $params ): array {
+	$surface = isset( $params['surface'] ) ? (string) $params['surface'] : 'cli';
+
+	$targets = isset( $params['targets'] ) && is_array( $params['targets'] )
+		? $params['targets']
+		: novablocks_agent_blocks_resolve_targets( $params );
 
 	if ( is_wp_error( $targets ) ) {
-		novablocks_cli_emit_wp_error( $targets, $assoc_args );
-
-		return;
+		return novablocks_agent_blocks_error_result( $targets );
 	}
 
 	$probe = novablocks_cli_harness_probe();
 
 	if ( empty( $probe['available'] ) ) {
-		novablocks_cli_harness_unavailable( $probe, $assoc_args );
-
-		return;
+		return novablocks_cli_harness_unavailable_result( $probe, '', $surface );
 	}
 
-	$response = novablocks_cli_harness_invoke( 'validate', novablocks_cli_harness_documents( $targets ) );
+	$response = novablocks_cli_harness_invoke( 'validate', novablocks_cli_harness_documents( $targets ), $surface );
 
 	if ( is_wp_error( $response ) ) {
-		novablocks_cli_emit_wp_error( $response, $assoc_args );
-
-		return;
+		return novablocks_agent_blocks_error_result( $response );
 	}
 
 	$by_id   = novablocks_cli_index_harness_documents( $response );
@@ -166,39 +202,31 @@ function novablocks_cli_blocks_validate( $args, $assoc_args ) {
 	];
 
 	if ( empty( $invalid ) ) {
-		novablocks_cli_emit(
-			true,
-			'ok',
-			sprintf(
+		return [
+			'exit'     => 0,
+			'code'     => 'ok',
+			'summary'  => sprintf(
 				/* translators: %d: number of posts checked. */
 				_n( '%d post checked: zero invalid blocks.', '%d posts checked: zero invalid blocks.', count( $posts ), '__plugin_txtd' ),
 				count( $posts )
 			),
-			$data,
-			$warnings,
-			0,
-			[],
-			$assoc_args
-		);
-
-		return;
+			'data'     => $data,
+			'warnings' => $warnings,
+		];
 	}
 
-	novablocks_cli_emit(
+	return [
 		// Contract §2: `ok` is bound to the exit code, not the outcome — findings the caller must
 		// inspect are exit 2 and `ok:true`. Invalid blocks are a finding, not a command failure.
-		true,
-		'invalid_blocks',
-		sprintf(
+		'exit'     => 2,
+		'code'     => 'invalid_blocks',
+		'summary'  => sprintf(
 			/* translators: 1: number of invalid blocks, 2: number of posts checked. */
 			__( '%1$d invalid block(s) across %2$d post(s). See data.invalid[].', '__plugin_txtd' ),
 			count( $invalid ),
 			count( $posts )
 		),
-		$data,
-		$warnings,
-		2,
-		[],
-		$assoc_args
-	);
+		'data'     => $data,
+		'warnings' => $warnings,
+	];
 }

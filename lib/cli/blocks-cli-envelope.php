@@ -24,6 +24,13 @@ if ( ! defined( 'ABSPATH' ) ) {
 /**
  * Read an associative argument.
  *
+ * `\WP_CLI\Utils\get_flag_value()` only exists inside a WP-CLI process. The shared cores this
+ * subtree exposes to W7's abilities (`novablocks_agent_blocks_*_core()`) reach the same helpers
+ * from an ordinary web/REST request through `lib/abilities/blocks-abilities.php`, where that
+ * function is absent — so fall back to the identical array lookup rather than fataling. The
+ * fallback is byte-for-byte what WP-CLI's own implementation does for the shapes this subtree
+ * passes it.
+ *
  * @param array  $assoc_args Associative arguments.
  * @param string $key        Key.
  * @param mixed  $default    Fallback.
@@ -31,7 +38,11 @@ if ( ! defined( 'ABSPATH' ) ) {
  * @return mixed
  */
 function novablocks_cli_flag( array $assoc_args, string $key, $default = null ) {
-	return \WP_CLI\Utils\get_flag_value( $assoc_args, $key, $default );
+	if ( function_exists( '\WP_CLI\Utils\get_flag_value' ) ) {
+		return \WP_CLI\Utils\get_flag_value( $assoc_args, $key, $default );
+	}
+
+	return array_key_exists( $key, $assoc_args ) ? $assoc_args[ $key ] : $default;
 }
 
 /**
@@ -165,6 +176,60 @@ function novablocks_cli_emit( bool $ok, string $code, string $summary, array $da
 	}
 
 	\WP_CLI::halt( $exit_code );
+}
+
+/**
+ * Emit a shared core's result through `novablocks_cli_emit()`.
+ *
+ * The four verbs in this subtree hold their whole implementation in a core
+ * (`novablocks_agent_blocks_{list,patterns,validate,canonicalize}_core()`) that returns the §2
+ * envelope *pieces* — `{exit, code, summary, data, warnings, extra}` — and nothing else. This is
+ * the ONE place that turns those pieces into a printed envelope and an exit code for the CLI
+ * surface; W7's abilities turn the same pieces into a return value or a `WP_Error`. Keeping the
+ * mapping in one function per surface is what makes "the ability and the command cannot diverge"
+ * a structural fact rather than a promise.
+ *
+ * §2's `ok` binding is applied here, not in the cores: `ok:true` ⇔ exit 0 or 2.
+ *
+ * @param array $result     A core result: `{exit, code, summary, data, warnings, extra?}`.
+ * @param array $assoc_args The command's assoc_args (read only for --format).
+ */
+function novablocks_cli_emit_core_result( array $result, array $assoc_args ): void {
+	$exit = (int) ( $result['exit'] ?? 1 );
+
+	novablocks_cli_emit(
+		0 === $exit || 2 === $exit,
+		(string) ( $result['code'] ?? 'invalid_params' ),
+		(string) ( $result['summary'] ?? '' ),
+		(array) ( $result['data'] ?? [] ),
+		(array) ( $result['warnings'] ?? [] ),
+		$exit,
+		(array) ( $result['extra'] ?? [] ),
+		$assoc_args
+	);
+}
+
+/**
+ * Map a `WP_Error` from the shared resolution/invocation helpers onto core-result pieces.
+ *
+ * `permission_denied` keeps exit 3 (§2's permission row); everything else is exit 1. The error
+ * code is preserved verbatim in `data.error_code` so the cause survives the translation, exactly
+ * as §2 requires of the Style Manager writes.
+ *
+ * @param WP_Error $error The error.
+ *
+ * @return array Core-result pieces.
+ */
+function novablocks_agent_blocks_error_result( WP_Error $error ): array {
+	$code = (string) $error->get_error_code();
+
+	return [
+		'exit'     => 'permission_denied' === $code ? 3 : 1,
+		'code'     => $code,
+		'summary'  => (string) $error->get_error_message(),
+		'data'     => [ 'error_code' => $code ],
+		'warnings' => [],
+	];
 }
 
 /**
