@@ -52,6 +52,69 @@ function novablocks_fix_duplicate_classes_in_inner_content( $parsed_block ) {
 }
 add_filter( 'render_block_data', 'novablocks_fix_duplicate_classes_in_inner_content', 5 );
 
+/**
+ * Pass a marked Query Loop's filter opt-in through to its child blocks.
+ *
+ * @param array         $parsed_block Parsed block data.
+ * @param array|null    $source_block Unfiltered block data.
+ * @param WP_Block|null $parent_block Parent block instance.
+ * @return array Filtered block data.
+ */
+function novablocks_mark_facetwp_query_loop_context( $parsed_block, $source_block = null, $parent_block = null ) {
+	// WordPress calls this filter for every nested block. Traverse only once,
+	// from the top-level block, so nested trees are not repeatedly rescanned.
+	if ( null !== $parent_block ) {
+		return $parsed_block;
+	}
+
+	// Keep Nova-only sites entirely outside this integration, including the
+	// subtree traversal and the internal query-context attribute.
+	if ( ! function_exists( 'FWP' ) ) {
+		return $parsed_block;
+	}
+
+	if ( ( $parsed_block['blockName'] ?? '' ) === 'core/query' ) {
+		$class_name  = $parsed_block['attrs']['className'] ?? '';
+		$class_names = is_string( $class_name ) ? preg_split( '/\s+/', trim( $class_name ) ) : [];
+
+		if ( in_array( 'facetwp-template', $class_names, true ) ) {
+			$parsed_block['attrs']['query']['facetwp'] = true;
+		}
+	}
+
+	if ( ! empty( $parsed_block['innerBlocks'] ) && is_array( $parsed_block['innerBlocks'] ) ) {
+		foreach ( $parsed_block['innerBlocks'] as $index => $inner_block ) {
+			$parsed_block['innerBlocks'][ $index ] = novablocks_mark_facetwp_query_loop_context( $inner_block );
+		}
+	}
+
+	return $parsed_block;
+}
+add_filter( 'render_block_data', 'novablocks_mark_facetwp_query_loop_context', 10, 3 );
+
+/**
+ * Opt a marked Query Loop into FacetWP's custom-query detection.
+ *
+ * FacetWP ignores secondary queries on singular pages unless the query carries
+ * its explicit opt-in flag. The `render_block_data` marker above makes the
+ * parent Query block's author-controlled class available to its listing child.
+ *
+ * @param array    $query Query arguments built by the Query Loop block.
+ * @param WP_Block $block Query Loop child block instance.
+ * @param int      $page  Current Query Loop page.
+ * @return array Filtered query arguments.
+ */
+function novablocks_enable_facetwp_query_loop( array $query, $block, int $page ): array {
+	if ( ! function_exists( 'FWP' ) || empty( $block->context['query']['facetwp'] ) ) {
+		return $query;
+	}
+
+	$query['facetwp'] = true;
+
+	return $query;
+}
+add_filter( 'query_loop_block_query_vars', 'novablocks_enable_facetwp_query_loop', 10, 3 );
+
 function novablocks_get_alignment( array $attributes ): array {
 
 	if ( ! empty( $attributes['contentPosition'] ) ) {
