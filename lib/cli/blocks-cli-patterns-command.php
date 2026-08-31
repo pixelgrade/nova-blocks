@@ -102,9 +102,36 @@ function novablocks_cli_blocks_patterns( $args, $assoc_args ) {
 
 	$refresh = novablocks_cli_bool_flag( $assoc_args, 'refresh' );
 
-	// Keyed by pattern name throughout, so a pattern present in both the live registry and a
-	// fresh cloud fetch is reported once (the richer cloud record — it carries `tier`).
+	// Keyed by pattern name throughout. Local is collected FIRST and cloud never overwrites an
+	// already-present name (see the cloud branch below) — this mirrors
+	// `novablocks_register_cloud_block_patterns()`'s own `WP_Block_Patterns_Registry::is_registered()`
+	// skip: local/theme patterns register before init@30's cloud pass, so on a name collision the
+	// cloud version is NEVER actually registered and the LOCAL pattern is what the site serves.
+	// Attributing a colliding name to the cloud record (title/tier included) would describe
+	// content the site does not serve.
 	$records = [];
+
+	if ( in_array( $source, [ 'local', 'all' ], true ) ) {
+		// A warm cloud cache means `novablocks_register_cloud_block_patterns()` (init@30) may
+		// already have registered NEW (non-colliding) cloud-origin patterns into
+		// WP_Block_Patterns_Registry on this same request — so a bare `--source=local` must
+		// exclude those by name, or a warm cache silently makes it double-report them (no tier,
+		// double-counted against --source=cloud). The exclusion set is tier-filtered to mirror
+		// exactly what init@30 registers (`novablocks_cli_known_cloud_pattern_names()`, cache-only,
+		// never a network call) — a disallowed-tier cloud name was never registered by init@30 in
+		// the first place, so a local pattern that happens to share that name must still appear
+		// under --source=local. `--source=all` needs no such exclusion here: the cloud merge below
+		// already yields to whatever name this loop collects.
+		$exclude_names = ( 'local' === $source ) ? novablocks_cli_known_cloud_pattern_names() : [];
+
+		foreach ( novablocks_cli_local_registered_patterns() as $name => $record ) {
+			if ( in_array( $name, $exclude_names, true ) ) {
+				continue;
+			}
+
+			$records[ $name ] = $record;
+		}
+	}
 
 	if ( in_array( $source, [ 'cloud', 'all' ], true ) ) {
 		$fetch = novablocks_cli_fetch_cloud_pattern_items( $refresh );
@@ -129,23 +156,10 @@ function novablocks_cli_blocks_patterns( $args, $assoc_args ) {
 			: [ 'free' ];
 
 		foreach ( novablocks_cli_normalize_cloud_pattern_items( $fetch['items'], $allowed_tiers ) as $name => $record ) {
-			$records[ $name ] = $record;
-		}
-	}
-
-	if ( in_array( $source, [ 'local', 'all' ], true ) ) {
-		// A warm cloud cache means `novablocks_register_cloud_block_patterns()` (init@30) has
-		// already registered cloud-origin patterns into WP_Block_Patterns_Registry on THIS
-		// request too — so "local" must exclude them by name, or a warm cache silently makes
-		// --source=local start reporting cloud patterns as local (no tier, double-counted
-		// against --source=cloud). For --source=all the cloud branch above already populated
-		// $records with the richer (tier-carrying) cloud records, so reuse those same names;
-		// for --source=local alone, resolve the exclusion set from the cache directly (cheap —
-		// see novablocks_cli_known_cloud_pattern_names(), never a network call).
-		$exclude_names = ( 'all' === $source ) ? array_keys( $records ) : novablocks_cli_known_cloud_pattern_names();
-
-		foreach ( novablocks_cli_local_registered_patterns() as $name => $record ) {
-			if ( in_array( $name, $exclude_names, true ) ) {
+			if ( 'all' === $source && isset( $records[ $name ] ) ) {
+				// H1: a name already collected above (from the local registry, in --source=all)
+				// is what `novablocks_register_cloud_block_patterns()` actually kept — the cloud
+				// version was skipped by its `is_registered()` guard. Keep the local record.
 				continue;
 			}
 
@@ -221,30 +235,46 @@ function novablocks_cli_local_registered_patterns(): array {
 }
 
 /**
- * Names of every cloud-origin pattern the site currently knows about, read from the same
+ * Names of every cloud-origin pattern init@30 (`novablocks_register_cloud_block_patterns()`)
+ * would actually register from the current cache, read from the same
  * `novablocks_cloud_block_patterns` cache option `novablocks_get_cloud_block_patterns_config()`
  * reads — used to exclude cloud-origin entries from a `--source=local` listing (see the caller).
+ *
+ * Tier-filtered to MIRROR init@30's own `novablocks_convert_cloud_block_patterns_config()`, which
+ * drops a disallowed tier before ever calling `register_block_pattern()`. A disallowed-tier
+ * (e.g. locked pro) name is therefore never actually sitting in the registry as a cloud
+ * registration — so it must NOT be excluded here: a local pattern that happens to share that name
+ * is genuinely local and must still surface under `--source=local` (contract: `local` ∪ `cloud` =
+ * `all`, verified by the pro-collision regression test).
  *
  * Cache-only and side-effect-free: `novablocks_get_cloud_block_patterns_config()` only ever
  * triggers a live fetch when `novablocks_should_fetch_cloud_block_patterns()` allows it
  * (admin/AJAX/REST requests), which is never true in a WP-CLI process — so this never touches the
  * network, it just reads whatever is already cached (possibly nothing, on a cold cache).
  *
- * @return string[] Cloud-origin pattern names, unfiltered by tier (a locked tier is never
- *                   actually sitting in the local registry to begin with — see
- *                   `novablocks_register_cloud_block_patterns()`, which tier-filters before
- *                   registering — but this list stays unfiltered so it never under-excludes).
+ * @return string[] Cloud-origin pattern names, tier-filtered to the currently allowed set.
  */
 function novablocks_cli_known_cloud_pattern_names(): array {
 	if ( ! function_exists( 'novablocks_get_cloud_block_patterns_config' ) ) {
 		return [];
 	}
 
+	$allowed_tiers = function_exists( 'novablocks_get_allowed_cloud_block_pattern_tiers' )
+		? novablocks_get_allowed_cloud_block_pattern_tiers()
+		: [ 'free' ];
+
 	$names = [];
 	foreach ( novablocks_get_cloud_block_patterns_config( false ) as $item ) {
-		if ( is_array( $item ) && ! empty( $item['name'] ) ) {
-			$names[] = (string) $item['name'];
+		if ( ! is_array( $item ) || empty( $item['name'] ) ) {
+			continue;
 		}
+
+		$tier = function_exists( 'novablocks_get_cloud_block_pattern_tier' ) ? novablocks_get_cloud_block_pattern_tier( $item ) : 'free';
+		if ( ! in_array( $tier, $allowed_tiers, true ) ) {
+			continue;
+		}
+
+		$names[] = (string) $item['name'];
 	}
 
 	return $names;
@@ -276,7 +306,7 @@ function novablocks_cli_fetch_cloud_pattern_items( bool $refresh ): ?array {
 		$items = ( is_array( $cached_data ) && ! empty( $cached_data['items'] ) && is_array( $cached_data['items'] ) ) ? $cached_data['items'] : [];
 
 		return [
-			'items'      => $items,
+			'items'      => novablocks_cli_apply_raw_items_filter( $items ),
 			'from_cache' => true,
 		];
 	}
@@ -294,9 +324,35 @@ function novablocks_cli_fetch_cloud_pattern_items( bool $refresh ): ?array {
 	$items = ( is_array( $fetched ) && ! empty( $fetched['items'] ) && is_array( $fetched['items'] ) ) ? $fetched['items'] : [];
 
 	return [
-		'items'      => $items,
+		'items'      => novablocks_cli_apply_raw_items_filter( $items ),
 		'from_cache' => false,
 	];
+}
+
+/**
+ * Apply the same `novablocks/cloud_block_patterns_raw_items` extension point
+ * `novablocks_get_cloud_block_patterns_config()` applies, so a site using that filter sees the
+ * same items in this listing as in what actually gets registered (M2: this listing bypasses that
+ * helper for its own cache/refresh handling — see the file docblock — so the filter has to be
+ * re-applied explicitly here rather than inherited for free).
+ *
+ * The second extension point, `novablocks/cloud_block_patterns`, is deliberately NOT re-applied:
+ * it runs on the fully-converted `{name, properties}` registration shape (after
+ * `novablocks_convert_cloud_block_patterns_config()`), not on raw items, and this listing's
+ * payload shape (`{name, title, source, categories, tier}`) is not that shape.
+ *
+ * @param array $items Raw cloud pattern config items.
+ *
+ * @return array Filtered items.
+ */
+function novablocks_cli_apply_raw_items_filter( array $items ): array {
+	if ( ! function_exists( 'apply_filters' ) ) {
+		return $items;
+	}
+
+	$filtered = apply_filters( 'novablocks/cloud_block_patterns_raw_items', $items );
+
+	return is_array( $filtered ) ? $filtered : $items;
 }
 
 /**

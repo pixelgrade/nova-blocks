@@ -601,22 +601,57 @@ namespace {
 	$exit                            = nbc_run( 'novablocks_cli_blocks_patterns', [], [ 'source' => 'all', 'format' => 'json' ] );
 	assert_same( 1, $exit, 'patterns: --source=all still exits 1 on a cloud fetch failure.' );
 
-	// --source=all de-duplicates a pattern already registered locally (e.g. from a warm-cache
-	// init@30 pass) with the richer, tier-carrying cloud record — never lists it twice.
+	// H1 regression: --source=all de-duplicates a name collision by keeping the LOCAL record, not
+	// the cloud one. novablocks_register_cloud_block_patterns() (init@30) SKIPS registering a
+	// cloud pattern whose name is already registered (WP_Block_Patterns_Registry::is_registered()
+	// guard) — local/theme patterns register before that pass, so on a collision the local
+	// pattern is what the site actually serves. Attributing the name to the cloud record (title,
+	// tier) would describe content the site never registers.
 	nbc_reset();
-	WP_Block_Patterns_Registry::get_instance()->register( 'pixelgrade/free-hero', [ 'title' => 'Free Hero (registered)' ] );
+	WP_Block_Patterns_Registry::get_instance()->register( 'pixelgrade/free-hero', [ 'title' => 'Free Hero (as actually registered locally)' ] );
 	$GLOBALS['nbc_remote_response'] = nbc_cloud_response(
 		[
 			'pixelgrade/free-hero' => [
 				'name'       => 'pixelgrade/free-hero',
-				'properties' => [ 'title' => 'Free Hero', 'content' => '<!-- wp:paragraph --><p>x</p><!-- /wp:paragraph -->' ],
+				'properties' => [ 'title' => 'Free Hero (cloud version, never actually registered)', 'content' => '<!-- wp:paragraph --><p>x</p><!-- /wp:paragraph -->' ],
 			],
 		]
 	);
 	$exit = nbc_run( 'novablocks_cli_blocks_patterns', [], [ 'source' => 'all', 'format' => 'json' ] );
 	assert_same( 0, $exit, 'patterns: --source=all succeeds.' );
 	assert_same( 1, WP_CLI::$printed_value['data']['count'], 'patterns: --source=all reports each pattern exactly once.' );
-	assert_same( 'cloud', WP_CLI::$printed_value['data']['patterns'][0]['source'], 'patterns: --source=all prefers the richer cloud record on a name collision.' );
+	assert_same( 'local', WP_CLI::$printed_value['data']['patterns'][0]['source'], 'patterns: --source=all keeps the LOCAL record on a name collision (H1) — the cloud version is never actually registered.' );
+	assert_same( 'Free Hero (as actually registered locally)', WP_CLI::$printed_value['data']['patterns'][0]['title'], 'patterns: the collision record carries the title the site actually serves, not the cloud title.' );
+	assert_same( null, WP_CLI::$printed_value['data']['patterns'][0]['tier'], 'patterns: a collision-won local record carries no tier (it is not a cloud registration).' );
+
+	// H2 regression: a local pattern colliding with a PRO (disallowed-tier, therefore never
+	// actually registered by init@30) cloud name must still surface under bare --source=local —
+	// local ∪ cloud must equal all even in the pro-collision case.
+	nbc_reset();
+	WP_Block_Patterns_Registry::get_instance()->register( 'pixelgrade/pro-collision', [ 'title' => 'Pro Collision (genuinely local)' ] );
+	$GLOBALS['nbc_options']['novablocks_cloud_block_patterns'] = [
+		'items' => [
+			'pixelgrade/pro-collision' => [
+				'name'       => 'pixelgrade/pro-collision',
+				'tier'       => 'pro',
+				'properties' => [ 'title' => 'Pro Collision (cloud, locked)', 'content' => '<!-- wp:paragraph --><p>x</p><!-- /wp:paragraph -->' ],
+			],
+		],
+	];
+	$GLOBALS['nbc_options']['novablocks_cloud_block_patterns_timestamp'] = time() + HOUR_IN_SECONDS; // fresh
+	$exit_local = nbc_run( 'novablocks_cli_blocks_patterns', [], [ 'source' => 'local', 'format' => 'json' ] );
+	assert_same( 0, $exit_local, 'patterns: --source=local with a pro-tier collision still succeeds.' );
+	assert_same( 1, WP_CLI::$printed_value['data']['count'], 'patterns: a pro-tier collision must NOT be excluded from --source=local (H2) — the pro cloud name was never actually registered, so the local pattern is genuinely local.' );
+	assert_same( 'pixelgrade/pro-collision', WP_CLI::$printed_value['data']['patterns'][0]['name'], 'patterns: the surviving --source=local record is the pro-collision name.' );
+	assert_same( 'local', WP_CLI::$printed_value['data']['patterns'][0]['source'], 'patterns: it is reported as local, correctly.' );
+
+	$exit_cloud = nbc_run( 'novablocks_cli_blocks_patterns', [], [ 'source' => 'cloud', 'format' => 'json' ] );
+	assert_same( 0, $exit_cloud, 'patterns: --source=cloud with only a locked pro pattern still succeeds (zero results is not an error).' );
+	assert_same( 0, WP_CLI::$printed_value['data']['count'], 'patterns: --source=cloud drops the pro pattern by default (tier-filtered).' );
+
+	$exit_all = nbc_run( 'novablocks_cli_blocks_patterns', [], [ 'source' => 'all', 'format' => 'json' ] );
+	assert_same( 1, WP_CLI::$printed_value['data']['count'], 'patterns: --source=all count in the pro-collision case equals local ∪ cloud (1 + 0 = 1), the local ∪ cloud = all invariant.' );
+	assert_same( 'local', WP_CLI::$printed_value['data']['patterns'][0]['source'], 'patterns: --source=all also attributes the pro-collision to local.' );
 
 	// Regression: a WARM cloud cache means the site's own init@30 hook has already registered
 	// cloud-origin patterns into WP_Block_Patterns_Registry on this same request. A bare
@@ -667,6 +702,46 @@ namespace {
 	assert_true( null === WP_CLI::$printed_value, 'list: table mode never calls print_value() (STDOUT must stay envelope-only under json/yaml, and table mode uses its own renderer).' );
 
 	echo "table-mode contract OK\n";
+
+	// =========================================================================================
+	// M3 regression: control characters (e.g. \x1b, an ANSI escape) in a cloud/local-sourced
+	// string must never reach the operator's terminal in table mode, but pass through untouched
+	// in JSON/YAML mode (already safe there — WP_CLI::print_value() JSON-encodes them, and STDOUT
+	// under json/yaml carries only the envelope).
+	// =========================================================================================
+
+	nbc_reset();
+	$evil_title = "Evil\x1b[31mTitle";
+	WP_Block_Patterns_Registry::get_instance()->register(
+		'pixelgrade/evil-pattern',
+		[ 'title' => $evil_title, 'categories' => [ "evil\x1bcat" ] ]
+	);
+
+	// Table mode: the escape sequence must not survive into any logged line.
+	$exit = nbc_run( 'novablocks_cli_blocks_patterns', [], [ 'source' => 'local' ] ); // no --format => table.
+	assert_same( 0, $exit, 'patterns: table mode with a control-char-bearing title still succeeds.' );
+	$table_output = '';
+	foreach ( WP_CLI::$log as $entry ) {
+		$table_output .= is_string( $entry[1] ) ? $entry[1] : '';
+	}
+	assert_true( false === strpos( $table_output, "\x1b" ), 'patterns: table mode strips control characters (M3) — no raw ESC byte reaches the terminal.' );
+	// Only the control BYTE is stripped, so "\x1b[31m" (ESC + printable CSI text) becomes the
+	// harmless printable residue "[31m" — inert without its leading ESC byte, never re-fabricated
+	// into an escape sequence.
+	assert_true( false !== strpos( $table_output, 'Evil[31mTitle' ), 'patterns: table mode keeps the surrounding printable text intact, only the control byte itself is removed.' );
+
+	// JSON mode: no sanitization needed or applied — the raw value round-trips (json_encode()
+	// already makes control characters harmless, e.g. \x1b becomes , never a raw byte).
+	nbc_reset();
+	WP_Block_Patterns_Registry::get_instance()->register(
+		'pixelgrade/evil-pattern',
+		[ 'title' => $evil_title, 'categories' => [ "evil\x1bcat" ] ]
+	);
+	$exit = nbc_run( 'novablocks_cli_blocks_patterns', [], [ 'source' => 'local', 'format' => 'json' ] );
+	assert_same( 0, $exit, 'patterns: json mode with a control-char-bearing title still succeeds.' );
+	assert_same( $evil_title, WP_CLI::$printed_value['data']['patterns'][0]['title'], 'patterns: json mode carries the raw value — sanitization is a table-mode-only concern; the JSON encoder itself neutralizes control characters on the wire.' );
+
+	echo "control-char contract OK\n";
 
 	echo "All wp pixelgrade blocks CLI contract tests OK\n";
 }

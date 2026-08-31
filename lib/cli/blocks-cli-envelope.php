@@ -218,11 +218,11 @@ function novablocks_cli_render_blocks_table( array $blocks ): void {
 	$rows = [];
 	foreach ( $blocks as $block ) {
 		$rows[] = [
-			'name'                => (string) ( $block['name'] ?? '' ),
-			'title'               => (string) ( $block['title'] ?? '' ),
-			'api_version'         => (string) ( $block['api_version'] ?? '' ),
+			'name'                => novablocks_cli_sanitize_table_string( $block['name'] ?? '' ),
+			'title'               => novablocks_cli_sanitize_table_string( $block['title'] ?? '' ),
+			'api_version'         => novablocks_cli_sanitize_table_string( $block['api_version'] ?? '' ),
 			'has_render_callback' => ! empty( $block['has_render_callback'] ) ? 'yes' : 'no',
-			'attribute_count'     => (string) ( $block['attribute_count'] ?? 0 ),
+			'attribute_count'     => novablocks_cli_sanitize_table_string( $block['attribute_count'] ?? 0 ),
 		];
 	}
 
@@ -232,21 +232,46 @@ function novablocks_cli_render_blocks_table( array $blocks ): void {
 /**
  * Render `data.patterns` as a table.
  *
+ * Cloud-sourced titles/categories are cleared of control characters (M3) before reaching
+ * WP-CLI's table formatter — see `novablocks_cli_sanitize_table_string()`. JSON/YAML mode needs
+ * no such treatment: `WP_CLI::print_value()` JSON-encodes control characters harmlessly.
+ *
  * @param array $patterns Pattern records.
  */
 function novablocks_cli_render_patterns_table( array $patterns ): void {
 	$rows = [];
 	foreach ( $patterns as $pattern ) {
+		$categories = implode( ',', array_map( 'strval', (array) ( $pattern['categories'] ?? [] ) ) );
+
 		$rows[] = [
-			'name'       => (string) ( $pattern['name'] ?? '' ),
-			'title'      => (string) ( $pattern['title'] ?? '' ),
-			'source'     => (string) ( $pattern['source'] ?? '' ),
-			'tier'       => null === ( $pattern['tier'] ?? null ) ? '' : (string) $pattern['tier'],
-			'categories' => implode( ',', array_map( 'strval', (array) ( $pattern['categories'] ?? [] ) ) ),
+			'name'       => novablocks_cli_sanitize_table_string( $pattern['name'] ?? '' ),
+			'title'      => novablocks_cli_sanitize_table_string( $pattern['title'] ?? '' ),
+			'source'     => novablocks_cli_sanitize_table_string( $pattern['source'] ?? '' ),
+			'tier'       => null === ( $pattern['tier'] ?? null ) ? '' : novablocks_cli_sanitize_table_string( $pattern['tier'] ),
+			'categories' => novablocks_cli_sanitize_table_string( $categories ),
 		];
 	}
 
 	novablocks_cli_render_rows( $rows, [ 'name', 'title', 'source', 'tier', 'categories' ] );
+}
+
+/**
+ * Strip C0 control characters and DEL (`\x00`-`\x1F`, `\x7F` — ANSI escapes like `\x1b` included)
+ * from a value before it reaches the terminal in table mode (M3). These byte values never appear
+ * inside a multi-byte UTF-8 sequence (continuation/lead bytes are all `\x80`+), so a plain
+ * byte-wise strip is UTF-8-safe without needing a unicode regex mode. JSON/YAML mode needs no
+ * equivalent treatment: `WP_CLI::print_value()` JSON-encodes control characters harmlessly, and
+ * STDOUT under those formats carries only the envelope.
+ *
+ * @param mixed $value Value to sanitize (cast to string first).
+ *
+ * @return string
+ */
+function novablocks_cli_sanitize_table_string( $value ): string {
+	$value    = (string) $value;
+	$stripped = preg_replace( '/[\x00-\x1F\x7F]/', '', $value );
+
+	return null === $stripped ? $value : $stripped;
 }
 
 /**
