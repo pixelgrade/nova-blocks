@@ -7,6 +7,7 @@
 
 $plugin_source = file_get_contents( __DIR__ . '/../../nova-blocks.php' );
 $readme_source = file_get_contents( __DIR__ . '/../../readme.txt' );
+$pot_source    = file_get_contents( __DIR__ . '/../../languages/nova-blocks.pot' );
 
 preg_match( '/^\s*\*\s+Version:\s*([^\s]+)/m', $plugin_source, $header_match );
 preg_match( "/define\(\s*'Pixelgrade\\\\NovaBlocks\\\\VERSION'\s*,\s*'([^']+)'\s*\)/", $plugin_source, $constant_match );
@@ -27,6 +28,27 @@ if ( in_array( '', $versions, true ) || 1 !== count( array_unique( $versions ) )
 			$versions
 		) )
 	) );
+}
+
+if ( false !== strpos( $readme_source, 'FacetWP' ) ) {
+	throw new RuntimeException( 'The public readme must use Pixelgrade Filters terminology.' );
+}
+
+$required_pot_strings = [
+	'Mobile filter panel',
+	'Close filters',
+	'%d active filter',
+	'Pixelgrade Filters listings need a Pager facet',
+];
+
+foreach ( $required_pot_strings as $required_pot_string ) {
+	if ( false === strpos( $pot_source, $required_pot_string ) ) {
+		throw new RuntimeException( sprintf( 'The translation template is missing: %s.', $required_pot_string ) );
+	}
+}
+
+if ( false !== strpos( $pot_source, 'using the FacetWP plugin' ) ) {
+	throw new RuntimeException( 'The translation template contains stale customer-facing FacetWP copy.' );
 }
 
 echo "release metadata contract ok\n";

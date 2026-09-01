@@ -3,7 +3,7 @@ Contributors: pixelgrade, vlad.olaru, babbardel, razvanonofrei, gorby31
 Tags: blocks, gutenberg, gutenberg blocks, page builder, full site editing
 Requires at least: 7.0
 Tested up to: 7.1
-Stable tag: 2.6.3
+Stable tag: 2.6.4
 Requires PHP: 7.4
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -114,6 +114,10 @@ Yes! Nova Block's core features are free to use.
 
 == Changelog ==
 
+= 2.6.4 =
+* New: Add optional mobile filter panels with active counts, live result summaries, and native clear actions for Pixelgrade Filters.
+* Improved: Keep filter panels keyboard-accessible, use 48-pixel mobile targets, and give generated form controls stable accessible names.
+
 = 2.6.3 =
 * New: Let Pixelgrade Filters choices use automatic, design-system control, or indicatorless text styling, while preserving the established Mies treatment by default.
 
@@ -131,7 +135,7 @@ Yes! Nova Block's core features are free to use.
 * Fix: Restore the two-way sync between the Cards Collection Items Count and the Query Loop's items per page, and prevent the sync from freezing the editor when both values change at once.
 * Fix: Show the real stored Composition and its presets in the inspector while a Cards Collection preview layout is in Edit Mode.
 * Fix: Keep Column text and link colors following the intended palette on the frontend.
-* Fix: Hide FacetWP filtering controls when FacetWP is not available, and guard the Media Composition attachment lookup against missing attachments.
+* Fix: Hide Pixelgrade Filters controls when Advanced Filtering is not available, and guard the Media Composition attachment lookup against missing attachments.
 * Improved: Keep layout containers subgridded inside plain Groups, stop treating classic main wrappers as layout roots, and keep transparent card groups flush.
 * Improved: Consume the Style Manager rail gap token and version package stylesheets independently.
 
@@ -186,11 +190,11 @@ Yes! Nova Block's core features are free to use.
 = 2.1.19 =
 * New: Edit the header navigation directly in the block editor — inline core/navigation editing projected into the menu system, plus special items (search, cart, dark mode), menu-item badges, icon/label display modes, and inline core/site-logo.
 * New: Cloud-served block pattern library with free/premium tiering.
-* New: FacetWP Pager block and FacetWP pagination support inside Supernova Query Loops.
+* New: Filter Pagination block and Pixelgrade Filters pagination support inside Supernova Query Loops.
 * Fix: Restore scrolling effects (Parallax/Doppler) on custom post type pages, where a null reference could abort the frontend collection, shape, and scrolling engines.
 * Fix: Resolve "unexpected or invalid content" recovery on enhanced core blocks (Separator, Group, Columns) by serializing the `--nb-card-media-container-height` and `--nb-emphasis-area` sizing variables unitless to match the frontend render, with an automatic one-time content migration for existing content.
 * Fix: Match the editor Parallax/Doppler preview enlargement and focal point to the frontend by measuring the canvas viewport instead of the full scroll content height.
-* Fix: A broad round of editor and frontend fixes across Cards Collection, Food Menu, Author Box, Post Comments, Sharing, Media Composition, OpenHours, FacetWP, Google Map, and the augmented core blocks (parametric grid crash, dead/duplicate controls, missing guards, and several editor/frontend mismatches).
+* Fix: A broad round of editor and frontend fixes across Cards Collection, Food Menu, Author Box, Post Comments, Sharing, Media Composition, OpenHours, Pixelgrade Filters, Google Map, and the augmented core blocks (parametric grid crash, dead/duplicate controls, missing guards, and several editor/frontend mismatches).
 * Fix: Mobile Parallax viewport height and mobile menu open-color contrast.
 
 = 2.1.18 =
@@ -227,7 +231,7 @@ Yes! Nova Block's core features are free to use.
 = 2.1.14 =
 * Release: Published the latest WordPress 7.0 compatibility and Collection Layout improvements as 2.1.14 to keep GitHub and WordPress.org versioning aligned.
 * Fix: Legacy starter-content block validation regressions for NB-enhanced core blocks (Group, Columns, Separator, Quote).
-* Fix: FacetWP hidden filters close animation and end-of-close layout jump.
+* Fix: Pixelgrade Filters hidden-controls close animation and end-of-close layout jump.
 * Fix: Frontend collection and sharing initialization during AJAX transition re-execution.
 
 = 2.1.11 =
@@ -238,7 +242,7 @@ Yes! Nova Block's core features are free to use.
 * Security: Fixed Object Injection via unserialize() in author-box block.
 * Security: Fixed multiple Stored XSS vulnerabilities in block rendering (collection headers, card items, media titles/captions).
 * Security: Fixed unescaped anchor, className, and style attributes across multiple blocks.
-* Security: Fixed XSS in FacetWP, OpenHours, sharing overlay, comment highlighters, logo, and post-meta blocks.
+* Security: Fixed XSS in Pixelgrade Filters, OpenHours, sharing overlay, comment highlighters, logo, and post-meta blocks.
 * Security: Added input validation and sanitization to REST API endpoint.
 * Security: Improved comment meta data sanitization.
 
@@ -287,7 +291,7 @@ Yes! Nova Block's core features are free to use.
 * Removed deprecated blocks
 * Performance optimization
 * Fixes to i18n (missing translatable strings)
-* Add advanced filtering block (FacetWP integration)
+* Add Advanced Filtering blocks
 * Add CPT metafields block
 * Many styling fixes and improvements
 * Ensure compatibility with WordPress 6.0

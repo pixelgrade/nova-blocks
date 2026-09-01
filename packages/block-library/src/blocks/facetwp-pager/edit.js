@@ -23,9 +23,9 @@ const Edit = ( props ) => {
 
 	if ( settings?.facetwp_available === false ) {
 		return (
-			<nav { ...blockProps } aria-label={ __( 'FacetWP Pagination', '__plugin_txtd' ) }>
+			<nav { ...blockProps } aria-label={ __( 'Filtered results pagination', '__plugin_txtd' ) }>
 				<Warning>
-					<p>{ __( 'Advanced Filtering is unavailable because FacetWP is not active. This pager stays hidden from visitors.', '__plugin_txtd' ) }</p>
+					<p>{ __( 'Advanced Filtering is unavailable because Pixelgrade Filters is not active. This pager stays hidden from visitors.', '__plugin_txtd' ) }</p>
 					<Button href={ settings?.facetwp_setup_url } variant="primary">
 						{ __( 'Open Site Setup', '__plugin_txtd' ) }
 					</Button>
@@ -36,10 +36,10 @@ const Edit = ( props ) => {
 
 	return (
 		<Fragment>
-			<nav { ...blockProps } aria-label={ __( 'FacetWP Pagination', '__plugin_txtd' ) }>
+			<nav { ...blockProps } aria-label={ __( 'Filtered results pagination', '__plugin_txtd' ) }>
 				{ pagerFacets.length === 0 ? (
 					<Warning>
-						{ __( 'Create a FacetWP Pager facet, then select it here. Do not use core Query Pagination with FacetWP templates.', '__plugin_txtd' ) }
+						{ __( 'Create a Pager facet in Pixelgrade → Filters, then select it here. Do not use core Query Pagination for a filtered listing.', '__plugin_txtd' ) }
 					</Warning>
 				) : (
 					<div className="nb-facetwp-pager__preview">
@@ -76,7 +76,7 @@ const PagerInspectorControls = ( props ) => {
 					value={ facet }
 					options={ options }
 					onChange={ facet => setAttributes( { facet } ) }
-					help={ __( 'FacetWP Pager facets should be placed outside the listing container with the facetwp-template class.', '__plugin_txtd' ) }
+					help={ __( 'Pager facets should be placed outside the filtered listing container.', '__plugin_txtd' ) }
 				/>
 			</ControlsTab>
 		</ControlsSection>

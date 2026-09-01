@@ -53,7 +53,7 @@ if ( ! function_exists( 'novablocks_render_facetwp_pager_block' ) ) {
 
 		ob_start(); ?>
 
-		<nav class="nb-facetwp-pager wp-block-query-pagination" aria-label="<?php esc_attr_e( 'FacetWP pagination', '__plugin_txtd' ); ?>">
+		<nav class="nb-facetwp-pager wp-block-query-pagination" aria-label="<?php esc_attr_e( 'Filtered results pagination', '__plugin_txtd' ); ?>">
 			<?php echo do_shortcode( '[facetwp facet="' . esc_attr( $attributes['facet'] ) . '"]' ); ?>
 		</nav> <!-- .nb-facetwp-pager -->
 

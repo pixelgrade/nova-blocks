@@ -33,6 +33,20 @@ if ( ! function_exists( 'novablocks_render_facetwp_selections_block' ) ) {
 
 		$attributes_config = novablocks_get_facetwp_selections_attributes();
 		$attributes        = novablocks_get_attributes_with_defaults( $attributes, $attributes_config );
+		$active_reset_facet = null;
+
+		if ( ! empty( $attributes['resetFacet'] ) ) {
+			foreach ( novablocks_get_facets() as $facet ) {
+				if ( $facet['name'] === $attributes['resetFacet'] ) {
+					$active_reset_facet = $facet;
+					break;
+				}
+			}
+		}
+
+		if ( ! empty( $active_reset_facet ) && $active_reset_facet['type'] !== 'reset' ) {
+			$active_reset_facet = null;
+		}
 
 		$classes = [
 			'nb-facetwp-selections',
@@ -42,7 +56,17 @@ if ( ! function_exists( 'novablocks_render_facetwp_selections_block' ) ) {
 		ob_start(); ?>
 
 		<div class="<?php echo esc_attr( join( ' ', $classes ) ); ?>">
+			<?php if ( $attributes['showCounts'] ) : ?>
+				<div class="nb-facetwp-selections__count" role="status" aria-live="polite" aria-atomic="true">
+					<?php echo do_shortcode( '[facetwp counts="true"]' ); ?>
+				</div>
+			<?php endif; ?>
 			<?php echo do_shortcode( '[facetwp selections="true"]' ); ?>
+			<?php if ( $active_reset_facet ) : ?>
+				<div class="nb-facetwp-selections__reset">
+					<?php echo do_shortcode( '[facetwp facet="' . esc_attr( $attributes['resetFacet'] ) . '"]' ); ?>
+				</div>
+			<?php endif; ?>
 		</div> <!-- .nb-facetwp-selections -->
 
 		<?php return ob_get_clean();

@@ -5,7 +5,7 @@ const path = require('node:path');
 
 const source = fs.readFileSync(path.join(__dirname, 'index.js'), 'utf8');
 
-test('FacetWP template Query Loops warn when paired with core Query Pagination', () => {
+test('Pixelgrade Filters Query Loops warn when paired with core Query Pagination', () => {
 	assert.match(
 		source,
 		/export const hasClassName = \( className, targetClassName \) => \{[\s\S]*?split\( \/\\s\+\/ \)[\s\S]*?includes\( targetClassName \)/
@@ -23,6 +23,8 @@ test('FacetWP template Query Loops warn when paired with core Query Pagination',
 
 	assert.match(
 		source,
-		/<Warning>[\s\S]*?Replace the core Query Pagination block with a Nova FacetWP Pager block/
+		/<Warning>[\s\S]*?Replace Query Pagination with Filter Pagination\. Pixelgrade Filters listings need a Pager facet so pagination follows filtered results\./
 	);
+
+	assert.doesNotMatch( source, /Nova FacetWP Pager|FacetWP templates/ );
 });

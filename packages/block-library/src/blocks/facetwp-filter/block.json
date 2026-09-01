@@ -4,7 +4,7 @@
 	"name": "novablocks/facetwp-filter",
 	"title": "Filter Controls",
 	"category": "nova-blocks",
-	"description": "Add faceted search and filtering to your website using the FacetWP plugin",
+	"description": "Add advanced search and filtering controls to your website.",
 	"keywords": [ "facetwp", "filter" ],
 	"textdomain": "nova-blocks",
 	"attributes": {},

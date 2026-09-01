@@ -36,6 +36,11 @@ if ( ! function_exists( 'novablocks_render_facetwp_filter_block' ) ) {
 
 		$attributes_config = novablocks_get_facetwp_filter_attributes();
 		$attributes        = novablocks_get_attributes_with_defaults( $attributes, $attributes_config );
+		$mobile_title      = trim( (string) ( $attributes['mobileTitle'] ?? '' ) );
+
+		if ( '' === $mobile_title ) {
+			$mobile_title = function_exists( '__' ) ? __( 'Filters', '__plugin_txtd' ) : 'Filters';
+		}
 
 		$classes = [
 			'nb-facetwp-filter',
@@ -44,13 +49,32 @@ if ( ! function_exists( 'novablocks_render_facetwp_filter_block' ) ) {
 			'align' . $attributes['align']
 		];
 
+		$panel_id = '';
+		$title_id = '';
+
+		if ( $attributes['mobilePanel'] ) {
+			$classes[] = 'nb-facetwp-filter--mobile-panel';
+			$panel_id  = wp_unique_id( 'nb-facetwp-mobile-panel-' );
+			$title_id  = $panel_id . '-title';
+		}
+
 		$cssProps = array_merge(
 			novablocks_get_space_and_sizing_css( $attributes ),
 		);
 
 		ob_start(); ?>
 
-		<div class="<?php echo esc_attr( join( ' ', $classes ) ); ?>" style="<?php echo esc_attr( join( ';', $cssProps ) ); ?>">
+		<div <?php if ( $panel_id ) : ?>id="<?php echo esc_attr( $panel_id ); ?>" data-mobile-title-id="<?php echo esc_attr( $title_id ); ?>"<?php endif; ?> class="<?php echo esc_attr( join( ' ', $classes ) ); ?>" style="<?php echo esc_attr( join( ';', $cssProps ) ); ?>">
+			<?php if ( $attributes['mobilePanel'] ) : ?>
+				<div class="nb-facetwp-filter__mobile-header">
+					<div id="<?php echo esc_attr( $title_id ); ?>" class="nb-facetwp-filter__mobile-title">
+						<?php echo esc_html( $mobile_title ); ?>
+					</div>
+					<button type="button" class="nb-facetwp-filter__mobile-close" aria-label="<?php esc_attr_e( 'Close filters', '__plugin_txtd' ); ?>">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+			<?php endif; ?>
 			<?php echo $content; ?>
 		</div> <!-- .nb-facetwp-filter -->
 

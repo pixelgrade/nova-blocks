@@ -10,5 +10,13 @@
 	"orientation": {
 		"type": "string",
 		"default": "vertical"
+	},
+	"mobilePanel": {
+		"type": "boolean",
+		"default": false
+	},
+	"mobileTitle": {
+		"type": "string",
+		"default": "Filters"
 	}
 }

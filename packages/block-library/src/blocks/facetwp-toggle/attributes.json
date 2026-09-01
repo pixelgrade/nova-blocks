@@ -2,5 +2,13 @@
 	"text": {
 		"type": "string",
 		"default": "+ Filter"
+	},
+	"behavior": {
+		"type": "string",
+		"default": "more-filters"
+	},
+	"visibility": {
+		"type": "string",
+		"default": "always"
 	}
 }

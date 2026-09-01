@@ -18,7 +18,7 @@ test('FacetWP pager is a standalone block for replacing Query Pagination blocks'
 		default: '',
 	});
 	assert.match(source, /currentFacet\.type === 'pager'/);
-	assert.match(source, /Create a FacetWP Pager facet/);
+	assert.match(source, /Create a Pager facet in Pixelgrade/);
 });
 
 test('FacetWP pager render callback only outputs configured Pager facets', () => {

@@ -53,7 +53,7 @@ export const withControls = createHigherOrderComponent( ( BlockEdit ) => {
         <Fragment>
           { showFacetwpPaginationWarning && (
             <Warning>
-              { __( 'Replace the core Query Pagination block with a Nova FacetWP Pager block. FacetWP templates need Pager facets so pagination follows filtered results.', '__plugin_txtd' ) }
+              { __( 'Replace Query Pagination with Filter Pagination. Pixelgrade Filters listings need a Pager facet so pagination follows filtered results.', '__plugin_txtd' ) }
             </Warning>
           ) }
           { showPreventDuplicatePostsControl && (
