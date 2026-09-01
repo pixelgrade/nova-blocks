@@ -491,14 +491,113 @@ namespace {
 
 	nbq_reset();
 	nbq_post( 10, '<!-- wp:paragraph --><p>a</p><!-- /wp:paragraph -->' );
-	nbq_response( 1, [ [ 'id' => 10, 'invalid' => [], 'block_count' => 3, 'converged' => true ] ] );
+	nbq_response( 1, [ [ 'id' => 10, 'invalid' => [], 'block_count' => 3, 'converged' => true, 'canonical' => true, 'not_canonical_blocks' => [] ] ] );
 	$exit = nbq_run( 'novablocks_cli_blocks_validate', [ 10 ], [ 'format' => 'json' ] );
 	assert_same( 0, $exit, 'validate: zero invalid must exit 0.' );
 	assert_same( true, WP_CLI::$printed_value['ok'], 'validate: zero invalid ok:true.' );
 	assert_same( 'ok', WP_CLI::$printed_value['code'], 'validate: zero invalid code.' );
 	assert_same( [], WP_CLI::$printed_value['data']['invalid'], 'validate: zero invalid payload.' );
+	assert_same( [], WP_CLI::$printed_value['data']['not_canonical'], 'validate: a fixed point has an empty not_canonical payload.' );
+	assert_same( true, WP_CLI::$printed_value['data']['posts'][0]['canonical'], 'validate: each post reports its fixed-point verdict.' );
 	assert_same( 3, WP_CLI::$printed_value['data']['posts'][0]['block_count'], 'validate: block_count is reported.' );
 	assert_true( nbq_last_request_bytes() > 0, 'validate: the harness actually received a request.' );
+
+	// -----------------------------------------------------------------------------------
+	// The fixed-point post-condition (about-athletics, 2026-09-01).
+	//
+	// The rev-108 shape: 229 blocks, ZERO invalid, and 112 core/paragraphs that parse valid only
+	// through core/paragraph deprecation #6 — whose selector-less `content` swallows the whole <p>
+	// element. Old `validate` certified this document clean. The next editor save re-wrapped every
+	// paragraph into <p …><p …>text</p></p> and put 2,032 characters of body copy one keystroke
+	// from deletion. `serialize( parse( content ) ) === content` was false the whole time.
+	// -----------------------------------------------------------------------------------
+
+	nbq_reset();
+	nbq_post( 5, '<!-- wp:paragraph {"style":{"color":{"text":"var(--sm-current-accent-color)"}}} --><p class="has-text-color wp-block-paragraph" style="color:var(--sm-current-accent-color)">About us</p><!-- /wp:paragraph -->' );
+	nbq_response(
+		1,
+		[ [
+			'id'                   => 5,
+			'block_count'          => 229,
+			'converged'            => true,
+			'invalid'              => [],
+			'canonical'            => false,
+			'not_canonical_blocks' => [
+				[ 'index' => 2, 'block_name' => 'core/paragraph', 'reason_code' => 'valid_via_deprecation' ],
+				[ 'index' => 7, 'block_name' => 'core/paragraph', 'reason_code' => 'valid_via_deprecation' ],
+			],
+		] ]
+	);
+	$exit = nbq_run( 'novablocks_cli_blocks_validate', [ 5 ], [ 'format' => 'json' ] );
+	assert_same( 2, $exit, 'validate: a document that is valid but not a fixed point exits 2 — this is what said 0 before.' );
+	assert_same( true, WP_CLI::$printed_value['ok'], 'validate: not_canonical is a finding, not a failure (§2).' );
+	assert_same( 'not_canonical', WP_CLI::$printed_value['code'], 'validate: the fixed-point failure has its own code.' );
+	assert_same( [], WP_CLI::$printed_value['data']['invalid'], 'validate: and it is NOT reported as invalid blocks — every block really does parse.' );
+	assert_same( false, WP_CLI::$printed_value['data']['posts'][0]['canonical'], 'validate: the post-level verdict says so too.' );
+	assert_same(
+		[
+			[ 'post_id' => 5, 'index' => 2, 'block_name' => 'core/paragraph', 'reason_code' => 'valid_via_deprecation' ],
+			[ 'post_id' => 5, 'index' => 7, 'block_name' => 'core/paragraph', 'reason_code' => 'valid_via_deprecation' ],
+		],
+		WP_CLI::$printed_value['data']['not_canonical'],
+		'validate: data.not_canonical[] names the blocks that are valid only via a deprecation.'
+	);
+	assert_true( in_array( 'not_canonical', nbq_warning_codes(), true ), 'validate: the finding is also a warning.' );
+
+	// Not a fixed point, but no block is valid-via-deprecation: attribute defaults materialising,
+	// delimiter reflow, the `--` escaping serializeAttributes() applies. Still a finding — the
+	// next save rewrites the post — but there is no block to point at, so the record says so
+	// rather than inventing an index.
+	nbq_reset();
+	nbq_post( 77, '<!-- wp:navigation {"overlayMenu":"mobile"} /-->' );
+	nbq_response( 1, [ [ 'id' => 77, 'block_count' => 9, 'converged' => true, 'invalid' => [], 'canonical' => false, 'not_canonical_blocks' => [] ] ] );
+	$exit = nbq_run( 'novablocks_cli_blocks_validate', [ 77 ], [ 'format' => 'json' ] );
+	assert_same( 2, $exit, 'validate: byte drift with no deprecated block is still exit 2.' );
+	assert_same( 'not_canonical', WP_CLI::$printed_value['code'], 'validate: same code.' );
+	assert_same(
+		[ [ 'post_id' => 77, 'index' => -1, 'block_name' => '', 'reason_code' => 'not_a_fixed_point' ] ],
+		WP_CLI::$printed_value['data']['not_canonical'],
+		'validate: a document-level record uses index -1 and its own reason_code.'
+	);
+
+	// Invalid blocks AND a non-fixed-point document: the harder code wins, the warning still fires.
+	nbq_reset();
+	nbq_post( 5, '<!-- wp:paragraph --><p>a</p><!-- /wp:paragraph -->' );
+	nbq_response(
+		1,
+		[ [
+			'id'                   => 5,
+			'block_count'          => 2,
+			'converged'            => false,
+			'invalid'              => [ [ 'index' => 1, 'block_name' => 'core/paragraph', 'reason_code' => 'token_mismatch', 'reason' => 'x' ] ],
+			'canonical'            => false,
+			'not_canonical_blocks' => [ [ 'index' => 0, 'block_name' => 'core/group', 'reason_code' => 'valid_via_deprecation' ] ],
+		] ]
+	);
+	$exit = nbq_run( 'novablocks_cli_blocks_validate', [ 5 ], [ 'format' => 'json' ] );
+	assert_same( 2, $exit, 'validate: both findings, exit 2.' );
+	assert_same( 'invalid_blocks', WP_CLI::$printed_value['code'], 'validate: invalid blocks outrank a fixed-point miss in the code.' );
+	assert_true( in_array( 'not_canonical', nbq_warning_codes(), true ), 'validate: and the fixed-point finding is not swallowed — it rides as a warning.' );
+
+	// A harness that predates the field sends no `canonical` at all. Absence is "not measured",
+	// never "measured clean" — but it must not manufacture a finding either, so the verdict is the
+	// old one and the payload is empty.
+	nbq_reset();
+	nbq_post( 10, '<!-- wp:paragraph --><p>a</p><!-- /wp:paragraph -->' );
+	nbq_response( 1, [ [ 'id' => 10, 'invalid' => [], 'block_count' => 1, 'converged' => true ] ] );
+	$exit = nbq_run( 'novablocks_cli_blocks_validate', [ 10 ], [ 'format' => 'json' ] );
+	assert_same( 0, $exit, 'validate: a harness that cannot answer the fixed-point question does not fabricate a finding.' );
+	assert_same( [], WP_CLI::$printed_value['data']['not_canonical'], 'validate: nor a payload.' );
+	assert_same( null, WP_CLI::$printed_value['data']['posts'][0]['canonical'], 'validate: and it says "not measured" rather than claiming a clean fixed point — the tri-state survives into the envelope.' );
+
+	// Same rule when the harness DID try and its serialization threw: `canonical: null` on the
+	// wire stays null in the envelope. Not measured is not measured.
+	nbq_reset();
+	nbq_post( 10, '<!-- wp:paragraph --><p>a</p><!-- /wp:paragraph -->' );
+	nbq_response( 1, [ [ 'id' => 10, 'invalid' => [], 'block_count' => 1, 'converged' => true, 'canonical' => null, 'canonical_error' => 'save() exploded' ] ] );
+	$exit = nbq_run( 'novablocks_cli_blocks_validate', [ 10 ], [ 'format' => 'json' ] );
+	assert_same( 0, $exit, 'validate: an unanswerable fixed-point check is not a finding.' );
+	assert_same( null, WP_CLI::$printed_value['data']['posts'][0]['canonical'], 'validate: and it is never reported as true.' );
 
 	nbq_reset();
 	nbq_post( 10, '<!-- wp:heading --><h2>a</h2><!-- /wp:heading -->' );
@@ -524,6 +623,19 @@ namespace {
 	$exit = nbq_run( 'novablocks_cli_blocks_validate', [ 10 ], [] );
 	assert_same( 2, $exit, 'validate: table mode exit code is identical to json mode (§2).' );
 	assert_true( null === WP_CLI::$printed_value, 'validate: table mode never calls print_value().' );
+
+	// Table mode must carry the fixed-point verdict too. A table that prints `invalid 0` and stops
+	// is how a page holding 112 swallowed paragraphs came to be read as clean.
+	nbq_reset();
+	nbq_post( 10, '<!-- wp:paragraph --><p>a</p><!-- /wp:paragraph -->' );
+	nbq_response( 1, [ [ 'id' => 10, 'block_count' => 2, 'converged' => true, 'invalid' => [], 'canonical' => false, 'not_canonical_blocks' => [] ] ] );
+	$exit = nbq_run( 'novablocks_cli_blocks_validate', [ 10 ], [] );
+	$rendered = '';
+	foreach ( WP_CLI::$log as $entry ) {
+		$rendered .= is_string( $entry[1] ) ? $entry[1] : '';
+	}
+	assert_same( 2, $exit, 'validate: table mode exits 2 on a fixed-point miss, same as json.' );
+	assert_true( false !== strpos( $rendered, 'canonical' ), 'validate: the table carries a canonical column.' );
 
 	echo "validate contract OK\n";
 
@@ -610,9 +722,11 @@ namespace {
 				'inner_text_after_sha1'    => 'TEXT',
 				'inner_text_before_length' => 100,
 				'inner_text_after_length'  => 100,
-				'lost_blocks'              => [],
-				'nested_paragraphs_before' => 0,
-				'nested_paragraphs_after'  => 0,
+				'lost_blocks'                    => [],
+				'nested_paragraphs_before'       => 0,
+				'nested_paragraphs_after'        => 0,
+				'nested_paragraph_markup_before' => 0,
+				'nested_paragraph_markup_after'  => 0,
 			],
 			$overrides
 		);
@@ -843,27 +957,103 @@ namespace {
 	assert_same( 'content_altered', WP_CLI::$printed_value['code'], 'canonicalize: text-loss code.' );
 	assert_same( [], $GLOBALS['nbq_updates'], 'canonicalize: a text-losing rewrite is REFUSED, not written and then regretted.' );
 	assert_same( $original, $GLOBALS['nbq_posts'][10]->post_content, 'canonicalize: the post is byte-identical after a refusal — the CUMULATIVE loss is caught even though pass 1 alone was safe.' );
-	// Contract §1.4 F-W4-2 pins the payload: the affected blocks and the would-be-lost length.
+	// Contract §1.4 F-W4-2 pins the payload: the affected blocks and the would-be-lost length —
+	// plus, since the about-athletics post-mortem, the closed-vocabulary reason.
 	assert_same(
-		[ [ 'post_id' => 10, 'lost_length' => 6, 'blocks' => [ [ 'index' => 3, 'name' => 'core/paragraph' ] ] ] ],
+		[ [ 'post_id' => 10, 'reason_code' => 'inner_text_lost', 'lost_length' => 6, 'blocks' => [ [ 'index' => 3, 'name' => 'core/paragraph' ] ] ] ],
 		WP_CLI::$printed_value['data']['refused'],
-		'canonicalize: data.refused[] carries {post_id, lost_length, blocks:[{index,name}]} as v0.3.11 pins.'
+		'canonicalize: data.refused[] carries {post_id, reason_code, lost_length, blocks:[{index,name}]}.'
 	);
 	assert_true( in_array( 'content_altered', nbq_warning_codes(), true ), 'canonicalize: the refusal is surfaced as a warning too.' );
+	assert_true( ! in_array( 'content_diverged', nbq_warning_codes(), true ), 'canonicalize: a genuine text loss does NOT also raise the mild code.' );
 	assert_same( 3, nbq_harness_calls(), 'canonicalize: iteration stops as soon as the text is lost — no third pass on a doomed document.' );
 
-	// Introducing a nested <p> is refused on the same grounds.
+	// -----------------------------------------------------------------------------------
+	// The split. `content_altered` covers every refusal that would DAMAGE the content: text
+	// destroyed now (`inner_text_lost`), a nested <p> written that destroys it on the next parse
+	// (`nested_paragraph_introduced`), or a gate that could not answer. `content_diverged` is only
+	// the branch that loses no text at all (`inner_text_altered`). The reason_code is what makes a
+	// `lost_length: 0` legible — that zero, read as noise, is what let this run's corruption land.
+	// -----------------------------------------------------------------------------------
+
+	// Introducing a nested <p> is the PRE-DETONATION state, so it lands on the severe code even
+	// though the text is provably intact and lost_length is 0. Routing it to a code whose message
+	// says "loses nothing" would rebuild the exact misreading this split exists to prevent.
+	// Note the markup counts, not the model counts: when nova-blocks#610 actually lands, the
+	// double-wrapped markup re-parses to `content: ""` and the MODEL count falls to zero, so a
+	// gate reading the model alone sees an improvement and writes the corruption.
 	nbq_reset();
 	$original = '<!-- wp:paragraph --><p>a</p><!-- /wp:paragraph -->';
 	nbq_post( 10, $original );
 	nbq_stage_canonicalize(
-		[ [ nbq_pass( '<!-- wp:paragraph --><p><p>a</p></p><!-- /wp:paragraph -->', [ 'nested_paragraphs_after' => 1 ] ) ] ],
+		[ [ nbq_pass( '<!-- wp:paragraph --><p><p>a</p></p><!-- /wp:paragraph -->', [
+			'nested_paragraphs_after'       => 0,
+			'nested_paragraph_markup_after' => 1,
+		] ) ] ],
 		[ [ 'id' => 10, 'invalid' => [] ] ]
 	);
 	$exit = nbq_run( 'novablocks_cli_blocks_canonicalize', [ 10 ], [ 'format' => 'json', 'yes' => true ] );
 	assert_same( 2, $exit, 'canonicalize: introducing a nested <p> exits 2.' );
+	assert_same( 'content_altered', WP_CLI::$printed_value['code'], 'canonicalize: the pre-detonation state is on the SEVERE side — it is one save from inner_text_lost.' );
+	assert_same( 'nested_paragraph_introduced', WP_CLI::$printed_value['data']['refused'][0]['reason_code'], 'canonicalize: the refused record names the branch.' );
+	assert_same( 0, WP_CLI::$printed_value['data']['refused'][0]['lost_length'], 'canonicalize: nothing is destroyed YET — and the zero is now legible next to the reason_code.' );
+	assert_true( in_array( 'content_altered', nbq_warning_codes(), true ), 'canonicalize: the severe warning fires.' );
+	assert_true( ! in_array( 'content_diverged', nbq_warning_codes(), true ), 'canonicalize: and the mild one does not — its message asserts the text is safe, which would be false here.' );
+	assert_true( in_array( 'nested_paragraph_introduced', nbq_warning_codes(), true ), 'canonicalize: the specific guard still names itself.' );
+	assert_true( ! in_array( 'inner_text_changed', nbq_warning_codes(), true ), 'canonicalize: the text warning no longer fires on a refusal that preserved the text — the two warnings stop overlapping.' );
+	assert_same( true, WP_CLI::$printed_value['data']['posts'][0]['inner_text_preserved'], 'canonicalize: and inner_text_preserved reports the TEXT, not the verdict — the text really is intact here.' );
+	assert_same( 'nested_paragraph_introduced', WP_CLI::$printed_value['data']['posts'][0]['refusal_reason'], 'canonicalize: the verdict has its own field.' );
 	assert_same( [], $GLOBALS['nbq_updates'], 'canonicalize: introducing a nested <p> is refused, not written.' );
 	assert_same( $original, $GLOBALS['nbq_posts'][10]->post_content, 'canonicalize: the post is byte-identical after a nested-<p> refusal.' );
+
+	// Text that differs WITHOUT losing anything (an entity re-encoded, a word reordered) is the
+	// one genuinely milder case, and the only thing `content_diverged` covers.
+	nbq_reset();
+	$original = '<!-- wp:paragraph --><p>a &amp; b</p><!-- /wp:paragraph -->';
+	nbq_post( 10, $original );
+	nbq_stage_canonicalize(
+		[ [ nbq_pass( '<!-- wp:paragraph --><p>a &#38; b</p><!-- /wp:paragraph -->', [
+			'inner_text_after_sha1'   => 'DIFFERENT',
+			'inner_text_after_length' => 100,
+		] ) ] ],
+		[ [ 'id' => 10, 'invalid' => [] ] ]
+	);
+	$exit = nbq_run( 'novablocks_cli_blocks_canonicalize', [ 10 ], [ 'format' => 'json', 'yes' => true ] );
+	assert_same( 2, $exit, 'canonicalize: an altered-but-not-shorter text is still refused.' );
+	assert_same( 'content_diverged', WP_CLI::$printed_value['code'], 'canonicalize: text altered with no net loss is content_diverged.' );
+	assert_same( 'inner_text_altered', WP_CLI::$printed_value['data']['refused'][0]['reason_code'], 'canonicalize: the entity/other branch has its own reason_code.' );
+	assert_same( false, WP_CLI::$printed_value['data']['posts'][0]['inner_text_preserved'], 'canonicalize: here the text genuinely did move, and the field says so.' );
+	assert_same( $original, $GLOBALS['nbq_posts'][10]->post_content, 'canonicalize: still refused — "loses nothing" is not "safe to write".' );
+
+	// When both classes appear in one run, the SEVERE code wins the envelope and the per-post
+	// truth stays in data.refused[].
+	nbq_reset();
+	nbq_post( 10, '<!-- wp:paragraph --><p>a</p><!-- /wp:paragraph -->' );
+	nbq_post( 11, '<!-- wp:paragraph --><p>b</p><!-- /wp:paragraph -->' );
+	nbq_stage_canonicalize(
+		[ [
+			nbq_pass( 'x', [ 'id' => 10, 'inner_text_after_sha1' => 'LOST', 'inner_text_after_length' => 4 ] ),
+			nbq_pass( 'y', [ 'id' => 11, 'inner_text_after_sha1' => 'DIFFERENT', 'inner_text_after_length' => 100 ] ),
+		] ],
+		[ [ 'id' => 10, 'invalid' => [] ], [ 'id' => 11, 'invalid' => [] ] ]
+	);
+	$exit = nbq_run( 'novablocks_cli_blocks_canonicalize', [ 10, 11 ], [ 'format' => 'json', 'yes' => true ] );
+	assert_same( 2, $exit, 'canonicalize: a mixed refusal set exits 2.' );
+	assert_same( 'content_altered', WP_CLI::$printed_value['code'], 'canonicalize: the severe code wins when both classes are present.' );
+	assert_same(
+		[ 'inner_text_lost', 'inner_text_altered' ],
+		array_column( WP_CLI::$printed_value['data']['refused'], 'reason_code' ),
+		'canonicalize: per-post reasons survive the top-level collapse.'
+	);
+	assert_same( [], $GLOBALS['nbq_updates'], 'canonicalize: neither post is written.' );
+
+	// Vocabulary drift fails CLOSED. An unrecognized reason_code must not default to the mild
+	// code in a gate whose whole discipline is "a gate that cannot answer must not answer safe".
+	assert_same( 'content_altered', novablocks_cli_refusal_code( 'something_new_nobody_mapped' ), 'refusal codes: an unknown token is treated as severe.' );
+	assert_same( 'content_altered', novablocks_cli_refusal_code( 'gate_unavailable' ), 'refusal codes: an unanswerable gate is severe.' );
+	assert_same( 'content_altered', novablocks_cli_refusal_code( 'inner_text_lost' ), 'refusal codes: destroyed text is severe.' );
+	assert_same( 'content_altered', novablocks_cli_refusal_code( 'nested_paragraph_introduced' ), 'refusal codes: the pre-detonation state is severe.' );
+	assert_same( 'content_diverged', novablocks_cli_refusal_code( 'inner_text_altered' ), 'refusal codes: only a lossless divergence is mild.' );
 
 	// Removing a nested <p> is the fix, not a finding — it must not warn.
 	nbq_reset();
@@ -1098,6 +1288,17 @@ namespace {
 	$warnings = novablocks_cli_third_party_editor_warnings();
 	assert_same( 'third_party_editor_scripts', $warnings[0]['code'], 'the detector emits a named warning code.' );
 	assert_true( ! empty( $warnings[0]['sources'] ), 'the warning carries the suspects in data, not just in prose.' );
+	// The detector reflects over $wp_filter INSIDE a WP-CLI request, where is_admin() is false and
+	// current_screen never fires, so a plugin that gates its editor assets behind either — which is
+	// how a well-written plugin does it — has no callback here to find. Measured on the
+	// about-athletics lab site: the CLI dump was correctly silent about Style Manager while the
+	// real Site Editor page loaded style-manager/dist/js/site-editor.js and four carbon-fields
+	// bundles. So the promise is narrowed rather than quietly overstated, and the caveat rides on
+	// every emitted warning — in prose for a human, and as `complete: false` for a consumer that
+	// should not have to parse prose.
+	assert_same( false, $warnings[0]['complete'], 'the warning declares itself a floor, not an inventory.' );
+	assert_true( false !== stripos( $warnings[0]['message'], 'is_admin()' ), 'the warning names the blind spot in its own text.' );
+	assert_true( false !== stripos( $warnings[0]['message'], 'never a complete inventory' ), 'the warning says plainly that the list is not exhaustive.' );
 	unset( $GLOBALS['wp_filter']['enqueue_block_editor_assets'] );
 
 	echo "terminal-safety + third-party-detection contract OK\n";

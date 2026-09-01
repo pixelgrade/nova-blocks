@@ -8,7 +8,7 @@
  *
  * Request:
  *   {
- *     "protocol": 1,                       // refused unless it matches this harness
+ *     "protocol": 2,                       // refused unless it matches this harness
  *     "mode": "validate" | "canonicalize",
  *     "site_bundles_meta": { "abspath": "…", "plugin_dir": "…", "site_url": "…" },
  *     "server_block_settings":    { … },   // get_block_editor_server_block_settings()
@@ -19,11 +19,13 @@
  * Response:
  *   {
  *     "ok": true,
- *     "protocol": 1,
+ *     "protocol": 2,
  *     "bootstrap": { … },                  // what actually loaded, for the envelope's data
  *     "documents": [ {
  *       "id": 12,
  *       "invalid": [ { "index": 3, "block_name": "core/heading", "reason": "…" } ],
+ *       "canonical": true,                 // validate mode: serialize(parse(c)) === c
+ *       "not_canonical_blocks": [ … ],     // validate mode: blocks valid only via a deprecation
  *       "canonical_content": "…",          // canonicalize mode only
  *       "converged": true
  *     } ]
@@ -35,7 +37,10 @@
 
 'use strict';
 
-const PROTOCOL_VERSION = 1;
+// 2 (2026-09-01): the response gained `canonical` / `not_canonical_blocks` and
+// `nested_paragraph_markup_before|after`. See NOVABLOCKS_CLI_HARNESS_PROTOCOL in
+// lib/cli/blocks-cli-harness.php for why this bump is load-bearing rather than ceremonial.
+const PROTOCOL_VERSION = 2;
 
 /**
  * Read all of stdin.

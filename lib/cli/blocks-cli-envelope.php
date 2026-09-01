@@ -329,9 +329,13 @@ function novablocks_cli_render_patterns_table( array $patterns ): void {
 /**
  * Render `data.posts` as a table — the per-post row `validate` and `canonicalize` share.
  *
- * `validate` rows carry `invalid`; `canonicalize` rows carry `invalid_before`/`invalid_after` plus
- * the §5 P3 rule (c) columns. Absent keys render empty rather than forcing two near-identical
- * renderers.
+ * `validate` rows carry `invalid` and `canonical`; `canonicalize` rows carry
+ * `invalid_before`/`invalid_after` plus the §5 P3 rule (c) columns. Absent keys render empty rather
+ * than forcing two near-identical renderers.
+ *
+ * `canonical` renders `yes` / `NO` / `?` — the third state is "not measured", and it is shown
+ * because a table that prints `invalid 0` and nothing else is how a page holding 112 swallowed
+ * paragraphs came to be certified clean.
  *
  * @param array $posts Post records.
  */
@@ -340,7 +344,7 @@ function novablocks_cli_render_posts_table( array $posts ): void {
 
 	$keys = $is_canonicalize
 		? [ 'post_id', 'post_type', 'blocks', 'passes', 'invalid_before', 'invalid_after', 'changed', 'stable', 'text_ok' ]
-		: [ 'post_id', 'post_type', 'blocks', 'invalid' ];
+		: [ 'post_id', 'post_type', 'blocks', 'invalid', 'canonical' ];
 
 	$rows = [];
 	foreach ( $posts as $post ) {
@@ -359,6 +363,11 @@ function novablocks_cli_render_posts_table( array $posts ): void {
 			$row['text_ok']        = ! empty( $post['inner_text_preserved'] ) ? 'yes' : 'NO';
 		} else {
 			$row['invalid'] = novablocks_cli_sanitize_table_string( $post['invalid'] ?? 0 );
+			// Tri-state, rendered as one: a document that was never measured must not read as a
+			// clean one. `invalid 0` on its own is exactly the comforting half-truth this column
+			// exists to stop the table from telling.
+			$canonical         = $post['canonical'] ?? null;
+			$row['canonical']  = null === $canonical ? '?' : ( $canonical ? 'yes' : 'NO' );
 		}
 
 		$rows[] = $row;

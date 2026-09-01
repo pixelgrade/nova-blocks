@@ -32,8 +32,16 @@ if ( ! defined( 'ABSPATH' ) ) {
  * installed package (§3.11 / Gate-1), version skew between plugin and harness is this
  * architecture's routine failure mode: the handshake turns it into a named `harness_unavailable`
  * instead of silently-absent fields that a lenient reader would treat as "nothing to report".
+ *
+ * **2 (2026-09-01)** — the response gained `canonical` / `not_canonical_blocks` (`validate`'s
+ * fixed-point post-condition) and `nested_paragraph_markup_before|after` (the §5 P3 (c) nested-<p>
+ * guard, measured on the serialized bytes instead of the block model). The bump is load-bearing,
+ * not ceremonial: against a protocol-1 harness the markup counts are simply absent, `0 > 0` is
+ * false, and the nested-<p> gate silently reverts to the model-only comparison — which is the
+ * comparison that reads a double-wrap detonation as an improvement and lets the write through.
+ * A gate that quietly downgrades itself is worse than one that refuses to run.
  */
-const NOVABLOCKS_CLI_HARNESS_PROTOCOL = 1;
+const NOVABLOCKS_CLI_HARNESS_PROTOCOL = 2;
 
 /**
  * Where the agent-tools package lives, in §3.11's discovery order.
@@ -821,7 +829,7 @@ function novablocks_cli_collect_template_posts(): array {
 
 /**
  * Name every source, other than WordPress core and the verified Pixelgrade stack, that hooks
- * `enqueue_block_editor_assets` on this site.
+ * `enqueue_block_editor_assets` **in this WP-CLI request**.
  *
  * This is the spike's own minimum mitigation for its highest-severity risk. The harness loads WP
  * core plus Nova Blocks and nothing else, so a third-party plugin registering a
@@ -840,7 +848,37 @@ function novablocks_cli_collect_template_posts(): array {
  * filterable so a site that has verified another plugin can silence it deliberately, rather than
  * learning to ignore a permanent warning.
  *
- * @return string[] Distinct source labels (plugin/theme directory names, or file paths).
+ * ## WHAT THIS DETECTOR DOES NOT COVER — read before trusting its silence
+ *
+ * It reflects over `$GLOBALS['wp_filter']` **inside the WP-CLI request**, and a WP-CLI request is
+ * not an admin request. `is_admin()` is false, `current_screen` never fires, and
+ * `admin_enqueue_scripts` is never reached — so a plugin that registers its editor assets behind
+ * any of those, which is how a well-written plugin does it, **has no callback here to find**. The
+ * narrowed, accurate promise is therefore:
+ *
+ * > This names third-party sources that hook `enqueue_block_editor_assets` UNCONDITIONALLY, at
+ * > plugin-load time. It cannot see registrations gated on `is_admin()` / `current_screen`, and it
+ * > does not inspect `admin_enqueue_scripts` at all.
+ *
+ * Measured on the about-athletics lab site: the CLI hook dump listed core, Nova Blocks, Pixelgrade
+ * Plus, Anima LT and Pixelgrade Assistant, and the detector was correctly silent. The real Site
+ * Editor page on that same site loaded `style-manager/dist/js/site-editor.js`, four
+ * `carbon-fields/build/gutenberg/*` bundles, `anima-lt/dist/js/admin/site-editor-style-manager.min.js`
+ * and `pixelgrade-assistant/admin/build/docs-window.js` — none of which this function can reach,
+ * because Style Manager registers those screens inside `if ( is_admin() )`. (On that stack the
+ * verdict was unaffected: the only non-core, non-Nova save filter present was
+ * `carbon-fields/blocks`, which is inert for anything outside `carbon-fields/*`. That is a fact
+ * about that site, not a property of this detector.)
+ *
+ * Enumerating the real editor page as an authenticated admin request would close the gap and is
+ * the honest fix; it is deliberately NOT done here, because it means credentials, an HTTP round
+ * trip and a running web server inside a command whose entire value is that it needs none of the
+ * three. So the promise is narrowed instead, and every emitted warning carries the caveat in its
+ * own text — see `novablocks_cli_third_party_editor_warnings()`.
+ *
+ * @return string[] Distinct source labels (plugin/theme directory names, or file paths). An EMPTY
+ *                  array means "no unconditional third-party registration was found", never "no
+ *                  third party is involved".
  */
 function novablocks_cli_third_party_editor_asset_sources(): array {
 	if ( empty( $GLOBALS['wp_filter']['enqueue_block_editor_assets'] ) ) {
@@ -961,6 +999,16 @@ function novablocks_cli_source_label( string $file ): string {
 /**
  * Build the `third_party_editor_scripts` warning, when there is anything to name.
  *
+ * The message carries a STANDING note about the detector's blind spot, not just the suspects it
+ * happened to find. A warning that lists two plugins reads as an exhaustive list unless it says
+ * otherwise, and this one cannot be exhaustive: `is_admin()`-gated editor registrations do not
+ * exist in a WP-CLI request at all. See
+ * `novablocks_cli_third_party_editor_asset_sources()`'s docblock for the measured example.
+ *
+ * The note rides on the warning rather than becoming a warning of its own on every run: a
+ * permanent unconditional warning is a warning people learn to skip, which is the failure mode
+ * this whole lane is trying to stop repeating.
+ *
  * @return array Warnings (zero or one entry).
  */
 function novablocks_cli_third_party_editor_warnings(): array {
@@ -972,13 +1020,16 @@ function novablocks_cli_third_party_editor_warnings(): array {
 
 	return [
 		[
-			'code'    => 'third_party_editor_scripts',
-			'message' => sprintf(
+			'code'     => 'third_party_editor_scripts',
+			'message'  => sprintf(
 				/* translators: %s: comma-separated plugin/theme names. */
-				__( 'These sources add block-editor assets the harness does not load: %s. If any of them registers a blocks.registerBlockType or blocks.getSaveContent filter, the real editor serializes differently from this result and the verdict is unreliable. Verify, then allow-list them via the "novablocks/agent_harness_editor_asset_allowlist" filter.', '__plugin_txtd' ),
+				__( 'These sources add block-editor assets the harness does not load: %s. If any of them registers a blocks.registerBlockType or blocks.getSaveContent filter, the real editor serializes differently from this result and the verdict is unreliable. Verify, then allow-list them via the "novablocks/agent_harness_editor_asset_allowlist" filter. NOTE: this list covers only UNCONDITIONAL registrations — editor assets a plugin registers behind is_admin() or current_screen, or through admin_enqueue_scripts, do not exist in a WP-CLI request and cannot be enumerated headless, so this list is a floor and never a complete inventory.', '__plugin_txtd' ),
 				implode( ', ', $sources )
 			),
-			'sources' => array_values( $sources ),
+			'sources'  => array_values( $sources ),
+			// Machine-readable form of the caveat above, so a consumer branching on warnings does
+			// not have to parse prose to learn the list is a floor.
+			'complete' => false,
 		],
 	];
 }

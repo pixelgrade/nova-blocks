@@ -76,9 +76,16 @@ if ( ! defined( 'ABSPATH' ) ) {
  * and the fresh re-parse is clean (idempotent second run). `invalid_blocks` — at least one post
  * still parses invalid after the write, or a document did not converge (exit 2).
  * `content_altered` — one or more posts were LEFT UNTOUCHED because canonicalizing them would have
- * changed their visible text or introduced a nested `<p>` (exit 2; §5 P3 rule (c) enforced as a
- * cumulative pre-write gate). `not_yet_stable` — a post was still changing after the pass budget
- * and never reached a byte-stable fixed point (exit 2).
+ * DAMAGED their content: destroyed visible text (`inner_text_lost`), written a nested `<p>` that
+ * orphans a paragraph's text on the next parse (`nested_paragraph_introduced`), or the §5 P3 (c)
+ * gate could not answer (`gate_unavailable`, failing closed) — exit 2.
+ * `content_diverged` — one or more posts were LEFT UNTOUCHED because the pass, while losing NO
+ * text, is still not text-identical: an entity re-encoded, words that read differently
+ * (`inner_text_altered`) — exit 2. Both are BLOCKING and neither writes anything. When both
+ * classes are present in one run, the envelope's `code` is the severe one and
+ * `data.refused[].reason_code` is per post.
+ * `not_yet_stable` — a post was still changing after the pass budget and never reached a
+ * byte-stable fixed point (exit 2).
  * `write_mutated` — the save path changed the content between `wp_update_post()` and
  * `get_post()`: kses stripping markup the acting user may not author, a `content_save_pre` filter,
  * or a slashing bug. The stored bytes are neither the original nor the canonical form, so this is
@@ -92,13 +99,27 @@ if ( ! defined( 'ABSPATH' ) ) {
  * ## WARNINGS
  *
  * `not_yet_stable` — accompanies the code of the same name. `content_altered` /
- * `inner_text_changed` / `nested_paragraph_introduced` — the §5 P3 rule (c) guards.
- * `preset_detected` — §3.8 pass-through. `write_failed` — a post could not be rewritten.
+ * `content_diverged` / `inner_text_changed` / `nested_paragraph_introduced` — the §5 P3 rule (c)
+ * guards. `preset_detected` — §3.8 pass-through. `write_failed` — a post could not be rewritten.
  * `third_party_editor_scripts` — another plugin or theme adds block-editor assets the harness does
  * not load, so a `blocks.*` filter of theirs could make the real editor serialize differently.
+ * **That detector only sees unconditional registrations** (see its docblock in
+ * `blocks-cli-harness.php`); its silence is not evidence that no third party is involved.
  *
- * `data.refused[]` carries `{post_id, lost_length, blocks:[{index, name}]}` — the affected blocks
- * and the would-be-lost character count, as §1.4's F-W4-2 ruling pins.
+ * `data.refused[]` carries `{post_id, reason_code, lost_length, blocks:[{index, name}]}` — the
+ * affected blocks and the would-be-lost character count, as §1.4's F-W4-2 ruling pins, plus the
+ * closed-vocabulary reason the rewrite was declined: `inner_text_lost` (characters destroyed),
+ * `nested_paragraph_introduced` (the pre-detonation state — text still intact, one save from
+ * losing it), `gate_unavailable` (the digests were missing; fail closed), and
+ * `inner_text_altered` (text differs with no net loss). The first three are `content_altered`;
+ * only the last is `content_diverged`.
+ *
+ * **A refusal is never a false positive.** `lost_length: 0` means "nothing destroyed YET" — read
+ * `reason_code`, not the zero. On the about-athletics run a `content_altered` with
+ * `lost_length: 0, blocks: []` was dismissed as known noise; it was an accurate advance warning of
+ * the corruption that landed hours later and put 2,032 characters of body copy one keystroke from
+ * deletion. `wp pixelgrade blocks validate`'s `not_canonical` warning is the cheaper tripwire for
+ * the same condition.
  *
  * **Nothing is written for a post that is refused or never stabilizes.** Both leave the stored
  * content byte-identical, so an envelope that says "inspect this" leaves something intact to
@@ -427,8 +448,15 @@ function novablocks_agent_blocks_canonicalize_core( array $params ): array {
 
 		$nested_before = (int) ( $one['nested_paragraphs_before'] ?? 0 );
 		$nested_after  = (int) ( $one['nested_paragraphs_after'] ?? 0 );
-		$text_ok       = ! empty( $one['text_safe'] );
-		$converged     = empty( $after );
+		// `inner_text_preserved` reports the TEXT, not the verdict. Reading it off `text_safe`
+		// meant a post refused purely for a nested <p> — where the text is provably intact, digests
+		// equal, lengths equal — was published as `inner_text_preserved: false` and rendered
+		// `text_ok NO`. That is the same conflation of the two branches that the codes above exist
+		// to end, surviving one field over. The verdict has its own field: `refusal_reason`.
+		$refusal_reason = $one['refusal_reason'] ?? null;
+		$text_ok        = null === $refusal_reason
+			|| ! in_array( $refusal_reason, [ 'inner_text_lost', 'inner_text_altered', 'gate_unavailable' ], true );
+		$converged      = empty( $after );
 		// Byte-stability comes from the iteration loop: the document reached a pass whose output
 		// equalled its input, within the bound. A refused document is not "unstable" — its
 		// iteration was cut short deliberately — so it is reported through `refused` alone rather
@@ -438,12 +466,21 @@ function novablocks_agent_blocks_canonicalize_core( array $params ): array {
 		if ( ! $converged ) {
 			$not_converged[] = $post_id;
 		}
+		// Both guards read the SINGLE authority — the reason the gate itself returned. Restating
+		// the nested-<p> conditions inline here meant two copies of one predicate, the second of
+		// which would silently disagree the moment the gate's branch order changed.
+		//
+		// `inner_text_changed` is scoped to the branches it names, rather than firing on every
+		// refusal including the nested-<p> one. The two warnings no longer overlap, which is half
+		// of why a reader could not tell them apart.
 		if ( ! $text_ok ) {
 			$text_changed[] = $post_id;
 		}
 		// §5 P3 rule (c): the guard is against INTRODUCING a nested <p>. Removing one — which the
-		// recovery pass legitimately does — is the fix, not a finding.
-		if ( $nested_after > $nested_before ) {
+		// recovery pass legitimately does — is the fix, not a finding. Measured on the MARKUP as
+		// well as the model: see `novablocks_cli_canonicalization_refusal_reason()` for why the
+		// model count alone reads a detonation as an improvement.
+		if ( 'nested_paragraph_introduced' === $refusal_reason ) {
 			$nested_p_added[] = $post_id;
 		}
 		if ( ! $stable ) {
@@ -464,6 +501,7 @@ function novablocks_agent_blocks_canonicalize_core( array $params ): array {
 			'inner_text_preserved'     => $text_ok,
 			'nested_paragraphs_before' => $nested_before,
 			'nested_paragraphs_after'  => $nested_after,
+			'refusal_reason'           => $refusal_reason,
 			'error'                    => $failures[ $post_id ] ?? null,
 		];
 	}
@@ -485,9 +523,26 @@ function novablocks_agent_blocks_canonicalize_core( array $params ): array {
 
 		$refused_records[] = [
 			'post_id'     => (int) $post_id,
+			// The reason a rewrite was declined, from the closed vocabulary in
+			// `novablocks_cli_canonicalization_refusal_reason()`. This is the field that makes a
+			// `lost_length: 0` legible: without it, a refusal that would have re-encoded an entity
+			// and a refusal that would have deleted 2,000 characters of body copy arrive under one
+			// code with the same zero.
+			'reason_code' => (string) ( $entry['refusal_reason'] ?? 'gate_unavailable' ),
 			'lost_length' => max( 0, (int) ( $entry['inner_text_before_length'] ?? 0 ) - (int) ( $entry['inner_text_after_length'] ?? 0 ) ),
 			'blocks'      => $blocks,
 		];
+	}
+
+	// Split the refusals by the code they belong under, so each warning speaks about one class.
+	$refused_altered  = [];
+	$refused_diverged = [];
+	foreach ( $refused_records as $record ) {
+		if ( 'content_altered' === novablocks_cli_refusal_code( $record['reason_code'] ) ) {
+			$refused_altered[] = $record;
+		} else {
+			$refused_diverged[] = $record;
+		}
 	}
 
 	$warnings = array_merge(
@@ -495,16 +550,29 @@ function novablocks_agent_blocks_canonicalize_core( array $params ): array {
 		novablocks_cli_third_party_editor_warnings()
 	);
 
-	if ( ! empty( $refused ) ) {
+	if ( ! empty( $refused_altered ) ) {
 		$warnings[] = [
 			'code'     => 'content_altered',
 			'message'  => sprintf(
-				/* translators: 1: comma-separated post ids, 2: total characters that would have been lost. */
-				__( 'Refused to rewrite post(s) %1$s: the canonical serialization would have dropped %2$d character(s) of visible text or introduced a nested <p>. They are untouched and still need attention — usually a paragraph that nova-blocks#610 has double-wrapped, which an editor session must repair by hand. See data.refused[] for the affected blocks.', '__plugin_txtd' ),
-				implode( ', ', $refused ),
-				array_sum( array_column( $refused_records, 'lost_length' ) )
+				/* translators: 1: comma-separated post ids, 2: comma-separated reason codes, 3: total characters that would have been lost. */
+				__( 'Refused to rewrite post(s) %1$s (%2$s): the canonical serialization would have damaged their content — %3$d character(s) of visible text dropped outright, and/or a nested <p> written that orphans a paragraph\'s text on the very next parse. They are untouched and still need attention: repair the STORED MARKUP (never "Attempt Block Recovery", which is what writes the empty paragraphs). This warning is BLOCKING and is never a false positive — on a nested_paragraph_introduced record the text is still intact and lost_length is 0, which means "nothing destroyed YET", not "nothing to see". See data.refused[].', '__plugin_txtd' ),
+				implode( ', ', array_column( $refused_altered, 'post_id' ) ),
+				implode( ', ', array_unique( array_column( $refused_altered, 'reason_code' ) ) ),
+				array_sum( array_column( $refused_altered, 'lost_length' ) )
 			),
-			'post_ids' => $refused,
+			'post_ids' => array_column( $refused_altered, 'post_id' ),
+		];
+	}
+
+	if ( ! empty( $refused_diverged ) ) {
+		$warnings[] = [
+			'code'     => 'content_diverged',
+			'message'  => sprintf(
+				/* translators: %s: comma-separated post ids. */
+				__( 'Refused to rewrite post(s) %s: no text would be lost, but the pass is not text-identical — an entity re-encoded, or words that read differently after the rewrite. Canonicalization that cannot be certified word-for-word is not written. Blocking, and worth reading rather than re-running. See data.refused[].', '__plugin_txtd' ),
+				implode( ', ', array_column( $refused_diverged, 'post_id' ) )
+			),
+			'post_ids' => array_column( $refused_diverged, 'post_id' ),
 		];
 	}
 
@@ -595,14 +663,28 @@ function novablocks_agent_blocks_canonicalize_core( array $params ): array {
 		// re-read unchanged and is still invalid. Exit 2 either way: §2 defines exit 2 as
 		// "completed with findings the caller must inspect", and "we declined to rewrite your
 		// content" is exactly that.
+		//
+		// When both classes are present the SEVERE code wins: an envelope that says
+		// `content_diverged` while one of its posts is losing body copy would be the same
+		// under-reporting this split exists to end.
+		$severe = ! empty( $refused_altered );
+
 		return [
 			'exit'     => 2,
-			'code'     => 'content_altered',
-			'summary'  => sprintf(
-				/* translators: %d: number of refused posts. */
-				_n( '%d post was left untouched because canonicalizing it would have changed its visible text. See data.refused[].', '%d posts were left untouched because canonicalizing them would have changed their visible text. See data.refused[].', count( $refused ), '__plugin_txtd' ),
-				count( $refused )
-			),
+			'code'     => $severe ? 'content_altered' : 'content_diverged',
+			'summary'  => $severe
+				? sprintf(
+					/* translators: 1: number of posts, 2: comma-separated reason codes, 3: characters that would be lost. */
+					__( '%1$d post(s) were left untouched because canonicalizing them would have damaged their content (%2$s; %3$d character(s) of visible text dropped). See data.refused[] — each record carries a reason_code.', '__plugin_txtd' ),
+					count( $refused_altered ),
+					implode( ', ', array_unique( array_column( $refused_altered, 'reason_code' ) ) ),
+					array_sum( array_column( $refused_altered, 'lost_length' ) )
+				)
+				: sprintf(
+					/* translators: %d: number of refused posts. */
+					_n( '%d post was left untouched: the pass loses no text but is not text-identical, so it was not certified. See data.refused[].', '%d posts were left untouched: the passes lose no text but are not text-identical, so they were not certified. See data.refused[].', count( $refused_diverged ), '__plugin_txtd' ),
+					count( $refused_diverged )
+				),
 			'data'     => $data,
 			'warnings' => $warnings,
 		];
@@ -696,10 +778,13 @@ function novablocks_cli_canonicalize_to_fixed_point( array $targets, string $sur
 			'stable'                   => false,
 			'active'                   => true,
 			'text_safe'                => true,
+			'refusal_reason'           => null,
 			'invalid'                  => [],
 			'block_count'              => 0,
 			'nested_paragraphs_before' => 0,
 			'nested_paragraphs_after'  => 0,
+			'nested_markup_before'     => 0,
+			'nested_markup_after'      => 0,
 			'inner_text_before_sha1'   => null,
 			'inner_text_after_sha1'    => null,
 			'inner_text_before_length' => 0,
@@ -756,11 +841,13 @@ function novablocks_cli_canonicalize_to_fixed_point( array $targets, string $sur
 				$state[ $post_id ]['invalid']                  = is_array( $result['invalid'] ?? null ) ? $result['invalid'] : [];
 				$state[ $post_id ]['block_count']              = (int) ( $result['block_count'] ?? 0 );
 				$state[ $post_id ]['nested_paragraphs_before'] = (int) ( $result['nested_paragraphs_before'] ?? 0 );
+				$state[ $post_id ]['nested_markup_before']     = (int) ( $result['nested_paragraph_markup_before'] ?? 0 );
 				$state[ $post_id ]['inner_text_before_sha1']   = $result['inner_text_before_sha1'] ?? null;
 				$state[ $post_id ]['inner_text_before_length'] = (int) ( $result['inner_text_before_length'] ?? 0 );
 			}
 
 			$state[ $post_id ]['nested_paragraphs_after'] = (int) ( $result['nested_paragraphs_after'] ?? 0 );
+			$state[ $post_id ]['nested_markup_after']     = (int) ( $result['nested_paragraph_markup_after'] ?? 0 );
 			$state[ $post_id ]['inner_text_after_sha1']   = $result['inner_text_after_sha1'] ?? null;
 			$state[ $post_id ]['inner_text_after_length'] = (int) ( $result['inner_text_after_length'] ?? 0 );
 
@@ -772,11 +859,12 @@ function novablocks_cli_canonicalize_to_fixed_point( array $targets, string $sur
 
 			// The cumulative §5 P3 (c) gate: original text vs text after this pass, and nested-<p>
 			// count against the ORIGINAL count (removing one is the repair, not a finding).
-			$text_safe = novablocks_cli_canonicalization_is_text_safe( $state[ $post_id ] );
+			$refusal = novablocks_cli_canonicalization_refusal_reason( $state[ $post_id ] );
 
-			if ( ! $text_safe ) {
-				$state[ $post_id ]['text_safe'] = false;
-				$state[ $post_id ]['active']    = false;
+			if ( null !== $refusal ) {
+				$state[ $post_id ]['text_safe']      = false;
+				$state[ $post_id ]['refusal_reason'] = $refusal;
+				$state[ $post_id ]['active']         = false;
 				// The content is NOT advanced: `canonical_content` reports what the refused pass
 				// would have produced, but the post keeps whatever the last safe pass held.
 				$state[ $post_id ]['canonical_content'] = $state[ $post_id ]['content'];
@@ -807,35 +895,111 @@ function novablocks_cli_canonicalize_to_fixed_point( array $targets, string $sur
 }
 
 /**
- * Whether the CUMULATIVE canonicalization so far may be written back, per §5 P3 rule (c).
+ * WHY the CUMULATIVE canonicalization so far may not be written back, per §5 P3 rule (c) — or
+ * `null` when it may.
  *
- * Two conditions: the visible text of the original document still matches the text after the latest
- * pass (compared by digest), and no nested `<p>` has appeared inside a paragraph relative to the
- * ORIGINAL count. Removing a nested `<p>` is the repair, not a finding, so only an increase counts.
+ * This used to be a boolean, and the boolean is what made the guard dismissible in the field. Its
+ * two branches — "the visible text changed" and "a nested `<p>` appeared" — both surfaced as one
+ * `content_altered` code with a `lost_length` that is clamped at 0, so an operator who saw
+ * `content_altered` with `lost_length: 0, blocks: []` had nothing in the envelope to distinguish
+ * "this rewrite deletes your body copy" from "this rewrite re-encodes an entity". On the
+ * about-athletics run that ambiguity was read as a known false positive, the warning was dismissed,
+ * and the corruption it was warning about landed a few hours later. So the branches now carry
+ * distinct machine tokens and the codes above them are distinct too.
  *
- * FAIL CLOSED: a missing digest returns false, refusing the write. The fields are always present on
- * a successful canonicalize pass with the protocol handshake in place, so this should be unreachable
- * in practice — but for a separately-installed package, version skew is a routine failure mode, and a
- * gate that cannot answer must not answer "safe".
+ * The returned vocabulary is CLOSED:
+ *
+ * - `inner_text_lost` — the visible text is SHORTER after the pass. Characters were destroyed.
+ *   This is the nova-blocks#610 signature and the reason the gate exists.
+ * - `inner_text_altered` — the visible text differs without net loss: an entity decoded, words
+ *   reordered, a block's text re-emitted differently. Nothing was destroyed, and the rewrite is
+ *   still refused — canonicalization must be text-IDENTICAL, and a pass whose output the command
+ *   cannot certify is not one it should write.
+ * - `nested_paragraph_introduced` — the text survives and the pass would introduce a nested `<p>`.
+ * - `gate_unavailable` — the digests are missing, so the gate cannot answer. FAIL CLOSED.
+ *
+ * The nested check reads the MARKUP counts (`nested_markup_*`), not the model counts. The model
+ * count is the number of paragraphs whose `content` ATTRIBUTE holds a `<p`, which is the shape a
+ * swallowed paragraph has BEFORE the round trip: when the double-wrap actually lands, the re-parse
+ * orphans the text, `content` becomes `""`, and the model count falls to zero. Gating on the model
+ * alone therefore reads a detonation as an improvement. The model counts are still carried and
+ * still reported — they are in the protocol and they say something true about the input — but the
+ * gate is on the bytes. **A harness that predates the markup counts cannot answer this at all**
+ * (both fields absent, so `0 > 0` is false and the check silently reverts to the model-only
+ * comparison), and the digest branch does NOT cover that case: measured on the about-athletics
+ * authored fixture, the digests are equal and the lengths are equal while the markup goes 0 → 3.
+ * That is why `NOVABLOCKS_CLI_HARNESS_PROTOCOL` was bumped to 2 rather than left tolerant — version
+ * skew is refused up front instead of quietly downgrading the gate.
+ *
+ * **On `lost_length`.** It is a delta between two visible-text strings that have been
+ * whitespace-collapsed and had their block delimiters replaced by a space, not a count of deleted
+ * characters. Splitting one block into two adds a separator, so a pass can add length while losing
+ * a word; a `lost_length` of 0 therefore means "no NET shortening", never "nothing changed". The
+ * digest, not the length, is what decides whether the text moved — the length only ranks how bad it
+ * was. Both branches refuse the write either way.
  *
  * @param array $entry Accumulated per-post iteration state.
  *
- * @return bool
+ * @return string|null One of the four reason codes above, or null when the write may proceed.
  */
-function novablocks_cli_canonicalization_is_text_safe( array $entry ): bool {
+function novablocks_cli_canonicalization_refusal_reason( array $entry ): ?string {
 	$before = $entry['inner_text_before_sha1'] ?? null;
 	$after  = $entry['inner_text_after_sha1'] ?? null;
 
-	// FAIL CLOSED — see the docblock above; a missing digest refuses the write.
+	// FAIL CLOSED — a gate that cannot answer must not answer "safe".
 	if ( null === $before || null === $after ) {
-		return false;
+		return 'gate_unavailable';
 	}
 
 	if ( $before !== $after ) {
-		return false;
+		return (int) $entry['inner_text_after_length'] < (int) $entry['inner_text_before_length']
+			? 'inner_text_lost'
+			: 'inner_text_altered';
 	}
 
-	return (int) $entry['nested_paragraphs_after'] <= (int) $entry['nested_paragraphs_before'];
+	// Removing a nested `<p>` is the repair, not a finding, so only an INCREASE counts.
+	if ( (int) ( $entry['nested_markup_after'] ?? 0 ) > (int) ( $entry['nested_markup_before'] ?? 0 ) ) {
+		return 'nested_paragraph_introduced';
+	}
+
+	if ( (int) $entry['nested_paragraphs_after'] > (int) $entry['nested_paragraphs_before'] ) {
+		return 'nested_paragraph_introduced';
+	}
+
+	return null;
+}
+
+/**
+ * Map a refusal reason to the envelope `code` it belongs under.
+ *
+ * Two codes, both exit 2, both leaving the post byte-identical — the split is about what the
+ * operator must do next, which is the only thing a `code` is for:
+ *
+ * - `content_altered` — the rewrite would harm the CONTENT: it destroys visible text now
+ *   (`inner_text_lost`), or it writes a nested `<p>` that destroys it on the next parse
+ *   (`nested_paragraph_introduced`), or the gate could not answer (`gate_unavailable`). The post
+ *   needs a repair of its stored markup before anything else touches it.
+ * - `content_diverged` — the rewrite would change the visible text without losing any of it: an
+ *   entity re-encoded, words reordered. Equally blocking and equally unwritten, but the finding is
+ *   a divergence to inspect rather than damage to recover from.
+ *
+ * **`nested_paragraph_introduced` is on the SEVERE side, and this is the correction that matters.**
+ * It looked like the mild branch — the text is preserved, `lost_length` is 0 — and that appearance
+ * is exactly the trap: a document about to be double-wrapped is one save away from
+ * `inner_text_lost`, because the nested `<p>` re-parses to `content: ""`. Measured on the
+ * about-athletics fixture: `inner_text_preserved: true`, lengths 426 → 426, digests equal, and the
+ * only thing that fires is the markup counter going 0 → 3. Routing THAT document to a code that
+ * says "loses nothing" would rebuild the misreading this whole split exists to prevent.
+ *
+ * An UNKNOWN token lands on `content_altered`. In a gate whose stated discipline is "a gate that
+ * cannot answer must not answer safe", vocabulary drift must not default to the mild code.
+ *
+ * @param string $reason One of `novablocks_cli_canonicalization_refusal_reason()`'s tokens.
+ *
+ * @return string `content_altered` or `content_diverged`.
+ */
+function novablocks_cli_refusal_code( string $reason ): string {
+	return 'inner_text_altered' === $reason ? 'content_diverged' : 'content_altered';
 }
 
 /**

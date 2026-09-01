@@ -18,6 +18,16 @@
  *   and ends with two invalid `core/paragraph`s after the recovery pass: nova-blocks#610,
  *   cross-checked in a real editor with identical before/after lists. A harness that "fixed" this
  *   would be lying, and `canonicalize` must exit 2 on it rather than loop.
+ *
+ * A third trio was added after the about-athletics post-mortem (2026-09-01) — the same three
+ * paragraphs in the three states the corruption moved through, lifted verbatim from that run's
+ * post 5 (revisions 108 and 112, and the scripted repair):
+ *
+ * - `athletics-paragraphs.authored.html` — the LANDMINE. Every block parses valid; the document is
+ *   not a serialization fixed point. This is the shape `blocks validate` used to certify as clean
+ *   over 229 blocks while 2,032 characters of body copy sat one editor save from deletion.
+ * - `athletics-paragraphs.double-wrapped.html` — the DETONATION, as revision 112 stored it.
+ * - `athletics-paragraphs.repaired.html` — the repaired form: valid AND a fixed point.
  */
 
 'use strict';
@@ -32,8 +42,15 @@ const ABSPATH = process.env.PIXELGRADE_HARNESS_TEST_ABSPATH || '';
 const PLUGIN_DIR = process.env.PIXELGRADE_HARNESS_TEST_PLUGIN_DIR || '';
 const CORPUS = path.join( __dirname, 'corpus' );
 
+// This is the ONLY suite in the package that touches a real block registry, so a default `npm test`
+// green means "the plumbing is right", never "the claims about @wordpress/blocks are right". The
+// empirical facts this whole lane rests on — that core/paragraph deprecation #6 really does swallow
+// the element, that `wp.blocks.validateBlock` exists in the shipped bundle and returns false for
+// those blocks, that the model-level nested-<p> count really does invert on the round trip — are
+// asserted HERE and nowhere else. Skipping it silently would let a regression in any of them pass
+// CI, so the skip reason says what is going unchecked rather than just how to opt in.
 const skip = ! ABSPATH || ! PLUGIN_DIR
-	? 'set PIXELGRADE_HARNESS_TEST_ABSPATH and PIXELGRADE_HARNESS_TEST_PLUGIN_DIR to run the corpus parity contract'
+	? 'NOT RUN: the real-registry parity contract (nova-blocks#610, deprecation-#6 swallow, valid-via-deprecation detection) is unverified in this run. Point PIXELGRADE_HARNESS_TEST_ABSPATH and PIXELGRADE_HARNESS_TEST_PLUGIN_DIR at a provisioned site to run it.'
 	: false;
 
 /**
@@ -150,6 +167,75 @@ test( 'corpus parity against the site\'s own bundles', { skip }, async t => {
 		);
 		assert.strictEqual( probe.inner_text_preserved, true, 'even a non-converging pass must not lose text' );
 		assert.strictEqual( probe.inner_text_before_sha1, probe.inner_text_after_sha1 );
+	} );
+
+	await t.test( 'about-athletics: the fixed-point post-condition catches what invalid:0 certified', () => {
+		const read = name => fs.readFileSync( path.join( CORPUS, `athletics-paragraphs.${ name }.html` ), 'utf8' );
+
+		const seen = runHarness(
+			'validate',
+			[
+				{ id: 'authored', content: read( 'authored' ) },
+				{ id: 'doubled', content: read( 'double-wrapped' ) },
+				{ id: 'repaired', content: read( 'repaired' ) },
+			],
+			settings
+		);
+		const v = Object.fromEntries( seen.documents.map( d => [ d.id, d ] ) );
+
+		// THE LANDMINE. Zero invalid blocks — the old verdict, reproduced exactly — and the
+		// document is not a fixed point, with every paragraph valid only through core/paragraph
+		// deprecation #6 (whose selector-less `content` swallows the entire <p> element).
+		assert.strictEqual( v.authored.invalid.length, 0, 'the authored shape parses entirely valid — this is what said 0' );
+		assert.strictEqual( v.authored.canonical, false, 'and it is NOT a serialization fixed point' );
+		assert.ok( v.authored.not_canonical_blocks.length > 0, 'the blocks at risk are named' );
+		assert.ok(
+			v.authored.not_canonical_blocks.every(
+				entry => 'core/paragraph' === entry.block_name && 'valid_via_deprecation' === entry.reason_code
+			),
+			'and named for the right reason'
+		);
+
+		// THE DETONATION: after one editor save the same paragraphs no longer parse at all.
+		assert.ok( v.doubled.invalid.length > 0, 'the double-wrapped form is openly invalid' );
+
+		// THE REPAIR: valid AND canonical. Both signals, which is the standard a migrated page
+		// has to clear before a run may be called done.
+		assert.strictEqual( v.repaired.invalid.length, 0 );
+		assert.strictEqual( v.repaired.canonical, true );
+		assert.deepStrictEqual( v.repaired.not_canonical_blocks, [] );
+	} );
+
+	await t.test( 'about-athletics: the nested-<p> gate must read the MARKUP, not the model', () => {
+		const read = name => fs.readFileSync( path.join( CORPUS, `athletics-paragraphs.${ name }.html` ), 'utf8' );
+
+		const pass = runHarness(
+			'canonicalize',
+			[ { id: 'authored', content: read( 'authored' ) }, { id: 'doubled', content: read( 'double-wrapped' ) } ],
+			settings
+		);
+		const c = Object.fromEntries( pass.documents.map( d => [ d.id, d ] ) );
+
+		// This is the near-miss, in numbers. Canonicalizing the authored shape preserves the
+		// visible text, and the MODEL-level nested-<p> count goes 3 -> 0, which reads as a repair.
+		// The markup count goes 0 -> 3: the pass would WRITE the double-wrap. A gate gated on the
+		// model alone would have let this through.
+		assert.strictEqual( c.authored.inner_text_preserved, true, 'the text survives, so the text gate does not fire' );
+		assert.ok(
+			c.authored.nested_paragraphs_after < c.authored.nested_paragraphs_before,
+			'and the MODEL count falls, which reads as an improvement'
+		);
+		assert.strictEqual( c.authored.nested_paragraph_markup_before, 0 );
+		assert.ok( c.authored.nested_paragraph_markup_after > 0, 'while the bytes gain a nested <p> — the finding' );
+
+		// The reverse direction still reads as the repair it is: removing a nested <p> must not
+		// be reported as introducing one.
+		assert.ok( c.doubled.nested_paragraph_markup_before > 0 );
+		assert.strictEqual( c.doubled.nested_paragraph_markup_after, 0 );
+		// And recovering the detonated form is where the text is genuinely destroyed, which the
+		// text gate catches on its own.
+		assert.strictEqual( c.doubled.inner_text_preserved, false );
+		assert.ok( c.doubled.inner_text_after_length < c.doubled.inner_text_before_length );
 	} );
 
 	await t.test( 'a validate pass over the produced markup agrees with the canonicalize pass', () => {

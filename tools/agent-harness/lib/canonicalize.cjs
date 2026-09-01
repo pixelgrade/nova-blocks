@@ -197,9 +197,19 @@ function recover( wp, blocks ) {
  */
 function innerText( win, content ) {
 	const host = win.document.createElement( 'div' );
-	// Strip block comment delimiters first: they are comments, so `textContent` ignores them
-	// anyway, but removing them keeps the parse cheap and the intent explicit.
-	host.innerHTML = String( content || '' ).replace( /<!--[\s\S]*?-->/g, '' );
+	// Replace block comment delimiters with a SPACE — not with nothing. They are comments, so
+	// `textContent` ignores them either way, but a document whose blocks are written with no
+	// whitespace between them (`…</p><!-- /wp:paragraph --><!-- wp:paragraph --><p>…`, which is
+	// what hand-authored and CLI-written markup looks like) would otherwise read as `WorkAbout`
+	// before the pass and `Work About` after it, purely because serialization puts a blank line
+	// between delimiters. That is a change in SPACING, not in words, and the whole point of this
+	// function is that only a change in words is a finding. Collapsing whitespace afterwards makes
+	// the substitution free for documents that were already reflowed.
+	//
+	// This is not a loosening of the gate: text that is genuinely dropped is still dropped, and the
+	// digests still differ. It removes a false positive that fired on every document written
+	// outside the editor — the one that made `content_altered` look dismissible in the field.
+	host.innerHTML = String( content || '' ).replace( /<!--[\s\S]*?-->/g, ' ' );
 
 	return String( host.textContent || '' ).replace( /\s+/g, ' ' ).trim();
 }
@@ -292,6 +302,99 @@ function countNestedParagraphs( blocks ) {
 }
 
 /**
+ * Count `<p …><p` pairs in MARKUP.
+ *
+ * `countNestedParagraphs()` above measures the block MODEL — a paragraph whose `content` attribute
+ * carries a `<p`. That is the shape a swallowed paragraph has BEFORE the round trip, and it is
+ * exactly the wrong side of the transition to gate on: the moment nova-blocks#610 actually lands,
+ * the double-wrapped markup re-parses to `content: ""` and the model-level count drops to ZERO. A
+ * gate comparing model counts therefore reads the detonation as an improvement (112 → 0) and lets
+ * the write through. On the about-athletics run only the innerText digest stood between the
+ * canonicalizer and 2,032 characters of body copy, and it stood there by accident.
+ *
+ * So the nested-`<p>` half of §5 P3 rule (c) is measured where the damage is visible: in the bytes
+ * that would be written.
+ *
+ * Three things the pattern has to get right, each of which a simpler one gets wrong:
+ *
+ * - It is a **lookahead**, so a match does not consume the inner `<p>`'s bracket. A consuming
+ *   pattern cannot start the next match inside what it just ate, so `<p><p><p>x` counts 1 instead
+ *   of 2 — and since the gate compares `after > before`, a document that already carries one level
+ *   of the mangling and gains a second reads 1 → 1 and passes. That is the re-run-on-an-
+ *   already-corrupted-page case, which is exactly when the gate is most needed.
+ * - The inner lookahead allows **content between the two openings**, as long as no `</p>` closes
+ *   the outer one first. `<p class="a">foo <p>bar</p></p>` is the same defect with a word in front
+ *   of it. The `(?!<\/p>)` guard is what keeps two ordinary SIBLING paragraphs
+ *   (`<p>a</p>\n\n<p>b</p>`) from matching.
+ * - It is case-insensitive. Hand-authored markup is not guaranteed lowercase.
+ *
+ * Known and accepted: a `>` inside an attribute VALUE (`<p title="a>b">`) ends the tag early for
+ * this pattern. Serialized output never produces one — `serializeAttributes()` escapes `<`/`>` and
+ * attribute values are entity-encoded — so the residue is a hand-authored edge that costs a missed
+ * count, never a false alarm.
+ *
+ * @param {string} content Block markup.
+ *
+ * @return {number} Count of nested `<p>` openings.
+ */
+function countNestedParagraphMarkup( content ) {
+	return ( String( content || '' ).match( /<p(?:\s[^>]*)?>(?=(?:(?!<\/p>)[\s\S])*?<p[\s>])/gi ) || [] ).length;
+}
+
+/**
+ * Report the blocks that parse VALID but only against a deprecated version of their save.
+ *
+ * This is the failure class the whole about-athletics corruption hid inside. `parse()` walks a
+ * block type's deprecations and reports `isValid: true` as soon as any of them matches, so a
+ * document can be 100% "valid" and still be a different document the next time the editor saves
+ * it. `core/paragraph`'s deprecation #6 is the sharp case: its `content` attribute is declared
+ * `{ source: 'html' }` with NO `selector`, so the whole stored `<p>` element becomes the content
+ * value and the deprecated save matches anything. The block reports valid while holding an entire
+ * element as its text, and one editor save re-wraps it into `<p …><p …>text</p></p>`.
+ *
+ * `validateBlock()` compares against the CURRENT save only, so `isValid && ! validateBlock()` is
+ * precisely "valid via deprecation".
+ *
+ * @param {object} wp     The window's `wp` namespace.
+ * @param {Array}  blocks Parsed blocks.
+ *
+ * @return {Array} `[{ index, block_name, reason_code }]`.
+ */
+function collectValidViaDeprecation( wp, blocks ) {
+	if ( 'function' !== typeof ( wp.blocks && wp.blocks.validateBlock ) ) {
+		return [];
+	}
+
+	const found = [];
+
+	flatten( blocks ).forEach( ( block, index ) => {
+		if ( true !== block.isValid ) {
+			return;
+		}
+
+		let currentSaveMatches;
+		try {
+			const verdict = wp.blocks.validateBlock( block );
+			currentSaveMatches = Array.isArray( verdict ) ? verdict[ 0 ] : !! verdict;
+		} catch ( error ) {
+			// A block type whose save() throws cannot be judged either way; the document-level
+			// fixed-point check still covers it.
+			return;
+		}
+
+		if ( true !== currentSaveMatches ) {
+			found.push( {
+				index,
+				block_name: String( block.name || 'unknown' ),
+				reason_code: 'valid_via_deprecation',
+			} );
+		}
+	} );
+
+	return found;
+}
+
+/**
  * Process one document.
  *
  * @param {object} context          Bootstrapped harness (`{ win, wp }`).
@@ -329,6 +432,47 @@ function processDocument( context, document, mode ) {
 
 	if ( 'validate' === mode ) {
 		result.converged = 0 === result.invalid.length;
+
+		// The fixed-point post-condition. Per-block validity answers "does this parse?"; it does
+		// NOT answer "is this what the editor would store?", because `parse()` accepts a block
+		// that only matches a DEPRECATED save. `serialize( parse( content ) ) === content` answers
+		// the second question in one comparison, and it is the check that would have caught the
+		// about-athletics page while it still had 112 clean-looking paragraphs: `invalid: 0` said
+		// nothing, this said "the next save rewrites 288 KB of this document".
+		//
+		// No recovery is applied here — recovery is `canonicalize`'s job and would mask exactly
+		// what is being measured. The serialization is a pure re-emission of what parse produced.
+		//
+		// TWO EXCLUSIONS, both about keeping the finding worth reading:
+		//
+		// - A document with NO block markup (classic content, an empty post) has no serialization
+		//   to be a fixed point of. `parse()` wraps it in a `core/freeform`, re-serializing shifts
+		//   whitespace, and the verdict would be an exit-2 finding about a post that has nothing to
+		//   do with blocks. Not measured, reported as `null`.
+		// - **Outer whitespace only.** A trailing newline is the default shape of anything written
+		//   by `wp post create --post_content="$( cat file.html )"`, by REST, or by a migration
+		//   script, and it makes an otherwise perfect document differ by one byte. Comparing the
+		//   trimmed forms drops that class entirely while changing nothing about internal
+		//   whitespace, which is where real reflow lives. A gate that cries on every CLI-written
+		//   post is a gate people learn to pass with a flag.
+		if ( ! result.has_blocks ) {
+			result.canonical = null;
+			result.not_canonical_blocks = [];
+
+			return result;
+		}
+
+		try {
+			result.canonical = wp.blocks.serialize( parsed ).trim() === content.trim();
+		} catch ( error ) {
+			// A save() that throws is a finding of its own, but it is not a fixed-point verdict.
+			// Report the document as canonical-unknown rather than asserting either answer.
+			result.canonical = null;
+			result.canonical_error = String( error.message ).split( '\n' )[ 0 ];
+		}
+
+		result.not_canonical_blocks = false === result.canonical ? collectValidViaDeprecation( wp, parsed ) : [];
+
 		return result;
 	}
 
@@ -359,6 +503,11 @@ function processDocument( context, document, mode ) {
 	result.converged = 0 === invalidAfter.length;
 	result.nested_paragraphs_before = countNestedParagraphs( parsed );
 	result.nested_paragraphs_after = countNestedParagraphs( reparsed );
+	// The same guard measured in the bytes rather than in the model — see
+	// `countNestedParagraphMarkup()` for why the model-level pair alone reads a detonation as an
+	// improvement and lets it through.
+	result.nested_paragraph_markup_before = countNestedParagraphMarkup( content );
+	result.nested_paragraph_markup_after = countNestedParagraphMarkup( serialized );
 	// Digests gate, lengths report. The caller compares pass 1's `before` digest against the LAST
 	// pass's `after` digest to decide whether to write; shipping the full visible text of every
 	// document back on every pass would grow the response without adding information. The lengths
@@ -387,5 +536,7 @@ module.exports = {
 	blockTextLength,
 	lostTextByBlock,
 	countNestedParagraphs,
+	countNestedParagraphMarkup,
+	collectValidViaDeprecation,
 	processDocument,
 };
