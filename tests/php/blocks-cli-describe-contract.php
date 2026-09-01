@@ -65,6 +65,7 @@ namespace {
 		public $name;
 		public $title;
 		public $attributes;
+		public $supports;
 		public function __construct( array $p ) { foreach ( $p as $k => $v ) { $this->$k = $v; } }
 	}
 
@@ -125,10 +126,10 @@ namespace {
 		throw new \RuntimeException( 'Command did not halt.' );
 	}
 
-	function nbd_register( $name, array $attributes = [], $title = '' ) {
+	function nbd_register( $name, array $attributes = [], $title = '', array $supports = [] ) {
 		WP_Block_Type_Registry::get_instance()->register(
 			$name,
-			new WP_Block_Type( [ 'name' => $name, 'title' => $title, 'attributes' => $attributes ] )
+			new WP_Block_Type( [ 'name' => $name, 'title' => $title, 'attributes' => $attributes, 'supports' => $supports ] )
 		);
 	}
 
@@ -220,7 +221,53 @@ namespace {
 	// Coverage tallies add up.
 	assert_same( 6, $data['coverage']['bundle'] + $data['coverage']['curated'] + $data['coverage']['none'] + 1, 'describe: coverage buckets (+1 schema attr) sum to the attribute count.' );
 
+	// Unclamped block: colorSignal enum is the full 0-3 with parallel labels.
+	assert_same( [ 'None', 'Low', 'Medium', 'High' ], $attrs['colorSignal']['vocabulary']['labels'], 'describe: unclamped colorSignal labels are a list parallel to the 0-3 enum.' );
+
 	echo "merge + honesty contract OK\n";
+
+	// =========================================================================================
+	// MEDIUM (W9 review): colorSignal is CLAMPED to the block's minColorSignal/maxColorSignal —
+	// describe must never advertise 0/None where the block forbids it.
+	// =========================================================================================
+
+	// (a) Server-registered supports.novaBlocks.colorSignal.minColorSignal wins and clamps.
+	nbd_reset();
+	nbd_register(
+		'novablocks/clamped',
+		[ 'colorSignal' => [ 'type' => 'number', 'default' => 1 ] ],
+		'Clamped',
+		[ 'novaBlocks' => [ 'colorSignal' => [ 'minColorSignal' => 1 ] ] ]
+	);
+	$exit  = nbd_run( 'novablocks_cli_blocks_describe', [ 'novablocks/clamped' ], [ 'format' => 'json' ] );
+	$attrs = WP_CLI::$printed_value['data']['attributes'];
+	assert_same( [ 1, 2, 3 ], $attrs['colorSignal']['vocabulary']['enum'], 'describe: a minColorSignal:1 block omits 0 from colorSignal (server supports).' );
+	assert_same( [ 'Low', 'Medium', 'High' ], $attrs['colorSignal']['vocabulary']['labels'], 'describe: clamped labels drop "None" and stay parallel to the enum.' );
+
+	// (b) The JS-only curated clamp (core/button, core/separator declare minColorSignal:1 in JS,
+	// never reaching the server registry) is applied from the curated map.
+	nbd_reset();
+	nbd_register( 'core/button', [ 'colorSignal' => [ 'type' => 'number', 'default' => 1 ] ] );
+	$exit  = nbd_run( 'novablocks_cli_blocks_describe', [ 'core/button' ], [ 'format' => 'json' ] );
+	$attrs = WP_CLI::$printed_value['data']['attributes'];
+	assert_same( [ 1, 2, 3 ], $attrs['colorSignal']['vocabulary']['enum'], 'describe: core/button colorSignal omits 0 via the curated JS-clamp map (minColorSignal:1 is JS-only).' );
+
+	echo "colorSignal clamp contract OK\n";
+
+	// =========================================================================================
+	// JS-drift CANARY (W9 review LOW): one curated JS-sourced row pinned to its expected values,
+	// so a future edit to the control component that silently changes the range trips a test. The
+	// file:line citations stay the re-audit path; this is the tripwire.
+	// =========================================================================================
+
+	nbd_reset();
+	nbd_register( 'novablocks/canary', [ 'emphasisArea' => [ 'type' => 'number', 'default' => 100 ] ] );
+	$exit  = nbd_run( 'novablocks_cli_blocks_describe', [ 'novablocks/canary' ], [ 'format' => 'json' ] );
+	$attrs = WP_CLI::$printed_value['data']['attributes'];
+	// emphasis-area-control/index.js:20-22 → min=0 max=100 step=5. If this fails, the JS changed.
+	assert_same( [ 'min' => 0, 'max' => 100, 'step' => 5 ], $attrs['emphasisArea']['vocabulary']['range'], 'describe: emphasisArea range canary (emphasis-area-control/index.js:20-22).' );
+
+	echo "js-drift canary contract OK\n";
 
 	// =========================================================================================
 	// Short-name resolution + unknown-name suggestions.

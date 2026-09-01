@@ -171,6 +171,13 @@ function novablocks_agent_blocks_describe_core( array $params ): array {
 			$record['source']     = 'schema';
 		}
 
+		// colorSignal's valid set is block-dependent: minColorSignal/maxColorSignal supports clamp
+		// it (core/button, core/separator forbid 0/None). Clamp the emitted enum to the block's real
+		// bounds so describe never advertises an invalid value.
+		if ( 'colorSignal' === $attr_name && is_array( $record['vocabulary'] ) ) {
+			$record = novablocks_blocks_describe_clamp_color_signal( $record, $block_name, $block_type->supports ?? null );
+		}
+
 		if ( '' !== $resolved['note'] ) {
 			$record['note'] = $resolved['note'];
 		}

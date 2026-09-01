@@ -275,10 +275,11 @@ function novablocks_blocks_describe_supernova_vocabulary(): array {
 			'note' => 'horizontal / horizontal-reverse split the card into media + content columns (the layouts where emphasisArea applies).',
 		],
 		'layoutStyle' => [
-			// Verified across supernova cards-collection / query-loop variations. `masonry` is
-			// reachable only through a theme-registered collection layout recipe (baseLayout).
-			'enum' => [ 'classic', 'carousel', 'parametric' ],
-			'note' => 'Base collection layout. masonry is available only via a theme-registered collection layout recipe (see data.recipes).',
+			// Verified across supernova cards-collection / query-loop variations, plus `masonry`,
+			// which is a real baseLayout reachable only through a theme-registered collection layout
+			// recipe (collection-layout-recipes.php:169 supported set: classic|masonry|carousel|parametric).
+			'enum' => [ 'classic', 'masonry', 'carousel', 'parametric' ],
+			'note' => 'Base collection layout. masonry is reachable only in the context of a theme-registered collection layout recipe (see data.recipes); the other three are always available.',
 		],
 		'contentType' => [
 			// Verified across supernova query-loop/cards-collection variations.
@@ -382,6 +383,120 @@ function novablocks_blocks_describe_resolve_vocabulary( string $block_name, stri
 		'source'     => 'none',
 		'note'       => 'No curated vocabulary for this attribute — type and default only. Author a value and prove it with `wp pixelgrade blocks canonicalize` / `validate`.',
 	];
+}
+
+/**
+ * The Color Signal level labels, index-aligned to the signal value
+ * (`get-color-signal-levels.js:6-12`, `COLOR_SIGNAL_LEVEL_LABELS`).
+ *
+ * @return string[]
+ */
+function novablocks_blocks_describe_color_signal_labels(): array {
+	return [ 0 => 'None', 1 => 'Low', 2 => 'Medium', 3 => 'High' ];
+}
+
+/**
+ * The per-block `minColorSignal` / `maxColorSignal` clamps that are declared ONLY in JS
+ * (`blocks.registerBlockType` filters), so they never reach the server block registry and cannot be
+ * read off `$block_type->supports`. Curated here with a file:line citation each, same discipline as
+ * the rest of this table, so `describe` does not over-claim `0`/None as valid where the editor
+ * forbids it.
+ *
+ * A block whose clamp IS server-registered (a future PHP-side `supports.novaBlocks.colorSignal`
+ * object) is read live and wins over this map — see `novablocks_blocks_describe_color_signal_bounds()`.
+ *
+ * @return array block-name → `{ min?: int, max?: int }`.
+ */
+function novablocks_blocks_describe_color_signal_js_clamps(): array {
+	return [
+		// packages/core/src/blocks/core/button/index.js:23 — minColorSignal: 1 (None is invalid).
+		'core/button'    => [ 'min' => 1 ],
+		// packages/core/src/blocks/core/separator/index.js:30 — minColorSignal: 1.
+		'core/separator' => [ 'min' => 1 ],
+	];
+}
+
+/**
+ * Resolve the `[min, max]` Color Signal bounds for a block, mirroring the editor's own clamp
+ * (`get-color-signal-levels.js:36-41`: min defaults 0, max defaults 3, each overridden by an integer
+ * `minColorSignal`/`maxColorSignal` on the block's `supports.novaBlocks.colorSignal` object).
+ *
+ * Precedence: a server-registered supports object wins; otherwise the JS-only curated clamp map
+ * (`core/button`, `core/separator`) applies; otherwise the 0–3 default.
+ *
+ * @param string $block_name Block name.
+ * @param mixed  $supports   `$block_type->supports` (array or null).
+ *
+ * @return array{0:int,1:int} `[ min, max ]`.
+ */
+function novablocks_blocks_describe_color_signal_bounds( string $block_name, $supports ): array {
+	$min = 0;
+	$max = 3;
+
+	$curated = novablocks_blocks_describe_color_signal_js_clamps();
+	if ( isset( $curated[ $block_name ]['min'] ) ) {
+		$min = (int) $curated[ $block_name ]['min'];
+	}
+	if ( isset( $curated[ $block_name ]['max'] ) ) {
+		$max = (int) $curated[ $block_name ]['max'];
+	}
+
+	// A server-registered supports object is authoritative if present (future-proofing: today these
+	// clamps live only in JS, but nothing should silently disagree with the registry if that changes).
+	$signal_support = ( is_array( $supports ) && isset( $supports['novaBlocks']['colorSignal'] ) )
+		? $supports['novaBlocks']['colorSignal']
+		: null;
+
+	if ( is_array( $signal_support ) ) {
+		if ( isset( $signal_support['minColorSignal'] ) && is_int( $signal_support['minColorSignal'] ) ) {
+			$min = $signal_support['minColorSignal'];
+		}
+		if ( isset( $signal_support['maxColorSignal'] ) && is_int( $signal_support['maxColorSignal'] ) ) {
+			$max = $signal_support['maxColorSignal'];
+		}
+	}
+
+	// Keep inside the absolute 0–3 signal universe and coherent.
+	$min = max( 0, min( 3, $min ) );
+	$max = max( $min, min( 3, $max ) );
+
+	return [ $min, $max ];
+}
+
+/**
+ * Clamp a resolved `colorSignal` vocabulary record to the block's real `[min..max]` bounds — so a
+ * block that forbids `None` (e.g. core/button, core/separator with `minColorSignal:1`) never has `0`
+ * advertised as valid. Rebuilds `labels` as a list parallel to the clamped `enum`.
+ *
+ * @param array  $record     The attribute record (`{ type, default, vocabulary, source, note? }`).
+ * @param string $block_name Block name.
+ * @param mixed  $supports   `$block_type->supports`.
+ *
+ * @return array The record with a clamped `colorSignal` enum/labels.
+ */
+function novablocks_blocks_describe_clamp_color_signal( array $record, string $block_name, $supports ): array {
+	if ( empty( $record['vocabulary']['enum'] ) || ! is_array( $record['vocabulary']['enum'] ) ) {
+		return $record;
+	}
+
+	list( $min, $max ) = novablocks_blocks_describe_color_signal_bounds( $block_name, $supports );
+
+	$labels_all = novablocks_blocks_describe_color_signal_labels();
+	$enum       = [];
+	$labels     = [];
+
+	foreach ( range( 0, 3 ) as $value ) {
+		if ( $value < $min || $value > $max ) {
+			continue;
+		}
+		$enum[]   = $value;
+		$labels[] = $labels_all[ $value ];
+	}
+
+	$record['vocabulary']['enum']   = $enum;
+	$record['vocabulary']['labels'] = $labels;
+
+	return $record;
 }
 
 /**

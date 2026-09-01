@@ -2,10 +2,12 @@
 /**
  * WordPress Abilities API registrations for Nova Blocks — the four `pixelgrade/*` block abilities.
  *
- * The agent-surface contract (`docs/plans/agentic-stack/CONTRACT.md` v0.4.0 §4) gives Nova Blocks
- * four of the stack's 21 abilities: `pixelgrade/list-blocks`, `pixelgrade/list-patterns`,
- * `pixelgrade/validate-post` and `pixelgrade/canonicalize-post`, each mapping 1:1 to a
- * `wp pixelgrade blocks …` command.
+ * The agent-surface contract (`docs/plans/agentic-stack/CONTRACT.md` §4) gives Nova Blocks five
+ * `pixelgrade/*` abilities: `pixelgrade/list-blocks`, `pixelgrade/describe-block` (W9),
+ * `pixelgrade/list-patterns`, `pixelgrade/validate-post` and `pixelgrade/canonicalize-post`, each
+ * mapping 1:1 to a `wp pixelgrade blocks …` command. `describe-block` is a new verb under the W9
+ * lane, absent from the frozen §1.4 inventory pending a contract amendment; it registers here and
+ * stays PRIVATE (not on the MCP public whitelist) until publication is a Gate decision.
  *
  * **These abilities contain no logic of their own.** Every one of them calls the same
  * `novablocks_agent_blocks_*_core()` the WP-CLI callback calls (`lib/cli/blocks-cli-*.php`) and
