@@ -460,7 +460,7 @@ function novablocks_register_block_types() {
 
 			// The same dependencies array used for the respective script file.
 			$js_dependencies  = $asset_config['dependencies'] ?? [];
-			$version          = $asset_config['version'] ?? filemtime( $style_path );
+			$version          = filemtime( $style_path );
 			$css_dependencies = [];
 
 			if ( $key === 'editor_style' ) {

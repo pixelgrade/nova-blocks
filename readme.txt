@@ -3,7 +3,7 @@ Contributors: pixelgrade, vlad.olaru, babbardel, razvanonofrei, gorby31
 Tags: blocks, gutenberg, gutenberg blocks, page builder, full site editing
 Requires at least: 7.0
 Tested up to: 7.1
-Stable tag: 2.6.6
+Stable tag: 2.6.6.1
 Requires PHP: 7.4
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -113,6 +113,11 @@ Yes! Nova Block's core features are free to use.
 3. Slideshow Me the Way block options
 
 == Changelog ==
+
+= 2.6.6.1 =
+* Improved: Separate multiple active values into individual design-system filter chips with aligned remove actions.
+* Improved: Align compact Search and Filters controls, summaries, and results below the shared mobile breakpoint.
+* Fix: Version block stylesheets from their own files so CSS-only updates invalidate caches reliably.
 
 = 2.6.6 =
 * Improved: Align compact full-width Search toolbars, mobile Filters buttons, and result summaries to the design-system content rail and spacing rhythm.

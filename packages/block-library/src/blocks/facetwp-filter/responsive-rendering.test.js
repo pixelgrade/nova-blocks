@@ -9,7 +9,13 @@ const read = file => fs.readFileSync( path.join( __dirname, file ), 'utf8' );
 
 const compileStyles = source => sass.compileString( `
 @mixin above($breakpoint) { @media (min-width: 1024px) { @content; } }
-@mixin below($breakpoint) { @media (max-width: 1023px) { @content; } }
+@mixin below($breakpoint) {
+	@if $breakpoint == mobile {
+		@media not screen and (min-width: 480px) { @content; }
+	} @else {
+		@media (max-width: 1023px) { @content; }
+	}
+}
 ${ source }
 `, { style: 'expanded' } ).css;
 
@@ -84,7 +90,47 @@ test( 'Filter Controls exposes an opt-in mobile panel without changing existing 
 	assert.match( styles, /grid-template-areas:[\s\S]*"count reset"[\s\S]*"selections selections"/ );
 	assert.match( styles, /\.nb-facetwp-selections__count[\s\S]*white-space:\s*nowrap/ );
 	assert.match( styles, /\.nb-facetwp-selections__count[\s\S]*\.facetwp-counts[\s\S]*display:\s*inline/ );
-	const compactMedia = '(max-width: 420px)';
+	const selectionRoot = ':is(.facetwp-selections, #specific)';
+	const selectionListSelector = `${ selectionRoot } > ul`;
+	const selectionItemSelector = `${ selectionRoot } > ul > li`;
+	const selectionItemBackgroundSelector = `${ selectionItemSelector }:before`;
+	const selectionLabelSelector = `${ selectionRoot } .facetwp-selection-label`;
+	const selectionValueSelector = `${ selectionRoot } .facetwp-selection-value`;
+	const selectionValueHoverSelector = `${ selectionValueSelector }:hover`;
+	const selectionValueActiveSelector = `${ selectionValueSelector }:active`;
+	const selectionValueFocusSelector = `${ selectionValueSelector }:focus-visible`;
+	const selectionListRule = ruleAt( stylesheet, selectionListSelector );
+	const selectionItemRule = ruleAt( stylesheet, selectionItemSelector );
+	const selectionItemBackgroundRule = ruleAt( stylesheet, selectionItemBackgroundSelector );
+	const selectionLabelRule = ruleAt( stylesheet, selectionLabelSelector );
+	const selectionValueRule = ruleAt( stylesheet, selectionValueSelector );
+	const selectionValueHoverRule = ruleAt( stylesheet, selectionValueHoverSelector );
+	const selectionValueActiveRule = ruleAt( stylesheet, selectionValueActiveSelector );
+	const selectionValueFocusRule = ruleAt( stylesheet, selectionValueFocusSelector );
+
+	assert.equal( declaration( selectionListRule, 'gap' ), 'var(--theme-spacing-smallest, 0.5em)' );
+	assert.equal( declaration( selectionItemRule, 'display' ), 'inline-flex' );
+	assert.equal( declaration( selectionItemRule, 'align-items' ), 'center' );
+	assert.equal( declaration( selectionItemRule, 'flex-wrap' ), 'wrap' );
+	assert.equal( declaration( selectionItemRule, 'gap' ), 'var(--theme-spacing-smallest, 0.5em)' );
+	assert.equal( declaration( selectionItemRule, 'padding' ), '0' );
+	assert.equal( declaration( selectionItemBackgroundRule, 'display' ), 'none' );
+	assert.equal( declaration( selectionLabelRule, 'display' ), 'inline-flex' );
+	assert.equal( declaration( selectionLabelRule, 'align-items' ), 'center' );
+	assert.equal( declaration( selectionValueRule, 'display' ), 'inline-flex' );
+	assert.equal( declaration( selectionValueRule, 'align-items' ), 'center' );
+	assert.equal( declaration( selectionValueRule, 'padding-block' ), 'calc(var(--theme-spacing-smallest, 0.5em) * 0.5)' );
+	assert.equal( declaration( selectionValueRule, 'padding-inline-start' ), 'var(--theme-spacing-smallest, 0.5em)' );
+	assert.equal( declaration( selectionValueRule, 'padding-inline-end' ), 'calc(var(--theme-spacing-smallest, 0.5em) + 1.4em)' );
+	assert.equal( declaration( selectionValueRule, 'background' ), 'color-mix(in srgb, currentColor 10%, transparent)' );
+	assert.equal( declaration( selectionValueRule, 'border-radius' ), 'var(--theme-input-border-radius, 0.25em)' );
+	assert.equal( declaration( selectionValueRule, 'transition' ), 'background-color var(--theme-transition-duration-quick, 0.15s) var(--theme-transition-easing, ease)' );
+	assert.equal( declaration( selectionValueHoverRule, 'background' ), 'color-mix(in srgb, currentColor 18%, transparent)' );
+	assert.equal( declaration( selectionValueActiveRule, 'background' ), 'color-mix(in srgb, currentColor 25%, transparent)' );
+	assert.equal( declaration( selectionValueFocusRule, 'outline' ), '2px solid var(--sm-current-accent-color, var(--nb-accent-color, currentColor))' );
+	assert.equal( declaration( selectionValueFocusRule, 'outline-offset' ), '2px' );
+
+	const compactMedia = 'not screen and (min-width: 480px)';
 	const toolbarSelector = '.nb-facetwp-filter--orientation-horizontal:has(> .nb-facetwp-facet--fill-width)';
 	const summarySelector = `${ toolbarSelector } + .nb-facetwp-filter:has(> .nb-facetwp-selections)`;
 	const railRule = ruleAt( stylesheet, `${ toolbarSelector }, ${ summarySelector }`, compactMedia );
@@ -94,6 +140,7 @@ test( 'Filter Controls exposes an opt-in mobile panel without changing existing 
 	const toggleWrapRule = ruleAt( stylesheet, `${ toolbarSelector } > .nb-facetwp-toggle-wrap`, compactMedia );
 	const toggleRule = ruleAt( stylesheet, `${ toolbarSelector } > .nb-facetwp-toggle-wrap > .wp-block-button, ${ toolbarSelector } > .nb-facetwp-toggle-wrap .nb-facetwp-toggle`, compactMedia );
 	const compactSummaryRule = ruleAt( stylesheet, summarySelector, compactMedia );
+	const compactSelectionLabelRule = ruleAt( stylesheet, selectionLabelSelector, compactMedia );
 	const desktopSummaryRule = ruleAt( stylesheet, summarySelector );
 
 	assert.equal( declaration( desktopSummaryRule, 'margin-block-start' ), 'var(--theme-spacing-smallest, calc(var(--nb-spacing) * 0.25))' );
@@ -104,11 +151,13 @@ test( 'Filter Controls exposes an opt-in mobile panel without changing existing 
 	assert.equal( declaration( toolbarRule, 'flex-wrap' ), 'wrap' );
 	assert.equal( declaration( fillRule, 'flex-basis' ), '100%' );
 	assert.equal( declaration( searchRule, 'min-block-size' ), '48px' );
+	assert.equal( declaration( searchRule, 'block-size' ), '48px' );
 	assert.equal( declaration( toggleWrapRule, 'flex' ), '1 0 100%' );
 	assert.equal( declaration( toggleWrapRule, 'inline-size' ), '100%' );
 	assert.equal( declaration( toggleRule, 'inline-size' ), '100%' );
 	assert.equal( declaration( compactSummaryRule, 'margin-inline' ), 'calc(-1 * var(--nb-facetwp-inline-rail))' );
 	assert.equal( declaration( compactSummaryRule, 'margin-block-start' ), 'var(--theme-spacing-smaller, calc(var(--nb-spacing) * 0.5))' );
+	assert.equal( declaration( compactSelectionLabelRule, 'flex' ), '1 0 100%' );
 	assert.match( styles, /:is\(\.nb-facetwp-selections, \.nb-facetwp-filter--mobile-panel\) \.facetwp-reset[\s\S]*background:\s*none/ );
 	assert.match( styles, /\.nb-facetwp-filter__mobile-title[\s\S]*--theme-heading-4-font-family/ );
 	assert.match( styles, /@include below\(lap\)[\s\S]*\.nb-facetwp-toggle[\s\S]*min-block-size:\s*48px/ );
