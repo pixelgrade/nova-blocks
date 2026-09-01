@@ -1,6 +1,6 @@
 <?php
 /**
- * WordPress Abilities API registrations for Nova Blocks — the four `pixelgrade/*` block abilities.
+ * WordPress Abilities API registrations for Nova Blocks — the five `pixelgrade/*` block abilities.
  *
  * The agent-surface contract (`docs/plans/agentic-stack/CONTRACT.md` §4) gives Nova Blocks five
  * `pixelgrade/*` abilities: `pixelgrade/list-blocks`, `pixelgrade/describe-block` (W9),
@@ -36,7 +36,7 @@ if ( ! defined( 'ABSPATH' ) ) {
  * `lib/cli/blocks-cli.php` requires these only inside a WP-CLI process — deliberately, so an
  * ordinary web request never pays for them. An ability call is an ordinary web request, so it has
  * to load them itself, and it does so lazily: at *call* time, not at registration time, because
- * registering four descriptors must not drag the harness plumbing into every admin page load.
+ * registering five descriptors must not drag the harness plumbing into every admin page load.
  */
 function novablocks_agent_blocks_bootstrap(): void {
 	require_once dirname( __DIR__ ) . '/cli/blocks-cli-envelope.php';
@@ -49,7 +49,7 @@ function novablocks_agent_blocks_bootstrap(): void {
 }
 
 // -------------------------------------------------------------------------------------------
-// Category (SHARED-SPEC §2) — registered defensively and idempotently by each of the four
+// Category (SHARED-SPEC §2) — registered defensively and idempotently by each of the five
 // Pixelgrade plugins, so the `pixelgrade` category exists with ANY subset of them active.
 // -------------------------------------------------------------------------------------------
 
@@ -78,7 +78,7 @@ add_action(
 );
 
 /**
- * Register the four Nova Blocks abilities.
+ * Register the five Nova Blocks abilities.
  *
  * @param array|null $definitions Optional descriptor set, defaulting to the shipped one. The
  *                                parameter exists so the entitlement seam below can be exercised
@@ -522,7 +522,7 @@ function novablocks_agent_blocks_object_list_schema(): array {
 }
 
 /**
- * The four ability descriptors.
+ * The five ability descriptors.
  *
  * Annotations are §4's table, as data: `list-blocks`/`list-patterns`/`validate-post` are
  * `readonly` and `idempotent`; `canonicalize-post` is `destructive` and `idempotent` (a canonical

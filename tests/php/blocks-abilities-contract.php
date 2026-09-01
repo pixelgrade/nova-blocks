@@ -1,6 +1,6 @@
 <?php
 /**
- * Pins `lib/abilities/blocks-abilities.php` — Nova Blocks' four `pixelgrade/*` WordPress
+ * Pins `lib/abilities/blocks-abilities.php` — Nova Blocks' five `pixelgrade/*` WordPress
  * Abilities — against the agentic-stack contract (`docs/plans/agentic-stack/CONTRACT.md` v0.4.0
  * §4) and the W7 shared build spec: registration presence and shape (§10.1), annotations as data
  * (§10.2), private-by-default plus the single reviewed whitelist filter (§10.3), permission
