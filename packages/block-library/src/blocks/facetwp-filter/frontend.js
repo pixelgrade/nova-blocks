@@ -41,6 +41,63 @@ export const enhanceFacetFormControls = ( root = document ) => {
   } );
 };
 
+const resultCountTotal = ( rawCount, filterEngine ) => {
+  const totalRows = Number( filterEngine?.settings?.pager?.total_rows );
+
+  if ( Number.isFinite( totalRows ) ) {
+    return totalRows;
+  }
+
+  const normalizedCount = String( rawCount || '' ).trim();
+  return /^1$/.test( normalizedCount ) ? 1 : null;
+};
+
+export const updateResultCountLabels = ( root = document, filterEngine = window.FWP ) => {
+  root.querySelectorAll( '.nb-facetwp-selections__count' ).forEach( countWrapper => {
+    const rawCount = countWrapper.querySelector( '.facetwp-counts' );
+    let label = countWrapper.querySelector( '.nb-facetwp-selections__count-label' );
+
+    if ( ! rawCount || String( rawCount.textContent || '' ).trim() === '' ) {
+      label?.remove();
+      return;
+    }
+
+    const totalRows = resultCountTotal( rawCount.textContent, filterEngine );
+    const noun = totalRows === 1
+      ? countWrapper.dataset.resultLabelSingular
+      : countWrapper.dataset.resultLabelPlural;
+    const nextLabel = ` ${ noun || ( totalRows === 1 ? 'result' : 'results' ) }`;
+
+    if ( ! label ) {
+      label = document.createElement( 'span' );
+      label.className = 'nb-facetwp-selections__count-label';
+      label.textContent = nextLabel;
+      countWrapper.appendChild( label );
+      return;
+    }
+
+    if ( label.textContent !== nextLabel ) {
+      label.textContent = nextLabel;
+    }
+  } );
+};
+
+export const setupResultCountLabels = ( root = document, filterEngine = window.FWP ) => {
+  const updateLabels = () => updateResultCountLabels( root, filterEngine );
+
+  updateLabels();
+
+  if ( filterEngine?.hooks?.addAction ) {
+    filterEngine.hooks.addAction( 'facetwp/loaded', updateLabels, 50 );
+  }
+
+  return () => {
+    if ( filterEngine?.hooks?.removeAction ) {
+      filterEngine.hooks.removeAction( 'facetwp/loaded', updateLabels );
+    }
+  };
+};
+
 const prefersReducedMotion = () => {
   return window.matchMedia && window.matchMedia( '(prefers-reduced-motion: reduce)' ).matches;
 };
@@ -475,5 +532,6 @@ domReady( () => {
     } );
   } );
 
+  setupResultCountLabels( document, window.FWP );
   setupResponsiveFilterPanels( document, window.FWP );
 } );

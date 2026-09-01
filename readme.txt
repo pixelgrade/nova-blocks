@@ -3,7 +3,7 @@ Contributors: pixelgrade, vlad.olaru, babbardel, razvanonofrei, gorby31
 Tags: blocks, gutenberg, gutenberg blocks, page builder, full site editing
 Requires at least: 7.0
 Tested up to: 7.1
-Stable tag: 2.6.4
+Stable tag: 2.6.5
 Requires PHP: 7.4
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -113,6 +113,10 @@ Yes! Nova Block's core features are free to use.
 3. Slideshow Me the Way block options
 
 == Changelog ==
+
+= 2.6.5 =
+* New: Let Search facets fill their available width and let live result summaries use content-specific singular and plural labels.
+* Improved: Keep full-width Search facets usable on compact screens and prevent plugin search minimums from overlapping mobile filter controls.
 
 = 2.6.4 =
 * New: Add optional mobile filter panels with active counts, live result summaries, and native clear actions for Pixelgrade Filters.

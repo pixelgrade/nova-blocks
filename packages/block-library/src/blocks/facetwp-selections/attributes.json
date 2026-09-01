@@ -6,5 +6,13 @@
 	"resetFacet": {
 		"type": "string",
 		"default": ""
+	},
+	"resultLabelSingular": {
+		"type": "string",
+		"default": ""
+	},
+	"resultLabelPlural": {
+		"type": "string",
+		"default": ""
 	}
 }

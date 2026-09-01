@@ -6,6 +6,7 @@ jest.mock( '@wordpress/dom-ready', () => callback => callback() );
 
 import {
 	countActiveFilterValues,
+	setupResultCountLabels,
 	setupResponsiveFilterPanels,
 } from './frontend';
 
@@ -72,6 +73,73 @@ describe( 'responsive filter panels', () => {
 				recipe_reset: 'reset',
 			}
 		) ).toBe( 4 );
+	} );
+
+	test( 'labels raw result counts with author-defined singular and plural nouns', async () => {
+		document.body.innerHTML = `
+			<div class="nb-facetwp-selections">
+				<div class="nb-facetwp-selections__count" data-result-label-singular="recipe" data-result-label-plural="recipes">
+					<div class="facetwp-counts">6</div>
+				</div>
+			</div>
+		`;
+
+		let onLoaded;
+		const filterEngine = {
+			settings: { pager: { total_rows: 6 } },
+			hooks: {
+				addAction: jest.fn( ( hook, callback ) => {
+					if ( hook === 'facetwp/loaded' ) {
+						onLoaded = callback;
+					}
+				} ),
+				removeAction: jest.fn(),
+			},
+		};
+
+		const teardown = setupResultCountLabels( document, filterEngine );
+		const count = document.querySelector( '.nb-facetwp-selections__count' );
+
+		expect( count.textContent.replace( /\s+/g, ' ' ).trim() ).toBe( '6 recipes' );
+
+		const label = count.querySelector( '.nb-facetwp-selections__count-label' );
+		const mutations = [];
+		const observer = new MutationObserver( records => mutations.push( ...records ) );
+		observer.observe( label, { characterData: true, childList: true, subtree: true } );
+		onLoaded();
+		await Promise.resolve();
+		expect( mutations ).toHaveLength( 0 );
+		observer.disconnect();
+
+		filterEngine.settings.pager.total_rows = 1;
+		count.querySelector( '.facetwp-counts' ).textContent = '1';
+		onLoaded();
+		expect( count.textContent.replace( /\s+/g, ' ' ).trim() ).toBe( '1 recipe' );
+
+		filterEngine.settings.pager.total_rows = 20;
+		count.querySelector( '.facetwp-counts' ).textContent = '1-9 of 20';
+		onLoaded();
+		onLoaded();
+		expect( count.textContent.replace( /\s+/g, ' ' ).trim() ).toBe( '1-9 of 20 recipes' );
+		expect( count.querySelectorAll( '.nb-facetwp-selections__count-label' ) ).toHaveLength( 1 );
+
+		teardown();
+		expect( filterEngine.hooks.removeAction ).toHaveBeenCalledWith( 'facetwp/loaded', expect.any( Function ) );
+	} );
+
+	test( 'uses generic result nouns and tolerates summaries without a count shortcode', () => {
+		document.body.innerHTML = `
+			<div class="nb-facetwp-selections">
+				<div class="nb-facetwp-selections__count" data-result-label-singular="result" data-result-label-plural="results">
+					<div class="facetwp-counts">1</div>
+				</div>
+			</div>
+			<div class="nb-facetwp-selections"></div>
+		`;
+
+		setupResultCountLabels( document, {} );
+
+		expect( document.querySelector( '.nb-facetwp-selections__count' ).textContent.replace( /\s+/g, ' ' ).trim() ).toBe( '1 result' );
 	} );
 
 	test( 'opens as a modal dialog, closes on Escape, and restores trigger focus', () => {

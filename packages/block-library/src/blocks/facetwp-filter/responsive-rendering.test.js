@@ -57,6 +57,10 @@ test( 'Filter Controls exposes an opt-in mobile panel without changing existing 
 	assert.match( styles, /nb-facetwp-title \+ \.nb-facetwp-facet[\s\S]*--theme-spacing-smallest/ );
 	assert.match( styles, /@include below\(lap\)[\s\S]*\.nb-facetwp-filter--orientation-horizontal[\s\S]*\.nb-facetwp-facet__options[\s\S]*min-inline-size:\s*0[\s\S]*inline-size:\s*100%/ );
 	assert.match( styles, /grid-template-areas:[\s\S]*"count reset"[\s\S]*"selections selections"/ );
+	assert.match( styles, /\.nb-facetwp-selections__count[\s\S]*white-space:\s*nowrap/ );
+	assert.match( styles, /\.nb-facetwp-selections__count[\s\S]*\.facetwp-counts[\s\S]*display:\s*inline/ );
+	assert.match( styles, /@media\s*\(max-width:\s*420px\)[\s\S]*\.nb-facetwp-filter--orientation-horizontal:has\(> \.nb-facetwp-facet--fill-width\)[\s\S]*flex-wrap:\s*wrap/ );
+	assert.match( styles, /@media\s*\(max-width:\s*420px\)[\s\S]*> \.nb-facetwp-facet--fill-width[\s\S]*flex-basis:\s*100%/ );
 	assert.match( styles, /:is\(\.nb-facetwp-selections, \.nb-facetwp-filter--mobile-panel\) \.facetwp-reset[\s\S]*background:\s*none/ );
 	assert.match( styles, /\.nb-facetwp-filter__mobile-title[\s\S]*--theme-heading-4-font-family/ );
 	assert.match( styles, /@include below\(lap\)[\s\S]*\.nb-facetwp-toggle[\s\S]*min-block-size:\s*48px/ );

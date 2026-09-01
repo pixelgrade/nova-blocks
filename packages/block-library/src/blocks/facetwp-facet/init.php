@@ -34,8 +34,9 @@ if ( ! function_exists( 'novablocks_render_facetwp_facet_block' ) ) {
 		$attributes_config = novablocks_get_facetwp_facet_attributes();
 		$attributes        = novablocks_get_attributes_with_defaults( $attributes, $attributes_config );
 
-		$choice_style = in_array( $attributes['choiceStyle'], [ 'auto', 'controls', 'text' ], true )
-			? $attributes['choiceStyle']
+		$choice_style_attribute = $attributes['choiceStyle'] ?? 'auto';
+		$choice_style = in_array( $choice_style_attribute, [ 'auto', 'controls', 'text' ], true )
+			? $choice_style_attribute
 			: 'auto';
 
 		$classes = [
@@ -62,6 +63,10 @@ if ( ! function_exists( 'novablocks_render_facetwp_facet_block' ) ) {
 
 		if ( $attributes['hideLabels'] ) {
 			$classes[] = 'nb-facetwp-facet--hide-labels';
+		}
+
+		if ( ! empty( $attributes['fillWidth'] ) && isset( $activeFacet['type'] ) && $activeFacet['type'] === 'search' ) {
+			$classes[] = 'nb-facetwp-facet--fill-width';
 		}
 
 		ob_start(); ?>

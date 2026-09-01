@@ -25,6 +25,27 @@ test( 'Facet choice appearance is author-selectable and backwards compatible', (
 	assert.match( renderer, /\$choice_style/ );
 } );
 
+test( 'Search facets can opt into filling their available width', () => {
+	const attributes = JSON.parse( read( 'attributes.json' ) );
+	const editor = read( 'edit.js' );
+	const renderer = read( 'init.php' );
+	const filterStyle = read( '../facetwp-filter/style.scss' );
+
+	assert.deepEqual( attributes.fillWidth, {
+		type: 'boolean',
+		default: false,
+	} );
+	assert.match( editor, /activeFacet\?\.type === 'search'/ );
+	assert.match( editor, /Fill available width/ );
+	assert.match( editor, /checked=\{\s*fillWidth\s*\}/ );
+	assert.match( editor, /setAttributes\( \{ fillWidth \} \)/ );
+	assert.match( renderer, /\$attributes\['fillWidth'\]/ );
+	assert.match( renderer, /\$activeFacet\['type'\]\s*===\s*'search'/ );
+	assert.match( renderer, /nb-facetwp-facet--fill-width/ );
+	assert.match( filterStyle, /\.nb-facetwp-facet--fill-width/ );
+	assert.match( filterStyle, /\.facetwp-search[\s\S]*min-inline-size:\s*0\s*!important/ );
+} );
+
 test( 'Facet choices consume design-system controls and keep the Mies text treatment', () => {
 	const style = read( 'style.scss' );
 	const filterStyle = read( '../facetwp-filter/style.scss' );

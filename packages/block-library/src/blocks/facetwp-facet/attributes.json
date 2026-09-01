@@ -14,5 +14,9 @@
 	"choiceStyle": {
 		"type": "string",
 		"default": "auto"
+	},
+	"fillWidth": {
+		"type": "boolean",
+		"default": false
 	}
 }

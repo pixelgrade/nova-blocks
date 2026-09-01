@@ -1,12 +1,12 @@
 import { useBlockProps } from "@wordpress/block-editor";
-import { SelectControl, ToggleControl } from "@wordpress/components";
+import { SelectControl, TextControl, ToggleControl } from "@wordpress/components";
 import { __ } from "@wordpress/i18n";
 
 import { ControlsSection, ControlsTab, useSettings } from "@novablocks/block-editor";
 
 const Edit = ( props ) => {
   const { attributes, setAttributes } = props;
-  const { resetFacet, showCounts } = attributes;
+  const { resetFacet, resultLabelPlural, resultLabelSingular, showCounts } = attributes;
   const settings = useSettings();
   const resetFacets = ( settings?.facetwp_facets || [] ).filter( currentFacet => currentFacet.type === 'reset' );
   const resetOptions = [
@@ -28,6 +28,22 @@ const Edit = ( props ) => {
             checked={ showCounts }
             onChange={ showCounts => setAttributes( { showCounts } ) }
           />
+          { showCounts &&
+            <>
+              <TextControl
+                label={ __( 'Singular result label', '__plugin_txtd' ) }
+                help={ __( 'Defaults to “result”.', '__plugin_txtd' ) }
+                value={ resultLabelSingular }
+                onChange={ resultLabelSingular => setAttributes( { resultLabelSingular } ) }
+              />
+              <TextControl
+                label={ __( 'Plural result label', '__plugin_txtd' ) }
+                help={ __( 'Defaults to “results”.', '__plugin_txtd' ) }
+                value={ resultLabelPlural }
+                onChange={ resultLabelPlural => setAttributes( { resultLabelPlural } ) }
+              />
+            </>
+          }
           <SelectControl
             label={ __( 'Clear filters action', '__plugin_txtd' ) }
             value={ resetFacet }

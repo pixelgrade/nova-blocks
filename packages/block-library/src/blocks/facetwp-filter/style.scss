@@ -127,10 +127,28 @@
 
 .nb-facetwp-selections__count {
   font-weight: bolder;
+  white-space: nowrap;
+
+  .facetwp-counts {
+    display: inline;
+  }
 }
 
 .nb-facetwp-selections__reset .facetwp-facet {
   margin-bottom: 0;
+}
+
+.nb-facetwp-facet--fill-width {
+  flex: 1 1 0;
+  min-inline-size: 0;
+  inline-size: 100%;
+
+  .nb-facetwp-facet__options,
+  :is(.facetwp-type-search, .facetwp-input-wrap, .facetwp-search) {
+    min-inline-size: 0 !important;
+    max-inline-size: 100%;
+    inline-size: 100% !important;
+  }
 }
 
 :is(.nb-facetwp-selections, .nb-facetwp-filter--mobile-panel) .facetwp-reset {
@@ -284,6 +302,7 @@
     }
 
     :is(.facetwp-type-search, .facetwp-input-wrap, .facetwp-search) {
+      min-inline-size: 0 !important;
       inline-size: 100% !important;
       max-inline-size: 100%;
     }
@@ -411,6 +430,20 @@
 
   .nb-facetwp-selections__reset {
     grid-area: reset;
+  }
+}
+
+@media (max-width: 420px) {
+  .nb-facetwp-filter--orientation-horizontal:has(> .nb-facetwp-facet--fill-width) {
+    flex-wrap: wrap;
+
+    > .nb-facetwp-facet--fill-width {
+      flex-basis: 100%;
+    }
+
+    > .nb-facetwp-toggle-wrap {
+      margin-inline-start: auto;
+    }
   }
 }
 

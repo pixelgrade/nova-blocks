@@ -73,7 +73,8 @@ const Edit = ( props ) => {
 
 const FacetInspectorControls = ( props ) => {
   const { attributes, setAttributes } = props;
-  const { choiceStyle, hideLabels, hideCounts } = attributes;
+  const { choiceStyle, fillWidth, hideLabels, hideCounts } = attributes;
+  const activeFacet = useActiveFacet( attributes );
 
   return (
     <ControlsSection id={ 'setup' } label={ __( 'Setup', '__plugin_txtd' ) } placement={ 'settings' }>
@@ -98,6 +99,13 @@ const FacetInspectorControls = ( props ) => {
           checked={ hideCounts }
           onChange={ () => setAttributes( { hideCounts: ! hideCounts } ) }
         />
+        { activeFacet?.type === 'search' &&
+          <ToggleControl
+            label={ __( 'Fill available width', '__plugin_txtd' ) }
+            checked={ fillWidth }
+            onChange={ fillWidth => setAttributes( { fillWidth } ) }
+          />
+        }
       </ControlsTab>
     </ControlsSection>
   )

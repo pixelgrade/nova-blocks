@@ -34,6 +34,16 @@ if ( ! function_exists( 'novablocks_render_facetwp_selections_block' ) ) {
 		$attributes_config = novablocks_get_facetwp_selections_attributes();
 		$attributes        = novablocks_get_attributes_with_defaults( $attributes, $attributes_config );
 		$active_reset_facet = null;
+		$result_label_singular = trim( (string) ( $attributes['resultLabelSingular'] ?? '' ) );
+		$result_label_plural   = trim( (string) ( $attributes['resultLabelPlural'] ?? '' ) );
+
+		if ( '' === $result_label_singular ) {
+			$result_label_singular = function_exists( '__' ) ? __( 'result', '__plugin_txtd' ) : 'result';
+		}
+
+		if ( '' === $result_label_plural ) {
+			$result_label_plural = function_exists( '__' ) ? __( 'results', '__plugin_txtd' ) : 'results';
+		}
 
 		if ( ! empty( $attributes['resetFacet'] ) ) {
 			foreach ( novablocks_get_facets() as $facet ) {
@@ -57,7 +67,7 @@ if ( ! function_exists( 'novablocks_render_facetwp_selections_block' ) ) {
 
 		<div class="<?php echo esc_attr( join( ' ', $classes ) ); ?>">
 			<?php if ( $attributes['showCounts'] ) : ?>
-				<div class="nb-facetwp-selections__count" role="status" aria-live="polite" aria-atomic="true">
+				<div class="nb-facetwp-selections__count" role="status" aria-live="polite" aria-atomic="true" data-result-label-singular="<?php echo esc_attr( $result_label_singular ); ?>" data-result-label-plural="<?php echo esc_attr( $result_label_plural ); ?>">
 					<?php echo do_shortcode( '[facetwp counts="true"]' ); ?>
 				</div>
 			<?php endif; ?>

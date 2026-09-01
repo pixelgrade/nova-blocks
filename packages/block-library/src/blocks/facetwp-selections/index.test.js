@@ -20,3 +20,18 @@ test( 'Selections can become a live filter summary without changing its default 
 	assert.match( renderer, /\$active_reset_facet\['type'\]\s*!==\s*'reset'/ );
 	assert.match( renderer, /\[facetwp facet="/ );
 } );
+
+test( 'Selections expose author-defined singular and plural result nouns', () => {
+	const attributes = JSON.parse( read( 'attributes.json' ) );
+	const editor = read( 'edit.js' );
+	const renderer = read( 'init.php' );
+
+	assert.deepEqual( attributes.resultLabelSingular, { type: 'string', default: '' } );
+	assert.deepEqual( attributes.resultLabelPlural, { type: 'string', default: '' } );
+	assert.match( editor, /Singular result label/ );
+	assert.match( editor, /Plural result label/ );
+	assert.match( renderer, /data-result-label-singular/ );
+	assert.match( renderer, /data-result-label-plural/ );
+	assert.match( renderer, /__\( 'result', '__plugin_txtd' \)/ );
+	assert.match( renderer, /__\( 'results', '__plugin_txtd' \)/ );
+} );
