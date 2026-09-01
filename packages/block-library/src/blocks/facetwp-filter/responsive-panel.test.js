@@ -64,6 +64,7 @@ describe( 'responsive filter panels', () => {
 				recipe_search: 'cake',
 				recipe_pager: [ '2' ],
 				recipe_reset: [ 'reset' ],
+				paged: '2',
 			},
 			{
 				categories: 'dropdown',
@@ -73,6 +74,10 @@ describe( 'responsive filter panels', () => {
 				recipe_reset: 'reset',
 			}
 		) ).toBe( 4 );
+	} );
+
+	test( 'never counts internal pagination state before facet types initialize', () => {
+		expect( countActiveFilterValues( { paged: '2' }, {} ) ).toBe( 0 );
 	} );
 
 	test( 'labels raw result counts with author-defined singular and plural nouns', async () => {

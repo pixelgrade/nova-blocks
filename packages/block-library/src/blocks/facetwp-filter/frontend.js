@@ -6,9 +6,20 @@ const toggleTimers = new WeakMap();
 const FILTER_PANEL_OPEN_CLASS = 'nb-filter-panel-open';
 const MOBILE_PANEL_MEDIA_QUERY = '(max-width: 1023px)';
 const SKIPPED_FILTER_TYPES = [ 'pager', 'reset', 'sort' ];
+const SKIPPED_FILTER_NAMES = [ 'paged' ];
 
 export const countActiveFilterValues = ( facets = {}, facetTypes = {} ) => {
+  const hasRegisteredFacetTypes = Object.keys( facetTypes ).length > 0;
+
   return Object.entries( facets ).reduce( ( total, [ facetName, value ] ) => {
+    if ( SKIPPED_FILTER_NAMES.includes( facetName ) ) {
+      return total;
+    }
+
+    if ( hasRegisteredFacetTypes && ! Object.prototype.hasOwnProperty.call( facetTypes, facetName ) ) {
+      return total;
+    }
+
     if ( SKIPPED_FILTER_TYPES.includes( facetTypes[ facetName ] ) ) {
       return total;
     }
