@@ -48,7 +48,10 @@
         "align",
         "secondary",
         "primary"
-      ]
+      ],
+      "body_template_constraints": {
+        "className": null
+      }
     },
     "novablocks/hero": {
       "save_body": "dynamic"
@@ -58,8 +61,7 @@
     },
     "novablocks/menu-food": {
       "save_body": "static",
-      "body_template": null,
-      "body_template_note": "The real serializer emitted a static body, but no complete fillable template is curated for this block. Do not author it from describe alone; obtain canonical markup from the editor or harness, then validate/canonicalize."
+      "body_template": null
     },
     "novablocks/navigation": {
       "save_body": "dynamic"
@@ -78,8 +80,7 @@
     },
     "novablocks/opentable": {
       "save_body": "static",
-      "body_template": null,
-      "body_template_note": "The real serializer emitted a static body, but no complete fillable template is curated for this block. Do not author it from describe alone; obtain canonical markup from the editor or harness, then validate/canonicalize."
+      "body_template": null
     },
     "novablocks/post-comments": {
       "save_body": "dynamic"
@@ -101,8 +102,7 @@
     },
     "novablocks/site-identity": {
       "save_body": "static",
-      "body_template": null,
-      "body_template_note": "The real serializer emitted a static body, but no complete fillable template is curated for this block. Do not author it from describe alone; obtain canonical markup from the editor or harness, then validate/canonicalize."
+      "body_template": null
     },
     "novablocks/supernova": {
       "save_body": "dynamic"

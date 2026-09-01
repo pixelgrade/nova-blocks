@@ -39,6 +39,7 @@ test( 'describeBodies classifies real save output and keeps the generated body',
 			{ attribute: 'secondary', kind: 'literal', value: '{{secondary}}' },
 			{ attribute: 'primary', kind: 'literal', value: '{{primary}}' },
 		],
+		template_constraints: { className: null },
 	} ] );
 
 	assert.deepStrictEqual( result, {
@@ -46,6 +47,7 @@ test( 'describeBodies classifies real save output and keeps the generated body',
 			save_body: 'static',
 			body_template: '<h{{level}}><span>{{secondary}}</span> <span>{{primary}}</span></h{{level}}>',
 			body_template_slots: [ 'level', 'secondary', 'primary' ],
+			body_template_constraints: { className: null },
 		},
 	} );
 } );
@@ -67,7 +69,6 @@ test( 'default-only static bodies are withheld rather than advertised as fillabl
 			'novablocks/opentable': {
 				save_body: 'static',
 				body_template: null,
-				body_template_note: 'The real serializer emitted a static body, but no complete fillable template is curated for this block. Do not author it from describe alone; obtain canonical markup from the editor or harness, then validate/canonicalize.',
 			},
 		}
 	);
@@ -128,7 +129,7 @@ test( 'the checked-in catalog is a complete generated artifact', () => {
 				assert.ok( record.body_template_slots.length > 0, `${ name } fillable template names its slots` );
 			} else {
 				assert.strictEqual( record.body_template, null, `${ name } withholds default-only serializer bytes` );
-				assert.ok( record.body_template_note, `${ name } explains why its static template is unavailable` );
+				assert.strictEqual( record.body_template_note, undefined, `${ name } keeps translatable prose out of the generated artifact` );
 			}
 		} else {
 			assert.strictEqual( record.body_template, undefined, `${ name } dynamic body has no static template` );
@@ -138,9 +139,10 @@ test( 'the checked-in catalog is a complete generated artifact', () => {
 	assert.match( manifest.blocks['novablocks/headline'].body_template, /\{\{secondary\}\}.*\{\{primary\}\}/ );
 	assert.match( manifest.blocks['novablocks/headline'].body_template, /<h\{\{level\}\}[^>]*has-text-align-\{\{textAlign\}\} align\{\{align\}\}/ );
 	assert.deepStrictEqual( manifest.blocks['novablocks/headline'].body_template_slots, [ 'level', 'textAlign', 'align', 'secondary', 'primary' ] );
+	assert.deepStrictEqual( manifest.blocks['novablocks/headline'].body_template_constraints, { className: null } );
 	assert.strictEqual( manifest.blocks['novablocks/opentable'].save_body, 'static', 'legacy static bundles stay in the catalog' );
 	assert.strictEqual( manifest.blocks['novablocks/opentable'].body_template, null, 'default-only static markup is not advertised as fillable' );
-	assert.match( manifest.blocks['novablocks/opentable'].body_template_note, /no complete fillable template/i );
+	assert.strictEqual( manifest.blocks['novablocks/opentable'].body_template_note, undefined, 'generated catalog contains no untranslatable prose' );
 	assert.strictEqual( manifest.blocks['novablocks/openhours'].save_body, 'dynamic', 'legacy dynamic bundles stay in the catalog' );
 } );
 

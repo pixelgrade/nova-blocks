@@ -483,6 +483,10 @@ namespace {
 		isset( $GLOBALS['nba_abilities']['pixelgrade/describe-block']['output_schema']['properties']['data']['properties']['body_template_slots'] ),
 		'describe-block: the output schema advertises the fillable template slot list.'
 	);
+	assert_true(
+		isset( $GLOBALS['nba_abilities']['pixelgrade/describe-block']['output_schema']['properties']['data']['properties']['body_template_constraints'] ),
+		'describe-block: the output schema advertises template constraints for unsupported save-affecting attributes.'
+	);
 
 	echo "registration shape contract OK\n";
 

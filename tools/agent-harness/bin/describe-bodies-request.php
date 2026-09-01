@@ -47,6 +47,9 @@ foreach ( WP_Block_Type_Registry::get_instance()->get_all_registered() as $name 
 			[ 'attribute' => 'secondary', 'kind' => 'literal', 'value' => '{{secondary}}' ],
 			[ 'attribute' => 'primary', 'kind' => 'literal', 'value' => '{{primary}}' ],
 		];
+		$record['template_constraints'] = [
+			'className' => null,
+		];
 	}
 
 	$blocks[] = $record;

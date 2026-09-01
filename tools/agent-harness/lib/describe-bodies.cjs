@@ -9,8 +9,6 @@
 
 'use strict';
 
-const UNPARAMETERIZED_STATIC_NOTE = 'The real serializer emitted a static body, but no complete fillable template is curated for this block. Do not author it from describe alone; obtain canonical markup from the editor or harness, then validate/canonicalize.';
-
 /**
  * Strip the outer block comments from one serialized block.
  *
@@ -42,15 +40,15 @@ function extractBlockBody( serialized ) {
  * drift in a save() implementation therefore fails generation instead of emitting a guess.
  *
  * @param {string} body  Canonical inner HTML from the real serializer.
- * @param {Array<object>} slots Slot descriptions from the WordPress request.
+ * @param {Array<object>} slots       Slot descriptions from the WordPress request.
+ * @param {object}        constraints Save-affecting attributes that must retain exact values.
  * @return {object} Static catalog record.
  */
-function parameterizeBody( body, slots ) {
+function parameterizeBody( body, slots, constraints = {} ) {
 	if ( ! Array.isArray( slots ) || 0 === slots.length ) {
 		return {
 			save_body: 'static',
 			body_template: null,
-			body_template_note: UNPARAMETERIZED_STATIC_NOTE,
 		};
 	}
 
@@ -89,11 +87,23 @@ function parameterizeBody( body, slots ) {
 		names.push( attribute );
 	}
 
-	return {
+	const normalizedConstraints = {};
+	for ( const [ attribute, value ] of Object.entries( constraints || {} ) ) {
+		if ( ! /^[A-Za-z][A-Za-z0-9_]*$/.test( attribute ) || ( null !== value && ! [ 'string', 'number', 'boolean' ].includes( typeof value ) ) ) {
+			throw new Error( `invalid body-template constraint: ${ attribute || '(empty)' }` );
+		}
+		normalizedConstraints[ attribute ] = value;
+	}
+
+	const result = {
 		save_body: 'static',
 		body_template: template,
 		body_template_slots: names,
 	};
+	if ( Object.keys( normalizedConstraints ).length > 0 ) {
+		result.body_template_constraints = normalizedConstraints;
+	}
+	return result;
 }
 
 /**
@@ -102,10 +112,11 @@ function parameterizeBody( body, slots ) {
  * A registered server renderer makes a block dynamic even when save() preserves fallback or
  * InnerBlocks markup. Without one, an empty serializer body identifies a null-save block. A
  * non-empty body is static, but receives a fillable template only when every configured sentinel
- * is uniquely parameterized; otherwise the default-only body is withheld with an explicit note.
+ * is uniquely parameterized; otherwise the default-only body is withheld and the PHP runtime adds
+ * a translatable explanation.
  *
  * @param {object} context Harness bootstrap context.
- * @param {Array<object>} requested `{name, has_render_callback, attributes?, template_slots?}` rows.
+ * @param {Array<object>} requested `{name, has_render_callback, attributes?, template_slots?, template_constraints?}` rows.
  * @return {object} Catalog keyed by block name.
  */
 function describeBodies( context, requested ) {
@@ -136,7 +147,9 @@ function describeBodies( context, requested ) {
 		const body = extractBlockBody( blocksApi.serialize( [ block ] ) );
 		const dynamic = !! request.has_render_callback || '' === body;
 
-		catalog[ name ] = dynamic ? { save_body: 'dynamic' } : parameterizeBody( body, request.template_slots );
+		catalog[ name ] = dynamic
+			? { save_body: 'dynamic' }
+			: parameterizeBody( body, request.template_slots, request.template_constraints );
 	}
 
 	return catalog;

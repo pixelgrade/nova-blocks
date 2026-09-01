@@ -254,6 +254,8 @@ namespace {
 	assert_true( false !== strpos( $data['body_template'], '{{secondary}}' ), 'describe: headline skeleton exposes a fillable secondary slot.' );
 	assert_true( false !== strpos( $data['body_template'], '{{primary}}' ), 'describe: headline skeleton exposes a fillable primary slot.' );
 	assert_same( [ 'level', 'textAlign', 'align', 'secondary', 'primary' ], $data['body_template_slots'], 'describe: headline names every fillable slot.' );
+	assert_same( [ 'className' => null ], $data['body_template_constraints'], 'describe: unsupported save-affecting attributes are explicit constraints.' );
+	assert_true( false !== strpos( $data['body_template_note'], 'body_template_constraints' ), 'describe: the parameterized template explains its constraint.' );
 
 	nbd_reset();
 	nbd_register( 'novablocks/opentable' );

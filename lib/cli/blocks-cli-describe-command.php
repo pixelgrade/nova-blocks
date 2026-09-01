@@ -212,6 +212,9 @@ function novablocks_agent_blocks_describe_core( array $params ): array {
 		if ( isset( $save_body['body_template_slots'] ) ) {
 			$data['body_template_slots'] = $save_body['body_template_slots'];
 		}
+		if ( isset( $save_body['body_template_constraints'] ) ) {
+			$data['body_template_constraints'] = $save_body['body_template_constraints'];
+		}
 		if ( isset( $save_body['note'] ) ) {
 			$data['body_template_note'] = $save_body['note'];
 		}
@@ -298,7 +301,7 @@ function novablocks_blocks_describe_body_catalog(): array {
  * @param string        $block_name Registered block name.
  * @param WP_Block_Type $block_type Registered block type.
  *
- * @return array `{ save_body: static|dynamic, body_template?: string|null, body_template_slots?: string[], note?: string }`.
+ * @return array `{ save_body: static|dynamic, body_template?: string|null, body_template_slots?: string[], body_template_constraints?: array, note?: string }`.
  */
 function novablocks_blocks_describe_save_body( string $block_name, WP_Block_Type $block_type ): array {
 	$has_renderer = ! empty( $block_type->render_callback ) || ! empty( $block_type->render_template );
@@ -322,15 +325,17 @@ function novablocks_blocks_describe_save_body( string $block_name, WP_Block_Type
 			if ( isset( $record['body_template_slots'] ) && is_array( $record['body_template_slots'] ) ) {
 				$result['body_template_slots'] = array_values( array_filter( $record['body_template_slots'], 'is_string' ) );
 			}
+			if ( isset( $record['body_template_constraints'] ) && is_array( $record['body_template_constraints'] ) ) {
+				$result['body_template_constraints'] = $record['body_template_constraints'];
+				$result['note']                      = __( 'The template is canonical only while authored attributes match body_template_constraints; otherwise obtain canonical markup from the editor or harness.', '__plugin_txtd' );
+			}
 			return $result;
 		}
 
 		return [
 			'save_body'    => 'static',
 			'body_template' => null,
-			'note'          => is_string( $record['body_template_note'] ?? null )
-				? $record['body_template_note']
-				: __( 'The serializer identifies this as a static block, but no fillable body template is curated. Do not author it from describe alone; obtain canonical markup from the editor or harness, then validate/canonicalize.', '__plugin_txtd' ),
+			'note'          => __( 'The serializer identifies this as a static block, but no fillable body template is curated. Do not author it from describe alone; obtain canonical markup from the editor or harness, then validate/canonicalize.', '__plugin_txtd' ),
 		];
 	}
 
