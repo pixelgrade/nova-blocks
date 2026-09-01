@@ -479,6 +479,10 @@ namespace {
 		assert_true( ! empty( $ability['output_schema']['properties']['data'] ), $name . ': output_schema describes the envelope, data included.' );
 		assert_true( strlen( (string) $ability['description'] ) > 200, $name . ': the description is written for a model — what it does, when to reach for it, and its consequences.' );
 	}
+	assert_true(
+		isset( $GLOBALS['nba_abilities']['pixelgrade/describe-block']['output_schema']['properties']['data']['properties']['body_template_slots'] ),
+		'describe-block: the output schema advertises the fillable template slot list.'
+	);
 
 	echo "registration shape contract OK\n";
 

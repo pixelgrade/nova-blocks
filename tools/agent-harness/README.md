@@ -119,8 +119,10 @@ wp --path=/path/to/site eval-file tools/agent-harness/bin/describe-bodies-reques
 
 The request helper curates shipped `novablocks/*` editor bundles and supplies fillable Headline
 sentinels. The generator loads the site's real WordPress and Nova editor bundles, classifies server
-renderers/null-save bodies as dynamic, and copies only serializer-produced inner HTML for static
-blocks. Review the generated diff and run `npm test`; never edit template strings by hand.
+renderers/null-save bodies as dynamic, and derives fillable template slots only from verified
+serializer sentinels. A static body without a complete parameterization is recorded as null with
+an explicit note instead of exposing default-only bytes as generally canonical. Review the
+generated diff and run `npm test`; never edit template strings by hand.
 
 ## Tests
 

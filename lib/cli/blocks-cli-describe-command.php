@@ -19,7 +19,8 @@
  *
  * W11 also exposes whether the block needs a static save body. Nova's generated catalog is made
  * once by the agent harness from the real editor serializer; this runtime only reads those bytes.
- * A registered server renderer remains authoritative for `dynamic`.
+ * A registered server renderer remains authoritative for `dynamic`; default-only serializer output
+ * is withheld until every advertised save-affecting slot is parameterized.
  *
  * Surface split matches W6: the whole implementation lives in `novablocks_agent_blocks_describe_core()`,
  * called identically by this WP-CLI callback and by the `pixelgrade/describe-block` ability
@@ -208,6 +209,9 @@ function novablocks_agent_blocks_describe_core( array $params ): array {
 	$data['save_body'] = $save_body['save_body'];
 	if ( 'static' === $save_body['save_body'] ) {
 		$data['body_template'] = $save_body['body_template'];
+		if ( isset( $save_body['body_template_slots'] ) ) {
+			$data['body_template_slots'] = $save_body['body_template_slots'];
+		}
 		if ( isset( $save_body['note'] ) ) {
 			$data['body_template_note'] = $save_body['note'];
 		}
@@ -294,7 +298,7 @@ function novablocks_blocks_describe_body_catalog(): array {
  * @param string        $block_name Registered block name.
  * @param WP_Block_Type $block_type Registered block type.
  *
- * @return array `{ save_body: static|dynamic, body_template?: string|null, note?: string }`.
+ * @return array `{ save_body: static|dynamic, body_template?: string|null, body_template_slots?: string[], note?: string }`.
  */
 function novablocks_blocks_describe_save_body( string $block_name, WP_Block_Type $block_type ): array {
 	$has_renderer = ! empty( $block_type->render_callback ) || ! empty( $block_type->render_template );
@@ -311,11 +315,23 @@ function novablocks_blocks_describe_save_body( string $block_name, WP_Block_Type
 		}
 
 		if ( isset( $record['body_template'] ) && is_string( $record['body_template'] ) && '' !== $record['body_template'] ) {
-			return [
+			$result = [
 				'save_body'    => 'static',
 				'body_template' => $record['body_template'],
 			];
+			if ( isset( $record['body_template_slots'] ) && is_array( $record['body_template_slots'] ) ) {
+				$result['body_template_slots'] = array_values( array_filter( $record['body_template_slots'], 'is_string' ) );
+			}
+			return $result;
 		}
+
+		return [
+			'save_body'    => 'static',
+			'body_template' => null,
+			'note'          => is_string( $record['body_template_note'] ?? null )
+				? $record['body_template_note']
+				: __( 'The serializer identifies this as a static block, but no fillable body template is curated. Do not author it from describe alone; obtain canonical markup from the editor or harness, then validate/canonicalize.', '__plugin_txtd' ),
+		];
 	}
 
 	return [

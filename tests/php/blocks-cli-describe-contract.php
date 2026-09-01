@@ -248,8 +248,21 @@ namespace {
 	assert_same( 'static', $data['save_body'], 'describe: headline is a static-save block.' );
 	assert_true( is_string( $data['body_template'] ) && '' !== $data['body_template'], 'describe: a static curated block ships a body template.' );
 	assert_true( false !== strpos( $data['body_template'], 'c-headline__secondary' ), 'describe: headline skeleton comes from the real save markup.' );
+	assert_true( false !== strpos( $data['body_template'], '<h{{level}}' ), 'describe: headline skeleton exposes the heading level that changes its saved tag.' );
+	assert_true( false !== strpos( $data['body_template'], 'has-text-align-{{textAlign}}' ), 'describe: headline skeleton exposes the alignment that changes its saved class.' );
+	assert_true( false !== strpos( $data['body_template'], 'align{{align}}' ), 'describe: headline skeleton exposes wide/full alignment that changes its saved class.' );
 	assert_true( false !== strpos( $data['body_template'], '{{secondary}}' ), 'describe: headline skeleton exposes a fillable secondary slot.' );
 	assert_true( false !== strpos( $data['body_template'], '{{primary}}' ), 'describe: headline skeleton exposes a fillable primary slot.' );
+	assert_same( [ 'level', 'textAlign', 'align', 'secondary', 'primary' ], $data['body_template_slots'], 'describe: headline names every fillable slot.' );
+
+	nbd_reset();
+	nbd_register( 'novablocks/opentable' );
+	$exit = nbd_run( 'novablocks_cli_blocks_describe', [ 'novablocks/opentable' ], [ 'format' => 'json' ] );
+	$data = WP_CLI::$printed_value['data'];
+	assert_same( 0, $exit, 'describe: an unparameterized static block still exits 0.' );
+	assert_same( 'static', $data['save_body'], 'describe: serializer classification remains static.' );
+	assert_same( null, $data['body_template'], 'describe: a default-only body is withheld rather than misrepresented as fillable.' );
+	assert_true( false !== strpos( $data['body_template_note'], 'Do not author it from describe alone' ), 'describe: the null template explains the honest limitation.' );
 
 	nbd_reset();
 	nbd_register( 'novablocks/dynamic-probe', [], 'Dynamic probe', [], static function () {} );

@@ -9,6 +9,8 @@
 
 'use strict';
 
+const UNPARAMETERIZED_STATIC_NOTE = 'The real serializer emitted a static body, but no complete fillable template is curated for this block. Do not author it from describe alone; obtain canonical markup from the editor or harness, then validate/canonicalize.';
+
 /**
  * Strip the outer block comments from one serialized block.
  *
@@ -32,14 +34,78 @@ function extractBlockBody( serialized ) {
 }
 
 /**
+ * Turn serializer-produced sentinel values into named template slots.
+ *
+ * Slot kinds deliberately describe semantic output locations rather than hand-written HTML:
+ * `heading_tag` replaces both tags, `class_suffix` replaces one generated class token, and
+ * `literal` verifies/replaces one serialized content value. Every replacement must be unique;
+ * drift in a save() implementation therefore fails generation instead of emitting a guess.
+ *
+ * @param {string} body  Canonical inner HTML from the real serializer.
+ * @param {Array<object>} slots Slot descriptions from the WordPress request.
+ * @return {object} Static catalog record.
+ */
+function parameterizeBody( body, slots ) {
+	if ( ! Array.isArray( slots ) || 0 === slots.length ) {
+		return {
+			save_body: 'static',
+			body_template: null,
+			body_template_note: UNPARAMETERIZED_STATIC_NOTE,
+		};
+	}
+
+	let template = body;
+	const names = [];
+	const replaceOne = ( search, replacement, label ) => {
+		const occurrences = template.split( search ).length - 1;
+		if ( 1 !== occurrences ) {
+			throw new Error( `${ label } expected exactly one serializer occurrence, found ${ occurrences }` );
+		}
+		template = template.replace( search, replacement );
+	};
+
+	for ( const slot of slots ) {
+		const attribute = String( slot && slot.attribute || '' );
+		const placeholder = `{{${ attribute }}}`;
+		if ( ! /^[A-Za-z][A-Za-z0-9_]*$/.test( attribute ) || names.includes( attribute ) ) {
+			throw new Error( `invalid or duplicate body-template slot: ${ attribute || '(empty)' }` );
+		}
+
+		if ( 'heading_tag' === slot.kind ) {
+			replaceOne( `<h${ slot.value }`, `<h${ placeholder }`, `${ attribute } opening tag` );
+			replaceOne( `</h${ slot.value }>`, `</h${ placeholder }>`, `${ attribute } closing tag` );
+		} else if ( 'class_suffix' === slot.kind ) {
+			const prefix = String( slot.prefix || '' );
+			if ( ! prefix ) {
+				throw new Error( `${ attribute } class_suffix needs a prefix` );
+			}
+			replaceOne( `${ prefix }${ slot.value }`, `${ prefix }${ placeholder }`, `${ attribute } class` );
+		} else if ( 'literal' === slot.kind ) {
+			replaceOne( String( slot.value ), placeholder, `${ attribute } literal` );
+		} else {
+			throw new Error( `${ attribute } has unknown body-template slot kind: ${ slot.kind }` );
+		}
+
+		names.push( attribute );
+	}
+
+	return {
+		save_body: 'static',
+		body_template: template,
+		body_template_slots: names,
+	};
+}
+
+/**
  * Classify a curated block set and capture canonical static bodies.
  *
  * A registered server renderer makes a block dynamic even when save() preserves fallback or
- * InnerBlocks markup. Without one, an empty serializer body identifies a null-save block. Only a
- * non-empty body with no server renderer is static and receives a template.
+ * InnerBlocks markup. Without one, an empty serializer body identifies a null-save block. A
+ * non-empty body is static, but receives a fillable template only when every configured sentinel
+ * is uniquely parameterized; otherwise the default-only body is withheld with an explicit note.
  *
  * @param {object} context Harness bootstrap context.
- * @param {Array<object>} requested `{name, has_render_callback, attributes?}` rows.
+ * @param {Array<object>} requested `{name, has_render_callback, attributes?, template_slots?}` rows.
  * @return {object} Catalog keyed by block name.
  */
 function describeBodies( context, requested ) {
@@ -70,9 +136,7 @@ function describeBodies( context, requested ) {
 		const body = extractBlockBody( blocksApi.serialize( [ block ] ) );
 		const dynamic = !! request.has_render_callback || '' === body;
 
-		catalog[ name ] = dynamic
-			? { save_body: 'dynamic' }
-			: { save_body: 'static', body_template: body };
+		catalog[ name ] = dynamic ? { save_body: 'dynamic' } : parameterizeBody( body, request.template_slots );
 	}
 
 	return catalog;
@@ -80,5 +144,6 @@ function describeBodies( context, requested ) {
 
 module.exports = {
 	extractBlockBody,
+	parameterizeBody,
 	describeBodies,
 };

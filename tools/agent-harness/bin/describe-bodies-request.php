@@ -34,8 +34,18 @@ foreach ( WP_Block_Type_Registry::get_instance()->get_all_registered() as $name 
 	// Placeholders make the generated Headline skeleton directly fillable without transcribing JSX.
 	if ( 'novablocks/headline' === $name ) {
 		$record['attributes'] = [
+			'level'     => 6,
+			'textAlign' => 'right',
+			'align'     => 'full',
 			'primary'   => '{{primary}}',
 			'secondary' => '{{secondary}}',
+		];
+		$record['template_slots'] = [
+			[ 'attribute' => 'level', 'kind' => 'heading_tag', 'value' => 6 ],
+			[ 'attribute' => 'textAlign', 'kind' => 'class_suffix', 'prefix' => 'has-text-align-', 'value' => 'right' ],
+			[ 'attribute' => 'align', 'kind' => 'class_suffix', 'prefix' => 'align', 'value' => 'full' ],
+			[ 'attribute' => 'secondary', 'kind' => 'literal', 'value' => '{{secondary}}' ],
+			[ 'attribute' => 'primary', 'kind' => 'literal', 'value' => '{{primary}}' ],
 		];
 	}
 

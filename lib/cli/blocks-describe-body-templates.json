@@ -41,7 +41,14 @@
     },
     "novablocks/headline": {
       "save_body": "static",
-      "body_template": "<h2 class=\"c-headline has-text-align-center alignnone\"><span class=\"c-headline__secondary\">{{secondary}}</span> <span class=\"c-headline__primary\">{{primary}}</span></h2>"
+      "body_template": "<h{{level}} class=\"c-headline has-text-align-{{textAlign}} align{{align}}\"><span class=\"c-headline__secondary\">{{secondary}}</span> <span class=\"c-headline__primary\">{{primary}}</span></h{{level}}>",
+      "body_template_slots": [
+        "level",
+        "textAlign",
+        "align",
+        "secondary",
+        "primary"
+      ]
     },
     "novablocks/hero": {
       "save_body": "dynamic"
@@ -51,7 +58,8 @@
     },
     "novablocks/menu-food": {
       "save_body": "static",
-      "body_template": "<div class=\"nova-food-menu nova-food-menu--layout\" itemscope itemtype=\"https://schema.org/Menu\"></div>"
+      "body_template": null,
+      "body_template_note": "The real serializer emitted a static body, but no complete fillable template is curated for this block. Do not author it from describe alone; obtain canonical markup from the editor or harness, then validate/canonicalize."
     },
     "novablocks/navigation": {
       "save_body": "dynamic"
@@ -70,7 +78,8 @@
     },
     "novablocks/opentable": {
       "save_body": "static",
-      "body_template": "<div class=\"novablocks-opentable novablocks-opentable__wide has-opentable-logo sm-palette-1 sm-variation-1 sm-color-signal-0\" data-palette=\"1\" data-palette-variation=\"1\" data-color-signal=\"0\"><script type=\"text/javascript\" src=\"//www.opentable.com/widget/reservation/loader?rid=1&amp;domain=com&amp;type=standard&amp;theme=wide&amp;iframe=false&amp;overlay=false&amp;domain=com&amp;lang=en-US\"></script></div>"
+      "body_template": null,
+      "body_template_note": "The real serializer emitted a static body, but no complete fillable template is curated for this block. Do not author it from describe alone; obtain canonical markup from the editor or harness, then validate/canonicalize."
     },
     "novablocks/post-comments": {
       "save_body": "dynamic"
@@ -92,7 +101,8 @@
     },
     "novablocks/site-identity": {
       "save_body": "static",
-      "body_template": "<div class=\"wp-block-novablocks-site-identity nb-site-identity c-branding\" style=\"--nb-site-identity-width:395px\"><div class=\"nb-site-identity__inner\"></div></div>"
+      "body_template": null,
+      "body_template_note": "The real serializer emitted a static body, but no complete fillable template is curated for this block. Do not author it from describe alone; obtain canonical markup from the editor or harness, then validate/canonicalize."
     },
     "novablocks/supernova": {
       "save_body": "dynamic"
