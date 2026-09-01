@@ -397,17 +397,18 @@ function bootstrap( options ) {
 			const dir = path.join( nbBlockDir, name );
 			const metaPath = path.join( dir, 'block.json' );
 			const scriptPath = path.join( dir, 'index.js' );
-			if ( ! fs.existsSync( metaPath ) ) {
-				continue;
-			}
+			const hasMetadata = fs.existsSync( metaPath );
+			const meta = hasMetadata ? JSON.parse( fs.readFileSync( metaPath, 'utf8' ) ) : null;
+			const blockName = meta ? meta.name : `novablocks/${ name }`;
 
-			const meta = JSON.parse( fs.readFileSync( metaPath, 'utf8' ) );
-			try {
-				win.wp.blocks.unstable__bootstrapServerSideBlockDefinitions( { [ meta.name ]: meta } );
-			} catch ( error ) {
-				// Bootstrapping is additive; a rejected metadata merge is reported through the
-				// registration outcome below, not swallowed silently.
-				note( 'ssd merge failed for', meta.name, '::', String( error.message ).split( '\n' )[ 0 ] );
+			if ( meta ) {
+				try {
+					win.wp.blocks.unstable__bootstrapServerSideBlockDefinitions( { [ meta.name ]: meta } );
+				} catch ( error ) {
+					// Bootstrapping is additive; a rejected metadata merge is reported through the
+					// registration outcome below, not swallowed silently.
+					note( 'ssd merge failed for', meta.name, '::', String( error.message ).split( '\n' )[ 0 ] );
+				}
 			}
 
 			let ok = false;
@@ -418,7 +419,7 @@ function bootstrap( options ) {
 			} else {
 				try {
 					vm.runInContext( fs.readFileSync( scriptPath, 'utf8' ), vmctx, { filename: scriptPath } );
-					ok = !! win.wp.blocks.getBlockType( meta.name );
+					ok = !! win.wp.blocks.getBlockType( blockName );
 					if ( ! ok ) {
 						err = 'the bundle evaluated but registered no block type';
 					}
@@ -434,7 +435,7 @@ function bootstrap( options ) {
 			// empty". A block with no visible text (an image, a spacer, a media block) would be
 			// DESTROYED silently, because the innerText gate has no text to miss. The loader's own
 			// philosophy applies: fail loudly rather than serialize against a partial registry.
-			nbBlockResults.push( { name, blockName: meta.name, ok, err } );
+			nbBlockResults.push( { name, blockName, hasMetadata, ok, err } );
 		}
 	}
 

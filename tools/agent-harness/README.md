@@ -105,6 +105,23 @@ with identical before/after invalid lists and byte-identical serialization — a
 markup, not a harness artefact. Those documents report `converged: false`, the command exits **2**,
 and nothing retries. `test/corpus/nested-inline-paragraph.html` is a checked-in probe of that class.
 
+## Regenerate the `blocks describe` save-body catalog
+
+`lib/cli/blocks-describe-body-templates.json` is generated output, not hand-authored block markup.
+From a built site running the target Nova Blocks revision, pipe the WordPress registry/settings
+request into the harness serializer:
+
+```bash
+wp --path=/path/to/site eval-file tools/agent-harness/bin/describe-bodies-request.php \
+  | node tools/agent-harness/bin/generate-describe-bodies.cjs \
+  > lib/cli/blocks-describe-body-templates.json
+```
+
+The request helper curates shipped `novablocks/*` editor bundles and supplies fillable Headline
+sentinels. The generator loads the site's real WordPress and Nova editor bundles, classifies server
+renderers/null-save bodies as dynamic, and copies only serializer-produced inner HTML for static
+blocks. Review the generated diff and run `npm test`; never edit template strings by hand.
+
 ## Tests
 
 ```bash

@@ -1,0 +1,104 @@
+{
+  "schema_version": 1,
+  "generated_by": "@pixelgrade/agent-harness",
+  "generator": "tools/agent-harness/bin/generate-describe-bodies.cjs",
+  "blocks": {
+    "novablocks/announcement-bar": {
+      "save_body": "dynamic"
+    },
+    "novablocks/author-box": {
+      "save_body": "dynamic"
+    },
+    "novablocks/contextual-post-card": {
+      "save_body": "dynamic"
+    },
+    "novablocks/facetwp-facet": {
+      "save_body": "dynamic"
+    },
+    "novablocks/facetwp-filter": {
+      "save_body": "dynamic"
+    },
+    "novablocks/facetwp-pager": {
+      "save_body": "dynamic"
+    },
+    "novablocks/facetwp-selections": {
+      "save_body": "dynamic"
+    },
+    "novablocks/facetwp-title": {
+      "save_body": "dynamic"
+    },
+    "novablocks/facetwp-toggle": {
+      "save_body": "dynamic"
+    },
+    "novablocks/google-map": {
+      "save_body": "dynamic"
+    },
+    "novablocks/header": {
+      "save_body": "dynamic"
+    },
+    "novablocks/header-row": {
+      "save_body": "dynamic"
+    },
+    "novablocks/headline": {
+      "save_body": "static",
+      "body_template": "<h2 class=\"c-headline has-text-align-center alignnone\"><span class=\"c-headline__secondary\">{{secondary}}</span> <span class=\"c-headline__primary\">{{primary}}</span></h2>"
+    },
+    "novablocks/hero": {
+      "save_body": "dynamic"
+    },
+    "novablocks/logo": {
+      "save_body": "dynamic"
+    },
+    "novablocks/menu-food": {
+      "save_body": "static",
+      "body_template": "<div class=\"nova-food-menu nova-food-menu--layout\" itemscope itemtype=\"https://schema.org/Menu\"></div>"
+    },
+    "novablocks/navigation": {
+      "save_body": "dynamic"
+    },
+    "novablocks/navigation-cart": {
+      "save_body": "dynamic"
+    },
+    "novablocks/navigation-dark-mode": {
+      "save_body": "dynamic"
+    },
+    "novablocks/navigation-search": {
+      "save_body": "dynamic"
+    },
+    "novablocks/openhours": {
+      "save_body": "dynamic"
+    },
+    "novablocks/opentable": {
+      "save_body": "static",
+      "body_template": "<div class=\"novablocks-opentable novablocks-opentable__wide has-opentable-logo sm-palette-1 sm-variation-1 sm-color-signal-0\" data-palette=\"1\" data-palette-variation=\"1\" data-color-signal=\"0\"><script type=\"text/javascript\" src=\"//www.opentable.com/widget/reservation/loader?rid=1&amp;domain=com&amp;type=standard&amp;theme=wide&amp;iframe=false&amp;overlay=false&amp;domain=com&amp;lang=en-US\"></script></div>"
+    },
+    "novablocks/post-comments": {
+      "save_body": "dynamic"
+    },
+    "novablocks/post-meta": {
+      "save_body": "dynamic"
+    },
+    "novablocks/post-navigation": {
+      "save_body": "dynamic"
+    },
+    "novablocks/sharing-overlay": {
+      "save_body": "dynamic"
+    },
+    "novablocks/sidecar": {
+      "save_body": "dynamic"
+    },
+    "novablocks/sidecar-area": {
+      "save_body": "dynamic"
+    },
+    "novablocks/site-identity": {
+      "save_body": "static",
+      "body_template": "<div class=\"wp-block-novablocks-site-identity nb-site-identity c-branding\" style=\"--nb-site-identity-width:395px\"><div class=\"nb-site-identity__inner\"></div></div>"
+    },
+    "novablocks/supernova": {
+      "save_body": "dynamic"
+    },
+    "novablocks/supernova-item": {
+      "save_body": "dynamic"
+    }
+  }
+}

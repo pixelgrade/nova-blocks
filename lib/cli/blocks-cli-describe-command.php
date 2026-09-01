@@ -17,6 +17,10 @@
  * curate — describe never invents an enum it did not verify (task honesty rule / contract §2's
  * "never lie" spirit).
  *
+ * W11 also exposes whether the block needs a static save body. Nova's generated catalog is made
+ * once by the agent harness from the real editor serializer; this runtime only reads those bytes.
+ * A registered server renderer remains authoritative for `dynamic`.
+ *
  * Surface split matches W6: the whole implementation lives in `novablocks_agent_blocks_describe_core()`,
  * called identically by this WP-CLI callback and by the `pixelgrade/describe-block` ability
  * (`lib/abilities/blocks-abilities.php`). Capability resolution (§3.0) belongs to the surface.
@@ -200,6 +204,15 @@ function novablocks_agent_blocks_describe_core( array $params ): array {
 		'attributes'      => empty( $described ) ? new stdClass() : $described,
 	];
 
+	$save_body         = novablocks_blocks_describe_save_body( $block_name, $block_type );
+	$data['save_body'] = $save_body['save_body'];
+	if ( 'static' === $save_body['save_body'] ) {
+		$data['body_template'] = $save_body['body_template'];
+		if ( isset( $save_body['note'] ) ) {
+			$data['body_template_note'] = $save_body['note'];
+		}
+	}
+
 	// The stylePreset numeric expansions (the whole point of "set the numbers, not the label") and
 	// the collection layout recipes are high-value and cheap; attach them when the block actually
 	// carries the governing attribute so the payload stays scoped.
@@ -242,6 +255,73 @@ function novablocks_agent_blocks_describe_core( array $params ): array {
 		),
 		'data'     => $data,
 		'warnings' => [],
+	];
+}
+
+/**
+ * Read the generated Nova save-body catalog.
+ *
+ * The JSON is a distributable build-time artifact. Its static templates are serializer output,
+ * not PHP copies of JSX; see `tools/agent-harness/bin/generate-describe-bodies.cjs`.
+ *
+ * @return array Catalog keyed by block name.
+ */
+function novablocks_blocks_describe_body_catalog(): array {
+	static $catalog = null;
+
+	if ( null !== $catalog ) {
+		return $catalog;
+	}
+
+	$path    = __DIR__ . '/blocks-describe-body-templates.json';
+	$decoded = is_readable( $path ) ? json_decode( (string) file_get_contents( $path ), true ) : null;
+	$catalog = is_array( $decoded ) && 1 === (int) ( $decoded['schema_version'] ?? 0 ) && is_array( $decoded['blocks'] ?? null )
+		? $decoded['blocks']
+		: [];
+
+	return $catalog;
+}
+
+/**
+ * Classify a block's save body and attach its generated static skeleton when curated.
+ *
+ * A server render callback is authoritative: a block rendered by PHP is dynamic even when its
+ * save() preserves fallback or InnerBlocks content. Otherwise the generated harness result records
+ * whether the real save() emitted a body. Blocks outside Nova's curated catalog use the WordPress
+ * registry definition; their static classification is honest, but no site/version-specific body is
+ * invented, so the template is null with an explicit note.
+ *
+ * @param string        $block_name Registered block name.
+ * @param WP_Block_Type $block_type Registered block type.
+ *
+ * @return array `{ save_body: static|dynamic, body_template?: string|null, note?: string }`.
+ */
+function novablocks_blocks_describe_save_body( string $block_name, WP_Block_Type $block_type ): array {
+	$has_renderer = ! empty( $block_type->render_callback ) || ! empty( $block_type->render_template );
+	if ( $has_renderer ) {
+		return [ 'save_body' => 'dynamic' ];
+	}
+
+	$catalog = novablocks_blocks_describe_body_catalog();
+	$record  = isset( $catalog[ $block_name ] ) && is_array( $catalog[ $block_name ] ) ? $catalog[ $block_name ] : null;
+
+	if ( is_array( $record ) && in_array( $record['save_body'] ?? '', [ 'static', 'dynamic' ], true ) ) {
+		if ( 'dynamic' === $record['save_body'] ) {
+			return [ 'save_body' => 'dynamic' ];
+		}
+
+		if ( isset( $record['body_template'] ) && is_string( $record['body_template'] ) && '' !== $record['body_template'] ) {
+			return [
+				'save_body'    => 'static',
+				'body_template' => $record['body_template'],
+			];
+		}
+	}
+
+	return [
+		'save_body'    => 'static',
+		'body_template' => null,
+		'note'          => __( 'No harness-generated body template is curated for this block. Use validate/canonicalize rather than inventing saved markup.', '__plugin_txtd' ),
 	];
 }
 

@@ -664,6 +664,7 @@ namespace {
 	assert_same( 0, $core['exit'], 'describe core: a short name resolves and exits 0.' );
 	assert_same( 'novablocks/hero', $core['data']['block'], 'describe core: hero → novablocks/hero.' );
 	assert_same( 'curated', $core['data']['attributes']['emphasisArea']['source'], 'describe core: emphasisArea is curated.' );
+	assert_same( 'dynamic', $core['data']['save_body'], 'describe core: generated save-body metadata survives the shared core.' );
 	assert_same( nba_json( $core['data'] ), nba_json( $ability['data'] ), 'describe-block: the ability returns the core payload verbatim.' );
 	assert_same( nba_json( $core['data'] ), nba_json( $cli['envelope']['data'] ), 'describe: ability and command produce identical data for identical input (SHARED-SPEC §10.5).' );
 

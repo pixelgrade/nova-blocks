@@ -66,6 +66,7 @@ namespace {
 		public $title;
 		public $attributes;
 		public $supports;
+		public $render_callback;
 		public function __construct( array $p ) { foreach ( $p as $k => $v ) { $this->$k = $v; } }
 	}
 
@@ -126,10 +127,10 @@ namespace {
 		throw new \RuntimeException( 'Command did not halt.' );
 	}
 
-	function nbd_register( $name, array $attributes = [], $title = '', array $supports = [] ) {
+	function nbd_register( $name, array $attributes = [], $title = '', array $supports = [], $render_callback = null ) {
 		WP_Block_Type_Registry::get_instance()->register(
 			$name,
-			new WP_Block_Type( [ 'name' => $name, 'title' => $title, 'attributes' => $attributes, 'supports' => $supports ] )
+			new WP_Block_Type( [ 'name' => $name, 'title' => $title, 'attributes' => $attributes, 'supports' => $supports, 'render_callback' => $render_callback ] )
 		);
 	}
 
@@ -225,6 +226,40 @@ namespace {
 	assert_same( [ 'None', 'Low', 'Medium', 'High' ], $attrs['colorSignal']['vocabulary']['labels'], 'describe: unclamped colorSignal labels are a list parallel to the 0-3 enum.' );
 
 	echo "merge + honesty contract OK\n";
+
+	// =========================================================================================
+	// W11 — save-body classification + harness-generated body templates.
+	// =========================================================================================
+
+	nbd_reset();
+	nbd_register(
+		'novablocks/headline',
+		[
+			'primary'   => [ 'type' => 'string', 'default' => 'Our Story' ],
+			'secondary' => [ 'type' => 'string', 'default' => 'Discover' ],
+			'level'     => [ 'type' => 'number', 'default' => 2 ],
+			'align'     => [ 'type' => 'string', 'default' => 'none' ],
+			'textAlign' => [ 'type' => 'string', 'default' => 'center' ],
+		]
+	);
+	$exit = nbd_run( 'novablocks_cli_blocks_describe', [ 'headline' ], [ 'format' => 'json' ] );
+	$data = WP_CLI::$printed_value['data'];
+	assert_same( 0, $exit, 'describe: headline save-body probe exits 0.' );
+	assert_same( 'static', $data['save_body'], 'describe: headline is a static-save block.' );
+	assert_true( is_string( $data['body_template'] ) && '' !== $data['body_template'], 'describe: a static curated block ships a body template.' );
+	assert_true( false !== strpos( $data['body_template'], 'c-headline__secondary' ), 'describe: headline skeleton comes from the real save markup.' );
+	assert_true( false !== strpos( $data['body_template'], '{{secondary}}' ), 'describe: headline skeleton exposes a fillable secondary slot.' );
+	assert_true( false !== strpos( $data['body_template'], '{{primary}}' ), 'describe: headline skeleton exposes a fillable primary slot.' );
+
+	nbd_reset();
+	nbd_register( 'novablocks/dynamic-probe', [], 'Dynamic probe', [], static function () {} );
+	$exit = nbd_run( 'novablocks_cli_blocks_describe', [ 'novablocks/dynamic-probe' ], [ 'format' => 'json' ] );
+	$data = WP_CLI::$printed_value['data'];
+	assert_same( 0, $exit, 'describe: dynamic save-body probe exits 0.' );
+	assert_same( 'dynamic', $data['save_body'], 'describe: a registered render callback is dynamic.' );
+	assert_true( ! array_key_exists( 'body_template', $data ), 'describe: a dynamic block does not advertise a static body template.' );
+
+	echo "save-body contract OK\n";
 
 	// =========================================================================================
 	// MEDIUM (W9 review): colorSignal is CLAMPED to the block's minColorSignal/maxColorSignal —
