@@ -275,9 +275,30 @@ namespace {
 			$this->registered[ $name ] = $block_type;
 		}
 
+		public function is_registered( $name ) {
+			return isset( $this->registered[ $name ] );
+		}
+
+		public function get_registered( $name ) {
+			return $this->registered[ $name ] ?? null;
+		}
+
 		public function get_all_registered() {
 			return $this->registered;
 		}
+	}
+
+	// `describe` folds in the bundle enums via novablocks_get_block_editor_settings(). The real
+	// function pulls in the whole theme-support/plus payload; stub it to just the enums describe
+	// reads so the parity assertion below runs without that machinery.
+	function novablocks_get_block_editor_settings(): array {
+		return [
+			'advancedGalleryPresetOptions' => [ [ 'label' => 'The Cloud Atlas', 'value' => 'the-cloud-atlas' ] ],
+			'scrollingEffectOptions'       => [ [ 'label' => 'Static', 'value' => 'static' ] ],
+			'motionPresetOptions'          => [ [ 'label' => 'Custom', 'value' => 'custom' ] ],
+			'collectionLayoutRecipes'      => [],
+			'modules'                      => [ 'spaceAndSizing' => [] ],
+		];
 	}
 
 	class WP_Block_Patterns_Registry {
@@ -309,6 +330,7 @@ namespace {
 
 	require_once __DIR__ . '/../../lib/cli/blocks-cli-envelope.php';
 	require_once __DIR__ . '/../../lib/cli/blocks-cli-list-command.php';
+	require_once __DIR__ . '/../../lib/cli/blocks-cli-describe-command.php';
 	require_once __DIR__ . '/../../lib/cli/blocks-cli-patterns-command.php';
 	require_once __DIR__ . '/../../lib/cli/blocks-cli-harness.php';
 	require_once __DIR__ . '/../../lib/cli/blocks-cli-validate-command.php';
@@ -415,6 +437,7 @@ namespace {
 
 	$ability_names = [
 		'pixelgrade/list-blocks',
+		'pixelgrade/describe-block',
 		'pixelgrade/list-patterns',
 		'pixelgrade/validate-post',
 		'pixelgrade/canonicalize-post',
@@ -440,7 +463,7 @@ namespace {
 
 	nba_register();
 
-	assert_same( $ability_names, array_keys( $GLOBALS['nba_abilities'] ), 'exactly the four §4 abilities register, under their exact contract names.' );
+	assert_same( $ability_names, array_keys( $GLOBALS['nba_abilities'] ), 'exactly the five §4 abilities (W9 adds describe-block) register, under their exact contract names.' );
 
 	foreach ( $ability_names as $name ) {
 		$ability = $GLOBALS['nba_abilities'][ $name ];
@@ -465,6 +488,7 @@ namespace {
 
 	$expected_annotations = [
 		'pixelgrade/list-blocks'       => [ 'readonly' => true, 'destructive' => false, 'idempotent' => true ],
+		'pixelgrade/describe-block'    => [ 'readonly' => true, 'destructive' => false, 'idempotent' => true ],
 		'pixelgrade/list-patterns'     => [ 'readonly' => true, 'destructive' => false, 'idempotent' => true ],
 		'pixelgrade/validate-post'     => [ 'readonly' => true, 'destructive' => false, 'idempotent' => true ],
 		'pixelgrade/canonicalize-post' => [ 'readonly' => false, 'destructive' => true, 'idempotent' => true ],
@@ -627,6 +651,27 @@ namespace {
 	assert_true( false !== strpos( $ability->get_error_message(), 'novablocks|core|all' ), '…alongside the accepted set — never a bare schema rejection.' );
 	assert_same( 1, $cli['exit'], 'list CLI: the same bad value exits 1.' );
 	assert_same( 'invalid_params', $cli['envelope']['code'], 'list: CLI and ability report the same failure token.' );
+
+	// describe (W9): the schema+vocabulary merge lives in the core, so both surfaces agree.
+	WP_Block_Type_Registry::get_instance()->register(
+		'novablocks/hero',
+		new WP_Block_Type( [ 'name' => 'novablocks/hero', 'title' => 'Hero', 'api_version' => 3, 'attributes' => [ 'emphasisArea' => [ 'type' => 'number', 'default' => 100 ], 'stylePreset' => [ 'type' => 'string', 'default' => 'the-cloud-atlas' ] ], 'supports' => [] ] )
+	);
+	$core    = novablocks_agent_blocks_describe_core( [ 'block' => 'hero' ] );
+	$ability = call_user_func( $GLOBALS['nba_abilities']['pixelgrade/describe-block']['execute_callback'], [ 'block' => 'hero' ] );
+	$cli     = nba_run_cli( 'novablocks_cli_blocks_describe', [ 'hero' ], [ 'format' => 'json' ] );
+
+	assert_same( 0, $core['exit'], 'describe core: a short name resolves and exits 0.' );
+	assert_same( 'novablocks/hero', $core['data']['block'], 'describe core: hero → novablocks/hero.' );
+	assert_same( 'curated', $core['data']['attributes']['emphasisArea']['source'], 'describe core: emphasisArea is curated.' );
+	assert_same( nba_json( $core['data'] ), nba_json( $ability['data'] ), 'describe-block: the ability returns the core payload verbatim.' );
+	assert_same( nba_json( $core['data'] ), nba_json( $cli['envelope']['data'] ), 'describe: ability and command produce identical data for identical input (SHARED-SPEC §10.5).' );
+
+	$core_bad    = novablocks_agent_blocks_describe_core( [ 'block' => 'nope-nope' ] );
+	$ability_bad = call_user_func( $GLOBALS['nba_abilities']['pixelgrade/describe-block']['execute_callback'], [ 'block' => 'nope-nope' ] );
+	assert_true( is_wp_error( $ability_bad ), 'describe-block: an unknown block travels as a WP_Error.' );
+	assert_same( 'invalid_params', $ability_bad->get_error_code(), 'describe-block: the WP_Error code is the command token.' );
+	assert_same( $core_bad['summary'], $ability_bad->get_error_message(), 'describe-block: the error message is the core summary.' );
 
 	// patterns: the local-wins merge lives in the core, so both surfaces see one list.
 	WP_Block_Patterns_Registry::get_instance()->register( 'pixelgrade/hero', [ 'title' => 'Hero', 'categories' => [ 'featured' ] ] );

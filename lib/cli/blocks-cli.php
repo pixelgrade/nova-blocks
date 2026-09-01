@@ -29,12 +29,14 @@ if ( ! defined( 'ABSPATH' ) ) {
 if ( class_exists( '\WP_CLI' ) ) {
 	require_once __DIR__ . '/blocks-cli-envelope.php';
 	require_once __DIR__ . '/blocks-cli-list-command.php';
+	require_once __DIR__ . '/blocks-cli-describe-command.php';
 	require_once __DIR__ . '/blocks-cli-patterns-command.php';
 	require_once __DIR__ . '/blocks-cli-harness.php';
 	require_once __DIR__ . '/blocks-cli-validate-command.php';
 	require_once __DIR__ . '/blocks-cli-canonicalize-command.php';
 
 	\WP_CLI::add_command( 'pixelgrade blocks list', 'novablocks_cli_blocks_list' );
+	\WP_CLI::add_command( 'pixelgrade blocks describe', 'novablocks_cli_blocks_describe' );
 	\WP_CLI::add_command( 'pixelgrade blocks patterns', 'novablocks_cli_blocks_patterns' );
 	\WP_CLI::add_command( 'pixelgrade blocks validate', 'novablocks_cli_blocks_validate' );
 	\WP_CLI::add_command( 'pixelgrade blocks canonicalize', 'novablocks_cli_blocks_canonicalize' );

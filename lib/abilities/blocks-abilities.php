@@ -39,6 +39,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 function novablocks_agent_blocks_bootstrap(): void {
 	require_once dirname( __DIR__ ) . '/cli/blocks-cli-envelope.php';
 	require_once dirname( __DIR__ ) . '/cli/blocks-cli-list-command.php';
+	require_once dirname( __DIR__ ) . '/cli/blocks-cli-describe-command.php';
 	require_once dirname( __DIR__ ) . '/cli/blocks-cli-patterns-command.php';
 	require_once dirname( __DIR__ ) . '/cli/blocks-cli-harness.php';
 	require_once dirname( __DIR__ ) . '/cli/blocks-cli-validate-command.php';
@@ -254,6 +255,25 @@ function novablocks_agent_blocks_execute_list( array $input = [] ) {
 				'namespace'  => novablocks_agent_blocks_string_param( $input, 'namespace', 'novablocks' ),
 				'attributes' => ! empty( $input['attributes'] ),
 				'supports'   => ! empty( $input['supports'] ),
+			]
+		)
+	);
+}
+
+/**
+ * `pixelgrade/describe-block` → `novablocks_agent_blocks_describe_core()`.
+ *
+ * @param array $input Validated input.
+ *
+ * @return array|WP_Error
+ */
+function novablocks_agent_blocks_execute_describe( array $input = [] ) {
+	novablocks_agent_blocks_bootstrap();
+
+	return novablocks_agent_blocks_ability_result(
+		novablocks_agent_blocks_describe_core(
+			[
+				'block' => novablocks_agent_blocks_string_param( $input, 'block', '' ),
 			]
 		)
 	);
@@ -553,6 +573,55 @@ function novablocks_agent_blocks_ability_definitions(): array {
 					'namespace' => [ 'type' => 'string' ],
 					'count'     => [ 'type' => 'integer' ],
 					'blocks'    => novablocks_agent_blocks_object_list_schema(),
+				]
+			),
+		],
+
+		'pixelgrade/describe-block'     => [
+			'label'               => __( 'Describe a block', '__plugin_txtd' ),
+			'description'         => __( 'Describe one block\'s attributes AND the VALID VALUES for each — the crib sheet an agent needs to author Nova Blocks markup without opening the editor. Where list-blocks returns only type and default per attribute, this adds a "vocabulary" for the ones that have one: an "enum" of allowed values (arrangement grid|chain, imageResizing cropped|original, colorSignal 0-3, stylePreset ids, sidebar sizes, metadata sources) or a "range" of {min,max,step} (emphasisArea 0-100/5, contentAreaWidth 30-90/5, block spacing -3..3, and so on). Each attribute is stamped with a "source": "bundle" (an enum the editor bundle already ships), "curated" (harvested from a JS control component and cross-checked against the gene-migration reference), "schema" (a registered enum), or "none". IMPORTANT — "source": "none" with "vocabulary": null means NOT covered: it does not mean "any value is fine", it means this tool has not verified the vocabulary, so fall back to authoring a value and proving it with canonicalize/validate. Never treat a null vocabulary as permission to guess. Pass "block" namespace-qualified (novablocks/hero) or short (hero → novablocks/hero, then core/hero); an unknown name comes back as invalid_params with the closest registered names in data.suggestions. For blocks that carry them, data also includes style_presets (each preset\'s numeric expansion — set those numbers, the preset label is not read for layout), the collection layout recipes, and the bundle option menus. Reads only; writes nothing.', '__plugin_txtd' ),
+			'annotations'         => [
+				'readonly'    => true,
+				'destructive' => false,
+				'idempotent'  => true,
+			],
+			'permission_callback' => 'novablocks_agent_blocks_can_edit_posts',
+			'execute_callback'    => 'novablocks_agent_blocks_execute_describe',
+			'input_schema'        => [
+				'type'                 => 'object',
+				'properties'           => [
+					'block' => [
+						'type'        => 'string',
+						'description' => 'The block to describe: namespace-qualified (novablocks/hero) or short (hero). An unknown name returns invalid_params with suggestions.',
+					],
+				],
+				'required'             => [ 'block' ],
+				'additionalProperties' => false,
+			],
+			'output_schema'       => novablocks_agent_blocks_output_schema(
+				[
+					'block'           => [ 'type' => 'string' ],
+					'requested'       => [ 'type' => 'string' ],
+					'title'           => [ 'type' => 'string' ],
+					'attribute_count' => [ 'type' => 'integer' ],
+					'coverage'        => [
+						'type'                 => 'object',
+						'additionalProperties' => true,
+					],
+					'attributes'      => [
+						'type'                 => 'object',
+						'additionalProperties' => true,
+					],
+					'suggestions'     => [
+						'type'  => 'array',
+						'items' => [ 'type' => 'string' ],
+					],
+					'style_presets'   => novablocks_agent_blocks_object_list_schema(),
+					'recipes'         => novablocks_agent_blocks_object_list_schema(),
+					'bundle_options'  => [
+						'type'                 => 'object',
+						'additionalProperties' => true,
+					],
 				]
 			),
 		],
