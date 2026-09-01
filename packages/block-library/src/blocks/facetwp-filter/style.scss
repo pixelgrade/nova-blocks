@@ -192,6 +192,10 @@
     --font-size-modifier: 0.9;
   }
 
+  .nb-facetwp-facet--choice-style-text .nb-facetwp-facet__options {
+    --font-size-modifier: 1;
+  }
+
   .nb-facetwp-facet__label {
     margin-bottom: var(--theme-spacing-smallest);
   }
