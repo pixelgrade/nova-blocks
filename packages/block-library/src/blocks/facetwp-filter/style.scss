@@ -81,16 +81,25 @@
   }
 
   .facetwp-selection-value {
+    --nb-facetwp-chip-min-block-size: calc(var(--theme-spacing-smallest, 0.5em) * 4);
+    --nb-facetwp-chip-delete-size: 0.8em;
+    --nb-facetwp-chip-radius: var(--theme-button-border-radius, var(--theme-input-border-radius, 0.25em));
+    --font-size-modifier: 0.9;
+
     position: relative;
 
     display: inline-flex;
     align-items: center;
+    min-block-size: var(--nb-facetwp-chip-min-block-size);
     padding-block: calc(var(--theme-spacing-smallest, 0.5em) * 0.5);
     padding-inline-start: var(--theme-spacing-smallest, 0.5em);
-    padding-inline-end: calc(var(--theme-spacing-smallest, 0.5em) + 1.4em);
+    padding-inline-end: calc(var(--theme-spacing-smallest, 0.5em) * 2 + var(--nb-facetwp-chip-delete-size));
     margin-right: 0;
     background: color-mix(in srgb, currentColor 10%, transparent);
-    border-radius: var(--theme-input-border-radius, 0.25em);
+    border-radius: var(--nb-facetwp-chip-radius);
+    cursor: pointer;
+    user-select: none;
+    white-space: nowrap;
     transition: background-color var(--theme-transition-duration-quick, 0.15s) var(--theme-transition-easing, ease);
 
     &:before,
@@ -98,11 +107,12 @@
       content: "";
       position: absolute;
       top: calc(50% - 0.4em);
-      right: 0.4em;
+      // Compensate for the rotated stroke so its visible edge keeps one spacing token.
+      right: calc(var(--theme-spacing-smallest, 0.5em) + 0.25em);
 
       display: block;
       width: 0.1em;
-      height: 0.8em;
+      height: var(--nb-facetwp-chip-delete-size);
       border-radius: 0.1em;
       background: currentColor;
     }
@@ -296,11 +306,14 @@
     min-block-size: 48px;
   }
 
-  .nb-facetwp-selections .facetwp-reset,
-  .nb-facetwp-selections .facetwp-selection-value {
+  .nb-facetwp-selections .facetwp-reset {
     display: inline-flex;
     align-items: center;
     min-block-size: 48px;
+  }
+
+  :is(.facetwp-selections, #specific) .facetwp-selection-value {
+    --nb-facetwp-chip-min-block-size: 48px;
   }
 
   .nb-facetwp-filter--orientation-horizontal {

@@ -76,6 +76,10 @@ test( 'Filter Controls exposes an opt-in mobile panel without changing existing 
 	assert.match( styles, /mobile-panel\.nb-facetwp-filter--orientation-vertical[\s\S]*--theme-heading-4-font-family/ );
 	assert.deepEqual( fontSizeModifierMatrix( compiledStyles ), [
 		{
+			selector: ':is(.facetwp-selections, #specific) .facetwp-selection-value',
+			value: '0.9',
+		},
+		{
 			selector: '.nb-facetwp-filter--orientation-vertical .nb-facetwp-facet__options',
 			value: '0.9',
 		},
@@ -96,6 +100,7 @@ test( 'Filter Controls exposes an opt-in mobile panel without changing existing 
 	const selectionItemBackgroundSelector = `${ selectionItemSelector }:before`;
 	const selectionLabelSelector = `${ selectionRoot } .facetwp-selection-label`;
 	const selectionValueSelector = `${ selectionRoot } .facetwp-selection-value`;
+	const selectionValueIconSelector = `${ selectionValueSelector }:before, ${ selectionValueSelector }:after`;
 	const selectionValueHoverSelector = `${ selectionValueSelector }:hover`;
 	const selectionValueActiveSelector = `${ selectionValueSelector }:active`;
 	const selectionValueFocusSelector = `${ selectionValueSelector }:focus-visible`;
@@ -104,6 +109,7 @@ test( 'Filter Controls exposes an opt-in mobile panel without changing existing 
 	const selectionItemBackgroundRule = ruleAt( stylesheet, selectionItemBackgroundSelector );
 	const selectionLabelRule = ruleAt( stylesheet, selectionLabelSelector );
 	const selectionValueRule = ruleAt( stylesheet, selectionValueSelector );
+	const selectionValueIconRule = ruleAt( stylesheet, selectionValueIconSelector );
 	const selectionValueHoverRule = ruleAt( stylesheet, selectionValueHoverSelector );
 	const selectionValueActiveRule = ruleAt( stylesheet, selectionValueActiveSelector );
 	const selectionValueFocusRule = ruleAt( stylesheet, selectionValueFocusSelector );
@@ -119,16 +125,28 @@ test( 'Filter Controls exposes an opt-in mobile panel without changing existing 
 	assert.equal( declaration( selectionLabelRule, 'align-items' ), 'center' );
 	assert.equal( declaration( selectionValueRule, 'display' ), 'inline-flex' );
 	assert.equal( declaration( selectionValueRule, 'align-items' ), 'center' );
+	assert.equal( declaration( selectionValueRule, '--nb-facetwp-chip-min-block-size' ), 'calc(var(--theme-spacing-smallest, 0.5em) * 4)' );
+	assert.equal( declaration( selectionValueRule, '--nb-facetwp-chip-delete-size' ), '0.8em' );
+	assert.equal( declaration( selectionValueRule, '--nb-facetwp-chip-radius' ), 'var(--theme-button-border-radius, var(--theme-input-border-radius, 0.25em))' );
+	assert.equal( declaration( selectionValueRule, '--font-size-modifier' ), '0.9' );
+	assert.equal( declaration( selectionValueRule, 'min-block-size' ), 'var(--nb-facetwp-chip-min-block-size)' );
 	assert.equal( declaration( selectionValueRule, 'padding-block' ), 'calc(var(--theme-spacing-smallest, 0.5em) * 0.5)' );
 	assert.equal( declaration( selectionValueRule, 'padding-inline-start' ), 'var(--theme-spacing-smallest, 0.5em)' );
-	assert.equal( declaration( selectionValueRule, 'padding-inline-end' ), 'calc(var(--theme-spacing-smallest, 0.5em) + 1.4em)' );
+	assert.equal( declaration( selectionValueRule, 'padding-inline-end' ), 'calc(var(--theme-spacing-smallest, 0.5em) * 2 + var(--nb-facetwp-chip-delete-size))' );
 	assert.equal( declaration( selectionValueRule, 'background' ), 'color-mix(in srgb, currentColor 10%, transparent)' );
-	assert.equal( declaration( selectionValueRule, 'border-radius' ), 'var(--theme-input-border-radius, 0.25em)' );
+	assert.equal( declaration( selectionValueRule, 'border-radius' ), 'var(--nb-facetwp-chip-radius)' );
+	assert.equal( declaration( selectionValueRule, 'cursor' ), 'pointer' );
+	assert.equal( declaration( selectionValueRule, 'user-select' ), 'none' );
+	assert.equal( declaration( selectionValueRule, 'white-space' ), 'nowrap' );
 	assert.equal( declaration( selectionValueRule, 'transition' ), 'background-color var(--theme-transition-duration-quick, 0.15s) var(--theme-transition-easing, ease)' );
+	assert.equal( declaration( selectionValueIconRule, 'right' ), 'calc(var(--theme-spacing-smallest, 0.5em) + 0.25em)' );
 	assert.equal( declaration( selectionValueHoverRule, 'background' ), 'color-mix(in srgb, currentColor 18%, transparent)' );
 	assert.equal( declaration( selectionValueActiveRule, 'background' ), 'color-mix(in srgb, currentColor 25%, transparent)' );
 	assert.equal( declaration( selectionValueFocusRule, 'outline' ), '2px solid var(--sm-current-accent-color, var(--nb-accent-color, currentColor))' );
 	assert.equal( declaration( selectionValueFocusRule, 'outline-offset' ), '2px' );
+	const lapMedia = '(max-width: 1023px)';
+	const mobileSelectionValueRule = ruleAt( stylesheet, selectionValueSelector, lapMedia );
+	assert.equal( declaration( mobileSelectionValueRule, '--nb-facetwp-chip-min-block-size' ), '48px' );
 
 	const compactMedia = 'not screen and (min-width: 480px)';
 	const toolbarSelector = '.nb-facetwp-filter--orientation-horizontal:has(> .nb-facetwp-facet--fill-width)';
@@ -162,7 +180,7 @@ test( 'Filter Controls exposes an opt-in mobile panel without changing existing 
 	assert.match( styles, /\.nb-facetwp-filter__mobile-title[\s\S]*--theme-heading-4-font-family/ );
 	assert.match( styles, /@include below\(lap\)[\s\S]*\.nb-facetwp-toggle[\s\S]*min-block-size:\s*48px/ );
 	assert.match( styles, /\.nb-facetwp-selections \.facetwp-reset[\s\S]*min-block-size:\s*48px/ );
-	assert.match( styles, /\.nb-facetwp-selections \.facetwp-selection-value[\s\S]*min-block-size:\s*48px/ );
+	assert.match( styles, /:is\(\.facetwp-selections, #specific\) \.facetwp-selection-value[\s\S]*--nb-facetwp-chip-min-block-size:\s*48px/ );
 	assert.match( styles, /var\(--sm-current-bg-color/ );
 } );
 
