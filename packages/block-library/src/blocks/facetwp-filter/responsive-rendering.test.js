@@ -160,8 +160,17 @@ test( 'Filter Controls exposes an opt-in mobile panel without changing existing 
 	const compactSummaryRule = ruleAt( stylesheet, summarySelector, compactMedia );
 	const compactSelectionLabelRule = ruleAt( stylesheet, selectionLabelSelector, compactMedia );
 	const desktopSummaryRule = ruleAt( stylesheet, summarySelector );
+	const secondaryPanelColumnsSelector = '.wp-block-columns:has(> .wp-block-column > .nb-facetwp-filter--section-type-hidden)';
+	const collapsedSecondaryPanelColumnsSelector = `${ secondaryPanelColumnsSelector }:not(:has(> .wp-block-column > .nb-facetwp-filter--section-type-hidden.is-visible))`;
+	const secondaryPanelColumnsRule = ruleAt( stylesheet, secondaryPanelColumnsSelector );
+	const collapsedSecondaryPanelColumnsRule = ruleAt( stylesheet, collapsedSecondaryPanelColumnsSelector );
+	const moreFiltersRootSelector = '.nb-facetwp-filter:has(> .nb-facetwp-toggle-wrap .nb-facetwp-toggle--more-filters)';
+	const compactMoreFiltersSelector = `${ moreFiltersRootSelector }, .nb-facetwp-toggle-wrap:has(.nb-facetwp-toggle--more-filters), .nb-facetwp-toggle-wrap:has(.nb-facetwp-toggle--more-filters) > .wp-block-button, .nb-facetwp-toggle--more-filters`;
+	const compactMoreFiltersRule = ruleAt( stylesheet, compactMoreFiltersSelector, compactMedia );
 
 	assert.equal( declaration( desktopSummaryRule, 'margin-block-start' ), 'var(--theme-spacing-smallest, calc(var(--nb-spacing) * 0.25))' );
+	assert.equal( declaration( secondaryPanelColumnsRule, 'padding-block' ), 'var(--theme-spacing-small, calc(var(--nb-spacing) * 0.75))' );
+	assert.equal( declaration( collapsedSecondaryPanelColumnsRule, 'display' ), 'none' );
 	assert.equal( declaration( railRule, '--nb-facetwp-inline-rail' ), 'var(--nb-group-side-padding, 0)' );
 	assert.equal( declaration( railRule, 'inline-size' ), 'calc(100% + 2 * var(--nb-facetwp-inline-rail))' );
 	assert.equal( declaration( toolbarRule, 'position' ), 'relative' );
@@ -176,6 +185,7 @@ test( 'Filter Controls exposes an opt-in mobile panel without changing existing 
 	assert.equal( declaration( compactSummaryRule, 'margin-inline' ), 'calc(-1 * var(--nb-facetwp-inline-rail))' );
 	assert.equal( declaration( compactSummaryRule, 'margin-block-start' ), 'var(--theme-spacing-smaller, calc(var(--nb-spacing) * 0.5))' );
 	assert.equal( declaration( compactSelectionLabelRule, 'flex' ), '1 0 100%' );
+	assert.equal( declaration( compactMoreFiltersRule, 'inline-size' ), '100%' );
 	assert.match( styles, /:is\(\.nb-facetwp-selections, \.nb-facetwp-filter--mobile-panel\) \.facetwp-reset[\s\S]*background:\s*none/ );
 	assert.match( styles, /\.nb-facetwp-filter__mobile-title[\s\S]*--theme-heading-4-font-family/ );
 	assert.match( styles, /@include below\(lap\)[\s\S]*\.nb-facetwp-toggle[\s\S]*min-block-size:\s*48px/ );
