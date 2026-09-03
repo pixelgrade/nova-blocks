@@ -317,6 +317,29 @@ namespace {
 	// emphasis-area-control/index.js:20-22 → min=0 max=100 step=5. If this fails, the JS changed.
 	assert_same( [ 'min' => 0, 'max' => 100, 'step' => 5 ], $attrs['emphasisArea']['vocabulary']['range'], 'describe: emphasisArea range canary (emphasis-area-control/index.js:20-22).' );
 
+	// Second canary, same discipline: the band-inset pair. card-spacing-settings.js exports
+	// CONTENT_SPACING_MAX 6 / CONTENT_SPACING_STEP 0.5 (0..3 whole steps before 2026-09-03 —
+	// one step is ~32px @1440w/level 1, so the old ceiling pinned a band inset at 96px and every
+	// 128-200px band a real page wants collapsed onto it). The floor stays -3 and is reachable
+	// only with supports.novaBlocks.spaceAndSizing.advancedSpacing; describe reports the widest
+	// form and says so in the note.
+	nbd_reset();
+	nbd_register(
+		'novablocks/canary',
+		[
+			'emphasisTopSpacing'    => [ 'type' => 'number', 'default' => 0 ],
+			'emphasisBottomSpacing' => [ 'type' => 'number', 'default' => 0 ],
+			'blockTopSpacing'       => [ 'type' => 'number', 'default' => 1 ],
+		]
+	);
+	$exit  = nbd_run( 'novablocks_cli_blocks_describe', [ 'novablocks/canary' ], [ 'format' => 'json' ] );
+	$attrs = WP_CLI::$printed_value['data']['attributes'];
+	assert_same( [ 'min' => -3, 'max' => 6, 'step' => 0.5 ], $attrs['emphasisTopSpacing']['vocabulary']['range'], 'describe: emphasisTopSpacing range canary (card-spacing-settings.js CONTENT_SPACING_*).' );
+	assert_same( [ 'min' => -3, 'max' => 6, 'step' => 0.5 ], $attrs['emphasisBottomSpacing']['vocabulary']['range'], 'describe: emphasisBottomSpacing range canary (card-spacing-settings.js CONTENT_SPACING_*).' );
+	// The OUTER pair is deliberately NOT widened: block spacing is the rhythm between blocks and
+	// stays on whole steps. If this ever moves with the emphasis pair, it was not this decision.
+	assert_same( [ 'min' => -3, 'max' => 3, 'step' => 1 ], $attrs['blockTopSpacing']['vocabulary']['range'], 'describe: blockTopSpacing stays -3..3 step 1 (BLOCK_SPACING_*).' );
+
 	echo "js-drift canary contract OK\n";
 
 	// =========================================================================================

@@ -290,6 +290,40 @@ nb_ccs_assert_same(
 	'spacingModifier both carries the value AND is the selector hook ([style*="--nb-spacing-modifier"]) that starts the child cascade.'
 );
 
+// The band inset in half steps (2026-09-03: the emphasis pair went 0..3 whole to
+// 0..6 half). 5.5 is the 176px band at 1440w / spacing level 1, and it is the
+// value that proves the whole chain: a fraction must survive PHP's float→string
+// AND land in the style attribute as `5.5`, never `5.50` — a trailing zero is
+// still valid CSS but it is a DIFFERENT byte string from what the editor's
+// `emphasisTopSpacing + ''` writes, and the two must agree or the same authored
+// page renders one way headless and another after an editor save.
+nb_ccs_assert_same(
+	[
+		'--nb-emphasis-top-spacing'    => '5.5',
+		'--nb-emphasis-bottom-spacing' => '4.5',
+	],
+	novablocks_get_core_container_spacing_props( [
+		'emphasisTopSpacing'    => 5.5,
+		'emphasisBottomSpacing' => 4.5,
+	] ),
+	'A half-step band inset keeps its fraction on both emphasis properties.'
+);
+
+nb_ccs_assert_same(
+	[ '--nb-emphasis-top-spacing' => '6' ],
+	novablocks_get_core_container_spacing_props( [ 'emphasisTopSpacing' => 6 ] ),
+	'The new ceiling emits as a bare integer, exactly as 3 did.'
+);
+
+nb_ccs_assert_same(
+	[ '--nb-emphasis-top-spacing' => '5.5' ],
+	novablocks_get_core_container_spacing_props( [ 'emphasisTopSpacing' => '5.5' ] ),
+	'A numeric STRING fraction (how a value arrives from parsed block JSON in some paths) formats identically.'
+);
+
+nb_ccs_assert_same( '5.5', novablocks_format_core_container_spacing_number( 5.5 ), 'Five and a half steps survive formatting without a trailing zero.' );
+nb_ccs_assert_same( '6', novablocks_format_core_container_spacing_number( 6.0 ), 'The ceiling loses its decimal tail.' );
+
 // Overlap: the z-index twin of getSpacingCSSProps().
 nb_ccs_assert_same(
 	[
@@ -408,5 +442,66 @@ foreach ( [ '', '   ', 'no tags at all' ] as $degenerate ) {
 		'Empty or tagless content is returned untouched.'
 	);
 }
+
+// The fraction must reach the rendered wrapper intact — this is the byte a
+// browser reads, and `--nb-emphasis-top-spacing:5.5` is what makes the padding
+// calc() resolve to 176px at 1440w / level 1 instead of the 96px the old
+// 3-step ceiling forced.
+$rendered = novablocks_render_core_container_spacing( $plain_group, [ 'blockName' => 'core/group', 'attrs' => [ 'emphasisTopSpacing' => 5.5 ] ] );
+nb_ccs_assert(
+	false !== strpos( $rendered, '--nb-emphasis-top-spacing:5.5;' ),
+	'A half-step band inset must reach the wrapper as 5.5. Got: ' . $rendered
+);
+nb_ccs_assert(
+	false === strpos( $rendered, '5.50' ),
+	'Never 5.50 — the editor writes 5.5 and the two serializations must not diverge. Got: ' . $rendered
+);
+
+// -----------------------------------------------------------------------------
+// 7. The curated vocabulary `blocks describe` hands a headless author.
+//
+// Nothing pins the PHP table to the JS RangeControl at runtime (see the honesty
+// note at the top of blocks-describe-vocabulary.php), so this assertion and its
+// Jest twin (card-spacing-settings.test.js) are the drift alarm for the pair.
+// -----------------------------------------------------------------------------
+
+if ( ! function_exists( '__' ) ) {
+	function __( $text, $domain = 'default' ) { return $text; }
+}
+
+require_once dirname( __DIR__, 2 ) . '/lib/cli/blocks-describe-vocabulary.php';
+
+$curated = novablocks_blocks_describe_curated_vocabulary();
+
+foreach ( [ 'core/group', 'core/columns' ] as $container ) {
+	foreach ( [ 'emphasisTopSpacing', 'emphasisBottomSpacing' ] as $attribute ) {
+		nb_ccs_assert_same(
+			[ 'min' => 0, 'max' => 6, 'step' => 0.5 ],
+			$curated[ $container ][ $attribute ]['range'],
+			sprintf( '%s %s must advertise the 0..6 half-step band inset. Min stays 0: the containers do not declare advancedSpacing.', $container, $attribute )
+		);
+	}
+
+	foreach ( [ 'blockTopSpacing', 'blockBottomSpacing' ] as $attribute ) {
+		nb_ccs_assert_same(
+			[ 'min' => -3, 'max' => 3, 'step' => 1 ],
+			$curated[ $container ][ $attribute ]['range'],
+			sprintf( '%s %s is the rhythm between blocks and deliberately stays -3..3 on whole steps.', $container, $attribute )
+		);
+	}
+}
+
+// The cross-cutting bucket (every Nova block that opts into the bundle) carries
+// the same ceiling and step, with the advancedSpacing floor.
+nb_ccs_assert_same(
+	[ 'min' => -3, 'max' => 6, 'step' => 0.5 ],
+	$curated['*']['emphasisTopSpacing']['range'],
+	'The shared Space & Sizing bucket must advertise the same ceiling and step as the containers.'
+);
+nb_ccs_assert_same(
+	[ 'min' => -3, 'max' => 3, 'step' => 1 ],
+	$curated['*']['blockTopSpacing']['range'],
+	'The shared blockTopSpacing range is unchanged.'
+);
 
 echo "core container spacing contract ok\n";

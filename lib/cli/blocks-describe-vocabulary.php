@@ -145,14 +145,15 @@ function novablocks_blocks_describe_curated_vocabulary(): array {
 				'note'  => 'Vertical spacing step below the block (negative overlaps the next block).',
 			],
 			'emphasisTopSpacing'        => [
-				// card-spacing-settings.js:15-16 → contentSpacingMax 3; contentSpacingMin is
-				// -3 only when supports novaBlocks.spaceAndSizing.advancedSpacing, else 0.
-				'range' => [ 'min' => -3, 'max' => 3, 'step' => 1 ],
-				'note'  => 'Content-area top spacing. Min is -3 only when the block supports advancedSpacing, otherwise 0.',
+				// card-spacing-settings.js CONTENT_SPACING_MAX 6 / CONTENT_SPACING_STEP 0.5;
+				// contentSpacingMin is CONTENT_SPACING_MIN_ADVANCED (-3) only when supports
+				// novaBlocks.spaceAndSizing.advancedSpacing, else CONTENT_SPACING_MIN (0).
+				'range' => [ 'min' => -3, 'max' => 6, 'step' => 0.5 ],
+				'note'  => 'Content-area top spacing, in half steps. Min is -3 only when the block supports advancedSpacing, otherwise 0.',
 			],
 			'emphasisBottomSpacing'     => [
-				'range' => [ 'min' => -3, 'max' => 3, 'step' => 1 ],
-				'note'  => 'Content-area bottom spacing. Min is -3 only when the block supports advancedSpacing, otherwise 0.',
+				'range' => [ 'min' => -3, 'max' => 6, 'step' => 0.5 ],
+				'note'  => 'Content-area bottom spacing, in half steps. Min is -3 only when the block supports advancedSpacing, otherwise 0.',
 			],
 			'spacingMultiplierOverride' => [
 				// with-space-and-sizing/controls/index.js:100-102 → min=0 max=4 step=0.5.
@@ -310,16 +311,16 @@ function novablocks_blocks_describe_core_container_vocabulary( string $label ): 
 			'note'  => __( 'Vertical spacing step BELOW the block, as margin-bottom (negative overlaps the next block).', '__plugin_txtd' ) . $outer,
 		],
 		'emphasisTopSpacing'        => [
-			'range' => [ 'min' => 0, 'max' => 3, 'step' => 1 ],
-			'note'  => __( 'INNER top spacing, as padding-top — the band inset. Prefer this over style.spacing.padding.top. Min is 0 here: negative inner spacing needs supports.novaBlocks.spaceAndSizing.advancedSpacing, which the core containers do not declare.', '__plugin_txtd' ) . $inner,
+			'range' => [ 'min' => 0, 'max' => 6, 'step' => 0.5 ],
+			'note'  => __( 'INNER top spacing, as padding-top — the band inset. Prefer this over style.spacing.padding.top. Half steps are allowed, so a 128-200px band is authored directly (5.5 ≈ 176px at 1440w, spacing level 1). Min is 0 here: negative inner spacing needs supports.novaBlocks.spaceAndSizing.advancedSpacing, which the core containers do not declare.', '__plugin_txtd' ) . $inner,
 		],
 		'emphasisBottomSpacing'     => [
-			'range' => [ 'min' => 0, 'max' => 3, 'step' => 1 ],
-			'note'  => __( 'INNER bottom spacing, as padding-bottom — the band inset.', '__plugin_txtd' ) . $inner,
+			'range' => [ 'min' => 0, 'max' => 6, 'step' => 0.5 ],
+			'note'  => __( 'INNER bottom spacing, as padding-bottom — the band inset. Half steps are allowed.', '__plugin_txtd' ) . $inner,
 		],
 		'spacingMultiplierOverride' => [
 			'range' => [ 'min' => 0, 'max' => 4, 'step' => 0.5 ],
-			'note'  => __( 'Multiplies this block\'s own four spacing steps AND, because nothing re-declares it, every descendant\'s. Use it to reach a band inset beyond 3 steps (e.g. blockTopSpacing 2 with an override of 2 = 4 steps = ~128px @1440w).', '__plugin_txtd' ),
+			'note'  => __( 'Multiplies this block\'s own four spacing steps AND, because nothing re-declares it, every descendant\'s. Reach for it only for the OUTER steps (blockTop/BottomSpacing, capped at 3) or past 6 inner steps — the band inset itself now goes to 6 in half steps without it, and unlike this multiplier a plain step is not inherited by descendants.', '__plugin_txtd' ),
 		],
 		'spacingModifier'           => [
 			'range' => [ 'min' => 0, 'max' => 2, 'step' => 0.5 ],

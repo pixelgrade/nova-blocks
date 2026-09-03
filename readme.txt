@@ -114,6 +114,9 @@ Yes! Nova Block's core features are free to use.
 
 == Changelog ==
 
+= Unreleased =
+* Improved: Raise the Space & Sizing "Content Top/Bottom Spacing" range to 6 steps in half-step increments, so a section band can hold the deep inset a full-width design asks for.
+
 = 2.6.6.1 =
 * Improved: Separate multiple active values into individual design-system filter chips with aligned remove actions.
 * Improved: Align compact Search and Filters controls, summaries, and results below the shared mobile breakpoint.
