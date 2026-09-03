@@ -149,6 +149,23 @@ function novablocks_agent_blocks_describe_core( array $params ): array {
 	$block_type = $registry->get_registered( $block_name );
 	$attributes = is_array( $block_type->attributes ) ? $block_type->attributes : [];
 
+	// Attributes a Nova EDITOR filter registers on a core block, which the server registry
+	// therefore never sees. They are real and authorable — the editor writes them and
+	// lib/core-container-spacing.php renders them — but they must not be merged into
+	// WP_Block_Type_Registry, because that reorders the attribute list the harness serializes
+	// from and flips the comment JSON key order of already-canonical content. describe ksort()s
+	// its output, so merging them HERE has no ordering consequence at all. Each is marked
+	// `registration: "editor"` so a reader is never misled about where it lives.
+	$editor_registered = function_exists( 'novablocks_get_core_container_spacing_describe_attributes' )
+		? novablocks_get_core_container_spacing_describe_attributes( $block_name )
+		: [];
+
+	foreach ( $editor_registered as $editor_attr => $editor_schema ) {
+		if ( ! array_key_exists( $editor_attr, $attributes ) ) {
+			$attributes[ $editor_attr ] = $editor_schema;
+		}
+	}
+
 	$settings     = function_exists( 'novablocks_get_block_editor_settings' ) ? novablocks_get_block_editor_settings() : [];
 	$curated      = novablocks_blocks_describe_curated_vocabulary();
 	$bundle_vocab = novablocks_blocks_describe_bundle_vocabulary( is_array( $settings ) ? $settings : [] );
@@ -185,6 +202,10 @@ function novablocks_agent_blocks_describe_core( array $params ): array {
 
 		if ( '' !== $resolved['note'] ) {
 			$record['note'] = $resolved['note'];
+		}
+
+		if ( array_key_exists( $attr_name, $editor_registered ) ) {
+			$record['registration'] = 'editor';
 		}
 
 		if ( isset( $coverage[ $record['source'] ] ) ) {

@@ -49,6 +49,51 @@ function novablocks_get_attributes_from_json( $path ) {
 	return json_decode( file_get_contents( $filename ), true );
 }
 
+// Minimal stand-in for WP's HTML API, matching the stub the site-tagline /
+// site-title / post-terms render contracts already use in this directory.
+class WP_HTML_Tag_Processor {
+	private string $html;
+	private array $attributes = [];
+	private string $opening_tag = '';
+
+	public function __construct( string $html ) {
+		$this->html = $html;
+	}
+
+	public function next_tag(): bool {
+		if ( ! preg_match( '/<([a-z][a-z0-9-]*)([^>]*)>/i', $this->html, $match ) ) {
+			return false;
+		}
+
+		$this->opening_tag = $match[0];
+		preg_match_all( '/([a-z0-9:-]+)=("|\')(.*?)\2/i', $match[2], $attributes, PREG_SET_ORDER );
+		foreach ( $attributes as $attribute ) {
+			$this->attributes[ strtolower( $attribute[1] ) ] = $attribute[3];
+		}
+
+		return true;
+	}
+
+	public function get_attribute( string $name ) {
+		return $this->attributes[ strtolower( $name ) ] ?? null;
+	}
+
+	public function set_attribute( string $name, string $value ): void {
+		$this->attributes[ strtolower( $name ) ] = $value;
+	}
+
+	public function get_updated_html(): string {
+		preg_match( '/<([a-z][a-z0-9-]*)/i', $this->opening_tag, $match );
+		$tag_name       = $match[1] ?? 'div';
+		$attribute_html = '';
+		foreach ( $this->attributes as $name => $value ) {
+			$attribute_html .= sprintf( ' %s="%s"', $name, htmlspecialchars( $value, ENT_QUOTES, 'UTF-8' ) );
+		}
+
+		return preg_replace( '/<([a-z][a-z0-9-]*)([^>]*)>/i', '<' . $tag_name . $attribute_html . '>', $this->html, 1 );
+	}
+}
+
 require_once __DIR__ . '/../../lib/core-container-spacing.php';
 
 function nb_ccs_assert( bool $condition, string $message ): void {
@@ -114,75 +159,57 @@ foreach ( [ 'mediaContainerHeight', 'thumbnailAspectRatio', 'imageResizing', 'co
 }
 
 // -----------------------------------------------------------------------------
-// 2. register_block_type_args — scope and ORDER.
+// 2. describe-level augmentation, and the registry left ALONE.
+//
+// The registry is deliberately untouched. Merging these six into
+// WP_Block_Type_Registry moves them from positions 29-39 to 4-9 in core/group's
+// attribute list (server-registered attributes seed the block type BEFORE core's
+// supports-derived ones and before the JS filters append Nova's), and
+// `serialize()` walks that list in order to build the block comment. Measured on
+// a lab site, the shipped canonical form
+//   <!-- wp:group {"align":"full","layout":{…},"blockTopSpacing":2,…} -->
+// became `not_canonical` / `not_a_fixed_point` with a registry merge in place.
+// describe ksort()s its output, so it has no order to disturb.
 // -----------------------------------------------------------------------------
 
-$core_group_args = [
-	'attributes' => [
-		'align'    => [ 'type' => 'string' ],
-		'tagName'  => [ 'type' => 'string', 'default' => 'div' ],
-		'layout'   => [ 'type' => 'object' ],
-	],
-];
-
-$filtered = novablocks_register_core_container_spacing_attributes( $core_group_args, 'core/group' );
-$keys     = array_keys( $filtered['attributes'] );
-
-nb_ccs_assert_same(
-	[ 'align', 'tagName', 'layout' ],
-	array_slice( $keys, 0, 3 ),
-	'Existing attributes must keep their exact positions — `serialize()` walks blockType.attributes IN ORDER to build the block comment JSON, so a reorder would turn canonical content into not_canonical.'
+nb_ccs_assert(
+	! function_exists( 'novablocks_register_core_container_spacing_attributes' ),
+	'There must be no register_block_type_args registration for these attributes — it reorders the harness attribute list and flips the comment JSON key order of already-canonical editor-saved content.'
 );
 
-nb_ccs_assert_same(
-	[
-		'blockTopSpacing',
-		'blockBottomSpacing',
-		'emphasisTopSpacing',
-		'emphasisBottomSpacing',
-		'spacingModifier',
-		'spacingMultiplierOverride',
-	],
-	array_slice( $keys, 3 ),
-	'The spacing attributes must be APPENDED, in slice order.'
+nb_ccs_assert(
+	false === strpos( file_get_contents( dirname( __DIR__, 2 ) . '/lib/core-container-spacing.php' ), "add_filter( 'register_block_type_args'" ),
+	'lib/core-container-spacing.php must not add a register_block_type_args filter.'
 );
 
-nb_ccs_assert_same(
-	[ 'type' => 'string', 'default' => 'div' ],
-	$filtered['attributes']['tagName'],
-	'A core attribute must never be reshaped by this filter.'
-);
+foreach ( [ 'core/group', 'core/columns' ] as $container ) {
+	nb_ccs_assert_same(
+		[
+			'blockTopSpacing',
+			'blockBottomSpacing',
+			'emphasisTopSpacing',
+			'emphasisBottomSpacing',
+			'spacingModifier',
+			'spacingMultiplierOverride',
+		],
+		array_keys( novablocks_get_core_container_spacing_describe_attributes( $container ) ),
+		sprintf( '%s must expose the six attributes to describe.', $container )
+	);
+}
 
-// A same-named core attribute wins outright (defensive: none collide today).
-$collision = novablocks_register_core_container_spacing_attributes(
-	[ 'attributes' => [ 'blockTopSpacing' => [ 'type' => 'string', 'default' => 'core-wins' ] ] ],
-	'core/columns'
-);
-nb_ccs_assert_same(
-	[ 'type' => 'string', 'default' => 'core-wins' ],
-	$collision['attributes']['blockTopSpacing'],
-	'On a name collision core must win; a collision is a signal to rename ours, not to reshape the block.'
-);
+foreach ( [ 'core/column', 'core/paragraph', 'core/separator', 'novablocks/hero' ] as $other ) {
+	nb_ccs_assert_same(
+		[],
+		novablocks_get_core_container_spacing_describe_attributes( $other ),
+		sprintf( '%s must get nothing from this augmentation.', $other )
+	);
+}
 
-// Scope.
 nb_ccs_assert_same(
 	[ 'core/group', 'core/columns' ],
 	novablocks_get_core_container_spacing_blocks(),
 	'core/column is deliberately excluded (it receives no spaceAndSizing support in the editor either); core/separator already owns its spacing through a full render-time re-render.'
 );
-
-foreach ( [ 'core/column', 'core/paragraph', 'novablocks/hero', 'core/separator' ] as $untouched ) {
-	$args = [ 'attributes' => [ 'anchor' => [ 'type' => 'string' ] ] ];
-	nb_ccs_assert_same(
-		$args,
-		novablocks_register_core_container_spacing_attributes( $args, $untouched ),
-		sprintf( '%s must be returned untouched.', $untouched )
-	);
-}
-
-// A block registered with no attributes key at all must not fatal.
-$bare = novablocks_register_core_container_spacing_attributes( [], 'core/group' );
-nb_ccs_assert_same( 6, count( $bare['attributes'] ), 'A block registered without an attributes key still receives the slice.' );
 
 // -----------------------------------------------------------------------------
 // 3. The property builder — the no-op guarantee.
@@ -287,5 +314,99 @@ nb_ccs_assert_same( '2', novablocks_format_core_container_spacing_number( 2.0 ),
 nb_ccs_assert_same( '-3', novablocks_format_core_container_spacing_number( -3.0 ), 'Negative whole numbers keep their sign and lose their tail.' );
 nb_ccs_assert_same( '0.5', novablocks_format_core_container_spacing_number( 0.5 ), 'Half steps survive.' );
 nb_ccs_assert_same( '1.5', novablocks_format_core_container_spacing_number( 1.5 ), 'One-and-a-half steps survive.' );
+
+// -----------------------------------------------------------------------------
+// 6. The render filter — scope, no-op, and the WRAPPER-ONLY stand-down.
+// -----------------------------------------------------------------------------
+
+$plain_group = '<div class="wp-block-group is-layout-constrained"><p>Body</p></div>';
+
+// Untouched blocks.
+nb_ccs_assert_same(
+	$plain_group,
+	novablocks_render_core_container_spacing( $plain_group, [ 'blockName' => 'core/column', 'attrs' => [ 'blockTopSpacing' => 2 ] ] ),
+	'A block outside the container list is never rewritten, whatever it carries.'
+);
+
+// No-op: this is every group on every site today.
+nb_ccs_assert_same(
+	$plain_group,
+	novablocks_render_core_container_spacing( $plain_group, [ 'blockName' => 'core/group', 'attrs' => [] ] ),
+	'A container with no spacing attributes renders byte-identical markup — no style attribute is introduced.'
+);
+
+nb_ccs_assert_same(
+	$plain_group,
+	novablocks_render_core_container_spacing( $plain_group, [ 'blockName' => 'core/group', 'attrs' => [ 'blockTopSpacing' => 1 ] ] ),
+	'A container at the registered default renders byte-identical markup.'
+);
+
+// The emit.
+$rendered = novablocks_render_core_container_spacing( $plain_group, [ 'blockName' => 'core/group', 'attrs' => [ 'blockTopSpacing' => 2 ] ] );
+nb_ccs_assert(
+	false !== strpos( $rendered, '--nb-block-top-spacing:2;' ),
+	'An authored step must reach the wrapper style attribute. Got: ' . $rendered
+);
+
+// An existing wrapper style is preserved, not replaced.
+$with_style = '<div class="wp-block-group" style="color:red"><p>Body</p></div>';
+$rendered   = novablocks_render_core_container_spacing( $with_style, [ 'blockName' => 'core/group', 'attrs' => [ 'blockTopSpacing' => 2 ] ] );
+nb_ccs_assert(
+	false !== strpos( $rendered, 'color:red;' ) && false !== strpos( $rendered, '--nb-block-top-spacing:2;' ),
+	'An existing inline style must be appended to, never clobbered. Got: ' . $rendered
+);
+
+// Stand-down: the WRAPPER already carries the editor-saved property bundle.
+$editor_saved = '<div class="wp-block-group" style="--nb-emphasis-top-spacing:0;--nb-block-top-spacing:1;--nb-block-bottom-spacing:0"><p>Body</p></div>';
+nb_ccs_assert_same(
+	$editor_saved,
+	novablocks_render_core_container_spacing( $editor_saved, [ 'blockName' => 'core/group', 'attrs' => [ 'blockTopSpacing' => 2 ] ] ),
+	'When the wrapper already carries --nb-block-top-spacing an editor save is authoritative: never doubled, never overridden by a possibly stale comment attribute.'
+);
+
+// THE REGRESSION THIS SECTION EXISTS FOR: a headlessly-authored OUTER container
+// whose rendered content happens to contain an INNER block carrying the property.
+// Scanning $block_content instead of the wrapper's own style attribute made the
+// outer container silently render none of its own spacing.
+$nested = '<div class="wp-block-group is-layout-constrained">'
+	. '<div class="wp-block-group" style="--nb-emphasis-top-spacing:0;--nb-block-top-spacing:3"><p>Inner, editor-saved</p></div>'
+	. '</div>';
+
+$rendered = novablocks_render_core_container_spacing( $nested, [ 'blockName' => 'core/group', 'attrs' => [ 'blockTopSpacing' => 2 ] ] );
+
+nb_ccs_assert(
+	false !== strpos( $rendered, '--nb-block-top-spacing:2;' ),
+	'The OUTER wrapper must receive its own authored step even though an inner block already carries the property. Got: ' . $rendered
+);
+
+nb_ccs_assert(
+	false !== strpos( $rendered, '<div class="wp-block-group" style="--nb-emphasis-top-spacing:0;--nb-block-top-spacing:3">' ),
+	'The inner block must be returned byte-identical — this filter only ever rewrites the first tag. Got: ' . $rendered
+);
+
+nb_ccs_assert_same(
+	2,
+	substr_count( $rendered, '--nb-block-top-spacing' ),
+	'Exactly two occurrences: the outer wrapper\'s new one and the inner block\'s untouched one.'
+);
+
+// The same trap via a Nova child rather than a Group child.
+$nova_child = '<div class="wp-block-columns">'
+	. '<div class="wp-block-separator" style="--nb-block-top-spacing: 3; --nb-block-bottom-spacing: 0; "></div>'
+	. '</div>';
+$rendered   = novablocks_render_core_container_spacing( $nova_child, [ 'blockName' => 'core/columns', 'attrs' => [ 'blockTopSpacing' => 2 ] ] );
+nb_ccs_assert(
+	false !== strpos( $rendered, '--nb-block-top-spacing:2;' ),
+	'A Columns wrapping a Nova block that emits the property must still receive its own step. Got: ' . $rendered
+);
+
+// Degenerate inputs must not fatal.
+foreach ( [ '', '   ', 'no tags at all' ] as $degenerate ) {
+	nb_ccs_assert_same(
+		$degenerate,
+		novablocks_render_core_container_spacing( $degenerate, [ 'blockName' => 'core/group', 'attrs' => [ 'blockTopSpacing' => 2 ] ] ),
+		'Empty or tagless content is returned untouched.'
+	);
+}
 
 echo "core container spacing contract ok\n";

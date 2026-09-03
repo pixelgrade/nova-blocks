@@ -29,11 +29,14 @@
  *
  * This file closes both halves on the server, without touching stored markup:
  *
- *   - `register_block_type_args` merges the container-relevant slice of the
- *     space-and-sizing attribute schema into the two blocks' PHP registration, so
- *     `blocks describe` names them and resolves their curated vocabulary (the
- *     `'*'` bucket in lib/cli/blocks-describe-vocabulary.php already holds the
- *     ranges; nothing there had a block to attach to).
+ *   - `blocks describe` merges in the container-relevant slice of the
+ *     space-and-sizing attribute schema, so it names the lever and resolves its
+ *     curated vocabulary (the `'*'` bucket in
+ *     lib/cli/blocks-describe-vocabulary.php already held the ranges; nothing
+ *     there had a block to attach to). Deliberately NOT a
+ *     `register_block_type_args` registration — see the long note on
+ *     `novablocks_get_core_container_spacing_describe_attributes()` for the
+ *     byte-identity reason.
  *
  *   - `render_block` injects the corresponding `--nb-*` custom properties into the
  *     rendered wrapper — and ONLY then. It is a strict no-op when every attribute
@@ -138,47 +141,47 @@ function novablocks_get_core_container_spacing_attributes(): array {
 }
 
 /**
- * Register the spacing attributes on the core container blocks' PHP block type.
+ * The spacing attributes `wp pixelgrade blocks describe` must surface for a core container.
  *
- * This is what makes `wp pixelgrade blocks describe core/group` name the lever.
- * The editor keeps registering the full bundle in JS (core blocks are registered
- * client-side from core's own bundled metadata, so the two registrations do not
- * race); this adds the honest container subset to the server registry, which is
- * what every server-readable surface — describe, the REST block-type endpoint,
- * `WP_Block::prepare_attributes_for_render()` — reads.
+ * NOT a `register_block_type_args` registration, and the difference is load-bearing.
  *
- * @param array $args     Registration arguments.
- * @param string $name    Block name.
- * @return array
+ * Merging these into `WP_Block_Type_Registry` looks like the obvious move — it is what
+ * `packages/core/src/blocks/core/post-terms/init.php` does for Color Signal — and it is a
+ * BYTE-IDENTITY REGRESSION here. `get_block_editor_server_block_settings()` seeds the block
+ * type the editor and the agent-harness build, and `serialize()` walks `blockType.attributes`
+ * IN ORDER to emit the block comment's JSON. Server-registered attributes land immediately
+ * after the block.json ones and BEFORE the supports-derived ones (`align`, `className`,
+ * `style`, `layout`, …), whereas the editor's own `blocks.registerBlockType` filter appends
+ * them at the very END. Measured in the harness on a lab site, registering the six moved them
+ * from positions 29-39 to 4-9 in `core/group`'s attribute list, which flips the comment JSON
+ * key order for any editor-saved Group carrying both a spacing attribute and a common one:
+ *
+ *   shipped canonical: <!-- wp:group {"align":"full","layout":{…},"blockTopSpacing":2,…} -->
+ *   after registering: <!-- wp:group {"blockTopSpacing":2,…,"align":"full","layout":{…}} -->
+ *
+ * The first form then reports `not_canonical` / `not_a_fixed_point` — reproduced on a real
+ * editor-shaped page before this function existed. Every ordering variant of a registry merge
+ * has the same defect: the position is decided by WHEN a key enters the object, and the server
+ * always enters before core's supports and the JS filters.
+ *
+ * So the registry is left exactly as it ships, and `describe` — which `ksort()`s its output and
+ * therefore has no order to disturb — merges these in itself. The attributes are no less real
+ * for it: the editor registers them, the editor's panel writes them, and
+ * `novablocks_render_core_container_spacing()` below honours them on the frontend. What is
+ * being reported is "what you may author on this block", which is the question describe exists
+ * to answer.
+ *
+ * @param string $block_name Block name.
+ * @return array<string, array> Attribute schema, or an empty array for any other block.
  */
-function novablocks_register_core_container_spacing_attributes( array $args, string $name ): array {
+function novablocks_get_core_container_spacing_describe_attributes( string $block_name ): array {
 
-	if ( ! in_array( $name, novablocks_get_core_container_spacing_blocks(), true ) ) {
-		return $args;
+	if ( ! in_array( $block_name, novablocks_get_core_container_spacing_blocks(), true ) ) {
+		return [];
 	}
 
-	$existing = isset( $args['attributes'] ) && is_array( $args['attributes'] ) ? $args['attributes'] : [];
-	$ours     = novablocks_get_core_container_spacing_attributes();
-
-	// APPEND, never prepend, and never clobber a same-named core attribute.
-	// This is a byte-identity constraint, not a style preference: the server
-	// registration is what `get_block_editor_server_block_settings()` hands the
-	// agent-harness, and `serialize()` walks `blockType.attributes` IN ORDER to
-	// build the block comment's JSON. Prepending would reorder the keys of every
-	// already-stored group and turn canonical content into `not_canonical`.
-	// array_merge keeps each existing key at its existing position and appends
-	// only the genuinely new ones.
-	foreach ( array_keys( $ours ) as $key ) {
-		if ( array_key_exists( $key, $existing ) ) {
-			unset( $ours[ $key ] );
-		}
-	}
-
-	$args['attributes'] = array_merge( $existing, $ours );
-
-	return $args;
+	return novablocks_get_core_container_spacing_attributes();
 }
-add_filter( 'register_block_type_args', 'novablocks_register_core_container_spacing_attributes', 10, 2 );
 
 /**
  * Build the custom properties for a container's AUTHORED spacing.
@@ -295,14 +298,6 @@ function novablocks_render_core_container_spacing( $block_content, $block ) {
 		return $block_content;
 	}
 
-	// An editor save already wrote the whole `--nb-*` bundle onto this wrapper
-	// (with-space-and-sizing-save-custom-props.js). That markup is authoritative:
-	// re-emitting here would duplicate declarations and, worse, would let a stale
-	// attribute value in the comment delimiter override what the saved markup says.
-	if ( false !== strpos( $block_content, '--nb-block-top-spacing' ) ) {
-		return $block_content;
-	}
-
 	$processor = new WP_HTML_Tag_Processor( $block_content );
 
 	if ( ! $processor->next_tag() ) {
@@ -310,6 +305,21 @@ function novablocks_render_core_container_spacing( $block_content, $block ) {
 	}
 
 	$style = trim( (string) $processor->get_attribute( 'style' ) );
+
+	// An editor save already wrote the whole `--nb-*` bundle onto THIS WRAPPER
+	// (with-space-and-sizing-save-custom-props.js). That markup is authoritative:
+	// re-emitting here would duplicate declarations and, worse, would let a stale
+	// attribute value in the comment delimiter override what the saved markup says.
+	//
+	// The test is the WRAPPER's own style attribute, never the block content. By
+	// the time this filter runs, `$block_content` already contains every rendered
+	// INNER block, so scanning the whole string would stand this filter down for a
+	// headlessly-authored container merely because something nested inside it —
+	// an editor-saved child Group, a Nova block, a Separator — emits the same
+	// property. That container would then silently render none of its own spacing.
+	if ( false !== strpos( $style, '--nb-block-top-spacing' ) ) {
+		return $block_content;
+	}
 
 	if ( '' !== $style && ';' !== substr( $style, -1 ) ) {
 		$style .= ';';
