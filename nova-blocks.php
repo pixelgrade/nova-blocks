@@ -75,6 +75,7 @@ require_once dirname( __FILE__ ) . '/lib/setup.php';
 require_once dirname( __FILE__ ) . '/lib/rest-api.php';
 require_once dirname( __FILE__ ) . '/lib/theme-supports.php';
 require_once dirname( __FILE__ ) . '/lib/core-tools-ownership.php';
+require_once dirname( __FILE__ ) . '/lib/core-container-spacing.php';
 require_once dirname( __FILE__ ) . '/lib/rule-styles.php';
 require_once dirname( __FILE__ ) . '/lib/site-tagline.php';
 require_once dirname( __FILE__ ) . '/lib/site-title.php';

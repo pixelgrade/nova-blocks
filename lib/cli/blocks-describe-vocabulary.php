@@ -258,6 +258,73 @@ function novablocks_blocks_describe_curated_vocabulary(): array {
 				'enum' => [ 'none', 'wide', 'full' ],
 			],
 		],
+
+		// -----------------------------------------------------------------------------------
+		// Core container blocks — the design-system spacing lever (H12a).
+		//
+		// The ranges are the cross-cutting Space & Sizing ones and are inherited from the '*'
+		// bucket; only the NOTES are overridden, because what a step MEANS on a bare container
+		// needs saying out loud. See lib/core-container-spacing.php for the registration and
+		// the render-time emit.
+		// -----------------------------------------------------------------------------------
+		'core/group'                => novablocks_blocks_describe_core_container_vocabulary( 'Group' ),
+		'core/columns'              => novablocks_blocks_describe_core_container_vocabulary( 'Columns' ),
+	];
+}
+
+/**
+ * Container-spacing notes shared by core/group and core/columns.
+ *
+ * One step is `--nb-current-spacing`, the SAME fluid unit a Nova Hero's step resolves to:
+ * `calc( var(--nb-spacing) * var(--nb-spacing-current-multiplier) )`, where anima-lt binds
+ * `--nb-spacing` to `--theme-content-spacing` → `--theme-spacing-fluid-normal`. That is
+ * ~20px at a 320px viewport and ~32px at 1440px at Style Manager's default spacing level,
+ * and it scales linearly with `sm_spacing_level`. Authoring a step therefore follows the
+ * site and the viewport; a px value in `style.spacing` does not.
+ *
+ * @param string $label Human block label for the notes.
+ * @return array
+ */
+function novablocks_blocks_describe_core_container_vocabulary( string $label ): array {
+	$unit = __( 'One step = --nb-current-spacing (fluid: ~20px @320w, ~32px @1440w at spacing level 1; scales with sm_spacing_level).', '__plugin_txtd' );
+
+	$outer = ' ' . $unit . ' ' . sprintf(
+		/* translators: %s: block label, e.g. "Group". */
+		__( 'Applies to the %s\'s OWN outer margin, and resolves only while it is a direct child of a spacing container (.wp-block-post-content, another Group, a Column, a Sidecar area …).', '__plugin_txtd' ),
+		$label
+	);
+
+	$inner = ' ' . $unit . ' ' . sprintf(
+		/* translators: %s: block label, e.g. "Group". */
+		__( 'Applies inside the %s. On a Group carrying a Color Signal the inset is floored at 0.75 of the wrapper side spacing, so a small step can be swallowed by that floor.', '__plugin_txtd' ),
+		$label
+	);
+
+	return [
+		'blockTopSpacing'           => [
+			'range' => [ 'min' => -3, 'max' => 3, 'step' => 1 ],
+			'note'  => __( 'Vertical spacing step ABOVE the block, as margin-top. Prefer this over style.spacing.margin.top — a px margin is frozen; a step is not.', '__plugin_txtd' ) . $outer,
+		],
+		'blockBottomSpacing'        => [
+			'range' => [ 'min' => -3, 'max' => 3, 'step' => 1 ],
+			'note'  => __( 'Vertical spacing step BELOW the block, as margin-bottom (negative overlaps the next block).', '__plugin_txtd' ) . $outer,
+		],
+		'emphasisTopSpacing'        => [
+			'range' => [ 'min' => 0, 'max' => 3, 'step' => 1 ],
+			'note'  => __( 'INNER top spacing, as padding-top — the band inset. Prefer this over style.spacing.padding.top. Min is 0 here: negative inner spacing needs supports.novaBlocks.spaceAndSizing.advancedSpacing, which the core containers do not declare.', '__plugin_txtd' ) . $inner,
+		],
+		'emphasisBottomSpacing'     => [
+			'range' => [ 'min' => 0, 'max' => 3, 'step' => 1 ],
+			'note'  => __( 'INNER bottom spacing, as padding-bottom — the band inset.', '__plugin_txtd' ) . $inner,
+		],
+		'spacingMultiplierOverride' => [
+			'range' => [ 'min' => 0, 'max' => 4, 'step' => 0.5 ],
+			'note'  => __( 'Multiplies this block\'s own four spacing steps AND, because nothing re-declares it, every descendant\'s. Use it to reach a band inset beyond 3 steps (e.g. blockTopSpacing 2 with an override of 2 = 4 steps = ~128px @1440w).', '__plugin_txtd' ),
+		],
+		'spacingModifier'           => [
+			'range' => [ 'min' => 0, 'max' => 2, 'step' => 0.5 ],
+			'note'  => __( 'Scales the spacing of the elements INSIDE this container (not the container itself). 0 zeroes every descendant spacing control.', '__plugin_txtd' ),
+		],
 	];
 }
 
