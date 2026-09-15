@@ -1,0 +1,21 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/block.json",
+	"apiVersion": 3,
+	"name": "novablocks/email-field-preview",
+	"title": "Email Field Preview",
+	"description": "A presentation-only email field for local and staging designs. Never collects or submits email.",
+	"category": "nova-blocks",
+	"icon": "email",
+	"textdomain": "nova-blocks",
+	"attributes": {
+		"compact": {
+			"type": "boolean",
+			"default": false
+		}
+	},
+	"supports": {
+		"html": false,
+		"customClassName": false,
+		"reusable": false
+	}
+}

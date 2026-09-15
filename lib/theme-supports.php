@@ -143,6 +143,14 @@ function novablocks_get_theme_support(): array {
 		$theme_support = novablocks_array_merge_recursive_distinct( $required, $default );
 	}
 
+	// This native design aid has no collection endpoint and is never a production block.
+	// Apply after theme overrides so a theme cannot accidentally enable it elsewhere.
+	$theme_support['email-field-preview'] = [
+		'name'    => 'email-field-preview',
+		'enabled' => function_exists( 'wp_get_environment_type' )
+			&& in_array( wp_get_environment_type(), [ 'local', 'staging' ], true ),
+	];
+
 	return $theme_support;
 }
 
