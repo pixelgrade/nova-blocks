@@ -53,6 +53,7 @@ const Edit = withControlsVisibility( props => {
       '--nb-navigation-item-spacing-setting': navigationLinkSpacing,
       '--nb-header-sides-spacing-setting': headerSidesSpacing,
       '--nb-sticky-header-spacing-multiplier': stickyHeaderSpacingMultiplier,
+      '--header-background-opacity': attributes.backgroundMode === 'solid' ? 1 : undefined,
     },
   } );
 

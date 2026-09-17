@@ -18,7 +18,8 @@
 				"attributes": true,
 				"controls": true,
 				"paletteClassname": true,
-				"paletteVariationClassname": true
+				"paletteVariationClassname": true,
+				"colorSignalClassname": true
 			},
 			"spaceAndSizing": true
 		}

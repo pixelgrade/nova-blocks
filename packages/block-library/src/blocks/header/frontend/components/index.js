@@ -22,6 +22,7 @@ class Header extends HeaderBase {
     }
 
     this.element = element;
+    this.allowsTransparency = element.dataset.backgroundMode !== 'solid';
     this.adjacentElement = this.getAdjacentElement( element );
     this.adjacentElementTargetChild = this.findProperElement( this.adjacentElement ) || this.adjacentElement;
     this.colorsElement = this.findColorsElement( this.adjacentElementTargetChild );
@@ -50,7 +51,10 @@ class Header extends HeaderBase {
 
     this.toggleRowsColors( true );
 
-    addClass( this.element, 'nb-header--transparent' );
+    // Apply after cloning so the secondary sticky Header stays opaque.
+    if ( this.allowsTransparency ) {
+      addClass( this.element, 'nb-header--transparent' );
+    }
   }
 
   gatherPromoBars() {
@@ -290,7 +294,7 @@ class Header extends HeaderBase {
 
   toggleRowsColors( isTransparent ) {
     this.rows.forEach( row => {
-      row.toggleColors( isTransparent );
+      row.toggleColors( this.allowsTransparency && isTransparent );
     } );
   }
 

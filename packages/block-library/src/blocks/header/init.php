@@ -49,7 +49,9 @@ if ( ! function_exists( 'novablocks_render_header_block' ) ) {
 		$attributes_config     = novablocks_get_header_attributes();
 		$attributes            = novablocks_get_attributes_with_defaults( $attributes, $attributes_config );
 		$data_attributes_array = array_map( 'novablocks_camel_case_to_kebab_case', array_keys( $attributes ) );
-		$data_attributes       = novablocks_get_data_attributes( $data_attributes_array, $attributes );
+		// Missing mode means legacy transparency; keep default frontend HTML unchanged.
+		$data_blacklist        = 'solid' === ( $attributes['backgroundMode'] ?? 'transparent' ) ? [] : [ 'background-mode' ];
+		$data_attributes       = novablocks_get_data_attributes( $data_attributes_array, $attributes, $data_blacklist );
 
 		$classes = [
 			'nb-header',
@@ -75,6 +77,11 @@ if ( ! function_exists( 'novablocks_render_header_block' ) ) {
 				'--nb-sticky-header-spacing-multiplier: ' . $attributes[ 'stickyHeaderSpacingMultiplier' ],
 			)
 		);
+
+		if ( 'solid' === ( $attributes['backgroundMode'] ?? 'transparent' ) ) {
+			// Authored Solid mode also takes precedence over transparent theme skins.
+			$spacingProps[] = '--header-background-opacity: 1';
+		}
 
 		$style               = join( '; ', $spacingProps ) . '; ';
 		$blockPaletteClasses = novablocks_get_color_signal_classes( $attributes );

@@ -32,8 +32,9 @@ class HeaderMobile extends HeaderBase {
     this.parentHadMobileMenuOpenColorClass = hasClass( this.parent.element, this.mobileMenuOpenColorClass );
     this.mobileMenuOpenColorClassRemovalTimeout = null;
     this.mobileMenuOpenColorClassRemovalHandler = null;
-    this.colors = new HeaderColors( this.element, logoRow?.element, this.parent.colorsElement );
-    this.menuToggleColors = new HeaderColors( this.menuToggle.element, logoRow?.element, this.parent.colorsElement );
+    const initialColorsSource = logoRow?.element || this.parent.element;
+    this.colors = new HeaderColors( this.element, initialColorsSource, this.parent.colorsElement );
+    this.menuToggleColors = new HeaderColors( this.menuToggle.element, initialColorsSource, this.parent.colorsElement );
 
     HeaderBase.prototype.initialize.call( this );
   }
@@ -57,7 +58,9 @@ class HeaderMobile extends HeaderBase {
     this.element.setAttribute( 'class', 'nb-header--mobile nb-header-background nb-header-shadow' );
     this.element.setAttribute( 'style', this.parent.element.getAttribute( 'style' ) );
     this.element.style.removeProperty( 'padding-top' );
-    addClass( this.element, 'nb-header--transparent' );
+    if ( this.parent.allowsTransparency ) {
+      addClass( this.element, 'nb-header--transparent' );
+    }
     const mobileBrand = this.copyElementFromParent( '.c-branding' );
 
     if ( mobileBrand ) {
@@ -123,7 +126,7 @@ class HeaderMobile extends HeaderBase {
       this.applyStickyStyles( this.element );
       this.applyStickyStyles( this.parent.element );
       this.applyStickyStyles( this.menuToggle.element );
-      this.colors.toggleColors( !this.shouldBeSticky );
+      this.colors.toggleColors( this.parent.allowsTransparency && !this.shouldBeSticky );
       this.updateToggleClasses();
     }
 
@@ -163,7 +166,7 @@ class HeaderMobile extends HeaderBase {
 
       this.scheduleMobileMenuOpenColorClassRemoval();
 
-      this.menuToggleColors.toggleColors( !this.shouldBeSticky );
+      this.menuToggleColors.toggleColors( this.parent.allowsTransparency && !this.shouldBeSticky );
     }
   }
 

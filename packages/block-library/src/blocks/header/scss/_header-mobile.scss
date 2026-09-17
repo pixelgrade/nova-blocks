@@ -19,7 +19,7 @@
   --shadow-y-offset: 4px;
   --shadow-blur: 4px;
 
-  &:not([style*='fixed'])[class] {
+  &.nb-header--transparent:not([style*='fixed'])[class] {
     --header-background-opacity: 0;
   }
 

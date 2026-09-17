@@ -7,6 +7,11 @@
 		"type": "string",
 		"default": "logo-left"
 	},
+	"backgroundMode": {
+		"type": "string",
+		"enum": [ "transparent", "solid" ],
+		"default": "transparent"
+	},
 	"logoHeight": {
 		"type": "number",
 		"default": 30

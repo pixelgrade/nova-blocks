@@ -130,9 +130,10 @@ if ( ! function_exists( 'novablocks_render_header_row_block' ) ) {
 			$spacingProps[] = '--nb-navigation-link-vertical-spacing-setting: ' . (int) $linkVerticalSpacing;
 		}
 
-		$style               = join( '; ', $spacingProps ) . '; ';
-		$blockPaletteClasses = novablocks_get_color_signal_classes( $attributes );
-		$classes             = array_merge( $classes, $blockPaletteClasses );
+		$style                 = join( '; ', $spacingProps ) . '; ';
+		$blockPaletteClasses   = novablocks_get_color_signal_classes( $attributes );
+		$blockPaletteClasses[] = 'sm-color-signal-' . (int) $attributes['colorSignal'];
+		$classes               = array_merge( $classes, $blockPaletteClasses );
 
 		?>
 

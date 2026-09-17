@@ -21,7 +21,7 @@ import { capitalizeFirstLetter } from '@novablocks/utils';
 
 const HeaderInspectorControls = ( props ) => {
 
-  const { clientId } = props;
+  const { clientId, attributes, setAttributes } = props;
   const innerBlocks = useInnerBlocks( clientId );
 
   const { updateBlockAttributes, selectBlock } = useDispatch( 'core/block-editor' );
@@ -75,6 +75,18 @@ const HeaderInspectorControls = ( props ) => {
           options={ [
             { label: __( 'Static', '__plugin_txtd' ), value: 'static' },
             { label: __( 'Sticky (fixed)', '__plugin_txtd' ), value: 'sticky' },
+          ] }
+        />
+
+        <RadioControl
+          key={ 'header-background-mode' }
+          label={ __( 'Header Background', '__plugin_txtd' ) }
+          help={ __( 'Transparent blends with the first section’s colors. Solid shows the Header and each row’s own Color Signal.', '__plugin_txtd' ) }
+          selected={ attributes.backgroundMode === 'solid' ? 'solid' : 'transparent' }
+          onChange={ backgroundMode => setAttributes( { backgroundMode } ) }
+          options={ [
+            { label: __( 'Transparent', '__plugin_txtd' ), value: 'transparent' },
+            { label: __( 'Solid', '__plugin_txtd' ), value: 'solid' },
           ] }
         />
 
