@@ -1,0 +1,363 @@
+{
+  "issue": 607,
+  "recommendation": "KEEP OPEN: page-width correction proved; reliable prevention remains unresolved",
+  "site": "http://localhost:9127",
+  "theme": "actual Rosa2 1.13.1 source",
+  "wordpress": "7.1.1",
+  "styleManager": "2.5.2",
+  "care": "1.20.1",
+  "php": "8.2.29",
+  "cacheIsolation": {
+    "nativeServerRestartedBetweenVersions": true,
+    "realpathCacheSize": 0,
+    "ownedPageNetworkCacheDisabled": true,
+    "stableGeometryAndForegroundSamplesPerCase": 5
+  },
+  "geometryMeasurementCount": 90,
+  "measurementsPerVersion": 30,
+  "currentCenteredNonOverflowPageCases": 25,
+  "servedBundleByteComparisons": 18,
+  "liveCarePolicyCases": 18,
+  "standaloneCarePolicyCases": 7,
+  "simulatedUpdateCandidate": {
+    "version": "2.6.7",
+    "publishedReleaseClaim": false
+  },
+  "articleMeasurements1440": {
+    "1.13.4": [
+      {
+        "fixture": "plain",
+        "articleLeft": 32,
+        "articleWidth": 1376,
+        "scrollWidth": 1440,
+        "mainDisplay": "block",
+        "articleGridColumn": "auto",
+        "heroWidths": []
+      },
+      {
+        "fixture": "legacy-hero",
+        "articleLeft": 32,
+        "articleWidth": 1376,
+        "scrollWidth": 1440,
+        "mainDisplay": "block",
+        "articleGridColumn": "auto",
+        "heroWidths": [
+          1440
+        ]
+      },
+      {
+        "fixture": "wide-group",
+        "articleLeft": 32,
+        "articleWidth": 1376,
+        "scrollWidth": 1440,
+        "mainDisplay": "block",
+        "articleGridColumn": "auto",
+        "heroWidths": []
+      },
+      {
+        "fixture": "hero-plus-sidecar",
+        "articleLeft": 32,
+        "articleWidth": 1376,
+        "scrollWidth": 1440,
+        "mainDisplay": "block",
+        "articleGridColumn": "auto",
+        "heroWidths": [
+          1440
+        ]
+      },
+      {
+        "fixture": "inner-sidecar",
+        "articleLeft": 32,
+        "articleWidth": 1376,
+        "scrollWidth": 1440,
+        "mainDisplay": "block",
+        "articleGridColumn": "auto",
+        "heroWidths": []
+      },
+      {
+        "fixture": "single-post",
+        "articleLeft": 32,
+        "articleWidth": 1376,
+        "scrollWidth": 2449,
+        "mainDisplay": "block",
+        "articleGridColumn": "auto",
+        "heroWidths": []
+      }
+    ],
+    "2.5.3": [
+      {
+        "fixture": "plain",
+        "articleLeft": 489,
+        "articleWidth": 462,
+        "scrollWidth": 1440,
+        "mainDisplay": "grid",
+        "articleGridColumn": "cs / ce",
+        "heroWidths": []
+      },
+      {
+        "fixture": "legacy-hero",
+        "articleLeft": 489,
+        "articleWidth": 462,
+        "scrollWidth": 1440,
+        "mainDisplay": "grid",
+        "articleGridColumn": "cs / ce",
+        "heroWidths": [
+          840
+        ]
+      },
+      {
+        "fixture": "wide-group",
+        "articleLeft": 489,
+        "articleWidth": 462,
+        "scrollWidth": 1440,
+        "mainDisplay": "grid",
+        "articleGridColumn": "cs / ce",
+        "heroWidths": []
+      },
+      {
+        "fixture": "hero-plus-sidecar",
+        "articleLeft": 489,
+        "articleWidth": 462,
+        "scrollWidth": 1440,
+        "mainDisplay": "grid",
+        "articleGridColumn": "cs / ce",
+        "heroWidths": [
+          840
+        ]
+      },
+      {
+        "fixture": "inner-sidecar",
+        "articleLeft": 489,
+        "articleWidth": 462,
+        "scrollWidth": 1440,
+        "mainDisplay": "grid",
+        "articleGridColumn": "cs / ce",
+        "heroWidths": []
+      },
+      {
+        "fixture": "single-post",
+        "articleLeft": 489,
+        "articleWidth": 462,
+        "scrollWidth": 2373,
+        "mainDisplay": "grid",
+        "articleGridColumn": "cs / ce",
+        "heroWidths": []
+      }
+    ],
+    "2.6.6.1": [
+      {
+        "fixture": "plain",
+        "articleLeft": 32,
+        "articleWidth": 1376,
+        "scrollWidth": 1440,
+        "mainDisplay": "block",
+        "articleGridColumn": "auto",
+        "heroWidths": []
+      },
+      {
+        "fixture": "legacy-hero",
+        "articleLeft": 32,
+        "articleWidth": 1376,
+        "scrollWidth": 1440,
+        "mainDisplay": "block",
+        "articleGridColumn": "auto",
+        "heroWidths": [
+          1376
+        ]
+      },
+      {
+        "fixture": "wide-group",
+        "articleLeft": 32,
+        "articleWidth": 1376,
+        "scrollWidth": 1440,
+        "mainDisplay": "block",
+        "articleGridColumn": "auto",
+        "heroWidths": []
+      },
+      {
+        "fixture": "hero-plus-sidecar",
+        "articleLeft": 32,
+        "articleWidth": 1376,
+        "scrollWidth": 1440,
+        "mainDisplay": "block",
+        "articleGridColumn": "auto",
+        "heroWidths": [
+          1376
+        ]
+      },
+      {
+        "fixture": "inner-sidecar",
+        "articleLeft": 32,
+        "articleWidth": 1376,
+        "scrollWidth": 1440,
+        "mainDisplay": "block",
+        "articleGridColumn": "auto",
+        "heroWidths": []
+      },
+      {
+        "fixture": "single-post",
+        "articleLeft": 32,
+        "articleWidth": 1376,
+        "scrollWidth": 2391,
+        "mainDisplay": "block",
+        "articleGridColumn": "auto",
+        "heroWidths": []
+      }
+    ]
+  },
+  "stockSinglePostBaselineLimitation": {
+    "1.13.4": [
+      {
+        "viewport": 390,
+        "scrollWidth": 390
+      },
+      {
+        "viewport": 768,
+        "scrollWidth": 768
+      },
+      {
+        "viewport": 1024,
+        "scrollWidth": 1668
+      },
+      {
+        "viewport": 1440,
+        "scrollWidth": 2449
+      },
+      {
+        "viewport": 1920,
+        "scrollWidth": 3324
+      }
+    ],
+    "2.5.3": [
+      {
+        "viewport": 390,
+        "scrollWidth": 390
+      },
+      {
+        "viewport": 768,
+        "scrollWidth": 768
+      },
+      {
+        "viewport": 1024,
+        "scrollWidth": 1875
+      },
+      {
+        "viewport": 1440,
+        "scrollWidth": 2373
+      },
+      {
+        "viewport": 1920,
+        "scrollWidth": 3106
+      }
+    ],
+    "2.6.6.1": [
+      {
+        "viewport": 390,
+        "scrollWidth": 390
+      },
+      {
+        "viewport": 768,
+        "scrollWidth": 768
+      },
+      {
+        "viewport": 1024,
+        "scrollWidth": 1632
+      },
+      {
+        "viewport": 1440,
+        "scrollWidth": 2391
+      },
+      {
+        "viewport": 1920,
+        "scrollWidth": 3191
+      }
+    ]
+  },
+  "contentControlCount": 6,
+  "screenshots": [
+    {
+      "file": "screenshots/1.13.4-plain-1440.png",
+      "sha256": "084aa21960e0788c1b9d70142b1c2e68513192cf2a69aca4191ed619a6307942",
+      "width": 1440,
+      "height": 900,
+      "unedited": true
+    },
+    {
+      "file": "screenshots/1.13.4-legacy-hero-1440.png",
+      "sha256": "918d130b8e71d2c3a7e946c69496db78628ee35d26c874701c40229dd4f7aa16",
+      "width": 1440,
+      "height": 900,
+      "unedited": true
+    },
+    {
+      "file": "screenshots/1.13.4-hero-plus-sidecar-1440.png",
+      "sha256": "6a8ef09a26969b1166273d29201bf2c84927415c0a45561a0400353f5baa7e70",
+      "width": 1440,
+      "height": 900,
+      "unedited": true
+    },
+    {
+      "file": "screenshots/1.13.4-single-post-1440.png",
+      "sha256": "9df9ed1a9b8c089dbfd0679170afa4aa01cbe3f04883d0fe9f5cd9f521f48c45",
+      "width": 1440,
+      "height": 900,
+      "unedited": true
+    },
+    {
+      "file": "screenshots/2.5.3-plain-1440.png",
+      "sha256": "b00aebec2a9e4e40c458d5ae50cb25bea7b642b287f79cf93f84074669a4b0d6",
+      "width": 1440,
+      "height": 900,
+      "unedited": true
+    },
+    {
+      "file": "screenshots/2.5.3-legacy-hero-1440.png",
+      "sha256": "30455041566e5e5503c9121af8e3c9dbbac1abfeeb0065d70d04bedd55c8ff0d",
+      "width": 1440,
+      "height": 900,
+      "unedited": true
+    },
+    {
+      "file": "screenshots/2.5.3-hero-plus-sidecar-1440.png",
+      "sha256": "3ef4001ee726c3d828c6819cae6654b490d18961d2194b08854313ea383b914f",
+      "width": 1440,
+      "height": 900,
+      "unedited": true
+    },
+    {
+      "file": "screenshots/2.5.3-single-post-1440.png",
+      "sha256": "e3c37f3f497f2badccc7e3fa39a3bee5c05560e0433cd6e0371724ad2d03ea5b",
+      "width": 1440,
+      "height": 900,
+      "unedited": true
+    },
+    {
+      "file": "screenshots/2.6.6.1-plain-1440.png",
+      "sha256": "55ea64a41542916251e756462965bc506bc129e03a20851ea55f47e023a590dc",
+      "width": 1440,
+      "height": 900,
+      "unedited": true
+    },
+    {
+      "file": "screenshots/2.6.6.1-legacy-hero-1440.png",
+      "sha256": "4196f47e8a60f05f9da68dd7c52e23c908e3b6643ad92bfcfcd6f75483e3a35a",
+      "width": 1440,
+      "height": 900,
+      "unedited": true
+    },
+    {
+      "file": "screenshots/2.6.6.1-hero-plus-sidecar-1440.png",
+      "sha256": "2872ac722e591b9ea456fb24f2483deee4501a6090980fde26c38b80d6893ed3",
+      "width": 1440,
+      "height": 900,
+      "unedited": true
+    },
+    {
+      "file": "screenshots/2.6.6.1-single-post-1440.png",
+      "sha256": "1be53d2a0ef5395eff7064c7f451ac579b1e8ad896750b904791b68e8c797ebd",
+      "width": 1440,
+      "height": 900,
+      "unedited": true
+    }
+  ]
+}

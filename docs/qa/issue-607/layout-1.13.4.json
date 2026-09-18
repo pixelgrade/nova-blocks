@@ -1,0 +1,2348 @@
+[
+  {
+    "viewport": 390,
+    "foreground": [
+      "1",
+      "1",
+      "1",
+      "1"
+    ],
+    "fontLoaderComplete": true,
+    "scrollWidth": 390,
+    "documentHeight": 900,
+    "main": {
+      "classes": "site-main",
+      "left": 0,
+      "width": 390,
+      "rightGap": 0,
+      "height": 438.796875,
+      "display": "block",
+      "gridColumn": "auto",
+      "gridTemplateColumns": "none"
+    },
+    "article": {
+      "classes": "post-5 page type-page status-publish hentry",
+      "left": 20.75,
+      "width": 348.5,
+      "rightGap": 20.75,
+      "height": 438.796875,
+      "display": "block",
+      "gridColumn": "auto",
+      "gridTemplateColumns": "none"
+    },
+    "sidecars": [
+      {
+        "classes": "novablocks-sidecar ignore-block novablocks-sidecar--sidebar-right novablocks-sidebar--medium",
+        "left": 20.75,
+        "width": 348.5,
+        "rightGap": 20.75,
+        "height": 438.796875,
+        "display": "block",
+        "gridColumn": "fs / fe",
+        "gridTemplateColumns": "[fs] 0px [ws] 300px [gs] 50.625px [cs] 1fr [gcs] 25.3125px [cc] 25.3125px [gce] 1fr [ce] 50.625px [ge] 300px [we] 0px [fe]"
+      }
+    ],
+    "heroes": [],
+    "heroMedia": [],
+    "header": [
+      {
+        "classes": "novablocks-header novablocks-header--main novablocks-header-shadow novablocks-header-background alignfull sm-palette-1 sm-variation-10 novablocks-header--is-old novablocks-header--ready novablocks-header--transparent",
+        "left": -390,
+        "width": 390,
+        "rightGap": 390,
+        "height": 900,
+        "display": "block",
+        "gridColumn": "auto",
+        "gridTemplateColumns": "none"
+      }
+    ],
+    "fixture": "plain",
+    "version": "1.13.4",
+    "stableGeometrySamples": 5,
+    "logs": [
+      "[log] JQMIGRATE: Migrate is installed, version 3.4.1",
+      "[log] JQMIGRATE: Migrate is installed, version 3.4.1"
+    ]
+  },
+  {
+    "viewport": 768,
+    "foreground": [
+      "1",
+      "1",
+      "1",
+      "1"
+    ],
+    "fontLoaderComplete": true,
+    "scrollWidth": 768,
+    "documentHeight": 900,
+    "main": {
+      "classes": "site-main",
+      "left": 0,
+      "width": 768,
+      "rightGap": 0,
+      "height": 302.65625,
+      "display": "block",
+      "gridColumn": "auto",
+      "gridTemplateColumns": "none"
+    },
+    "article": {
+      "classes": "post-5 page type-page status-publish hentry",
+      "left": 24.796875,
+      "width": 718.40625,
+      "rightGap": 24.796875,
+      "height": 302.65625,
+      "display": "block",
+      "gridColumn": "auto",
+      "gridTemplateColumns": "none"
+    },
+    "sidecars": [
+      {
+        "classes": "novablocks-sidecar ignore-block novablocks-sidecar--sidebar-right novablocks-sidebar--medium",
+        "left": 24.796875,
+        "width": 718.40625,
+        "rightGap": 24.796875,
+        "height": 302.65625,
+        "display": "block",
+        "gridColumn": "fs / fe",
+        "gridTemplateColumns": "[fs] 0px [ws] 300px [gs] 51.84px [cs] 1fr [gcs] 25.92px [cc] 25.92px [gce] 1fr [ce] 51.84px [ge] 300px [we] 0px [fe]"
+      }
+    ],
+    "heroes": [],
+    "heroMedia": [],
+    "header": [
+      {
+        "classes": "novablocks-header novablocks-header--main novablocks-header-shadow novablocks-header-background alignfull sm-palette-1 sm-variation-10 novablocks-header--is-old novablocks-header--ready novablocks-header--transparent",
+        "left": -768,
+        "width": 768,
+        "rightGap": 768,
+        "height": 900,
+        "display": "block",
+        "gridColumn": "auto",
+        "gridTemplateColumns": "none"
+      }
+    ],
+    "fixture": "plain",
+    "version": "1.13.4",
+    "stableGeometrySamples": 5,
+    "logs": [
+      "[log] JQMIGRATE: Migrate is installed, version 3.4.1"
+    ]
+  },
+  {
+    "viewport": 1024,
+    "foreground": [
+      "1",
+      "1",
+      "1",
+      "1"
+    ],
+    "fontLoaderComplete": true,
+    "scrollWidth": 1024,
+    "documentHeight": 900,
+    "main": {
+      "classes": "site-main",
+      "left": 0,
+      "width": 1024,
+      "rightGap": 0,
+      "height": 404.5625,
+      "display": "block",
+      "gridColumn": "auto",
+      "gridTemplateColumns": "none"
+    },
+    "article": {
+      "classes": "post-5 page type-page status-publish hentry",
+      "left": 27.53125,
+      "width": 968.9375,
+      "rightGap": 27.53125,
+      "height": 404.5625,
+      "display": "block",
+      "gridColumn": "auto",
+      "gridTemplateColumns": "none"
+    },
+    "sidecars": [
+      {
+        "classes": "novablocks-sidecar ignore-block novablocks-sidecar--sidebar-right novablocks-sidebar--medium",
+        "left": 27.53125,
+        "width": 968.9375,
+        "rightGap": 27.53125,
+        "height": 404.5625,
+        "display": "grid",
+        "gridColumn": "fs / fe",
+        "gridTemplateColumns": "[fs] 0px [ws] 300px [gs] 52.6562px [cs] 105.484px [gcs] 26.3281px [cc] 26.3281px [gce] 105.484px [ce] 52.6562px [ge] 300px [we] 0px [fe]"
+      }
+    ],
+    "heroes": [],
+    "heroMedia": [],
+    "header": [
+      {
+        "classes": "novablocks-header novablocks-header--main novablocks-header-shadow novablocks-header-background alignfull sm-palette-1 sm-variation-10 novablocks-header--is-old novablocks-header--ready novablocks-header--transparent",
+        "left": 0,
+        "width": 1024,
+        "rightGap": 0,
+        "height": 117.5,
+        "display": "block",
+        "gridColumn": "auto",
+        "gridTemplateColumns": "none"
+      }
+    ],
+    "fixture": "plain",
+    "version": "1.13.4",
+    "stableGeometrySamples": 5,
+    "logs": [
+      "[log] JQMIGRATE: Migrate is installed, version 3.4.1"
+    ]
+  },
+  {
+    "viewport": 1440,
+    "foreground": [
+      "1",
+      "1",
+      "1",
+      "1"
+    ],
+    "fontLoaderComplete": true,
+    "scrollWidth": 1440,
+    "documentHeight": 900,
+    "main": {
+      "classes": "site-main",
+      "left": 0,
+      "width": 1440,
+      "rightGap": 0,
+      "height": 348.78125,
+      "display": "block",
+      "gridColumn": "auto",
+      "gridTemplateColumns": "none"
+    },
+    "article": {
+      "classes": "post-5 page type-page status-publish hentry",
+      "left": 32,
+      "width": 1376,
+      "rightGap": 32,
+      "height": 348.78125,
+      "display": "block",
+      "gridColumn": "auto",
+      "gridTemplateColumns": "none"
+    },
+    "sidecars": [
+      {
+        "classes": "novablocks-sidecar ignore-block novablocks-sidecar--sidebar-right novablocks-sidebar--medium",
+        "left": 32,
+        "width": 1376,
+        "rightGap": 32,
+        "height": 348.78125,
+        "display": "grid",
+        "gridColumn": "fs / fe",
+        "gridTemplateColumns": "[fs] 45px [ws] 300px [gs] 54px [cs] 262px [gcs] 27px [cc] 27px [gce] 262px [ce] 54px [ge] 300px [we] 45px [fe]"
+      }
+    ],
+    "heroes": [],
+    "heroMedia": [],
+    "header": [
+      {
+        "classes": "novablocks-header novablocks-header--main novablocks-header-shadow novablocks-header-background alignfull sm-palette-1 sm-variation-10 novablocks-header--is-old novablocks-header--ready novablocks-header--transparent",
+        "left": 0,
+        "width": 1440,
+        "rightGap": 0,
+        "height": 132.390625,
+        "display": "block",
+        "gridColumn": "auto",
+        "gridTemplateColumns": "none"
+      }
+    ],
+    "fixture": "plain",
+    "version": "1.13.4",
+    "stableGeometrySamples": 5,
+    "logs": [
+      "[log] JQMIGRATE: Migrate is installed, version 3.4.1"
+    ]
+  },
+  {
+    "viewport": 1920,
+    "foreground": [
+      "1",
+      "1",
+      "1",
+      "1"
+    ],
+    "fontLoaderComplete": true,
+    "scrollWidth": 1920,
+    "documentHeight": 900,
+    "main": {
+      "classes": "site-main",
+      "left": 0,
+      "width": 1920,
+      "rightGap": 0,
+      "height": 429.453125,
+      "display": "block",
+      "gridColumn": "auto",
+      "gridTemplateColumns": "none"
+    },
+    "article": {
+      "classes": "post-5 page type-page status-publish hentry",
+      "left": 37.140625,
+      "width": 1845.71875,
+      "rightGap": 37.140625,
+      "height": 429.453125,
+      "display": "block",
+      "gridColumn": "auto",
+      "gridTemplateColumns": "none"
+    },
+    "sidecars": [
+      {
+        "classes": "novablocks-sidecar ignore-block novablocks-sidecar--sidebar-right novablocks-sidebar--medium",
+        "left": 37.140625,
+        "width": 1845.71875,
+        "rightGap": 37.140625,
+        "height": 429.453125,
+        "display": "grid",
+        "gridColumn": "fs / fe",
+        "gridTemplateColumns": "[fs] 92.1406px [ws] 317.047px [gs] 69.4219px [cs] 409.547px [gcs] 34.7031px [cc] 34.7031px [gce] 409.547px [ce] 69.4219px [ge] 317.047px [we] 92.1406px [fe]"
+      }
+    ],
+    "heroes": [],
+    "heroMedia": [],
+    "header": [
+      {
+        "classes": "novablocks-header novablocks-header--main novablocks-header-shadow novablocks-header-background alignfull sm-palette-1 sm-variation-10 novablocks-header--is-old novablocks-header--ready novablocks-header--transparent",
+        "left": 0,
+        "width": 1920,
+        "rightGap": 0,
+        "height": 159.765625,
+        "display": "block",
+        "gridColumn": "auto",
+        "gridTemplateColumns": "none"
+      }
+    ],
+    "fixture": "plain",
+    "version": "1.13.4",
+    "stableGeometrySamples": 5,
+    "logs": [
+      "[log] JQMIGRATE: Migrate is installed, version 3.4.1"
+    ]
+  },
+  {
+    "viewport": 390,
+    "foreground": [
+      "0.999585",
+      "0.999585",
+      "1",
+      "1",
+      "1",
+      "1"
+    ],
+    "fontLoaderComplete": true,
+    "scrollWidth": 390,
+    "documentHeight": 1266,
+    "main": {
+      "classes": "site-main",
+      "left": 0,
+      "width": 390,
+      "rightGap": 0,
+      "height": 1074.296875,
+      "display": "block",
+      "gridColumn": "auto",
+      "gridTemplateColumns": "none"
+    },
+    "article": {
+      "classes": "post-6 page type-page status-publish hentry",
+      "left": 20.75,
+      "width": 348.5,
+      "rightGap": 20.75,
+      "height": 1074.296875,
+      "display": "block",
+      "gridColumn": "auto",
+      "gridTemplateColumns": "none"
+    },
+    "sidecars": [
+      {
+        "classes": "novablocks-sidecar ignore-block novablocks-sidecar--sidebar-right novablocks-sidebar--medium",
+        "left": 20.75,
+        "width": 348.5,
+        "rightGap": 20.75,
+        "height": 1074.296875,
+        "display": "block",
+        "gridColumn": "fs / fe",
+        "gridTemplateColumns": "[fs] 0px [ws] 300px [gs] 50.625px [cs] 1fr [gcs] 25.3125px [cc] 25.3125px [gce] 1fr [ce] 50.625px [ge] 300px [we] 0px [fe]"
+      }
+    ],
+    "heroes": [
+      {
+        "classes": "novablocks-hero novablocks-doppler alignfull novablocks-u-valign-center novablocks-u-halign-center novablocks-u-background novablocks-u-background-dark sm-palette-1 sm-variation-12 scrolling-effect-none",
+        "left": 0,
+        "width": 390,
+        "rightGap": 0,
+        "height": 594,
+        "display": "flex",
+        "gridColumn": "fs / fe",
+        "gridTemplateColumns": "none"
+      }
+    ],
+    "heroMedia": [
+      {
+        "classes": "novablocks-hero__media novablocks-doppler__target is-loaded",
+        "left": 0,
+        "width": 390,
+        "rightGap": 0,
+        "height": 900,
+        "display": "block",
+        "gridColumn": "auto",
+        "gridTemplateColumns": "none"
+      }
+    ],
+    "header": [
+      {
+        "classes": "novablocks-header novablocks-header--main novablocks-header-shadow novablocks-header-background alignfull sm-palette-1 sm-variation-10 novablocks-header--is-old novablocks-header--ready novablocks-header--transparent",
+        "left": -390,
+        "width": 390,
+        "rightGap": 390,
+        "height": 900,
+        "display": "block",
+        "gridColumn": "auto",
+        "gridTemplateColumns": "none"
+      }
+    ],
+    "fixture": "legacy-hero",
+    "version": "1.13.4",
+    "stableGeometrySamples": 5,
+    "logs": [
+      "[log] JQMIGRATE: Migrate is installed, version 3.4.1"
+    ]
+  },
+  {
+    "viewport": 768,
+    "foreground": [
+      "0.988858",
+      "0.988858",
+      "1",
+      "1",
+      "1",
+      "1"
+    ],
+    "fontLoaderComplete": true,
+    "scrollWidth": 768,
+    "documentHeight": 1119,
+    "main": {
+      "classes": "site-main",
+      "left": 0,
+      "width": 768,
+      "rightGap": 0,
+      "height": 946.25,
+      "display": "block",
+      "gridColumn": "auto",
+      "gridTemplateColumns": "none"
+    },
+    "article": {
+      "classes": "post-6 page type-page status-publish hentry",
+      "left": 24.796875,
+      "width": 718.40625,
+      "rightGap": 24.796875,
+      "height": 946.25,
+      "display": "block",
+      "gridColumn": "auto",
+      "gridTemplateColumns": "none"
+    },
+    "sidecars": [
+      {
+        "classes": "novablocks-sidecar ignore-block novablocks-sidecar--sidebar-right novablocks-sidebar--medium",
+        "left": 24.796875,
+        "width": 718.40625,
+        "rightGap": 24.796875,
+        "height": 946.25,
+        "display": "block",
+        "gridColumn": "fs / fe",
+        "gridTemplateColumns": "[fs] 0px [ws] 300px [gs] 51.84px [cs] 1fr [gcs] 25.92px [cc] 25.92px [gce] 1fr [ce] 51.84px [ge] 300px [we] 0px [fe]"
+      }
+    ],
+    "heroes": [
+      {
+        "classes": "novablocks-hero novablocks-doppler alignfull novablocks-u-valign-center novablocks-u-halign-center novablocks-u-background novablocks-u-background-dark sm-palette-1 sm-variation-12 scrolling-effect-none",
+        "left": 0,
+        "width": 768,
+        "rightGap": 0,
+        "height": 594,
+        "display": "flex",
+        "gridColumn": "fs / fe",
+        "gridTemplateColumns": "none"
+      }
+    ],
+    "heroMedia": [
+      {
+        "classes": "novablocks-hero__media novablocks-doppler__target is-loaded",
+        "left": 0,
+        "width": 768,
+        "rightGap": 0,
+        "height": 900,
+        "display": "block",
+        "gridColumn": "auto",
+        "gridTemplateColumns": "none"
+      }
+    ],
+    "header": [
+      {
+        "classes": "novablocks-header novablocks-header--main novablocks-header-shadow novablocks-header-background alignfull sm-palette-1 sm-variation-10 novablocks-header--is-old novablocks-header--ready novablocks-header--transparent",
+        "left": -768,
+        "width": 768,
+        "rightGap": 768,
+        "height": 900,
+        "display": "block",
+        "gridColumn": "auto",
+        "gridTemplateColumns": "none"
+      }
+    ],
+    "fixture": "legacy-hero",
+    "version": "1.13.4",
+    "stableGeometrySamples": 5,
+    "logs": [
+      "[log] JQMIGRATE: Migrate is installed, version 3.4.1"
+    ]
+  },
+  {
+    "viewport": 1024,
+    "foreground": [
+      "0.999979",
+      "0.999979",
+      "1",
+      "1",
+      "1",
+      "1"
+    ],
+    "fontLoaderComplete": true,
+    "scrollWidth": 1024,
+    "documentHeight": 1233,
+    "main": {
+      "classes": "site-main",
+      "left": 0,
+      "width": 1024,
+      "rightGap": 0,
+      "height": 1053.640625,
+      "display": "block",
+      "gridColumn": "auto",
+      "gridTemplateColumns": "none"
+    },
+    "article": {
+      "classes": "post-6 page type-page status-publish hentry",
+      "left": 27.53125,
+      "width": 968.9375,
+      "rightGap": 27.53125,
+      "height": 1053.640625,
+      "display": "block",
+      "gridColumn": "auto",
+      "gridTemplateColumns": "none"
+    },
+    "sidecars": [
+      {
+        "classes": "novablocks-sidecar ignore-block novablocks-sidecar--sidebar-right novablocks-sidebar--medium",
+        "left": 27.53125,
+        "width": 968.9375,
+        "rightGap": 27.53125,
+        "height": 1053.640625,
+        "display": "grid",
+        "gridColumn": "fs / fe",
+        "gridTemplateColumns": "[fs] 0px [ws] 300px [gs] 52.6562px [cs] 105.484px [gcs] 26.3281px [cc] 26.3281px [gce] 105.484px [ce] 52.6562px [ge] 300px [we] 0px [fe]"
+      }
+    ],
+    "heroes": [
+      {
+        "classes": "novablocks-hero novablocks-doppler alignfull novablocks-u-valign-center novablocks-u-halign-center novablocks-u-background novablocks-u-background-dark sm-palette-1 sm-variation-12 scrolling-effect-none",
+        "left": 0,
+        "width": 1024,
+        "rightGap": 0,
+        "height": 594,
+        "display": "flex",
+        "gridColumn": "fs / fe",
+        "gridTemplateColumns": "none"
+      }
+    ],
+    "heroMedia": [
+      {
+        "classes": "novablocks-hero__media novablocks-doppler__target is-loaded",
+        "left": 0,
+        "width": 1024,
+        "rightGap": 0,
+        "height": 900,
+        "display": "block",
+        "gridColumn": "auto",
+        "gridTemplateColumns": "none"
+      }
+    ],
+    "header": [
+      {
+        "classes": "novablocks-header novablocks-header--main novablocks-header-shadow novablocks-header-background alignfull sm-palette-1 sm-variation-10 novablocks-header--is-old novablocks-header--ready novablocks-header--transparent",
+        "left": 0,
+        "width": 1024,
+        "rightGap": 0,
+        "height": 117.5,
+        "display": "block",
+        "gridColumn": "auto",
+        "gridTemplateColumns": "none"
+      }
+    ],
+    "fixture": "legacy-hero",
+    "version": "1.13.4",
+    "stableGeometrySamples": 5,
+    "logs": [
+      "[log] JQMIGRATE: Migrate is installed, version 3.4.1"
+    ]
+  },
+  {
+    "viewport": 1440,
+    "foreground": [
+      "0.999622",
+      "0.999622",
+      "1",
+      "1",
+      "1",
+      "1"
+    ],
+    "fontLoaderComplete": true,
+    "scrollWidth": 1440,
+    "documentHeight": 1196,
+    "main": {
+      "classes": "site-main",
+      "left": 0,
+      "width": 1440,
+      "rightGap": 0,
+      "height": 1006.78125,
+      "display": "block",
+      "gridColumn": "auto",
+      "gridTemplateColumns": "none"
+    },
+    "article": {
+      "classes": "post-6 page type-page status-publish hentry",
+      "left": 32,
+      "width": 1376,
+      "rightGap": 32,
+      "height": 1006.78125,
+      "display": "block",
+      "gridColumn": "auto",
+      "gridTemplateColumns": "none"
+    },
+    "sidecars": [
+      {
+        "classes": "novablocks-sidecar ignore-block novablocks-sidecar--sidebar-right novablocks-sidebar--medium",
+        "left": 32,
+        "width": 1376,
+        "rightGap": 32,
+        "height": 1006.78125,
+        "display": "grid",
+        "gridColumn": "fs / fe",
+        "gridTemplateColumns": "[fs] 45px [ws] 300px [gs] 54px [cs] 262px [gcs] 27px [cc] 27px [gce] 262px [ce] 54px [ge] 300px [we] 45px [fe]"
+      }
+    ],
+    "heroes": [
+      {
+        "classes": "novablocks-hero novablocks-doppler alignfull novablocks-u-valign-center novablocks-u-halign-center novablocks-u-background novablocks-u-background-dark sm-palette-1 sm-variation-12 scrolling-effect-none",
+        "left": 0,
+        "width": 1440,
+        "rightGap": 0,
+        "height": 594,
+        "display": "flex",
+        "gridColumn": "fs / fe",
+        "gridTemplateColumns": "none"
+      }
+    ],
+    "heroMedia": [
+      {
+        "classes": "novablocks-hero__media novablocks-doppler__target is-loaded",
+        "left": 0,
+        "width": 1440,
+        "rightGap": 0,
+        "height": 900,
+        "display": "block",
+        "gridColumn": "auto",
+        "gridTemplateColumns": "none"
+      }
+    ],
+    "header": [
+      {
+        "classes": "novablocks-header novablocks-header--main novablocks-header-shadow novablocks-header-background alignfull sm-palette-1 sm-variation-10 novablocks-header--is-old novablocks-header--ready novablocks-header--transparent",
+        "left": 0,
+        "width": 1440,
+        "rightGap": 0,
+        "height": 132.390625,
+        "display": "block",
+        "gridColumn": "auto",
+        "gridTemplateColumns": "none"
+      }
+    ],
+    "fixture": "legacy-hero",
+    "version": "1.13.4",
+    "stableGeometrySamples": 5,
+    "logs": [
+      "[log] JQMIGRATE: Migrate is installed, version 3.4.1"
+    ]
+  },
+  {
+    "viewport": 1920,
+    "foreground": [
+      "0.999585",
+      "0.999585",
+      "1",
+      "1",
+      "1",
+      "1"
+    ],
+    "fontLoaderComplete": true,
+    "scrollWidth": 1920,
+    "documentHeight": 1305,
+    "main": {
+      "classes": "site-main",
+      "left": 0,
+      "width": 1920,
+      "rightGap": 0,
+      "height": 1097.734375,
+      "display": "block",
+      "gridColumn": "auto",
+      "gridTemplateColumns": "none"
+    },
+    "article": {
+      "classes": "post-6 page type-page status-publish hentry",
+      "left": 37.140625,
+      "width": 1845.71875,
+      "rightGap": 37.140625,
+      "height": 1097.734375,
+      "display": "block",
+      "gridColumn": "auto",
+      "gridTemplateColumns": "none"
+    },
+    "sidecars": [
+      {
+        "classes": "novablocks-sidecar ignore-block novablocks-sidecar--sidebar-right novablocks-sidebar--medium",
+        "left": 37.140625,
+        "width": 1845.71875,
+        "rightGap": 37.140625,
+        "height": 1097.734375,
+        "display": "grid",
+        "gridColumn": "fs / fe",
+        "gridTemplateColumns": "[fs] 92.1406px [ws] 317.047px [gs] 69.4219px [cs] 409.547px [gcs] 34.7031px [cc] 34.7031px [gce] 409.547px [ce] 69.4219px [ge] 317.047px [we] 92.1406px [fe]"
+      }
+    ],
+    "heroes": [
+      {
+        "classes": "novablocks-hero novablocks-doppler alignfull novablocks-u-valign-center novablocks-u-halign-center novablocks-u-background novablocks-u-background-dark sm-palette-1 sm-variation-12 scrolling-effect-none",
+        "left": 0,
+        "width": 1920,
+        "rightGap": 0,
+        "height": 594,
+        "display": "flex",
+        "gridColumn": "fs / fe",
+        "gridTemplateColumns": "none"
+      }
+    ],
+    "heroMedia": [
+      {
+        "classes": "novablocks-hero__media novablocks-doppler__target is-loaded",
+        "left": 0,
+        "width": 1920,
+        "rightGap": 0,
+        "height": 900,
+        "display": "block",
+        "gridColumn": "auto",
+        "gridTemplateColumns": "none"
+      }
+    ],
+    "header": [
+      {
+        "classes": "novablocks-header novablocks-header--main novablocks-header-shadow novablocks-header-background alignfull sm-palette-1 sm-variation-10 novablocks-header--is-old novablocks-header--ready novablocks-header--transparent",
+        "left": 0,
+        "width": 1920,
+        "rightGap": 0,
+        "height": 159.765625,
+        "display": "block",
+        "gridColumn": "auto",
+        "gridTemplateColumns": "none"
+      }
+    ],
+    "fixture": "legacy-hero",
+    "version": "1.13.4",
+    "stableGeometrySamples": 5,
+    "logs": [
+      "[log] JQMIGRATE: Migrate is installed, version 3.4.1"
+    ]
+  },
+  {
+    "viewport": 390,
+    "foreground": [
+      "1",
+      "1",
+      "1",
+      "1",
+      "1"
+    ],
+    "fontLoaderComplete": true,
+    "scrollWidth": 390,
+    "documentHeight": 986,
+    "main": {
+      "classes": "site-main",
+      "left": 0,
+      "width": 390,
+      "rightGap": 0,
+      "height": 648.546875,
+      "display": "block",
+      "gridColumn": "auto",
+      "gridTemplateColumns": "none"
+    },
+    "article": {
+      "classes": "post-7 page type-page status-publish hentry",
+      "left": 20.75,
+      "width": 348.5,
+      "rightGap": 20.75,
+      "height": 648.546875,
+      "display": "block",
+      "gridColumn": "auto",
+      "gridTemplateColumns": "none"
+    },
+    "sidecars": [
+      {
+        "classes": "novablocks-sidecar ignore-block novablocks-sidecar--sidebar-right novablocks-sidebar--medium",
+        "left": 20.75,
+        "width": 348.5,
+        "rightGap": 20.75,
+        "height": 648.546875,
+        "display": "block",
+        "gridColumn": "fs / fe",
+        "gridTemplateColumns": "[fs] 0px [ws] 300px [gs] 50.625px [cs] 1fr [gcs] 25.3125px [cc] 25.3125px [gce] 1fr [ce] 50.625px [ge] 300px [we] 0px [fe]"
+      }
+    ],
+    "heroes": [],
+    "heroMedia": [],
+    "header": [
+      {
+        "classes": "novablocks-header novablocks-header--main novablocks-header-shadow novablocks-header-background alignfull sm-palette-1 sm-variation-10 novablocks-header--is-old novablocks-header--ready novablocks-header--transparent",
+        "left": -390,
+        "width": 390,
+        "rightGap": 390,
+        "height": 900,
+        "display": "block",
+        "gridColumn": "auto",
+        "gridTemplateColumns": "none"
+      }
+    ],
+    "fixture": "wide-group",
+    "version": "1.13.4",
+    "stableGeometrySamples": 5,
+    "logs": [
+      "[log] JQMIGRATE: Migrate is installed, version 3.4.1"
+    ]
+  },
+  {
+    "viewport": 768,
+    "foreground": [
+      "1",
+      "1",
+      "1",
+      "1",
+      "1"
+    ],
+    "fontLoaderComplete": true,
+    "scrollWidth": 768,
+    "documentHeight": 900,
+    "main": {
+      "classes": "site-main",
+      "left": 0,
+      "width": 768,
+      "rightGap": 0,
+      "height": 382.8046875,
+      "display": "block",
+      "gridColumn": "auto",
+      "gridTemplateColumns": "none"
+    },
+    "article": {
+      "classes": "post-7 page type-page status-publish hentry",
+      "left": 24.796875,
+      "width": 718.40625,
+      "rightGap": 24.796875,
+      "height": 382.8046875,
+      "display": "block",
+      "gridColumn": "auto",
+      "gridTemplateColumns": "none"
+    },
+    "sidecars": [
+      {
+        "classes": "novablocks-sidecar ignore-block novablocks-sidecar--sidebar-right novablocks-sidebar--medium",
+        "left": 24.796875,
+        "width": 718.40625,
+        "rightGap": 24.796875,
+        "height": 382.8046875,
+        "display": "block",
+        "gridColumn": "fs / fe",
+        "gridTemplateColumns": "[fs] 0px [ws] 300px [gs] 51.84px [cs] 1fr [gcs] 25.92px [cc] 25.92px [gce] 1fr [ce] 51.84px [ge] 300px [we] 0px [fe]"
+      }
+    ],
+    "heroes": [],
+    "heroMedia": [],
+    "header": [
+      {
+        "classes": "novablocks-header novablocks-header--main novablocks-header-shadow novablocks-header-background alignfull sm-palette-1 sm-variation-10 novablocks-header--is-old novablocks-header--ready novablocks-header--transparent",
+        "left": -768,
+        "width": 768,
+        "rightGap": 768,
+        "height": 900,
+        "display": "block",
+        "gridColumn": "auto",
+        "gridTemplateColumns": "none"
+      }
+    ],
+    "fixture": "wide-group",
+    "version": "1.13.4",
+    "stableGeometrySamples": 5,
+    "logs": [
+      "[log] JQMIGRATE: Migrate is installed, version 3.4.1"
+    ]
+  },
+  {
+    "viewport": 1024,
+    "foreground": [
+      "1",
+      "1",
+      "1",
+      "1",
+      "1"
+    ],
+    "fontLoaderComplete": true,
+    "scrollWidth": 1024,
+    "documentHeight": 900,
+    "main": {
+      "classes": "site-main",
+      "left": 0,
+      "width": 1024,
+      "rightGap": 0,
+      "height": 432.046875,
+      "display": "block",
+      "gridColumn": "auto",
+      "gridTemplateColumns": "none"
+    },
+    "article": {
+      "classes": "post-7 page type-page status-publish hentry",
+      "left": 27.5390625,
+      "width": 968.921875,
+      "rightGap": 27.5390625,
+      "height": 432.046875,
+      "display": "block",
+      "gridColumn": "auto",
+      "gridTemplateColumns": "none"
+    },
+    "sidecars": [
+      {
+        "classes": "novablocks-sidecar ignore-block novablocks-sidecar--sidebar-right novablocks-sidebar--medium",
+        "left": 27.5390625,
+        "width": 968.921875,
+        "rightGap": 27.5390625,
+        "height": 432.046875,
+        "display": "grid",
+        "gridColumn": "fs / fe",
+        "gridTemplateColumns": "[fs] 0px [ws] 300px [gs] 52.6562px [cs] 105.477px [gcs] 26.3281px [cc] 26.3281px [gce] 105.477px [ce] 52.6562px [ge] 300px [we] 0px [fe]"
+      }
+    ],
+    "heroes": [],
+    "heroMedia": [],
+    "header": [
+      {
+        "classes": "novablocks-header novablocks-header--main novablocks-header-shadow novablocks-header-background alignfull sm-palette-1 sm-variation-10 novablocks-header--is-old novablocks-header--ready novablocks-header--transparent",
+        "left": 0,
+        "width": 1024,
+        "rightGap": 0,
+        "height": 117.5078125,
+        "display": "block",
+        "gridColumn": "auto",
+        "gridTemplateColumns": "none"
+      }
+    ],
+    "fixture": "wide-group",
+    "version": "1.13.4",
+    "stableGeometrySamples": 5,
+    "logs": [
+      "[log] JQMIGRATE: Migrate is installed, version 3.4.1"
+    ]
+  },
+  {
+    "viewport": 1440,
+    "foreground": [
+      "1",
+      "1",
+      "1",
+      "1",
+      "1"
+    ],
+    "fontLoaderComplete": true,
+    "scrollWidth": 1440,
+    "documentHeight": 900,
+    "main": {
+      "classes": "site-main",
+      "left": 0,
+      "width": 1440,
+      "rightGap": 0,
+      "height": 438.375,
+      "display": "block",
+      "gridColumn": "auto",
+      "gridTemplateColumns": "none"
+    },
+    "article": {
+      "classes": "post-7 page type-page status-publish hentry",
+      "left": 32,
+      "width": 1376,
+      "rightGap": 32,
+      "height": 438.375,
+      "display": "block",
+      "gridColumn": "auto",
+      "gridTemplateColumns": "none"
+    },
+    "sidecars": [
+      {
+        "classes": "novablocks-sidecar ignore-block novablocks-sidecar--sidebar-right novablocks-sidebar--medium",
+        "left": 32,
+        "width": 1376,
+        "rightGap": 32,
+        "height": 438.375,
+        "display": "grid",
+        "gridColumn": "fs / fe",
+        "gridTemplateColumns": "[fs] 45px [ws] 300px [gs] 54px [cs] 262px [gcs] 27px [cc] 27px [gce] 262px [ce] 54px [ge] 300px [we] 45px [fe]"
+      }
+    ],
+    "heroes": [],
+    "heroMedia": [],
+    "header": [
+      {
+        "classes": "novablocks-header novablocks-header--main novablocks-header-shadow novablocks-header-background alignfull sm-palette-1 sm-variation-10 novablocks-header--is-old novablocks-header--ready novablocks-header--transparent",
+        "left": 0,
+        "width": 1440,
+        "rightGap": 0,
+        "height": 132.3984375,
+        "display": "block",
+        "gridColumn": "auto",
+        "gridTemplateColumns": "none"
+      }
+    ],
+    "fixture": "wide-group",
+    "version": "1.13.4",
+    "stableGeometrySamples": 5,
+    "logs": [
+      "[log] JQMIGRATE: Migrate is installed, version 3.4.1"
+    ]
+  },
+  {
+    "viewport": 1920,
+    "foreground": [
+      "1",
+      "1",
+      "1",
+      "1",
+      "1"
+    ],
+    "fontLoaderComplete": true,
+    "scrollWidth": 1920,
+    "documentHeight": 900,
+    "main": {
+      "classes": "site-main",
+      "left": 0,
+      "width": 1920,
+      "rightGap": 0,
+      "height": 429.5546875,
+      "display": "block",
+      "gridColumn": "auto",
+      "gridTemplateColumns": "none"
+    },
+    "article": {
+      "classes": "post-7 page type-page status-publish hentry",
+      "left": 37.140625,
+      "width": 1845.71875,
+      "rightGap": 37.140625,
+      "height": 429.5546875,
+      "display": "block",
+      "gridColumn": "auto",
+      "gridTemplateColumns": "none"
+    },
+    "sidecars": [
+      {
+        "classes": "novablocks-sidecar ignore-block novablocks-sidecar--sidebar-right novablocks-sidebar--medium",
+        "left": 37.140625,
+        "width": 1845.71875,
+        "rightGap": 37.140625,
+        "height": 429.5546875,
+        "display": "grid",
+        "gridColumn": "fs / fe",
+        "gridTemplateColumns": "[fs] 92.1406px [ws] 317.055px [gs] 69.4219px [cs] 409.531px [gcs] 34.7109px [cc] 34.7109px [gce] 409.531px [ce] 69.4219px [ge] 317.055px [we] 92.1406px [fe]"
+      }
+    ],
+    "heroes": [],
+    "heroMedia": [],
+    "header": [
+      {
+        "classes": "novablocks-header novablocks-header--main novablocks-header-shadow novablocks-header-background alignfull sm-palette-1 sm-variation-10 novablocks-header--is-old novablocks-header--ready novablocks-header--transparent",
+        "left": 0,
+        "width": 1920,
+        "rightGap": 0,
+        "height": 159.7578125,
+        "display": "block",
+        "gridColumn": "auto",
+        "gridTemplateColumns": "none"
+      }
+    ],
+    "fixture": "wide-group",
+    "version": "1.13.4",
+    "stableGeometrySamples": 5,
+    "logs": [
+      "[log] JQMIGRATE: Migrate is installed, version 3.4.1"
+    ]
+  },
+  {
+    "viewport": 390,
+    "foreground": [
+      "0.999877",
+      "0.999877",
+      "1",
+      "1",
+      "1",
+      "1",
+      "1",
+      "1"
+    ],
+    "fontLoaderComplete": true,
+    "scrollWidth": 390,
+    "documentHeight": 1448,
+    "main": {
+      "classes": "site-main",
+      "left": 0,
+      "width": 390,
+      "rightGap": 0,
+      "height": 1256.7734375,
+      "display": "block",
+      "gridColumn": "auto",
+      "gridTemplateColumns": "none"
+    },
+    "article": {
+      "classes": "post-8 page type-page status-publish hentry",
+      "left": 20.75,
+      "width": 348.5,
+      "rightGap": 20.75,
+      "height": 1256.7734375,
+      "display": "block",
+      "gridColumn": "auto",
+      "gridTemplateColumns": "none"
+    },
+    "sidecars": [
+      {
+        "classes": "novablocks-sidecar ignore-block novablocks-sidecar--sidebar-right novablocks-sidebar--medium",
+        "left": 20.75,
+        "width": 348.5,
+        "rightGap": 20.75,
+        "height": 1256.7734375,
+        "display": "block",
+        "gridColumn": "fs / fe",
+        "gridTemplateColumns": "[fs] 0px [ws] 300px [gs] 50.625px [cs] 1fr [gcs] 25.3125px [cc] 25.3125px [gce] 1fr [ce] 50.625px [ge] 300px [we] 0px [fe]"
+      },
+      {
+        "classes": "novablocks-sidecar novablocks-sidecar--sidebar-right novablocks-sidebar--small",
+        "left": 20.75,
+        "width": 348.5,
+        "rightGap": 20.75,
+        "height": 621.2734375,
+        "display": "block",
+        "gridColumn": "fs / fe",
+        "gridTemplateColumns": "[fs] 0px [ws] 230px [gs] 50.625px [cs] 1fr [gcs] 25.3125px [cc] 25.3125px [gce] 1fr [ce] 50.625px [ge] 230px [we] 0px [fe]"
+      }
+    ],
+    "heroes": [
+      {
+        "classes": "novablocks-hero novablocks-doppler alignfull novablocks-u-valign-center novablocks-u-halign-center novablocks-u-background novablocks-u-background-dark sm-palette-1 sm-variation-12 scrolling-effect-none",
+        "left": 0,
+        "width": 390,
+        "rightGap": 0,
+        "height": 594,
+        "display": "flex",
+        "gridColumn": "fs / fe",
+        "gridTemplateColumns": "none"
+      }
+    ],
+    "heroMedia": [
+      {
+        "classes": "novablocks-hero__media novablocks-doppler__target is-loaded",
+        "left": 0,
+        "width": 390,
+        "rightGap": 0,
+        "height": 900,
+        "display": "block",
+        "gridColumn": "auto",
+        "gridTemplateColumns": "none"
+      }
+    ],
+    "header": [
+      {
+        "classes": "novablocks-header novablocks-header--main novablocks-header-shadow novablocks-header-background alignfull sm-palette-1 sm-variation-10 novablocks-header--is-old novablocks-header--ready novablocks-header--transparent",
+        "left": -390,
+        "width": 390,
+        "rightGap": 390,
+        "height": 900,
+        "display": "block",
+        "gridColumn": "auto",
+        "gridTemplateColumns": "none"
+      }
+    ],
+    "fixture": "hero-plus-sidecar",
+    "version": "1.13.4",
+    "stableGeometrySamples": 5,
+    "logs": [
+      "[log] JQMIGRATE: Migrate is installed, version 3.4.1"
+    ]
+  },
+  {
+    "viewport": 768,
+    "foreground": [
+      "0.995431",
+      "0.995431",
+      "1",
+      "1",
+      "1",
+      "1",
+      "1",
+      "1"
+    ],
+    "fontLoaderComplete": true,
+    "scrollWidth": 768,
+    "documentHeight": 1255,
+    "main": {
+      "classes": "site-main",
+      "left": 0,
+      "width": 768,
+      "rightGap": 0,
+      "height": 1081.6640625,
+      "display": "block",
+      "gridColumn": "auto",
+      "gridTemplateColumns": "none"
+    },
+    "article": {
+      "classes": "post-8 page type-page status-publish hentry",
+      "left": 24.796875,
+      "width": 718.40625,
+      "rightGap": 24.796875,
+      "height": 1081.6640625,
+      "display": "block",
+      "gridColumn": "auto",
+      "gridTemplateColumns": "none"
+    },
+    "sidecars": [
+      {
+        "classes": "novablocks-sidecar ignore-block novablocks-sidecar--sidebar-right novablocks-sidebar--medium",
+        "left": 24.796875,
+        "width": 718.40625,
+        "rightGap": 24.796875,
+        "height": 1081.6640625,
+        "display": "block",
+        "gridColumn": "fs / fe",
+        "gridTemplateColumns": "[fs] 0px [ws] 300px [gs] 51.84px [cs] 1fr [gcs] 25.92px [cc] 25.92px [gce] 1fr [ce] 51.84px [ge] 300px [we] 0px [fe]"
+      },
+      {
+        "classes": "novablocks-sidecar novablocks-sidecar--sidebar-right novablocks-sidebar--small",
+        "left": 24.796875,
+        "width": 718.40625,
+        "rightGap": 24.796875,
+        "height": 438.0703125,
+        "display": "block",
+        "gridColumn": "fs / fe",
+        "gridTemplateColumns": "[fs] 0px [ws] 230px [gs] 51.84px [cs] 1fr [gcs] 25.92px [cc] 25.92px [gce] 1fr [ce] 51.84px [ge] 230px [we] 0px [fe]"
+      }
+    ],
+    "heroes": [
+      {
+        "classes": "novablocks-hero novablocks-doppler alignfull novablocks-u-valign-center novablocks-u-halign-center novablocks-u-background novablocks-u-background-dark sm-palette-1 sm-variation-12 scrolling-effect-none",
+        "left": 0,
+        "width": 768,
+        "rightGap": 0,
+        "height": 594,
+        "display": "flex",
+        "gridColumn": "fs / fe",
+        "gridTemplateColumns": "none"
+      }
+    ],
+    "heroMedia": [
+      {
+        "classes": "novablocks-hero__media novablocks-doppler__target is-loaded",
+        "left": 0,
+        "width": 768,
+        "rightGap": 0,
+        "height": 900,
+        "display": "block",
+        "gridColumn": "auto",
+        "gridTemplateColumns": "none"
+      }
+    ],
+    "header": [
+      {
+        "classes": "novablocks-header novablocks-header--main novablocks-header-shadow novablocks-header-background alignfull sm-palette-1 sm-variation-10 novablocks-header--is-old novablocks-header--ready novablocks-header--transparent",
+        "left": -768,
+        "width": 768,
+        "rightGap": 768,
+        "height": 900,
+        "display": "block",
+        "gridColumn": "auto",
+        "gridTemplateColumns": "none"
+      }
+    ],
+    "fixture": "hero-plus-sidecar",
+    "version": "1.13.4",
+    "stableGeometrySamples": 5,
+    "logs": [
+      "[log] JQMIGRATE: Migrate is installed, version 3.4.1"
+    ]
+  },
+  {
+    "viewport": 1024,
+    "foreground": [
+      "0.999066",
+      "0.999066",
+      "1",
+      "1",
+      "1",
+      "1",
+      "1",
+      "1"
+    ],
+    "fontLoaderComplete": true,
+    "scrollWidth": 1024,
+    "documentHeight": 1764,
+    "main": {
+      "classes": "site-main",
+      "left": 0,
+      "width": 1024,
+      "rightGap": 0,
+      "height": 1584.671875,
+      "display": "block",
+      "gridColumn": "auto",
+      "gridTemplateColumns": "none"
+    },
+    "article": {
+      "classes": "post-8 page type-page status-publish hentry",
+      "left": 27.5390625,
+      "width": 968.921875,
+      "rightGap": 27.5390625,
+      "height": 1584.671875,
+      "display": "block",
+      "gridColumn": "auto",
+      "gridTemplateColumns": "none"
+    },
+    "sidecars": [
+      {
+        "classes": "novablocks-sidecar ignore-block novablocks-sidecar--sidebar-right novablocks-sidebar--medium",
+        "left": 27.5390625,
+        "width": 968.921875,
+        "rightGap": 27.5390625,
+        "height": 1584.671875,
+        "display": "grid",
+        "gridColumn": "fs / fe",
+        "gridTemplateColumns": "[fs] 0px [ws] 300px [gs] 52.6562px [cs] 105.477px [gcs] 26.3281px [cc] 26.3281px [gce] 105.477px [ce] 52.6562px [ge] 300px [we] 0px [fe]"
+      },
+      {
+        "classes": "novablocks-sidecar novablocks-sidecar--sidebar-right novablocks-sidebar--small",
+        "left": 27.5390625,
+        "width": 968.921875,
+        "rightGap": 27.5390625,
+        "height": 935.59375,
+        "display": "grid",
+        "gridColumn": "fs / fe",
+        "gridTemplateColumns": "[fs] 0px [ws] 230px [gs] 52.6562px [cs] 175.477px [gcs] 26.3281px [cc] 26.3281px [gce] 175.477px [ce] 52.6562px [ge] 230px [we] 0px [fe]"
+      }
+    ],
+    "heroes": [
+      {
+        "classes": "novablocks-hero novablocks-doppler alignfull novablocks-u-valign-center novablocks-u-halign-center novablocks-u-background novablocks-u-background-dark sm-palette-1 sm-variation-12 scrolling-effect-none",
+        "left": 0,
+        "width": 1024,
+        "rightGap": 0,
+        "height": 594,
+        "display": "flex",
+        "gridColumn": "fs / fe",
+        "gridTemplateColumns": "none"
+      }
+    ],
+    "heroMedia": [
+      {
+        "classes": "novablocks-hero__media novablocks-doppler__target is-loaded",
+        "left": 0,
+        "width": 1024,
+        "rightGap": 0,
+        "height": 900,
+        "display": "block",
+        "gridColumn": "auto",
+        "gridTemplateColumns": "none"
+      }
+    ],
+    "header": [
+      {
+        "classes": "novablocks-header novablocks-header--main novablocks-header-shadow novablocks-header-background alignfull sm-palette-1 sm-variation-10 novablocks-header--is-old novablocks-header--ready novablocks-header--transparent",
+        "left": 0,
+        "width": 1024,
+        "rightGap": 0,
+        "height": 117.5078125,
+        "display": "block",
+        "gridColumn": "auto",
+        "gridTemplateColumns": "none"
+      }
+    ],
+    "fixture": "hero-plus-sidecar",
+    "version": "1.13.4",
+    "stableGeometrySamples": 5,
+    "logs": [
+      "[log] JQMIGRATE: Migrate is installed, version 3.4.1"
+    ]
+  },
+  {
+    "viewport": 1440,
+    "foreground": [
+      "0.999832",
+      "0.999832",
+      "1",
+      "1",
+      "1",
+      "1",
+      "1",
+      "1"
+    ],
+    "fontLoaderComplete": true,
+    "scrollWidth": 1440,
+    "documentHeight": 1858,
+    "main": {
+      "classes": "site-main",
+      "left": 0,
+      "width": 1440,
+      "rightGap": 0,
+      "height": 1669.109375,
+      "display": "block",
+      "gridColumn": "auto",
+      "gridTemplateColumns": "none"
+    },
+    "article": {
+      "classes": "post-8 page type-page status-publish hentry",
+      "left": 32,
+      "width": 1376,
+      "rightGap": 32,
+      "height": 1669.109375,
+      "display": "block",
+      "gridColumn": "auto",
+      "gridTemplateColumns": "none"
+    },
+    "sidecars": [
+      {
+        "classes": "novablocks-sidecar ignore-block novablocks-sidecar--sidebar-right novablocks-sidebar--medium",
+        "left": 32,
+        "width": 1376,
+        "rightGap": 32,
+        "height": 1669.109375,
+        "display": "grid",
+        "gridColumn": "fs / fe",
+        "gridTemplateColumns": "[fs] 45px [ws] 300px [gs] 54px [cs] 262px [gcs] 27px [cc] 27px [gce] 262px [ce] 54px [ge] 300px [we] 45px [fe]"
+      },
+      {
+        "classes": "novablocks-sidecar novablocks-sidecar--sidebar-right novablocks-sidebar--small",
+        "left": 32,
+        "width": 1376,
+        "rightGap": 32,
+        "height": 1011.109375,
+        "display": "grid",
+        "gridColumn": "fs / fe",
+        "gridTemplateColumns": "[fs] 45px [ws] 230px [gs] 54px [cs] 332px [gcs] 27px [cc] 27px [gce] 332px [ce] 54px [ge] 230px [we] 45px [fe]"
+      }
+    ],
+    "heroes": [
+      {
+        "classes": "novablocks-hero novablocks-doppler alignfull novablocks-u-valign-center novablocks-u-halign-center novablocks-u-background novablocks-u-background-dark sm-palette-1 sm-variation-12 scrolling-effect-none",
+        "left": 0,
+        "width": 1440,
+        "rightGap": 0,
+        "height": 594,
+        "display": "flex",
+        "gridColumn": "fs / fe",
+        "gridTemplateColumns": "none"
+      }
+    ],
+    "heroMedia": [
+      {
+        "classes": "novablocks-hero__media novablocks-doppler__target is-loaded",
+        "left": 0,
+        "width": 1440,
+        "rightGap": 0,
+        "height": 900,
+        "display": "block",
+        "gridColumn": "auto",
+        "gridTemplateColumns": "none"
+      }
+    ],
+    "header": [
+      {
+        "classes": "novablocks-header novablocks-header--main novablocks-header-shadow novablocks-header-background alignfull sm-palette-1 sm-variation-10 novablocks-header--is-old novablocks-header--ready novablocks-header--transparent",
+        "left": 0,
+        "width": 1440,
+        "rightGap": 0,
+        "height": 132.3984375,
+        "display": "block",
+        "gridColumn": "auto",
+        "gridTemplateColumns": "none"
+      }
+    ],
+    "fixture": "hero-plus-sidecar",
+    "version": "1.13.4",
+    "stableGeometrySamples": 5,
+    "logs": [
+      "[log] JQMIGRATE: Migrate is installed, version 3.4.1"
+    ]
+  },
+  {
+    "viewport": 1920,
+    "foreground": [
+      "0.999585",
+      "0.999585",
+      "1",
+      "1",
+      "1",
+      "1",
+      "1",
+      "1"
+    ],
+    "fontLoaderComplete": true,
+    "scrollWidth": 1920,
+    "documentHeight": 2162,
+    "main": {
+      "classes": "site-main",
+      "left": 0,
+      "width": 1920,
+      "rightGap": 0,
+      "height": 1955.421875,
+      "display": "block",
+      "gridColumn": "auto",
+      "gridTemplateColumns": "none"
+    },
+    "article": {
+      "classes": "post-8 page type-page status-publish hentry",
+      "left": 37.140625,
+      "width": 1845.71875,
+      "rightGap": 37.140625,
+      "height": 1955.421875,
+      "display": "block",
+      "gridColumn": "auto",
+      "gridTemplateColumns": "none"
+    },
+    "sidecars": [
+      {
+        "classes": "novablocks-sidecar ignore-block novablocks-sidecar--sidebar-right novablocks-sidebar--medium",
+        "left": 37.140625,
+        "width": 1845.71875,
+        "rightGap": 37.140625,
+        "height": 1955.421875,
+        "display": "grid",
+        "gridColumn": "fs / fe",
+        "gridTemplateColumns": "[fs] 92.1406px [ws] 317.055px [gs] 69.4219px [cs] 409.531px [gcs] 34.7109px [cc] 34.7109px [gce] 409.531px [ce] 69.4219px [ge] 317.055px [we] 92.1406px [fe]"
+      },
+      {
+        "classes": "novablocks-sidecar novablocks-sidecar--sidebar-right novablocks-sidebar--small",
+        "left": 37.140625,
+        "width": 1845.71875,
+        "rightGap": 37.140625,
+        "height": 1287.140625,
+        "display": "grid",
+        "gridColumn": "fs / fe",
+        "gridTemplateColumns": "[fs] 92.1406px [ws] 243px [gs] 69.4219px [cs] 483.586px [gcs] 34.7109px [cc] 34.7109px [gce] 483.586px [ce] 69.4219px [ge] 243px [we] 92.1406px [fe]"
+      }
+    ],
+    "heroes": [
+      {
+        "classes": "novablocks-hero novablocks-doppler alignfull novablocks-u-valign-center novablocks-u-halign-center novablocks-u-background novablocks-u-background-dark sm-palette-1 sm-variation-12 scrolling-effect-none",
+        "left": 0,
+        "width": 1920,
+        "rightGap": 0,
+        "height": 594,
+        "display": "flex",
+        "gridColumn": "fs / fe",
+        "gridTemplateColumns": "none"
+      }
+    ],
+    "heroMedia": [
+      {
+        "classes": "novablocks-hero__media novablocks-doppler__target is-loaded",
+        "left": 0,
+        "width": 1920,
+        "rightGap": 0,
+        "height": 900,
+        "display": "block",
+        "gridColumn": "auto",
+        "gridTemplateColumns": "none"
+      }
+    ],
+    "header": [
+      {
+        "classes": "novablocks-header novablocks-header--main novablocks-header-shadow novablocks-header-background alignfull sm-palette-1 sm-variation-10 novablocks-header--is-old novablocks-header--ready novablocks-header--transparent",
+        "left": 0,
+        "width": 1920,
+        "rightGap": 0,
+        "height": 159.7578125,
+        "display": "block",
+        "gridColumn": "auto",
+        "gridTemplateColumns": "none"
+      }
+    ],
+    "fixture": "hero-plus-sidecar",
+    "version": "1.13.4",
+    "stableGeometrySamples": 5,
+    "logs": [
+      "[log] JQMIGRATE: Migrate is installed, version 3.4.1"
+    ]
+  },
+  {
+    "viewport": 390,
+    "foreground": [
+      "1",
+      "1",
+      "1",
+      "1",
+      "1",
+      "1",
+      "1"
+    ],
+    "fontLoaderComplete": true,
+    "scrollWidth": 390,
+    "documentHeight": 1032,
+    "main": {
+      "classes": "site-main",
+      "left": 0,
+      "width": 390,
+      "rightGap": 0,
+      "height": 694.5703125,
+      "display": "block",
+      "gridColumn": "auto",
+      "gridTemplateColumns": "none"
+    },
+    "article": {
+      "classes": "post-9 page type-page status-publish hentry",
+      "left": 20.75,
+      "width": 348.5,
+      "rightGap": 20.75,
+      "height": 694.5703125,
+      "display": "block",
+      "gridColumn": "auto",
+      "gridTemplateColumns": "none"
+    },
+    "sidecars": [
+      {
+        "classes": "novablocks-sidecar ignore-block novablocks-sidecar--sidebar-right novablocks-sidebar--medium",
+        "left": 20.75,
+        "width": 348.5,
+        "rightGap": 20.75,
+        "height": 694.5703125,
+        "display": "block",
+        "gridColumn": "fs / fe",
+        "gridTemplateColumns": "[fs] 0px [ws] 300px [gs] 50.625px [cs] 1fr [gcs] 25.3125px [cc] 25.3125px [gce] 1fr [ce] 50.625px [ge] 300px [we] 0px [fe]"
+      },
+      {
+        "classes": "novablocks-sidecar novablocks-sidecar--sidebar-right novablocks-sidebar--small",
+        "left": 20.75,
+        "width": 348.5,
+        "rightGap": 20.75,
+        "height": 621.2734375,
+        "display": "block",
+        "gridColumn": "fs / fe",
+        "gridTemplateColumns": "[fs] 0px [ws] 230px [gs] 50.625px [cs] 1fr [gcs] 25.3125px [cc] 25.3125px [gce] 1fr [ce] 50.625px [ge] 230px [we] 0px [fe]"
+      }
+    ],
+    "heroes": [],
+    "heroMedia": [],
+    "header": [
+      {
+        "classes": "novablocks-header novablocks-header--main novablocks-header-shadow novablocks-header-background alignfull sm-palette-1 sm-variation-10 novablocks-header--is-old novablocks-header--ready novablocks-header--transparent",
+        "left": -390,
+        "width": 390,
+        "rightGap": 390,
+        "height": 900,
+        "display": "block",
+        "gridColumn": "auto",
+        "gridTemplateColumns": "none"
+      }
+    ],
+    "fixture": "inner-sidecar",
+    "version": "1.13.4",
+    "stableGeometrySamples": 5,
+    "logs": [
+      "[log] JQMIGRATE: Migrate is installed, version 3.4.1"
+    ]
+  },
+  {
+    "viewport": 768,
+    "foreground": [
+      "1",
+      "1",
+      "1",
+      "1",
+      "1",
+      "1",
+      "1"
+    ],
+    "fontLoaderComplete": true,
+    "scrollWidth": 768,
+    "documentHeight": 900,
+    "main": {
+      "classes": "site-main",
+      "left": 0,
+      "width": 768,
+      "rightGap": 0,
+      "height": 525.296875,
+      "display": "block",
+      "gridColumn": "auto",
+      "gridTemplateColumns": "none"
+    },
+    "article": {
+      "classes": "post-9 page type-page status-publish hentry",
+      "left": 24.796875,
+      "width": 718.40625,
+      "rightGap": 24.796875,
+      "height": 525.296875,
+      "display": "block",
+      "gridColumn": "auto",
+      "gridTemplateColumns": "none"
+    },
+    "sidecars": [
+      {
+        "classes": "novablocks-sidecar ignore-block novablocks-sidecar--sidebar-right novablocks-sidebar--medium",
+        "left": 24.796875,
+        "width": 718.40625,
+        "rightGap": 24.796875,
+        "height": 525.296875,
+        "display": "block",
+        "gridColumn": "fs / fe",
+        "gridTemplateColumns": "[fs] 0px [ws] 300px [gs] 51.84px [cs] 1fr [gcs] 25.92px [cc] 25.92px [gce] 1fr [ce] 51.84px [ge] 300px [we] 0px [fe]"
+      },
+      {
+        "classes": "novablocks-sidecar novablocks-sidecar--sidebar-right novablocks-sidebar--small",
+        "left": 24.796875,
+        "width": 718.40625,
+        "rightGap": 24.796875,
+        "height": 438.0703125,
+        "display": "block",
+        "gridColumn": "fs / fe",
+        "gridTemplateColumns": "[fs] 0px [ws] 230px [gs] 51.84px [cs] 1fr [gcs] 25.92px [cc] 25.92px [gce] 1fr [ce] 51.84px [ge] 230px [we] 0px [fe]"
+      }
+    ],
+    "heroes": [],
+    "heroMedia": [],
+    "header": [
+      {
+        "classes": "novablocks-header novablocks-header--main novablocks-header-shadow novablocks-header-background alignfull sm-palette-1 sm-variation-10 novablocks-header--is-old novablocks-header--ready novablocks-header--transparent",
+        "left": -768,
+        "width": 768,
+        "rightGap": 768,
+        "height": 900,
+        "display": "block",
+        "gridColumn": "auto",
+        "gridTemplateColumns": "none"
+      }
+    ],
+    "fixture": "inner-sidecar",
+    "version": "1.13.4",
+    "stableGeometrySamples": 5,
+    "logs": [
+      "[log] JQMIGRATE: Migrate is installed, version 3.4.1"
+    ]
+  },
+  {
+    "viewport": 1024,
+    "foreground": [
+      "1",
+      "1",
+      "1",
+      "1",
+      "1",
+      "1",
+      "1"
+    ],
+    "fontLoaderComplete": true,
+    "scrollWidth": 1024,
+    "documentHeight": 1384,
+    "main": {
+      "classes": "site-main",
+      "left": 0,
+      "width": 1024,
+      "rightGap": 0,
+      "height": 1032.25,
+      "display": "block",
+      "gridColumn": "auto",
+      "gridTemplateColumns": "none"
+    },
+    "article": {
+      "classes": "post-9 page type-page status-publish hentry",
+      "left": 27.5390625,
+      "width": 968.921875,
+      "rightGap": 27.5390625,
+      "height": 1032.25,
+      "display": "block",
+      "gridColumn": "auto",
+      "gridTemplateColumns": "none"
+    },
+    "sidecars": [
+      {
+        "classes": "novablocks-sidecar ignore-block novablocks-sidecar--sidebar-right novablocks-sidebar--medium",
+        "left": 27.5390625,
+        "width": 968.921875,
+        "rightGap": 27.5390625,
+        "height": 1032.25,
+        "display": "grid",
+        "gridColumn": "fs / fe",
+        "gridTemplateColumns": "[fs] 0px [ws] 300px [gs] 52.6562px [cs] 105.477px [gcs] 26.3281px [cc] 26.3281px [gce] 105.477px [ce] 52.6562px [ge] 300px [we] 0px [fe]"
+      },
+      {
+        "classes": "novablocks-sidecar novablocks-sidecar--sidebar-right novablocks-sidebar--small",
+        "left": 27.5390625,
+        "width": 968.921875,
+        "rightGap": 27.5390625,
+        "height": 935.59375,
+        "display": "grid",
+        "gridColumn": "fs / fe",
+        "gridTemplateColumns": "[fs] 0px [ws] 230px [gs] 52.6562px [cs] 175.477px [gcs] 26.3281px [cc] 26.3281px [gce] 175.477px [ce] 52.6562px [ge] 230px [we] 0px [fe]"
+      }
+    ],
+    "heroes": [],
+    "heroMedia": [],
+    "header": [
+      {
+        "classes": "novablocks-header novablocks-header--main novablocks-header-shadow novablocks-header-background alignfull sm-palette-1 sm-variation-10 novablocks-header--is-old novablocks-header--ready novablocks-header--transparent",
+        "left": 0,
+        "width": 1024,
+        "rightGap": 0,
+        "height": 117.5078125,
+        "display": "block",
+        "gridColumn": "auto",
+        "gridTemplateColumns": "none"
+      }
+    ],
+    "fixture": "inner-sidecar",
+    "version": "1.13.4",
+    "stableGeometrySamples": 5,
+    "logs": [
+      "[log] JQMIGRATE: Migrate is installed, version 3.4.1"
+    ]
+  },
+  {
+    "viewport": 1440,
+    "foreground": [
+      "1",
+      "1",
+      "1",
+      "1",
+      "1",
+      "1",
+      "1"
+    ],
+    "fontLoaderComplete": true,
+    "scrollWidth": 1440,
+    "documentHeight": 1508,
+    "main": {
+      "classes": "site-main",
+      "left": 0,
+      "width": 1440,
+      "rightGap": 0,
+      "height": 1123.109375,
+      "display": "block",
+      "gridColumn": "auto",
+      "gridTemplateColumns": "none"
+    },
+    "article": {
+      "classes": "post-9 page type-page status-publish hentry",
+      "left": 32,
+      "width": 1376,
+      "rightGap": 32,
+      "height": 1123.109375,
+      "display": "block",
+      "gridColumn": "auto",
+      "gridTemplateColumns": "none"
+    },
+    "sidecars": [
+      {
+        "classes": "novablocks-sidecar ignore-block novablocks-sidecar--sidebar-right novablocks-sidebar--medium",
+        "left": 32,
+        "width": 1376,
+        "rightGap": 32,
+        "height": 1123.109375,
+        "display": "grid",
+        "gridColumn": "fs / fe",
+        "gridTemplateColumns": "[fs] 45px [ws] 300px [gs] 54px [cs] 262px [gcs] 27px [cc] 27px [gce] 262px [ce] 54px [ge] 300px [we] 45px [fe]"
+      },
+      {
+        "classes": "novablocks-sidecar novablocks-sidecar--sidebar-right novablocks-sidebar--small",
+        "left": 32,
+        "width": 1376,
+        "rightGap": 32,
+        "height": 1011.109375,
+        "display": "grid",
+        "gridColumn": "fs / fe",
+        "gridTemplateColumns": "[fs] 45px [ws] 230px [gs] 54px [cs] 332px [gcs] 27px [cc] 27px [gce] 332px [ce] 54px [ge] 230px [we] 45px [fe]"
+      }
+    ],
+    "heroes": [],
+    "heroMedia": [],
+    "header": [
+      {
+        "classes": "novablocks-header novablocks-header--main novablocks-header-shadow novablocks-header-background alignfull sm-palette-1 sm-variation-10 novablocks-header--is-old novablocks-header--ready novablocks-header--transparent",
+        "left": 0,
+        "width": 1440,
+        "rightGap": 0,
+        "height": 132.3984375,
+        "display": "block",
+        "gridColumn": "auto",
+        "gridTemplateColumns": "none"
+      }
+    ],
+    "fixture": "inner-sidecar",
+    "version": "1.13.4",
+    "stableGeometrySamples": 5,
+    "logs": [
+      "[log] JQMIGRATE: Migrate is installed, version 3.4.1"
+    ]
+  },
+  {
+    "viewport": 1920,
+    "foreground": [
+      "1",
+      "1",
+      "1",
+      "1",
+      "1",
+      "1",
+      "1"
+    ],
+    "fontLoaderComplete": true,
+    "scrollWidth": 1920,
+    "documentHeight": 1861,
+    "main": {
+      "classes": "site-main",
+      "left": 0,
+      "width": 1920,
+      "rightGap": 0,
+      "height": 1420.1171875,
+      "display": "block",
+      "gridColumn": "auto",
+      "gridTemplateColumns": "none"
+    },
+    "article": {
+      "classes": "post-9 page type-page status-publish hentry",
+      "left": 37.140625,
+      "width": 1845.71875,
+      "rightGap": 37.140625,
+      "height": 1420.1171875,
+      "display": "block",
+      "gridColumn": "auto",
+      "gridTemplateColumns": "none"
+    },
+    "sidecars": [
+      {
+        "classes": "novablocks-sidecar ignore-block novablocks-sidecar--sidebar-right novablocks-sidebar--medium",
+        "left": 37.140625,
+        "width": 1845.71875,
+        "rightGap": 37.140625,
+        "height": 1420.1171875,
+        "display": "grid",
+        "gridColumn": "fs / fe",
+        "gridTemplateColumns": "[fs] 92.1406px [ws] 317.055px [gs] 69.4219px [cs] 409.531px [gcs] 34.7109px [cc] 34.7109px [gce] 409.531px [ce] 69.4219px [ge] 317.055px [we] 92.1406px [fe]"
+      },
+      {
+        "classes": "novablocks-sidecar novablocks-sidecar--sidebar-right novablocks-sidebar--small",
+        "left": 37.140625,
+        "width": 1845.71875,
+        "rightGap": 37.140625,
+        "height": 1287.140625,
+        "display": "grid",
+        "gridColumn": "fs / fe",
+        "gridTemplateColumns": "[fs] 92.1406px [ws] 243px [gs] 69.4219px [cs] 483.586px [gcs] 34.7109px [cc] 34.7109px [gce] 483.586px [ce] 69.4219px [ge] 243px [we] 92.1406px [fe]"
+      }
+    ],
+    "heroes": [],
+    "heroMedia": [],
+    "header": [
+      {
+        "classes": "novablocks-header novablocks-header--main novablocks-header-shadow novablocks-header-background alignfull sm-palette-1 sm-variation-10 novablocks-header--is-old novablocks-header--ready novablocks-header--transparent",
+        "left": 0,
+        "width": 1920,
+        "rightGap": 0,
+        "height": 159.7578125,
+        "display": "block",
+        "gridColumn": "auto",
+        "gridTemplateColumns": "none"
+      }
+    ],
+    "fixture": "inner-sidecar",
+    "version": "1.13.4",
+    "stableGeometrySamples": 5,
+    "logs": [
+      "[log] JQMIGRATE: Migrate is installed, version 3.4.1"
+    ]
+  },
+  {
+    "viewport": 390,
+    "foreground": [
+      "1",
+      "1",
+      "1",
+      "1",
+      "1",
+      "1",
+      "1",
+      "1",
+      "1",
+      "1",
+      "1",
+      "1",
+      "1",
+      "1",
+      "1"
+    ],
+    "fontLoaderComplete": true,
+    "scrollWidth": 390,
+    "documentHeight": 2075,
+    "main": {
+      "classes": "site-main",
+      "left": 0,
+      "width": 390,
+      "rightGap": 0,
+      "height": 1779.1640625,
+      "display": "block",
+      "gridColumn": "auto",
+      "gridTemplateColumns": "none"
+    },
+    "article": {
+      "classes": "post-10 post type-post status-publish format-standard hentry category-uncategorized",
+      "left": 20.75,
+      "width": 348.5,
+      "rightGap": 20.75,
+      "height": 1762.2890625,
+      "display": "block",
+      "gridColumn": "auto",
+      "gridTemplateColumns": "none"
+    },
+    "sidecars": [
+      {
+        "classes": "novablocks-sidecar alignwide novablocks-sidecar--sidebar-right novablocks-sidebar--medium last-block-is-sticky",
+        "left": 20.75,
+        "width": 348.5,
+        "rightGap": 20.75,
+        "height": 1762.2890625,
+        "display": "block",
+        "gridColumn": "fs / fe",
+        "gridTemplateColumns": "[fs] 0px [ws] 300px [gs] 50.625px [cs] 1fr [gcs] 25.3125px [cc] 25.3125px [gce] 1fr [ce] 50.625px [ge] 300px [we] 0px [fe]"
+      }
+    ],
+    "heroes": [],
+    "heroMedia": [],
+    "header": [
+      {
+        "classes": "novablocks-header novablocks-header--main novablocks-header-shadow novablocks-header-background alignfull sm-palette-1 sm-variation-10 novablocks-header--is-old novablocks-header--ready novablocks-header--transparent",
+        "left": -390,
+        "width": 390,
+        "rightGap": 390,
+        "height": 900,
+        "display": "block",
+        "gridColumn": "auto",
+        "gridTemplateColumns": "none"
+      }
+    ],
+    "fixture": "single-post",
+    "version": "1.13.4",
+    "stableGeometrySamples": 5,
+    "logs": [
+      "[log] JQMIGRATE: Migrate is installed, version 3.4.1"
+    ]
+  },
+  {
+    "viewport": 768,
+    "foreground": [
+      "1",
+      "1",
+      "1",
+      "1",
+      "1",
+      "1",
+      "1",
+      "1",
+      "1",
+      "1",
+      "1",
+      "1",
+      "1",
+      "1",
+      "1"
+    ],
+    "fontLoaderComplete": true,
+    "scrollWidth": 768,
+    "documentHeight": 2012,
+    "main": {
+      "classes": "site-main",
+      "left": 0,
+      "width": 768,
+      "rightGap": 0,
+      "height": 1730.2421875,
+      "display": "block",
+      "gridColumn": "auto",
+      "gridTemplateColumns": "none"
+    },
+    "article": {
+      "classes": "post-10 post type-post status-publish format-standard hentry category-uncategorized",
+      "left": 24.796875,
+      "width": 718.40625,
+      "rightGap": 24.796875,
+      "height": 1712.96875,
+      "display": "block",
+      "gridColumn": "auto",
+      "gridTemplateColumns": "none"
+    },
+    "sidecars": [
+      {
+        "classes": "novablocks-sidecar alignwide novablocks-sidecar--sidebar-right novablocks-sidebar--medium last-block-is-sticky",
+        "left": 24.796875,
+        "width": 718.40625,
+        "rightGap": 24.796875,
+        "height": 1712.96875,
+        "display": "block",
+        "gridColumn": "fs / fe",
+        "gridTemplateColumns": "[fs] 0px [ws] 300px [gs] 51.84px [cs] 1fr [gcs] 25.92px [cc] 25.92px [gce] 1fr [ce] 51.84px [ge] 300px [we] 0px [fe]"
+      }
+    ],
+    "heroes": [],
+    "heroMedia": [],
+    "header": [
+      {
+        "classes": "novablocks-header novablocks-header--main novablocks-header-shadow novablocks-header-background alignfull sm-palette-1 sm-variation-10 novablocks-header--is-old novablocks-header--ready novablocks-header--transparent",
+        "left": -768,
+        "width": 768,
+        "rightGap": 768,
+        "height": 900,
+        "display": "block",
+        "gridColumn": "auto",
+        "gridTemplateColumns": "none"
+      }
+    ],
+    "fixture": "single-post",
+    "version": "1.13.4",
+    "stableGeometrySamples": 5,
+    "logs": [
+      "[log] JQMIGRATE: Migrate is installed, version 3.4.1"
+    ]
+  },
+  {
+    "viewport": 1024,
+    "foreground": [
+      "1",
+      "1",
+      "1",
+      "1",
+      "1",
+      "1",
+      "1",
+      "1",
+      "1",
+      "1",
+      "1",
+      "1",
+      "1",
+      "1",
+      "1"
+    ],
+    "fontLoaderComplete": true,
+    "scrollWidth": 1668,
+    "documentHeight": 1228,
+    "main": {
+      "classes": "site-main",
+      "left": 0,
+      "width": 1024,
+      "rightGap": 0,
+      "height": 876.453125,
+      "display": "block",
+      "gridColumn": "auto",
+      "gridTemplateColumns": "none"
+    },
+    "article": {
+      "classes": "post-10 post type-post status-publish format-standard hentry category-uncategorized",
+      "left": 27.5390625,
+      "width": 968.921875,
+      "rightGap": 27.5390625,
+      "height": 876.453125,
+      "display": "block",
+      "gridColumn": "auto",
+      "gridTemplateColumns": "none"
+    },
+    "sidecars": [
+      {
+        "classes": "novablocks-sidecar alignwide novablocks-sidecar--sidebar-right novablocks-sidebar--medium last-block-is-sticky",
+        "left": 27.5390625,
+        "width": 968.921875,
+        "rightGap": 27.5390625,
+        "height": 876.453125,
+        "display": "grid",
+        "gridColumn": "fs / fe",
+        "gridTemplateColumns": "[fs] 0px [ws] 300px [gs] 52.6562px [cs] 105.477px [gcs] 26.3281px [cc] 26.3281px [gce] 105.477px [ce] 52.6562px [ge] 300px [we] 0px [fe]"
+      }
+    ],
+    "heroes": [],
+    "heroMedia": [],
+    "header": [
+      {
+        "classes": "novablocks-header novablocks-header--main novablocks-header-shadow novablocks-header-background alignfull sm-palette-1 sm-variation-10 novablocks-header--is-old novablocks-header--ready novablocks-header--transparent",
+        "left": 0,
+        "width": 1024,
+        "rightGap": 0,
+        "height": 117.5078125,
+        "display": "block",
+        "gridColumn": "auto",
+        "gridTemplateColumns": "none"
+      }
+    ],
+    "fixture": "single-post",
+    "version": "1.13.4",
+    "stableGeometrySamples": 5,
+    "logs": [
+      "[log] JQMIGRATE: Migrate is installed, version 3.4.1"
+    ]
+  },
+  {
+    "viewport": 1440,
+    "foreground": [
+      "1",
+      "1",
+      "1",
+      "1",
+      "1",
+      "1",
+      "1",
+      "1",
+      "1",
+      "1",
+      "1",
+      "1",
+      "1",
+      "1",
+      "1"
+    ],
+    "fontLoaderComplete": true,
+    "scrollWidth": 2449,
+    "documentHeight": 1393,
+    "main": {
+      "classes": "site-main",
+      "left": 0,
+      "width": 1440,
+      "rightGap": 0,
+      "height": 1008.40625,
+      "display": "block",
+      "gridColumn": "auto",
+      "gridTemplateColumns": "none"
+    },
+    "article": {
+      "classes": "post-10 post type-post status-publish format-standard hentry category-uncategorized",
+      "left": 32,
+      "width": 1376,
+      "rightGap": 32,
+      "height": 1008.40625,
+      "display": "block",
+      "gridColumn": "auto",
+      "gridTemplateColumns": "none"
+    },
+    "sidecars": [
+      {
+        "classes": "novablocks-sidecar alignwide novablocks-sidecar--sidebar-right novablocks-sidebar--medium last-block-is-sticky",
+        "left": 32,
+        "width": 1376,
+        "rightGap": 32,
+        "height": 1008.40625,
+        "display": "grid",
+        "gridColumn": "fs / fe",
+        "gridTemplateColumns": "[fs] 45px [ws] 300px [gs] 54px [cs] 262px [gcs] 27px [cc] 27px [gce] 262px [ce] 54px [ge] 300px [we] 45px [fe]"
+      }
+    ],
+    "heroes": [],
+    "heroMedia": [],
+    "header": [
+      {
+        "classes": "novablocks-header novablocks-header--main novablocks-header-shadow novablocks-header-background alignfull sm-palette-1 sm-variation-10 novablocks-header--is-old novablocks-header--ready novablocks-header--transparent",
+        "left": 0,
+        "width": 1440,
+        "rightGap": 0,
+        "height": 132.3984375,
+        "display": "block",
+        "gridColumn": "auto",
+        "gridTemplateColumns": "none"
+      }
+    ],
+    "fixture": "single-post",
+    "version": "1.13.4",
+    "stableGeometrySamples": 5,
+    "logs": [
+      "[log] JQMIGRATE: Migrate is installed, version 3.4.1"
+    ]
+  },
+  {
+    "viewport": 1920,
+    "foreground": [
+      "1",
+      "1",
+      "1",
+      "1",
+      "1",
+      "1",
+      "1",
+      "1",
+      "1",
+      "1",
+      "1",
+      "1",
+      "1",
+      "1",
+      "1"
+    ],
+    "fontLoaderComplete": true,
+    "scrollWidth": 3324,
+    "documentHeight": 1695,
+    "main": {
+      "classes": "site-main",
+      "left": 0,
+      "width": 1920,
+      "rightGap": 0,
+      "height": 1253.6015625,
+      "display": "block",
+      "gridColumn": "auto",
+      "gridTemplateColumns": "none"
+    },
+    "article": {
+      "classes": "post-10 post type-post status-publish format-standard hentry category-uncategorized",
+      "left": 37.140625,
+      "width": 1845.71875,
+      "rightGap": 37.140625,
+      "height": 1253.6015625,
+      "display": "block",
+      "gridColumn": "auto",
+      "gridTemplateColumns": "none"
+    },
+    "sidecars": [
+      {
+        "classes": "novablocks-sidecar alignwide novablocks-sidecar--sidebar-right novablocks-sidebar--medium last-block-is-sticky",
+        "left": 37.140625,
+        "width": 1845.71875,
+        "rightGap": 37.140625,
+        "height": 1253.6015625,
+        "display": "grid",
+        "gridColumn": "fs / fe",
+        "gridTemplateColumns": "[fs] 92.1406px [ws] 317.055px [gs] 69.4219px [cs] 409.531px [gcs] 34.7109px [cc] 34.7109px [gce] 409.531px [ce] 69.4219px [ge] 317.055px [we] 92.1406px [fe]"
+      }
+    ],
+    "heroes": [],
+    "heroMedia": [],
+    "header": [
+      {
+        "classes": "novablocks-header novablocks-header--main novablocks-header-shadow novablocks-header-background alignfull sm-palette-1 sm-variation-10 novablocks-header--is-old novablocks-header--ready novablocks-header--transparent",
+        "left": 0,
+        "width": 1920,
+        "rightGap": 0,
+        "height": 159.7578125,
+        "display": "block",
+        "gridColumn": "auto",
+        "gridTemplateColumns": "none"
+      }
+    ],
+    "fixture": "single-post",
+    "version": "1.13.4",
+    "stableGeometrySamples": 5,
+    "logs": [
+      "[log] JQMIGRATE: Migrate is installed, version 3.4.1"
+    ]
+  }
+]

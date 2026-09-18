@@ -1,0 +1,2347 @@
+[
+  {
+    "viewport": 390,
+    "foreground": [
+      "1",
+      "1",
+      "1",
+      "1"
+    ],
+    "fontLoaderComplete": true,
+    "scrollWidth": 390,
+    "documentHeight": 900,
+    "main": {
+      "classes": "site-main",
+      "left": 0,
+      "width": 390,
+      "rightGap": 0,
+      "height": 496.796875,
+      "display": "block",
+      "gridColumn": "auto",
+      "gridTemplateColumns": "none"
+    },
+    "article": {
+      "classes": "post-5 page type-page status-publish hentry",
+      "left": 20.75,
+      "width": 348.5,
+      "rightGap": 20.75,
+      "height": 496.796875,
+      "display": "block",
+      "gridColumn": "auto",
+      "gridTemplateColumns": "none"
+    },
+    "sidecars": [
+      {
+        "classes": "nb-sidecar nb-sidecar--sidebar-none nb-sidecar--sidebar-small nb-content-layout-grid alignfull nb-sidecar--no-left-rail nb-sidecar--no-right-rail sm-palette-1 sm-variation-1 sm-color-signal-0 sm-light",
+        "left": 20.75,
+        "width": 348.5,
+        "rightGap": 20.75,
+        "height": 496.796875,
+        "display": "grid",
+        "gridColumn": "fs / fe",
+        "gridTemplateColumns": "[fs] 24px [ws] 0px [gs] 0px [cs] 150.25px [gcs] 0px [cc] 0px [gce] 150.25px [ce] 0px [ge] 0px [we] 24px [fe]"
+      }
+    ],
+    "heroes": [],
+    "heroMedia": [],
+    "header": [
+      {
+        "classes": "nb-header nb-header--main nb-header-shadow nb-header-background alignfull sm-palette-1 sm-variation-1 sm-color-signal-0 sm-light nb-header--ready nb-header--transparent",
+        "left": -390,
+        "width": 390,
+        "rightGap": 390,
+        "height": 87,
+        "display": "block",
+        "gridColumn": "auto",
+        "gridTemplateColumns": "none"
+      }
+    ],
+    "fixture": "plain",
+    "version": "2.6.6.1",
+    "stableGeometrySamples": 5,
+    "logs": [
+      "[log] JQMIGRATE: Migrate is installed, version 3.4.1"
+    ]
+  },
+  {
+    "viewport": 768,
+    "foreground": [
+      "1",
+      "1",
+      "1",
+      "1"
+    ],
+    "fontLoaderComplete": true,
+    "scrollWidth": 768,
+    "documentHeight": 900,
+    "main": {
+      "classes": "site-main",
+      "left": 0,
+      "width": 768,
+      "rightGap": 0,
+      "height": 263.46875,
+      "display": "block",
+      "gridColumn": "auto",
+      "gridTemplateColumns": "none"
+    },
+    "article": {
+      "classes": "post-5 page type-page status-publish hentry",
+      "left": 24.796875,
+      "width": 718.40625,
+      "rightGap": 24.796875,
+      "height": 263.46875,
+      "display": "block",
+      "gridColumn": "auto",
+      "gridTemplateColumns": "none"
+    },
+    "sidecars": [
+      {
+        "classes": "nb-sidecar nb-sidecar--sidebar-none nb-sidecar--sidebar-small nb-content-layout-grid alignfull nb-sidecar--no-left-rail nb-sidecar--no-right-rail sm-palette-1 sm-variation-1 sm-color-signal-0 sm-light",
+        "left": 24.796875,
+        "width": 718.40625,
+        "rightGap": 24.796875,
+        "height": 263.46875,
+        "display": "grid",
+        "gridColumn": "fs / fe",
+        "gridTemplateColumns": "[fs] 24px [ws] 0px [gs] 0px [cs] 335.203px [gcs] 0px [cc] 0px [gce] 335.203px [ce] 0px [ge] 0px [we] 24px [fe]"
+      }
+    ],
+    "heroes": [],
+    "heroMedia": [],
+    "header": [
+      {
+        "classes": "nb-header nb-header--main nb-header-shadow nb-header-background alignfull sm-palette-1 sm-variation-1 sm-color-signal-0 sm-light nb-header--ready nb-header--transparent",
+        "left": -768,
+        "width": 768,
+        "rightGap": 768,
+        "height": 84,
+        "display": "block",
+        "gridColumn": "auto",
+        "gridTemplateColumns": "none"
+      }
+    ],
+    "fixture": "plain",
+    "version": "2.6.6.1",
+    "stableGeometrySamples": 5,
+    "logs": [
+      "[log] JQMIGRATE: Migrate is installed, version 3.4.1"
+    ]
+  },
+  {
+    "viewport": 1024,
+    "foreground": [
+      "1",
+      "1",
+      "1",
+      "1"
+    ],
+    "fontLoaderComplete": true,
+    "scrollWidth": 1024,
+    "documentHeight": 1162,
+    "main": {
+      "classes": "site-main",
+      "left": 0,
+      "width": 1024,
+      "rightGap": 0,
+      "height": 817.40625,
+      "display": "block",
+      "gridColumn": "auto",
+      "gridTemplateColumns": "none"
+    },
+    "article": {
+      "classes": "post-5 page type-page status-publish hentry",
+      "left": 27.53125,
+      "width": 968.9375,
+      "rightGap": 27.53125,
+      "height": 817.40625,
+      "display": "block",
+      "gridColumn": "auto",
+      "gridTemplateColumns": "none"
+    },
+    "sidecars": [
+      {
+        "classes": "nb-sidecar nb-sidecar--sidebar-none nb-sidecar--sidebar-small nb-content-layout-grid alignfull nb-sidecar--no-left-rail nb-sidecar--no-right-rail sm-palette-1 sm-variation-1 sm-color-signal-0 sm-light",
+        "left": 27.53125,
+        "width": 968.9375,
+        "rightGap": 27.53125,
+        "height": 817.40625,
+        "display": "grid",
+        "gridColumn": "fs / fe",
+        "gridTemplateColumns": "[fs] 24px [ws] 315.969px [frs] 0.015625px [gs] 48px [cs] 72.4844px [gcs] 24px [cc] 24px [gce] 72.4844px [ce] 48px [ge] 0.015625px [fre] 315.969px [we] 24px [fe]"
+      }
+    ],
+    "heroes": [],
+    "heroMedia": [],
+    "header": [
+      {
+        "classes": "nb-header nb-header--main nb-header-shadow nb-header-background alignfull sm-palette-1 sm-variation-1 sm-color-signal-0 sm-light nb-header--ready nb-header--transparent",
+        "left": 0,
+        "width": 1024,
+        "rightGap": 0,
+        "height": 110.4375,
+        "display": "block",
+        "gridColumn": "auto",
+        "gridTemplateColumns": "none"
+      }
+    ],
+    "fixture": "plain",
+    "version": "2.6.6.1",
+    "stableGeometrySamples": 5,
+    "logs": [
+      "[log] JQMIGRATE: Migrate is installed, version 3.4.1"
+    ]
+  },
+  {
+    "viewport": 1440,
+    "foreground": [
+      "1",
+      "1",
+      "1",
+      "1"
+    ],
+    "fontLoaderComplete": true,
+    "scrollWidth": 1440,
+    "documentHeight": 900,
+    "main": {
+      "classes": "site-main",
+      "left": 0,
+      "width": 1440,
+      "rightGap": 0,
+      "height": 367.171875,
+      "display": "block",
+      "gridColumn": "auto",
+      "gridTemplateColumns": "none"
+    },
+    "article": {
+      "classes": "post-5 page type-page status-publish hentry",
+      "left": 32,
+      "width": 1376,
+      "rightGap": 32,
+      "height": 367.171875,
+      "display": "block",
+      "gridColumn": "auto",
+      "gridTemplateColumns": "none"
+    },
+    "sidecars": [
+      {
+        "classes": "nb-sidecar nb-sidecar--sidebar-none nb-sidecar--sidebar-small nb-content-layout-grid alignfull nb-sidecar--no-left-rail nb-sidecar--no-right-rail sm-palette-1 sm-variation-1 sm-color-signal-0 sm-light",
+        "left": 32,
+        "width": 1376,
+        "rightGap": 32,
+        "height": 367.171875,
+        "display": "grid",
+        "gridColumn": "fs / fe",
+        "gridTemplateColumns": "[fs] 85px [ws] 324px [frs] 0px [gs] 48px [cs] 207px [gcs] 24px [cc] 24px [gce] 207px [ce] 48px [ge] 0px [fre] 324px [we] 85px [fe]"
+      }
+    ],
+    "heroes": [],
+    "heroMedia": [],
+    "header": [
+      {
+        "classes": "nb-header nb-header--main nb-header-shadow nb-header-background alignfull sm-palette-1 sm-variation-1 sm-color-signal-0 sm-light nb-header--ready nb-header--transparent",
+        "left": 0,
+        "width": 1440,
+        "rightGap": 0,
+        "height": 116.390625,
+        "display": "block",
+        "gridColumn": "auto",
+        "gridTemplateColumns": "none"
+      }
+    ],
+    "fixture": "plain",
+    "version": "2.6.6.1",
+    "stableGeometrySamples": 5,
+    "logs": [
+      "[log] JQMIGRATE: Migrate is installed, version 3.4.1"
+    ]
+  },
+  {
+    "viewport": 1920,
+    "foreground": [
+      "1",
+      "1",
+      "1",
+      "1"
+    ],
+    "fontLoaderComplete": true,
+    "scrollWidth": 1920,
+    "documentHeight": 900,
+    "main": {
+      "classes": "site-main",
+      "left": 0,
+      "width": 1920,
+      "rightGap": 0,
+      "height": 451.984375,
+      "display": "block",
+      "gridColumn": "auto",
+      "gridTemplateColumns": "none"
+    },
+    "article": {
+      "classes": "post-5 page type-page status-publish hentry",
+      "left": 37.140625,
+      "width": 1845.71875,
+      "rightGap": 37.140625,
+      "height": 451.984375,
+      "display": "block",
+      "gridColumn": "auto",
+      "gridTemplateColumns": "none"
+    },
+    "sidecars": [
+      {
+        "classes": "nb-sidecar nb-sidecar--sidebar-none nb-sidecar--sidebar-small nb-content-layout-grid alignfull nb-sidecar--no-left-rail nb-sidecar--no-right-rail sm-palette-1 sm-variation-1 sm-color-signal-0 sm-light",
+        "left": 37.140625,
+        "width": 1845.71875,
+        "rightGap": 37.140625,
+        "height": 451.984375,
+        "display": "grid",
+        "gridColumn": "fs / fe",
+        "gridTemplateColumns": "[fs] 147.562px [ws] 416.562px [frs] 0.03125px [gs] 48px [cs] 286.703px [gcs] 24px [cc] 24px [gce] 286.703px [ce] 48px [ge] 0.03125px [fre] 416.562px [we] 147.562px [fe]"
+      }
+    ],
+    "heroes": [],
+    "heroMedia": [],
+    "header": [
+      {
+        "classes": "nb-header nb-header--main nb-header-shadow nb-header-background alignfull sm-palette-1 sm-variation-1 sm-color-signal-0 sm-light nb-header--ready nb-header--transparent",
+        "left": 0,
+        "width": 1920,
+        "rightGap": 0,
+        "height": 133.484375,
+        "display": "block",
+        "gridColumn": "auto",
+        "gridTemplateColumns": "none"
+      }
+    ],
+    "fixture": "plain",
+    "version": "2.6.6.1",
+    "stableGeometrySamples": 5,
+    "logs": [
+      "[log] JQMIGRATE: Migrate is installed, version 3.4.1"
+    ]
+  },
+  {
+    "viewport": 390,
+    "foreground": [
+      "1",
+      "1",
+      "1",
+      "1",
+      "1",
+      "1"
+    ],
+    "fontLoaderComplete": true,
+    "scrollWidth": 390,
+    "documentHeight": 1399,
+    "main": {
+      "classes": "site-main",
+      "left": 0,
+      "width": 390,
+      "rightGap": 0,
+      "height": 1144.796875,
+      "display": "block",
+      "gridColumn": "auto",
+      "gridTemplateColumns": "none"
+    },
+    "article": {
+      "classes": "post-6 page type-page status-publish hentry",
+      "left": 20.75,
+      "width": 348.5,
+      "rightGap": 20.75,
+      "height": 1144.796875,
+      "display": "block",
+      "gridColumn": "auto",
+      "gridTemplateColumns": "none"
+    },
+    "sidecars": [
+      {
+        "classes": "nb-sidecar nb-sidecar--sidebar-none nb-sidecar--sidebar-small nb-content-layout-grid alignfull nb-sidecar--no-left-rail nb-sidecar--no-right-rail sm-palette-1 sm-variation-1 sm-color-signal-0 sm-light",
+        "left": 20.75,
+        "width": 348.5,
+        "rightGap": 20.75,
+        "height": 1144.796875,
+        "display": "grid",
+        "gridColumn": "fs / fe",
+        "gridTemplateColumns": "[fs] 24px [ws] 0px [gs] 0px [cs] 150.25px [gcs] 0px [cc] 0px [gce] 150.25px [ce] 0px [ge] 0px [we] 24px [fe]"
+      }
+    ],
+    "heroes": [
+      {
+        "classes": "nb-supernova nb-supernova--content-type-custom nb-supernova--card-layout-stacked nb-supernova--layout-classic nb-supernova--1-columns nb-supernova--valign-center nb-supernova--halign-center nb-supernova--align-full alignfull nb-grid__area--portrait nb-grid__area--width-full sm-palette-1 sm-variation-11 sm-color-signal-3 sm-light novablocks-block--ready",
+        "left": 20.75,
+        "width": 348.5,
+        "rightGap": 20.75,
+        "height": 594,
+        "display": "grid",
+        "gridColumn": "fs / fe",
+        "gridTemplateColumns": "subgrid [] [] [] [] [] [] [] [] [] [] []"
+      }
+    ],
+    "heroMedia": [
+      {
+        "classes": "nb-supernova-item__media novablocks-doppler__target is-loaded",
+        "left": 20.75,
+        "width": 349,
+        "rightGap": 20.25,
+        "height": 900,
+        "display": "block",
+        "gridColumn": "auto",
+        "gridTemplateColumns": "none"
+      }
+    ],
+    "header": [
+      {
+        "classes": "nb-header nb-header--main nb-header-shadow nb-header-background alignfull sm-palette-1 sm-variation-1 sm-color-signal-0 sm-light nb-header--ready nb-header--transparent",
+        "left": -390,
+        "width": 390,
+        "rightGap": 390,
+        "height": 87,
+        "display": "block",
+        "gridColumn": "auto",
+        "gridTemplateColumns": "none"
+      }
+    ],
+    "fixture": "legacy-hero",
+    "version": "2.6.6.1",
+    "stableGeometrySamples": 5,
+    "logs": [
+      "[log] JQMIGRATE: Migrate is installed, version 3.4.1"
+    ]
+  },
+  {
+    "viewport": 768,
+    "foreground": [
+      "1",
+      "1",
+      "1",
+      "1",
+      "1",
+      "1"
+    ],
+    "fontLoaderComplete": true,
+    "scrollWidth": 768,
+    "documentHeight": 1145,
+    "main": {
+      "classes": "site-main",
+      "left": 0,
+      "width": 768,
+      "rightGap": 0,
+      "height": 911.46875,
+      "display": "block",
+      "gridColumn": "auto",
+      "gridTemplateColumns": "none"
+    },
+    "article": {
+      "classes": "post-6 page type-page status-publish hentry",
+      "left": 24.796875,
+      "width": 718.40625,
+      "rightGap": 24.796875,
+      "height": 911.46875,
+      "display": "block",
+      "gridColumn": "auto",
+      "gridTemplateColumns": "none"
+    },
+    "sidecars": [
+      {
+        "classes": "nb-sidecar nb-sidecar--sidebar-none nb-sidecar--sidebar-small nb-content-layout-grid alignfull nb-sidecar--no-left-rail nb-sidecar--no-right-rail sm-palette-1 sm-variation-1 sm-color-signal-0 sm-light",
+        "left": 24.796875,
+        "width": 718.40625,
+        "rightGap": 24.796875,
+        "height": 911.46875,
+        "display": "grid",
+        "gridColumn": "fs / fe",
+        "gridTemplateColumns": "[fs] 24px [ws] 0px [gs] 0px [cs] 335.203px [gcs] 0px [cc] 0px [gce] 335.203px [ce] 0px [ge] 0px [we] 24px [fe]"
+      }
+    ],
+    "heroes": [
+      {
+        "classes": "nb-supernova nb-supernova--content-type-custom nb-supernova--card-layout-stacked nb-supernova--layout-classic nb-supernova--1-columns nb-supernova--valign-center nb-supernova--halign-center nb-supernova--align-full alignfull nb-grid__area--portrait nb-grid__area--width-full sm-palette-1 sm-variation-11 sm-color-signal-3 sm-light novablocks-block--ready",
+        "left": 24.796875,
+        "width": 718.40625,
+        "rightGap": 24.796875,
+        "height": 594,
+        "display": "grid",
+        "gridColumn": "fs / fe",
+        "gridTemplateColumns": "subgrid [] [] [] [] [] [] [] [] [] [] []"
+      }
+    ],
+    "heroMedia": [
+      {
+        "classes": "nb-supernova-item__media novablocks-doppler__target is-loaded",
+        "left": 24.796875,
+        "width": 718,
+        "rightGap": 25.203125,
+        "height": 900,
+        "display": "block",
+        "gridColumn": "auto",
+        "gridTemplateColumns": "none"
+      }
+    ],
+    "header": [
+      {
+        "classes": "nb-header nb-header--main nb-header-shadow nb-header-background alignfull sm-palette-1 sm-variation-1 sm-color-signal-0 sm-light nb-header--ready nb-header--transparent",
+        "left": -768,
+        "width": 768,
+        "rightGap": 768,
+        "height": 84,
+        "display": "block",
+        "gridColumn": "auto",
+        "gridTemplateColumns": "none"
+      }
+    ],
+    "fixture": "legacy-hero",
+    "version": "2.6.6.1",
+    "stableGeometrySamples": 5,
+    "logs": [
+      "[log] JQMIGRATE: Migrate is installed, version 3.4.1"
+    ]
+  },
+  {
+    "viewport": 1024,
+    "foreground": [
+      "1",
+      "1",
+      "1",
+      "1",
+      "1",
+      "1"
+    ],
+    "fontLoaderComplete": true,
+    "scrollWidth": 1024,
+    "documentHeight": 1755,
+    "main": {
+      "classes": "site-main",
+      "left": 0,
+      "width": 1024,
+      "rightGap": 0,
+      "height": 1465.40625,
+      "display": "block",
+      "gridColumn": "auto",
+      "gridTemplateColumns": "none"
+    },
+    "article": {
+      "classes": "post-6 page type-page status-publish hentry",
+      "left": 27.53125,
+      "width": 968.9375,
+      "rightGap": 27.53125,
+      "height": 1465.40625,
+      "display": "block",
+      "gridColumn": "auto",
+      "gridTemplateColumns": "none"
+    },
+    "sidecars": [
+      {
+        "classes": "nb-sidecar nb-sidecar--sidebar-none nb-sidecar--sidebar-small nb-content-layout-grid alignfull nb-sidecar--no-left-rail nb-sidecar--no-right-rail sm-palette-1 sm-variation-1 sm-color-signal-0 sm-light",
+        "left": 27.53125,
+        "width": 968.9375,
+        "rightGap": 27.53125,
+        "height": 1465.40625,
+        "display": "grid",
+        "gridColumn": "fs / fe",
+        "gridTemplateColumns": "[fs] 24px [ws] 315.969px [frs] 0.015625px [gs] 48px [cs] 72.4844px [gcs] 24px [cc] 24px [gce] 72.4844px [ce] 48px [ge] 0.015625px [fre] 315.969px [we] 24px [fe]"
+      }
+    ],
+    "heroes": [
+      {
+        "classes": "nb-supernova nb-supernova--content-type-custom nb-supernova--card-layout-stacked nb-supernova--layout-classic nb-supernova--1-columns nb-supernova--valign-center nb-supernova--halign-center nb-supernova--align-full alignfull nb-grid__area--portrait nb-grid__area--width-full sm-palette-1 sm-variation-11 sm-color-signal-3 sm-light novablocks-block--ready",
+        "left": 27.53125,
+        "width": 968.9375,
+        "rightGap": 27.53125,
+        "height": 594,
+        "display": "grid",
+        "gridColumn": "fs / fe",
+        "gridTemplateColumns": "subgrid [] [] [] [] [] [] [] [] [] [] [] [] []"
+      }
+    ],
+    "heroMedia": [
+      {
+        "classes": "nb-supernova-item__media novablocks-doppler__target is-loaded",
+        "left": 27.53125,
+        "width": 969,
+        "rightGap": 27.46875,
+        "height": 900,
+        "display": "block",
+        "gridColumn": "auto",
+        "gridTemplateColumns": "none"
+      }
+    ],
+    "header": [
+      {
+        "classes": "nb-header nb-header--main nb-header-shadow nb-header-background alignfull sm-palette-1 sm-variation-1 sm-color-signal-0 sm-light nb-header--ready nb-header--transparent",
+        "left": 0,
+        "width": 1024,
+        "rightGap": 0,
+        "height": 110.4375,
+        "display": "block",
+        "gridColumn": "auto",
+        "gridTemplateColumns": "none"
+      }
+    ],
+    "fixture": "legacy-hero",
+    "version": "2.6.6.1",
+    "stableGeometrySamples": 5,
+    "logs": [
+      "[log] JQMIGRATE: Migrate is installed, version 3.4.1"
+    ]
+  },
+  {
+    "viewport": 1440,
+    "foreground": [
+      "1",
+      "1",
+      "1",
+      "1",
+      "1",
+      "1"
+    ],
+    "fontLoaderComplete": true,
+    "scrollWidth": 1440,
+    "documentHeight": 1320,
+    "main": {
+      "classes": "site-main",
+      "left": 0,
+      "width": 1440,
+      "rightGap": 0,
+      "height": 1015.171875,
+      "display": "block",
+      "gridColumn": "auto",
+      "gridTemplateColumns": "none"
+    },
+    "article": {
+      "classes": "post-6 page type-page status-publish hentry",
+      "left": 32,
+      "width": 1376,
+      "rightGap": 32,
+      "height": 1015.171875,
+      "display": "block",
+      "gridColumn": "auto",
+      "gridTemplateColumns": "none"
+    },
+    "sidecars": [
+      {
+        "classes": "nb-sidecar nb-sidecar--sidebar-none nb-sidecar--sidebar-small nb-content-layout-grid alignfull nb-sidecar--no-left-rail nb-sidecar--no-right-rail sm-palette-1 sm-variation-1 sm-color-signal-0 sm-light",
+        "left": 32,
+        "width": 1376,
+        "rightGap": 32,
+        "height": 1015.171875,
+        "display": "grid",
+        "gridColumn": "fs / fe",
+        "gridTemplateColumns": "[fs] 85px [ws] 324px [frs] 0px [gs] 48px [cs] 207px [gcs] 24px [cc] 24px [gce] 207px [ce] 48px [ge] 0px [fre] 324px [we] 85px [fe]"
+      }
+    ],
+    "heroes": [
+      {
+        "classes": "nb-supernova nb-supernova--content-type-custom nb-supernova--card-layout-stacked nb-supernova--layout-classic nb-supernova--1-columns nb-supernova--valign-center nb-supernova--halign-center nb-supernova--align-full alignfull nb-grid__area--portrait nb-grid__area--width-full sm-palette-1 sm-variation-11 sm-color-signal-3 sm-light novablocks-block--ready",
+        "left": 32,
+        "width": 1376,
+        "rightGap": 32,
+        "height": 594,
+        "display": "grid",
+        "gridColumn": "fs / fe",
+        "gridTemplateColumns": "subgrid [] [] [] [] [] [] [] [] [] [] [] [] []"
+      }
+    ],
+    "heroMedia": [
+      {
+        "classes": "nb-supernova-item__media novablocks-doppler__target is-loaded",
+        "left": 32,
+        "width": 1376,
+        "rightGap": 32,
+        "height": 900,
+        "display": "block",
+        "gridColumn": "auto",
+        "gridTemplateColumns": "none"
+      }
+    ],
+    "header": [
+      {
+        "classes": "nb-header nb-header--main nb-header-shadow nb-header-background alignfull sm-palette-1 sm-variation-1 sm-color-signal-0 sm-light nb-header--ready nb-header--transparent",
+        "left": 0,
+        "width": 1440,
+        "rightGap": 0,
+        "height": 116.390625,
+        "display": "block",
+        "gridColumn": "auto",
+        "gridTemplateColumns": "none"
+      }
+    ],
+    "fixture": "legacy-hero",
+    "version": "2.6.6.1",
+    "stableGeometrySamples": 5,
+    "logs": [
+      "[log] JQMIGRATE: Migrate is installed, version 3.4.1"
+    ]
+  },
+  {
+    "viewport": 1920,
+    "foreground": [
+      "1",
+      "1",
+      "1",
+      "1",
+      "1",
+      "1"
+    ],
+    "fontLoaderComplete": true,
+    "scrollWidth": 1920,
+    "documentHeight": 1441,
+    "main": {
+      "classes": "site-main",
+      "left": 0,
+      "width": 1920,
+      "rightGap": 0,
+      "height": 1099.984375,
+      "display": "block",
+      "gridColumn": "auto",
+      "gridTemplateColumns": "none"
+    },
+    "article": {
+      "classes": "post-6 page type-page status-publish hentry",
+      "left": 37.140625,
+      "width": 1845.71875,
+      "rightGap": 37.140625,
+      "height": 1099.984375,
+      "display": "block",
+      "gridColumn": "auto",
+      "gridTemplateColumns": "none"
+    },
+    "sidecars": [
+      {
+        "classes": "nb-sidecar nb-sidecar--sidebar-none nb-sidecar--sidebar-small nb-content-layout-grid alignfull nb-sidecar--no-left-rail nb-sidecar--no-right-rail sm-palette-1 sm-variation-1 sm-color-signal-0 sm-light",
+        "left": 37.140625,
+        "width": 1845.71875,
+        "rightGap": 37.140625,
+        "height": 1099.984375,
+        "display": "grid",
+        "gridColumn": "fs / fe",
+        "gridTemplateColumns": "[fs] 147.562px [ws] 416.562px [frs] 0.03125px [gs] 48px [cs] 286.703px [gcs] 24px [cc] 24px [gce] 286.703px [ce] 48px [ge] 0.03125px [fre] 416.562px [we] 147.562px [fe]"
+      }
+    ],
+    "heroes": [
+      {
+        "classes": "nb-supernova nb-supernova--content-type-custom nb-supernova--card-layout-stacked nb-supernova--layout-classic nb-supernova--1-columns nb-supernova--valign-center nb-supernova--halign-center nb-supernova--align-full alignfull nb-grid__area--portrait nb-grid__area--width-full sm-palette-1 sm-variation-11 sm-color-signal-3 sm-light novablocks-block--ready",
+        "left": 37.140625,
+        "width": 1845.71875,
+        "rightGap": 37.140625,
+        "height": 594,
+        "display": "grid",
+        "gridColumn": "fs / fe",
+        "gridTemplateColumns": "subgrid [] [] [] [] [] [] [] [] [] [] [] [] []"
+      }
+    ],
+    "heroMedia": [
+      {
+        "classes": "nb-supernova-item__media novablocks-doppler__target is-loaded",
+        "left": 37.140625,
+        "width": 1846,
+        "rightGap": 36.859375,
+        "height": 900,
+        "display": "block",
+        "gridColumn": "auto",
+        "gridTemplateColumns": "none"
+      }
+    ],
+    "header": [
+      {
+        "classes": "nb-header nb-header--main nb-header-shadow nb-header-background alignfull sm-palette-1 sm-variation-1 sm-color-signal-0 sm-light nb-header--ready nb-header--transparent",
+        "left": 0,
+        "width": 1920,
+        "rightGap": 0,
+        "height": 133.484375,
+        "display": "block",
+        "gridColumn": "auto",
+        "gridTemplateColumns": "none"
+      }
+    ],
+    "fixture": "legacy-hero",
+    "version": "2.6.6.1",
+    "stableGeometrySamples": 5,
+    "logs": [
+      "[log] JQMIGRATE: Migrate is installed, version 3.4.1"
+    ]
+  },
+  {
+    "viewport": 390,
+    "foreground": [
+      "1",
+      "1",
+      "1",
+      "1",
+      "1"
+    ],
+    "fontLoaderComplete": true,
+    "scrollWidth": 390,
+    "documentHeight": 951,
+    "main": {
+      "classes": "site-main",
+      "left": 0,
+      "width": 390,
+      "rightGap": 0,
+      "height": 655.796875,
+      "display": "block",
+      "gridColumn": "auto",
+      "gridTemplateColumns": "none"
+    },
+    "article": {
+      "classes": "post-7 page type-page status-publish hentry",
+      "left": 20.75,
+      "width": 348.5,
+      "rightGap": 20.75,
+      "height": 655.796875,
+      "display": "block",
+      "gridColumn": "auto",
+      "gridTemplateColumns": "none"
+    },
+    "sidecars": [
+      {
+        "classes": "nb-sidecar nb-sidecar--sidebar-none nb-sidecar--sidebar-small nb-content-layout-grid alignfull nb-sidecar--no-left-rail nb-sidecar--no-right-rail sm-palette-1 sm-variation-1 sm-color-signal-0 sm-light",
+        "left": 20.75,
+        "width": 348.5,
+        "rightGap": 20.75,
+        "height": 655.796875,
+        "display": "grid",
+        "gridColumn": "fs / fe",
+        "gridTemplateColumns": "[fs] 24px [ws] 0px [gs] 0px [cs] 150.25px [gcs] 0px [cc] 0px [gce] 150.25px [ce] 0px [ge] 0px [we] 24px [fe]"
+      }
+    ],
+    "heroes": [],
+    "heroMedia": [],
+    "header": [
+      {
+        "classes": "nb-header nb-header--main nb-header-shadow nb-header-background alignfull sm-palette-1 sm-variation-1 sm-color-signal-0 sm-light nb-header--ready nb-header--transparent",
+        "left": -390,
+        "width": 390,
+        "rightGap": 390,
+        "height": 87,
+        "display": "block",
+        "gridColumn": "auto",
+        "gridTemplateColumns": "none"
+      }
+    ],
+    "fixture": "wide-group",
+    "version": "2.6.6.1",
+    "stableGeometrySamples": 5,
+    "logs": [
+      "[log] JQMIGRATE: Migrate is installed, version 3.4.1"
+    ]
+  },
+  {
+    "viewport": 768,
+    "foreground": [
+      "1",
+      "1",
+      "1",
+      "1",
+      "1"
+    ],
+    "fontLoaderComplete": true,
+    "scrollWidth": 768,
+    "documentHeight": 900,
+    "main": {
+      "classes": "site-main",
+      "left": 0,
+      "width": 768,
+      "rightGap": 0,
+      "height": 425.671875,
+      "display": "block",
+      "gridColumn": "auto",
+      "gridTemplateColumns": "none"
+    },
+    "article": {
+      "classes": "post-7 page type-page status-publish hentry",
+      "left": 24.796875,
+      "width": 718.40625,
+      "rightGap": 24.796875,
+      "height": 425.671875,
+      "display": "block",
+      "gridColumn": "auto",
+      "gridTemplateColumns": "none"
+    },
+    "sidecars": [
+      {
+        "classes": "nb-sidecar nb-sidecar--sidebar-none nb-sidecar--sidebar-small nb-content-layout-grid alignfull nb-sidecar--no-left-rail nb-sidecar--no-right-rail sm-palette-1 sm-variation-1 sm-color-signal-0 sm-light",
+        "left": 24.796875,
+        "width": 718.40625,
+        "rightGap": 24.796875,
+        "height": 425.671875,
+        "display": "grid",
+        "gridColumn": "fs / fe",
+        "gridTemplateColumns": "[fs] 24px [ws] 0px [gs] 0px [cs] 335.203px [gcs] 0px [cc] 0px [gce] 335.203px [ce] 0px [ge] 0px [we] 24px [fe]"
+      }
+    ],
+    "heroes": [],
+    "heroMedia": [],
+    "header": [
+      {
+        "classes": "nb-header nb-header--main nb-header-shadow nb-header-background alignfull sm-palette-1 sm-variation-1 sm-color-signal-0 sm-light nb-header--ready nb-header--transparent",
+        "left": -768,
+        "width": 768,
+        "rightGap": 768,
+        "height": 84,
+        "display": "block",
+        "gridColumn": "auto",
+        "gridTemplateColumns": "none"
+      }
+    ],
+    "fixture": "wide-group",
+    "version": "2.6.6.1",
+    "stableGeometrySamples": 5,
+    "logs": [
+      "[log] JQMIGRATE: Migrate is installed, version 3.4.1"
+    ]
+  },
+  {
+    "viewport": 1024,
+    "foreground": [
+      "1",
+      "1",
+      "1",
+      "1",
+      "1"
+    ],
+    "fontLoaderComplete": true,
+    "scrollWidth": 1024,
+    "documentHeight": 1411,
+    "main": {
+      "classes": "site-main",
+      "left": 0,
+      "width": 1024,
+      "rightGap": 0,
+      "height": 1066.15625,
+      "display": "block",
+      "gridColumn": "auto",
+      "gridTemplateColumns": "none"
+    },
+    "article": {
+      "classes": "post-7 page type-page status-publish hentry",
+      "left": 27.53125,
+      "width": 968.9375,
+      "rightGap": 27.53125,
+      "height": 1066.15625,
+      "display": "block",
+      "gridColumn": "auto",
+      "gridTemplateColumns": "none"
+    },
+    "sidecars": [
+      {
+        "classes": "nb-sidecar nb-sidecar--sidebar-none nb-sidecar--sidebar-small nb-content-layout-grid alignfull nb-sidecar--no-left-rail nb-sidecar--no-right-rail sm-palette-1 sm-variation-1 sm-color-signal-0 sm-light",
+        "left": 27.53125,
+        "width": 968.9375,
+        "rightGap": 27.53125,
+        "height": 1066.15625,
+        "display": "grid",
+        "gridColumn": "fs / fe",
+        "gridTemplateColumns": "[fs] 24px [ws] 315.969px [frs] 0.015625px [gs] 48px [cs] 72.4844px [gcs] 24px [cc] 24px [gce] 72.4844px [ce] 48px [ge] 0.015625px [fre] 315.969px [we] 24px [fe]"
+      }
+    ],
+    "heroes": [],
+    "heroMedia": [],
+    "header": [
+      {
+        "classes": "nb-header nb-header--main nb-header-shadow nb-header-background alignfull sm-palette-1 sm-variation-1 sm-color-signal-0 sm-light nb-header--ready nb-header--transparent",
+        "left": 0,
+        "width": 1024,
+        "rightGap": 0,
+        "height": 110.4375,
+        "display": "block",
+        "gridColumn": "auto",
+        "gridTemplateColumns": "none"
+      }
+    ],
+    "fixture": "wide-group",
+    "version": "2.6.6.1",
+    "stableGeometrySamples": 5,
+    "logs": [
+      "[log] JQMIGRATE: Migrate is installed, version 3.4.1"
+    ]
+  },
+  {
+    "viewport": 1440,
+    "foreground": [
+      "1",
+      "1",
+      "1",
+      "1",
+      "1"
+    ],
+    "fontLoaderComplete": true,
+    "scrollWidth": 1440,
+    "documentHeight": 900,
+    "main": {
+      "classes": "site-main",
+      "left": 0,
+      "width": 1440,
+      "rightGap": 0,
+      "height": 477.5625,
+      "display": "block",
+      "gridColumn": "auto",
+      "gridTemplateColumns": "none"
+    },
+    "article": {
+      "classes": "post-7 page type-page status-publish hentry",
+      "left": 32,
+      "width": 1376,
+      "rightGap": 32,
+      "height": 477.5625,
+      "display": "block",
+      "gridColumn": "auto",
+      "gridTemplateColumns": "none"
+    },
+    "sidecars": [
+      {
+        "classes": "nb-sidecar nb-sidecar--sidebar-none nb-sidecar--sidebar-small nb-content-layout-grid alignfull nb-sidecar--no-left-rail nb-sidecar--no-right-rail sm-palette-1 sm-variation-1 sm-color-signal-0 sm-light",
+        "left": 32,
+        "width": 1376,
+        "rightGap": 32,
+        "height": 477.5625,
+        "display": "grid",
+        "gridColumn": "fs / fe",
+        "gridTemplateColumns": "[fs] 85px [ws] 324px [frs] 0px [gs] 48px [cs] 207px [gcs] 24px [cc] 24px [gce] 207px [ce] 48px [ge] 0px [fre] 324px [we] 85px [fe]"
+      }
+    ],
+    "heroes": [],
+    "heroMedia": [],
+    "header": [
+      {
+        "classes": "nb-header nb-header--main nb-header-shadow nb-header-background alignfull sm-palette-1 sm-variation-1 sm-color-signal-0 sm-light nb-header--ready nb-header--transparent",
+        "left": 0,
+        "width": 1440,
+        "rightGap": 0,
+        "height": 116.390625,
+        "display": "block",
+        "gridColumn": "auto",
+        "gridTemplateColumns": "none"
+      }
+    ],
+    "fixture": "wide-group",
+    "version": "2.6.6.1",
+    "stableGeometrySamples": 5,
+    "logs": [
+      "[log] JQMIGRATE: Migrate is installed, version 3.4.1"
+    ]
+  },
+  {
+    "viewport": 1920,
+    "foreground": [
+      "1",
+      "1",
+      "1",
+      "1",
+      "1"
+    ],
+    "fontLoaderComplete": true,
+    "scrollWidth": 1920,
+    "documentHeight": 1002,
+    "main": {
+      "classes": "site-main",
+      "left": 0,
+      "width": 1920,
+      "rightGap": 0,
+      "height": 587.078125,
+      "display": "block",
+      "gridColumn": "auto",
+      "gridTemplateColumns": "none"
+    },
+    "article": {
+      "classes": "post-7 page type-page status-publish hentry",
+      "left": 37.140625,
+      "width": 1845.71875,
+      "rightGap": 37.140625,
+      "height": 587.078125,
+      "display": "block",
+      "gridColumn": "auto",
+      "gridTemplateColumns": "none"
+    },
+    "sidecars": [
+      {
+        "classes": "nb-sidecar nb-sidecar--sidebar-none nb-sidecar--sidebar-small nb-content-layout-grid alignfull nb-sidecar--no-left-rail nb-sidecar--no-right-rail sm-palette-1 sm-variation-1 sm-color-signal-0 sm-light",
+        "left": 37.140625,
+        "width": 1845.71875,
+        "rightGap": 37.140625,
+        "height": 587.078125,
+        "display": "grid",
+        "gridColumn": "fs / fe",
+        "gridTemplateColumns": "[fs] 147.562px [ws] 416.562px [frs] 0.03125px [gs] 48px [cs] 286.703px [gcs] 24px [cc] 24px [gce] 286.703px [ce] 48px [ge] 0.03125px [fre] 416.562px [we] 147.562px [fe]"
+      }
+    ],
+    "heroes": [],
+    "heroMedia": [],
+    "header": [
+      {
+        "classes": "nb-header nb-header--main nb-header-shadow nb-header-background alignfull sm-palette-1 sm-variation-1 sm-color-signal-0 sm-light nb-header--ready nb-header--transparent",
+        "left": 0,
+        "width": 1920,
+        "rightGap": 0,
+        "height": 133.484375,
+        "display": "block",
+        "gridColumn": "auto",
+        "gridTemplateColumns": "none"
+      }
+    ],
+    "fixture": "wide-group",
+    "version": "2.6.6.1",
+    "stableGeometrySamples": 5,
+    "logs": [
+      "[log] JQMIGRATE: Migrate is installed, version 3.4.1"
+    ]
+  },
+  {
+    "viewport": 390,
+    "foreground": [
+      "1",
+      "1",
+      "1",
+      "1",
+      "1",
+      "1",
+      "1",
+      "1"
+    ],
+    "fontLoaderComplete": true,
+    "scrollWidth": 390,
+    "documentHeight": 1596,
+    "main": {
+      "classes": "site-main",
+      "left": 0,
+      "width": 390,
+      "rightGap": 0,
+      "height": 1341.59375,
+      "display": "block",
+      "gridColumn": "auto",
+      "gridTemplateColumns": "none"
+    },
+    "article": {
+      "classes": "post-8 page type-page status-publish hentry",
+      "left": 20.75,
+      "width": 348.5,
+      "rightGap": 20.75,
+      "height": 1341.59375,
+      "display": "block",
+      "gridColumn": "auto",
+      "gridTemplateColumns": "none"
+    },
+    "sidecars": [
+      {
+        "classes": "nb-sidecar nb-sidecar--sidebar-none nb-sidecar--sidebar-small nb-content-layout-grid alignfull nb-sidecar--no-left-rail nb-sidecar--no-right-rail sm-palette-1 sm-variation-1 sm-color-signal-0 sm-light",
+        "left": 20.75,
+        "width": 348.5,
+        "rightGap": 20.75,
+        "height": 1341.59375,
+        "display": "grid",
+        "gridColumn": "fs / fe",
+        "gridTemplateColumns": "[fs] 24px [ws] 0px [gs] 0px [cs] 150.25px [gcs] 0px [cc] 0px [gce] 150.25px [ce] 0px [ge] 0px [we] 24px [fe]"
+      },
+      {
+        "classes": "nb-sidecar nb-sidecar--sidebar-right nb-sidecar--sidebar-small nb-content-layout-grid alignfull nb-sidecar--no-left-rail sm-palette-1 sm-variation-1 sm-color-signal-0 sm-light break-align-left",
+        "left": 20.75,
+        "width": 348.5,
+        "rightGap": 20.75,
+        "height": 699.59375,
+        "display": "grid",
+        "gridColumn": "fs / fe",
+        "gridTemplateColumns": "[fs] 24px [ws] 0px [gs] 0px [cs] 150.25px [gcs] 0px [cc] 0px [gce] 150.25px [ce] 0px [ge] 0px [we] 24px [fe]"
+      }
+    ],
+    "heroes": [
+      {
+        "classes": "nb-supernova nb-supernova--content-type-custom nb-supernova--card-layout-stacked nb-supernova--layout-classic nb-supernova--1-columns nb-supernova--valign-center nb-supernova--halign-center nb-supernova--align-full alignfull nb-grid__area--portrait nb-grid__area--width-full sm-palette-1 sm-variation-11 sm-color-signal-3 sm-light novablocks-block--ready",
+        "left": 20.75,
+        "width": 348.5,
+        "rightGap": 20.75,
+        "height": 594,
+        "display": "grid",
+        "gridColumn": "fs / fe",
+        "gridTemplateColumns": "subgrid [] [] [] [] [] [] [] [] [] [] []"
+      }
+    ],
+    "heroMedia": [
+      {
+        "classes": "nb-supernova-item__media novablocks-doppler__target is-loaded",
+        "left": 20.75,
+        "width": 349,
+        "rightGap": 20.25,
+        "height": 900,
+        "display": "block",
+        "gridColumn": "auto",
+        "gridTemplateColumns": "none"
+      }
+    ],
+    "header": [
+      {
+        "classes": "nb-header nb-header--main nb-header-shadow nb-header-background alignfull sm-palette-1 sm-variation-1 sm-color-signal-0 sm-light nb-header--ready nb-header--transparent",
+        "left": -390,
+        "width": 390,
+        "rightGap": 390,
+        "height": 87,
+        "display": "block",
+        "gridColumn": "auto",
+        "gridTemplateColumns": "none"
+      }
+    ],
+    "fixture": "hero-plus-sidecar",
+    "version": "2.6.6.1",
+    "stableGeometrySamples": 5,
+    "logs": [
+      "[log] JQMIGRATE: Migrate is installed, version 3.4.1"
+    ]
+  },
+  {
+    "viewport": 768,
+    "foreground": [
+      "1",
+      "1",
+      "1",
+      "1",
+      "1",
+      "1",
+      "1",
+      "1"
+    ],
+    "fontLoaderComplete": true,
+    "scrollWidth": 768,
+    "documentHeight": 1268,
+    "main": {
+      "classes": "site-main",
+      "left": 0,
+      "width": 768,
+      "rightGap": 0,
+      "height": 1034.375,
+      "display": "block",
+      "gridColumn": "auto",
+      "gridTemplateColumns": "none"
+    },
+    "article": {
+      "classes": "post-8 page type-page status-publish hentry",
+      "left": 24.796875,
+      "width": 718.40625,
+      "rightGap": 24.796875,
+      "height": 1034.375,
+      "display": "block",
+      "gridColumn": "auto",
+      "gridTemplateColumns": "none"
+    },
+    "sidecars": [
+      {
+        "classes": "nb-sidecar nb-sidecar--sidebar-none nb-sidecar--sidebar-small nb-content-layout-grid alignfull nb-sidecar--no-left-rail nb-sidecar--no-right-rail sm-palette-1 sm-variation-1 sm-color-signal-0 sm-light",
+        "left": 24.796875,
+        "width": 718.40625,
+        "rightGap": 24.796875,
+        "height": 1034.375,
+        "display": "grid",
+        "gridColumn": "fs / fe",
+        "gridTemplateColumns": "[fs] 24px [ws] 0px [gs] 0px [cs] 335.203px [gcs] 0px [cc] 0px [gce] 335.203px [ce] 0px [ge] 0px [we] 24px [fe]"
+      },
+      {
+        "classes": "nb-sidecar nb-sidecar--sidebar-right nb-sidecar--sidebar-small nb-content-layout-grid alignfull nb-sidecar--no-left-rail sm-palette-1 sm-variation-1 sm-color-signal-0 sm-light break-align-left",
+        "left": 24.796875,
+        "width": 718.40625,
+        "rightGap": 24.796875,
+        "height": 392.375,
+        "display": "grid",
+        "gridColumn": "fs / fe",
+        "gridTemplateColumns": "[fs] 24px [ws] 0px [gs] 0px [cs] 335.203px [gcs] 0px [cc] 0px [gce] 335.203px [ce] 0px [ge] 0px [we] 24px [fe]"
+      }
+    ],
+    "heroes": [
+      {
+        "classes": "nb-supernova nb-supernova--content-type-custom nb-supernova--card-layout-stacked nb-supernova--layout-classic nb-supernova--1-columns nb-supernova--valign-center nb-supernova--halign-center nb-supernova--align-full alignfull nb-grid__area--portrait nb-grid__area--width-full sm-palette-1 sm-variation-11 sm-color-signal-3 sm-light novablocks-block--ready",
+        "left": 24.796875,
+        "width": 718.40625,
+        "rightGap": 24.796875,
+        "height": 594,
+        "display": "grid",
+        "gridColumn": "fs / fe",
+        "gridTemplateColumns": "subgrid [] [] [] [] [] [] [] [] [] [] []"
+      }
+    ],
+    "heroMedia": [
+      {
+        "classes": "nb-supernova-item__media novablocks-doppler__target is-loaded",
+        "left": 24.796875,
+        "width": 718,
+        "rightGap": 25.203125,
+        "height": 900,
+        "display": "block",
+        "gridColumn": "auto",
+        "gridTemplateColumns": "none"
+      }
+    ],
+    "header": [
+      {
+        "classes": "nb-header nb-header--main nb-header-shadow nb-header-background alignfull sm-palette-1 sm-variation-1 sm-color-signal-0 sm-light nb-header--ready nb-header--transparent",
+        "left": -768,
+        "width": 768,
+        "rightGap": 768,
+        "height": 84,
+        "display": "block",
+        "gridColumn": "auto",
+        "gridTemplateColumns": "none"
+      }
+    ],
+    "fixture": "hero-plus-sidecar",
+    "version": "2.6.6.1",
+    "stableGeometrySamples": 5,
+    "logs": [
+      "[log] JQMIGRATE: Migrate is installed, version 3.4.1"
+    ]
+  },
+  {
+    "viewport": 1024,
+    "foreground": [
+      "1",
+      "1",
+      "1",
+      "1",
+      "1",
+      "1",
+      "1",
+      "1"
+    ],
+    "fontLoaderComplete": true,
+    "scrollWidth": 1024,
+    "documentHeight": 1286,
+    "main": {
+      "classes": "site-main",
+      "left": 0,
+      "width": 1024,
+      "rightGap": 0,
+      "height": 996.421875,
+      "display": "block",
+      "gridColumn": "auto",
+      "gridTemplateColumns": "none"
+    },
+    "article": {
+      "classes": "post-8 page type-page status-publish hentry",
+      "left": 27.53125,
+      "width": 968.9375,
+      "rightGap": 27.53125,
+      "height": 996.421875,
+      "display": "block",
+      "gridColumn": "auto",
+      "gridTemplateColumns": "none"
+    },
+    "sidecars": [
+      {
+        "classes": "nb-sidecar nb-sidecar--sidebar-none nb-sidecar--sidebar-small nb-content-layout-grid alignfull nb-sidecar--no-left-rail nb-sidecar--no-right-rail sm-palette-1 sm-variation-1 sm-color-signal-0 sm-light",
+        "left": 27.53125,
+        "width": 968.9375,
+        "rightGap": 27.53125,
+        "height": 996.421875,
+        "display": "grid",
+        "gridColumn": "fs / fe",
+        "gridTemplateColumns": "[fs] 24px [ws] 315.969px [frs] 0.015625px [gs] 48px [cs] 72.4844px [gcs] 24px [cc] 24px [gce] 72.4844px [ce] 48px [ge] 0.015625px [fre] 315.969px [we] 24px [fe]"
+      },
+      {
+        "classes": "nb-sidecar nb-sidecar--sidebar-right nb-sidecar--sidebar-small nb-content-layout-grid alignfull nb-sidecar--no-left-rail sm-palette-1 sm-variation-1 sm-color-signal-0 sm-light break-align-left",
+        "left": 27.53125,
+        "width": 968.9375,
+        "rightGap": 27.53125,
+        "height": 354.421875,
+        "display": "grid",
+        "gridColumn": "fs / fe",
+        "gridTemplateColumns": "[fs] 24px [ws] 315.969px [frs] 0.015625px [gs] 48px [cs] 72.4844px [gcs] 24px [cc] 24px [gce] 72.4844px [ce] 48px [ge] 0.015625px [fre] 315.969px [we] 24px [fe]"
+      }
+    ],
+    "heroes": [
+      {
+        "classes": "nb-supernova nb-supernova--content-type-custom nb-supernova--card-layout-stacked nb-supernova--layout-classic nb-supernova--1-columns nb-supernova--valign-center nb-supernova--halign-center nb-supernova--align-full alignfull nb-grid__area--portrait nb-grid__area--width-full sm-palette-1 sm-variation-11 sm-color-signal-3 sm-light novablocks-block--ready",
+        "left": 27.53125,
+        "width": 968.9375,
+        "rightGap": 27.53125,
+        "height": 594,
+        "display": "grid",
+        "gridColumn": "fs / fe",
+        "gridTemplateColumns": "subgrid [] [] [] [] [] [] [] [] [] [] [] [] []"
+      }
+    ],
+    "heroMedia": [
+      {
+        "classes": "nb-supernova-item__media novablocks-doppler__target is-loaded",
+        "left": 27.53125,
+        "width": 969,
+        "rightGap": 27.46875,
+        "height": 900,
+        "display": "block",
+        "gridColumn": "auto",
+        "gridTemplateColumns": "none"
+      }
+    ],
+    "header": [
+      {
+        "classes": "nb-header nb-header--main nb-header-shadow nb-header-background alignfull sm-palette-1 sm-variation-1 sm-color-signal-0 sm-light nb-header--ready nb-header--transparent",
+        "left": 0,
+        "width": 1024,
+        "rightGap": 0,
+        "height": 110.4375,
+        "display": "block",
+        "gridColumn": "auto",
+        "gridTemplateColumns": "none"
+      }
+    ],
+    "fixture": "hero-plus-sidecar",
+    "version": "2.6.6.1",
+    "stableGeometrySamples": 5,
+    "logs": [
+      "[log] JQMIGRATE: Migrate is installed, version 3.4.1"
+    ]
+  },
+  {
+    "viewport": 1440,
+    "foreground": [
+      "1",
+      "1",
+      "1",
+      "1",
+      "1",
+      "1",
+      "1",
+      "1"
+    ],
+    "fontLoaderComplete": true,
+    "scrollWidth": 1440,
+    "documentHeight": 1228,
+    "main": {
+      "classes": "site-main",
+      "left": 0,
+      "width": 1440,
+      "rightGap": 0,
+      "height": 922.78125,
+      "display": "block",
+      "gridColumn": "auto",
+      "gridTemplateColumns": "none"
+    },
+    "article": {
+      "classes": "post-8 page type-page status-publish hentry",
+      "left": 32,
+      "width": 1376,
+      "rightGap": 32,
+      "height": 922.78125,
+      "display": "block",
+      "gridColumn": "auto",
+      "gridTemplateColumns": "none"
+    },
+    "sidecars": [
+      {
+        "classes": "nb-sidecar nb-sidecar--sidebar-none nb-sidecar--sidebar-small nb-content-layout-grid alignfull nb-sidecar--no-left-rail nb-sidecar--no-right-rail sm-palette-1 sm-variation-1 sm-color-signal-0 sm-light",
+        "left": 32,
+        "width": 1376,
+        "rightGap": 32,
+        "height": 922.78125,
+        "display": "grid",
+        "gridColumn": "fs / fe",
+        "gridTemplateColumns": "[fs] 85px [ws] 324px [frs] 0px [gs] 48px [cs] 207px [gcs] 24px [cc] 24px [gce] 207px [ce] 48px [ge] 0px [fre] 324px [we] 85px [fe]"
+      },
+      {
+        "classes": "nb-sidecar nb-sidecar--sidebar-right nb-sidecar--sidebar-small nb-content-layout-grid alignfull nb-sidecar--no-left-rail sm-palette-1 sm-variation-1 sm-color-signal-0 sm-light break-align-left",
+        "left": 32,
+        "width": 1376,
+        "rightGap": 32,
+        "height": 280.78125,
+        "display": "grid",
+        "gridColumn": "fs / fe",
+        "gridTemplateColumns": "[fs] 85px [ws] 324px [frs] 0px [gs] 48px [cs] 207px [gcs] 24px [cc] 24px [gce] 207px [ce] 48px [ge] 0px [fre] 324px [we] 85px [fe]"
+      }
+    ],
+    "heroes": [
+      {
+        "classes": "nb-supernova nb-supernova--content-type-custom nb-supernova--card-layout-stacked nb-supernova--layout-classic nb-supernova--1-columns nb-supernova--valign-center nb-supernova--halign-center nb-supernova--align-full alignfull nb-grid__area--portrait nb-grid__area--width-full sm-palette-1 sm-variation-11 sm-color-signal-3 sm-light novablocks-block--ready",
+        "left": 32,
+        "width": 1376,
+        "rightGap": 32,
+        "height": 594,
+        "display": "grid",
+        "gridColumn": "fs / fe",
+        "gridTemplateColumns": "subgrid [] [] [] [] [] [] [] [] [] [] [] [] []"
+      }
+    ],
+    "heroMedia": [
+      {
+        "classes": "nb-supernova-item__media novablocks-doppler__target is-loaded",
+        "left": 32,
+        "width": 1376,
+        "rightGap": 32,
+        "height": 900,
+        "display": "block",
+        "gridColumn": "auto",
+        "gridTemplateColumns": "none"
+      }
+    ],
+    "header": [
+      {
+        "classes": "nb-header nb-header--main nb-header-shadow nb-header-background alignfull sm-palette-1 sm-variation-1 sm-color-signal-0 sm-light nb-header--ready nb-header--transparent",
+        "left": 0,
+        "width": 1440,
+        "rightGap": 0,
+        "height": 116.390625,
+        "display": "block",
+        "gridColumn": "auto",
+        "gridTemplateColumns": "none"
+      }
+    ],
+    "fixture": "hero-plus-sidecar",
+    "version": "2.6.6.1",
+    "stableGeometrySamples": 5,
+    "logs": [
+      "[log] JQMIGRATE: Migrate is installed, version 3.4.1"
+    ]
+  },
+  {
+    "viewport": 1920,
+    "foreground": [
+      "1",
+      "1",
+      "1",
+      "1",
+      "1",
+      "1",
+      "1",
+      "1"
+    ],
+    "fontLoaderComplete": true,
+    "scrollWidth": 1920,
+    "documentHeight": 1324,
+    "main": {
+      "classes": "site-main",
+      "left": 0,
+      "width": 1920,
+      "rightGap": 0,
+      "height": 982.890625,
+      "display": "block",
+      "gridColumn": "auto",
+      "gridTemplateColumns": "none"
+    },
+    "article": {
+      "classes": "post-8 page type-page status-publish hentry",
+      "left": 37.140625,
+      "width": 1845.71875,
+      "rightGap": 37.140625,
+      "height": 982.890625,
+      "display": "block",
+      "gridColumn": "auto",
+      "gridTemplateColumns": "none"
+    },
+    "sidecars": [
+      {
+        "classes": "nb-sidecar nb-sidecar--sidebar-none nb-sidecar--sidebar-small nb-content-layout-grid alignfull nb-sidecar--no-left-rail nb-sidecar--no-right-rail sm-palette-1 sm-variation-1 sm-color-signal-0 sm-light",
+        "left": 37.140625,
+        "width": 1845.71875,
+        "rightGap": 37.140625,
+        "height": 982.890625,
+        "display": "grid",
+        "gridColumn": "fs / fe",
+        "gridTemplateColumns": "[fs] 147.562px [ws] 416.562px [frs] 0.03125px [gs] 48px [cs] 286.703px [gcs] 24px [cc] 24px [gce] 286.703px [ce] 48px [ge] 0.03125px [fre] 416.562px [we] 147.562px [fe]"
+      },
+      {
+        "classes": "nb-sidecar nb-sidecar--sidebar-right nb-sidecar--sidebar-small nb-content-layout-grid alignfull nb-sidecar--no-left-rail sm-palette-1 sm-variation-1 sm-color-signal-0 sm-light break-align-left",
+        "left": 37.140625,
+        "width": 1845.71875,
+        "rightGap": 37.140625,
+        "height": 340.890625,
+        "display": "grid",
+        "gridColumn": "fs / fe",
+        "gridTemplateColumns": "[fs] 147.562px [ws] 416.562px [frs] 0.03125px [gs] 48px [cs] 286.703px [gcs] 24px [cc] 24px [gce] 286.703px [ce] 48px [ge] 0.03125px [fre] 416.562px [we] 147.562px [fe]"
+      }
+    ],
+    "heroes": [
+      {
+        "classes": "nb-supernova nb-supernova--content-type-custom nb-supernova--card-layout-stacked nb-supernova--layout-classic nb-supernova--1-columns nb-supernova--valign-center nb-supernova--halign-center nb-supernova--align-full alignfull nb-grid__area--portrait nb-grid__area--width-full sm-palette-1 sm-variation-11 sm-color-signal-3 sm-light novablocks-block--ready",
+        "left": 37.140625,
+        "width": 1845.71875,
+        "rightGap": 37.140625,
+        "height": 594,
+        "display": "grid",
+        "gridColumn": "fs / fe",
+        "gridTemplateColumns": "subgrid [] [] [] [] [] [] [] [] [] [] [] [] []"
+      }
+    ],
+    "heroMedia": [
+      {
+        "classes": "nb-supernova-item__media novablocks-doppler__target is-loaded",
+        "left": 37.140625,
+        "width": 1846,
+        "rightGap": 36.859375,
+        "height": 900,
+        "display": "block",
+        "gridColumn": "auto",
+        "gridTemplateColumns": "none"
+      }
+    ],
+    "header": [
+      {
+        "classes": "nb-header nb-header--main nb-header-shadow nb-header-background alignfull sm-palette-1 sm-variation-1 sm-color-signal-0 sm-light nb-header--ready nb-header--transparent",
+        "left": 0,
+        "width": 1920,
+        "rightGap": 0,
+        "height": 133.484375,
+        "display": "block",
+        "gridColumn": "auto",
+        "gridTemplateColumns": "none"
+      }
+    ],
+    "fixture": "hero-plus-sidecar",
+    "version": "2.6.6.1",
+    "stableGeometrySamples": 5,
+    "logs": [
+      "[log] JQMIGRATE: Migrate is installed, version 3.4.1"
+    ]
+  },
+  {
+    "viewport": 390,
+    "foreground": [
+      "1",
+      "1",
+      "1",
+      "1",
+      "1",
+      "1",
+      "1"
+    ],
+    "fontLoaderComplete": true,
+    "scrollWidth": 390,
+    "documentHeight": 1051,
+    "main": {
+      "classes": "site-main",
+      "left": 0,
+      "width": 390,
+      "rightGap": 0,
+      "height": 755.390625,
+      "display": "block",
+      "gridColumn": "auto",
+      "gridTemplateColumns": "none"
+    },
+    "article": {
+      "classes": "post-9 page type-page status-publish hentry",
+      "left": 20.75,
+      "width": 348.5,
+      "rightGap": 20.75,
+      "height": 755.390625,
+      "display": "block",
+      "gridColumn": "auto",
+      "gridTemplateColumns": "none"
+    },
+    "sidecars": [
+      {
+        "classes": "nb-sidecar nb-sidecar--sidebar-none nb-sidecar--sidebar-small nb-content-layout-grid alignfull nb-sidecar--no-left-rail nb-sidecar--no-right-rail sm-palette-1 sm-variation-1 sm-color-signal-0 sm-light",
+        "left": 20.75,
+        "width": 348.5,
+        "rightGap": 20.75,
+        "height": 755.390625,
+        "display": "grid",
+        "gridColumn": "fs / fe",
+        "gridTemplateColumns": "[fs] 24px [ws] 0px [gs] 0px [cs] 150.25px [gcs] 0px [cc] 0px [gce] 150.25px [ce] 0px [ge] 0px [we] 24px [fe]"
+      },
+      {
+        "classes": "nb-sidecar nb-sidecar--sidebar-right nb-sidecar--sidebar-small nb-content-layout-grid alignfull nb-sidecar--no-left-rail sm-palette-1 sm-variation-1 sm-color-signal-0 sm-light break-align-left",
+        "left": 20.75,
+        "width": 348.5,
+        "rightGap": 20.75,
+        "height": 699.59375,
+        "display": "grid",
+        "gridColumn": "fs / fe",
+        "gridTemplateColumns": "[fs] 24px [ws] 0px [gs] 0px [cs] 150.25px [gcs] 0px [cc] 0px [gce] 150.25px [ce] 0px [ge] 0px [we] 24px [fe]"
+      }
+    ],
+    "heroes": [],
+    "heroMedia": [],
+    "header": [
+      {
+        "classes": "nb-header nb-header--main nb-header-shadow nb-header-background alignfull sm-palette-1 sm-variation-1 sm-color-signal-0 sm-light nb-header--ready nb-header--transparent",
+        "left": -390,
+        "width": 390,
+        "rightGap": 390,
+        "height": 87,
+        "display": "block",
+        "gridColumn": "auto",
+        "gridTemplateColumns": "none"
+      }
+    ],
+    "fixture": "inner-sidecar",
+    "version": "2.6.6.1",
+    "stableGeometrySamples": 5,
+    "logs": [
+      "[log] JQMIGRATE: Migrate is installed, version 3.4.1"
+    ]
+  },
+  {
+    "viewport": 768,
+    "foreground": [
+      "1",
+      "1",
+      "1",
+      "1",
+      "1",
+      "1",
+      "1"
+    ],
+    "fontLoaderComplete": true,
+    "scrollWidth": 768,
+    "documentHeight": 900,
+    "main": {
+      "classes": "site-main",
+      "left": 0,
+      "width": 768,
+      "rightGap": 0,
+      "height": 454,
+      "display": "block",
+      "gridColumn": "auto",
+      "gridTemplateColumns": "none"
+    },
+    "article": {
+      "classes": "post-9 page type-page status-publish hentry",
+      "left": 24.796875,
+      "width": 718.40625,
+      "rightGap": 24.796875,
+      "height": 454,
+      "display": "block",
+      "gridColumn": "auto",
+      "gridTemplateColumns": "none"
+    },
+    "sidecars": [
+      {
+        "classes": "nb-sidecar nb-sidecar--sidebar-none nb-sidecar--sidebar-small nb-content-layout-grid alignfull nb-sidecar--no-left-rail nb-sidecar--no-right-rail sm-palette-1 sm-variation-1 sm-color-signal-0 sm-light",
+        "left": 24.796875,
+        "width": 718.40625,
+        "rightGap": 24.796875,
+        "height": 454,
+        "display": "grid",
+        "gridColumn": "fs / fe",
+        "gridTemplateColumns": "[fs] 24px [ws] 0px [gs] 0px [cs] 335.203px [gcs] 0px [cc] 0px [gce] 335.203px [ce] 0px [ge] 0px [we] 24px [fe]"
+      },
+      {
+        "classes": "nb-sidecar nb-sidecar--sidebar-right nb-sidecar--sidebar-small nb-content-layout-grid alignfull nb-sidecar--no-left-rail sm-palette-1 sm-variation-1 sm-color-signal-0 sm-light break-align-left",
+        "left": 24.796875,
+        "width": 718.40625,
+        "rightGap": 24.796875,
+        "height": 392.375,
+        "display": "grid",
+        "gridColumn": "fs / fe",
+        "gridTemplateColumns": "[fs] 24px [ws] 0px [gs] 0px [cs] 335.203px [gcs] 0px [cc] 0px [gce] 335.203px [ce] 0px [ge] 0px [we] 24px [fe]"
+      }
+    ],
+    "heroes": [],
+    "heroMedia": [],
+    "header": [
+      {
+        "classes": "nb-header nb-header--main nb-header-shadow nb-header-background alignfull sm-palette-1 sm-variation-1 sm-color-signal-0 sm-light nb-header--ready nb-header--transparent",
+        "left": -768,
+        "width": 768,
+        "rightGap": 768,
+        "height": 84,
+        "display": "block",
+        "gridColumn": "auto",
+        "gridTemplateColumns": "none"
+      }
+    ],
+    "fixture": "inner-sidecar",
+    "version": "2.6.6.1",
+    "stableGeometrySamples": 5,
+    "logs": [
+      "[log] JQMIGRATE: Migrate is installed, version 3.4.1"
+    ]
+  },
+  {
+    "viewport": 1024,
+    "foreground": [
+      "1",
+      "1",
+      "1",
+      "1",
+      "1",
+      "1",
+      "1"
+    ],
+    "fontLoaderComplete": true,
+    "scrollWidth": 1024,
+    "documentHeight": 900,
+    "main": {
+      "classes": "site-main",
+      "left": 0,
+      "width": 1024,
+      "rightGap": 0,
+      "height": 461.578125,
+      "display": "block",
+      "gridColumn": "auto",
+      "gridTemplateColumns": "none"
+    },
+    "article": {
+      "classes": "post-9 page type-page status-publish hentry",
+      "left": 27.53125,
+      "width": 968.9375,
+      "rightGap": 27.53125,
+      "height": 461.578125,
+      "display": "block",
+      "gridColumn": "auto",
+      "gridTemplateColumns": "none"
+    },
+    "sidecars": [
+      {
+        "classes": "nb-sidecar nb-sidecar--sidebar-none nb-sidecar--sidebar-small nb-content-layout-grid alignfull nb-sidecar--no-left-rail nb-sidecar--no-right-rail sm-palette-1 sm-variation-1 sm-color-signal-0 sm-light",
+        "left": 27.53125,
+        "width": 968.9375,
+        "rightGap": 27.53125,
+        "height": 461.578125,
+        "display": "grid",
+        "gridColumn": "fs / fe",
+        "gridTemplateColumns": "[fs] 24px [ws] 315.969px [frs] 0.015625px [gs] 48px [cs] 72.4844px [gcs] 24px [cc] 24px [gce] 72.4844px [ce] 48px [ge] 0.015625px [fre] 315.969px [we] 24px [fe]"
+      },
+      {
+        "classes": "nb-sidecar nb-sidecar--sidebar-right nb-sidecar--sidebar-small nb-content-layout-grid alignfull nb-sidecar--no-left-rail sm-palette-1 sm-variation-1 sm-color-signal-0 sm-light break-align-left",
+        "left": 27.53125,
+        "width": 968.9375,
+        "rightGap": 27.53125,
+        "height": 354.421875,
+        "display": "grid",
+        "gridColumn": "fs / fe",
+        "gridTemplateColumns": "[fs] 24px [ws] 315.969px [frs] 0.015625px [gs] 48px [cs] 72.4844px [gcs] 24px [cc] 24px [gce] 72.4844px [ce] 48px [ge] 0.015625px [fre] 315.969px [we] 24px [fe]"
+      }
+    ],
+    "heroes": [],
+    "heroMedia": [],
+    "header": [
+      {
+        "classes": "nb-header nb-header--main nb-header-shadow nb-header-background alignfull sm-palette-1 sm-variation-1 sm-color-signal-0 sm-light nb-header--ready nb-header--transparent",
+        "left": 0,
+        "width": 1024,
+        "rightGap": 0,
+        "height": 110.4375,
+        "display": "block",
+        "gridColumn": "auto",
+        "gridTemplateColumns": "none"
+      }
+    ],
+    "fixture": "inner-sidecar",
+    "version": "2.6.6.1",
+    "stableGeometrySamples": 5,
+    "logs": [
+      "[log] JQMIGRATE: Migrate is installed, version 3.4.1"
+    ]
+  },
+  {
+    "viewport": 1440,
+    "foreground": [
+      "1",
+      "1",
+      "1",
+      "1",
+      "1",
+      "1",
+      "1"
+    ],
+    "fontLoaderComplete": true,
+    "scrollWidth": 1440,
+    "documentHeight": 900,
+    "main": {
+      "classes": "site-main",
+      "left": 0,
+      "width": 1440,
+      "rightGap": 0,
+      "height": 352.78125,
+      "display": "block",
+      "gridColumn": "auto",
+      "gridTemplateColumns": "none"
+    },
+    "article": {
+      "classes": "post-9 page type-page status-publish hentry",
+      "left": 32,
+      "width": 1376,
+      "rightGap": 32,
+      "height": 352.78125,
+      "display": "block",
+      "gridColumn": "auto",
+      "gridTemplateColumns": "none"
+    },
+    "sidecars": [
+      {
+        "classes": "nb-sidecar nb-sidecar--sidebar-none nb-sidecar--sidebar-small nb-content-layout-grid alignfull nb-sidecar--no-left-rail nb-sidecar--no-right-rail sm-palette-1 sm-variation-1 sm-color-signal-0 sm-light",
+        "left": 32,
+        "width": 1376,
+        "rightGap": 32,
+        "height": 352.78125,
+        "display": "grid",
+        "gridColumn": "fs / fe",
+        "gridTemplateColumns": "[fs] 85px [ws] 324px [frs] 0px [gs] 48px [cs] 207px [gcs] 24px [cc] 24px [gce] 207px [ce] 48px [ge] 0px [fre] 324px [we] 85px [fe]"
+      },
+      {
+        "classes": "nb-sidecar nb-sidecar--sidebar-right nb-sidecar--sidebar-small nb-content-layout-grid alignfull nb-sidecar--no-left-rail sm-palette-1 sm-variation-1 sm-color-signal-0 sm-light break-align-left",
+        "left": 32,
+        "width": 1376,
+        "rightGap": 32,
+        "height": 280.78125,
+        "display": "grid",
+        "gridColumn": "fs / fe",
+        "gridTemplateColumns": "[fs] 85px [ws] 324px [frs] 0px [gs] 48px [cs] 207px [gcs] 24px [cc] 24px [gce] 207px [ce] 48px [ge] 0px [fre] 324px [we] 85px [fe]"
+      }
+    ],
+    "heroes": [],
+    "heroMedia": [],
+    "header": [
+      {
+        "classes": "nb-header nb-header--main nb-header-shadow nb-header-background alignfull sm-palette-1 sm-variation-1 sm-color-signal-0 sm-light nb-header--ready nb-header--transparent",
+        "left": 0,
+        "width": 1440,
+        "rightGap": 0,
+        "height": 116.390625,
+        "display": "block",
+        "gridColumn": "auto",
+        "gridTemplateColumns": "none"
+      }
+    ],
+    "fixture": "inner-sidecar",
+    "version": "2.6.6.1",
+    "stableGeometrySamples": 5,
+    "logs": [
+      "[log] JQMIGRATE: Migrate is installed, version 3.4.1"
+    ]
+  },
+  {
+    "viewport": 1920,
+    "foreground": [
+      "1",
+      "1",
+      "1",
+      "1",
+      "1",
+      "1",
+      "1"
+    ],
+    "fontLoaderComplete": true,
+    "scrollWidth": 1920,
+    "documentHeight": 900,
+    "main": {
+      "classes": "site-main",
+      "left": 0,
+      "width": 1920,
+      "rightGap": 0,
+      "height": 423.59375,
+      "display": "block",
+      "gridColumn": "auto",
+      "gridTemplateColumns": "none"
+    },
+    "article": {
+      "classes": "post-9 page type-page status-publish hentry",
+      "left": 37.140625,
+      "width": 1845.71875,
+      "rightGap": 37.140625,
+      "height": 423.59375,
+      "display": "block",
+      "gridColumn": "auto",
+      "gridTemplateColumns": "none"
+    },
+    "sidecars": [
+      {
+        "classes": "nb-sidecar nb-sidecar--sidebar-none nb-sidecar--sidebar-small nb-content-layout-grid alignfull nb-sidecar--no-left-rail nb-sidecar--no-right-rail sm-palette-1 sm-variation-1 sm-color-signal-0 sm-light",
+        "left": 37.140625,
+        "width": 1845.71875,
+        "rightGap": 37.140625,
+        "height": 423.59375,
+        "display": "grid",
+        "gridColumn": "fs / fe",
+        "gridTemplateColumns": "[fs] 147.562px [ws] 416.562px [frs] 0.03125px [gs] 48px [cs] 286.703px [gcs] 24px [cc] 24px [gce] 286.703px [ce] 48px [ge] 0.03125px [fre] 416.562px [we] 147.562px [fe]"
+      },
+      {
+        "classes": "nb-sidecar nb-sidecar--sidebar-right nb-sidecar--sidebar-small nb-content-layout-grid alignfull nb-sidecar--no-left-rail sm-palette-1 sm-variation-1 sm-color-signal-0 sm-light break-align-left",
+        "left": 37.140625,
+        "width": 1845.71875,
+        "rightGap": 37.140625,
+        "height": 340.890625,
+        "display": "grid",
+        "gridColumn": "fs / fe",
+        "gridTemplateColumns": "[fs] 147.562px [ws] 416.562px [frs] 0.03125px [gs] 48px [cs] 286.703px [gcs] 24px [cc] 24px [gce] 286.703px [ce] 48px [ge] 0.03125px [fre] 416.562px [we] 147.562px [fe]"
+      }
+    ],
+    "heroes": [],
+    "heroMedia": [],
+    "header": [
+      {
+        "classes": "nb-header nb-header--main nb-header-shadow nb-header-background alignfull sm-palette-1 sm-variation-1 sm-color-signal-0 sm-light nb-header--ready nb-header--transparent",
+        "left": 0,
+        "width": 1920,
+        "rightGap": 0,
+        "height": 133.484375,
+        "display": "block",
+        "gridColumn": "auto",
+        "gridTemplateColumns": "none"
+      }
+    ],
+    "fixture": "inner-sidecar",
+    "version": "2.6.6.1",
+    "stableGeometrySamples": 5,
+    "logs": [
+      "[log] JQMIGRATE: Migrate is installed, version 3.4.1"
+    ]
+  },
+  {
+    "viewport": 390,
+    "foreground": [
+      "1",
+      "1",
+      "1",
+      "1",
+      "1",
+      "1",
+      "1",
+      "1",
+      "1",
+      "1",
+      "1",
+      "1",
+      "1",
+      "1",
+      "1"
+    ],
+    "fontLoaderComplete": true,
+    "scrollWidth": 390,
+    "documentHeight": 1901,
+    "main": {
+      "classes": "site-main",
+      "left": 0,
+      "width": 390,
+      "rightGap": 0,
+      "height": 1646.078125,
+      "display": "block",
+      "gridColumn": "auto",
+      "gridTemplateColumns": "none"
+    },
+    "article": {
+      "classes": "post-10 post type-post status-publish format-standard hentry category-uncategorized",
+      "left": 20.75,
+      "width": 348.5,
+      "rightGap": 20.75,
+      "height": 1646.078125,
+      "display": "block",
+      "gridColumn": "auto",
+      "gridTemplateColumns": "none"
+    },
+    "sidecars": [
+      {
+        "classes": "nb-sidecar nb-sidecar--sidebar-none nb-sidecar--sidebar-medium nb-content-layout-grid alignfull nb-sidecar--no-left-rail nb-sidecar--no-right-rail nb-sidecar--sticky-sidebar sm-light sm-palette-1 sm-variation-1 sm-color-signal-0 nb-sidecar--sidebar-ready",
+        "left": 20.75,
+        "width": 348.5,
+        "rightGap": 20.75,
+        "height": 1646.078125,
+        "display": "grid",
+        "gridColumn": "fs / fe",
+        "gridTemplateColumns": "[fs] 24px [ws] 0px [gs] 0px [cs] 150.25px [gcs] 0px [cc] 0px [gce] 150.25px [ce] 0px [ge] 0px [we] 24px [fe]"
+      }
+    ],
+    "heroes": [],
+    "heroMedia": [],
+    "header": [
+      {
+        "classes": "nb-header nb-header--main nb-header-shadow nb-header-background alignfull sm-light sm-palette-1 sm-variation-1 sm-color-signal-0 nb-header--ready nb-header--transparent",
+        "left": -390,
+        "width": 390,
+        "rightGap": 390,
+        "height": 87,
+        "display": "block",
+        "gridColumn": "auto",
+        "gridTemplateColumns": "none"
+      }
+    ],
+    "fixture": "single-post",
+    "version": "2.6.6.1",
+    "stableGeometrySamples": 5,
+    "logs": [
+      "[log] JQMIGRATE: Migrate is installed, version 3.4.1"
+    ]
+  },
+  {
+    "viewport": 768,
+    "foreground": [
+      "1",
+      "1",
+      "1",
+      "1",
+      "1",
+      "1",
+      "1",
+      "1",
+      "1",
+      "1",
+      "1",
+      "1",
+      "1",
+      "1",
+      "1"
+    ],
+    "fontLoaderComplete": true,
+    "scrollWidth": 768,
+    "documentHeight": 1587,
+    "main": {
+      "classes": "site-main",
+      "left": 0,
+      "width": 768,
+      "rightGap": 0,
+      "height": 1354.0625,
+      "display": "block",
+      "gridColumn": "auto",
+      "gridTemplateColumns": "none"
+    },
+    "article": {
+      "classes": "post-10 post type-post status-publish format-standard hentry category-uncategorized",
+      "left": 24.796875,
+      "width": 718.40625,
+      "rightGap": 24.796875,
+      "height": 1354.0625,
+      "display": "block",
+      "gridColumn": "auto",
+      "gridTemplateColumns": "none"
+    },
+    "sidecars": [
+      {
+        "classes": "nb-sidecar nb-sidecar--sidebar-none nb-sidecar--sidebar-medium nb-content-layout-grid alignfull nb-sidecar--no-left-rail nb-sidecar--no-right-rail nb-sidecar--sticky-sidebar sm-light sm-palette-1 sm-variation-1 sm-color-signal-0 nb-sidecar--sidebar-ready",
+        "left": 24.796875,
+        "width": 718.40625,
+        "rightGap": 24.796875,
+        "height": 1354.0625,
+        "display": "grid",
+        "gridColumn": "fs / fe",
+        "gridTemplateColumns": "[fs] 24px [ws] 0px [gs] 0px [cs] 335.203px [gcs] 0px [cc] 0px [gce] 335.203px [ce] 0px [ge] 0px [we] 24px [fe]"
+      }
+    ],
+    "heroes": [],
+    "heroMedia": [],
+    "header": [
+      {
+        "classes": "nb-header nb-header--main nb-header-shadow nb-header-background alignfull sm-light sm-palette-1 sm-variation-1 sm-color-signal-0 nb-header--ready nb-header--transparent",
+        "left": -768,
+        "width": 768,
+        "rightGap": 768,
+        "height": 84,
+        "display": "block",
+        "gridColumn": "auto",
+        "gridTemplateColumns": "none"
+      }
+    ],
+    "fixture": "single-post",
+    "version": "2.6.6.1",
+    "stableGeometrySamples": 5,
+    "logs": [
+      "[log] JQMIGRATE: Migrate is installed, version 3.4.1"
+    ]
+  },
+  {
+    "viewport": 1024,
+    "foreground": [
+      "1",
+      "1",
+      "1",
+      "1",
+      "1",
+      "1",
+      "1",
+      "1",
+      "1",
+      "1",
+      "1",
+      "1",
+      "1",
+      "1",
+      "1"
+    ],
+    "fontLoaderComplete": true,
+    "scrollWidth": 1632,
+    "documentHeight": 1987,
+    "main": {
+      "classes": "site-main",
+      "left": 0,
+      "width": 1024,
+      "rightGap": 0,
+      "height": 1642.59375,
+      "display": "block",
+      "gridColumn": "auto",
+      "gridTemplateColumns": "none"
+    },
+    "article": {
+      "classes": "post-10 post type-post status-publish format-standard hentry category-uncategorized",
+      "left": 27.53125,
+      "width": 968.9375,
+      "rightGap": 27.53125,
+      "height": 1642.59375,
+      "display": "block",
+      "gridColumn": "auto",
+      "gridTemplateColumns": "none"
+    },
+    "sidecars": [
+      {
+        "classes": "nb-sidecar nb-sidecar--sidebar-none nb-sidecar--sidebar-medium nb-content-layout-grid alignfull nb-sidecar--no-left-rail nb-sidecar--no-right-rail nb-sidecar--sticky-sidebar sm-light sm-palette-1 sm-variation-1 sm-color-signal-0 nb-sidecar--sidebar-ready",
+        "left": 27.53125,
+        "width": 968.9375,
+        "rightGap": 27.53125,
+        "height": 1642.59375,
+        "display": "grid",
+        "gridColumn": "fs / fe",
+        "gridTemplateColumns": "[fs] 24px [ws] 315.969px [frs] 0.015625px [gs] 48px [cs] 72.4844px [gcs] 24px [cc] 24px [gce] 72.4844px [ce] 48px [ge] 0.015625px [fre] 315.969px [we] 24px [fe]"
+      }
+    ],
+    "heroes": [],
+    "heroMedia": [],
+    "header": [
+      {
+        "classes": "nb-header nb-header--main nb-header-shadow nb-header-background alignfull sm-light sm-palette-1 sm-variation-1 sm-color-signal-0 nb-header--ready nb-header--transparent",
+        "left": 0,
+        "width": 1024,
+        "rightGap": 0,
+        "height": 110.4375,
+        "display": "block",
+        "gridColumn": "auto",
+        "gridTemplateColumns": "none"
+      }
+    ],
+    "fixture": "single-post",
+    "version": "2.6.6.1",
+    "stableGeometrySamples": 5,
+    "logs": [
+      "[log] JQMIGRATE: Migrate is installed, version 3.4.1"
+    ]
+  },
+  {
+    "viewport": 1440,
+    "foreground": [
+      "1",
+      "1",
+      "1",
+      "1",
+      "1",
+      "1",
+      "1",
+      "1",
+      "1",
+      "1",
+      "1",
+      "1",
+      "1",
+      "1",
+      "1"
+    ],
+    "fontLoaderComplete": true,
+    "scrollWidth": 2391,
+    "documentHeight": 1364,
+    "main": {
+      "classes": "site-main",
+      "left": 0,
+      "width": 1440,
+      "rightGap": 0,
+      "height": 994.3125,
+      "display": "block",
+      "gridColumn": "auto",
+      "gridTemplateColumns": "none"
+    },
+    "article": {
+      "classes": "post-10 post type-post status-publish format-standard hentry category-uncategorized",
+      "left": 32,
+      "width": 1376,
+      "rightGap": 32,
+      "height": 994.3125,
+      "display": "block",
+      "gridColumn": "auto",
+      "gridTemplateColumns": "none"
+    },
+    "sidecars": [
+      {
+        "classes": "nb-sidecar nb-sidecar--sidebar-none nb-sidecar--sidebar-medium nb-content-layout-grid alignfull nb-sidecar--no-left-rail nb-sidecar--no-right-rail nb-sidecar--sticky-sidebar sm-light sm-palette-1 sm-variation-1 sm-color-signal-0 nb-sidecar--sidebar-ready",
+        "left": 32,
+        "width": 1376,
+        "rightGap": 32,
+        "height": 994.3125,
+        "display": "grid",
+        "gridColumn": "fs / fe",
+        "gridTemplateColumns": "[fs] 85px [ws] 324px [frs] 0px [gs] 48px [cs] 207px [gcs] 24px [cc] 24px [gce] 207px [ce] 48px [ge] 0px [fre] 324px [we] 85px [fe]"
+      }
+    ],
+    "heroes": [],
+    "heroMedia": [],
+    "header": [
+      {
+        "classes": "nb-header nb-header--main nb-header-shadow nb-header-background alignfull sm-light sm-palette-1 sm-variation-1 sm-color-signal-0 nb-header--ready nb-header--transparent",
+        "left": 0,
+        "width": 1440,
+        "rightGap": 0,
+        "height": 116.390625,
+        "display": "block",
+        "gridColumn": "auto",
+        "gridTemplateColumns": "none"
+      }
+    ],
+    "fixture": "single-post",
+    "version": "2.6.6.1",
+    "stableGeometrySamples": 5,
+    "logs": [
+      "[log] JQMIGRATE: Migrate is installed, version 3.4.1"
+    ]
+  },
+  {
+    "viewport": 1920,
+    "foreground": [
+      "1",
+      "1",
+      "1",
+      "1",
+      "1",
+      "1",
+      "1",
+      "1",
+      "1",
+      "1",
+      "1",
+      "1",
+      "1",
+      "1",
+      "1"
+    ],
+    "fontLoaderComplete": true,
+    "scrollWidth": 3191,
+    "documentHeight": 1619,
+    "main": {
+      "classes": "site-main",
+      "left": 0,
+      "width": 1920,
+      "rightGap": 0,
+      "height": 1204.453125,
+      "display": "block",
+      "gridColumn": "auto",
+      "gridTemplateColumns": "none"
+    },
+    "article": {
+      "classes": "post-10 post type-post status-publish format-standard hentry category-uncategorized",
+      "left": 37.140625,
+      "width": 1845.71875,
+      "rightGap": 37.140625,
+      "height": 1204.453125,
+      "display": "block",
+      "gridColumn": "auto",
+      "gridTemplateColumns": "none"
+    },
+    "sidecars": [
+      {
+        "classes": "nb-sidecar nb-sidecar--sidebar-none nb-sidecar--sidebar-medium nb-content-layout-grid alignfull nb-sidecar--no-left-rail nb-sidecar--no-right-rail nb-sidecar--sticky-sidebar sm-light sm-palette-1 sm-variation-1 sm-color-signal-0 nb-sidecar--sidebar-ready",
+        "left": 37.140625,
+        "width": 1845.71875,
+        "rightGap": 37.140625,
+        "height": 1204.453125,
+        "display": "grid",
+        "gridColumn": "fs / fe",
+        "gridTemplateColumns": "[fs] 147.562px [ws] 416.562px [frs] 0.03125px [gs] 48px [cs] 286.703px [gcs] 24px [cc] 24px [gce] 286.703px [ce] 48px [ge] 0.03125px [fre] 416.562px [we] 147.562px [fe]"
+      }
+    ],
+    "heroes": [],
+    "heroMedia": [],
+    "header": [
+      {
+        "classes": "nb-header nb-header--main nb-header-shadow nb-header-background alignfull sm-light sm-palette-1 sm-variation-1 sm-color-signal-0 nb-header--ready nb-header--transparent",
+        "left": 0,
+        "width": 1920,
+        "rightGap": 0,
+        "height": 133.484375,
+        "display": "block",
+        "gridColumn": "auto",
+        "gridTemplateColumns": "none"
+      }
+    ],
+    "fixture": "single-post",
+    "version": "2.6.6.1",
+    "stableGeometrySamples": 5,
+    "logs": [
+      "[log] JQMIGRATE: Migrate is installed, version 3.4.1"
+    ]
+  }
+]

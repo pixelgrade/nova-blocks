@@ -1,0 +1,68 @@
+{
+    "source": "pixelgrade-care 1.20.1 actual conditional-updates class",
+    "cases": [
+        {
+            "case": "missing header before upgrade",
+            "installed": "1.12.8",
+            "header": "",
+            "offered": "2.5.3",
+            "actual_range": "~1",
+            "result_offer": "1.13.4",
+            "pass": true
+        },
+        {
+            "case": "missing header on latest legacy",
+            "installed": "1.13.4",
+            "header": "",
+            "offered": "2.5.3",
+            "actual_range": "~1",
+            "result_offer": null,
+            "pass": true
+        },
+        {
+            "case": "missing header after mistaken upgrade",
+            "installed": "2.5.3",
+            "header": "",
+            "offered": "2.6.6.1",
+            "actual_range": "~2",
+            "result_offer": "2.6.6.1",
+            "pass": true
+        },
+        {
+            "case": "explicit legacy header before upgrade",
+            "installed": "1.12.8",
+            "header": "Nova Blocks (>=1.13.0 <2.0.0)",
+            "offered": "2.6.6.1",
+            "actual_range": ">=1.13.0 <2.0.0",
+            "result_offer": "1.13.4",
+            "pass": true
+        },
+        {
+            "case": "explicit legacy header after upgrade",
+            "installed": "2.5.3",
+            "header": "Nova Blocks (>=1.13.0 <2.0.0)",
+            "offered": "2.6.6.1",
+            "actual_range": ">=1.13.0 <2.0.0",
+            "result_offer": null,
+            "pass": true
+        },
+        {
+            "case": "explicit modern header remains supported",
+            "installed": "2.5.3",
+            "header": "Nova Blocks (>=2.0.0 <3.0.0)",
+            "offered": "2.6.6.1",
+            "actual_range": ">=2.0.0 <3.0.0",
+            "result_offer": "2.6.6.1",
+            "pass": true
+        },
+        {
+            "case": "explicit modern header blocks next major",
+            "installed": "2.6.6.1",
+            "header": "Nova Blocks (>=2.0.0 <3.0.0)",
+            "offered": "3.0.0",
+            "actual_range": ">=2.0.0 <3.0.0",
+            "result_offer": null,
+            "pass": true
+        }
+    ]
+}

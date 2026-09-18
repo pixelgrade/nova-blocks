@@ -1,0 +1,62 @@
+[
+    {
+        "fixture": "plain",
+        "postId": 5,
+        "authoredSeedSha256": "b1c43ac0a8c253c9ccd99a1103aead614e41ff3df54a79b5ac90aac3f0212746",
+        "reconstructedAuthoredSha256": "b1c43ac0a8c253c9ccd99a1103aead614e41ff3df54a79b5ac90aac3f0212746",
+        "authoredMatchesSeed": true,
+        "expectedStoredSha256": "b1c43ac0a8c253c9ccd99a1103aead614e41ff3df54a79b5ac90aac3f0212746",
+        "actualStoredSha256": "b1c43ac0a8c253c9ccd99a1103aead614e41ff3df54a79b5ac90aac3f0212746",
+        "storedContentMatchesSeedAfterWordPressUnslash": true
+    },
+    {
+        "fixture": "legacy-hero",
+        "postId": 6,
+        "authoredSeedSha256": "9f5471c3daa86dc6aed812333aa31ea21286bb36a71849e6cb085c99dbeee4b5",
+        "reconstructedAuthoredSha256": "9f5471c3daa86dc6aed812333aa31ea21286bb36a71849e6cb085c99dbeee4b5",
+        "authoredMatchesSeed": true,
+        "expectedStoredSha256": "20546397a1f5ea008d27387c405faf55b395b258b889d275198e28dfbad872e9",
+        "actualStoredSha256": "20546397a1f5ea008d27387c405faf55b395b258b889d275198e28dfbad872e9",
+        "storedContentMatchesSeedAfterWordPressUnslash": true
+    },
+    {
+        "fixture": "wide-group",
+        "postId": 7,
+        "authoredSeedSha256": "f112aeb9df0cf39755534af18f0e07ea247fcbf096b24e6dba81adaf6870118f",
+        "reconstructedAuthoredSha256": "f112aeb9df0cf39755534af18f0e07ea247fcbf096b24e6dba81adaf6870118f",
+        "authoredMatchesSeed": true,
+        "expectedStoredSha256": "f112aeb9df0cf39755534af18f0e07ea247fcbf096b24e6dba81adaf6870118f",
+        "actualStoredSha256": "f112aeb9df0cf39755534af18f0e07ea247fcbf096b24e6dba81adaf6870118f",
+        "storedContentMatchesSeedAfterWordPressUnslash": true
+    },
+    {
+        "fixture": "hero-plus-sidecar",
+        "postId": 8,
+        "authoredSeedSha256": "572185edc8cca71e63dd18c103d43a6425d179a26d917ef8304c745d5c27e129",
+        "reconstructedAuthoredSha256": "572185edc8cca71e63dd18c103d43a6425d179a26d917ef8304c745d5c27e129",
+        "authoredMatchesSeed": true,
+        "expectedStoredSha256": "9622fa8c155410198afc315e28821645d0222eb92d1f6a1125e5fc22f71bf1a3",
+        "actualStoredSha256": "9622fa8c155410198afc315e28821645d0222eb92d1f6a1125e5fc22f71bf1a3",
+        "storedContentMatchesSeedAfterWordPressUnslash": true
+    },
+    {
+        "fixture": "inner-sidecar",
+        "postId": 9,
+        "authoredSeedSha256": "78a2540f282edf7f38aa6a8a4c864f5339661fd750bee4f9f12c3d8f3fd58e69",
+        "reconstructedAuthoredSha256": "78a2540f282edf7f38aa6a8a4c864f5339661fd750bee4f9f12c3d8f3fd58e69",
+        "authoredMatchesSeed": true,
+        "expectedStoredSha256": "78a2540f282edf7f38aa6a8a4c864f5339661fd750bee4f9f12c3d8f3fd58e69",
+        "actualStoredSha256": "78a2540f282edf7f38aa6a8a4c864f5339661fd750bee4f9f12c3d8f3fd58e69",
+        "storedContentMatchesSeedAfterWordPressUnslash": true
+    },
+    {
+        "fixture": "single-post",
+        "postId": 10,
+        "authoredSeedSha256": "b1c43ac0a8c253c9ccd99a1103aead614e41ff3df54a79b5ac90aac3f0212746",
+        "reconstructedAuthoredSha256": "b1c43ac0a8c253c9ccd99a1103aead614e41ff3df54a79b5ac90aac3f0212746",
+        "authoredMatchesSeed": true,
+        "expectedStoredSha256": "b1c43ac0a8c253c9ccd99a1103aead614e41ff3df54a79b5ac90aac3f0212746",
+        "actualStoredSha256": "b1c43ac0a8c253c9ccd99a1103aead614e41ff3df54a79b5ac90aac3f0212746",
+        "storedContentMatchesSeedAfterWordPressUnslash": true
+    }
+]

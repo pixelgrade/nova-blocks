@@ -1,0 +1,74 @@
+{
+    "wordpress": "7.1.1",
+    "careVersion": "1.20.1",
+    "themeVersion": "1.13.1",
+    "sourceOriginalRestored": true,
+    "cases": [
+        {
+            "case": "real unmodified Rosa2 missing range",
+            "installedVersion": "2.6.6.1",
+            "theme": "rosa2",
+            "parent": "rosa2",
+            "supportsHeader": "",
+            "careHookActive": true,
+            "novaActiveAfterBootstrap": true,
+            "incompatibleActivePluginCount": 0,
+            "resultOffer": "2.6.7"
+        },
+        {
+            "case": "declared legacy parent range",
+            "installedVersion": "2.6.6.1",
+            "theme": "rosa2",
+            "parent": "rosa2",
+            "supportsHeader": "Nova Blocks (>=1.13.4 <2.0.0)",
+            "careHookActive": true,
+            "novaActiveAfterBootstrap": true,
+            "incompatibleActivePluginCount": 1,
+            "resultOffer": null
+        },
+        {
+            "case": "child without header does not inherit parent policy",
+            "installedVersion": "2.6.6.1",
+            "theme": "rosa2-qa-child",
+            "parent": "rosa2",
+            "supportsHeader": "",
+            "careHookActive": true,
+            "novaActiveAfterBootstrap": true,
+            "incompatibleActivePluginCount": 0,
+            "resultOffer": "2.6.7"
+        },
+        {
+            "case": "child explicitly repeats legacy range",
+            "installedVersion": "2.6.6.1",
+            "theme": "rosa2-qa-child",
+            "parent": "rosa2",
+            "supportsHeader": "Nova Blocks (>=1.13.4 <2.0.0)",
+            "careHookActive": true,
+            "novaActiveAfterBootstrap": true,
+            "incompatibleActivePluginCount": 1,
+            "resultOffer": null
+        },
+        {
+            "case": "guard absent even with declared legacy header",
+            "installedVersion": "2.6.6.1",
+            "theme": "rosa2-qa-child",
+            "parent": "rosa2",
+            "supportsHeader": "Nova Blocks (>=1.13.4 <2.0.0)",
+            "careHookActive": false,
+            "novaActiveAfterBootstrap": true,
+            "incompatibleActivePluginCount": 1,
+            "resultOffer": "2.6.7"
+        },
+        {
+            "case": "explicit modern child policy still allows modern updates",
+            "installedVersion": "2.6.6.1",
+            "theme": "rosa2-qa-child",
+            "parent": "rosa2",
+            "supportsHeader": "Nova Blocks (>=2.0.0 <3.0.0)",
+            "careHookActive": true,
+            "novaActiveAfterBootstrap": true,
+            "incompatibleActivePluginCount": 0,
+            "resultOffer": "2.6.7"
+        }
+    ]
+}

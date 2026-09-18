@@ -1,0 +1,44 @@
+[
+  {
+    "file": "build/core/style.css",
+    "status": 200,
+    "bytes": 14303,
+    "sha256": "8dba9ce1a7bfbdde502b3480c8716e377112703bf2e3d55b7e90d87508e4735c",
+    "matchesFixtureFile": true
+  },
+  {
+    "file": "build/utils/index.js",
+    "status": 200,
+    "bytes": 13131,
+    "sha256": "531430d5d7cd20eec01c1d2f2bd15e9243d701aabe1e55451b1c1c8bfa33231f",
+    "matchesFixtureFile": true
+  },
+  {
+    "file": "build/block-library/blocks/header/style.css",
+    "status": 200,
+    "bytes": 8790,
+    "sha256": "5a417dee2e1cfb5842fb4ee411135a7c87c1c9f7094bee4cee60858893641f00",
+    "matchesFixtureFile": true
+  },
+  {
+    "file": "build/block-library/blocks/header/frontend.js",
+    "status": 200,
+    "bytes": 3857,
+    "sha256": "e52615e8f5123858fd5a61740bb16881bb38d7896cd43db8505b36797618f2b3",
+    "matchesFixtureFile": true
+  },
+  {
+    "file": "build/block-library/blocks/sidecar/style.css",
+    "status": 200,
+    "bytes": 10639,
+    "sha256": "0c6cecbf24640edf985b01f9c1d2e53fce14b88d8ee01c21bdad0ca4b7c3bf43",
+    "matchesFixtureFile": true
+  },
+  {
+    "file": "build/block-library/blocks/sidecar/frontend.js",
+    "status": 200,
+    "bytes": 4833,
+    "sha256": "0da99bddbe8fe8096c0f3e5f4de3088f5dc9f30a36517e94af3c0c2bb411b9dc",
+    "matchesFixtureFile": true
+  }
+]

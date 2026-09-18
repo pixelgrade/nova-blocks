@@ -1,0 +1,38 @@
+{
+    "plain": {
+        "id": 5,
+        "url": "http://localhost:9127/?page_id=5",
+        "type": "page",
+        "contentSha256": "b1c43ac0a8c253c9ccd99a1103aead614e41ff3df54a79b5ac90aac3f0212746"
+    },
+    "legacy-hero": {
+        "id": 6,
+        "url": "http://localhost:9127/?page_id=6",
+        "type": "page",
+        "contentSha256": "9f5471c3daa86dc6aed812333aa31ea21286bb36a71849e6cb085c99dbeee4b5"
+    },
+    "wide-group": {
+        "id": 7,
+        "url": "http://localhost:9127/?page_id=7",
+        "type": "page",
+        "contentSha256": "f112aeb9df0cf39755534af18f0e07ea247fcbf096b24e6dba81adaf6870118f"
+    },
+    "hero-plus-sidecar": {
+        "id": 8,
+        "url": "http://localhost:9127/?page_id=8",
+        "type": "page",
+        "contentSha256": "572185edc8cca71e63dd18c103d43a6425d179a26d917ef8304c745d5c27e129"
+    },
+    "inner-sidecar": {
+        "id": 9,
+        "url": "http://localhost:9127/?page_id=9",
+        "type": "page",
+        "contentSha256": "78a2540f282edf7f38aa6a8a4c864f5339661fd750bee4f9f12c3d8f3fd58e69"
+    },
+    "single-post": {
+        "id": 10,
+        "url": "http://localhost:9127/?p=10",
+        "type": "post",
+        "contentSha256": "b1c43ac0a8c253c9ccd99a1103aead614e41ff3df54a79b5ac90aac3f0212746"
+    }
+}
