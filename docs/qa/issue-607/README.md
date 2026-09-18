@@ -1,6 +1,6 @@
 # Nova Blocks #607 — final isolated investigation, 2026-09-18
 
-**Recommendation: keep #607 open.** Current Nova corrects the reported page/hero width geometry through the already implemented #608 change. This does not prove full Rosa 2 visual parity or general Nova 2.x compatibility. Reliable legacy update prevention is still unresolved and needs explicit theme compatibility metadata plus Care changes and a defined behavior when Care is absent. No tracked source, customer site, GitHub issue, or update policy was modified by this investigation.
+**Recommendation: keep #607 open.** Current Nova corrects the reported page/hero width geometry through the already implemented #608 change. This does not prove full Rosa 2 visual parity or general Nova 2.x compatibility. Reliable legacy update prevention is still unresolved and needs explicit theme compatibility metadata plus Care changes and a defined behavior when Care is absent. No tracked source, customer site, GitHub issue, or shipped update policy was modified by this investigation.
 
 ## Reproduction and bounded result
 
@@ -85,7 +85,7 @@ Use the Local PHP binary, not the broken default PHP path:
 '/Users/georgeolaru/Library/Application Support/Local/lightning-services/php-8.2.29+0/bin/darwin-arm64/bin/php' /usr/local/bin/wp --path=/tmp/nova-607-rosa2-site eval-file '/absolute/path/to/check-content-integrity.php'
 ```
 
-Only owned browser pages were used; no customer/browser login was created, so there is no customer or user authentication to remove. The isolated runtime remains running for follow-up inspection. Private fixture scripts and exact artifact hashes are retained locally for reproducibility; they are not release files.
+All owned browser pages (sessions 12, 14 and 15) were closed after capture. Only owned browser pages were used; no customer/browser login was created, so there is no customer or user authentication to remove. The isolated runtime remains running for follow-up inspection. Private fixture scripts and exact artifact hashes are retained locally for reproducibility; they are not release files.
 
 ## Primary source references
 
