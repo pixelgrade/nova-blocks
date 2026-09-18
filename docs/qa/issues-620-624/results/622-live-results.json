@@ -1,0 +1,332 @@
+{
+    "core/group": {
+        "attributeCount": 29,
+        "editorSchemaParity": true,
+        "abilityParity": true,
+        "registryUnchanged": true,
+        "colorSignal": {
+            "type": "number",
+            "default": 0,
+            "vocabulary": {
+                "enum": [
+                    0,
+                    1,
+                    2,
+                    3
+                ],
+                "labels": [
+                    "None",
+                    "Low",
+                    "Medium",
+                    "High"
+                ]
+            },
+            "source": "curated",
+            "note": "Contextual color intent relative to the parent. Default anchors map signal\u2192variation 0\u21921, 1\u21923, 2\u21928, 3\u219211. Max is getMaxSignal(palette) (default 3); a block may clamp via supports minColorSignal/maxColorSignal.",
+            "registration": "editor"
+        },
+        "palette": {
+            "type": "string",
+            "default": "1",
+            "vocabulary": {
+                "enum": [
+                    "1",
+                    "_info",
+                    "_error",
+                    "_warning",
+                    "_success"
+                ]
+            },
+            "source": "bundle",
+            "note": "Palette IDs from this site's live Style Manager editor settings, not fixed brand colors. Functional palette IDs (starting with _) are included only where the block supports functional colors. Inherit through useParentPalette where available.",
+            "registration": "editor"
+        },
+        "activation": null,
+        "inheritance": null
+    },
+    "core/button": {
+        "attributeCount": 28,
+        "editorSchemaParity": true,
+        "abilityParity": true,
+        "registryUnchanged": true,
+        "colorSignal": {
+            "type": null,
+            "default": 1,
+            "vocabulary": {
+                "enum": [
+                    1,
+                    2,
+                    3
+                ],
+                "labels": [
+                    "Low",
+                    "Medium",
+                    "High"
+                ]
+            },
+            "source": "curated",
+            "note": "Contextual color intent relative to the parent. Default anchors map signal\u2192variation 0\u21921, 1\u21923, 2\u21928, 3\u219211. Max is getMaxSignal(palette) (default 3); a block may clamp via supports minColorSignal/maxColorSignal.",
+            "registration": "editor"
+        },
+        "palette": {
+            "type": "string",
+            "default": "1",
+            "vocabulary": {
+                "enum": [
+                    "1",
+                    "_info",
+                    "_error",
+                    "_warning",
+                    "_success"
+                ]
+            },
+            "source": "bundle",
+            "note": "Palette IDs from this site's live Style Manager editor settings, not fixed brand colors. Functional palette IDs (starting with _) are included only where the block supports functional colors. Inherit through useParentPalette where available.",
+            "registration": "editor"
+        },
+        "activation": {
+            "type": "boolean",
+            "default": false,
+            "vocabulary": {
+                "enum": [
+                    true,
+                    false
+                ]
+            },
+            "source": "curated",
+            "note": "Opt-in activation. An untouched Button, Columns, or Column remains inactive by default. Changing Color Signal activates it; Columns and Column also clear conflicting core colors in that editor update.",
+            "registration": "editor"
+        },
+        "inheritance": {
+            "type": "boolean",
+            "default": null,
+            "vocabulary": {
+                "enum": [
+                    true,
+                    false
+                ]
+            },
+            "source": "curated",
+            "note": "true inherits the nearest active ancestor palette; false chooses this block's palette. Absence is a legacy state, not a registered default: the editor resolves and migrates it without activating an inactive Color Signal block.",
+            "registration": "editor"
+        }
+    },
+    "core/separator": {
+        "attributeCount": 18,
+        "editorSchemaParity": true,
+        "abilityParity": true,
+        "registryUnchanged": true,
+        "colorSignal": {
+            "type": null,
+            "default": 3,
+            "vocabulary": {
+                "enum": [
+                    1,
+                    2,
+                    3
+                ],
+                "labels": [
+                    "Low",
+                    "Medium",
+                    "High"
+                ]
+            },
+            "source": "curated",
+            "note": "Contextual color intent relative to the parent. Default anchors map signal\u2192variation 0\u21921, 1\u21923, 2\u21928, 3\u219211. Max is getMaxSignal(palette) (default 3); a block may clamp via supports minColorSignal/maxColorSignal.",
+            "registration": "editor"
+        },
+        "palette": {
+            "type": "string",
+            "default": "1",
+            "vocabulary": {
+                "enum": [
+                    "1"
+                ]
+            },
+            "source": "bundle",
+            "note": "Palette IDs from this site's live Style Manager editor settings, not fixed brand colors. Functional palette IDs (starting with _) are included only where the block supports functional colors. Inherit through useParentPalette where available.",
+            "registration": "editor"
+        },
+        "activation": null,
+        "inheritance": {
+            "type": "boolean",
+            "default": null,
+            "vocabulary": {
+                "enum": [
+                    true,
+                    false
+                ]
+            },
+            "source": "curated",
+            "note": "true inherits the nearest active ancestor palette; false chooses this block's palette. Absence is a legacy state, not a registered default: the editor resolves and migrates it without activating an inactive Color Signal block.",
+            "registration": "editor"
+        }
+    },
+    "core/columns": {
+        "attributeCount": 30,
+        "editorSchemaParity": true,
+        "abilityParity": true,
+        "registryUnchanged": true,
+        "colorSignal": {
+            "type": "number",
+            "default": 0,
+            "vocabulary": {
+                "enum": [
+                    0,
+                    1,
+                    2,
+                    3
+                ],
+                "labels": [
+                    "None",
+                    "Low",
+                    "Medium",
+                    "High"
+                ]
+            },
+            "source": "curated",
+            "note": "Contextual color intent relative to the parent. Default anchors map signal\u2192variation 0\u21921, 1\u21923, 2\u21928, 3\u219211. Max is getMaxSignal(palette) (default 3); a block may clamp via supports minColorSignal/maxColorSignal.",
+            "registration": "editor"
+        },
+        "palette": {
+            "type": "string",
+            "default": "1",
+            "vocabulary": {
+                "enum": [
+                    "1",
+                    "_info",
+                    "_error",
+                    "_warning",
+                    "_success"
+                ]
+            },
+            "source": "bundle",
+            "note": "Palette IDs from this site's live Style Manager editor settings, not fixed brand colors. Functional palette IDs (starting with _) are included only where the block supports functional colors. Inherit through useParentPalette where available.",
+            "registration": "editor"
+        },
+        "activation": {
+            "type": "boolean",
+            "default": false,
+            "vocabulary": {
+                "enum": [
+                    true,
+                    false
+                ]
+            },
+            "source": "curated",
+            "note": "Opt-in activation. An untouched Button, Columns, or Column remains inactive by default. Changing Color Signal activates it; Columns and Column also clear conflicting core colors in that editor update.",
+            "registration": "editor"
+        },
+        "inheritance": null
+    },
+    "core/column": {
+        "attributeCount": 24,
+        "editorSchemaParity": true,
+        "abilityParity": true,
+        "registryUnchanged": true,
+        "colorSignal": {
+            "type": "number",
+            "default": 0,
+            "vocabulary": {
+                "enum": [
+                    0,
+                    1,
+                    2,
+                    3
+                ],
+                "labels": [
+                    "None",
+                    "Low",
+                    "Medium",
+                    "High"
+                ]
+            },
+            "source": "curated",
+            "note": "Contextual color intent relative to the parent. Default anchors map signal\u2192variation 0\u21921, 1\u21923, 2\u21928, 3\u219211. Max is getMaxSignal(palette) (default 3); a block may clamp via supports minColorSignal/maxColorSignal.",
+            "registration": "editor"
+        },
+        "palette": {
+            "type": "string",
+            "default": "1",
+            "vocabulary": {
+                "enum": [
+                    "1",
+                    "_info",
+                    "_error",
+                    "_warning",
+                    "_success"
+                ]
+            },
+            "source": "bundle",
+            "note": "Palette IDs from this site's live Style Manager editor settings, not fixed brand colors. Functional palette IDs (starting with _) are included only where the block supports functional colors. Inherit through useParentPalette where available.",
+            "registration": "editor"
+        },
+        "activation": {
+            "type": "boolean",
+            "default": false,
+            "vocabulary": {
+                "enum": [
+                    true,
+                    false
+                ]
+            },
+            "source": "curated",
+            "note": "Opt-in activation. An untouched Button, Columns, or Column remains inactive by default. Changing Color Signal activates it; Columns and Column also clear conflicting core colors in that editor update.",
+            "registration": "editor"
+        },
+        "inheritance": {
+            "type": "boolean",
+            "default": null,
+            "vocabulary": {
+                "enum": [
+                    true,
+                    false
+                ]
+            },
+            "source": "curated",
+            "note": "true inherits the nearest active ancestor palette; false chooses this block's palette. Absence is a legacy state, not a registered default: the editor resolves and migrates it without activating an inactive Color Signal block.",
+            "registration": "editor"
+        }
+    },
+    "core/list": {
+        "attributeCount": 24,
+        "editorSchemaParity": true,
+        "abilityParity": true,
+        "registryUnchanged": true,
+        "colorSignal": {
+            "type": "number",
+            "default": 0,
+            "vocabulary": {
+                "enum": [
+                    0,
+                    1,
+                    2,
+                    3
+                ],
+                "labels": [
+                    "None",
+                    "Low",
+                    "Medium",
+                    "High"
+                ]
+            },
+            "source": "curated",
+            "note": "Contextual color intent relative to the parent. Default anchors map signal\u2192variation 0\u21921, 1\u21923, 2\u21928, 3\u219211. Max is getMaxSignal(palette) (default 3); a block may clamp via supports minColorSignal/maxColorSignal.",
+            "registration": "editor"
+        },
+        "palette": {
+            "type": "string",
+            "default": "1",
+            "vocabulary": {
+                "enum": [
+                    "1"
+                ]
+            },
+            "source": "bundle",
+            "note": "Palette IDs from this site's live Style Manager editor settings, not fixed brand colors. Functional palette IDs (starting with _) are included only where the block supports functional colors. Inherit through useParentPalette where available. This block always inherits its surrounding palette; palette is a resolved context value, not an independent palette control.",
+            "registration": "editor"
+        },
+        "activation": null,
+        "inheritance": null
+    }
+}

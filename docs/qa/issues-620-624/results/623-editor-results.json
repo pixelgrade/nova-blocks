@@ -1,0 +1,860 @@
+[
+  {
+    "label": "Post Editor initial dark context",
+    "mode": "block-editor-iframe__body editor-styles-wrapper post-type-page admin-color-modern wp-embed-responsive",
+    "icons": [
+      {
+        "classes": "block-editor-block-list__block wp-block is-style-logos-only is-style-logos-only-e7779f36-1a83-41b2-9e74-074fb976f6bd alignnone wp-block-social-links block-editor-block-list__layout is-layout-flex wp-block-social-links-is-layout-flex",
+        "color": "rgb(255, 255, 255)",
+        "background": "rgba(0, 0, 0, 0)",
+        "contextForeground": "rgb(255, 255, 255)",
+        "contextBackground": "rgb(31, 28, 28)"
+      },
+      {
+        "classes": "block-editor-block-list__block wp-block is-style-logos-only is-style-logos-only-e7779f36-1a83-41b2-9e74-074fb976f6bd alignnone wp-block-social-links block-editor-block-list__layout is-layout-flex wp-block-social-links-is-layout-flex",
+        "color": "rgb(255, 255, 255)",
+        "background": "rgba(0, 0, 0, 0)",
+        "contextForeground": "rgb(255, 255, 255)",
+        "contextBackground": "rgb(31, 28, 28)"
+      },
+      {
+        "classes": "block-editor-block-list__block wp-block is-style-logos-only is-style-logos-only-e7779f36-1a83-41b2-9e74-074fb976f6bd alignnone wp-block-social-links block-editor-block-list__layout is-layout-flex wp-block-social-links-is-layout-flex",
+        "color": "rgb(255, 255, 255)",
+        "background": "rgba(0, 0, 0, 0)",
+        "contextForeground": "rgb(255, 255, 255)",
+        "contextBackground": "rgb(31, 28, 28)"
+      },
+      {
+        "classes": "block-editor-block-list__block wp-block alignnone wp-block-social-links block-editor-block-list__layout is-layout-flex wp-block-social-links-is-layout-flex",
+        "color": "rgb(31, 28, 28)",
+        "background": "rgb(255, 255, 255)",
+        "contextForeground": "rgb(255, 255, 255)",
+        "contextBackground": "rgb(31, 28, 28)"
+      },
+      {
+        "classes": "block-editor-block-list__block wp-block alignnone wp-block-social-links block-editor-block-list__layout is-layout-flex wp-block-social-links-is-layout-flex",
+        "color": "rgb(31, 28, 28)",
+        "background": "rgb(255, 255, 255)",
+        "contextForeground": "rgb(255, 255, 255)",
+        "contextBackground": "rgb(31, 28, 28)"
+      },
+      {
+        "classes": "block-editor-block-list__block wp-block alignnone wp-block-social-links block-editor-block-list__layout is-layout-flex wp-block-social-links-is-layout-flex",
+        "color": "rgb(31, 28, 28)",
+        "background": "rgb(255, 255, 255)",
+        "contextForeground": "rgb(255, 255, 255)",
+        "contextBackground": "rgb(31, 28, 28)"
+      },
+      {
+        "classes": "block-editor-block-list__block wp-block is-style-pill-shape is-style-pill-shape-dbf7d3b1-dc1c-46a2-932b-6359772f4207 alignnone wp-block-social-links block-editor-block-list__layout is-layout-flex wp-block-social-links-is-layout-flex",
+        "color": "rgb(31, 28, 28)",
+        "background": "rgb(255, 255, 255)",
+        "contextForeground": "rgb(255, 255, 255)",
+        "contextBackground": "rgb(31, 28, 28)"
+      },
+      {
+        "classes": "block-editor-block-list__block wp-block is-style-pill-shape is-style-pill-shape-dbf7d3b1-dc1c-46a2-932b-6359772f4207 alignnone wp-block-social-links block-editor-block-list__layout is-layout-flex wp-block-social-links-is-layout-flex",
+        "color": "rgb(31, 28, 28)",
+        "background": "rgb(255, 255, 255)",
+        "contextForeground": "rgb(255, 255, 255)",
+        "contextBackground": "rgb(31, 28, 28)"
+      },
+      {
+        "classes": "block-editor-block-list__block wp-block is-style-pill-shape is-style-pill-shape-dbf7d3b1-dc1c-46a2-932b-6359772f4207 alignnone wp-block-social-links block-editor-block-list__layout is-layout-flex wp-block-social-links-is-layout-flex",
+        "color": "rgb(31, 28, 28)",
+        "background": "rgb(255, 255, 255)",
+        "contextForeground": "rgb(255, 255, 255)",
+        "contextBackground": "rgb(31, 28, 28)"
+      }
+    ],
+    "menus": [
+      {
+        "color": "rgb(255, 255, 255)",
+        "background": "rgb(31, 28, 28)",
+        "contextForeground": "rgb(255, 255, 255)",
+        "contextBackground": "rgb(31, 28, 28)"
+      }
+    ],
+    "passed": true
+  },
+  {
+    "label": "Post Editor Plain preset",
+    "mode": "block-editor-iframe__body editor-styles-wrapper post-type-page admin-color-modern wp-embed-responsive",
+    "icons": [
+      {
+        "classes": "block-editor-block-list__block wp-block is-style-logos-only is-style-logos-only-e7779f36-1a83-41b2-9e74-074fb976f6bd alignnone wp-block-social-links block-editor-block-list__layout is-layout-flex wp-block-social-links-is-layout-flex",
+        "color": "rgb(45, 30, 28)",
+        "background": "rgba(0, 0, 0, 0)",
+        "contextForeground": "rgb(45, 30, 28)",
+        "contextBackground": "rgb(255, 253, 250)"
+      },
+      {
+        "classes": "block-editor-block-list__block wp-block is-style-logos-only is-style-logos-only-e7779f36-1a83-41b2-9e74-074fb976f6bd alignnone wp-block-social-links block-editor-block-list__layout is-layout-flex wp-block-social-links-is-layout-flex",
+        "color": "rgb(45, 30, 28)",
+        "background": "rgba(0, 0, 0, 0)",
+        "contextForeground": "rgb(45, 30, 28)",
+        "contextBackground": "rgb(255, 253, 250)"
+      },
+      {
+        "classes": "block-editor-block-list__block wp-block is-style-logos-only is-style-logos-only-e7779f36-1a83-41b2-9e74-074fb976f6bd alignnone wp-block-social-links block-editor-block-list__layout is-layout-flex wp-block-social-links-is-layout-flex",
+        "color": "rgb(45, 30, 28)",
+        "background": "rgba(0, 0, 0, 0)",
+        "contextForeground": "rgb(45, 30, 28)",
+        "contextBackground": "rgb(255, 253, 250)"
+      },
+      {
+        "classes": "block-editor-block-list__block wp-block alignnone wp-block-social-links block-editor-block-list__layout is-layout-flex wp-block-social-links-is-layout-flex",
+        "color": "rgb(255, 253, 250)",
+        "background": "rgb(45, 30, 28)",
+        "contextForeground": "rgb(45, 30, 28)",
+        "contextBackground": "rgb(255, 253, 250)"
+      },
+      {
+        "classes": "block-editor-block-list__block wp-block alignnone wp-block-social-links block-editor-block-list__layout is-layout-flex wp-block-social-links-is-layout-flex",
+        "color": "rgb(255, 253, 250)",
+        "background": "rgb(45, 30, 28)",
+        "contextForeground": "rgb(45, 30, 28)",
+        "contextBackground": "rgb(255, 253, 250)"
+      },
+      {
+        "classes": "block-editor-block-list__block wp-block alignnone wp-block-social-links block-editor-block-list__layout is-layout-flex wp-block-social-links-is-layout-flex",
+        "color": "rgb(255, 253, 250)",
+        "background": "rgb(45, 30, 28)",
+        "contextForeground": "rgb(45, 30, 28)",
+        "contextBackground": "rgb(255, 253, 250)"
+      },
+      {
+        "classes": "block-editor-block-list__block wp-block is-style-pill-shape is-style-pill-shape-dbf7d3b1-dc1c-46a2-932b-6359772f4207 alignnone wp-block-social-links block-editor-block-list__layout is-layout-flex wp-block-social-links-is-layout-flex",
+        "color": "rgb(255, 253, 250)",
+        "background": "rgb(45, 30, 28)",
+        "contextForeground": "rgb(45, 30, 28)",
+        "contextBackground": "rgb(255, 253, 250)"
+      },
+      {
+        "classes": "block-editor-block-list__block wp-block is-style-pill-shape is-style-pill-shape-dbf7d3b1-dc1c-46a2-932b-6359772f4207 alignnone wp-block-social-links block-editor-block-list__layout is-layout-flex wp-block-social-links-is-layout-flex",
+        "color": "rgb(255, 253, 250)",
+        "background": "rgb(45, 30, 28)",
+        "contextForeground": "rgb(45, 30, 28)",
+        "contextBackground": "rgb(255, 253, 250)"
+      },
+      {
+        "classes": "block-editor-block-list__block wp-block is-style-pill-shape is-style-pill-shape-dbf7d3b1-dc1c-46a2-932b-6359772f4207 alignnone wp-block-social-links block-editor-block-list__layout is-layout-flex wp-block-social-links-is-layout-flex",
+        "color": "rgb(255, 253, 250)",
+        "background": "rgb(45, 30, 28)",
+        "contextForeground": "rgb(45, 30, 28)",
+        "contextBackground": "rgb(255, 253, 250)"
+      }
+    ],
+    "menus": [
+      {
+        "color": "rgb(45, 30, 28)",
+        "background": "rgb(255, 253, 250)",
+        "contextForeground": "rgb(45, 30, 28)",
+        "contextBackground": "rgb(255, 253, 250)"
+      }
+    ],
+    "passed": true
+  },
+  {
+    "label": "Post Editor one-step undo restores dark context",
+    "mode": "block-editor-iframe__body editor-styles-wrapper post-type-page admin-color-modern wp-embed-responsive",
+    "icons": [
+      {
+        "classes": "block-editor-block-list__block wp-block is-style-logos-only is-style-logos-only-e7779f36-1a83-41b2-9e74-074fb976f6bd alignnone wp-block-social-links block-editor-block-list__layout is-layout-flex wp-block-social-links-is-layout-flex",
+        "color": "rgb(255, 255, 255)",
+        "background": "rgba(0, 0, 0, 0)",
+        "contextForeground": "rgb(255, 255, 255)",
+        "contextBackground": "rgb(31, 28, 28)"
+      },
+      {
+        "classes": "block-editor-block-list__block wp-block is-style-logos-only is-style-logos-only-e7779f36-1a83-41b2-9e74-074fb976f6bd alignnone wp-block-social-links block-editor-block-list__layout is-layout-flex wp-block-social-links-is-layout-flex",
+        "color": "rgb(255, 255, 255)",
+        "background": "rgba(0, 0, 0, 0)",
+        "contextForeground": "rgb(255, 255, 255)",
+        "contextBackground": "rgb(31, 28, 28)"
+      },
+      {
+        "classes": "block-editor-block-list__block wp-block is-style-logos-only is-style-logos-only-e7779f36-1a83-41b2-9e74-074fb976f6bd alignnone wp-block-social-links block-editor-block-list__layout is-layout-flex wp-block-social-links-is-layout-flex",
+        "color": "rgb(255, 255, 255)",
+        "background": "rgba(0, 0, 0, 0)",
+        "contextForeground": "rgb(255, 255, 255)",
+        "contextBackground": "rgb(31, 28, 28)"
+      },
+      {
+        "classes": "block-editor-block-list__block wp-block alignnone wp-block-social-links block-editor-block-list__layout is-layout-flex wp-block-social-links-is-layout-flex",
+        "color": "rgb(31, 28, 28)",
+        "background": "rgb(255, 255, 255)",
+        "contextForeground": "rgb(255, 255, 255)",
+        "contextBackground": "rgb(31, 28, 28)"
+      },
+      {
+        "classes": "block-editor-block-list__block wp-block alignnone wp-block-social-links block-editor-block-list__layout is-layout-flex wp-block-social-links-is-layout-flex",
+        "color": "rgb(31, 28, 28)",
+        "background": "rgb(255, 255, 255)",
+        "contextForeground": "rgb(255, 255, 255)",
+        "contextBackground": "rgb(31, 28, 28)"
+      },
+      {
+        "classes": "block-editor-block-list__block wp-block alignnone wp-block-social-links block-editor-block-list__layout is-layout-flex wp-block-social-links-is-layout-flex",
+        "color": "rgb(31, 28, 28)",
+        "background": "rgb(255, 255, 255)",
+        "contextForeground": "rgb(255, 255, 255)",
+        "contextBackground": "rgb(31, 28, 28)"
+      },
+      {
+        "classes": "block-editor-block-list__block wp-block is-style-pill-shape is-style-pill-shape-dbf7d3b1-dc1c-46a2-932b-6359772f4207 alignnone wp-block-social-links block-editor-block-list__layout is-layout-flex wp-block-social-links-is-layout-flex",
+        "color": "rgb(31, 28, 28)",
+        "background": "rgb(255, 255, 255)",
+        "contextForeground": "rgb(255, 255, 255)",
+        "contextBackground": "rgb(31, 28, 28)"
+      },
+      {
+        "classes": "block-editor-block-list__block wp-block is-style-pill-shape is-style-pill-shape-dbf7d3b1-dc1c-46a2-932b-6359772f4207 alignnone wp-block-social-links block-editor-block-list__layout is-layout-flex wp-block-social-links-is-layout-flex",
+        "color": "rgb(31, 28, 28)",
+        "background": "rgb(255, 255, 255)",
+        "contextForeground": "rgb(255, 255, 255)",
+        "contextBackground": "rgb(31, 28, 28)"
+      },
+      {
+        "classes": "block-editor-block-list__block wp-block is-style-pill-shape is-style-pill-shape-dbf7d3b1-dc1c-46a2-932b-6359772f4207 alignnone wp-block-social-links block-editor-block-list__layout is-layout-flex wp-block-social-links-is-layout-flex",
+        "color": "rgb(31, 28, 28)",
+        "background": "rgb(255, 255, 255)",
+        "contextForeground": "rgb(255, 255, 255)",
+        "contextBackground": "rgb(31, 28, 28)"
+      }
+    ],
+    "menus": [
+      {
+        "color": "rgb(255, 255, 255)",
+        "background": "rgb(31, 28, 28)",
+        "contextForeground": "rgb(255, 255, 255)",
+        "contextBackground": "rgb(31, 28, 28)"
+      }
+    ],
+    "passed": true
+  },
+  {
+    "label": "Post Editor functional palette controls enabled",
+    "mode": "block-editor-iframe__body editor-styles-wrapper post-type-page admin-color-modern wp-embed-responsive",
+    "icons": [
+      {
+        "classes": "block-editor-block-list__block wp-block is-style-logos-only is-style-logos-only-e7779f36-1a83-41b2-9e74-074fb976f6bd alignnone wp-block-social-links block-editor-block-list__layout is-layout-flex wp-block-social-links-is-layout-flex",
+        "color": "rgb(255, 255, 255)",
+        "background": "rgba(0, 0, 0, 0)",
+        "contextForeground": "rgb(255, 255, 255)",
+        "contextBackground": "rgb(31, 28, 28)"
+      },
+      {
+        "classes": "block-editor-block-list__block wp-block is-style-logos-only is-style-logos-only-e7779f36-1a83-41b2-9e74-074fb976f6bd alignnone wp-block-social-links block-editor-block-list__layout is-layout-flex wp-block-social-links-is-layout-flex",
+        "color": "rgb(255, 255, 255)",
+        "background": "rgba(0, 0, 0, 0)",
+        "contextForeground": "rgb(255, 255, 255)",
+        "contextBackground": "rgb(31, 28, 28)"
+      },
+      {
+        "classes": "block-editor-block-list__block wp-block is-style-logos-only is-style-logos-only-e7779f36-1a83-41b2-9e74-074fb976f6bd alignnone wp-block-social-links block-editor-block-list__layout is-layout-flex wp-block-social-links-is-layout-flex",
+        "color": "rgb(255, 255, 255)",
+        "background": "rgba(0, 0, 0, 0)",
+        "contextForeground": "rgb(255, 255, 255)",
+        "contextBackground": "rgb(31, 28, 28)"
+      },
+      {
+        "classes": "block-editor-block-list__block wp-block alignnone wp-block-social-links block-editor-block-list__layout is-layout-flex wp-block-social-links-is-layout-flex",
+        "color": "rgb(31, 28, 28)",
+        "background": "rgb(255, 255, 255)",
+        "contextForeground": "rgb(255, 255, 255)",
+        "contextBackground": "rgb(31, 28, 28)"
+      },
+      {
+        "classes": "block-editor-block-list__block wp-block alignnone wp-block-social-links block-editor-block-list__layout is-layout-flex wp-block-social-links-is-layout-flex",
+        "color": "rgb(31, 28, 28)",
+        "background": "rgb(255, 255, 255)",
+        "contextForeground": "rgb(255, 255, 255)",
+        "contextBackground": "rgb(31, 28, 28)"
+      },
+      {
+        "classes": "block-editor-block-list__block wp-block alignnone wp-block-social-links block-editor-block-list__layout is-layout-flex wp-block-social-links-is-layout-flex",
+        "color": "rgb(31, 28, 28)",
+        "background": "rgb(255, 255, 255)",
+        "contextForeground": "rgb(255, 255, 255)",
+        "contextBackground": "rgb(31, 28, 28)"
+      },
+      {
+        "classes": "block-editor-block-list__block wp-block is-style-pill-shape is-style-pill-shape-dbf7d3b1-dc1c-46a2-932b-6359772f4207 alignnone wp-block-social-links block-editor-block-list__layout is-layout-flex wp-block-social-links-is-layout-flex",
+        "color": "rgb(31, 28, 28)",
+        "background": "rgb(255, 255, 255)",
+        "contextForeground": "rgb(255, 255, 255)",
+        "contextBackground": "rgb(31, 28, 28)"
+      },
+      {
+        "classes": "block-editor-block-list__block wp-block is-style-pill-shape is-style-pill-shape-dbf7d3b1-dc1c-46a2-932b-6359772f4207 alignnone wp-block-social-links block-editor-block-list__layout is-layout-flex wp-block-social-links-is-layout-flex",
+        "color": "rgb(31, 28, 28)",
+        "background": "rgb(255, 255, 255)",
+        "contextForeground": "rgb(255, 255, 255)",
+        "contextBackground": "rgb(31, 28, 28)"
+      },
+      {
+        "classes": "block-editor-block-list__block wp-block is-style-pill-shape is-style-pill-shape-dbf7d3b1-dc1c-46a2-932b-6359772f4207 alignnone wp-block-social-links block-editor-block-list__layout is-layout-flex wp-block-social-links-is-layout-flex",
+        "color": "rgb(31, 28, 28)",
+        "background": "rgb(255, 255, 255)",
+        "contextForeground": "rgb(255, 255, 255)",
+        "contextBackground": "rgb(31, 28, 28)"
+      }
+    ],
+    "menus": [
+      {
+        "color": "rgb(255, 255, 255)",
+        "background": "rgb(31, 28, 28)",
+        "contextForeground": "rgb(255, 255, 255)",
+        "contextBackground": "rgb(31, 28, 28)"
+      }
+    ],
+    "passed": true
+  },
+  {
+    "label": "Post Editor Info palette after real toolbar change",
+    "mode": "block-editor-iframe__body editor-styles-wrapper post-type-page admin-color-modern wp-embed-responsive",
+    "icons": [
+      {
+        "classes": "block-editor-block-list__block wp-block is-style-logos-only is-style-logos-only-e7779f36-1a83-41b2-9e74-074fb976f6bd alignnone wp-block-social-links block-editor-block-list__layout is-layout-flex wp-block-social-links-is-layout-flex",
+        "color": "rgb(255, 255, 255)",
+        "background": "rgba(0, 0, 0, 0)",
+        "contextForeground": "rgb(255, 255, 255)",
+        "contextBackground": "rgb(12, 23, 65)"
+      },
+      {
+        "classes": "block-editor-block-list__block wp-block is-style-logos-only is-style-logos-only-e7779f36-1a83-41b2-9e74-074fb976f6bd alignnone wp-block-social-links block-editor-block-list__layout is-layout-flex wp-block-social-links-is-layout-flex",
+        "color": "rgb(255, 255, 255)",
+        "background": "rgba(0, 0, 0, 0)",
+        "contextForeground": "rgb(255, 255, 255)",
+        "contextBackground": "rgb(12, 23, 65)"
+      },
+      {
+        "classes": "block-editor-block-list__block wp-block is-style-logos-only is-style-logos-only-e7779f36-1a83-41b2-9e74-074fb976f6bd alignnone wp-block-social-links block-editor-block-list__layout is-layout-flex wp-block-social-links-is-layout-flex",
+        "color": "rgb(255, 255, 255)",
+        "background": "rgba(0, 0, 0, 0)",
+        "contextForeground": "rgb(255, 255, 255)",
+        "contextBackground": "rgb(12, 23, 65)"
+      },
+      {
+        "classes": "block-editor-block-list__block wp-block alignnone wp-block-social-links block-editor-block-list__layout is-layout-flex wp-block-social-links-is-layout-flex",
+        "color": "rgb(12, 23, 65)",
+        "background": "rgb(255, 255, 255)",
+        "contextForeground": "rgb(255, 255, 255)",
+        "contextBackground": "rgb(12, 23, 65)"
+      },
+      {
+        "classes": "block-editor-block-list__block wp-block alignnone wp-block-social-links block-editor-block-list__layout is-layout-flex wp-block-social-links-is-layout-flex",
+        "color": "rgb(12, 23, 65)",
+        "background": "rgb(255, 255, 255)",
+        "contextForeground": "rgb(255, 255, 255)",
+        "contextBackground": "rgb(12, 23, 65)"
+      },
+      {
+        "classes": "block-editor-block-list__block wp-block alignnone wp-block-social-links block-editor-block-list__layout is-layout-flex wp-block-social-links-is-layout-flex",
+        "color": "rgb(12, 23, 65)",
+        "background": "rgb(255, 255, 255)",
+        "contextForeground": "rgb(255, 255, 255)",
+        "contextBackground": "rgb(12, 23, 65)"
+      },
+      {
+        "classes": "block-editor-block-list__block wp-block is-style-pill-shape is-style-pill-shape-dbf7d3b1-dc1c-46a2-932b-6359772f4207 alignnone wp-block-social-links block-editor-block-list__layout is-layout-flex wp-block-social-links-is-layout-flex",
+        "color": "rgb(12, 23, 65)",
+        "background": "rgb(255, 255, 255)",
+        "contextForeground": "rgb(255, 255, 255)",
+        "contextBackground": "rgb(12, 23, 65)"
+      },
+      {
+        "classes": "block-editor-block-list__block wp-block is-style-pill-shape is-style-pill-shape-dbf7d3b1-dc1c-46a2-932b-6359772f4207 alignnone wp-block-social-links block-editor-block-list__layout is-layout-flex wp-block-social-links-is-layout-flex",
+        "color": "rgb(12, 23, 65)",
+        "background": "rgb(255, 255, 255)",
+        "contextForeground": "rgb(255, 255, 255)",
+        "contextBackground": "rgb(12, 23, 65)"
+      },
+      {
+        "classes": "block-editor-block-list__block wp-block is-style-pill-shape is-style-pill-shape-dbf7d3b1-dc1c-46a2-932b-6359772f4207 alignnone wp-block-social-links block-editor-block-list__layout is-layout-flex wp-block-social-links-is-layout-flex",
+        "color": "rgb(12, 23, 65)",
+        "background": "rgb(255, 255, 255)",
+        "contextForeground": "rgb(255, 255, 255)",
+        "contextBackground": "rgb(12, 23, 65)"
+      }
+    ],
+    "menus": [
+      {
+        "color": "rgb(255, 255, 255)",
+        "background": "rgb(12, 23, 65)",
+        "contextForeground": "rgb(255, 255, 255)",
+        "contextBackground": "rgb(12, 23, 65)"
+      }
+    ],
+    "passed": true
+  },
+  {
+    "label": "Post Editor Info palette Save and reload",
+    "mode": "block-editor-iframe__body editor-styles-wrapper post-type-page admin-color-modern wp-embed-responsive",
+    "icons": [
+      {
+        "classes": "block-editor-block-list__block wp-block is-style-logos-only is-style-logos-only-ab4b53b9-5e00-4254-8a88-c338766331a4 alignnone wp-block-social-links block-editor-block-list__layout is-layout-flex wp-block-social-links-is-layout-flex",
+        "color": "rgb(255, 255, 255)",
+        "background": "rgba(0, 0, 0, 0)",
+        "contextForeground": "rgb(255, 255, 255)",
+        "contextBackground": "rgb(12, 23, 65)"
+      },
+      {
+        "classes": "block-editor-block-list__block wp-block is-style-logos-only is-style-logos-only-ab4b53b9-5e00-4254-8a88-c338766331a4 alignnone wp-block-social-links block-editor-block-list__layout is-layout-flex wp-block-social-links-is-layout-flex",
+        "color": "rgb(255, 255, 255)",
+        "background": "rgba(0, 0, 0, 0)",
+        "contextForeground": "rgb(255, 255, 255)",
+        "contextBackground": "rgb(12, 23, 65)"
+      },
+      {
+        "classes": "block-editor-block-list__block wp-block is-style-logos-only is-style-logos-only-ab4b53b9-5e00-4254-8a88-c338766331a4 alignnone wp-block-social-links block-editor-block-list__layout is-layout-flex wp-block-social-links-is-layout-flex",
+        "color": "rgb(255, 255, 255)",
+        "background": "rgba(0, 0, 0, 0)",
+        "contextForeground": "rgb(255, 255, 255)",
+        "contextBackground": "rgb(12, 23, 65)"
+      },
+      {
+        "classes": "block-editor-block-list__block wp-block alignnone wp-block-social-links block-editor-block-list__layout is-layout-flex wp-block-social-links-is-layout-flex",
+        "color": "rgb(12, 23, 65)",
+        "background": "rgb(255, 255, 255)",
+        "contextForeground": "rgb(255, 255, 255)",
+        "contextBackground": "rgb(12, 23, 65)"
+      },
+      {
+        "classes": "block-editor-block-list__block wp-block alignnone wp-block-social-links block-editor-block-list__layout is-layout-flex wp-block-social-links-is-layout-flex",
+        "color": "rgb(12, 23, 65)",
+        "background": "rgb(255, 255, 255)",
+        "contextForeground": "rgb(255, 255, 255)",
+        "contextBackground": "rgb(12, 23, 65)"
+      },
+      {
+        "classes": "block-editor-block-list__block wp-block alignnone wp-block-social-links block-editor-block-list__layout is-layout-flex wp-block-social-links-is-layout-flex",
+        "color": "rgb(12, 23, 65)",
+        "background": "rgb(255, 255, 255)",
+        "contextForeground": "rgb(255, 255, 255)",
+        "contextBackground": "rgb(12, 23, 65)"
+      },
+      {
+        "classes": "block-editor-block-list__block wp-block is-style-pill-shape is-style-pill-shape-e490644b-d6dc-4eb1-b114-7359024ba40f alignnone wp-block-social-links block-editor-block-list__layout is-layout-flex wp-block-social-links-is-layout-flex",
+        "color": "rgb(12, 23, 65)",
+        "background": "rgb(255, 255, 255)",
+        "contextForeground": "rgb(255, 255, 255)",
+        "contextBackground": "rgb(12, 23, 65)"
+      },
+      {
+        "classes": "block-editor-block-list__block wp-block is-style-pill-shape is-style-pill-shape-e490644b-d6dc-4eb1-b114-7359024ba40f alignnone wp-block-social-links block-editor-block-list__layout is-layout-flex wp-block-social-links-is-layout-flex",
+        "color": "rgb(12, 23, 65)",
+        "background": "rgb(255, 255, 255)",
+        "contextForeground": "rgb(255, 255, 255)",
+        "contextBackground": "rgb(12, 23, 65)"
+      },
+      {
+        "classes": "block-editor-block-list__block wp-block is-style-pill-shape is-style-pill-shape-e490644b-d6dc-4eb1-b114-7359024ba40f alignnone wp-block-social-links block-editor-block-list__layout is-layout-flex wp-block-social-links-is-layout-flex",
+        "color": "rgb(12, 23, 65)",
+        "background": "rgb(255, 255, 255)",
+        "contextForeground": "rgb(255, 255, 255)",
+        "contextBackground": "rgb(12, 23, 65)"
+      }
+    ],
+    "menus": [
+      {
+        "color": "rgb(255, 255, 255)",
+        "background": "rgb(12, 23, 65)",
+        "contextForeground": "rgb(255, 255, 255)",
+        "contextBackground": "rgb(12, 23, 65)"
+      }
+    ],
+    "passed": true
+  },
+  {
+    "label": "Site Editor initial dark context",
+    "mode": "block-editor-iframe__body editor-styles-wrapper admin-color-modern wp-embed-responsive",
+    "icons": [
+      {
+        "classes": "block-editor-block-list__block wp-block is-style-logos-only is-style-logos-only-2cc6a81c-305f-47a2-a3f4-6dc773a5837a alignnone wp-block-social-links block-editor-block-list__layout is-layout-flex wp-block-social-links-is-layout-flex",
+        "color": "rgb(255, 255, 255)",
+        "background": "rgba(0, 0, 0, 0)",
+        "contextForeground": "rgb(255, 255, 255)",
+        "contextBackground": "rgb(31, 28, 28)"
+      },
+      {
+        "classes": "block-editor-block-list__block wp-block is-style-logos-only is-style-logos-only-2cc6a81c-305f-47a2-a3f4-6dc773a5837a alignnone wp-block-social-links block-editor-block-list__layout is-layout-flex wp-block-social-links-is-layout-flex",
+        "color": "rgb(255, 255, 255)",
+        "background": "rgba(0, 0, 0, 0)",
+        "contextForeground": "rgb(255, 255, 255)",
+        "contextBackground": "rgb(31, 28, 28)"
+      },
+      {
+        "classes": "block-editor-block-list__block wp-block is-style-logos-only is-style-logos-only-2cc6a81c-305f-47a2-a3f4-6dc773a5837a alignnone wp-block-social-links block-editor-block-list__layout is-layout-flex wp-block-social-links-is-layout-flex",
+        "color": "rgb(255, 255, 255)",
+        "background": "rgba(0, 0, 0, 0)",
+        "contextForeground": "rgb(255, 255, 255)",
+        "contextBackground": "rgb(31, 28, 28)"
+      },
+      {
+        "classes": "block-editor-block-list__block wp-block alignnone wp-block-social-links block-editor-block-list__layout is-layout-flex wp-block-social-links-is-layout-flex",
+        "color": "rgb(31, 28, 28)",
+        "background": "rgb(255, 255, 255)",
+        "contextForeground": "rgb(255, 255, 255)",
+        "contextBackground": "rgb(31, 28, 28)"
+      },
+      {
+        "classes": "block-editor-block-list__block wp-block alignnone wp-block-social-links block-editor-block-list__layout is-layout-flex wp-block-social-links-is-layout-flex",
+        "color": "rgb(31, 28, 28)",
+        "background": "rgb(255, 255, 255)",
+        "contextForeground": "rgb(255, 255, 255)",
+        "contextBackground": "rgb(31, 28, 28)"
+      },
+      {
+        "classes": "block-editor-block-list__block wp-block alignnone wp-block-social-links block-editor-block-list__layout is-layout-flex wp-block-social-links-is-layout-flex",
+        "color": "rgb(31, 28, 28)",
+        "background": "rgb(255, 255, 255)",
+        "contextForeground": "rgb(255, 255, 255)",
+        "contextBackground": "rgb(31, 28, 28)"
+      },
+      {
+        "classes": "block-editor-block-list__block wp-block is-style-pill-shape is-style-pill-shape-7fd7e573-7de4-4844-8ff3-4bfd2a71ae5d alignnone wp-block-social-links block-editor-block-list__layout is-layout-flex wp-block-social-links-is-layout-flex",
+        "color": "rgb(31, 28, 28)",
+        "background": "rgb(255, 255, 255)",
+        "contextForeground": "rgb(255, 255, 255)",
+        "contextBackground": "rgb(31, 28, 28)"
+      },
+      {
+        "classes": "block-editor-block-list__block wp-block is-style-pill-shape is-style-pill-shape-7fd7e573-7de4-4844-8ff3-4bfd2a71ae5d alignnone wp-block-social-links block-editor-block-list__layout is-layout-flex wp-block-social-links-is-layout-flex",
+        "color": "rgb(31, 28, 28)",
+        "background": "rgb(255, 255, 255)",
+        "contextForeground": "rgb(255, 255, 255)",
+        "contextBackground": "rgb(31, 28, 28)"
+      },
+      {
+        "classes": "block-editor-block-list__block wp-block is-style-pill-shape is-style-pill-shape-7fd7e573-7de4-4844-8ff3-4bfd2a71ae5d alignnone wp-block-social-links block-editor-block-list__layout is-layout-flex wp-block-social-links-is-layout-flex",
+        "color": "rgb(31, 28, 28)",
+        "background": "rgb(255, 255, 255)",
+        "contextForeground": "rgb(255, 255, 255)",
+        "contextBackground": "rgb(31, 28, 28)"
+      }
+    ],
+    "menus": [
+      {
+        "color": "rgb(255, 255, 255)",
+        "background": "rgb(31, 28, 28)",
+        "contextForeground": "rgb(255, 255, 255)",
+        "contextBackground": "rgb(31, 28, 28)"
+      }
+    ],
+    "passed": true
+  },
+  {
+    "label": "Site Editor Plain preset",
+    "mode": "block-editor-iframe__body editor-styles-wrapper admin-color-modern wp-embed-responsive",
+    "icons": [
+      {
+        "classes": "block-editor-block-list__block wp-block is-style-logos-only is-style-logos-only-2cc6a81c-305f-47a2-a3f4-6dc773a5837a alignnone wp-block-social-links block-editor-block-list__layout is-layout-flex wp-block-social-links-is-layout-flex",
+        "color": "rgb(45, 30, 28)",
+        "background": "rgba(0, 0, 0, 0)",
+        "contextForeground": "rgb(45, 30, 28)",
+        "contextBackground": "rgb(255, 253, 250)"
+      },
+      {
+        "classes": "block-editor-block-list__block wp-block is-style-logos-only is-style-logos-only-2cc6a81c-305f-47a2-a3f4-6dc773a5837a alignnone wp-block-social-links block-editor-block-list__layout is-layout-flex wp-block-social-links-is-layout-flex",
+        "color": "rgb(45, 30, 28)",
+        "background": "rgba(0, 0, 0, 0)",
+        "contextForeground": "rgb(45, 30, 28)",
+        "contextBackground": "rgb(255, 253, 250)"
+      },
+      {
+        "classes": "block-editor-block-list__block wp-block is-style-logos-only is-style-logos-only-2cc6a81c-305f-47a2-a3f4-6dc773a5837a alignnone wp-block-social-links block-editor-block-list__layout is-layout-flex wp-block-social-links-is-layout-flex",
+        "color": "rgb(45, 30, 28)",
+        "background": "rgba(0, 0, 0, 0)",
+        "contextForeground": "rgb(45, 30, 28)",
+        "contextBackground": "rgb(255, 253, 250)"
+      },
+      {
+        "classes": "block-editor-block-list__block wp-block alignnone wp-block-social-links block-editor-block-list__layout is-layout-flex wp-block-social-links-is-layout-flex",
+        "color": "rgb(255, 253, 250)",
+        "background": "rgb(45, 30, 28)",
+        "contextForeground": "rgb(45, 30, 28)",
+        "contextBackground": "rgb(255, 253, 250)"
+      },
+      {
+        "classes": "block-editor-block-list__block wp-block alignnone wp-block-social-links block-editor-block-list__layout is-layout-flex wp-block-social-links-is-layout-flex",
+        "color": "rgb(255, 253, 250)",
+        "background": "rgb(45, 30, 28)",
+        "contextForeground": "rgb(45, 30, 28)",
+        "contextBackground": "rgb(255, 253, 250)"
+      },
+      {
+        "classes": "block-editor-block-list__block wp-block alignnone wp-block-social-links block-editor-block-list__layout is-layout-flex wp-block-social-links-is-layout-flex",
+        "color": "rgb(255, 253, 250)",
+        "background": "rgb(45, 30, 28)",
+        "contextForeground": "rgb(45, 30, 28)",
+        "contextBackground": "rgb(255, 253, 250)"
+      },
+      {
+        "classes": "block-editor-block-list__block wp-block is-style-pill-shape is-style-pill-shape-7fd7e573-7de4-4844-8ff3-4bfd2a71ae5d alignnone wp-block-social-links block-editor-block-list__layout is-layout-flex wp-block-social-links-is-layout-flex",
+        "color": "rgb(255, 253, 250)",
+        "background": "rgb(45, 30, 28)",
+        "contextForeground": "rgb(45, 30, 28)",
+        "contextBackground": "rgb(255, 253, 250)"
+      },
+      {
+        "classes": "block-editor-block-list__block wp-block is-style-pill-shape is-style-pill-shape-7fd7e573-7de4-4844-8ff3-4bfd2a71ae5d alignnone wp-block-social-links block-editor-block-list__layout is-layout-flex wp-block-social-links-is-layout-flex",
+        "color": "rgb(255, 253, 250)",
+        "background": "rgb(45, 30, 28)",
+        "contextForeground": "rgb(45, 30, 28)",
+        "contextBackground": "rgb(255, 253, 250)"
+      },
+      {
+        "classes": "block-editor-block-list__block wp-block is-style-pill-shape is-style-pill-shape-7fd7e573-7de4-4844-8ff3-4bfd2a71ae5d alignnone wp-block-social-links block-editor-block-list__layout is-layout-flex wp-block-social-links-is-layout-flex",
+        "color": "rgb(255, 253, 250)",
+        "background": "rgb(45, 30, 28)",
+        "contextForeground": "rgb(45, 30, 28)",
+        "contextBackground": "rgb(255, 253, 250)"
+      }
+    ],
+    "menus": [
+      {
+        "color": "rgb(45, 30, 28)",
+        "background": "rgb(255, 253, 250)",
+        "contextForeground": "rgb(45, 30, 28)",
+        "contextBackground": "rgb(255, 253, 250)"
+      }
+    ],
+    "passed": true
+  },
+  {
+    "label": "Site Editor one-step undo restores dark context",
+    "mode": "block-editor-iframe__body editor-styles-wrapper admin-color-modern wp-embed-responsive",
+    "icons": [
+      {
+        "classes": "block-editor-block-list__block wp-block is-style-logos-only is-style-logos-only-2cc6a81c-305f-47a2-a3f4-6dc773a5837a alignnone wp-block-social-links block-editor-block-list__layout is-layout-flex wp-block-social-links-is-layout-flex",
+        "color": "rgb(255, 255, 255)",
+        "background": "rgba(0, 0, 0, 0)",
+        "contextForeground": "rgb(255, 255, 255)",
+        "contextBackground": "rgb(31, 28, 28)"
+      },
+      {
+        "classes": "block-editor-block-list__block wp-block is-style-logos-only is-style-logos-only-2cc6a81c-305f-47a2-a3f4-6dc773a5837a alignnone wp-block-social-links block-editor-block-list__layout is-layout-flex wp-block-social-links-is-layout-flex",
+        "color": "rgb(255, 255, 255)",
+        "background": "rgba(0, 0, 0, 0)",
+        "contextForeground": "rgb(255, 255, 255)",
+        "contextBackground": "rgb(31, 28, 28)"
+      },
+      {
+        "classes": "block-editor-block-list__block wp-block is-style-logos-only is-style-logos-only-2cc6a81c-305f-47a2-a3f4-6dc773a5837a alignnone wp-block-social-links block-editor-block-list__layout is-layout-flex wp-block-social-links-is-layout-flex",
+        "color": "rgb(255, 255, 255)",
+        "background": "rgba(0, 0, 0, 0)",
+        "contextForeground": "rgb(255, 255, 255)",
+        "contextBackground": "rgb(31, 28, 28)"
+      },
+      {
+        "classes": "block-editor-block-list__block wp-block alignnone wp-block-social-links block-editor-block-list__layout is-layout-flex wp-block-social-links-is-layout-flex",
+        "color": "rgb(31, 28, 28)",
+        "background": "rgb(255, 255, 255)",
+        "contextForeground": "rgb(255, 255, 255)",
+        "contextBackground": "rgb(31, 28, 28)"
+      },
+      {
+        "classes": "block-editor-block-list__block wp-block alignnone wp-block-social-links block-editor-block-list__layout is-layout-flex wp-block-social-links-is-layout-flex",
+        "color": "rgb(31, 28, 28)",
+        "background": "rgb(255, 255, 255)",
+        "contextForeground": "rgb(255, 255, 255)",
+        "contextBackground": "rgb(31, 28, 28)"
+      },
+      {
+        "classes": "block-editor-block-list__block wp-block alignnone wp-block-social-links block-editor-block-list__layout is-layout-flex wp-block-social-links-is-layout-flex",
+        "color": "rgb(31, 28, 28)",
+        "background": "rgb(255, 255, 255)",
+        "contextForeground": "rgb(255, 255, 255)",
+        "contextBackground": "rgb(31, 28, 28)"
+      },
+      {
+        "classes": "block-editor-block-list__block wp-block is-style-pill-shape is-style-pill-shape-7fd7e573-7de4-4844-8ff3-4bfd2a71ae5d alignnone wp-block-social-links block-editor-block-list__layout is-layout-flex wp-block-social-links-is-layout-flex",
+        "color": "rgb(31, 28, 28)",
+        "background": "rgb(255, 255, 255)",
+        "contextForeground": "rgb(255, 255, 255)",
+        "contextBackground": "rgb(31, 28, 28)"
+      },
+      {
+        "classes": "block-editor-block-list__block wp-block is-style-pill-shape is-style-pill-shape-7fd7e573-7de4-4844-8ff3-4bfd2a71ae5d alignnone wp-block-social-links block-editor-block-list__layout is-layout-flex wp-block-social-links-is-layout-flex",
+        "color": "rgb(31, 28, 28)",
+        "background": "rgb(255, 255, 255)",
+        "contextForeground": "rgb(255, 255, 255)",
+        "contextBackground": "rgb(31, 28, 28)"
+      },
+      {
+        "classes": "block-editor-block-list__block wp-block is-style-pill-shape is-style-pill-shape-7fd7e573-7de4-4844-8ff3-4bfd2a71ae5d alignnone wp-block-social-links block-editor-block-list__layout is-layout-flex wp-block-social-links-is-layout-flex",
+        "color": "rgb(31, 28, 28)",
+        "background": "rgb(255, 255, 255)",
+        "contextForeground": "rgb(255, 255, 255)",
+        "contextBackground": "rgb(31, 28, 28)"
+      }
+    ],
+    "menus": [
+      {
+        "color": "rgb(255, 255, 255)",
+        "background": "rgb(31, 28, 28)",
+        "contextForeground": "rgb(255, 255, 255)",
+        "contextBackground": "rgb(31, 28, 28)"
+      }
+    ],
+    "passed": true
+  },
+  {
+    "label": "Site Editor Info palette after toolbar change",
+    "mode": "block-editor-iframe__body editor-styles-wrapper admin-color-modern wp-embed-responsive",
+    "icons": [
+      {
+        "classes": "block-editor-block-list__block wp-block is-style-logos-only is-style-logos-only-2cc6a81c-305f-47a2-a3f4-6dc773a5837a alignnone wp-block-social-links block-editor-block-list__layout is-layout-flex wp-block-social-links-is-layout-flex",
+        "color": "rgb(255, 255, 255)",
+        "background": "rgba(0, 0, 0, 0)",
+        "contextForeground": "rgb(255, 255, 255)",
+        "contextBackground": "rgb(12, 23, 65)"
+      },
+      {
+        "classes": "block-editor-block-list__block wp-block is-style-logos-only is-style-logos-only-2cc6a81c-305f-47a2-a3f4-6dc773a5837a alignnone wp-block-social-links block-editor-block-list__layout is-layout-flex wp-block-social-links-is-layout-flex",
+        "color": "rgb(255, 255, 255)",
+        "background": "rgba(0, 0, 0, 0)",
+        "contextForeground": "rgb(255, 255, 255)",
+        "contextBackground": "rgb(12, 23, 65)"
+      },
+      {
+        "classes": "block-editor-block-list__block wp-block is-style-logos-only is-style-logos-only-2cc6a81c-305f-47a2-a3f4-6dc773a5837a alignnone wp-block-social-links block-editor-block-list__layout is-layout-flex wp-block-social-links-is-layout-flex",
+        "color": "rgb(255, 255, 255)",
+        "background": "rgba(0, 0, 0, 0)",
+        "contextForeground": "rgb(255, 255, 255)",
+        "contextBackground": "rgb(12, 23, 65)"
+      },
+      {
+        "classes": "block-editor-block-list__block wp-block alignnone wp-block-social-links block-editor-block-list__layout is-layout-flex wp-block-social-links-is-layout-flex",
+        "color": "rgb(12, 23, 65)",
+        "background": "rgb(255, 255, 255)",
+        "contextForeground": "rgb(255, 255, 255)",
+        "contextBackground": "rgb(12, 23, 65)"
+      },
+      {
+        "classes": "block-editor-block-list__block wp-block alignnone wp-block-social-links block-editor-block-list__layout is-layout-flex wp-block-social-links-is-layout-flex",
+        "color": "rgb(12, 23, 65)",
+        "background": "rgb(255, 255, 255)",
+        "contextForeground": "rgb(255, 255, 255)",
+        "contextBackground": "rgb(12, 23, 65)"
+      },
+      {
+        "classes": "block-editor-block-list__block wp-block alignnone wp-block-social-links block-editor-block-list__layout is-layout-flex wp-block-social-links-is-layout-flex",
+        "color": "rgb(12, 23, 65)",
+        "background": "rgb(255, 255, 255)",
+        "contextForeground": "rgb(255, 255, 255)",
+        "contextBackground": "rgb(12, 23, 65)"
+      },
+      {
+        "classes": "block-editor-block-list__block wp-block is-style-pill-shape is-style-pill-shape-7fd7e573-7de4-4844-8ff3-4bfd2a71ae5d alignnone wp-block-social-links block-editor-block-list__layout is-layout-flex wp-block-social-links-is-layout-flex",
+        "color": "rgb(12, 23, 65)",
+        "background": "rgb(255, 255, 255)",
+        "contextForeground": "rgb(255, 255, 255)",
+        "contextBackground": "rgb(12, 23, 65)"
+      },
+      {
+        "classes": "block-editor-block-list__block wp-block is-style-pill-shape is-style-pill-shape-7fd7e573-7de4-4844-8ff3-4bfd2a71ae5d alignnone wp-block-social-links block-editor-block-list__layout is-layout-flex wp-block-social-links-is-layout-flex",
+        "color": "rgb(12, 23, 65)",
+        "background": "rgb(255, 255, 255)",
+        "contextForeground": "rgb(255, 255, 255)",
+        "contextBackground": "rgb(12, 23, 65)"
+      },
+      {
+        "classes": "block-editor-block-list__block wp-block is-style-pill-shape is-style-pill-shape-7fd7e573-7de4-4844-8ff3-4bfd2a71ae5d alignnone wp-block-social-links block-editor-block-list__layout is-layout-flex wp-block-social-links-is-layout-flex",
+        "color": "rgb(12, 23, 65)",
+        "background": "rgb(255, 255, 255)",
+        "contextForeground": "rgb(255, 255, 255)",
+        "contextBackground": "rgb(12, 23, 65)"
+      }
+    ],
+    "menus": [
+      {
+        "color": "rgb(255, 255, 255)",
+        "background": "rgb(12, 23, 65)",
+        "contextForeground": "rgb(255, 255, 255)",
+        "contextBackground": "rgb(12, 23, 65)"
+      }
+    ],
+    "passed": true
+  },
+  {
+    "label": "Site Editor Info palette Save and reload",
+    "mode": "block-editor-iframe__body editor-styles-wrapper admin-color-modern wp-embed-responsive",
+    "icons": [
+      {
+        "classes": "block-editor-block-list__block wp-block is-style-logos-only is-style-logos-only-7ec4be00-6fd1-40f0-99fe-26ecb7144e60 alignnone wp-block-social-links block-editor-block-list__layout is-layout-flex wp-block-social-links-is-layout-flex",
+        "color": "rgb(255, 255, 255)",
+        "background": "rgba(0, 0, 0, 0)",
+        "contextForeground": "rgb(255, 255, 255)",
+        "contextBackground": "rgb(12, 23, 65)"
+      },
+      {
+        "classes": "block-editor-block-list__block wp-block is-style-logos-only is-style-logos-only-7ec4be00-6fd1-40f0-99fe-26ecb7144e60 alignnone wp-block-social-links block-editor-block-list__layout is-layout-flex wp-block-social-links-is-layout-flex",
+        "color": "rgb(255, 255, 255)",
+        "background": "rgba(0, 0, 0, 0)",
+        "contextForeground": "rgb(255, 255, 255)",
+        "contextBackground": "rgb(12, 23, 65)"
+      },
+      {
+        "classes": "block-editor-block-list__block wp-block is-style-logos-only is-style-logos-only-7ec4be00-6fd1-40f0-99fe-26ecb7144e60 alignnone wp-block-social-links block-editor-block-list__layout is-layout-flex wp-block-social-links-is-layout-flex",
+        "color": "rgb(255, 255, 255)",
+        "background": "rgba(0, 0, 0, 0)",
+        "contextForeground": "rgb(255, 255, 255)",
+        "contextBackground": "rgb(12, 23, 65)"
+      },
+      {
+        "classes": "block-editor-block-list__block wp-block alignnone wp-block-social-links block-editor-block-list__layout is-layout-flex wp-block-social-links-is-layout-flex",
+        "color": "rgb(12, 23, 65)",
+        "background": "rgb(255, 255, 255)",
+        "contextForeground": "rgb(255, 255, 255)",
+        "contextBackground": "rgb(12, 23, 65)"
+      },
+      {
+        "classes": "block-editor-block-list__block wp-block alignnone wp-block-social-links block-editor-block-list__layout is-layout-flex wp-block-social-links-is-layout-flex",
+        "color": "rgb(12, 23, 65)",
+        "background": "rgb(255, 255, 255)",
+        "contextForeground": "rgb(255, 255, 255)",
+        "contextBackground": "rgb(12, 23, 65)"
+      },
+      {
+        "classes": "block-editor-block-list__block wp-block alignnone wp-block-social-links block-editor-block-list__layout is-layout-flex wp-block-social-links-is-layout-flex",
+        "color": "rgb(12, 23, 65)",
+        "background": "rgb(255, 255, 255)",
+        "contextForeground": "rgb(255, 255, 255)",
+        "contextBackground": "rgb(12, 23, 65)"
+      },
+      {
+        "classes": "block-editor-block-list__block wp-block is-style-pill-shape is-style-pill-shape-665a18d2-9616-444b-a4f5-6e295178f72d alignnone wp-block-social-links block-editor-block-list__layout is-layout-flex wp-block-social-links-is-layout-flex",
+        "color": "rgb(12, 23, 65)",
+        "background": "rgb(255, 255, 255)",
+        "contextForeground": "rgb(255, 255, 255)",
+        "contextBackground": "rgb(12, 23, 65)"
+      },
+      {
+        "classes": "block-editor-block-list__block wp-block is-style-pill-shape is-style-pill-shape-665a18d2-9616-444b-a4f5-6e295178f72d alignnone wp-block-social-links block-editor-block-list__layout is-layout-flex wp-block-social-links-is-layout-flex",
+        "color": "rgb(12, 23, 65)",
+        "background": "rgb(255, 255, 255)",
+        "contextForeground": "rgb(255, 255, 255)",
+        "contextBackground": "rgb(12, 23, 65)"
+      },
+      {
+        "classes": "block-editor-block-list__block wp-block is-style-pill-shape is-style-pill-shape-665a18d2-9616-444b-a4f5-6e295178f72d alignnone wp-block-social-links block-editor-block-list__layout is-layout-flex wp-block-social-links-is-layout-flex",
+        "color": "rgb(12, 23, 65)",
+        "background": "rgb(255, 255, 255)",
+        "contextForeground": "rgb(255, 255, 255)",
+        "contextBackground": "rgb(12, 23, 65)"
+      }
+    ],
+    "menus": [
+      {
+        "color": "rgb(255, 255, 255)",
+        "background": "rgb(12, 23, 65)",
+        "contextForeground": "rgb(255, 255, 255)",
+        "contextBackground": "rgb(12, 23, 65)"
+      }
+    ],
+    "passed": true
+  }
+]

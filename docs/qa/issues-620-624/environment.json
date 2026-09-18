@@ -1,0 +1,50 @@
+{
+  "date": "2026-09-18",
+  "sourceCommit": "455bd9989615c57c8b3020340179e36814ea8f33",
+  "wordpress": "7.1.1",
+  "theme": "Anima LT 2.0.49",
+  "buildNode": "22.22.0",
+  "browser": "Playwriter headless Chromium",
+  "site": "isolated source-mirrored WordPress Studio site",
+  "mirror": {
+    "checkedAt": "2026-09-18T07:26:10Z",
+    "state": "CLEAN",
+    "warnings": 0,
+    "errors": 0
+  },
+  "canonicalTestSuite": "npm test; final commit hook: ALL FAST TESTS PASSED (56.6s)",
+  "build": "npm run build under Node22; exit0",
+  "screenshots": {
+    "620": [
+      "620-post-editor-max-controls.png",
+      "620-site-editor-max-controls.png",
+      "620-seal-maximum-1440.png",
+      "620-seal-maximum-390.png",
+      "620-wide-narrow-mobile.png",
+      "620-tall-narrow-mobile.png"
+    ],
+    "621": [
+      "621-text-choices-global-on.png",
+      "621-text-choices-global-off.png",
+      "621-patch-text-global-off.png",
+      "621-post-editor-local-text.png",
+      "621-site-editor-local-text.png"
+    ],
+    "622": [
+      "622-live-discovery-report.png",
+      "622-editor-color-signal.png"
+    ],
+    "623": [
+      "623-dark-drawer-0.png",
+      "623-dark-social-styles.png",
+      "623-social-explicit-social-styles.png",
+      "623-info-palette-frontend.png",
+      "623-site-editor-context.png"
+    ],
+    "624": [
+      "624-post-editor-solid-control.png",
+      "624-solid-before-scroll.png",
+      "624-solid-sticky.png"
+    ]
+  }
+}

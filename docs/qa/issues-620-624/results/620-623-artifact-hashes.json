@@ -1,0 +1,64 @@
+{
+  "build/core/style.css": {
+    "source": "a67f14cc10982c9fcc334a116b6b35d71ac6b24d5a2d25e8c3b298f31807f1ef",
+    "qa": "a67f14cc10982c9fcc334a116b6b35d71ac6b24d5a2d25e8c3b298f31807f1ef",
+    "matched": true,
+    "served": "a67f14cc10982c9fcc334a116b6b35d71ac6b24d5a2d25e8c3b298f31807f1ef"
+  },
+  "build/block-library/blocks/logo/index.js": {
+    "source": "a2e5d87cecf88e8ef87793353810c257382eb30a570adf75c5deaecf9ebef86a",
+    "qa": "a2e5d87cecf88e8ef87793353810c257382eb30a570adf75c5deaecf9ebef86a",
+    "matched": true,
+    "served": "a2e5d87cecf88e8ef87793353810c257382eb30a570adf75c5deaecf9ebef86a"
+  },
+  "build/block-library/blocks/logo/style.css": {
+    "source": "258ea6fc1a5b395ed50bc1458230f73afbe8b0c4959e7c60069ccee6992c773e",
+    "qa": "258ea6fc1a5b395ed50bc1458230f73afbe8b0c4959e7c60069ccee6992c773e",
+    "matched": true,
+    "served": "258ea6fc1a5b395ed50bc1458230f73afbe8b0c4959e7c60069ccee6992c773e"
+  },
+  "build/block-library/blocks/header-row/style.css": {
+    "source": "c6d7faa922e2efd9b963275461fe73700acb74c47919004c727adbcfb3e99abe",
+    "qa": "c6d7faa922e2efd9b963275461fe73700acb74c47919004c727adbcfb3e99abe",
+    "matched": true,
+    "served": "c6d7faa922e2efd9b963275461fe73700acb74c47919004c727adbcfb3e99abe"
+  },
+  "build/block-library/blocks/header-row/editor-styles.css": {
+    "source": "25ef41bb159bbf3f075b4b18d8ee36ced1d8d2f2a4eb7e48ad78425d9b78921d",
+    "qa": "25ef41bb159bbf3f075b4b18d8ee36ced1d8d2f2a4eb7e48ad78425d9b78921d",
+    "matched": true,
+    "served": "25ef41bb159bbf3f075b4b18d8ee36ced1d8d2f2a4eb7e48ad78425d9b78921d"
+  },
+  "build/block-library/blocks/header/index.js": {
+    "source": "feeb828be31396ea0420e04e347b752155f2567dd4fd2c8901a0ffa23b41aefe",
+    "qa": "feeb828be31396ea0420e04e347b752155f2567dd4fd2c8901a0ffa23b41aefe",
+    "matched": true,
+    "served": "feeb828be31396ea0420e04e347b752155f2567dd4fd2c8901a0ffa23b41aefe"
+  },
+  "build/block-library/blocks/header/style.css": {
+    "source": "e6e7782aaa7f8dc7735161b4cc04c09796e54b528e8d0952399b4d89ca29d100",
+    "qa": "e6e7782aaa7f8dc7735161b4cc04c09796e54b528e8d0952399b4d89ca29d100",
+    "matched": true,
+    "served": "e6e7782aaa7f8dc7735161b4cc04c09796e54b528e8d0952399b4d89ca29d100"
+  },
+  "packages/block-library/src/blocks/logo/init.php": {
+    "source": "bd30fb0242b88def0ea5ec7473f915e6d261e120667c732e2a5cc70a6254d392",
+    "qa": "bd30fb0242b88def0ea5ec7473f915e6d261e120667c732e2a5cc70a6254d392",
+    "matched": true
+  },
+  "lib/cli/blocks-cli-describe-command.php": {
+    "source": "d432df4d243e66d61df9040d2009ef50a05d1fd19f0e4e81cb312136576d09ec",
+    "qa": "d432df4d243e66d61df9040d2009ef50a05d1fd19f0e4e81cb312136576d09ec",
+    "matched": true
+  },
+  "lib/cli/blocks-describe-vocabulary.php": {
+    "source": "dfbf4b29ecea2adfa8f2899270b1db96302b7e9bbb434f97f97e38ce8d425bcb",
+    "qa": "dfbf4b29ecea2adfa8f2899270b1db96302b7e9bbb434f97f97e38ce8d425bcb",
+    "matched": true
+  },
+  "lib/cli/blocks-describe-core-color-signal.php": {
+    "source": "1f7ddaac4bda1d575f6e077b4168414feb663396192143b9a7e42f67980919fa",
+    "qa": "1f7ddaac4bda1d575f6e077b4168414feb663396192143b9a7e42f67980919fa",
+    "matched": true
+  }
+}

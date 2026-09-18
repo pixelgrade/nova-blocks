@@ -1,0 +1,7 @@
+{
+  "customOverlayClass": true,
+  "overlayBackground": "rgba(0, 0, 0, 0)",
+  "partBackground": "rgb(22, 75, 53)",
+  "partForeground": "rgb(244, 201, 93)",
+  "passed": true
+}

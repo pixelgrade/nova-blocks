@@ -1,0 +1,23 @@
+[
+  {
+    "scrollY": 0,
+    "opacity": "1",
+    "background": "rgb(255, 253, 250)",
+    "header": "nb-header nb-header--main nb-header-shadow nb-header-background alignfull sm-palette-1 sm-variation-11 sm-color-signal-3 sm-light nb-header--ready break-align-left break-align-right",
+    "passed": true
+  },
+  {
+    "scrollY": 700,
+    "opacity": "1",
+    "background": "rgb(255, 253, 250)",
+    "header": "nb-header nb-header--main nb-header-shadow nb-header-background alignfull sm-palette-1 sm-variation-11 sm-color-signal-3 sm-light nb-header--ready break-align-left break-align-right nb-header--sticky",
+    "passed": true
+  },
+  {
+    "scrollY": 0,
+    "opacity": "1",
+    "background": "rgb(255, 253, 250)",
+    "header": "nb-header nb-header--main nb-header-shadow nb-header-background alignfull sm-palette-1 sm-variation-11 sm-color-signal-3 sm-light nb-header--ready break-align-left break-align-right",
+    "passed": true
+  }
+]

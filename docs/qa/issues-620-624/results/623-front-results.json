@@ -1,0 +1,1075 @@
+[
+  {
+    "slug": "623-dark",
+    "menus": [
+      {
+        "foreground": "rgb(255, 255, 255)",
+        "background": "rgb(31, 28, 28)",
+        "contextForeground": "rgb(255, 255, 255)",
+        "contextBackground": "rgb(31, 28, 28)",
+        "fullViewport": true
+      }
+    ],
+    "icons": [
+      {
+        "classes": "wp-block-social-links is-style-logos-only is-layout-flex wp-block-social-links-is-layout-flex",
+        "icons": [
+          {
+            "foreground": "rgb(255, 255, 255)",
+            "background": "rgba(0, 0, 0, 0)",
+            "contextForeground": "rgb(255, 255, 255)",
+            "contextBackground": "rgb(31, 28, 28)"
+          },
+          {
+            "foreground": "rgb(255, 255, 255)",
+            "background": "rgba(0, 0, 0, 0)",
+            "contextForeground": "rgb(255, 255, 255)",
+            "contextBackground": "rgb(31, 28, 28)"
+          },
+          {
+            "foreground": "rgb(255, 255, 255)",
+            "background": "rgba(0, 0, 0, 0)",
+            "contextForeground": "rgb(255, 255, 255)",
+            "contextBackground": "rgb(31, 28, 28)"
+          }
+        ]
+      },
+      {
+        "classes": "wp-block-social-links is-layout-flex wp-block-social-links-is-layout-flex",
+        "icons": [
+          {
+            "foreground": "rgb(31, 28, 28)",
+            "background": "rgb(255, 255, 255)",
+            "contextForeground": "rgb(255, 255, 255)",
+            "contextBackground": "rgb(31, 28, 28)"
+          },
+          {
+            "foreground": "rgb(31, 28, 28)",
+            "background": "rgb(255, 255, 255)",
+            "contextForeground": "rgb(255, 255, 255)",
+            "contextBackground": "rgb(31, 28, 28)"
+          },
+          {
+            "foreground": "rgb(31, 28, 28)",
+            "background": "rgb(255, 255, 255)",
+            "contextForeground": "rgb(255, 255, 255)",
+            "contextBackground": "rgb(31, 28, 28)"
+          }
+        ]
+      },
+      {
+        "classes": "wp-block-social-links is-style-pill-shape is-layout-flex wp-block-social-links-is-layout-flex",
+        "icons": [
+          {
+            "foreground": "rgb(31, 28, 28)",
+            "background": "rgb(255, 255, 255)",
+            "contextForeground": "rgb(255, 255, 255)",
+            "contextBackground": "rgb(31, 28, 28)"
+          },
+          {
+            "foreground": "rgb(31, 28, 28)",
+            "background": "rgb(255, 255, 255)",
+            "contextForeground": "rgb(255, 255, 255)",
+            "contextBackground": "rgb(31, 28, 28)"
+          },
+          {
+            "foreground": "rgb(31, 28, 28)",
+            "background": "rgb(255, 255, 255)",
+            "contextForeground": "rgb(255, 255, 255)",
+            "contextBackground": "rgb(31, 28, 28)"
+          }
+        ]
+      }
+    ],
+    "logs": [],
+    "passed": true
+  },
+  {
+    "slug": "623-light",
+    "menus": [
+      {
+        "foreground": "rgb(45, 30, 28)",
+        "background": "rgb(255, 253, 250)",
+        "contextForeground": "rgb(45, 30, 28)",
+        "contextBackground": "rgb(255, 253, 250)",
+        "fullViewport": true
+      }
+    ],
+    "icons": [
+      {
+        "classes": "wp-block-social-links is-style-logos-only is-layout-flex wp-block-social-links-is-layout-flex",
+        "icons": [
+          {
+            "foreground": "rgb(45, 30, 28)",
+            "background": "rgba(0, 0, 0, 0)",
+            "contextForeground": "rgb(45, 30, 28)",
+            "contextBackground": "rgb(255, 253, 250)"
+          },
+          {
+            "foreground": "rgb(45, 30, 28)",
+            "background": "rgba(0, 0, 0, 0)",
+            "contextForeground": "rgb(45, 30, 28)",
+            "contextBackground": "rgb(255, 253, 250)"
+          },
+          {
+            "foreground": "rgb(45, 30, 28)",
+            "background": "rgba(0, 0, 0, 0)",
+            "contextForeground": "rgb(45, 30, 28)",
+            "contextBackground": "rgb(255, 253, 250)"
+          }
+        ]
+      },
+      {
+        "classes": "wp-block-social-links is-layout-flex wp-block-social-links-is-layout-flex",
+        "icons": [
+          {
+            "foreground": "rgb(255, 253, 250)",
+            "background": "rgb(45, 30, 28)",
+            "contextForeground": "rgb(45, 30, 28)",
+            "contextBackground": "rgb(255, 253, 250)"
+          },
+          {
+            "foreground": "rgb(255, 253, 250)",
+            "background": "rgb(45, 30, 28)",
+            "contextForeground": "rgb(45, 30, 28)",
+            "contextBackground": "rgb(255, 253, 250)"
+          },
+          {
+            "foreground": "rgb(255, 253, 250)",
+            "background": "rgb(45, 30, 28)",
+            "contextForeground": "rgb(45, 30, 28)",
+            "contextBackground": "rgb(255, 253, 250)"
+          }
+        ]
+      },
+      {
+        "classes": "wp-block-social-links is-style-pill-shape is-layout-flex wp-block-social-links-is-layout-flex",
+        "icons": [
+          {
+            "foreground": "rgb(255, 253, 250)",
+            "background": "rgb(45, 30, 28)",
+            "contextForeground": "rgb(45, 30, 28)",
+            "contextBackground": "rgb(255, 253, 250)"
+          },
+          {
+            "foreground": "rgb(255, 253, 250)",
+            "background": "rgb(45, 30, 28)",
+            "contextForeground": "rgb(45, 30, 28)",
+            "contextBackground": "rgb(255, 253, 250)"
+          },
+          {
+            "foreground": "rgb(255, 253, 250)",
+            "background": "rgb(45, 30, 28)",
+            "contextForeground": "rgb(45, 30, 28)",
+            "contextBackground": "rgb(255, 253, 250)"
+          }
+        ]
+      }
+    ],
+    "logs": [],
+    "passed": true
+  },
+  {
+    "slug": "623-shifted",
+    "menus": [
+      {
+        "foreground": "rgb(255, 255, 255)",
+        "background": "rgb(187, 82, 23)",
+        "contextForeground": "rgb(255, 255, 255)",
+        "contextBackground": "rgb(187, 82, 23)",
+        "fullViewport": true
+      }
+    ],
+    "icons": [
+      {
+        "classes": "wp-block-social-links is-style-logos-only is-layout-flex wp-block-social-links-is-layout-flex",
+        "icons": [
+          {
+            "foreground": "rgb(255, 255, 255)",
+            "background": "rgba(0, 0, 0, 0)",
+            "contextForeground": "rgb(255, 255, 255)",
+            "contextBackground": "rgb(187, 82, 23)"
+          },
+          {
+            "foreground": "rgb(255, 255, 255)",
+            "background": "rgba(0, 0, 0, 0)",
+            "contextForeground": "rgb(255, 255, 255)",
+            "contextBackground": "rgb(187, 82, 23)"
+          },
+          {
+            "foreground": "rgb(255, 255, 255)",
+            "background": "rgba(0, 0, 0, 0)",
+            "contextForeground": "rgb(255, 255, 255)",
+            "contextBackground": "rgb(187, 82, 23)"
+          }
+        ]
+      },
+      {
+        "classes": "wp-block-social-links is-layout-flex wp-block-social-links-is-layout-flex",
+        "icons": [
+          {
+            "foreground": "rgb(187, 82, 23)",
+            "background": "rgb(255, 255, 255)",
+            "contextForeground": "rgb(255, 255, 255)",
+            "contextBackground": "rgb(187, 82, 23)"
+          },
+          {
+            "foreground": "rgb(187, 82, 23)",
+            "background": "rgb(255, 255, 255)",
+            "contextForeground": "rgb(255, 255, 255)",
+            "contextBackground": "rgb(187, 82, 23)"
+          },
+          {
+            "foreground": "rgb(187, 82, 23)",
+            "background": "rgb(255, 255, 255)",
+            "contextForeground": "rgb(255, 255, 255)",
+            "contextBackground": "rgb(187, 82, 23)"
+          }
+        ]
+      },
+      {
+        "classes": "wp-block-social-links is-style-pill-shape is-layout-flex wp-block-social-links-is-layout-flex",
+        "icons": [
+          {
+            "foreground": "rgb(187, 82, 23)",
+            "background": "rgb(255, 255, 255)",
+            "contextForeground": "rgb(255, 255, 255)",
+            "contextBackground": "rgb(187, 82, 23)"
+          },
+          {
+            "foreground": "rgb(187, 82, 23)",
+            "background": "rgb(255, 255, 255)",
+            "contextForeground": "rgb(255, 255, 255)",
+            "contextBackground": "rgb(187, 82, 23)"
+          },
+          {
+            "foreground": "rgb(187, 82, 23)",
+            "background": "rgb(255, 255, 255)",
+            "contextForeground": "rgb(255, 255, 255)",
+            "contextBackground": "rgb(187, 82, 23)"
+          }
+        ]
+      }
+    ],
+    "logs": [],
+    "passed": true
+  },
+  {
+    "slug": "623-nested",
+    "menus": [
+      {
+        "foreground": "rgb(255, 255, 255)",
+        "background": "rgb(31, 28, 28)",
+        "contextForeground": "rgb(255, 255, 255)",
+        "contextBackground": "rgb(31, 28, 28)",
+        "fullViewport": true
+      },
+      {
+        "foreground": "rgb(45, 30, 28)",
+        "background": "rgb(255, 253, 250)",
+        "contextForeground": "rgb(45, 30, 28)",
+        "contextBackground": "rgb(255, 253, 250)",
+        "fullViewport": true
+      }
+    ],
+    "icons": [
+      {
+        "classes": "wp-block-social-links is-style-logos-only is-layout-flex wp-block-social-links-is-layout-flex",
+        "icons": [
+          {
+            "foreground": "rgb(255, 255, 255)",
+            "background": "rgba(0, 0, 0, 0)",
+            "contextForeground": "rgb(255, 255, 255)",
+            "contextBackground": "rgb(31, 28, 28)"
+          },
+          {
+            "foreground": "rgb(255, 255, 255)",
+            "background": "rgba(0, 0, 0, 0)",
+            "contextForeground": "rgb(255, 255, 255)",
+            "contextBackground": "rgb(31, 28, 28)"
+          },
+          {
+            "foreground": "rgb(255, 255, 255)",
+            "background": "rgba(0, 0, 0, 0)",
+            "contextForeground": "rgb(255, 255, 255)",
+            "contextBackground": "rgb(31, 28, 28)"
+          }
+        ]
+      },
+      {
+        "classes": "wp-block-social-links is-layout-flex wp-block-social-links-is-layout-flex",
+        "icons": [
+          {
+            "foreground": "rgb(31, 28, 28)",
+            "background": "rgb(255, 255, 255)",
+            "contextForeground": "rgb(255, 255, 255)",
+            "contextBackground": "rgb(31, 28, 28)"
+          },
+          {
+            "foreground": "rgb(31, 28, 28)",
+            "background": "rgb(255, 255, 255)",
+            "contextForeground": "rgb(255, 255, 255)",
+            "contextBackground": "rgb(31, 28, 28)"
+          },
+          {
+            "foreground": "rgb(31, 28, 28)",
+            "background": "rgb(255, 255, 255)",
+            "contextForeground": "rgb(255, 255, 255)",
+            "contextBackground": "rgb(31, 28, 28)"
+          }
+        ]
+      },
+      {
+        "classes": "wp-block-social-links is-style-pill-shape is-layout-flex wp-block-social-links-is-layout-flex",
+        "icons": [
+          {
+            "foreground": "rgb(31, 28, 28)",
+            "background": "rgb(255, 255, 255)",
+            "contextForeground": "rgb(255, 255, 255)",
+            "contextBackground": "rgb(31, 28, 28)"
+          },
+          {
+            "foreground": "rgb(31, 28, 28)",
+            "background": "rgb(255, 255, 255)",
+            "contextForeground": "rgb(255, 255, 255)",
+            "contextBackground": "rgb(31, 28, 28)"
+          },
+          {
+            "foreground": "rgb(31, 28, 28)",
+            "background": "rgb(255, 255, 255)",
+            "contextForeground": "rgb(255, 255, 255)",
+            "contextBackground": "rgb(31, 28, 28)"
+          }
+        ]
+      },
+      {
+        "classes": "wp-block-social-links is-style-logos-only is-layout-flex wp-block-social-links-is-layout-flex",
+        "icons": [
+          {
+            "foreground": "rgb(45, 30, 28)",
+            "background": "rgba(0, 0, 0, 0)",
+            "contextForeground": "rgb(45, 30, 28)",
+            "contextBackground": "rgb(255, 253, 250)"
+          },
+          {
+            "foreground": "rgb(45, 30, 28)",
+            "background": "rgba(0, 0, 0, 0)",
+            "contextForeground": "rgb(45, 30, 28)",
+            "contextBackground": "rgb(255, 253, 250)"
+          },
+          {
+            "foreground": "rgb(45, 30, 28)",
+            "background": "rgba(0, 0, 0, 0)",
+            "contextForeground": "rgb(45, 30, 28)",
+            "contextBackground": "rgb(255, 253, 250)"
+          }
+        ]
+      }
+    ],
+    "logs": [],
+    "passed": true
+  },
+  {
+    "slug": "623-inactive",
+    "menus": [
+      {
+        "foreground": "rgb(255, 255, 255)",
+        "background": "rgb(31, 28, 28)",
+        "contextForeground": "rgb(255, 255, 255)",
+        "contextBackground": "rgb(31, 28, 28)",
+        "fullViewport": true
+      }
+    ],
+    "icons": [
+      {
+        "classes": "wp-block-social-links is-style-logos-only is-layout-flex wp-block-social-links-is-layout-flex",
+        "icons": [
+          {
+            "foreground": "rgb(255, 255, 255)",
+            "background": "rgba(0, 0, 0, 0)",
+            "contextForeground": "rgb(255, 255, 255)",
+            "contextBackground": "rgb(31, 28, 28)"
+          },
+          {
+            "foreground": "rgb(255, 255, 255)",
+            "background": "rgba(0, 0, 0, 0)",
+            "contextForeground": "rgb(255, 255, 255)",
+            "contextBackground": "rgb(31, 28, 28)"
+          },
+          {
+            "foreground": "rgb(255, 255, 255)",
+            "background": "rgba(0, 0, 0, 0)",
+            "contextForeground": "rgb(255, 255, 255)",
+            "contextBackground": "rgb(31, 28, 28)"
+          }
+        ]
+      }
+    ],
+    "logs": [],
+    "passed": true
+  },
+  {
+    "slug": "623-custom-bg",
+    "menus": [
+      {
+        "foreground": "rgb(255, 255, 255)",
+        "background": "rgb(22, 75, 53)",
+        "contextForeground": "rgb(255, 255, 255)",
+        "contextBackground": "rgb(31, 28, 28)",
+        "fullViewport": true
+      }
+    ],
+    "icons": [
+      {
+        "classes": "wp-block-social-links is-style-logos-only is-layout-flex wp-block-social-links-is-layout-flex",
+        "icons": [
+          {
+            "foreground": "rgb(255, 255, 255)",
+            "background": "rgba(0, 0, 0, 0)",
+            "contextForeground": "rgb(255, 255, 255)",
+            "contextBackground": "rgb(31, 28, 28)"
+          },
+          {
+            "foreground": "rgb(255, 255, 255)",
+            "background": "rgba(0, 0, 0, 0)",
+            "contextForeground": "rgb(255, 255, 255)",
+            "contextBackground": "rgb(31, 28, 28)"
+          },
+          {
+            "foreground": "rgb(255, 255, 255)",
+            "background": "rgba(0, 0, 0, 0)",
+            "contextForeground": "rgb(255, 255, 255)",
+            "contextBackground": "rgb(31, 28, 28)"
+          }
+        ]
+      },
+      {
+        "classes": "wp-block-social-links is-layout-flex wp-block-social-links-is-layout-flex",
+        "icons": [
+          {
+            "foreground": "rgb(31, 28, 28)",
+            "background": "rgb(255, 255, 255)",
+            "contextForeground": "rgb(255, 255, 255)",
+            "contextBackground": "rgb(31, 28, 28)"
+          },
+          {
+            "foreground": "rgb(31, 28, 28)",
+            "background": "rgb(255, 255, 255)",
+            "contextForeground": "rgb(255, 255, 255)",
+            "contextBackground": "rgb(31, 28, 28)"
+          },
+          {
+            "foreground": "rgb(31, 28, 28)",
+            "background": "rgb(255, 255, 255)",
+            "contextForeground": "rgb(255, 255, 255)",
+            "contextBackground": "rgb(31, 28, 28)"
+          }
+        ]
+      },
+      {
+        "classes": "wp-block-social-links is-style-pill-shape is-layout-flex wp-block-social-links-is-layout-flex",
+        "icons": [
+          {
+            "foreground": "rgb(31, 28, 28)",
+            "background": "rgb(255, 255, 255)",
+            "contextForeground": "rgb(255, 255, 255)",
+            "contextBackground": "rgb(31, 28, 28)"
+          },
+          {
+            "foreground": "rgb(31, 28, 28)",
+            "background": "rgb(255, 255, 255)",
+            "contextForeground": "rgb(255, 255, 255)",
+            "contextBackground": "rgb(31, 28, 28)"
+          },
+          {
+            "foreground": "rgb(31, 28, 28)",
+            "background": "rgb(255, 255, 255)",
+            "contextForeground": "rgb(255, 255, 255)",
+            "contextBackground": "rgb(31, 28, 28)"
+          }
+        ]
+      }
+    ],
+    "logs": [],
+    "passed": true
+  },
+  {
+    "slug": "623-custom-fg",
+    "menus": [
+      {
+        "foreground": "rgb(244, 201, 93)",
+        "background": "rgb(31, 28, 28)",
+        "contextForeground": "rgb(255, 255, 255)",
+        "contextBackground": "rgb(31, 28, 28)",
+        "fullViewport": true
+      }
+    ],
+    "icons": [
+      {
+        "classes": "wp-block-social-links is-style-logos-only is-layout-flex wp-block-social-links-is-layout-flex",
+        "icons": [
+          {
+            "foreground": "rgb(255, 255, 255)",
+            "background": "rgba(0, 0, 0, 0)",
+            "contextForeground": "rgb(255, 255, 255)",
+            "contextBackground": "rgb(31, 28, 28)"
+          },
+          {
+            "foreground": "rgb(255, 255, 255)",
+            "background": "rgba(0, 0, 0, 0)",
+            "contextForeground": "rgb(255, 255, 255)",
+            "contextBackground": "rgb(31, 28, 28)"
+          },
+          {
+            "foreground": "rgb(255, 255, 255)",
+            "background": "rgba(0, 0, 0, 0)",
+            "contextForeground": "rgb(255, 255, 255)",
+            "contextBackground": "rgb(31, 28, 28)"
+          }
+        ]
+      },
+      {
+        "classes": "wp-block-social-links is-layout-flex wp-block-social-links-is-layout-flex",
+        "icons": [
+          {
+            "foreground": "rgb(31, 28, 28)",
+            "background": "rgb(255, 255, 255)",
+            "contextForeground": "rgb(255, 255, 255)",
+            "contextBackground": "rgb(31, 28, 28)"
+          },
+          {
+            "foreground": "rgb(31, 28, 28)",
+            "background": "rgb(255, 255, 255)",
+            "contextForeground": "rgb(255, 255, 255)",
+            "contextBackground": "rgb(31, 28, 28)"
+          },
+          {
+            "foreground": "rgb(31, 28, 28)",
+            "background": "rgb(255, 255, 255)",
+            "contextForeground": "rgb(255, 255, 255)",
+            "contextBackground": "rgb(31, 28, 28)"
+          }
+        ]
+      },
+      {
+        "classes": "wp-block-social-links is-style-pill-shape is-layout-flex wp-block-social-links-is-layout-flex",
+        "icons": [
+          {
+            "foreground": "rgb(31, 28, 28)",
+            "background": "rgb(255, 255, 255)",
+            "contextForeground": "rgb(255, 255, 255)",
+            "contextBackground": "rgb(31, 28, 28)"
+          },
+          {
+            "foreground": "rgb(31, 28, 28)",
+            "background": "rgb(255, 255, 255)",
+            "contextForeground": "rgb(255, 255, 255)",
+            "contextBackground": "rgb(31, 28, 28)"
+          },
+          {
+            "foreground": "rgb(31, 28, 28)",
+            "background": "rgb(255, 255, 255)",
+            "contextForeground": "rgb(255, 255, 255)",
+            "contextBackground": "rgb(31, 28, 28)"
+          }
+        ]
+      }
+    ],
+    "logs": [],
+    "passed": true
+  },
+  {
+    "slug": "623-named-bg",
+    "menus": [
+      {
+        "foreground": "rgb(255, 255, 255)",
+        "background": "rgb(6, 147, 227)",
+        "contextForeground": "rgb(255, 255, 255)",
+        "contextBackground": "rgb(31, 28, 28)",
+        "fullViewport": true
+      }
+    ],
+    "icons": [
+      {
+        "classes": "wp-block-social-links is-style-logos-only is-layout-flex wp-block-social-links-is-layout-flex",
+        "icons": [
+          {
+            "foreground": "rgb(255, 255, 255)",
+            "background": "rgba(0, 0, 0, 0)",
+            "contextForeground": "rgb(255, 255, 255)",
+            "contextBackground": "rgb(31, 28, 28)"
+          },
+          {
+            "foreground": "rgb(255, 255, 255)",
+            "background": "rgba(0, 0, 0, 0)",
+            "contextForeground": "rgb(255, 255, 255)",
+            "contextBackground": "rgb(31, 28, 28)"
+          },
+          {
+            "foreground": "rgb(255, 255, 255)",
+            "background": "rgba(0, 0, 0, 0)",
+            "contextForeground": "rgb(255, 255, 255)",
+            "contextBackground": "rgb(31, 28, 28)"
+          }
+        ]
+      },
+      {
+        "classes": "wp-block-social-links is-layout-flex wp-block-social-links-is-layout-flex",
+        "icons": [
+          {
+            "foreground": "rgb(31, 28, 28)",
+            "background": "rgb(255, 255, 255)",
+            "contextForeground": "rgb(255, 255, 255)",
+            "contextBackground": "rgb(31, 28, 28)"
+          },
+          {
+            "foreground": "rgb(31, 28, 28)",
+            "background": "rgb(255, 255, 255)",
+            "contextForeground": "rgb(255, 255, 255)",
+            "contextBackground": "rgb(31, 28, 28)"
+          },
+          {
+            "foreground": "rgb(31, 28, 28)",
+            "background": "rgb(255, 255, 255)",
+            "contextForeground": "rgb(255, 255, 255)",
+            "contextBackground": "rgb(31, 28, 28)"
+          }
+        ]
+      },
+      {
+        "classes": "wp-block-social-links is-style-pill-shape is-layout-flex wp-block-social-links-is-layout-flex",
+        "icons": [
+          {
+            "foreground": "rgb(31, 28, 28)",
+            "background": "rgb(255, 255, 255)",
+            "contextForeground": "rgb(255, 255, 255)",
+            "contextBackground": "rgb(31, 28, 28)"
+          },
+          {
+            "foreground": "rgb(31, 28, 28)",
+            "background": "rgb(255, 255, 255)",
+            "contextForeground": "rgb(255, 255, 255)",
+            "contextBackground": "rgb(31, 28, 28)"
+          },
+          {
+            "foreground": "rgb(31, 28, 28)",
+            "background": "rgb(255, 255, 255)",
+            "contextForeground": "rgb(255, 255, 255)",
+            "contextBackground": "rgb(31, 28, 28)"
+          }
+        ]
+      }
+    ],
+    "logs": [],
+    "passed": true
+  },
+  {
+    "slug": "623-named-fg",
+    "menus": [
+      {
+        "foreground": "rgb(207, 46, 46)",
+        "background": "rgb(31, 28, 28)",
+        "contextForeground": "rgb(255, 255, 255)",
+        "contextBackground": "rgb(31, 28, 28)",
+        "fullViewport": true
+      }
+    ],
+    "icons": [
+      {
+        "classes": "wp-block-social-links is-style-logos-only is-layout-flex wp-block-social-links-is-layout-flex",
+        "icons": [
+          {
+            "foreground": "rgb(255, 255, 255)",
+            "background": "rgba(0, 0, 0, 0)",
+            "contextForeground": "rgb(255, 255, 255)",
+            "contextBackground": "rgb(31, 28, 28)"
+          },
+          {
+            "foreground": "rgb(255, 255, 255)",
+            "background": "rgba(0, 0, 0, 0)",
+            "contextForeground": "rgb(255, 255, 255)",
+            "contextBackground": "rgb(31, 28, 28)"
+          },
+          {
+            "foreground": "rgb(255, 255, 255)",
+            "background": "rgba(0, 0, 0, 0)",
+            "contextForeground": "rgb(255, 255, 255)",
+            "contextBackground": "rgb(31, 28, 28)"
+          }
+        ]
+      },
+      {
+        "classes": "wp-block-social-links is-layout-flex wp-block-social-links-is-layout-flex",
+        "icons": [
+          {
+            "foreground": "rgb(31, 28, 28)",
+            "background": "rgb(255, 255, 255)",
+            "contextForeground": "rgb(255, 255, 255)",
+            "contextBackground": "rgb(31, 28, 28)"
+          },
+          {
+            "foreground": "rgb(31, 28, 28)",
+            "background": "rgb(255, 255, 255)",
+            "contextForeground": "rgb(255, 255, 255)",
+            "contextBackground": "rgb(31, 28, 28)"
+          },
+          {
+            "foreground": "rgb(31, 28, 28)",
+            "background": "rgb(255, 255, 255)",
+            "contextForeground": "rgb(255, 255, 255)",
+            "contextBackground": "rgb(31, 28, 28)"
+          }
+        ]
+      },
+      {
+        "classes": "wp-block-social-links is-style-pill-shape is-layout-flex wp-block-social-links-is-layout-flex",
+        "icons": [
+          {
+            "foreground": "rgb(31, 28, 28)",
+            "background": "rgb(255, 255, 255)",
+            "contextForeground": "rgb(255, 255, 255)",
+            "contextBackground": "rgb(31, 28, 28)"
+          },
+          {
+            "foreground": "rgb(31, 28, 28)",
+            "background": "rgb(255, 255, 255)",
+            "contextForeground": "rgb(255, 255, 255)",
+            "contextBackground": "rgb(31, 28, 28)"
+          },
+          {
+            "foreground": "rgb(31, 28, 28)",
+            "background": "rgb(255, 255, 255)",
+            "contextForeground": "rgb(255, 255, 255)",
+            "contextBackground": "rgb(31, 28, 28)"
+          }
+        ]
+      }
+    ],
+    "logs": [],
+    "passed": true
+  },
+  {
+    "slug": "623-nav-explicit",
+    "menus": [
+      {
+        "foreground": "rgb(255, 255, 255)",
+        "background": "rgb(31, 28, 28)",
+        "contextForeground": "rgb(255, 255, 255)",
+        "contextBackground": "rgb(31, 28, 28)",
+        "fullViewport": true
+      }
+    ],
+    "icons": [
+      {
+        "classes": "wp-block-social-links is-style-logos-only is-layout-flex wp-block-social-links-is-layout-flex",
+        "icons": [
+          {
+            "foreground": "rgb(255, 255, 255)",
+            "background": "rgba(0, 0, 0, 0)",
+            "contextForeground": "rgb(255, 255, 255)",
+            "contextBackground": "rgb(31, 28, 28)"
+          },
+          {
+            "foreground": "rgb(255, 255, 255)",
+            "background": "rgba(0, 0, 0, 0)",
+            "contextForeground": "rgb(255, 255, 255)",
+            "contextBackground": "rgb(31, 28, 28)"
+          },
+          {
+            "foreground": "rgb(255, 255, 255)",
+            "background": "rgba(0, 0, 0, 0)",
+            "contextForeground": "rgb(255, 255, 255)",
+            "contextBackground": "rgb(31, 28, 28)"
+          }
+        ]
+      },
+      {
+        "classes": "wp-block-social-links is-layout-flex wp-block-social-links-is-layout-flex",
+        "icons": [
+          {
+            "foreground": "rgb(31, 28, 28)",
+            "background": "rgb(255, 255, 255)",
+            "contextForeground": "rgb(255, 255, 255)",
+            "contextBackground": "rgb(31, 28, 28)"
+          },
+          {
+            "foreground": "rgb(31, 28, 28)",
+            "background": "rgb(255, 255, 255)",
+            "contextForeground": "rgb(255, 255, 255)",
+            "contextBackground": "rgb(31, 28, 28)"
+          },
+          {
+            "foreground": "rgb(31, 28, 28)",
+            "background": "rgb(255, 255, 255)",
+            "contextForeground": "rgb(255, 255, 255)",
+            "contextBackground": "rgb(31, 28, 28)"
+          }
+        ]
+      },
+      {
+        "classes": "wp-block-social-links is-style-pill-shape is-layout-flex wp-block-social-links-is-layout-flex",
+        "icons": [
+          {
+            "foreground": "rgb(31, 28, 28)",
+            "background": "rgb(255, 255, 255)",
+            "contextForeground": "rgb(255, 255, 255)",
+            "contextBackground": "rgb(31, 28, 28)"
+          },
+          {
+            "foreground": "rgb(31, 28, 28)",
+            "background": "rgb(255, 255, 255)",
+            "contextForeground": "rgb(255, 255, 255)",
+            "contextBackground": "rgb(31, 28, 28)"
+          },
+          {
+            "foreground": "rgb(31, 28, 28)",
+            "background": "rgb(255, 255, 255)",
+            "contextForeground": "rgb(255, 255, 255)",
+            "contextBackground": "rgb(31, 28, 28)"
+          }
+        ]
+      }
+    ],
+    "logs": [],
+    "passed": true
+  },
+  {
+    "slug": "623-social-explicit",
+    "menus": [
+      {
+        "foreground": "rgb(255, 255, 255)",
+        "background": "rgb(31, 28, 28)",
+        "contextForeground": "rgb(255, 255, 255)",
+        "contextBackground": "rgb(31, 28, 28)",
+        "fullViewport": true
+      }
+    ],
+    "icons": [
+      {
+        "classes": "wp-block-social-links is-style-logos-only is-layout-flex wp-block-social-links-is-layout-flex",
+        "icons": [
+          {
+            "foreground": "rgb(255, 255, 255)",
+            "background": "rgba(0, 0, 0, 0)",
+            "contextForeground": "rgb(255, 255, 255)",
+            "contextBackground": "rgb(31, 28, 28)"
+          },
+          {
+            "foreground": "rgb(255, 255, 255)",
+            "background": "rgba(0, 0, 0, 0)",
+            "contextForeground": "rgb(255, 255, 255)",
+            "contextBackground": "rgb(31, 28, 28)"
+          },
+          {
+            "foreground": "rgb(255, 255, 255)",
+            "background": "rgba(0, 0, 0, 0)",
+            "contextForeground": "rgb(255, 255, 255)",
+            "contextBackground": "rgb(31, 28, 28)"
+          }
+        ]
+      },
+      {
+        "classes": "wp-block-social-links is-layout-flex wp-block-social-links-is-layout-flex",
+        "icons": [
+          {
+            "foreground": "rgb(31, 28, 28)",
+            "background": "rgb(255, 255, 255)",
+            "contextForeground": "rgb(255, 255, 255)",
+            "contextBackground": "rgb(31, 28, 28)"
+          },
+          {
+            "foreground": "rgb(31, 28, 28)",
+            "background": "rgb(255, 255, 255)",
+            "contextForeground": "rgb(255, 255, 255)",
+            "contextBackground": "rgb(31, 28, 28)"
+          },
+          {
+            "foreground": "rgb(31, 28, 28)",
+            "background": "rgb(255, 255, 255)",
+            "contextForeground": "rgb(255, 255, 255)",
+            "contextBackground": "rgb(31, 28, 28)"
+          }
+        ]
+      },
+      {
+        "classes": "wp-block-social-links is-style-pill-shape is-layout-flex wp-block-social-links-is-layout-flex",
+        "icons": [
+          {
+            "foreground": "rgb(31, 28, 28)",
+            "background": "rgb(255, 255, 255)",
+            "contextForeground": "rgb(255, 255, 255)",
+            "contextBackground": "rgb(31, 28, 28)"
+          },
+          {
+            "foreground": "rgb(31, 28, 28)",
+            "background": "rgb(255, 255, 255)",
+            "contextForeground": "rgb(255, 255, 255)",
+            "contextBackground": "rgb(31, 28, 28)"
+          },
+          {
+            "foreground": "rgb(31, 28, 28)",
+            "background": "rgb(255, 255, 255)",
+            "contextForeground": "rgb(255, 255, 255)",
+            "contextBackground": "rgb(31, 28, 28)"
+          }
+        ]
+      },
+      {
+        "classes": "wp-block-social-links has-icon-color qa-custom-foreground is-layout-flex wp-block-social-links-is-layout-flex",
+        "icons": [
+          {
+            "foreground": "rgb(244, 201, 93)",
+            "background": "rgb(255, 255, 255)",
+            "contextForeground": "rgb(255, 255, 255)",
+            "contextBackground": "rgb(31, 28, 28)"
+          },
+          {
+            "foreground": "rgb(244, 201, 93)",
+            "background": "rgb(255, 255, 255)",
+            "contextForeground": "rgb(255, 255, 255)",
+            "contextBackground": "rgb(31, 28, 28)"
+          },
+          {
+            "foreground": "rgb(244, 201, 93)",
+            "background": "rgb(255, 255, 255)",
+            "contextForeground": "rgb(255, 255, 255)",
+            "contextBackground": "rgb(31, 28, 28)"
+          }
+        ]
+      },
+      {
+        "classes": "wp-block-social-links has-icon-background-color qa-custom-background is-style-pill-shape is-layout-flex wp-block-social-links-is-layout-flex",
+        "icons": [
+          {
+            "foreground": "rgb(31, 28, 28)",
+            "background": "rgb(22, 75, 53)",
+            "contextForeground": "rgb(255, 255, 255)",
+            "contextBackground": "rgb(31, 28, 28)"
+          },
+          {
+            "foreground": "rgb(31, 28, 28)",
+            "background": "rgb(22, 75, 53)",
+            "contextForeground": "rgb(255, 255, 255)",
+            "contextBackground": "rgb(31, 28, 28)"
+          },
+          {
+            "foreground": "rgb(31, 28, 28)",
+            "background": "rgb(22, 75, 53)",
+            "contextForeground": "rgb(255, 255, 255)",
+            "contextBackground": "rgb(31, 28, 28)"
+          }
+        ]
+      },
+      {
+        "classes": "wp-block-social-links has-icon-color has-icon-background-color qa-custom-both is-layout-flex wp-block-social-links-is-layout-flex",
+        "icons": [
+          {
+            "foreground": "rgb(244, 201, 93)",
+            "background": "rgb(22, 75, 53)",
+            "contextForeground": "rgb(255, 255, 255)",
+            "contextBackground": "rgb(31, 28, 28)"
+          },
+          {
+            "foreground": "rgb(244, 201, 93)",
+            "background": "rgb(22, 75, 53)",
+            "contextForeground": "rgb(255, 255, 255)",
+            "contextBackground": "rgb(31, 28, 28)"
+          },
+          {
+            "foreground": "rgb(244, 201, 93)",
+            "background": "rgb(22, 75, 53)",
+            "contextForeground": "rgb(255, 255, 255)",
+            "contextBackground": "rgb(31, 28, 28)"
+          }
+        ]
+      },
+      {
+        "classes": "wp-block-social-links has-icon-color qa-named-foreground is-style-logos-only is-layout-flex wp-block-social-links-is-layout-flex",
+        "icons": [
+          {
+            "foreground": "rgb(207, 46, 46)",
+            "background": "rgba(0, 0, 0, 0)",
+            "contextForeground": "rgb(255, 255, 255)",
+            "contextBackground": "rgb(31, 28, 28)"
+          },
+          {
+            "foreground": "rgb(207, 46, 46)",
+            "background": "rgba(0, 0, 0, 0)",
+            "contextForeground": "rgb(255, 255, 255)",
+            "contextBackground": "rgb(31, 28, 28)"
+          },
+          {
+            "foreground": "rgb(207, 46, 46)",
+            "background": "rgba(0, 0, 0, 0)",
+            "contextForeground": "rgb(255, 255, 255)",
+            "contextBackground": "rgb(31, 28, 28)"
+          }
+        ]
+      }
+    ],
+    "logs": [],
+    "passed": true
+  },
+  {
+    "slug": "623-unsignalled",
+    "menus": [
+      {
+        "foreground": "rgb(0, 0, 0)",
+        "background": "rgb(255, 255, 255)",
+        "contextForeground": "rgb(45, 30, 28)",
+        "contextBackground": "rgb(255, 253, 250)",
+        "fullViewport": true
+      }
+    ],
+    "icons": [
+      {
+        "classes": "wp-block-social-links is-style-logos-only is-layout-flex wp-block-social-links-is-layout-flex",
+        "icons": [
+          {
+            "foreground": "rgb(52, 153, 205)",
+            "background": "rgba(0, 0, 0, 0)",
+            "contextForeground": "rgb(45, 30, 28)",
+            "contextBackground": "rgb(255, 253, 250)"
+          },
+          {
+            "foreground": "rgb(36, 41, 45)",
+            "background": "rgba(0, 0, 0, 0)",
+            "contextForeground": "rgb(45, 30, 28)",
+            "contextBackground": "rgb(255, 253, 250)"
+          },
+          {
+            "foreground": "rgb(240, 0, 117)",
+            "background": "rgba(0, 0, 0, 0)",
+            "contextForeground": "rgb(45, 30, 28)",
+            "contextBackground": "rgb(255, 253, 250)"
+          }
+        ]
+      },
+      {
+        "classes": "wp-block-social-links is-layout-flex wp-block-social-links-is-layout-flex",
+        "icons": [
+          {
+            "foreground": "rgb(255, 255, 255)",
+            "background": "rgb(52, 153, 205)",
+            "contextForeground": "rgb(45, 30, 28)",
+            "contextBackground": "rgb(255, 253, 250)"
+          },
+          {
+            "foreground": "rgb(255, 255, 255)",
+            "background": "rgb(36, 41, 45)",
+            "contextForeground": "rgb(45, 30, 28)",
+            "contextBackground": "rgb(255, 253, 250)"
+          },
+          {
+            "foreground": "rgb(255, 255, 255)",
+            "background": "rgb(240, 0, 117)",
+            "contextForeground": "rgb(45, 30, 28)",
+            "contextBackground": "rgb(255, 253, 250)"
+          }
+        ]
+      }
+    ],
+    "logs": [],
+    "passed": true
+  }
+]

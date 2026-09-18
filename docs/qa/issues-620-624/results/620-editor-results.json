@@ -1,0 +1,1842 @@
+[
+  {
+    "label": "Post Editor unchanged defaults",
+    "height": 30,
+    "mobile": 24,
+    "mode": "block-editor-iframe__body editor-styles-wrapper post-type-page admin-color-modern wp-embed-responsive",
+    "images": [
+      {
+        "height": 30,
+        "width": 30.21875,
+        "fit": "contain",
+        "rect": {
+          "x": 27.28125,
+          "y": 102.5625,
+          "width": 30.21875,
+          "height": 30,
+          "top": 102.5625,
+          "right": 57.5,
+          "bottom": 132.5625,
+          "left": 27.28125
+        },
+        "wrapper": {
+          "x": 27.28125,
+          "y": 102.5625,
+          "width": 30.21875,
+          "height": 37,
+          "top": 102.5625,
+          "right": 57.5,
+          "bottom": 139.5625,
+          "left": 27.28125
+        },
+        "row": {
+          "x": 0,
+          "y": 75.28125,
+          "width": 1000,
+          "height": 91.5625,
+          "top": 75.28125,
+          "right": 1000,
+          "bottom": 166.84375,
+          "left": 0
+        },
+        "naturalWidth": 520,
+        "naturalHeight": 516
+      }
+    ],
+    "passed": true
+  },
+  {
+    "label": "Post Editor desktop maximum",
+    "height": 400,
+    "mobile": 24,
+    "mode": "block-editor-iframe__body editor-styles-wrapper post-type-page admin-color-modern wp-embed-responsive",
+    "images": [
+      {
+        "height": 400,
+        "width": 305.65625,
+        "fit": "contain",
+        "rect": {
+          "x": 27.28125,
+          "y": 102.5625,
+          "width": 305.65625,
+          "height": 400,
+          "top": 102.5625,
+          "right": 332.9375,
+          "bottom": 502.5625,
+          "left": 27.28125
+        },
+        "wrapper": {
+          "x": 27.28125,
+          "y": 102.5625,
+          "width": 305.65625,
+          "height": 407,
+          "top": 102.5625,
+          "right": 332.9375,
+          "bottom": 509.5625,
+          "left": 27.28125
+        },
+        "row": {
+          "x": 0,
+          "y": 75.28125,
+          "width": 1000,
+          "height": 461.5625,
+          "top": 75.28125,
+          "right": 1000,
+          "bottom": 536.84375,
+          "left": 0
+        },
+        "naturalWidth": 520,
+        "naturalHeight": 516
+      }
+    ],
+    "passed": true
+  },
+  {
+    "label": "Post Editor desktop one-step undo",
+    "height": 30,
+    "mobile": 24,
+    "mode": "block-editor-iframe__body editor-styles-wrapper post-type-page admin-color-modern wp-embed-responsive",
+    "images": [
+      {
+        "height": 30,
+        "width": 30.21875,
+        "fit": "contain",
+        "rect": {
+          "x": 27.28125,
+          "y": 102.5625,
+          "width": 30.21875,
+          "height": 30,
+          "top": 102.5625,
+          "right": 57.5,
+          "bottom": 132.5625,
+          "left": 27.28125
+        },
+        "wrapper": {
+          "x": 27.28125,
+          "y": 102.5625,
+          "width": 30.21875,
+          "height": 37,
+          "top": 102.5625,
+          "right": 57.5,
+          "bottom": 139.5625,
+          "left": 27.28125
+        },
+        "row": {
+          "x": 0,
+          "y": 75.28125,
+          "width": 1000,
+          "height": 91.5625,
+          "top": 75.28125,
+          "right": 1000,
+          "bottom": 166.84375,
+          "left": 0
+        },
+        "naturalWidth": 520,
+        "naturalHeight": 516
+      }
+    ],
+    "passed": true
+  },
+  {
+    "label": "Post Editor mobile maximum",
+    "height": 30,
+    "mobile": 200,
+    "mode": "block-editor-iframe__body editor-styles-wrapper post-type-page admin-color-modern wp-embed-responsive",
+    "images": [
+      {
+        "height": 30,
+        "width": 30.21875,
+        "fit": "contain",
+        "rect": {
+          "x": 27.28125,
+          "y": 102.5625,
+          "width": 30.21875,
+          "height": 30,
+          "top": 102.5625,
+          "right": 57.5,
+          "bottom": 132.5625,
+          "left": 27.28125
+        },
+        "wrapper": {
+          "x": 27.28125,
+          "y": 102.5625,
+          "width": 30.21875,
+          "height": 37,
+          "top": 102.5625,
+          "right": 57.5,
+          "bottom": 139.5625,
+          "left": 27.28125
+        },
+        "row": {
+          "x": 0,
+          "y": 75.28125,
+          "width": 1000,
+          "height": 91.5625,
+          "top": 75.28125,
+          "right": 1000,
+          "bottom": 166.84375,
+          "left": 0
+        },
+        "naturalWidth": 520,
+        "naturalHeight": 516
+      }
+    ],
+    "passed": true
+  },
+  {
+    "label": "Post Editor mobile one-step undo",
+    "height": 30,
+    "mobile": 24,
+    "mode": "block-editor-iframe__body editor-styles-wrapper post-type-page admin-color-modern wp-embed-responsive",
+    "images": [
+      {
+        "height": 30,
+        "width": 30.21875,
+        "fit": "contain",
+        "rect": {
+          "x": 27.28125,
+          "y": 102.5625,
+          "width": 30.21875,
+          "height": 30,
+          "top": 102.5625,
+          "right": 57.5,
+          "bottom": 132.5625,
+          "left": 27.28125
+        },
+        "wrapper": {
+          "x": 27.28125,
+          "y": 102.5625,
+          "width": 30.21875,
+          "height": 37,
+          "top": 102.5625,
+          "right": 57.5,
+          "bottom": 139.5625,
+          "left": 27.28125
+        },
+        "row": {
+          "x": 0,
+          "y": 75.28125,
+          "width": 1000,
+          "height": 91.5625,
+          "top": 75.28125,
+          "right": 1000,
+          "bottom": 166.84375,
+          "left": 0
+        },
+        "naturalWidth": 520,
+        "naturalHeight": 516
+      }
+    ],
+    "passed": true
+  },
+  {
+    "label": "Post Editor set 300/120",
+    "height": 300,
+    "mobile": 120,
+    "mode": "block-editor-iframe__body editor-styles-wrapper post-type-page admin-color-modern wp-embed-responsive",
+    "images": [
+      {
+        "height": 300,
+        "width": 302.3125,
+        "fit": "contain",
+        "rect": {
+          "x": 27.28125,
+          "y": 102.5625,
+          "width": 302.3125,
+          "height": 300,
+          "top": 102.5625,
+          "right": 329.59375,
+          "bottom": 402.5625,
+          "left": 27.28125
+        },
+        "wrapper": {
+          "x": 27.28125,
+          "y": 102.5625,
+          "width": 302.3125,
+          "height": 307,
+          "top": 102.5625,
+          "right": 329.59375,
+          "bottom": 409.5625,
+          "left": 27.28125
+        },
+        "row": {
+          "x": 0,
+          "y": 75.28125,
+          "width": 1000,
+          "height": 361.5625,
+          "top": 75.28125,
+          "right": 1000,
+          "bottom": 436.84375,
+          "left": 0
+        },
+        "naturalWidth": 520,
+        "naturalHeight": 516
+      }
+    ],
+    "passed": true
+  },
+  {
+    "label": "Post Editor saved 300/120",
+    "height": 300,
+    "mobile": 120,
+    "mode": "block-editor-iframe__body editor-styles-wrapper post-type-page admin-color-modern wp-embed-responsive",
+    "images": [
+      {
+        "height": 300,
+        "width": 302.3125,
+        "fit": "contain",
+        "rect": {
+          "x": 27.28125,
+          "y": 102.5625,
+          "width": 302.3125,
+          "height": 300,
+          "top": 102.5625,
+          "right": 329.59375,
+          "bottom": 402.5625,
+          "left": 27.28125
+        },
+        "wrapper": {
+          "x": 27.28125,
+          "y": 102.5625,
+          "width": 302.3125,
+          "height": 307,
+          "top": 102.5625,
+          "right": 329.59375,
+          "bottom": 409.5625,
+          "left": 27.28125
+        },
+        "row": {
+          "x": 0,
+          "y": 75.28125,
+          "width": 1000,
+          "height": 361.5625,
+          "top": 75.28125,
+          "right": 1000,
+          "bottom": 436.84375,
+          "left": 0
+        },
+        "naturalWidth": 520,
+        "naturalHeight": 516
+      }
+    ],
+    "passed": true
+  },
+  {
+    "label": "Post Editor set 400/200",
+    "height": 400,
+    "mobile": 200,
+    "mode": "block-editor-iframe__body editor-styles-wrapper post-type-page admin-color-modern wp-embed-responsive",
+    "images": [
+      {
+        "height": 400,
+        "width": 305.65625,
+        "fit": "contain",
+        "rect": {
+          "x": 27.28125,
+          "y": 102.5625,
+          "width": 305.65625,
+          "height": 400,
+          "top": 102.5625,
+          "right": 332.9375,
+          "bottom": 502.5625,
+          "left": 27.28125
+        },
+        "wrapper": {
+          "x": 27.28125,
+          "y": 102.5625,
+          "width": 305.65625,
+          "height": 407,
+          "top": 102.5625,
+          "right": 332.9375,
+          "bottom": 509.5625,
+          "left": 27.28125
+        },
+        "row": {
+          "x": 0,
+          "y": 75.28125,
+          "width": 1000,
+          "height": 461.5625,
+          "top": 75.28125,
+          "right": 1000,
+          "bottom": 536.84375,
+          "left": 0
+        },
+        "naturalWidth": 520,
+        "naturalHeight": 516
+      }
+    ],
+    "passed": true
+  },
+  {
+    "label": "Post Editor saved 400/200",
+    "height": 400,
+    "mobile": 200,
+    "mode": "block-editor-iframe__body editor-styles-wrapper post-type-page admin-color-modern wp-embed-responsive",
+    "images": [
+      {
+        "height": 400,
+        "width": 305.65625,
+        "fit": "contain",
+        "rect": {
+          "x": 27.28125,
+          "y": 102.5625,
+          "width": 305.65625,
+          "height": 400,
+          "top": 102.5625,
+          "right": 332.9375,
+          "bottom": 502.5625,
+          "left": 27.28125
+        },
+        "wrapper": {
+          "x": 27.28125,
+          "y": 102.5625,
+          "width": 305.65625,
+          "height": 407,
+          "top": 102.5625,
+          "right": 332.9375,
+          "bottom": 509.5625,
+          "left": 27.28125
+        },
+        "row": {
+          "x": 0,
+          "y": 75.28125,
+          "width": 1000,
+          "height": 461.5625,
+          "top": 75.28125,
+          "right": 1000,
+          "bottom": 536.84375,
+          "left": 0
+        },
+        "naturalWidth": 520,
+        "naturalHeight": 516
+      }
+    ],
+    "passed": true
+  },
+  {
+    "label": "Post Editor set 30/24",
+    "height": 30,
+    "mobile": 24,
+    "mode": "block-editor-iframe__body editor-styles-wrapper post-type-page admin-color-modern wp-embed-responsive",
+    "images": [
+      {
+        "height": 30,
+        "width": 30.21875,
+        "fit": "contain",
+        "rect": {
+          "x": 27.28125,
+          "y": 102.5625,
+          "width": 30.21875,
+          "height": 30,
+          "top": 102.5625,
+          "right": 57.5,
+          "bottom": 132.5625,
+          "left": 27.28125
+        },
+        "wrapper": {
+          "x": 27.28125,
+          "y": 102.5625,
+          "width": 30.21875,
+          "height": 37,
+          "top": 102.5625,
+          "right": 57.5,
+          "bottom": 139.5625,
+          "left": 27.28125
+        },
+        "row": {
+          "x": 0,
+          "y": 75.28125,
+          "width": 1000,
+          "height": 91.5625,
+          "top": 75.28125,
+          "right": 1000,
+          "bottom": 166.84375,
+          "left": 0
+        },
+        "naturalWidth": 520,
+        "naturalHeight": 516
+      }
+    ],
+    "passed": true
+  },
+  {
+    "label": "Post Editor saved 30/24",
+    "height": 30,
+    "mobile": 24,
+    "mode": "block-editor-iframe__body editor-styles-wrapper post-type-page admin-color-modern wp-embed-responsive",
+    "images": [
+      {
+        "height": 30,
+        "width": 30.21875,
+        "fit": "contain",
+        "rect": {
+          "x": 27.28125,
+          "y": 102.5625,
+          "width": 30.21875,
+          "height": 30,
+          "top": 102.5625,
+          "right": 57.5,
+          "bottom": 132.5625,
+          "left": 27.28125
+        },
+        "wrapper": {
+          "x": 27.28125,
+          "y": 102.5625,
+          "width": 30.21875,
+          "height": 37,
+          "top": 102.5625,
+          "right": 57.5,
+          "bottom": 139.5625,
+          "left": 27.28125
+        },
+        "row": {
+          "x": 0,
+          "y": 75.28125,
+          "width": 1000,
+          "height": 91.5625,
+          "top": 75.28125,
+          "right": 1000,
+          "bottom": 166.84375,
+          "left": 0
+        },
+        "naturalWidth": 520,
+        "naturalHeight": 516
+      }
+    ],
+    "passed": true
+  },
+  {
+    "label": "Site Editor initial saved maximum",
+    "height": 400,
+    "mobile": 200,
+    "mode": "block-editor-iframe__body editor-styles-wrapper admin-color-modern wp-embed-responsive",
+    "images": [
+      {
+        "height": 400,
+        "width": 295.90625,
+        "fit": "contain",
+        "rect": {
+          "x": 26.765625,
+          "y": 53.53125,
+          "width": 295.90625,
+          "height": 400,
+          "top": 53.53125,
+          "right": 322.671875,
+          "bottom": 453.53125,
+          "left": 26.765625
+        },
+        "wrapper": {
+          "x": 26.765625,
+          "y": 53.53125,
+          "width": 295.90625,
+          "height": 407,
+          "top": 53.53125,
+          "right": 322.671875,
+          "bottom": 460.53125,
+          "left": 26.765625
+        },
+        "row": {
+          "x": 0,
+          "y": 26.765625,
+          "width": 952,
+          "height": 460.53125,
+          "top": 26.765625,
+          "right": 952,
+          "bottom": 487.296875,
+          "left": 0
+        },
+        "naturalWidth": 520,
+        "naturalHeight": 516
+      }
+    ],
+    "passed": true
+  },
+  {
+    "label": "Site Editor set defaults",
+    "height": 30,
+    "mobile": 24,
+    "mode": "block-editor-iframe__body editor-styles-wrapper admin-color-modern wp-embed-responsive",
+    "images": [
+      {
+        "height": 30,
+        "width": 30.21875,
+        "fit": "contain",
+        "rect": {
+          "x": 26.765625,
+          "y": 53.53125,
+          "width": 30.21875,
+          "height": 30,
+          "top": 53.53125,
+          "right": 56.984375,
+          "bottom": 83.53125,
+          "left": 26.765625
+        },
+        "wrapper": {
+          "x": 26.765625,
+          "y": 53.53125,
+          "width": 30.21875,
+          "height": 37,
+          "top": 53.53125,
+          "right": 56.984375,
+          "bottom": 90.53125,
+          "left": 26.765625
+        },
+        "row": {
+          "x": 0,
+          "y": 26.765625,
+          "width": 952,
+          "height": 90.53125,
+          "top": 26.765625,
+          "right": 952,
+          "bottom": 117.296875,
+          "left": 0
+        },
+        "naturalWidth": 520,
+        "naturalHeight": 516
+      }
+    ],
+    "passed": true
+  },
+  {
+    "label": "Site Editor unchanged defaults",
+    "height": 30,
+    "mobile": 24,
+    "mode": "block-editor-iframe__body editor-styles-wrapper admin-color-modern wp-embed-responsive",
+    "images": [
+      {
+        "height": 30,
+        "width": 30.21875,
+        "fit": "contain",
+        "rect": {
+          "x": 26.765625,
+          "y": 53.53125,
+          "width": 30.21875,
+          "height": 30,
+          "top": 53.53125,
+          "right": 56.984375,
+          "bottom": 83.53125,
+          "left": 26.765625
+        },
+        "wrapper": {
+          "x": 26.765625,
+          "y": 53.53125,
+          "width": 30.21875,
+          "height": 37,
+          "top": 53.53125,
+          "right": 56.984375,
+          "bottom": 90.53125,
+          "left": 26.765625
+        },
+        "row": {
+          "x": 0,
+          "y": 26.765625,
+          "width": 952,
+          "height": 90.53125,
+          "top": 26.765625,
+          "right": 952,
+          "bottom": 117.296875,
+          "left": 0
+        },
+        "naturalWidth": 520,
+        "naturalHeight": 516
+      }
+    ],
+    "passed": true
+  },
+  {
+    "label": "Site Editor desktop maximum",
+    "height": 400,
+    "mobile": 24,
+    "mode": "block-editor-iframe__body editor-styles-wrapper admin-color-modern wp-embed-responsive",
+    "images": [
+      {
+        "height": 400,
+        "width": 295.90625,
+        "fit": "contain",
+        "rect": {
+          "x": 26.765625,
+          "y": 53.53125,
+          "width": 295.90625,
+          "height": 400,
+          "top": 53.53125,
+          "right": 322.671875,
+          "bottom": 453.53125,
+          "left": 26.765625
+        },
+        "wrapper": {
+          "x": 26.765625,
+          "y": 53.53125,
+          "width": 295.90625,
+          "height": 407,
+          "top": 53.53125,
+          "right": 322.671875,
+          "bottom": 460.53125,
+          "left": 26.765625
+        },
+        "row": {
+          "x": 0,
+          "y": 26.765625,
+          "width": 952,
+          "height": 460.53125,
+          "top": 26.765625,
+          "right": 952,
+          "bottom": 487.296875,
+          "left": 0
+        },
+        "naturalWidth": 520,
+        "naturalHeight": 516
+      }
+    ],
+    "passed": true
+  },
+  {
+    "label": "Site Editor desktop one-step undo",
+    "height": 30,
+    "mobile": 24,
+    "mode": "block-editor-iframe__body editor-styles-wrapper admin-color-modern wp-embed-responsive",
+    "images": [
+      {
+        "height": 30,
+        "width": 30.21875,
+        "fit": "contain",
+        "rect": {
+          "x": 26.765625,
+          "y": 53.53125,
+          "width": 30.21875,
+          "height": 30,
+          "top": 53.53125,
+          "right": 56.984375,
+          "bottom": 83.53125,
+          "left": 26.765625
+        },
+        "wrapper": {
+          "x": 26.765625,
+          "y": 53.53125,
+          "width": 30.21875,
+          "height": 37,
+          "top": 53.53125,
+          "right": 56.984375,
+          "bottom": 90.53125,
+          "left": 26.765625
+        },
+        "row": {
+          "x": 0,
+          "y": 26.765625,
+          "width": 952,
+          "height": 90.53125,
+          "top": 26.765625,
+          "right": 952,
+          "bottom": 117.296875,
+          "left": 0
+        },
+        "naturalWidth": 520,
+        "naturalHeight": 516
+      }
+    ],
+    "passed": true
+  },
+  {
+    "label": "Site Editor mobile maximum",
+    "height": 30,
+    "mobile": 200,
+    "mode": "block-editor-iframe__body editor-styles-wrapper admin-color-modern wp-embed-responsive",
+    "images": [
+      {
+        "height": 30,
+        "width": 30.21875,
+        "fit": "contain",
+        "rect": {
+          "x": 26.765625,
+          "y": 53.53125,
+          "width": 30.21875,
+          "height": 30,
+          "top": 53.53125,
+          "right": 56.984375,
+          "bottom": 83.53125,
+          "left": 26.765625
+        },
+        "wrapper": {
+          "x": 26.765625,
+          "y": 53.53125,
+          "width": 30.21875,
+          "height": 37,
+          "top": 53.53125,
+          "right": 56.984375,
+          "bottom": 90.53125,
+          "left": 26.765625
+        },
+        "row": {
+          "x": 0,
+          "y": 26.765625,
+          "width": 952,
+          "height": 90.53125,
+          "top": 26.765625,
+          "right": 952,
+          "bottom": 117.296875,
+          "left": 0
+        },
+        "naturalWidth": 520,
+        "naturalHeight": 516
+      }
+    ],
+    "passed": true
+  },
+  {
+    "label": "Site Editor mobile one-step undo",
+    "height": 30,
+    "mobile": 24,
+    "mode": "block-editor-iframe__body editor-styles-wrapper admin-color-modern wp-embed-responsive",
+    "images": [
+      {
+        "height": 30,
+        "width": 30.21875,
+        "fit": "contain",
+        "rect": {
+          "x": 26.765625,
+          "y": 53.53125,
+          "width": 30.21875,
+          "height": 30,
+          "top": 53.53125,
+          "right": 56.984375,
+          "bottom": 83.53125,
+          "left": 26.765625
+        },
+        "wrapper": {
+          "x": 26.765625,
+          "y": 53.53125,
+          "width": 30.21875,
+          "height": 37,
+          "top": 53.53125,
+          "right": 56.984375,
+          "bottom": 90.53125,
+          "left": 26.765625
+        },
+        "row": {
+          "x": 0,
+          "y": 26.765625,
+          "width": 952,
+          "height": 90.53125,
+          "top": 26.765625,
+          "right": 952,
+          "bottom": 117.296875,
+          "left": 0
+        },
+        "naturalWidth": 520,
+        "naturalHeight": 516
+      }
+    ],
+    "passed": true
+  },
+  {
+    "label": "Site Editor set 300/120",
+    "height": 300,
+    "mobile": 120,
+    "mode": "block-editor-iframe__body editor-styles-wrapper admin-color-modern wp-embed-responsive",
+    "images": [
+      {
+        "height": 300,
+        "width": 295.90625,
+        "fit": "contain",
+        "rect": {
+          "x": 26.765625,
+          "y": 53.53125,
+          "width": 295.90625,
+          "height": 300,
+          "top": 53.53125,
+          "right": 322.671875,
+          "bottom": 353.53125,
+          "left": 26.765625
+        },
+        "wrapper": {
+          "x": 26.765625,
+          "y": 53.53125,
+          "width": 295.90625,
+          "height": 307,
+          "top": 53.53125,
+          "right": 322.671875,
+          "bottom": 360.53125,
+          "left": 26.765625
+        },
+        "row": {
+          "x": 0,
+          "y": 26.765625,
+          "width": 952,
+          "height": 360.53125,
+          "top": 26.765625,
+          "right": 952,
+          "bottom": 387.296875,
+          "left": 0
+        },
+        "naturalWidth": 520,
+        "naturalHeight": 516
+      }
+    ],
+    "passed": true
+  },
+  {
+    "label": "Site Editor saved 300/120",
+    "height": 300,
+    "mobile": 120,
+    "mode": "block-editor-iframe__body editor-styles-wrapper admin-color-modern wp-embed-responsive",
+    "images": [
+      {
+        "height": 300,
+        "width": 295.90625,
+        "fit": "contain",
+        "rect": {
+          "x": 26.765625,
+          "y": 53.53125,
+          "width": 295.90625,
+          "height": 300,
+          "top": 53.53125,
+          "right": 322.671875,
+          "bottom": 353.53125,
+          "left": 26.765625
+        },
+        "wrapper": {
+          "x": 26.765625,
+          "y": 53.53125,
+          "width": 295.90625,
+          "height": 307,
+          "top": 53.53125,
+          "right": 322.671875,
+          "bottom": 360.53125,
+          "left": 26.765625
+        },
+        "row": {
+          "x": 0,
+          "y": 26.765625,
+          "width": 952,
+          "height": 360.53125,
+          "top": 26.765625,
+          "right": 952,
+          "bottom": 387.296875,
+          "left": 0
+        },
+        "naturalWidth": 520,
+        "naturalHeight": 516
+      }
+    ],
+    "passed": true
+  },
+  {
+    "label": "Site Editor set 400/200",
+    "height": 400,
+    "mobile": 200,
+    "mode": "block-editor-iframe__body editor-styles-wrapper admin-color-modern wp-embed-responsive",
+    "images": [
+      {
+        "height": 400,
+        "width": 295.90625,
+        "fit": "contain",
+        "rect": {
+          "x": 26.765625,
+          "y": 53.53125,
+          "width": 295.90625,
+          "height": 400,
+          "top": 53.53125,
+          "right": 322.671875,
+          "bottom": 453.53125,
+          "left": 26.765625
+        },
+        "wrapper": {
+          "x": 26.765625,
+          "y": 53.53125,
+          "width": 295.90625,
+          "height": 407,
+          "top": 53.53125,
+          "right": 322.671875,
+          "bottom": 460.53125,
+          "left": 26.765625
+        },
+        "row": {
+          "x": 0,
+          "y": 26.765625,
+          "width": 952,
+          "height": 460.53125,
+          "top": 26.765625,
+          "right": 952,
+          "bottom": 487.296875,
+          "left": 0
+        },
+        "naturalWidth": 520,
+        "naturalHeight": 516
+      }
+    ],
+    "passed": true
+  },
+  {
+    "label": "Site Editor saved 400/200",
+    "height": 400,
+    "mobile": 200,
+    "mode": "block-editor-iframe__body editor-styles-wrapper admin-color-modern wp-embed-responsive",
+    "images": [
+      {
+        "height": 400,
+        "width": 295.90625,
+        "fit": "contain",
+        "rect": {
+          "x": 26.765625,
+          "y": 53.53125,
+          "width": 295.90625,
+          "height": 400,
+          "top": 53.53125,
+          "right": 322.671875,
+          "bottom": 453.53125,
+          "left": 26.765625
+        },
+        "wrapper": {
+          "x": 26.765625,
+          "y": 53.53125,
+          "width": 295.90625,
+          "height": 407,
+          "top": 53.53125,
+          "right": 322.671875,
+          "bottom": 460.53125,
+          "left": 26.765625
+        },
+        "row": {
+          "x": 0,
+          "y": 26.765625,
+          "width": 952,
+          "height": 460.53125,
+          "top": 26.765625,
+          "right": 952,
+          "bottom": 487.296875,
+          "left": 0
+        },
+        "naturalWidth": 520,
+        "naturalHeight": 516
+      }
+    ],
+    "passed": true
+  },
+  {
+    "label": "Site Editor set 30/24",
+    "height": 30,
+    "mobile": 24,
+    "mode": "block-editor-iframe__body editor-styles-wrapper admin-color-modern wp-embed-responsive",
+    "images": [
+      {
+        "height": 30,
+        "width": 30.21875,
+        "fit": "contain",
+        "rect": {
+          "x": 26.765625,
+          "y": 53.53125,
+          "width": 30.21875,
+          "height": 30,
+          "top": 53.53125,
+          "right": 56.984375,
+          "bottom": 83.53125,
+          "left": 26.765625
+        },
+        "wrapper": {
+          "x": 26.765625,
+          "y": 53.53125,
+          "width": 30.21875,
+          "height": 37,
+          "top": 53.53125,
+          "right": 56.984375,
+          "bottom": 90.53125,
+          "left": 26.765625
+        },
+        "row": {
+          "x": 0,
+          "y": 26.765625,
+          "width": 952,
+          "height": 90.53125,
+          "top": 26.765625,
+          "right": 952,
+          "bottom": 117.296875,
+          "left": 0
+        },
+        "naturalWidth": 520,
+        "naturalHeight": 516
+      }
+    ],
+    "passed": true
+  },
+  {
+    "label": "Site Editor saved 30/24",
+    "height": 30,
+    "mobile": 24,
+    "mode": "block-editor-iframe__body editor-styles-wrapper admin-color-modern wp-embed-responsive",
+    "images": [
+      {
+        "height": 30,
+        "width": 30.21875,
+        "fit": "contain",
+        "rect": {
+          "x": 26.765625,
+          "y": 53.53125,
+          "width": 30.21875,
+          "height": 30,
+          "top": 53.53125,
+          "right": 56.984375,
+          "bottom": 83.53125,
+          "left": 26.765625
+        },
+        "wrapper": {
+          "x": 26.765625,
+          "y": 53.53125,
+          "width": 30.21875,
+          "height": 37,
+          "top": 53.53125,
+          "right": 56.984375,
+          "bottom": 90.53125,
+          "left": 26.765625
+        },
+        "row": {
+          "x": 0,
+          "y": 26.765625,
+          "width": 952,
+          "height": 90.53125,
+          "top": 26.765625,
+          "right": 952,
+          "bottom": 117.296875,
+          "left": 0
+        },
+        "naturalWidth": 520,
+        "naturalHeight": 516
+      }
+    ],
+    "passed": true
+  },
+  {
+    "label": "Site Editor final maximum",
+    "height": 400,
+    "mobile": 200,
+    "mode": "block-editor-iframe__body editor-styles-wrapper admin-color-modern wp-embed-responsive",
+    "images": [
+      {
+        "height": 400,
+        "width": 295.90625,
+        "fit": "contain",
+        "rect": {
+          "x": 26.765625,
+          "y": 53.53125,
+          "width": 295.90625,
+          "height": 400,
+          "top": 53.53125,
+          "right": 322.671875,
+          "bottom": 453.53125,
+          "left": 26.765625
+        },
+        "wrapper": {
+          "x": 26.765625,
+          "y": 53.53125,
+          "width": 295.90625,
+          "height": 407,
+          "top": 53.53125,
+          "right": 322.671875,
+          "bottom": 460.53125,
+          "left": 26.765625
+        },
+        "row": {
+          "x": 0,
+          "y": 26.765625,
+          "width": 952,
+          "height": 460.53125,
+          "top": 26.765625,
+          "right": 952,
+          "bottom": 487.296875,
+          "left": 0
+        },
+        "naturalWidth": 520,
+        "naturalHeight": 516
+      }
+    ],
+    "passed": true
+  },
+  {
+    "label": "Post Editor final maximum screenshot",
+    "height": 400,
+    "mobile": 200,
+    "mode": "block-editor-iframe__body editor-styles-wrapper post-type-page admin-color-modern wp-embed-responsive",
+    "images": [
+      {
+        "height": 400,
+        "width": 370.625,
+        "fit": "contain",
+        "rect": {
+          "x": 30.703125,
+          "y": 109.40625,
+          "width": 370.625,
+          "height": 400,
+          "top": 109.40625,
+          "right": 401.328125,
+          "bottom": 509.40625,
+          "left": 30.703125
+        },
+        "wrapper": {
+          "x": 30.703125,
+          "y": 109.40625,
+          "width": 370.625,
+          "height": 407,
+          "top": 109.40625,
+          "right": 401.328125,
+          "bottom": 516.40625,
+          "left": 30.703125
+        },
+        "row": {
+          "x": 0,
+          "y": 78.703125,
+          "width": 1320,
+          "height": 468.40625,
+          "top": 78.703125,
+          "right": 1320,
+          "bottom": 547.109375,
+          "left": 0
+        },
+        "naturalWidth": 520,
+        "naturalHeight": 516
+      }
+    ],
+    "passed": true
+  },
+  {
+    "label": "Site Editor final maximum screenshot",
+    "height": 400,
+    "mobile": 200,
+    "mode": "block-editor-iframe__body editor-styles-wrapper admin-color-modern wp-embed-responsive",
+    "images": [
+      {
+        "height": 400,
+        "width": 360.875,
+        "fit": "contain",
+        "rect": {
+          "x": 30.1875,
+          "y": 60.375,
+          "width": 360.875,
+          "height": 400,
+          "top": 60.375,
+          "right": 391.0625,
+          "bottom": 460.375,
+          "left": 30.1875
+        },
+        "wrapper": {
+          "x": 30.1875,
+          "y": 60.375,
+          "width": 360.875,
+          "height": 407,
+          "top": 60.375,
+          "right": 391.0625,
+          "bottom": 467.375,
+          "left": 30.1875
+        },
+        "row": {
+          "x": 0,
+          "y": 30.1875,
+          "width": 1272,
+          "height": 467.375,
+          "top": 30.1875,
+          "right": 1272,
+          "bottom": 497.5625,
+          "left": 0
+        },
+        "naturalWidth": 520,
+        "naturalHeight": 516
+      }
+    ],
+    "passed": true
+  },
+  {
+    "label": "Post Editor wide 30/24",
+    "height": 30,
+    "mobile": 24,
+    "mode": "block-editor-iframe__body editor-styles-wrapper post-type-page admin-color-modern wp-embed-responsive",
+    "images": [
+      {
+        "height": 30,
+        "width": 187.5,
+        "fit": "contain",
+        "rect": {
+          "x": 566.25,
+          "y": 109.40625,
+          "width": 187.5,
+          "height": 30,
+          "top": 109.40625,
+          "right": 753.75,
+          "bottom": 139.40625,
+          "left": 566.25
+        },
+        "wrapper": {
+          "x": 566.25,
+          "y": 109.40625,
+          "width": 187.5,
+          "height": 37,
+          "top": 109.40625,
+          "right": 753.75,
+          "bottom": 146.40625,
+          "left": 566.25
+        },
+        "row": {
+          "x": 0,
+          "y": 78.703125,
+          "width": 1320,
+          "height": 98.40625,
+          "top": 78.703125,
+          "right": 1320,
+          "bottom": 177.109375,
+          "left": 0
+        },
+        "naturalWidth": 1000,
+        "naturalHeight": 160
+      }
+    ],
+    "passed": true
+  },
+  {
+    "label": "Post Editor wide 30/24",
+    "height": 30,
+    "mobile": 24,
+    "mode": "block-editor-iframe__body editor-styles-wrapper post-type-page admin-color-modern wp-embed-responsive",
+    "images": [
+      {
+        "height": 30,
+        "width": 187.5,
+        "fit": "contain",
+        "rect": {
+          "x": 566.25,
+          "y": 109.40625,
+          "width": 187.5,
+          "height": 30,
+          "top": 109.40625,
+          "right": 753.75,
+          "bottom": 139.40625,
+          "left": 566.25
+        },
+        "wrapper": {
+          "x": 566.25,
+          "y": 109.40625,
+          "width": 187.5,
+          "height": 37,
+          "top": 109.40625,
+          "right": 753.75,
+          "bottom": 146.40625,
+          "left": 566.25
+        },
+        "row": {
+          "x": 0,
+          "y": 78.703125,
+          "width": 1320,
+          "height": 98.40625,
+          "top": 78.703125,
+          "right": 1320,
+          "bottom": 177.109375,
+          "left": 0
+        },
+        "naturalWidth": 1000,
+        "naturalHeight": 160
+      }
+    ],
+    "passed": true
+  },
+  {
+    "label": "Post Editor wide 300/120",
+    "height": 300,
+    "mobile": 120,
+    "mode": "block-editor-iframe__body editor-styles-wrapper post-type-page admin-color-modern wp-embed-responsive",
+    "images": [
+      {
+        "height": 300,
+        "width": 370.625,
+        "fit": "contain",
+        "rect": {
+          "x": 474.6875,
+          "y": 109.40625,
+          "width": 370.625,
+          "height": 300,
+          "top": 109.40625,
+          "right": 845.3125,
+          "bottom": 409.40625,
+          "left": 474.6875
+        },
+        "wrapper": {
+          "x": 474.6875,
+          "y": 109.40625,
+          "width": 370.625,
+          "height": 307,
+          "top": 109.40625,
+          "right": 845.3125,
+          "bottom": 416.40625,
+          "left": 474.6875
+        },
+        "row": {
+          "x": 0,
+          "y": 78.703125,
+          "width": 1320,
+          "height": 368.40625,
+          "top": 78.703125,
+          "right": 1320,
+          "bottom": 447.109375,
+          "left": 0
+        },
+        "naturalWidth": 1000,
+        "naturalHeight": 160
+      }
+    ],
+    "passed": true
+  },
+  {
+    "label": "Post Editor wide 400/200",
+    "height": 400,
+    "mobile": 200,
+    "mode": "block-editor-iframe__body editor-styles-wrapper post-type-page admin-color-modern wp-embed-responsive",
+    "images": [
+      {
+        "height": 400,
+        "width": 370.625,
+        "fit": "contain",
+        "rect": {
+          "x": 474.6875,
+          "y": 109.40625,
+          "width": 370.625,
+          "height": 400,
+          "top": 109.40625,
+          "right": 845.3125,
+          "bottom": 509.40625,
+          "left": 474.6875
+        },
+        "wrapper": {
+          "x": 474.6875,
+          "y": 109.40625,
+          "width": 370.625,
+          "height": 407,
+          "top": 109.40625,
+          "right": 845.3125,
+          "bottom": 516.40625,
+          "left": 474.6875
+        },
+        "row": {
+          "x": 0,
+          "y": 78.703125,
+          "width": 1320,
+          "height": 468.40625,
+          "top": 78.703125,
+          "right": 1320,
+          "bottom": 547.109375,
+          "left": 0
+        },
+        "naturalWidth": 1000,
+        "naturalHeight": 160
+      }
+    ],
+    "passed": true
+  },
+  {
+    "label": "Site Editor wide 30/24",
+    "height": 30,
+    "mobile": 24,
+    "mode": "block-editor-iframe__body editor-styles-wrapper admin-color-modern wp-embed-responsive",
+    "images": [
+      {
+        "height": 30,
+        "width": 187.5,
+        "fit": "contain",
+        "rect": {
+          "x": 30.1875,
+          "y": 60.375,
+          "width": 187.5,
+          "height": 30,
+          "top": 60.375,
+          "right": 217.6875,
+          "bottom": 90.375,
+          "left": 30.1875
+        },
+        "wrapper": {
+          "x": 30.1875,
+          "y": 60.375,
+          "width": 187.5,
+          "height": 37,
+          "top": 60.375,
+          "right": 217.6875,
+          "bottom": 97.375,
+          "left": 30.1875
+        },
+        "row": {
+          "x": 0,
+          "y": 30.1875,
+          "width": 1272,
+          "height": 97.375,
+          "top": 30.1875,
+          "right": 1272,
+          "bottom": 127.5625,
+          "left": 0
+        },
+        "naturalWidth": 1000,
+        "naturalHeight": 160
+      }
+    ],
+    "passed": true
+  },
+  {
+    "label": "Site Editor wide 300/120",
+    "height": 300,
+    "mobile": 120,
+    "mode": "block-editor-iframe__body editor-styles-wrapper admin-color-modern wp-embed-responsive",
+    "images": [
+      {
+        "height": 300,
+        "width": 360.875,
+        "fit": "contain",
+        "rect": {
+          "x": 30.1875,
+          "y": 60.375,
+          "width": 360.875,
+          "height": 300,
+          "top": 60.375,
+          "right": 391.0625,
+          "bottom": 360.375,
+          "left": 30.1875
+        },
+        "wrapper": {
+          "x": 30.1875,
+          "y": 60.375,
+          "width": 360.875,
+          "height": 307,
+          "top": 60.375,
+          "right": 391.0625,
+          "bottom": 367.375,
+          "left": 30.1875
+        },
+        "row": {
+          "x": 0,
+          "y": 30.1875,
+          "width": 1272,
+          "height": 367.375,
+          "top": 30.1875,
+          "right": 1272,
+          "bottom": 397.5625,
+          "left": 0
+        },
+        "naturalWidth": 1000,
+        "naturalHeight": 160
+      }
+    ],
+    "passed": true
+  },
+  {
+    "label": "Site Editor wide 400/200",
+    "height": 400,
+    "mobile": 200,
+    "mode": "block-editor-iframe__body editor-styles-wrapper admin-color-modern wp-embed-responsive",
+    "images": [
+      {
+        "height": 400,
+        "width": 360.875,
+        "fit": "contain",
+        "rect": {
+          "x": 30.1875,
+          "y": 60.375,
+          "width": 360.875,
+          "height": 400,
+          "top": 60.375,
+          "right": 391.0625,
+          "bottom": 460.375,
+          "left": 30.1875
+        },
+        "wrapper": {
+          "x": 30.1875,
+          "y": 60.375,
+          "width": 360.875,
+          "height": 407,
+          "top": 60.375,
+          "right": 391.0625,
+          "bottom": 467.375,
+          "left": 30.1875
+        },
+        "row": {
+          "x": 0,
+          "y": 30.1875,
+          "width": 1272,
+          "height": 467.375,
+          "top": 30.1875,
+          "right": 1272,
+          "bottom": 497.5625,
+          "left": 0
+        },
+        "naturalWidth": 1000,
+        "naturalHeight": 160
+      }
+    ],
+    "passed": true
+  },
+  {
+    "label": "Post Editor tall 30/24",
+    "height": 30,
+    "mobile": 24,
+    "mode": "block-editor-iframe__body editor-styles-wrapper post-type-page admin-color-modern wp-embed-responsive",
+    "images": [
+      {
+        "height": 30,
+        "width": 11.25,
+        "fit": "contain",
+        "rect": {
+          "x": 654.375,
+          "y": 109.40625,
+          "width": 11.25,
+          "height": 30,
+          "top": 109.40625,
+          "right": 665.625,
+          "bottom": 139.40625,
+          "left": 654.375
+        },
+        "wrapper": {
+          "x": 654.375,
+          "y": 109.40625,
+          "width": 11.25,
+          "height": 37,
+          "top": 109.40625,
+          "right": 665.625,
+          "bottom": 146.40625,
+          "left": 654.375
+        },
+        "row": {
+          "x": 0,
+          "y": 78.703125,
+          "width": 1320,
+          "height": 98.40625,
+          "top": 78.703125,
+          "right": 1320,
+          "bottom": 177.109375,
+          "left": 0
+        },
+        "naturalWidth": 240,
+        "naturalHeight": 640
+      }
+    ],
+    "passed": true
+  },
+  {
+    "label": "Post Editor tall 300/120",
+    "height": 300,
+    "mobile": 120,
+    "mode": "block-editor-iframe__body editor-styles-wrapper post-type-page admin-color-modern wp-embed-responsive",
+    "images": [
+      {
+        "height": 300,
+        "width": 112.5,
+        "fit": "contain",
+        "rect": {
+          "x": 603.75,
+          "y": 109.40625,
+          "width": 112.5,
+          "height": 300,
+          "top": 109.40625,
+          "right": 716.25,
+          "bottom": 409.40625,
+          "left": 603.75
+        },
+        "wrapper": {
+          "x": 603.75,
+          "y": 109.40625,
+          "width": 112.5,
+          "height": 307,
+          "top": 109.40625,
+          "right": 716.25,
+          "bottom": 416.40625,
+          "left": 603.75
+        },
+        "row": {
+          "x": 0,
+          "y": 78.703125,
+          "width": 1320,
+          "height": 368.40625,
+          "top": 78.703125,
+          "right": 1320,
+          "bottom": 447.109375,
+          "left": 0
+        },
+        "naturalWidth": 240,
+        "naturalHeight": 640
+      }
+    ],
+    "passed": true
+  },
+  {
+    "label": "Post Editor tall 400/200",
+    "height": 400,
+    "mobile": 200,
+    "mode": "block-editor-iframe__body editor-styles-wrapper post-type-page admin-color-modern wp-embed-responsive",
+    "images": [
+      {
+        "height": 400,
+        "width": 150,
+        "fit": "contain",
+        "rect": {
+          "x": 585,
+          "y": 109.40625,
+          "width": 150,
+          "height": 400,
+          "top": 109.40625,
+          "right": 735,
+          "bottom": 509.40625,
+          "left": 585
+        },
+        "wrapper": {
+          "x": 585,
+          "y": 109.40625,
+          "width": 150,
+          "height": 407,
+          "top": 109.40625,
+          "right": 735,
+          "bottom": 516.40625,
+          "left": 585
+        },
+        "row": {
+          "x": 0,
+          "y": 78.703125,
+          "width": 1320,
+          "height": 468.40625,
+          "top": 78.703125,
+          "right": 1320,
+          "bottom": 547.109375,
+          "left": 0
+        },
+        "naturalWidth": 240,
+        "naturalHeight": 640
+      }
+    ],
+    "passed": true
+  },
+  {
+    "label": "Site Editor tall 30/24",
+    "height": 30,
+    "mobile": 24,
+    "mode": "block-editor-iframe__body editor-styles-wrapper admin-color-modern wp-embed-responsive",
+    "images": [
+      {
+        "height": 30,
+        "width": 11.25,
+        "fit": "contain",
+        "rect": {
+          "x": 30.1875,
+          "y": 60.375,
+          "width": 11.25,
+          "height": 30,
+          "top": 60.375,
+          "right": 41.4375,
+          "bottom": 90.375,
+          "left": 30.1875
+        },
+        "wrapper": {
+          "x": 30.1875,
+          "y": 60.375,
+          "width": 11.25,
+          "height": 37,
+          "top": 60.375,
+          "right": 41.4375,
+          "bottom": 97.375,
+          "left": 30.1875
+        },
+        "row": {
+          "x": 0,
+          "y": 30.1875,
+          "width": 1272,
+          "height": 97.375,
+          "top": 30.1875,
+          "right": 1272,
+          "bottom": 127.5625,
+          "left": 0
+        },
+        "naturalWidth": 240,
+        "naturalHeight": 640
+      }
+    ],
+    "passed": true
+  },
+  {
+    "label": "Site Editor tall 300/120",
+    "height": 300,
+    "mobile": 120,
+    "mode": "block-editor-iframe__body editor-styles-wrapper admin-color-modern wp-embed-responsive",
+    "images": [
+      {
+        "height": 300,
+        "width": 112.5,
+        "fit": "contain",
+        "rect": {
+          "x": 30.1875,
+          "y": 60.375,
+          "width": 112.5,
+          "height": 300,
+          "top": 60.375,
+          "right": 142.6875,
+          "bottom": 360.375,
+          "left": 30.1875
+        },
+        "wrapper": {
+          "x": 30.1875,
+          "y": 60.375,
+          "width": 112.5,
+          "height": 307,
+          "top": 60.375,
+          "right": 142.6875,
+          "bottom": 367.375,
+          "left": 30.1875
+        },
+        "row": {
+          "x": 0,
+          "y": 30.1875,
+          "width": 1272,
+          "height": 367.375,
+          "top": 30.1875,
+          "right": 1272,
+          "bottom": 397.5625,
+          "left": 0
+        },
+        "naturalWidth": 240,
+        "naturalHeight": 640
+      }
+    ],
+    "passed": true
+  },
+  {
+    "label": "Site Editor tall 400/200",
+    "height": 400,
+    "mobile": 200,
+    "mode": "block-editor-iframe__body editor-styles-wrapper admin-color-modern wp-embed-responsive",
+    "images": [
+      {
+        "height": 400,
+        "width": 150,
+        "fit": "contain",
+        "rect": {
+          "x": 30.1875,
+          "y": 60.375,
+          "width": 150,
+          "height": 400,
+          "top": 60.375,
+          "right": 180.1875,
+          "bottom": 460.375,
+          "left": 30.1875
+        },
+        "wrapper": {
+          "x": 30.1875,
+          "y": 60.375,
+          "width": 150,
+          "height": 407,
+          "top": 60.375,
+          "right": 180.1875,
+          "bottom": 467.375,
+          "left": 30.1875
+        },
+        "row": {
+          "x": 0,
+          "y": 30.1875,
+          "width": 1272,
+          "height": 467.375,
+          "top": 30.1875,
+          "right": 1272,
+          "bottom": 497.5625,
+          "left": 0
+        },
+        "naturalWidth": 240,
+        "naturalHeight": 640
+      }
+    ],
+    "passed": true
+  }
+]

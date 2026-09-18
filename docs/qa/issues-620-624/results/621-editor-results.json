@@ -1,0 +1,233 @@
+[
+  {
+    "label": "Post Editor reset initial title",
+    "mode": "title",
+    "title": "Nova QA Studio",
+    "tagline": null,
+    "titleClipPath": "none",
+    "taglineClipPath": null,
+    "image": true,
+    "textDisplay": "block",
+    "passed": true
+  },
+  {
+    "label": "Post Editor initial title",
+    "mode": "title",
+    "title": "Nova QA Studio",
+    "tagline": null,
+    "titleClipPath": "none",
+    "taglineClipPath": null,
+    "image": true,
+    "textDisplay": "block",
+    "passed": true
+  },
+  {
+    "label": "Post Editor local tagline",
+    "mode": "tagline",
+    "title": null,
+    "tagline": "Independent logo text",
+    "titleClipPath": null,
+    "taglineClipPath": "none",
+    "image": true,
+    "textDisplay": "block",
+    "passed": true
+  },
+  {
+    "label": "Post Editor one-step undo",
+    "mode": "title",
+    "title": "Nova QA Studio",
+    "tagline": null,
+    "titleClipPath": "none",
+    "taglineClipPath": null,
+    "image": true,
+    "textDisplay": "block",
+    "passed": true
+  },
+  {
+    "label": "Post Editor both texts",
+    "mode": "title-tagline",
+    "title": "Nova QA Studio",
+    "tagline": "Independent logo text",
+    "titleClipPath": "none",
+    "taglineClipPath": "none",
+    "image": true,
+    "textDisplay": "block",
+    "passed": true
+  },
+  {
+    "label": "Post Editor save and reload",
+    "mode": "title-tagline",
+    "title": "Nova QA Studio",
+    "tagline": "Independent logo text",
+    "titleClipPath": "none",
+    "taglineClipPath": "none",
+    "image": true,
+    "textDisplay": "block",
+    "passed": true
+  },
+  {
+    "label": "Post Editor No text",
+    "mode": "none",
+    "title": null,
+    "tagline": null,
+    "titleClipPath": null,
+    "taglineClipPath": null,
+    "image": true,
+    "textDisplay": null,
+    "passed": true
+  },
+  {
+    "label": "Post Editor No text persisted",
+    "mode": "none",
+    "title": null,
+    "tagline": null,
+    "titleClipPath": null,
+    "taglineClipPath": null,
+    "image": true,
+    "textDisplay": null,
+    "passed": true
+  },
+  {
+    "label": "Post Editor inherited global off",
+    "mode": "inherit",
+    "title": null,
+    "tagline": null,
+    "titleClipPath": null,
+    "taglineClipPath": null,
+    "image": true,
+    "textDisplay": null,
+    "passed": true
+  },
+  {
+    "label": "Post Editor Inherit persisted",
+    "mode": "inherit",
+    "title": null,
+    "tagline": null,
+    "titleClipPath": null,
+    "taglineClipPath": null,
+    "image": true,
+    "textDisplay": null,
+    "passed": true
+  },
+  {
+    "label": "Post Editor final both",
+    "mode": "title-tagline",
+    "title": "Nova QA Studio",
+    "tagline": "Independent logo text",
+    "titleClipPath": "none",
+    "taglineClipPath": "none",
+    "image": true,
+    "textDisplay": "block",
+    "passed": true
+  },
+  {
+    "label": "Site Editor reset initial title",
+    "mode": "title",
+    "title": "Nova QA Studio",
+    "tagline": null,
+    "titleClipPath": "none",
+    "taglineClipPath": null,
+    "image": true,
+    "textDisplay": "block",
+    "passed": true
+  },
+  {
+    "label": "Site Editor initial title",
+    "mode": "title",
+    "title": "Nova QA Studio",
+    "tagline": null,
+    "titleClipPath": "none",
+    "taglineClipPath": null,
+    "image": true,
+    "textDisplay": "block",
+    "passed": true
+  },
+  {
+    "label": "Site Editor tagline",
+    "mode": "tagline",
+    "title": null,
+    "tagline": "Independent logo text",
+    "titleClipPath": null,
+    "taglineClipPath": "none",
+    "image": true,
+    "textDisplay": "block",
+    "passed": true
+  },
+  {
+    "label": "Site Editor one-step undo",
+    "mode": "title",
+    "title": "Nova QA Studio",
+    "tagline": null,
+    "titleClipPath": "none",
+    "taglineClipPath": null,
+    "image": true,
+    "textDisplay": "block",
+    "passed": true
+  },
+  {
+    "label": "Site Editor none",
+    "mode": "none",
+    "title": null,
+    "tagline": null,
+    "titleClipPath": null,
+    "taglineClipPath": null,
+    "image": true,
+    "textDisplay": null,
+    "passed": true
+  },
+  {
+    "label": "Site Editor none save and reload",
+    "mode": "none",
+    "title": null,
+    "tagline": null,
+    "titleClipPath": null,
+    "taglineClipPath": null,
+    "image": true,
+    "textDisplay": null,
+    "passed": true
+  },
+  {
+    "label": "Site Editor inherit",
+    "mode": "inherit",
+    "title": null,
+    "tagline": null,
+    "titleClipPath": null,
+    "taglineClipPath": null,
+    "image": true,
+    "textDisplay": null,
+    "passed": true
+  },
+  {
+    "label": "Site Editor inherit save and reload",
+    "mode": "inherit",
+    "title": null,
+    "tagline": null,
+    "titleClipPath": null,
+    "taglineClipPath": null,
+    "image": true,
+    "textDisplay": null,
+    "passed": true
+  },
+  {
+    "label": "Site Editor title-tagline",
+    "mode": "title-tagline",
+    "title": "Nova QA Studio",
+    "tagline": "Independent logo text",
+    "titleClipPath": "none",
+    "taglineClipPath": "none",
+    "image": true,
+    "textDisplay": "block",
+    "passed": true
+  },
+  {
+    "label": "Site Editor title-tagline save and reload",
+    "mode": "title-tagline",
+    "title": "Nova QA Studio",
+    "tagline": "Independent logo text",
+    "titleClipPath": "none",
+    "taglineClipPath": "none",
+    "image": true,
+    "textDisplay": "block",
+    "passed": true
+  }
+]

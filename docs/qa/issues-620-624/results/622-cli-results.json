@@ -1,0 +1,3788 @@
+{
+  "core/group": {
+    "ok": true,
+    "code": "ok",
+    "summary": "Described core/group: 29 attributes (1 bundle, 12 curated vocabulary).",
+    "data": {
+      "block": "core/group",
+      "requested": "core/group",
+      "title": "Group",
+      "attribute_count": 29,
+      "coverage": {
+        "bundle": 1,
+        "curated": 12,
+        "none": 14
+      },
+      "attributes": {
+        "align": {
+          "type": "string",
+          "default": null,
+          "vocabulary": {
+            "enum": [
+              "left",
+              "center",
+              "right",
+              "wide",
+              "full",
+              ""
+            ]
+          },
+          "source": "schema",
+          "note": "No curated vocabulary for this attribute \u2014 type and default only. Author a value and prove it with `wp pixelgrade blocks canonicalize` / `validate`."
+        },
+        "anchor": {
+          "type": "string",
+          "default": null,
+          "vocabulary": null,
+          "source": "none",
+          "note": "No curated vocabulary for this attribute \u2014 type and default only. Author a value and prove it with `wp pixelgrade blocks canonicalize` / `validate`."
+        },
+        "ariaLabel": {
+          "type": "string",
+          "default": null,
+          "vocabulary": null,
+          "source": "none",
+          "note": "No curated vocabulary for this attribute \u2014 type and default only. Author a value and prove it with `wp pixelgrade blocks canonicalize` / `validate`."
+        },
+        "backgroundColor": {
+          "type": "string",
+          "default": null,
+          "vocabulary": null,
+          "source": "none",
+          "note": "No curated vocabulary for this attribute \u2014 type and default only. Author a value and prove it with `wp pixelgrade blocks canonicalize` / `validate`."
+        },
+        "blockBottomSpacing": {
+          "type": "number",
+          "default": 0,
+          "vocabulary": {
+            "range": {
+              "min": -3,
+              "max": 3,
+              "step": 1
+            }
+          },
+          "source": "curated",
+          "note": "Vertical spacing step BELOW the block, as margin-bottom (negative overlaps the next block). One step = --nb-current-spacing (fluid: ~20px @320w, ~32px @1440w at spacing level 1; scales with sm_spacing_level). Applies to the Group's OWN outer margin, and resolves only while it is a direct child of a spacing container (.wp-block-post-content, another Group, a Column, a Sidecar area \u2026).",
+          "registration": "editor"
+        },
+        "blockTopSpacing": {
+          "type": "number",
+          "default": 1,
+          "vocabulary": {
+            "range": {
+              "min": -3,
+              "max": 3,
+              "step": 1
+            }
+          },
+          "source": "curated",
+          "note": "Vertical spacing step ABOVE the block, as margin-top. Prefer this over style.spacing.margin.top \u2014 a px margin is frozen; a step is not. One step = --nb-current-spacing (fluid: ~20px @320w, ~32px @1440w at spacing level 1; scales with sm_spacing_level). Applies to the Group's OWN outer margin, and resolves only while it is a direct child of a spacing container (.wp-block-post-content, another Group, a Column, a Sidecar area \u2026).",
+          "registration": "editor"
+        },
+        "borderColor": {
+          "type": "string",
+          "default": null,
+          "vocabulary": null,
+          "source": "none",
+          "note": "No curated vocabulary for this attribute \u2014 type and default only. Author a value and prove it with `wp pixelgrade blocks canonicalize` / `validate`."
+        },
+        "className": {
+          "type": "string",
+          "default": null,
+          "vocabulary": null,
+          "source": "none",
+          "note": "No curated vocabulary for this attribute \u2014 type and default only. Author a value and prove it with `wp pixelgrade blocks canonicalize` / `validate`."
+        },
+        "colorSignal": {
+          "type": "number",
+          "default": 0,
+          "vocabulary": {
+            "enum": [
+              0,
+              1,
+              2,
+              3
+            ],
+            "labels": [
+              "None",
+              "Low",
+              "Medium",
+              "High"
+            ]
+          },
+          "source": "curated",
+          "note": "Contextual color intent relative to the parent. Default anchors map signal\u2192variation 0\u21921, 1\u21923, 2\u21928, 3\u219211. Max is getMaxSignal(palette) (default 3); a block may clamp via supports minColorSignal/maxColorSignal.",
+          "registration": "editor"
+        },
+        "contentColorSignal": {
+          "type": "number",
+          "default": 0,
+          "vocabulary": {
+            "enum": [
+              0,
+              1,
+              2,
+              3
+            ],
+            "labels": [
+              "None",
+              "Low",
+              "Medium",
+              "High"
+            ]
+          },
+          "source": "curated",
+          "note": "Color signal of the block's content area (hosts with contentColorSignal support, e.g. Supernova).",
+          "registration": "editor"
+        },
+        "contentPaletteVariation": {
+          "type": "number",
+          "default": 1,
+          "vocabulary": {
+            "range": {
+              "min": 1,
+              "max": 12,
+              "step": 1
+            }
+          },
+          "source": "curated",
+          "note": "Resolved grade of the content area; keep consistent with contentColorSignal.",
+          "registration": "editor"
+        },
+        "emphasisArea": {
+          "type": "number",
+          "default": 100,
+          "vocabulary": {
+            "range": {
+              "min": 0,
+              "max": 100,
+              "step": 5
+            }
+          },
+          "source": "curated",
+          "note": "Percentage of block width covered by the colored background. Only meaningful on horizontal Supernova cards (cardLayout horizontal / horizontal-reverse).",
+          "registration": "editor"
+        },
+        "emphasisBottomSpacing": {
+          "type": "number",
+          "default": 0,
+          "vocabulary": {
+            "range": {
+              "min": 0,
+              "max": 6,
+              "step": 0.5
+            }
+          },
+          "source": "curated",
+          "note": "INNER bottom spacing, as padding-bottom \u2014 the band inset. Half steps are allowed. One step = --nb-current-spacing (fluid: ~20px @320w, ~32px @1440w at spacing level 1; scales with sm_spacing_level). Applies inside the Group. On a Group carrying a Color Signal the inset is floored at 0.75 of the wrapper side spacing, so a small step can be swallowed by that floor.",
+          "registration": "editor"
+        },
+        "emphasisTopSpacing": {
+          "type": "number",
+          "default": 0,
+          "vocabulary": {
+            "range": {
+              "min": 0,
+              "max": 6,
+              "step": 0.5
+            }
+          },
+          "source": "curated",
+          "note": "INNER top spacing, as padding-top \u2014 the band inset. Prefer this over style.spacing.padding.top. Half steps are allowed, so a 128-200px band is authored directly (5.5 \u2248 176px at 1440w, spacing level 1). Min is 0 here: negative inner spacing needs supports.novaBlocks.spaceAndSizing.advancedSpacing, which the core containers do not declare. One step = --nb-current-spacing (fluid: ~20px @320w, ~32px @1440w at spacing level 1; scales with sm_spacing_level). Applies inside the Group. On a Group carrying a Color Signal the inset is floored at 0.75 of the wrapper side spacing, so a small step can be swallowed by that floor.",
+          "registration": "editor"
+        },
+        "fontFamily": {
+          "type": "string",
+          "default": null,
+          "vocabulary": null,
+          "source": "none",
+          "note": "No curated vocabulary for this attribute \u2014 type and default only. Author a value and prove it with `wp pixelgrade blocks canonicalize` / `validate`."
+        },
+        "fontSize": {
+          "type": "string",
+          "default": null,
+          "vocabulary": null,
+          "source": "none",
+          "note": "No curated vocabulary for this attribute \u2014 type and default only. Author a value and prove it with `wp pixelgrade blocks canonicalize` / `validate`."
+        },
+        "gradient": {
+          "type": "string",
+          "default": null,
+          "vocabulary": null,
+          "source": "none",
+          "note": "No curated vocabulary for this attribute \u2014 type and default only. Author a value and prove it with `wp pixelgrade blocks canonicalize` / `validate`."
+        },
+        "layout": {
+          "type": "object",
+          "default": null,
+          "vocabulary": null,
+          "source": "none",
+          "note": "No curated vocabulary for this attribute \u2014 type and default only. Author a value and prove it with `wp pixelgrade blocks canonicalize` / `validate`."
+        },
+        "lock": {
+          "type": "object",
+          "default": null,
+          "vocabulary": null,
+          "source": "none",
+          "note": "No curated vocabulary for this attribute \u2014 type and default only. Author a value and prove it with `wp pixelgrade blocks canonicalize` / `validate`."
+        },
+        "metadata": {
+          "type": "object",
+          "default": null,
+          "vocabulary": null,
+          "source": "none",
+          "note": "No curated vocabulary for this attribute \u2014 type and default only. Author a value and prove it with `wp pixelgrade blocks canonicalize` / `validate`."
+        },
+        "palette": {
+          "type": "string",
+          "default": "1",
+          "vocabulary": {
+            "enum": [
+              "1",
+              "_info",
+              "_error",
+              "_warning",
+              "_success"
+            ]
+          },
+          "source": "bundle",
+          "note": "Palette IDs from this site's live Style Manager editor settings, not fixed brand colors. Functional palette IDs (starting with _) are included only where the block supports functional colors. Inherit through useParentPalette where available.",
+          "registration": "editor"
+        },
+        "paletteVariation": {
+          "type": "number",
+          "default": 1,
+          "vocabulary": {
+            "range": {
+              "min": 1,
+              "max": 12,
+              "step": 1
+            }
+          },
+          "source": "curated",
+          "note": "Which palette grade paints the block background \u2192 sm-variation-{n}. 1 = lightest, 12 = darkest. Normally kept in sync with colorSignal automatically; set it directly only to pin a grade.",
+          "registration": "editor"
+        },
+        "spacingModifier": {
+          "type": "number",
+          "default": 1,
+          "vocabulary": {
+            "range": {
+              "min": 0,
+              "max": 2,
+              "step": 0.5
+            }
+          },
+          "source": "curated",
+          "note": "Scales the spacing of the elements INSIDE this container (not the container itself). 0 zeroes every descendant spacing control.",
+          "registration": "editor"
+        },
+        "spacingMultiplierOverride": {
+          "type": "number",
+          "default": 1,
+          "vocabulary": {
+            "range": {
+              "min": 0,
+              "max": 4,
+              "step": 0.5
+            }
+          },
+          "source": "curated",
+          "note": "Multiplies this block's own four spacing steps AND, because nothing re-declares it, every descendant's. Reach for it only for the OUTER steps (blockTop/BottomSpacing, capped at 3) or past 6 inner steps \u2014 the band inset itself now goes to 6 in half steps without it, and unlike this multiplier a plain step is not inherited by descendants.",
+          "registration": "editor"
+        },
+        "style": {
+          "type": "object",
+          "default": null,
+          "vocabulary": null,
+          "source": "none",
+          "note": "No curated vocabulary for this attribute \u2014 type and default only. Author a value and prove it with `wp pixelgrade blocks canonicalize` / `validate`."
+        },
+        "tagName": {
+          "type": "string",
+          "default": "div",
+          "vocabulary": null,
+          "source": "none",
+          "note": "No curated vocabulary for this attribute \u2014 type and default only. Author a value and prove it with `wp pixelgrade blocks canonicalize` / `validate`."
+        },
+        "templateLock": {
+          "type": [
+            "string",
+            "boolean"
+          ],
+          "default": null,
+          "vocabulary": {
+            "enum": [
+              "all",
+              "insert",
+              "contentOnly",
+              false
+            ]
+          },
+          "source": "schema",
+          "note": "No curated vocabulary for this attribute \u2014 type and default only. Author a value and prove it with `wp pixelgrade blocks canonicalize` / `validate`."
+        },
+        "textColor": {
+          "type": "string",
+          "default": null,
+          "vocabulary": null,
+          "source": "none",
+          "note": "No curated vocabulary for this attribute \u2014 type and default only. Author a value and prove it with `wp pixelgrade blocks canonicalize` / `validate`."
+        },
+        "useSourceColorAsReference": {
+          "type": "boolean",
+          "default": false,
+          "vocabulary": {
+            "enum": [
+              true,
+              false
+            ]
+          },
+          "source": "curated",
+          "note": "Whether the chosen palette's source color anchors Color Signal resolution.",
+          "registration": "editor"
+        }
+      },
+      "save_body": "static",
+      "body_template": null,
+      "body_template_note": "No harness-generated body template is curated for this block. Use validate/canonicalize rather than inventing saved markup.",
+      "bundle_options": {
+        "minimumHeightOptions": [
+          {
+            "label": "None",
+            "value": 0
+          },
+          {
+            "label": "Half",
+            "value": 50
+          },
+          {
+            "label": "Two Thirds",
+            "value": 66
+          },
+          {
+            "label": "Three Quarters",
+            "value": 75
+          },
+          {
+            "label": "Full",
+            "value": 100
+          }
+        ],
+        "contentPaddingOptions": [
+          {
+            "label": "Small",
+            "value": "small"
+          },
+          {
+            "label": "Medium",
+            "value": "medium"
+          },
+          {
+            "label": "Large",
+            "value": "large"
+          },
+          {
+            "label": "Custom",
+            "value": "custom"
+          }
+        ],
+        "contentWidthOptions": [
+          {
+            "label": "Full",
+            "value": "full"
+          },
+          {
+            "label": "Large",
+            "value": "large"
+          },
+          {
+            "label": "Narrow",
+            "value": "narrow"
+          },
+          {
+            "label": "Custom",
+            "value": "custom"
+          }
+        ],
+        "blobPresetOptions": [
+          {
+            "label": "Rectangle",
+            "value": "rectangle",
+            "preset": {
+              "blobsEnableMask": false,
+              "blobsEnableDecoration": false
+            }
+          },
+          {
+            "label": "Ellipse",
+            "value": "ellipse",
+            "preset": {
+              "blobsEnableMask": true,
+              "blobMaskSides": 4,
+              "blobMaskPatternSeed": 1,
+              "blobMaskComplexity": 0,
+              "blobMaskSmoothness": 100,
+              "blobMaskRotation": 0,
+              "blobsEnableDecoration": false
+            }
+          },
+          {
+            "label": "Diamond",
+            "value": "diamond",
+            "preset": {
+              "blobsEnableMask": true,
+              "blobMaskSides": 6,
+              "blobMaskPatternSeed": 1,
+              "blobMaskComplexity": 0,
+              "blobMaskSmoothness": 0,
+              "blobMaskRotation": 0,
+              "blobsEnableDecoration": false
+            }
+          },
+          {
+            "label": "Seed",
+            "value": "seed",
+            "preset": {
+              "blobsEnableMask": true,
+              "blobMaskSides": 5,
+              "blobMaskPatternSeed": 70,
+              "blobMaskComplexity": 100,
+              "blobMaskSmoothness": 100,
+              "blobMaskRotation": 0,
+              "blobsEnableDecoration": false
+            }
+          },
+          {
+            "label": "Blob",
+            "value": "blob",
+            "preset": {
+              "blobsEnableMask": true,
+              "blobMaskSides": 7,
+              "blobMaskPatternSeed": 50,
+              "blobMaskComplexity": 100,
+              "blobMaskSmoothness": 100,
+              "blobMaskRotation": 0,
+              "blobsEnableDecoration": false
+            }
+          },
+          {
+            "label": "MX37: Stones",
+            "value": "stones-37",
+            "preset": {
+              "blobsEnableMask": true,
+              "blobMaskSides": 3,
+              "blobMaskPatternSeed": 30,
+              "blobMaskComplexity": 100,
+              "blobMaskSmoothness": 60,
+              "blobMaskRotation": 70,
+              "blobsEnableDecoration": true,
+              "blobSides": 4,
+              "blobPatternSeed": 30,
+              "blobComplexity": 90,
+              "blobSmoothness": 100,
+              "blobRotation": 70,
+              "blobsHorizontalDisplacement": 80,
+              "blobsVerticalDisplacement": 60,
+              "blobsSizeBalance": 60
+            }
+          },
+          {
+            "label": "MX19: Seeds",
+            "value": "seeds-19",
+            "preset": {
+              "blobsEnableMask": true,
+              "blobMaskSides": 5,
+              "blobMaskPatternSeed": 90,
+              "blobMaskComplexity": 80,
+              "blobMaskSmoothness": 100,
+              "blobMaskRotation": 50,
+              "blobsEnableDecoration": true,
+              "blobSides": 5,
+              "blobPatternSeed": 40,
+              "blobComplexity": 80,
+              "blobSmoothness": 100,
+              "blobRotation": 100,
+              "blobsHorizontalDisplacement": 30,
+              "blobsVerticalDisplacement": 60,
+              "blobsSizeBalance": 50
+            }
+          },
+          {
+            "label": "MX81: Ovoid",
+            "value": "ovoid-81",
+            "preset": {
+              "blobsEnableMask": true,
+              "blobMaskSides": 6,
+              "blobMaskPatternSeed": 10,
+              "blobMaskComplexity": 100,
+              "blobMaskSmoothness": 100,
+              "blobMaskRotation": 100,
+              "blobsEnableDecoration": true,
+              "blobSides": 3,
+              "blobPatternSeed": 50,
+              "blobComplexity": 100,
+              "blobSmoothness": 50,
+              "blobRotation": 40,
+              "blobsHorizontalDisplacement": 40,
+              "blobsVerticalDisplacement": 30,
+              "blobsSizeBalance": 45
+            }
+          },
+          {
+            "label": "MX76: Leaf",
+            "value": "leaf-76",
+            "preset": {
+              "blobsEnableMask": true,
+              "blobMaskSides": 3,
+              "blobMaskPatternSeed": 100,
+              "blobMaskComplexity": 100,
+              "blobMaskSmoothness": 60,
+              "blobMaskRotation": 80,
+              "blobsEnableDecoration": true,
+              "blobSides": 6,
+              "blobPatternSeed": 70,
+              "blobComplexity": 100,
+              "blobSmoothness": 100,
+              "blobRotation": 10,
+              "blobsHorizontalDisplacement": 40,
+              "blobsVerticalDisplacement": 40,
+              "blobsSizeBalance": 45
+            }
+          },
+          {
+            "label": "MX19: Ruby",
+            "value": "ruby-19",
+            "preset": {
+              "blobsEnableMask": true,
+              "blobMaskSides": 5,
+              "blobMaskPatternSeed": 0,
+              "blobMaskComplexity": 0,
+              "blobMaskSmoothness": 0,
+              "blobMaskRotation": 10,
+              "blobsEnableDecoration": true,
+              "blobSides": 5,
+              "blobPatternSeed": 0,
+              "blobComplexity": 0,
+              "blobSmoothness": 0,
+              "blobRotation": 40,
+              "blobsHorizontalDisplacement": 40,
+              "blobsVerticalDisplacement": 30,
+              "blobsSizeBalance": 50
+            }
+          },
+          {
+            "label": "MX41: Diagonal",
+            "value": "diagonal-41",
+            "preset": {
+              "blobsEnableMask": true,
+              "blobMaskSides": 8,
+              "blobMaskPatternSeed": 0,
+              "blobMaskComplexity": 0,
+              "blobMaskSmoothness": 0,
+              "blobMaskRotation": 0,
+              "blobsEnableDecoration": true,
+              "blobSides": 4,
+              "blobPatternSeed": 60,
+              "blobComplexity": 100,
+              "blobSmoothness": 0,
+              "blobRotation": 50,
+              "blobsHorizontalDisplacement": 55,
+              "blobsVerticalDisplacement": 45,
+              "blobsSizeBalance": 35
+            }
+          }
+        ],
+        "spaceAndSizingPresets": {
+          "presetOptions": [
+            {
+              "label": "Default Block Spacing",
+              "value": "default",
+              "preset": {
+                "blockTopSpacing": 1,
+                "blockBottomSpacing": 0,
+                "emphasisTopSpacing": 0,
+                "emphasisBottomSpacing": 0,
+                "enableOverlapping": false,
+                "verticalAlignment": "center"
+              }
+            },
+            {
+              "label": "Overlap Nearby Blocks / Bottom",
+              "value": "overlap-nearby-2",
+              "preset": {
+                "blockTopSpacing": 0,
+                "blockBottomSpacing": -2,
+                "emphasisTopSpacing": 2,
+                "emphasisBottomSpacing": -2,
+                "enableOverlapping": true,
+                "verticalAlignment": "top"
+              }
+            },
+            {
+              "label": "Overlap Nearby Blocks / Centered",
+              "value": "overlap-nearby-1",
+              "preset": {
+                "blockTopSpacing": -2,
+                "blockBottomSpacing": -2,
+                "emphasisTopSpacing": -2,
+                "emphasisBottomSpacing": -2,
+                "enableOverlapping": true,
+                "verticalAlignment": "center"
+              }
+            },
+            {
+              "label": "Overlap Nearby Blocks / Top",
+              "value": "overlap-nearby-3",
+              "preset": {
+                "blockTopSpacing": -2,
+                "blockBottomSpacing": 0,
+                "emphasisTopSpacing": -2,
+                "emphasisBottomSpacing": 2,
+                "enableOverlapping": true,
+                "verticalAlignment": "bottom"
+              }
+            }
+          ],
+          "advancedPresetOptions": [
+            {
+              "label": "Overlap 1 / Top Anchoring",
+              "value": "overlap1",
+              "preset": {
+                "blockTopSpacing": 0,
+                "blockBottomSpacing": 2,
+                "emphasisTopSpacing": -2,
+                "emphasisBottomSpacing": -2,
+                "enableOverlapping": true,
+                "verticalAlignment": "top"
+              }
+            },
+            {
+              "label": "Overlap 2 / Centered",
+              "value": "overlap2",
+              "preset": {
+                "blockTopSpacing": 1,
+                "blockBottomSpacing": 1,
+                "emphasisTopSpacing": -2,
+                "emphasisBottomSpacing": -2,
+                "enableOverlapping": true,
+                "verticalAlignment": "center"
+              }
+            },
+            {
+              "label": "Overlap 3 / Bottom Anchoring",
+              "value": "overlap3",
+              "preset": {
+                "blockTopSpacing": 2,
+                "blockBottomSpacing": 0,
+                "emphasisTopSpacing": -2,
+                "emphasisBottomSpacing": -2,
+                "enableOverlapping": true,
+                "verticalAlignment": "bottom"
+              }
+            }
+          ]
+        }
+      }
+    },
+    "warnings": []
+  },
+  "core/button": {
+    "ok": true,
+    "code": "ok",
+    "summary": "Described core/button: 28 attributes (1 bundle, 8 curated vocabulary).",
+    "data": {
+      "block": "core/button",
+      "requested": "core/button",
+      "title": "Button",
+      "attribute_count": 28,
+      "coverage": {
+        "bundle": 1,
+        "curated": 8,
+        "none": 18
+      },
+      "attributes": {
+        "anchor": {
+          "type": "string",
+          "default": null,
+          "vocabulary": null,
+          "source": "none",
+          "note": "No curated vocabulary for this attribute \u2014 type and default only. Author a value and prove it with `wp pixelgrade blocks canonicalize` / `validate`."
+        },
+        "backgroundColor": {
+          "type": "string",
+          "default": null,
+          "vocabulary": null,
+          "source": "none",
+          "note": "No curated vocabulary for this attribute \u2014 type and default only. Author a value and prove it with `wp pixelgrade blocks canonicalize` / `validate`."
+        },
+        "borderColor": {
+          "type": "string",
+          "default": null,
+          "vocabulary": null,
+          "source": "none",
+          "note": "No curated vocabulary for this attribute \u2014 type and default only. Author a value and prove it with `wp pixelgrade blocks canonicalize` / `validate`."
+        },
+        "className": {
+          "type": "string",
+          "default": null,
+          "vocabulary": null,
+          "source": "none",
+          "note": "No curated vocabulary for this attribute \u2014 type and default only. Author a value and prove it with `wp pixelgrade blocks canonicalize` / `validate`."
+        },
+        "colorSignal": {
+          "type": null,
+          "default": 1,
+          "vocabulary": {
+            "enum": [
+              1,
+              2,
+              3
+            ],
+            "labels": [
+              "Low",
+              "Medium",
+              "High"
+            ]
+          },
+          "source": "curated",
+          "note": "Contextual color intent relative to the parent. Default anchors map signal\u2192variation 0\u21921, 1\u21923, 2\u21928, 3\u219211. Max is getMaxSignal(palette) (default 3); a block may clamp via supports minColorSignal/maxColorSignal.",
+          "registration": "editor"
+        },
+        "contentColorSignal": {
+          "type": "number",
+          "default": 0,
+          "vocabulary": {
+            "enum": [
+              0,
+              1,
+              2,
+              3
+            ],
+            "labels": [
+              "None",
+              "Low",
+              "Medium",
+              "High"
+            ]
+          },
+          "source": "curated",
+          "note": "Color signal of the block's content area (hosts with contentColorSignal support, e.g. Supernova).",
+          "registration": "editor"
+        },
+        "contentPaletteVariation": {
+          "type": "number",
+          "default": 1,
+          "vocabulary": {
+            "range": {
+              "min": 1,
+              "max": 12,
+              "step": 1
+            }
+          },
+          "source": "curated",
+          "note": "Resolved grade of the content area; keep consistent with contentColorSignal.",
+          "registration": "editor"
+        },
+        "emphasisArea": {
+          "type": "number",
+          "default": 100,
+          "vocabulary": {
+            "range": {
+              "min": 0,
+              "max": 100,
+              "step": 5
+            }
+          },
+          "source": "curated",
+          "note": "Percentage of block width covered by the colored background. Only meaningful on horizontal Supernova cards (cardLayout horizontal / horizontal-reverse).",
+          "registration": "editor"
+        },
+        "fontFamily": {
+          "type": "string",
+          "default": null,
+          "vocabulary": null,
+          "source": "none",
+          "note": "No curated vocabulary for this attribute \u2014 type and default only. Author a value and prove it with `wp pixelgrade blocks canonicalize` / `validate`."
+        },
+        "fontSize": {
+          "type": "string",
+          "default": null,
+          "vocabulary": null,
+          "source": "none",
+          "note": "No curated vocabulary for this attribute \u2014 type and default only. Author a value and prove it with `wp pixelgrade blocks canonicalize` / `validate`."
+        },
+        "gradient": {
+          "type": "string",
+          "default": null,
+          "vocabulary": null,
+          "source": "none",
+          "note": "No curated vocabulary for this attribute \u2014 type and default only. Author a value and prove it with `wp pixelgrade blocks canonicalize` / `validate`."
+        },
+        "linkTarget": {
+          "type": "string",
+          "default": null,
+          "vocabulary": null,
+          "source": "none",
+          "note": "No curated vocabulary for this attribute \u2014 type and default only. Author a value and prove it with `wp pixelgrade blocks canonicalize` / `validate`."
+        },
+        "lock": {
+          "type": "object",
+          "default": null,
+          "vocabulary": null,
+          "source": "none",
+          "note": "No curated vocabulary for this attribute \u2014 type and default only. Author a value and prove it with `wp pixelgrade blocks canonicalize` / `validate`."
+        },
+        "metadata": {
+          "type": "object",
+          "default": null,
+          "vocabulary": null,
+          "source": "none",
+          "note": "No curated vocabulary for this attribute \u2014 type and default only. Author a value and prove it with `wp pixelgrade blocks canonicalize` / `validate`."
+        },
+        "palette": {
+          "type": "string",
+          "default": "1",
+          "vocabulary": {
+            "enum": [
+              "1",
+              "_info",
+              "_error",
+              "_warning",
+              "_success"
+            ]
+          },
+          "source": "bundle",
+          "note": "Palette IDs from this site's live Style Manager editor settings, not fixed brand colors. Functional palette IDs (starting with _) are included only where the block supports functional colors. Inherit through useParentPalette where available.",
+          "registration": "editor"
+        },
+        "paletteVariation": {
+          "type": null,
+          "default": 1,
+          "vocabulary": {
+            "range": {
+              "min": 1,
+              "max": 12,
+              "step": 1
+            }
+          },
+          "source": "curated",
+          "note": "Which palette grade paints the block background \u2192 sm-variation-{n}. 1 = lightest, 12 = darkest. Normally kept in sync with colorSignal automatically; set it directly only to pin a grade.",
+          "registration": "editor"
+        },
+        "placeholder": {
+          "type": "string",
+          "default": null,
+          "vocabulary": null,
+          "source": "none",
+          "note": "No curated vocabulary for this attribute \u2014 type and default only. Author a value and prove it with `wp pixelgrade blocks canonicalize` / `validate`."
+        },
+        "rel": {
+          "type": "string",
+          "default": null,
+          "vocabulary": null,
+          "source": "none",
+          "note": "No curated vocabulary for this attribute \u2014 type and default only. Author a value and prove it with `wp pixelgrade blocks canonicalize` / `validate`."
+        },
+        "style": {
+          "type": "object",
+          "default": null,
+          "vocabulary": null,
+          "source": "none",
+          "note": "No curated vocabulary for this attribute \u2014 type and default only. Author a value and prove it with `wp pixelgrade blocks canonicalize` / `validate`."
+        },
+        "tagName": {
+          "type": "string",
+          "default": "a",
+          "vocabulary": {
+            "enum": [
+              "a",
+              "button"
+            ]
+          },
+          "source": "schema",
+          "note": "No curated vocabulary for this attribute \u2014 type and default only. Author a value and prove it with `wp pixelgrade blocks canonicalize` / `validate`."
+        },
+        "text": {
+          "type": "rich-text",
+          "default": null,
+          "vocabulary": null,
+          "source": "none",
+          "note": "No curated vocabulary for this attribute \u2014 type and default only. Author a value and prove it with `wp pixelgrade blocks canonicalize` / `validate`."
+        },
+        "textColor": {
+          "type": "string",
+          "default": null,
+          "vocabulary": null,
+          "source": "none",
+          "note": "No curated vocabulary for this attribute \u2014 type and default only. Author a value and prove it with `wp pixelgrade blocks canonicalize` / `validate`."
+        },
+        "title": {
+          "type": "string",
+          "default": null,
+          "vocabulary": null,
+          "source": "none",
+          "note": "No curated vocabulary for this attribute \u2014 type and default only. Author a value and prove it with `wp pixelgrade blocks canonicalize` / `validate`."
+        },
+        "type": {
+          "type": "string",
+          "default": "button",
+          "vocabulary": null,
+          "source": "none",
+          "note": "No curated vocabulary for this attribute \u2014 type and default only. Author a value and prove it with `wp pixelgrade blocks canonicalize` / `validate`."
+        },
+        "url": {
+          "type": "string",
+          "default": null,
+          "vocabulary": null,
+          "source": "none",
+          "note": "No curated vocabulary for this attribute \u2014 type and default only. Author a value and prove it with `wp pixelgrade blocks canonicalize` / `validate`."
+        },
+        "useColorSignal": {
+          "type": "boolean",
+          "default": false,
+          "vocabulary": {
+            "enum": [
+              true,
+              false
+            ]
+          },
+          "source": "curated",
+          "note": "Opt-in activation. An untouched Button, Columns, or Column remains inactive by default. Changing Color Signal activates it; Columns and Column also clear conflicting core colors in that editor update.",
+          "registration": "editor"
+        },
+        "useParentPalette": {
+          "type": "boolean",
+          "default": null,
+          "vocabulary": {
+            "enum": [
+              true,
+              false
+            ]
+          },
+          "source": "curated",
+          "note": "true inherits the nearest active ancestor palette; false chooses this block's palette. Absence is a legacy state, not a registered default: the editor resolves and migrates it without activating an inactive Color Signal block.",
+          "registration": "editor"
+        },
+        "useSourceColorAsReference": {
+          "type": null,
+          "default": true,
+          "vocabulary": {
+            "enum": [
+              true,
+              false
+            ]
+          },
+          "source": "curated",
+          "note": "Whether the chosen palette's source color anchors Color Signal resolution.",
+          "registration": "editor"
+        }
+      },
+      "save_body": "dynamic",
+      "bundle_options": {
+        "minimumHeightOptions": [
+          {
+            "label": "None",
+            "value": 0
+          },
+          {
+            "label": "Half",
+            "value": 50
+          },
+          {
+            "label": "Two Thirds",
+            "value": 66
+          },
+          {
+            "label": "Three Quarters",
+            "value": 75
+          },
+          {
+            "label": "Full",
+            "value": 100
+          }
+        ],
+        "contentPaddingOptions": [
+          {
+            "label": "Small",
+            "value": "small"
+          },
+          {
+            "label": "Medium",
+            "value": "medium"
+          },
+          {
+            "label": "Large",
+            "value": "large"
+          },
+          {
+            "label": "Custom",
+            "value": "custom"
+          }
+        ],
+        "contentWidthOptions": [
+          {
+            "label": "Full",
+            "value": "full"
+          },
+          {
+            "label": "Large",
+            "value": "large"
+          },
+          {
+            "label": "Narrow",
+            "value": "narrow"
+          },
+          {
+            "label": "Custom",
+            "value": "custom"
+          }
+        ],
+        "blobPresetOptions": [
+          {
+            "label": "Rectangle",
+            "value": "rectangle",
+            "preset": {
+              "blobsEnableMask": false,
+              "blobsEnableDecoration": false
+            }
+          },
+          {
+            "label": "Ellipse",
+            "value": "ellipse",
+            "preset": {
+              "blobsEnableMask": true,
+              "blobMaskSides": 4,
+              "blobMaskPatternSeed": 1,
+              "blobMaskComplexity": 0,
+              "blobMaskSmoothness": 100,
+              "blobMaskRotation": 0,
+              "blobsEnableDecoration": false
+            }
+          },
+          {
+            "label": "Diamond",
+            "value": "diamond",
+            "preset": {
+              "blobsEnableMask": true,
+              "blobMaskSides": 6,
+              "blobMaskPatternSeed": 1,
+              "blobMaskComplexity": 0,
+              "blobMaskSmoothness": 0,
+              "blobMaskRotation": 0,
+              "blobsEnableDecoration": false
+            }
+          },
+          {
+            "label": "Seed",
+            "value": "seed",
+            "preset": {
+              "blobsEnableMask": true,
+              "blobMaskSides": 5,
+              "blobMaskPatternSeed": 70,
+              "blobMaskComplexity": 100,
+              "blobMaskSmoothness": 100,
+              "blobMaskRotation": 0,
+              "blobsEnableDecoration": false
+            }
+          },
+          {
+            "label": "Blob",
+            "value": "blob",
+            "preset": {
+              "blobsEnableMask": true,
+              "blobMaskSides": 7,
+              "blobMaskPatternSeed": 50,
+              "blobMaskComplexity": 100,
+              "blobMaskSmoothness": 100,
+              "blobMaskRotation": 0,
+              "blobsEnableDecoration": false
+            }
+          },
+          {
+            "label": "MX37: Stones",
+            "value": "stones-37",
+            "preset": {
+              "blobsEnableMask": true,
+              "blobMaskSides": 3,
+              "blobMaskPatternSeed": 30,
+              "blobMaskComplexity": 100,
+              "blobMaskSmoothness": 60,
+              "blobMaskRotation": 70,
+              "blobsEnableDecoration": true,
+              "blobSides": 4,
+              "blobPatternSeed": 30,
+              "blobComplexity": 90,
+              "blobSmoothness": 100,
+              "blobRotation": 70,
+              "blobsHorizontalDisplacement": 80,
+              "blobsVerticalDisplacement": 60,
+              "blobsSizeBalance": 60
+            }
+          },
+          {
+            "label": "MX19: Seeds",
+            "value": "seeds-19",
+            "preset": {
+              "blobsEnableMask": true,
+              "blobMaskSides": 5,
+              "blobMaskPatternSeed": 90,
+              "blobMaskComplexity": 80,
+              "blobMaskSmoothness": 100,
+              "blobMaskRotation": 50,
+              "blobsEnableDecoration": true,
+              "blobSides": 5,
+              "blobPatternSeed": 40,
+              "blobComplexity": 80,
+              "blobSmoothness": 100,
+              "blobRotation": 100,
+              "blobsHorizontalDisplacement": 30,
+              "blobsVerticalDisplacement": 60,
+              "blobsSizeBalance": 50
+            }
+          },
+          {
+            "label": "MX81: Ovoid",
+            "value": "ovoid-81",
+            "preset": {
+              "blobsEnableMask": true,
+              "blobMaskSides": 6,
+              "blobMaskPatternSeed": 10,
+              "blobMaskComplexity": 100,
+              "blobMaskSmoothness": 100,
+              "blobMaskRotation": 100,
+              "blobsEnableDecoration": true,
+              "blobSides": 3,
+              "blobPatternSeed": 50,
+              "blobComplexity": 100,
+              "blobSmoothness": 50,
+              "blobRotation": 40,
+              "blobsHorizontalDisplacement": 40,
+              "blobsVerticalDisplacement": 30,
+              "blobsSizeBalance": 45
+            }
+          },
+          {
+            "label": "MX76: Leaf",
+            "value": "leaf-76",
+            "preset": {
+              "blobsEnableMask": true,
+              "blobMaskSides": 3,
+              "blobMaskPatternSeed": 100,
+              "blobMaskComplexity": 100,
+              "blobMaskSmoothness": 60,
+              "blobMaskRotation": 80,
+              "blobsEnableDecoration": true,
+              "blobSides": 6,
+              "blobPatternSeed": 70,
+              "blobComplexity": 100,
+              "blobSmoothness": 100,
+              "blobRotation": 10,
+              "blobsHorizontalDisplacement": 40,
+              "blobsVerticalDisplacement": 40,
+              "blobsSizeBalance": 45
+            }
+          },
+          {
+            "label": "MX19: Ruby",
+            "value": "ruby-19",
+            "preset": {
+              "blobsEnableMask": true,
+              "blobMaskSides": 5,
+              "blobMaskPatternSeed": 0,
+              "blobMaskComplexity": 0,
+              "blobMaskSmoothness": 0,
+              "blobMaskRotation": 10,
+              "blobsEnableDecoration": true,
+              "blobSides": 5,
+              "blobPatternSeed": 0,
+              "blobComplexity": 0,
+              "blobSmoothness": 0,
+              "blobRotation": 40,
+              "blobsHorizontalDisplacement": 40,
+              "blobsVerticalDisplacement": 30,
+              "blobsSizeBalance": 50
+            }
+          },
+          {
+            "label": "MX41: Diagonal",
+            "value": "diagonal-41",
+            "preset": {
+              "blobsEnableMask": true,
+              "blobMaskSides": 8,
+              "blobMaskPatternSeed": 0,
+              "blobMaskComplexity": 0,
+              "blobMaskSmoothness": 0,
+              "blobMaskRotation": 0,
+              "blobsEnableDecoration": true,
+              "blobSides": 4,
+              "blobPatternSeed": 60,
+              "blobComplexity": 100,
+              "blobSmoothness": 0,
+              "blobRotation": 50,
+              "blobsHorizontalDisplacement": 55,
+              "blobsVerticalDisplacement": 45,
+              "blobsSizeBalance": 35
+            }
+          }
+        ],
+        "spaceAndSizingPresets": {
+          "presetOptions": [
+            {
+              "label": "Default Block Spacing",
+              "value": "default",
+              "preset": {
+                "blockTopSpacing": 1,
+                "blockBottomSpacing": 0,
+                "emphasisTopSpacing": 0,
+                "emphasisBottomSpacing": 0,
+                "enableOverlapping": false,
+                "verticalAlignment": "center"
+              }
+            },
+            {
+              "label": "Overlap Nearby Blocks / Bottom",
+              "value": "overlap-nearby-2",
+              "preset": {
+                "blockTopSpacing": 0,
+                "blockBottomSpacing": -2,
+                "emphasisTopSpacing": 2,
+                "emphasisBottomSpacing": -2,
+                "enableOverlapping": true,
+                "verticalAlignment": "top"
+              }
+            },
+            {
+              "label": "Overlap Nearby Blocks / Centered",
+              "value": "overlap-nearby-1",
+              "preset": {
+                "blockTopSpacing": -2,
+                "blockBottomSpacing": -2,
+                "emphasisTopSpacing": -2,
+                "emphasisBottomSpacing": -2,
+                "enableOverlapping": true,
+                "verticalAlignment": "center"
+              }
+            },
+            {
+              "label": "Overlap Nearby Blocks / Top",
+              "value": "overlap-nearby-3",
+              "preset": {
+                "blockTopSpacing": -2,
+                "blockBottomSpacing": 0,
+                "emphasisTopSpacing": -2,
+                "emphasisBottomSpacing": 2,
+                "enableOverlapping": true,
+                "verticalAlignment": "bottom"
+              }
+            }
+          ],
+          "advancedPresetOptions": [
+            {
+              "label": "Overlap 1 / Top Anchoring",
+              "value": "overlap1",
+              "preset": {
+                "blockTopSpacing": 0,
+                "blockBottomSpacing": 2,
+                "emphasisTopSpacing": -2,
+                "emphasisBottomSpacing": -2,
+                "enableOverlapping": true,
+                "verticalAlignment": "top"
+              }
+            },
+            {
+              "label": "Overlap 2 / Centered",
+              "value": "overlap2",
+              "preset": {
+                "blockTopSpacing": 1,
+                "blockBottomSpacing": 1,
+                "emphasisTopSpacing": -2,
+                "emphasisBottomSpacing": -2,
+                "enableOverlapping": true,
+                "verticalAlignment": "center"
+              }
+            },
+            {
+              "label": "Overlap 3 / Bottom Anchoring",
+              "value": "overlap3",
+              "preset": {
+                "blockTopSpacing": 2,
+                "blockBottomSpacing": 0,
+                "emphasisTopSpacing": -2,
+                "emphasisBottomSpacing": -2,
+                "enableOverlapping": true,
+                "verticalAlignment": "bottom"
+              }
+            }
+          ]
+        }
+      }
+    },
+    "warnings": []
+  },
+  "core/separator": {
+    "ok": true,
+    "code": "ok",
+    "summary": "Described core/separator: 18 attributes (1 bundle, 7 curated vocabulary).",
+    "data": {
+      "block": "core/separator",
+      "requested": "core/separator",
+      "title": "Separator",
+      "attribute_count": 18,
+      "coverage": {
+        "bundle": 1,
+        "curated": 7,
+        "none": 8
+      },
+      "attributes": {
+        "align": {
+          "type": "string",
+          "default": null,
+          "vocabulary": {
+            "enum": [
+              "left",
+              "center",
+              "right",
+              "wide",
+              "full",
+              ""
+            ]
+          },
+          "source": "schema",
+          "note": "No curated vocabulary for this attribute \u2014 type and default only. Author a value and prove it with `wp pixelgrade blocks canonicalize` / `validate`."
+        },
+        "anchor": {
+          "type": "string",
+          "default": null,
+          "vocabulary": null,
+          "source": "none",
+          "note": "No curated vocabulary for this attribute \u2014 type and default only. Author a value and prove it with `wp pixelgrade blocks canonicalize` / `validate`."
+        },
+        "backgroundColor": {
+          "type": "string",
+          "default": null,
+          "vocabulary": null,
+          "source": "none",
+          "note": "No curated vocabulary for this attribute \u2014 type and default only. Author a value and prove it with `wp pixelgrade blocks canonicalize` / `validate`."
+        },
+        "className": {
+          "type": "string",
+          "default": null,
+          "vocabulary": null,
+          "source": "none",
+          "note": "No curated vocabulary for this attribute \u2014 type and default only. Author a value and prove it with `wp pixelgrade blocks canonicalize` / `validate`."
+        },
+        "colorSignal": {
+          "type": null,
+          "default": 3,
+          "vocabulary": {
+            "enum": [
+              1,
+              2,
+              3
+            ],
+            "labels": [
+              "Low",
+              "Medium",
+              "High"
+            ]
+          },
+          "source": "curated",
+          "note": "Contextual color intent relative to the parent. Default anchors map signal\u2192variation 0\u21921, 1\u21923, 2\u21928, 3\u219211. Max is getMaxSignal(palette) (default 3); a block may clamp via supports minColorSignal/maxColorSignal.",
+          "registration": "editor"
+        },
+        "contentColorSignal": {
+          "type": "number",
+          "default": 0,
+          "vocabulary": {
+            "enum": [
+              0,
+              1,
+              2,
+              3
+            ],
+            "labels": [
+              "None",
+              "Low",
+              "Medium",
+              "High"
+            ]
+          },
+          "source": "curated",
+          "note": "Color signal of the block's content area (hosts with contentColorSignal support, e.g. Supernova).",
+          "registration": "editor"
+        },
+        "contentPaletteVariation": {
+          "type": "number",
+          "default": 1,
+          "vocabulary": {
+            "range": {
+              "min": 1,
+              "max": 12,
+              "step": 1
+            }
+          },
+          "source": "curated",
+          "note": "Resolved grade of the content area; keep consistent with contentColorSignal.",
+          "registration": "editor"
+        },
+        "emphasisArea": {
+          "type": "number",
+          "default": 100,
+          "vocabulary": {
+            "range": {
+              "min": 0,
+              "max": 100,
+              "step": 5
+            }
+          },
+          "source": "curated",
+          "note": "Percentage of block width covered by the colored background. Only meaningful on horizontal Supernova cards (cardLayout horizontal / horizontal-reverse).",
+          "registration": "editor"
+        },
+        "gradient": {
+          "type": "string",
+          "default": null,
+          "vocabulary": null,
+          "source": "none",
+          "note": "No curated vocabulary for this attribute \u2014 type and default only. Author a value and prove it with `wp pixelgrade blocks canonicalize` / `validate`."
+        },
+        "lock": {
+          "type": "object",
+          "default": null,
+          "vocabulary": null,
+          "source": "none",
+          "note": "No curated vocabulary for this attribute \u2014 type and default only. Author a value and prove it with `wp pixelgrade blocks canonicalize` / `validate`."
+        },
+        "metadata": {
+          "type": "object",
+          "default": null,
+          "vocabulary": null,
+          "source": "none",
+          "note": "No curated vocabulary for this attribute \u2014 type and default only. Author a value and prove it with `wp pixelgrade blocks canonicalize` / `validate`."
+        },
+        "opacity": {
+          "type": "string",
+          "default": "alpha-channel",
+          "vocabulary": null,
+          "source": "none",
+          "note": "No curated vocabulary for this attribute \u2014 type and default only. Author a value and prove it with `wp pixelgrade blocks canonicalize` / `validate`."
+        },
+        "palette": {
+          "type": "string",
+          "default": "1",
+          "vocabulary": {
+            "enum": [
+              "1"
+            ]
+          },
+          "source": "bundle",
+          "note": "Palette IDs from this site's live Style Manager editor settings, not fixed brand colors. Functional palette IDs (starting with _) are included only where the block supports functional colors. Inherit through useParentPalette where available.",
+          "registration": "editor"
+        },
+        "paletteVariation": {
+          "type": null,
+          "default": 12,
+          "vocabulary": {
+            "range": {
+              "min": 1,
+              "max": 12,
+              "step": 1
+            }
+          },
+          "source": "curated",
+          "note": "Which palette grade paints the block background \u2192 sm-variation-{n}. 1 = lightest, 12 = darkest. Normally kept in sync with colorSignal automatically; set it directly only to pin a grade.",
+          "registration": "editor"
+        },
+        "style": {
+          "type": "object",
+          "default": null,
+          "vocabulary": null,
+          "source": "none",
+          "note": "No curated vocabulary for this attribute \u2014 type and default only. Author a value and prove it with `wp pixelgrade blocks canonicalize` / `validate`."
+        },
+        "tagName": {
+          "type": "string",
+          "default": "hr",
+          "vocabulary": {
+            "enum": [
+              "hr",
+              "div"
+            ]
+          },
+          "source": "schema",
+          "note": "No curated vocabulary for this attribute \u2014 type and default only. Author a value and prove it with `wp pixelgrade blocks canonicalize` / `validate`."
+        },
+        "useParentPalette": {
+          "type": "boolean",
+          "default": null,
+          "vocabulary": {
+            "enum": [
+              true,
+              false
+            ]
+          },
+          "source": "curated",
+          "note": "true inherits the nearest active ancestor palette; false chooses this block's palette. Absence is a legacy state, not a registered default: the editor resolves and migrates it without activating an inactive Color Signal block.",
+          "registration": "editor"
+        },
+        "useSourceColorAsReference": {
+          "type": "boolean",
+          "default": false,
+          "vocabulary": {
+            "enum": [
+              true,
+              false
+            ]
+          },
+          "source": "curated",
+          "note": "Whether the chosen palette's source color anchors Color Signal resolution.",
+          "registration": "editor"
+        }
+      },
+      "save_body": "static",
+      "body_template": null,
+      "body_template_note": "No harness-generated body template is curated for this block. Use validate/canonicalize rather than inventing saved markup.",
+      "bundle_options": {
+        "minimumHeightOptions": [
+          {
+            "label": "None",
+            "value": 0
+          },
+          {
+            "label": "Half",
+            "value": 50
+          },
+          {
+            "label": "Two Thirds",
+            "value": 66
+          },
+          {
+            "label": "Three Quarters",
+            "value": 75
+          },
+          {
+            "label": "Full",
+            "value": 100
+          }
+        ],
+        "contentPaddingOptions": [
+          {
+            "label": "Small",
+            "value": "small"
+          },
+          {
+            "label": "Medium",
+            "value": "medium"
+          },
+          {
+            "label": "Large",
+            "value": "large"
+          },
+          {
+            "label": "Custom",
+            "value": "custom"
+          }
+        ],
+        "contentWidthOptions": [
+          {
+            "label": "Full",
+            "value": "full"
+          },
+          {
+            "label": "Large",
+            "value": "large"
+          },
+          {
+            "label": "Narrow",
+            "value": "narrow"
+          },
+          {
+            "label": "Custom",
+            "value": "custom"
+          }
+        ],
+        "blobPresetOptions": [
+          {
+            "label": "Rectangle",
+            "value": "rectangle",
+            "preset": {
+              "blobsEnableMask": false,
+              "blobsEnableDecoration": false
+            }
+          },
+          {
+            "label": "Ellipse",
+            "value": "ellipse",
+            "preset": {
+              "blobsEnableMask": true,
+              "blobMaskSides": 4,
+              "blobMaskPatternSeed": 1,
+              "blobMaskComplexity": 0,
+              "blobMaskSmoothness": 100,
+              "blobMaskRotation": 0,
+              "blobsEnableDecoration": false
+            }
+          },
+          {
+            "label": "Diamond",
+            "value": "diamond",
+            "preset": {
+              "blobsEnableMask": true,
+              "blobMaskSides": 6,
+              "blobMaskPatternSeed": 1,
+              "blobMaskComplexity": 0,
+              "blobMaskSmoothness": 0,
+              "blobMaskRotation": 0,
+              "blobsEnableDecoration": false
+            }
+          },
+          {
+            "label": "Seed",
+            "value": "seed",
+            "preset": {
+              "blobsEnableMask": true,
+              "blobMaskSides": 5,
+              "blobMaskPatternSeed": 70,
+              "blobMaskComplexity": 100,
+              "blobMaskSmoothness": 100,
+              "blobMaskRotation": 0,
+              "blobsEnableDecoration": false
+            }
+          },
+          {
+            "label": "Blob",
+            "value": "blob",
+            "preset": {
+              "blobsEnableMask": true,
+              "blobMaskSides": 7,
+              "blobMaskPatternSeed": 50,
+              "blobMaskComplexity": 100,
+              "blobMaskSmoothness": 100,
+              "blobMaskRotation": 0,
+              "blobsEnableDecoration": false
+            }
+          },
+          {
+            "label": "MX37: Stones",
+            "value": "stones-37",
+            "preset": {
+              "blobsEnableMask": true,
+              "blobMaskSides": 3,
+              "blobMaskPatternSeed": 30,
+              "blobMaskComplexity": 100,
+              "blobMaskSmoothness": 60,
+              "blobMaskRotation": 70,
+              "blobsEnableDecoration": true,
+              "blobSides": 4,
+              "blobPatternSeed": 30,
+              "blobComplexity": 90,
+              "blobSmoothness": 100,
+              "blobRotation": 70,
+              "blobsHorizontalDisplacement": 80,
+              "blobsVerticalDisplacement": 60,
+              "blobsSizeBalance": 60
+            }
+          },
+          {
+            "label": "MX19: Seeds",
+            "value": "seeds-19",
+            "preset": {
+              "blobsEnableMask": true,
+              "blobMaskSides": 5,
+              "blobMaskPatternSeed": 90,
+              "blobMaskComplexity": 80,
+              "blobMaskSmoothness": 100,
+              "blobMaskRotation": 50,
+              "blobsEnableDecoration": true,
+              "blobSides": 5,
+              "blobPatternSeed": 40,
+              "blobComplexity": 80,
+              "blobSmoothness": 100,
+              "blobRotation": 100,
+              "blobsHorizontalDisplacement": 30,
+              "blobsVerticalDisplacement": 60,
+              "blobsSizeBalance": 50
+            }
+          },
+          {
+            "label": "MX81: Ovoid",
+            "value": "ovoid-81",
+            "preset": {
+              "blobsEnableMask": true,
+              "blobMaskSides": 6,
+              "blobMaskPatternSeed": 10,
+              "blobMaskComplexity": 100,
+              "blobMaskSmoothness": 100,
+              "blobMaskRotation": 100,
+              "blobsEnableDecoration": true,
+              "blobSides": 3,
+              "blobPatternSeed": 50,
+              "blobComplexity": 100,
+              "blobSmoothness": 50,
+              "blobRotation": 40,
+              "blobsHorizontalDisplacement": 40,
+              "blobsVerticalDisplacement": 30,
+              "blobsSizeBalance": 45
+            }
+          },
+          {
+            "label": "MX76: Leaf",
+            "value": "leaf-76",
+            "preset": {
+              "blobsEnableMask": true,
+              "blobMaskSides": 3,
+              "blobMaskPatternSeed": 100,
+              "blobMaskComplexity": 100,
+              "blobMaskSmoothness": 60,
+              "blobMaskRotation": 80,
+              "blobsEnableDecoration": true,
+              "blobSides": 6,
+              "blobPatternSeed": 70,
+              "blobComplexity": 100,
+              "blobSmoothness": 100,
+              "blobRotation": 10,
+              "blobsHorizontalDisplacement": 40,
+              "blobsVerticalDisplacement": 40,
+              "blobsSizeBalance": 45
+            }
+          },
+          {
+            "label": "MX19: Ruby",
+            "value": "ruby-19",
+            "preset": {
+              "blobsEnableMask": true,
+              "blobMaskSides": 5,
+              "blobMaskPatternSeed": 0,
+              "blobMaskComplexity": 0,
+              "blobMaskSmoothness": 0,
+              "blobMaskRotation": 10,
+              "blobsEnableDecoration": true,
+              "blobSides": 5,
+              "blobPatternSeed": 0,
+              "blobComplexity": 0,
+              "blobSmoothness": 0,
+              "blobRotation": 40,
+              "blobsHorizontalDisplacement": 40,
+              "blobsVerticalDisplacement": 30,
+              "blobsSizeBalance": 50
+            }
+          },
+          {
+            "label": "MX41: Diagonal",
+            "value": "diagonal-41",
+            "preset": {
+              "blobsEnableMask": true,
+              "blobMaskSides": 8,
+              "blobMaskPatternSeed": 0,
+              "blobMaskComplexity": 0,
+              "blobMaskSmoothness": 0,
+              "blobMaskRotation": 0,
+              "blobsEnableDecoration": true,
+              "blobSides": 4,
+              "blobPatternSeed": 60,
+              "blobComplexity": 100,
+              "blobSmoothness": 0,
+              "blobRotation": 50,
+              "blobsHorizontalDisplacement": 55,
+              "blobsVerticalDisplacement": 45,
+              "blobsSizeBalance": 35
+            }
+          }
+        ],
+        "spaceAndSizingPresets": {
+          "presetOptions": [
+            {
+              "label": "Default Block Spacing",
+              "value": "default",
+              "preset": {
+                "blockTopSpacing": 1,
+                "blockBottomSpacing": 0,
+                "emphasisTopSpacing": 0,
+                "emphasisBottomSpacing": 0,
+                "enableOverlapping": false,
+                "verticalAlignment": "center"
+              }
+            },
+            {
+              "label": "Overlap Nearby Blocks / Bottom",
+              "value": "overlap-nearby-2",
+              "preset": {
+                "blockTopSpacing": 0,
+                "blockBottomSpacing": -2,
+                "emphasisTopSpacing": 2,
+                "emphasisBottomSpacing": -2,
+                "enableOverlapping": true,
+                "verticalAlignment": "top"
+              }
+            },
+            {
+              "label": "Overlap Nearby Blocks / Centered",
+              "value": "overlap-nearby-1",
+              "preset": {
+                "blockTopSpacing": -2,
+                "blockBottomSpacing": -2,
+                "emphasisTopSpacing": -2,
+                "emphasisBottomSpacing": -2,
+                "enableOverlapping": true,
+                "verticalAlignment": "center"
+              }
+            },
+            {
+              "label": "Overlap Nearby Blocks / Top",
+              "value": "overlap-nearby-3",
+              "preset": {
+                "blockTopSpacing": -2,
+                "blockBottomSpacing": 0,
+                "emphasisTopSpacing": -2,
+                "emphasisBottomSpacing": 2,
+                "enableOverlapping": true,
+                "verticalAlignment": "bottom"
+              }
+            }
+          ],
+          "advancedPresetOptions": [
+            {
+              "label": "Overlap 1 / Top Anchoring",
+              "value": "overlap1",
+              "preset": {
+                "blockTopSpacing": 0,
+                "blockBottomSpacing": 2,
+                "emphasisTopSpacing": -2,
+                "emphasisBottomSpacing": -2,
+                "enableOverlapping": true,
+                "verticalAlignment": "top"
+              }
+            },
+            {
+              "label": "Overlap 2 / Centered",
+              "value": "overlap2",
+              "preset": {
+                "blockTopSpacing": 1,
+                "blockBottomSpacing": 1,
+                "emphasisTopSpacing": -2,
+                "emphasisBottomSpacing": -2,
+                "enableOverlapping": true,
+                "verticalAlignment": "center"
+              }
+            },
+            {
+              "label": "Overlap 3 / Bottom Anchoring",
+              "value": "overlap3",
+              "preset": {
+                "blockTopSpacing": 2,
+                "blockBottomSpacing": 0,
+                "emphasisTopSpacing": -2,
+                "emphasisBottomSpacing": -2,
+                "enableOverlapping": true,
+                "verticalAlignment": "bottom"
+              }
+            }
+          ]
+        }
+      }
+    },
+    "warnings": []
+  },
+  "core/columns": {
+    "ok": true,
+    "code": "ok",
+    "summary": "Described core/columns: 30 attributes (1 bundle, 13 curated vocabulary).",
+    "data": {
+      "block": "core/columns",
+      "requested": "core/columns",
+      "title": "Columns",
+      "attribute_count": 30,
+      "coverage": {
+        "bundle": 1,
+        "curated": 13,
+        "none": 14
+      },
+      "attributes": {
+        "align": {
+          "type": "string",
+          "default": null,
+          "vocabulary": {
+            "enum": [
+              "left",
+              "center",
+              "right",
+              "wide",
+              "full",
+              ""
+            ]
+          },
+          "source": "schema",
+          "note": "No curated vocabulary for this attribute \u2014 type and default only. Author a value and prove it with `wp pixelgrade blocks canonicalize` / `validate`."
+        },
+        "anchor": {
+          "type": "string",
+          "default": null,
+          "vocabulary": null,
+          "source": "none",
+          "note": "No curated vocabulary for this attribute \u2014 type and default only. Author a value and prove it with `wp pixelgrade blocks canonicalize` / `validate`."
+        },
+        "backgroundColor": {
+          "type": "string",
+          "default": null,
+          "vocabulary": null,
+          "source": "none",
+          "note": "No curated vocabulary for this attribute \u2014 type and default only. Author a value and prove it with `wp pixelgrade blocks canonicalize` / `validate`."
+        },
+        "blockBottomSpacing": {
+          "type": "number",
+          "default": 0,
+          "vocabulary": {
+            "range": {
+              "min": -3,
+              "max": 3,
+              "step": 1
+            }
+          },
+          "source": "curated",
+          "note": "Vertical spacing step BELOW the block, as margin-bottom (negative overlaps the next block). One step = --nb-current-spacing (fluid: ~20px @320w, ~32px @1440w at spacing level 1; scales with sm_spacing_level). Applies to the Columns's OWN outer margin, and resolves only while it is a direct child of a spacing container (.wp-block-post-content, another Group, a Column, a Sidecar area \u2026).",
+          "registration": "editor"
+        },
+        "blockTopSpacing": {
+          "type": "number",
+          "default": 1,
+          "vocabulary": {
+            "range": {
+              "min": -3,
+              "max": 3,
+              "step": 1
+            }
+          },
+          "source": "curated",
+          "note": "Vertical spacing step ABOVE the block, as margin-top. Prefer this over style.spacing.margin.top \u2014 a px margin is frozen; a step is not. One step = --nb-current-spacing (fluid: ~20px @320w, ~32px @1440w at spacing level 1; scales with sm_spacing_level). Applies to the Columns's OWN outer margin, and resolves only while it is a direct child of a spacing container (.wp-block-post-content, another Group, a Column, a Sidecar area \u2026).",
+          "registration": "editor"
+        },
+        "borderColor": {
+          "type": "string",
+          "default": null,
+          "vocabulary": null,
+          "source": "none",
+          "note": "No curated vocabulary for this attribute \u2014 type and default only. Author a value and prove it with `wp pixelgrade blocks canonicalize` / `validate`."
+        },
+        "className": {
+          "type": "string",
+          "default": null,
+          "vocabulary": null,
+          "source": "none",
+          "note": "No curated vocabulary for this attribute \u2014 type and default only. Author a value and prove it with `wp pixelgrade blocks canonicalize` / `validate`."
+        },
+        "colorSignal": {
+          "type": "number",
+          "default": 0,
+          "vocabulary": {
+            "enum": [
+              0,
+              1,
+              2,
+              3
+            ],
+            "labels": [
+              "None",
+              "Low",
+              "Medium",
+              "High"
+            ]
+          },
+          "source": "curated",
+          "note": "Contextual color intent relative to the parent. Default anchors map signal\u2192variation 0\u21921, 1\u21923, 2\u21928, 3\u219211. Max is getMaxSignal(palette) (default 3); a block may clamp via supports minColorSignal/maxColorSignal.",
+          "registration": "editor"
+        },
+        "contentColorSignal": {
+          "type": "number",
+          "default": 0,
+          "vocabulary": {
+            "enum": [
+              0,
+              1,
+              2,
+              3
+            ],
+            "labels": [
+              "None",
+              "Low",
+              "Medium",
+              "High"
+            ]
+          },
+          "source": "curated",
+          "note": "Color signal of the block's content area (hosts with contentColorSignal support, e.g. Supernova).",
+          "registration": "editor"
+        },
+        "contentPaletteVariation": {
+          "type": "number",
+          "default": 1,
+          "vocabulary": {
+            "range": {
+              "min": 1,
+              "max": 12,
+              "step": 1
+            }
+          },
+          "source": "curated",
+          "note": "Resolved grade of the content area; keep consistent with contentColorSignal.",
+          "registration": "editor"
+        },
+        "emphasisArea": {
+          "type": "number",
+          "default": 100,
+          "vocabulary": {
+            "range": {
+              "min": 0,
+              "max": 100,
+              "step": 5
+            }
+          },
+          "source": "curated",
+          "note": "Percentage of block width covered by the colored background. Only meaningful on horizontal Supernova cards (cardLayout horizontal / horizontal-reverse).",
+          "registration": "editor"
+        },
+        "emphasisBottomSpacing": {
+          "type": "number",
+          "default": 0,
+          "vocabulary": {
+            "range": {
+              "min": 0,
+              "max": 6,
+              "step": 0.5
+            }
+          },
+          "source": "curated",
+          "note": "INNER bottom spacing, as padding-bottom \u2014 the band inset. Half steps are allowed. One step = --nb-current-spacing (fluid: ~20px @320w, ~32px @1440w at spacing level 1; scales with sm_spacing_level). Applies inside the Columns. On a Group carrying a Color Signal the inset is floored at 0.75 of the wrapper side spacing, so a small step can be swallowed by that floor.",
+          "registration": "editor"
+        },
+        "emphasisTopSpacing": {
+          "type": "number",
+          "default": 0,
+          "vocabulary": {
+            "range": {
+              "min": 0,
+              "max": 6,
+              "step": 0.5
+            }
+          },
+          "source": "curated",
+          "note": "INNER top spacing, as padding-top \u2014 the band inset. Prefer this over style.spacing.padding.top. Half steps are allowed, so a 128-200px band is authored directly (5.5 \u2248 176px at 1440w, spacing level 1). Min is 0 here: negative inner spacing needs supports.novaBlocks.spaceAndSizing.advancedSpacing, which the core containers do not declare. One step = --nb-current-spacing (fluid: ~20px @320w, ~32px @1440w at spacing level 1; scales with sm_spacing_level). Applies inside the Columns. On a Group carrying a Color Signal the inset is floored at 0.75 of the wrapper side spacing, so a small step can be swallowed by that floor.",
+          "registration": "editor"
+        },
+        "fontFamily": {
+          "type": "string",
+          "default": null,
+          "vocabulary": null,
+          "source": "none",
+          "note": "No curated vocabulary for this attribute \u2014 type and default only. Author a value and prove it with `wp pixelgrade blocks canonicalize` / `validate`."
+        },
+        "fontSize": {
+          "type": "string",
+          "default": null,
+          "vocabulary": null,
+          "source": "none",
+          "note": "No curated vocabulary for this attribute \u2014 type and default only. Author a value and prove it with `wp pixelgrade blocks canonicalize` / `validate`."
+        },
+        "gradient": {
+          "type": "string",
+          "default": null,
+          "vocabulary": null,
+          "source": "none",
+          "note": "No curated vocabulary for this attribute \u2014 type and default only. Author a value and prove it with `wp pixelgrade blocks canonicalize` / `validate`."
+        },
+        "isStackedOnMobile": {
+          "type": "boolean",
+          "default": true,
+          "vocabulary": null,
+          "source": "none",
+          "note": "No curated vocabulary for this attribute \u2014 type and default only. Author a value and prove it with `wp pixelgrade blocks canonicalize` / `validate`."
+        },
+        "layout": {
+          "type": "object",
+          "default": null,
+          "vocabulary": null,
+          "source": "none",
+          "note": "No curated vocabulary for this attribute \u2014 type and default only. Author a value and prove it with `wp pixelgrade blocks canonicalize` / `validate`."
+        },
+        "lock": {
+          "type": "object",
+          "default": null,
+          "vocabulary": null,
+          "source": "none",
+          "note": "No curated vocabulary for this attribute \u2014 type and default only. Author a value and prove it with `wp pixelgrade blocks canonicalize` / `validate`."
+        },
+        "metadata": {
+          "type": "object",
+          "default": null,
+          "vocabulary": null,
+          "source": "none",
+          "note": "No curated vocabulary for this attribute \u2014 type and default only. Author a value and prove it with `wp pixelgrade blocks canonicalize` / `validate`."
+        },
+        "palette": {
+          "type": "string",
+          "default": "1",
+          "vocabulary": {
+            "enum": [
+              "1",
+              "_info",
+              "_error",
+              "_warning",
+              "_success"
+            ]
+          },
+          "source": "bundle",
+          "note": "Palette IDs from this site's live Style Manager editor settings, not fixed brand colors. Functional palette IDs (starting with _) are included only where the block supports functional colors. Inherit through useParentPalette where available.",
+          "registration": "editor"
+        },
+        "paletteVariation": {
+          "type": "number",
+          "default": 1,
+          "vocabulary": {
+            "range": {
+              "min": 1,
+              "max": 12,
+              "step": 1
+            }
+          },
+          "source": "curated",
+          "note": "Which palette grade paints the block background \u2192 sm-variation-{n}. 1 = lightest, 12 = darkest. Normally kept in sync with colorSignal automatically; set it directly only to pin a grade.",
+          "registration": "editor"
+        },
+        "spacingModifier": {
+          "type": "number",
+          "default": 1,
+          "vocabulary": {
+            "range": {
+              "min": 0,
+              "max": 2,
+              "step": 0.5
+            }
+          },
+          "source": "curated",
+          "note": "Scales the spacing of the elements INSIDE this container (not the container itself). 0 zeroes every descendant spacing control.",
+          "registration": "editor"
+        },
+        "spacingMultiplierOverride": {
+          "type": "number",
+          "default": 1,
+          "vocabulary": {
+            "range": {
+              "min": 0,
+              "max": 4,
+              "step": 0.5
+            }
+          },
+          "source": "curated",
+          "note": "Multiplies this block's own four spacing steps AND, because nothing re-declares it, every descendant's. Reach for it only for the OUTER steps (blockTop/BottomSpacing, capped at 3) or past 6 inner steps \u2014 the band inset itself now goes to 6 in half steps without it, and unlike this multiplier a plain step is not inherited by descendants.",
+          "registration": "editor"
+        },
+        "style": {
+          "type": "object",
+          "default": null,
+          "vocabulary": null,
+          "source": "none",
+          "note": "No curated vocabulary for this attribute \u2014 type and default only. Author a value and prove it with `wp pixelgrade blocks canonicalize` / `validate`."
+        },
+        "templateLock": {
+          "type": [
+            "string",
+            "boolean"
+          ],
+          "default": null,
+          "vocabulary": {
+            "enum": [
+              "all",
+              "insert",
+              "contentOnly",
+              false
+            ]
+          },
+          "source": "schema",
+          "note": "No curated vocabulary for this attribute \u2014 type and default only. Author a value and prove it with `wp pixelgrade blocks canonicalize` / `validate`."
+        },
+        "textColor": {
+          "type": "string",
+          "default": null,
+          "vocabulary": null,
+          "source": "none",
+          "note": "No curated vocabulary for this attribute \u2014 type and default only. Author a value and prove it with `wp pixelgrade blocks canonicalize` / `validate`."
+        },
+        "useColorSignal": {
+          "type": "boolean",
+          "default": false,
+          "vocabulary": {
+            "enum": [
+              true,
+              false
+            ]
+          },
+          "source": "curated",
+          "note": "Opt-in activation. An untouched Button, Columns, or Column remains inactive by default. Changing Color Signal activates it; Columns and Column also clear conflicting core colors in that editor update.",
+          "registration": "editor"
+        },
+        "useSourceColorAsReference": {
+          "type": "boolean",
+          "default": false,
+          "vocabulary": {
+            "enum": [
+              true,
+              false
+            ]
+          },
+          "source": "curated",
+          "note": "Whether the chosen palette's source color anchors Color Signal resolution.",
+          "registration": "editor"
+        },
+        "verticalAlignment": {
+          "type": "string",
+          "default": null,
+          "vocabulary": null,
+          "source": "none",
+          "note": "No curated vocabulary for this attribute \u2014 type and default only. Author a value and prove it with `wp pixelgrade blocks canonicalize` / `validate`."
+        }
+      },
+      "save_body": "static",
+      "body_template": null,
+      "body_template_note": "No harness-generated body template is curated for this block. Use validate/canonicalize rather than inventing saved markup.",
+      "bundle_options": {
+        "minimumHeightOptions": [
+          {
+            "label": "None",
+            "value": 0
+          },
+          {
+            "label": "Half",
+            "value": 50
+          },
+          {
+            "label": "Two Thirds",
+            "value": 66
+          },
+          {
+            "label": "Three Quarters",
+            "value": 75
+          },
+          {
+            "label": "Full",
+            "value": 100
+          }
+        ],
+        "contentPaddingOptions": [
+          {
+            "label": "Small",
+            "value": "small"
+          },
+          {
+            "label": "Medium",
+            "value": "medium"
+          },
+          {
+            "label": "Large",
+            "value": "large"
+          },
+          {
+            "label": "Custom",
+            "value": "custom"
+          }
+        ],
+        "contentWidthOptions": [
+          {
+            "label": "Full",
+            "value": "full"
+          },
+          {
+            "label": "Large",
+            "value": "large"
+          },
+          {
+            "label": "Narrow",
+            "value": "narrow"
+          },
+          {
+            "label": "Custom",
+            "value": "custom"
+          }
+        ],
+        "blobPresetOptions": [
+          {
+            "label": "Rectangle",
+            "value": "rectangle",
+            "preset": {
+              "blobsEnableMask": false,
+              "blobsEnableDecoration": false
+            }
+          },
+          {
+            "label": "Ellipse",
+            "value": "ellipse",
+            "preset": {
+              "blobsEnableMask": true,
+              "blobMaskSides": 4,
+              "blobMaskPatternSeed": 1,
+              "blobMaskComplexity": 0,
+              "blobMaskSmoothness": 100,
+              "blobMaskRotation": 0,
+              "blobsEnableDecoration": false
+            }
+          },
+          {
+            "label": "Diamond",
+            "value": "diamond",
+            "preset": {
+              "blobsEnableMask": true,
+              "blobMaskSides": 6,
+              "blobMaskPatternSeed": 1,
+              "blobMaskComplexity": 0,
+              "blobMaskSmoothness": 0,
+              "blobMaskRotation": 0,
+              "blobsEnableDecoration": false
+            }
+          },
+          {
+            "label": "Seed",
+            "value": "seed",
+            "preset": {
+              "blobsEnableMask": true,
+              "blobMaskSides": 5,
+              "blobMaskPatternSeed": 70,
+              "blobMaskComplexity": 100,
+              "blobMaskSmoothness": 100,
+              "blobMaskRotation": 0,
+              "blobsEnableDecoration": false
+            }
+          },
+          {
+            "label": "Blob",
+            "value": "blob",
+            "preset": {
+              "blobsEnableMask": true,
+              "blobMaskSides": 7,
+              "blobMaskPatternSeed": 50,
+              "blobMaskComplexity": 100,
+              "blobMaskSmoothness": 100,
+              "blobMaskRotation": 0,
+              "blobsEnableDecoration": false
+            }
+          },
+          {
+            "label": "MX37: Stones",
+            "value": "stones-37",
+            "preset": {
+              "blobsEnableMask": true,
+              "blobMaskSides": 3,
+              "blobMaskPatternSeed": 30,
+              "blobMaskComplexity": 100,
+              "blobMaskSmoothness": 60,
+              "blobMaskRotation": 70,
+              "blobsEnableDecoration": true,
+              "blobSides": 4,
+              "blobPatternSeed": 30,
+              "blobComplexity": 90,
+              "blobSmoothness": 100,
+              "blobRotation": 70,
+              "blobsHorizontalDisplacement": 80,
+              "blobsVerticalDisplacement": 60,
+              "blobsSizeBalance": 60
+            }
+          },
+          {
+            "label": "MX19: Seeds",
+            "value": "seeds-19",
+            "preset": {
+              "blobsEnableMask": true,
+              "blobMaskSides": 5,
+              "blobMaskPatternSeed": 90,
+              "blobMaskComplexity": 80,
+              "blobMaskSmoothness": 100,
+              "blobMaskRotation": 50,
+              "blobsEnableDecoration": true,
+              "blobSides": 5,
+              "blobPatternSeed": 40,
+              "blobComplexity": 80,
+              "blobSmoothness": 100,
+              "blobRotation": 100,
+              "blobsHorizontalDisplacement": 30,
+              "blobsVerticalDisplacement": 60,
+              "blobsSizeBalance": 50
+            }
+          },
+          {
+            "label": "MX81: Ovoid",
+            "value": "ovoid-81",
+            "preset": {
+              "blobsEnableMask": true,
+              "blobMaskSides": 6,
+              "blobMaskPatternSeed": 10,
+              "blobMaskComplexity": 100,
+              "blobMaskSmoothness": 100,
+              "blobMaskRotation": 100,
+              "blobsEnableDecoration": true,
+              "blobSides": 3,
+              "blobPatternSeed": 50,
+              "blobComplexity": 100,
+              "blobSmoothness": 50,
+              "blobRotation": 40,
+              "blobsHorizontalDisplacement": 40,
+              "blobsVerticalDisplacement": 30,
+              "blobsSizeBalance": 45
+            }
+          },
+          {
+            "label": "MX76: Leaf",
+            "value": "leaf-76",
+            "preset": {
+              "blobsEnableMask": true,
+              "blobMaskSides": 3,
+              "blobMaskPatternSeed": 100,
+              "blobMaskComplexity": 100,
+              "blobMaskSmoothness": 60,
+              "blobMaskRotation": 80,
+              "blobsEnableDecoration": true,
+              "blobSides": 6,
+              "blobPatternSeed": 70,
+              "blobComplexity": 100,
+              "blobSmoothness": 100,
+              "blobRotation": 10,
+              "blobsHorizontalDisplacement": 40,
+              "blobsVerticalDisplacement": 40,
+              "blobsSizeBalance": 45
+            }
+          },
+          {
+            "label": "MX19: Ruby",
+            "value": "ruby-19",
+            "preset": {
+              "blobsEnableMask": true,
+              "blobMaskSides": 5,
+              "blobMaskPatternSeed": 0,
+              "blobMaskComplexity": 0,
+              "blobMaskSmoothness": 0,
+              "blobMaskRotation": 10,
+              "blobsEnableDecoration": true,
+              "blobSides": 5,
+              "blobPatternSeed": 0,
+              "blobComplexity": 0,
+              "blobSmoothness": 0,
+              "blobRotation": 40,
+              "blobsHorizontalDisplacement": 40,
+              "blobsVerticalDisplacement": 30,
+              "blobsSizeBalance": 50
+            }
+          },
+          {
+            "label": "MX41: Diagonal",
+            "value": "diagonal-41",
+            "preset": {
+              "blobsEnableMask": true,
+              "blobMaskSides": 8,
+              "blobMaskPatternSeed": 0,
+              "blobMaskComplexity": 0,
+              "blobMaskSmoothness": 0,
+              "blobMaskRotation": 0,
+              "blobsEnableDecoration": true,
+              "blobSides": 4,
+              "blobPatternSeed": 60,
+              "blobComplexity": 100,
+              "blobSmoothness": 0,
+              "blobRotation": 50,
+              "blobsHorizontalDisplacement": 55,
+              "blobsVerticalDisplacement": 45,
+              "blobsSizeBalance": 35
+            }
+          }
+        ],
+        "spaceAndSizingPresets": {
+          "presetOptions": [
+            {
+              "label": "Default Block Spacing",
+              "value": "default",
+              "preset": {
+                "blockTopSpacing": 1,
+                "blockBottomSpacing": 0,
+                "emphasisTopSpacing": 0,
+                "emphasisBottomSpacing": 0,
+                "enableOverlapping": false,
+                "verticalAlignment": "center"
+              }
+            },
+            {
+              "label": "Overlap Nearby Blocks / Bottom",
+              "value": "overlap-nearby-2",
+              "preset": {
+                "blockTopSpacing": 0,
+                "blockBottomSpacing": -2,
+                "emphasisTopSpacing": 2,
+                "emphasisBottomSpacing": -2,
+                "enableOverlapping": true,
+                "verticalAlignment": "top"
+              }
+            },
+            {
+              "label": "Overlap Nearby Blocks / Centered",
+              "value": "overlap-nearby-1",
+              "preset": {
+                "blockTopSpacing": -2,
+                "blockBottomSpacing": -2,
+                "emphasisTopSpacing": -2,
+                "emphasisBottomSpacing": -2,
+                "enableOverlapping": true,
+                "verticalAlignment": "center"
+              }
+            },
+            {
+              "label": "Overlap Nearby Blocks / Top",
+              "value": "overlap-nearby-3",
+              "preset": {
+                "blockTopSpacing": -2,
+                "blockBottomSpacing": 0,
+                "emphasisTopSpacing": -2,
+                "emphasisBottomSpacing": 2,
+                "enableOverlapping": true,
+                "verticalAlignment": "bottom"
+              }
+            }
+          ],
+          "advancedPresetOptions": [
+            {
+              "label": "Overlap 1 / Top Anchoring",
+              "value": "overlap1",
+              "preset": {
+                "blockTopSpacing": 0,
+                "blockBottomSpacing": 2,
+                "emphasisTopSpacing": -2,
+                "emphasisBottomSpacing": -2,
+                "enableOverlapping": true,
+                "verticalAlignment": "top"
+              }
+            },
+            {
+              "label": "Overlap 2 / Centered",
+              "value": "overlap2",
+              "preset": {
+                "blockTopSpacing": 1,
+                "blockBottomSpacing": 1,
+                "emphasisTopSpacing": -2,
+                "emphasisBottomSpacing": -2,
+                "enableOverlapping": true,
+                "verticalAlignment": "center"
+              }
+            },
+            {
+              "label": "Overlap 3 / Bottom Anchoring",
+              "value": "overlap3",
+              "preset": {
+                "blockTopSpacing": 2,
+                "blockBottomSpacing": 0,
+                "emphasisTopSpacing": -2,
+                "emphasisBottomSpacing": -2,
+                "enableOverlapping": true,
+                "verticalAlignment": "bottom"
+              }
+            }
+          ]
+        }
+      }
+    },
+    "warnings": []
+  },
+  "core/column": {
+    "ok": true,
+    "code": "ok",
+    "summary": "Described core/column: 24 attributes (1 bundle, 8 curated vocabulary).",
+    "data": {
+      "block": "core/column",
+      "requested": "core/column",
+      "title": "Column",
+      "attribute_count": 24,
+      "coverage": {
+        "bundle": 1,
+        "curated": 8,
+        "none": 14
+      },
+      "attributes": {
+        "anchor": {
+          "type": "string",
+          "default": null,
+          "vocabulary": null,
+          "source": "none",
+          "note": "No curated vocabulary for this attribute \u2014 type and default only. Author a value and prove it with `wp pixelgrade blocks canonicalize` / `validate`."
+        },
+        "backgroundColor": {
+          "type": "string",
+          "default": null,
+          "vocabulary": null,
+          "source": "none",
+          "note": "No curated vocabulary for this attribute \u2014 type and default only. Author a value and prove it with `wp pixelgrade blocks canonicalize` / `validate`."
+        },
+        "borderColor": {
+          "type": "string",
+          "default": null,
+          "vocabulary": null,
+          "source": "none",
+          "note": "No curated vocabulary for this attribute \u2014 type and default only. Author a value and prove it with `wp pixelgrade blocks canonicalize` / `validate`."
+        },
+        "className": {
+          "type": "string",
+          "default": null,
+          "vocabulary": null,
+          "source": "none",
+          "note": "No curated vocabulary for this attribute \u2014 type and default only. Author a value and prove it with `wp pixelgrade blocks canonicalize` / `validate`."
+        },
+        "colorSignal": {
+          "type": "number",
+          "default": 0,
+          "vocabulary": {
+            "enum": [
+              0,
+              1,
+              2,
+              3
+            ],
+            "labels": [
+              "None",
+              "Low",
+              "Medium",
+              "High"
+            ]
+          },
+          "source": "curated",
+          "note": "Contextual color intent relative to the parent. Default anchors map signal\u2192variation 0\u21921, 1\u21923, 2\u21928, 3\u219211. Max is getMaxSignal(palette) (default 3); a block may clamp via supports minColorSignal/maxColorSignal.",
+          "registration": "editor"
+        },
+        "contentColorSignal": {
+          "type": "number",
+          "default": 0,
+          "vocabulary": {
+            "enum": [
+              0,
+              1,
+              2,
+              3
+            ],
+            "labels": [
+              "None",
+              "Low",
+              "Medium",
+              "High"
+            ]
+          },
+          "source": "curated",
+          "note": "Color signal of the block's content area (hosts with contentColorSignal support, e.g. Supernova).",
+          "registration": "editor"
+        },
+        "contentPaletteVariation": {
+          "type": "number",
+          "default": 1,
+          "vocabulary": {
+            "range": {
+              "min": 1,
+              "max": 12,
+              "step": 1
+            }
+          },
+          "source": "curated",
+          "note": "Resolved grade of the content area; keep consistent with contentColorSignal.",
+          "registration": "editor"
+        },
+        "emphasisArea": {
+          "type": "number",
+          "default": 100,
+          "vocabulary": {
+            "range": {
+              "min": 0,
+              "max": 100,
+              "step": 5
+            }
+          },
+          "source": "curated",
+          "note": "Percentage of block width covered by the colored background. Only meaningful on horizontal Supernova cards (cardLayout horizontal / horizontal-reverse).",
+          "registration": "editor"
+        },
+        "fontFamily": {
+          "type": "string",
+          "default": null,
+          "vocabulary": null,
+          "source": "none",
+          "note": "No curated vocabulary for this attribute \u2014 type and default only. Author a value and prove it with `wp pixelgrade blocks canonicalize` / `validate`."
+        },
+        "fontSize": {
+          "type": "string",
+          "default": null,
+          "vocabulary": null,
+          "source": "none",
+          "note": "No curated vocabulary for this attribute \u2014 type and default only. Author a value and prove it with `wp pixelgrade blocks canonicalize` / `validate`."
+        },
+        "gradient": {
+          "type": "string",
+          "default": null,
+          "vocabulary": null,
+          "source": "none",
+          "note": "No curated vocabulary for this attribute \u2014 type and default only. Author a value and prove it with `wp pixelgrade blocks canonicalize` / `validate`."
+        },
+        "layout": {
+          "type": "object",
+          "default": null,
+          "vocabulary": null,
+          "source": "none",
+          "note": "No curated vocabulary for this attribute \u2014 type and default only. Author a value and prove it with `wp pixelgrade blocks canonicalize` / `validate`."
+        },
+        "lock": {
+          "type": "object",
+          "default": null,
+          "vocabulary": null,
+          "source": "none",
+          "note": "No curated vocabulary for this attribute \u2014 type and default only. Author a value and prove it with `wp pixelgrade blocks canonicalize` / `validate`."
+        },
+        "metadata": {
+          "type": "object",
+          "default": null,
+          "vocabulary": null,
+          "source": "none",
+          "note": "No curated vocabulary for this attribute \u2014 type and default only. Author a value and prove it with `wp pixelgrade blocks canonicalize` / `validate`."
+        },
+        "palette": {
+          "type": "string",
+          "default": "1",
+          "vocabulary": {
+            "enum": [
+              "1",
+              "_info",
+              "_error",
+              "_warning",
+              "_success"
+            ]
+          },
+          "source": "bundle",
+          "note": "Palette IDs from this site's live Style Manager editor settings, not fixed brand colors. Functional palette IDs (starting with _) are included only where the block supports functional colors. Inherit through useParentPalette where available.",
+          "registration": "editor"
+        },
+        "paletteVariation": {
+          "type": "number",
+          "default": 1,
+          "vocabulary": {
+            "range": {
+              "min": 1,
+              "max": 12,
+              "step": 1
+            }
+          },
+          "source": "curated",
+          "note": "Which palette grade paints the block background \u2192 sm-variation-{n}. 1 = lightest, 12 = darkest. Normally kept in sync with colorSignal automatically; set it directly only to pin a grade.",
+          "registration": "editor"
+        },
+        "style": {
+          "type": "object",
+          "default": null,
+          "vocabulary": null,
+          "source": "none",
+          "note": "No curated vocabulary for this attribute \u2014 type and default only. Author a value and prove it with `wp pixelgrade blocks canonicalize` / `validate`."
+        },
+        "templateLock": {
+          "type": [
+            "string",
+            "boolean"
+          ],
+          "default": null,
+          "vocabulary": {
+            "enum": [
+              "all",
+              "insert",
+              "contentOnly",
+              false
+            ]
+          },
+          "source": "schema",
+          "note": "No curated vocabulary for this attribute \u2014 type and default only. Author a value and prove it with `wp pixelgrade blocks canonicalize` / `validate`."
+        },
+        "textColor": {
+          "type": "string",
+          "default": null,
+          "vocabulary": null,
+          "source": "none",
+          "note": "No curated vocabulary for this attribute \u2014 type and default only. Author a value and prove it with `wp pixelgrade blocks canonicalize` / `validate`."
+        },
+        "useColorSignal": {
+          "type": "boolean",
+          "default": false,
+          "vocabulary": {
+            "enum": [
+              true,
+              false
+            ]
+          },
+          "source": "curated",
+          "note": "Opt-in activation. An untouched Button, Columns, or Column remains inactive by default. Changing Color Signal activates it; Columns and Column also clear conflicting core colors in that editor update.",
+          "registration": "editor"
+        },
+        "useParentPalette": {
+          "type": "boolean",
+          "default": null,
+          "vocabulary": {
+            "enum": [
+              true,
+              false
+            ]
+          },
+          "source": "curated",
+          "note": "true inherits the nearest active ancestor palette; false chooses this block's palette. Absence is a legacy state, not a registered default: the editor resolves and migrates it without activating an inactive Color Signal block.",
+          "registration": "editor"
+        },
+        "useSourceColorAsReference": {
+          "type": "boolean",
+          "default": false,
+          "vocabulary": {
+            "enum": [
+              true,
+              false
+            ]
+          },
+          "source": "curated",
+          "note": "Whether the chosen palette's source color anchors Color Signal resolution.",
+          "registration": "editor"
+        },
+        "verticalAlignment": {
+          "type": "string",
+          "default": null,
+          "vocabulary": null,
+          "source": "none",
+          "note": "No curated vocabulary for this attribute \u2014 type and default only. Author a value and prove it with `wp pixelgrade blocks canonicalize` / `validate`."
+        },
+        "width": {
+          "type": "string",
+          "default": null,
+          "vocabulary": null,
+          "source": "none",
+          "note": "No curated vocabulary for this attribute \u2014 type and default only. Author a value and prove it with `wp pixelgrade blocks canonicalize` / `validate`."
+        }
+      },
+      "save_body": "static",
+      "body_template": null,
+      "body_template_note": "No harness-generated body template is curated for this block. Use validate/canonicalize rather than inventing saved markup.",
+      "bundle_options": {
+        "minimumHeightOptions": [
+          {
+            "label": "None",
+            "value": 0
+          },
+          {
+            "label": "Half",
+            "value": 50
+          },
+          {
+            "label": "Two Thirds",
+            "value": 66
+          },
+          {
+            "label": "Three Quarters",
+            "value": 75
+          },
+          {
+            "label": "Full",
+            "value": 100
+          }
+        ],
+        "contentPaddingOptions": [
+          {
+            "label": "Small",
+            "value": "small"
+          },
+          {
+            "label": "Medium",
+            "value": "medium"
+          },
+          {
+            "label": "Large",
+            "value": "large"
+          },
+          {
+            "label": "Custom",
+            "value": "custom"
+          }
+        ],
+        "contentWidthOptions": [
+          {
+            "label": "Full",
+            "value": "full"
+          },
+          {
+            "label": "Large",
+            "value": "large"
+          },
+          {
+            "label": "Narrow",
+            "value": "narrow"
+          },
+          {
+            "label": "Custom",
+            "value": "custom"
+          }
+        ],
+        "blobPresetOptions": [
+          {
+            "label": "Rectangle",
+            "value": "rectangle",
+            "preset": {
+              "blobsEnableMask": false,
+              "blobsEnableDecoration": false
+            }
+          },
+          {
+            "label": "Ellipse",
+            "value": "ellipse",
+            "preset": {
+              "blobsEnableMask": true,
+              "blobMaskSides": 4,
+              "blobMaskPatternSeed": 1,
+              "blobMaskComplexity": 0,
+              "blobMaskSmoothness": 100,
+              "blobMaskRotation": 0,
+              "blobsEnableDecoration": false
+            }
+          },
+          {
+            "label": "Diamond",
+            "value": "diamond",
+            "preset": {
+              "blobsEnableMask": true,
+              "blobMaskSides": 6,
+              "blobMaskPatternSeed": 1,
+              "blobMaskComplexity": 0,
+              "blobMaskSmoothness": 0,
+              "blobMaskRotation": 0,
+              "blobsEnableDecoration": false
+            }
+          },
+          {
+            "label": "Seed",
+            "value": "seed",
+            "preset": {
+              "blobsEnableMask": true,
+              "blobMaskSides": 5,
+              "blobMaskPatternSeed": 70,
+              "blobMaskComplexity": 100,
+              "blobMaskSmoothness": 100,
+              "blobMaskRotation": 0,
+              "blobsEnableDecoration": false
+            }
+          },
+          {
+            "label": "Blob",
+            "value": "blob",
+            "preset": {
+              "blobsEnableMask": true,
+              "blobMaskSides": 7,
+              "blobMaskPatternSeed": 50,
+              "blobMaskComplexity": 100,
+              "blobMaskSmoothness": 100,
+              "blobMaskRotation": 0,
+              "blobsEnableDecoration": false
+            }
+          },
+          {
+            "label": "MX37: Stones",
+            "value": "stones-37",
+            "preset": {
+              "blobsEnableMask": true,
+              "blobMaskSides": 3,
+              "blobMaskPatternSeed": 30,
+              "blobMaskComplexity": 100,
+              "blobMaskSmoothness": 60,
+              "blobMaskRotation": 70,
+              "blobsEnableDecoration": true,
+              "blobSides": 4,
+              "blobPatternSeed": 30,
+              "blobComplexity": 90,
+              "blobSmoothness": 100,
+              "blobRotation": 70,
+              "blobsHorizontalDisplacement": 80,
+              "blobsVerticalDisplacement": 60,
+              "blobsSizeBalance": 60
+            }
+          },
+          {
+            "label": "MX19: Seeds",
+            "value": "seeds-19",
+            "preset": {
+              "blobsEnableMask": true,
+              "blobMaskSides": 5,
+              "blobMaskPatternSeed": 90,
+              "blobMaskComplexity": 80,
+              "blobMaskSmoothness": 100,
+              "blobMaskRotation": 50,
+              "blobsEnableDecoration": true,
+              "blobSides": 5,
+              "blobPatternSeed": 40,
+              "blobComplexity": 80,
+              "blobSmoothness": 100,
+              "blobRotation": 100,
+              "blobsHorizontalDisplacement": 30,
+              "blobsVerticalDisplacement": 60,
+              "blobsSizeBalance": 50
+            }
+          },
+          {
+            "label": "MX81: Ovoid",
+            "value": "ovoid-81",
+            "preset": {
+              "blobsEnableMask": true,
+              "blobMaskSides": 6,
+              "blobMaskPatternSeed": 10,
+              "blobMaskComplexity": 100,
+              "blobMaskSmoothness": 100,
+              "blobMaskRotation": 100,
+              "blobsEnableDecoration": true,
+              "blobSides": 3,
+              "blobPatternSeed": 50,
+              "blobComplexity": 100,
+              "blobSmoothness": 50,
+              "blobRotation": 40,
+              "blobsHorizontalDisplacement": 40,
+              "blobsVerticalDisplacement": 30,
+              "blobsSizeBalance": 45
+            }
+          },
+          {
+            "label": "MX76: Leaf",
+            "value": "leaf-76",
+            "preset": {
+              "blobsEnableMask": true,
+              "blobMaskSides": 3,
+              "blobMaskPatternSeed": 100,
+              "blobMaskComplexity": 100,
+              "blobMaskSmoothness": 60,
+              "blobMaskRotation": 80,
+              "blobsEnableDecoration": true,
+              "blobSides": 6,
+              "blobPatternSeed": 70,
+              "blobComplexity": 100,
+              "blobSmoothness": 100,
+              "blobRotation": 10,
+              "blobsHorizontalDisplacement": 40,
+              "blobsVerticalDisplacement": 40,
+              "blobsSizeBalance": 45
+            }
+          },
+          {
+            "label": "MX19: Ruby",
+            "value": "ruby-19",
+            "preset": {
+              "blobsEnableMask": true,
+              "blobMaskSides": 5,
+              "blobMaskPatternSeed": 0,
+              "blobMaskComplexity": 0,
+              "blobMaskSmoothness": 0,
+              "blobMaskRotation": 10,
+              "blobsEnableDecoration": true,
+              "blobSides": 5,
+              "blobPatternSeed": 0,
+              "blobComplexity": 0,
+              "blobSmoothness": 0,
+              "blobRotation": 40,
+              "blobsHorizontalDisplacement": 40,
+              "blobsVerticalDisplacement": 30,
+              "blobsSizeBalance": 50
+            }
+          },
+          {
+            "label": "MX41: Diagonal",
+            "value": "diagonal-41",
+            "preset": {
+              "blobsEnableMask": true,
+              "blobMaskSides": 8,
+              "blobMaskPatternSeed": 0,
+              "blobMaskComplexity": 0,
+              "blobMaskSmoothness": 0,
+              "blobMaskRotation": 0,
+              "blobsEnableDecoration": true,
+              "blobSides": 4,
+              "blobPatternSeed": 60,
+              "blobComplexity": 100,
+              "blobSmoothness": 0,
+              "blobRotation": 50,
+              "blobsHorizontalDisplacement": 55,
+              "blobsVerticalDisplacement": 45,
+              "blobsSizeBalance": 35
+            }
+          }
+        ],
+        "spaceAndSizingPresets": {
+          "presetOptions": [
+            {
+              "label": "Default Block Spacing",
+              "value": "default",
+              "preset": {
+                "blockTopSpacing": 1,
+                "blockBottomSpacing": 0,
+                "emphasisTopSpacing": 0,
+                "emphasisBottomSpacing": 0,
+                "enableOverlapping": false,
+                "verticalAlignment": "center"
+              }
+            },
+            {
+              "label": "Overlap Nearby Blocks / Bottom",
+              "value": "overlap-nearby-2",
+              "preset": {
+                "blockTopSpacing": 0,
+                "blockBottomSpacing": -2,
+                "emphasisTopSpacing": 2,
+                "emphasisBottomSpacing": -2,
+                "enableOverlapping": true,
+                "verticalAlignment": "top"
+              }
+            },
+            {
+              "label": "Overlap Nearby Blocks / Centered",
+              "value": "overlap-nearby-1",
+              "preset": {
+                "blockTopSpacing": -2,
+                "blockBottomSpacing": -2,
+                "emphasisTopSpacing": -2,
+                "emphasisBottomSpacing": -2,
+                "enableOverlapping": true,
+                "verticalAlignment": "center"
+              }
+            },
+            {
+              "label": "Overlap Nearby Blocks / Top",
+              "value": "overlap-nearby-3",
+              "preset": {
+                "blockTopSpacing": -2,
+                "blockBottomSpacing": 0,
+                "emphasisTopSpacing": -2,
+                "emphasisBottomSpacing": 2,
+                "enableOverlapping": true,
+                "verticalAlignment": "bottom"
+              }
+            }
+          ],
+          "advancedPresetOptions": [
+            {
+              "label": "Overlap 1 / Top Anchoring",
+              "value": "overlap1",
+              "preset": {
+                "blockTopSpacing": 0,
+                "blockBottomSpacing": 2,
+                "emphasisTopSpacing": -2,
+                "emphasisBottomSpacing": -2,
+                "enableOverlapping": true,
+                "verticalAlignment": "top"
+              }
+            },
+            {
+              "label": "Overlap 2 / Centered",
+              "value": "overlap2",
+              "preset": {
+                "blockTopSpacing": 1,
+                "blockBottomSpacing": 1,
+                "emphasisTopSpacing": -2,
+                "emphasisBottomSpacing": -2,
+                "enableOverlapping": true,
+                "verticalAlignment": "center"
+              }
+            },
+            {
+              "label": "Overlap 3 / Bottom Anchoring",
+              "value": "overlap3",
+              "preset": {
+                "blockTopSpacing": 2,
+                "blockBottomSpacing": 0,
+                "emphasisTopSpacing": -2,
+                "emphasisBottomSpacing": -2,
+                "enableOverlapping": true,
+                "verticalAlignment": "bottom"
+              }
+            }
+          ]
+        }
+      }
+    },
+    "warnings": []
+  },
+  "core/list": {
+    "ok": true,
+    "code": "ok",
+    "summary": "Described core/list: 24 attributes (1 bundle, 6 curated vocabulary).",
+    "data": {
+      "block": "core/list",
+      "requested": "core/list",
+      "title": "List",
+      "attribute_count": 24,
+      "coverage": {
+        "bundle": 1,
+        "curated": 6,
+        "none": 17
+      },
+      "attributes": {
+        "anchor": {
+          "type": "string",
+          "default": null,
+          "vocabulary": null,
+          "source": "none",
+          "note": "No curated vocabulary for this attribute \u2014 type and default only. Author a value and prove it with `wp pixelgrade blocks canonicalize` / `validate`."
+        },
+        "backgroundColor": {
+          "type": "string",
+          "default": null,
+          "vocabulary": null,
+          "source": "none",
+          "note": "No curated vocabulary for this attribute \u2014 type and default only. Author a value and prove it with `wp pixelgrade blocks canonicalize` / `validate`."
+        },
+        "borderColor": {
+          "type": "string",
+          "default": null,
+          "vocabulary": null,
+          "source": "none",
+          "note": "No curated vocabulary for this attribute \u2014 type and default only. Author a value and prove it with `wp pixelgrade blocks canonicalize` / `validate`."
+        },
+        "className": {
+          "type": "string",
+          "default": null,
+          "vocabulary": null,
+          "source": "none",
+          "note": "No curated vocabulary for this attribute \u2014 type and default only. Author a value and prove it with `wp pixelgrade blocks canonicalize` / `validate`."
+        },
+        "colorSignal": {
+          "type": "number",
+          "default": 0,
+          "vocabulary": {
+            "enum": [
+              0,
+              1,
+              2,
+              3
+            ],
+            "labels": [
+              "None",
+              "Low",
+              "Medium",
+              "High"
+            ]
+          },
+          "source": "curated",
+          "note": "Contextual color intent relative to the parent. Default anchors map signal\u2192variation 0\u21921, 1\u21923, 2\u21928, 3\u219211. Max is getMaxSignal(palette) (default 3); a block may clamp via supports minColorSignal/maxColorSignal.",
+          "registration": "editor"
+        },
+        "contentColorSignal": {
+          "type": "number",
+          "default": 0,
+          "vocabulary": {
+            "enum": [
+              0,
+              1,
+              2,
+              3
+            ],
+            "labels": [
+              "None",
+              "Low",
+              "Medium",
+              "High"
+            ]
+          },
+          "source": "curated",
+          "note": "Color signal of the block's content area (hosts with contentColorSignal support, e.g. Supernova).",
+          "registration": "editor"
+        },
+        "contentPaletteVariation": {
+          "type": "number",
+          "default": 1,
+          "vocabulary": {
+            "range": {
+              "min": 1,
+              "max": 12,
+              "step": 1
+            }
+          },
+          "source": "curated",
+          "note": "Resolved grade of the content area; keep consistent with contentColorSignal.",
+          "registration": "editor"
+        },
+        "emphasisArea": {
+          "type": "number",
+          "default": 100,
+          "vocabulary": {
+            "range": {
+              "min": 0,
+              "max": 100,
+              "step": 5
+            }
+          },
+          "source": "curated",
+          "note": "Percentage of block width covered by the colored background. Only meaningful on horizontal Supernova cards (cardLayout horizontal / horizontal-reverse).",
+          "registration": "editor"
+        },
+        "fontFamily": {
+          "type": "string",
+          "default": null,
+          "vocabulary": null,
+          "source": "none",
+          "note": "No curated vocabulary for this attribute \u2014 type and default only. Author a value and prove it with `wp pixelgrade blocks canonicalize` / `validate`."
+        },
+        "fontSize": {
+          "type": "string",
+          "default": null,
+          "vocabulary": null,
+          "source": "none",
+          "note": "No curated vocabulary for this attribute \u2014 type and default only. Author a value and prove it with `wp pixelgrade blocks canonicalize` / `validate`."
+        },
+        "gradient": {
+          "type": "string",
+          "default": null,
+          "vocabulary": null,
+          "source": "none",
+          "note": "No curated vocabulary for this attribute \u2014 type and default only. Author a value and prove it with `wp pixelgrade blocks canonicalize` / `validate`."
+        },
+        "lock": {
+          "type": "object",
+          "default": null,
+          "vocabulary": null,
+          "source": "none",
+          "note": "No curated vocabulary for this attribute \u2014 type and default only. Author a value and prove it with `wp pixelgrade blocks canonicalize` / `validate`."
+        },
+        "metadata": {
+          "type": "object",
+          "default": null,
+          "vocabulary": null,
+          "source": "none",
+          "note": "No curated vocabulary for this attribute \u2014 type and default only. Author a value and prove it with `wp pixelgrade blocks canonicalize` / `validate`."
+        },
+        "ordered": {
+          "type": "boolean",
+          "default": false,
+          "vocabulary": null,
+          "source": "none",
+          "note": "No curated vocabulary for this attribute \u2014 type and default only. Author a value and prove it with `wp pixelgrade blocks canonicalize` / `validate`."
+        },
+        "palette": {
+          "type": "string",
+          "default": "1",
+          "vocabulary": {
+            "enum": [
+              "1"
+            ]
+          },
+          "source": "bundle",
+          "note": "Palette IDs from this site's live Style Manager editor settings, not fixed brand colors. Functional palette IDs (starting with _) are included only where the block supports functional colors. Inherit through useParentPalette where available. This block always inherits its surrounding palette; palette is a resolved context value, not an independent palette control.",
+          "registration": "editor"
+        },
+        "paletteVariation": {
+          "type": "number",
+          "default": 1,
+          "vocabulary": {
+            "range": {
+              "min": 1,
+              "max": 12,
+              "step": 1
+            }
+          },
+          "source": "curated",
+          "note": "Which palette grade paints the block background \u2192 sm-variation-{n}. 1 = lightest, 12 = darkest. Normally kept in sync with colorSignal automatically; set it directly only to pin a grade.",
+          "registration": "editor"
+        },
+        "placeholder": {
+          "type": "string",
+          "default": null,
+          "vocabulary": null,
+          "source": "none",
+          "note": "No curated vocabulary for this attribute \u2014 type and default only. Author a value and prove it with `wp pixelgrade blocks canonicalize` / `validate`."
+        },
+        "reversed": {
+          "type": "boolean",
+          "default": null,
+          "vocabulary": null,
+          "source": "none",
+          "note": "No curated vocabulary for this attribute \u2014 type and default only. Author a value and prove it with `wp pixelgrade blocks canonicalize` / `validate`."
+        },
+        "start": {
+          "type": "number",
+          "default": null,
+          "vocabulary": null,
+          "source": "none",
+          "note": "No curated vocabulary for this attribute \u2014 type and default only. Author a value and prove it with `wp pixelgrade blocks canonicalize` / `validate`."
+        },
+        "style": {
+          "type": "object",
+          "default": null,
+          "vocabulary": null,
+          "source": "none",
+          "note": "No curated vocabulary for this attribute \u2014 type and default only. Author a value and prove it with `wp pixelgrade blocks canonicalize` / `validate`."
+        },
+        "textColor": {
+          "type": "string",
+          "default": null,
+          "vocabulary": null,
+          "source": "none",
+          "note": "No curated vocabulary for this attribute \u2014 type and default only. Author a value and prove it with `wp pixelgrade blocks canonicalize` / `validate`."
+        },
+        "type": {
+          "type": "string",
+          "default": null,
+          "vocabulary": null,
+          "source": "none",
+          "note": "No curated vocabulary for this attribute \u2014 type and default only. Author a value and prove it with `wp pixelgrade blocks canonicalize` / `validate`."
+        },
+        "useSourceColorAsReference": {
+          "type": "boolean",
+          "default": false,
+          "vocabulary": {
+            "enum": [
+              true,
+              false
+            ]
+          },
+          "source": "curated",
+          "note": "Whether the chosen palette's source color anchors Color Signal resolution.",
+          "registration": "editor"
+        },
+        "values": {
+          "type": "string",
+          "default": "",
+          "vocabulary": null,
+          "source": "none",
+          "note": "No curated vocabulary for this attribute \u2014 type and default only. Author a value and prove it with `wp pixelgrade blocks canonicalize` / `validate`."
+        }
+      },
+      "save_body": "dynamic",
+      "bundle_options": {
+        "minimumHeightOptions": [
+          {
+            "label": "None",
+            "value": 0
+          },
+          {
+            "label": "Half",
+            "value": 50
+          },
+          {
+            "label": "Two Thirds",
+            "value": 66
+          },
+          {
+            "label": "Three Quarters",
+            "value": 75
+          },
+          {
+            "label": "Full",
+            "value": 100
+          }
+        ],
+        "contentPaddingOptions": [
+          {
+            "label": "Small",
+            "value": "small"
+          },
+          {
+            "label": "Medium",
+            "value": "medium"
+          },
+          {
+            "label": "Large",
+            "value": "large"
+          },
+          {
+            "label": "Custom",
+            "value": "custom"
+          }
+        ],
+        "contentWidthOptions": [
+          {
+            "label": "Full",
+            "value": "full"
+          },
+          {
+            "label": "Large",
+            "value": "large"
+          },
+          {
+            "label": "Narrow",
+            "value": "narrow"
+          },
+          {
+            "label": "Custom",
+            "value": "custom"
+          }
+        ],
+        "blobPresetOptions": [
+          {
+            "label": "Rectangle",
+            "value": "rectangle",
+            "preset": {
+              "blobsEnableMask": false,
+              "blobsEnableDecoration": false
+            }
+          },
+          {
+            "label": "Ellipse",
+            "value": "ellipse",
+            "preset": {
+              "blobsEnableMask": true,
+              "blobMaskSides": 4,
+              "blobMaskPatternSeed": 1,
+              "blobMaskComplexity": 0,
+              "blobMaskSmoothness": 100,
+              "blobMaskRotation": 0,
+              "blobsEnableDecoration": false
+            }
+          },
+          {
+            "label": "Diamond",
+            "value": "diamond",
+            "preset": {
+              "blobsEnableMask": true,
+              "blobMaskSides": 6,
+              "blobMaskPatternSeed": 1,
+              "blobMaskComplexity": 0,
+              "blobMaskSmoothness": 0,
+              "blobMaskRotation": 0,
+              "blobsEnableDecoration": false
+            }
+          },
+          {
+            "label": "Seed",
+            "value": "seed",
+            "preset": {
+              "blobsEnableMask": true,
+              "blobMaskSides": 5,
+              "blobMaskPatternSeed": 70,
+              "blobMaskComplexity": 100,
+              "blobMaskSmoothness": 100,
+              "blobMaskRotation": 0,
+              "blobsEnableDecoration": false
+            }
+          },
+          {
+            "label": "Blob",
+            "value": "blob",
+            "preset": {
+              "blobsEnableMask": true,
+              "blobMaskSides": 7,
+              "blobMaskPatternSeed": 50,
+              "blobMaskComplexity": 100,
+              "blobMaskSmoothness": 100,
+              "blobMaskRotation": 0,
+              "blobsEnableDecoration": false
+            }
+          },
+          {
+            "label": "MX37: Stones",
+            "value": "stones-37",
+            "preset": {
+              "blobsEnableMask": true,
+              "blobMaskSides": 3,
+              "blobMaskPatternSeed": 30,
+              "blobMaskComplexity": 100,
+              "blobMaskSmoothness": 60,
+              "blobMaskRotation": 70,
+              "blobsEnableDecoration": true,
+              "blobSides": 4,
+              "blobPatternSeed": 30,
+              "blobComplexity": 90,
+              "blobSmoothness": 100,
+              "blobRotation": 70,
+              "blobsHorizontalDisplacement": 80,
+              "blobsVerticalDisplacement": 60,
+              "blobsSizeBalance": 60
+            }
+          },
+          {
+            "label": "MX19: Seeds",
+            "value": "seeds-19",
+            "preset": {
+              "blobsEnableMask": true,
+              "blobMaskSides": 5,
+              "blobMaskPatternSeed": 90,
+              "blobMaskComplexity": 80,
+              "blobMaskSmoothness": 100,
+              "blobMaskRotation": 50,
+              "blobsEnableDecoration": true,
+              "blobSides": 5,
+              "blobPatternSeed": 40,
+              "blobComplexity": 80,
+              "blobSmoothness": 100,
+              "blobRotation": 100,
+              "blobsHorizontalDisplacement": 30,
+              "blobsVerticalDisplacement": 60,
+              "blobsSizeBalance": 50
+            }
+          },
+          {
+            "label": "MX81: Ovoid",
+            "value": "ovoid-81",
+            "preset": {
+              "blobsEnableMask": true,
+              "blobMaskSides": 6,
+              "blobMaskPatternSeed": 10,
+              "blobMaskComplexity": 100,
+              "blobMaskSmoothness": 100,
+              "blobMaskRotation": 100,
+              "blobsEnableDecoration": true,
+              "blobSides": 3,
+              "blobPatternSeed": 50,
+              "blobComplexity": 100,
+              "blobSmoothness": 50,
+              "blobRotation": 40,
+              "blobsHorizontalDisplacement": 40,
+              "blobsVerticalDisplacement": 30,
+              "blobsSizeBalance": 45
+            }
+          },
+          {
+            "label": "MX76: Leaf",
+            "value": "leaf-76",
+            "preset": {
+              "blobsEnableMask": true,
+              "blobMaskSides": 3,
+              "blobMaskPatternSeed": 100,
+              "blobMaskComplexity": 100,
+              "blobMaskSmoothness": 60,
+              "blobMaskRotation": 80,
+              "blobsEnableDecoration": true,
+              "blobSides": 6,
+              "blobPatternSeed": 70,
+              "blobComplexity": 100,
+              "blobSmoothness": 100,
+              "blobRotation": 10,
+              "blobsHorizontalDisplacement": 40,
+              "blobsVerticalDisplacement": 40,
+              "blobsSizeBalance": 45
+            }
+          },
+          {
+            "label": "MX19: Ruby",
+            "value": "ruby-19",
+            "preset": {
+              "blobsEnableMask": true,
+              "blobMaskSides": 5,
+              "blobMaskPatternSeed": 0,
+              "blobMaskComplexity": 0,
+              "blobMaskSmoothness": 0,
+              "blobMaskRotation": 10,
+              "blobsEnableDecoration": true,
+              "blobSides": 5,
+              "blobPatternSeed": 0,
+              "blobComplexity": 0,
+              "blobSmoothness": 0,
+              "blobRotation": 40,
+              "blobsHorizontalDisplacement": 40,
+              "blobsVerticalDisplacement": 30,
+              "blobsSizeBalance": 50
+            }
+          },
+          {
+            "label": "MX41: Diagonal",
+            "value": "diagonal-41",
+            "preset": {
+              "blobsEnableMask": true,
+              "blobMaskSides": 8,
+              "blobMaskPatternSeed": 0,
+              "blobMaskComplexity": 0,
+              "blobMaskSmoothness": 0,
+              "blobMaskRotation": 0,
+              "blobsEnableDecoration": true,
+              "blobSides": 4,
+              "blobPatternSeed": 60,
+              "blobComplexity": 100,
+              "blobSmoothness": 0,
+              "blobRotation": 50,
+              "blobsHorizontalDisplacement": 55,
+              "blobsVerticalDisplacement": 45,
+              "blobsSizeBalance": 35
+            }
+          }
+        ],
+        "spaceAndSizingPresets": {
+          "presetOptions": [
+            {
+              "label": "Default Block Spacing",
+              "value": "default",
+              "preset": {
+                "blockTopSpacing": 1,
+                "blockBottomSpacing": 0,
+                "emphasisTopSpacing": 0,
+                "emphasisBottomSpacing": 0,
+                "enableOverlapping": false,
+                "verticalAlignment": "center"
+              }
+            },
+            {
+              "label": "Overlap Nearby Blocks / Bottom",
+              "value": "overlap-nearby-2",
+              "preset": {
+                "blockTopSpacing": 0,
+                "blockBottomSpacing": -2,
+                "emphasisTopSpacing": 2,
+                "emphasisBottomSpacing": -2,
+                "enableOverlapping": true,
+                "verticalAlignment": "top"
+              }
+            },
+            {
+              "label": "Overlap Nearby Blocks / Centered",
+              "value": "overlap-nearby-1",
+              "preset": {
+                "blockTopSpacing": -2,
+                "blockBottomSpacing": -2,
+                "emphasisTopSpacing": -2,
+                "emphasisBottomSpacing": -2,
+                "enableOverlapping": true,
+                "verticalAlignment": "center"
+              }
+            },
+            {
+              "label": "Overlap Nearby Blocks / Top",
+              "value": "overlap-nearby-3",
+              "preset": {
+                "blockTopSpacing": -2,
+                "blockBottomSpacing": 0,
+                "emphasisTopSpacing": -2,
+                "emphasisBottomSpacing": 2,
+                "enableOverlapping": true,
+                "verticalAlignment": "bottom"
+              }
+            }
+          ],
+          "advancedPresetOptions": [
+            {
+              "label": "Overlap 1 / Top Anchoring",
+              "value": "overlap1",
+              "preset": {
+                "blockTopSpacing": 0,
+                "blockBottomSpacing": 2,
+                "emphasisTopSpacing": -2,
+                "emphasisBottomSpacing": -2,
+                "enableOverlapping": true,
+                "verticalAlignment": "top"
+              }
+            },
+            {
+              "label": "Overlap 2 / Centered",
+              "value": "overlap2",
+              "preset": {
+                "blockTopSpacing": 1,
+                "blockBottomSpacing": 1,
+                "emphasisTopSpacing": -2,
+                "emphasisBottomSpacing": -2,
+                "enableOverlapping": true,
+                "verticalAlignment": "center"
+              }
+            },
+            {
+              "label": "Overlap 3 / Bottom Anchoring",
+              "value": "overlap3",
+              "preset": {
+                "blockTopSpacing": 2,
+                "blockBottomSpacing": 0,
+                "emphasisTopSpacing": -2,
+                "emphasisBottomSpacing": -2,
+                "enableOverlapping": true,
+                "verticalAlignment": "bottom"
+              }
+            }
+          ]
+        }
+      }
+    },
+    "warnings": []
+  }
+}

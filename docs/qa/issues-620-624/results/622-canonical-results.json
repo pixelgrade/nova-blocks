@@ -1,0 +1,32 @@
+[
+  {
+    "name": "core/group",
+    "rawUnchanged": true,
+    "valid": true
+  },
+  {
+    "name": "core/button",
+    "rawUnchanged": true,
+    "valid": true
+  },
+  {
+    "name": "core/separator",
+    "rawUnchanged": true,
+    "valid": true
+  },
+  {
+    "name": "core/columns",
+    "rawUnchanged": true,
+    "valid": true
+  },
+  {
+    "name": "core/column",
+    "rawUnchanged": true,
+    "valid": true
+  },
+  {
+    "name": "core/list",
+    "rawUnchanged": true,
+    "valid": true
+  }
+]
