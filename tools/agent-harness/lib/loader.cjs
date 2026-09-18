@@ -40,6 +40,8 @@
 const fs = require( 'fs' );
 const path = require( 'path' );
 const vm = require( 'vm' );
+const { webcrypto } = require( 'node:crypto' );
+const { TextEncoder, TextDecoder } = require( 'node:util' );
 
 /**
  * WP script handles whose file lives outside the packages manifest, plus the handles that are
@@ -99,12 +101,29 @@ const REQUIRED_WP_GLOBALS = [ 'blocks', 'blockEditor', 'blockLibrary', 'data', '
 const MIN_REGISTERED_BLOCK_TYPES = 60;
 
 /**
- * Install the browser APIs the WP bundles touch at module scope. Nine small stubs; none of them
- * touches block logic (spike §2.1).
+ * Install the browser APIs the WP bundles touch at module scope. These provide browser
+ * capabilities without changing block logic (spike §2.1).
  *
  * @param {object} win jsdom window.
  */
 function installShims( win ) {
+	// WP bundles use real cryptography and UTF-8 encoding at startup. Older jsdom releases omit
+	// these APIs; newer ones expose getter-only crypto with only some capabilities implemented.
+	// Keep every existing capability and fill the gaps with Node's native browser-compatible APIs.
+	if ( ! win.crypto ) {
+		Object.defineProperty( win, 'crypto', { value: webcrypto, configurable: true } );
+	}
+	if ( ! win.crypto.subtle ) {
+		Object.defineProperty( win.crypto, 'subtle', { value: webcrypto.subtle, configurable: true } );
+	}
+	for ( const method of [ 'getRandomValues', 'randomUUID' ] ) {
+		if ( typeof win.crypto[ method ] !== 'function' ) {
+			Object.defineProperty( win.crypto, method, { value: webcrypto[ method ].bind( webcrypto ), configurable: true } );
+		}
+	}
+	win.TextEncoder = win.TextEncoder || TextEncoder;
+	win.TextDecoder = win.TextDecoder || TextDecoder;
+
 	win.matchMedia = win.matchMedia || ( query => ( {
 		matches: false,
 		media: query,

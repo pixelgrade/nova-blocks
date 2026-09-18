@@ -10,7 +10,7 @@
     "pixelgrade-agent-harness": "bin/harness.cjs"
   },
   "engines": {
-    "node": ">=18"
+    "node": "^22.13.0 || >=24.0.0"
   },
   "scripts": {
     "test": "node --test test/*.test.cjs",
