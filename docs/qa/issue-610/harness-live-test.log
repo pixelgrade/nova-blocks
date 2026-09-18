@@ -1,0 +1,483 @@
+
+> @pixelgrade/agent-harness@1.0.0 test
+> node --test test/*.test.cjs
+
+TAP version 13
+# Subtest: corpus parity against the site's own bundles
+    # Subtest: the bootstrap loaded the real editor surface, not a partial registry
+    ok 1 - the bootstrap loaded the real editor surface, not a partial registry
+      ---
+      duration_ms: 0.78075
+      type: 'test'
+      ...
+    # Subtest: P3-b part-footer: one invalid heading recovers to the browser-produced baseline
+    ok 2 - P3-b part-footer: one invalid heading recovers to the browser-produced baseline
+      ---
+      duration_ms: 0.612958
+      type: 'test'
+      ...
+    # Subtest: nova-blocks\#610: colored footer paragraphs converge without nesting or text loss
+    ok 3 - nova-blocks\#610: colored footer paragraphs converge without nesting or text loss
+      ---
+      duration_ms: 48.346458
+      type: 'test'
+      ...
+    # Subtest: paragraph compatibility: colored-line-breaks
+    ok 4 - paragraph compatibility: colored-line-breaks
+      ---
+      duration_ms: 6.889
+      type: 'test'
+      ...
+    # Subtest: paragraph compatibility: formatted-links
+    ok 5 - paragraph compatibility: formatted-links
+      ---
+      duration_ms: 9.164417
+      type: 'test'
+      ...
+    # Subtest: paragraph compatibility: custom-class
+    ok 6 - paragraph compatibility: custom-class
+      ---
+      duration_ms: 7.724208
+      type: 'test'
+      ...
+    # Subtest: paragraph compatibility: anchor-rtl
+    ok 7 - paragraph compatibility: anchor-rtl
+      ---
+      duration_ms: 13.813083
+      type: 'test'
+      ...
+    # Subtest: paragraph compatibility: drop-cap
+    ok 8 - paragraph compatibility: drop-cap
+      ---
+      duration_ms: 7.978125
+      type: 'test'
+      ...
+    # Subtest: paragraph compatibility: explicit-small
+    ok 9 - paragraph compatibility: explicit-small
+      ---
+      duration_ms: 8.876458
+      type: 'test'
+      ...
+    # Subtest: paragraph compatibility: current-normal
+    ok 10 - paragraph compatibility: current-normal
+      ---
+      duration_ms: 6.7015
+      type: 'test'
+      ...
+    # Subtest: paragraph compatibility: plain-legacy
+    ok 11 - paragraph compatibility: plain-legacy
+      ---
+      duration_ms: 5.576583
+      type: 'test'
+      ...
+    # Subtest: paragraph compatibility: custom-pixel-size
+    ok 12 - paragraph compatibility: custom-pixel-size
+      ---
+      duration_ms: 6.451958
+      type: 'test'
+      ...
+    # Subtest: about-athletics: safe migration and already corrupted paragraphs remain distinguishable
+    ok 13 - about-athletics: safe migration and already corrupted paragraphs remain distinguishable
+      ---
+      duration_ms: 1184.176
+      type: 'test'
+      ...
+    # Subtest: about-athletics: the nested-<p> gate must read the MARKUP, not the model
+    ok 14 - about-athletics: the nested-<p> gate must read the MARKUP, not the model
+      ---
+      duration_ms: 1025.780333
+      type: 'test'
+      ...
+    # Subtest: a validate pass over the produced markup agrees with the canonicalize pass
+    ok 15 - a validate pass over the produced markup agrees with the canonicalize pass
+      ---
+      duration_ms: 1011.32725
+      type: 'test'
+      ...
+    1..15
+ok 1 - corpus parity against the site's own bundles
+  ---
+  duration_ms: 4601.687
+  type: 'test'
+  ...
+# Subtest: extractBlockBody returns only the canonical inner HTML
+ok 2 - extractBlockBody returns only the canonical inner HTML
+  ---
+  duration_ms: 1.166791
+  type: 'test'
+  ...
+# Subtest: describeBodies classifies real save output and keeps the generated body
+ok 3 - describeBodies classifies real save output and keeps the generated body
+  ---
+  duration_ms: 0.759875
+  type: 'test'
+  ...
+# Subtest: default-only static bodies are withheld rather than advertised as fillable
+ok 4 - default-only static bodies are withheld rather than advertised as fillable
+  ---
+  duration_ms: 0.115167
+  type: 'test'
+  ...
+# Subtest: a server renderer or an empty save result is dynamic
+ok 5 - a server renderer or an empty save result is dynamic
+  ---
+  duration_ms: 0.228041
+  type: 'test'
+  ...
+# Subtest: an unregistered curated block is refused rather than guessed
+ok 6 - an unregistered curated block is refused rather than guessed
+  ---
+  duration_ms: 0.267167
+  type: 'test'
+  ...
+# Subtest: the checked-in catalog is a complete generated artifact
+ok 7 - the checked-in catalog is a complete generated artifact
+  ---
+  duration_ms: 1.1655
+  type: 'test'
+  ...
+# Subtest: the loader does not skip legacy block bundles without block.json
+ok 8 - the loader does not skip legacy block bundles without block.json
+  ---
+  duration_ms: 0.785333
+  type: 'test'
+  ...
+# Subtest: missing Web Crypto can hash the bytes WordPress encodes at startup
+ok 9 - missing Web Crypto can hash the bytes WordPress encodes at startup
+  ---
+  duration_ms: 40.440167
+  type: 'test'
+  ...
+# Subtest: getter-only crypto gains subtle encryption without replacing its random generator
+ok 10 - getter-only crypto gains subtle encryption without replacing its random generator
+  ---
+  duration_ms: 10.692417
+  type: 'test'
+  ...
+# Subtest: a partial crypto object gains bound UUID and random-value methods
+ok 11 - a partial crypto object gains bound UUID and random-value methods
+  ---
+  duration_ms: 6.034666
+  type: 'test'
+  ...
+# Subtest: missing text encoders round-trip Unicode and reject invalid UTF-8 in fatal mode
+ok 12 - missing text encoders round-trip Unicode and reject invalid UTF-8 in fatal mode
+  ---
+  duration_ms: 4.562333
+  type: 'test'
+  ...
+# Subtest: complete crypto and text APIs remain intact on repeated shim installation
+ok 13 - complete crypto and text APIs remain intact on repeated shim installation
+  ---
+  duration_ms: 5.254375
+  type: 'test'
+  ...
+# Subtest: the installed jsdom crypto keeps its accessor and existing native methods
+ok 14 - the installed jsdom crypto keeps its accessor and existing native methods
+  ---
+  duration_ms: 6.308958
+  type: 'test'
+  ...
+# Subtest: flatten walks depth-first, so an index is stable and addressable
+ok 15 - flatten walks depth-first, so an index is stable and addressable
+  ---
+  duration_ms: 0.972625
+  type: 'test'
+  ...
+# Subtest: collectInvalid reports index, block name and a reason for every invalid block
+ok 16 - collectInvalid reports index, block name and a reason for every invalid block
+  ---
+  duration_ms: 0.407959
+  type: 'test'
+  ...
+# Subtest: invalidReason survives a malformed validationIssues entry rather than throwing
+ok 17 - invalidReason survives a malformed validationIssues entry rather than throwing
+  ---
+  duration_ms: 0.065333
+  type: 'test'
+  ...
+# Subtest: a reason NEVER quotes the stored content — every substitution is redacted
+ok 18 - a reason NEVER quotes the stored content — every substitution is redacted
+  ---
+  duration_ms: 0.154125
+  type: 'test'
+  ...
+# Subtest: reason codes are stable machine tokens per failure mode
+ok 19 - reason codes are stable machine tokens per failure mode
+  ---
+  duration_ms: 0.34575
+  type: 'test'
+  ...
+# Subtest: invalidReason never stringifies the logger function itself
+ok 20 - invalidReason never stringifies the logger function itself
+  ---
+  duration_ms: 1.866208
+  type: 'test'
+  ...
+# Subtest: invalidReason reports the FIRST issue — the specific one, not the generic trailing dump
+ok 21 - invalidReason reports the FIRST issue — the specific one, not the generic trailing dump
+  ---
+  duration_ms: 0.084208
+  type: 'test'
+  ...
+# Subtest: recover rebuilds only invalid blocks, and still walks a valid parent for invalid children
+ok 22 - recover rebuilds only invalid blocks, and still walks a valid parent for invalid children
+  ---
+  duration_ms: 0.125166
+  type: 'test'
+  ...
+# Subtest: innerText strips block delimiters and markup and collapses whitespace
+ok 23 - innerText strips block delimiters and markup and collapses whitespace
+  ---
+  duration_ms: 29.147333
+  type: 'test'
+  ...
+# Subtest: innerText is insensitive to reflowed indentation between delimiters (that is not a text change)
+ok 24 - innerText is insensitive to reflowed indentation between delimiters (that is not a text change)
+  ---
+  duration_ms: 13.309958
+  type: 'test'
+  ...
+# Subtest: innerText does not read block-delimiter reflow as two words becoming one (about-athletics)
+ok 25 - innerText does not read block-delimiter reflow as two words becoming one (about-athletics)
+  ---
+  duration_ms: 5.291334
+  type: 'test'
+  ...
+# Subtest: innerText still catches a genuine loss — the false-positive fix is not a loosening
+ok 26 - innerText still catches a genuine loss — the false-positive fix is not a loosening
+  ---
+  duration_ms: 4.158916
+  type: 'test'
+  ...
+# Subtest: countNestedParagraphMarkup counts the double-wrap in the BYTES, where the damage is visible
+ok 27 - countNestedParagraphMarkup counts the double-wrap in the BYTES, where the damage is visible
+  ---
+  duration_ms: 0.428875
+  type: 'test'
+  ...
+# Subtest: collectValidViaDeprecation names blocks that parse valid ONLY against a deprecated save
+ok 28 - collectValidViaDeprecation names blocks that parse valid ONLY against a deprecated save
+  ---
+  duration_ms: 0.206458
+  type: 'test'
+  ...
+# Subtest: validate mode answers the fixed-point question, and answers it separately from validity
+ok 29 - validate mode answers the fixed-point question, and answers it separately from validity
+  ---
+  duration_ms: 3.306917
+  type: 'test'
+  ...
+# Subtest: validate mode reports a true fixed point as canonical, with no block list
+ok 30 - validate mode reports a true fixed point as canonical, with no block list
+  ---
+  duration_ms: 2.911667
+  type: 'test'
+  ...
+# Subtest: validate mode does not manufacture a finding from a trailing newline or from classic content
+ok 31 - validate mode does not manufacture a finding from a trailing newline or from classic content
+  ---
+  duration_ms: 3.83
+  type: 'test'
+  ...
+# Subtest: validate mode reports canonical:null when serialization throws — never a guessed verdict
+ok 32 - validate mode reports canonical:null when serialization throws — never a guessed verdict
+  ---
+  duration_ms: 2.7455
+  type: 'test'
+  ...
+# Subtest: canonicalize mode carries the markup-level nested-<p> counts alongside the model ones
+ok 33 - canonicalize mode carries the markup-level nested-<p> counts alongside the model ones
+  ---
+  duration_ms: 9.421459
+  type: 'test'
+  ...
+# Subtest: countNestedParagraphs counts paragraphs whose stored content itself carries a <p
+ok 34 - countNestedParagraphs counts paragraphs whose stored content itself carries a <p
+  ---
+  duration_ms: 0.073042
+  type: 'test'
+  ...
+# Subtest: validate mode reports invalid blocks and never produces canonical content
+ok 35 - validate mode reports invalid blocks and never produces canonical content
+  ---
+  duration_ms: 3.70475
+  type: 'test'
+  ...
+# Subtest: canonicalize mode reports the same-session re-parse, the text check and the nested-<p> counts
+ok 36 - canonicalize mode reports the same-session re-parse, the text check and the nested-<p> counts
+  ---
+  duration_ms: 3.224292
+  type: 'test'
+  ...
+# Subtest: canonicalize marks an unchanged document as such — a canonical post canonicalizes to itself
+ok 37 - canonicalize marks an unchanged document as such — a canonical post canonicalizes to itself
+  ---
+  duration_ms: 2.907917
+  type: 'test'
+  ...
+# Subtest: a document that does not converge reports converged:false — the caller must not retry it
+ok 38 - a document that does not converge reports converged:false — the caller must not retry it
+  ---
+  duration_ms: 3.181458
+  type: 'test'
+  ...
+# Subtest: a parse failure is reported as a per-document error, not thrown out of the run
+ok 39 - a parse failure is reported as a per-document error, not thrown out of the run
+  ---
+  duration_ms: 2.472458
+  type: 'test'
+  ...
+# Subtest: --selftest proves the runtime resolves, and is what the PHP availability probe reads
+ok 40 - --selftest proves the runtime resolves, and is what the PHP availability probe reads
+  ---
+  duration_ms: 276.658625
+  type: 'test'
+  ...
+# Subtest: an empty request fails with a parsable envelope and exit 1, never a stack trace
+ok 41 - an empty request fails with a parsable envelope and exit 1, never a stack trace
+  ---
+  duration_ms: 35.766542
+  type: 'test'
+  ...
+# Subtest: malformed JSON on stdin fails with a parsable envelope
+ok 42 - malformed JSON on stdin fails with a parsable envelope
+  ---
+  duration_ms: 37.683333
+  type: 'test'
+  ...
+# Subtest: an unknown mode is rejected before any bootstrap work
+ok 43 - an unknown mode is rejected before any bootstrap work
+  ---
+  duration_ms: 37.604916
+  type: 'test'
+  ...
+# Subtest: incomplete site_bundles_meta is rejected with a message naming what is required
+ok 44 - incomplete site_bundles_meta is rejected with a message naming what is required
+  ---
+  duration_ms: 37.905125
+  type: 'test'
+  ...
+# Subtest: a non-array documents field is rejected
+ok 45 - a non-array documents field is rejected
+  ---
+  duration_ms: 38.886459
+  type: 'test'
+  ...
+# Subtest: a bad abspath fails as a bootstrap error, not as a silent empty result set
+ok 46 - a bad abspath fails as a bootstrap error, not as a silent empty result set
+  ---
+  duration_ms: 237.01225
+  type: 'test'
+  ...
+# Subtest: the WP packages manifest parser reproduces handle names and dependency edges
+ok 47 - the WP packages manifest parser reproduces handle names and dependency edges
+  ---
+  duration_ms: 2.951416
+  type: 'test'
+  ...
+# Subtest: Nova Blocks package load order keeps core before every package that depends on it
+ok 48 - Nova Blocks package load order keeps core before every package that depends on it
+  ---
+  duration_ms: 0.062709
+  type: 'test'
+  ...
+# Subtest: react-jsx-runtime declares its react edge — the vendor edge hand-ordering missed
+ok 49 - react-jsx-runtime declares its react edge — the vendor edge hand-ordering missed
+  ---
+  duration_ms: 0.113917
+  type: 'test'
+  ...
+# Subtest: the installed shims cover every browser API the WP bundles touch at module scope
+ok 50 - the installed shims cover every browser API the WP bundles touch at module scope
+  ---
+  duration_ms: 3.031875
+  type: 'test'
+  ...
+# Subtest: inner-text digests differ exactly when the visible text does
+ok 51 - inner-text digests differ exactly when the visible text does
+  ---
+  duration_ms: 5.787125
+  type: 'test'
+  ...
+# Subtest: sha1 is stable and content-addressed, so digests from different passes are comparable
+ok 52 - sha1 is stable and content-addressed, so digests from different passes are comparable
+  ---
+  duration_ms: 0.0775
+  type: 'test'
+  ...
+# Subtest: blockTextLength measures what a block RENDERS, children excluded
+ok 53 - blockTextLength measures what a block RENDERS, children excluded
+  ---
+  duration_ms: 2.244458
+  type: 'test'
+  ...
+# Subtest: blockTextLength survives a save() that throws
+ok 54 - blockTextLength survives a save() that throws
+  ---
+  duration_ms: 2.480334
+  type: 'test'
+  ...
+# Subtest: lostTextByBlock names the blocks that shrank, and only those
+ok 55 - lostTextByBlock names the blocks that shrank, and only those
+  ---
+  duration_ms: 4.347125
+  type: 'test'
+  ...
+# Subtest: lostTextByBlock treats a block that vanished entirely as fully lost
+ok 56 - lostTextByBlock treats a block that vanished entirely as fully lost
+  ---
+  duration_ms: 1.793916
+  type: 'test'
+  ...
+# Subtest: canonicalize reports innerText LENGTHS and the losing blocks when text goes missing
+ok 57 - canonicalize reports innerText LENGTHS and the losing blocks when text goes missing
+  ---
+  duration_ms: 2.486875
+  type: 'test'
+  ...
+# Subtest: the per-block walk is skipped entirely when nothing was lost
+ok 58 - the per-block walk is skipped entirely when nothing was lost
+  ---
+  duration_ms: 3.092
+  type: 'test'
+  ...
+# Subtest: a protocol mismatch is refused before any bootstrap work
+ok 59 - a protocol mismatch is refused before any bootstrap work
+  ---
+  duration_ms: 38.585584
+  type: 'test'
+  ...
+# Subtest: a matching protocol passes the handshake and proceeds to the real work
+ok 60 - a matching protocol passes the handshake and proceeds to the real work
+  ---
+  duration_ms: 233.447167
+  type: 'test'
+  ...
+# Subtest: every response echoes the protocol so the caller can always check it
+ok 61 - every response echoes the protocol so the caller can always check it
+  ---
+  duration_ms: 453.749167
+  type: 'test'
+  ...
+# Subtest: the harness exits promptly rather than relying on the event loop to drain
+ok 62 - the harness exits promptly rather than relying on the event loop to drain
+  ---
+  duration_ms: 258.335166
+  type: 'test'
+  ...
+# Subtest: the loader exposes no metadata-fallback path — a failed bundle can never become a stub save
+ok 63 - the loader exposes no metadata-fallback path — a failed bundle can never become a stub save
+  ---
+  duration_ms: 0.321916
+  type: 'test'
+  ...
+1..63
+# tests 78
+# suites 0
+# pass 78
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 4913.565

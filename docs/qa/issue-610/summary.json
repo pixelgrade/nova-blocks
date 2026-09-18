@@ -1,0 +1,24 @@
+{
+  "post": {
+    "rebuild_cases": 12,
+    "invalid_after_both_rebuilds": 0,
+    "nested_paragraphs": 0,
+    "all_semantics_preserved": true,
+    "all_fixed_points": true,
+    "duplicate_count": 10,
+    "undo_count": 9,
+    "dirty_after_undo": false,
+    "save_reload_rounds": 2
+  },
+  "site": {
+    "rebuild_cases": 12,
+    "invalid_after_both_rebuilds": 0,
+    "nested_paragraphs": 0,
+    "all_semantics_preserved": true,
+    "all_fixed_points": true,
+    "duplicate_count": 10,
+    "undo_count": 9,
+    "dirty_after_undo": false,
+    "save_reload_rounds": 2
+  }
+}

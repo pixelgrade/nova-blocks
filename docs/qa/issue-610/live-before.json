@@ -1,0 +1,83 @@
+[
+  {
+    "name": "colored-line-breaks",
+    "invalidBefore": 0,
+    "invalidFirst": 1,
+    "invalidSecond": 0,
+    "wrapperInContent": 1,
+    "first": "<!-- wp:paragraph {\"style\":{\"color\":{\"text\":\"#123456\"}}} -->\n<p class=\"has-text-color has-normal-font-size\" style=\"color:#123456\"><p class=\"has-text-color\" style=\"color:#123456\">12 Rope Walk<br>Thursday–Saturday, 10–4</p></p>\n<!-- /wp:paragraph -->",
+    "second": "<!-- wp:paragraph {\"style\":{\"color\":{\"text\":\"#123456\"}}} -->\n<p class=\"has-text-color has-normal-font-size\" style=\"color:#123456\"></p>\n<!-- /wp:paragraph -->"
+  },
+  {
+    "name": "formatted-links",
+    "invalidBefore": 0,
+    "invalidFirst": 1,
+    "invalidSecond": 0,
+    "wrapperInContent": 1,
+    "first": "<!-- wp:paragraph {\"style\":{\"color\":{\"text\":\"#123456\"}}} -->\n<p class=\"has-text-color has-normal-font-size\" style=\"color:#123456\"><p class=\"has-text-color\" style=\"color:#123456\"><strong>Press</strong>: <a href=\"https://example.com/reviews\">reviews &amp; news</a> <em>today</em></p></p>\n<!-- /wp:paragraph -->",
+    "second": "<!-- wp:paragraph {\"style\":{\"color\":{\"text\":\"#123456\"}}} -->\n<p class=\"has-text-color has-normal-font-size\" style=\"color:#123456\"></p>\n<!-- /wp:paragraph -->"
+  },
+  {
+    "name": "custom-class",
+    "invalidBefore": 0,
+    "invalidFirst": 1,
+    "invalidSecond": 0,
+    "wrapperInContent": 1,
+    "first": "<!-- wp:paragraph {\"style\":{\"color\":{\"text\":\"#123456\"}}} -->\n<p class=\"has-text-color has-normal-font-size\" style=\"color:#123456\"><p class=\"contact-detail has-text-color\" style=\"color:#123456\">Call <br>or write</p></p>\n<!-- /wp:paragraph -->",
+    "second": "<!-- wp:paragraph {\"style\":{\"color\":{\"text\":\"#123456\"}}} -->\n<p class=\"has-text-color has-normal-font-size\" style=\"color:#123456\"></p>\n<!-- /wp:paragraph -->"
+  },
+  {
+    "name": "anchor-rtl",
+    "invalidBefore": 0,
+    "invalidFirst": 1,
+    "invalidSecond": 0,
+    "wrapperInContent": 1,
+    "first": "<!-- wp:paragraph {\"direction\":\"rtl\",\"style\":{\"color\":{\"text\":\"#123456\"}}} -->\n<p class=\"has-text-color has-normal-font-size\" dir=\"rtl\" style=\"color:#123456\"><p id=\"contact\" class=\"has-text-color\" style=\"color:#123456\" dir=\"rtl\">مرحبا</p></p>\n<!-- /wp:paragraph -->",
+    "second": "<!-- wp:paragraph {\"direction\":\"rtl\",\"style\":{\"color\":{\"text\":\"#123456\"}}} -->\n<p class=\"has-text-color has-normal-font-size\" dir=\"rtl\" style=\"color:#123456\"></p>\n<!-- /wp:paragraph -->"
+  },
+  {
+    "name": "drop-cap",
+    "invalidBefore": 0,
+    "invalidFirst": 1,
+    "invalidSecond": 0,
+    "wrapperInContent": 1,
+    "first": "<!-- wp:paragraph {\"dropCap\":true,\"style\":{\"color\":{\"text\":\"#123456\"}}} -->\n<p class=\"has-drop-cap has-text-color has-normal-font-size\" style=\"color:#123456\"><p class=\"has-drop-cap has-text-color\" style=\"color:#123456\">Drop cap text</p></p>\n<!-- /wp:paragraph -->",
+    "second": "<!-- wp:paragraph {\"dropCap\":true,\"style\":{\"color\":{\"text\":\"#123456\"}}} -->\n<p class=\"has-drop-cap has-text-color has-normal-font-size\" style=\"color:#123456\"></p>\n<!-- /wp:paragraph -->"
+  },
+  {
+    "name": "explicit-small",
+    "invalidBefore": 0,
+    "invalidFirst": 0,
+    "invalidSecond": 0,
+    "wrapperInContent": 0,
+    "first": "<!-- wp:paragraph {\"fontSize\":\"small\"} -->\n<p class=\"has-small-font-size\">Small text</p>\n<!-- /wp:paragraph -->",
+    "second": "<!-- wp:paragraph {\"fontSize\":\"small\"} -->\n<p class=\"has-small-font-size\">Small text</p>\n<!-- /wp:paragraph -->"
+  },
+  {
+    "name": "current-normal",
+    "invalidBefore": 0,
+    "invalidFirst": 0,
+    "invalidSecond": 0,
+    "wrapperInContent": 0,
+    "first": "<!-- wp:paragraph -->\n<p class=\"has-normal-font-size\">Normal text</p>\n<!-- /wp:paragraph -->",
+    "second": "<!-- wp:paragraph -->\n<p class=\"has-normal-font-size\">Normal text</p>\n<!-- /wp:paragraph -->"
+  },
+  {
+    "name": "plain-legacy",
+    "invalidBefore": 0,
+    "invalidFirst": 0,
+    "invalidSecond": 0,
+    "wrapperInContent": 0,
+    "first": "<!-- wp:paragraph -->\n<p class=\"has-normal-font-size\">Plain legacy text</p>\n<!-- /wp:paragraph -->",
+    "second": "<!-- wp:paragraph -->\n<p class=\"has-normal-font-size\">Plain legacy text</p>\n<!-- /wp:paragraph -->"
+  },
+  {
+    "name": "custom-pixel-size",
+    "invalidBefore": 0,
+    "invalidFirst": 1,
+    "invalidSecond": 0,
+    "wrapperInContent": 1,
+    "first": "<!-- wp:paragraph {\"style\":{\"typography\":{\"fontSize\":\"23px\"}}} -->\n<p class=\"has-normal-font-size\" style=\"font-size:23px\"><p style=\"font-size:23px\">Custom size text</p></p>\n<!-- /wp:paragraph -->",
+    "second": "<!-- wp:paragraph {\"style\":{\"typography\":{\"fontSize\":\"23px\"}}} -->\n<p class=\"has-normal-font-size\" style=\"font-size:23px\"></p>\n<!-- /wp:paragraph -->"
+  }
+]

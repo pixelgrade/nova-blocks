@@ -1,0 +1,92 @@
+[
+  {
+    "text": "12 Rope WalkThursday–Saturday, 10–4",
+    "html": "12 Rope Walk<br>Thursday–Saturday, 10–4",
+    "color": "rgb(18, 52, 86)",
+    "fontSize": "15px",
+    "direction": "ltr",
+    "id": "",
+    "classes": "has-text-color has-normal-font-size wp-block-paragraph",
+    "style": "color:#123456"
+  },
+  {
+    "text": "Press: reviews & news today",
+    "html": "<strong>Press</strong>: <a href=\"https://example.com/reviews\">reviews &amp; news</a> <em>today</em>",
+    "color": "rgb(18, 52, 86)",
+    "fontSize": "15px",
+    "direction": "ltr",
+    "id": "",
+    "classes": "has-text-color has-normal-font-size wp-block-paragraph",
+    "style": "color:#123456"
+  },
+  {
+    "text": "Call or write",
+    "html": "Call <br>or write",
+    "color": "rgb(18, 52, 86)",
+    "fontSize": "15px",
+    "direction": "ltr",
+    "id": "",
+    "classes": "contact-detail has-text-color has-normal-font-size wp-block-paragraph",
+    "style": "color:#123456"
+  },
+  {
+    "text": "مرحبا",
+    "html": "مرحبا",
+    "color": "rgb(18, 52, 86)",
+    "fontSize": "15px",
+    "direction": "rtl",
+    "id": "contact",
+    "classes": "has-text-color has-normal-font-size wp-block-paragraph",
+    "style": "color:#123456"
+  },
+  {
+    "text": "Drop cap text",
+    "html": "Drop cap text",
+    "color": "rgb(18, 52, 86)",
+    "fontSize": "15px",
+    "direction": "ltr",
+    "id": "",
+    "classes": "has-drop-cap has-text-color has-normal-font-size wp-block-paragraph",
+    "style": "color:#123456"
+  },
+  {
+    "text": "Small text",
+    "html": "Small text",
+    "color": "rgb(45, 30, 28)",
+    "fontSize": "12.6px",
+    "direction": "ltr",
+    "id": "",
+    "classes": "has-small-font-size wp-block-paragraph",
+    "style": null
+  },
+  {
+    "text": "Normal text",
+    "html": "Normal text",
+    "color": "rgb(45, 30, 28)",
+    "fontSize": "15px",
+    "direction": "ltr",
+    "id": "",
+    "classes": "has-normal-font-size wp-block-paragraph",
+    "style": null
+  },
+  {
+    "text": "Plain legacy text",
+    "html": "Plain legacy text",
+    "color": "rgb(45, 30, 28)",
+    "fontSize": "15px",
+    "direction": "ltr",
+    "id": "",
+    "classes": "has-normal-font-size wp-block-paragraph",
+    "style": null
+  },
+  {
+    "text": "Custom size text",
+    "html": "Custom size text",
+    "color": "rgb(45, 30, 28)",
+    "fontSize": "21.082px",
+    "direction": "ltr",
+    "id": "",
+    "classes": "has-normal-font-size wp-block-paragraph",
+    "style": "font-size:clamp(15.197px, 0.95rem + ((1vw - 3.2px) * 0.61), 23px);"
+  }
+]

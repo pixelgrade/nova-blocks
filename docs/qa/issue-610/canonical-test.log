@@ -1,0 +1,59 @@
+
+> nova-blocks@2.1.18 test
+> npm run test:fast
+
+
+> nova-blocks@2.1.18 test:fast
+> bash ./bin/run-tests.sh
+
+== PHP contracts (44, concurrency 4) ==
+  ok    blocks-abilities-contract.php (0.4s)
+  ok    blocks-cli-canonicalize-contract.php (3.6s)
+  ok    blocks-cli-contract.php (0.4s)
+  ok    blocks-cli-describe-contract.php (0.4s)
+  ok    card-content-regions-contract.php (0.0s)
+  ok    card-expression-classes-contract.php (0.0s)
+  ok    card-media-aspect-ratio-contract.php (0.0s)
+  ok    cloud-block-patterns-contract.php (0.0s)
+  ok    collection-external-participant-contract.php (0.0s)
+  ok    collection-layout-recipe-contract.php (0.0s)
+  ok    collection-leading-items-contract.php (0.0s)
+  ok    collection-post-card-markup-contract.php (0.0s)
+  ok    core-container-spacing-contract.php (0.0s)
+  ok    core-tools-ownership-contract.php (0.0s)
+  ok    facetwp-availability-contract.php (0.0s)
+  ok    facetwp-core-view-script-contract.php (0.0s)
+  ok    facetwp-editor-early-availability-contract.php (0.0s)
+  ok    facetwp-query-loop-contract.php (0.0s)
+  ok    facetwp-query-loop-no-engine-contract.php (0.0s)
+  ok    flow-segments-contract.php (0.0s)
+  ok    header-background-mode-contract.php (0.0s)
+  ok    header-custom-class-contract.php (0.0s)
+  ok    header-mobile-menu-accessibility-contract.php (0.0s)
+  ok    header-nav-projection-apply-contract.php (0.0s)
+  ok    header-nav-projection-contract.php (0.0s)
+  ok    header-nav-projection-roundtrip-contract.php (0.0s)
+  ok    header-row-layout-classes-contract.php (0.0s)
+  ok    logo-site-text-contract.php (0.0s)
+  ok    media-composition-editorial-pair-contract.php (0.0s)
+  ok    motion-entitlement-contract.php (0.0s)
+  ok    overlay-filter-strength-contract.php (0.0s)
+  ok    php84-explicit-nullable-contract.php (0.0s)
+  ok    placeholder-media-contract.php (0.0s)
+  ok    plus-gating-contract.php (0.0s)
+  ok    post-terms-color-signal-contract.php (0.0s)
+  ok    release-metadata-contract.php (0.0s)
+  ok    rule-styles-contract.php (0.0s)
+  ok    sharing-overlay-color-signal-defaults-contract.php (0.0s)
+  ok    sharing-overlay-trigger-contract.php (0.0s)
+  ok    sidecar-render-contract.php (0.0s)
+  ok    site-identity-fluid-width-contract.php (0.0s)
+  ok    site-tagline-rule-contract.php (0.0s)
+  ok    site-title-wordmark-contract.php (0.0s)
+  ok    wp71-editor-iframe-assets-contract.php (0.0s)
+== Node tests and contracts ==
+  ok    Node tests and contracts (2.6s)
+== Jest tests ==
+  ok    Jest (35.8s)
+  ok    Jest compatibility (22.2s)
+ALL FAST TESTS PASSED (64.3s)
