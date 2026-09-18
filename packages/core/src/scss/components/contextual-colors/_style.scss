@@ -1,0 +1,33 @@
+// Color Signal classes exist in both editor and frontend. The data attribute
+// exists only on saved markup, so it cannot be the shared integration boundary.
+// Resolve tokens on the child: a nearer active context wins naturally, while
+// inactive opt-in containers remain transparent to inherited palette context.
+:where([class*="sm-color-signal-"]) {
+	.wp-block-navigation .wp-block-navigation__responsive-container.is-menu-open:not(.disable-default-overlay) {
+		&:not(.has-background) {
+			background-color: var(--sm-current-bg-color);
+		}
+
+		&:not(.has-text-color) {
+			color: var(--sm-current-fg1-color);
+		}
+	}
+
+	.wp-block-social-links {
+		&.is-style-logos-only:not(.has-icon-color) .wp-social-link {
+			color: var(--sm-current-fg1-color);
+		}
+
+		// Filled and pill icons use the inverse pair so the glyph and its
+		// surface keep the same contrast as the surrounding signal band.
+		&:not(.is-style-logos-only) {
+			&:not(.has-icon-color) .wp-social-link {
+				color: var(--sm-current-bg-color);
+			}
+
+			&:not(.has-icon-background-color) .wp-social-link {
+				background-color: var(--sm-current-fg1-color);
+			}
+		}
+	}
+}
