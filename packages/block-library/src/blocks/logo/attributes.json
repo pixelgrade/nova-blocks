@@ -2,5 +2,10 @@
 	"className": {
 		"type": "string",
 		"default": ""
+	},
+	"siteText": {
+		"type": "string",
+		"enum": [ "inherit", "title-tagline", "title", "tagline", "none" ],
+		"default": "inherit"
 	}
 }

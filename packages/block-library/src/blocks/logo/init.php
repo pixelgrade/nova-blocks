@@ -30,10 +30,18 @@ if ( ! function_exists( 'novablocks_render_logo_block' ) ) {
 		// Maybe enqueue frontend-only scripts.
 		novablocks_maybe_enqueue_block_frontend_scripts( $block );
 
+		$site_text = $attributes['siteText'] ?? 'inherit';
+		if ( ! in_array( $site_text, [ 'inherit', 'title-tagline', 'title', 'tagline', 'none' ], true ) ) {
+			$site_text = 'inherit';
+		}
+
 		$classes = [
 			'c-branding',
 			'site-branding',
 		];
+		if ( in_array( $site_text, [ 'title-tagline', 'title', 'tagline' ], true ) ) {
+			$classes[] = 'nb-logo--site-text-explicit';
+		}
 
 		if ( ! empty( $attributes['className'] ) ) {
 			$custom_classes = array_map( 'sanitize_html_class', explode( ' ', $attributes['className'] ) );
@@ -60,9 +68,19 @@ if ( ! function_exists( 'novablocks_render_logo_block' ) ) {
 			$blog_info   = get_bloginfo( 'name' );
 			$description = get_bloginfo( 'description', 'display' );
 
-			if ( ( ! empty( $blog_info ) || ! empty( $description ) ) && get_theme_mod( 'header_text', true ) ) { ?>
+			if ( 'inherit' === $site_text ) {
+				$show_title     = (bool) get_theme_mod( 'header_text', true );
+				$show_tagline   = $show_title;
+				$show_site_info = ( ! empty( $blog_info ) || ! empty( $description ) ) && $show_title;
+			} else {
+				$show_title     = in_array( $site_text, [ 'title-tagline', 'title' ], true );
+				$show_tagline   = in_array( $site_text, [ 'title-tagline', 'tagline' ], true );
+				$show_site_info = ( $show_title && ! empty( $blog_info ) ) || ( $show_tagline && ( $description || is_customize_preview() ) );
+			}
+
+			if ( $show_site_info ) { ?>
 				<div class="site-info">
-					<?php if ( ! empty( $blog_info ) ) { ?>
+					<?php if ( $show_title && ! empty( $blog_info ) ) { ?>
 						<?php if ( is_front_page() || is_home() ) { ?>
 							<h1 class="site-title"><a href="<?php echo esc_url( home_url( '/' ) ); ?>"
 							                          rel="home"><?php bloginfo( 'name' ); ?></a></h1>
@@ -72,7 +90,7 @@ if ( ! function_exists( 'novablocks_render_logo_block' ) ) {
 						<?php }
 					}
 
-					if ( $description || is_customize_preview() ) { ?>
+					if ( $show_tagline && ( $description || is_customize_preview() ) ) { ?>
 						<p class="site-description">
 							<?php echo esc_html( $description ); ?>
 						</p>

@@ -64,6 +64,20 @@
   text-align: center;
 }
 
+// Explicit local choices override skin rules that hide the image logo's text.
+// Five class/attribute slots also beat Patch's four-slot editor selector.
+.c-branding.site-branding.nb-logo--site-text-explicit > .site-info[class] {
+  display: block;
+
+  // The theme's global text switch visually clips these elements, even when
+  // this Logo explicitly renders them. Restore only the locally chosen text.
+  > .site-title,
+  > .site-description {
+    position: static;
+    clip-path: none;
+  }
+}
+
 .site-logo + .site-info {
   text-align: left;
 
