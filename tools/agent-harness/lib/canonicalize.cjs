@@ -9,11 +9,9 @@
  * comment and from the saved markup through the block type's own `attributes` sources before it
  * ever compares the regenerated save output.
  *
- * Deliberately NOT here: any retry loop. Some hand-authored markup legitimately does not converge
- * (a `core/paragraph` that was valid before the pass parses invalid after it — nova-blocks#610,
- * cross-checked in the real editor with identical before/after invalid lists and byte-identical
- * serialization). Those documents report `converged: false` and the command exits 2 honestly; it
- * never re-runs the pass hoping for a different answer.
+ * There is no retry loop. Malformed or already corrupted markup can fail to converge or lose
+ * text during recovery; failed safety checks make the command exit 2. Historical paragraph
+ * migration (#610) is covered by the real-site corpus and must preserve text and converge.
  */
 
 'use strict';

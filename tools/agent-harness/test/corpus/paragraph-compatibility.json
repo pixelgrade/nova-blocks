@@ -1,0 +1,38 @@
+[
+  {
+    "id": "colored-line-breaks",
+    "content": "<!-- wp:paragraph {\"style\":{\"color\":{\"text\":\"#123456\"}}} -->\n<p class=\"has-text-color\" style=\"color:#123456\">12 Rope Walk<br>Thursday–Saturday, 10–4</p>\n<!-- /wp:paragraph -->"
+  },
+  {
+    "id": "formatted-links",
+    "content": "<!-- wp:paragraph {\"style\":{\"color\":{\"text\":\"#123456\"}}} -->\n<p class=\"has-text-color\" style=\"color:#123456\"><strong>Press</strong>: <a href=\"https://example.com/reviews\">reviews &amp; news</a> <em>today</em></p>\n<!-- /wp:paragraph -->"
+  },
+  {
+    "id": "custom-class",
+    "content": "<!-- wp:paragraph {\"className\":\"contact-detail\",\"style\":{\"color\":{\"text\":\"#123456\"}}} -->\n<p class=\"contact-detail has-text-color\" style=\"color:#123456\">Call <br>or write</p>\n<!-- /wp:paragraph -->"
+  },
+  {
+    "id": "anchor-rtl",
+    "content": "<!-- wp:paragraph {\"anchor\":\"contact\",\"direction\":\"rtl\",\"style\":{\"color\":{\"text\":\"#123456\"}}} -->\n<p id=\"contact\" class=\"has-text-color\" style=\"color:#123456\" dir=\"rtl\">مرحبا</p>\n<!-- /wp:paragraph -->"
+  },
+  {
+    "id": "drop-cap",
+    "content": "<!-- wp:paragraph {\"dropCap\":true,\"style\":{\"color\":{\"text\":\"#123456\"}}} -->\n<p class=\"has-drop-cap has-text-color\" style=\"color:#123456\">Drop cap text</p>\n<!-- /wp:paragraph -->"
+  },
+  {
+    "id": "explicit-small",
+    "content": "<!-- wp:paragraph {\"fontSize\":\"small\"} -->\n<p class=\"has-small-font-size\">Small text</p>\n<!-- /wp:paragraph -->"
+  },
+  {
+    "id": "current-normal",
+    "content": "<!-- wp:paragraph -->\n<p class=\"has-normal-font-size\">Normal text</p>\n<!-- /wp:paragraph -->"
+  },
+  {
+    "id": "plain-legacy",
+    "content": "<!-- wp:paragraph -->\n<p>Plain legacy text</p>\n<!-- /wp:paragraph -->"
+  },
+  {
+    "id": "custom-pixel-size",
+    "content": "<!-- wp:paragraph {\"style\":{\"typography\":{\"fontSize\":\"23px\"}}} -->\n<p style=\"font-size:23px\">Custom size text</p>\n<!-- /wp:paragraph -->"
+  }
+]

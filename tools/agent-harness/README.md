@@ -99,11 +99,15 @@ Two load-order rules matter just as much: WP core bundles are ordered from WP's 
 
 ## Non-converging documents
 
-Some hand-authored markup legitimately does not converge: a `core/paragraph` valid before the
-recovery pass parses invalid after it. This is **nova-blocks#610**, cross-checked in a real editor
-with identical before/after invalid lists and byte-identical serialization — a property of the
-markup, not a harness artefact. Those documents report `converged: false`, the command exits **2**,
-and nothing retries. `test/corpus/nested-inline-paragraph.html` is a checked-in probe of that class.
+Malformed or already corrupted markup may fail to converge or lose text during recovery. The
+command exits **2** when the safety checks fail, and nothing retries. The already double-wrapped
+paragraphs in `test/corpus/athletics-paragraphs.double-wrapped.html` exercise the text-loss gate.
+
+**nova-blocks#610** previously made valid historical paragraphs non-convergent by rewriting their
+font-size defaults during registration. Preserving their historical schemas fixes that migration.
+The colored footer, authored athletics paragraphs, and nine cases in
+`test/corpus/paragraph-compatibility.json` must now converge without introducing nested paragraphs
+or losing text and formatting. Run the real-site corpus suite to verify the installed bundles.
 
 ## Regenerate the `blocks describe` save-body catalog
 

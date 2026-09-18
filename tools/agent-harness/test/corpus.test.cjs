@@ -14,20 +14,13 @@
  *   invalid `core/heading` recovers, and the result is byte-identical to `merz-part-footer.
  *   canonical.html`, a file a real browser editor session produced weeks earlier. That is the
  *   end-to-end proof that the headless pass equals the editor pass.
- * - `nb610-atelier-part-footer.html` — the honest exit-2 case. It starts with ZERO invalid blocks
- *   and ends with two invalid `core/paragraph`s after the recovery pass: nova-blocks#610,
- *   cross-checked in a real editor with identical before/after lists. A harness that "fixed" this
- *   would be lying, and `canonicalize` must exit 2 on it rather than loop.
+ * - `nb610-atelier-part-footer.html` — issue #610's real colored paragraphs. They
+ *   must migrate without swallowing the paragraph wrapper, preserve their text, and reach a
+ *   valid serialization fixed point. Previously a second rebuild deleted their body copy.
  *
- * A third trio was added after the about-athletics post-mortem (2026-09-01) — the same three
- * paragraphs in the three states the corruption moved through, lifted verbatim from that run's
- * post 5 (revisions 108 and 112, and the scripted repair):
- *
- * - `athletics-paragraphs.authored.html` — the LANDMINE. Every block parses valid; the document is
- *   not a serialization fixed point. This is the shape `blocks validate` used to certify as clean
- *   over 229 blocks while 2,032 characters of body copy sat one editor save from deletion.
- * - `athletics-paragraphs.double-wrapped.html` — the DETONATION, as revision 112 stored it.
- * - `athletics-paragraphs.repaired.html` — the repaired form: valid AND a fixed point.
+ * The athletics trio retains the actual authored, double-wrapped, and repaired paragraphs from
+ * the 2026-09-01 post-mortem. Authored content now migrates safely; already corrupted content
+ * must still be reported honestly when its recovery would lose text.
  */
 
 'use strict';
@@ -37,20 +30,33 @@ const assert = require( 'node:assert' );
 const fs = require( 'node:fs' );
 const path = require( 'node:path' );
 const { execFileSync } = require( 'node:child_process' );
+const { JSDOM } = require( 'jsdom' );
 
 const ABSPATH = process.env.PIXELGRADE_HARNESS_TEST_ABSPATH || '';
 const PLUGIN_DIR = process.env.PIXELGRADE_HARNESS_TEST_PLUGIN_DIR || '';
 const CORPUS = path.join( __dirname, 'corpus' );
 
+const paragraphSemantics = content => {
+	const dom = new JSDOM( content );
+	try {
+		return Array.from( dom.window.document.querySelectorAll( 'p' ), paragraph => ( {
+			content: paragraph.innerHTML,
+			classes: Array.from( paragraph.classList ).filter( name => name !== 'has-normal-font-size' ).sort(),
+			style: Array.from( paragraph.style ).map( name => [ name, paragraph.style.getPropertyValue( name ) ] ).sort(),
+			anchor: paragraph.getAttribute( 'id' ),
+			direction: paragraph.getAttribute( 'dir' ),
+		} ) );
+	} finally {
+		dom.window.close();
+	}
+};
+
 // This is the ONLY suite in the package that touches a real block registry, so a default `npm test`
 // green means "the plumbing is right", never "the claims about @wordpress/blocks are right". The
-// empirical facts this whole lane rests on — that core/paragraph deprecation #6 really does swallow
-// the element, that `wp.blocks.validateBlock` exists in the shipped bundle and returns false for
-// those blocks, that the model-level nested-<p> count really does invert on the round trip — are
-// asserted HERE and nowhere else. Skipping it silently would let a regression in any of them pass
-// CI, so the skip reason says what is going unchecked rather than just how to opt in.
+// empirical facts about historical paragraph migration and markup safety are asserted HERE.
+// A plumbing-only pass cannot establish compatibility with the site's actual WordPress bundles.
 const skip = ! ABSPATH || ! PLUGIN_DIR
-	? 'NOT RUN: the real-registry parity contract (nova-blocks#610, deprecation-#6 swallow, valid-via-deprecation detection) is unverified in this run. Point PIXELGRADE_HARNESS_TEST_ABSPATH and PIXELGRADE_HARNESS_TEST_PLUGIN_DIR at a provisioned site to run it.'
+	? 'NOT RUN: real-registry paragraph migration and corruption detection are unverified. Point PIXELGRADE_HARNESS_TEST_ABSPATH and PIXELGRADE_HARNESS_TEST_PLUGIN_DIR at a provisioned site.'
 	: false;
 
 /**
@@ -117,9 +123,11 @@ test( 'corpus parity against the site\'s own bundles', { skip }, async t => {
 		'novablocks editor settings must carry separator.markup — core/separator\'s save() reads it (spike F3)'
 	);
 
+	const paragraphFixtures = JSON.parse( fs.readFileSync( path.join( CORPUS, 'paragraph-compatibility.json' ), 'utf8' ) );
 	const documents = [
 		{ id: 'merz', content: fs.readFileSync( path.join( CORPUS, 'merz-part-footer.html' ), 'utf8' ) },
 		{ id: 'nb610', content: fs.readFileSync( path.join( CORPUS, 'nb610-atelier-part-footer.html' ), 'utf8' ) },
+		...paragraphFixtures,
 	];
 
 	const response = runHarness( 'canonicalize', documents, settings );
@@ -155,21 +163,32 @@ test( 'corpus parity against the site\'s own bundles', { skip }, async t => {
 		);
 	} );
 
-	await t.test( 'nova-blocks#610: a non-converging document is reported honestly, not "fixed"', () => {
+	await t.test( 'nova-blocks#610: colored footer paragraphs converge without nesting or text loss', () => {
 		const probe = byId.nb610;
 
 		assert.strictEqual( probe.invalid.length, 0, 'this document starts out entirely valid' );
-		assert.strictEqual( probe.converged, false, 'and does not converge — that is the upstream bug, reproduced' );
-		assert.ok( probe.invalid_after_same_session.length > 0 );
-		assert.ok(
-			probe.invalid_after_same_session.every( entry => 'core/paragraph' === entry.block_name ),
-			'the #610 class is core/paragraph'
-		);
-		assert.strictEqual( probe.inner_text_preserved, true, 'even a non-converging pass must not lose text' );
+		assert.strictEqual( probe.converged, true );
+		assert.deepStrictEqual( probe.invalid_after_same_session, [] );
+		assert.strictEqual( probe.nested_paragraph_markup_before, 0 );
+		assert.strictEqual( probe.nested_paragraph_markup_after, 0 );
+		assert.strictEqual( probe.inner_text_preserved, true, 'migration must preserve all paragraph text' );
 		assert.strictEqual( probe.inner_text_before_sha1, probe.inner_text_after_sha1 );
+		assert.deepStrictEqual( paragraphSemantics( probe.canonical_content ), paragraphSemantics( documents[ 1 ].content ) );
 	} );
 
-	await t.test( 'about-athletics: the fixed-point post-condition catches what invalid:0 certified', () => {
+	for ( const fixture of paragraphFixtures ) {
+		await t.test( `paragraph compatibility: ${ fixture.id }`, () => {
+			const result = byId[ fixture.id ];
+			assert.deepStrictEqual( result.invalid, [] );
+			assert.strictEqual( result.converged, true );
+			assert.deepStrictEqual( result.invalid_after_same_session, [] );
+			assert.strictEqual( result.inner_text_preserved, true );
+			assert.strictEqual( result.nested_paragraph_markup_after, 0 );
+			assert.deepStrictEqual( paragraphSemantics( result.canonical_content ), paragraphSemantics( fixture.content ) );
+		} );
+	}
+
+	await t.test( 'about-athletics: safe migration and already corrupted paragraphs remain distinguishable', () => {
 		const read = name => fs.readFileSync( path.join( CORPUS, `athletics-paragraphs.${ name }.html` ), 'utf8' );
 
 		const seen = runHarness(
@@ -183,18 +202,13 @@ test( 'corpus parity against the site\'s own bundles', { skip }, async t => {
 		);
 		const v = Object.fromEntries( seen.documents.map( d => [ d.id, d ] ) );
 
-		// THE LANDMINE. Zero invalid blocks — the old verdict, reproduced exactly — and the
-		// document is not a fixed point, with every paragraph valid only through core/paragraph
-		// deprecation #6 (whose selector-less `content` swallows the entire <p> element).
-		assert.strictEqual( v.authored.invalid.length, 0, 'the authored shape parses entirely valid — this is what said 0' );
-		assert.strictEqual( v.authored.canonical, false, 'and it is NOT a serialization fixed point' );
-		assert.ok( v.authored.not_canonical_blocks.length > 0, 'the blocks at risk are named' );
-		assert.ok(
-			v.authored.not_canonical_blocks.every(
-				entry => 'core/paragraph' === entry.block_name && 'valid_via_deprecation' === entry.reason_code
-			),
-			'and named for the right reason'
-		);
+		// Historical markup remains non-canonical until its safe font-size migration is saved.
+		assert.strictEqual( v.authored.invalid.length, 0 );
+		assert.strictEqual( v.authored.canonical, false );
+		assert.strictEqual( v.authored.not_canonical_blocks.length, 3, 'all historical paragraphs are identified for migration' );
+		assert.ok( v.authored.not_canonical_blocks.every(
+			entry => entry.block_name === 'core/paragraph' && entry.reason_code === 'valid_via_deprecation'
+		) );
 
 		// THE DETONATION: after one editor save the same paragraphs no longer parse at all.
 		assert.ok( v.doubled.invalid.length > 0, 'the double-wrapped form is openly invalid' );
@@ -216,18 +230,13 @@ test( 'corpus parity against the site\'s own bundles', { skip }, async t => {
 		);
 		const c = Object.fromEntries( pass.documents.map( d => [ d.id, d ] ) );
 
-		// This is the near-miss, in numbers. Canonicalizing the authored shape preserves the
-		// visible text, and the MODEL-level nested-<p> count goes 3 -> 0, which reads as a repair.
-		// The markup count goes 0 -> 3: the pass would WRITE the double-wrap. A gate gated on the
-		// model alone would have let this through.
-		assert.strictEqual( c.authored.inner_text_preserved, true, 'the text survives, so the text gate does not fire' );
-		assert.ok(
-			c.authored.nested_paragraphs_after < c.authored.nested_paragraphs_before,
-			'and the MODEL count falls, which reads as an improvement'
-		);
+		assert.strictEqual( c.authored.inner_text_preserved, true );
+		assert.strictEqual( c.authored.converged, true );
+		assert.deepStrictEqual( c.authored.invalid_after_same_session, [] );
+		assert.strictEqual( c.authored.nested_paragraphs_before, 0 );
+		assert.strictEqual( c.authored.nested_paragraphs_after, 0 );
 		assert.strictEqual( c.authored.nested_paragraph_markup_before, 0 );
-		assert.ok( c.authored.nested_paragraph_markup_after > 0, 'while the bytes gain a nested <p> — the finding' );
-
+		assert.strictEqual( c.authored.nested_paragraph_markup_after, 0 );
 		// The reverse direction still reads as the repair it is: removing a nested <p> must not
 		// be reported as introducing one.
 		assert.ok( c.doubled.nested_paragraph_markup_before > 0 );
@@ -253,5 +262,9 @@ test( 'corpus parity against the site\'s own bundles', { skip }, async t => {
 			byId.nb610.invalid_after_same_session.length,
 			'a fresh process must reach the same verdict as the same-session re-parse'
 		);
+		for ( const fixture of paragraphFixtures ) {
+			assert.deepStrictEqual( verified[ fixture.id ].invalid, [] );
+			assert.strictEqual( verified[ fixture.id ].canonical, true, `${ fixture.id } must remain a fixed point in a fresh process` );
+		}
 	} );
 } );
