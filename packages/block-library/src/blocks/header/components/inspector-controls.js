@@ -183,7 +183,7 @@ const HeaderOptions = ( props ) => {
         value={ logoHeight }
         onChange={ logoHeight => setAttributes( { logoHeight } ) }
         min={ 20 }
-        max={ 200 }
+        max={ 400 }
         step={ 1 }
       />
       <RangeControl
@@ -192,7 +192,7 @@ const HeaderOptions = ( props ) => {
         value={ mobileLogoHeight }
         onChange={ mobileLogoHeight => setAttributes( { mobileLogoHeight } ) }
         min={ 14 }
-        max={ 80 }
+        max={ 200 }
         step={ 1 }
       />
       <RangeControl

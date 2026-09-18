@@ -23,6 +23,12 @@
     --header-background-opacity: 0;
   }
 
+  // Modern branding clones need the same foreground layer as legacy Logo.
+  .nb-header__mobile-brand {
+    position: relative;
+    z-index: 1;
+  }
+
   .menu-item--cart {
     display: flex;
 

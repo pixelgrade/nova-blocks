@@ -49,3 +49,14 @@
 .nb-header-row .wp-block-site-logo img[class] {
   height: calc(var(--nb-header-logo-height-setting) * 1px);
 }
+
+// Core's width-based resize box writes inline dimensions and bounds. Header
+// logos are height-based, so that box must follow its image rather than cap it.
+.editor-styles-wrapper .nb-header-row .wp-block-site-logo > .components-resizable-box__container {
+  width: auto !important;
+  height: auto !important;
+  min-width: 0 !important;
+  max-width: 100% !important;
+  min-height: 0 !important;
+  max-height: none !important;
+}

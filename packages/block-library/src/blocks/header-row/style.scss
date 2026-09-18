@@ -85,7 +85,9 @@
 // stylesheet (`.site-logo img`) is only enqueued when novablocks/logo is on the
 // page; core/site-logo's `.wp-block-site-logo` must be sized from the header
 // context so the two render 1:1 (height-driven, content-width column).
-.nb-header-row .wp-block-site-logo {
+// The compact mobile branding clone lives outside any Header Row.
+.nb-header-row .wp-block-site-logo,
+.nb-header--mobile .wp-block-site-logo {
   display: flex;
   align-items: center;
   justify-content: var(--justify-content, center);
