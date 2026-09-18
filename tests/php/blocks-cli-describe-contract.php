@@ -58,6 +58,12 @@ namespace {
 	function add_filter() { return true; }
 	function add_action() { return true; }
 	function apply_filters( $hook, $value, ...$args ) { return $value; }
+	function novablocks_get_attributes_from_json( $path ) {
+		return json_decode( file_get_contents( dirname( __DIR__, 2 ) . '/' . $path ), true );
+	}
+	function novablocks_get_palette_settings_fragment(): array {
+		return [ 'palettes' => $GLOBALS['nbd_palettes'] ?? [] ];
+	}
 
 	// ---- WP_Block_Type / registry stubs. -------------------------------------------------
 
@@ -394,6 +400,118 @@ namespace {
 	assert_true( isset( WP_CLI::$printed_value['data']['recipes'] ), 'describe: recipes attached for a layoutStyle-bearing block.' );
 
 	echo "shared-attrs contract OK\n";
+
+	// =========================================================================================
+	// #622 — editor-only core Color Signal discovery, without registry mutation.
+	// =========================================================================================
+
+	$shared_schema = novablocks_get_attributes_from_json( 'packages/color-signal/src/attributes.json' );
+	$GLOBALS['nbd_palettes'] = [
+		[ 'id' => 'brand-blue', 'label' => 'Blue' ],
+		(object) [ 'id' => 9, 'label' => 'Olive' ],
+		[ 'id' => '_success', 'label' => 'Success' ],
+	];
+
+	foreach ( [ 'core/group', 'core/button', 'core/separator', 'core/columns', 'core/column', 'core/list' ] as $block_name ) {
+		nbd_reset();
+		$registered_schema = [ 'className' => [ 'type' => 'string' ] ];
+		nbd_register( $block_name, $registered_schema );
+		$before = serialize( WP_Block_Type_Registry::get_instance()->get_registered( $block_name ) );
+		$core = novablocks_agent_blocks_describe_core( [ 'block' => $block_name ] );
+		assert_same( 0, $core['exit'], "$block_name: describe succeeds." );
+		$attrs = $core['data']['attributes'];
+		foreach ( $shared_schema as $name => $schema ) {
+			assert_true( isset( $attrs[ $name ] ), "$block_name: describe must expose editor Color Signal attribute $name." );
+			assert_same( 'editor', $attrs[ $name ]['registration'], "$block_name/$name: mark editor-only provenance." );
+		}
+
+		$expected_schema = $shared_schema;
+		if ( in_array( $block_name, [ 'core/button', 'core/separator' ], true ) ) {
+			$overrides = novablocks_get_attributes_from_json( 'packages/core/src/blocks/' . $block_name . '/attributes.json' );
+			foreach ( $shared_schema as $name => $schema ) {
+				if ( isset( $overrides[ $name ] ) ) {
+					// Priority-20 JS filters replace the whole schema, not just its default.
+					$expected_schema[ $name ] = $overrides[ $name ];
+				}
+			}
+		}
+		foreach ( $expected_schema as $name => $schema ) {
+			assert_same( $schema['type'] ?? null, $attrs[ $name ]['type'], "$block_name/$name: describe mirrors the final editor schema type honestly." );
+			assert_same( $schema['default'] ?? null, $attrs[ $name ]['default'], "$block_name/$name: block-specific default matches editor." );
+		}
+
+		$opt_in = in_array( $block_name, [ 'core/button', 'core/columns', 'core/column' ], true );
+		assert_same( $opt_in, isset( $attrs['useColorSignal'] ), "$block_name: only actual opt-ins advertise activation." );
+		if ( $opt_in ) {
+			assert_same( false, $attrs['useColorSignal']['default'], "$block_name: inactive legacy opt-ins stay inactive." );
+			assert_same( [ true, false ], $attrs['useColorSignal']['vocabulary']['enum'], "$block_name: activation values are discoverable." );
+		}
+		$inherits = in_array( $block_name, [ 'core/button', 'core/separator', 'core/column' ], true );
+		assert_same( $inherits, isset( $attrs['useParentPalette'] ), "$block_name: advertise only registered inheritance slots." );
+		if ( $inherits ) {
+			assert_same( null, $attrs['useParentPalette']['default'], "$block_name: preserve absent inheritance default used by migration." );
+			assert_same( 'boolean', $attrs['useParentPalette']['type'], "$block_name: inheritance is boolean." );
+		}
+		$signals = in_array( $block_name, [ 'core/button', 'core/separator' ], true ) ? [ 1, 2, 3 ] : [ 0, 1, 2, 3 ];
+		assert_same( $signals, $attrs['colorSignal']['vocabulary']['enum'], "$block_name: correct signal clamp." );
+		$palettes = in_array( $block_name, [ 'core/list', 'core/separator' ], true ) ? [ 'brand-blue', '9' ] : [ 'brand-blue', '9', '_success' ];
+		assert_same( $palettes, $attrs['palette']['vocabulary']['enum'], "$block_name: palette choices come from the actual site and functional-color capability." );
+		assert_same( 'bundle', $attrs['palette']['source'], "$block_name: site palette vocabulary source is bundle." );
+		if ( 'core/list' === $block_name ) {
+			assert_true( false !== strpos( $attrs['palette']['note'], 'always inherits' ), 'List: describe must not advertise an independent palette control.' );
+		}
+		assert_same( [ 'min' => 1, 'max' => 12, 'step' => 1 ], $attrs['paletteVariation']['vocabulary']['range'], "$block_name: registered variations retain curated range." );
+		assert_same( $before, serialize( WP_Block_Type_Registry::get_instance()->get_registered( $block_name ) ), "$block_name: describe cannot mutate registration or attribute ordering." );
+		nbd_run( 'novablocks_cli_blocks_describe', [ $block_name ], [ 'format' => 'json' ] );
+		assert_same( $core['data'], WP_CLI::$printed_value['data'], "$block_name: CLI and shared ability core agree." );
+	}
+
+	// Server Color Signal flags govern Nova blocks, and explicit flags override the
+	// describe-only JS fallback on core blocks. Functional colors require literal true.
+	foreach ( [
+		[ 'novablocks/header-row', [ 'attributes' => true ], [ 'brand-blue', '9' ] ],
+		[ 'novablocks/header-row', [ 'attributes' => true, 'functionalColors' => false ], [ 'brand-blue', '9' ] ],
+		[ 'novablocks/header-row', [ 'attributes' => true, 'functionalColors' => true ], [ 'brand-blue', '9', '_success' ] ],
+		[ 'novablocks/header-row', [ 'attributes' => true, 'functionalColors' => 1 ], [ 'brand-blue', '9' ] ],
+		[ 'novablocks/header-row', true, [ 'brand-blue', '9' ] ],
+		[ 'core/group', [ 'functionalColors' => false ], [ 'brand-blue', '9' ] ],
+		[ 'core/separator', [ 'functionalColors' => true ], [ 'brand-blue', '9', '_success' ] ],
+	] as $case ) {
+		[ $block_name, $color_support, $expected_palettes ] = $case;
+		nbd_reset();
+		nbd_register( $block_name, [ 'palette' => [ 'type' => 'string', 'default' => '1' ] ], '', [ 'novaBlocks' => [ 'colorSignal' => $color_support ] ] );
+		$attrs = novablocks_agent_blocks_describe_core( [ 'block' => $block_name ] )['data']['attributes'];
+		assert_same( $expected_palettes, $attrs['palette']['vocabulary']['enum'], "$block_name: literal server functional-color capability governs palette choices." );
+	}
+	foreach ( [ [], [ 'novaBlocks' => [ 'colorSignal' => false ] ] ] as $supports ) {
+		nbd_reset();
+		nbd_register( 'novablocks/unextended', [ 'palette' => [ 'type' => 'string' ] ], '', $supports );
+		$attrs = novablocks_agent_blocks_describe_core( [ 'block' => 'novablocks/unextended' ] )['data']['attributes'];
+		assert_same( null, $attrs['palette']['vocabulary'], 'unsupported block: a similarly named attribute is not a Color Signal palette control.' );
+	}
+
+	// Future server registration remains authoritative and must not be stamped editor-only.
+	nbd_reset();
+	nbd_register( 'core/button', [
+		'colorSignal' => [ 'type' => 'integer', 'default' => 2 ],
+		'useColorSignal' => [ 'type' => 'boolean', 'default' => true ],
+	], '', [ 'novaBlocks' => [ 'colorSignal' => [ 'minColorSignal' => 2, 'maxColorSignal' => 2 ] ] ] );
+	$attrs = novablocks_agent_blocks_describe_core( [ 'block' => 'core/button' ] )['data']['attributes'];
+	assert_same( 2, $attrs['colorSignal']['default'], 'registered collision: preserve server default.' );
+	assert_same( 'integer', $attrs['colorSignal']['type'], 'registered collision: preserve server type.' );
+	assert_same( [ 2 ], $attrs['colorSignal']['vocabulary']['enum'], 'registered collision: live server clamp wins.' );
+	assert_true( ! isset( $attrs['colorSignal']['registration'] ), 'registered collision: do not mislabel a server Color Signal slot as editor-only.' );
+	assert_true( ! isset( $attrs['useColorSignal']['registration'] ), 'registered collision: activation provenance stays server-owned.' );
+	assert_same( true, $attrs['useColorSignal']['default'], 'registered collision: activation default stays server-owned.' );
+
+	$GLOBALS['nbd_palettes'] = [];
+	$attrs = novablocks_agent_blocks_describe_core( [ 'block' => 'core/button' ] )['data']['attributes'];
+	assert_same( null, $attrs['palette']['vocabulary'], 'empty site palettes: do not invent a static palette enum.' );
+	assert_same( 'none', $attrs['palette']['source'], 'empty site palettes: report no vocabulary honestly.' );
+	assert_same( [], novablocks_get_core_color_signal_describe_attributes( 'core/paragraph' ), 'unextended core block: do not fabricate Color Signal support.' );
+	assert_same( [], novablocks_get_core_color_signal_describe_attributes( 'novablocks/logo' ), 'non-core block: provider stays scoped.' );
+
+	echo "editor Color Signal discovery contract OK\n";
 
 	echo "All wp pixelgrade blocks describe contract tests OK\n";
 }

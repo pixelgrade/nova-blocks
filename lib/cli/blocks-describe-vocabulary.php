@@ -57,6 +57,19 @@ function novablocks_blocks_describe_curated_vocabulary(): array {
 		// Cross-cutting shared attribute sets — merged into any block whose supports opt in.
 		// -----------------------------------------------------------------------------------
 		'*' => [
+			// with-color-signal-attributes.js and the corresponding ToggleControls.
+			'useColorSignal' => [
+				'enum' => [ true, false ],
+				'note' => 'Opt-in activation. An untouched Button, Columns, or Column remains inactive by default. Changing Color Signal activates it; Columns and Column also clear conflicting core colors in that editor update.',
+			],
+			'useParentPalette' => [
+				'enum' => [ true, false ],
+				'note' => 'true inherits the nearest active ancestor palette; false chooses this block\'s palette. Absence is a legacy state, not a registered default: the editor resolves and migrates it without activating an inactive Color Signal block.',
+			],
+			'useSourceColorAsReference' => [
+				'enum' => [ true, false ],
+				'note' => 'Whether the chosen palette\'s source color anchors Color Signal resolution.',
+			],
 			// Color Signal (packages/color-signal). Values verified against
 			// get-color-signal-levels.js:6-12 (COLOR_SIGNAL_LEVEL_LABELS) and the
 			// gene-migration color-signal.md attribute table.
@@ -366,12 +379,47 @@ function novablocks_blocks_describe_supernova_vocabulary(): array {
  * surfaced wholesale under `data.bundle_options` by the command rather than guessed onto an
  * attribute name.
  *
- * @param array $settings The result of `novablocks_get_block_editor_settings()`.
+ * @param array  $settings   The editor settings including its live palette fragment.
+ * @param string $block_name Optional block name for capability-specific palette choices.
+ * @param mixed  $supports   Registered server supports; explicit flags override JS-only fallbacks.
  *
  * @return array attribute-name → vocabulary entry (same shape as the curated table).
  */
-function novablocks_blocks_describe_bundle_vocabulary( array $settings ): array {
-	$map = [];
+function novablocks_blocks_describe_bundle_vocabulary( array $settings, string $block_name = '', $supports = null ): array {
+	$map            = [];
+	$palette_ids    = [];
+	$signal_support = function_exists( 'novablocks_get_core_color_signal_describe_support' ) ? novablocks_get_core_color_signal_describe_support( $block_name ) : null;
+	$server_support = is_array( $supports ) ? ( $supports['novaBlocks']['colorSignal'] ?? null ) : null;
+	if ( is_array( $server_support ) ) {
+		$signal_support = array_merge( $signal_support ?? [], $server_support );
+	} elseif ( true === $server_support ) {
+		$signal_support = $signal_support ?? [];
+	} elseif ( false === $server_support ) {
+		$signal_support = null;
+	}
+	// A similarly named attribute on an unrelated block is not a Color Signal control.
+	$palettes = is_array( $signal_support ) && is_array( $settings['palettes'] ?? null ) ? $settings['palettes'] : [];
+	foreach ( $palettes as $palette ) {
+		$palette = (array) $palette;
+		$id      = $palette['id'] ?? null;
+		if ( ! is_string( $id ) && ! is_int( $id ) ) {
+			continue;
+		}
+		$id = (string) $id;
+		if ( '' === $id || ( '_' === substr( $id, 0, 1 ) && true !== ( $signal_support['functionalColors'] ?? false ) ) ) {
+			continue;
+		}
+		$palette_ids[] = $id;
+	}
+	if ( ! empty( $palette_ids ) ) {
+		$map['palette'] = [
+			'enum' => array_values( array_unique( $palette_ids ) ),
+			'note' => 'Palette IDs from this site\'s live Style Manager editor settings, not fixed brand colors. Functional palette IDs (starting with _) are included only where the block supports functional colors. Inherit through useParentPalette where available.',
+		];
+		if ( true === ( $signal_support['inheritParentPalette'] ?? false ) && empty( $signal_support['paletteInheritanceAttribute'] ) ) {
+			$map['palette']['note'] .= ' This block always inherits its surrounding palette; palette is a resolved context value, not an independent palette control.';
+		}
+	}
 
 	$style_presets = novablocks_blocks_describe_option_values( $settings['advancedGalleryPresetOptions'] ?? [] );
 	if ( ! empty( $style_presets ) ) {

@@ -37,6 +37,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 require_once __DIR__ . '/blocks-describe-vocabulary.php';
+require_once __DIR__ . '/blocks-describe-core-color-signal.php';
 
 /**
  * Describe one registered block's attributes AND their valid value vocabulary.
@@ -151,7 +152,7 @@ function novablocks_agent_blocks_describe_core( array $params ): array {
 
 	// Attributes a Nova EDITOR filter registers on a core block, which the server registry
 	// therefore never sees. They are real and authorable — the editor writes them and
-	// lib/core-container-spacing.php renders them — but they must not be merged into
+	// the runtime consumes them — but they must not be merged into
 	// WP_Block_Type_Registry, because that reorders the attribute list the harness serializes
 	// from and flips the comment JSON key order of already-canonical content. describe ksort()s
 	// its output, so merging them HERE has no ordering consequence at all. Each is marked
@@ -159,16 +160,24 @@ function novablocks_agent_blocks_describe_core( array $params ): array {
 	$editor_registered = function_exists( 'novablocks_get_core_container_spacing_describe_attributes' )
 		? novablocks_get_core_container_spacing_describe_attributes( $block_name )
 		: [];
+	$editor_registered = array_merge( $editor_registered, novablocks_get_core_color_signal_describe_attributes( $block_name ) );
+	$editor_added      = [];
 
 	foreach ( $editor_registered as $editor_attr => $editor_schema ) {
 		if ( ! array_key_exists( $editor_attr, $attributes ) ) {
-			$attributes[ $editor_attr ] = $editor_schema;
+			$attributes[ $editor_attr ]   = $editor_schema;
+			$editor_added[ $editor_attr ] = true;
 		}
 	}
 
-	$settings     = function_exists( 'novablocks_get_block_editor_settings' ) ? novablocks_get_block_editor_settings() : [];
-	$curated      = novablocks_blocks_describe_curated_vocabulary();
-	$bundle_vocab = novablocks_blocks_describe_bundle_vocabulary( is_array( $settings ) ? $settings : [] );
+	$settings = function_exists( 'novablocks_get_block_editor_settings' ) ? novablocks_get_block_editor_settings() : [];
+	$settings = is_array( $settings ) ? $settings : [];
+	// The editor receives this fragment separately from its base settings. Use the same
+	// request-aware palette payload, rather than inventing fixed palette IDs.
+	$palette_settings = function_exists( 'novablocks_get_palette_settings_fragment' ) ? novablocks_get_palette_settings_fragment() : [];
+	$settings         = array_merge( $settings, $palette_settings );
+	$curated          = novablocks_blocks_describe_curated_vocabulary();
+	$bundle_vocab     = novablocks_blocks_describe_bundle_vocabulary( $settings, $block_name, $block_type->supports ?? null );
 
 	$described = [];
 	$coverage  = [ 'bundle' => 0, 'curated' => 0, 'none' => 0 ];
@@ -204,7 +213,7 @@ function novablocks_agent_blocks_describe_core( array $params ): array {
 			$record['note'] = $resolved['note'];
 		}
 
-		if ( array_key_exists( $attr_name, $editor_registered ) ) {
+		if ( isset( $editor_added[ $attr_name ] ) ) {
 			$record['registration'] = 'editor';
 		}
 
