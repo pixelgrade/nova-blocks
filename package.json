@@ -61,7 +61,7 @@
 		"autoprefixer": "^10.4.21",
 		"babel-plugin-inline-json-import": "^0.3.2",
 		"babel-plugin-lodash": "^3.3.4",
-		"browserslist": "^4.24.4",
+		"browserslist": "^4.28.8",
 		"command-exists": "^1.2.9",
 		"concurrently": "^7.6.0",
 		"copy-webpack-plugin": "^6.4.1",
