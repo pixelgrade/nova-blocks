@@ -488,6 +488,11 @@
 
 .nb-card__title {
   a {
+    // Anima assigns --current-font-size to every element. A linked title must
+    // inherit the author's Card Title Font Size choice from its heading.
+    font-size: inherit;
+    line-height: inherit;
+
     &:hover {
       color: var(--sm-current-accent-color);
     }

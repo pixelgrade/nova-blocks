@@ -200,14 +200,23 @@
   @include nb-layout-subgrid-override;
 }
 
-// A Core Column is a bounded flex item, not a Nova layout-grid parent. Its
-// direct Query child must use that column's width rather than instantiate the
-// page's rail tracks again: on narrow columns the content track can fall
-// outside the Query box (and even outside the viewport). Keep the normal Nova
-// Query grid everywhere else, where named-line alignment is intentional.
+// A Core Column is a bounded flex item, not a Nova layout-grid parent. A Query
+// Loop with a direct Post Template must use that column's width at every
+// viewport instead of placing its list on page-wide rail tracks.
+.wp-block-column > .wp-block-query:has(> .wp-block-post-template) {
+  display: block;
+}
+
+// Do not make a Supernova Query block-level: Slick needs its Nova grid at
+// initialization. Replace only the page-wide tracks with one bounded named
+// track, preserving the fs / fe lines its child uses.
 @include above(lap) {
-  .wp-block-column > .wp-block-query {
-    display: block;
+  // A Carousel still needs Nova's named grid lines (fs / fe), but the
+  // page-wide rail template can be wider than its bounded Core Column.
+  // Keep the grid and replace only its tracks so Slick measures the real
+  // column width at initialization.
+  .wp-block-column > .wp-block-query:has(> .nb-supernova--layout-carousel) {
+    grid-template-columns: [fs] minmax(0, 1fr) [fe];
   }
 }
 

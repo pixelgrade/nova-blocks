@@ -44,6 +44,10 @@
     @include below(tablet) {
       text-align: center;
 
+      &.is-style-editorial-hero.nb-supernova--halign-left {
+        text-align: left;
+      }
+
       .nb-card__description,
       .nb-card__buttons {
         display: none;

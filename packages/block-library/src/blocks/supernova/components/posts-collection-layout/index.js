@@ -48,7 +48,7 @@ const PostsCollectionLayout = props => {
 
             return (
               <div className={ 'nb-collection__layout-item' } key={ 'collection_layout_item_' + post.id }>
-                <PostCard { ...passedProps } post={ post } collectionNewestPostTimestamp={ collectionNewestPostTimestamp } key={ 'collection_post_card_post_' + post.id }/>
+                <PostCard { ...passedProps } post={ post } collectionOrdinal={ index + 1 } collectionNewestPostTimestamp={ collectionNewestPostTimestamp } key={ 'collection_post_card_post_' + post.id }/>
               </div>
             );
           } )

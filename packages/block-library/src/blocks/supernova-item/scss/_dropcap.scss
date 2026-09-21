@@ -3,6 +3,9 @@
 // this is why we needed #very#specific added
 :is(.nb-supernova-item__dropcap-wrapper, #very#specific) {
   position: absolute;
+}
+
+.nb-supernova-item__dropcap-wrapper {
   top: 0;
   left: 0;
   z-index: 100;

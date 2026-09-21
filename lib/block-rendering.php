@@ -3133,6 +3133,26 @@ function novablocks_get_card_item_meta( $metaValue, array $attributes, string $r
 	return '<p class="nb-card__meta is-style-meta">' . wp_kses_post( $metaValue ) . '</p>';
 }
 
+/**
+ * A query-driven caption ordinal for the opt-in editorial carousel style.
+ * It is decorative because the card heading and pagination already name the
+ * work and position for assistive technology.
+ */
+function novablocks_get_editorial_card_ordinal_markup( array $attributes ): string {
+	$classes = preg_split( '/\s+/', trim( (string) ( $attributes['className'] ?? '' ) ) );
+	if ( ! in_array( 'is-style-editorial-hero', $classes, true )
+		|| ( $attributes['contentType'] ?? '' ) !== 'auto'
+		|| ( $attributes['layoutStyle'] ?? '' ) !== 'carousel'
+		|| empty( $attributes['showTitle'] )
+		|| (int) ( $attributes['_collectionOrdinal'] ?? 0 ) < 1 ) {
+		return '';
+	}
+
+	return '<span class="nb-card__ordinal" aria-hidden="true">'
+		. esc_html( sprintf( '%02d', (int) $attributes['_collectionOrdinal'] ) )
+		. '</span>';
+}
+
 function novablocks_get_card_item_title( string $title, array $attributes, $post = null ): string {
 	// Bail if we don't have a title or we should not show it.
 	if ( empty( $title ) || empty( $attributes['showTitle'] ) ) {
@@ -3333,13 +3353,17 @@ function novablocks_get_posts_collection_cards_markup( array $attributes, $conte
 
 	$attributes['_collectionNewestPostTimestamp'] = $newest_timestamp;
 
+	$card_index = 0;
 	while ( $query->have_posts() ) {
 		$post = $query->next_post();
 
-		$card_markup = novablocks_get_collection_card_markup_from_post( $post, $attributes );
+		$card_attributes = $attributes;
+		$card_attributes['_collectionOrdinal'] = $card_index + 1;
+		$card_markup = novablocks_get_collection_card_markup_from_post( $post, $card_attributes );
 		$markup      = apply_filters( 'novablocks/get_collection_card_markup', $card_markup, $post, $attributes );
 		if ( ! empty( $markup ) ) {
 			$output .= $markup;
+			$card_index++;
 			// Only remember posts that were actually rendered.
 			$novablocks_rendered_posts_ids[] = $post->ID;
 		}
@@ -3459,6 +3483,7 @@ function novablocks_get_post_card_items_markup( $post, array $item_ids, array $a
 				}
 				break;
 			case 'title':
+				$output .= novablocks_get_editorial_card_ordinal_markup( $attributes );
 				$output .= novablocks_get_card_item_title( $title, $attributes, $post );
 				break;
 			case 'subtitle':

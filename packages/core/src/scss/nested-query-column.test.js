@@ -16,9 +16,11 @@ const css = sass.compileString(
 ).css;
 const stylesheet = postcss.parse( css );
 
-test( 'a Query directly inside a Core Column uses the column width instead of Nova page tracks on desktop', () => {
+test( 'Post Template and Carousel Queries inside Core Columns use bounded tracks', () => {
 	let layoutRoot;
 	let nestedQuery;
+	let nestedCarouselQuery;
+	let genericColumnQuery;
 
 	stylesheet.walkRules( rule => {
 		if (
@@ -29,13 +31,22 @@ test( 'a Query directly inside a Core Column uses the column width instead of No
 			layoutRoot = rule;
 		}
 
-		if ( rule.selector === '.wp-block-column > .wp-block-query' ) {
+		if ( rule.selector === '.wp-block-column > .wp-block-query:has(> .wp-block-post-template)' ) {
 			nestedQuery = rule;
+		}
+
+		if ( rule.selector === '.wp-block-column > .wp-block-query:has(> .nb-supernova--layout-carousel)' ) {
+			nestedCarouselQuery = rule;
+		}
+
+		if ( rule.selector === '.wp-block-column > .wp-block-query' ) {
+			genericColumnQuery = rule;
 		}
 	} );
 
 	assert.ok( layoutRoot, 'the normal Nova Query layout root must remain intact' );
-	assert.ok( nestedQuery, 'a direct Core Column child needs a bounded flow layout' );
+	assert.ok( nestedQuery, 'a Post Template Query needs the bounded column layout' );
+	assert.equal( genericColumnQuery, undefined, 'a Supernova Query in the same column must keep its Nova grid for carousel sizing' );
 	assert.equal(
 		nestedQuery.nodes.find( node => node.prop === 'display' )?.value,
 		'block',
@@ -45,5 +56,12 @@ test( 'a Query directly inside a Core Column uses the column width instead of No
 		nestedQuery.source.start.line > layoutRoot.source.start.line,
 		'the scoped correction must follow the generic Nova grid rule'
 	);
-	assert.match( nestedQuery.parent.params, /min-width:\s*1024px/ );
+	assert.equal( nestedQuery.parent.type, 'root', 'the index stays flush with its Core Column on mobile too' );
+	assert.ok( nestedCarouselQuery, 'a Carousel Query needs bounded named tracks inside a Core Column' );
+	assert.equal(
+		nestedCarouselQuery.nodes.find( node => node.prop === 'grid-template-columns' )?.value,
+		'[fs] minmax(0, 1fr) [fe]',
+		'the carousel must retain its Nova grid and named lines without overflowing its column'
+	);
+	assert.match( nestedCarouselQuery.parent.params, /min-width:\s*1024px/ );
 } );

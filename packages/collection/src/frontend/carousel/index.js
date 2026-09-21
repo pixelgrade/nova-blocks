@@ -57,6 +57,7 @@ const initializeCarousels = () => {
       infinite: true,
       slidesToShow: 1,
       slidesToScroll: 1,
+      adaptiveHeight: $block.hasClass( 'is-style-editorial-hero' ),
       centerMode: true,
       centerPadding: 'calc(var(--nb-sidecar-sides) - var(--nb-grid-spacing) / 4)',
       variableWidth: false,
