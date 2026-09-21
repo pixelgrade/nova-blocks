@@ -193,12 +193,6 @@ export const PostCardComponent = props => {
     .join( ' ' );
 
   const quoteParts = post?.format === 'quote' ? extractPostQuote( post ) : null;
-  const showEditorialOrdinal = String( attributes.className || '' ).split( /\s+/ ).includes( 'is-style-editorial-hero' )
-    && attributes.contentType === 'auto'
-    && attributes.layoutStyle === 'carousel'
-    && showTitle
-    && Number.isInteger( props.collectionOrdinal )
-    && props.collectionOrdinal > 0;
 
   const renderMediaWrapper = () => (
     showMedia && props.media
@@ -258,9 +252,6 @@ export const PostCardComponent = props => {
       }
 
       if ( id === ELEMENT.TITLE ) {
-        if ( showEditorialOrdinal ) {
-          elements.push( <span className="nb-card__ordinal" aria-hidden="true" key={ key + '_ordinal' }>{ String( props.collectionOrdinal ).padStart( 2, '0' ) }</span> );
-        }
         elements.push(
           <CardTitle show={ showTitle } attributes={ attributes } key={ key }>
             <span className="nb-supernova-item__link">

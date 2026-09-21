@@ -8,7 +8,6 @@ const cardScss = fs.readFileSync( path.resolve( __dirname, 'scss/_card.scss' ), 
 const itemScss = fs.readFileSync( path.resolve( __dirname, '../supernova-item/scss/_dropcap.scss' ), 'utf8' );
 const alignmentScss = fs.readFileSync( path.resolve( __dirname, 'scss/_content-alignments.scss' ), 'utf8' );
 const carouselScss = fs.readFileSync( path.resolve( __dirname, 'scss/_carousel.scss' ), 'utf8' );
-const postCollection = fs.readFileSync( path.resolve( __dirname, 'components/posts-collection-layout/index.js' ), 'utf8' );
 
 test( 'automatic cards enqueue their item stylesheet on the frontend', () => {
 	assert.match(
@@ -42,9 +41,5 @@ test( 'editorial carousel alignment is opt-in and ordinary carousels keep mobile
 test( 'an editorial hero is an opt-in style with contained mobile media and inline desktop caption', () => {
 	assert.match( supernovaPhp, /register_block_style\(\s*'novablocks\/supernova'[\s\S]*?'name'\s*=>\s*'editorial-hero'/ );
 	assert.match( carouselScss, /\.nb-supernova\.is-style-editorial-hero[^{]*\{[\s\S]*?overflow:\s*clip;/ );
-	assert.match( carouselScss, /\.nb-supernova-item__inner-container[^{]*\{[^}]*display:\s*grid;[^}]*grid-template-columns:\s*auto minmax\(0,\s*1fr\) auto;/ );
-} );
-
-test( 'the editor forwards Query position so PostCard can render the same ordinal as PHP', () => {
-	assert.match( postCollection, /<PostCard[^>]*collectionOrdinal=\{ index \+ 1 \}/ );
+	assert.match( carouselScss, /\.nb-supernova-item__inner-container[^{]*\{[^}]*display:\s*grid;[^}]*grid-template-columns:\s*minmax\(0,\s*1fr\) auto;/ );
 } );

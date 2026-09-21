@@ -213,7 +213,7 @@ describe( 'PostCard expression-class integration', () => {
 		expect( titleLink.closest( 'a' ) ).toBeNull();
 	} );
 
-	test( 'shows an ordinal before the title only for an automatic editorial carousel', () => {
+	test( 'does not turn a collection position into card markup', () => {
 		mockGetVisibleOrder.mockReturnValue( [ 'media', 'title' ] );
 		const editorial = {
 			...baseAttributes,
@@ -226,14 +226,6 @@ describe( 'PostCard expression-class integration', () => {
 			render( <PostCardComponent attributes={ editorial } post={ basePost } collectionOrdinal={ 2 } />, container );
 		} );
 
-		const ordinal = container.querySelector( '.nb-card__ordinal' );
-		expect( ordinal?.textContent ).toBe( '02' );
-		expect( ordinal?.getAttribute( 'aria-hidden' ) ).toBe( 'true' );
-		expect( ordinal?.nextElementSibling?.classList.contains( 'nb-card__title' ) ).toBe( true );
-
-		act( () => {
-			render( <PostCardComponent attributes={ { ...editorial, className: '' } } post={ basePost } collectionOrdinal={ 2 } />, container );
-		} );
 		expect( container.querySelector( '.nb-card__ordinal' ) ).toBeNull();
 	} );
 

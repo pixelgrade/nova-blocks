@@ -148,8 +148,8 @@ $slick-arrow-background-opacity-hover: 0.6 !default;
   }
 }
 
-// The editorial hero keeps the active work, its ordinal and its metadata in
-// one caption row. Natural slide heights let Slick's adaptiveHeight position
+// The editorial hero keeps the active work and its metadata in one caption
+// row. Natural slide heights let Slick's adaptiveHeight position
 // pagination immediately after the active caption, not after the longest one.
 // Opt-in preserves ordinary carousel spacing and mobile peek elsewhere.
 .nb-supernova.is-style-editorial-hero {
@@ -164,22 +164,17 @@ $slick-arrow-background-opacity-hover: 0.6 !default;
 
   .nb-supernova-item__inner-container {
     display: grid;
-    grid-template-columns: auto minmax(0, 1fr) auto;
+    grid-template-columns: minmax(0, 1fr) auto;
     align-items: baseline;
     column-gap: 1em;
 
-    .nb-card__ordinal {
-      grid-column: 1;
-      font-size: 0.8em;
-    }
-
     .nb-card__title {
-      grid-column: 2;
+      grid-column: 1;
       min-width: 0;
     }
 
     .nb-card__meta {
-      grid-column: 3;
+      grid-column: 2;
       margin: 0;
     }
   }
@@ -188,10 +183,10 @@ $slick-arrow-background-opacity-hover: 0.6 !default;
     overflow: clip;
 
     .nb-supernova-item__inner-container {
-      grid-template-columns: auto minmax(0, 1fr);
+      grid-template-columns: minmax(0, 1fr);
 
       .nb-card__meta {
-        grid-column: 2;
+        grid-column: 1;
         grid-row: 2;
       }
     }
