@@ -38,6 +38,7 @@ export const updateBlockSignal = ( block, parentVariation, parentPalette ) => {
     ? {
       inheritParentPalette: true,
       minColorSignal: 1,
+      paletteInheritanceAttribute: 'useParentPalette',
     }
     : block.classList.contains( 'wp-block-list' ) || block.classList.contains( 'nb-list' )
       ? { inheritParentPalette: true }

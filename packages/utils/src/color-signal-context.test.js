@@ -198,6 +198,13 @@ describe( 'shouldInheritParentPalette', () => {
 		} ) ).toBe( false );
 	} );
 
+	it( 'honors string ownership values from saved DOM data attributes', () => {
+		expect( [
+			shouldInheritParentPalette?.( optionalInheritance, { palette: '3', useParentPalette: 'true' } ),
+			shouldInheritParentPalette?.( optionalInheritance, { palette: '1', useParentPalette: 'false' } ),
+		] ).toEqual( [ true, false ] );
+	} );
+
 	it( 'migrates legacy default palettes to inheritance without overriding non-default palettes', () => {
 		expect( [
 			shouldInheritParentPalette?.( optionalInheritance, { palette: '1' } ),

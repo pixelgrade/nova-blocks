@@ -30,11 +30,17 @@ jest.mock( '../utils', () => ( {
 	shouldInheritParentPalette: ( support, attributes ) => {
 		if ( support.paletteInheritanceAttribute ) {
 			const explicit = attributes[ support.paletteInheritanceAttribute ];
-			if ( typeof explicit === 'boolean' ) {
-				return explicit;
+			if ( explicit === true || explicit === 'true' ) {
+				return true;
+			}
+			if ( explicit === false || explicit === 'false' ) {
+				return false;
 			}
 
-			return `${ attributes.palette }` === `${ support.legacyInheritedPalette }`;
+			if ( typeof support.legacyInheritedPalette !== 'undefined' ) {
+				return `${ attributes.palette }` === `${ support.legacyInheritedPalette }`;
+			}
+			return true;
 		}
 
 		return support.inheritParentPalette === true;
@@ -114,6 +120,53 @@ describe( 'updateBlockSignal', () => {
 		expect( button.classList.contains( 'sm-color-signal-1' ) ).toBe( true );
 		expect( button.dataset.palette ).toBe( '2' );
 		expect( button.dataset.useSourceColorAsReference ).toBeUndefined();
+	} );
+
+	it( 'keeps a legacy Button without ownership data inherited even when its saved palette is non-default', () => {
+		document.body.innerHTML = `
+			<div class="sm-palette-1 sm-variation-8 sm-color-signal-0"
+				data-palette="1" data-palette-variation="8" data-color-signal="0">
+				<div class="wp-block-button sm-palette-2 sm-variation-8 sm-color-signal-2"
+					data-palette="2" data-palette-variation="8" data-color-signal="2"></div>
+			</div>
+		`;
+
+		const surface = document.body.firstElementChild;
+		const button = surface.firstElementChild;
+		updateBlockSignal( surface, 1 );
+
+		expect( button.dataset.palette ).toBe( '1' );
+		expect( button.dataset.useParentPalette ).toBe( 'true' );
+	} );
+
+	it.each( [
+		[ '2', '1', 'false', '1' ],
+		[ '1', '2', 'false', '2' ],
+		[ '1', '2', 'true', '1' ],
+	] )( 'honors Button palette ownership: parent %s, saved %s, explicit %s', ( parentPalette, savedPalette, inherit, expectedPalette ) => {
+		window.styleManager = {
+			colorsConfig: [ '1', '2' ].map( id => ( {
+				id,
+				variations: Array.from( { length: 12 }, () => ( { fg1: '#ffffff' } ) ),
+			} ) ),
+		};
+		document.body.innerHTML = `
+			<div class="sm-palette-${ parentPalette } sm-variation-8 sm-color-signal-0"
+				data-palette="${ parentPalette }" data-palette-variation="8" data-color-signal="0">
+				<div class="wp-block-button sm-palette-${ savedPalette } sm-variation-8 sm-color-signal-2"
+					data-palette="${ savedPalette }" data-palette-variation="8" data-color-signal="2"
+					data-use-parent-palette="${ inherit }"></div>
+			</div>
+		`;
+
+		const surface = document.body.firstElementChild;
+		const button = surface.firstElementChild;
+		updateBlockSignal( surface, 1 );
+		updateBlockSignal( surface, 1 );
+
+		expect( button.dataset.palette ).toBe( expectedPalette );
+		expect( button.classList.contains( `sm-palette-${ expectedPalette }` ) ).toBe( true );
+		expect( button.dataset.useParentPalette ).toBe( inherit );
 	} );
 
 	it( 'resolves legacy List markup against the nearest parent palette', () => {
