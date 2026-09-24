@@ -135,6 +135,83 @@ function novablocks_enable_facetwp_query_loop( array $query, $block, int $page )
 }
 add_filter( 'query_loop_block_query_vars', 'novablocks_enable_facetwp_query_loop', 10, 3 );
 
+/**
+ * Whether a parsed block tree holds a Nova collection.
+ *
+ * @param array $parsed_block Parsed block.
+ * @return bool
+ */
+function novablocks_parsed_block_has_collection( array $parsed_block ): bool {
+	foreach ( $parsed_block['innerBlocks'] ?? [] as $inner_block ) {
+		if ( 'novablocks/supernova' === ( $inner_block['blockName'] ?? '' ) || novablocks_parsed_block_has_collection( $inner_block ) ) {
+			return true;
+		}
+	}
+
+	return false;
+}
+
+/**
+ * Remember which posts a Query Loop's collection excludes ("Prevent duplicate posts").
+ *
+ * @param int   $query_id Query Loop id.
+ * @param array $post_ids Posts rendered higher on the page.
+ */
+function novablocks_set_query_dedup_exclusions( int $query_id, array $post_ids ): void {
+	$GLOBALS['novablocks_query_dedup_exclusions'][ $query_id ] = array_values( array_unique( array_map( 'intval', $post_ids ) ) );
+}
+
+/**
+ * Snapshot the "Prevent duplicate posts" exclusion when a Query Loop holding a
+ * Nova collection starts rendering, before the collection adds its own posts,
+ * so counting blocks placed above the cards see the same list.
+ *
+ * @param array $parsed_block Parsed block about to render.
+ * @return array Unchanged parsed block.
+ */
+function novablocks_record_query_dedup_exclusions( array $parsed_block ): array {
+	if ( 'core/query' !== ( $parsed_block['blockName'] ?? '' ) || ! isset( $parsed_block['attrs']['queryId'] ) ) {
+		return $parsed_block;
+	}
+
+	if ( ! get_post_meta( get_the_ID(), 'supernova_prevent_duplicate', true ) || ! novablocks_parsed_block_has_collection( $parsed_block ) ) {
+		return $parsed_block;
+	}
+
+	novablocks_set_query_dedup_exclusions( (int) $parsed_block['attrs']['queryId'], $GLOBALS['novablocks_rendered_posts_ids'] ?? [] );
+
+	return $parsed_block;
+}
+add_filter( 'render_block_data', 'novablocks_record_query_dedup_exclusions', 10, 1 );
+
+/**
+ * Apply the "Prevent duplicate posts" exclusion at the shared Query Loop build
+ * step, so the collection's cards and the loop's counting blocks (pagination
+ * numbers, next, no-results, total) query the same deduplicated set. Otherwise
+ * the pager counts posts the collection never shows and offers empty pages.
+ *
+ * @param array    $query Query arguments built by the Query Loop block.
+ * @param WP_Block $block Block building the query.
+ * @param int      $page  Current Query Loop page.
+ * @return array Filtered query arguments.
+ */
+function novablocks_apply_query_dedup_exclusions( array $query, $block, int $page ): array {
+	if ( ! isset( $block->context['queryId'] ) ) {
+		return $query;
+	}
+
+	$excluded = $GLOBALS['novablocks_query_dedup_exclusions'][ (int) $block->context['queryId'] ] ?? [];
+
+	if ( ! $excluded ) {
+		return $query;
+	}
+
+	$query['post__not_in'] = array_values( array_unique( array_merge( $query['post__not_in'] ?? [], $excluded ) ) );
+
+	return $query;
+}
+add_filter( 'query_loop_block_query_vars', 'novablocks_apply_query_dedup_exclusions', 10, 3 );
+
 function novablocks_get_alignment( array $attributes ): array {
 
 	if ( ! empty( $attributes['contentPosition'] ) ) {
@@ -3286,15 +3363,18 @@ function novablocks_get_posts_collection_cards_markup( array $attributes, $conte
 		}
 	} else {
 		if ( isset( $block->context['queryId'] ) ) {
+			// The exclusion is applied by novablocks_apply_query_dedup_exclusions()
+			// while building the query, like for the loop's counting blocks.
+			// Refresh the loop's list first: it holds exactly what these cards skip.
+			$prevent_duplicate_posts = get_post_meta( get_the_ID(), 'supernova_prevent_duplicate', true );
+			if ( $prevent_duplicate_posts ) {
+				novablocks_set_query_dedup_exclusions( (int) $block->context['queryId'], $novablocks_rendered_posts_ids );
+			}
+
 			if ( function_exists( 'gutenberg_build_query_vars_from_query_block' ) ) {
 				$query_args = gutenberg_build_query_vars_from_query_block( $block, $page );
 			} else {
 				$query_args = build_query_vars_from_query_block( $block, $page );
-			}
-
-			$prevent_duplicate_posts = get_post_meta( get_the_ID(), 'supernova_prevent_duplicate', true );
-			if ( $prevent_duplicate_posts ) {
-				$query_args['post__not_in'] = $novablocks_rendered_posts_ids;
 			}
 		} else {
 			$query_args = novablocks_build_articles_query( $attributes, $block );
