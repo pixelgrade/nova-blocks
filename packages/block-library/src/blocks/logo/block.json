@@ -9,7 +9,7 @@
 	"keywords": ["branding"],
 	"textdomain": "nova-blocks",
 	"attributes": {},
-	"usesContext": [],
+	"usesContext": [ "novablocks/logoHeight", "novablocks/mobileLogoHeight" ],
 	"supports": {
 		"html": false
 	}

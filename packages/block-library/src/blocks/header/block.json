@@ -9,6 +9,10 @@
 	"textdomain": "nova-blocks",
 	"attributes": {},
 	"usesContext": [],
+	"providesContext": {
+		"novablocks/logoHeight": "logoHeight",
+		"novablocks/mobileLogoHeight": "mobileLogoHeight"
+	},
 	"supports": {
 		"html": false,
 		"novaBlocks": {
