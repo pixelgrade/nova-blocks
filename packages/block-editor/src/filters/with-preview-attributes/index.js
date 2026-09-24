@@ -21,9 +21,12 @@ const withPreviewAttributes = BlockEdit => {
 
     const newAttributes = useMemo( () => getPreviewAttributes( attributes ), [ attributes ] );
 
+    // `storedAttributes` lets sections rendered from a block's own edit
+    // (always inside this boundary) show and edit the saved design (#642).
     const newProps = {
       ...props,
       attributes: newAttributes,
+      storedAttributes: attributes,
     };
 
     if ( ! blockNeedsPreview ) {

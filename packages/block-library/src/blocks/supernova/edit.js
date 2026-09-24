@@ -521,12 +521,16 @@ const SupernovaEdit = props => {
 
   markPosts( clientId, posts );
 
+  // In Edit Mode the canvas renders forced preview attributes; the toolbar
+  // and inspector sections must show and edit the saved design (#642).
+  const storedProps = props.storedAttributes ? { ...props, attributes: props.storedAttributes } : props;
+
   return (
     <Fragment>
       <SupernovaPreview { ...props } attributes={ previewAttributes } posts={ posts } inQuery={ isDescendentOfQueryLoop } key={ 'preview' }/>
-      <BlockControls { ...props } inQuery={ isDescendentOfQueryLoop } key={ 'block-controls' }/>
-      <InspectorControls { ...props } inQuery={ isDescendentOfQueryLoop } key={ 'inspector-controls' }/>
-      <CardStyleControls { ...props } key={ 'card-style-controls' }/>
+      <BlockControls { ...storedProps } inQuery={ isDescendentOfQueryLoop } key={ 'block-controls' }/>
+      <InspectorControls { ...storedProps } inQuery={ isDescendentOfQueryLoop } key={ 'inspector-controls' }/>
+      <CardStyleControls { ...storedProps } key={ 'card-style-controls' }/>
       <ChangeMediaBlockControls { ...props } key={ 'media-composition-block-controls' }/>
     </Fragment>
   );

@@ -28,7 +28,11 @@ const withCardDetailsControls = createHigherOrderComponent( OriginalComponent =>
   };
 }, 'withCardDetailsControls' );
 
-addFilter( 'editor.BlockEdit', 'novablocks/with-card-details-controls', withCardDetailsControls );
+// Priority 30 places the inspector controls OUTSIDE withPreviewAttributes
+// (priority 20), so in a preview-capable layout's Edit Mode they read the
+// block's stored attributes instead of the canvas-only forced ones (#642;
+// same boundary as with-collection-layout).
+addFilter( 'editor.BlockEdit', 'novablocks/with-card-details-controls', withCardDetailsControls, 30 );
 
 const blocksWithCardDetailsAttributes = [
   'novablocks/posts-collection',

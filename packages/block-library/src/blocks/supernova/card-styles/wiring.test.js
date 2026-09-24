@@ -17,7 +17,8 @@ const thumb = read('./card-style-thumb.js');
 test('the section is supernova-only, top of drawer (order 5), one Presets tab', () => {
   assert.match(controls, /<ControlsSection id=\{ 'card-styles' \} label=\{ __\( 'Card Styles', '__plugin_txtd' \) \} order=\{ 5 \}>/);
   assert.match(controls, /<ControlsTab label=\{ __\( 'Presets', '__plugin_txtd' \) \}>/);
-  assert.match(edit, /<CardStyleControls \{ \.\.\.props \} key=\{ 'card-style-controls' \}\/>/);
+  // Stored attributes, not the Edit Mode canvas ones, drive the tile selection (#642).
+  assert.match(edit, /<CardStyleControls \{ \.\.\.storedProps \} key=\{ 'card-style-controls' \}\/>/);
   assert.match(edit, /import CardStyleControls from '\.\/card-styles\/controls'/);
 });
 
