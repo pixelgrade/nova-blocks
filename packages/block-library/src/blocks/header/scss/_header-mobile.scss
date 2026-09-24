@@ -2,6 +2,8 @@
   #MOBILE HEADER
 \*------------------------------------*/
 
+$nb-header-mobile-cta-gap: 12px;
+
 .nb-header--mobile {
   z-index: 2000;
 
@@ -48,6 +50,104 @@
       display: none;
     }
   }
+
+  // Navigation CTA (`is-cta-button`) promoted into the bar, grouped with the
+  // cart in the right slot. The theme owns the button look; Nova owns the
+  // placement, the tap target, and the fit.
+  .nb-header__mobile-actions {
+    display: flex;
+    align-items: center;
+    gap: 1em;
+
+    position: absolute;
+    top: 50%;
+    right: var(--theme-wrapper-sides-spacing);
+    z-index: 1;
+
+    transform: translateY(-50%);
+
+    .menu-item--cart {
+      position: static;
+      transform: none;
+    }
+  }
+
+  // The brand stays centered; reserve the actions' measured width on both
+  // sides so a long title or logo never runs under the CTA. JS publishes the
+  // width after fitting the CTA (see `HeaderMobile.fitMobileCta`).
+  &.nb-header--has-mobile-cta .nb-header__mobile-brand {
+    max-width: calc(100% - 2 * (var(--nb-header-mobile-actions-width, 0px) + #{$nb-header-mobile-cta-gap}));
+  }
+
+  // Measuring pass: the brand's one-line width, unconstrained. Theme buttons
+  // transition `all`, so size changes must land instantly to be measurable.
+  &.nb-header--measuring-mobile-cta {
+
+    .nb-header__mobile-brand {
+      max-width: none;
+      white-space: nowrap;
+    }
+
+    :is(.nb-header__mobile-brand, .nb-header__mobile-actions, .nb-header__mobile-actions *) {
+      transition: none !important;
+    }
+  }
+
+  .nb-header__mobile-cta > a {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.4em;
+
+    min-width: 44px;
+    min-height: 44px;
+    max-width: var(--nb-header-mobile-cta-max-width, 45vw);
+    margin: 0;
+
+    white-space: nowrap;
+    text-decoration: none;
+  }
+
+  .nb-header__mobile-cta--hidden {
+    display: none;
+  }
+
+  .nb-header__mobile-cta-label {
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .nb-header__mobile-cta-icon {
+    flex: none;
+    width: 1.1em;
+    height: 1.1em;
+  }
+
+  // Phone and email CTAs fall back to their icon when the label would crowd
+  // the brand; the link keeps its accessible name through `aria-label`.
+  // `[class]` outranks the theme's button padding, which loads later.
+  .nb-header__mobile-cta--icon-only[class] > a {
+    width: 44px;
+    padding-left: 0;
+    padding-right: 0;
+  }
+
+  .nb-header__mobile-cta--icon-only .nb-header__mobile-cta-label {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip-path: inset(50%);
+    white-space: nowrap;
+  }
+}
+
+// Theme-neutral fallback look, at zero specificity so a theme's button styles win.
+:where(.nb-header--mobile .nb-header__mobile-cta) > a {
+  padding: 0.5em 1em;
+  border: 1px solid currentColor;
+  border-radius: 999px;
+  color: inherit;
 }
 
 :is(.nb-header--mobile, #more.specific) {
