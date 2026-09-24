@@ -155,7 +155,9 @@ $nb-header-mobile-cta-gap: 12px;
     --header-background-opacity: 0;
   }
 
+  // Above the band's ground layer (`.nb-header-background:before`).
   .nb-header-row {
+    position: relative;
     width: 100%;
   }
 

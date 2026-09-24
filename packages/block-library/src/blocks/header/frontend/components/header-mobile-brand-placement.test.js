@@ -155,6 +155,14 @@ describe( 'HeaderMobile brand placement', () => {
 			expect( title.classList.contains( 'nb-fit-text' ) ).toBe( true );
 		} );
 
+		it( 'paints the header ground like the bar, since rows paint none below lap (#647)', () => {
+			const header = renderHeader( 'below' );
+			const masthead = document.querySelector( '.nb-header__mobile-masthead' );
+
+			expect( masthead.classList.contains( 'nb-header-background' ) ).toBe( true );
+			expect( header.element.classList.contains( 'nb-header-background' ) ).toBe( true );
+		} );
+
 		it( 'carries the Header sizing variables so the row keeps its design size', () => {
 			renderHeader( 'below' );
 			const masthead = document.querySelector( '.nb-header__mobile-masthead' );

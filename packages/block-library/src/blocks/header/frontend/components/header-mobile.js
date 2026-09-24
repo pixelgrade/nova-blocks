@@ -143,8 +143,11 @@ class HeaderMobile extends HeaderBase {
     const palette = getColorSetClasses( row ).join( ' ' );
     removeClass( row, palette );
 
+    // Rows paint no ground below lap (the bar does), so the band paints the
+    // header's own ground like the bar: solid over any first section, and
+    // see-through only while the Header is transparent over its hero.
     const masthead = document.createElement( 'div' );
-    masthead.setAttribute( 'class', 'nb-header__mobile-masthead' );
+    masthead.setAttribute( 'class', 'nb-header__mobile-masthead nb-header-background' );
     addClass( masthead, palette );
     masthead.setAttribute( 'style', this.parent.element.getAttribute( 'style' ) || '' );
     masthead.style.removeProperty( 'padding-top' );
