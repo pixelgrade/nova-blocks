@@ -1,0 +1,39 @@
+// A compact, query-driven project index. The style is opt-in in the editor;
+// numbers follow the current Query result instead of becoming stale content.
+.wp-block-post-template.is-style-numbered-index {
+  counter-reset: nb-post-index;
+
+  > li {
+    counter-increment: nb-post-index;
+    display: grid;
+    grid-template-columns: 2.25em minmax(0, 1fr);
+    align-items: center;
+    column-gap: 0.55em;
+    padding-block: 0.42em;
+    border-bottom: 1px solid color-mix(in srgb, currentColor 20%, transparent);
+
+    @include below(tablet) {
+      padding-block: 0.14em;
+    }
+
+    &::before {
+      content: counter(nb-post-index, decimal-leading-zero);
+      font-size: 0.75em;
+    }
+
+    > .wp-block-post-title {
+      min-width: 0;
+      margin: 0;
+    }
+  }
+
+  > li:not(:first-child) {
+    margin-top: 0;
+  }
+}
+
+// The heading immediately before this kind of index is part of one compact
+// rail. Use Nova's fluid rhythm instead of the generic whole-block gap.
+.wp-block-column > .wp-block-query:has(> .wp-block-post-template.is-style-numbered-index) {
+  --nb-block-top-spacing: 0.5;
+}

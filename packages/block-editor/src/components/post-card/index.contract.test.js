@@ -213,6 +213,22 @@ describe( 'PostCard expression-class integration', () => {
 		expect( titleLink.closest( 'a' ) ).toBeNull();
 	} );
 
+	test( 'does not turn a collection position into card markup', () => {
+		mockGetVisibleOrder.mockReturnValue( [ 'media', 'title' ] );
+		const editorial = {
+			...baseAttributes,
+			contentType: 'auto',
+			layoutStyle: 'carousel',
+			className: 'is-style-editorial-hero',
+		};
+
+		act( () => {
+			render( <PostCardComponent attributes={ editorial } post={ basePost } collectionOrdinal={ 2 } />, container );
+		} );
+
+		expect( container.querySelector( '.nb-card__ordinal' ) ).toBeNull();
+	} );
+
 	test( 'renders the media Read More affordance only for a registered capable recipe', () => {
 		mockGetVisibleOrder.mockReturnValue( [ 'media', 'title' ] );
 		const attributes = {

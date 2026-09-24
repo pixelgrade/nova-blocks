@@ -200,6 +200,26 @@
   @include nb-layout-subgrid-override;
 }
 
+// A Core Column is a bounded flex item, not a Nova layout-grid parent. A Query
+// Loop with a direct Post Template must use that column's width at every
+// viewport instead of placing its list on page-wide rail tracks.
+.wp-block-column > .wp-block-query:has(> .wp-block-post-template) {
+  display: block;
+}
+
+// Do not make a Supernova Query block-level: Slick needs its Nova grid at
+// initialization. Replace only the page-wide tracks with one bounded named
+// track, preserving the fs / fe lines its child uses.
+@include above(lap) {
+  // A Carousel still needs Nova's named grid lines (fs / fe), but the
+  // page-wide rail template can be wider than its bounded Core Column.
+  // Keep the grid and replace only its tracks so Slick measures the real
+  // column width at initialization.
+  .wp-block-column > .wp-block-query:has(> .nb-supernova--layout-carousel) {
+    grid-template-columns: [fs] minmax(0, 1fr) [fe];
+  }
+}
+
 // Rail-less roots reserve no rail tracks (Task 3.1, the design's "roots
 // without rails zero the rail track vars" end state). Zero ONLY the derived
 // template var: the gap tracks and the content math keep deriving from the

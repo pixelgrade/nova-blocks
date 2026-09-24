@@ -148,6 +148,51 @@ $slick-arrow-background-opacity-hover: 0.6 !default;
   }
 }
 
+// The editorial hero keeps the active work and its metadata in one caption
+// row. Natural slide heights let Slick's adaptiveHeight position
+// pagination immediately after the active caption, not after the longest one.
+// Opt-in preserves ordinary carousel spacing and mobile peek elsewhere.
+.nb-supernova.is-style-editorial-hero {
+  .slick-track {
+    align-items: flex-start;
+  }
+
+  .slick-slide,
+  .nb-supernova-item {
+    height: auto;
+  }
+
+  .nb-supernova-item__inner-container {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    align-items: baseline;
+    column-gap: 1em;
+
+    .nb-card__title {
+      grid-column: 1;
+      min-width: 0;
+    }
+
+    .nb-card__meta {
+      grid-column: 2;
+      margin: 0;
+    }
+  }
+
+  @include below(lap) {
+    overflow: clip;
+
+    .nb-supernova-item__inner-container {
+      grid-template-columns: minmax(0, 1fr);
+
+      .nb-card__meta {
+        grid-column: 1;
+        grid-row: 2;
+      }
+    }
+  }
+}
+
 // Remove default color signal background
 :is(.slick-arrow, .slick-dots, .specificity.x2) {
   background: transparent;
@@ -329,6 +374,27 @@ $slick-arrow-background-opacity-hover: 0.6 !default;
       }
     }
   }
+}
+
+// The Content Position control aligns the card caption; its numbered
+// navigation is part of the same carousel and must follow that axis too.
+.nb-supernova.is-style-editorial-hero.nb-supernova--halign-left .slick-dots {
+  text-align: left;
+
+  @include below(lap) {
+    // The carousel bleeds to the viewport on small screens; restore the
+    // page's native inset for the control without widening its box.
+    box-sizing: border-box;
+    padding-left: var(--nb-wrapper-sides-spacings);
+  }
+
+  li:first-child button {
+    margin-left: 0;
+  }
+}
+
+.nb-supernova.is-style-editorial-hero.nb-supernova--halign-right .slick-dots {
+  text-align: right;
 }
 
 

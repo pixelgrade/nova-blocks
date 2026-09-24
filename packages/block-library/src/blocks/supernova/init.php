@@ -8,6 +8,13 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
+add_action( 'init', function () {
+	register_block_style( 'novablocks/supernova', array(
+		'name'  => 'editorial-hero',
+		'label' => __( 'Editorial Hero', '__plugin_txtd' ),
+	) );
+}, 20 );
+
 function novablocks_get_supernova_attributes(): array {
 
 	return novablocks_merge_attributes_from_array( [
@@ -61,6 +68,13 @@ if ( ! function_exists( 'novablocks_render_supernova_block' ) ) {
 
 		$attributes_config = novablocks_get_supernova_attributes();
 		$attributes        = novablocks_get_attributes_with_defaults( $attributes, $attributes_config );
+
+		// Auto collections create Card markup during render, without a stored
+		// Supernova Item block for Core's asset discovery to find. Its stylesheet
+		// contains the default hidden state for the Read More affordance.
+		if ( 'auto' === $attributes['contentType'] ) {
+			wp_enqueue_style( 'novablocks/supernova-item-style' );
+		}
 
 		// Intrinsic Plus enforcement: normalize locked premium values before they
 		// reach data-* attributes, classes, CSS props, or markup (lib/plus-gating.php).
