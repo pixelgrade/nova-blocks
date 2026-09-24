@@ -2,7 +2,7 @@
  * WordPress dependencies
  */
 import { __ } from '@wordpress/i18n';
-import { BaseControl, Button, RadioControl, RangeControl } from '@wordpress/components';
+import { BaseControl, Button, RadioControl, RangeControl, SelectControl } from '@wordpress/components';
 import { useSelect, useDispatch } from "@wordpress/data";
 import { useState, useCallback, createInterpolateElement } from '@wordpress/element';
 
@@ -170,6 +170,7 @@ const HeaderOptions = ( props ) => {
   const {
     logoHeight,
     mobileLogoHeight,
+    mobileBrandPlacement,
     navigationLinkSpacing,
     headerSidesSpacing,
     stickyHeaderSpacingMultiplier
@@ -194,6 +195,17 @@ const HeaderOptions = ( props ) => {
         min={ 14 }
         max={ 200 }
         step={ 1 }
+      />
+      <SelectControl
+        label={ __( 'Mobile Branding', '__plugin_txtd' ) }
+        help={ __( 'Where the logo or site title shows on phones and tablets (below 1024px). Below the bar keeps it at full size and lets it scroll away; the bar stays sticky.', '__plugin_txtd' ) }
+        value={ mobileBrandPlacement }
+        options={ [
+          { label: __( 'In the bar', '__plugin_txtd' ), value: 'bar' },
+          { label: __( 'Below the bar, full size', '__plugin_txtd' ), value: 'below' },
+          { label: __( 'Below the bar, folding into it on scroll', '__plugin_txtd' ), value: 'below-fold' },
+        ] }
+        onChange={ mobileBrandPlacement => setAttributes( { mobileBrandPlacement } ) }
       />
       <RangeControl
         label={ __( 'Navigation Link Spacing', '__plugin_txtd' ) }

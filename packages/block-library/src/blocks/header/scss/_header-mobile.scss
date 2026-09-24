@@ -142,6 +142,60 @@ $nb-header-mobile-cta-gap: 12px;
   }
 }
 
+// Branding below the bar (Header `mobileBrandPlacement`, #645). The masthead is
+// the branding row at its full design size, positioned by JS right under the
+// bar; it scrolls away with the page while the bar stays sticky.
+.nb-header__mobile-masthead {
+  position: absolute;
+  right: 0;
+  left: 0;
+  z-index: 1999; // under the bar (2000) and the drawer
+
+  &.nb-header--transparent:not([style*='fixed'])[class] {
+    --header-background-opacity: 0;
+  }
+
+  .nb-header-row {
+    width: 100%;
+  }
+
+  // The masthead wordmark fills the mobile measure (the Hive/Jason pattern):
+  // Site Identity's fluid width curve is for compact contexts, so give its
+  // text column the full width and let fit-text size the title to it.
+  .nb-site-identity__inner {
+    inline-size: 100%;
+  }
+
+  @include above(lap) {
+    display: none;
+  }
+}
+
+// Folding: the bar keeps a compact brand, revealed once the masthead has
+// scrolled under the bar.
+.nb-header--mobile.nb-header--brand-foldable {
+
+  .nb-header__mobile-brand {
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity .25s ease, visibility 0s linear .25s;
+  }
+
+  &.nb-header--brand-folded .nb-header__mobile-brand {
+    opacity: 1;
+    visibility: visible;
+    transition: opacity .25s ease, visibility 0s linear 0s;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+
+    .nb-header__mobile-brand,
+    &.nb-header--brand-folded .nb-header__mobile-brand {
+      transition: none;
+    }
+  }
+}
+
 // Theme-neutral fallback look, at zero specificity so a theme's button styles win.
 :where(.nb-header--mobile .nb-header__mobile-cta) > a {
   padding: 0.5em 1em;

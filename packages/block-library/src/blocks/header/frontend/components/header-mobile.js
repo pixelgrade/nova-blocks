@@ -4,11 +4,17 @@ import { getColorSetClasses } from '../../utils';
 import HeaderBase from './header-base';
 import HeaderColors from './header-colors';
 import MenuToggle from './menu-toggle';
+import { observeFitText } from './fit-text';
 
 // Keep in sync with `$nb-header-mobile-cta-gap` in scss/_header-mobile.scss.
 const MOBILE_CTA_GAP = 12;
 const MOBILE_CTA_MIN_SIZE = 44;
 const MOBILE_CTA_MIN_LABEL_WIDTH = 96;
+
+// Where the branding goes below `lap` (Header `mobileBrandPlacement`):
+// in the bar (default), below it at full size, or below it and folding
+// into the bar once it scrolls out of view.
+const BRAND_PLACEMENTS = [ 'bar', 'below', 'below-fold' ];
 
 class HeaderMobile extends HeaderBase {
 
@@ -17,6 +23,11 @@ class HeaderMobile extends HeaderBase {
 
     this.parent = parent;
     this.parentContainer = parent.element.querySelector( '.nb-header__inner-container' );
+
+    const placement = parent.element.dataset.mobileBrandPlacement;
+    this.brandPlacement = BRAND_PLACEMENTS.includes( placement ) ? placement : 'bar';
+    this.masthead = null;
+    this.mastheadHeight = 0;
 
     this.initialize();
     this.onResize();
@@ -66,7 +77,20 @@ class HeaderMobile extends HeaderBase {
     if ( this.parent.allowsTransparency ) {
       addClass( this.element, 'nb-header--transparent' );
     }
-    const mobileBrand = this.copyElementFromParent( '.c-branding' );
+    // Below the bar, the bar holds only the toggle and its actions; when the
+    // masthead folds in, the bar keeps a compact brand it reveals on scroll.
+    const mobileBrand = 'below' === this.brandPlacement ? null : this.copyElementFromParent( '.c-branding' );
+
+    if ( 'below-fold' === this.brandPlacement ) {
+      addClass( this.element, 'nb-header--brand-foldable' );
+
+      // The compact brand only echoes the masthead: keep the masthead link
+      // the single tab stop and the single thing screen readers announce.
+      if ( mobileBrand ) {
+        mobileBrand.setAttribute( 'aria-hidden', 'true' );
+        mobileBrand.querySelectorAll( 'a, button' ).forEach( link => link.setAttribute( 'tabindex', '-1' ) );
+      }
+    }
 
     if ( mobileBrand ) {
       addClass( mobileBrand, 'nb-header__mobile-brand' );
@@ -89,7 +113,112 @@ class HeaderMobile extends HeaderBase {
     const mobileCart = this.copyElementFromParent( '.menu-item--cart' );
     this.createMobileCta( mobileCart );
     this.menuToggle.element.insertAdjacentElement( 'afterend', this.element );
+    this.createMasthead();
     this.createButtonMenu();
+  }
+
+  // The branding row at its full design size, in a band right under the bar.
+  // It scrolls away with the page; the bar stays sticky.
+  createMasthead() {
+    if ( 'bar' === this.brandPlacement ) {
+      return;
+    }
+
+    const logoRow = this.parent.rows.find( row => row.element.querySelector( '.site-logo, .wp-block-site-logo, .c-branding' ) );
+
+    if ( ! logoRow ) {
+      return;
+    }
+
+    const row = logoRow.element.cloneNode( true );
+
+    // The drawer keeps the navigation; ids stay unique.
+    row.querySelectorAll( '.nb-navigation, .wp-block-nb-navigation, .wp-block-navigation, .menu-item--cart, .menu--buttons' )
+      .forEach( element => element.remove() );
+    row.removeAttribute( 'id' );
+    row.querySelectorAll( '[id]' ).forEach( element => element.removeAttribute( 'id' ) );
+
+    // The band carries the row's Color Signal, so transparency over a hero
+    // can be toggled on it like on the bar.
+    const palette = getColorSetClasses( row ).join( ' ' );
+    removeClass( row, palette );
+
+    const masthead = document.createElement( 'div' );
+    masthead.setAttribute( 'class', 'nb-header__mobile-masthead' );
+    addClass( masthead, palette );
+    masthead.setAttribute( 'style', this.parent.element.getAttribute( 'style' ) || '' );
+    masthead.style.removeProperty( 'padding-top' );
+
+    if ( this.parent.allowsTransparency ) {
+      addClass( masthead, 'nb-header--transparent' );
+    }
+
+    masthead.appendChild( row );
+
+    // Fit Text's Interactivity directives never hydrate on a clone: fit the
+    // title against the mobile measure ourselves.
+    this.fitTextCleanups = [];
+    row.querySelectorAll( '.wp-block-site-title.has-fit-text' ).forEach( title => {
+      Array.from( title.attributes ).forEach( attribute => {
+        if ( attribute.name.startsWith( 'data-wp-' ) ) {
+          title.removeAttribute( attribute.name );
+        }
+      } );
+      title.style.removeProperty( 'font-size' );
+      addClass( title, 'nb-fit-text' );
+      this.fitTextCleanups.push( observeFitText( title ) );
+    } );
+
+    this.element.insertAdjacentElement( 'afterend', masthead );
+    this.masthead = masthead;
+    this.mastheadColors = new HeaderColors( masthead, logoRow.element, this.parent.colorsElement );
+    this.mastheadColors.toggleColors( this.parent.allowsTransparency );
+  }
+
+  // Reveal the bar's compact brand once the masthead has scrolled under the
+  // bar, and hide it again on the way back up.
+  observeMastheadFold() {
+    if ( 'below-fold' !== this.brandPlacement || ! this.masthead || ! window.IntersectionObserver ) {
+      return;
+    }
+
+    const barHeight = Math.round( this.getBarHeight() );
+
+    // rootMargin is fixed per observer: rebuild only when the bar changes size.
+    if ( this.foldObserver && this.foldObserverBarHeight === barHeight ) {
+      return;
+    }
+
+    if ( this.foldObserver ) {
+      this.foldObserver.disconnect();
+    }
+
+    this.foldObserverBarHeight = barHeight;
+    this.foldObserver = new window.IntersectionObserver( entries => {
+      entries.forEach( entry => {
+        if ( entry.isIntersecting ) {
+          removeClass( this.element, 'nb-header--brand-folded' );
+        } else {
+          addClass( this.element, 'nb-header--brand-folded' );
+        }
+      } );
+    }, { rootMargin: `-${ barHeight }px 0px 0px 0px`, threshold: 0 } );
+
+    this.foldObserver.observe( this.masthead );
+  }
+
+  getBarHeight() {
+    return this.box?.height || 0;
+  }
+
+  // The sticky offset is the bar alone; the masthead scrolls away.
+  getStickyHeight() {
+    return this.getBarHeight();
+  }
+
+  // The page reserves room for the bar and, below it, the masthead.
+  getHeight() {
+    return this.getBarHeight() + ( this.masthead ? this.mastheadHeight : 0 );
   }
 
   // A navigation item marked as the call to action (`is-cta-button`) is the
@@ -204,9 +333,20 @@ class HeaderMobile extends HeaderBase {
     this.update();
     const scrollY = window.pageYOffset;
     this.updateStickyStyles( scrollY );
+    this.updateMasthead();
     // Fit only once the bar is positioned again: `HeaderBase.onResize` clears
     // its position to measure, which leaves it at its narrower in-flow width.
     this.fitMobileCta();
+  }
+
+  updateMasthead() {
+    if ( ! this.masthead ) {
+      return;
+    }
+
+    this.masthead.style.top = `${ this.staticDistance + this.getBarHeight() }px`;
+    this.mastheadHeight = this.masthead.getBoundingClientRect().height;
+    this.observeMastheadFold();
   }
 
   update() {
@@ -273,6 +413,11 @@ class HeaderMobile extends HeaderBase {
     const { checked } = event.target;
     document.body.style.overflow = checked ? 'hidden' : '';
     this.navigationIsOpen = !!checked;
+
+    // The open drawer covers the masthead: keep focus inside the menu.
+    if ( this.masthead ) {
+      this.masthead.inert = this.navigationIsOpen;
+    }
     this.updateToggleClasses();
   }
 

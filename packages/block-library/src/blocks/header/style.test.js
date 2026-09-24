@@ -51,7 +51,7 @@ test('generated mobile header uses text-based Site Identity as its color source'
 test('generated mobile header marks text branding as a compact static clone', () => {
   assert.match(
     headerMobileJsSource,
-    /const mobileBrand = this\.copyElementFromParent\( '\.c-branding' \)/
+    /const mobileBrand = [^;\n]*this\.copyElementFromParent\( '\.c-branding' \)/
   );
 
   assert.match(

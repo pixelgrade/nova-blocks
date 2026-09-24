@@ -20,6 +20,11 @@
 		"type": "number",
 		"default": 24
 	},
+	"mobileBrandPlacement": {
+		"type": "string",
+		"enum": [ "bar", "below", "below-fold" ],
+		"default": "bar"
+	},
 	"navigationLinkSpacing": {
 		"type": "number",
 		"default": 32

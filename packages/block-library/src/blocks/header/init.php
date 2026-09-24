@@ -51,6 +51,10 @@ if ( ! function_exists( 'novablocks_render_header_block' ) ) {
 		$data_attributes_array = array_map( 'novablocks_camel_case_to_kebab_case', array_keys( $attributes ) );
 		// Missing mode means legacy transparency; keep default frontend HTML unchanged.
 		$data_blacklist        = 'solid' === ( $attributes['backgroundMode'] ?? 'transparent' ) ? [] : [ 'background-mode' ];
+		// Default "in the bar" placement adds nothing, so existing headers keep their exact markup.
+		if ( 'bar' === ( $attributes['mobileBrandPlacement'] ?? 'bar' ) ) {
+			$data_blacklist[] = 'mobile-brand-placement';
+		}
 		$data_attributes       = novablocks_get_data_attributes( $data_attributes_array, $attributes, $data_blacklist );
 
 		$classes = [

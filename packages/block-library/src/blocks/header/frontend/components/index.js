@@ -142,7 +142,9 @@ class Header extends HeaderBase {
     }
 
     if ( this.isSticky ) {
-      document.documentElement.style.setProperty( '--theme-sticky-header-height', `${ this.getHeight() }px` ) ;
+      // Below `lap` only the mobile bar sticks; a masthead under it scrolls away.
+      const stickyHeight = below( 'lap' ) ? this.mobileHeader.getStickyHeight() : this.getHeight();
+      document.documentElement.style.setProperty( '--theme-sticky-header-height', `${ stickyHeight }px` ) ;
     }
 
     this.applyPaddingTopToTargets();
