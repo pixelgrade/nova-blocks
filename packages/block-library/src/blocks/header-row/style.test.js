@@ -93,3 +93,33 @@ test( 'the resize-box reset preserves core Logo sizing outside Header editor row
 	} );
 	frontend.walkRules( rule => assert.equal( rule.selector.includes( '.components-resizable-box__container' ), false, 'Frontend logo sizing does not depend on editor wrappers.' ) );
 } );
+
+test( 'below lap, the spacing reset keeps the compact rows tight but spares the Mobile Branding masthead (#648)', () => {
+	const page = new JSDOM( '<body><header class="nb-header nb-header--main"><div class="nb-header-row" id="drawer-row"></div></header><div class="nb-header__mobile-masthead"><div class="nb-header-row" id="masthead-row"></div></div></body>' ).window.document;
+	const resets = {};
+	frontend.walkRules( rule => {
+		if ( rule.parent.type !== 'atrule' || ! /^not screen and \(min-width:/.test( rule.parent.params ) ) {
+			return;
+		}
+		for ( const property of [ '--nb-emphasis-top-spacing', '--nb-emphasis-bottom-spacing', '--nb-block-top-spacing', '--nb-block-bottom-spacing' ] ) {
+			const decl = rule.nodes.find( node => node.type === 'decl' && node.prop === property );
+			if ( decl && '0' === decl.value && decl.important ) {
+				( resets[ property ] = resets[ property ] || [] ).push( rule.selector );
+			}
+		}
+	} );
+
+	for ( const property of [ '--nb-emphasis-top-spacing', '--nb-emphasis-bottom-spacing', '--nb-block-top-spacing', '--nb-block-bottom-spacing' ] ) {
+		const selectors = resets[ property ] || [];
+		assert.ok( selectors.length, `${ property } is still reset below lap.` );
+		// jsdom cannot parse complex :not() arguments (browsers can): evaluate
+		// `A:not(B)` as "matches A and not B".
+		const matches = ( element, selector ) => selector.split( /,(?![^(]*\))/ ).some( part => {
+			const excluded = [ ...part.matchAll( /:not\(([^()]*>[^()]*)\)/g ) ].map( match => match[ 1 ] );
+			const base = part.replace( /:not\(([^()]*>[^()]*)\)/g, '' );
+			return element.matches( base ) && ! excluded.some( exclusion => element.matches( exclusion ) );
+		} );
+		assert.ok( selectors.some( selector => matches( page.querySelector( '#drawer-row' ), selector ) ), `${ property }: the Header's own rows stay tight.` );
+		assert.equal( selectors.some( selector => matches( page.querySelector( '#masthead-row' ), selector ) ), false, `${ property }: the masthead row keeps its authored spacing.` );
+	}
+} );

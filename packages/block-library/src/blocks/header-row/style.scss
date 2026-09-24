@@ -14,10 +14,15 @@
 
       --header-background-opacity: 0;
 
-      --nb-block-top-spacing: 0 !important;
-      --nb-block-bottom-spacing: 0 !important;
-      --nb-emphasis-top-spacing: 0 !important;
-      --nb-emphasis-bottom-spacing: 0 !important;
+      // The compact bar and drawer keep their rows tight. The branding row
+      // copied under the bar (Mobile Branding "below", #645) keeps its authored
+      // vertical rhythm, like on desktop (#648).
+      &:not(.nb-header__mobile-masthead > *) {
+        --nb-block-top-spacing: 0 !important;
+        --nb-block-bottom-spacing: 0 !important;
+        --nb-emphasis-top-spacing: 0 !important;
+        --nb-emphasis-bottom-spacing: 0 !important;
+      }
 
       .nb-navigation--primary {
         order: -1;
