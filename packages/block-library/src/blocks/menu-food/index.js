@@ -9,6 +9,7 @@ import { select } from '@wordpress/data';
  * Internal dependencies
  */
 import attributes from './attributes.json';
+import deprecated from './deprecated';
 import iconSvg from './icon.svg';
 import edit from './edit';
 import save from './save';
@@ -40,6 +41,7 @@ registerBlockType( BLOCK_NAME, {
       },
     ],
   },
+  deprecated,
   edit,
   save
 } );

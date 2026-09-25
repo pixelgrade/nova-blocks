@@ -9,7 +9,18 @@ import classnames from 'classnames';
 import { RichText } from '@wordpress/block-editor';
 import { __ } from '@wordpress/i18n';
 
-const save = ( props ) => {
+/*
+ * Frozen historical save outputs of `novablocks/menu-food-item`. Do not edit
+ * them: each entry must keep reproducing markup that shipped in a release.
+ * Before 2.1.18 the block was implicitly API v1, so WordPress added the
+ * generated `wp-block-novablocks-menu-food-item` class on save.
+ *
+ * - 2.1.0 – 2.1.17: `https://schema.org` item types.
+ * - 1.1.0 – 2.0.4: `http://schema.org` item types. Releases before 1.5.0 had
+ *   no `showPrices` / `showDescription` attributes and always rendered both
+ *   parts, which is this save's output under those attributes' defaults.
+ */
+const createSave = schemaOrigin => props => {
 	const {
 		attributes: {
 			enableHighlightFoodItem,
@@ -36,7 +47,7 @@ const save = ( props ) => {
 	);
 
 	return (
-		<div className={ classNames } itemscope itemtype="https://schema.org/MenuItem">
+		<div className={ classNames } itemscope itemtype={ `${ schemaOrigin }/MenuItem` }>
 			{ enableHighlightFoodItem && (
 				<div className="nova-food-menu-item__highlight-label">
 					<h5 className="nova-food-menu-item__label"> { highlightLabel } </h5>
@@ -54,7 +65,7 @@ const save = ( props ) => {
 			</div>
 
 			{ showPrices && (
-				<div className="nova-food-menu-item__prices" itemscope itemtype="https://schema.org/offers">
+				<div className="nova-food-menu-item__prices" itemscope itemtype={ `${ schemaOrigin }/offers` }>
 					<RichText.Content
 						value={ price }
 						tagName="span"
@@ -86,48 +97,55 @@ const save = ( props ) => {
 	);
 };
 
+const attributes = {
+	title: {
+		type: 'string',
+		default: __( 'Sweet Shrimp Salad', '__plugin_txtd' ),
+	},
+	description: {
+		type: 'string',
+		default: __( 'Tomatillo, Baja Crema, Cabbage, Fried Okra', '__plugin_txtd' ),
+	},
+	price: {
+		type: 'string',
+		default: '$7.95',
+	},
+	salePrice: {
+		type: 'string',
+		default: '$9.50',
+	},
+	highlightLabel: {
+		type: 'string',
+		default: __( 'Our top pick', '__plugin_txtd' ),
+	},
+	enableHighlightFoodItem: {
+		type: 'boolean',
+		default: false,
+	},
+	enableSalePrice: {
+		type: 'boolean',
+		default: false,
+	},
+	showPrices: {
+		type: 'boolean',
+		default: true,
+	},
+	showDescription: {
+		type: 'boolean',
+		default: true,
+	},
+};
+
 const deprecated = [
 	{
 		apiVersion: 1,
-		attributes: {
-			title: {
-				type: 'string',
-				default: __( 'Sweet Shrimp Salad', '__plugin_txtd' ),
-			},
-			description: {
-				type: 'string',
-				default: __( 'Tomatillo, Baja Crema, Cabbage, Fried Okra', '__plugin_txtd' ),
-			},
-			price: {
-				type: 'string',
-				default: '$7.95',
-			},
-			salePrice: {
-				type: 'string',
-				default: '$9.50',
-			},
-			highlightLabel: {
-				type: 'string',
-				default: __( 'Our top pick', '__plugin_txtd' ),
-			},
-			enableHighlightFoodItem: {
-				type: 'boolean',
-				default: false,
-			},
-			enableSalePrice: {
-				type: 'boolean',
-				default: false,
-			},
-			showPrices: {
-				type: 'boolean',
-				default: true,
-			},
-			showDescription: {
-				type: 'boolean',
-				default: true,
-			},
-		},
-		save,
+		attributes,
+		save: createSave( 'https://schema.org' ),
+	},
+	{
+		apiVersion: 1,
+		attributes,
+		save: createSave( 'http://schema.org' ),
 	},
 ];
 

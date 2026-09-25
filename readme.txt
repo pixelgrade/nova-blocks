@@ -115,6 +115,7 @@ Yes! Nova Block's core features are free to use.
 == Changelog ==
 
 = Unreleased =
+* Fix: Food Menus saved with Nova Blocks 2.0.4 or earlier open in the editor again without "Attempt Block Recovery" on every menu, section, and item.
 * Improved: Raise the Space & Sizing "Content Top/Bottom Spacing" range to 6 steps in half-step increments, so a section band can hold the deep inset a full-width design asks for.
 
 = 2.6.6.1 =
