@@ -12,6 +12,8 @@ import { createHigherOrderComponent } from "@wordpress/compose";
 
 import { getColorSignalClassnames, getSpacingCSSProps } from "@novablocks/utils";
 
+import { addContentMeasureFilter } from "../content-measure";
+
 const addNovaBlocksSupport = ( settings ) => {
 
   if ( settings.name !== 'core/group' ) {
@@ -51,3 +53,11 @@ const addNovaBlocksSupport = ( settings ) => {
 };
 
 addFilter( 'blocks.registerBlockType', 'novablocks/group/settings-add-nb-support', addNovaBlocksSupport, 1 );
+
+// Editor twin of init.php: an authored Group content width becomes the
+// reading measure of its default-aligned children (GitHub #635).
+addContentMeasureFilter( 'novablocks/group/measure', {
+	blockName: 'core/group',
+	className: 'nb-group--measure',
+	property: '--nb-group-measure',
+} );

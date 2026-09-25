@@ -258,6 +258,38 @@ function sl_color_signal_group( string $inner ): string {
 }
 
 /**
+ * A core/group that authors its OWN reading measure (layout.contentSize,
+ * GitHub #635), optionally a color-signal box ("themed band") and/or
+ * justified. Its default-aligned children cap at the measure; wide/full keep
+ * their widths.
+ */
+function sl_measure_group( string $inner, string $size, string $class = '', string $justify = '' ): string {
+	$layout = [ 'type' => 'constrained', 'contentSize' => $size ];
+	if ( '' !== $justify ) {
+		$layout['justifyContent'] = $justify;
+	}
+	$attrs = '' !== $class ? [ 'className' => $class, 'layout' => $layout ] : [ 'layout' => $layout ];
+	$html  = '' !== $class ? 'wp-block-group ' . $class . ' sm-palette-2' : 'wp-block-group';
+	return '<!-- wp:group ' . wp_json_encode( $attrs ) . ' -->' . "\n"
+		. '<div class="' . $html . '">' . "\n" . $inner . "</div>\n"
+		. "<!-- /wp:group -->\n\n";
+}
+
+/** The #635 battery: every place a Group's authored measure must hold. */
+function sl_group_measure_battery( int $img ): string {
+	return sl_heading( 'Plain group, measure 487px' )
+		. sl_measure_group( sl_paragraphs( 2, 0 ) . sl_image( $img ) . sl_image( $img, 'wide' ), '487px' )
+		. sl_heading( 'Themed band holding a measured group' )
+		. sl_color_signal_group( sl_measure_group( sl_paragraphs( 1, 1 ), '487px' ) . sl_image( $img ) )
+		. sl_heading( 'Themed band with its own measure' )
+		. sl_measure_group( sl_paragraphs( 1, 2 ) . sl_image( $img ), '487px', 'sm-color-signal-2' )
+		. sl_heading( 'Measure justified left' )
+		. sl_measure_group( sl_paragraphs( 1, 3 ), '487px', '', 'left' )
+		. sl_heading( 'Group without a measure (control)' )
+		. sl_group( sl_paragraphs( 1, 4 ) );
+}
+
+/**
  * novablocks/sidecar wrapping its area blocks. Both blocks are dynamic:
  * serialized markup is block comments around inner content only.
  * Content area first, sidebar second (variations.js order).
@@ -764,6 +796,24 @@ function sl_page_definitions( int $img, array $post_ids = [] ): array {
 			. sl_color_signal_group( sl_image( $img, 'wide' ) . sl_paragraphs( 1, 3 ) )
 			. sl_paragraphs( 1, 4 )
 		),
+	];
+
+	// --- (i) A Group's authored content width is its reading measure
+	//         (GitHub #635): default-aligned children cap at layout.contentSize
+	//         instead of Nova's --nb-content-width, centred like core's
+	//         constrained layout (justifyContent honoured); media outside the
+	//         measured group keeps the row maximum. ---
+	$pages['group-measure'] = [
+		'title'       => 'Sidecar Lab — Group with an authored measure',
+		'description' => 'No rail (none/small). Groups authoring layout.contentSize 487px: plain (pass-through) with a default and a wide image, inside a color-signal band beside a sibling image, as the band itself, justified left, plus an unmeasured control group (#635).',
+		'families'    => [ 'rail-none', 'width-small', 'group-passthrough', 'color-signal', 'group-measure' ],
+		'content'     => sl_sidecar( [ 'sidebarPosition' => 'none', 'sidebarWidth' => 'small' ], sl_group_measure_battery( $img ) ),
+	];
+	$pages['group-measure-rail'] = [
+		'title'       => 'Sidecar Lab — Group with an authored measure beside a Right Rail',
+		'description' => 'Right rail, medium: the #635 group-measure battery in the content area beside a long rail.',
+		'families'    => [ 'rail-right', 'width-medium', 'rail-long', 'group-passthrough', 'color-signal', 'group-measure' ],
+		'content'     => sl_sidecar( [ 'sidebarPosition' => 'right', 'sidebarWidth' => 'medium' ], sl_group_measure_battery( $img ), sl_rail_long( $img ) ),
 	];
 
 	// --- (c) Header-nested grid: a Nova header row overrides

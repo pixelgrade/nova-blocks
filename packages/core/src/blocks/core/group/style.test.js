@@ -198,3 +198,71 @@ test( 'box-rendering groups are excluded from the pass-through, so their fill ca
 		'the child pass-through must be scoped to the same qualified Group selector'
 	);
 } );
+
+// A Group's authored reading measure (GitHub #635): the render filter / editor
+// twin add `nb-group--measure` + `--nb-group-measure` only when the Group
+// authors its own `layout.contentSize`.
+const measureRules = () => {
+	const rules = [];
+	stylesheet.walkRules( rule => {
+		if ( rule.selector.includes( 'nb-group--measure' ) ) {
+			rules.push( rule );
+		}
+	} );
+	return rules;
+};
+const decl = ( rule, prop ) => rule.nodes.find( node => node.type === 'decl' && node.prop === prop );
+const EXEMPT_CHILDREN = [ '.alignwide', '.alignfull', '.alignleft', '.alignright', '[data-align=wide]', '[data-align=full]', '[data-align=left]', '[data-align=right]', '.block-list-appender' ];
+
+test( 'an authored Group measure yields the content-width cap to the narrower measure (#635)', () => {
+	const [ base ] = measureRules();
+	assert.ok( base, 'expected the Group measure rule' );
+
+	// Two marker classes on the Group + :not() out-rank the collection cap
+	// (`:is(… .specificity.x2.x3) > *` is 0,3,0) that overrode core's rule.
+	assert.match( base.selector, /^\.wp-block-group\.nb-group--measure\.nb-group--measure > :not\(/ );
+	assert.deepEqual( atRuleChain( base ), [], 'the measure holds at every viewport' );
+
+	// Narrower authored widths win; --nb-content-width stays the row maximum.
+	assert.equal( decl( base, 'max-width' ).value, 'min(var(--nb-group-measure), var(--nb-content-width))' );
+
+	// Centring and justification stay with core's constrained layout
+	// (`margin-left/right: auto|0 !important` from layout.justifyContent).
+	assert.equal( decl( base, 'margin-left' ), undefined );
+	assert.equal( decl( base, 'margin-inline-start' ), undefined );
+	assert.equal( decl( base, 'justify-self' ), undefined );
+
+	const selector = base.selector.replace( /\s+/g, ' ' ).replace( /"/g, '' );
+	for ( const exempt of EXEMPT_CHILDREN ) {
+		assert.ok( selector.includes( exempt ), `${ exempt } keeps its own width` );
+	}
+
+	// It must come after the cap it overrides.
+	const nodes = [];
+	stylesheet.walkRules( rule => nodes.push( rule ) );
+	const cap = nodes.findIndex( rule => rule.selector.endsWith( '> *' ) && decl( rule, 'max-width' )?.value === 'var(--nb-content-width)' );
+	assert.ok( cap >= 0 && cap < nodes.indexOf( base ), 'the measure rule follows the content-width cap' );
+} );
+
+test( 'a measured Group passed through the layout grid caps its children inside the content track (#635)', () => {
+	const parent = getGroupPassThroughRule();
+	const twin = measureRules().find( rule => rule.selector.startsWith( parent.selector ) );
+
+	assert.ok( twin, 'expected the pass-through measure rule, scoped to the same qualified Group' );
+	assert.ok(
+		twin.selector.startsWith( `${ parent.selector }.nb-group--measure > :not(` ),
+		'it adds the marker on the qualified Group, so it out-ranks the pass-through `> * { max-width: none }`'
+	);
+	assert.deepEqual( atRuleChain( twin ), atRuleChain( parent ) );
+	assert.equal( decl( twin, 'max-width' ).value, 'min(var(--nb-group-measure), 100%)' );
+	assert.equal( decl( twin, 'margin-left' ), undefined );
+
+	const selector = twin.selector.replace( /\s+/g, ' ' ).replace( /"/g, '' );
+	for ( const exempt of EXEMPT_CHILDREN ) {
+		assert.ok( selector.includes( exempt ), `${ exempt } keeps its own track` );
+	}
+} );
+
+test( 'only the measure rules consume the Group measure', () => {
+	assert.equal( measureRules().length, 2 );
+} );

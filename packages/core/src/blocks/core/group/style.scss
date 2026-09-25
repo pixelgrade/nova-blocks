@@ -70,6 +70,20 @@
   }
 }
 
+// A Group's authored reading measure (GitHub #635). The render filter
+// (init.php; editor twin in index.js) adds `nb-group--measure` and
+// `--nb-group-measure` only when the Group authors its own
+// `layout.contentSize`. The cap above (0,3,0) overrode WordPress's generated
+// contentSize rule, so the reading measure could never be narrower than the
+// row maximum. Default-aligned children now take the narrower of the two;
+// wide, full and floated children keep their widths. Centring and
+// `justifyContent` stay with core's `margin-left/right: … !important`.
+$nb-group-measure-children: ':not(.alignwide, .alignfull, .alignleft, .alignright, [data-align="wide"], [data-align="full"], [data-align="left"], [data-align="right"], .block-list-appender)';
+
+.wp-block-group.nb-group--measure.nb-group--measure > #{$nb-group-measure-children} {
+  max-width: min(var(--nb-group-measure), var(--nb-content-width));
+}
+
 :is(.wp-block-group__inner-container, .specificity.x2.x3) {
   max-width: none;
   padding-left: 0;
@@ -207,6 +221,12 @@
 
       > :is(.alignfull, [data-align="full"]) {
         grid-column: var(--block-full-start) / var(--block-full-end);
+      }
+
+      // A measured Group (#635) keeps its default-aligned children inside the
+      // content track at the authored measure; core's auto margins centre them.
+      &.nb-group--measure > #{$nb-group-measure-children} {
+        max-width: min(var(--nb-group-measure), 100%);
       }
 
       // A Group pass-through is deliberately absent from
