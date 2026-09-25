@@ -73,12 +73,20 @@
   // The per-container track math derives from the live counterpart
   // `--nb-sidecar-content-width` computed in nb-layout-settings
   // (see _content-layout.scss).
-  // Zeroing the rail vars on rail-less roots (the design's end state) is
-  // deferred to the Phase 3 break-system rework: today the break placement
-  // vars (--block-left-end: gs / --block-right-start: ge) anchor broken
-  // aligned blocks to the rail-gap lines, and zeroed rails move those lines
-  // through subgridded chains; Task 3.1's rail-absence classes re-anchor
-  // them first.
+  // This token always subtracts both rail budgets: it is the consumer cap,
+  // not a grid track, and the raw rail width vars stay untouched everywhere.
+  // Rail-less layouts stop reserving rail TRACKS through two later rules,
+  // neither of which changes this token:
+  // - rail-less roots (the editor root, Post Content, template parts, Query,
+  //   Supernova) zero only the derived template var --nb-layout-rail-*
+  //   (Task 3.1, GitHub #653; see "Rail-less roots reserve no rail tracks"
+  //   below), so every named placement line keeps its position;
+  // - once a Content Inset is saved, the inset path zeroes the rail tracks of
+  //   rail-less contexts and centres a container - 2 x inset reading column
+  //   (GitHub #655; see "Content Inset" below). Group and Post Content
+  //   content width can narrow further inside that column (#635, #650).
+  // The Small rail default is decoupled from the inset (#655), so this cap
+  // does not move when the inset does.
   --nb-content-width: calc(var(--nb-container-width) - var(--nb-sidecar-sidebar-left-width) - var(--nb-sidecar-sidebar-left-gap) - var(--nb-sidecar-sidebar-right-width) - var(--nb-sidecar-sidebar-right-gap));
   --nb-sidecar-sides: max(var(--nb-wrapper-sides-spacings), calc((100% - var(--nb-container-width)) * 0.5));
 
