@@ -2585,12 +2585,67 @@ function novablocks_get_collection_card_surface_markup( string $media, string $c
 	return ob_get_clean();
 }
 
+/**
+ * Compile the core Border support of a card (or of the collection, for its
+ * query-driven cards) into the item slot's classes and inline CSS (#631).
+ *
+ * Mirrors core's wp_apply_border_support() for the features the card blocks
+ * declare — colour, style, width, per side; no radius — because both blocks
+ * render server-side without get_block_wrapper_attributes(). The rule goes on
+ * `.nb-collection__layout-item`, which is also the card block's wrapper in the
+ * editor, so core's own editor serialisation lands on the same element.
+ *
+ * @param array $attributes Card or collection attributes.
+ *
+ * @return array{css: string, classnames: string} Empty strings without a border.
+ */
+function novablocks_get_collection_item_border_styles( array $attributes ): array {
+	$empty       = [ 'css' => '', 'classnames' => '' ];
+	$border      = $attributes['style']['border'] ?? [];
+	$named_color = $attributes['borderColor'] ?? '';
+	$border      = is_array( $border ) ? $border : [];
+	$named_color = is_string( $named_color ) ? $named_color : '';
+
+	unset( $border['radius'] );
+
+	if ( '' !== $named_color ) {
+		$border['color'] = 'var:preset|color|' . $named_color;
+	}
+
+	if ( empty( $border ) || ! function_exists( 'wp_style_engine_get_styles' ) ) {
+		return $empty;
+	}
+
+	$styles = wp_style_engine_get_styles( [ 'border' => $border ] );
+
+	return [
+		'css'        => is_string( $styles['css'] ?? null ) ? $styles['css'] : '',
+		'classnames' => is_string( $styles['classnames'] ?? null ) ? $styles['classnames'] : '',
+	];
+}
+
+/**
+ * Open a card's item slot. Without a border this is byte-identical to the
+ * historical `<div class="nb-collection__layout-item">`.
+ *
+ * @param array $attributes Card or collection attributes.
+ *
+ * @return string
+ */
+function novablocks_get_collection_layout_item_open_tag( array $attributes ): string {
+	$border  = novablocks_get_collection_item_border_styles( $attributes );
+	$classes = trim( 'nb-collection__layout-item ' . $border['classnames'] );
+	$style   = '' !== $border['css'] ? ' style="' . esc_attr( $border['css'] ) . '"' : '';
+
+	return '<div class="' . esc_attr( $classes ) . '"' . $style . '>';
+}
+
 function novablocks_get_collection_card_markup( string $media, string $content, array $attributes, string $content_before_media = '', array $content_regions = [] ): string {
 	$surface_markup = novablocks_get_collection_card_surface_markup( $media, $content, $attributes, $content_before_media, $content_regions );
 
 	ob_start(); ?>
 
-		<div class="nb-collection__layout-item">
+		<?php echo novablocks_get_collection_layout_item_open_tag( $attributes ) . "\n"; // A closing tag swallows the newline after it. ?>
 			<?php echo $surface_markup; ?>
 		</div>
 

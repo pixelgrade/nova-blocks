@@ -7,7 +7,7 @@ import { CollectionBody, CollectionLeadingItems, useEditorCollectionLeadingItems
 import { needsPreview } from "@novablocks/utils";
 
 import { SupernovaItemPreview } from "../index";
-import { getUniquePlaceholderImages, getUsedPlaceholderImages } from "../../utils";
+import { getCollectionLayoutItemProps, getUniquePlaceholderImages, getUsedPlaceholderImages } from "../../utils";
 
 const CardsCollectionEdit = ( props ) => {
 
@@ -41,7 +41,7 @@ const CardsCollectionPreview = ( props ) => {
       { leadingItems.length > 0 &&
         <CollectionLeadingItems attributes={ props.attributes } /> }
       { innerBlocks.map( innerBlock =>
-        <div className={ 'nb-collection__layout-item' } key={ 'collection_layout_item_' + innerBlock.clientId }>
+        <div { ...getCollectionLayoutItemProps( innerBlock.attributes ) } key={ 'collection_layout_item_' + innerBlock.clientId }>
           <SupernovaItemPreview { ...innerBlock } parentAttributes={ props.attributes } context={ props.context } />
         </div> )
       }

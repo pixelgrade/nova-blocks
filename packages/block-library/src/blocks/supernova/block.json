@@ -81,6 +81,17 @@
 		"color": {
 			"text": false,
 			"background": false
+		},
+		"__experimentalBorder": {
+			"color": true,
+			"style": true,
+			"width": true,
+			"__experimentalSkipSerialization": true,
+			"__experimentalDefaultControls": {
+				"color": true,
+				"style": true,
+				"width": true
+			}
 		}
 	}
 }

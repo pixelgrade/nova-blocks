@@ -66,6 +66,8 @@ test('Cards Collection preview initializes image defaults for cards added after 
 test('Cards Collection preview wraps every manual card as a collection layout item', () => {
   assert.match(
     source,
-    /innerBlocks\.map\( innerBlock =>[\s\S]*?<div className=\{ 'nb-collection__layout-item' \} key=\{ 'collection_layout_item_' \+ innerBlock\.clientId \}>[\s\S]*?<SupernovaItemPreview[\s\S]*?<\/div>/
+    /innerBlocks\.map\( innerBlock =>[\s\S]*?<div \{ \.\.\.getCollectionLayoutItemProps\( innerBlock\.attributes \) \} key=\{ 'collection_layout_item_' \+ innerBlock\.clientId \}>[\s\S]*?<SupernovaItemPreview[\s\S]*?<\/div>/
   );
+  // The item slot keeps its class and, with a border, carries it (#631).
+  assert.match( source, /import \{ getCollectionLayoutItemProps,[^}]*\} from "\.\.\/\.\.\/utils";/ );
 });

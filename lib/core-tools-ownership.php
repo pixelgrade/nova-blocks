@@ -228,3 +228,74 @@ function novablocks_filter_core_tools_availability( $theme_json ) {
 if ( class_exists( 'WP_Theme_JSON_Data' ) ) {
 	add_filter( 'wp_theme_json_data_theme', 'novablocks_filter_core_tools_availability' );
 }
+
+/**
+ * Pure function: core design tools Nova opts its OWN blocks into.
+ *
+ * The inverse of the ownership map above, kept separate so that map stays a
+ * list of what Nova switches off. A theme may turn a core tool off globally
+ * (Anima LT sets `settings.border.*: false`); where a Nova block declares the
+ * matching core support as its designed-for control, the block opts back in
+ * per block, the same way a theme's own `settings.blocks` would.
+ *
+ * - `novablocks/supernova` + `novablocks/supernova-item`: core Border
+ *   (colour, style, width, per side; no radius — card shape belongs to Shape
+ *   Modeling) rules a collection's items like a list (#631). The collection's
+ *   border is drawn on each item slot, including query-driven cards.
+ *
+ * @return array<string, array<string, array<string, bool>>> Per-block settings
+ *         map, keyed like a theme.json `settings.blocks.<block-name>` fragment.
+ */
+function novablocks_get_nova_block_tools_availability(): array {
+	$border = [
+		'border' => [
+			'color' => true,
+			'style' => true,
+			'width' => true,
+		],
+	];
+
+	/**
+	 * Filters the core design tools Nova enables on its own blocks. Return
+	 * the map without a block (or set a leaf to false) to withdraw a tool.
+	 *
+	 * @param array $tools Per-block settings map.
+	 */
+	return apply_filters( 'novablocks/nova_block_tools_availability', [
+		'novablocks/supernova'      => $border,
+		'novablocks/supernova-item' => $border,
+	] );
+}
+
+/**
+ * Merge the Nova block tools availability into the active theme's
+ * theme.json data (`wp_theme_json_data_theme`).
+ *
+ * @param WP_Theme_JSON_Data $theme_json
+ *
+ * @return WP_Theme_JSON_Data
+ */
+function novablocks_filter_nova_block_tools_availability( $theme_json ) {
+	if ( ! is_object( $theme_json ) || ! method_exists( $theme_json, 'update_with' ) ) {
+		return $theme_json;
+	}
+
+	$blocks = array_filter( novablocks_get_nova_block_tools_availability(), function ( $settings, $block_name ) {
+		return is_string( $block_name ) && '' !== $block_name && is_array( $settings ) && ! empty( $settings );
+	}, ARRAY_FILTER_USE_BOTH );
+
+	if ( empty( $blocks ) ) {
+		return $theme_json;
+	}
+
+	return $theme_json->update_with( [
+		'version'  => 3,
+		'settings' => [
+			'blocks' => $blocks,
+		],
+	] );
+}
+
+if ( class_exists( 'WP_Theme_JSON_Data' ) ) {
+	add_filter( 'wp_theme_json_data_theme', 'novablocks_filter_nova_block_tools_availability' );
+}

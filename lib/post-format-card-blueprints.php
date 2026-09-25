@@ -284,7 +284,7 @@ function novablocks_maybe_get_post_format_blueprint_card_markup( WP_Post $post, 
 
 	$item_markup  = novablocks_get_collection_card_surface_markup( $media_markup, $content_markup, $item_attributes, $content_before_media, $content_regions );
 
-	return novablocks_get_post_format_blueprint_supernova_markup( $root_attributes, $item_markup, $format );
+	return novablocks_get_post_format_blueprint_supernova_markup( $root_attributes, $item_markup, $format, $attributes );
 }
 
 function novablocks_maybe_get_quote_blueprint_card_markup( WP_Post $post, array $attributes, array $profile, string $content_before_media = '', array $content_regions = [] ): ?string {
@@ -710,7 +710,14 @@ function novablocks_get_quote_blueprint_permalink_markup( WP_Post $post ): strin
 	return novablocks_get_post_format_blueprint_permalink_markup( $post );
 }
 
-function novablocks_get_post_format_blueprint_supernova_markup( array $attributes, string $content, string $format ): string {
+/**
+ * @param array  $attributes             Blueprint root attributes.
+ * @param string $content                Item surface markup.
+ * @param string $format                 Post format.
+ * @param array  $layout_item_attributes The collection's attributes: its
+ *                                       border rules the item slot (#631).
+ */
+function novablocks_get_post_format_blueprint_supernova_markup( array $attributes, string $content, string $format, array $layout_item_attributes = [] ): string {
 	$data_attributes = novablocks_get_data_attributes(
 		novablocks_get_post_format_blueprint_root_data_attribute_names(),
 		$attributes
@@ -751,7 +758,7 @@ function novablocks_get_post_format_blueprint_supernova_markup( array $attribute
 		$anchor = 'id="' . esc_attr( $attributes['anchor'] ) . '" ';
 	}
 
-		return '<div class="nb-collection__layout-item"><div class="' . esc_attr( join( ' ', $classes ) ) . '" style="' . esc_attr( join( ';', $css_props ) ) . '" ' . $anchor . join( ' ', $data_attributes ) . '>' .
+		return novablocks_get_collection_layout_item_open_tag( $layout_item_attributes ) . '<div class="' . esc_attr( join( ' ', $classes ) ) . '" style="' . esc_attr( join( ';', $css_props ) ) . '" ' . $anchor . join( ' ', $data_attributes ) . '>' .
 			$content .
 		'</div></div>';
 }

@@ -3,6 +3,7 @@ import { __ } from '@wordpress/i18n';
 import { useInnerBlocks } from '@novablocks/block-editor';
 import { CollectionBody, CollectionLeadingItems, useEditorCollectionLeadingItems } from '@novablocks/collection';
 import { PostCard } from '../index';
+import { getCollectionLayoutItemProps } from '../../utils';
 
 const PostsCollectionLayout = props => {
   const { posts, clientId } = props;
@@ -13,6 +14,8 @@ const PostsCollectionLayout = props => {
     useSourceColorAsReference: false
   } );
   const leadingItems = useEditorCollectionLeadingItems( attributes );
+  // Query-driven cards have no item blocks: the collection border rules each slot (#631).
+  const layoutItemProps = getCollectionLayoutItemProps( props.attributes );
 
   const passedProps = Object.assign( {}, props, {
     attributes: attributes
@@ -47,7 +50,7 @@ const PostsCollectionLayout = props => {
             }
 
             return (
-              <div className={ 'nb-collection__layout-item' } key={ 'collection_layout_item_' + post.id }>
+              <div { ...layoutItemProps } key={ 'collection_layout_item_' + post.id }>
                 <PostCard { ...passedProps } post={ post } collectionNewestPostTimestamp={ collectionNewestPostTimestamp } key={ 'collection_post_card_post_' + post.id }/>
               </div>
             );
