@@ -364,6 +364,16 @@ try {
 		novablocks_fail_post_format_quote_blueprint_contract( 'Expected Quote blueprint cards without thumbnails to omit the media wrapper.' );
 	}
 
+	// The blueprint's minimum height is for an image-filled card (#651): a
+	// text-only quote sizes to its quote, not to the viewport height.
+	if ( false === strpos( $valid_markup, '--nb-minimum-container-height: 66vh' ) ) {
+		novablocks_fail_post_format_quote_blueprint_contract( 'Expected Quote blueprint cards with a featured image to keep the blueprint minimum height.' );
+	}
+
+	if ( false !== strpos( $no_media_markup, '--nb-minimum-container-height: 66vh' ) ) {
+		novablocks_fail_post_format_quote_blueprint_contract( 'Expected text-only Quote blueprint cards to drop the viewport-based minimum height.' );
+	}
+
 	$active_blueprint_mode = 'invalid';
 	$fallback_markup       = novablocks_get_collection_card_markup_from_post( get_post( $quote_post_id ), $attributes );
 

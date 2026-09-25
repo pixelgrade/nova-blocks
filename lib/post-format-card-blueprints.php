@@ -273,6 +273,15 @@ function novablocks_maybe_get_post_format_blueprint_card_markup( WP_Post $post, 
 	}
 
 	$media_markup = novablocks_get_post_format_blueprint_media_markup( $post, $item_attributes, $content_markup !== '' );
+
+	// The blueprint's minimum height (e.g. the Quote card's 66vh) frames its
+	// media. A card that shows none, such as a text-only quote, sizes to its
+	// content instead of to the viewport height (#651).
+	if ( '' === $media_markup && ! empty( $item_attributes['minHeightFallback'] ) ) {
+		$item_attributes['minHeightFallback'] = 0;
+		$item_attributes['surfaceStyleProps'] = novablocks_get_post_format_blueprint_item_style_props( $item_attributes );
+	}
+
 	$item_markup  = novablocks_get_collection_card_surface_markup( $media_markup, $content_markup, $item_attributes, $content_before_media, $content_regions );
 
 	return novablocks_get_post_format_blueprint_supernova_markup( $root_attributes, $item_markup, $format );
