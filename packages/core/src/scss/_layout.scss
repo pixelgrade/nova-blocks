@@ -35,14 +35,27 @@
 
   --nb-content-inset-setting: 288;
 
+  // Small rail default — its own token, decoupled from Content Inset (GitHub
+  // #655, decision 2: the inset now sets the reading column, so moving it must
+  // not also resize the Small rail).
+  //
+  // The token is the Content Inset DEFAULT, never the saved inset:
+  // - no Content Inset saved (no `--sm-content-inset-explicit`): the inset
+  //   token still holds its default — Style Manager prints its registered 230,
+  //   Anima/Nova fall back to 288 without Style Manager — so this resolves to
+  //   exactly the value the old coupling produced (byte-identical geometry);
+  // - a Content Inset saved (the signal, which only Style Manager emits, is 1):
+  //   Style Manager's registered default, 230 — whatever inset was saved.
+  // A rail scale (`--sm-rail-small`) still wins over both.
+  --nb-rail-small-setting: calc(var(--nb-content-inset-setting) + (230 - var(--nb-content-inset-setting)) * var(--sm-content-inset-explicit, 0));
+
   // Rail scale bridge (Style Manager Layout section). SM emits the per-side
   // Small/Medium/Large rail tokens once the user touches the Rail Scale control;
-  // until then the tokens are absent and each var() falls back to today's exact
-  // value — Small stays content-inset-derived (via --nb-content-inset-setting,
-  // which Anima maps to var(--sm-content-inset, 288)), Medium 330, Large 400 —
-  // so untouched rendering is byte-identical (legacy-until-touched). The
-  // font-size-relative calc shape is preserved.
-  --nb-sidecar-sidebar-small-width: calc(var(--sm-rail-small, var(--nb-content-inset-setting)) * var(--theme-body-final-font-size, 16px) / 16);
+  // until then the tokens are absent and each var() falls back to its default —
+  // Small the token above, Medium 330, Large 400 — so untouched rendering is
+  // byte-identical (legacy-until-touched). The font-size-relative calc shape is
+  // preserved.
+  --nb-sidecar-sidebar-small-width: calc(var(--sm-rail-small, var(--nb-rail-small-setting)) * var(--theme-body-final-font-size, 16px) / 16);
   --nb-sidecar-sidebar-medium-width: calc(var(--sm-rail-medium, 330) * var(--theme-body-final-font-size, 16px) / 16);
   --nb-sidecar-sidebar-large-width: calc(var(--sm-rail-large, 400) * var(--theme-body-final-font-size, 16px) / 16);
 
@@ -283,8 +296,19 @@
     --nb-layout-rail-left: var(--nb-inset-rail-left, 0px);
     --nb-layout-rail-right: var(--nb-inset-rail-right, 0px);
 
-    // Same font-relative scale as the Small rail it historically fed.
-    --nb-content-inset: calc(var(--nb-content-inset-setting) * var(--theme-body-final-font-size, 16px) / 16);
+    // Font-relative like the rails, then scaled down on narrow screens
+    // (decision 1): below ~1280px the inset follows a linear viewport ramp
+    // that reaches half the setting at 1024px (the `lap` breakpoint, where the
+    // desktop grid ends) — setting x (100vw - 768px) / 512 — and the smaller of
+    // the two wins. From 1280px up the ramp is pushed out of reach (the
+    // `max(0px, 100vw - 1279px) * 1000` term), so 1280+ is exactly the full
+    // font-relative inset whatever the font scale. The ramp is font-free on
+    // purpose: CSS cannot multiply two lengths. The minimum-column cap in
+    // `--nb-content-inset-effective` stays as the backstop.
+    --nb-content-inset: min(
+      calc(var(--nb-content-inset-setting) * var(--theme-body-final-font-size, 16px) / 16),
+      calc(var(--nb-content-inset-setting) * (100vw - 768px) / 512 + max(0px, 100vw - 1279px) * 1000)
+    );
     --nb-content-inset-effective: clamp(0px, var(--nb-content-inset), calc((var(--nb-actual-container-width) - var(--nb-layout-rail-left) - var(--nb-layout-rail-right)) * 0.5 - var(--nb-sidecar-gap) * 1.5));
 
     @each $side in left, right {
