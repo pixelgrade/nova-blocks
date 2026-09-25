@@ -154,7 +154,7 @@ set_post_thumbnail( $quote_post_id, $quote_attachment_id );
 $valid_blueprint_content =
 	'<!-- wp:novablocks/supernova {"contentType":"custom","palette":1,"paletteVariation":11,"colorSignal":3,"contentPaletteVariation":11,"contentColorSignal":3,"blobSides":3,"blobPatternSeed":3,"blobComplexity":0,"blobSmoothness":33,"blobRotation":0,"blobMaskSides":3,"blobMaskPatternSeed":3,"blobMaskComplexity":0,"blobMaskSmoothness":33,"blobMaskRotation":0,"blobsSizeBalance":50,"blobsHorizontalDisplacement":50,"blobsVerticalDisplacement":50,"stylePreset":"the-cloud-atlas","sizeContrast":0,"positionShift":0,"elementsDistance":20,"placementVariation":25,"imageRotation":0,"objectPosition":50} -->' .
 	'<!-- wp:novablocks/supernova-item {"contentType":"custom","cardLayout":"stacked","contentPosition":"bottom right","contentPadding":50,"overlayFilterStrength":80,"minHeightFallback":66,"thumbnailAspectRatioString":"landscape","imageResizing":"cover","colorSignal":3,"paletteVariation":11,"contentPaletteVariation":11} -->' .
-	'<!-- wp:quote {"className":"is-style-editorial has-normal-font-size"} --><blockquote class="wp-block-quote is-style-editorial has-normal-font-size"><!-- wp:paragraph --><p>Blueprint quote copy.</p><!-- /wp:paragraph --><cite>Blueprint cite</cite></blockquote><!-- /wp:quote -->' .
+	'<!-- wp:quote {"className":"is-style-editorial has-normal-font-size"} --><blockquote class="wp-block-quote is-style-editorial has-normal-font-size"><!-- wp:paragraph {"style":{"typography":{"fontStyle":"italic"}}} --><p style="font-style:italic">Blueprint quote copy.</p><!-- /wp:paragraph --><cite>Blueprint cite</cite></blockquote><!-- /wp:quote -->' .
 	'<!-- /wp:novablocks/supernova-item -->' .
 	'<!-- /wp:novablocks/supernova -->';
 
@@ -214,6 +214,11 @@ $profile_filter = static function ( array $profile, $post ) use ( $quote_post_id
 			'quote_citation' => 'Paul Graham',
 		],
 	];
+
+	// nova-blocks#652: a theme that extracts the quote's inline formatting.
+	if ( $post->ID === $no_media_quote_post_id ) {
+		$base_profile['extracts']['quote_html'] = 'It is a <em>purely</em> <a href="https://example.test/x" onclick="x()">lyrical</a> process.<br>Encrusted.<script>alert(1)</script>';
+	}
 
 	if ( $post->ID === $no_extract_quote_post_id ) {
 		$base_profile['extracts']['quote']          = '';
@@ -362,6 +367,29 @@ try {
 
 	if ( false !== strpos( $no_media_markup, 'nb-supernova-item__media-wrapper' ) ) {
 		novablocks_fail_post_format_quote_blueprint_contract( 'Expected Quote blueprint cards without thumbnails to omit the media wrapper.' );
+	}
+
+	// #652: inline formatting from the theme's quote_html survives (sanitized);
+	// without it the plain quote is escaped as before. The blueprint's sample
+	// paragraph keeps its authored inline typography.
+	foreach ( [ '<em>purely</em>', '<a href="https://example.test/x">lyrical</a>', '<br' ] as $needle ) {
+		if ( false === strpos( $no_media_markup, $needle ) ) {
+			novablocks_fail_post_format_quote_blueprint_contract( 'Expected Quote cards to keep the quote\'s inline formatting: ' . $needle );
+		}
+	}
+
+	foreach ( [ '<script', 'alert(1)', 'onclick' ] as $needle ) {
+		if ( false !== strpos( $no_media_markup, $needle ) ) {
+			novablocks_fail_post_format_quote_blueprint_contract( 'Expected Quote card formatting to be sanitized: ' . $needle );
+		}
+	}
+
+	if ( false === strpos( $valid_markup, 'It is a purely lyrical process.' ) ) {
+		novablocks_fail_post_format_quote_blueprint_contract( 'Expected Quote cards without quote_html to keep the plain quote.' );
+	}
+
+	if ( ! preg_match( '/<blockquote[^>]*>\s*<p[^>]*style="font-style:italic"/', $valid_markup ) ) {
+		novablocks_fail_post_format_quote_blueprint_contract( 'Expected Quote cards to keep the blueprint paragraph\'s inline typography.' );
 	}
 
 	// The blueprint's minimum height is for an image-filled card (#651): a

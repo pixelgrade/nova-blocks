@@ -478,8 +478,9 @@ function novablocks_get_quote_blueprint_item_style_props( array $attributes ): a
 }
 
 function novablocks_get_quote_blueprint_content_markup( WP_Post $post, array $profile, array $item_block ): string {
-	$quote    = trim( (string) ( $profile['extracts']['quote'] ?? '' ) );
-	$citation = trim( (string) ( $profile['extracts']['quote_citation'] ?? '' ) );
+	$quote      = trim( (string) ( $profile['extracts']['quote'] ?? '' ) );
+	$quote_html = trim( (string) ( $profile['extracts']['quote_html'] ?? '' ) );
+	$citation   = trim( (string) ( $profile['extracts']['quote_citation'] ?? '' ) );
 	$blocks   = is_array( $item_block['innerBlocks'] ?? null ) ? $item_block['innerBlocks'] : [];
 
 	if ( '' === $quote ) {
@@ -490,8 +491,8 @@ function novablocks_get_quote_blueprint_content_markup( WP_Post $post, array $pr
 	$blocks   = novablocks_replace_first_named_block(
 		$blocks,
 		'core/quote',
-		static function ( array $block ) use ( $quote, $citation ): array {
-			return novablocks_get_replacement_quote_block( $quote, $citation, $block );
+		static function ( array $block ) use ( $quote, $citation, $quote_html ): array {
+			return novablocks_get_replacement_quote_block( $quote, $citation, $block, $quote_html );
 		},
 		$replaced
 	);
@@ -544,7 +545,42 @@ function novablocks_get_image_blueprint_content_markup( WP_Post $post, array $it
 	return $markup;
 }
 
-function novablocks_get_replacement_quote_block( string $quote, string $citation, array $block ): array {
+/**
+ * The quote's inline formatting, when the theme extracts it (`quote_html`,
+ * nova-blocks#652), limited to inline tags; otherwise the escaped plain quote.
+ *
+ * @param string $quote      Plain quote text.
+ * @param string $quote_html Inline quote markup, or ''.
+ * @return string Safe inline HTML.
+ */
+function novablocks_get_quote_blueprint_inline_html( string $quote, string $quote_html = '' ): string {
+	if ( '' === $quote_html ) {
+		return esc_html( $quote );
+	}
+
+	// wp_kses drops disallowed tags but keeps their text; drop script and
+	// style contents entirely first.
+	$quote_html = preg_replace( '/<(script|style)\b[^>]*>.*?<\/\1>/is', '', $quote_html );
+
+	return wp_kses(
+		$quote_html,
+		[
+			'a'      => [ 'href' => true, 'title' => true ],
+			'strong' => [],
+			'b'      => [],
+			'em'     => [],
+			'i'      => [],
+			'code'   => [],
+			'mark'   => [],
+			'sub'    => [],
+			'sup'    => [],
+			's'      => [],
+			'br'     => [],
+		]
+	);
+}
+
+function novablocks_get_replacement_quote_block( string $quote, string $citation, array $block, string $quote_html = '' ): array {
 	$quote_attrs           = is_array( $block['attrs'] ?? null ) ? $block['attrs'] : [];
 	$paragraph_attrs       = [];
 	$existing_inner_blocks = is_array( $block['innerBlocks'] ?? null ) ? $block['innerBlocks'] : [];
@@ -566,7 +602,20 @@ function novablocks_get_replacement_quote_block( string $quote, string $citation
 		$paragraph_attr_markup = ' ' . wp_json_encode( $paragraph_attrs, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE );
 	}
 
+	// Keep the sample paragraph's saved inline typography (block-support
+	// styles live in its markup, not in its attributes).
+	$paragraph_style = '';
+	if ( ! empty( $existing_inner_blocks[0]['innerHTML'] ) ) {
+		$processor = new WP_HTML_Tag_Processor( (string) $existing_inner_blocks[0]['innerHTML'] );
+		if ( $processor->next_tag( 'p' ) ) {
+			$paragraph_style = trim( (string) $processor->get_attribute( 'style' ) );
+			$paragraph_classes = trim( $paragraph_classes . ' ' . (string) $processor->get_attribute( 'class' ) );
+			$paragraph_classes = implode( ' ', array_unique( array_filter( explode( ' ', $paragraph_classes ) ) ) );
+		}
+	}
+
 	$paragraph_class_attr = '' !== $paragraph_classes ? ' class="' . esc_attr( $paragraph_classes ) . '"' : '';
+	$paragraph_class_attr .= '' !== $paragraph_style ? ' style="' . esc_attr( $paragraph_style ) . '"' : '';
 	$citation_markup      = '' !== $citation ? '<cite>' . esc_html( $citation ) . '</cite>' : '';
 
 	$blocks = parse_blocks(
@@ -576,7 +625,7 @@ function novablocks_get_replacement_quote_block( string $quote, string $citation
 			esc_attr( $quote_classes ),
 			$paragraph_attr_markup,
 			$paragraph_class_attr,
-			esc_html( $quote ),
+			novablocks_get_quote_blueprint_inline_html( $quote, $quote_html ),
 			$citation_markup
 		)
 	);
