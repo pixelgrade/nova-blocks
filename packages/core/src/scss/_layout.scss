@@ -210,12 +210,18 @@
 // the raw vars, so this override cannot inherit into Sidecars, Queries,
 // Supernovas, or card-internal instances. MUST stay after the container-union
 // emission above (same specificity; later source order wins on the roots).
+// Query and Supernova (GitHub #653): they own no rails either. As pass-throughs
+// they subgrid and this template var is inert; as roots (no Nova layout-grid
+// parent, e.g. inside a core/column) fixed rail tracks set a minimum width
+// that overflowed a half-width column at 1024-1280.
 :is(
   .is-root-container,
   .edit-post-visual-editor__post-title-wrapper,
   .wp-block-post-content,
   .wp-block-template-part,
-  [data-block-name="woocommerce/legacy-template"]
+  [data-block-name="woocommerce/legacy-template"],
+  .wp-block-query,
+  .nb-supernova
 ) {
   --nb-layout-rail-left: 0px;
   --nb-layout-rail-right: 0px;

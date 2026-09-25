@@ -39,7 +39,7 @@ stable).
 - **3 lab posts** (`sidecar-lab-post-1..3`) — deterministic posts (fixed
   excerpt, featured image = the fixture attachment) backing the query-loop
   pass-through fixture. Recreated each run; deleted by the same prefix sweep.
-- **37 published pages**, slug prefix `sidecar-lab-` (plus one `sidecar-lab-tpl-*` wp_template per template fixture, swept by the same prefix). The first 17 are the
+- **39 published pages**, slug prefix `sidecar-lab-` (plus one `sidecar-lab-tpl-*` wp_template per template fixture, swept by the same prefix). The first 17 are the
   Phase 1-3 family pages (each carries the full content-variant battery as
   successive sections — wide image, full image, alignleft, alignright,
   Group-wrapped wide image, captioned image — over body copy long enough to
@@ -82,6 +82,9 @@ stable).
   | **Post Content in a template Sidecar (g) — GitHub #650** | |
   | `template-right-small`, `template-right-medium`, `template-right-large`, `template-left-medium` | custom page template (`sidecar-lab-tpl-<fixture>` wp_template): a Sidecar with one rail whose content area holds post-title + `core/post-content`; the page body is the reduced battery. Post Content must pass through to the area's tracks (children stop at `ce`) |
   | `template-both` | same, three-area Sidecar (both rails) |
+  | **Layout containers nested in a column (h) — GitHub #653** | |
+  | `columns-query` | core/columns (2 x 50%) each holding a core/query with an align-full Supernova card list: a nested Query/Supernova is a ROOT and must not reserve rail tracks (each list stays within its column) |
+  | `columns-mixed` | core/columns: a plain Post Template query beside a standalone static Supernova |
   | **Phase 5 — Task 5.2 gate (b)** | |
   | `color-signal-group` | No rail; a PLAIN group-wrapped wide (subgrid pass-through: escapes to ws/we) beside a COLOR-SIGNAL group-wrapped wide (a box group EXCLUDED from the pass-through: box stays content-width, background does not bleed, child stays constrained). The two wide-image rects differ — the exclusion regression pin. |
 

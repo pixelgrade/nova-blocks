@@ -140,6 +140,23 @@ test( 'Post Content passes through a layout grid it sits in (#650)', () => {
 	assert.ok( jsContainers().includes( '.wp-block-post-content' ), 'Post Content must stay a root-union member (fallback grid + page-level root)' );
 } );
 
+test( 'nested Query and Supernova roots reserve no rail tracks (#653)', () => {
+	// A Query or Supernova with no Nova layout-grid parent (e.g. in a
+	// core/column) is a root. Rails are Sidecar budgets it never uses; fixed
+	// rail tracks set its minimum width and overflowed a half-width column.
+	// Zeroing only the template var moves no named line (the width flows into
+	// the 1fr free-space tracks), and pass-through instances subgrid anyway.
+	const layout = fs.readFileSync( LAYOUT_SCSS, 'utf8' ).replace( /\/\/.*$/gm, '' );
+	const block = layout.match( /:is\(([^{}]*?)\)\s*\{\s*--nb-layout-rail-left:\s*0px;\s*--nb-layout-rail-right:\s*0px;/ );
+	assert.ok( block, 'the rail-less roots rule was not found in _layout.scss' );
+	const members = block[ 1 ].split( ',' ).map( ( s ) => s.trim() ).filter( Boolean );
+	for ( const member of [ '.wp-block-post-content', '.wp-block-query', '.nb-supernova' ] ) {
+		assert.ok( members.includes( member ), `${ member } must zero its rail tracks` );
+	}
+	assert.ok( ! members.includes( '.nb-sidecar' ), 'a Sidecar owns its rails and must keep them' );
+	assert.ok( ! members.includes( '.nb-sidecar-area--content' ), 'a Sidecar content area inherits its Sidecar rails' );
+} );
+
 test( 'both SCSS subgrid-override sites consume the shared pass-through list', () => {
 	const layout = fs.readFileSync( LAYOUT_SCSS, 'utf8' );
 	const group = fs.readFileSync( GROUP_SCSS, 'utf8' );

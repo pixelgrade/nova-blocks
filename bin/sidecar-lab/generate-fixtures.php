@@ -804,7 +804,52 @@ function sl_page_definitions( int $img, array $post_ids = [] ): array {
 		'template'    => sl_sidecar_three( [ 'sidebarWidth' => 'medium' ], sl_rail_short(), sl_template_content_area(), sl_rail_long( $img ) ),
 	];
 
+	// --- (h) Layout containers nested in a column (GitHub #653). A Query or a
+	//         Supernova inside core/columns has no Nova layout-grid parent, so
+	//         it is a root; it must not reserve rail tracks it never uses, or
+	//         its minimum width overflows a half-width column at 1024-1280. ---
+	$pages['columns-query'] = [
+		'title'       => 'Sidecar Lab — Query + align-full card list in two columns',
+		'description' => 'core/columns (2 x 50%), each column a core/query over the lab posts holding an align-full Supernova card list (the #653 story band). Each list must stay inside its column; no horizontal scroll.',
+		'families'    => [ 'nested-in-column', 'rail-none', 'query', 'supernova' ],
+		'content'     => sl_columns( [ sl_collection_query( $post_ids, 4301 ), sl_collection_query( $post_ids, 4302 ) ] ),
+	];
+	$pages['columns-mixed'] = [
+		'title'       => 'Sidecar Lab — Post Template query and static collection in two columns',
+		'description' => 'core/columns (2 x 50%): a plain Post Template query beside a standalone static Supernova (#653).',
+		'families'    => [ 'nested-in-column', 'rail-none', 'query', 'supernova' ],
+		'content'     => sl_columns( [ sl_query( $post_ids ), sl_supernova() ] ),
+	];
+
 	return $pages;
+}
+
+/** A two-or-more column core/columns band, one inner markup per column. */
+function sl_columns( array $columns ): string {
+	$out = '<!-- wp:columns --><div class="wp-block-columns">' . "\n";
+	foreach ( $columns as $inner ) {
+		$out .= '<!-- wp:column --><div class="wp-block-column">' . "\n" . $inner . '</div><!-- /wp:column -->' . "\n";
+	}
+	return $out . '</div><!-- /wp:columns -->' . "\n";
+}
+
+/** A core/query over the lab posts rendering an align-full Nova card list. */
+function sl_collection_query( array $post_ids, int $query_id ): string {
+	$query = [
+		'perPage'  => count( $post_ids ),
+		'pages'    => 0,
+		'offset'   => 0,
+		'postType' => 'post',
+		'order'    => 'desc',
+		'orderBy'  => 'date',
+		'inherit'  => false,
+		'include'  => implode( ',', array_map( 'intval', $post_ids ) ),
+	];
+	return '<!-- wp:query {"queryId":' . $query_id . ',"query":' . wp_json_encode( $query ) . '} -->' . "\n"
+		. '<div class="wp-block-query">' . "\n"
+		. '<!-- wp:novablocks/supernova {"contentType":"auto","align":"full","layoutStyle":"classic","columns":1,"showCollectionTitle":false,"showCollectionSubtitle":false} /-->' . "\n"
+		. '</div>' . "\n"
+		. "<!-- /wp:query -->\n";
 }
 
 /** Template content area: the page title and the page's own body. */
