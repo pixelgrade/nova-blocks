@@ -73,8 +73,15 @@ test( 'the only rules inside the signal are the inset overrides (no ungated var 
 		'--nb-content-inset-effective',
 		'--nb-inset-rail-left',
 		'--nb-inset-rail-right',
+		// Revised decision 3: the acs/ace split of the separator tracks.
+		'--nb-layout-ace-alias',
+		'--nb-layout-acs-alias',
+		'--nb-layout-rail-gap-left',
+		'--nb-layout-rail-gap-right',
 		'--nb-layout-rail-left',
 		'--nb-layout-rail-right',
+		'--nb-layout-sep-left',
+		'--nb-layout-sep-right',
 		// #656: the in-column pull-out flag and the pull-out placement it gates.
 		'--nb-pullout-in-column',
 		'--nb-sidecar-content-left',
@@ -97,8 +104,13 @@ test( 'header/footer template parts, Query, Supernova and card grids keep their 
 		rule.walkRules( r => {
 			// Only the track math counts here: the #656 pull-out placement names
 			// every grid parent (it must out-rank the shared placement), and the
-			// template-part rule only opts back out of it.
-			const setsTrackMath = r.nodes.some( n => n.type === 'decl' && n.prop.startsWith( '--' ) && ! ( n.prop === '--nb-pullout-in-column' && n.value === '0' ) );
+			// template-part rule only opts back out of it. Every grid also
+			// carries the acs/ace split (template mixin) and its reset to "no
+			// inset share" (settings mixin) — inert where the inset math does
+			// not run; the evaluator below pins that it keeps acs = cs there.
+			const splitOnly = n => /^--nb-layout-(sep|acs-alias|ace-alias)/.test( n.prop )
+				|| ( /^--nb-layout-rail-gap-(left|right)$/.test( n.prop ) && /^var\(--nb-sidecar-sidebar-(left|right)-gap\)$/.test( n.value ) );
+			const setsTrackMath = r.nodes.some( n => n.type === 'decl' && n.prop.startsWith( '--' ) && ! ( n.prop === '--nb-pullout-in-column' && n.value === '0' ) && ! splitOnly( n ) );
 			if ( ! setsTrackMath ) {
 				return;
 			}
@@ -451,35 +463,207 @@ test( 'a rail scale still wins over the Small default', () => {
 } );
 
 // ---------------------------------------------------------------------------
-// Decision 3: beside a rail, wide blocks stop at the (inset-narrowed) `ce`.
+// Decision 3 (revised 2026-09-25): beside a rail, wide blocks stop at the RAIL
+// GAP — the pre-inset content edge, the named line `acs` / `ace` — not at the
+// inset reading column `cs` / `ce`. The free side still reaches ws / we, the
+// text stays in cs-ce, and nothing changes without the signal.
 // ---------------------------------------------------------------------------
 
-test( 'beside a right rail wide/full end at ce, and nothing in the signal moves them to the rail gap', () => {
-	const ends = [];
-	sidecarSheet.walkRules( rule => {
-		if ( rule.selector !== '.nb-sidecar:not(.nb-sidecar--no-right-rail) > .nb-sidecar-area--content' ) {
+// The compiled gated separator split: `<rail-gap share> [acs] <inset share>`
+// on the left, `<inset share> [ace] <rail-gap share>` on the right.
+const splitDecl = side => {
+	const values = [];
+	layoutSheet.walkDecls( `--nb-layout-sep-${ side }`, d => {
+		assert.ok( insideSignal( d ), `--nb-layout-sep-${ side } is declared outside the signal (${ d.parent.selector })` );
+		values.push( d.value );
+	} );
+	assert.ok( values.length > 0, `no --nb-layout-sep-${ side } declaration` );
+	assert.ok( values.every( v => v === values[ 0 ] ), 'every grid declares the same split' );
+	const parts = values[ 0 ].split( side === 'left' ? /\s*\[acs\]\s*/ : /\s*\[ace\]\s*/ );
+	assert.equal( parts.length, 2, `the split must name exactly one line: ${ values[ 0 ] }` );
+	return parts;
+};
+
+const evaluateExpr = ( declarations, expr, scope ) => {
+	const lookup = name => ( name in scope ? scope[ name ] : declarations[ name ] );
+	return toNumber( substituteVars( expr, lookup ), scope[ '--vw' ] ?? 1440 );
+};
+
+// acs / ace for an inset container (the gated declarations, where the inset
+// rule's rail-gap share wins over the settings reset by source order).
+const areaLines = scope => {
+	const l = lines( scope );
+	const [ leftRailGap, leftInset ] = splitDecl( 'left' ).map( e => evaluateExpr( gatedDeclarations, e, scope ) );
+	const [ rightInset, rightRailGap ] = splitDecl( 'right' ).map( e => evaluateExpr( gatedDeclarations, e, scope ) );
+	close( leftRailGap + leftInset, l.cs - l.gs, 'the left split tracks sum to the separator' );
+	close( rightInset + rightRailGap, l.ge - l.ce, 'the right split tracks sum to the separator' );
+	assert.ok( leftRailGap >= -1e-9 && leftInset >= -1e-9 && rightRailGap >= -1e-9 && rightInset >= -1e-9, 'no negative split track' );
+	return { ...l, ws: 0, acs: l.gs + leftRailGap, ace: l.ge - rightRailGap };
+};
+
+// The declarations every NON-inset grid resolves (settings reset + split).
+const plainGridDeclarations = ( () => {
+	const map = {};
+	layoutSheet.walkAtRules( 'container', rule => {
+		if ( rule.params !== SIGNAL ) {
 			return;
 		}
-		rule.walkDecls( d => {
-			if ( d.prop === '--block-wide-end' || d.prop === '--block-full-end' ) {
-				ends.push( { prop: d.prop, value: d.value, gated: insideSignal( d ) } );
+		rule.walkDecls( /^--nb-layout-(rail-gap|sep)-/, d => {
+			if ( d.parent.selector.includes( '.nb-sidecar-area--content' ) && ! /--nb-layout-rail-left|--nb-layout-rail-right/.test( d.value ) ) {
+				map[ d.prop ] = d.value;
 			}
 		} );
 	} );
-	assert.deepEqual( ends.map( e => `${ e.prop }: ${ e.value }` ).sort(), [ '--block-full-end: ce', '--block-wide-end: ce' ] );
-	assert.ok( ends.every( e => ! e.gated ), 'the rail-bounded wide span is the shared (ungated) rule' );
+	return map;
+} )();
 
-	const gatedWide = [];
-	sidecarSheet.walkAtRules( 'container', rule => {
-		if ( rule.params === SIGNAL ) {
-			rule.walkDecls( /^--block-(wide|full)-(start|end)$/, d => gatedWide.push( d.prop ) );
+const ONE_RAIL_CASES = [
+	{ label: '1024', container: 968.9, gap: 55.1, vw: 1024, fontSize: 15, inset: 230 },
+	{ label: '1280', container: 1125, gap: 64, vw: 1280, fontSize: 15, inset: 230 },
+	{ label: '1440', container: 1125, gap: 64, vw: 1440, fontSize: 15, inset: 230 },
+	{ label: '1920', container: 1462.5, gap: 64, vw: 1920, fontSize: 15, inset: 230 },
+	{ label: '1440, inset 300', container: 1125, gap: 64, vw: 1440, fontSize: 15, inset: 300 },
+];
+
+for ( const c of ONE_RAIL_CASES ) {
+	test( `wide beside a right rail ends at the rail gap, the pre-inset ce (${ c.label })`, () => {
+		const rail = 215.6;
+		const l = areaLines( scopeFor( { ...c, railRight: rail } ) );
+		close( l.ace, c.container - rail - c.gap, 'ace = rail edge - rail gap' );
+		assert.ok( l.ce < l.ace - 1, 'the reading column still ends before ace' );
+		close( l.acs, l.gs, 'free side: acs sits on gs (no rail gap there)' );
+	} );
+
+	test( `wide beside a left rail starts at the rail gap, the pre-inset cs (${ c.label })`, () => {
+		const rail = 215.6;
+		const l = areaLines( scopeFor( { ...c, railLeft: rail } ) );
+		close( l.acs, rail + c.gap, 'acs = rail edge + rail gap' );
+		assert.ok( l.cs > l.acs + 1, 'the reading column still starts after acs' );
+		close( l.ace, l.ge, 'free side: ace sits on ge' );
+	} );
+}
+
+test( 'both rails: wide spans acs-ace, one rail gap off each rail', () => {
+	const l = areaLines( scopeFor( { container: 1125, gap: 64, vw: 1440, fontSize: 15, inset: 230, railLeft: 215.6, railRight: 215.6 } ) );
+	close( l.acs, 215.6 + 64, 'acs' );
+	close( l.ace, 1125 - 215.6 - 64, 'ace' );
+} );
+
+test( 'an inset smaller than the rail gap: ace coincides with ce (the gap already wins)', () => {
+	const l = areaLines( scopeFor( { container: 1200, inset: 20, railRight: 288, gap: 64 } ) );
+	close( l.ace, l.ce, 'ace = ce' );
+	close( l.ace, 1200 - 288 - 64, 'both on the rail gap' );
+} );
+
+test( 'a grid that takes no inset keeps acs = cs and ace = ce (no phantom split)', () => {
+	for ( const side of [ 'left', 'right' ] ) {
+		assert.match( plainGridDeclarations[ `--nb-layout-rail-gap-${ side }` ] || '', new RegExp( `^var\\(--nb-sidecar-sidebar-${ side }-gap\\)$` ), 'the settings reset' );
+	}
+	const scope = { '--nb-sidecar-sidebar-left-gap': 64, '--nb-sidecar-sidebar-right-gap': 0 };
+	const [ lRail, lInset ] = splitDecl( 'left' ).map( e => evaluateExpr( plainGridDeclarations, e, scope ) );
+	const [ rInset, rRail ] = splitDecl( 'right' ).map( e => evaluateExpr( plainGridDeclarations, e, scope ) );
+	close( lInset, 0, 'left inset share' );
+	close( lRail, 64, 'left rail-gap share is the whole separator' );
+	close( rInset, 0, 'right inset share' );
+	close( rRail, 0, 'right rail-gap share' );
+} );
+
+const findTemplate = ( sheet, predicate ) => {
+	const found = [];
+	sheet.walkDecls( 'grid-template-columns', d => {
+		if ( predicate( d.value ) ) {
+			found.push( d );
 		}
 	} );
-	assert.deepEqual( gatedWide, [], 'the signal must not redefine the wide/full lines' );
+	return found;
+};
 
-	// With the inset saved, `ce` is the reading column's end: ge - max(gap, inset).
-	const l = lines( scopeFor( { container: 1125, inset: 230, railRight: 215.6, gap: 64, fontSize: 15 } ) );
-	close( l.ge - l.ce, 230 * 15 / 16, 'wide stops one inset short of the rail' );
+test( 'without the signal the desktop template falls back to the single historical separator tracks', () => {
+	const desktop = findTemplate( layoutSheet, v => v.includes( '[frs]' ) );
+	assert.ok( desktop.length > 0, 'no desktop template' );
+	for ( const d of desktop ) {
+		const v = d.value.replace( /\s+/g, ' ' );
+		assert.match( v, /\[gs\] var\(--nb-layout-sep-left, var\(--nb-sidecar-sidebar-left-gap\)\) \[cs\]/ );
+		assert.match( v, /\[ce\] var\(--nb-layout-sep-right, var\(--nb-sidecar-sidebar-right-gap\)\) \[ge\]/ );
+		assert.doesNotMatch( v, /(^|[\s[])ac[se]([\s\]]|$)/, 'acs/ace only come from the gated split' );
+	}
+} );
+
+test( 'the collapsed (below lap) template aliases acs/ace onto cs/ce, only under the signal', () => {
+	const collapsed = findTemplate( layoutSheet, v => v.includes( '[fs]' ) && ! v.includes( '[frs]' ) );
+	assert.ok( collapsed.length > 0, 'no collapsed template' );
+	for ( const d of collapsed ) {
+		const v = d.value.replace( /\s+/g, ' ' );
+		assert.match( v, /\[cs var\(--nb-layout-acs-alias, ?\)\]/ );
+		assert.match( v, /\[ce var\(--nb-layout-ace-alias, ?\)\]/ );
+	}
+	const aliases = [];
+	layoutSheet.walkDecls( /^--nb-layout-ac[se]-alias$/, d => aliases.push( `${ d.prop }: ${ d.value }: ${ insideSignal( d ) }` ) );
+	assert.ok( aliases.length > 0 && aliases.every( a => a.endsWith( ': true' ) ), aliases.join( '\n' ) );
+} );
+
+// Sidecar placement: which line wide / full resolve to on a railed side.
+const sidecarPlacement = ( selector, prop ) => {
+	const found = [];
+	sidecarSheet.walkRules( rule => {
+		if ( rule.selector !== selector ) {
+			return;
+		}
+		rule.walkDecls( prop, d => {
+			found.push( { value: d.value, gated: insideSignal( d ) } );
+		} );
+	} );
+	return found;
+};
+
+const RIGHT_AREA = '.nb-sidecar:not(.nb-sidecar--no-right-rail) > .nb-sidecar-area--content';
+const LEFT_AREA = '.nb-sidecar:not(.nb-sidecar--no-left-rail) > .nb-sidecar-area--content';
+
+for ( const [ area, props, ungatedLine, gatedLine ] of [
+	[ RIGHT_AREA, [ '--block-wide-end', '--block-full-end' ], 'ce', 'ace' ],
+	[ LEFT_AREA, [ '--block-wide-start', '--block-full-start' ], 'cs', 'acs' ],
+	[ `${ RIGHT_AREA } > .nb-break-never`, [ '--block-wide-end', '--block-full-end' ], 'ce', 'ace' ],
+	[ `${ LEFT_AREA } > .nb-break-never`, [ '--block-wide-start', '--block-full-start' ], 'cs', 'acs' ],
+] ) {
+	test( `beside a rail: ${ props.join( ' + ' ) } on ${ area.includes( 'never' ) ? 'a Never block' : 'the content area' } — ${ ungatedLine } without the signal, ${ gatedLine } with it`, () => {
+		for ( const prop of props ) {
+			const found = sidecarPlacement( area, prop );
+			const ungated = found.filter( f => ! f.gated );
+			const gated = found.filter( f => f.gated );
+			assert.deepEqual( ungated.map( f => f.value ), [ ungatedLine ], `${ prop }: the shared rule must stay byte-identical` );
+			assert.deepEqual( gated.map( f => f.value ), [ gatedLine ], `${ prop }: the signal moves it to the rail gap` );
+			assert.ok( found.indexOf( gated[ 0 ] ) > found.indexOf( ungated[ 0 ] ), 'the gated rule must follow the shared one (same specificity)' );
+		}
+	} );
+}
+
+test( 'the break layers still open a railed side under the signal (inherit / break-align come later or win)', () => {
+	// Layer 1 (no rail) and layer 2 (empty rail) keep `inherit`, and they come
+	// after the gated rail-gap rule in source order.
+	const order = [];
+	sidecarSheet.walkDecls( '--block-wide-end', d => {
+		order.push( { selector: d.parent.selector, value: d.value, gated: insideSignal( d ) } );
+	} );
+	const gatedIndex = order.findIndex( o => o.gated && o.selector === RIGHT_AREA );
+	const emptyRail = order.findIndex( o => o.selector.includes( ':not(:has(> .nb-sidecar-area--sidebar-right > *))' ) );
+	assert.ok( gatedIndex !== -1 && emptyRail > gatedIndex, 'the empty-rail flip must follow the gated rule' );
+	assert.equal( order[ emptyRail ].value, 'inherit' );
+	// break-align-right / nb-break-always open the block itself to we.
+	const breakRight = [];
+	layoutSheet.walkDecls( '--block-wide-end', d => {
+		if ( /break-align-right|nb-break-always/.test( d.parent.selector ) ) {
+			breakRight.push( d.value );
+		}
+	} );
+	assert.ok( breakRight.length > 0 && breakRight.every( v => v === 'we' ), 'break-align keeps opening to we' );
+} );
+
+test( 'the reading column is unchanged by the split: text stays cs-ce under the signal', () => {
+	const found = sidecarPlacement( '.nb-sidecar:not(.nb-sidecar--no-left-rail.nb-sidecar--no-right-rail) > .nb-sidecar-area--content', '--block-content-end' );
+	assert.deepEqual( found.filter( f => f.gated ).map( f => f.value ), [ 'ce' ] );
+	const l = areaLines( scopeFor( { container: 1125, inset: 230, railRight: 215.6, gap: 64, fontSize: 15 } ) );
+	close( l.ge - l.ce, 230 * 15 / 16, 'ce stays one inset short of the rail' );
+	close( l.cs, 230 * 15 / 16, 'cs stays one inset from the free edge' );
 } );
 
 // ---------------------------------------------------------------------------

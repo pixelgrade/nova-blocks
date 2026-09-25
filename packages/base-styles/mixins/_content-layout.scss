@@ -39,6 +39,18 @@
   // previous `50% - sides - rail - rail-gap - gap/2` subtraction.
   --nb-sidecar-content-left: calc(var(--nb-sidecar-content-width) * 0.5 - var(--nb-sidecar-gap) * 0.5 + (var(--nb-sidecar-sidebar-right-width) + var(--nb-sidecar-sidebar-right-gap) - var(--nb-sidecar-sidebar-left-width) - var(--nb-sidecar-sidebar-left-gap)) * 0.5);
   --nb-sidecar-content-right: calc(var(--nb-sidecar-content-width) * 0.5 - var(--nb-sidecar-gap) * 0.5 + (var(--nb-sidecar-sidebar-left-width) + var(--nb-sidecar-sidebar-left-gap) - var(--nb-sidecar-sidebar-right-width) - var(--nb-sidecar-sidebar-right-gap)) * 0.5);
+
+  // Content Inset (GitHub #655): the rail-gap share of each separator track,
+  // which puts the `acs` / `ace` lines (see the template below). Reset on
+  // EVERY layout container to the whole separator, so a grid that takes no
+  // inset keeps `acs` = `cs` and `ace` = `ce` instead of inheriting an outer
+  // Sidecar's split; the inset containers override it (core _layout.scss).
+  // Behind the Style Manager opt-in signal like the rest of the inset.
+  @container style(--sm-content-inset-explicit: 1) {
+    @each $side in left, right {
+      --nb-layout-rail-gap-#{$side}: var(--nb-sidecar-sidebar-#{$side}-gap);
+    }
+  }
 }
 
 
@@ -98,21 +110,43 @@
 // Desktop device preview) without touching the fallback/frontend cascade — see
 // sidecar/editor-styles.scss and Task 3.0b. Keeping ONE source of truth avoids
 // the template drifting between the engine and the editor pin.
+//
+// Content Inset (GitHub #655, revised decision 3): with the inset saved, the
+// separator tracks [gs..cs] / [ce..ge] carry the rail gap AND the inset. Wide
+// blocks beside a rail stop at the rail gap — the pre-inset content edge —
+// not at the inset reading column, so each separator splits into two tracks
+// around a named line: `acs` (gs + rail gap) and `ace` (ge - rail gap), the
+// content AREA's edges, with the reading column cs-ce inset inside them.
+// Where a side has no rail its rail gap is 0 (`acs` = gs); in any grid that
+// takes no inset the inset share is 0 (`acs` = cs, `ace` = ce).
+// COMPAT: the split lives in `--nb-layout-sep-*`, declared only behind the
+// Style Manager opt-in signal. Unset, var() falls back to the single
+// separator track, so the ungated template is the historical one, token for
+// token. The collapsed below-lap template names the same lines as aliases
+// (`[cs acs]`, `[ce ace]`) under the signal, so a placement var that names
+// them never lands on an implicit line.
 @mixin nb-layout-desktop-template-columns {
   grid-template-columns:
     [fs] var(--nb-sidecar-sides)
     [ws] var(--nb-layout-rail-left)
     [frs] 1fr
-    [gs] var(--nb-sidecar-sidebar-left-gap)
+    [gs] var(--nb-layout-sep-left, var(--nb-sidecar-sidebar-left-gap))
     [cs] var(--nb-sidecar-content-left)
     [gcs] calc(var(--nb-sidecar-gap) / 2)
     [cc] calc(var(--nb-sidecar-gap) / 2)
     [gce] var(--nb-sidecar-content-right)
-    [ce] var(--nb-sidecar-sidebar-right-gap)
+    [ce] var(--nb-layout-sep-right, var(--nb-sidecar-sidebar-right-gap))
     [ge] 1fr
     [fre] var(--nb-layout-rail-right)
     [we] var(--nb-sidecar-sides)
     [fe];
+
+  @container style(--sm-content-inset-explicit: 1) {
+    --nb-layout-sep-left: var(--nb-layout-rail-gap-left, var(--nb-sidecar-sidebar-left-gap)) [acs] calc(var(--nb-sidecar-sidebar-left-gap) - var(--nb-layout-rail-gap-left, var(--nb-sidecar-sidebar-left-gap)));
+    --nb-layout-sep-right: calc(var(--nb-sidecar-sidebar-right-gap) - var(--nb-layout-rail-gap-right, var(--nb-sidecar-sidebar-right-gap))) [ace] var(--nb-layout-rail-gap-right, var(--nb-sidecar-sidebar-right-gap));
+    --nb-layout-acs-alias: acs;
+    --nb-layout-ace-alias: ace;
+  }
 }
 
 // Desktop child placement: default content span plus the wide/full escapes.
@@ -193,11 +227,11 @@
       [fs] var(--nb-wrapper-sides-spacings) // [ws]
       [ws] auto // [gs]
       [gs] 0 // [cs]
-      [cs] 1fr // [gcs]
+      [cs var(--nb-layout-acs-alias, )] 1fr // [gcs]
       [gcs] 0 // [cc]
       [cc] 0  // [gce]
       [gce] 1fr // [gce]
-      [ce] 0 // [ge]
+      [ce var(--nb-layout-ace-alias, )] 0 // [ge]
       [ge] auto // [we]
       [we] var(--nb-wrapper-sides-spacings) [fe];
 

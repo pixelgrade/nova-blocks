@@ -39,7 +39,7 @@ stable).
 - **3 lab posts** (`sidecar-lab-post-1..3`) — deterministic posts (fixed
   excerpt, featured image = the fixture attachment) backing the query-loop
   pass-through fixture. Recreated each run; deleted by the same prefix sweep.
-- **50 published pages**, slug prefix `sidecar-lab-` (plus one `sidecar-lab-tpl-*` wp_template per template fixture, swept by the same prefix). The first 17 are the
+- **54 published pages**, slug prefix `sidecar-lab-` (plus one `sidecar-lab-tpl-*` wp_template per template fixture, swept by the same prefix). The first 17 are the
   Phase 1-3 family pages (each carries the full content-variant battery as
   successive sections — wide image, full image, alignleft, alignright,
   Group-wrapped wide image, captioned image — over body copy long enough to
@@ -92,6 +92,8 @@ stable).
   | `template-single-right`, `template-single-left`, `template-single-both`, `template-single-railless` | custom single-style template: a Sidecar (right / left / both rails, small; or rail-less) whose content area holds a default-aligned post-title, post-date, post-featured-image (the page's thumbnail = the fixture image) and `core/post-content` (reduced battery). Title, meta, featured image and body share one column; wide/full escape. Captured with Content Inset UNSET: they pin the compat guarantee (identical geometry until Style Manager's Content Inset is explicitly saved) |
   | **Aligned images in the reading column (k) — GitHub #656** | |
   | `template-single-aligned-right`, `template-single-aligned-left`, `template-single-aligned-railless`, `aligned-page` | the (j) single-style templates (right / left rail, rail-less) and a plain page, whose Post Content holds an alignleft 190x240 and an alignright 300px image with text beside them. Capture them twice: Content Inset UNSET (the compat pin) and SAVED (`sm_content_inset` 230, run label suffix `-inset`): with the inset, a broken pull-out sits on its half of the reading column (cs-gcs / gce-ce) at its authored width with the next block beside it, and one too wide for that half stays unbroken in cs-ce |
+  | **Wide post header beside a rail (l) — GitHub #655, revised decision 3** | |
+  | `template-single-wide-right`, `template-single-wide-left`, `template-single-wide-both`, `template-single-wide-railless` | the (j) single-style templates with the post-title, a meta row (flex Group, class `sl-post-meta`: author + date) and the featured image set to Wide; Post Content default (reduced battery). Capture UNSET (compat pin) and SAVED (`sm_content_inset` 230): with the inset, wide beside a rail ends at the rail gap (`acs` / `ace`, the pre-inset content edge — the same x as the unset `cs` / `ce`), the free side still reaches `ws` / `we`, and the text keeps the inset reading column `cs`-`ce` |
   | **Phase 5 — Task 5.2 gate (b)** | |
   | `color-signal-group` | No rail; a PLAIN group-wrapped wide (subgrid pass-through: escapes to ws/we) beside a COLOR-SIGNAL group-wrapped wide (a box group EXCLUDED from the pass-through: box stays content-width, background does not bleed, child stays constrained). The two wide-image rects differ — the exclusion regression pin. |
 

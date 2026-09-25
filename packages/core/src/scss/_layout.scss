@@ -276,6 +276,12 @@
 // side), not on the container midline, so the halves are always equal. The
 // inset is capped to keep the column at least three rail gaps wide; a negative
 // track would invalidate the whole template.
+//
+// Wide beside a rail (revised decision 3): the separator splits at `acs` /
+// `ace`, one rail gap off the rail — where `cs` / `ce` sat before the inset.
+// Wide and full stop there beside a rail (sidecar _desktop-layout.scss), so a
+// Wide post header spans container edge to rail gap while the text keeps the
+// reading column; see nb-layout-desktop-template-columns for the split.
 @container style(--sm-content-inset-explicit: 1) {
 
   .nb-sidecar:not(.nb-sidecar--no-left-rail) {
@@ -313,6 +319,14 @@
 
     @each $side in left, right {
       --nb-sidecar-sidebar-#{$side}-gap: calc(var(--nb-content-inset-effective) + clamp(0px, var(--nb-layout-rail-#{$side}) * 999, max(0px, var(--nb-sidecar-gap) - var(--nb-content-inset-effective))));
+
+      // The rail-gap share of that separator (revised decision 3): the rail
+      // gap beside a rail, 0 on a free side. It puts `acs` / `ace` — the
+      // pre-inset content edge, where wide beside a rail stops — one rail gap
+      // off the rail; the rest of the separator (the inset, when it exceeds
+      // the gap) sits between that line and the reading column. Never more
+      // than the separator: beside a rail the separator is max(gap, inset).
+      --nb-layout-rail-gap-#{$side}: clamp(0px, var(--nb-layout-rail-#{$side}) * 999, var(--nb-sidecar-gap));
     }
 
     --nb-sidecar-content-width: calc(var(--nb-actual-container-width) - var(--nb-layout-rail-left) - var(--nb-sidecar-sidebar-left-gap) - var(--nb-layout-rail-right) - var(--nb-sidecar-sidebar-right-gap));

@@ -77,6 +77,28 @@
     }
   }
 
+  // Content Inset (GitHub #655, revised decision 3): with the inset saved,
+  // `cs`/`ce` are the inset reading column, so beside a rail wide AND full
+  // stop at the rail gap instead — `acs`/`ace`, the pre-inset content edge
+  // (the line `cs`/`ce` sat on before the inset). A post header set to Wide
+  // spans container edge to rail gap while the text keeps the reading
+  // column. Full keeps meaning "at least as wide as wide": beside a rail it
+  // has always stopped on the same line as wide. A side without a rail is
+  // untouched (ws/we, fs/fe), and the break layers below still open a
+  // side (inherit / break-align-*) exactly as before. Same specificity as the
+  // rules above, later in source.
+  @container style(--sm-content-inset-explicit: 1) {
+    .nb-sidecar:not(.nb-sidecar--no-left-rail) > .nb-sidecar-area--content {
+      --block-wide-start: acs;
+      --block-full-start: acs;
+    }
+
+    .nb-sidecar:not(.nb-sidecar--no-right-rail) > .nb-sidecar-area--content {
+      --block-wide-end: ace;
+      --block-full-end: ace;
+    }
+  }
+
   // Per-side rail placement: each rail area spans its own region of the parent
   // grid, keyed on the resolved per-side class so both rails can coexist.
   .nb-sidecar > .nb-sidecar-area--sidebar-left {
@@ -171,5 +193,19 @@
   .nb-sidecar:not(.nb-sidecar--no-right-rail) > .nb-sidecar-area--content > .nb-break-never {
     --block-wide-end: ce;
     --block-full-end: ce;
+  }
+
+  // Under a saved Content Inset the constrained span beside a rail is the
+  // rail gap line (see the inset rule above), so Never pins there.
+  @container style(--sm-content-inset-explicit: 1) {
+    .nb-sidecar:not(.nb-sidecar--no-left-rail) > .nb-sidecar-area--content > .nb-break-never {
+      --block-wide-start: acs;
+      --block-full-start: acs;
+    }
+
+    .nb-sidecar:not(.nb-sidecar--no-right-rail) > .nb-sidecar-area--content > .nb-break-never {
+      --block-wide-end: ace;
+      --block-full-end: ace;
+    }
   }
 }

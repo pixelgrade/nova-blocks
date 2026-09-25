@@ -930,6 +930,31 @@ function sl_page_definitions( int $img, array $post_ids = [] ): array {
 			'thumbnail'   => true,
 		];
 	}
+	// --- (l) A Wide post header beside a rail (GitHub #655, revised decision
+	//         3). The single-style templates again, but the title, a meta row
+	//         (a flex Group holding author + date — post-date has no align
+	//         support) and the featured image are set to Wide, while Post
+	//         Content stays default. With Content Inset saved, wide beside a
+	//         rail stops at the rail gap (the pre-inset content edge, acs /
+	//         ace), not at the inset reading column; the free side still
+	//         reaches ws / we and the text stays in cs-ce. ---
+	$single_wide = [
+		'right'    => sl_sidecar( [ 'sidebarPosition' => 'right', 'sidebarWidth' => 'small' ], sl_template_single_wide_area(), sl_rail_long( $img ) ),
+		'left'     => sl_sidecar( [ 'sidebarPosition' => 'left', 'sidebarWidth' => 'small' ], sl_template_single_wide_area(), sl_rail_long( $img ) ),
+		'both'     => sl_sidecar_three( [ 'sidebarWidth' => 'small' ], sl_rail_short(), sl_template_single_wide_area(), sl_rail_long( $img ) ),
+		'railless' => sl_sidecar( [ 'sidebarPosition' => 'none', 'sidebarWidth' => 'small' ], sl_template_single_wide_area() ),
+	];
+	foreach ( $single_wide as $rails => $template ) {
+		$pages[ 'template-single-wide-' . $rails ] = [
+			'title'       => 'Sidecar Lab — Wide post header (' . $rails . ')',
+			'description' => 'Custom single-style template (' . $rails . ' rail(s), small): post-title, a meta row (flex Group: author + date) and post-featured-image set to Wide, then default core/post-content (reduced battery). With Content Inset saved, the wide header spans container edge to rail gap while the text keeps the inset reading column (#655, revised decision 3).',
+			'families'    => [ 'post-content-template', 'content-inset', 'wide-header', 'rail-' . $rails, 'width-small' ],
+			'content'     => sl_content_battery_reduced( $img ),
+			'template'    => $template,
+			'thumbnail'   => true,
+		];
+	}
+
 	$pages['aligned-page'] = [
 		'title'       => 'Sidecar Lab — Aligned images on a plain page',
 		'description' => 'A plain page (no custom template, no Sidecar in the body): Post Content holds the #656 aligned battery (alignleft 190x240, alignright 300px, text beside them).',
@@ -999,6 +1024,22 @@ function sl_template_single_area(): string {
 	return '<!-- wp:post-title {"level":1} /-->' . "\n\n"
 		. '<!-- wp:post-date /-->' . "\n\n"
 		. '<!-- wp:post-featured-image /-->' . "\n\n"
+		. '<!-- wp:post-content {"layout":{"inherit":true}} /-->' . "\n";
+}
+
+/**
+ * The (l) single content area with a Wide post header: title, a meta row and
+ * the featured image aligned wide; Post Content default (GitHub #655).
+ */
+function sl_template_single_wide_area(): string {
+	return '<!-- wp:post-title {"level":1,"align":"wide"} /-->' . "\n\n"
+		. '<!-- wp:group {"align":"wide","className":"sl-post-meta","layout":{"type":"flex","flexWrap":"wrap"}} -->' . "\n"
+		. '<div class="wp-block-group alignwide sl-post-meta">'
+		. '<!-- wp:post-author {"showAvatar":false} /-->' . "\n"
+		. '<!-- wp:post-date /-->'
+		. '</div>' . "\n"
+		. '<!-- /wp:group -->' . "\n\n"
+		. '<!-- wp:post-featured-image {"align":"wide"} /-->' . "\n\n"
 		. '<!-- wp:post-content {"layout":{"inherit":true}} /-->' . "\n";
 }
 
