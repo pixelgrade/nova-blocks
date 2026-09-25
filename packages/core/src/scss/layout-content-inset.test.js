@@ -75,11 +75,17 @@ test( 'the only rules inside the signal are the inset overrides (no ungated var 
 		'--nb-inset-rail-right',
 		'--nb-layout-rail-left',
 		'--nb-layout-rail-right',
+		// #656: the in-column pull-out flag and the pull-out placement it gates.
+		'--nb-pullout-in-column',
 		'--nb-sidecar-content-left',
 		'--nb-sidecar-content-right',
 		'--nb-sidecar-content-width',
 		'--nb-sidecar-sidebar-left-gap',
 		'--nb-sidecar-sidebar-right-gap',
+		'align-items',
+		'grid-column',
+		'grid-column-end',
+		'grid-column-start',
 	] );
 } );
 
@@ -89,11 +95,48 @@ test( 'header/footer template parts, Query, Supernova and card grids keep their 
 			return;
 		}
 		rule.walkRules( r => {
+			// Only the track math counts here: the #656 pull-out placement names
+			// every grid parent (it must out-rank the shared placement), and the
+			// template-part rule only opts back out of it.
+			const setsTrackMath = r.nodes.some( n => n.type === 'decl' && n.prop.startsWith( '--' ) && ! ( n.prop === '--nb-pullout-in-column' && n.value === '0' ) );
+			if ( ! setsTrackMath ) {
+				return;
+			}
 			for ( const excluded of [ '.wp-block-template-part', '.wp-block-query', '.nb-supernova', '.nb-content-layout-grid' ] ) {
 				assert.ok( ! r.selector.includes( excluded ), `${ excluded } must not take the inset (${ r.selector })` );
 			}
 		} );
 	} );
+} );
+
+test( '#656 the in-column pull-out is gated on its own flag, set by the inset containers and cleared on template parts', () => {
+	const flagged = [];
+	layoutSheet.walkDecls( '--nb-pullout-in-column', d => {
+		let rule = d.parent;
+		while ( rule && rule.type !== 'rule' ) {
+			rule = rule.parent;
+		}
+		assert.ok( insideSignal( d ), `${ rule.selector } sets the flag outside the signal` );
+		// The "on" flag is desktop-only: the band (and the break layer's fit
+		// rule) never applies to the collapsed below-lap grid.
+		if ( d.value === '1' ) {
+			assert.ok( rule.parent.type === 'atrule' && /min-width:\s*1024px/.test( rule.parent.params ), 'the flag must be set above lap only' );
+		}
+		flagged.push( `${ rule.selector.includes( '.wp-block-post-content' ) ? 'inset' : rule.selector }=${ d.value }` );
+	} );
+	assert.deepEqual( flagged.sort(), [ '.wp-block-template-part=0', 'inset=1' ] );
+
+	const placements = [];
+	layoutSheet.walkDecls( /^grid-column/, d => {
+		if ( insideSignal( d ) ) {
+			let flagQuery = false;
+			for ( let p = d.parent; p; p = p.parent ) {
+				flagQuery = flagQuery || ( p.type === 'atrule' && p.params === 'style(--nb-pullout-in-column: 1)' );
+			}
+			placements.push( flagQuery );
+		}
+	} );
+	assert.ok( placements.length === 4 && placements.every( Boolean ), 'every gated placement sits in the flag query' );
 } );
 
 test( 'a railed Sidecar content area puts default blocks on cs-ce only under the signal', () => {
@@ -437,4 +480,118 @@ test( 'beside a right rail wide/full end at ce, and nothing in the signal moves 
 	// With the inset saved, `ce` is the reading column's end: ge - max(gap, inset).
 	const l = lines( scopeFor( { container: 1125, inset: 230, railRight: 215.6, gap: 64, fontSize: 15 } ) );
 	close( l.ge - l.ce, 230 * 15 / 16, 'wide stops one inset short of the rail' );
+} );
+
+// ---------------------------------------------------------------------------
+// GitHub #656: aligned (pull-out) blocks under a saved Content Inset.
+//
+// A broken pull-out is placed on `--block-left-start / --block-left-end`
+// (default ws / gs) or `--block-right-start / --block-right-end` (ge / we):
+// the rail track plus free space beside the reading column. The inset math
+// moves the free-side room into the gs-cs separator and zeroes an absent
+// rail, so ws-gs (and ge-we) collapse to 0px and the image vanished. Under the
+// signal a pull-out belongs INSIDE the reading column: a band on its own side
+// (cs-gcs / gce-ce) with the next block beside it (gce-ce / cs-gcs).
+// ---------------------------------------------------------------------------
+
+const allRules = ( () => {
+	const rules = [];
+	layoutSheet.walkRules( rule => {
+		rules.push( rule );
+	} );
+	return rules;
+} )();
+
+const declOf = ( rule, prop ) => {
+	const decls = rule.nodes.filter( n => n.type === 'decl' && n.prop === prop );
+	return decls.length ? decls[ decls.length - 1 ].value : undefined;
+};
+
+// The placement a broken pull-out (or the block after it) resolves to: the
+// last matching rule in source order, gated ones only when the signal is on.
+const placementFor = ( { side, sibling, prop, signal } ) => {
+	const align = `.align${ side }`;
+	const broken = `.break-align-${ side }`;
+	let value;
+	for ( const rule of allRules ) {
+		const selector = rule.selector;
+		if ( ! selector.includes( align ) || ! selector.includes( broken ) || selector.includes( ':not(.break-align' ) ) {
+			continue;
+		}
+		if ( sibling !== /\+\s*:not\(/.test( selector ) ) {
+			continue;
+		}
+		if ( insideSignal( rule ) && ! signal ) {
+			continue;
+		}
+		const v = declOf( rule, prop );
+		if ( undefined !== v ) {
+			value = v;
+		}
+	}
+	return value;
+};
+
+// Resolve `var(--block-left-start)`-style placement vars to line names: the
+// gated inset containers' values when the signal is on, else :root.
+const lineName = ( token, signal ) => {
+	const m = token.trim().match( /^var\((--[\w-]+)(?:,\s*([\w-]+))?\)$/ );
+	if ( ! m ) {
+		return token.trim();
+	}
+	const [ , name, fallback ] = m;
+	if ( signal && gatedDeclarations[ name ] ) {
+		return gatedDeclarations[ name ].trim();
+	}
+	return ( rootDeclarations[ name ] || fallback ).trim();
+};
+
+const span = ( value, signal ) => value.split( '/' ).map( t => lineName( t, signal ) );
+
+const allLines = scope => {
+	const l = lines( scope );
+	const g = scope[ '--nb-sidecar-gap' ];
+	const cl = evaluate( '--nb-sidecar-content-left', scope );
+	const gcs = l.cs + cl;
+	return { ...l, ws: 0, gcs, gce: gcs + g };
+};
+
+const PULLOUT_CASES = [
+	{ label: 'one right rail, 1024', container: 968.9, gap: 55.1, vw: 1024, fontSize: 15, inset: 230, railRight: 215.6 },
+	{ label: 'one right rail, 1440', container: 1125, gap: 64, vw: 1440, fontSize: 15, inset: 230, railRight: 215.6 },
+	{ label: 'one left rail, 1280', container: 1125, gap: 64, vw: 1280, fontSize: 15, inset: 230, railLeft: 215.6 },
+	{ label: 'rail-less, 1920', container: 1462.5, gap: 64, vw: 1920, fontSize: 15, inset: 230 },
+	{ label: 'rail-less, 1024', container: 968.9, gap: 55.1, vw: 1024, fontSize: 15, inset: 300 },
+];
+
+for ( const c of PULLOUT_CASES ) {
+	test( `#656 a broken pull-out keeps a real band inside the reading column (${ c.label })`, () => {
+		const l = allLines( scopeFor( c ) );
+		for ( const side of [ 'left', 'right' ] ) {
+			const value = placementFor( { side, sibling: false, prop: 'grid-column', signal: true } );
+			assert.ok( value, `no ${ side } pull-out placement` );
+			const [ start, end ] = span( value, true );
+			assert.ok( start in l && end in l, `${ side }: unknown lines ${ start } / ${ end }` );
+			const width = l[ end ] - l[ start ];
+			assert.ok( width > 100, `${ side } pull-out band is ${ width.toFixed( 1 ) }px (${ start } / ${ end })` );
+			assert.ok( l[ start ] >= l.cs - 0.01 && l[ end ] <= l.ce + 0.01, `${ side } band ${ start } / ${ end } must sit inside cs-ce` );
+		}
+	} );
+}
+
+test( '#656 the block after a pull-out sits beside the band, never under it', () => {
+	const leftEnd = span( placementFor( { side: 'left', sibling: false, prop: 'grid-column', signal: true } ), true )[ 1 ];
+	const leftNext = lineName( placementFor( { side: 'left', sibling: true, prop: 'grid-column-start', signal: true } ), true );
+	const rightStart = span( placementFor( { side: 'right', sibling: false, prop: 'grid-column', signal: true } ), true )[ 0 ];
+	const rightNext = lineName( placementFor( { side: 'right', sibling: true, prop: 'grid-column-end', signal: true } ), true );
+	const l = allLines( scopeFor( PULLOUT_CASES[ 1 ] ) );
+	assert.ok( l[ leftNext ] >= l[ leftEnd ] + 1, `text after a left pull-out starts at ${ leftNext }, band ends at ${ leftEnd }` );
+	assert.ok( l[ rightNext ] <= l[ rightStart ] - 1, `text before a right pull-out ends at ${ rightNext }, band starts at ${ rightStart }` );
+} );
+
+test( '#656 without the signal the pull-out placement is the untouched ws/gs + ge/we rail band', () => {
+	assert.deepEqual( span( placementFor( { side: 'left', sibling: false, prop: 'grid-column', signal: false } ), false ), [ 'ws', 'gs' ] );
+	assert.deepEqual( span( placementFor( { side: 'right', sibling: false, prop: 'grid-column', signal: false } ), false ), [ 'ge', 'we' ] );
+	assert.equal( lineName( placementFor( { side: 'left', sibling: true, prop: 'grid-column-start', signal: false } ), false ), 'cs' );
+	assert.equal( lineName( placementFor( { side: 'right', sibling: true, prop: 'grid-column-end', signal: false } ), false ), 'ce' );
 } );

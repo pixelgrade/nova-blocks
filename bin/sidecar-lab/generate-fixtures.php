@@ -346,6 +346,33 @@ function sl_content_battery( int $img ): string {
 		. sl_paragraphs( 1, 0 );
 }
 
+/**
+ * A resized aligned core/image (#656): authored width, optional authored
+ * height (cropped with object-fit, as the editor's resize writes it).
+ */
+function sl_aligned_image( int $id, string $align, int $width, int $height = 0 ): string {
+	$src   = wp_get_attachment_image_url( $id, 'large' );
+	$attrs = [ 'id' => $id, 'width' => $width . 'px', 'sizeSlug' => 'large', 'linkDestination' => 'none', 'align' => $align ];
+	$style = 'width:' . $width . 'px';
+	if ( $height ) {
+		$attrs = [ 'id' => $id, 'width' => $width . 'px', 'height' => $height . 'px', 'scale' => 'cover', 'sizeSlug' => 'large', 'linkDestination' => 'none', 'align' => $align ];
+		$style = 'object-fit:cover;width:' . $width . 'px;height:' . $height . 'px';
+	}
+	return '<!-- wp:image ' . wp_json_encode( $attrs ) . " -->\n"
+		. '<figure class="wp-block-image align' . $align . ' size-large is-resized"><img src="' . esc_url( $src ) . '" alt="Sidecar lab aligned fixture" class="wp-image-' . $id . '" style="' . $style . '"/></figure>' . "\n"
+		. "<!-- /wp:image -->\n\n";
+}
+
+/** The #656 battery: a left and a right pull-out with text beside them. */
+function sl_aligned_battery( int $img ): string {
+	return sl_paragraphs( 1, 0 )
+		. sl_aligned_image( $img, 'left', 190, 240 )
+		. sl_paragraphs( 2, 1 )
+		. sl_aligned_image( $img, 'right', 300 )
+		. sl_paragraphs( 2, 3 )
+		. sl_paragraphs( 1, 5 );
+}
+
 /** Reduced battery for nested pages (keeps page weight sane). */
 function sl_content_battery_reduced( int $img ): string {
 	return sl_paragraphs( 1, 2 )
@@ -885,6 +912,30 @@ function sl_page_definitions( int $img, array $post_ids = [] ): array {
 			'thumbnail'   => true,
 		];
 	}
+
+	// --- (k) Aligned images in the reading column (GitHub #656). The same
+	//         single-style templates, but the page body is the aligned battery:
+	//         an alignleft 190x240 and an alignright 300px image with text
+	//         beside them, inside Post Content. With Content Inset saved they
+	//         must keep their authored width inside cs-ce (a broken left
+	//         pull-out used to take the zero-width ws-gs track). Plus a plain
+	//         page (Anima's own page wrapper, no template). ---
+	foreach ( [ 'right', 'left', 'railless' ] as $rails ) {
+		$pages[ 'template-single-aligned-' . $rails ] = [
+			'title'       => 'Sidecar Lab — Aligned images in the reading column (' . $rails . ')',
+			'description' => 'Custom single-style template (' . $rails . ' rail(s), small) whose Post Content holds an alignleft 190x240 and an alignright 300px image with text beside them (#656). Aligned images keep their authored width inside the reading column.',
+			'families'    => [ 'post-content-template', 'content-inset', 'aligned', 'rail-' . $rails, 'width-small' ],
+			'content'     => sl_aligned_battery( $img ),
+			'template'    => $single_rails[ 'template-single-' . $rails ],
+			'thumbnail'   => true,
+		];
+	}
+	$pages['aligned-page'] = [
+		'title'       => 'Sidecar Lab — Aligned images on a plain page',
+		'description' => 'A plain page (no custom template, no Sidecar in the body): Post Content holds the #656 aligned battery (alignleft 190x240, alignright 300px, text beside them).',
+		'families'    => [ 'content-inset', 'aligned', 'rail-none' ],
+		'content'     => sl_aligned_battery( $img ),
+	];
 
 	// --- (h) Layout containers nested in a column (GitHub #653). A Query or a
 	//         Supernova inside core/columns has no Nova layout-grid parent, so

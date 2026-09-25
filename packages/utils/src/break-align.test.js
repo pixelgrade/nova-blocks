@@ -411,6 +411,58 @@ describe( 'seed+verify pass shape (Task 3.4 review pinning)', () => {
 	} );
 } );
 
+describe( 'in-column pull-outs under a saved Content Inset (#656)', () => {
+	// With the inset saved the broken band is half the reading column
+	// (cs-gcs / gce-ce, flagged by --nb-pullout-in-column: 1). A pull-out
+	// whose authored width does not fit that band must stay unbroken, so it
+	// keeps its authored width in cs-ce instead of being squeezed.
+	const stubFlag = ( value ) => {
+		getComputedStyleSpy.mockImplementation( () => ( {
+			...ZERO_MARGINS,
+			getPropertyValue: ( prop ) => ( prop === '--nb-pullout-in-column' ? value : '' ),
+		} ) );
+	};
+
+	const makePullout = ( align, authoredWidth, bandWidth ) => {
+		const { content } = makeSidecar( { position: 'none', railChildren: 0 } );
+		const pullout = makeBlock( `wp-block-image align${ align } is-resized` );
+		const img = document.createElement( 'img' );
+		img.style.setProperty( 'width', `${ authoredWidth }px` );
+		pullout.appendChild( img );
+		setRect( pullout, { top: 0, bottom: 240, left: 400, right: 400 + bandWidth, width: bandWidth, height: 240 } );
+		content.appendChild( pullout );
+		return pullout;
+	};
+
+	it.each( [ 'left', 'right' ] )( 'keeps an align%s pull-out wider than its band unbroken', ( align ) => {
+		stubFlag( ' 1' );
+		const pullout = makePullout( align, 300, 207 );
+
+		measureBreakClassesPass( [ pullout ], { skipCssCoveredRails: false } );
+
+		expect( pullout.classList.contains( `break-align-${ align }` ) ).toBe( false );
+		expect( pullout.style.getPropertyValue( 'grid-row-end' ) ).toBe( '' );
+	} );
+
+	it.each( [ 'left', 'right' ] )( 'breaks an align%s pull-out that fits its band', ( align ) => {
+		stubFlag( '1' );
+		const pullout = makePullout( align, 190, 207 );
+
+		measureBreakClassesPass( [ pullout ], { skipCssCoveredRails: false } );
+
+		expect( pullout.classList.contains( `break-align-${ align }` ) ).toBe( true );
+	} );
+
+	it( 'leaves the inset-free engine alone: no flag, the rail band may shrink the image', () => {
+		stubFlag( '' );
+		const pullout = makePullout( 'left', 300, 207 );
+
+		measureBreakClassesPass( [ pullout ], { skipCssCoveredRails: false } );
+
+		expect( pullout.classList.contains( 'break-align-left' ) ).toBe( true );
+	} );
+} );
+
 describe( 'honest pull-out row span (Task 3.4, replaces span 5)', () => {
 	it( 'spans one row per vertically-overlapped following sibling', () => {
 		const pulloutBox = { top: 0, bottom: 300 };

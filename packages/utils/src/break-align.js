@@ -202,6 +202,30 @@ export const computePulloutRowSpan = ( pulloutBox, followingSiblingBoxes ) => {
   return Math.max( 1, 1 + overlapped );
 };
 
+// In-column pull-outs (GitHub #656): with Style Manager's Content Inset saved,
+// the core layout CSS flags the reading contexts with
+// `--nb-pullout-in-column: 1` and places a broken pull-out on HALF the reading
+// column (cs-gcs / gce-ce) instead of the rail band. A pull-out whose authored
+// pixel width (the resized image's inline width) is wider than that band would
+// be squeezed there, so it is not broken: it stays in cs-ce at full size.
+// Without the flag (no inset saved) this never applies — the rail band keeps
+// its historical capping behaviour.
+export const pulloutMisfitsBand = ( block, bandWidth ) => {
+  const style = window.getComputedStyle( block );
+  if ( ! style || typeof style.getPropertyValue !== 'function' ) {
+    return false;
+  }
+  if ( style.getPropertyValue( '--nb-pullout-in-column' ).trim() !== '1' ) {
+    return false;
+  }
+  const img = block.querySelector( 'img' );
+  const authored = img ? img.style.getPropertyValue( 'width' ).trim() : '';
+  if ( ! /^\d*\.?\d+px$/.test( authored ) ) {
+    return false;
+  }
+  return bandWidth + 0.5 < parseFloat( authored );
+};
+
 const collectFollowingSiblings = ( block ) => {
   const siblings = [];
   let node = block.nextElementSibling;
@@ -296,6 +320,9 @@ export const measureBreakClassesPass = ( blocks, { skipCssCoveredRails = false, 
   };
   infos.forEach( info => {
     info.extendedBox = snapshotExtended( info.block );
+    // #656: read in the extended world, where the pull-out sits on its band.
+    info.misfitsBand = info.isPullout
+      && pulloutMisfitsBand( info.block, info.extendedBox.right - info.extendedBox.left );
     if ( context === 'extended' ) {
       info.leftObstacleBoxes = info.leftObstacles.map( snapshotExtended );
       info.rightObstacleBoxes = info.rightObstacles.map( snapshotExtended );
@@ -331,8 +358,10 @@ export const measureBreakClassesPass = ( blocks, { skipCssCoveredRails = false, 
   let changed = false;
 
   infos.forEach( info => {
-    const breakLeft = ! info.leftObstacleBoxes.some( box => boxesOverlap( box, info.box ) );
-    const breakRight = ! info.rightObstacleBoxes.some( box => boxesOverlap( box, info.box ) );
+    const isLeft = info.block.classList.contains( 'alignleft' );
+    const isRight = info.block.classList.contains( 'alignright' );
+    const breakLeft = ! ( isLeft && info.misfitsBand ) && ! info.leftObstacleBoxes.some( box => boxesOverlap( box, info.box ) );
+    const breakRight = ! ( isRight && info.misfitsBand ) && ! info.rightObstacleBoxes.some( box => boxesOverlap( box, info.box ) );
 
     if ( breakLeft ) {
       info.block.classList.add( BREAK_LEFT_CLASS );

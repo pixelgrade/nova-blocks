@@ -318,6 +318,56 @@
     --nb-sidecar-content-width: calc(var(--nb-actual-container-width) - var(--nb-layout-rail-left) - var(--nb-sidecar-sidebar-left-gap) - var(--nb-layout-rail-right) - var(--nb-sidecar-sidebar-right-gap));
     --nb-sidecar-content-left: calc(var(--nb-sidecar-content-width) * 0.5 - var(--nb-sidecar-gap) * 0.5);
     --nb-sidecar-content-right: var(--nb-sidecar-content-left);
+
+    // Pull-outs sit inside the reading column here (GitHub #656, below).
+    // Inherited, so grids that subgrid these tracks (Groups, Queries) follow.
+    // Desktop grid only: below `lap` the shared pull-out rules stand, and the
+    // break layer must not apply its band-fit rule there either.
+    @include above(lap) {
+      --nb-pullout-in-column: 1;
+    }
+  }
+
+  // A template part keeps its own (inset-free) grid, where the rail band is
+  // real — e.g. a footer part inside the Site Editor root.
+  .wp-block-template-part {
+    --nb-pullout-in-column: 0;
+  }
+
+  // Aligned pull-outs (GitHub #656). A broken alignleft/alignright is placed on
+  // the rail band beside the column — ws-gs / ge-we — which the math above
+  // collapses to 0px wherever a side has no rail (the inset lives in the
+  // gs-cs / ce-ge separator instead), so the block rendered 0px wide. Under
+  // the inset the pull-out belongs INSIDE the reading column: a band on its
+  // own half (cs-gcs / gce-ce), the image at its authored width on its side,
+  // and the next block beside it on the other half. The break layer
+  // (packages/utils/src/break-align.js) keeps a pull-out whose authored width
+  // does not fit that half unbroken, so it stays in cs-ce at full size. Below
+  // `lap` the grid collapses to one column and the shared rules stand. Same
+  // selectors as the shared placement above, later in source order.
+  @container style(--nb-pullout-in-column: 1) {
+    @include above(lap) {
+      :is(#{$nb-layout-grid-parents}) {
+
+        > :is(.alignleft, [data-align="left"]):is(.break-align-left, .nb-break-always) {
+          grid-column: cs / gcs;
+          align-items: flex-start;
+
+          + :not(:is(.alignright, [data-align="right"])) {
+            grid-column-start: gce;
+          }
+        }
+
+        > :is(.alignright, [data-align="right"]):is(.break-align-right, .nb-break-always) {
+          grid-column: gce / ce;
+          align-items: flex-end;
+
+          + :not(:is(.alignleft, [data-align="left"])) {
+            grid-column-end: gcs;
+          }
+        }
+      }
+    }
   }
 }
 
