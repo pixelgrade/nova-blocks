@@ -42,6 +42,22 @@
     }
   }
 
+  // Content Inset contract (GitHub #655, opt-in — see core _layout.scss): once
+  // Style Manager's Content Inset is saved, a railed Sidecar's content area
+  // puts default blocks on the reading column `cs–ce` instead of aliasing the
+  // wide lines, so the title, meta, featured image and Post Content share one
+  // column; wide/full keep the rail-bounded spans below (and the break layers).
+  // Without the signal this matches nothing and the alias above stands.
+  @container style(--sm-content-inset-explicit: 1) {
+    .nb-sidecar:not(.nb-sidecar--no-left-rail.nb-sidecar--no-right-rail) {
+
+      > .nb-sidecar-area--content {
+        --block-content-start: cs;
+        --block-content-end: ce;
+      }
+    }
+  }
+
   // A left rail present narrows the content's LEFT edge to `cs`.
   .nb-sidecar:not(.nb-sidecar--no-left-rail) {
 

@@ -861,6 +861,31 @@ function sl_page_definitions( int $img, array $post_ids = [] ): array {
 		'template'    => sl_sidecar_three( [ 'sidebarWidth' => 'medium' ], sl_rail_short(), sl_template_content_area(), sl_rail_long( $img ) ),
 	];
 
+	// --- (j) Content Inset on the single reading column (GitHub #655). A
+	//         single-post-shaped template whose Sidecar content area holds the
+	//         title, a meta line, the featured image and Post Content, all
+	//         default-aligned: they must share one column (cs-ce). Captured in
+	//         the harness with Content Inset UNSET (the compat guarantee); the
+	//         inset-set geometry is measured separately against the Style
+	//         Manager Layout board formula. ---
+	$single_rails = [
+		'template-single-right'    => sl_sidecar( [ 'sidebarPosition' => 'right', 'sidebarWidth' => 'small' ], sl_template_single_area(), sl_rail_long( $img ) ),
+		'template-single-left'     => sl_sidecar( [ 'sidebarPosition' => 'left', 'sidebarWidth' => 'small' ], sl_template_single_area(), sl_rail_long( $img ) ),
+		'template-single-both'     => sl_sidecar_three( [ 'sidebarWidth' => 'small' ], sl_rail_short(), sl_template_single_area(), sl_rail_long( $img ) ),
+		'template-single-railless' => sl_sidecar( [ 'sidebarPosition' => 'none', 'sidebarWidth' => 'small' ], sl_template_single_area() ),
+	];
+	foreach ( $single_rails as $suffix => $template ) {
+		$rails = str_replace( 'template-single-', '', $suffix );
+		$pages[ $suffix ] = [
+			'title'       => 'Sidecar Lab — Single reading column (' . $rails . ')',
+			'description' => 'Custom single-style template: Sidecar (' . $rails . ' rail(s), small) whose content area holds a default-aligned post-title, post-date, post-featured-image and core/post-content (reduced battery with wide + full images). Title, meta, featured image and body share one column; wide/full escape (#655).',
+			'families'    => [ 'post-content-template', 'content-inset', 'rail-' . $rails, 'width-small' ],
+			'content'     => sl_content_battery_reduced( $img ),
+			'template'    => $template,
+			'thumbnail'   => true,
+		];
+	}
+
 	// --- (h) Layout containers nested in a column (GitHub #653). A Query or a
 	//         Supernova inside core/columns has no Nova layout-grid parent, so
 	//         it is a root; it must not reserve rail tracks it never uses, or
@@ -913,6 +938,17 @@ function sl_collection_query( array $post_ids, int $query_id ): string {
 function sl_template_content_area( array $layout = [ 'inherit' => true ] ): string {
 	return '<!-- wp:post-title {"level":1,"align":"wide"} /-->' . "\n\n"
 		. '<!-- wp:post-content ' . wp_json_encode( [ 'layout' => $layout ] ) . ' /-->' . "\n";
+}
+
+/**
+ * Single-style content area (#655): title, meta line, featured image and the
+ * page body, all default-aligned so they share the reading column.
+ */
+function sl_template_single_area(): string {
+	return '<!-- wp:post-title {"level":1} /-->' . "\n\n"
+		. '<!-- wp:post-date /-->' . "\n\n"
+		. '<!-- wp:post-featured-image /-->' . "\n\n"
+		. '<!-- wp:post-content {"layout":{"inherit":true}} /-->' . "\n";
 }
 
 /** A full custom page template around a Sidecar (header and footer parts). */
@@ -1005,6 +1041,10 @@ foreach ( $definitions as $slug_suffix => $def ) {
 		}
 		wp_set_object_terms( $template_id, get_stylesheet(), 'wp_theme' );
 		update_post_meta( $post_id, '_wp_page_template', $template_slug );
+	}
+
+	if ( ! empty( $def['thumbnail'] ) ) {
+		set_post_thumbnail( $post_id, $attachment_id );
 	}
 
 	$manifest[] = [

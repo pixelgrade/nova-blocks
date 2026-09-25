@@ -227,6 +227,76 @@
   --nb-layout-rail-right: 0px;
 }
 
+// Content Inset — the Style Manager Layout board contract (GitHub #655).
+//
+// The board ("The Layout contract", style-manager spacing-overlay
+// buildContractSvg + the "Centered · pure reading page" example) draws Content
+// Inset as the lever that narrows the reading column on BOTH sides:
+//
+//   cs = (ws | left rail edge gs) + inset      ce = (we | right rail edge ge) - inset
+//   reading = container - rails - 2 x inset
+//
+// with the rail gap kept as the minimum next to a rail (max(gap, inset)). One
+// rule for every reading context: a Sidecar with rails, a rail-less Sidecar
+// (Anima's page wrapper) and page-level Post Content / the editor root. Header
+// and footer template parts, card-internal grids and Query / Supernova roots
+// keep their grids.
+//
+// COMPAT: everything below sits in a container style query on the Style
+// Manager opt-in signal `--sm-content-inset-explicit: 1`, which SM emits ONLY
+// once a Content Inset value is saved (`--sm-content-inset` itself is always
+// emitted with its 230 default, so it cannot tell a saved value apart). Sites
+// that never saved Content Inset — and browsers without style queries — match
+// none of it: the ungated cascade is untouched, byte for byte.
+//
+// Rails: `--nb-inset-rail-*` is the rail that actually sits on each side. A
+// Sidecar sets it on its present sides; an absent side INHERITS it, so a nested
+// Sidecar keeps an outer rail's boundary (the same inheritance the raw width
+// vars give the ungated engine); with no rail anywhere it falls back to 0px.
+// The rail track itself (`--nb-layout-rail-*`) follows it, so an absent side
+// reserves no phantom rail.
+//
+// Only derived vars are overridden (the engine rule: never add padding/width
+// to a grid container). The separator track [gs..cs] / [ce..ge] carries the
+// inset (min the rail gap next to a rail). `cc` centres on the READING column
+// (as the board draws it: an inset beside a rail is not mirrored on the free
+// side), not on the container midline, so the halves are always equal. The
+// inset is capped to keep the column at least three rail gaps wide; a negative
+// track would invalidate the whole template.
+@container style(--sm-content-inset-explicit: 1) {
+
+  .nb-sidecar:not(.nb-sidecar--no-left-rail) {
+    --nb-inset-rail-left: var(--nb-sidecar-sidebar-left-width);
+  }
+
+  .nb-sidecar:not(.nb-sidecar--no-right-rail) {
+    --nb-inset-rail-right: var(--nb-sidecar-sidebar-right-width);
+  }
+
+  :is(
+    .nb-sidecar,
+    .nb-sidecar-area--content,
+    .is-root-container,
+    .edit-post-visual-editor__post-title-wrapper,
+    .wp-block-post-content
+  ) {
+    --nb-layout-rail-left: var(--nb-inset-rail-left, 0px);
+    --nb-layout-rail-right: var(--nb-inset-rail-right, 0px);
+
+    // Same font-relative scale as the Small rail it historically fed.
+    --nb-content-inset: calc(var(--nb-content-inset-setting) * var(--theme-body-final-font-size, 16px) / 16);
+    --nb-content-inset-effective: clamp(0px, var(--nb-content-inset), calc((var(--nb-actual-container-width) - var(--nb-layout-rail-left) - var(--nb-layout-rail-right)) * 0.5 - var(--nb-sidecar-gap) * 1.5));
+
+    @each $side in left, right {
+      --nb-sidecar-sidebar-#{$side}-gap: calc(var(--nb-content-inset-effective) + clamp(0px, var(--nb-layout-rail-#{$side}) * 999, max(0px, var(--nb-sidecar-gap) - var(--nb-content-inset-effective))));
+    }
+
+    --nb-sidecar-content-width: calc(var(--nb-actual-container-width) - var(--nb-layout-rail-left) - var(--nb-sidecar-sidebar-left-gap) - var(--nb-layout-rail-right) - var(--nb-sidecar-sidebar-right-gap));
+    --nb-sidecar-content-left: calc(var(--nb-sidecar-content-width) * 0.5 - var(--nb-sidecar-gap) * 0.5);
+    --nb-sidecar-content-right: var(--nb-sidecar-content-left);
+  }
+}
+
 // Task 5.0 (header-nested-grid ruling — from the 4b.3 harness finding).
 //
 // A Nova layout grid must NOT establish inside a header row. `.nb-header-row`
