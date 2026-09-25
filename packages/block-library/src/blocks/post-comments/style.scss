@@ -3,7 +3,6 @@
     --comments-grid-gap: 10px;
     --component-accent-color: var(--sm-current-accent-color, var(--nb-accent-color));
     --nb-conversations-width: 48em;
-    --field-description-color: #000;
     --conversations-bg-color: #E4E3E4;
     --conversations-reply-bg-color: #CDCCCD;
     --comment-author-color: var(--sm-current-accent-color, var(--nb-accent-color));
@@ -50,10 +49,10 @@
         }
       }
   
+      // Hints take the context's text role, not a dimmed fixed black (#649).
       .field-description {
         display: block;
-        color: var(--field-description-color);
-        opacity: .6;
+        color: var(--field-description-color, var(--sm-current-fg1-color, var(--nb-fg1-color)));
       }
     }
   
@@ -154,18 +153,21 @@
       }
     }
   
+    // Secondary meta and links read at 4.5:1 on any ground: they take the
+    // context's text role instead of being dimmed with opacity, and keep
+    // their hierarchy through their smaller size (#649).
     .comment-posted-time {
-      opacity: .5;
+      color: var(--sm-current-fg1-color, var(--nb-fg1-color));
     }
   
     :is(.comment-reply-link,
     .comment-edit-link,
     .comment-link,
     [id="cancel-comment-reply-link"]) {
-      transition: opacity .15s ease-out;
+      color: var(--sm-current-fg1-color, var(--nb-fg1-color));
   
-      &:not(:hover) {
-        opacity: 0.6;
+      &:hover {
+        text-decoration-thickness: 0.125em;
       }
     }
   
@@ -179,10 +181,6 @@
       text-decoration: underline;
     }
   
-    .comment-reply-link,
-    .comment-link {
-      color: currentColor;
-    }
   
     .comment-list {
   
@@ -533,10 +531,6 @@
       }
     }
   
-    .comment-edit-link {
-      color: currentColor;
-    }
-  
     [id="cancel-comment-reply-link"] {
       margin-top: calc(var(--nb-spacing) * 0.5);
       padding-left: calc(var(--avatar-column-size) + var(--comments-grid-gap));
@@ -703,7 +697,7 @@
   
   .comment-awaiting-moderation {
     --font-size-modifier: 0.88;
-    opacity: 0.6;
+    color: var(--sm-current-fg1-color, var(--nb-fg1-color));
 
     @include block-spacing;
     --nb-block-top-spacing: 0.25;
@@ -877,6 +871,7 @@
   .comment-dropdown-toggle {
   
     display: flex;
+    color: var(--sm-current-fg1-color, var(--nb-fg1-color));
   
     .arrow-down {
       display: none;
@@ -908,8 +903,6 @@
   
       cursor: pointer;
   
-      opacity: .5;
-  
       .arrow-down {
         display: block;
       }
@@ -917,14 +910,9 @@
       .dots {
         display: none;
       }
-
-      &:hover {
-        opacity: 1;
-      }
     }
   
     @include below(tablet) {
-      opacity: .5;
       text-indent: -99999px;
     }
   }
