@@ -796,6 +796,13 @@ function sl_page_definitions( int $img, array $post_ids = [] ): array {
 			'template'    => sl_sidecar( [ 'sidebarPosition' => $position, 'sidebarWidth' => $width ], sl_template_content_area(), sl_rail_long( $img ) ),
 		];
 	}
+	$pages['template-right-medium-measure'] = [
+		'title'       => 'Sidecar Lab — Post Content with an authored measure beside a Right Rail',
+		'description' => 'Custom page template: Sidecar (right rail, medium) whose Post Content authors layout.contentSize 38rem: default-aligned children cap at the measure and start level with the title; wide/full keep their tracks (#650 ask 2).',
+		'families'    => [ 'post-content-template', 'post-content-measure', 'rail-right', 'width-medium', 'rail-long' ],
+		'content'     => sl_content_battery_reduced( $img ),
+		'template'    => sl_sidecar( [ 'sidebarPosition' => 'right', 'sidebarWidth' => 'medium' ], sl_template_content_area( [ 'type' => 'constrained', 'contentSize' => '38rem' ] ), sl_rail_long( $img ) ),
+	];
 	$pages['template-both'] = [
 		'title'       => 'Sidecar Lab — Post Content in a Three-Area Template',
 		'description' => 'Custom page template: three-area Sidecar (both rails, medium) whose content area holds post-title + core/post-content (#650).',
@@ -853,9 +860,9 @@ function sl_collection_query( array $post_ids, int $query_id ): string {
 }
 
 /** Template content area: the page title and the page's own body. */
-function sl_template_content_area(): string {
+function sl_template_content_area( array $layout = [ 'inherit' => true ] ): string {
 	return '<!-- wp:post-title {"level":1,"align":"wide"} /-->' . "\n\n"
-		. '<!-- wp:post-content {"layout":{"inherit":true}} /-->' . "\n";
+		. '<!-- wp:post-content ' . wp_json_encode( [ 'layout' => $layout ] ) . ' /-->' . "\n";
 }
 
 /** A full custom page template around a Sidecar (header and footer parts). */

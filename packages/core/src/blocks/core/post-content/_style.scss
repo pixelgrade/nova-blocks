@@ -1,0 +1,33 @@
+// Post Content's authored reading measure (GitHub #650). The render filter
+// (init.php) adds `nb-post-content--measure` and `--nb-post-content-measure`
+// only when the block authors its own `layout.contentSize`.
+//
+// Inside a Nova layout grid, default-aligned children sit on the content track
+// and Nova clears their max-width. Cap them to the measure and keep them on
+// the content start line, level with the title; WordPress's constrained layout
+// would centre them with `margin: auto !important`. Wide, full and floated
+// alignments keep their tracks.
+.wp-block-post-content.nb-post-content--measure.nb-post-content--measure > :not(
+  .alignwide,
+  .alignfull,
+  .alignleft,
+  .alignright,
+  [data-align="wide"],
+  [data-align="full"],
+  [data-align="left"],
+  [data-align="right"],
+  .block-list-appender
+) {
+  max-width: min(var(--nb-post-content-measure), 100%);
+  margin-inline-start: 0 !important;
+  margin-inline-end: auto !important;
+  justify-self: start;
+}
+
+// With an authored contentSize WordPress's constrained layout also caps wide
+// children at the theme wide size and centres them. On the Nova grid a wide
+// child already spans its own track: keep it there, as without a measure.
+.wp-block-post-content.nb-post-content--measure.nb-post-content--measure > :is(.alignwide, [data-align="wide"]) {
+  max-width: none;
+  margin-inline: 0 !important;
+}
