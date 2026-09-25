@@ -19,7 +19,9 @@
  * testable and safe to import from any family's controls (space-and-sizing,
  * shape-modeling, future families) without pulling in editor runtime code.
  */
-import { cloneDeep, isEqual } from 'lodash';
+import { deepClone, deepEqual } from './deep-values';
+
+export { deepClone, deepEqual };
 
 /**
  * Resolves the union of every attribute declared across a family's preset
@@ -132,7 +134,7 @@ export const getPresetApplyPatch = ( definition, currentAttributes = {}, registe
 		}
 
 		patch[ attribute ] = undefined !== defaults[ attribute ]
-			? cloneDeep( defaults[ attribute ] )
+			? deepClone( defaults[ attribute ] )
 			: undefined;
 	} );
 
@@ -181,7 +183,7 @@ export const deriveActivePresetId = ( definitions, attributes = {}, registeredDe
 				attribute
 			);
 
-			return isEqual( normalizedCurrent, target );
+			return deepEqual( normalizedCurrent, target );
 		} );
 	} );
 

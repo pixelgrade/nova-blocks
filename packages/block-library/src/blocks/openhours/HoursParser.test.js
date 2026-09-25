@@ -1,6 +1,6 @@
-// The parser is legacy Foursquare code that relies on the `_` global that
-// WordPress ships in the editor. Provide it before requiring the module.
-global._ = global._ || require( 'lodash' );
+// The parser used to rely on a `_` (lodash/underscore) global. It is native
+// JavaScript now (#485), so make sure no such global is available.
+delete global._;
 
 const { parseContent } = require( './HoursParser' );
 

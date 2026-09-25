@@ -126,13 +126,13 @@ fourSq.util.HoursParser = {
     text = fourSq.util.Hours.padTimes(text);
 
     // Massage days
-    var dayCanonicals = _.map(_.range(1, 8), function(dayI) {
+    var dayCanonicals = fourSq.util.HoursParser.range(1, 8).map(function(dayI) {
       var allNames = fourSq.util.HoursParser.dayAliases(dayI);
-      var canonical = _.head(allNames); // Shortest is at the front
-      var aliases = _.tail(allNames);
+      var canonical = allNames[0]; // Shortest is at the front
+      var aliases = allNames.slice(1);
       aliases.reverse();  // Need to have the largest alias first for replacing
       if (canonical && aliases) {
-        _.each(aliases, function(alias) {
+        aliases.forEach(function(alias) {
           // Locale day names may contain regex metacharacters, so escape every
           // alias here. English aliases contain none, so this is a no-op for them.
           var pattern = fourSq.util.HoursParser.escapeRegExp(alias);
@@ -202,7 +202,7 @@ fourSq.util.HoursParser = {
       }
     }
 
-    var timeframes = _.map(matches, function(match) {
+    var timeframes = matches.map(function(match) {
       // day slots in the regex match array
       var day1 = isForward ? match[1] : match[7];
       var day2 = isForward ? match[2] : match[8];
@@ -227,7 +227,7 @@ fourSq.util.HoursParser = {
         // For case where: Sun-Tue (we start on Monday)
         endDay += 7;
       }
-      var days = _.map(_.range(startDay, endDay + 1), function(day) {
+      var days = fourSq.util.HoursParser.range(startDay, endDay + 1).map(function(day) {
         // Days start at 1 for Monday
         return (day % 7) + 1;
       });
@@ -255,6 +255,22 @@ fourSq.util.HoursParser = {
   },
 
   /**
+   * Ascending integers from start up to, but not including, end
+   * (what lodash `range(start, end)` returned for this legacy code).
+   *
+   * @param {number} start
+   * @param {number} end
+   * @return {Array.<number>}
+   */
+  range: function(start, end) {
+    var numbers = [];
+    for (var n = start; n < end; n++) {
+      numbers.push(n);
+    }
+    return numbers;
+  },
+
+  /**
    * @param {string} text
    * @return {string} the text with every regex metacharacter escaped
    */
@@ -274,10 +290,10 @@ fourSq.util.HoursParser = {
     try {
       var l10n = window.wp.date.getSettings().l10n;
       if (l10n) {
-        if (_.isArray(l10n.weekdays)) {
+        if (Array.isArray(l10n.weekdays)) {
           names.weekdays = l10n.weekdays;
         }
-        if (_.isArray(l10n.weekdaysShort)) {
+        if (Array.isArray(l10n.weekdaysShort)) {
           names.weekdaysShort = l10n.weekdaysShort;
         }
       }
@@ -305,13 +321,13 @@ fourSq.util.HoursParser = {
       default: return [];
     }
 
-    // Append the locale day names AFTER the English ones. _.sortBy is stable,
+    // Append the locale day names AFTER the English ones. Array#sort is stable,
     // so on a length tie the English token stays the canonical one, which keeps
     // the canonicals unique across days.
     var localeNames = fourSq.util.HoursParser.localeDayNames();
     // The parser counts 1=Monday..7=Sunday, the locale lists are Sunday-first.
     var localeIndex = day % 7;
-    _.each([localeNames.weekdays[localeIndex], localeNames.weekdaysShort[localeIndex]], function(name) {
+    [localeNames.weekdays[localeIndex], localeNames.weekdaysShort[localeIndex]].forEach(function(name) {
       if (typeof name !== 'string') {
         return;
       }
@@ -319,15 +335,15 @@ fourSq.util.HoursParser = {
       // Also accept the unaccented spelling, so both "miércoles" and
       // "miercoles" parse.
       var stripped = lowered.normalize('NFD').replace(/[\u0300-\u036f]/g, '');
-      _.each([lowered, stripped], function(variant) {
+      [lowered, stripped].forEach(function(variant) {
         if (variant && aliases.indexOf(variant) === -1) {
           aliases.push(variant);
         }
       });
     });
 
-    return _.sortBy(aliases, function(alias) {
-      return alias.length;
+    return aliases.slice().sort(function(a, b) {
+      return a.length - b.length;
     });
   }
 };

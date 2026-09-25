@@ -1,11 +1,7 @@
 /**
- * External dependencies
- */
-import { debounce } from 'lodash';
-
-/**
  * WordPress dependencies
  */
+import { debounce } from '@wordpress/compose';
 import { Component } from '@wordpress/element';
 import { FormTokenField, Spinner } from '@wordpress/components';
 

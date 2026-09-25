@@ -1,8 +1,6 @@
 import { createHigherOrderComponent } from "@wordpress/compose";
 import { useEffect, useState } from "@wordpress/element";
-import { isEqual } from "lodash";
-
-import { useSupports } from "@novablocks/block-editor";
+import { deepEqual, useSupports } from "@novablocks/block-editor";
 
 import Controls from "../controls";
 import ScrollingEffectPreviewContext from "../preview-context";
@@ -21,7 +19,7 @@ const withDopplerControls = createHigherOrderComponent( OriginalComponent => {
       }
 
       const previewWasCommitted = Object.entries( previewAttributes ).every(
-        ( [ key, value ] ) => isEqual( props.attributes[ key ], value )
+        ( [ key, value ] ) => deepEqual( props.attributes[ key ], value )
       );
 
       if ( previewWasCommitted ) {

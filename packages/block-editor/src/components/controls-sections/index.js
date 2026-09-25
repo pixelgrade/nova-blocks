@@ -22,7 +22,7 @@ import {
 /**
  * Internal dependencies
  */
-import { groupBy, orderBy } from 'lodash';
+import { groupBy, sortByKey } from '../../utils/collections';
 import { getSectionsFromFills, getControlsSectionsScopeKey, resolveControlsSectionPlacement } from './utils';
 import { ControlsSectionsSlot, ControlsSectionsFill } from "./controls-sections-slot-fill";
 import { DrawerContentSlot, DrawerContentFill } from "./drawer-content-slot-fill";
@@ -58,7 +58,7 @@ const ControlsSectionsComponent = ( props ) => {
       return child.type === ControlsTab && show;
     } );
 
-    const orderedTabs = orderBy( tabs, tab => tab.props.priority || 0, [ 'desc' ] );
+    const orderedTabs = sortByKey( tabs, tab => tab.props.priority || 0, 'desc' );
     const groupedTabs = groupBy( orderedTabs, tab => {
       return tab.props.label;
     } );

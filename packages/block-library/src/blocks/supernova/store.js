@@ -1,9 +1,4 @@
 /**
- * External dependencies
- */
-import { uniq } from 'lodash';
-
-/**
  * WordPress dependencies
  */
 import {
@@ -82,7 +77,7 @@ const selectors = {
     .filter( ( { clientId } ) => postsByBlock[ clientId ] )
     .flatMap( ( { clientId } ) => postsByBlock[ clientId ].map( p => p.id ) );
 
-    return uniq( postIdsFromSpecificMode.concat( previousPostIds ) ).sort();
+    return [ ...new Set( postIdsFromSpecificMode.concat( previousPostIds ) ) ].sort();
   },
 };
 

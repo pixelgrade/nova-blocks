@@ -1,4 +1,3 @@
-const { omit } = lodash;
 import { createBlock } from '@wordpress/blocks';
 
 const blockAttributes = {
@@ -83,11 +82,13 @@ const deprecated = [
 		},
 
 		migrate( attributes, innerBlocks ) {
+			const { content, ...migratedAttributes } = attributes;
+
 			return [
-				omit( attributes, 'content' ),
+				migratedAttributes,
 				[
 					createBlock( 'core/paragraph', {
-						content: attributes.content
+						content
 					} ),
 					...innerBlocks
 				]

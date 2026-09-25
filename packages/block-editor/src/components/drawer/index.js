@@ -1,5 +1,4 @@
 import classnames from 'classnames';
-import { orderBy } from 'lodash';
 
 import {
 	Children,
@@ -11,6 +10,7 @@ import {
 } from '@wordpress/element';
 
 import { useMemoryState } from '../../index';
+import { sortByKey } from '../../utils/collections';
 
 const Drawers = ( ownProps ) => {
 
@@ -106,7 +106,7 @@ const Drawers = ( ownProps ) => {
 
 						totalDrawers = totalDrawers + drawers.length;
 
-						const orderedDrawers = orderBy( drawers, drawer => drawer.props.order || 100, ['asc'] );
+						const orderedDrawers = sortByKey( drawers, drawer => drawer.props.order || 100, 'asc' );
 
 						return (
 							<div className={ `novablocks-drawers__list` } key={ `drawer_list_${ drawerListIndex }` }>

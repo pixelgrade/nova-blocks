@@ -1,4 +1,3 @@
-import {isUndefined} from "lodash";
 
 const withContentPositionDeprecated = ( settings ) => {
 
@@ -20,7 +19,7 @@ const withContentPositionDeprecated = ( settings ) => {
           }
         },
         isEligible( attributes ) {
-          return !isUndefined( attributes.horizontalAlignment ) && !isUndefined( attributes.verticalAlignment ) && isUndefined( attributes.contentPosition );
+          return undefined !== attributes.horizontalAlignment && undefined !== attributes.verticalAlignment && undefined === attributes.contentPosition;
         },
         migrate( oldAttributes ) {
           const {horizontalAlignment, verticalAlignment, ...attributes} = oldAttributes;

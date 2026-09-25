@@ -5,7 +5,10 @@ const withColorSignalsDeprecated = ( settings, name ) => {
   }
 
   return Object.assign( {}, settings, {
-    attributes: _.omit( settings.attributes, [ 'contentColor', 'overlayFilterStyle' ] ),
+    attributes: Object.fromEntries(
+      Object.entries( settings.attributes || {} )
+        .filter( ( [ attributeName ] ) => ! [ 'contentColor', 'overlayFilterStyle' ].includes( attributeName ) )
+    ),
     deprecated: [
       {
         attributes: settings.attributes,

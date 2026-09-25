@@ -7,6 +7,7 @@ let mockControlsProps;
 jest.mock( '@wordpress/element', () => require( 'react' ) );
 
 jest.mock( '@novablocks/block-editor', () => ( {
+	deepEqual: jest.requireActual( '../../../block-editor/src/preset-engine/deep-values' ).deepEqual,
 	useSupports: () => ( {
 		novaBlocks: {
 			scrollingEffect: true,
