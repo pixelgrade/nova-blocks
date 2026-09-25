@@ -36,6 +36,15 @@ const contentElementsToggle = [
   }
 ];
 
+// Only query-driven cards print the title's first letter, and the Read More
+// label that rides with it, over the media for the theme's hover effect (#636).
+const dropcapToggles = [
+  {
+    label: __( 'Dropcap', '__plugin_txtd' ),
+    attribute: 'showDropcap',
+  }
+];
+
 const contentToggles = [
   {
     label: __( 'Inner Content', '__plugin_txtd' ),
@@ -71,5 +80,6 @@ export {
   mediaToggles,
   contentElementsToggle,
   contentToggles,
+  dropcapToggles,
   heroToggles,
 }

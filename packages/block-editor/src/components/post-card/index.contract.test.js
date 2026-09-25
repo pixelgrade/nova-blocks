@@ -241,6 +241,41 @@ describe( 'PostCard expression-class integration', () => {
 		expect( container.querySelector( '.nb-card__read-more' ).textContent ).toBe( 'Read More' );
 	} );
 
+	test( 'drops the dropcap and its Read More when the collection turns the Dropcap off (#636)', () => {
+		mockGetVisibleOrder.mockReturnValue( [ 'media', 'title', 'description' ] );
+		const recipes = [ {
+			id: 'anima-collage',
+			baseLayout: 'masonry',
+			capabilities: { readMoreAffordance: true },
+		} ];
+		const attributes = {
+			...baseAttributes,
+			showMedia: true,
+			layoutStyle: 'masonry',
+			layoutRecipe: 'anima-collage',
+		};
+		const renderCard = cardAttributes => act( () => {
+			render(
+				<PostCardComponent
+					attributes={ cardAttributes }
+					post={ basePost }
+					media={ { originalWidth: 800, originalHeight: 600 } }
+					collectionLayoutRecipes={ recipes }
+				/>,
+				container
+			);
+		} );
+
+		renderCard( attributes );
+		expect( container.querySelector( '.nb-supernova-item__dropcap' ).textContent ).toBe( 'A' );
+		expect( container.querySelector( '.nb-card__read-more' ) ).not.toBeNull();
+
+		renderCard( { ...attributes, showDropcap: false } );
+		expect( container.querySelector( '.nb-supernova-item__dropcap-wrapper' ) ).toBeNull();
+		expect( container.querySelector( '.nb-card__read-more' ) ).toBeNull();
+		expect( container.querySelector( '.nb-supernova-item__media-wrapper' ) ).not.toBeNull();
+	} );
+
 	test( 'renders quote content and citation under the quote-format class', () => {
 		mockGetVisibleOrder.mockReturnValue( [ 'media', 'title', 'description' ] );
 		const post = {

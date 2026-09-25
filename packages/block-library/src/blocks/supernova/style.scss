@@ -3,6 +3,9 @@
 @import 'scss/carousel';
 @import 'scss/block-background';
 @import 'scss/content-alignments';
+// Only post-driven cards print the dropcap, and they render no Card item
+// blocks, so its rules ship with the collection, not the item (#636).
+@import 'scss/dropcap';
 
 .nb-supernova {
 

@@ -122,16 +122,19 @@ export const PostCardLetter = props => {
     ? collectionLayoutRecipes.find( recipe => recipe?.id === attributes?.layoutRecipe && recipe?.baseLayout === attributes?.layoutStyle )
     : null;
   const showReadMoreAffordance = !! activeRecipe?.capabilities?.readMoreAffordance;
-
-  if ( ! postTitle ) {
-    return null;
-  }
+  // Mirrors the frontend: a collection's Dropcap toggle removes the letter
+  // and the Read More label that rides with it (#636).
+  const showDropcap = false !== attributes?.showDropcap;
 
   useEffect( () => {
     if ( ref.current ) {
       resizeDropcap( ref.current );
     }
-  }, [ ref ] );
+  }, [ ref, showDropcap ] );
+
+  if ( ! postTitle || ! showDropcap ) {
+    return null;
+  }
 
   return (
     <div className="nb-supernova-item__dropcap-wrapper sm-variation-11">

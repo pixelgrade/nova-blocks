@@ -9,6 +9,7 @@ import {
   collectionToggles,
   contentElementsToggle,
   contentToggles,
+  dropcapToggles,
   heroToggles,
   mediaToggles
 } from './toggles';
@@ -54,6 +55,10 @@ const CardElementsVisibilityToggles = ( props ) => {
       toggles.push( ...contentElementsToggle );
     } else {
       toggles.push( ...contentToggles );
+    }
+
+    if ( 'auto' === contentType ) {
+      toggles.push( ...dropcapToggles );
     }
 
     if ( IS_HERO ) {

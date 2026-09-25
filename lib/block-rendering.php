@@ -351,6 +351,8 @@ function novablocks_get_supernova_data_attribute_names( array $attributes ): arr
 		'columnsFitMinWidth'       => (float) ( $attributes['columnsFitMinWidth'] ?? 0 ) > 0,
 		'cardHoverEffect'          => 'none' !== ( $attributes['cardHoverEffect'] ?? 'none' ),
 		'cardMetadataStyle'        => 'inherit' !== ( $attributes['cardMetadataStyle'] ?? 'inherit' ),
+		// Server-side only: it decides whether card media print a dropcap.
+		'showDropcap'              => false,
 		'latticeModuleShape'       => $is_lattice,
 		'latticeLandscapeSpan'     => $is_lattice,
 		'latticePortraitSpan'      => $is_lattice,
@@ -3132,7 +3134,10 @@ function novablocks_get_collection_card_media_markup_wrapped( $media, $link = fa
 
 	$output .= '<div class="nb-supernova-item__media-aspect-ratio">';
 
-	if ( ! empty( $dropcap ) ) {
+	// Query-driven cards print the title's first letter and a Read More label
+	// over the media for the theme's collection hover effect to reveal. A
+	// collection can turn both off with its Dropcap toggle (#636).
+	if ( ! empty( $dropcap ) && false !== ( $attributes['showDropcap'] ?? true ) ) {
 		$has_read_more_affordance = novablocks_collection_layout_recipe_supports( $attributes, 'readMoreAffordance' );
 		$read_more_class          = $has_read_more_affordance
 			? 'nb-card__read-more nb-supernova-item__dropcap-more'
