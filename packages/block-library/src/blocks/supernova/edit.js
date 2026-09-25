@@ -31,6 +31,7 @@ import { compileSupernovaItemAttributes } from './utils';
 import { CURRENT_ITEM_FEATURED_IMAGE_MEDIA_SOURCE } from './utils/current-item-featured-image';
 import { orderEditorPostsLikeFrontend } from './editor-post-order';
 import { buildEditorRestTaxQuery } from './editor-tax-query';
+import { getQueryItemsCountSync, INITIAL_QUERY_ITEMS_COUNT_SYNC } from './query-items-count-sync';
 
 const normalizeVariationValue = ( value ) => ( value + 11 ) % 12 + 1;
 
@@ -472,46 +473,43 @@ const SupernovaEdit = props => {
   }
 
   // We need to hook regardless to avoid error related to varying number of hooks.
-  const { updateBlockAttributes } = useDispatch( 'core/block-editor' );
+  const { updateBlockAttributes, __unstableMarkNextChangeAsNotPersistent } = useDispatch( 'core/block-editor' );
 
   // Reconcile Items Count (postsToShow) and the Query Loop's perPage without the
-  // two-way-write loop: remember the last reconciled pair, work out which side
-  // actually moved, and let Items Count win deterministically when both did —
-  // two independent effects pushing in opposite directions swap the values on
-  // every commit until React aborts with a maximum-update-depth error.
-  const lastSyncedRef = useRef( { postsToShow: undefined, perPage: undefined } );
+  // two-way-write loop and without dirtying content on open: remember the last
+  // reconciled pair and let `getQueryItemsCountSync` decide which side moved.
+  // Mirroring perPage is a non-persistent derivation; only an Items Count change
+  // is written into the Query as a real edit (#543).
+  const lastSyncedRef = useRef( INITIAL_QUERY_ITEMS_COUNT_SYNC );
 
   useEffect( () => {
     if ( ! syncQueryAndSupernova || ! parentQueryClientId ) {
       return;
     }
 
-    const currentPostsToShow = parseInt( attributes.postsToShow );
-    const currentPerPage = parseInt( context.query?.perPage );
-    const lastSynced = lastSyncedRef.current;
-    const postsToShowMoved = Number.isFinite( currentPostsToShow ) && currentPostsToShow !== lastSynced.postsToShow;
-    const perPageMoved = Number.isFinite( currentPerPage ) && currentPerPage !== lastSynced.perPage;
+    const { lastSynced, write } = getQueryItemsCountSync( lastSyncedRef.current, attributes.postsToShow, context.query?.perPage );
+    lastSyncedRef.current = lastSynced;
 
-    if ( postsToShowMoved && currentPostsToShow !== currentPerPage ) {
-      lastSyncedRef.current = { postsToShow: currentPostsToShow, perPage: currentPostsToShow };
+    if ( write?.attribute === 'perPage' ) {
       updateBlockAttributes( parentQueryClientId, {
         query: {
           ...context.query,
-          perPage: currentPostsToShow,
+          perPage: write.value,
         }
       } );
-      return;
-    }
+    } else if ( write?.attribute === 'postsToShow' ) {
+      // The wrapped setAttributes (with-set-children-attributes) would follow
+      // up with persistent per-item writes; mirror the collection and its
+      // items in ONE non-persistent action instead.
+      const itemClientIds = select( 'core/block-editor' ).getBlocks( clientId )
+        .filter( block => block.name === 'novablocks/supernova-item' )
+        .map( block => block.clientId );
 
-    if ( perPageMoved && currentPostsToShow !== currentPerPage ) {
-      lastSyncedRef.current = { postsToShow: currentPerPage, perPage: currentPerPage };
-      setAttributes( {
-        postsToShow: currentPerPage,
+      __unstableMarkNextChangeAsNotPersistent();
+      updateBlockAttributes( [ clientId, ...itemClientIds ], {
+        postsToShow: write.value,
       } );
-      return;
     }
-
-    lastSyncedRef.current = { postsToShow: currentPostsToShow, perPage: currentPerPage };
   }, [ attributes, context ] );
 
   const { markPostsAsDisplayed, markSpecificPostsAsDisplayed } = useDispatch( 'novablocks/displayed-posts' );

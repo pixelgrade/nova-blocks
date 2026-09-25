@@ -181,32 +181,24 @@ test('query perPage sync resolves the closest Query parent id, not the parents a
 
   assert.match(
     source,
-    /const lastSyncedRef = useRef\( \{ postsToShow: undefined, perPage: undefined \} \)/
+    /const lastSyncedRef = useRef\( INITIAL_QUERY_ITEMS_COUNT_SYNC \)/
   );
 
   assert.match(
     source,
-    /parseInt\( context\.query\?\.perPage \)/
+    /getQueryItemsCountSync\( lastSyncedRef\.current, attributes\.postsToShow, context\.query\?\.perPage \)/
+  );
+
+  // Mirroring the Query's perPage is a derivation: it must never dirty the
+  // post on open (#543). Only an Items Count change edits the Query.
+  assert.match(
+    source,
+    /write\?\.attribute === 'postsToShow' \) \{[\s\S]*?__unstableMarkNextChangeAsNotPersistent\(\);\s*updateBlockAttributes\( \[ clientId, \.\.\.itemClientIds \], \{\s*postsToShow: write\.value,\s*\} \);\s*\}/
   );
 
   assert.match(
     source,
-    /Number\.isFinite\( currentPostsToShow \)/
-  );
-
-  assert.match(
-    source,
-    /Number\.isFinite\( currentPerPage \)/
-  );
-
-  assert.match(
-    source,
-    /lastSyncedRef\.current = \{ postsToShow: currentPostsToShow, perPage: currentPostsToShow \};\s*updateBlockAttributes\(/
-  );
-
-  assert.match(
-    source,
-    /lastSyncedRef\.current = \{ postsToShow: currentPerPage, perPage: currentPerPage \};\s*setAttributes\(/
+    /write\?\.attribute === 'perPage' \) \{\s*updateBlockAttributes\( parentQueryClientId,/
   );
 
   assert.doesNotMatch(
