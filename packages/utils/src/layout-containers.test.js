@@ -130,6 +130,16 @@ test( 'the pass-through subset only contains track-neutral containers', () => {
 	}
 } );
 
+test( 'Post Content passes through a layout grid it sits in (#650)', () => {
+	// Inside a Sidecar content area (the single template with a rail) Post
+	// Content must inherit the area's tracks. As a root it re-declared a
+	// rail-less grid whose content track ran under the rail. At page level it
+	// has no layout-grid parent, so the scoped subgrid override is inert and it
+	// stays the root it was.
+	assert.ok( jsPassThroughs().includes( '.wp-block-post-content' ), 'Post Content must be a pass-through' );
+	assert.ok( jsContainers().includes( '.wp-block-post-content' ), 'Post Content must stay a root-union member (fallback grid + page-level root)' );
+} );
+
 test( 'both SCSS subgrid-override sites consume the shared pass-through list', () => {
 	const layout = fs.readFileSync( LAYOUT_SCSS, 'utf8' );
 	const group = fs.readFileSync( GROUP_SCSS, 'utf8' );

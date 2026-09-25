@@ -776,7 +776,48 @@ function sl_page_definitions( int $img, array $post_ids = [] ): array {
 		'content'     => sl_header_nested( $img ),
 	];
 
+	// --- (g) Post Content inside a template Sidecar with rails (GitHub #650).
+	//         The page body renders through core/post-content placed in a
+	//         Sidecar content area by a custom page template (the Anima single
+	//         shape): post-content must pass through to the area's tracks, not
+	//         re-declare a rail-less grid that runs under the rail. ---
+	$template_rails = [
+		'template-right-small'  => [ 'right', 'small' ],
+		'template-right-medium' => [ 'right', 'medium' ],
+		'template-right-large'  => [ 'right', 'large' ],
+		'template-left-medium'  => [ 'left', 'medium' ],
+	];
+	foreach ( $template_rails as $suffix => [ $position, $width ] ) {
+		$pages[ $suffix ] = [
+			'title'       => 'Sidecar Lab — Post Content in a ' . ucfirst( $position ) . ' Rail Template, ' . ucfirst( $width ),
+			'description' => 'Custom page template: Sidecar (' . $position . ' rail, ' . $width . ') whose content area holds post-title + core/post-content; the page body is the reduced battery. Post Content children must stop at the Sidecar content edge (#650).',
+			'families'    => [ 'post-content-template', 'rail-' . $position, 'width-' . $width, 'rail-long' ],
+			'content'     => sl_content_battery_reduced( $img ),
+			'template'    => sl_sidecar( [ 'sidebarPosition' => $position, 'sidebarWidth' => $width ], sl_template_content_area(), sl_rail_long( $img ) ),
+		];
+	}
+	$pages['template-both'] = [
+		'title'       => 'Sidecar Lab — Post Content in a Three-Area Template',
+		'description' => 'Custom page template: three-area Sidecar (both rails, medium) whose content area holds post-title + core/post-content (#650).',
+		'families'    => [ 'post-content-template', 'rail-both', 'width-medium', 'three-area' ],
+		'content'     => sl_content_battery_reduced( $img ),
+		'template'    => sl_sidecar_three( [ 'sidebarWidth' => 'medium' ], sl_rail_short(), sl_template_content_area(), sl_rail_long( $img ) ),
+	];
+
 	return $pages;
+}
+
+/** Template content area: the page title and the page's own body. */
+function sl_template_content_area(): string {
+	return '<!-- wp:post-title {"level":1,"align":"wide"} /-->' . "\n\n"
+		. '<!-- wp:post-content {"layout":{"inherit":true}} /-->' . "\n";
+}
+
+/** A full custom page template around a Sidecar (header and footer parts). */
+function sl_template( string $sidecar ): string {
+	return '<!-- wp:template-part {"slug":"header","tagName":"header"} /-->' . "\n\n"
+		. $sidecar . "\n"
+		. '<!-- wp:template-part {"slug":"footer","tagName":"footer"} /-->' . "\n";
 }
 
 // -------------------------------------------------------------------------
@@ -797,7 +838,13 @@ foreach ( $all_posts as $p ) {
 		$deleted ++;
 	}
 }
-echo 'Deleted ' . $deleted . " existing sidecar-lab page(s)/post(s).\n";
+foreach ( get_posts( [ 'post_type' => 'wp_template', 'post_status' => 'any', 'posts_per_page' => - 1 ] ) as $p ) {
+	if ( 0 === strpos( $p->post_name, SL_SLUG_PREFIX ) ) {
+		wp_delete_post( $p->ID, true );
+		$deleted ++;
+	}
+}
+echo 'Deleted ' . $deleted . " existing sidecar-lab page(s)/post(s)/template(s).\n";
 
 $attachment_id = sl_get_fixture_attachment_id();
 echo 'Fixture attachment ID: ' . $attachment_id . ' (' . wp_get_attachment_image_url( $attachment_id, 'full' ) . ")\n";
@@ -839,6 +886,23 @@ foreach ( $definitions as $slug_suffix => $def ) {
 	if ( is_wp_error( $post_id ) ) {
 		fwrite( STDERR, 'Failed to create ' . $slug . ': ' . $post_id->get_error_message() . "\n" );
 		exit( 1 );
+	}
+
+	if ( ! empty( $def['template'] ) ) {
+		$template_slug = SL_SLUG_PREFIX . 'tpl-' . $slug_suffix;
+		$template_id   = wp_insert_post( [
+			'post_type'    => 'wp_template',
+			'post_status'  => 'publish',
+			'post_name'    => $template_slug,
+			'post_title'   => $def['title'],
+			'post_content' => sl_template( $def['template'] ),
+		], true );
+		if ( is_wp_error( $template_id ) ) {
+			fwrite( STDERR, 'Failed to create template ' . $template_slug . ': ' . $template_id->get_error_message() . "\n" );
+			exit( 1 );
+		}
+		wp_set_object_terms( $template_id, get_stylesheet(), 'wp_theme' );
+		update_post_meta( $post_id, '_wp_page_template', $template_slug );
 	}
 
 	$manifest[] = [

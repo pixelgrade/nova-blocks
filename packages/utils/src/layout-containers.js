@@ -78,6 +78,14 @@ export const LAYOUT_GRID_SELECTOR = LAYOUT_GRID_CONTAINERS.join( ', ' );
  *     `LAYOUT_GRID_CONTAINERS` (it must never become a standalone layout root),
  *     so its own children cannot be reached by the scoped override above.
  *
+ * Post Content is a root at page level, but inside a layout grid (a Sidecar
+ * content area in a single template with a rail) it must inherit the area's
+ * tracks: as a root it re-declared a rail-less grid whose content track ran
+ * under the rail (GitHub #650). The subgrid override is scoped to direct
+ * children of `$nb-layout-grid-parents`, so page-level Post Content is
+ * unaffected. Its rail-zeroing only touches the template var, which subgrid
+ * replaces.
+ *
  * `bin/generate-layout-containers.js` emits this as
  * `$nb-layout-passthrough-containers`; `layout-containers.test.js` pins the JS
  * and SCSS halves equal, exactly like the root union.
@@ -85,6 +93,7 @@ export const LAYOUT_GRID_SELECTOR = LAYOUT_GRID_CONTAINERS.join( ', ' );
 export const LAYOUT_PASSTHROUGH_CONTAINERS = [
 	'.nb-sidecar--no-left-rail.nb-sidecar--no-right-rail',
 	'.nb-sidecar-area--content',
+	'.wp-block-post-content',
 	'.wp-block-query',
 	'.nb-supernova',
 ];

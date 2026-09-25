@@ -39,7 +39,7 @@ stable).
 - **3 lab posts** (`sidecar-lab-post-1..3`) — deterministic posts (fixed
   excerpt, featured image = the fixture attachment) backing the query-loop
   pass-through fixture. Recreated each run; deleted by the same prefix sweep.
-- **32 published pages**, slug prefix `sidecar-lab-`. The first 17 are the
+- **37 published pages**, slug prefix `sidecar-lab-` (plus one `sidecar-lab-tpl-*` wp_template per template fixture, swept by the same prefix). The first 17 are the
   Phase 1-3 family pages (each carries the full content-variant battery as
   successive sections — wide image, full image, alignleft, alignright,
   Group-wrapped wide image, captioned image — over body copy long enough to
@@ -79,6 +79,9 @@ stable).
   | `supernova` | page-level Supernova, static `fields` cards — `.nb-supernova` subgrid pass-through |
   | **Phase 4b — substitution context (c)** | |
   | `header-nested-grid` | Sidecar nested in a `novablocks/header-row` (wrapper-sides override). Was **KNOWN-BROKEN in baseline-v2** (~8341px overflow); **FIXED in baseline-v2b** by the Task 5.0 header-row grid gate — now fits (~1376px). |
+  | **Post Content in a template Sidecar (g) — GitHub #650** | |
+  | `template-right-small`, `template-right-medium`, `template-right-large`, `template-left-medium` | custom page template (`sidecar-lab-tpl-<fixture>` wp_template): a Sidecar with one rail whose content area holds post-title + `core/post-content`; the page body is the reduced battery. Post Content must pass through to the area's tracks (children stop at `ce`) |
+  | `template-both` | same, three-area Sidecar (both rails) |
   | **Phase 5 — Task 5.2 gate (b)** | |
   | `color-signal-group` | No rail; a PLAIN group-wrapped wide (subgrid pass-through: escapes to ws/we) beside a COLOR-SIGNAL group-wrapped wide (a box group EXCLUDED from the pass-through: box stays content-width, background does not bleed, child stays constrained). The two wide-image rects differ — the exclusion regression pin. |
 
