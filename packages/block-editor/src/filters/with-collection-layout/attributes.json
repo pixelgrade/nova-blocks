@@ -23,6 +23,10 @@
 		"type": "number",
 		"default": 0
 	},
+	"mediaAlign": {
+		"type": "string",
+		"default": "center center"
+	},
 	"cardHoverEffect": {
 		"type": "string",
 		"default": "none"

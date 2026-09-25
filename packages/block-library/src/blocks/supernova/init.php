@@ -125,9 +125,7 @@ if ( ! function_exists( 'novablocks_render_supernova_block' ) ) {
 			$classes[] = 'nb-supernova--carousel-layout-' . $attributes['carouselLayout'];
 		}
 
-		if ( ! empty( $attributes['thumbnailAspectRatioString'] ) && $attributes['thumbnailAspectRatioString'] === 'original' ) {
-			$classes[] = 'nb-supernova--aspect-ratio-original';
-		}
+		$classes = array_merge( $classes, novablocks_get_collection_aspect_ratio_classes( $attributes ) );
 
 		if ( novablocks_supports_pile_parallax( $attributes ) ) {
 			$classes[] = 'nb-supernova--pile-parallax';

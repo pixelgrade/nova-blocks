@@ -18,6 +18,7 @@ import ItemsPerRowControl from './items-per-row-control';
 import ItemsGapControls from './items-gap-control';
 import VerticalGapModifierControl from './vertical-gap-modifier-control';
 import ItemsAspectRatioControl from './items-aspect-ratio-control';
+import MediaAlignControl from './media-align-control';
 import { STYLE_LABELS } from './composition/style-tiles';
 import {
   getActiveLayoutRecipe,
@@ -136,6 +137,7 @@ const SettingsTab = ( props ) => {
       { isGrid && supportsAspectRatio && (
         <ControlsGroup title={ __( 'Media', '__plugin_txtd' ) }>
           <ItemsAspectRatioControl { ...props } />
+          <MediaAlignControl { ...props } />
         </ControlsGroup>
       ) }
       { isCarousel && (

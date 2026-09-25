@@ -351,6 +351,8 @@ function novablocks_get_supernova_data_attribute_names( array $attributes ): arr
 		'columnsFitMinWidth'       => (float) ( $attributes['columnsFitMinWidth'] ?? 0 ) > 0,
 		'cardHoverEffect'          => 'none' !== ( $attributes['cardHoverEffect'] ?? 'none' ),
 		'cardMetadataStyle'        => 'inherit' !== ( $attributes['cardMetadataStyle'] ?? 'inherit' ),
+		// Default Media Alignment prints nothing, keeping markup byte-identical.
+		'mediaAlign'               => '' !== novablocks_get_card_media_object_position( $attributes['mediaAlign'] ?? '' ),
 		// Server-side only: it decides whether card media print a dropcap.
 		'showDropcap'              => false,
 		'latticeModuleShape'       => $is_lattice,
@@ -1178,7 +1180,10 @@ function novablocks_get_sizing_css( array $attributes ): array {
 		$props[] = '--nb-card-media-container-height: ' . $attributes['mediaContainerHeight'];
 	}
 
-	$is_original_aspect_ratio = ! empty( $attributes['thumbnailAspectRatioString'] ) && $attributes['thumbnailAspectRatioString'] === 'original';
+	// Original and Fit to Row (#627) both show every picture whole, so neither
+	// has a fixed ratio box: Original sizes the box to its picture, Fit to Row
+	// to the tallest picture of its row.
+	$is_original_aspect_ratio = ! empty( $attributes['thumbnailAspectRatioString'] ) && in_array( $attributes['thumbnailAspectRatioString'], [ 'original', 'row' ], true );
 
 	if ( isset( $attributes['thumbnailAspectRatio'] ) && ! $is_original_aspect_ratio ) {
 		$padding_top = novablocks_get_card_media_padding_top( $attributes['thumbnailAspectRatio'] );
@@ -1228,13 +1233,74 @@ function novablocks_supports_pile_parallax( array $attributes ): bool {
 function novablocks_get_collection_layout_css( array $attributes ): array {
 	$supports_pile_3d_effect = novablocks_supports_pile_3d_effect( $attributes );
 
-	return [
+	$props = [
 		'--nb-collection-columns-count: ' . $attributes['columns'],
 		'--nb-grid-spacing-modifier: ' . $attributes['gridGap'],
 		'--nb-grid-spacing-multiplier: ' . ( $supports_pile_3d_effect ? 2 : 1 ),
 		'--nb-grid-row-spacing-multiplier: ' . ( $attributes['verticalGapModifier'] ?? 1 ),
 		'--nb-pile-3d-scale: ' . ( $supports_pile_3d_effect ? '0.82' : '1' ),
 	];
+
+	$object_position = novablocks_get_card_media_object_position( $attributes['mediaAlign'] ?? '' );
+
+	if ( '' !== $object_position ) {
+		$props[] = '--nb-card-media-object-position: ' . $object_position;
+	}
+
+	return $props;
+}
+
+/**
+ * Media Alignment (#627): where a card's picture sits inside its media box —
+ * the part kept when a ratio crops it, the free space when it is shown whole.
+ *
+ * Maps an alignment-matrix value ("<vertical> <horizontal>", e.g.
+ * "bottom center") to a CSS object-position ("center bottom"). The default
+ * "center center" is the historical rendering and returns '' so nothing is
+ * printed; unknown values are ignored. Twin of getMediaAlignObjectPosition()
+ * in get-collection-layout-custom-properties.js.
+ *
+ * @param mixed $media_align Stored mediaAlign attribute.
+ *
+ * @return string CSS object-position, or '' for the default/invalid values.
+ */
+function novablocks_get_card_media_object_position( $media_align ): string {
+	if ( ! is_string( $media_align ) ) {
+		return '';
+	}
+
+	$parts = preg_split( '/\s+/', trim( $media_align ) );
+
+	if ( 2 !== count( $parts )
+		|| ! in_array( $parts[0], [ 'top', 'center', 'bottom' ], true )
+		|| ! in_array( $parts[1], [ 'left', 'center', 'right' ], true ) ) {
+		return '';
+	}
+
+	if ( 'center' === $parts[0] && 'center' === $parts[1] ) {
+		return '';
+	}
+
+	return $parts[1] . ' ' . $parts[0];
+}
+
+/**
+ * Collection classes for the lossless Items Aspect Ratio modes: Original
+ * (each picture sizes its own box) and Fit to Row (#627: each box takes its
+ * row's tallest picture). Preset ratios add nothing.
+ *
+ * @param array $attributes Collection attributes.
+ *
+ * @return array Class names.
+ */
+function novablocks_get_collection_aspect_ratio_classes( array $attributes ): array {
+	$ratio = $attributes['thumbnailAspectRatioString'] ?? '';
+
+	if ( in_array( $ratio, [ 'original', 'row' ], true ) ) {
+		return [ 'nb-supernova--aspect-ratio-' . $ratio ];
+	}
+
+	return [];
 }
 
 function novablocks_get_collection_layout_classes( array $attributes ): array {

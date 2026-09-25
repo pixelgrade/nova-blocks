@@ -80,3 +80,46 @@ test('editor custom properties resolve depth support from the authoritative acti
     /getCollectionLayoutCustomProperties\( attributes, \{[\s\S]*?supportsPile3d: layoutRecipeSupports\( attributes, collectionLayoutRecipes, 'pile3d' \)[\s\S]*?\} \)/
   );
 } );
+
+// #627: Media Alignment places the picture inside its media box. The default
+// (center center) is today's rendering, so it must add nothing to the style.
+test('media alignment emits an object-position only for a non-default, valid matrix value', () => {
+  const base = { layoutStyle: 'classic', cardLayout: 'vertical', columns: 3, gridGap: 50, verticalGapModifier: 1 };
+
+  assert.equal(
+    '--nb-card-media-object-position' in getCollectionLayoutCustomProperties( { ...base, mediaAlign: 'center center' } ),
+    false
+  );
+  assert.equal( '--nb-card-media-object-position' in getCollectionLayoutCustomProperties( base ), false );
+  assert.equal( '--nb-card-media-object-position' in getCollectionLayoutCustomProperties( { ...base, mediaAlign: 'sideways' } ), false );
+
+  assert.equal(
+    getCollectionLayoutCustomProperties( { ...base, mediaAlign: 'bottom center' } )[ '--nb-card-media-object-position' ],
+    'center bottom'
+  );
+  assert.equal(
+    getCollectionLayoutCustomProperties( { ...base, mediaAlign: 'top left' } )[ '--nb-card-media-object-position' ],
+    'left top'
+  );
+  assert.equal(
+    getCollectionLayoutCustomProperties( { ...base, mediaAlign: 'center right' } )[ '--nb-card-media-object-position' ],
+    'right center'
+  );
+} );
+
+test('media alignment keeps the PHP twin in sync', () => {
+  const phpSource = fs.readFileSync( path.join( __dirname, '../../../../../lib/block-rendering.php' ), 'utf8' );
+  assert.match( phpSource, /function novablocks_get_card_media_object_position\(/ );
+  assert.match( phpSource, /'--nb-card-media-object-position: '/ );
+} );
+
+// This module is CommonJS (module.exports) imported by ES modules. Anything
+// Babel turns into a runtime-helper import (object spread, for one) makes it
+// an ES module with a read-only module.exports, aborting the whole
+// novablocks-block-editor bundle in the editor.
+test('stays a plain CommonJS module with no Babel-helper syntax', () => {
+  const source = fs.readFileSync( path.join( __dirname, 'get-collection-layout-custom-properties.js' ), 'utf8' );
+
+  assert.doesNotMatch( source, /^\s*(import|export)\s/m );
+  assert.doesNotMatch( source.replace( /\/\/.*$/gm, "" ), /\.\.\./ );
+} );

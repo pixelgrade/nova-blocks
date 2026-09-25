@@ -366,6 +366,16 @@ function novablocks_blocks_describe_supernova_vocabulary(): array {
 			// Verified across supernova query-loop/cards-collection variations.
 			'enum' => [ 'auto', 'custom', 'fields' ],
 		],
+		'thumbnailAspectRatioString' => [
+			// items-aspect-ratio-options.js (Items Aspect Ratio control).
+			'enum' => [ 'original', 'row', 'square', 'landscape', 'portrait' ],
+			'note' => 'original and row never crop: original sizes each media box to its picture; row (Fit to Row, Classic grid of vertical cards only, else behaves as original) gives every box in a row the height of its tallest picture so captions share one line. The preset ratios crop.',
+		],
+		'mediaAlign' => [
+			// media-align-control.js (alignment matrix).
+			'enum' => [ 'top left', 'top center', 'top right', 'center left', 'center center', 'center right', 'bottom left', 'bottom center', 'bottom right' ],
+			'note' => 'Where each card picture sits in its media box (CSS object-position): the part kept by a cropping ratio, or the free space in a Fit to Row box. center center is the default and prints nothing.',
+		],
 	];
 }
 

@@ -41,7 +41,9 @@ export const getSpacingCSSProps = ( attributes, existingStyle = {} ) => {
     spacingMultiplierOverride,
   } = attributes;
 
-  const isOriginalAspectRatio = thumbnailAspectRatioString === 'original';
+  // Original and Fit to Row (#627) both show every picture whole, so neither
+  // has a fixed ratio box (twin of novablocks_get_sizing_css()).
+  const isOriginalAspectRatio = [ 'original', 'row' ].includes( thumbnailAspectRatioString );
 
   const emphasisTopSpacingValue = verticalAlignment === 'top' ? Math.abs(emphasisTopSpacing) : emphasisTopSpacing;
   const emphasisBottomSpacingValue = verticalAlignment === 'bottom' ? Math.abs(emphasisBottomSpacing) : emphasisBottomSpacing;

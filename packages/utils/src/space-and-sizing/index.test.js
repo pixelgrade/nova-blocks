@@ -62,4 +62,21 @@ describe( 'getSpacingCSSProps', () => {
 
 		expect( props['--nb-emphasis-top-spacing'] ).toBe( '2.5' );
 	} );
+
+	// #627: "Fit to row" shows every picture whole, like Original — no fixed
+	// ratio box — and the box height comes from the row, not from a ratio.
+	it( 'drops the fixed ratio box and contains the picture for the row-fit media box', () => {
+		const props = getSpacingCSSProps( { ...attributes, thumbnailAspectRatioString: 'row', imageResizing: 'cropped' } );
+
+		expect( props ).not.toHaveProperty( '--nb-card-media-padding-top' );
+		expect( props ).not.toHaveProperty( '--nb-card-media-aspect-ratio' );
+		expect( props['--nb-card-media-object-fit'] ).toBe( 'contain' );
+	} );
+
+	it( 'keeps the fixed ratio box for a preset ratio', () => {
+		const props = getSpacingCSSProps( { ...attributes, thumbnailAspectRatioString: 'landscape', imageResizing: 'cropped' } );
+
+		expect( props['--nb-card-media-padding-top'] ).toBe( '100%' );
+		expect( props['--nb-card-media-object-fit'] ).toBe( 'cover' );
+	} );
 } );

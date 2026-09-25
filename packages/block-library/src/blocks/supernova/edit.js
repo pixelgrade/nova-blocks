@@ -248,6 +248,7 @@ const SupernovaPreview = props => {
     { 'nb-supernova--show-pagination': showPagination },
     { [ `nb-supernova--carousel-layout-${ carouselLayout }` ]: layoutStyle === 'carousel' },
     { 'nb-supernova--aspect-ratio-original': thumbnailAspectRatioString === 'original' },
+    { 'nb-supernova--aspect-ratio-row': thumbnailAspectRatioString === 'row' },
     { [ `nb-supernova--card-metadata-style-${ cardMetadataStyle }` ]: cardMetadataStyle === 'accent-label' },
     { [ `nb-supernova--card-hover-${ attributes.cardHoverEffect }` ]: !! attributes.cardHoverEffect && attributes.cardHoverEffect !== 'none' },
     { 'nb-supernova--pile-parallax': supportsPile3d && pileParallaxAmount > 0 },

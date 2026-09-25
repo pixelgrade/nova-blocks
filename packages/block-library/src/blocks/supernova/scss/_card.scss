@@ -70,6 +70,8 @@
   width: 100%;
   height: 100%;
   object-fit: var(--nb-card-media-object-fit, cover);
+  // Media Alignment (#627); unset, it is the historical centre.
+  object-position: var(--nb-card-media-object-position, 50% 50%);
 }
 
 .nb-supernova-item__media--placeholder {
@@ -170,7 +172,9 @@
 // their frame behavior (content overlays media — handled by the theme layer),
 // and cards with scrolling effects keep the cover chain the Doppler runtime
 // measures against.
-.nb-supernova--aspect-ratio-original
+// Fit to Row (#627) shares this natural flow wherever rows do not apply
+// (Masonry, side-by-side cards); the Classic grid layers its row fit below.
+:is(.nb-supernova--aspect-ratio-original, .nb-supernova--aspect-ratio-row)
 .nb-supernova-item:is(
   .nb-supernova-item--scrolling-effect-static,
   .nb-supernova-item--scrolling-effect-none
@@ -200,6 +204,114 @@
     width: 100%;
     height: auto;
     object-fit: unset;
+  }
+}
+
+// ------ #ROW-FIT MEDIA BOX (Items Aspect Ratio: Fit to Row, #627)
+// Every picture is shown whole and every caption starts on one line: in a
+// Classic grid each card is subgridded into two collection rows — media, then
+// content — so the media track takes the height of the row's tallest picture
+// and the content track starts at the same line for the whole row. Inside the
+// stretched box the picture fills with object-fit: contain and sits by Media
+// Alignment. Split cards (content before and after the media) take three
+// rows. Without subgrid support the natural flow above still applies: no
+// crop, ragged captions.
+$nb-row-fit-card: '.nb-supernova-item:is(.nb-supernova-item--layout-vertical, .nb-supernova-item--layout-vertical-reverse):is(.nb-supernova-item--scrolling-effect-static, .nb-supernova-item--scrolling-effect-none)';
+
+@supports (grid-template-rows: subgrid) {
+
+  .nb-supernova--aspect-ratio-row .nb-collection__layout--classic {
+
+    > .nb-collection__layout-item:has(> #{$nb-row-fit-card}) {
+      display: grid;
+      grid-row: span 2;
+      grid-template-rows: subgrid;
+      grid-template-columns: minmax(0, 1fr);
+    }
+
+    > .nb-collection__layout-item:has(> * > .nb-supernova-item__content--before-media + .nb-supernova-item__media-wrapper + .nb-supernova-item__content) {
+      grid-row: span 3;
+    }
+
+    > .nb-collection__layout-item > #{$nb-row-fit-card} {
+      // Beats supernova-item/style.scss's `display: flex !important` (a
+      // Slick guard) on static cards.
+      display: grid !important;
+      grid-row: 1 / -1;
+      grid-template-rows: subgrid;
+      grid-template-columns: minmax(0, 1fr);
+      height: auto;
+      // The card's own gap (Content to Media Spacing) stays the space between
+      // its rows; the subgrid absorbs the collection's row gap there.
+      row-gap: var(--nb-card-layout-gap);
+
+      // Captions keep their natural height and hug the media box, so the
+      // line they share is the media box edge (the content position still
+      // aligns text inside the caption, as on any vertical card).
+      > .nb-supernova-item__content {
+        align-self: start;
+      }
+
+      > .nb-supernova-item__content--before-media {
+        align-self: end;
+      }
+
+      // A card without media keeps its caption on the row's caption line.
+      &.nb-supernova-item--layout-vertical > .nb-supernova-item__content:only-child {
+        grid-row: 2;
+      }
+
+      // column-reverse, restated as grid order: caption row first, captions
+      // sitting on the media box below them.
+      &.nb-supernova-item--layout-vertical-reverse {
+        > .nb-supernova-item__content {
+          order: -1;
+          align-self: end;
+        }
+
+        > .nb-supernova-item__content--before-media {
+          order: 1;
+          align-self: start;
+        }
+      }
+
+      .nb-supernova-item__media-wrapper {
+        min-height: 0;
+      }
+
+      .nb-supernova-item__media-aspect-ratio {
+        height: 100%;
+        min-height: 0;
+
+        &:before {
+          content: none;
+        }
+      }
+
+      // The media chain fills the stretched box (the Doppler wrapper plus
+      // the shape-modeling wrappers the editor and frontend add). While the
+      // row track is being sized these percentages resolve to auto, so the
+      // natural picture height is what sizes the row.
+      :is(
+        .novablocks-doppler__wrapper,
+        .nb-supernova-item__media-doppler,
+        .blob-mix,
+        .blob-mix__media,
+        .blob-mix__mask
+      ) {
+        position: relative;
+        height: 100%;
+      }
+
+      .nb-supernova-item__media[class][class] {
+        position: static;
+        display: block;
+        width: 100%;
+        height: 100%;
+        object-fit: contain;
+        object-position: var(--nb-card-media-object-position, 50% 50%);
+      }
+    }
   }
 }
 

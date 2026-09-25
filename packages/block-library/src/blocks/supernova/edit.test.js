@@ -244,3 +244,7 @@ test('editor resolves inherited card metadata style without coupling it to Meta 
     /`nb-supernova--card-hover-\$\{ attributes\.cardHoverEffect \}`[\s\S]*?attributes\.cardHoverEffect !== 'none'/
   );
 } );
+
+test('editor preview carries the row-fit collection class like the frontend (#627)', () => {
+  assert.match( source, /\{ 'nb-supernova--aspect-ratio-row': thumbnailAspectRatioString === 'row' \}/ );
+});

@@ -31,3 +31,12 @@ test( 'Settings does not advertise card depth when the active recipe disables it
   assert.match( settingsSource, /isGrid && ! supportsPile3d && \(/ );
   assert.match( settingsSource, /Looking for media motion\? Motion & Effects/ );
 } );
+
+test( 'Settings offers Media Alignment next to Items Aspect Ratio (#627)', () => {
+  const aspectSource = fs.readFileSync( path.join( __dirname, 'items-aspect-ratio-control.js' ), 'utf8' );
+
+  assert.match( settingsSource, /import MediaAlignControl from '\.\/media-align-control';/ );
+  assert.match( settingsSource, /<ItemsAspectRatioControl \{ \.\.\.props \} \/>[\s\S]*?<MediaAlignControl \{ \.\.\.props \} \/>/ );
+  assert.match( aspectSource, /getItemsAspectRatioOptions\( attributes \)/ );
+  assert.match( aspectSource, /getItemsAspectRatioPatch\( value \)/ );
+} );
