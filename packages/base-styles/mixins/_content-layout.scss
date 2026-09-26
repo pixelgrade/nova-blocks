@@ -271,9 +271,20 @@
 // compound also outranks the root fallback's below-lap template re-declaration
 // at every breakpoint, so pass-throughs subgrid below lap too — they inherit
 // whatever template the root declares at that breakpoint.
+//
+// The `.wp-site-blocks` root is excluded (GitHub #667). The Site Editor root,
+// and a template-locked Post Editor root, carry `.is-root-container` (in the
+// union) together with `.wp-site-blocks`, and the editor makes that root
+// `display: flow-root` with a style element printed after every stylesheet, at
+// the union's `display: grid` weight. So it is never a grid, and a rail-less
+// Sidecar or a Query placed directly in an archive or page template subgridded
+// a block box: no tracks, content shifted right and running to the canvas edge.
+// Excluded, it declares its own tracks, as it does on the front end inside
+// `.wp-site-blocks`. `:where()` adds no weight and no front-end element has
+// both classes, so the front-end cascade is unchanged.
 @mixin nb-layout-subgrid-override {
   @supports (grid-template-columns: subgrid) {
-    :is(#{$nb-layout-grid-parents}) > & {
+    :is(#{$nb-layout-grid-parents}):where(:not(.wp-site-blocks)) > & {
       grid-template-columns: subgrid;
     }
   }
