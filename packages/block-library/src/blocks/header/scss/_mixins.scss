@@ -27,6 +27,8 @@
   --sm-current-accent-color: var(--sm-accent-color-1);
   --sm-current-fg1-color: var(--sm-fg1-color-1);
   --sm-current-fg2-color: var(--sm-fg2-color-1);
+  // Quiet text resets to variation 1 alongside the other roles (style-manager#216).
+  --sm-current-fg-muted-color: var(--sm-fg-muted-color-1, var(--sm-current-fg1-color));
 
   color: var(--sm-current-fg1-color);
 }

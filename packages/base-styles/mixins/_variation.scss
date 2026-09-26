@@ -20,4 +20,7 @@
   --sm-current-accent-color: var(--sm-accent-color-#{ $i });
   --sm-current-fg1-color: var(--sm-fg1-color-#{ $i });
   --sm-current-fg2-color: var(--sm-fg2-color-#{ $i });
+  // Quiet text (style-manager#214): resets on this surface so it never carries over
+  // from an outer one into a nested variation (style-manager#216).
+  --sm-current-fg-muted-color: var(--sm-fg-muted-color-#{ $i }, var(--sm-current-fg1-color));
 }

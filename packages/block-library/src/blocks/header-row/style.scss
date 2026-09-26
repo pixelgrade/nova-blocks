@@ -34,6 +34,8 @@
       --sm-current-fg1-color: inherit;
       --sm-current-fg2-color: inherit;
       --sm-current-accent-color: inherit;
+      // Quiet text resets alongside the other roles (style-manager#216).
+      --sm-current-fg-muted-color: inherit;
     }
 
     .nb-header-row--primary {

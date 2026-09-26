@@ -3,6 +3,8 @@
   --sm-current-accent-color: inherit !important;
   --sm-current-fg1-color: inherit !important;
   --sm-current-fg2-color: inherit !important;
+  // Quiet text resets alongside the other roles (style-manager#216).
+  --sm-current-fg-muted-color: inherit !important;
 
   // SIGNAL NONE
   // Bullet, checkmark or number will

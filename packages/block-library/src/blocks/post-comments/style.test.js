@@ -3,8 +3,10 @@
  *
  * Meta, links, hints and the dropdown toggle used to be dimmed with `opacity`,
  * which blends the ink into whatever ground sits behind it (2.79–4.28:1 on
- * white). They now take the context's text role, `--sm-current-fg1-color`,
- * the role Style Manager contrast-picks per variation. `fg2` is not used: the
+ * white). They now take the quiet-text role, `--sm-current-fg-muted-color`
+ * (style-manager#214), which Style Manager contrast-picks per variation at a
+ * 4.5:1 floor, falling back to `--sm-current-fg1-color` on a site whose Style
+ * Manager predates the role (style-manager#216). `fg2` is not used: the
  * generator only guarantees it the large-text minimum. Hierarchy comes from
  * the smaller size these elements already have.
  */
@@ -58,10 +60,14 @@ for ( const file of [ 'style.scss', 'editor-styles.scss' ] ) {
 		}
 	} );
 
-	test( `${ file }: secondary Conversations text takes the context fg1 text role`, () => {
+	test( `${ file }: secondary Conversations text takes the quiet-text role, falling back to fg1`, () => {
 		for ( const target of SECONDARY ) {
 			const colors = decls( rulesFor( sheet, target ), 'color' );
-			assert.ok( colors.some( decl => /^var\(--sm-current-fg1-color\b/.test( decl.value ) || /^var\(--field-description-color, var\(--sm-current-fg1-color\b/.test( decl.value ) ), `${ target } is colored by fg1: ${ JSON.stringify( colors ) }` );
+			assert.ok(
+				colors.some( decl => /^var\(--sm-current-fg-muted-color,\s*var\(--sm-current-fg1-color\b/.test( decl.value )
+					|| /^var\(--field-description-color,\s*var\(--sm-current-fg-muted-color,\s*var\(--sm-current-fg1-color\b/.test( decl.value ) ),
+				`${ target } is colored by the quiet-text role, falling back to fg1: ${ JSON.stringify( colors ) }`
+			);
 			assert.ok( colors.every( decl => ! /currentColor|#000|rgba?\(/i.test( decl.value.split( ',' )[ 0 ] ) ), `${ target } has no fixed or translucent ink: ${ JSON.stringify( colors ) }` );
 		}
 	} );

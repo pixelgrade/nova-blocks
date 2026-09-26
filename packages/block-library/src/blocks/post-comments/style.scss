@@ -49,10 +49,10 @@
         }
       }
   
-      // Hints take the context's text role, not a dimmed fixed black (#649).
+      // Hints take the quiet-text role, not a dimmed fixed black (#649, style-manager#216).
       .field-description {
         display: block;
-        color: var(--field-description-color, var(--sm-current-fg1-color, var(--nb-fg1-color)));
+        color: var(--field-description-color, var(--sm-current-fg-muted-color, var(--sm-current-fg1-color, var(--nb-fg1-color))));
       }
     }
   
@@ -154,17 +154,17 @@
     }
   
     // Secondary meta and links read at 4.5:1 on any ground: they take the
-    // context's text role instead of being dimmed with opacity, and keep
-    // their hierarchy through their smaller size (#649).
+    // quiet-text role instead of being dimmed with opacity, and keep
+    // their hierarchy through their smaller size (#649, style-manager#216).
     .comment-posted-time {
-      color: var(--sm-current-fg1-color, var(--nb-fg1-color));
+      color: var(--sm-current-fg-muted-color, var(--sm-current-fg1-color, var(--nb-fg1-color)));
     }
-  
+
     :is(.comment-reply-link,
     .comment-edit-link,
     .comment-link,
     [id="cancel-comment-reply-link"]) {
-      color: var(--sm-current-fg1-color, var(--nb-fg1-color));
+      color: var(--sm-current-fg-muted-color, var(--sm-current-fg1-color, var(--nb-fg1-color)));
   
       &:hover {
         text-decoration-thickness: 0.125em;
@@ -697,7 +697,8 @@
   
   .comment-awaiting-moderation {
     --font-size-modifier: 0.88;
-    color: var(--sm-current-fg1-color, var(--nb-fg1-color));
+    // Quiet text (#649, style-manager#216).
+    color: var(--sm-current-fg-muted-color, var(--sm-current-fg1-color, var(--nb-fg1-color)));
 
     @include block-spacing;
     --nb-block-top-spacing: 0.25;
@@ -869,9 +870,10 @@
   }
   
   .comment-dropdown-toggle {
-  
+
     display: flex;
-    color: var(--sm-current-fg1-color, var(--nb-fg1-color));
+    // Quiet text (#649, style-manager#216).
+    color: var(--sm-current-fg-muted-color, var(--sm-current-fg1-color, var(--nb-fg1-color)));
   
     .arrow-down {
       display: none;
