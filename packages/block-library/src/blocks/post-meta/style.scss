@@ -99,13 +99,13 @@
   row-gap: var(--nb-spacing);
 
   &__avatar {
-    flex: 0 0 2em;
+    flex: 0 0 var(--nb-meta-avatar-size, 2em);
 
     display: flex;
     align-items: center;
 
     @include above(lap) {
-      flex-basis: 2.6em;
+      flex-basis: var(--nb-meta-avatar-size--lap, 2.6em);
     }
 
     &-wrapper {

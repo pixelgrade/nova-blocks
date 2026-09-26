@@ -1,3 +1,7 @@
 {
-
+	"avatarSize": {
+		"type": "string",
+		"enum": [ "small", "medium", "large" ],
+		"default": "medium"
+	}
 }

@@ -17,6 +17,71 @@ function novablocks_get_post_meta_attributes() {
 
 }
 
+if ( ! function_exists( 'novablocks_post_meta_template_supports_discuss' ) ) {
+
+	/**
+	 * Whether the current template renders a comments UI that Discuss can
+	 * link to (#665).
+	 *
+	 * Nova's own `novablocks/post-comments`, or core's `core/comments` (whose
+	 * Comments Title renders the `id="comments"` anchor Discuss targets via
+	 * `href="#comments"`) or `core/post-comments-form` (a bare form, still a
+	 * legitimate comments entry point on templates that only render it).
+	 *
+	 * @param string $template_content
+	 *
+	 * @return bool
+	 */
+	function novablocks_post_meta_template_supports_discuss( $template_content ) {
+
+		if ( empty( $template_content ) ) {
+			return false;
+		}
+
+		foreach ( [ 'novablocks/post-comments', 'core/comments', 'core/post-comments-form' ] as $block_name ) {
+			if ( has_block( $block_name, $template_content ) ) {
+				return true;
+			}
+		}
+
+		return false;
+	}
+}
+
+if ( ! function_exists( 'novablocks_get_post_meta_avatar_size_css' ) ) {
+
+	/**
+	 * Build the avatar-size CSS custom properties for the given attributes
+	 * (#665). The `medium` step is the pre-existing 2em / 2.6em size, so it
+	 * emits nothing — the SCSS fallback already renders it, keeping existing
+	 * blocks byte-identical.
+	 *
+	 * @param array $attributes
+	 *
+	 * @return string[]
+	 */
+	function novablocks_get_post_meta_avatar_size_css( array $attributes ) {
+
+		$sizes = [
+			'small' => [ '1.5em', '2em' ],
+			'large' => [ '3em', '4.1em' ],
+		];
+
+		$avatar_size = $attributes['avatarSize'] ?? 'medium';
+
+		if ( ! is_string( $avatar_size ) || ! isset( $sizes[ $avatar_size ] ) ) {
+			return [];
+		}
+
+		[ $base, $above_lap ] = $sizes[ $avatar_size ];
+
+		return [
+			'--nb-meta-avatar-size: ' . $base,
+			'--nb-meta-avatar-size--lap: ' . $above_lap,
+		];
+	}
+}
+
 if ( ! function_exists( 'novablocks_render_post_meta_block' ) ) {
 
 	/**
@@ -37,7 +102,10 @@ if ( ! function_exists( 'novablocks_render_post_meta_block' ) ) {
 
 		$attributes_config = novablocks_get_post_meta_attributes();
 		$attributes        = novablocks_get_attributes_with_defaults( $attributes, $attributes_config );
-		$cssProps          = novablocks_get_space_and_sizing_css( $attributes );
+		$cssProps          = array_merge(
+			novablocks_get_space_and_sizing_css( $attributes ),
+			novablocks_get_post_meta_avatar_size_css( $attributes )
+		);
 
 		// We assume we are in some sort of preview context (like in the Site Editor).
 		if ( empty( $block->context['postId'] ) ) {
@@ -57,7 +125,10 @@ if ( ! function_exists( 'novablocks_render_post_meta_block' ) ) {
 
 		ob_start(); ?>
 
-		<div class="c-meta" style="<?php echo esc_attr( join( '; ', $cssProps ) ); ?>">
+		<div <?php echo get_block_wrapper_attributes( [
+			'class' => 'c-meta',
+			'style' => join( '; ', $cssProps ),
+		] ); ?>>
 			<?php
 			$author_email     = $author->user_email;
 			$avatar_url       = get_avatar_url( $author_email, [ 'size' => 96, 'default' => 'identicon' ] );
@@ -108,11 +179,11 @@ if ( ! function_exists( 'novablocks_render_post_meta_block' ) ) {
 							<?php echo do_blocks( '<!-- wp:novablocks/sharing-overlay { "buttonLabel":"' . esc_html__( 'Share', '__plugin_txtd' ) . '", "useSourceColorAsReference":"1" } --><!-- /wp:novablocks/sharing-overlay -->' ); ?>
 						</div>
 						<?php
-						// Only show the Discuss link if comments are open and the post comments block is present.
+						// Only show the Discuss link if comments are open and the template
+						// renders a comments UI (Nova's own, or core's) it can link to (#665).
 						global $_wp_current_template_content;
 						if ( comments_open( $post->ID ) &&
-						     ! empty( $_wp_current_template_content ) &&
-				             has_block( 'novablocks/post-comments', $_wp_current_template_content )
+						     novablocks_post_meta_template_supports_discuss( $_wp_current_template_content )
 						) {
 							$comments_count = get_comments_number( $post->ID );
 							?>
