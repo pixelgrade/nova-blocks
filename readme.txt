@@ -3,7 +3,7 @@ Contributors: pixelgrade, vlad.olaru, babbardel, razvanonofrei, gorby31
 Tags: blocks, gutenberg, gutenberg blocks, page builder, full site editing
 Requires at least: 7.0
 Tested up to: 7.1
-Stable tag: 2.6.6.1
+Stable tag: 2.7.0
 Requires PHP: 7.4
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -114,14 +114,40 @@ Yes! Nova Block's core features are free to use.
 
 == Changelog ==
 
-= Unreleased =
-* Fix: Food Menus saved with Nova Blocks 2.0.4 or earlier open in the editor again without "Attempt Block Recovery" on every menu, section, and item.
-* Improved: Raise the Space & Sizing "Content Top/Bottom Spacing" range to 6 steps in half-step increments, so a section band can hold the deep inset a full-width design asks for.
-
-= 2.6.6.1 =
-* Improved: Separate multiple active values into individual design-system filter chips with aligned remove actions.
-* Improved: Align compact Search and Filters controls, summaries, and results below the shared mobile breakpoint.
-* Fix: Version block stylesheets from their own files so CSS-only updates invalidate caches reliably.
+= 2.7.0 =
+* New: Header Mobile Branding setting. Show the logo in the mobile bar, below it, or below it and folding into the bar as you scroll. The masthead below the bar paints its own background and keeps its spacing.
+* New: the navigation's call-to-action item now shows in the mobile header bar.
+* New: each Logo block can choose whether to show the site title and tagline, image logos can be as large as the fitted wordmark, and header rows can show their own Color Signal background above the fold.
+* New: Content Inset now sets the reading column in Sidecar layouts and scales down on narrow screens. The Small rail no longer depends on it. Sites that never saved Content Inset look the same as before.
+* New: an optional divider rule between Sidecar content and its rail.
+* New: Post Title and Post Featured Image get the "Extend over sidebar" control, so a Wide post header can line up beside a rail.
+* New: Cards Collections get a Fit to Row media box and Media Alignment for mixed image ratios, can take a core border drawn on each card, and can turn off the card dropcap, which now follows the collection's style.
+* New: Action and Light surface Color Signal tiles. Action buttons follow the brand color when you switch palettes.
+* New: lined separators get a Rule Weight control (1 to 4 px).
+* New: Post Meta's Discuss link can point to core Comments, with Avatar size and alignment controls.
+* Improved: Post Content and Groups keep the content width you set as their reading measure, including beside a rail.
+* Improved: aligned images and pull-outs stack below the text on phones and tablets instead of squeezing it into a narrow strip.
+* Improved: Quote cards size text-only quotes to the quote instead of the screen height, and keep the quote's links, emphasis and paragraph typography.
+* Improved: comment dates, links, hints and the comment form use the quiet-text color instead of dimming with opacity, so they stay readable (4.5:1 contrast).
+* Improved: navigation drawers and social icons follow the header's Color Signal colors.
+* Improved: Logo block images are sized to the header logo height, so browsers stop downloading the full-size logo.
+* Improved: Group and Columns Content Top/Bottom Spacing goes up to 6 steps in half-step increments, and the spacing also renders for content that was never saved in the editor.
+* Improved: active filter chips list each value separately with aligned remove buttons, and compact Search and Filters controls line up below the mobile breakpoint.
+* Improved: Edit Mode shows the stored design in the inspector and toolbar.
+* Fix: "Prevent duplicate posts" no longer makes Query Loop pagination offer empty pages.
+* Fix: a Button's own Color Palette choice is no longer overwritten by its parent on the frontend.
+* Fix: Cards Collections no longer mark the editor as having unsaved changes every time it loads.
+* Fix: Query Loops and card lists inside a grid column no longer overflow the column between 1024 and 1280 px.
+* Fix: a page without rails no longer reserves empty rail space.
+* Fix: separators placed directly in Post Content no longer collapse to zero width.
+* Fix: Text wrap Around/Extend no longer removes an image's left or right placement in post content.
+* Fix: a colored Group's padding no longer doubles up in plain Groups nested inside it.
+* Fix: archive-type templates are no longer shifted and clipped in the Site Editor.
+* Fix: paragraphs with legacy font sizes stay valid when the editor rebuilds them.
+* Fix: Food Menus saved with Nova Blocks 2.0.4 or earlier open in the editor again without "Attempt Block Recovery".
+* Fix: block stylesheets are versioned by their own files, so CSS-only updates reach visitors reliably.
+* Developer: `wp pixelgrade blocks describe` now reports the Color Signal attributes and the Group and Columns spacing attributes.
+* Developer: the editor source no longer depends on lodash.
 
 = 2.6.6 =
 * Improved: Align compact full-width Search toolbars, mobile Filters buttons, and result summaries to the design-system content rail and spacing rhythm.

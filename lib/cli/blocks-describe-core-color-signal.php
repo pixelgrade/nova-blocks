@@ -18,7 +18,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 /**
  * Retrieves the Color Signal support details needed by describe for extended core blocks.
  *
- * @since 2.6.7
+ * @since 2.7.0
  * @param string $block_name Block name.
  * @return array|null Describe-relevant support, or null for an unextended block.
  */
@@ -43,7 +43,7 @@ function novablocks_get_core_color_signal_describe_support( string $block_name )
  * default overrides at priority 20. Those overrides replace whole schema entries;
  * an omitted type is preserved rather than inventing a type absent in the editor.
  *
- * @since 2.6.7
+ * @since 2.7.0
  * @param string $block_name Block name.
  * @return array Attribute schemas, or an empty array for an unextended block.
  */
