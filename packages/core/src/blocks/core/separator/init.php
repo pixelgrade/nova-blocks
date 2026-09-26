@@ -29,8 +29,15 @@ function novablocks_get_separator_attributes(): array {
  * @return array<string, string>
  */
 function novablocks_get_separator_rule_style_properties( array $attributes ): array {
+	// Match JS (`typeof === 'number'`): block JSON carries numbers, so a string
+	// weight is foreign input and must not render in PHP alone.
+	$weight = $attributes['ruleWeight'] ?? null;
+	if ( ! is_int( $weight ) && ! is_float( $weight ) ) {
+		return [];
+	}
+
 	return novablocks_get_rule_style_properties(
-		array_intersect_key( $attributes, [ 'ruleWeight' => true ] ),
+		[ 'ruleWeight' => $weight ],
 		'--nb-separator-rule',
 		'subtle',
 		3

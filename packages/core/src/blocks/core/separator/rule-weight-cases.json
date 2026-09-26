@@ -8,5 +8,6 @@
 	{ "label": "clamps below the scale", "attributes": { "ruleWeight": 0 }, "style": { "--nb-separator-rule-weight": "1px" } },
 	{ "label": "rounds fractional weights", "attributes": { "ruleWeight": 1.4 }, "style": { "--nb-separator-rule-weight": "1px" } },
 	{ "label": "ignores non-numeric weights", "attributes": { "ruleWeight": "heavy" }, "style": {} },
+	{ "label": "ignores numeric strings, like JS: block JSON carries numbers", "attributes": { "ruleWeight": "2" }, "style": {} },
 	{ "label": "never emits a rule colour: the separator colour belongs to Color Signal", "attributes": { "ruleWeight": 2, "ruleStrength": "solid" }, "style": { "--nb-separator-rule-weight": "2px" } }
 ]
