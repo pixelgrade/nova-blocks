@@ -5,7 +5,7 @@ import { __ } from '@wordpress/i18n';
 import { RadioControl, ToggleControl, SelectControl } from '@wordpress/components';
 import { InspectorControls } from '@wordpress/block-editor';
 import { Fragment } from "@wordpress/element";
-import { ControlsGroup, ControlsSection, ControlsTab, useInnerBlocks } from "@novablocks/block-editor";
+import { ControlsGroup, ControlsSection, ControlsTab, RuleRoleControls, useInnerBlocks } from "@novablocks/block-editor";
 
 import SidecarLayoutRecipes from "./layout-recipe-controls";
 import { resolveSidecarAreaSide } from "./layout-recipes";
@@ -105,6 +105,21 @@ const SidecarInspectorControls = ( props ) => {
                 }
                 checked={ lastItemIsSticky }
                 onChange={ () => setAttributes( { lastItemIsSticky: !lastItemIsSticky } ) }
+              />
+            </ControlsGroup>
+          }
+
+          { /* Divider rule between content and rail (GitHub #658), in the
+               shared rule-role control (#668). Drawn only while a rail with
+               content sits beside the content, so it is offered with a rail. */ }
+          { hasRail &&
+            <ControlsGroup title={ __( 'Divider', '__plugin_txtd' ) }>
+              <RuleRoleControls
+                ruleRole={ attributes.ruleRole }
+                ruleWeight={ attributes.ruleWeight }
+                clientId={ clientId }
+                setAttributes={ setAttributes }
+                help={ __( 'Draws a line between the content and each rail, while the rail sits beside the content.', '__plugin_txtd' ) }
               />
             </ControlsGroup>
           }

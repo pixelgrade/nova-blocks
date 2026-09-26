@@ -10,6 +10,7 @@ import variations from './variations';
 import { useInnerBlocks, VariationPicker } from "@novablocks/block-editor";
 
 import InspectorControls from "./inspector-controls";
+import { getSidecarRuleClasses, getSidecarRuleStyle } from './rule-style';
 import BlockControls from "./block-controls";
 
 const Edit = ( props ) => {
@@ -68,7 +69,10 @@ const Edit = ( props ) => {
       'nb-sidecar--no-left-rail': ! hasLeftRail,
       'nb-sidecar--no-right-rail': ! hasRightRail,
     },
-    'alignfull'
+    'alignfull',
+    // Divider rule between content and rail (GitHub #658); mirrors the PHP
+    // render through rule-cases.json. Off adds nothing.
+    ...getSidecarRuleClasses( props.attributes )
   );
 
   const blockProps = useBlockProps( {
@@ -76,6 +80,7 @@ const Edit = ( props ) => {
       ...props.style,
       '--nb-sidecar-content-font-size-base': `var(--nb-font-size-${ contentFontSize })`,
       '--nb-sidecar-sidebar-font-size-base': `var(--nb-font-size-${ sidebarFontSize })`,
+      ...getSidecarRuleStyle( props.attributes ),
     },
     className: className,
   } );

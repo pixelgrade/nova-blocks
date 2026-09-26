@@ -73,6 +73,8 @@ function esc_attr( $value ) { return htmlspecialchars( $value, ENT_QUOTES, 'UTF-
 // sidecar-area/init.php owns the area-side resolution used by both renders,
 // so it must load first (mirrors production: all block init.php are required
 // at init:20, before any render).
+// The Sidecar render reads the shared rule-role helper (GitHub #658).
+require dirname( __DIR__, 2 ) . '/lib/rule-styles.php';
 require dirname( __DIR__, 2 ) . '/packages/block-library/src/blocks/sidecar-area/init.php';
 require dirname( __DIR__, 2 ) . '/packages/block-library/src/blocks/sidecar/init.php';
 

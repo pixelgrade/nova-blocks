@@ -30,5 +30,12 @@
 	"sidebarFontSize": {
 		"type": "string",
 		"default": "normal"
+	},
+	"ruleRole": {
+		"type": "string",
+		"enum": [ "primary", "secondary" ]
+	},
+	"ruleWeight": {
+		"type": "number"
 	}
 }

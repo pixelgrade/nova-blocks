@@ -18,6 +18,33 @@ function novablocks_get_sidecar_attributes() {
 
 }
 
+/**
+ * Classes for the divider rule between content and rail (GitHub #658).
+ *
+ * Mirrors getSidecarRuleClasses() in rule-style.js; both are pinned to
+ * rule-cases.json. Off emits nothing.
+ *
+ * @param array $attributes Sidecar attributes.
+ * @return string[]
+ */
+function novablocks_get_sidecar_rule_classes( array $attributes ): array {
+	$role = novablocks_get_rule_role( $attributes['ruleRole'] ?? '' );
+
+	return '' === $role ? [] : [ 'nb-sidecar--has-rule', 'nb-sidecar--rule-' . $role ];
+}
+
+/**
+ * Custom properties for the divider rule: the role's colour and weight, or an
+ * explicit 1-4px weight override. Mirrors getSidecarRuleStyle() in
+ * rule-style.js. Off emits nothing.
+ *
+ * @param array $attributes Sidecar attributes.
+ * @return array<string, string>
+ */
+function novablocks_get_sidecar_rule_style_properties( array $attributes ): array {
+	return novablocks_get_rule_role_style_properties( $attributes, '--nb-sidecar-rule' );
+}
+
 if ( ! function_exists( 'novablocks_render_sidecar_block' ) ) {
 
 	/**
@@ -114,8 +141,17 @@ if ( ! function_exists( 'novablocks_render_sidecar_block' ) ) {
 			$classes[] = 'nb-sidecar--sticky-sidebar';
 		}
 
+		// Divider rule between content and rail (GitHub #658). Off adds no
+		// class and no property, so existing Sidecars stay byte-identical.
+		$classes = array_merge( $classes, novablocks_get_sidecar_rule_classes( $attributes ) );
+		foreach ( novablocks_get_sidecar_rule_style_properties( $attributes ) as $property => $value ) {
+			$cssProps[] = $property . ': ' . $value;
+		}
+
+		// The rule attributes are presentation only: they never become data-*
+		// attributes (Off would otherwise print data-rule-role='').
 		$data_attributes_array = array_map( 'novablocks_camel_case_to_kebab_case', array_keys( $attributes ) );
-		$data_attributes = novablocks_get_data_attributes( $data_attributes_array, $attributes );
+		$data_attributes = novablocks_get_data_attributes( $data_attributes_array, $attributes, [ 'rule-role', 'rule-weight' ] );
 
 		$tag = 'div';
 		if ( ! empty( $attributes['tagName'] ) && in_array( $attributes['tagName'], ['header', 'main', 'section', 'article', 'aside', 'footer'] ) ) {

@@ -25,10 +25,23 @@
   --nb-fg1-color: var(--sm-current-fg1-color, #272743);
   --nb-fg2-color: var(--sm-current-fg2-color, #000043);
 
-  // Shared line-drawing mechanics. Style Manager owns the contextual divider
-  // colors; Nova owns how blocks consume them and keeps palette-aware fallbacks
-  // for sites where Style Manager is inactive or predates these roles.
-  --nb-rule-weight: 1px;
-  --nb-rule-color: var(--sm-current-divider-color, color-mix(in srgb, currentColor 20%, transparent));
-  --nb-rule-strong-color: var(--sm-current-divider-strong-color, color-mix(in srgb, currentColor 45%, transparent));
+  // Shared line-drawing mechanics: the rule model (GitHub #668). Two roles,
+  // each a weight plus a colour: PRIMARY (strong, structural) and SECONDARY
+  // (subtle, quiet). Style Manager owns the contextual divider colours; Nova
+  // owns how blocks consume them and keeps palette-aware fallbacks for sites
+  // where Style Manager is inactive or predates these roles. The fallbacks
+  // are the historical values, so untouched sites render identically.
+  // Declared on every element so currentColor and the Style Manager colours
+  // resolve in each element's own context (a `:root` token would bake them).
+  --nb-rule-primary-weight: 1px;
+  --nb-rule-primary-color: var(--sm-current-divider-strong-color, color-mix(in srgb, currentColor 45%, transparent));
+  --nb-rule-secondary-weight: 1px;
+  --nb-rule-secondary-color: var(--sm-current-divider-color, color-mix(in srgb, currentColor 20%, transparent));
+
+  // Historical tokens, kept as aliases of the roles (subtle -> secondary,
+  // strong -> primary). Existing consumers still read these until #668
+  // moves them onto the role tokens.
+  --nb-rule-weight: var(--nb-rule-secondary-weight);
+  --nb-rule-color: var(--nb-rule-secondary-color);
+  --nb-rule-strong-color: var(--nb-rule-primary-color);
 }

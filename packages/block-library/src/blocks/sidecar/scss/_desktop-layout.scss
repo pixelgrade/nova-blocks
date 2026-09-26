@@ -208,4 +208,56 @@
       --block-full-end: ace;
     }
   }
+
+  // Divider rule between content and rail (GitHub #658, on the #668 rule
+  // model). Opt-in: the render emits `nb-sidecar--has-rule` plus the role's
+  // `--nb-sidecar-rule-color` / `--nb-sidecar-rule-weight` only when a Rule
+  // role is chosen, so an untouched Sidecar matches none of this.
+  //
+  // The Sidecar's ::before becomes ONE grid item on row 1 spanning the fixed
+  // tracks gs..ge (left gap, content, right gap), so it needs no markup and
+  // changes no geometry: it has no content (row height untouched), spans no
+  // flexible track, and adds no padding, width or margin to the container.
+  // It paints beneath the areas, so a block that breaks over the rail hides
+  // the line where it passes.
+  // Each side is a background layer centred in that side's rail gap, using the
+  // template's own gap expression (the rail-gap share under Content Inset, the
+  // whole separator otherwise). It lives in this desktop mixin, so it exists
+  // only while the rails sit beside the content (and in the editor's Desktop
+  // preview); below `lap` the rail stacks and no pseudo-element is generated.
+  //
+  // A side draws only while its rail exists AND has content: an absent rail
+  // (layer 1) or an empty one (layer 2, where wide blocks extend over it)
+  // shows no line. The reset keeps a nested rule-on Sidecar from inheriting an
+  // outer Sidecar's layers.
+  .nb-sidecar--has-rule {
+    --nb-sidecar-rule-left: none;
+    --nb-sidecar-rule-right: none;
+  }
+
+  .nb-sidecar--has-rule:not(.nb-sidecar--no-left-rail):has(> .nb-sidecar-area--sidebar-left > *) {
+    --nb-sidecar-rule-left: linear-gradient(var(--nb-sidecar-rule-color), var(--nb-sidecar-rule-color));
+  }
+
+  .nb-sidecar--has-rule:not(.nb-sidecar--no-right-rail):has(> .nb-sidecar-area--sidebar-right > *) {
+    --nb-sidecar-rule-right: linear-gradient(var(--nb-sidecar-rule-color), var(--nb-sidecar-rule-color));
+  }
+
+  .nb-sidecar--has-rule::before {
+    content: "";
+    grid-row: 1;
+    grid-column: gs / ge;
+    align-self: stretch;
+    pointer-events: none;
+    // Paint beneath every area: grid items paint in order-modified document
+    // order and the content area is `order: -1`, so at the default order the
+    // line would cross a wide block that breaks over the rail.
+    order: -2;
+    background-image: var(--nb-sidecar-rule-left, none), var(--nb-sidecar-rule-right, none);
+    background-repeat: no-repeat;
+    background-size: var(--nb-sidecar-rule-weight) 100%;
+    background-position:
+      left calc(var(--nb-layout-rail-gap-left, var(--nb-sidecar-sidebar-left-gap)) / 2 - var(--nb-sidecar-rule-weight) / 2) top 0,
+      right calc(var(--nb-layout-rail-gap-right, var(--nb-sidecar-sidebar-right-gap)) / 2 - var(--nb-sidecar-rule-weight) / 2) top 0;
+  }
 }

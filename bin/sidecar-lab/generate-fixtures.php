@@ -825,6 +825,60 @@ function sl_page_definitions( int $img, array $post_ids = [] ): array {
 		),
 	];
 
+	// --- (m) Divider rule between content and rail (GitHub #658, on the #668
+	//         rule model). The rule is a Sidecar ::before drawn inside the
+	//         existing rail gap, so every probed rect must match the same
+	//         fixture without the rule (0 rect diff); only the screenshots
+	//         differ. Primary / Secondary x left / right, a weight override,
+	//         both rails, an empty rail (no rule) and a dark variation. -------
+	$pages['rule-primary-right'] = [
+		'title'       => 'Sidecar Lab — Divider Rule, Primary, Right Rail',
+		'description' => 'Right rail, medium, long rail fill, Rule: Primary (#658). The rule sits centred in the ce..ge gap and spans the Sidecar row.',
+		'families'    => [ 'divider-rule', 'rule-primary', 'rail-right', 'width-medium', 'rail-long', 'content-battery' ],
+		'content'     => sl_sidecar( [ 'sidebarPosition' => 'right', 'sidebarWidth' => 'medium', 'ruleRole' => 'primary' ], $battery, sl_rail_long( $img ) ),
+	];
+	$pages['rule-secondary-right'] = [
+		'title'       => 'Sidecar Lab — Divider Rule, Secondary, Right Rail',
+		'description' => 'Right rail, small, short rail fill, Rule: Secondary (#658).',
+		'families'    => [ 'divider-rule', 'rule-secondary', 'rail-right', 'width-small', 'rail-short', 'content-battery' ],
+		'content'     => sl_sidecar( [ 'sidebarPosition' => 'right', 'sidebarWidth' => 'small', 'ruleRole' => 'secondary' ], $battery, sl_rail_short() ),
+	];
+	$pages['rule-primary-left'] = [
+		'title'       => 'Sidecar Lab — Divider Rule, Primary, Left Rail',
+		'description' => 'Left rail, medium, long rail fill, Rule: Primary (#658). Mirror of rule-primary-right: the rule sits in the gs..cs gap.',
+		'families'    => [ 'divider-rule', 'rule-primary', 'rail-left', 'width-medium', 'rail-long', 'content-battery' ],
+		'content'     => sl_sidecar( [ 'sidebarPosition' => 'left', 'sidebarWidth' => 'medium', 'ruleRole' => 'primary' ], $battery, sl_rail_long( $img ) ),
+	];
+	$pages['rule-secondary-left-weight'] = [
+		'title'       => 'Sidecar Lab — Divider Rule, Secondary, Left Rail, Weight 3',
+		'description' => 'Left rail, small, short rail fill, Rule: Secondary with a 3px weight override (#658).',
+		'families'    => [ 'divider-rule', 'rule-secondary', 'rule-weight', 'rail-left', 'width-small', 'rail-short', 'content-battery' ],
+		'content'     => sl_sidecar( [ 'sidebarPosition' => 'left', 'sidebarWidth' => 'small', 'ruleRole' => 'secondary', 'ruleWeight' => 3 ], $battery, sl_rail_short() ),
+	];
+	$pages['rule-three-area'] = [
+		'title'       => 'Sidecar Lab — Divider Rule, Both Rails',
+		'description' => 'Three-area Sidecar (both rails), small, Rule: Secondary (#658): one rule in each rail gap.',
+		'families'    => [ 'divider-rule', 'rule-secondary', 'rail-both', 'three-area', 'width-small', 'rail-short', 'content-reduced' ],
+		'content'     => sl_sidecar_three(
+			[ 'sidebarPosition' => 'none', 'sidebarWidth' => 'small', 'ruleRole' => 'secondary' ],
+			sl_rail_short(),
+			sl_content_battery_reduced( $img ),
+			sl_rail_short()
+		),
+	];
+	$pages['rule-empty-rail'] = [
+		'title'       => 'Sidecar Lab — Divider Rule over an Empty Rail',
+		'description' => 'Right rail present but EMPTY, Rule: Primary (#658): wide blocks extend over the rail, so no rule is drawn.',
+		'families'    => [ 'divider-rule', 'rule-primary', 'rail-right', 'rail-empty', 'width-small', 'content-battery' ],
+		'content'     => sl_sidecar( [ 'sidebarPosition' => 'right', 'sidebarWidth' => 'small', 'ruleRole' => 'primary' ], $battery, '' ),
+	];
+	$pages['rule-dark'] = [
+		'title'       => 'Sidecar Lab — Divider Rule on a Dark Variation',
+		'description' => 'Right rail, medium, Rule: Primary on a Color Signal 3 / variation 12 Sidecar (#658): the rule re-tones with the context ink.',
+		'families'    => [ 'divider-rule', 'rule-primary', 'rail-right', 'width-medium', 'rail-short', 'color-signal', 'content-reduced' ],
+		'content'     => sl_sidecar( [ 'sidebarPosition' => 'right', 'sidebarWidth' => 'medium', 'ruleRole' => 'primary', 'colorSignal' => 3, 'paletteVariation' => 12 ], sl_content_battery_reduced( $img ), sl_rail_short() ),
+	];
+
 	// --- (i) A Group's authored content width is its reading measure
 	//         (GitHub #635): default-aligned children cap at layout.contentSize
 	//         instead of Nova's --nb-content-width, centred like core's

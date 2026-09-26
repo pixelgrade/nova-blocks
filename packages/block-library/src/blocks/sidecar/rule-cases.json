@@ -1,0 +1,61 @@
+[
+	{ "label": "no rule attributes keep the Sidecar byte-identical", "attributes": {}, "classes": [], "style": {} },
+	{ "label": "an empty role is Off", "attributes": { "ruleRole": "" }, "classes": [], "style": {} },
+	{ "label": "an unknown role is Off", "attributes": { "ruleRole": "tertiary" }, "classes": [], "style": {} },
+	{ "label": "a legacy strength value is not a role", "attributes": { "ruleRole": "strong" }, "classes": [], "style": {} },
+	{ "label": "a weight without a role draws nothing", "attributes": { "ruleWeight": 3 }, "classes": [], "style": {} },
+	{
+		"label": "primary follows the primary rule tokens",
+		"attributes": { "ruleRole": "primary" },
+		"classes": [ "nb-sidecar--has-rule", "nb-sidecar--rule-primary" ],
+		"style": { "--nb-sidecar-rule-color": "var(--nb-rule-primary-color)", "--nb-sidecar-rule-weight": "var(--nb-rule-primary-weight)" }
+	},
+	{
+		"label": "secondary follows the secondary rule tokens",
+		"attributes": { "ruleRole": "secondary" },
+		"classes": [ "nb-sidecar--has-rule", "nb-sidecar--rule-secondary" ],
+		"style": { "--nb-sidecar-rule-color": "var(--nb-rule-secondary-color)", "--nb-sidecar-rule-weight": "var(--nb-rule-secondary-weight)" }
+	},
+	{
+		"label": "a weight override replaces only the role weight",
+		"attributes": { "ruleRole": "secondary", "ruleWeight": 3 },
+		"classes": [ "nb-sidecar--has-rule", "nb-sidecar--rule-secondary" ],
+		"style": { "--nb-sidecar-rule-color": "var(--nb-rule-secondary-color)", "--nb-sidecar-rule-weight": "3px" }
+	},
+	{
+		"label": "an explicit 1px override is kept, since the role weight can change",
+		"attributes": { "ruleRole": "primary", "ruleWeight": 1 },
+		"classes": [ "nb-sidecar--has-rule", "nb-sidecar--rule-primary" ],
+		"style": { "--nb-sidecar-rule-color": "var(--nb-rule-primary-color)", "--nb-sidecar-rule-weight": "1px" }
+	},
+	{
+		"label": "clamps weights above the scale",
+		"attributes": { "ruleRole": "primary", "ruleWeight": 9 },
+		"classes": [ "nb-sidecar--has-rule", "nb-sidecar--rule-primary" ],
+		"style": { "--nb-sidecar-rule-color": "var(--nb-rule-primary-color)", "--nb-sidecar-rule-weight": "4px" }
+	},
+	{
+		"label": "clamps weights below the scale",
+		"attributes": { "ruleRole": "primary", "ruleWeight": 0 },
+		"classes": [ "nb-sidecar--has-rule", "nb-sidecar--rule-primary" ],
+		"style": { "--nb-sidecar-rule-color": "var(--nb-rule-primary-color)", "--nb-sidecar-rule-weight": "1px" }
+	},
+	{
+		"label": "rounds fractional weights",
+		"attributes": { "ruleRole": "secondary", "ruleWeight": 2.6 },
+		"classes": [ "nb-sidecar--has-rule", "nb-sidecar--rule-secondary" ],
+		"style": { "--nb-sidecar-rule-color": "var(--nb-rule-secondary-color)", "--nb-sidecar-rule-weight": "3px" }
+	},
+	{
+		"label": "ignores numeric-string weights, like JS: block JSON carries numbers",
+		"attributes": { "ruleRole": "secondary", "ruleWeight": "2" },
+		"classes": [ "nb-sidecar--has-rule", "nb-sidecar--rule-secondary" ],
+		"style": { "--nb-sidecar-rule-color": "var(--nb-rule-secondary-color)", "--nb-sidecar-rule-weight": "var(--nb-rule-secondary-weight)" }
+	},
+	{
+		"label": "ignores a null weight (a reset control)",
+		"attributes": { "ruleRole": "primary", "ruleWeight": null },
+		"classes": [ "nb-sidecar--has-rule", "nb-sidecar--rule-primary" ],
+		"style": { "--nb-sidecar-rule-color": "var(--nb-rule-primary-color)", "--nb-sidecar-rule-weight": "var(--nb-rule-primary-weight)" }
+	}
+]
