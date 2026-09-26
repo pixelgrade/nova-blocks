@@ -68,7 +68,9 @@ if ( ! function_exists( 'novablocks_group_fills_width' ) ) {
  * Nova caps a Group's default-aligned children at the content width (inside
  * the layout grid, the content track), which overrode core's flow layout: a
  * Wide header Group capped its meta row short of its Wide title and image.
- * The group stylesheet lets the children of a marked Group follow its width.
+ * The group stylesheet lets the children of a marked Group follow its width
+ * when the Group sits directly in a Nova layout container; elsewhere they keep
+ * the content-width cap (GitHub #671).
  *
  * @param string $block_content Rendered Group markup.
  * @param array  $block         Parsed block data.

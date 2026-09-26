@@ -103,7 +103,18 @@ $nb-group-measure-children: ':not(.alignwide, .alignfull, .alignleft, .alignrigh
 // Groups without a layout keep the cap above. Default-aligned children follow
 // the Group's width: a meta row in a Wide header Group lines up with the Wide
 // title and featured image. Wide, full and floated children keep their rules.
-.wp-block-group.nb-group--fill.nb-group--fill > #{$nb-group-measure-children} {
+//
+// Only inside a layout grid (GitHub #671): the Group must be a direct child of
+// a Nova layout container (a Sidecar content area, Post Content, a template
+// part...), which is where #657's Wide header Group sits. Anywhere else a fill
+// Group keeps the 2.6.6 content-width cap on its children. Patch LT's collage
+// canvas is a fill Group placed directly in `.wp-site-blocks`: lifting the cap
+// there widened its `main` Group from the content width to the canvas and
+// switched the masonry from 2 columns to 3. The Site Editor root carries
+// `.is-root-container` with `.wp-site-blocks` and is excluded, as in the
+// subgrid override (#667), so the editor matches the front end. `:where()`
+// keeps the rule at its (0,4,0) weight.
+:where(:is(#{$nb-layout-grid-parents}):not(.wp-site-blocks)) > .wp-block-group.nb-group--fill.nb-group--fill > #{$nb-group-measure-children} {
   max-width: none;
 }
 

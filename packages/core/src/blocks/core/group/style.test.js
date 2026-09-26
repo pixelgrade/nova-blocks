@@ -306,8 +306,10 @@ test( 'a fill Group lifts the content-width cap from its default-aligned childre
 	const base = fillRules().find( rule => atRuleChain( rule ).length === 0 );
 	assert.ok( base, 'expected the fill rule outside the desktop grid' );
 
-	// Doubled marker + :not() out-ranks the (0,3,0) collection cap.
-	assert.match( base.selector, /^\.wp-block-group\.nb-group--fill\.nb-group--fill > :not\(/ );
+	// Only a fill Group that is a direct child of a layout container (#671);
+	// `:where()` adds no weight, so the doubled marker + :not() still
+	// out-ranks the (0,3,0) collection cap.
+	assert.match( base.selector, /^:where\(:is\(\.is-root-container,[^)]*\.nb-sidecar-area--content[^)]*\):not\(\.wp-site-blocks\)\) > \.wp-block-group\.nb-group--fill\.nb-group--fill > :not\(/ );
 	assert.equal( decl( base, 'max-width' ).value, 'none' );
 	assert.equal( decl( base, 'margin-left' ), undefined, 'centring stays with the existing rules' );
 
@@ -350,4 +352,63 @@ test( 'a Wide or Full fill Group passed through the grid puts its default childr
 
 test( 'only the fill rules consume the fill marker', () => {
 	assert.equal( fillRules().length, 3 );
+} );
+
+// The fill scope (GitHub #671). #657 needs a fill Group INSIDE a layout grid
+// (a Sidecar content area, Post Content, any other layout root): its
+// default-aligned children follow the Group. Everywhere else a
+// `layout.type: default` Group keeps the 2.6.6 content-width cap on its
+// children. Patch LT's collage canvas is such a Group, a direct child of
+// `.wp-site-blocks` (not a layout root): lifting the cap there widened its
+// `main` Group from the content width to the canvas and switched the masonry
+// from 2 columns to 3. Resolved on a static DOM with the real cascade.
+const { compileImports, parseDom, find, winningDeclaration } = require( '../../../scss/cascade-harness.cjs' );
+
+const groupCascade = compileImports( [ 'scss/layout', 'blocks/core/group/style' ] );
+const fillPage = parseDom( `
+<div class="wp-site-blocks">
+  <div class="wp-block-group anima-collection-canvas nb-group--fill is-layout-flow">
+    <header class="wp-block-template-part"></header>
+    <main class="wp-block-group is-layout-flow"><div class="wp-block-query"></div></main>
+  </div>
+  <div class="nb-sidecar">
+    <div class="nb-sidecar-area nb-sidecar-area--content">
+      <div class="wp-block-group alignwide nb-group--fill sl-post-header is-layout-flow">
+        <h1 class="wp-block-post-title">Title</h1>
+        <div class="wp-block-group sl-post-meta is-layout-flex"></div>
+        <figure class="wp-block-post-featured-image"></figure>
+      </div>
+    </div>
+  </div>
+  <div class="entry-content wp-block-post-content is-layout-constrained">
+    <div class="wp-block-group nb-group--fill is-layout-flow in-content"><p class="fill-child">Text</p></div>
+  </div>
+</div>
+<div class="editor-styles-wrapper"><div class="is-root-container wp-site-blocks">
+  <div class="wp-block-group nb-group--fill site-editor-canvas"><div class="wp-block-group site-editor-main"></div></div>
+</div></div>` );
+
+const cascadeOf = ( selector, prop, desktop ) => winningDeclaration( [ groupCascade ], find( fillPage, selector ), prop, { desktop } );
+
+test( 'a fill Group outside a layout grid keeps the content-width cap on its children (#671)', () => {
+	for ( const desktop of [ true, false ] ) {
+		for ( const selector of [ '.anima-collection-canvas > main', '.anima-collection-canvas > header', '.site-editor-canvas > .site-editor-main' ] ) {
+			const winner = cascadeOf( selector, 'max-width', desktop );
+			assert.equal( winner.value, 'var(--nb-content-width)', `${ selector } (${ desktop ? 'desktop' : 'small' }) lost its cap to ${ winner.selector }` );
+		}
+	}
+} );
+
+test( 'a fill Group inside a layout grid lets its children follow it (#657)', () => {
+	for ( const desktop of [ true, false ] ) {
+		for ( const selector of [ '.sl-post-header > .wp-block-post-title', '.sl-post-header > .sl-post-meta', '.sl-post-header > .wp-block-post-featured-image', '.in-content > .fill-child' ] ) {
+			const winner = cascadeOf( selector, 'max-width', desktop );
+			assert.equal( winner.value, 'none', `${ selector } (${ desktop ? 'desktop' : 'small' }) is capped by ${ winner.selector }` );
+		}
+	}
+
+	for ( const selector of [ '.sl-post-header > .wp-block-post-title', '.sl-post-header > .sl-post-meta', '.sl-post-header > .wp-block-post-featured-image' ] ) {
+		const winner = cascadeOf( selector, 'grid-column', true );
+		assert.equal( winner.value.replace( /\s+/g, '' ), 'var(--block-wide-start)/var(--block-wide-end)', `${ selector } is placed by ${ winner.selector }` );
+	}
 } );

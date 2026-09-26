@@ -1067,6 +1067,21 @@ function sl_page_definitions( int $img, array $post_ids = [] ): array {
 			. '<!-- wp:template-part {"slug":"footer","tagName":"footer"} /-->' . "\n",
 	];
 
+	// --- (p) A Patch-style collage canvas (GitHub #671). A template whose
+	//         outer Group has core's "Inner blocks use content width" OFF
+	//         (`layout.type: default`, marker nb-group--fill) and sits
+	//         directly in `.wp-site-blocks`, outside every layout grid. It
+	//         holds the header part and a `main` Group with a card list.
+	//         Outside a layout grid the canvas keeps the content-width cap on
+	//         its children: the `main` Group stays at the content width. ---
+	$pages['collage-canvas'] = [
+		'title'        => 'Sidecar Lab — Collage canvas Group outside the layout grid',
+		'description'  => 'Custom template: a layout.type default canvas Group directly in .wp-site-blocks (no layout grid, no rail) holding the header part and a main Group with a query card list, like Patch LT\'s collage. Its children keep the content-width cap (#671).',
+		'families'     => [ 'wide-group', 'fill-group', 'rail-none', 'query', 'supernova' ],
+		'content'      => sl_short_paragraph( 'The collage canvas template renders the query below; this body is not shown.' ),
+		'template_raw' => sl_collage_canvas_template( $post_ids ),
+	];
+
 	$pages['aligned-page'] = [
 		'title'       => 'Sidecar Lab — Aligned images on a plain page',
 		'description' => 'A plain page (no custom template, no Sidecar in the body): Post Content holds the #656 aligned battery (alignleft 190x240, alignright 300px, text beside them).',
@@ -1187,6 +1202,39 @@ function sl_separator_battery(): string {
 		. '<!-- wp:separator {"align":"wide","className":"sl-probe sl-separator-wide"} -->' . "\n"
 		. '<hr class="wp-block-separator alignwide has-alpha-channel-opacity sl-probe sl-separator-wide"/>' . "\n"
 		. '<!-- /wp:separator -->' . "\n\n";
+}
+
+/**
+ * The (p) collage canvas template (GitHub #671): a flow-layout canvas Group
+ * directly in `.wp-site-blocks`, holding the header part and a `main` Group
+ * with a two-column card list, then the footer part.
+ */
+function sl_collage_canvas_template( array $post_ids ): string {
+	$query = [
+		'perPage'  => count( $post_ids ),
+		'pages'    => 0,
+		'offset'   => 0,
+		'postType' => 'post',
+		'order'    => 'desc',
+		'orderBy'  => 'date',
+		'inherit'  => false,
+		'include'  => implode( ',', array_map( 'intval', $post_ids ) ),
+	];
+	return '<!-- wp:group {"className":"sl-collage-canvas sl-probe","layout":{"type":"default"}} -->' . "\n"
+		. '<div class="wp-block-group sl-collage-canvas sl-probe">'
+		. '<!-- wp:template-part {"slug":"header","tagName":"header"} /-->' . "\n"
+		. '<!-- wp:group {"tagName":"main","className":"sl-collage-main sl-probe","layout":{"type":"default"}} -->' . "\n"
+		. '<main class="wp-block-group sl-collage-main sl-probe">'
+		. '<!-- wp:query {"queryId":4401,"query":' . wp_json_encode( $query ) . '} -->' . "\n"
+		. '<div class="wp-block-query">' . "\n"
+		. '<!-- wp:novablocks/supernova {"contentType":"auto","layoutStyle":"classic","columns":2,"showCollectionTitle":false,"showCollectionSubtitle":false} /-->' . "\n"
+		. '</div>' . "\n"
+		. '<!-- /wp:query -->'
+		. '</main>' . "\n"
+		. '<!-- /wp:group -->'
+		. '</div>' . "\n"
+		. '<!-- /wp:group -->' . "\n\n"
+		. '<!-- wp:template-part {"slug":"footer","tagName":"footer"} /-->' . "\n";
 }
 
 /**
