@@ -130,18 +130,24 @@ function nb_pm_render( $attributes = [] ) {
 	return novablocks_render_post_meta_block( $attributes, '', $block );
 }
 
-// ── Ask 1: Discuss accepts core `comments` / `post-comments-form` ─────────────
+// ── Ask 1: Discuss accepts core `comments` / `post-comments-form`, and links
+//          to whichever anchor that template shape actually renders (#666
+//          follow-up: a form-only template has no id="comments", only core's
+//          own id="respond" on the comment-respond wrapper) ──────────────────
 
 $discuss_cases = [
-	'Nova post-comments only'        => [ [ 'novablocks/post-comments' ], true ],
-	'core/comments only'             => [ [ 'core/comments' ], true ],
-	'core/post-comments-form only'   => [ [ 'core/post-comments-form' ], true ],
-	'core/comments plus unrelated'   => [ [ 'core/paragraph', 'core/comments' ], true ],
-	'no comments block'              => [ [ 'core/paragraph' ], false ],
-	'empty template'                 => [ [], false ],
+	// label                          => [ blocks on the template,                                  expected anchor or null when Discuss must be hidden ]
+	'Nova post-comments only'        => [ [ 'novablocks/post-comments' ], 'comments' ],
+	'core/comments only'             => [ [ 'core/comments' ], 'comments' ],
+	'core/post-comments-form only'   => [ [ 'core/post-comments-form' ], 'respond' ],
+	'core/comments plus unrelated'   => [ [ 'core/paragraph', 'core/comments' ], 'comments' ],
+	'core/comments plus bare form'   => [ [ 'core/comments', 'core/post-comments-form' ], 'comments' ],
+	'Nova post-comments plus form'   => [ [ 'novablocks/post-comments', 'core/post-comments-form' ], 'comments' ],
+	'no comments block'              => [ [ 'core/paragraph' ], null ],
+	'empty template'                 => [ [], null ],
 ];
 
-foreach ( $discuss_cases as $label => [ $blocks, $expected ] ) {
+foreach ( $discuss_cases as $label => [ $blocks, $expected_anchor ] ) {
 	$GLOBALS['nb_pm_fixture']['comments_open']   = true;
 	$GLOBALS['nb_pm_fixture']['template_blocks'] = $blocks;
 	global $_wp_current_template_content;
@@ -149,10 +155,12 @@ foreach ( $discuss_cases as $label => [ $blocks, $expected ] ) {
 
 	$html = nb_pm_render();
 	$has_discuss = false !== strpos( $html, 'Discuss' );
-	nb_pm_expect( $expected === $has_discuss, "Discuss visibility for [$label] must be " . ( $expected ? 'shown' : 'hidden' ) . '.' );
+	nb_pm_expect( ( null !== $expected_anchor ) === $has_discuss, "Discuss visibility for [$label] must be " . ( $expected_anchor ? 'shown' : 'hidden' ) . '.' );
 
-	if ( $expected ) {
-		nb_pm_expect( false !== strpos( $html, 'href="#comments"' ), "[$label]: Discuss must still link to #comments." );
+	if ( null !== $expected_anchor ) {
+		nb_pm_expect( false !== strpos( $html, 'href="#' . $expected_anchor . '"' ), "[$label]: Discuss must link to #$expected_anchor." );
+		$other_anchor = 'comments' === $expected_anchor ? 'respond' : 'comments';
+		nb_pm_expect( false === strpos( $html, 'href="#' . $other_anchor . '"' ), "[$label]: Discuss must not link to #$other_anchor." );
 	}
 }
 

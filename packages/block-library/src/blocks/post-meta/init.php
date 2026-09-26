@@ -17,34 +17,42 @@ function novablocks_get_post_meta_attributes() {
 
 }
 
-if ( ! function_exists( 'novablocks_post_meta_template_supports_discuss' ) ) {
+if ( ! function_exists( 'novablocks_post_meta_discuss_anchor' ) ) {
 
 	/**
-	 * Whether the current template renders a comments UI that Discuss can
-	 * link to (#665).
+	 * The anchor Discuss should link to for the current template, or '' when
+	 * the template renders nothing Discuss can point at (#665, follow-up
+	 * #666-style fix).
 	 *
-	 * Nova's own `novablocks/post-comments`, or core's `core/comments` (whose
-	 * Comments Title renders the `id="comments"` anchor Discuss targets via
-	 * `href="#comments"`) or `core/post-comments-form` (a bare form, still a
-	 * legitimate comments entry point on templates that only render it).
+	 * Nova's own `novablocks/post-comments` and core's `core/comments` (via
+	 * its Comments Title) both render `id="comments"`, so `href="#comments"`
+	 * resolves on either. A template with only a bare `core/post-comments-form`
+	 * has no `id="comments"` anywhere — the form's own wrapper carries
+	 * WordPress' default `id="respond"` (`comment_form()`'s `comment-respond`
+	 * container), so Discuss must target that instead, or the link goes
+	 * nowhere.
 	 *
 	 * @param string $template_content
 	 *
-	 * @return bool
+	 * @return string 'comments', 'respond', or '' when neither is present.
 	 */
-	function novablocks_post_meta_template_supports_discuss( $template_content ) {
+	function novablocks_post_meta_discuss_anchor( $template_content ) {
 
 		if ( empty( $template_content ) ) {
-			return false;
+			return '';
 		}
 
-		foreach ( [ 'novablocks/post-comments', 'core/comments', 'core/post-comments-form' ] as $block_name ) {
+		foreach ( [ 'novablocks/post-comments', 'core/comments' ] as $block_name ) {
 			if ( has_block( $block_name, $template_content ) ) {
-				return true;
+				return 'comments';
 			}
 		}
 
-		return false;
+		if ( has_block( 'core/post-comments-form', $template_content ) ) {
+			return 'respond';
+		}
+
+		return '';
 	}
 }
 
@@ -180,11 +188,11 @@ if ( ! function_exists( 'novablocks_render_post_meta_block' ) ) {
 						</div>
 						<?php
 						// Only show the Discuss link if comments are open and the template
-						// renders a comments UI (Nova's own, or core's) it can link to (#665).
+						// renders a comments UI (Nova's own, or core's) it can link to (#665),
+						// and point it at whichever anchor that UI actually renders.
 						global $_wp_current_template_content;
-						if ( comments_open( $post->ID ) &&
-						     novablocks_post_meta_template_supports_discuss( $_wp_current_template_content )
-						) {
+						$discuss_anchor = novablocks_post_meta_discuss_anchor( $_wp_current_template_content );
+						if ( comments_open( $post->ID ) && '' !== $discuss_anchor ) {
 							$comments_count = get_comments_number( $post->ID );
 							?>
 							<div class="c-meta__row-item">
@@ -197,7 +205,7 @@ if ( ! function_exists( 'novablocks_render_post_meta_block' ) ) {
 									<div class="c-meta-comments__label">
 										<a class="c-meta-comments__link"><?php echo esc_html__( 'Discuss', '__plugin_txtd' ); ?></a>
 									</div>
-									<a class="c-button__link" href="#comments"></a>
+									<a class="c-button__link" href="#<?php echo esc_attr( $discuss_anchor ); ?>"></a>
 								</div>
 							</div>
 						<?php } ?>
