@@ -39,7 +39,7 @@ stable).
 - **3 lab posts** (`sidecar-lab-post-1..3`) — deterministic posts (fixed
   excerpt, featured image = the fixture attachment) backing the query-loop
   pass-through fixture. Recreated each run; deleted by the same prefix sweep.
-- **54 published pages**, slug prefix `sidecar-lab-` (plus one `sidecar-lab-tpl-*` wp_template per template fixture, swept by the same prefix). The first 17 are the
+- **59 published pages**, slug prefix `sidecar-lab-` (plus one `sidecar-lab-tpl-*` wp_template per template fixture, swept by the same prefix). The first 17 are the
   Phase 1-3 family pages (each carries the full content-variant battery as
   successive sections — wide image, full image, alignleft, alignright,
   Group-wrapped wide image, captioned image — over body copy long enough to
@@ -97,7 +97,10 @@ stable).
   | **Divider rule between content and rail (m) — GitHub #658** | |
   | `rule-primary-right`, `rule-secondary-right`, `rule-primary-left`, `rule-secondary-left-weight` | Rule: Primary / Secondary on a right and a left rail (one with a 3px weight override). The rule is a Sidecar `::before` in the rail gap, so every probed rect equals the same page without the rule (0 rect diff); only screenshots change |
   | `rule-three-area`, `rule-empty-rail`, `rule-dark` | both rails (one rule per gap); an EMPTY rail (no rule: wide blocks extend over it); a Color Signal 3 / variation 12 Sidecar (the rule re-tones with the ink) |
-  | **Phase 5 — Task 5.2 gate (b)** | |
+  | **One Wide header Group beside a rail (n) — GitHub #657** | |
+| `template-single-wide-group-right`, `template-single-wide-group-left`, `template-single-wide-group-railless`, `template-single-wide-group-constrained-right` | the (j) single-style templates with the whole post header in ONE Wide Group: a default post-title, a meta row (flex Group, `sl-post-meta`) and a default post-featured-image. The Group turns core's "Inner blocks use content width" OFF (`layout.type: default`, marker `nb-group--fill`), so its default children follow its Wide track; the `constrained` control keeps them on the content track (unchanged). Capture UNSET and SAVED (`sm_content_inset` 230): with the inset, the fill header spans container edge to rail gap like the flat (l) header |
+| `template-single-wide-never-empty-right` | the (l) flat Wide header over an EMPTY right rail, with the post-title, meta row and featured image pinned `nb-break-never` (the per-block control's class): the `:has()` empty-rail flip must not open them |
+| **Phase 5 — Task 5.2 gate (b)** | |
   | `color-signal-group` | No rail; a PLAIN group-wrapped wide (subgrid pass-through: escapes to ws/we) beside a COLOR-SIGNAL group-wrapped wide (a box group EXCLUDED from the pass-through: box stays content-width, background does not bleed, child stays constrained). The two wide-image rects differ — the exclusion regression pin. |
 
 ## Manifest

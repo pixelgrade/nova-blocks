@@ -286,3 +286,68 @@ test( 'a measured Group passed through the layout grid caps its children inside 
 test( 'only the measure rules consume the Group measure', () => {
 	assert.equal( measureRules().length, 2 );
 } );
+
+// A Group whose nested blocks fill it (GitHub #657): core's "Inner blocks use
+// content width" OFF (`layout.type: default`) — marked `nb-group--fill` by the
+// render filter / editor twin. Default-aligned children follow the Group's own
+// width instead of Nova's content width, so a meta row in a Wide header Group
+// lines up with the Wide title and featured image.
+const fillRules = () => {
+	const rules = [];
+	stylesheet.walkRules( rule => {
+		if ( rule.selector.includes( 'nb-group--fill' ) ) {
+			rules.push( rule );
+		}
+	} );
+	return rules;
+};
+
+test( 'a fill Group lifts the content-width cap from its default-aligned children (#657)', () => {
+	const base = fillRules().find( rule => atRuleChain( rule ).length === 0 );
+	assert.ok( base, 'expected the fill rule outside the desktop grid' );
+
+	// Doubled marker + :not() out-ranks the (0,3,0) collection cap.
+	assert.match( base.selector, /^\.wp-block-group\.nb-group--fill\.nb-group--fill > :not\(/ );
+	assert.equal( decl( base, 'max-width' ).value, 'none' );
+	assert.equal( decl( base, 'margin-left' ), undefined, 'centring stays with the existing rules' );
+
+	const selector = base.selector.replace( /\s+/g, ' ' ).replace( /"/g, '' );
+	for ( const exempt of EXEMPT_CHILDREN ) {
+		assert.ok( selector.includes( exempt ), `${ exempt } keeps its own width` );
+	}
+
+	const nodes = [];
+	stylesheet.walkRules( rule => nodes.push( rule ) );
+	const cap = nodes.findIndex( rule => rule.selector.endsWith( '> *' ) && decl( rule, 'max-width' )?.value === 'var(--nb-content-width)' );
+	assert.ok( cap >= 0 && cap < nodes.indexOf( base ), 'the fill rule follows the content-width cap' );
+} );
+
+test( 'a Wide or Full fill Group passed through the grid puts its default children on its own track (#657)', () => {
+	const parent = getGroupPassThroughRule();
+	const inGrid = fillRules().filter( rule => rule.selector.startsWith( parent.selector ) );
+
+	const expected = {
+		wide: 'var(--block-wide-start) / var(--block-wide-end)',
+		full: 'var(--block-full-start) / var(--block-full-end)',
+	};
+
+	for ( const [ align, track ] of Object.entries( expected ) ) {
+		const rule = inGrid.find( candidate => candidate.selector.includes( `.nb-group--fill:is(.align${ align }, [data-align=${ align }]) > :not(` ) );
+		assert.ok( rule, `expected the ${ align } fill rule on the qualified Group` );
+		assert.deepEqual( atRuleChain( rule ), atRuleChain( parent ), 'same desktop + subgrid gates as the pass-through' );
+		// Sass may drop the spaces around the slash.
+		assert.equal( decl( rule, 'grid-column' ).value.replace( /\s+/g, '' ), track.replace( /\s+/g, '' ) );
+
+		const selector = rule.selector.replace( /\s+/g, ' ' ).replace( /"/g, '' );
+		for ( const exempt of EXEMPT_CHILDREN ) {
+			assert.ok( selector.includes( exempt ), `${ exempt } keeps its own track in a ${ align } fill Group` );
+		}
+	}
+
+	// A default-aligned fill Group already spans the content track: no rule.
+	assert.equal( inGrid.length, 2 );
+} );
+
+test( 'only the fill rules consume the fill marker', () => {
+	assert.equal( fillRules().length, 3 );
+} );

@@ -183,3 +183,41 @@ describe( 'wrap-wins control visibility (product ruling 2026-07-22)', () => {
 		expect( replaceSidecarBreakClass( 'alignright nb-wrap-around', 'never' ) ).toBe( 'alignright nb-wrap-around nb-break-never' );
 	} );
 } );
+
+// GitHub #657: a Wide post header beside a rail. Post Title and Post Featured
+// Image support Wide/Full alignment and sit directly in a single template's
+// Sidecar content area, so they carry the same Auto/Always/Never control as
+// every other aligned block there (no hand-typed nb-break-never class).
+describe( 'post header blocks carry the break control (#657)', () => {
+	it( 'offers the control on Post Title set to Wide or Full', () => {
+		expect( SIDECAR_BREAK_BLOCKS ).toContain( 'core/post-title' );
+		expect( isSidecarBreakEligible( 'core/post-title', { align: 'wide' } ) ).toBe( true );
+		expect( isSidecarBreakEligible( 'core/post-title', { align: 'full' } ) ).toBe( true );
+		// Post Title only aligns wide/full in core.
+		expect( isSidecarBreakEligible( 'core/post-title', { align: 'left' } ) ).toBe( false );
+		expect( isSidecarBreakEligible( 'core/post-title', {} ) ).toBe( false );
+	} );
+
+	it( 'offers the control on Post Featured Image for every breakable alignment it supports', () => {
+		expect( SIDECAR_BREAK_BLOCKS ).toContain( 'core/post-featured-image' );
+		[ 'wide', 'full', 'left', 'right' ].forEach( align => {
+			expect( isSidecarBreakEligible( 'core/post-featured-image', { align } ) ).toBe( true );
+		} );
+		expect( isSidecarBreakEligible( 'core/post-featured-image', { align: 'center' } ) ).toBe( false );
+		expect( isSidecarBreakEligible( 'core/post-featured-image', {} ) ).toBe( false );
+	} );
+
+	it( 'shows only the break control on them, never the text wrap (they are not wrap blocks)', () => {
+		expect( getSidecarLayoutControlVisibility( { name: 'core/post-title', attributes: { align: 'wide' }, inSidecarContent: true } ) )
+			.toEqual( { showBreak: true, showWrap: false } );
+		expect( getSidecarLayoutControlVisibility( { name: 'core/post-featured-image', attributes: { align: 'right' }, inSidecarContent: true } ) )
+			.toEqual( { showBreak: true, showWrap: false } );
+		expect( getSidecarLayoutControlVisibility( { name: 'core/post-title', attributes: { align: 'wide' }, inSidecarContent: false } ) )
+			.toEqual( { showBreak: false, showWrap: false } );
+	} );
+
+	it( 'serializes the same way as on other blocks (className, nothing for Auto)', () => {
+		expect( replaceSidecarBreakClass( undefined, 'never' ) ).toBe( 'nb-break-never' );
+		expect( replaceSidecarBreakClass( 'nb-break-never', 'auto' ) ).toBe( undefined );
+	} );
+} );

@@ -15,6 +15,15 @@
  * as wide/full only. Nova already registers attributes on all of these
  * (image/group via the deprecation filters; quote, pullquote, heading and
  * paragraph carry the fontSize attribute via with-font-size-picker).
+ *
+ * Post header blocks (GitHub #657): a single template's Sidecar content area
+ * holds Post Title (wide/full in core) and Post Featured Image (left, right,
+ * wide, full), measured and placed like any other aligned child — so they
+ * carry the same control instead of a hand-typed nb-break-never class. The
+ * list stays explicit rather than "every block with align support": the
+ * attribute must not reach blocks the editor renders through
+ * ServerSideRender (Archives, Calendar, RSS, …), whose REST endpoint rejects
+ * attributes the server did not register.
  */
 
 export const SIDECAR_BREAK_ALIGNMENTS_BY_BLOCK = {
@@ -24,6 +33,8 @@ export const SIDECAR_BREAK_ALIGNMENTS_BY_BLOCK = {
 	'core/pullquote': [ 'wide', 'full', 'left', 'right' ],
 	'core/heading': [ 'wide', 'full' ],
 	'core/paragraph': [ 'wide', 'full' ],
+	'core/post-title': [ 'wide', 'full' ],
+	'core/post-featured-image': [ 'wide', 'full', 'left', 'right' ],
 };
 
 export const SIDECAR_BREAK_BLOCKS = Object.keys( SIDECAR_BREAK_ALIGNMENTS_BY_BLOCK );

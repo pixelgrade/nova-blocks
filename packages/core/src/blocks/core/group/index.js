@@ -13,6 +13,7 @@ import { createHigherOrderComponent } from "@wordpress/compose";
 import { getColorSignalClassnames, getSpacingCSSProps } from "@novablocks/utils";
 
 import { addContentMeasureFilter } from "../content-measure";
+import { getGroupFillProps } from "./fill";
 
 const addNovaBlocksSupport = ( settings ) => {
 
@@ -61,3 +62,15 @@ addContentMeasureFilter( 'novablocks/group/measure', {
 	className: 'nb-group--measure',
 	property: '--nb-group-measure',
 } );
+
+// Editor twin of init.php: a Group with core's "Inner blocks use content
+// width" OFF lets its nested blocks fill it (GitHub #657).
+const withGroupFill = createHigherOrderComponent( ( BlockListBlock ) => {
+	return ( props ) => {
+		const next = getGroupFillProps( props );
+
+		return <BlockListBlock { ...( next || props ) } />;
+	};
+}, 'withGroupFill' );
+
+addFilter( 'editor.BlockListBlock', 'novablocks/group/fill', withGroupFill );

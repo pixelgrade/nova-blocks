@@ -96,6 +96,17 @@ $nb-group-measure-children: ':not(.alignwide, .alignfull, .alignleft, .alignrigh
   max-width: min(var(--nb-group-measure), var(--nb-content-width));
 }
 
+// A Group whose nested blocks fill it (GitHub #657). Core's "Inner blocks use
+// content width" OFF (`layout.type: default`) renders a flow layout whose
+// nested blocks fill the Group; the render filter (init.php; editor twin in
+// fill.js) marks only that explicit choice with `nb-group--fill`, so legacy
+// Groups without a layout keep the cap above. Default-aligned children follow
+// the Group's width: a meta row in a Wide header Group lines up with the Wide
+// title and featured image. Wide, full and floated children keep their rules.
+.wp-block-group.nb-group--fill.nb-group--fill > #{$nb-group-measure-children} {
+  max-width: none;
+}
+
 :is(.wp-block-group__inner-container, .specificity.x2.x3) {
   max-width: none;
   padding-left: 0;
@@ -239,6 +250,18 @@ $nb-group-measure-children: ':not(.alignwide, .alignfull, .alignleft, .alignrigh
       // content track at the authored measure; core's auto margins centre them.
       &.nb-group--measure > #{$nb-group-measure-children} {
         max-width: min(var(--nb-group-measure), 100%);
+      }
+
+      // A fill Group (#657) spans `fs / fe` like every pass-through, so "follow
+      // the Group's width" means its default-aligned children take the track
+      // of the Group's own alignment. A default-aligned fill Group already
+      // puts them on the content track, so it needs no rule.
+      &.nb-group--fill:is(.alignwide, [data-align="wide"]) > #{$nb-group-measure-children} {
+        grid-column: var(--block-wide-start) / var(--block-wide-end);
+      }
+
+      &.nb-group--fill:is(.alignfull, [data-align="full"]) > #{$nb-group-measure-children} {
+        grid-column: var(--block-full-start) / var(--block-full-end);
       }
 
       // A Group pass-through is deliberately absent from

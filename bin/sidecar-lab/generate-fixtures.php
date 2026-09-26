@@ -1009,6 +1009,41 @@ function sl_page_definitions( int $img, array $post_ids = [] ): array {
 		];
 	}
 
+	// --- (m) One Wide header Group beside a rail (GitHub #657). The whole post
+	//         header (a default post-title, a meta row and a default featured
+	//         image) sits in ONE Wide Group. With core's "Inner blocks use
+	//         content width" OFF (`layout.type: default`, marker class
+	//         nb-group--fill) its default children follow the Group's Wide
+	//         track, so the three share one set of edges; the constrained
+	//         control Group keeps them on the content track (the pre-#657
+	//         behaviour, pinned). Plus a flat Wide header over an EMPTY right
+	//         rail whose title, meta row and featured image are pinned Never
+	//         through the per-block control's serialized class. ---
+	$wide_group = [
+		'right'    => sl_sidecar( [ 'sidebarPosition' => 'right', 'sidebarWidth' => 'small' ], sl_template_single_wide_group_area( 'default' ), sl_rail_long( $img ) ),
+		'left'     => sl_sidecar( [ 'sidebarPosition' => 'left', 'sidebarWidth' => 'small' ], sl_template_single_wide_group_area( 'default' ), sl_rail_long( $img ) ),
+		'railless' => sl_sidecar( [ 'sidebarPosition' => 'none', 'sidebarWidth' => 'small' ], sl_template_single_wide_group_area( 'default' ) ),
+		'constrained-right' => sl_sidecar( [ 'sidebarPosition' => 'right', 'sidebarWidth' => 'small' ], sl_template_single_wide_group_area( 'constrained' ), sl_rail_long( $img ) ),
+	];
+	foreach ( $wide_group as $variant => $template ) {
+		$pages[ 'template-single-wide-group-' . $variant ] = [
+			'title'       => 'Sidecar Lab — Wide header Group (' . $variant . ')',
+			'description' => 'Custom single-style template (' . $variant . ', small): one Wide Group (' . ( 0 === strpos( $variant, 'constrained' ) ? 'constrained: children on the content track' : 'layout.type default: children follow the Wide track' ) . ') holding a default post-title, a meta row (flex Group: author + date) and a default post-featured-image, then default core/post-content (#657).',
+			'families'    => [ 'post-content-template', 'content-inset', 'wide-header', 'wide-group', 'rail-' . str_replace( 'constrained-', '', $variant ), 'width-small' ],
+			'content'     => sl_content_battery_reduced( $img ),
+			'template'    => $template,
+			'thumbnail'   => true,
+		];
+	}
+	$pages['template-single-wide-never-empty-right'] = [
+		'title'       => 'Sidecar Lab — Wide header pinned Never over an empty rail',
+		'description' => 'Custom single-style template: right rail present but EMPTY; a Wide post-title, meta row and post-featured-image each carry nb-break-never (sidecarBreak never), so the :has() empty-rail flip must not open them (#657). Post Content default.',
+		'families'    => [ 'post-content-template', 'content-inset', 'wide-header', 'break-never', 'rail-empty', 'width-small' ],
+		'content'     => sl_content_battery_reduced( $img ),
+		'template'    => sl_sidecar( [ 'sidebarPosition' => 'right', 'sidebarWidth' => 'small' ], sl_template_single_wide_area( true ), '' ),
+		'thumbnail'   => true,
+	];
+
 	$pages['aligned-page'] = [
 		'title'       => 'Sidecar Lab — Aligned images on a plain page',
 		'description' => 'A plain page (no custom template, no Sidecar in the body): Post Content holds the #656 aligned battery (alignleft 190x240, alignright 300px, text beside them).',
@@ -1085,15 +1120,39 @@ function sl_template_single_area(): string {
  * The (l) single content area with a Wide post header: title, a meta row and
  * the featured image aligned wide; Post Content default (GitHub #655).
  */
-function sl_template_single_wide_area(): string {
-	return '<!-- wp:post-title {"level":1,"align":"wide"} /-->' . "\n\n"
-		. '<!-- wp:group {"align":"wide","className":"sl-post-meta","layout":{"type":"flex","flexWrap":"wrap"}} -->' . "\n"
-		. '<div class="wp-block-group alignwide sl-post-meta">'
+function sl_template_single_wide_area( bool $never = false ): string {
+	$break = $never ? ',"className":"nb-break-never","sidecarBreak":"never"' : '';
+	$class = $never ? ' nb-break-never' : '';
+	return '<!-- wp:post-title {"level":1,"align":"wide"' . $break . '} /-->' . "\n\n"
+		. '<!-- wp:group {"align":"wide","className":"sl-post-meta' . $class . '",' . ( $never ? '"sidecarBreak":"never",' : '' ) . '"layout":{"type":"flex","flexWrap":"wrap"}} -->' . "\n"
+		. '<div class="wp-block-group alignwide sl-post-meta' . $class . '">'
 		. '<!-- wp:post-author {"showAvatar":false} /-->' . "\n"
 		. '<!-- wp:post-date /-->'
 		. '</div>' . "\n"
 		. '<!-- /wp:group -->' . "\n\n"
-		. '<!-- wp:post-featured-image {"align":"wide"} /-->' . "\n\n"
+		. '<!-- wp:post-featured-image {"align":"wide"' . $break . '} /-->' . "\n\n"
+		. '<!-- wp:post-content {"layout":{"inherit":true}} /-->' . "\n";
+}
+
+/**
+ * The (m) single content area (GitHub #657): the post header in ONE Wide
+ * Group — a default post-title, a meta row and a default featured image —
+ * then default Post Content. `$layout_type` is the Group's core layout type:
+ * `default` is core's "Inner blocks use content width" OFF, `constrained` ON.
+ */
+function sl_template_single_wide_group_area( string $layout_type ): string {
+	return '<!-- wp:group {"align":"wide","className":"sl-post-header","layout":{"type":"' . $layout_type . '"}} -->' . "\n"
+		. '<div class="wp-block-group alignwide sl-post-header">'
+		. '<!-- wp:post-title {"level":1} /-->' . "\n"
+		. '<!-- wp:group {"className":"sl-post-meta","layout":{"type":"flex","flexWrap":"wrap"}} -->' . "\n"
+		. '<div class="wp-block-group sl-post-meta">'
+		. '<!-- wp:post-author {"showAvatar":false} /-->' . "\n"
+		. '<!-- wp:post-date /-->'
+		. '</div>' . "\n"
+		. '<!-- /wp:group -->' . "\n"
+		. '<!-- wp:post-featured-image /-->'
+		. '</div>' . "\n"
+		. '<!-- /wp:group -->' . "\n\n"
 		. '<!-- wp:post-content {"layout":{"inherit":true}} /-->' . "\n";
 }
 
