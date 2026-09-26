@@ -126,30 +126,58 @@
     margin-inline-end: 0;
   }
 
-  // Align: LEFT & RIGHT
+  // Align: LEFT & RIGHT — desktop grid only (GitHub #664).
   // The serialized nb-break-always class (per-block control, Task 3.3) is a
   // forced twin of the measured break-align-* classes everywhere they appear.
-  > :is(.alignleft, [data-align="left"]):is(.break-align-left, .nb-break-always),
-  > :is(.alignright, [data-align="right"]):is(.break-align-right, .nb-break-always) {
-    grid-row-end: span 5;
-    align-self: flex-start;
-  }
+  //
+  // Below `lap` the grid is one reading column whose rail tracks (ws-gs /
+  // ge-we) are `auto`, sized by the pull-out itself, so a broken pull-out
+  // took its own width out of a phone-width column and squeezed the next
+  // block into the rest (0px beside a full-width image). There a pull-out
+  // stacks instead; see the below-lap rules after this block.
+  @include above(lap) {
+    > :is(.alignleft, [data-align="left"]):is(.break-align-left, .nb-break-always),
+    > :is(.alignright, [data-align="right"]):is(.break-align-right, .nb-break-always) {
+      grid-row-end: span 5;
+      align-self: flex-start;
+    }
 
-  // Align: LEFT
-  > :is(.alignleft, [data-align="left"]):is(.break-align-left, .nb-break-always) {
-    grid-column: var(--block-left-start) / var(--block-left-end);
+    // Align: LEFT
+    > :is(.alignleft, [data-align="left"]):is(.break-align-left, .nb-break-always) {
+      grid-column: var(--block-left-start) / var(--block-left-end);
 
-    + :not(:is(.alignright, [data-align="right"])) {
-      grid-column-start: cs; // shouldn't it be var(--block-content-start) ?
+      + :not(:is(.alignright, [data-align="right"])) {
+        grid-column-start: cs; // shouldn't it be var(--block-content-start) ?
+      }
+    }
+
+    // Align: RIGHT
+    > :is(.alignright, [data-align="right"]):is(.break-align-right, .nb-break-always) {
+      grid-column: var(--block-right-start) / var(--block-right-end);
+
+      + :not(:is(.alignleft, [data-align="left"])) {
+        grid-column-end: ce; // shouldn't it be var(--block-content-end) ?
+      }
     }
   }
 
-  // Align: RIGHT
-  > :is(.alignright, [data-align="right"]):is(.break-align-right, .nb-break-always) {
-    grid-column: var(--block-right-start) / var(--block-right-end);
+  // Below `lap` an aligned block sits on its own row across the column, the
+  // way core stacks a float that has no room beside it, and the next block
+  // keeps the whole column. The row span the break layer writes inline
+  // (break-align.js) would leave empty rows under a stacked block, so it is
+  // cleared whatever the block's break classes. An aligned image keeps its
+  // authored width at its own side instead of the engine's centring.
+  @include below(lap) {
+    > :is(.alignleft, [data-align="left"], .alignright, [data-align="right"]) {
+      grid-row-end: auto !important;
+    }
 
-    + :not(:is(.alignleft, [data-align="left"])) {
-      grid-column-end: ce; // shouldn't it be var(--block-content-end) ?
+    > .wp-block-image:is(.alignleft, [data-align="left"]) {
+      align-items: flex-start;
+    }
+
+    > .wp-block-image:is(.alignright, [data-align="right"]) {
+      align-items: flex-end;
     }
   }
 
