@@ -39,7 +39,7 @@ stable).
 - **3 lab posts** (`sidecar-lab-post-1..3`) — deterministic posts (fixed
   excerpt, featured image = the fixture attachment) backing the query-loop
   pass-through fixture. Recreated each run; deleted by the same prefix sweep.
-- **59 published pages**, slug prefix `sidecar-lab-` (plus one `sidecar-lab-tpl-*` wp_template per template fixture, swept by the same prefix). The first 17 are the
+- **67 published pages**, slug prefix `sidecar-lab-` (plus one `sidecar-lab-tpl-*` wp_template per template fixture, swept by the same prefix). The first 17 are the
   Phase 1-3 family pages (each carries the full content-variant battery as
   successive sections — wide image, full image, alignleft, alignright,
   Group-wrapped wide image, captioned image — over body copy long enough to
@@ -100,6 +100,8 @@ stable).
   | **One Wide header Group beside a rail (n) — GitHub #657** | |
 | `template-single-wide-group-right`, `template-single-wide-group-left`, `template-single-wide-group-railless`, `template-single-wide-group-constrained-right` | the (j) single-style templates with the whole post header in ONE Wide Group: a default post-title, a meta row (flex Group, `sl-post-meta`) and a default post-featured-image. The Group turns core's "Inner blocks use content width" OFF (`layout.type: default`, marker `nb-group--fill`), so its default children follow its Wide track; the `constrained` control keeps them on the content track (unchanged). Capture UNSET and SAVED (`sm_content_inset` 230): with the inset, the fill header spans container edge to rail gap like the flat (l) header |
 | `template-single-wide-never-empty-right` | the (l) flat Wide header over an EMPTY right rail, with the post-title, meta row and featured image pinned `nb-break-never` (the per-block control's class): the `:has()` empty-rail flip must not open them |
+| **Border Site Frame header (o) — GitHub #670** | |
+| `site-frame-header` | a plain page with Anima's Border Site Frame turned on for this page only (the generator installs the `sidecar-lab-site-frame.php` mu-plugin, scoped by request path). Anima pins the Nova header bars inside the frame; the layout-child stretch must not out-rank that pin (no sideways scroll: the probe's `docWidth`, the `header` role). A default and a wide separator in Post Content (`sl-probe`) still fill their track (#660) |
 | **Phase 5 — Task 5.2 gate (b)** | |
   | `color-signal-group` | No rail; a PLAIN group-wrapped wide (subgrid pass-through: escapes to ws/we) beside a COLOR-SIGNAL group-wrapped wide (a box group EXCLUDED from the pass-through: box stays content-width, background does not bleed, child stays constrained). The two wide-image rects differ — the exclusion regression pin. |
 
@@ -199,6 +201,12 @@ settlement flags. Elements are collected by ROLE (the diff keys on
 - `passthrough` (Task 4b.3 b) — `.wp-block-query`, `.nb-supernova`: the
   subgrid pass-through consumers, so their `grid-template-columns: subgrid`
   resolution has structural coverage, not just screenshots.
+- `header` (GitHub #670) — `.nb-header--main`, `.nb-header--mobile`: the
+  header bars a theme pins with its own geometry.
+- `probe` — any element a fixture marks with `sl-probe`.
+
+Page-level, the probe also records `docWidth` (the document's scroll width);
+the diff reports a change over 1px as a `rects` difference (sideways scroll).
 
 **Settlement protocol** (the current engine adds break classes via
 debounced JS after domReady — probing early poisons the data): wait for

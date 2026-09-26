@@ -169,6 +169,11 @@
   }
 }
 
+// The Nova header chrome that sits directly in the header template part: the
+// main and secondary bars (`.nb-header`), and the mobile bar, masthead and
+// menu toggle that the header script inserts next to them (GitHub #670).
+$nb-layout-header-chrome: '.nb-header, .nb-header--mobile, .nb-header__mobile-masthead, .c-menu-toggle, .c-menu-toggle__checkbox';
+
 //noinspection ALL
 @mixin nb-layout-root {
   @include nb-layout-settings;
@@ -201,6 +206,7 @@
 
   // force grid items take up all the available horizontal space
   > *:not(.block-list-appender) {
+    width: 100%;
     max-width: none;
   }
 
@@ -217,7 +223,18 @@
   // ((0,4,0) Post Content, Group), which must keep winning over the reset
   // above. The qualified Group pass-through repeats this stretch for its own
   // children at a higher weight (core/group/style.scss).
-  > :not(.block-list-appender, .nb-layout-item.nb-layout-item.nb-layout-item) {
+  //
+  // The header keeps the (0,2,0) stretch above and is never lifted (GitHub
+  // #670). The header template part is a layout root, and the Nova header bars
+  // and menu toggle are positioned against the viewport. Themes pin them with
+  // light selectors: Anima's Border Site Frame sets `width: auto` plus a
+  // left/right frame inset at (0,2,1). The lifted stretch beat that pin, so the
+  // header kept its left inset AND took the full width, overhanging the frame
+  // and scrolling every page sideways. Excluded twice: a `header` template part
+  // (`:where()`, no weight) and the header chrome by class, for a header in a
+  // div-tagged template part. `:not()` weighs its heaviest argument, so the
+  // extra classes leave the rule at (0,4,0).
+  &:where(:not(header)) > :not(.block-list-appender, #{$nb-layout-header-chrome}, .nb-layout-item.nb-layout-item.nb-layout-item) {
     width: 100%;
   }
 

@@ -1044,6 +1044,29 @@ function sl_page_definitions( int $img, array $post_ids = [] ): array {
 		'thumbnail'   => true,
 	];
 
+	// --- (o) A Border Site Frame header (GitHub #670). The lab mu-plugin
+	//         (sl_install_site_frame_mu_plugin) turns Anima's Border Site
+	//         Frame on for this page only. Anima pins the Nova header bars
+	//         inside the frame (`width: auto` + left/right insets); the
+	//         layout-child stretch must never out-rank that pin, or the header
+	//         overhangs the right frame edge and the page scrolls sideways.
+	//         Probed: the header bars (role `header`), the document width and
+	//         Post Content separators marked `sl-probe` (#660 must hold). ---
+	$pages['site-frame-header'] = [
+		'title'       => 'Sidecar Lab — Border Site Frame header',
+		'description' => 'A plain page with Anima\'s Border Site Frame on (lab mu-plugin): the Nova header bars stay inside the frame at every width (no sideways scroll, #670); a default and a wide separator in Post Content still fill their track (#660).',
+		'families'    => [ 'site-frame', 'header', 'separator', 'rail-none' ],
+		'content'     => sl_separator_battery() . sl_content_battery_reduced( $img ),
+		// Its own header part: the Anima header part can render empty on a
+		// fresh lab site, and the fixture needs a Nova header.
+		'template_raw' => '<!-- wp:template-part {"slug":"' . SL_SLUG_PREFIX . 'header","tagName":"header"} /-->' . "\n\n"
+			. '<!-- wp:group {"tagName":"main","layout":{"type":"constrained"}} -->' . "\n" . '<main class="wp-block-group">'
+			. '<!-- wp:post-title {"level":1} /-->' . "\n"
+			. '<!-- wp:post-content {"layout":{"inherit":true}} /-->'
+			. '</main>' . "\n" . '<!-- /wp:group -->' . "\n\n"
+			. '<!-- wp:template-part {"slug":"footer","tagName":"footer"} /-->' . "\n",
+	];
+
 	$pages['aligned-page'] = [
 		'title'       => 'Sidecar Lab — Aligned images on a plain page',
 		'description' => 'A plain page (no custom template, no Sidecar in the body): Post Content holds the #656 aligned battery (alignleft 190x240, alignright 300px, text beside them).',
@@ -1156,6 +1179,36 @@ function sl_template_single_wide_group_area( string $layout_type ): string {
 		. '<!-- wp:post-content {"layout":{"inherit":true}} /-->' . "\n";
 }
 
+/** A default and a wide core separator, marked for probing (GitHub #660). */
+function sl_separator_battery(): string {
+	return '<!-- wp:separator {"className":"sl-probe sl-separator-default"} -->' . "\n"
+		. '<hr class="wp-block-separator has-alpha-channel-opacity sl-probe sl-separator-default"/>' . "\n"
+		. '<!-- /wp:separator -->' . "\n\n"
+		. '<!-- wp:separator {"align":"wide","className":"sl-probe sl-separator-wide"} -->' . "\n"
+		. '<hr class="wp-block-separator alignwide has-alpha-channel-opacity sl-probe sl-separator-wide"/>' . "\n"
+		. '<!-- /wp:separator -->' . "\n\n";
+}
+
+/**
+ * The lab mu-plugin that turns Anima's Border Site Frame on for the (o)
+ * fixture only (GitHub #670). The frame is a site-wide option, so it is
+ * scoped by request path; every other fixture renders without a frame.
+ */
+function sl_install_site_frame_mu_plugin(): string {
+	$dir = WPMU_PLUGIN_DIR;
+	if ( ! is_dir( $dir ) ) {
+		mkdir( $dir, 0755, true );
+	}
+	$path = $dir . '/sidecar-lab-site-frame.php';
+	$code = "<?php\n"
+		. "/* Sidecar lab (nova-blocks bin/sidecar-lab): Border Site Frame on the site-frame fixture only. */\n"
+		. "add_filter( 'pre_option_sm_site_frame_style', static function ( \$value ) {\n"
+		. "\treturn false !== strpos( (string) ( \$_SERVER['REQUEST_URI'] ?? '' ), '/" . SL_SLUG_PREFIX . "site-frame-header' ) ? 'border' : \$value;\n"
+		. "} );\n";
+	file_put_contents( $path, $code );
+	return $path;
+}
+
 /** A full custom page template around a Sidecar (header and footer parts). */
 function sl_template( string $sidecar ): string {
 	return '<!-- wp:template-part {"slug":"header","tagName":"header"} /-->' . "\n\n"
@@ -1181,13 +1234,35 @@ foreach ( $all_posts as $p ) {
 		$deleted ++;
 	}
 }
-foreach ( get_posts( [ 'post_type' => 'wp_template', 'post_status' => 'any', 'posts_per_page' => - 1 ] ) as $p ) {
+foreach ( get_posts( [ 'post_type' => [ 'wp_template', 'wp_template_part' ], 'post_status' => 'any', 'posts_per_page' => - 1 ] ) as $p ) {
 	if ( 0 === strpos( $p->post_name, SL_SLUG_PREFIX ) ) {
 		wp_delete_post( $p->ID, true );
 		$deleted ++;
 	}
 }
 echo 'Deleted ' . $deleted . " existing sidecar-lab page(s)/post(s)/template(s).\n";
+
+echo 'Site-frame mu-plugin: ' . sl_install_site_frame_mu_plugin() . "\n";
+
+// The lab's own header part (Anima's default header pattern: a Nova header
+// with one sticky row), used by the (o) site-frame fixture.
+$header_part_id = wp_insert_post( [
+	'post_type'    => 'wp_template_part',
+	'post_status'  => 'publish',
+	'post_name'    => SL_SLUG_PREFIX . 'header',
+	'post_title'   => 'Sidecar Lab Header',
+	'post_content' => '<!-- wp:novablocks/header {"layout":"logo-center"} -->' . "\n"
+		. '<!-- wp:novablocks/header-row {"slug":"primary","label":"Primary Navigation","isSticky":true,"isPrimary":true} -->' . "\n"
+		. '<!-- wp:novablocks/navigation {"slug":"primary"} /-->' . "\n\n"
+		. '<!-- wp:novablocks/logo /-->' . "\n\n"
+		. '<!-- wp:novablocks/navigation {"slug":"secondary"} /-->' . "\n"
+		. '<!-- /wp:novablocks/header-row -->' . "\n"
+		. '<!-- /wp:novablocks/header -->',
+], true );
+if ( ! is_wp_error( $header_part_id ) ) {
+	wp_set_object_terms( $header_part_id, get_stylesheet(), 'wp_theme' );
+	wp_set_object_terms( $header_part_id, 'header', 'wp_template_part_area' );
+}
 
 $attachment_id = sl_get_fixture_attachment_id();
 echo 'Fixture attachment ID: ' . $attachment_id . ' (' . wp_get_attachment_image_url( $attachment_id, 'full' ) . ")\n";
@@ -1231,14 +1306,14 @@ foreach ( $definitions as $slug_suffix => $def ) {
 		exit( 1 );
 	}
 
-	if ( ! empty( $def['template'] ) ) {
+	if ( ! empty( $def['template'] ) || ! empty( $def['template_raw'] ) ) {
 		$template_slug = SL_SLUG_PREFIX . 'tpl-' . $slug_suffix;
 		$template_id   = wp_insert_post( [
 			'post_type'    => 'wp_template',
 			'post_status'  => 'publish',
 			'post_name'    => $template_slug,
 			'post_title'   => $def['title'],
-			'post_content' => sl_template( $def['template'] ),
+			'post_content' => ! empty( $def['template_raw'] ) ? $def['template_raw'] : sl_template( $def['template'] ),
 		], true );
 		if ( is_wp_error( $template_id ) ) {
 			fwrite( STDERR, 'Failed to create template ' . $template_slug . ': ' . $template_id->get_error_message() . "\n" );

@@ -81,7 +81,7 @@ const separatorSheet = compile( "@import 'mixins';\n@import 'blocks/core/separat
 // The unconditional engine rules that stretch a direct child of the layout
 // container union (`:is(<union>) > ...`) — the frontend path, not the editor
 // `.editor-styles-wrapper` twin and not a breakpoint override.
-const UNION_CHILD = /^:is\(\.is-root-container,[^)]*\.wp-block-post-content[^)]*\) > /;
+const UNION_CHILD = /^:is\(\.is-root-container,[^)]*\.wp-block-post-content[^)]*\)(?::where\(:not\(header\)\))? > /;
 const engineChildRules = prop => {
 	const rules = [];
 	layoutSheet.walkRules( rule => {
@@ -106,14 +106,25 @@ const separatorWidthRules = () => {
 	return rules;
 };
 
+const stretchRules = () => engineChildRules( 'width' ).filter( rule => decl( rule, 'width' ).value === '100%' );
+
+// The lifted (#660) stretch: the heavier of the two.
+const liftedStretch = () => stretchRules().reduce( ( best, rule ) => ( ! best || compare( maxSpecificity( rule ), maxSpecificity( best ) ) > 0 ? rule : best ), null );
+
 test( 'the engine stretches every direct layout-grid child to its track', () => {
-	const stretch = engineChildRules( 'width' ).filter( rule => decl( rule, 'width' ).value === '100%' );
-	assert.equal( stretch.length, 1, 'one unconditional width stretch for the container union' );
-	assert.match( stretch[ 0 ].selector, /> \*?:not\(\.block-list-appender/, 'the block-list appender keeps its own width' );
+	const stretch = stretchRules();
+	assert.equal( stretch.length, 2, 'the 2.6.6 stretch for every child, and its lifted twin (#660) for all but the header (#670)' );
+	for ( const rule of stretch ) {
+		assert.match( rule.selector, /> \*?:not\(\.block-list-appender/, 'the block-list appender keeps its own width' );
+	}
+
+	const base = stretch.find( rule => rule !== liftedStretch() );
+	assert.deepEqual( maxSpecificity( base ), [ 0, 2, 0 ], 'the 2.6.6 stretch keeps its weight, so theme header pins still beat it' );
+	assert.match( base.selector, /> \*:not\(\.block-list-appender\)$/, 'the 2.6.6 stretch reaches every child, the header included' );
 } );
 
 test( 'the stretch outranks block width resets, so separators in Post Content fill the track (#660)', () => {
-	const [ stretch ] = engineChildRules( 'width' ).filter( rule => decl( rule, 'width' ).value === '100%' );
+	const stretch = liftedStretch();
 	const resets = separatorWidthRules();
 
 	assert.ok( resets.length > 0, 'expected the separator width reset in the separator stylesheet' );

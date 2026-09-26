@@ -261,10 +261,18 @@ async function novaProbe( noJs ) {
 		// template) under the raised :is() specificity — probe them so the
 		// pass-through contract has structural coverage, not just screenshots.
 		collect( '.wp-block-query, .nb-supernova', 'passthrough' ),
+		// GitHub #670: the Nova header bars, which themes pin with their own
+		// geometry (Anima's Border Site Frame insets them from both edges).
+		collect( '.nb-header--main, .nb-header--mobile', 'header' ),
+		// Elements a fixture marks for probing with the `sl-probe` class
+		// (the #660 separators, the #671 collage canvas and its main Group).
+		collect( '.sl-probe', 'probe' ),
 	);
 
 	return {
 		title: document.title,
+		// Sideways scroll (GitHub #670): the document is wider than the viewport.
+		docWidth: document.documentElement.scrollWidth,
 		settlement,
 		breakClasses: breakInventory(),
 		elements,
@@ -594,6 +602,10 @@ function setDiff( a, b ) {
 function comparePage( a, b ) {
 	const diffs = [];
 	const push = ( kind, message ) => diffs.push( { kind, message } );
+
+	if ( a.docWidth !== b.docWidth && Math.abs( ( b.docWidth || 0 ) - ( a.docWidth || 0 ) ) > RECT_TOLERANCE_PX ) {
+		push( 'rects', `document width changed: ${ a.docWidth } -> ${ b.docWidth }` );
+	}
 
 	const breaks = setDiff( a.breakClasses, b.breakClasses );
 	for ( const x of breaks.removed ) {
