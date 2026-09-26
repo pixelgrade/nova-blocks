@@ -113,6 +113,26 @@ test( 'groups with a nonzero color signal retain surface padding', () => {
 	);
 } );
 
+// GitHub #666: a coloured card's `--nb-group-padding-toggle: 1` is a custom
+// property, so it inherits into a non-coloured inner Group (e.g. a synced
+// pattern's own Group) and pads the card's content twice.
+test( 'a non-coloured group nested in a coloured card resets the padding toggle to 0', () => {
+	assert.equal(
+		getToggle( '.wp-block-group[class*=sm-color-signal]:not(.sm-color-signal-0) .wp-block-group:not([class*=sm-color-signal]:not(.sm-color-signal-0))' ),
+		'0'
+	);
+} );
+
+test( 'a nested group with its own nonzero color signal still wins its own surface padding back', () => {
+	// The reset rule's :not() explicitly excludes a self-coloured nested
+	// Group, so only the plain self-selector rule (checked above) matches it
+	// — its specificity/order is irrelevant because the reset never applies.
+	const resetRuleSelector = '.wp-block-group[class*=sm-color-signal]:not(.sm-color-signal-0) .wp-block-group:not([class*=sm-color-signal]:not(.sm-color-signal-0))';
+	const resetRule = stylesheet.nodes.find( node => node.type === 'rule' && node.selector === resetRuleSelector );
+	assert.ok( resetRule, 'expected the #666 reset rule' );
+	assert.match( resetRule.selector, /:not\(\[class\*=sm-color-signal\]:not\(\.sm-color-signal-0\)\)$/ );
+} );
+
 test( 'layout containers nested directly in a plain Group keep the inherited subgrid', () => {
 	const rule = getNestedPassThroughRule();
 

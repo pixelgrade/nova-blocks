@@ -27,6 +27,18 @@
   --nb-group-padding-toggle: 1;
 }
 
+// GitHub #666: the toggle above is a custom property, so a coloured card's
+// `1` inherits straight through a non-coloured inner group (e.g. a synced
+// pattern's own Group) to whatever descendant `.wp-block-group` is nearest —
+// context (sidecar area, alignment) never gets a say for it, and the card's
+// content is padded twice. Reset any nested Group back to `0` unless IT
+// declares its own non-zero Color Signal, in which case its own rule above
+// (same compound, matched directly on itself) wins back to `1` — a nested
+// coloured card still pads itself.
+.wp-block-group[class*="sm-color-signal"]:not(.sm-color-signal-0) .wp-block-group:not([class*="sm-color-signal"]:not(.sm-color-signal-0)) {
+  --nb-group-padding-toggle: 0;
+}
+
 // Applying Grid on Group Block
 // added .specificity.x2 to override figure.wp-block-gallery { margin: 0; }
 // added .specificity.x2.x3 to override .block-editor-block-list__block .block-list-appender.block-list-appender { margin: 0; }
