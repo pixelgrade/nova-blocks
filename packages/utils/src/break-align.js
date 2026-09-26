@@ -31,11 +31,25 @@ export const getAlignedSiblings = ( block, side ) => {
 // editor). Measurement must never add break-align-* grid classes to it —
 // wrap wins over break by construction, and the "Extend over sidebar" control
 // is hidden while a wrap is active so no new contradiction can be authored.
+//
+// The wrap only owns the geometry where a wrap can exist: inside a flow
+// segment (frontend) or directly in a Sidecar content area (the editor canvas,
+// which has no segments). Segmentation runs nowhere else (lib/flow-segments.php
+// acts on Sidecar content areas only), so a stored wrap class in Post Content,
+// a Group or the editor root is inert there: the block is measured like any
+// other aligned block and keeps its left/right placement (GitHub #662).
+export const WRAP_CONTEXT_SELECTOR = '.nb-flow-segment, .nb-sidecar-area--content';
+
+export const isActiveWrapPullout = ( block ) => {
+  const isWrap = block.classList.contains( 'nb-wrap-around' ) || block.classList.contains( 'nb-wrap-extend' );
+  const parent = block.parentElement;
+  return isWrap && !! parent && parent.matches( WRAP_CONTEXT_SELECTOR );
+};
+
 export const shouldMeasureBreakClasses = ( block ) => {
   return ! block.classList.contains( 'nb-break-always' )
     && ! block.classList.contains( 'nb-break-never' )
-    && ! block.classList.contains( 'nb-wrap-around' )
-    && ! block.classList.contains( 'nb-wrap-extend' );
+    && ! isActiveWrapPullout( block );
 };
 
 // FRONTEND-ONLY skip (Task 3.4): when every ancestor rail is either absent

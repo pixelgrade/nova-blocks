@@ -144,9 +144,72 @@ describe( 'sidecar break control skip predicate', () => {
 	// Wrap-wins (Task 4b.2): a text-wrap pull-out owns its own geometry (a float
 	// inside a .nb-flow-segment on the frontend), so measurement must treat it as
 	// DECIDED and never add break-align-* grid classes to it.
-	it( 'skips text-wrap pull-out blocks (nb-wrap-around / nb-wrap-extend)', () => {
-		expect( shouldMeasureBreakClasses( makeBlock( 'wp-block-image alignright nb-wrap-around' ) ) ).toBe( false );
-		expect( shouldMeasureBreakClasses( makeBlock( 'wp-block-image alignleft nb-wrap-extend' ) ) ).toBe( false );
+	it( 'skips text-wrap pull-out blocks (nb-wrap-around / nb-wrap-extend) inside a flow segment', () => {
+		const segment = document.createElement( 'div' );
+		segment.className = 'nb-flow-segment nb-flow-segment--right nb-flow-segment--around';
+		const around = makeBlock( 'wp-block-image alignright nb-wrap-around' );
+		const extend = makeBlock( 'wp-block-image alignleft nb-wrap-extend' );
+		segment.appendChild( around );
+		segment.appendChild( extend );
+
+		expect( shouldMeasureBreakClasses( around ) ).toBe( false );
+		expect( shouldMeasureBreakClasses( extend ) ).toBe( false );
+	} );
+
+	// The editor canvas has no flow segments: a wrap pull-out sits directly in
+	// the Sidecar content area, where the wrap owns its placement too.
+	it( 'skips a text-wrap pull-out directly in a Sidecar content area (editor canvas)', () => {
+		const { content } = makeSidecar( { railChildren: 1 } );
+		const wrap = makeBlock( 'wp-block-image alignright nb-wrap-around' );
+		content.appendChild( wrap );
+
+		expect( shouldMeasureBreakClasses( wrap ) ).toBe( false );
+	} );
+
+	// GitHub #662: flow segmentation only runs in a Sidecar content area, so a
+	// stored wrap class anywhere else (Post Content, a Group, the editor root)
+	// places nothing. It must not switch off the block's measured left/right
+	// placement either: there it is inert and the block is measured normally.
+	it( 'measures a stored wrap class outside a Sidecar content area (inert, #662)', () => {
+		[ 'wp-block-post-content', 'is-root-container', 'wp-block-group' ].forEach( parentClass => {
+			const parent = document.createElement( 'div' );
+			parent.className = parentClass;
+			const around = makeBlock( 'wp-block-image alignleft nb-wrap-around' );
+			const extend = makeBlock( 'wp-block-image alignright nb-wrap-extend' );
+			parent.appendChild( around );
+			parent.appendChild( extend );
+			document.body.appendChild( parent );
+
+			expect( shouldMeasureBreakClasses( around ) ).toBe( true );
+			expect( shouldMeasureBreakClasses( extend ) ).toBe( true );
+		} );
+	} );
+
+	it( 'keeps the authored break decision on an inert wrap block (#662)', () => {
+		const postContent = document.createElement( 'div' );
+		postContent.className = 'wp-block-post-content';
+		const always = makeBlock( 'wp-block-image alignleft nb-wrap-around nb-break-always' );
+		postContent.appendChild( always );
+		document.body.appendChild( postContent );
+
+		expect( shouldMeasureBreakClasses( always ) ).toBe( false );
+	} );
+
+	it( 'gives an inert wrap block in Post Content its measured left/right break (#662)', () => {
+		const postContent = document.createElement( 'div' );
+		postContent.className = 'wp-block-post-content';
+		const left = makeBlock( 'wp-block-image alignleft nb-wrap-around' );
+		const right = makeBlock( 'wp-block-image alignright nb-wrap-extend' );
+		setRect( left, { top: 100, bottom: 300, left: 0, right: 300, width: 300, height: 200 } );
+		setRect( right, { top: 400, bottom: 600, left: 500, right: 800, width: 300, height: 200 } );
+		postContent.appendChild( left );
+		postContent.appendChild( right );
+		document.body.appendChild( postContent );
+
+		measureBreakClassesPass( [ left, right ], { skipCssCoveredRails: false } );
+
+		expect( left.classList.contains( 'break-align-left' ) ).toBe( true );
+		expect( right.classList.contains( 'break-align-right' ) ).toBe( true );
 	} );
 
 	it( 'never adds measured break classes to a wrap pull-out (wrap wins over measurement)', () => {
