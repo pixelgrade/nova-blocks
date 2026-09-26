@@ -102,6 +102,7 @@ packages/*/build
 packages/*/build-module
 packages/*/build-style
 packages/**/*.js
+packages/**/*.cjs
 packages/**/*.scss
 **/package.json
 **/package-lock.json
