@@ -201,8 +201,24 @@
 
   // force grid items take up all the available horizontal space
   > *:not(.block-list-appender) {
-    width: 100%;
     max-width: none;
+  }
+
+  // The stretch must outrank block CSS that resets a child's width to `auto`
+  // (GitHub #660). In block flow `auto` fills the line, but here WordPress's
+  // constrained layout gives every default child `margin-inline: auto
+  // !important`, and a grid item with auto margins is sized to fit its
+  // content. Nova's separator reset (`.wp-block-separator:not(.is-style-wide)
+  // :not(.is-style-dots)`, (0,3,0), which undoes core's 100px default) beat the
+  // old (0,2,0) stretch, so a Simple or Blank separator on the track rendered
+  // 0px wide and the others shrank to their symbol. The never-matching
+  // three-class `:not()` argument lifts this rule to (0,4,0). Only `width` is
+  // lifted: authored measures cap default children through `max-width`
+  // ((0,4,0) Post Content, Group), which must keep winning over the reset
+  // above. The qualified Group pass-through repeats this stretch for its own
+  // children at a higher weight (core/group/style.scss).
+  > :not(.block-list-appender, .nb-layout-item.nb-layout-item.nb-layout-item) {
+    width: 100%;
   }
 
   // WordPress emits the editor root's constrained-layout max-width rules
