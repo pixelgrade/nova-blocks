@@ -7,6 +7,9 @@
  * naming call, the subtree noun *is* `blocks`, so the registry listing is `wp pixelgrade blocks
  * list` (not `blocks blocks list`) and the pattern listing is `wp pixelgrade blocks patterns`.
  *
+ * `apply-preset <post-id>` (style-manager#210) applies a Color Signal preset tile to one block through
+ * the same managed-bundle definitions as the editor, then canonicalizes the result.
+ *
  * `validate <post-id>…` and `canonicalize <post-id>…` (W4) join them here. Their Node runtime is
  * NOT in the plugin: per §3.11 / Gate-1 it ships as a separate agent-tools package installed on
  * demand, and both verbs report `harness_unavailable` (exit 1, naming the install step) when it is
@@ -34,10 +37,12 @@ if ( class_exists( '\WP_CLI' ) ) {
 	require_once __DIR__ . '/blocks-cli-harness.php';
 	require_once __DIR__ . '/blocks-cli-validate-command.php';
 	require_once __DIR__ . '/blocks-cli-canonicalize-command.php';
+	require_once __DIR__ . '/blocks-cli-apply-preset-command.php';
 
 	\WP_CLI::add_command( 'pixelgrade blocks list', 'novablocks_cli_blocks_list' );
 	\WP_CLI::add_command( 'pixelgrade blocks describe', 'novablocks_cli_blocks_describe' );
 	\WP_CLI::add_command( 'pixelgrade blocks patterns', 'novablocks_cli_blocks_patterns' );
 	\WP_CLI::add_command( 'pixelgrade blocks validate', 'novablocks_cli_blocks_validate' );
 	\WP_CLI::add_command( 'pixelgrade blocks canonicalize', 'novablocks_cli_blocks_canonicalize' );
+	\WP_CLI::add_command( 'pixelgrade blocks apply-preset', 'novablocks_cli_blocks_apply_preset' );
 }

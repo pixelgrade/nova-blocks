@@ -441,6 +441,8 @@ namespace {
 		'pixelgrade/list-patterns',
 		'pixelgrade/validate-post',
 		'pixelgrade/canonicalize-post',
+		// style-manager#210: the Color Signal preset-tile writer.
+		'pixelgrade/apply-block-preset',
 	];
 
 	// =========================================================================================
@@ -463,7 +465,7 @@ namespace {
 
 	nba_register();
 
-	assert_same( $ability_names, array_keys( $GLOBALS['nba_abilities'] ), 'exactly the five §4 abilities (W9 adds describe-block) register, under their exact contract names.' );
+	assert_same( $ability_names, array_keys( $GLOBALS['nba_abilities'] ), 'exactly the §4 abilities (W9 adds describe-block, style-manager#210 adds apply-block-preset) register, under their exact contract names.' );
 
 	foreach ( $ability_names as $name ) {
 		$ability = $GLOBALS['nba_abilities'][ $name ];

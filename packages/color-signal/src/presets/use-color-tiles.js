@@ -1,10 +1,12 @@
 /**
- * Editor-context hook for the Row Surfaces tile family.
+ * Editor-context hook for the Color Signal tile families (Row Surfaces on
+ * core/group, Button roles on core/button — see color-tiles.js).
  *
- * Returns `{ options, managedAttributes }` for PresetCardsControl managed
- * mode, or `null` when the Presets tab must not render:
+ * Returns `{ label, thumbnail, options, managedAttributes }` for
+ * PresetCardsControl managed mode, or `null` when the Presets tab must not
+ * render:
  *
- * - no roster exists for the block type (family registry gate — this is why
+ * - no family exists for the block type (family registry gate — this is why
  *   no "not supernova" exclusion list is needed: supernova has no entry);
  * - the block's DIRECT parent has `contentColorSignal` support, in which case
  *   `update-blocks.js` force-syncs this block's palette variation to the
@@ -21,13 +23,13 @@ import { useSelect } from '@wordpress/data';
 
 import { getParentVariation } from '../editor/utils';
 import {
-  buildRowSurfaceOptions,
-  COLOR_TILE_MANAGED_ATTRIBUTES,
-  getRowSurfaceTiles,
-} from './row-surfaces';
+  buildColorTileOptions,
+  getColorTileFamily,
+} from './color-tiles';
 
-const useRowSurfaces = ( { name, clientId } ) => {
-  const tiles = getRowSurfaceTiles( name );
+const useColorTiles = ( { name, clientId } ) => {
+  const family = getColorTileFamily( name );
+  const tiles = family ? family.tiles : null;
 
   const parentForcesContentSync = useSelect( ( select ) => {
     if ( ! tiles || ! clientId ) {
@@ -61,18 +63,20 @@ const useRowSurfaces = ( { name, clientId } ) => {
   // payload arrives (editor reload), and on any context change above.
   const colorsConfig = window.styleManager?.colorsConfig;
   const options = useMemo( () => {
-    return tiles ? buildRowSurfaceOptions( tiles, referenceVariation ) : null;
+    return family ? buildColorTileOptions( family, referenceVariation ) : null;
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [ tiles, referenceVariation, colorsConfig ] );
+  }, [ family, referenceVariation, colorsConfig ] );
 
   if ( ! tiles || parentForcesContentSync ) {
     return null;
   }
 
   return {
+    label: family.label,
+    thumbnail: family.thumbnail,
     options,
-    managedAttributes: COLOR_TILE_MANAGED_ATTRIBUTES,
+    managedAttributes: family.managedAttributes,
   };
 };
 
-export default useRowSurfaces;
+export default useColorTiles;

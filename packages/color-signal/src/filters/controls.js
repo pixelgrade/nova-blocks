@@ -6,6 +6,7 @@ import {
   ControlsTab,
   Notice,
   PresetCardsControl,
+  useSupports,
 } from "@novablocks/block-editor";
 
 import {
@@ -22,28 +23,39 @@ import {
 } from "../components";
 
 import { ColorSignalPracticeGuide } from "../onboarding";
-import { RowSurfaceThumb, useRowSurfaces } from "../presets";
+import { ButtonTileThumb, getColorTileMountPatch, RowSurfaceThumb, useColorTiles } from "../presets";
 
 const Controls = withColorSignalProps( props => {
-  // Row Surfaces (Stage 3a Phase 3): managed-bundle surface tiles, rendered
-  // as the FIRST tab only for blocks with a roster in the family registry
-  // (core/group today) and outside contentColorSignal-forcing parents — see
-  // use-row-surfaces.js. `null` keeps every other block's section unchanged.
-  const rowSurfaces = useRowSurfaces( props );
+  // Color tiles: managed-bundle preset tiles, rendered as the FIRST tab only
+  // for blocks with a family in the registry (Row Surfaces on core/group,
+  // Button roles on core/button — color-tiles.json) and outside
+  // contentColorSignal-forcing parents — see use-color-tiles.js. `null`
+  // keeps every other block's section unchanged.
+  const colorTiles = useColorTiles( props );
+  const isButtonFamily = 'button' === colorTiles?.thumbnail;
+  const colorSignalSupport = useSupports( props.name )?.novaBlocks?.colorSignal;
+  // Still ONE setAttributes() patch: the tile values plus the content
+  // variation the editor would otherwise rewrite on the next mount.
+  const setTileAttributes = ( patch ) => props.setAttributes(
+    getColorTileMountPatch( patch, props.attributes, colorSignalSupport )
+  );
 
   return (
     <ControlsSection id={ 'color-signal' } label={ __( 'Color Signal', '__plugin_txtd' ) } order={ 10 } key={'color_signal_controls_section'}>
-      { !! rowSurfaces && (
+      { !! colorTiles && (
         <ControlsTab label={ __( 'Presets', '__plugin_txtd' ) } key={'color_signal_presets_tab'}>
           <PresetCardsControl
-            key={ 'row-surface-presets' }
-            label={ __( 'Surface presets', '__plugin_txtd' ) }
-            options={ rowSurfaces.options.map( ( option ) => ( {
+            key={ isButtonFamily ? 'button-role-presets' : 'row-surface-presets' }
+            label={ isButtonFamily ? __( 'Button presets', '__plugin_txtd' ) : __( 'Surface presets', '__plugin_txtd' ) }
+            options={ colorTiles.options.map( ( option ) => ( {
               ...option,
-              thumbnail: <RowSurfaceThumb palette={ option.palette } variation={ option.variation } />,
+              thumbnail: isButtonFamily
+                ? <ButtonTileThumb kind={ option.kind } palette={ option.palette } variation={ option.variation } />
+                : <RowSurfaceThumb palette={ option.palette } variation={ option.variation } />,
             } ) ) }
-            managedAttributes={ rowSurfaces.managedAttributes }
+            managedAttributes={ colorTiles.managedAttributes }
             { ...props }
+            setAttributes={ setTileAttributes }
           />
         </ControlsTab>
       ) }

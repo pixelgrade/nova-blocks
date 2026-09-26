@@ -15,21 +15,15 @@
  * Labels are plain strings on purpose (same precedent as the collection
  * free-presets data): pure data stays JSX/i18n-free and contract-testable.
  */
+import colorTiles from './color-tiles.json';
 import {
   COLOR_TILE_MANAGED_ATTRIBUTES,
   resolveColorTileValues,
 } from './resolve-color-tile-values';
 
-export const ROW_SURFACE_TILES = [
-  { id: 'row-surface-plain', version: 1, label: 'Plain', palette: '1', variation: 1 },
-  { id: 'row-surface-whisper', version: 1, label: 'Whisper', palette: '1', variation: 2 },
-  { id: 'row-surface-tinted', version: 1, label: 'Tinted', palette: '1', variation: 3 },
-  { id: 'row-surface-bold', version: 1, label: 'Bold', palette: '1', variation: 6 },
-  { id: 'row-surface-deep', version: 1, label: 'Deep', palette: '1', variation: 8 },
-  { id: 'row-surface-ink', version: 1, label: 'Ink', palette: '1', variation: 12 },
-  { id: 'row-surface-secondary-tint', version: 1, label: 'Secondary Tint', palette: '2', variation: 3 },
-  { id: 'row-surface-secondary-bold', version: 1, label: 'Secondary Bold', palette: '2', variation: 6 },
-];
+// The roster data lives in color-tiles.json (shared with the server writer,
+// lib/color-tiles.php). Same ids, versions, labels and values as shipped.
+export const ROW_SURFACE_TILES = colorTiles.families[ 'core/group' ].tiles;
 
 const ROW_SURFACE_FAMILIES = {
   'core/group': ROW_SURFACE_TILES,

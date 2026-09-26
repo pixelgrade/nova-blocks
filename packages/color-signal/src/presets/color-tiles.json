@@ -1,0 +1,57 @@
+{
+	"roles": {
+		"action": {
+			"label": "Action",
+			"block": "core/button",
+			"tile": "button-action"
+		},
+		"light-surface": {
+			"label": "Light surface",
+			"block": "core/group",
+			"tile": "row-surface-whisper"
+		}
+	},
+	"families": {
+		"core/group": {
+			"id": "row-surfaces",
+			"label": "Surface presets",
+			"thumbnail": "row",
+			"minColorSignal": 0,
+			"managedAttributes": [
+				"palette",
+				"paletteVariation",
+				"colorSignal",
+				"useSourceColorAsReference"
+			],
+			"tiles": [
+				{ "id": "row-surface-plain", "version": 1, "label": "Plain", "palette": "1", "variation": 1 },
+				{ "id": "row-surface-whisper", "version": 1, "label": "Whisper", "palette": "1", "variation": 2 },
+				{ "id": "row-surface-tinted", "version": 1, "label": "Tinted", "palette": "1", "variation": 3 },
+				{ "id": "row-surface-bold", "version": 1, "label": "Bold", "palette": "1", "variation": 6 },
+				{ "id": "row-surface-deep", "version": 1, "label": "Deep", "palette": "1", "variation": 8 },
+				{ "id": "row-surface-ink", "version": 1, "label": "Ink", "palette": "1", "variation": 12 },
+				{ "id": "row-surface-secondary-tint", "version": 1, "label": "Secondary Tint", "palette": "2", "variation": 3 },
+				{ "id": "row-surface-secondary-bold", "version": 1, "label": "Secondary Bold", "palette": "2", "variation": 6 }
+			]
+		},
+		"core/button": {
+			"id": "button-roles",
+			"label": "Button presets",
+			"thumbnail": "button",
+			"minColorSignal": 1,
+			"managedAttributes": [
+				"useColorSignal",
+				"useParentPalette",
+				"palette",
+				"paletteVariation",
+				"colorSignal",
+				"useSourceColorAsReference",
+				"contentPaletteVariation"
+			],
+			"tiles": [
+				{ "id": "button-default", "version": 1, "label": "Default", "kind": "default" },
+				{ "id": "button-action", "version": 1, "label": "Action", "kind": "source", "palette": "1" }
+			]
+		}
+	}
+}

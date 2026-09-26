@@ -132,3 +132,12 @@
   height: 2px;
   border-radius: 2px;
 }
+
+// Button role tiles (style-manager#210): a pill on the plain surface.
+.nb-button-tile-thumb__pill {
+  padding: 5px 12px;
+  border-radius: 4px;
+  font-size: 12px;
+  font-weight: 700;
+  line-height: 1;
+}

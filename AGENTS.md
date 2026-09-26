@@ -247,6 +247,8 @@ All preset UIs must run through `packages/block-editor/src/preset-engine/`. Full
 - The active preset is DERIVED by comparing attributes (normalized through registered defaults) against definitions — never stored. No match = the first-class **Custom** state. Do not add a stored `presetId`: attributes carry no provenance, so stored identity drifts into a lie on the first fine-tune.
 - Every definition in a family must declare the SAME `managedAttributes` set — it is the family's complete capability domain.
 - Structural attributes may be managed only when every definition writes an explicit value; never clear structure implicitly.
+- Color Signal tile families (Row Surfaces on `core/group`, Button roles on `core/button`) live in ONE data file, `packages/color-signal/src/presets/color-tiles.json`, read by the editor and by the server writer (`lib/color-tiles.php`, `wp pixelgrade blocks apply-preset`, `pixelgrade/apply-block-preset`). Roles (`action`, `light-surface`) name existing tiles; never add a definition whose values duplicate another's. The PHP resolver is a mirror of the JS Color Signal math and must stay equal to it (`color-tiles-parity.test.js`).
+- A tile must store exactly what the editor settles on at mount (`getUpdatedAttributes()` via `withUpdatedAttributes`), or reloads turn the post dirty and the tile derives as Custom (`color-tiles-editor-mount.test.js`). Button declares `stickySourceColor: false`, so Button tiles store the source color as an explicit variation, never `useSourceColorAsReference`. Both the Presets tab (`getColorTileMountPatch`) and the writer (`novablocks_color_tiles_mount_normalize`) fold the mount's `contentPaletteVariation` into the one patch.
 
 ## Columns Color Signal Architecture
 

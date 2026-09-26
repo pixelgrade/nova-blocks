@@ -1,0 +1,242 @@
+[
+	{
+		"id": 1,
+		"sourceIndex": 3,
+		"colors": [
+			"#ffffff",
+			"#fbf5ec",
+			"#f2dfc3",
+			"#dfae68",
+			"#b48a4f",
+			"#88693c",
+			"#705631",
+			"#5a4528",
+			"#45351e",
+			"#312616",
+			"#1c160c",
+			"#000000"
+		],
+		"variations": [
+			{
+				"bg": "#ffffff",
+				"fg1": "#292115",
+				"accent": "#b48a4f"
+			},
+			{
+				"bg": "#fbf5ec",
+				"fg1": "#292115",
+				"accent": "#b48a4f"
+			},
+			{
+				"bg": "#f2dfc3",
+				"fg1": "#2a2114",
+				"accent": "#88693c"
+			},
+			{
+				"bg": "#dfae68",
+				"fg1": "#2a2114",
+				"accent": "#88693c"
+			},
+			{
+				"bg": "#b48a4f",
+				"fg1": "#ffffff",
+				"accent": "#ffffff"
+			},
+			{
+				"bg": "#88693c",
+				"fg1": "#ffffff",
+				"accent": "#ffffff"
+			},
+			{
+				"bg": "#705631",
+				"fg1": "#ffffff",
+				"accent": "#ddaa61"
+			},
+			{
+				"bg": "#5a4528",
+				"fg1": "#ffffff",
+				"accent": "#ddaa61"
+			},
+			{
+				"bg": "#45351e",
+				"fg1": "#ffffff",
+				"accent": "#ddaa61"
+			},
+			{
+				"bg": "#312616",
+				"fg1": "#ffffff",
+				"accent": "#ddaa61"
+			},
+			{
+				"bg": "#1c160c",
+				"fg1": "#ffffff",
+				"accent": "#ddaa61"
+			},
+			{
+				"bg": "#000000",
+				"fg1": "#ffffff",
+				"accent": "#ddaa61"
+			}
+		]
+	},
+	{
+		"id": 2,
+		"sourceIndex": 7,
+		"colors": [
+			"#ffffff",
+			"#f4f5f8",
+			"#dee1e9",
+			"#afb6ca",
+			"#8791b0",
+			"#606d96",
+			"#4a5987",
+			"#374778",
+			"#2a365c",
+			"#1e2641",
+			"#111625",
+			"#000000"
+		],
+		"variations": [
+			{
+				"bg": "#ffffff",
+				"fg1": "#1e222f",
+				"accent": "#39497C"
+			},
+			{
+				"bg": "#f4f5f8",
+				"fg1": "#1e222f",
+				"accent": "#39497C"
+			},
+			{
+				"bg": "#dee1e9",
+				"fg1": "#1e222f",
+				"accent": "#39497C"
+			},
+			{
+				"bg": "#afb6ca",
+				"fg1": "#1e222f",
+				"accent": "#39497C"
+			},
+			{
+				"bg": "#8791b0",
+				"fg1": "#ffffff",
+				"accent": "#39497C"
+			},
+			{
+				"bg": "#606d96",
+				"fg1": "#ffffff",
+				"accent": "#ffffff"
+			},
+			{
+				"bg": "#4a5987",
+				"fg1": "#ffffff",
+				"accent": "#ffffff"
+			},
+			{
+				"bg": "#374778",
+				"fg1": "#ffffff",
+				"accent": "#ffffff"
+			},
+			{
+				"bg": "#2a365c",
+				"fg1": "#ffffff",
+				"accent": "#ffffff"
+			},
+			{
+				"bg": "#1e2641",
+				"fg1": "#ffffff",
+				"accent": "#ffffff"
+			},
+			{
+				"bg": "#111625",
+				"fg1": "#ffffff",
+				"accent": "#ffffff"
+			},
+			{
+				"bg": "#000000",
+				"fg1": "#ffffff",
+				"accent": "#ffffff"
+			}
+		]
+	},
+	{
+		"id": 3,
+		"sourceIndex": 6,
+		"colors": [
+			"#ffffff",
+			"#fbf4f5",
+			"#f2dce1",
+			"#dfa8b4",
+			"#cd788b",
+			"#ba4560",
+			"#a82a46",
+			"#882239",
+			"#691a2c",
+			"#4c1320",
+			"#2c0b13",
+			"#000000"
+		],
+		"variations": [
+			{
+				"bg": "#ffffff",
+				"fg1": "#2f1d20",
+				"accent": "#B12C4A"
+			},
+			{
+				"bg": "#fbf4f5",
+				"fg1": "#2f1d20",
+				"accent": "#B12C4A"
+			},
+			{
+				"bg": "#f2dce1",
+				"fg1": "#2f1d20",
+				"accent": "#B12C4A"
+			},
+			{
+				"bg": "#dfa8b4",
+				"fg1": "#2f1d20",
+				"accent": "#B12C4A"
+			},
+			{
+				"bg": "#cd788b",
+				"fg1": "#ffffff",
+				"accent": "#ffffff"
+			},
+			{
+				"bg": "#ba4560",
+				"fg1": "#ffffff",
+				"accent": "#ffffff"
+			},
+			{
+				"bg": "#a82a46",
+				"fg1": "#ffffff",
+				"accent": "#ffffff"
+			},
+			{
+				"bg": "#882239",
+				"fg1": "#ffffff",
+				"accent": "#ffffff"
+			},
+			{
+				"bg": "#691a2c",
+				"fg1": "#ffffff",
+				"accent": "#ffffff"
+			},
+			{
+				"bg": "#4c1320",
+				"fg1": "#ffffff",
+				"accent": "#ffffff"
+			},
+			{
+				"bg": "#2c0b13",
+				"fg1": "#ffffff",
+				"accent": "#B12C4A"
+			},
+			{
+				"bg": "#000000",
+				"fg1": "#ffffff",
+				"accent": "#B12C4A"
+			}
+		]
+	}
+]

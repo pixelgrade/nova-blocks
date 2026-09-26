@@ -1,6 +1,7 @@
 <?php
 /**
- * WordPress Abilities API registrations for Nova Blocks — the five `pixelgrade/*` block abilities.
+ * WordPress Abilities API registrations for Nova Blocks — the `pixelgrade/*` block abilities (the
+ * contract's five, plus `pixelgrade/apply-block-preset` for style-manager#210).
  *
  * The agent-surface contract (`docs/plans/agentic-stack/CONTRACT.md` §4) gives Nova Blocks five
  * `pixelgrade/*` abilities: `pixelgrade/list-blocks`, `pixelgrade/describe-block` (W9),
@@ -46,6 +47,7 @@ function novablocks_agent_blocks_bootstrap(): void {
 	require_once dirname( __DIR__ ) . '/cli/blocks-cli-harness.php';
 	require_once dirname( __DIR__ ) . '/cli/blocks-cli-validate-command.php';
 	require_once dirname( __DIR__ ) . '/cli/blocks-cli-canonicalize-command.php';
+	require_once dirname( __DIR__ ) . '/cli/blocks-cli-apply-preset-command.php';
 }
 
 // -------------------------------------------------------------------------------------------
@@ -366,6 +368,48 @@ function novablocks_agent_blocks_execute_canonicalize( array $input = [] ) {
 	$params['targets'] = $targets;
 
 	return novablocks_agent_blocks_ability_result( novablocks_agent_blocks_canonicalize_core( $params ) );
+}
+
+/**
+ * `pixelgrade/apply-block-preset` → `novablocks_agent_blocks_apply_preset_core()`.
+ *
+ * @param array $input Validated input.
+ *
+ * @return array|WP_Error
+ */
+function novablocks_agent_blocks_execute_apply_preset( array $input = [] ) {
+	novablocks_agent_blocks_bootstrap();
+
+	$params  = novablocks_agent_blocks_target_params( $input );
+	$dry_run = ! empty( $input['dry_run'] );
+	$targets = novablocks_agent_blocks_resolve_targets( $params );
+
+	if ( is_wp_error( $targets ) ) {
+		return novablocks_agent_blocks_ability_result( novablocks_agent_blocks_error_result( $targets ) );
+	}
+
+	if ( ! $dry_run && true !== ( $input['confirm'] ?? false ) ) {
+		return new WP_Error(
+			'confirmation_required',
+			__( 'apply-block-preset rewrites stored post content and is destructive. Pass confirm: true, or dry_run: true to preview without writing.', '__plugin_txtd' ),
+			[
+				'data'     => [ 'posts' => count( $targets ) ],
+				'warnings' => [],
+			]
+		);
+	}
+
+	return novablocks_agent_blocks_ability_result(
+		novablocks_agent_blocks_apply_preset_core(
+			[
+				'targets' => array_slice( array_values( $targets ), 0, 1 ),
+				'preset'  => novablocks_agent_blocks_string_param( $input, 'preset', '' ),
+				'block'   => novablocks_agent_blocks_string_param( $input, 'block', '' ),
+				'dry_run' => $dry_run,
+				'surface' => 'ability',
+			]
+		)
+	);
 }
 
 // -------------------------------------------------------------------------------------------
@@ -796,6 +840,59 @@ function novablocks_agent_blocks_ability_definitions(): array {
 					],
 					'refused'        => novablocks_agent_blocks_object_list_schema(),
 					'harness'        => [
+						'type'                 => 'object',
+						'additionalProperties' => true,
+					],
+				]
+			),
+		],
+		'pixelgrade/apply-block-preset' => [
+			'label'               => __( 'Apply a block color preset', '__plugin_txtd' ),
+			'description'         => __( 'Apply a Color Signal preset tile to ONE block of a post — the same managed-bundle definition the editor\'s Presets tab applies, resolved for the block\'s actual color context. "preset" is a tile id (button-action, button-default, row-surface-plain, row-surface-whisper, row-surface-tinted, row-surface-bold, row-surface-deep, row-surface-ink, row-surface-secondary-tint, row-surface-secondary-bold) or a role ("action" = the Button tile painting the palette source color, "light-surface" = the Group Row Surface tile for the palette\'s light tint). "block" selects the block: a dotted index path over named blocks ("0", "2.0.1"), "anchor:<id>" or "class:<class-name>". The tile\'s family must serve that block type (Button tiles on core/button, Row Surfaces on core/group), otherwise code "block_mismatch". Omitted managed attributes return to their registered defaults, so switching back to "button-default" restores an untouched Button. The edited document then goes through canonicalize-post\'s pipeline (editor-equivalent save, text-loss refusal, byte read-back, fresh re-parse) and every canonicalize-post code can surface. A repeated identical call is a fixed point: code "noop", nothing written. data.preset reports the resolved values, attributes before/after and the DERIVED active tile before/after (null = Custom). DESTRUCTIVE: requires "confirm": true unless "dry_run": true. PRECONDITION: needs the Pixelgrade agent-tools harness (code "harness_unavailable" otherwise). Requires edit_posts plus edit_post on the post.', '__plugin_txtd' ),
+			'annotations'         => [
+				'readonly'    => false,
+				'destructive' => true,
+				'idempotent'  => true,
+			],
+			'permission_callback' => 'novablocks_agent_blocks_can_edit_target_posts',
+			'execute_callback'    => 'novablocks_agent_blocks_execute_apply_preset',
+			'input_schema'        => [
+				'type'                 => 'object',
+				'properties'           => [
+					'post_ids' => [
+						'type'        => 'array',
+						'items'       => [ 'type' => 'integer' ],
+						'minItems'    => 1,
+						'maxItems'    => 1,
+						'description' => 'The one post holding the block. Any post type — pages, posts, wp_template, wp_template_part.',
+					],
+					'preset'   => [
+						'type'        => 'string',
+						'description' => 'Tile id or role (action, light-surface).',
+					],
+					'block'    => [
+						'type'        => 'string',
+						'description' => 'Dotted index path over named blocks, anchor:<id>, or class:<class-name>.',
+					],
+					'dry_run'  => [
+						'type'        => 'boolean',
+						'default'     => false,
+						'description' => 'Report the resolved patch and predicted result without writing. Never requires confirm.',
+					],
+					'confirm'  => [
+						'type'        => 'boolean',
+						'default'     => false,
+						'description' => 'Required for a real write.',
+					],
+				],
+				'required'             => [ 'post_ids', 'preset', 'block' ],
+				'additionalProperties' => false,
+			],
+			'output_schema'       => novablocks_agent_blocks_output_schema(
+				[
+					'post_id' => [ 'type' => 'integer' ],
+					'dry_run' => [ 'type' => 'boolean' ],
+					'preset'  => [
 						'type'                 => 'object',
 						'additionalProperties' => true,
 					],

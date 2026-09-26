@@ -192,6 +192,18 @@ function novablocks_cli_blocks_canonicalize( $args, $assoc_args ) {
 }
 
 /**
+ * What a target holds ON DISK: its `stored_content` when a caller iterates an edited copy, else
+ * its `content`.
+ *
+ * @param array $target Target record.
+ *
+ * @return string
+ */
+function novablocks_cli_target_stored_content( array $target ): string {
+	return array_key_exists( 'stored_content', $target ) ? (string) $target['stored_content'] : (string) $target['content'];
+}
+
+/**
  * The whole of `blocks canonicalize` from the harness probe onward, as a surface-agnostic core:
  * the bounded fixed-point iteration, the pre-write refusal gates, **the write itself** —
  * `wp_update_post()` + `wp_slash()` + the mandatory post-write byte-identity read-back — the fresh
@@ -294,8 +306,10 @@ function novablocks_agent_blocks_canonicalize_core( array $params ): array {
 
 		// §3.5 / idempotence: write ONLY when the bytes actually differ. A canonical post
 		// canonicalizes to itself, and rewriting it anyway would churn post_modified and the
-		// revision history for no change.
-		if ( $canonical === (string) $target['content'] ) {
+		// revision history for no change. `stored_content` is set by a caller that feeds the
+		// iteration an EDITED document (`blocks apply-preset`): what decides the write is then
+		// the bytes on disk, not the edited input.
+		if ( $canonical === novablocks_cli_target_stored_content( $target ) ) {
 			$unchanged[] = $post_id;
 			continue;
 		}
@@ -363,7 +377,7 @@ function novablocks_agent_blocks_canonicalize_core( array $params ): array {
 			$result  = $first[ $post_id ] ?? null;
 			$written = is_array( $result ) && isset( $result['canonical_content'] )
 				&& ! empty( $result['text_safe'] ) && ! empty( $result['stable'] );
-			$content = $written ? (string) $result['canonical_content'] : (string) $target['content'];
+			$content = $written ? (string) $result['canonical_content'] : novablocks_cli_target_stored_content( $target );
 		} else {
 			// Bypass any object-cache copy of the pre-write post.
 			clean_post_cache( $post_id );
