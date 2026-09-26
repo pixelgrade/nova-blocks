@@ -61,7 +61,13 @@ if ( ! function_exists( 'novablocks_register_vendor_scripts' ) ) {
 		$google_maps_api_key = get_option( 'novablocks_google_maps_api_key', '' );
 		wp_register_script(
 			'google-maps',
-			'//maps.googleapis.com/maps/api/js?key=' . $google_maps_api_key . '&libraries=places'
+			add_query_arg(
+				[
+					'key'       => rawurlencode( $google_maps_api_key ),
+					'libraries' => 'places',
+				],
+				'https://maps.googleapis.com/maps/api/js'
+			)
 		);
 
 		// Comments related.
