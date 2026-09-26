@@ -60,6 +60,53 @@ export const getParentVariation = ( clientId ) => {
 };
 
 /**
+ * A block's `stickySourceColor` mode, from its Color Signal support:
+ *
+ * - `true` (default): an existing source reference is kept, and a signal or
+ *   variation change that lands on the palette source color snaps into one.
+ * - `false`: never source-referenced; the mount rewrites a reference into the
+ *   source's explicit variation.
+ * - `'keep'` (core/button): an existing source reference is kept — an Action
+ *   Button follows the brand color through palette changes — but nothing ever
+ *   snaps into one and the palette picker's same-palette toggle stays off, so
+ *   every Button that is not source-referenced behaves exactly as `false`. A
+ *   kept reference mirrors its stored variation (1) into
+ *   `contentPaletteVariation`, so its markup never depends on the palette.
+ *
+ * @param {Object|boolean} colorSignalSupport
+ * @return {boolean|string} `true`, `false` or `'keep'`.
+ */
+export const resolveStickySourceColor = ( colorSignalSupport ) => {
+  const mode = colorSignalSupport?.stickySourceColor;
+
+  if ( 'keep' === mode ) {
+    return 'keep';
+  }
+
+  return mode !== false;
+};
+
+/**
+ * The mode for one user-driven update (`updateBlock()`): `'keep'` only keeps a
+ * reference the block ALREADY holds while active. An inactive opt-in block
+ * (an untouched Button) carries its registered defaults — for Button that
+ * includes `useSourceColorAsReference: true` — and its first Color Signal
+ * change must not turn that latent default into a live reference.
+ *
+ * @param {boolean|string} stickySourceColor Resolved mode.
+ * @param {Object|boolean} colorSignalSupport
+ * @param {Object} currentAttributes The block's attributes before the update.
+ * @return {boolean|string}
+ */
+export const getStickySourceColorForUpdate = ( stickySourceColor, colorSignalSupport, currentAttributes ) => {
+  if ( 'keep' === stickySourceColor && ! isColorSignalActive( colorSignalSupport, currentAttributes ) ) {
+    return false;
+  }
+
+  return stickySourceColor;
+};
+
+/**
  * Given a block's current (live) attributes, compute the attribute patch that
  * should be applied when the user picks a new `colorSignal` level — whether
  * from the sidebar stepper (`BlockColorSignalControl`) or the block toolbar
@@ -163,7 +210,7 @@ export const getContentSignalChangeAttributes = ( attributes, clientId, nextSign
 export const getPaletteChangeAttributes = ( attributes, clientId, nextPalette, stickySourceColor ) => {
   const { palette, useSourceColorAsReference } = attributes;
 
-  if ( nextPalette === palette && stickySourceColor ) {
+  if ( nextPalette === palette && true === stickySourceColor ) {
     const referenceVariation = getParentVariation( clientId );
     const sourceIndex = getSourceIndexFromPaletteId( palette );
     const nextSourceColorAsReference = ! useSourceColorAsReference;
@@ -214,13 +261,19 @@ export const getUpdatedAttributes = ( attributes, clientId, newAttributes = {}, 
   const sourceVariation = addSiteVariationOffset( sourceIndex + 1 );
   const sourceSignal = getSignalRelativeToVariation( sourceVariation, referenceVariation, palette );
 
-  const nextSourceAsReference = stickySourceColor && ( useSourceColorAsReference ||
-                                                       ( useSourceOnSameSignal && nextSignal === sourceSignal ) ||
-                                                       ( useSourceOnSameVariation && absoluteVariation === sourceVariation ) );
+  // `true` keeps a reference and snaps into one; `'keep'` only keeps one (see resolveStickySourceColor()).
+  const keepsSource = true === stickySourceColor || 'keep' === stickySourceColor;
+  const snapsToSource = true === stickySourceColor;
+  const nextSourceAsReference = ( keepsSource && useSourceColorAsReference ) ||
+                                ( snapsToSource && ( ( useSourceOnSameSignal && nextSignal === sourceSignal ) ||
+                                                     ( useSourceOnSameVariation && absoluteVariation === sourceVariation ) ) );
 
   const finalVariation = nextSourceAsReference ? sourceVariation : nextVariation;
   const { contentColorSignal, contentPaletteVariation } = nextAttributes;
   const nextContentVariation = computeColorSignal( finalVariation, contentColorSignal, palette, contentPaletteVariation );
+  // A `'keep'` reference (Button, which has no content area) mirrors its STORED variation, so
+  // the stored markup stays palette-independent and a palette change never rewrites it.
+  const mirroredVariation = nextSourceAsReference && 'keep' === stickySourceColor ? 1 : finalVariation;
 
   return {
     palette: palette,
@@ -228,6 +281,6 @@ export const getUpdatedAttributes = ( attributes, clientId, newAttributes = {}, 
     useSourceColorAsReference: nextSourceAsReference,
     colorSignal: nextSignal,
     contentColorSignal: contentColorSignal,
-    contentPaletteVariation: contentColorSignal === 0 ? finalVariation : nextContentVariation,
+    contentPaletteVariation: contentColorSignal === 0 ? mirroredVariation : nextContentVariation,
   }
 }

@@ -26,7 +26,7 @@ function novablocks_get_core_color_signal_describe_support( string $block_name )
 	$supports = [
 		// Priority-1 support filters in the corresponding core block directories.
 		'core/group'     => [ 'functionalColors' => true ],
-		'core/button'    => [ 'functionalColors' => true, 'activationAttribute' => 'useColorSignal', 'inheritParentPalette' => true, 'paletteInheritanceAttribute' => 'useParentPalette' ],
+		'core/button'    => [ 'functionalColors' => true, 'activationAttribute' => 'useColorSignal', 'inheritParentPalette' => true, 'paletteInheritanceAttribute' => 'useParentPalette', 'stickySourceColor' => 'keep' ],
 		'core/separator' => [ 'functionalColors' => false, 'inheritParentPalette' => true, 'paletteInheritanceAttribute' => 'useParentPalette' ],
 		'core/columns'   => [ 'functionalColors' => true, 'activationAttribute' => 'useColorSignal' ],
 		'core/column'    => [ 'functionalColors' => true, 'activationAttribute' => 'useColorSignal', 'inheritParentPalette' => true, 'paletteInheritanceAttribute' => 'useParentPalette' ],

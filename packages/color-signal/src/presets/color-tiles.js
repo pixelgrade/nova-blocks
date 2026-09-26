@@ -14,7 +14,11 @@
  *   managed attribute to its registered default (an untouched Button, which
  *   serializes nothing); "Action" paints the palette's SOURCE color — the
  *   brand color Style Manager generated the palette from — on a pinned
- *   palette, with that variation's own contrast-checked foreground.
+ *   palette, with that variation's own contrast-checked foreground. Action v2
+ *   stores a REFERENCE to the source color (`useSourceColorAsReference`,
+ *   kept by Button's `stickySourceColor: 'keep'`), so the button follows the
+ *   brand color when a palette change moves the source step. v1 stored the
+ *   step itself; a v1 button keeps its markup and derives as Custom.
  *
  * Roles (`roles` in the JSON) are semantic names agents and the UI use for a
  * tile: `action` and `light-surface`. A role names an existing definition; it
@@ -91,20 +95,32 @@ export const resolveColorTile = ( family, tile, referenceVariation ) => {
   }
 
   if ( 'source' === tile.kind ) {
-    // The palette source color as an EXPLICIT variation — the form the editor settles a Button
-    // on at every mount (Button declares `stickySourceColor: false`, so getUpdatedAttributes()
-    // turns `useSourceColorAsReference` into the source's own variation), with the signal and
-    // content variation it computes alongside. Storing any other form would be rewritten on
-    // the next editor load and derive as Custom.
     const sourceVariation = getAbsoluteColorVariation( {
       palette: tile.palette,
       paletteVariation: 1,
       useSourceColorAsReference: true,
     } );
-    const colorSignal = clampColorSignal(
-      getSignalRelativeToVariation( sourceVariation, referenceVariation, tile.palette ),
-      { minColorSignal: family.minColorSignal }
-    );
+    const relativeSignal = getSignalRelativeToVariation( sourceVariation, referenceVariation, tile.palette );
+    const colorSignal = clampColorSignal( relativeSignal, { minColorSignal: family.minColorSignal } );
+
+    if ( 0 !== relativeSignal ) {
+      // v2: a REFERENCE to the palette source color — exactly what the mount settles a
+      // source-referenced Button on (getUpdatedAttributes() with `stickySourceColor: 'keep'`):
+      // variation 1 plus the reference (mirrored into contentPaletteVariation), and the
+      // source's signal against this surface.
+      return {
+        useColorSignal: true,
+        useParentPalette: false,
+        palette: tile.palette,
+        paletteVariation: 1,
+        colorSignal,
+        useSourceColorAsReference: true,
+        contentPaletteVariation: 1,
+      };
+    }
+
+    // The surface IS the source color: a reference would paint the button in the surface's
+    // own color. Step off it as an explicit variation, as the Button minimum signal does.
     // On a surface that already IS the source color, the Button minimum signal
     // moves it to the nearest distinct step — exactly what the mount computes.
     const paletteVariation = removeSiteVariationOffset(

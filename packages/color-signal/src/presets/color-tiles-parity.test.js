@@ -48,11 +48,16 @@ const runPhp = ( request ) => {
 		$out = [];
 		foreach ( $request['contexts'] as $c ) {
 			$ctx = [ 'palettes' => $c['palettes'], 'site_variation' => $c['site'] ];
-			$row = [ 'tiles' => [], 'absolute' => [], 'signals' => [] ];
+			$row = [ 'tiles' => [], 'mount' => [], 'absolute' => [], 'signals' => [] ];
+			$button_support = [ 'activationAttribute' => 'useColorSignal', 'inheritParentPalette' => true, 'paletteInheritanceAttribute' => 'useParentPalette', 'stickySourceColor' => 'keep' ];
 			foreach ( novablocks_color_tiles_data()['families'] as $block => $family ) {
 				foreach ( $family['tiles'] as $tile ) {
 					for ( $ref = 1; $ref <= 12; $ref++ ) {
 						$row['tiles'][ $tile['id'] . '@' . $ref ] = (object) novablocks_color_tiles_resolve( $ctx, $family, $tile, $ref );
+						if ( 'core/button' === $block ) {
+							$mounted = novablocks_color_tiles_mount_normalize( novablocks_color_tiles_resolve( $ctx, $family, $tile, $ref ) + [ 'contentColorSignal' => 0 ], [], $button_support );
+							$row['mount'][ $tile['id'] . '@' . $ref ] = $mounted['contentPaletteVariation'] ?? null;
+						}
 					}
 				}
 			}
@@ -84,13 +89,18 @@ describe( 'color tiles: JS editor resolver === PHP writer resolver', () => {
 
 	test.each( CONTEXTS.map( ( context, index ) => [ context.label, context, index ] ) )( '%s', ( label, context, index ) => {
 		const { tiles, utils } = loadTiles( context.palettes, context.site );
-		const expected = { tiles: {}, absolute: {}, signals: {} };
+		const expected = { tiles: {}, mount: {}, absolute: {}, signals: {} };
+		const buttonSupport = { activationAttribute: 'useColorSignal', inheritParentPalette: true, paletteInheritanceAttribute: 'useParentPalette', stickySourceColor: 'keep' };
 
 		[ 'core/group', 'core/button' ].forEach( ( blockName ) => {
 			const family = tiles.getColorTileFamily( blockName );
 			family.tiles.forEach( ( tile ) => {
 				for ( let reference = 1; reference <= 12; reference++ ) {
 					expected.tiles[ `${ tile.id }@${ reference }` ] = tiles.resolveColorTile( family, tile, reference );
+					if ( 'core/button' === blockName ) {
+						const values = tiles.resolveColorTile( family, tile, reference );
+						expected.mount[ `${ tile.id }@${ reference }` ] = tiles.getColorTileMountPatch( values, { contentColorSignal: 0 }, buttonSupport ).contentPaletteVariation ?? null;
+					}
 				}
 			} );
 		} );

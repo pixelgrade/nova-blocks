@@ -103,7 +103,7 @@ $ctx = [
 	'support'        => static function ( $name ) {
 		$map = [
 			'core/group'            => [ 'functionalColors' => true ],
-			'core/button'           => [ 'activationAttribute' => 'useColorSignal', 'inheritParentPalette' => true, 'paletteInheritanceAttribute' => 'useParentPalette' ],
+			'core/button'           => [ 'activationAttribute' => 'useColorSignal', 'inheritParentPalette' => true, 'paletteInheritanceAttribute' => 'useParentPalette', 'stickySourceColor' => 'keep' ],
 			'core/columns'          => [ 'activationAttribute' => 'useColorSignal' ],
 			'novablocks/supernova'  => [ 'contentColorSignal' => true ],
 			'novablocks/sidecar'    => [ 'providesContext' => false ],
@@ -134,7 +134,7 @@ nbct_same( null, novablocks_color_tiles_find( 'primary' ), 'unknown reference re
 
 foreach ( novablocks_color_tiles_data()['families'] as $block_name => $family ) {
 	foreach ( $family['tiles'] as $tile ) {
-		nbct_same( 1, $tile['version'], "{$tile['id']} ships as version 1" );
+		nbct_same( 'button-action' === $tile['id'] ? 2 : 1, $tile['version'], "{$tile['id']} version (Action v2 stores the source reference)" );
 	}
 }
 
@@ -151,34 +151,43 @@ nbct_same(
 		'useColorSignal'            => true,
 		'useParentPalette'          => false,
 		'palette'                   => '1',
-		'paletteVariation'          => 4,
+		'paletteVariation'          => 1,
 		'colorSignal'               => 1,
-		'useSourceColorAsReference' => false,
-		'contentPaletteVariation'   => 4,
+		'useSourceColorAsReference' => true,
+		'contentPaletteVariation'   => 1,
 	],
 	$action_values,
-	'Action on a plain page: the source color (sourceIndex 3 -> variation 4) as an explicit variation, pinned palette 1, signal 1'
+	'Action v2 on a plain page: a REFERENCE to the palette 1 source color (variation 1, mirrored into the content variation), signal 1'
 );
 
 $on_dark = novablocks_color_tiles_resolve( $ctx, $button_family, $action['tile'], 10 );
 nbct_assert( $on_dark['colorSignal'] >= 1, 'Action keeps the Button minimum signal on a dark surface' );
-nbct_same( 4, $on_dark['paletteVariation'], 'Action keeps the source variation on a dark surface' );
+nbct_same( 4, novablocks_color_tiles_absolute_variation( $ctx, $on_dark ), 'Action keeps the source color on a dark surface' );
+nbct_same( true, $on_dark['useSourceColorAsReference'], 'Action keeps the source reference on a dark surface' );
 $on_source = novablocks_color_tiles_resolve( $ctx, $button_family, $action['tile'], 4 );
+nbct_same( false, $on_source['useSourceColorAsReference'], 'on a surface that IS the source color, Action falls back to an explicit variation' );
 nbct_assert( 4 !== $on_source['paletteVariation'], 'on a surface that IS the source color, the minimum signal moves Action to a distinct step' );
+
+// A palette change that moves the source step (sourceIndex 3 -> 7): Action follows.
+$moved_ctx             = $ctx;
+$moved_ctx['palettes'] = array_map(
+	static function ( $palette ) {
+		return '1' === (string) $palette['id'] ? array_merge( $palette, [ 'sourceIndex' => 7 ] ) : $palette;
+	},
+	$ctx['palettes']
+);
+nbct_same( 8, novablocks_color_tiles_absolute_variation( $moved_ctx, $action_values ), 'the stored Action values paint the NEW source step after a palette change' );
 
 $untouched = [ 'className' => 'cta' ];
 $applied   = novablocks_color_tiles_apply( $untouched, $button_family['managedAttributes'], $action_values, $button_defaults );
 nbct_same(
 	[
 		'className'                 => 'cta',
-		'useColorSignal'            => true,
-		'useParentPalette'          => false,
-		'paletteVariation'          => 4,
-		'useSourceColorAsReference' => false,
-		'contentPaletteVariation'   => 4,
+		'useColorSignal'   => true,
+		'useParentPalette' => false,
 	],
 	$applied,
-	'Action stores only non-default values; className (outside the boundary) is kept'
+	'Action stores only non-default values (the reference, variation 1, palette 1 and signal 1 are Button defaults); className (outside the boundary) is kept'
 );
 
 $restored = novablocks_color_tiles_apply( $applied, $button_family['managedAttributes'], [], $button_defaults );
@@ -215,6 +224,9 @@ nbct_same( 2, novablocks_color_tiles_mount_normalize( $group_applied, $group_def
 nbct_assert( ! isset( novablocks_color_tiles_mount_normalize( [ 'contentPaletteVariation' => 5 ], $group_defaults, $group_support )['contentPaletteVariation'] ), 'mount: a variation-1 block drops a stale contentPaletteVariation' );
 nbct_same( [ 'contentColorSignal' => 2, 'paletteVariation' => 6 ], novablocks_color_tiles_mount_normalize( [ 'contentColorSignal' => 2, 'paletteVariation' => 6 ], $group_defaults, $group_support ), 'mount: a content signal is left to the editor' );
 nbct_same( [ 'paletteVariation' => 6 ], novablocks_color_tiles_mount_normalize( [ 'paletteVariation' => 6 ], $button_defaults, $button_support ), 'mount: an inactive opt-in Button is untouched' );
+nbct_same( $applied, novablocks_color_tiles_mount_normalize( $applied, $button_defaults, $button_support ), 'mount: a no-op on the Action patch (nothing palette-dependent is stored)' );
+$v1_action = [ 'useColorSignal' => true, 'useParentPalette' => false, 'paletteVariation' => 4, 'useSourceColorAsReference' => false, 'contentPaletteVariation' => 4 ];
+nbct_same( $v1_action, novablocks_color_tiles_mount_normalize( $v1_action, $button_defaults, $button_support ), 'mount: a v1 Action button (explicit step) is left as stored' );
 
 // Derivation.
 $group_definitions = [];
@@ -223,6 +235,28 @@ foreach ( $group_family['tiles'] as $tile ) {
 }
 nbct_same( 'row-surface-whisper', novablocks_color_tiles_derive( $group_definitions, $group_family['managedAttributes'], $group_applied, $group_defaults ), 'the applied group derives as Whisper / Light surface' );
 nbct_same( null, novablocks_color_tiles_derive( $group_definitions, $group_family['managedAttributes'], [ 'paletteVariation' => 5, 'colorSignal' => 2 ], $group_defaults ), 'a fine-tuned group derives as Custom' );
+
+$button_definitions = [];
+foreach ( $button_family['tiles'] as $tile ) {
+	$button_definitions[ $tile['id'] ] = novablocks_color_tiles_resolve( $ctx, $button_family, $tile, 1 );
+}
+nbct_same( 'button-action', novablocks_color_tiles_derive( $button_definitions, $button_family['managedAttributes'], $applied, $button_defaults ), 'the applied Button derives as Action' );
+nbct_same( null, novablocks_color_tiles_derive( $button_definitions, $button_family['managedAttributes'], $v1_action, $button_defaults ), 'a v1 Action button (explicit step) derives as Custom under v2' );
+$moved_definitions = [];
+foreach ( $button_family['tiles'] as $tile ) {
+	$moved_definitions[ $tile['id'] ] = novablocks_color_tiles_resolve( $moved_ctx, $button_family, $tile, 1 );
+}
+$stored_keys = [ 'palette', 'paletteVariation', 'useSourceColorAsReference', 'contentPaletteVariation' ];
+nbct_same(
+	array_intersect_key( $button_definitions['button-action'], array_flip( $stored_keys ) ),
+	array_intersect_key( $moved_definitions['button-action'], array_flip( $stored_keys ) ),
+	'a palette change that moves the source step does not change the stored reference (palette, variation 1, reference, content mirror)'
+);
+// The one value that can move is colorSignal: the source's signal against the surface (a gold
+// step 4 is signal 1 on white, a dark step 8 is signal 2). The editor mount rewrites it; after
+// that the Button derives as Action again.
+nbct_same( 2, $moved_definitions['button-action']['colorSignal'], 'the moved (dark) source is signal 2 on a plain page' );
+nbct_same( 'button-action', novablocks_color_tiles_derive( $moved_definitions, $button_family['managedAttributes'], array_merge( $applied, [ 'colorSignal' => 2 ] ), $button_defaults ), 'after the palette change (and the mount signal rewrite) the Button still derives as Action' );
 
 // ---------------------------------------------------------------------------------------------
 // Parent reference + gate.
@@ -308,7 +342,7 @@ nbct_same( 1, count( $GLOBALS['nbct_canonicalize_calls'] ), 'one canonicalize ca
 $call   = $GLOBALS['nbct_canonicalize_calls'][0];
 $edited = json_decode( $call['targets'][0]['content'], true );
 nbct_same( $document, $call['targets'][0]['stored_content'], 'canonicalize compares against the on-disk bytes' );
-nbct_same( [ 'className' => 'is-style-fill cta', 'useColorSignal' => true, 'useParentPalette' => false, 'paletteVariation' => 4, 'useSourceColorAsReference' => false, 'contentPaletteVariation' => 4 ], $edited[1]['innerBlocks'][0]['innerBlocks'][0]['attrs'], 'the edited copy carries the Action attributes' );
+nbct_same( [ 'className' => 'is-style-fill cta', 'useColorSignal' => true, 'useParentPalette' => false ], $edited[1]['innerBlocks'][0]['innerBlocks'][0]['attrs'], 'the edited copy carries the Action attributes' );
 nbct_same( [ 'anchor' => 'hero' ], $edited[1]['attrs'], 'other blocks are untouched' );
 nbct_same( 'button-default', $result['data']['preset']['active_before'], 'derived active tile before: Default' );
 nbct_same( 'button-action', $result['data']['preset']['active_after'], 'derived active tile after: Action' );

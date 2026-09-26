@@ -104,13 +104,13 @@ describe( 'family registry', () => {
 		expect( tiles.getColorTileFamily( 'novablocks/supernova' ) ).toBeNull();
 	} );
 
-	test( 'the Button family ships Default + Action, version 1, one managed boundary', () => {
+	test( 'the Button family ships Default v1 + Action v2 (source reference), one managed boundary', () => {
 		const { tiles } = loadModules( 1 );
 		const family = tiles.getColorTileFamily( 'core/button' );
 
 		expect( family.tiles.map( ( tile ) => [ tile.id, tile.version, tile.label ] ) ).toEqual( [
 			[ 'button-default', 1, 'Default' ],
-			[ 'button-action', 1, 'Action' ],
+			[ 'button-action', 2, 'Action' ],
 		] );
 		expect( family.managedAttributes ).toEqual( [
 			'useColorSignal', 'useParentPalette', 'palette', 'paletteVariation', 'colorSignal', 'useSourceColorAsReference', 'contentPaletteVariation',
@@ -140,27 +140,47 @@ describe( 'family registry', () => {
 } );
 
 describe( 'Action (Button, palette source color)', () => {
-	test( 'resolves to the palette source color as an explicit variation on a plain page', () => {
-		const { tiles } = loadModules( 1 );
+	test( 'v2 stores a REFERENCE to the palette source color, not its current step', () => {
+		const { tiles, utils } = loadModules( 1 );
 		const action = definitionsFor( tiles, 'core/button', 1 ).find( ( definition ) => definition.id === 'button-action' );
 
-		// Fixture palette 1: sourceIndex 3 -> the source color is variation 4.
+		// Nothing palette-dependent is stored: variation 1 + the reference (mirrored into
+		// contentPaletteVariation). The source color itself (fixture: variation 4) is
+		// looked up at render time.
 		expect( action.values ).toEqual( {
 			useColorSignal: true,
 			useParentPalette: false,
 			palette: '1',
-			paletteVariation: 4,
+			paletteVariation: 1,
 			colorSignal: 1,
-			useSourceColorAsReference: false,
-			contentPaletteVariation: 4,
+			useSourceColorAsReference: true,
+			contentPaletteVariation: 1,
 		} );
+		expect( utils.getAbsoluteColorVariation( action.values ) ).toBe( 4 );
 	} );
 
-	test( 'the stored variation removes the Palette Basis Offset (site 3 stores the source as 2)', () => {
+	test( 'the reference is offset-independent (site 3 still stores variation 1 + the reference)', () => {
 		const { tiles } = loadModules( 3 );
 		const action = definitionsFor( tiles, 'core/button', 1 ).find( ( definition ) => definition.id === 'button-action' );
 
-		expect( action.values.paletteVariation ).toBe( 2 );
+		expect( [ action.values.paletteVariation, action.values.useSourceColorAsReference, action.values.contentPaletteVariation ] ).toEqual( [ 1, true, 1 ] );
+	} );
+
+	test( 'on a surface that IS the source color, Action steps off it as an explicit variation (v1 form)', () => {
+		const { tiles } = loadModules( 1 );
+		const action = definitionsFor( tiles, 'core/button', 4 ).find( ( definition ) => definition.id === 'button-action' );
+
+		expect( action.values.useSourceColorAsReference ).toBe( false );
+		expect( action.values.paletteVariation ).not.toBe( 4 );
+		expect( action.values.colorSignal ).toBeGreaterThanOrEqual( 1 );
+	} );
+
+	test( 'a v1-applied Action button (explicit source step) derives as Custom under v2', () => {
+		const { tiles, engine } = loadModules( 1 );
+		const definitions = definitionsFor( tiles, 'core/button', 1 );
+		const v1 = { useColorSignal: true, useParentPalette: false, palette: '1', paletteVariation: 4, colorSignal: 1, useSourceColorAsReference: false, contentPaletteVariation: 4 };
+
+		expect( engine.deriveActivePresetId( definitions, v1, BUTTON_DEFAULTS ) ).toBeNull();
 	} );
 
 	test.each( [
@@ -170,13 +190,18 @@ describe( 'Action (Button, palette source color)', () => {
 		const action = definitionsFor( tiles, 'core/button', reference ).find( ( definition ) => definition.id === 'button-action' );
 		const values = action.values;
 
-		// update-blocks.js, explicit-variation branch:
+		// update-blocks.js: the source-reference branch, else the explicit-variation branch.
 		const absolute = utils.getAbsoluteColorVariation( values );
 		const signal = utils.clampColorSignal( values.colorSignal, { minColorSignal: 1 } );
 		const next = utils.computeColorSignal( reference, signal, values.palette, absolute );
+		const nextSignal = utils.clampColorSignal(
+			values.useSourceColorAsReference ? utils.getSignalRelativeToVariation( absolute, reference, values.palette ) : signal,
+			{ minColorSignal: 1 }
+		);
+		const finalVariation = values.useSourceColorAsReference ? 1 : utils.removeSiteVariationOffset( next );
 
-		expect( utils.removeSiteVariationOffset( next ) ).toBe( values.paletteVariation );
-		expect( signal ).toBe( values.colorSignal );
+		expect( finalVariation ).toBe( values.paletteVariation );
+		expect( nextSignal ).toBe( values.colorSignal );
 		expect( values.colorSignal ).toBeGreaterThanOrEqual( 1 );
 	} );
 
@@ -219,16 +244,13 @@ describe( 'Button apply/derive through the real engine', () => {
 		expect( engine.deriveActivePresetId( definitions, tuned, BUTTON_DEFAULTS ) ).toBeNull();
 	} );
 
-	test( 'Action serializes the activation, ownership and explicit source variation on a plain page', () => {
+	test( 'Action serializes only the activation and ownership (the reference, variation 1 and signal 1 ARE Button defaults)', () => {
 		const { tiles, engine } = loadModules( 1 );
 		const action = definitionsFor( tiles, 'core/button', 1 )[ 1 ];
 
 		expect( serializedAttributes( engine.getPresetApplyPatch( action, {}, BUTTON_DEFAULTS ), BUTTON_DEFAULTS ) ).toEqual( {
 			useColorSignal: true,
 			useParentPalette: false,
-			paletteVariation: 4,
-			useSourceColorAsReference: false,
-			contentPaletteVariation: 4,
 		} );
 	} );
 } );
@@ -260,6 +282,14 @@ describe( 'getColorTileMountPatch (the editor mount, folded into the one patch)'
 		const patch = { paletteVariation: 6 };
 
 		expect( tiles.getColorTileMountPatch( patch, { contentColorSignal: 2 }, GROUP ) ).toBe( patch );
+	} );
+
+	test( "a 'keep' source-referenced Button mirrors its stored variation 1 (palette-independent)", () => {
+		const { tiles } = loadModules( 3 );
+		const support = { activationAttribute: 'useColorSignal', inheritParentPalette: true, paletteInheritanceAttribute: 'useParentPalette', stickySourceColor: 'keep' };
+		const patch = { useColorSignal: true, useParentPalette: false, palette: '1', paletteVariation: 1, useSourceColorAsReference: true, colorSignal: 1 };
+
+		expect( tiles.getColorTileMountPatch( patch, { contentColorSignal: 0 }, support ).contentPaletteVariation ).toBe( 1 );
 	} );
 
 	test( 'an inactive opt-in block (Button Default) is untouched', () => {

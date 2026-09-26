@@ -67,3 +67,15 @@ test.each( blockNames )( '%s describe schema matches the real editor filter orde
 		expect( described[ name ].support[ key ] ).toEqual( support[ key ] );
 	}
 } );
+
+test( 'core/button describes its stickySourceColor mode (the server writer resolves Action with it)', () => {
+	const settings = filters.reduce( ( current, filter ) => filter.callback( current ), {
+		name: 'core/button',
+		attributes: {},
+		supports: {},
+		save: () => null,
+	} );
+
+	expect( described[ 'core/button' ].support.stickySourceColor ).toBe( 'keep' );
+	expect( described[ 'core/button' ].support.stickySourceColor ).toEqual( settings.supports.novaBlocks.colorSignal.stickySourceColor );
+} );

@@ -3,6 +3,8 @@ import { render, unmountComponentAtNode } from 'react-dom';
 import { select } from '@wordpress/data';
 
 let mockControlProps;
+const mockGetUpdatedAttributes = jest.fn( () => ( {} ) );
+const mockGetStickySourceColorForUpdate = jest.fn( () => 'sticky-for-this-update' );
 
 jest.mock( '@wordpress/element', () => require( 'react' ) );
 
@@ -27,7 +29,9 @@ jest.mock( '../use-current-color-signal-attributes', () => ( {
 } ) );
 
 jest.mock( '../../editor/utils', () => ( {
-	getUpdatedAttributes: () => ( {} ),
+	getStickySourceColorForUpdate: ( ...args ) => mockGetStickySourceColorForUpdate( ...args ),
+	getUpdatedAttributes: ( ...args ) => mockGetUpdatedAttributes( ...args ),
+	resolveStickySourceColor: ( support ) => support?.stickySourceColor !== false,
 } ) );
 
 jest.mock( '../../utils', () => ( {
@@ -102,5 +106,27 @@ describe( 'withColorSignalProps adoption', () => {
 				spacing: { padding: { top: '2rem' } },
 			},
 		} ) );
+	} );
+
+	it( "updates with the per-update stickySourceColor mode (an inactive 'keep' Button activates as false)", () => {
+		const attributes = { useColorSignal: false, useSourceColorAsReference: true };
+
+		select.mockReturnValue( { getBlockAttributes: () => attributes } );
+
+		const EnhancedControl = withColorSignalProps( Control );
+
+		act( () => {
+			render(
+				<EnhancedControl name="core/button" clientId="button-client-id" attributes={ attributes } setAttributes={ jest.fn() } />,
+				container
+			);
+		} );
+
+		act( () => {
+			mockControlProps.updateBlock( { palette: '2' } );
+		} );
+
+		expect( mockGetStickySourceColorForUpdate ).toHaveBeenCalledWith( true, expect.objectContaining( { activationAttribute: 'useColorSignal' } ), attributes );
+		expect( mockGetUpdatedAttributes.mock.calls[ 0 ][ 3 ] ).toBe( 'sticky-for-this-update' );
 	} );
 } );

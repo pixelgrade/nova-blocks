@@ -21,7 +21,7 @@ describe( 'core/button Color Signal support', () => {
 			inheritParentPalette: true,
 			paletteInheritanceAttribute: 'useParentPalette',
 			legacyInheritedPalette: '1',
-			stickySourceColor: false,
+			stickySourceColor: 'keep',
 		} );
 	} );
 } );

@@ -9,6 +9,6 @@ const utilsSource = fs.readFileSync(utilsPath, 'utf8');
 test('getUpdatedAttributes preserves the explicit content color signal value', () => {
   assert.match(
     utilsSource,
-    /return\s*\{[\s\S]*contentColorSignal:\s*contentColorSignal,[\s\S]*contentPaletteVariation:\s*contentColorSignal === 0 \? finalVariation : nextContentVariation,[\s\S]*\}/
+    /return\s*\{[\s\S]*contentColorSignal:\s*contentColorSignal,[\s\S]*contentPaletteVariation:\s*contentColorSignal === 0 \? mirroredVariation : nextContentVariation,[\s\S]*\}/
   );
 } );

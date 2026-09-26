@@ -24,7 +24,9 @@ const addNovaBlocksSupport = ( settings ) => {
           inheritParentPalette: true,
           paletteInheritanceAttribute: 'useParentPalette',
           legacyInheritedPalette: '1',
-          stickySourceColor: false,
+          // Keep an existing source reference (the Action tile), never snap into one:
+          // see resolveStickySourceColor() in packages/color-signal/src/editor/utils.js.
+          stickySourceColor: 'keep',
         }
       }
     },

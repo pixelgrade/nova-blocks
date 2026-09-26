@@ -6,7 +6,9 @@ import { useSupports } from "@novablocks/block-editor";
 
 import { useCurrentColorSignalAttributes } from "../use-current-color-signal-attributes";
 import {
-  getUpdatedAttributes
+  getStickySourceColorForUpdate,
+  getUpdatedAttributes,
+  resolveStickySourceColor,
 } from "../../editor/utils";
 import { getColorSignalAdoptionAttributes } from "../../editor/core-color-adoption";
 import {
@@ -28,7 +30,7 @@ const withColorSignalProps = OriginalComponent => {
     };
     const memoryStateKey = clientId ? `showFunctionalColors:${ clientId }` : `showFunctionalColors:${ props.name }`;
     const [ showFunctionalColors, setShowFunctionalColors ] = useMemoryState( memoryStateKey, false );
-    const stickySourceColor = colorSignalSupport?.stickySourceColor !== false;
+    const stickySourceColor = resolveStickySourceColor( colorSignalSupport );
     const paletteInheritanceAttribute = colorSignalSupport?.paletteInheritanceAttribute;
     const inheritParentPalette = shouldInheritParentPalette( colorSignalSupport, currentAttributes );
     const minColorSignal = colorSignalSupport?.minColorSignal || 0;
@@ -56,7 +58,8 @@ const withColorSignalProps = OriginalComponent => {
         ...currentAttributes,
         ...requestedAttributes,
       } );
-      const updatedAttributes = getUpdatedAttributes( currentAttributes, clientId, requestedAttributes, stickySourceColor, useSourceOnSameVariation, useSourceOnSameSignal, nextInheritance, minColorSignal );
+      const updateStickySourceColor = getStickySourceColorForUpdate( stickySourceColor, colorSignalSupport, currentAttributes );
+      const updatedAttributes = getUpdatedAttributes( currentAttributes, clientId, requestedAttributes, updateStickySourceColor, useSourceOnSameVariation, useSourceOnSameSignal, nextInheritance, minColorSignal );
 
       if ( paletteInheritanceAttribute ) {
         updatedAttributes[ paletteInheritanceAttribute ] = Object.prototype.hasOwnProperty.call( requestedAttributes, paletteInheritanceAttribute )

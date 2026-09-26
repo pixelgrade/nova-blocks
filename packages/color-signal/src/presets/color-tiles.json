@@ -50,7 +50,7 @@
 			],
 			"tiles": [
 				{ "id": "button-default", "version": 1, "label": "Default", "kind": "default" },
-				{ "id": "button-action", "version": 1, "label": "Action", "kind": "source", "palette": "1" }
+				{ "id": "button-action", "version": 2, "label": "Action", "kind": "source", "palette": "1" }
 			]
 		}
 	}

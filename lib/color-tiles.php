@@ -359,10 +359,8 @@ function novablocks_color_tiles_resolve( array $ctx, array $family, array $tile,
 	}
 
 	if ( 'source' === $kind ) {
-		// The palette source color as an EXPLICIT variation: the form the editor settles a Button
-		// on at every mount (Button declares stickySourceColor: false). See color-tiles.js.
-		$palette = (string) $tile['palette'];
-		$source  = novablocks_color_tiles_absolute_variation(
+		$palette  = (string) $tile['palette'];
+		$source   = novablocks_color_tiles_absolute_variation(
 			$ctx,
 			[
 				'palette'                   => $palette,
@@ -370,8 +368,26 @@ function novablocks_color_tiles_resolve( array $ctx, array $family, array $tile,
 				'useSourceColorAsReference' => true,
 			]
 		);
-		$signal  = max( (int) ( $family['minColorSignal'] ?? 0 ), novablocks_color_tiles_signal_relative( $ctx, $source, $reference, $palette ) );
-		$stored  = novablocks_color_tiles_remove_offset( $ctx, novablocks_color_tiles_compute_signal( $ctx, $reference, $signal, $palette, $source ) );
+		$relative = novablocks_color_tiles_signal_relative( $ctx, $source, $reference, $palette );
+		$signal   = max( (int) ( $family['minColorSignal'] ?? 0 ), $relative );
+
+		if ( 0 !== $relative ) {
+			// v2: a REFERENCE to the palette source color, the form the mount keeps for a Button
+			// (stickySourceColor 'keep', which mirrors the stored variation 1 into the content
+			// variation), so the button follows palette changes. See color-tiles.js.
+			return [
+				'useColorSignal'            => true,
+				'useParentPalette'          => false,
+				'palette'                   => $palette,
+				'paletteVariation'          => 1,
+				'colorSignal'               => $signal,
+				'useSourceColorAsReference' => true,
+				'contentPaletteVariation'   => 1,
+			];
+		}
+
+		// The surface IS the source color: step off it as an explicit variation.
+		$stored = novablocks_color_tiles_remove_offset( $ctx, novablocks_color_tiles_compute_signal( $ctx, $reference, $signal, $palette, $source ) );
 
 		return [
 			'useColorSignal'            => true,
@@ -426,9 +442,9 @@ function novablocks_color_tiles_apply( array $attributes, array $managed, array 
 /**
  * The one other write the editor makes on mount (`getUpdatedAttributes()` via
  * `withUpdatedAttributes`): with no content signal, `contentPaletteVariation` mirrors the block
- * variation. Applying it here makes the writer's output the state the editor settles on, so
- * opening the post does not turn it dirty. It is not part of the Row Surface boundary (those
- * published definitions stay as they are); it is the editor's own normalization, reproduced.
+ * variation. Applying it here makes the writer's output the state the editor settles on, so opening the
+ * post does not turn it dirty. It is not part of the Row Surface boundary (those published
+ * definitions stay as they are); it is the editor's own normalization, reproduced.
  *
  * @param array             $attributes Stored attributes after the tile patch.
  * @param array             $defaults   Registered defaults.
