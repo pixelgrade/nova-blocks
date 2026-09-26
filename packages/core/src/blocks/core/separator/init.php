@@ -17,6 +17,26 @@ function novablocks_get_separator_attributes(): array {
 	] );
 }
 
+/**
+ * Rule weight custom property for lined separator styles (pixelgrade/anima#610).
+ *
+ * Mirrors getSeparatorRuleStyle() in rule-style.js. Only the weight is taken:
+ * the separator's colour belongs to Color Signal (the parent owns `color`), so
+ * no rule strength is ever emitted. The registered default of 3 (the theme's
+ * line thickness) emits nothing.
+ *
+ * @param array $attributes Block attributes.
+ * @return array<string, string>
+ */
+function novablocks_get_separator_rule_style_properties( array $attributes ): array {
+	return novablocks_get_rule_style_properties(
+		array_intersect_key( $attributes, [ 'ruleWeight' => true ] ),
+		'--nb-separator-rule',
+		'subtle',
+		3
+	);
+}
+
 if ( ! function_exists( 'novablocks_render_separator_block' ) ) {
 
 	function novablocks_render_separator_block( $block_content, $block ) {
@@ -32,6 +52,10 @@ if ( ! function_exists( 'novablocks_render_separator_block' ) ) {
 
 		$spacingProps   = novablocks_get_spacing_css( $attributes );
 		$style = join( '; ', $spacingProps ) . '; ';
+
+		foreach ( novablocks_get_separator_rule_style_properties( $attributes ) as $property => $value ) {
+			$style .= $property . ': ' . $value . '; ';
+		}
 
 		$allowed_align_values = array( 'none', 'wide', 'full', 'center', 'left', 'right' );
 		$align                = isset( $attributes['align'] ) && in_array( $attributes['align'], $allowed_align_values, true )

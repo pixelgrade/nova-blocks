@@ -5,6 +5,7 @@ import { useBlockProps } from "@wordpress/block-editor";
 import { useSettings } from "@novablocks/block-editor";
 
 import withControlsVisibility from './with-controls-visibility';
+import { getSeparatorRuleStyle } from './rule-style';
 
 const SeparatorEdit = ( props ) => {
 
@@ -19,7 +20,10 @@ const SeparatorEdit = ( props ) => {
 
   const blockProps = useBlockProps( {
     className: className,
-    style: props.style
+    style: {
+      ...props.style,
+      ...getSeparatorRuleStyle( attributes ),
+    }
   } );
 
   return (

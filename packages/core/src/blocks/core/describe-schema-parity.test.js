@@ -8,6 +8,8 @@ jest.mock( '@wordpress/block-editor', () => ( { useBlockProps: { save: jest.fn()
 // Group imports rendering helpers; this schema test never invokes them.
 jest.mock( '@novablocks/utils', () => ( {} ), { virtual: true } );
 jest.mock( './separator/edit', () => jest.fn() );
+// The rule-weight controls pull in the editor component library; unused here.
+jest.mock( './separator/with-separator-rule-controls', () => ( { withSeparatorRuleControls: jest.fn() } ) );
 
 const { execFileSync } = require( 'child_process' );
 const path = require( 'path' );

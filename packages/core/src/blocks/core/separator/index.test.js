@@ -15,6 +15,7 @@ jest.mock( '@wordpress/data', () => ( {
 } ) );
 
 jest.mock( './edit', () => jest.fn() );
+jest.mock( './with-separator-rule-controls', () => ( { withSeparatorRuleControls: jest.fn() } ) );
 
 const { addFilter } = require( '@wordpress/hooks' );
 
@@ -48,5 +49,24 @@ describe( 'core/separator Color Signal support', () => {
 		expect( settings.attributes.useParentPalette ).toEqual( {
 			type: 'boolean',
 		} );
+	} );
+
+	it( 'registers the rule weight with the theme default so untouched separators serialize nothing', () => {
+		const alterSeparatorAttributes = getFilter( 'novablocks/separator/alter-attributes' );
+		const settings = alterSeparatorAttributes( {
+			name: 'core/separator',
+			attributes: {},
+		} );
+
+		expect( settings.attributes.ruleWeight ).toEqual( { type: 'number', default: 3 } );
+	} );
+
+	it( 'keeps the saved markup independent of the rule weight', () => {
+		const alterSeparatorSettings = getFilter( 'novablocks/separator/alter-support' );
+		const { save } = alterSeparatorSettings( { name: 'core/separator', supports: {} } );
+		const render = attributes => JSON.stringify( save( { className: 'is-style-simple', attributes } ) );
+
+		expect( render( { align: 'none' } ) ).toBe( render( { align: 'none', ruleWeight: 1 } ) );
+		expect( render( { align: 'none' } ) ).not.toContain( 'rule-weight' );
 	} );
 } );

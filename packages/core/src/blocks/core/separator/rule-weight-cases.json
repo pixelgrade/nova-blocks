@@ -1,0 +1,12 @@
+[
+	{ "label": "missing attribute keeps the theme default", "attributes": {}, "style": {} },
+	{ "label": "registered default weight emits nothing", "attributes": { "ruleWeight": 3 }, "style": {} },
+	{ "label": "hairline", "attributes": { "ruleWeight": 1 }, "style": { "--nb-separator-rule-weight": "1px" } },
+	{ "label": "two pixels", "attributes": { "ruleWeight": 2 }, "style": { "--nb-separator-rule-weight": "2px" } },
+	{ "label": "four pixels", "attributes": { "ruleWeight": 4 }, "style": { "--nb-separator-rule-weight": "4px" } },
+	{ "label": "clamps above the scale", "attributes": { "ruleWeight": 20 }, "style": { "--nb-separator-rule-weight": "4px" } },
+	{ "label": "clamps below the scale", "attributes": { "ruleWeight": 0 }, "style": { "--nb-separator-rule-weight": "1px" } },
+	{ "label": "rounds fractional weights", "attributes": { "ruleWeight": 1.4 }, "style": { "--nb-separator-rule-weight": "1px" } },
+	{ "label": "ignores non-numeric weights", "attributes": { "ruleWeight": "heavy" }, "style": {} },
+	{ "label": "never emits a rule colour: the separator colour belongs to Color Signal", "attributes": { "ruleWeight": 2, "ruleStrength": "solid" }, "style": { "--nb-separator-rule-weight": "2px" } }
+]

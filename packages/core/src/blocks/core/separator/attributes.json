@@ -8,6 +8,10 @@
 	"useParentPalette": {
 		"type": "boolean"
 	},
+	"ruleWeight": {
+		"type": "number",
+		"default": 3
+	},
 	"align": {
 		"type": "string",
 		"default": "none"

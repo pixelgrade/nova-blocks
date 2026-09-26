@@ -7,6 +7,9 @@ import { preserveBlockSelectionWhileApplying } from './preserve-block-selection'
 const RuleControls = ( {
 	ruleWeight = 1,
 	ruleStrength = 'subtle',
+	// Blocks whose rule colour is owned elsewhere (the Separator's Color
+	// Signal) expose only the weight.
+	hasStrength = true,
 	clientId,
 	setAttributes,
 } ) => {
@@ -28,7 +31,7 @@ const RuleControls = ( {
 				step={ 1 }
 				onChange={ value => updateAttributes( { ruleWeight: value } ) }
 			/>
-			<RadioControl
+			{ hasStrength && <RadioControl
 				label={ __( 'Rule Strength', '__plugin_txtd' ) }
 				help={ __( 'Chooses a contextual divider role instead of a fixed color.', '__plugin_txtd' ) }
 				selected={ ruleStrength }
@@ -38,7 +41,7 @@ const RuleControls = ( {
 					{ label: __( 'Strong', '__plugin_txtd' ), value: 'strong' },
 					{ label: __( 'Solid', '__plugin_txtd' ), value: 'solid' },
 				] }
-			/>
+			/> }
 		</>
 	);
 };

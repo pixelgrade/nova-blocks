@@ -19,16 +19,17 @@ if ( ! defined( 'ABSPATH' ) ) {
  * @param array  $attributes       Block attributes.
  * @param string $property_prefix  Component custom-property prefix.
  * @param string $default_strength Curated strength for the component.
+ * @param int    $default_weight   Curated weight, in pixels, that emits nothing.
  * @return array<string, string>
  */
-function novablocks_get_rule_style_properties( array $attributes, string $property_prefix, string $default_strength ): array {
+function novablocks_get_rule_style_properties( array $attributes, string $property_prefix, string $default_strength, int $default_weight = 1 ): array {
 	$properties = [];
 
 	if ( array_key_exists( 'ruleWeight', $attributes ) && is_numeric( $attributes['ruleWeight'] ) ) {
 		$weight = (int) round( (float) $attributes['ruleWeight'] );
 		$weight = max( 1, min( 4, $weight ) );
 
-		if ( 1 !== $weight ) {
+		if ( $default_weight !== $weight ) {
 			$properties[ $property_prefix . '-weight' ] = $weight . 'px';
 		}
 	}

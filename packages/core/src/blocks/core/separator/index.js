@@ -6,6 +6,7 @@ import { select } from "@wordpress/data";
 
 import attributes from './attributes.json';
 import edit from './edit';
+import { withSeparatorRuleControls } from './with-separator-rule-controls';
 
 const alterSeparatorSettings = ( settings ) => {
 
@@ -118,3 +119,5 @@ const addSeparatorDeprecation = ( settings ) => {
   }
 };
 addFilter( 'blocks.registerBlockType', 'novablocks/separator/deprecation', addSeparatorDeprecation, 100 );
+
+addFilter( 'editor.BlockEdit', 'novablocks/separator/rule-controls', withSeparatorRuleControls );
