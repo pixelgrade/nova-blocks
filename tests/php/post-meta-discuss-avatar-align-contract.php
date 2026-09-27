@@ -84,6 +84,7 @@ function novablocks_get_space_and_sizing_css( array $attributes ) {
 // --- WordPress core stand-ins ---------------------------------------------------
 $GLOBALS['nb_pm_fixture'] = [
 	'comments_open'    => true,
+	'comments_count'   => 4,
 	'template_blocks'  => [],
 	'wrapper_extra'    => null, // captures the last get_block_wrapper_attributes() call
 ];
@@ -101,7 +102,7 @@ function get_author_posts_url( $id ) { return 'https://example.test/author/' . $
 function get_the_date( $format, $post ) { return '2026-09-26'; }
 function do_blocks( $content ) { return ''; } // Sharing overlay markup is irrelevant to this contract.
 function comments_open( $post_id ) { return $GLOBALS['nb_pm_fixture']['comments_open']; }
-function get_comments_number( $post_id ) { return 4; }
+function get_comments_number( $post_id ) { return $GLOBALS['nb_pm_fixture']['comments_count']; }
 function has_block( $block_name, $content ) {
 	return in_array( $block_name, $GLOBALS['nb_pm_fixture']['template_blocks'], true );
 }
@@ -133,22 +134,38 @@ function nb_pm_render( $attributes = [] ) {
 // ── Ask 1: Discuss accepts core `comments` / `post-comments-form`, and links
 //          to whichever anchor that template shape actually renders (#666
 //          follow-up: a form-only template has no id="comments", only core's
-//          own id="respond" on the comment-respond wrapper) ──────────────────
+//          own id="respond" on the comment-respond wrapper).
+//
+//          #673 follow-up: core's Comments Title (nested in `core/comments`)
+//          prints id="comments" only when there is at least one existing
+//          comment — with zero comments Discuss must fall back to the form's
+//          id="respond" (when comments are open) or hide entirely. Nova's own
+//          `novablocks/post-comments` always wraps in id="comments" whenever
+//          it renders anything at all, comment count aside. ─────────────────
 
 $discuss_cases = [
-	// label                          => [ blocks on the template,                                  expected anchor or null when Discuss must be hidden ]
-	'Nova post-comments only'        => [ [ 'novablocks/post-comments' ], 'comments' ],
-	'core/comments only'             => [ [ 'core/comments' ], 'comments' ],
-	'core/post-comments-form only'   => [ [ 'core/post-comments-form' ], 'respond' ],
-	'core/comments plus unrelated'   => [ [ 'core/paragraph', 'core/comments' ], 'comments' ],
-	'core/comments plus bare form'   => [ [ 'core/comments', 'core/post-comments-form' ], 'comments' ],
-	'Nova post-comments plus form'   => [ [ 'novablocks/post-comments', 'core/post-comments-form' ], 'comments' ],
-	'no comments block'              => [ [ 'core/paragraph' ], null ],
-	'empty template'                 => [ [], null ],
+	// label                                              => [ blocks,                                     open, count, expected anchor or null when Discuss must be hidden ]
+	'Nova post-comments, open, has comments'              => [ [ 'novablocks/post-comments' ], true, 4, 'comments' ],
+	'Nova post-comments, open, zero comments'             => [ [ 'novablocks/post-comments' ], true, 0, 'comments' ],
+	'Nova post-comments, closed, has comments'            => [ [ 'novablocks/post-comments' ], false, 4, 'comments' ],
+	'Nova post-comments, closed, zero comments'           => [ [ 'novablocks/post-comments' ], false, 0, null ],
+	'core/comments, open, has comments'                   => [ [ 'core/comments' ], true, 4, 'comments' ],
+	'core/comments, open, zero comments'                  => [ [ 'core/comments' ], true, 0, 'respond' ],
+	'core/comments, closed, has comments'                 => [ [ 'core/comments' ], false, 4, 'comments' ],
+	'core/comments, closed, zero comments'                => [ [ 'core/comments' ], false, 0, null ],
+	'core/post-comments-form only, open, has comments'    => [ [ 'core/post-comments-form' ], true, 4, 'respond' ],
+	'core/post-comments-form only, open, zero comments'   => [ [ 'core/post-comments-form' ], true, 0, 'respond' ],
+	'core/post-comments-form only, closed, has comments'  => [ [ 'core/post-comments-form' ], false, 4, null ],
+	'core/comments plus unrelated'                        => [ [ 'core/paragraph', 'core/comments' ], true, 4, 'comments' ],
+	'core/comments plus bare form'                        => [ [ 'core/comments', 'core/post-comments-form' ], true, 4, 'comments' ],
+	'Nova post-comments plus form'                        => [ [ 'novablocks/post-comments', 'core/post-comments-form' ], true, 4, 'comments' ],
+	'no comments block, open, has comments'               => [ [ 'core/paragraph' ], true, 4, null ],
+	'empty template'                                      => [ [], true, 4, null ],
 ];
 
-foreach ( $discuss_cases as $label => [ $blocks, $expected_anchor ] ) {
-	$GLOBALS['nb_pm_fixture']['comments_open']   = true;
+foreach ( $discuss_cases as $label => [ $blocks, $open, $count, $expected_anchor ] ) {
+	$GLOBALS['nb_pm_fixture']['comments_open']   = $open;
+	$GLOBALS['nb_pm_fixture']['comments_count']  = $count;
 	$GLOBALS['nb_pm_fixture']['template_blocks'] = $blocks;
 	global $_wp_current_template_content;
 	$_wp_current_template_content = empty( $blocks ) ? '' : '<!-- template markup -->';
@@ -164,12 +181,9 @@ foreach ( $discuss_cases as $label => [ $blocks, $expected_anchor ] ) {
 	}
 }
 
-// comments_open() gate must still apply even with a comments block present.
-$GLOBALS['nb_pm_fixture']['comments_open']   = false;
-$GLOBALS['nb_pm_fixture']['template_blocks'] = [ 'core/comments' ];
-$_wp_current_template_content = '<!-- template markup -->';
-nb_pm_expect( false === strpos( nb_pm_render(), 'Discuss' ), 'Closed comments must hide Discuss even with core/comments present.' );
-$GLOBALS['nb_pm_fixture']['comments_open'] = true;
+// Reset the fixture to the defaults the rest of the file (avatar/wrapper asks) relies on.
+$GLOBALS['nb_pm_fixture']['comments_open']  = true;
+$GLOBALS['nb_pm_fixture']['comments_count'] = 4;
 
 // A missing/empty global template must not fatal and must hide Discuss.
 unset( $GLOBALS['_wp_current_template_content_unused'] );

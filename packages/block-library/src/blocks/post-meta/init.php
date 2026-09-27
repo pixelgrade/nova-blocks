@@ -22,33 +22,47 @@ if ( ! function_exists( 'novablocks_post_meta_discuss_anchor' ) ) {
 	/**
 	 * The anchor Discuss should link to for the current template, or '' when
 	 * the template renders nothing Discuss can point at (#665, follow-up
-	 * #666-style fix).
+	 * #666-style fix, #673 follow-up).
 	 *
-	 * Nova's own `novablocks/post-comments` and core's `core/comments` (via
-	 * its Comments Title) both render `id="comments"`, so `href="#comments"`
-	 * resolves on either. A template with only a bare `core/post-comments-form`
-	 * has no `id="comments"` anywhere — the form's own wrapper carries
-	 * WordPress' default `id="respond"` (`comment_form()`'s `comment-respond`
-	 * container), so Discuss must target that instead, or the link goes
-	 * nowhere.
+	 * Nova's own `novablocks/post-comments` wraps unconditionally in
+	 * `id="comments"` whenever it renders anything at all — the only case it
+	 * renders nothing is comments closed with zero comments and no custom
+	 * "closed" message, which is covered below. Core's Comments Title (nested
+	 * in `core/comments`) is different: it prints `id="comments"` only when
+	 * `get_comments_number()` is non-zero (see core's
+	 * `render_block_core_comments_title()`) — with zero comments that anchor
+	 * simply doesn't exist on the page (#673).
 	 *
-	 * @param string $template_content
+	 * When there are no comments yet, Discuss should target the comment
+	 * form's own `id="respond"` instead (`comment_form()`'s `comment-respond`
+	 * container), but only when that form will actually render — `comment_form()`
+	 * prints nothing at all when comments are closed.
 	 *
-	 * @return string 'comments', 'respond', or '' when neither is present.
+	 * @param string       $template_content
+	 * @param WP_Post|null $post
+	 *
+	 * @return string 'comments', 'respond', or '' when neither target exists.
 	 */
-	function novablocks_post_meta_discuss_anchor( $template_content ) {
+	function novablocks_post_meta_discuss_anchor( $template_content, $post ) {
 
-		if ( empty( $template_content ) ) {
+		if ( empty( $template_content ) || empty( $post ) ) {
 			return '';
 		}
 
-		foreach ( [ 'novablocks/post-comments', 'core/comments' ] as $block_name ) {
-			if ( has_block( $block_name, $template_content ) ) {
-				return 'comments';
-			}
+		$is_open        = comments_open( $post->ID );
+		$comments_count = (int) get_comments_number( $post->ID );
+
+		if ( has_block( 'novablocks/post-comments', $template_content ) ) {
+			return ( $is_open || $comments_count > 0 ) ? 'comments' : '';
 		}
 
-		if ( has_block( 'core/post-comments-form', $template_content ) ) {
+		$has_core_comments = has_block( 'core/comments', $template_content );
+
+		if ( $has_core_comments && $comments_count > 0 ) {
+			return 'comments';
+		}
+
+		if ( $is_open && ( $has_core_comments || has_block( 'core/post-comments-form', $template_content ) ) ) {
 			return 'respond';
 		}
 
@@ -187,12 +201,14 @@ if ( ! function_exists( 'novablocks_render_post_meta_block' ) ) {
 							<?php echo do_blocks( '<!-- wp:novablocks/sharing-overlay { "buttonLabel":"' . esc_html__( 'Share', '__plugin_txtd' ) . '", "useSourceColorAsReference":"1" } --><!-- /wp:novablocks/sharing-overlay -->' ); ?>
 						</div>
 						<?php
-						// Only show the Discuss link if comments are open and the template
-						// renders a comments UI (Nova's own, or core's) it can link to (#665),
-						// and point it at whichever anchor that UI actually renders.
+						// Only show the Discuss link if the template renders a comments
+						// UI (Nova's own, or core's) it can actually link to (#665, #673),
+						// pointing it at whichever anchor that UI actually renders —
+						// comments_open() and the post's comment count are folded into
+						// that decision already.
 						global $_wp_current_template_content;
-						$discuss_anchor = novablocks_post_meta_discuss_anchor( $_wp_current_template_content );
-						if ( comments_open( $post->ID ) && '' !== $discuss_anchor ) {
+						$discuss_anchor = novablocks_post_meta_discuss_anchor( $_wp_current_template_content, $post );
+						if ( '' !== $discuss_anchor ) {
 							$comments_count = get_comments_number( $post->ID );
 							?>
 							<div class="c-meta__row-item">
