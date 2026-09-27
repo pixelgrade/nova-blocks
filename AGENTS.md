@@ -296,6 +296,14 @@ All preset UIs must run through `packages/block-editor/src/preset-engine/`. Full
 - Styles remain `is-style-simple` (one line), `is-style-decorative` (symbol), `is-style-elaborate` (lines, arrows and symbol; registered by Anima), and `is-style-blank` (spacer). Historical Anima override details belong in the relevant issue or `.ai/` investigation, not this runbook.
 - Line thickness is the `ruleWeight` attribute (shared `RuleControls`, 1–4px, weight only; colour stays with Color Signal), offered on the lined styles only (`is-style-simple`, `is-style-elaborate`). The registered default `3` emits and serializes nothing; other numeric values emit `--nb-separator-rule-weight` from `init.php` and `rule-style.js`, both pinned to `rule-weight-cases.json` (string weights are ignored on both sides). Anima declares `--separator-line-thickness: var(--nb-separator-rule-weight, 3px)` on `.c-separator`, never on `:root`, so it resolves per block (pixelgrade/anima#610).
 
+## Frontend Script Lifecycle (AJAX Page Transitions)
+
+- Every frontend script registers its page setup with `registerFrontendModule( id, setup )` from `@novablocks/utils` (`packages/utils/src/frontend-lifecycle.js`). The setup runs immediately, so pages without AJAX navigation behave as before.
+- Anything bound outside the module's own markup (window/document listeners, observers, frame loops, timers, nodes moved to `<body>`, third-party hooks) must be released on teardown: `scope.on()`, `scope.add()`, a returned teardown, or a helper that calls `trackTeardown()` (as `onScrollRAF` does). Deferred callbacks that can outlive the page go through `scope.bind()` or check a destroyed flag.
+- The lifecycle registers itself in Anima's re-init registry as `novablocks/frontend` (priority 0): its cleanup tears every module down with the outgoing page and its reinit sets them up for the incoming one. Anima stops re-executing Nova's scripts when that entry exists. Re-executing a script stays safe (same id = teardown first) and is never initialized twice per page.
+- `window.novablocks.header.refresh( container )` re-measures the header and re-applies its colours in place; `$.fn.bully.destroy()` ends the position-indicator state. Keep both public.
+- Verify with 10 A→B navigations: live MutationObservers, window scroll listeners and requestAnimationFrame callbacks per frame stay at their page-load values (GitHub #661, pixelgrade/anima#530).
+
 ## Logo Loading Transition System (Anima Theme)
 
 This system is owned entirely by the Anima theme, not Nova Blocks. Keep only these cross-repo invariants here:

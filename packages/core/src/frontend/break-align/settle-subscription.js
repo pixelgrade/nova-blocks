@@ -11,6 +11,7 @@
 
 const subscribers = new Set();
 let hooksInstalled = false;
+let removeImageHooks = [];
 
 const notifyAll = () => {
 	subscribers.forEach( ( callback ) => callback() );
@@ -32,14 +33,30 @@ const installHooks = () => {
 		if ( ! isImagePending( img ) ) {
 			return;
 		}
-		const onSettle = () => {
+		const unhook = () => {
 			img.removeEventListener( 'load', onSettle );
 			img.removeEventListener( 'error', onSettle );
+		};
+		const onSettle = () => {
+			unhook();
 			notifyAll();
 		};
 		img.addEventListener( 'load', onSettle );
 		img.addEventListener( 'error', onSettle );
+		removeImageHooks.push( unhook );
 	} );
+};
+
+// The last unsubscribe (a module teardown before an AJAX page swap) drops
+// the image hooks, so the next subscribe hooks the images of the new page.
+const releaseHooks = () => {
+	if ( subscribers.size || ! hooksInstalled ) {
+		return;
+	}
+
+	removeImageHooks.forEach( ( unhook ) => unhook() );
+	removeImageHooks = [];
+	hooksInstalled = false;
 };
 
 export const subscribeToSettleEvents = ( callback ) => {
@@ -48,5 +65,6 @@ export const subscribeToSettleEvents = ( callback ) => {
 
 	return () => {
 		subscribers.delete( callback );
+		releaseHooks();
 	};
 };

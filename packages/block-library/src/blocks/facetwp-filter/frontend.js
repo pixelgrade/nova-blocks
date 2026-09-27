@@ -1,4 +1,4 @@
-import domReady from "@wordpress/dom-ready";
+import { registerFrontendModule } from "@novablocks/utils";
 
 const TRANSITION_DURATION = 280;
 const TRANSITION_EASING = 'cubic-bezier(0.33, 1, 0.68, 1)';
@@ -502,7 +502,9 @@ export const setupResponsiveFilterPanels = ( root = document, filterEngine = win
   };
 };
 
-domReady( () => {
+// A frontend module (nova-blocks#661): FacetWP hooks and panel listeners
+// are removed on teardown, before an AJAX page swap.
+registerFrontendModule( 'novablocks/facetwp-filter', ( scope ) => scope.ready( () => {
   const blocks = Array.from( document.querySelectorAll( '.nb-facetwp-filter' ) );
   const hiddenBlocks = blocks.filter( block => block.classList.contains( 'nb-facetwp-filter--section-type-hidden' ) );
 
@@ -543,6 +545,6 @@ domReady( () => {
     } );
   } );
 
-  setupResultCountLabels( document, window.FWP );
-  setupResponsiveFilterPanels( document, window.FWP );
-} );
+  scope.add( setupResultCountLabels( document, window.FWP ) );
+  scope.add( setupResponsiveFilterPanels( document, window.FWP ) );
+} ) );

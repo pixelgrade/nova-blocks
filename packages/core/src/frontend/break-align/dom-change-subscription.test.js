@@ -20,7 +20,9 @@ describe( 'dom change subscription', () => {
 				this.target = target;
 				this.options = options;
 			}
-			disconnect() {}
+			disconnect() {
+				this.disconnected = true;
+			}
 		};
 		window.MutationObserver = RecordingObserver;
 	} );
@@ -66,5 +68,27 @@ describe( 'dom change subscription', () => {
 			removedNodes: [],
 		} ] );
 		expect( a ).not.toHaveBeenCalled();
+	} );
+
+	it( 'disconnects the observer when the last subscriber leaves and starts a fresh one for the next page (#661)', () => {
+		const { subscribeToDomChanges } = require( './dom-change-subscription' );
+
+		const unsubscribeA = subscribeToDomChanges( jest.fn() );
+		const unsubscribeB = subscribeToDomChanges( jest.fn() );
+
+		unsubscribeA();
+		expect( observers[ 0 ].disconnected ).toBeUndefined();
+
+		unsubscribeB();
+		expect( observers[ 0 ].disconnected ).toBe( true );
+
+		// Ten AJAX navigations: one live observer at a time, never more.
+		for ( let i = 0; i < 10; i++ ) {
+			const unsubscribe = subscribeToDomChanges( jest.fn() );
+			expect( observers.filter( observer => ! observer.disconnected ) ).toHaveLength( 1 );
+			unsubscribe();
+		}
+
+		expect( observers.filter( observer => ! observer.disconnected ) ).toHaveLength( 0 );
 	} );
 } );

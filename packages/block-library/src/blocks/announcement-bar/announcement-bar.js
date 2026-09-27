@@ -24,6 +24,10 @@ export default class AnnouncementBar {
     this.close.addEventListener( 'click', this.onClose );
 	}
 
+	destroy() {
+    this.close?.removeEventListener( 'click', this.onClose );
+	}
+
 	onClose() {
 		const { cookieName } = this;
 		addClass( this.element, 'is-hidden' );

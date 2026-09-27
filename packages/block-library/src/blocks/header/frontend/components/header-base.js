@@ -7,22 +7,56 @@ class HeaderBase {
     this.stickyDistance = 0;
     this.isSticky = false;
     this.adminBar = document.querySelector( '#wpadminbar' );
+    this.destroyed = false;
+    this.teardowns = [];
   }
 
   initialize() {
     addClass( this.element, 'nb-header--ready' );
-    onScrollRAF( this.maybeUpdateStickyStyles.bind( this ) );
-    const debouncedOnResize = debounce( this.onResize.bind( this ), 100 );
+    this.addTeardown( onScrollRAF( this.maybeUpdateStickyStyles.bind( this ) ) );
+
+    // A destroyed header must never measure again: its detached box would
+    // overwrite the page-level sticky variables of the header that replaced it.
+    const debouncedOnResize = debounce( () => {
+      if ( ! this.destroyed ) {
+        this.onResize();
+      }
+    }, 100 );
+
     window.addEventListener( 'resize', debouncedOnResize );
+    this.addTeardown( () => window.removeEventListener( 'resize', debouncedOnResize ) );
 
     // Display webfonts and late assets can grow the header after the initial
     // measurement without firing a window resize, leaving the neighbour
     // padding compensation short of the final header height.
-    document.fonts?.ready?.then( () => this.onResize() );
+    document.fonts?.ready?.then( () => {
+      if ( ! this.destroyed ) {
+        this.onResize();
+      }
+    } );
 
     if ( document.readyState !== 'complete' ) {
       window.addEventListener( 'load', debouncedOnResize, { once: true } );
+      this.addTeardown( () => window.removeEventListener( 'load', debouncedOnResize, { once: true } ) );
     }
+  }
+
+  addTeardown( teardown ) {
+    if ( typeof teardown === 'function' ) {
+      this.teardowns.push( teardown );
+    }
+
+    return teardown;
+  }
+
+  // Stop every listener and frame loop this header started (nova-blocks#661).
+  destroy() {
+    if ( this.destroyed ) {
+      return;
+    }
+
+    this.destroyed = true;
+    this.teardowns.splice( 0 ).reverse().forEach( teardown => teardown() );
   }
 
   onResize() {
@@ -49,6 +83,10 @@ class HeaderBase {
   }
 
   maybeUpdateStickyStyles( scrollY ) {
+    if ( this.destroyed ) {
+      return;
+    }
+
     const shouldBeSticky = scrollY > this.staticDistance - this.stickyDistance;
 
     if ( this.shouldBeSticky === shouldBeSticky ) {

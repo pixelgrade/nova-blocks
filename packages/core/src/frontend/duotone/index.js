@@ -1,5 +1,5 @@
 import $ from 'jquery';
-import { getDuotoneFilterSvg, getPaletteConfig } from "@novablocks/utils";
+import { getDuotoneFilterSvg, getPaletteConfig, registerFrontendModule } from "@novablocks/utils";
 
 const getHexFromConfig = ( config ) => {
   const { paletteId, variationIndex } = config;
@@ -16,13 +16,18 @@ const getHexFromConfig = ( config ) => {
   return false;
 };
 
-(() => {
-  let duotoneIncrement = 0;
+// Unique across AJAX page swaps too.
+let duotoneIncrement = 0;
+
+// A frontend module (nova-blocks#661): runs again for every AJAX page swap.
+// The filters it adds live next to their blocks, so they leave with them.
+registerFrontendModule( 'novablocks/core/duotone', () => {
 
   $( '[data-overlay-filter-type]' ).filter( ( i, obj ) => {
     const data = $( obj ).data();
     const config = data.overlayFilterDuotoneConfig;
-    return data.overlayFilterType === 'duotone' && config?.from && config?.to;
+    // Idempotent: a block already filtered keeps its filter.
+    return ! obj.hasAttribute( 'data-nb-duotone' ) && data.overlayFilterType === 'duotone' && config?.from && config?.to;
   } ).each( ( i, obj ) => {
     const $obj = $( obj );
     const data = $obj.data();
@@ -31,7 +36,7 @@ const getHexFromConfig = ( config ) => {
     const toHex = getHexFromConfig( to );
     const id = `novablocks-duotone-${ duotoneIncrement }`;
     duotoneIncrement = duotoneIncrement + 1;
-    $obj.addClass( id );
+    $obj.addClass( id ).attr( 'data-nb-duotone', id );
     const $style = $( '<style>' ).html( `.${ id } .nb-supernova-item__media-wrapper :is(img, video) { filter: url( #${ id } ); }` );
     const svgMarkup = getDuotoneFilterSvg( [ fromHex, toHex ], id );
     const $svg = $( svgMarkup );
@@ -39,4 +44,4 @@ const getHexFromConfig = ( config ) => {
     $svg.insertAfter( $obj );
   } );
 
-})();
+} );

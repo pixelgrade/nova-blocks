@@ -2,7 +2,9 @@
  * @jest-environment jsdom
  */
 
-jest.mock( '@wordpress/dom-ready', () => callback => callback() );
+// The frontend module registers through the shared lifecycle; the panel
+// helpers under test are plain functions.
+jest.mock( '@novablocks/utils', () => ( { registerFrontendModule: () => {} } ) );
 
 import {
 	countActiveFilterValues,

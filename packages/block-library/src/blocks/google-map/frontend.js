@@ -1,6 +1,4 @@
-import domReady from "@wordpress/dom-ready";
-
-import { getAttributes } from "@novablocks/utils";
+import { getAttributes, registerFrontendModule } from "@novablocks/utils";
 
 import {
   addVisibilityToStyles,
@@ -17,7 +15,9 @@ import {
 
 export const REFERENCES = {};
 
-domReady( () => {
+// A frontend module (nova-blocks#661): runs again for every AJAX page swap;
+// its Dark Mode callbacks are unbound on teardown.
+registerFrontendModule( 'novablocks/google-map', ( scope ) => scope.ready( () => {
 
   if ( !window?.google?.maps ) {
     return;
@@ -65,10 +65,17 @@ domReady( () => {
     }
 
     if ( DarkMode && typeof DarkMode.bind === "function" ) {
-      DarkMode.bind( () => {
+      const onDarkModeChange = () => {
         map.setOptions( { styles: getCompiledStyles( attributes, accentColor ) } );
-      } );
+      };
+
+      DarkMode.bind( onDarkModeChange );
+      scope.add( () => DarkMode.unbind?.( onDarkModeChange ) );
     }
+
+    scope.add( () => {
+      delete REFERENCES[ refId ];
+    } );
   } );
 
   const api = window?.parent?.wp?.customize;
@@ -96,7 +103,7 @@ domReady( () => {
       } );
     } );
   }
-} );
+} ) );
 
 function createMapMarkers( markers, map, attributes, accentColor ) {
   const { showMarkerLabels, styleSlug } = attributes;

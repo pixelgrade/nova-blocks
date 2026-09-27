@@ -1,17 +1,19 @@
-import domReady from "@wordpress/dom-ready";
-
 import "@novablocks/collection/frontend";
-import { debounce, resizeDropcap } from "@novablocks/utils";
+import { debounce, registerFrontendModule, resizeDropcap } from "@novablocks/utils";
 
-const dropcaps = Array.from( document.querySelectorAll( '.nb-supernova-item__dropcap' ) );
+// A frontend module (nova-blocks#661): torn down and set up again for every
+// AJAX page swap instead of re-executing this script.
+registerFrontendModule( 'novablocks/supernova', ( scope ) => {
+  const dropcaps = Array.from( document.querySelectorAll( '.nb-supernova-item__dropcap' ) );
 
-const resizeAllDropcaps = () => {
-  dropcaps.forEach( resizeDropcap );
-}
+  const resizeAllDropcaps = () => {
+    dropcaps.forEach( resizeDropcap );
+  }
 
-const debouncedResizeAllDropcaps = debounce( resizeAllDropcaps, 100 );
+  const debouncedResizeAllDropcaps = debounce( scope.bind( resizeAllDropcaps ), 100 );
 
-domReady( resizeAllDropcaps );
+  scope.ready( resizeAllDropcaps );
 
-window.addEventListener( 'resize', debouncedResizeAllDropcaps );
-window.addEventListener( 'nb:layout', resizeAllDropcaps );
+  scope.on( window, 'resize', debouncedResizeAllDropcaps );
+  scope.on( window, 'nb:layout', resizeAllDropcaps );
+} );

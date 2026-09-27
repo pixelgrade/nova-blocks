@@ -35,11 +35,24 @@ const dispatchLayoutEvents = ( block, grid ) => {
 	window.dispatchEvent( new Event( BASE_LAYOUT_EVENT_NAME ) );
 };
 
+const TEARDOWN_PROPERTY = '__novablocksParametricGridTeardown';
+
+// Returns a teardown (frontend lifecycle, nova-blocks#661). A grid that is
+// already laid out keeps its layout: the engine consumes its source markup.
 export const handleParametricGrid = ( grid, block, attributes ) => {
+  if ( typeof grid[ TEARDOWN_PROPERTY ] === 'function' ) {
+    return grid[ TEARDOWN_PROPERTY ];
+  }
+
   const posts = Array.from( grid.children );
   const header = block.querySelector( '.nb-collection__header' );
   const body = block.querySelector( '.nb-collection__body' );
-  const onResize = debounce( recreateLayout, 100 );
+  let destroyed = false;
+  const onResize = debounce( () => {
+    if ( ! destroyed ) {
+      recreateLayout();
+    }
+  }, 100 );
 
   remove( header );
 
@@ -48,6 +61,15 @@ export const handleParametricGrid = ( grid, block, attributes ) => {
   addClass( block, 'novablocks-block--ready' );
 
   window.addEventListener( 'resize', onResize );
+
+  const teardown = () => {
+    destroyed = true;
+    window.removeEventListener( 'resize', onResize );
+  };
+
+  grid[ TEARDOWN_PROPERTY ] = teardown;
+
+  return teardown;
 
   function createLayout() {
 

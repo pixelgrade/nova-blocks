@@ -121,12 +121,24 @@ const observeOverlappingSets = ( overlappingSets ) => {
 // We are comparing the sticky block with all content blocks; while they
 // overlap we add a class that fades the sticky out and removes it from
 // hit-testing (visibility + pointer-events live in the sidecar stylesheet).
+//
+// Returns a teardown (frontend lifecycle, nova-blocks#661) that disconnects
+// the observers, unsubscribes and removes the resize listener.
 export const handleOverlappingOnScroll = () => {
+  let destroyed = false;
+  let teardown = () => {};
+  const cleanups = [];
 
   domReady( () => {
-    let teardown = () => {};
+    if ( destroyed ) {
+      return;
+    }
 
     const setup = () => {
+      if ( destroyed ) {
+        return;
+      }
+
       teardown();
       teardown = observeOverlappingSets( getOverlappingSets() );
     };
@@ -139,9 +151,16 @@ export const handleOverlappingOnScroll = () => {
     // late-arriving geometry settles (webfonts, pending images): the
     // band was measured at domReady and would otherwise go stale.
     const scheduleSetup = debounce( setup, 200 );
-    subscribeToDomChanges( scheduleSetup );
-    subscribeToSettleEvents( scheduleSetup );
+    cleanups.push( subscribeToDomChanges( scheduleSetup ) );
+    cleanups.push( subscribeToSettleEvents( scheduleSetup ) );
     window.addEventListener( 'resize', scheduleSetup );
+    cleanups.push( () => window.removeEventListener( 'resize', scheduleSetup ) );
   } );
 
+  return () => {
+    destroyed = true;
+    cleanups.splice( 0 ).forEach( cleanup => cleanup() );
+    teardown();
+    teardown = () => {};
+  };
 };

@@ -1,5 +1,4 @@
-import domReady from '@wordpress/dom-ready';
-import { getAttributes, IS_CUSTOMIZER, IS_EDITOR } from "@novablocks/utils";
+import { getAttributes, IS_CUSTOMIZER, IS_EDITOR, registerFrontendModule } from "@novablocks/utils";
 
 import { handleClassicGrid } from "./handle-classic-grid";
 import { handleLatticeGrid } from "./handle-lattice-grid";
@@ -8,7 +7,10 @@ import { handleParametricGrid } from "./handle-parametric-grid";
 
 import { initLoadMore } from "../load-more";
 
-domReady( () => {
+// A frontend module (nova-blocks#661): the layout engines' observers and
+// listeners end on teardown and start again for the next page of an AJAX
+// page swap.
+registerFrontendModule( 'novablocks/collection/grid', ( scope ) => scope.ready( () => {
 
   if ( IS_EDITOR || IS_CUSTOMIZER ) {
     return;
@@ -21,17 +23,19 @@ domReady( () => {
     const attributes = getAttributes( block );
 
     if ( 'lattice' === attributes.layoutStrategy ) {
-      handleLatticeGrid( grid, block, attributes );
+      const controller = handleLatticeGrid( grid, block, attributes );
+      scope.add( () => controller?.destroy?.() );
     } else if ( [ 'classic', 'carousel' ].includes( attributes.layoutStyle ) ) {
       handleClassicGrid( grid, block, attributes );
     }
 
     if ( 'parametric' === attributes.layoutStyle ) {
-      handleParametricGrid( grid, block, attributes );
+      scope.add( handleParametricGrid( grid, block, attributes ) );
     }
 
     if ( 'masonry' === attributes.layoutStyle ) {
-      handleMasonryGrid( grid, block, attributes );
+      const controller = handleMasonryGrid( grid, block, attributes );
+      scope.add( () => controller?.destroy?.() );
     }
   } );
 
@@ -40,4 +44,4 @@ domReady( () => {
   const resize = new CustomEvent( 'nb:layout' );
   window.dispatchEvent( resize );
 
-} )
+} ) );

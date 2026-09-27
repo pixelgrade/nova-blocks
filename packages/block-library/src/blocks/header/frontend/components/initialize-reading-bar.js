@@ -6,10 +6,10 @@ export const initializeReadingBar = ( header ) => {
   const progressBar = document.querySelector( '.js-reading-progress' );
 
   if ( ! readingBar ) {
-    return;
+    return () => {};
   }
 
-  bindMenuLabelClick( header );
+  const unbindMenuLabelClick = bindMenuLabelClick( header );
 
   if ( firstRow && readingBar ) {
     readingBar.style.display = 'block';
@@ -25,7 +25,7 @@ export const initializeReadingBar = ( header ) => {
   let showingReading = false;
   let showingNext = false;
 
-  onScrollRAF( ( newScrollY, oldScrollY ) => {
+  const stopScroll = onScrollRAF( ( newScrollY, oldScrollY ) => {
     const progress = clamp( ( newScrollY - min ) / ( max - min ), 0, 1 );
     const scrollingDown = newScrollY > oldScrollY;
     const showSomething = scrollingDown && newScrollY > min;
@@ -46,16 +46,28 @@ export const initializeReadingBar = ( header ) => {
       progressBar.style.setProperty( '--progress', progress );
     }
   } );
+
+  // Teardown (nova-blocks#661): end the frame loop and the click binding.
+  return () => {
+    stopScroll();
+    unbindMenuLabelClick();
+  };
 }
 
 const bindMenuLabelClick = ( header ) => {
   const menuButton = document.querySelector( '.js-sticky-menu-trigger' );
 
-  if ( menuButton ) {
-    menuButton.addEventListener( 'click', () => {
-      removeClass( header, 'nb-header--reading nb-header--next' )
-    } );
+  if ( ! menuButton ) {
+    return () => {};
   }
+
+  const onClick = () => {
+    removeClass( header, 'nb-header--reading nb-header--next' )
+  };
+
+  menuButton.addEventListener( 'click', onClick );
+
+  return () => menuButton.removeEventListener( 'click', onClick );
 }
 
 const getScrollTriggerBounds = () => {

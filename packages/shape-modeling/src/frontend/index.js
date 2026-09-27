@@ -1,11 +1,10 @@
-import domReady from '@wordpress/dom-ready';
-
 import {
   getAttributes,
   getColorSignalClassnames,
   IS_EDITOR,
   IS_CUSTOMIZER,
   addClass,
+  registerFrontendModule,
 } from "@novablocks/utils";
 
 import {
@@ -22,7 +21,8 @@ import {
   wrapTarget,
 } from "./utils";
 
-domReady( () => {
+// A frontend module (nova-blocks#661): runs again for every AJAX page swap.
+registerFrontendModule( 'novablocks/shape-modeling', ( scope ) => scope.ready( () => {
 
   if ( IS_EDITOR || IS_CUSTOMIZER ) {
     return;
@@ -31,6 +31,11 @@ domReady( () => {
   const targets = document.querySelectorAll( '[data-shape-modeling-target]' );
 
   targets.forEach( target => {
+    // Idempotent: a target that is already wrapped keeps its shape.
+    if ( target.closest( '.blob-mix' ) ) {
+      return;
+    }
+
     const seedOffsetData = target.dataset.shapeModelingShapeOffset;
     const seedOffset = seedOffsetData ? parseInt( seedOffsetData, 10 ) : 0;
     const block = target.closest( '[data-blob-sides]' );
@@ -73,6 +78,4 @@ domReady( () => {
 
   } );
 
-} );
-
-
+} ) );

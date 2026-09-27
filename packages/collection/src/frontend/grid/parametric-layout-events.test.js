@@ -34,6 +34,6 @@ test( 'recreateLayout clears item transforms before serializing the cards', () =
 test( 'scrolling effect refreshes cached container boxes after parametric layout updates', () => {
   assert.match(
     scrollingEffectSource,
-    /window\.addEventListener\(\s*'nb:parametric-layout',\s*updateAllContainersState\s*\);/
+    /scope\.on\(\s*window,\s*'nb:parametric-layout',\s*updateAllContainersState\s*\);/
   );
 } );

@@ -43,7 +43,7 @@ class Header extends HeaderBase {
     }
 
     if ( this.isSticky ) {
-      initializeReadingBar( this.element );
+      this.addTeardown( initializeReadingBar( this.element ) );
     }
 
     this.onResize();
@@ -55,6 +55,41 @@ class Header extends HeaderBase {
     if ( this.allowsTransparency ) {
       addClass( this.element, 'nb-header--transparent' );
     }
+  }
+
+  // Re-measure and re-apply colours for the page under the header, e.g.
+  // after an AJAX page swap replaced the neighbour (nova-blocks#661). The
+  // same header element keeps its instance: nothing is rebuilt.
+  refresh() {
+    if ( this.destroyed || ! this.element?.isConnected ) {
+      return;
+    }
+
+    this.adjacentElement = this.getAdjacentElement( this.element );
+    this.adjacentElementTargetChild = this.findProperElement( this.adjacentElement ) || this.adjacentElement;
+    this.colorsElement = this.findColorsElement( this.adjacentElementTargetChild );
+    this.paddingTopTargets = this.findPaddingTopTargets( this.adjacentElementTargetChild );
+
+    addClass( this.adjacentElementTargetChild, 'nb-header-neighbour' );
+
+    this.gatherPromoBars();
+    this.rows.forEach( row => row.setTransparentColorsSource?.( this.colorsElement ) );
+    this.mobileHeader?.setTransparentColorsSource?.( this.colorsElement );
+
+    this.onResize();
+    this.mobileHeader?.onResize?.();
+    this.toggleRowsColors( ! ( this.isSticky && above( 'lap' ) && this.shouldBeSticky ) );
+  }
+
+  // Stop the header and everything it started (nova-blocks#661).
+  destroy() {
+    if ( this.destroyed ) {
+      return;
+    }
+
+    HeaderBase.prototype.destroy.call( this );
+    this.mobileHeader?.destroy?.();
+    this.stickyHeader?.destroy?.();
   }
 
   gatherPromoBars() {

@@ -1,6 +1,6 @@
 import $ from 'jquery';
 
-import { debounce, isMobileDevice, titleCase } from '@novablocks/utils';
+import { debounce, isMobileDevice, registerFrontendModule, titleCase } from '@novablocks/utils';
 import { getIcon } from "@novablocks/icons";
 
 import Shariff from 'shariff';
@@ -9,7 +9,9 @@ import { findSharingTrigger, prependSharingTriggerIcon } from './trigger';
 
 import { __ } from '@wordpress/i18n';
 
-(function() {
+// A frontend module (nova-blocks#661): the overlays it moves to <body> and
+// the window/body handlers it binds leave with the page on teardown.
+registerFrontendModule( 'novablocks/sharing-overlay', ( scope ) => {
 
   const $adminBar = $( '#wpadminbar' );
 
@@ -24,6 +26,11 @@ import { __ } from '@wordpress/i18n';
 		$block.attr( 'data-nb-sharing-initialized', '1' );
 
 		const $overlay = $block.find( '.js-sharing-overlay' ).appendTo( 'body' );
+
+		scope.add( () => {
+			$overlay.remove();
+			$block.removeAttr( 'data-nb-sharing-initialized' );
+		} );
 		const attributes = $block.data();
 
 		const $wrap = $overlay.find( '.novablocks-sharing__wrap' );
@@ -92,8 +99,9 @@ import { __ } from '@wordpress/i18n';
 			} );
 		}
 
-    const onResize = debounce( positionPopup, 100 );
+    const onResize = debounce( scope.bind( positionPopup ), 100 );
 		$( window ).on( 'resize', onResize );
+		scope.add( () => $( window ).off( 'resize', onResize ) );
 
 		$openButton.on( 'click', function( e ) {
 			e.preventDefault();
@@ -115,9 +123,8 @@ import { __ } from '@wordpress/i18n';
 			e.stopPropagation();
 		} );
 
-		$( 'body' ).on( 'click', function( e ) {
-			hidePopup();
-		} );
+		$( 'body' ).on( 'click', hidePopup );
+		scope.add( () => $( 'body' ).off( 'click', hidePopup ) );
 
 	} );
 
@@ -364,4 +371,4 @@ import { __ } from '@wordpress/i18n';
 		return $group;
 	}
 
-})();
+} );

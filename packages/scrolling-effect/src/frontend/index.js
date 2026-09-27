@@ -1,41 +1,48 @@
-import domReady from "@wordpress/dom-ready";
-import { getContainers, initializeContainers, updateContainersStyle, updateContainerState } from "./utils";
+import { getContainers, initializeContainers, REFERENCES, updateContainersStyle, updateContainerState } from "./utils";
 
-import { debounce, IS_CUSTOMIZER, IS_EDITOR } from "@novablocks/utils";
+import { debounce, IS_CUSTOMIZER, IS_EDITOR, registerFrontendModule } from "@novablocks/utils";
 
-const initialize = () => {
+// A frontend module (nova-blocks#661): its listeners and its frame loop end
+// on teardown and start again for the next page of an AJAX page swap.
+registerFrontendModule( 'novablocks/scrolling-effect', ( scope ) => {
 
   if ( IS_EDITOR || IS_CUSTOMIZER ) {
     return;
   }
 
   let containers = [];
+  let frameId = null;
 
   const updateAllContainersState = () => {
     containers.forEach( updateContainerState );
   }
 
-  const debouncedUpdateAllContainersState = debounce( updateAllContainersState, 100 );
+  const debouncedUpdateAllContainersState = debounce( scope.bind( updateAllContainersState ), 100 );
 
-  domReady( () => {
+  scope.ready( () => {
     containers = getContainers();
     initializeContainers( containers );
     updateAllContainersState();
   } );
 
-  window.addEventListener( 'scroll', updateAllContainersState );
-  window.addEventListener( 'resize', debouncedUpdateAllContainersState );
-  window.addEventListener( 'nb:slick-update', updateAllContainersState );
-  window.addEventListener( 'nb:masonry-layout', updateAllContainersState );
-  window.addEventListener( 'nb:parametric-layout', updateAllContainersState );
-  window.addEventListener( 'load', updateAllContainersState );
+  scope.on( window, 'scroll', updateAllContainersState );
+  scope.on( window, 'resize', debouncedUpdateAllContainersState );
+  scope.on( window, 'nb:slick-update', updateAllContainersState );
+  scope.on( window, 'nb:masonry-layout', updateAllContainersState );
+  scope.on( window, 'nb:parametric-layout', updateAllContainersState );
+  scope.on( window, 'load', updateAllContainersState );
 
   const parallaxUpdateLoop = () => {
     updateContainersStyle( containers );
-    requestAnimationFrame( parallaxUpdateLoop );
+    frameId = requestAnimationFrame( parallaxUpdateLoop );
   }
 
-  requestAnimationFrame( parallaxUpdateLoop );
-}
+  frameId = requestAnimationFrame( parallaxUpdateLoop );
 
-initialize();
+  scope.add( () => {
+    cancelAnimationFrame( frameId );
+    containers = [];
+    Object.keys( REFERENCES ).forEach( refId => delete REFERENCES[ refId ] );
+  } );
+
+} );

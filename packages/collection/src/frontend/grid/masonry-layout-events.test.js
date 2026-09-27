@@ -32,6 +32,6 @@ test( 'the frontend Masonry runtime remains compatible with the webpack 4 bundle
 test( 'scrolling effect refreshes cached container boxes after masonry layout updates', () => {
   assert.match(
     scrollingEffectSource,
-    /window\.addEventListener\(\s*'nb:masonry-layout',\s*updateAllContainersState\s*\);/
+    /scope\.on\(\s*window,\s*'nb:masonry-layout',\s*updateAllContainersState\s*\);/
   );
 } );

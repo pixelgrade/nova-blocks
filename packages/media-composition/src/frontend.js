@@ -1,6 +1,4 @@
-import domReady from '@wordpress/dom-ready';
-
-import { applyCSS, getAttributes } from '@novablocks/utils';
+import { applyCSS, getAttributes, registerFrontendModule } from '@novablocks/utils';
 
 import {
   getMediaCompositionCSSProps,
@@ -8,7 +6,8 @@ import {
   GridItemCollection
 } from './utils';
 
-domReady( () => {
+// A frontend module (nova-blocks#661): runs again for every AJAX page swap.
+registerFrontendModule( 'novablocks/media-composition', ( scope ) => scope.ready( () => {
 
   const compositions = document.querySelectorAll( '.novablocks-media-composition' );
 
@@ -34,4 +33,4 @@ domReady( () => {
   const grids = document.querySelectorAll( '.novablocks-media-composition__grid' );
   grids.forEach( safariHeightFix );
 
-} );
+} ) );

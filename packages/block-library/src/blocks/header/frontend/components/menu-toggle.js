@@ -36,18 +36,38 @@ class MenuToggle {
   }
 
   bindEvents () {
-    this.input.addEventListener( 'change', event => {
+    this.onInputChange = event => {
       this.syncExpandedState();
       this.options.onChange.call( this, event, this );
-    } );
+    };
+
+    this.input.addEventListener( 'change', this.onInputChange );
 
     if ( this.element?.tagName === 'BUTTON' ) {
-      this.element.addEventListener( 'click', event => {
+      this.onButtonClick = event => {
         event.preventDefault();
         this.setChecked( !this.input.checked );
-      } );
+      };
+
+      this.element.addEventListener( 'click', this.onButtonClick );
     }
 
+  }
+
+  // Unbind before an AJAX page swap (nova-blocks#661): the toggle persists
+  // when it lives outside the swapped container.
+  destroy () {
+    this.input.removeEventListener( 'change', this.onInputChange );
+
+    if ( this.onButtonClick ) {
+      this.element.removeEventListener( 'click', this.onButtonClick );
+    }
+
+    const controller = window[ sharedEscapeControllerKey ];
+
+    if ( controller?.current === this ) {
+      controller.current = null;
+    }
   }
 
   onEscape ( event ) {

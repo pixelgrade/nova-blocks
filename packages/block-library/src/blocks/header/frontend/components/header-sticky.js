@@ -46,7 +46,16 @@ class HeaderSticky extends HeaderBase {
     this.onResize();
     super.initialize();
 
-    initializeReadingBar( this.element );
+    this.addTeardown( initializeReadingBar( this.element ) );
+  }
+
+  destroy() {
+    super.destroy();
+
+    // The sticky clone is ours: it leaves with the header.
+    if ( this.stickyRow && this.element ) {
+      this.element.remove();
+    }
   }
 
   onResize() {

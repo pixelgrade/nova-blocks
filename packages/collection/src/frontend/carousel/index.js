@@ -1,13 +1,8 @@
 import $ from 'jquery';
-import { IS_CUSTOMIZER, IS_EDITOR } from "@novablocks/utils";
+import { IS_CUSTOMIZER, IS_EDITOR, registerFrontendModule } from "@novablocks/utils";
 import { onBeforeSlideChange } from './utils';
 
-// on document ready
-$( () => {
-  initializeCarousels();
-} );
-
-const initializeCarousels = () => {
+const initializeCarousels = ( scope ) => {
 
   if ( IS_EDITOR || IS_CUSTOMIZER ) {
     return;
@@ -91,8 +86,22 @@ const initializeCarousels = () => {
 
     if ( $carousel.children().length > 1 ) {
       $carousel.slick( SLICK_OPTIONS );
+      scope.add( () => {
+        $carousel.off( 'beforeChange' );
+
+        if ( $carousel.hasClass( 'slick-initialized' ) ) {
+          $carousel.slick( 'unslick' );
+        }
+      } );
     }
 
   } );
 
 };
+
+// A frontend module (nova-blocks#661): Slick binds window listeners per
+// carousel, so teardown unslicks every carousel this module started.
+// jQuery's ready keeps the original timing (after the grid engines).
+registerFrontendModule( 'novablocks/collection/carousel', ( scope ) => {
+  $( scope.bind( () => initializeCarousels( scope ) ) );
+} );

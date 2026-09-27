@@ -65,6 +65,18 @@ class HeaderColors {
     }
   }
 
+  // The page under the header changed (an AJAX page swap, or a refresh):
+  // re-read the transparent colours from the new source. The initial colours
+  // stay: they were read from the row itself before anything painted it.
+  setTransparentColorsSource( transparentColorsSource ) {
+    this.transparentColorsSource = transparentColorsSource ? transparentColorsSource : this.getFirstUsefulBlock();
+    this.transparentColorClasses = this.initialColorClasses;
+
+    if ( this.transparentColorsSource ) {
+      this.transparentColorClasses = getColorSetClasses( this.transparentColorsSource ).filter( classname => classname !== 'sm-color-signal-0' ).join( ' ' );
+    }
+  }
+
   toggleColors( isTransparent ) {
     toggleClasses( this.element, isTransparent ? this.transparentColorClasses : this.initialColorClasses );
   }

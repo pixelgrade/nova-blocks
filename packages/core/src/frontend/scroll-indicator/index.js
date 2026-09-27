@@ -1,12 +1,16 @@
 import $ from 'jquery';
-
-const $scrollButtons = $( '.nb-scroll-indicator' ).filter( ( i, obj ) => {
-  return $( obj ).closest( '[data-scroll-indicator-block]' ).length;
-} );
+import { registerFrontendModule } from '@novablocks/utils';
 
 const SCROLL_BUTTON_HIDDEN_CLASS = 'nb-scroll-indicator--hidden';
+const EVENT_NAMESPACE = '.nbScrollIndicator';
 
-(function() {
+// A frontend module (nova-blocks#661): torn down and set up again for every
+// AJAX page swap instead of re-executing this script.
+registerFrontendModule( 'novablocks/core/scroll-indicator', ( scope ) => {
+
+  const $scrollButtons = $( '.nb-scroll-indicator' ).filter( ( i, obj ) => {
+    return $( obj ).closest( '[data-scroll-indicator-block]' ).length;
+  } );
 
   if ( ! $scrollButtons.length ) {
     return;
@@ -23,7 +27,7 @@ const SCROLL_BUTTON_HIDDEN_CLASS = 'nb-scroll-indicator--hidden';
     obj.dataset.isMiddle = isMiddle;
     obj.dataset.heroBox = JSON.stringify( heroBox );
 
-    $scrollButton.on( 'click', function() {
+    $scrollButton.off( 'click' + EVENT_NAMESPACE ).on( 'click' + EVENT_NAMESPACE, function() {
       const heroBoxTop = heroBox.y || heroBox.top;
 
       window.scrollTo( {
@@ -35,7 +39,12 @@ const SCROLL_BUTTON_HIDDEN_CLASS = 'nb-scroll-indicator--hidden';
 
   updateScroll();
 
-  $( window ).on( 'scroll', updateScroll );
+  $( window ).on( 'scroll' + EVENT_NAMESPACE, updateScroll );
+
+  scope.add( () => {
+    $( window ).off( 'scroll', updateScroll );
+    $scrollButtons.off( 'click' + EVENT_NAMESPACE );
+  } );
 
   function updateScroll() {
     windowScrollY = window.scrollY;
@@ -65,4 +74,4 @@ const SCROLL_BUTTON_HIDDEN_CLASS = 'nb-scroll-indicator--hidden';
 
   }
 
-})();
+} );

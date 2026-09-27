@@ -1,9 +1,12 @@
 import '@novablocks/icons'
+import { registerFrontendModule } from '@novablocks/utils';
 
 const COPY_LINK_SELECTOR = '.copy-comment-link';
 const NOTIFICATION_VISIBLE_CLASS = 'notification--is-visible';
 
-(function ($, window, undefined) {
+// A frontend module (nova-blocks#661): the document-level handler it binds
+// is removed on teardown, before an AJAX page swap.
+registerFrontendModule( 'novablocks/post-comments', ( scope ) => (function ($, window, undefined) {
 
   let $conversationsBlock = $('.novablocks-conversations'),
     $commentList = $('.comment-list'),
@@ -23,6 +26,13 @@ const NOTIFICATION_VISIBLE_CLASS = 'notification--is-visible';
     $(document).on('click', handleCommentDropdownState);
     // Handle comment direct link copying to the clipboard.
     $commentList.on('click', COPY_LINK_SELECTOR, copyLinkToClipboard)
+
+    scope.add(() => {
+      $(document).off('click', handleCommentDropdownState);
+      $commentList.off('click', COPY_LINK_SELECTOR, copyLinkToClipboard);
+      $commentList.off('click', '.toggle-comment-highlight');
+      clearTimeout(notificationTimeout);
+    });
   }
 
   function highlightCommentOnClick () {
@@ -115,4 +125,4 @@ const NOTIFICATION_VISIBLE_CLASS = 'notification--is-visible';
     }
   }
 
-})(jQuery, window);
+})(jQuery, window) );

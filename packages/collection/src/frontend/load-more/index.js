@@ -38,9 +38,12 @@ export const initLoadMore = ( doc = document ) => {
     const query = nav.closest( '.wp-block-query' );
     const grid = query ? query.querySelector( '.nb-collection__layout' ) : null;
 
-    if ( ! query || ! grid ) {
+    // Idempotent: a navigation that is already bound keeps its handler.
+    if ( ! query || ! grid || nav.dataset.nbLoadMoreBound ) {
       return;
     }
+
+    nav.dataset.nbLoadMoreBound = 'true';
 
     const queryIndex = [ ...doc.querySelectorAll( '.wp-block-query' ) ].indexOf( query );
 

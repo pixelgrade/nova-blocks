@@ -10,18 +10,16 @@
  */
 
 const subscribers = new Set();
-let observerStarted = false;
+let observer = null;
 
 const hasElementNodes = ( nodes ) => Array.prototype.some.call( nodes, node => node.nodeType === 1 );
 
 const ensureObserver = () => {
-  if ( observerStarted || ! window.MutationObserver || ! document.body ) {
+  if ( observer || ! window.MutationObserver || ! document.body ) {
     return;
   }
 
-  observerStarted = true;
-
-  const observer = new window.MutationObserver( mutations => {
+  observer = new window.MutationObserver( mutations => {
     const relevant = mutations.some( mutation =>
       mutation.type === 'childList'
       && ( hasElementNodes( mutation.addedNodes ) || hasElementNodes( mutation.removedNodes ) )
@@ -35,11 +33,24 @@ const ensureObserver = () => {
   observer.observe( document.body, { childList: true, subtree: true } );
 };
 
+// The observer lives only while someone listens: the last unsubscribe (a
+// frontend module teardown before an AJAX page swap) disconnects it, and
+// the next subscribe starts a fresh one on the current document.body.
+const releaseObserver = () => {
+  if ( subscribers.size || ! observer ) {
+    return;
+  }
+
+  observer.disconnect();
+  observer = null;
+};
+
 export const subscribeToDomChanges = ( callback ) => {
   subscribers.add( callback );
   ensureObserver();
 
   return () => {
     subscribers.delete( callback );
+    releaseObserver();
   };
 };

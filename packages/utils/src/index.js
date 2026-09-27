@@ -7,10 +7,12 @@ export * from './color-signal';
 export * from './debounce';
 export * from './duotone';
 export * from './focal-point';
+export * from './frontend-lifecycle';
 export * from './has-touch-screen';
 export * from './is-mobile-device';
 export * from './media';
 export * from './media-query';
+export * from './on-scroll-raf';
 export * from './overlay-filter';
 export * from './random';
 export * from './scroll-from-to';
@@ -347,32 +349,6 @@ export const getPreviewAttributes = ( attributes ) => {
 export const needsPreview = ( attributes ) => {
   return [ "parametric", "carousel", "masonry" ].includes( attributes.layoutStyle ) && "auto" !== attributes.contentType;
 };
-
-export const onScrollRAF = ( callback ) => {
-  let scrollY = window.pageYOffset;
-  let lastScrollY = -1;
-  let frameRendered = false;
-
-  window.addEventListener( 'scroll', () => {
-    scrollY = window.pageYOffset;
-    frameRendered = false;
-  } );
-
-  window.addEventListener( 'resize', () => {
-    frameRendered = false;
-  } );
-
-  const tick = () => {
-    if ( ! frameRendered ) {
-      callback( scrollY, lastScrollY );
-      lastScrollY = scrollY;
-      frameRendered = true;
-    }
-    requestAnimationFrame( tick );
-  }
-
-  requestAnimationFrame( tick );
-}
 
 export const matches = ( el, selector ) => {
   return ( el.matches || el.matchesSelector || el.msMatchesSelector || el.mozMatchesSelector || el.webkitMatchesSelector || el.oMatchesSelector ).call( el, selector );

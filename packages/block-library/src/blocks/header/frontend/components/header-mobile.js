@@ -210,6 +210,41 @@ class HeaderMobile extends HeaderBase {
     this.foldObserver.observe( this.masthead );
   }
 
+  // The page under the header changed: take the transparent colours from
+  // the new neighbour and re-apply them (nova-blocks#661).
+  setTransparentColorsSource( colorsElement ) {
+    this.colors.setTransparentColorsSource( colorsElement );
+    this.menuToggleColors.setTransparentColorsSource( colorsElement );
+
+    if ( this.mastheadColors ) {
+      this.mastheadColors.setTransparentColorsSource( colorsElement );
+      this.mastheadColors.toggleColors( this.parent.allowsTransparency );
+    }
+  }
+
+  // End listeners, observers and timers, and remove the elements this
+  // header generated outside its own markup (nova-blocks#661).
+  destroy() {
+    if ( this.destroyed ) {
+      return;
+    }
+
+    super.destroy();
+    this.clearMobileMenuOpenColorClassRemoval();
+
+    if ( this.foldObserver ) {
+      this.foldObserver.disconnect();
+      this.foldObserver = null;
+    }
+
+    ( this.fitTextCleanups || [] ).splice( 0 ).forEach( cleanup => cleanup() );
+    this.menuToggle?.destroy?.();
+
+    this.element?.remove();
+    this.masthead?.remove();
+    this.buttonMenu?.closest( '.nb-header__buttons-menu' )?.remove();
+  }
+
   getBarHeight() {
     return this.box?.height || 0;
   }

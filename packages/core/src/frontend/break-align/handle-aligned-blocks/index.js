@@ -50,21 +50,41 @@ const handleCustomizerChanges = ( onChange ) => {
 
 // Any image finishing to load after the initial measurement changes vertical
 // bands — the same bug class as measuring before webfonts settle. Bounded:
-// one listener per pending image, self-removing.
+// one listener per pending image, self-removing. Returns a remover for the
+// listeners still pending (module teardown).
 const remeasureOnImageSettle = ( onChange ) => {
-  Array.from( document.images )
+  const removers = Array.from( document.images )
     .filter( img => ! ( img.complete && img.naturalWidth > 0 ) )
-    .forEach( img => {
+    .map( img => {
       img.addEventListener( 'load', onChange, { once: true } );
       img.addEventListener( 'error', onChange, { once: true } );
+
+      return () => {
+        img.removeEventListener( 'load', onChange, { once: true } );
+        img.removeEventListener( 'error', onChange, { once: true } );
+      };
     } );
+
+  return () => removers.forEach( remove => remove() );
 };
 
+// Returns a teardown (frontend lifecycle, nova-blocks#661): it removes every
+// listener and subscription, and silences pending debounced/async re-runs.
 export const handleAlignedBlocks = () => {
+  let destroyed = false;
+  const cleanups = [];
 
-  const onChange = debounce( resetAlignedBlocks, 200 );
+  const onChange = debounce( () => {
+    if ( ! destroyed ) {
+      resetAlignedBlocks();
+    }
+  }, 200 );
 
   domReady( () => {
+    if ( destroyed ) {
+      return;
+    }
+
     // Initial decisions run at domReady — the same runtime shape the old
     // engine had, which in practice lands before first paint on this stack
     // (measured CLS 0 with throttled webfonts) though that is not an
@@ -81,14 +101,19 @@ export const handleAlignedBlocks = () => {
       document.fonts.ready.then( onChange );
     }
 
-    remeasureOnImageSettle( onChange );
+    cleanups.push( remeasureOnImageSettle( onChange ) );
     // Re-collect the overlap sets on element-level DOM change — via the
     // SHARED delegated observer (dom-change-subscription), which
     // structurally cannot self-trigger on our class/style writes.
-    subscribeToDomChanges( onChange );
+    cleanups.push( subscribeToDomChanges( onChange ) );
     handleCustomizerChanges( onChange );
   } );
 
   window.addEventListener( 'resize', onChange );
+  cleanups.push( () => window.removeEventListener( 'resize', onChange ) );
 
+  return () => {
+    destroyed = true;
+    cleanups.splice( 0 ).forEach( cleanup => cleanup() );
+  };
 };
