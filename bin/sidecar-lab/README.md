@@ -39,7 +39,7 @@ stable).
 - **3 lab posts** (`sidecar-lab-post-1..3`) — deterministic posts (fixed
   excerpt, featured image = the fixture attachment) backing the query-loop
   pass-through fixture. Recreated each run; deleted by the same prefix sweep.
-- **68 published pages**, slug prefix `sidecar-lab-` (plus one `sidecar-lab-tpl-*` wp_template per template fixture, swept by the same prefix). The first 17 are the
+- **70 published pages**, slug prefix `sidecar-lab-` (plus one `sidecar-lab-tpl-*` wp_template per template fixture, swept by the same prefix). The first 17 are the
   Phase 1-3 family pages (each carries the full content-variant battery as
   successive sections — wide image, full image, alignleft, alignright,
   Group-wrapped wide image, captioned image — over body copy long enough to
@@ -104,6 +104,8 @@ stable).
 | `site-frame-header` | a plain page with Anima's Border Site Frame turned on for this page only (the generator installs the `sidecar-lab-site-frame.php` mu-plugin, scoped by request path). Anima pins the Nova header bars inside the frame; the layout-child stretch must not out-rank that pin (no sideways scroll: the probe's `docWidth`, the `header` role). A default and a wide separator in Post Content (`sl-probe`) still fill their track (#660) |
 | **Collage canvas outside the layout grid (p) — GitHub #671** | |
 | `collage-canvas` | custom template: a `layout.type: default` canvas Group (marker `nb-group--fill`) directly in `.wp-site-blocks`, holding the header part and a `main` Group with a two-column query card list, like Patch LT's collage. Outside a layout grid its children keep the content-width cap: the `main` Group (`sl-probe`) stays at the content width |
+| **Post Content in a DB-saved page template (q) — GitHub #663** | |
+| `db-page-template`, `db-page-template-control` | custom template shaped like a DB-saved Anima LT `page` template (header, a constrained `main` Group holding a wide featured image, the title and Post Content, footer; comments left out) over a full-width Color Signal band, probed paragraphs (`sl-probe`) and the reduced battery; the control is the same body in Anima's own page template. Post Content spans the Group box, so its paragraphs, wide and full blocks match the control at every width |
 | **Phase 5 — Task 5.2 gate (b)** | |
   | `color-signal-group` | No rail; a PLAIN group-wrapped wide (subgrid pass-through: escapes to ws/we) beside a COLOR-SIGNAL group-wrapped wide (a box group EXCLUDED from the pass-through: box stays content-width, background does not bleed, child stays constrained). The two wide-image rects differ — the exclusion regression pin. |
 

@@ -1082,6 +1082,30 @@ function sl_page_definitions( int $img, array $post_ids = [] ): array {
 		'template_raw' => sl_collage_canvas_template( $post_ids ),
 	];
 
+	// --- (q) Post Content in a DB-saved constrained page template (GitHub
+	//         #663). A `page` template saved in the database skips Anima LT's
+	//         Nova variant and renders its plain template: a constrained `main`
+	//         Group holding the featured image, the title and Post Content.
+	//         Post Content is a layout root there and must keep the full width
+	//         of the tracks it declares, so its reading column, wide and full
+	//         blocks land where they do on the control page (the same content
+	//         in Anima's own page template). Probed: the band, the paragraphs
+	//         (`sl-probe`), Post Content (role `root`) and wide/full blocks. ---
+	$pages['db-page-template'] = [
+		'title'        => 'Sidecar Lab — Post Content in a DB-saved constrained page template',
+		'description'  => 'Custom template shaped like a DB-saved Anima LT page template: header, a constrained main Group (wide featured image, title, Post Content), footer. Post Content spans the Group box, so its paragraphs, wide and full blocks match db-page-template-control (#663).',
+		'families'     => [ 'post-content-template', 'db-template', 'rail-none' ],
+		'content'      => sl_db_page_battery( $img ),
+		'template_raw' => sl_db_page_template(),
+		'thumbnail'    => true,
+	];
+	$pages['db-page-template-control'] = [
+		'title'       => 'Sidecar Lab — DB-saved page template control',
+		'description' => 'The db-page-template content in Anima\'s own page template (no custom template): the reference geometry for #663.',
+		'families'    => [ 'db-template', 'rail-none' ],
+		'content'     => sl_db_page_battery( $img ),
+	];
+
 	$pages['aligned-page'] = [
 		'title'       => 'Sidecar Lab — Aligned images on a plain page',
 		'description' => 'A plain page (no custom template, no Sidecar in the body): Post Content holds the #656 aligned battery (alignleft 190x240, alignright 300px, text beside them).',
@@ -1202,6 +1226,40 @@ function sl_separator_battery(): string {
 		. '<!-- wp:separator {"align":"wide","className":"sl-probe sl-separator-wide"} -->' . "\n"
 		. '<hr class="wp-block-separator alignwide has-alpha-channel-opacity sl-probe sl-separator-wide"/>' . "\n"
 		. '<!-- /wp:separator -->' . "\n\n";
+}
+
+/**
+ * The (q) page body (GitHub #663): a full-width Color Signal band, then
+ * probed paragraphs around the reduced wide/full battery.
+ */
+function sl_db_page_battery( int $img ): string {
+	$para = static function ( string $class, string $text ): string {
+		return '<!-- wp:paragraph {"className":"sl-probe ' . $class . '"} -->' . "\n"
+			. '<p class="sl-probe ' . $class . '">' . $text . '</p>' . "\n"
+			. '<!-- /wp:paragraph -->' . "\n\n";
+	};
+	return '<!-- wp:group {"align":"full","className":"sm-color-signal-3 sm-palette-1 sm-variation-12 sl-db-band","layout":{"type":"constrained"}} -->' . "\n"
+		. '<div class="wp-block-group alignfull sm-color-signal-3 sm-palette-1 sm-variation-12 sl-db-band">' . "\n"
+		. sl_heading( 'A full-width Color Signal band' )
+		. $para( 'sl-db-band-para', 'A paragraph inside the full-width band keeps the reading column.' )
+		. "</div>\n<!-- /wp:group -->\n\n"
+		. $para( 'sl-db-para', 'The first body paragraph sits on the reading column of Post Content, exactly where it sits in the default page template.' )
+		. sl_content_battery_reduced( $img )
+		. $para( 'sl-db-para-last', 'The last body paragraph closes the page on the same reading column.' );
+}
+
+/**
+ * The (q) template (GitHub #663): Anima LT's plain `page` template, the shape
+ * a `page` template saved in the database renders (comments left out).
+ */
+function sl_db_page_template(): string {
+	return '<!-- wp:template-part {"slug":"header","tagName":"header"} /-->' . "\n\n"
+		. '<!-- wp:group {"tagName":"main","layout":{"type":"constrained"}} -->' . "\n" . '<main class="wp-block-group">'
+		. '<!-- wp:post-featured-image {"align":"wide"} /-->' . "\n"
+		. '<!-- wp:post-title {"level":1} /-->' . "\n"
+		. '<!-- wp:post-content {"layout":{"inherit":true}} /-->'
+		. '</main>' . "\n" . '<!-- /wp:group -->' . "\n\n"
+		. '<!-- wp:template-part {"slug":"footer","tagName":"footer"} /-->' . "\n";
 }
 
 /**

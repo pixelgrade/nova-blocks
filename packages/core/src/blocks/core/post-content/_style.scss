@@ -31,3 +31,36 @@
   max-width: none;
   margin-inline: 0 !important;
 }
+
+// Post Content in a template-level Group (GitHub #663). A `page` template
+// saved in the database (Anima LT's plain template: a constrained `main` Group
+// holding the featured image, the title and Post Content) puts Post Content
+// directly in a Group. Its parent is no Nova layout grid, so Post Content is a
+// layout ROOT there and declares its own tracks from its own box, as it does
+// in Anima's page template, where it spans the viewport. The Group child cap
+// ((0,3,0) `max-width: var(--nb-content-width)`, or an authored Group measure
+// at (0,4,0)) and WordPress's constrained `max-width` beat the root's (0,1,0)
+// `max-width: none`, and the Group's side padding insets it further. The grid
+// still subtracted both rails and gaps from that narrow box, so the content
+// tracks came out at 0: paragraphs as wide as the center gap (60.6px at 1280).
+//
+// Post Content keeps the full width of the tracks it declares: no cap, and it
+// runs through the Group's side padding like the Group's own full children
+// (`margin: -padding`), over WordPress's `margin: auto !important`. Its grid is
+// then drawn on the same box as in the default template, so its reading,
+// wide and full columns land on the same lines. Only Post Content's own box
+// changes; no track var and no Group rule does, and the Group's other children
+// (title, featured image) keep the Group cap.
+//
+// Only where the Group is not itself in a Nova layout grid: there a plain
+// Group is a subgrid pass-through (core/group/style.scss) that owns its
+// children's boxes. The `.wp-site-blocks` root counts as outside, so the Site
+// Editor canvas (`.is-root-container.wp-site-blocks`) matches the front end, as
+// in #667 / #671. A row Group has no side padding. The never-matching
+// `:not()` argument lifts the rule to (0,5,0), over the measure cap.
+:where(:not(:is(#{$nb-layout-grid-parents}):not(.wp-site-blocks))) > .wp-block-group:not(.wp-block-row) > .wp-block-post-content:not(.nb-layout-item.nb-layout-item) {
+  width: auto;
+  max-width: none;
+  margin-left: calc(-1 * var(--nb-group-side-padding)) !important;
+  margin-right: calc(-1 * var(--nb-group-side-padding)) !important;
+}
