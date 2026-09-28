@@ -282,9 +282,81 @@ function novablocks_maybe_get_post_format_blueprint_card_markup( WP_Post $post, 
 		$item_attributes['surfaceStyleProps'] = novablocks_get_post_format_blueprint_item_style_props( $item_attributes );
 	}
 
-	$item_markup  = novablocks_get_collection_card_surface_markup( $media_markup, $content_markup, $item_attributes, $content_before_media, $content_regions );
+	// A blueprint card renders only its own content (#676). The collection's
+	// title, description and buttons belong to the regular card: the
+	// blueprint's heading or quote replaces them. Only the metadata the
+	// collection orders before Media stays, above the blueprint media.
+	// `$content_before_media` and `$content_regions` describe the collection
+	// card and are no longer rendered here.
+	$has_media         = '' !== $media_markup && ! empty( $item_attributes['showMedia'] );
+	$blueprint_regions = novablocks_get_post_format_blueprint_content_regions(
+		function_exists( 'novablocks_get_visible_card_element_order' ) ? novablocks_get_visible_card_element_order( $attributes ) : [],
+		$has_media
+	);
+	$leading_markup    = '';
+
+	if ( 'before-media' === ( $blueprint_regions[0]['placement'] ?? '' ) ) {
+		$leading_markup = novablocks_get_post_card_items_markup( $post, $blueprint_regions[0]['items'], $attributes );
+
+		if ( '' === trim( $leading_markup ) ) {
+			$leading_markup    = '';
+			$blueprint_regions = novablocks_get_post_format_blueprint_content_regions( [], $has_media );
+		}
+	}
+
+	$item_markup  = novablocks_get_collection_card_surface_markup( $media_markup, $content_markup, $item_attributes, $leading_markup, $blueprint_regions );
 
 	return novablocks_get_post_format_blueprint_supernova_markup( $root_attributes, $item_markup, $format, $attributes );
+}
+
+/**
+ * The content regions of a post-format blueprint card (#676).
+ *
+ * Mirrors the editor's getPostFormatBlueprintContentRegions(). The blueprint
+ * content is one region after the media (content-only without media); the
+ * only collection elements kept are Primary/Secondary Metadata ordered before
+ * Media, as a leading details-only region.
+ *
+ * @param array $order     The collection's resolved visible element order.
+ * @param bool  $has_media Whether the blueprint media renders.
+ *
+ * @return array Regions in the shape of novablocks_get_card_content_regions().
+ */
+function novablocks_get_post_format_blueprint_content_regions( array $order, bool $has_media ): array {
+	$media_index = $has_media ? array_search( 'media', $order, true ) : false;
+	$leading     = false !== $media_index
+		? array_values( array_intersect( array_slice( $order, 0, $media_index ), [ 'meta-primary', 'meta-secondary' ] ) )
+		: [];
+	$regions     = [];
+
+	if ( ! empty( $leading ) ) {
+		$regions[] = [
+			'placement'  => 'before-media',
+			'items'      => $leading,
+			'classNames' => [
+				'nb-supernova-item__content--before-media',
+				'nb-supernova-item__content--details-only',
+				'nb-supernova-item__content--leading-boundary',
+			],
+		];
+	}
+
+	$placement   = $has_media ? 'after-media' : 'content-only';
+	$class_names = [ 'nb-supernova-item__content--' . $placement ];
+
+	if ( ! $has_media ) {
+		$class_names[] = 'nb-supernova-item__content--leading-boundary';
+	}
+
+	$class_names[] = 'nb-supernova-item__content--trailing-boundary';
+
+	$regions[] = [
+		'placement'  => $placement,
+		'items'      => [],
+		'classNames' => $class_names,
+	];
+
+	return $regions;
 }
 
 function novablocks_maybe_get_quote_blueprint_card_markup( WP_Post $post, array $attributes, array $profile, string $content_before_media = '', array $content_regions = [] ): ?string {

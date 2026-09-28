@@ -57,6 +57,7 @@ import {
 import {
   ELEMENT,
   getCardContentRegions,
+  getPostFormatBlueprintContentRegions,
   getVisibleOrder,
   metasAreAdjacent,
 } from "../../filters/with-card-details/components/element-order-utils";
@@ -317,6 +318,12 @@ export const PostCardComponent = props => {
       className: joinClassNames( attributes.className, itemBlueprintAttributes.className ),
       colorSignal: 0,
     };
+    // A blueprint card renders only its own content (#676): the collection's
+    // title, description and buttons never reach it; metadata ordered before
+    // Media stays above the blueprint media.
+    const blueprintRegions = getPostFormatBlueprintContentRegions( order, { hasMedia: !! showMedia && !! props.media } );
+    const blueprintLeadingRegion = blueprintRegions.find( region => region.placement === 'before-media' );
+    const blueprintContentRegion = blueprintRegions[ blueprintRegions.length - 1 ];
     const rootAlign = String( rootAttributes.contentPosition || 'center center' ).split( /\s+/ );
     const rootClassName = joinClassNames(
       'nb-supernova',
@@ -336,7 +343,7 @@ export const PostCardComponent = props => {
       `nb-supernova-item--layout-${ itemAttributes.cardLayout || 'stacked' }`,
       `nb-supernova-item--scrolling-effect-${ itemAttributes.scrollingEffect || 'static' }`,
       `nb-supernova-item--aspect-ratio-${ itemAttributes.thumbnailAspectRatioString || 'landscape' }`,
-      hasSplitContent && 'nb-supernova-item--split-content',
+      blueprintLeadingRegion && blueprintContentRegion.placement === 'after-media' && 'nb-supernova-item--split-content',
       expressionClasses,
       itemAttributes.className,
       getColorSignalClassnames( itemAttributes, true )
@@ -346,7 +353,7 @@ export const PostCardComponent = props => {
       <div className={ rootClassName } style={ { ...getPostFormatBlueprintStyle( rootAttributes ), display: 'block' } } key={ 'card_post_blueprint_' + post.id }>
         <div className={ itemClassName } style={ getPostFormatBlueprintStyle( itemAttributes ) }>
           <div className="nb-supernova-item__frame">
-            { beforeMediaRegion && renderContentWrapper( beforeMediaRegion, itemAttributes ) }
+            { blueprintLeadingRegion && renderContentWrapper( blueprintLeadingRegion, itemAttributes ) }
             { showMedia && props.media && (
               <CardMediaWrapper { ...props } attributes={ itemAttributes } key={ 'card_post_blueprint_media_' + post.id }>
                 <PostCardLetter { ...props } attributes={ itemAttributes } />
@@ -356,10 +363,7 @@ export const PostCardComponent = props => {
             <CardContentWrapper
               { ...props }
               attributes={ itemAttributes }
-              region={ afterMediaRegion || contentOnlyRegion || {
-                placement: 'after-media',
-                classNames: [ 'nb-supernova-item__content--after-media' ],
-              } }
+              region={ blueprintContentRegion }
             >
               <div className="nb-supernova-item__inner-container">
                 <blockquote className="wp-block-quote is-style-plain">

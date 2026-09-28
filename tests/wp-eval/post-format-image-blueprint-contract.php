@@ -312,6 +312,30 @@ try {
 		novablocks_fail_post_format_image_blueprint_contract( 'Expected Image blueprint cards to bind the live permalink aria label.' );
 	}
 
+	// #676: a collection that places Title (or Description) before Media must
+	// not leak its own card content into the blueprint card; the blueprint's
+	// heading is the only title.
+	$title_first_markup = novablocks_get_collection_card_markup_from_post(
+		get_post( $image_post_id ),
+		array_merge( $attributes, [ 'elementOrder' => [ 'title', 'description', 'media', 'meta-primary', 'meta-secondary' ] ] )
+	);
+
+	if ( false !== strpos( $title_first_markup, 'nb-card__title' ) || false !== strpos( $title_first_markup, 'nb-card__description' ) ) {
+		novablocks_fail_post_format_image_blueprint_contract( 'Expected Image blueprint cards to drop the collection title/description ordered before Media (#676).' );
+	}
+
+	if ( false !== strpos( $title_first_markup, 'nb-supernova-item__content--before-media' ) ) {
+		novablocks_fail_post_format_image_blueprint_contract( 'Expected Image blueprint cards without leading metadata to render no before-media region (#676).' );
+	}
+
+	if ( 1 !== substr_count( $title_first_markup, '>Image Blueprint Fixture<' ) ) {
+		novablocks_fail_post_format_image_blueprint_contract( 'Expected the post title to render exactly once, in the blueprint heading (#676).' );
+	}
+
+	if ( 1 !== preg_match( '/class="[^"]*nb-supernova-item__content--after-media[^"]*"[^>]*>\s*<div class="nb-supernova-item__inner-container">\s*<h3 class="wp-block-heading/', $title_first_markup ) ) {
+		novablocks_fail_post_format_image_blueprint_contract( 'Expected the blueprint heading to sit in the after-media region (#676).' );
+	}
+
 	$no_media_markup = novablocks_get_collection_card_markup_from_post( get_post( $no_media_image_post_id ), $attributes );
 
 	if ( false === strpos( $no_media_markup, 'format-image' ) ) {

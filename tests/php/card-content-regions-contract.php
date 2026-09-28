@@ -150,8 +150,10 @@ if ( ! preg_match( '/novablocks_get_collection_card_markup\([^;]+\$content_regio
 	throw new RuntimeException( 'Post-card rendering must pass semantic regions into the final surface markup.' );
 }
 
-if ( ! preg_match( '/novablocks_get_collection_card_surface_markup\([^;]+\$content_regions\s*\)/s', $blueprint_source ) ) {
-	throw new RuntimeException( 'Post-format blueprints must preserve semantic regions on their item surface.' );
+// Blueprint cards carry their own semantic regions (#676), see
+// post-format-blueprint-regions-contract.php.
+if ( ! preg_match( '/novablocks_get_collection_card_surface_markup\([^;]+\$blueprint_regions\s*\)/s', $blueprint_source ) ) {
+	throw new RuntimeException( 'Post-format blueprints must render semantic regions on their item surface.' );
 }
 
 echo "card content regions contract ok\n";

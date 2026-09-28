@@ -380,7 +380,52 @@ describe( 'PostCard expression-class integration', () => {
 		const blueprint = container.querySelector( '.nb-post-format-card-blueprint--quote' );
 		const content = blueprint.querySelector( '.nb-supernova-item__content--content-only' );
 		expect( content ).not.toBeNull();
-		expect( content.classList ).toContain( 'nb-supernova-item__content--contains-title' );
+		// #676: the region describes the blueprint content, not the collection's title.
+		expect( content.classList ).not.toContain( 'nb-supernova-item__content--contains-title' );
+		expect( content.querySelector( 'blockquote' ) ).not.toBeNull();
+		expect( blueprint.querySelector( '.nb-card__title' ) ).toBeNull();
 		expect( blueprint.querySelector( '.nb-supernova-item__content--after-media' ) ).toBeNull();
+	} );
+
+	test( 'keeps the collection title ordered before Media out of a Quote blueprint (#676)', () => {
+		mockGetVisibleOrder.mockReturnValue( [ 'title', 'meta-primary', 'media', 'description', 'meta-secondary' ] );
+		const post = {
+			...basePost,
+			format: 'quote',
+			content: {
+				raw: '<blockquote><p>Design needs delight.</p><cite>Massimo Vignelli</cite></blockquote>',
+			},
+		};
+
+		act( () => {
+			render(
+				<PostCardComponent
+					attributes={ { ...baseAttributes, showMedia: true, showMeta: true } }
+					post={ post }
+					media={ { url: 'quote.jpg', width: 1200, height: 722, originalWidth: 1200, originalHeight: 722 } }
+					postFormatCardBlueprints={ {
+						quote: {
+							rootAttributes: {},
+							itemAttributes: { cardLayout: 'stacked' },
+						},
+					} }
+				/>,
+				container
+			);
+		} );
+
+		const blueprint = container.querySelector( '.nb-post-format-card-blueprint--quote' );
+		expect( blueprint.querySelector( '.nb-card__title' ) ).toBeNull();
+		expect( blueprint.textContent ).not.toContain( 'A short card title' );
+		expect( blueprint.querySelector( '.nb-card__description' ) ).toBeNull();
+
+		const leading = blueprint.querySelector( '.nb-supernova-item__content--before-media' );
+		expect( leading ).not.toBeNull();
+		expect( leading.classList ).toContain( 'nb-supernova-item__content--details-only' );
+
+		const quote = blueprint.querySelector( '.nb-supernova-item__content--after-media' );
+		expect( quote.querySelector( 'blockquote' ) ).not.toBeNull();
+		expect( quote.classList ).not.toContain( 'nb-supernova-item__content--details-only' );
+		expect( quote.classList ).not.toContain( 'nb-supernova-item__content--contains-title' );
 	} );
 } );

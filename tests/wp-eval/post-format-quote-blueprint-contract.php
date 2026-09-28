@@ -362,6 +362,29 @@ try {
 		novablocks_fail_post_format_quote_blueprint_contract( 'Expected Quote blueprint cards to render their live post metadata.' );
 	}
 
+	// #676: a collection that places Title before Media keeps its metadata
+	// ahead of the quote, but its title never reaches the blueprint card.
+	$title_first_markup = novablocks_get_collection_card_markup_from_post(
+		get_post( $quote_post_id ),
+		array_merge( $attributes, [ 'elementOrder' => [ 'title', 'meta-primary', 'meta-secondary', 'media', 'description', 'buttons' ] ] )
+	);
+
+	if ( false !== strpos( $title_first_markup, 'nb-card__title' ) || false !== strpos( $title_first_markup, '>Quote Blueprint Fixture<' ) ) {
+		novablocks_fail_post_format_quote_blueprint_contract( 'Expected Quote blueprint cards to drop the collection title ordered before Media (#676).' );
+	}
+
+	if ( false !== strpos( $title_first_markup, 'contains-title' ) ) {
+		novablocks_fail_post_format_quote_blueprint_contract( 'Expected Quote blueprint regions to describe the blueprint, not the collection title (#676).' );
+	}
+
+	if ( false === strpos( $title_first_markup, 'nb-card__meta' ) || false === strpos( $title_first_markup, 'nb-supernova-item__content--before-media' ) ) {
+		novablocks_fail_post_format_quote_blueprint_contract( 'Expected Quote blueprint cards to keep the metadata ordered before Media (#676).' );
+	}
+
+	if ( false === strpos( $title_first_markup, 'Paul Graham' ) ) {
+		novablocks_fail_post_format_quote_blueprint_contract( 'Expected the title-first Quote card to keep its quote (#676).' );
+	}
+
 	$active_blueprint_mode = 'valid';
 	$no_media_markup       = novablocks_get_collection_card_markup_from_post( get_post( $no_media_quote_post_id ), $attributes );
 

@@ -200,6 +200,48 @@ export function getCardContentRegions( order, { hasMedia = true } = {} ) {
 }
 
 /**
+ * The content regions of a post-format blueprint card (#676). Mirrors PHP
+ * novablocks_get_post_format_blueprint_content_regions(): the blueprint
+ * content is one region after the media (content-only without media), and
+ * the only collection elements kept are Primary/Secondary Metadata ordered
+ * before Media, as a leading details-only region. The collection's title,
+ * description and buttons never reach a blueprint card.
+ */
+export function getPostFormatBlueprintContentRegions( order, { hasMedia = true } = {} ) {
+  const resolvedOrder = Array.isArray( order ) ? order : [];
+  const mediaIndex = hasMedia ? resolvedOrder.indexOf( ELEMENT.MEDIA ) : -1;
+  const leading = mediaIndex >= 0
+    ? resolvedOrder.slice( 0, mediaIndex ).filter( id => id === ELEMENT.META_PRIMARY || id === ELEMENT.META_SECONDARY )
+    : [];
+  const regions = [];
+
+  if ( leading.length ) {
+    regions.push( {
+      placement: 'before-media',
+      items: leading,
+      classNames: [
+        'nb-supernova-item__content--before-media',
+        'nb-supernova-item__content--details-only',
+        'nb-supernova-item__content--leading-boundary',
+      ],
+    } );
+  }
+
+  const placement = hasMedia ? 'after-media' : 'content-only';
+  regions.push( {
+    placement,
+    items: [],
+    classNames: [
+      `nb-supernova-item__content--${ placement }`,
+      ! hasMedia && 'nb-supernova-item__content--leading-boundary',
+      'nb-supernova-item__content--trailing-boundary',
+    ].filter( Boolean ),
+  } );
+
+  return regions;
+}
+
+/**
  * Produce a new order that swaps the item at `index` with its neighbour in
  * `direction`. Returns null when the move is not possible (boundary).
  */
