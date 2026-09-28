@@ -88,6 +88,12 @@ class WP_HTML_Tag_Processor {
 	}
 }
 
+$GLOBALS['novablocks_site_title_blogname'] = 'Hive';
+
+function get_bloginfo( string $show = '' ) {
+	return 'name' === $show ? $GLOBALS['novablocks_site_title_blogname'] : '';
+}
+
 require_once dirname( __DIR__, 2 ) . '/lib/site-title.php';
 
 function novablocks_site_title_assert( bool $condition, string $message ): void {
@@ -158,7 +164,7 @@ $rendered_markup = novablocks_render_site_title_fit_width(
 );
 
 novablocks_site_title_assert(
-	false !== strpos( $rendered_markup, '<div class="nb-site-title-fit-container" style="--nb-site-title-fit-width:420px">' ),
+	1 === preg_match( '/^<div class="nb-site-title-fit-container has-fit-ratio" style="--nb-site-title-fit-width:420px;--nb-site-title-fit-ratio:[0-9.]+">/', $rendered_markup ),
 	'Rendering the width must create the flex measurement container.'
 );
 novablocks_site_title_assert(
@@ -187,6 +193,130 @@ novablocks_site_title_assert(
 	'Fit Text without a serialized width must use the server default.'
 );
 
+
+// Issue #680: a fitted title must keep a CSS size close to its fit when the
+// fit-text script never runs. The ratio (rendered text width per pixel of
+// font size) turns the container's inline size into that font size.
+novablocks_site_title_assert_same(
+	[ 'type' => 'object' ],
+	$site_title_metadata['attributes']['fitTextMetrics'] ?? null,
+	'Site Title must accept the editor-measured Fit Text metrics.'
+);
+
+$measured_markup = novablocks_render_site_title_fit_width(
+	'<h1 class="wp-block-site-title">Hive</h1>',
+	[
+		'attrs' => [
+			'fitText'        => true,
+			'fitTextWidth'   => 800,
+			'fitTextMetrics' => [
+				'text'  => 'Hive',
+				'ratio' => 2.456,
+			],
+		],
+	]
+);
+novablocks_site_title_assert(
+	false !== strpos( $measured_markup, '<div class="nb-site-title-fit-container has-fit-ratio" style="--nb-site-title-fit-width:800px;--nb-site-title-fit-ratio:2.456">' ),
+	'A title measured for the current site name must render its measured ratio as the CSS fallback. Got: ' . $measured_markup
+);
+
+// The site name changed after the editor measured it: the stored ratio
+// describes other text, so it only calibrates the estimate for the face
+// (measured / estimated for the measured text), applied to the new name.
+$GLOBALS['novablocks_site_title_blogname'] = 'Harrowmere Quarterly';
+$stale_markup = novablocks_render_site_title_fit_width(
+	'<h1 class="wp-block-site-title">Harrowmere Quarterly</h1>',
+	[
+		'attrs' => [
+			'fitText'        => true,
+			'fitTextMetrics' => [
+				'text'  => 'Hive',
+				'ratio' => 2.456,
+			],
+		],
+	]
+);
+novablocks_site_title_assert(
+	false === strpos( $stale_markup, '--nb-site-title-fit-ratio:2.456' ),
+	'A ratio measured for different text must not be used as is.'
+);
+novablocks_site_title_assert(
+	1 === preg_match( '/--nb-site-title-fit-ratio:([0-9.]+)"/', $stale_markup, $stale_ratio ),
+	'A title without a matching measurement must still get a ratio.'
+);
+$calibrated = 2.456 * novablocks_estimate_site_title_fit_ratio( 'Harrowmere Quarterly', [] ) / novablocks_estimate_site_title_fit_ratio( 'Hive', [] );
+novablocks_site_title_assert(
+	abs( (float) $stale_ratio[1] - $calibrated ) < 0.002,
+	'A stale measurement must calibrate the estimate for the new name. Expected ~' . $calibrated . ', got ' . $stale_ratio[1] . '.'
+);
+novablocks_site_title_assert_same(
+	novablocks_format_site_title_fit_ratio( novablocks_estimate_site_title_fit_ratio( 'Harrowmere Quarterly', [] ) ),
+	novablocks_format_site_title_fit_ratio( novablocks_get_site_title_fit_ratio( [] ) ),
+	'Without any measurement the raw estimate applies.'
+);
+
+// The estimate must never be narrower than the text can render (that would
+// overflow the container); a wide bold sans is the reference, so it lands
+// between the real ratio of a condensed face and a generous upper bound.
+$GLOBALS['novablocks_site_title_blogname'] = 'Harrowmere';
+$estimate = novablocks_estimate_site_title_fit_ratio(
+	'Harrowmere',
+	[ 'style' => [ 'typography' => [ 'textTransform' => 'uppercase', 'letterSpacing' => '-0.055em' ] ] ]
+);
+novablocks_site_title_assert(
+	$estimate >= 6.2 && $estimate <= 8,
+	'The uppercase estimate for HARROWMERE must cover its measured 6.19 ratio without doubling it. Got: ' . var_export( $estimate, true )
+);
+novablocks_site_title_assert(
+	novablocks_estimate_site_title_fit_ratio( 'Harrowmere', [ 'style' => [ 'typography' => [ 'letterSpacing' => '0.2em' ] ] ] )
+		> novablocks_estimate_site_title_fit_ratio( 'Harrowmere', [] ),
+	'Positive letter-spacing must widen the estimate.'
+);
+novablocks_site_title_assert_same(
+	null,
+	novablocks_estimate_site_title_fit_ratio( '   ', [] ),
+	'Empty titles have no ratio.'
+);
+
+// Measured ratios are clamped to sane values; junk falls back to the estimate.
+$junk_markup = novablocks_render_site_title_fit_width(
+	'<h1 class="wp-block-site-title">Harrowmere</h1>',
+	[
+		'attrs' => [
+			'fitText'        => true,
+			'fitTextMetrics' => [
+				'text'  => 'Harrowmere',
+				'ratio' => 'calc(1px);color:red',
+			],
+		],
+	]
+);
+novablocks_site_title_assert(
+	false === strpos( $junk_markup, 'color:red' ) && 1 === preg_match( '/--nb-site-title-fit-ratio:[0-9.]+"/', $junk_markup ),
+	'Non-numeric measured ratios must be ignored in favour of the estimate.'
+);
+
+// Entities in the stored site name must not break the match.
+$GLOBALS['novablocks_site_title_blogname'] = 'Salt &amp; Pepper';
+$entity_markup = novablocks_render_site_title_fit_width(
+	'<h1 class="wp-block-site-title">Salt &amp; Pepper</h1>',
+	[
+		'attrs' => [
+			'fitText'        => true,
+			'fitTextMetrics' => [
+				'text'  => 'Salt & Pepper',
+				'ratio' => 5.5,
+			],
+		],
+	]
+);
+novablocks_site_title_assert(
+	false !== strpos( $entity_markup, '--nb-site-title-fit-ratio:5.5"' ),
+	'Encoded site names must match the decoded text the editor measured.'
+);
+$GLOBALS['novablocks_site_title_blogname'] = 'Hive';
+
 novablocks_site_title_assert_same(
 	$original_markup,
 	novablocks_render_site_title_fit_width( $original_markup, [ 'attrs' => [ 'fitText' => false, 'fitTextWidth' => 420 ] ] ),
@@ -198,7 +328,7 @@ $invalid_width_markup = novablocks_render_site_title_fit_width(
 	[ 'attrs' => [ 'fitText' => true, 'fitTextWidth' => 'wide' ] ]
 );
 novablocks_site_title_assert(
-	false !== strpos( $invalid_width_markup, '<div class="nb-site-title-fit-container">' ),
+	1 === preg_match( '/^<div class="nb-site-title-fit-container has-fit-ratio" style="--nb-site-title-fit-ratio:[0-9.]+">/', $invalid_width_markup ),
 	'Invalid serialized widths must retain the measurement container without outputting unsafe CSS.'
 );
 novablocks_site_title_assert(

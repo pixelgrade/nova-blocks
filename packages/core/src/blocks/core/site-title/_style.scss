@@ -39,6 +39,25 @@
 	min-inline-size: 0;
 }
 
+// Without core's fit-text script (blocked, failed, or not yet run) a fitted
+// title would sit at its small preset size. The server renders the title's
+// width per pixel of font size (`--nb-site-title-fit-ratio`), so the
+// container's inline size gives the fitted size directly; the script's inline
+// font size still overrides it whenever the script runs.
+//
+// Inline-size containment keeps the container's width independent of the
+// title (it already comes from the header or the Wordmark Width); a
+// shrink-to-fit parent sizes it from the Wordmark Width instead of from the
+// text, so the container can never collapse.
+.nb-site-title-fit-container.has-fit-ratio {
+	container-type: inline-size;
+	contain-intrinsic-inline-size: var(--nb-site-title-fit-width, 395px);
+}
+
+.nb-site-title-fit-container.has-fit-ratio > .wp-block-site-title.has-fit-text {
+	font-size: calc(100cqi / var(--nb-site-title-fit-ratio));
+}
+
 .wp-block-site-title {
 	&.has-fit-text {
 		flex: 1 1 auto;

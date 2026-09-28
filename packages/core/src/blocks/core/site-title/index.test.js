@@ -107,3 +107,35 @@ test( 'keeps the semantic Site Title family visible through Anima editor paragra
 		/\.editor-styles-wrapper\[class\] p\.wp-block-site-title\s*\{[\s\S]*font-family:\s*var\(--theme-site-title-font-family\)/
 	);
 } );
+
+// Issue #680: without the fit-text script, the title must still be sized from
+// its container. The container's width must come from the header (never from
+// the title), and its intrinsic width falls back to the Wordmark Width so a
+// shrink-to-fit parent cannot collapse it.
+test( 'sizes fitted titles from their container when the fit-text script does not run', () => {
+	const source = read( '_style.scss' );
+
+	assert.match(
+		source,
+		/\.nb-site-title-fit-container\.has-fit-ratio\s*\{[^}]*container-type:\s*inline-size/
+	);
+	assert.match(
+		source,
+		/\.nb-site-title-fit-container\.has-fit-ratio\s*\{[^}]*contain-intrinsic-inline-size:\s*var\(--nb-site-title-fit-width, 395px\)/
+	);
+	assert.match(
+		source,
+		/\.nb-site-title-fit-container\.has-fit-ratio\s*>\s*\.wp-block-site-title\.has-fit-text\s*\{[^}]*font-size:\s*calc\(100cqi \/ var\(--nb-site-title-fit-ratio\)\)/
+	);
+} );
+
+test( 'registers and stores the editor-measured Fit Text metrics without undo churn', () => {
+	const settingsSource = read( 'index.js' );
+	const wrapperSource = read( 'with-site-title-wrapper.js' );
+
+	assert.match( settingsSource, /fitTextMetrics:[\s\S]*type: 'object'/ );
+	assert.match( wrapperSource, /measureFitTextMetrics/ );
+	assert.match( wrapperSource, /shouldStoreFitTextMetrics/ );
+	assert.match( wrapperSource, /__unstableMarkNextChangeAsNotPersistent/ );
+	assert.match( wrapperSource, /updateBlockAttributes\( clientId, \{ fitTextMetrics/ );
+} );

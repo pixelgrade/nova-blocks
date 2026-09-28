@@ -28,6 +28,12 @@ export const extendSiteTitleSettings = ( settings, name ) => {
 				type: 'number',
 				default: 395,
 			},
+			// Editor-measured text width per pixel of font size, keyed to the
+			// site name it was measured for; the front end sizes the title
+			// from it when core's fit-text script does not run (issue #680).
+			fitTextMetrics: {
+				type: 'object',
+			},
 			fitTextContentRevision: {
 				type: 'string',
 				role: 'local',

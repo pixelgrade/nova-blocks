@@ -63,28 +63,42 @@ export const fitTextToContainer = ( textElement ) => {
   return size;
 };
 
-// Fit now and again whenever the container or the text changes size.
+// Fit now and again whenever the container, the text or its font changes.
 export const observeFitText = ( textElement ) => {
   fitTextToContainer( textElement );
 
-  if ( ! window.ResizeObserver || ! textElement?.parentElement ) {
+  if ( ! textElement?.parentElement ) {
     return () => {};
   }
 
-  let fitting = false;
-  const observer = new window.ResizeObserver( () => {
-    // Our own font-size writes resize the text; ignore that echo.
-    if ( fitting ) {
-      return;
-    }
-    fitting = true;
-    fitTextToContainer( textElement );
-    window.requestAnimationFrame( () => {
-      fitting = false;
+  // The copy is usually fitted before the web font arrives; the swap changes
+  // the text's width without resizing the container, so refit on it.
+  const fonts = textElement.ownerDocument?.fonts;
+  const refitOnFonts = () => fitTextToContainer( textElement );
+  fonts?.addEventListener?.( 'loadingdone', refitOnFonts );
+  fonts?.ready?.then( refitOnFonts );
+
+  let observer = null;
+
+  if ( window.ResizeObserver ) {
+    let fitting = false;
+    observer = new window.ResizeObserver( () => {
+      // Our own font-size writes resize the text; ignore that echo.
+      if ( fitting ) {
+        return;
+      }
+      fitting = true;
+      fitTextToContainer( textElement );
+      window.requestAnimationFrame( () => {
+        fitting = false;
+      } );
     } );
-  } );
 
-  observer.observe( textElement.parentElement );
+    observer.observe( textElement.parentElement );
+  }
 
-  return () => observer.disconnect();
+  return () => {
+    observer?.disconnect();
+    fonts?.removeEventListener?.( 'loadingdone', refitOnFonts );
+  };
 };
