@@ -73,6 +73,20 @@ describe( 'getSpacingCSSProps', () => {
 		expect( props['--nb-card-media-object-fit'] ).toBe( 'contain' );
 	} );
 
+	// A stacked card's media is the card background: it covers the content-sized
+	// card in Original / Fit to Row too, instead of letterboxing.
+	it.each( [ 'original', 'row' ] )( 'covers a stacked card with its media in %s mode', mode => {
+		const stacked = getSpacingCSSProps( { ...attributes, cardLayout: 'stacked', thumbnailAspectRatioString: mode, imageResizing: 'cropped' } );
+		expect( stacked['--nb-card-media-object-fit'] ).toBe( 'cover' );
+		expect( stacked ).not.toHaveProperty( '--nb-card-media-padding-top' );
+
+		const shrink = getSpacingCSSProps( { ...attributes, cardLayout: 'stacked', thumbnailAspectRatioString: mode, imageResizing: 'original' } );
+		expect( shrink['--nb-card-media-object-fit'] ).toBe( 'scale-down' );
+
+		const vertical = getSpacingCSSProps( { ...attributes, cardLayout: 'vertical', thumbnailAspectRatioString: mode, imageResizing: 'cropped' } );
+		expect( vertical['--nb-card-media-object-fit'] ).toBe( 'contain' );
+	} );
+
 	it( 'keeps the fixed ratio box for a preset ratio', () => {
 		const props = getSpacingCSSProps( { ...attributes, thumbnailAspectRatioString: 'landscape', imageResizing: 'cropped' } );
 

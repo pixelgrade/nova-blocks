@@ -1192,7 +1192,14 @@ function novablocks_get_sizing_css( array $attributes ): array {
 		$props[] = '--nb-card-media-aspect-ratio: ' . ( 100 / $padding_top );
 	}
 
-	if ( $is_original_aspect_ratio ) {
+	// A stacked card layers its content over its media and takes its height
+	// from the content, so its media is the card's background: it keeps the
+	// Image Resizing fit in every ratio mode. Letterboxing it (contain) would
+	// leave bare bands, e.g. a stacked post-format blueprint card inside an
+	// Original-ratio grid, which inherits the grid's ratio mode (#679).
+	$is_stacked = 'stacked' === ( $attributes['cardLayout'] ?? '' );
+
+	if ( $is_original_aspect_ratio && ! $is_stacked ) {
 		$props[] = '--nb-card-media-object-fit: contain';
 	} elseif ( isset( $attributes['imageResizing'] ) ) {
 		$props[] = '--nb-card-media-object-fit: ' . ( $attributes['imageResizing'] === 'cropped' ? 'cover' : 'scale-down' );

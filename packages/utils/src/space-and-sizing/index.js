@@ -24,6 +24,7 @@ export const getSpacingCSSProps = ( attributes, existingStyle = {} ) => {
 
   const {
     blockTopSpacing,
+    cardLayout,
     blockBottomSpacing,
     emphasisTopSpacing,
     emphasisBottomSpacing,
@@ -66,7 +67,9 @@ export const getSpacingCSSProps = ( attributes, existingStyle = {} ) => {
         '--nb-card-media-aspect-ratio': 100 / paddingTop,
       };
     })() ),
-    '--nb-card-media-object-fit': isOriginalAspectRatio ? 'contain' : ( imageResizing === 'cropped' ? 'cover' : 'scale-down' ),
+    // A stacked card's media is the card's background: it keeps the Image
+    // Resizing fit in every ratio mode instead of letterboxing (#679).
+    '--nb-card-media-object-fit': isOriginalAspectRatio && cardLayout !== 'stacked' ? 'contain' : ( imageResizing === 'cropped' ? 'cover' : 'scale-down' ),
     '--nb-card-media-padding-multiplier': imagePadding / 100,
     '--nb-card-layout-gap-modifier': layoutGutter / 100,
     '--nb-min-height-fallback': minHeightFallback,
