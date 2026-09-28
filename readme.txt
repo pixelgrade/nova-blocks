@@ -3,7 +3,7 @@ Contributors: pixelgrade, vlad.olaru, babbardel, razvanonofrei, gorby31
 Tags: blocks, gutenberg, gutenberg blocks, page builder, full site editing
 Requires at least: 7.0
 Tested up to: 7.1
-Stable tag: 2.7.0
+Stable tag: 2.7.1
 Requires PHP: 7.4
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -113,6 +113,12 @@ Yes! Nova Block's core features are free to use.
 3. Slideshow Me the Way block options
 
 == Changelog ==
+
+= 2.7.1 =
+* Fix: a page template saved in the Site Editor now lays out Post Content like the default template, so paragraphs no longer shrink to a narrow strip on the front end and in the editor.
+* Fix: the Post Meta Discuss link no longer points to a missing anchor on posts without comments. It jumps to the comment form while comments are open, and hides when they are closed.
+* Improved: with the theme's page transitions, Nova Blocks scripts are set up once per page and released when you leave it. Pages no longer do more work with every navigation, and the header keeps the same colors as a fresh page load.
+* Developer: the header exposes `window.novablocks.header.refresh()` and `destroy()`, and jQuery Bully gets `$.fn.bully.destroy()`, so themes can re-initialize them after swapping page content.
 
 = 2.7.0 =
 * New: Header Mobile Branding setting. Show the logo in the mobile bar, below it, or below it and folding into the bar as you scroll. The masthead below the bar paints its own background and keeps its spacing.
