@@ -1,0 +1,994 @@
+{
+ "label": "after",
+ "url": "http://localhost:8884/2026/09/28/issue-681/",
+ "results": {
+  "chromium": {
+   "390": {
+    "column": {
+     "x": 20.8,
+     "w": 348.5
+    },
+    "overflow": 0,
+    "items": {
+     "qa-full-column": {
+      "figure": {
+       "x": 20.8,
+       "w": 348.5
+      },
+      "img": {
+       "x": 20.8,
+       "w": 348.5
+      },
+      "caption": {
+       "x": 20.8,
+       "w": 348.5
+      },
+      "captionAlign": "left"
+     },
+     "qa-resized-420": {
+      "figure": {
+       "x": 20.8,
+       "w": 348.5
+      },
+      "img": {
+       "x": 20.8,
+       "w": 348.5
+      },
+      "caption": {
+       "x": 20.8,
+       "w": 348.5
+      },
+      "captionAlign": "left"
+     },
+     "qa-resized-190": {
+      "figure": {
+       "x": 100,
+       "w": 190
+      },
+      "img": {
+       "x": 100,
+       "w": 190
+      },
+      "caption": {
+       "x": 100,
+       "w": 190
+      },
+      "captionAlign": "left"
+     },
+     "qa-no-caption": {
+      "figure": {
+       "x": 20.8,
+       "w": 348.5
+      },
+      "img": {
+       "x": 45,
+       "w": 300
+      },
+      "caption": null,
+      "captionAlign": null
+     },
+     "qa-left": {
+      "figure": {
+       "x": 20.8,
+       "w": 348.5
+      },
+      "img": {
+       "x": 20.8,
+       "w": 300
+      },
+      "caption": {
+       "x": 20.8,
+       "w": 348.5
+      },
+      "captionAlign": "left"
+     },
+     "qa-gallery": {
+      "figure": {
+       "x": 20.8,
+       "w": 348.5
+      },
+      "items": [
+       {
+        "img": {
+         "x": 20.8,
+         "w": 163.9
+        },
+        "caption": {
+         "x": 20.8,
+         "w": 163.9
+        }
+       },
+       {
+        "img": {
+         "x": 205.4,
+         "w": 163.9
+        },
+        "caption": {
+         "x": 205.4,
+         "w": 163.9
+        }
+       },
+       {
+        "img": {
+         "x": 20.8,
+         "w": 348.5
+        },
+        "caption": {
+         "x": 20.8,
+         "w": 348.5
+        }
+       }
+      ],
+      "caption": {
+       "x": 20.8,
+       "w": 348.5
+      }
+     }
+    }
+   },
+   "768": {
+    "column": {
+     "x": 24.8,
+     "w": 718.4
+    },
+    "overflow": 0,
+    "items": {
+     "qa-full-column": {
+      "figure": {
+       "x": 24.8,
+       "w": 718.4
+      },
+      "img": {
+       "x": 24.8,
+       "w": 718.4
+      },
+      "caption": {
+       "x": 24.8,
+       "w": 718.4
+      },
+      "captionAlign": "left"
+     },
+     "qa-resized-420": {
+      "figure": {
+       "x": 174,
+       "w": 420
+      },
+      "img": {
+       "x": 174,
+       "w": 420
+      },
+      "caption": {
+       "x": 174,
+       "w": 420
+      },
+      "captionAlign": "left"
+     },
+     "qa-resized-190": {
+      "figure": {
+       "x": 289,
+       "w": 190
+      },
+      "img": {
+       "x": 289,
+       "w": 190
+      },
+      "caption": {
+       "x": 289,
+       "w": 190
+      },
+      "captionAlign": "left"
+     },
+     "qa-no-caption": {
+      "figure": {
+       "x": 24.8,
+       "w": 718.4
+      },
+      "img": {
+       "x": 234,
+       "w": 300
+      },
+      "caption": null,
+      "captionAlign": null
+     },
+     "qa-left": {
+      "figure": {
+       "x": 24.8,
+       "w": 718.4
+      },
+      "img": {
+       "x": 24.8,
+       "w": 300
+      },
+      "caption": {
+       "x": 24.8,
+       "w": 718.4
+      },
+      "captionAlign": "left"
+     },
+     "qa-gallery": {
+      "figure": {
+       "x": 24.8,
+       "w": 718.4
+      },
+      "items": [
+       {
+        "img": {
+         "x": 24.8,
+         "w": 222.9
+        },
+        "caption": {
+         "x": 24.8,
+         "w": 222.9
+        }
+       },
+       {
+        "img": {
+         "x": 272.5,
+         "w": 222.9
+        },
+        "caption": {
+         "x": 272.5,
+         "w": 222.9
+        }
+       },
+       {
+        "img": {
+         "x": 520.3,
+         "w": 222.9
+        },
+        "caption": {
+         "x": 520.3,
+         "w": 222.9
+        }
+       }
+      ],
+      "caption": {
+       "x": 24.8,
+       "w": 718.4
+      }
+     }
+    }
+   },
+   "1024": {
+    "column": {
+     "x": 27.5,
+     "w": 604.5
+    },
+    "overflow": 0,
+    "items": {
+     "qa-full-column": {
+      "figure": {
+       "x": 27.5,
+       "w": 604.5
+      },
+      "img": {
+       "x": 27.5,
+       "w": 604.5
+      },
+      "caption": {
+       "x": 27.5,
+       "w": 604.5
+      },
+      "captionAlign": "left"
+     },
+     "qa-resized-420": {
+      "figure": {
+       "x": 119.8,
+       "w": 420
+      },
+      "img": {
+       "x": 119.8,
+       "w": 420
+      },
+      "caption": {
+       "x": 119.8,
+       "w": 420
+      },
+      "captionAlign": "left"
+     },
+     "qa-resized-190": {
+      "figure": {
+       "x": 234.8,
+       "w": 190
+      },
+      "img": {
+       "x": 234.8,
+       "w": 190
+      },
+      "caption": {
+       "x": 234.8,
+       "w": 190
+      },
+      "captionAlign": "left"
+     },
+     "qa-no-caption": {
+      "figure": {
+       "x": 27.5,
+       "w": 604.5
+      },
+      "img": {
+       "x": 179.8,
+       "w": 300
+      },
+      "caption": null,
+      "captionAlign": null
+     },
+     "qa-left": {
+      "figure": {
+       "x": 27.5,
+       "w": 215.7
+      },
+      "img": {
+       "x": 27.5,
+       "w": 215.7
+      },
+      "caption": {
+       "x": 27.5,
+       "w": 215.7
+      },
+      "captionAlign": "left"
+     },
+     "qa-gallery": {
+      "figure": {
+       "x": 27.5,
+       "w": 604.5
+      },
+      "items": [
+       {
+        "img": {
+         "x": 27.5,
+         "w": 183.1
+        },
+        "caption": {
+         "x": 27.5,
+         "w": 183.1
+        }
+       },
+       {
+        "img": {
+         "x": 238.2,
+         "w": 183.1
+        },
+        "caption": {
+         "x": 238.2,
+         "w": 183.1
+        }
+       },
+       {
+        "img": {
+         "x": 448.9,
+         "w": 183.1
+        },
+        "caption": {
+         "x": 448.9,
+         "w": 183.1
+        }
+       }
+      ],
+      "caption": {
+       "x": 27.5,
+       "w": 604.5
+      }
+     }
+    }
+   },
+   "1440": {
+    "column": {
+     "x": 157.5,
+     "w": 751.6
+    },
+    "overflow": 0,
+    "items": {
+     "qa-full-column": {
+      "figure": {
+       "x": 157.5,
+       "w": 751.6
+      },
+      "img": {
+       "x": 157.5,
+       "w": 751.6
+      },
+      "caption": {
+       "x": 157.5,
+       "w": 751.6
+      },
+      "captionAlign": "left"
+     },
+     "qa-resized-420": {
+      "figure": {
+       "x": 323.3,
+       "w": 420
+      },
+      "img": {
+       "x": 323.3,
+       "w": 420
+      },
+      "caption": {
+       "x": 323.3,
+       "w": 420
+      },
+      "captionAlign": "left"
+     },
+     "qa-resized-190": {
+      "figure": {
+       "x": 438.3,
+       "w": 190
+      },
+      "img": {
+       "x": 438.3,
+       "w": 190
+      },
+      "caption": {
+       "x": 438.3,
+       "w": 190
+      },
+      "captionAlign": "left"
+     },
+     "qa-no-caption": {
+      "figure": {
+       "x": 157.5,
+       "w": 751.6
+      },
+      "img": {
+       "x": 383.3,
+       "w": 300
+      },
+      "caption": null,
+      "captionAlign": null
+     },
+     "qa-left": {
+      "figure": {
+       "x": 157.5,
+       "w": 215.6
+      },
+      "img": {
+       "x": 157.5,
+       "w": 215.6
+      },
+      "caption": {
+       "x": 157.5,
+       "w": 215.6
+      },
+      "captionAlign": "left"
+     },
+     "qa-gallery": {
+      "figure": {
+       "x": 157.5,
+       "w": 751.6
+      },
+      "items": [
+       {
+        "img": {
+         "x": 157.5,
+         "w": 229.2
+        },
+        "caption": {
+         "x": 157.5,
+         "w": 229.2
+        }
+       },
+       {
+        "img": {
+         "x": 418.7,
+         "w": 229.2
+        },
+        "caption": {
+         "x": 418.7,
+         "w": 229.2
+        }
+       },
+       {
+        "img": {
+         "x": 679.9,
+         "w": 229.2
+        },
+        "caption": {
+         "x": 679.9,
+         "w": 229.2
+        }
+       }
+      ],
+      "caption": {
+       "x": 157.5,
+       "w": 751.6
+      }
+     }
+    }
+   }
+  },
+  "firefox": {
+   "390": {
+    "column": {
+     "x": 20.7,
+     "w": 348.5
+    },
+    "overflow": 0,
+    "items": {
+     "qa-full-column": {
+      "figure": {
+       "x": 20.7,
+       "w": 348.5
+      },
+      "img": {
+       "x": 20.7,
+       "w": 348.5
+      },
+      "caption": {
+       "x": 20.7,
+       "w": 348.5
+      },
+      "captionAlign": "left"
+     },
+     "qa-resized-420": {
+      "figure": {
+       "x": 20.7,
+       "w": 348.5
+      },
+      "img": {
+       "x": 20.7,
+       "w": 348.5
+      },
+      "caption": {
+       "x": 20.7,
+       "w": 348.5
+      },
+      "captionAlign": "left"
+     },
+     "qa-resized-190": {
+      "figure": {
+       "x": 100,
+       "w": 190
+      },
+      "img": {
+       "x": 100,
+       "w": 190
+      },
+      "caption": {
+       "x": 100,
+       "w": 190
+      },
+      "captionAlign": "left"
+     },
+     "qa-no-caption": {
+      "figure": {
+       "x": 20.7,
+       "w": 348.5
+      },
+      "img": {
+       "x": 45,
+       "w": 300
+      },
+      "caption": null,
+      "captionAlign": null
+     },
+     "qa-left": {
+      "figure": {
+       "x": 20.7,
+       "w": 348.5
+      },
+      "img": {
+       "x": 20.7,
+       "w": 300
+      },
+      "caption": {
+       "x": 20.7,
+       "w": 348.5
+      },
+      "captionAlign": "left"
+     },
+     "qa-gallery": {
+      "figure": {
+       "x": 20.7,
+       "w": 348.5
+      },
+      "items": [
+       {
+        "img": {
+         "x": 20.7,
+         "w": 163.9
+        },
+        "caption": {
+         "x": 20.7,
+         "w": 163.9
+        }
+       },
+       {
+        "img": {
+         "x": 205.4,
+         "w": 163.9
+        },
+        "caption": {
+         "x": 205.4,
+         "w": 163.9
+        }
+       },
+       {
+        "img": {
+         "x": 20.7,
+         "w": 348.5
+        },
+        "caption": {
+         "x": 20.7,
+         "w": 348.5
+        }
+       }
+      ],
+      "caption": {
+       "x": 20.7,
+       "w": 348.5
+      }
+     }
+    }
+   },
+   "768": {
+    "column": {
+     "x": 24.8,
+     "w": 718.4
+    },
+    "overflow": 0,
+    "items": {
+     "qa-full-column": {
+      "figure": {
+       "x": 24.8,
+       "w": 718.4
+      },
+      "img": {
+       "x": 24.8,
+       "w": 718.4
+      },
+      "caption": {
+       "x": 24.8,
+       "w": 718.4
+      },
+      "captionAlign": "left"
+     },
+     "qa-resized-420": {
+      "figure": {
+       "x": 174,
+       "w": 420
+      },
+      "img": {
+       "x": 174,
+       "w": 420
+      },
+      "caption": {
+       "x": 174,
+       "w": 420
+      },
+      "captionAlign": "left"
+     },
+     "qa-resized-190": {
+      "figure": {
+       "x": 289,
+       "w": 190
+      },
+      "img": {
+       "x": 289,
+       "w": 190
+      },
+      "caption": {
+       "x": 289,
+       "w": 190
+      },
+      "captionAlign": "left"
+     },
+     "qa-no-caption": {
+      "figure": {
+       "x": 24.8,
+       "w": 718.4
+      },
+      "img": {
+       "x": 234,
+       "w": 300
+      },
+      "caption": null,
+      "captionAlign": null
+     },
+     "qa-left": {
+      "figure": {
+       "x": 24.8,
+       "w": 718.4
+      },
+      "img": {
+       "x": 24.8,
+       "w": 300
+      },
+      "caption": {
+       "x": 24.8,
+       "w": 718.4
+      },
+      "captionAlign": "left"
+     },
+     "qa-gallery": {
+      "figure": {
+       "x": 24.8,
+       "w": 718.4
+      },
+      "items": [
+       {
+        "img": {
+         "x": 24.8,
+         "w": 222.9
+        },
+        "caption": {
+         "x": 24.8,
+         "w": 222.9
+        }
+       },
+       {
+        "img": {
+         "x": 272.5,
+         "w": 223
+        },
+        "caption": {
+         "x": 272.5,
+         "w": 223
+        }
+       },
+       {
+        "img": {
+         "x": 520.3,
+         "w": 222.9
+        },
+        "caption": {
+         "x": 520.3,
+         "w": 222.9
+        }
+       }
+      ],
+      "caption": {
+       "x": 24.8,
+       "w": 718.4
+      }
+     }
+    }
+   },
+   "1024": {
+    "column": {
+     "x": 27.5,
+     "w": 604.5
+    },
+    "overflow": 0,
+    "items": {
+     "qa-full-column": {
+      "figure": {
+       "x": 27.5,
+       "w": 604.5
+      },
+      "img": {
+       "x": 27.5,
+       "w": 604.5
+      },
+      "caption": {
+       "x": 27.5,
+       "w": 604.5
+      },
+      "captionAlign": "left"
+     },
+     "qa-resized-420": {
+      "figure": {
+       "x": 119.8,
+       "w": 420
+      },
+      "img": {
+       "x": 119.8,
+       "w": 420
+      },
+      "caption": {
+       "x": 119.8,
+       "w": 420
+      },
+      "captionAlign": "left"
+     },
+     "qa-resized-190": {
+      "figure": {
+       "x": 234.8,
+       "w": 190
+      },
+      "img": {
+       "x": 234.8,
+       "w": 190
+      },
+      "caption": {
+       "x": 234.8,
+       "w": 190
+      },
+      "captionAlign": "left"
+     },
+     "qa-no-caption": {
+      "figure": {
+       "x": 27.5,
+       "w": 604.5
+      },
+      "img": {
+       "x": 179.8,
+       "w": 300
+      },
+      "caption": null,
+      "captionAlign": null
+     },
+     "qa-left": {
+      "figure": {
+       "x": 27.5,
+       "w": 215.6
+      },
+      "img": {
+       "x": 27.5,
+       "w": 215.6
+      },
+      "caption": {
+       "x": 27.5,
+       "w": 215.6
+      },
+      "captionAlign": "left"
+     },
+     "qa-gallery": {
+      "figure": {
+       "x": 27.5,
+       "w": 604.5
+      },
+      "items": [
+       {
+        "img": {
+         "x": 27.5,
+         "w": 183.1
+        },
+        "caption": {
+         "x": 27.5,
+         "w": 183.1
+        }
+       },
+       {
+        "img": {
+         "x": 238.2,
+         "w": 183.2
+        },
+        "caption": {
+         "x": 238.2,
+         "w": 183.2
+        }
+       },
+       {
+        "img": {
+         "x": 448.9,
+         "w": 183.1
+        },
+        "caption": {
+         "x": 448.9,
+         "w": 183.1
+        }
+       }
+      ],
+      "caption": {
+       "x": 27.5,
+       "w": 604.5
+      }
+     }
+    }
+   },
+   "1440": {
+    "column": {
+     "x": 157.5,
+     "w": 751.6
+    },
+    "overflow": 0,
+    "items": {
+     "qa-full-column": {
+      "figure": {
+       "x": 157.5,
+       "w": 751.6
+      },
+      "img": {
+       "x": 157.5,
+       "w": 751.6
+      },
+      "caption": {
+       "x": 157.5,
+       "w": 751.6
+      },
+      "captionAlign": "left"
+     },
+     "qa-resized-420": {
+      "figure": {
+       "x": 323.3,
+       "w": 420
+      },
+      "img": {
+       "x": 323.3,
+       "w": 420
+      },
+      "caption": {
+       "x": 323.3,
+       "w": 420
+      },
+      "captionAlign": "left"
+     },
+     "qa-resized-190": {
+      "figure": {
+       "x": 438.3,
+       "w": 190
+      },
+      "img": {
+       "x": 438.3,
+       "w": 190
+      },
+      "caption": {
+       "x": 438.3,
+       "w": 190
+      },
+      "captionAlign": "left"
+     },
+     "qa-no-caption": {
+      "figure": {
+       "x": 157.5,
+       "w": 751.6
+      },
+      "img": {
+       "x": 383.3,
+       "w": 300
+      },
+      "caption": null,
+      "captionAlign": null
+     },
+     "qa-left": {
+      "figure": {
+       "x": 157.5,
+       "w": 215.6
+      },
+      "img": {
+       "x": 157.5,
+       "w": 215.6
+      },
+      "caption": {
+       "x": 157.5,
+       "w": 215.6
+      },
+      "captionAlign": "left"
+     },
+     "qa-gallery": {
+      "figure": {
+       "x": 157.5,
+       "w": 751.6
+      },
+      "items": [
+       {
+        "img": {
+         "x": 157.5,
+         "w": 229.2
+        },
+        "caption": {
+         "x": 157.5,
+         "w": 229.2
+        }
+       },
+       {
+        "img": {
+         "x": 418.7,
+         "w": 229.2
+        },
+        "caption": {
+         "x": 418.7,
+         "w": 229.2
+        }
+       },
+       {
+        "img": {
+         "x": 679.9,
+         "w": 229.2
+        },
+        "caption": {
+         "x": 679.9,
+         "w": 229.2
+        }
+       }
+      ],
+      "caption": {
+       "x": 157.5,
+       "w": 751.6
+      }
+     }
+    }
+   }
+  }
+ }
+}

@@ -251,6 +251,30 @@ $nb-layout-header-chrome: '.nb-header, .nb-header--mobile, .nb-header__mobile-ma
     margin-left: 0;
     margin-right: 0;
   }
+
+  // A captioned image keeps its caption to the image's width (GitHub #681).
+  // Core lays a centred image out as `display: table` with a `table-caption`,
+  // so the caption wraps at the image's edges. The flex column above replaces
+  // that, and the stretch gives the figure the whole track, so a theme caption
+  // at `width: 100%` (Anima LT) spanned the column under a resized image. The
+  // figure shrinks to its image instead and centres in its track
+  // (`fit-content` never exceeds the track, and an authored measure still caps
+  // it through `max-width`); `contain: inline-size` keeps the caption's text
+  // from widening it, so the caption wraps at the image's width. Full-column
+  // images come out the same width as before. Aligned images (floated, pulled
+  // out or stacked, #664) and wide/full ones keep the stretch, and a gallery is
+  // not a `.wp-block-image`. The caption's text alignment stays the theme's call.
+  // The doubled class lifts the figure rule over the (0,4,0) stretch above and
+  // its editor twin, whatever the source order.
+  > .wp-block-image.wp-block-image:not(.alignleft, .alignright, .alignwide, .alignfull, [data-align="left"], [data-align="right"], [data-align="wide"], [data-align="full"]):has(> figcaption) {
+    width: fit-content;
+    margin-left: auto;
+    margin-right: auto;
+
+    > figcaption {
+      contain: inline-size;
+    }
+  }
   // --------------
 
   @include nb-layout-desktop-content-columns;
