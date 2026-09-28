@@ -3,7 +3,7 @@ Contributors: pixelgrade, vlad.olaru, babbardel, razvanonofrei, gorby31
 Tags: blocks, gutenberg, gutenberg blocks, page builder, full site editing
 Requires at least: 7.0
 Tested up to: 7.1
-Stable tag: 2.7.1
+Stable tag: 2.7.2
 Requires PHP: 7.4
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -113,6 +113,10 @@ Yes! Nova Block's core features are free to use.
 3. Slideshow Me the Way block options
 
 == Changelog ==
+
+= 2.7.2 =
+* Fix: post-format cards (Quote, Image and similar) in a Cards Collection no longer repeat the collection's title, subtitle, description or buttons. They show only their own content, with the byline above the media when the collection places it there.
+* Fix: a stacked card's image now covers the card in Original and Fit to Row grids instead of showing letterbox bars.
 
 = 2.7.1 =
 * Fix: a page template saved in the Site Editor now lays out Post Content like the default template, so paragraphs no longer shrink to a narrow strip on the front end and in the editor.
