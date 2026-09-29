@@ -1,0 +1,917 @@
+{
+ "ff115": {
+  "version": "115.41.0",
+  "single@1440": {
+   "vw": 1440,
+   "overflowX": 0,
+   "bodyInset": true,
+   "title": {
+    "x": 326.3,
+    "w": 478.2
+   },
+   "firstP": {
+    "x": 326.3,
+    "w": 478.2
+   },
+   "rail": {
+    "x": 973.2,
+    "w": 309.4
+   },
+   "railFirst": {
+    "x": 973.2,
+    "w": 309.4
+   },
+   "divider": {
+    "right": true,
+    "image": "none, linear-gradient(rgba(45, 30, 28, 0.45), rgba(45, 30, 28, 0.45))",
+    "position": "-0.5px 0px, calc(100% + 0.5px + clamp(-31.9881px, max(47952px + max(-280969px, -24975% + 15984px), -154533px), 0px)) 0px"
+   },
+   "sidecarClass": "nb-sidecar nb-sidecar--sidebar-right nb-sidecar--sidebar-medium nb-content-layout-grid alignfull sm-palette-1 sm-variation-1 nb-sidecar--no-left-rail nb-sidecar--has-rule nb-sidecar--rule-primary nb-sidecar--has-right-content",
+   "caption190": {
+    "figure": {
+     "x": 470.3,
+     "w": 190
+    },
+    "img": {
+     "x": 470.3,
+     "w": 190
+    },
+    "caption": {
+     "x": 470.3,
+     "w": 190
+    }
+   },
+   "captionFull": {
+    "figure": {
+     "x": 326.3,
+     "w": 478.2
+    },
+    "caption": {
+     "x": 326.3,
+     "w": 478.2
+    }
+   },
+   "noCaption": {
+    "figure": {
+     "x": 326.3,
+     "w": 478.2
+    },
+    "img": {
+     "x": 415.3,
+     "w": 300
+    }
+   },
+   "archiveQuery": null,
+   "sections": [],
+   "pageWide": null,
+   "console": [
+    "JavaScript error: http://localhost:8882/wp-includes/js/dist/script-modules/block-library/navigation/view.min.js?ver=1bf28ded04f9f188bdcb, line 1: TypeError: The specifier “@wordpress/interactivity” wa"
+   ]
+  },
+  "page@1440": {
+   "vw": 1440,
+   "overflowX": 0,
+   "bodyInset": true,
+   "title": {
+    "x": 326.3,
+    "w": 787.5
+   },
+   "firstP": {
+    "x": 326.3,
+    "w": 787.5
+   },
+   "archiveQuery": null,
+   "sections": [],
+   "pageWide": {
+    "x": 157.5,
+    "w": 1125
+   },
+   "console": []
+  },
+  "archive@1440": {
+   "vw": 1440,
+   "overflowX": 0,
+   "bodyInset": true,
+   "title": {
+    "x": 326.3,
+    "w": 787.5
+   },
+   "firstP": null,
+   "archiveQuery": {
+    "x": 0,
+    "w": 1440
+   },
+   "sections": [],
+   "pageWide": null,
+   "console": [
+    "JavaScript error: http://localhost:8882/wp-includes/js/dist/script-modules/block-library/navigation/view.min.js?ver=1bf28ded04f9f188bdcb, line 1: TypeError: The specifier “@wordpress/interactivity” wa"
+   ]
+  },
+  "home@1440": {
+   "vw": 1440,
+   "overflowX": 0,
+   "bodyInset": true,
+   "title": null,
+   "firstP": null,
+   "archiveQuery": null,
+   "sections": [
+    {
+     "group": {
+      "x": 0,
+      "w": 1440
+     },
+     "heading": {
+      "x": 326.3,
+      "w": 787.5
+     },
+     "wideImage": null,
+     "cards": {
+      "x": 0,
+      "w": 1440
+     },
+     "maxWidth": "none"
+    },
+    {
+     "group": {
+      "x": 0,
+      "w": 1440
+     },
+     "heading": {
+      "x": 326.3,
+      "w": 787.5
+     },
+     "wideImage": {
+      "x": 157.5,
+      "w": 1125
+     },
+     "cards": null,
+     "maxWidth": "none"
+    }
+   ],
+   "pageWide": null,
+   "console": [
+    "JavaScript error: http://localhost:8882/wp-includes/js/dist/script-modules/block-library/navigation/view.min.js?ver=1bf28ded04f9f188bdcb, line 1: TypeError: The specifier “@wordpress/interactivity” wa"
+   ],
+   "dropcapHover": {
+    "hover": true,
+    "transform": "matrix(-0.707107, 0.707107, -0.707036, -0.707036, -30, -30)",
+    "w": 48,
+    "h": 48
+   }
+  },
+  "single@450": {
+   "vw": 450,
+   "overflowX": 0,
+   "bodyInset": true,
+   "title": {
+    "x": 21.4,
+    "w": 407.2
+   },
+   "firstP": {
+    "x": 21.4,
+    "w": 407.2
+   },
+   "rail": {
+    "x": 21.4,
+    "w": 407.2
+   },
+   "railFirst": {
+    "x": 21.4,
+    "w": 407.2
+   },
+   "divider": {
+    "right": false,
+    "image": "none",
+    "position": "0% 0%"
+   },
+   "sidecarClass": "nb-sidecar nb-sidecar--sidebar-right nb-sidecar--sidebar-medium nb-content-layout-grid alignfull sm-palette-1 sm-variation-1 nb-sidecar--no-left-rail nb-sidecar--has-rule nb-sidecar--rule-primary nb-sidecar--has-right-content",
+   "caption190": {
+    "figure": {
+     "x": 130,
+     "w": 190
+    },
+    "img": {
+     "x": 130,
+     "w": 190
+    },
+    "caption": {
+     "x": 130,
+     "w": 190
+    }
+   },
+   "captionFull": {
+    "figure": {
+     "x": 21.4,
+     "w": 407.2
+    },
+    "caption": {
+     "x": 21.4,
+     "w": 407.2
+    }
+   },
+   "noCaption": {
+    "figure": {
+     "x": 21.4,
+     "w": 407.2
+    },
+    "img": {
+     "x": 75,
+     "w": 300
+    }
+   },
+   "archiveQuery": null,
+   "sections": [],
+   "pageWide": null,
+   "console": [
+    "JavaScript error: http://localhost:8882/wp-includes/js/dist/script-modules/block-library/navigation/view.min.js?ver=1bf28ded04f9f188bdcb, line 1: TypeError: The specifier “@wordpress/interactivity” wa"
+   ]
+  },
+  "page@450": {
+   "vw": 450,
+   "overflowX": 0,
+   "bodyInset": true,
+   "title": {
+    "x": 21.4,
+    "w": 407.2
+   },
+   "firstP": {
+    "x": 21.4,
+    "w": 407.2
+   },
+   "archiveQuery": null,
+   "sections": [],
+   "pageWide": {
+    "x": 21.4,
+    "w": 407.2
+   },
+   "console": [
+    "JavaScript error: http://localhost:8882/wp-includes/js/dist/script-modules/block-library/navigation/view.min.js?ver=1bf28ded04f9f188bdcb, line 1: TypeError: The specifier “@wordpress/interactivity” wa"
+   ]
+  },
+  "archive@450": {
+   "vw": 450,
+   "overflowX": 0,
+   "bodyInset": true,
+   "title": {
+    "x": 21.4,
+    "w": 407.2
+   },
+   "firstP": null,
+   "archiveQuery": {
+    "x": 0,
+    "w": 450
+   },
+   "sections": [],
+   "pageWide": null,
+   "console": [
+    "JavaScript error: http://localhost:8882/wp-includes/js/dist/script-modules/block-library/navigation/view.min.js?ver=1bf28ded04f9f188bdcb, line 1: TypeError: The specifier “@wordpress/interactivity” wa"
+   ]
+  },
+  "home@450": {
+   "vw": 450,
+   "overflowX": 0,
+   "bodyInset": true,
+   "title": null,
+   "firstP": null,
+   "archiveQuery": null,
+   "sections": [
+    {
+     "group": {
+      "x": 21.4,
+      "w": 407.2
+     },
+     "heading": {
+      "x": 21.4,
+      "w": 407.2
+     },
+     "wideImage": null,
+     "cards": {
+      "x": 21.4,
+      "w": 407.2
+     },
+     "maxWidth": "1125px"
+    },
+    {
+     "group": {
+      "x": 21.4,
+      "w": 407.2
+     },
+     "heading": {
+      "x": 21.4,
+      "w": 407.2
+     },
+     "wideImage": {
+      "x": 21.4,
+      "w": 407.2
+     },
+     "cards": null,
+     "maxWidth": "1125px"
+    }
+   ],
+   "pageWide": null,
+   "console": []
+  }
+ },
+ "firefox": {
+  "version": "153.0",
+  "single@1440": {
+   "vw": 1440,
+   "overflowX": 0,
+   "bodyInset": true,
+   "title": {
+    "x": 326.3,
+    "w": 478.1
+   },
+   "firstP": {
+    "x": 326.3,
+    "w": 478.1
+   },
+   "rail": {
+    "x": 973.1,
+    "w": 309.4
+   },
+   "railFirst": {
+    "x": 973.1,
+    "w": 309.4
+   },
+   "divider": {
+    "right": true,
+    "image": "none, linear-gradient(color(srgb 0.176471 0.117647 0.109804 / 0.45), color(srgb 0.176471 0",
+    "position": "-0.5px 0px, calc(100% + 0.5px - (0.5 * clamp(0px, 999 * min(-95.9976px + (0.5 * min(1125px, 100% - 63.9929px)), 309.375px), 63.9929px))) 0px"
+   },
+   "sidecarClass": "nb-sidecar nb-sidecar--sidebar-right nb-sidecar--sidebar-medium nb-content-layout-grid alignfull sm-palette-1 sm-variation-1 nb-sidecar--no-left-rail nb-sidecar--has-rule nb-sidecar--rule-primary nb-sidecar--has-right-content",
+   "caption190": {
+    "figure": {
+     "x": 470.3,
+     "w": 190
+    },
+    "img": {
+     "x": 470.3,
+     "w": 190
+    },
+    "caption": {
+     "x": 470.3,
+     "w": 190
+    }
+   },
+   "captionFull": {
+    "figure": {
+     "x": 326.3,
+     "w": 478.1
+    },
+    "caption": {
+     "x": 326.3,
+     "w": 478.1
+    }
+   },
+   "noCaption": {
+    "figure": {
+     "x": 326.3,
+     "w": 478.1
+    },
+    "img": {
+     "x": 415.3,
+     "w": 300
+    }
+   },
+   "archiveQuery": null,
+   "sections": [],
+   "pageWide": null,
+   "console": []
+  },
+  "page@1440": {
+   "vw": 1440,
+   "overflowX": 0,
+   "bodyInset": true,
+   "title": {
+    "x": 326.3,
+    "w": 787.5
+   },
+   "firstP": {
+    "x": 326.3,
+    "w": 787.5
+   },
+   "archiveQuery": null,
+   "sections": [],
+   "pageWide": {
+    "x": 157.5,
+    "w": 1125
+   },
+   "console": []
+  },
+  "archive@1440": {
+   "vw": 1440,
+   "overflowX": 0,
+   "bodyInset": true,
+   "title": {
+    "x": 326.3,
+    "w": 787.5
+   },
+   "firstP": null,
+   "archiveQuery": {
+    "x": 0,
+    "w": 1440
+   },
+   "sections": [],
+   "pageWide": null,
+   "console": []
+  },
+  "home@1440": {
+   "vw": 1440,
+   "overflowX": 0,
+   "bodyInset": true,
+   "title": null,
+   "firstP": null,
+   "archiveQuery": null,
+   "sections": [
+    {
+     "group": {
+      "x": 0,
+      "w": 1440
+     },
+     "heading": {
+      "x": 326.3,
+      "w": 787.5
+     },
+     "wideImage": null,
+     "cards": {
+      "x": 0,
+      "w": 1440
+     },
+     "maxWidth": "none"
+    },
+    {
+     "group": {
+      "x": 0,
+      "w": 1440
+     },
+     "heading": {
+      "x": 326.3,
+      "w": 787.5
+     },
+     "wideImage": {
+      "x": 157.5,
+      "w": 1125
+     },
+     "cards": null,
+     "maxWidth": "none"
+    }
+   ],
+   "pageWide": null,
+   "console": [],
+   "dropcapHover": {
+    "hover": true,
+    "transform": "matrix(-0.707107, 0.707107, -0.707036, -0.707036, -30, -30)",
+    "w": 48,
+    "h": 48
+   }
+  },
+  "single@450": {
+   "vw": 450,
+   "overflowX": 0,
+   "bodyInset": true,
+   "title": {
+    "x": 21.4,
+    "w": 407.2
+   },
+   "firstP": {
+    "x": 21.4,
+    "w": 407.2
+   },
+   "rail": {
+    "x": 21.4,
+    "w": 407.2
+   },
+   "railFirst": {
+    "x": 21.4,
+    "w": 407.2
+   },
+   "divider": {
+    "right": false,
+    "image": "none",
+    "position": "0% 0%"
+   },
+   "sidecarClass": "nb-sidecar nb-sidecar--sidebar-right nb-sidecar--sidebar-medium nb-content-layout-grid alignfull sm-palette-1 sm-variation-1 nb-sidecar--no-left-rail nb-sidecar--has-rule nb-sidecar--rule-primary nb-sidecar--has-right-content",
+   "caption190": {
+    "figure": {
+     "x": 130,
+     "w": 190
+    },
+    "img": {
+     "x": 130,
+     "w": 190
+    },
+    "caption": {
+     "x": 130,
+     "w": 190
+    }
+   },
+   "captionFull": {
+    "figure": {
+     "x": 21.4,
+     "w": 407.2
+    },
+    "caption": {
+     "x": 21.4,
+     "w": 407.2
+    }
+   },
+   "noCaption": {
+    "figure": {
+     "x": 21.4,
+     "w": 407.2
+    },
+    "img": {
+     "x": 75,
+     "w": 300
+    }
+   },
+   "archiveQuery": null,
+   "sections": [],
+   "pageWide": null,
+   "console": []
+  },
+  "page@450": {
+   "vw": 450,
+   "overflowX": 0,
+   "bodyInset": true,
+   "title": {
+    "x": 21.4,
+    "w": 407.2
+   },
+   "firstP": {
+    "x": 21.4,
+    "w": 407.2
+   },
+   "archiveQuery": null,
+   "sections": [],
+   "pageWide": {
+    "x": 21.4,
+    "w": 407.2
+   },
+   "console": []
+  },
+  "archive@450": {
+   "vw": 450,
+   "overflowX": 0,
+   "bodyInset": true,
+   "title": {
+    "x": 21.4,
+    "w": 407.2
+   },
+   "firstP": null,
+   "archiveQuery": {
+    "x": 0,
+    "w": 450
+   },
+   "sections": [],
+   "pageWide": null,
+   "console": []
+  },
+  "home@450": {
+   "vw": 450,
+   "overflowX": 0,
+   "bodyInset": true,
+   "title": null,
+   "firstP": null,
+   "archiveQuery": null,
+   "sections": [
+    {
+     "group": {
+      "x": 21.4,
+      "w": 407.2
+     },
+     "heading": {
+      "x": 21.4,
+      "w": 407.2
+     },
+     "wideImage": null,
+     "cards": {
+      "x": 21.4,
+      "w": 407.2
+     },
+     "maxWidth": "1125px"
+    },
+    {
+     "group": {
+      "x": 21.4,
+      "w": 407.2
+     },
+     "heading": {
+      "x": 21.4,
+      "w": 407.2
+     },
+     "wideImage": {
+      "x": 21.4,
+      "w": 407.2
+     },
+     "cards": null,
+     "maxWidth": "1125px"
+    }
+   ],
+   "pageWide": null,
+   "console": []
+  }
+ },
+ "chromium": {
+  "version": "151.0.7922.34",
+  "single@1440": {
+   "vw": 1440,
+   "overflowX": 0,
+   "bodyInset": true,
+   "title": {
+    "x": 326.3,
+    "w": 478.1
+   },
+   "firstP": {
+    "x": 326.3,
+    "w": 478.1
+   },
+   "rail": {
+    "x": 973.1,
+    "w": 309.4
+   },
+   "railFirst": {
+    "x": 973.1,
+    "w": 309.4
+   },
+   "divider": {
+    "right": true,
+    "image": "none, linear-gradient(color(srgb 0.176471 0.117647 0.109804 / 0.45), color(srgb 0.176471 0",
+    "position": "-0.5px 0px, calc(100% + 0.5px - (0.5 * clamp(0px, 999 * min(-46.2857px - 49.7143px + (0.5 * min(1125px, 100% - 64px)), 309.375px), 64px))) 0px"
+   },
+   "sidecarClass": "nb-sidecar nb-sidecar--sidebar-right nb-sidecar--sidebar-medium nb-content-layout-grid alignfull sm-palette-1 sm-variation-1 nb-sidecar--no-left-rail nb-sidecar--has-rule nb-sidecar--rule-primary nb-sidecar--has-right-content",
+   "caption190": {
+    "figure": {
+     "x": 470.3,
+     "w": 190
+    },
+    "img": {
+     "x": 470.3,
+     "w": 190
+    },
+    "caption": {
+     "x": 470.3,
+     "w": 190
+    }
+   },
+   "captionFull": {
+    "figure": {
+     "x": 326.3,
+     "w": 478.1
+    },
+    "caption": {
+     "x": 326.3,
+     "w": 478.1
+    }
+   },
+   "noCaption": {
+    "figure": {
+     "x": 326.3,
+     "w": 478.1
+    },
+    "img": {
+     "x": 415.3,
+     "w": 300
+    }
+   },
+   "archiveQuery": null,
+   "sections": [],
+   "pageWide": null,
+   "console": []
+  },
+  "page@1440": {
+   "vw": 1440,
+   "overflowX": 0,
+   "bodyInset": true,
+   "title": {
+    "x": 326.3,
+    "w": 787.5
+   },
+   "firstP": {
+    "x": 326.3,
+    "w": 787.5
+   },
+   "archiveQuery": null,
+   "sections": [],
+   "pageWide": {
+    "x": 157.5,
+    "w": 1125
+   },
+   "console": []
+  },
+  "archive@1440": {
+   "vw": 1440,
+   "overflowX": 0,
+   "bodyInset": true,
+   "title": {
+    "x": 326.3,
+    "w": 787.5
+   },
+   "firstP": null,
+   "archiveQuery": {
+    "x": 0,
+    "w": 1440
+   },
+   "sections": [],
+   "pageWide": null,
+   "console": []
+  },
+  "home@1440": {
+   "vw": 1440,
+   "overflowX": 0,
+   "bodyInset": true,
+   "title": null,
+   "firstP": null,
+   "archiveQuery": null,
+   "sections": [
+    {
+     "group": {
+      "x": 0,
+      "w": 1440
+     },
+     "heading": {
+      "x": 326.3,
+      "w": 787.5
+     },
+     "wideImage": null,
+     "cards": {
+      "x": 0,
+      "w": 1440
+     },
+     "maxWidth": "none"
+    },
+    {
+     "group": {
+      "x": 0,
+      "w": 1440
+     },
+     "heading": {
+      "x": 326.3,
+      "w": 787.5
+     },
+     "wideImage": {
+      "x": 157.5,
+      "w": 1125
+     },
+     "cards": null,
+     "maxWidth": "none"
+    }
+   ],
+   "pageWide": null,
+   "console": [],
+   "dropcapHover": {
+    "hover": true,
+    "transform": "matrix(-0.707107, 0.707107, -0.707036, -0.707036, -30, -30)",
+    "w": 48,
+    "h": 48
+   }
+  },
+  "single@450": {
+   "vw": 450,
+   "overflowX": 0,
+   "bodyInset": true,
+   "title": {
+    "x": 21.4,
+    "w": 407.2
+   },
+   "firstP": {
+    "x": 21.4,
+    "w": 407.2
+   },
+   "rail": {
+    "x": 21.4,
+    "w": 407.2
+   },
+   "railFirst": {
+    "x": 21.4,
+    "w": 407.2
+   },
+   "divider": {
+    "right": false,
+    "image": "none",
+    "position": "0% 0%"
+   },
+   "sidecarClass": "nb-sidecar nb-sidecar--sidebar-right nb-sidecar--sidebar-medium nb-content-layout-grid alignfull sm-palette-1 sm-variation-1 nb-sidecar--no-left-rail nb-sidecar--has-rule nb-sidecar--rule-primary nb-sidecar--has-right-content",
+   "caption190": {
+    "figure": {
+     "x": 130,
+     "w": 190
+    },
+    "img": {
+     "x": 130,
+     "w": 190
+    },
+    "caption": {
+     "x": 130,
+     "w": 190
+    }
+   },
+   "captionFull": {
+    "figure": {
+     "x": 21.4,
+     "w": 407.2
+    },
+    "caption": {
+     "x": 21.4,
+     "w": 407.2
+    }
+   },
+   "noCaption": {
+    "figure": {
+     "x": 21.4,
+     "w": 407.2
+    },
+    "img": {
+     "x": 75,
+     "w": 300
+    }
+   },
+   "archiveQuery": null,
+   "sections": [],
+   "pageWide": null,
+   "console": []
+  },
+  "page@450": {
+   "vw": 450,
+   "overflowX": 0,
+   "bodyInset": true,
+   "title": {
+    "x": 21.4,
+    "w": 407.2
+   },
+   "firstP": {
+    "x": 21.4,
+    "w": 407.2
+   },
+   "archiveQuery": null,
+   "sections": [],
+   "pageWide": {
+    "x": 21.4,
+    "w": 407.2
+   },
+   "console": []
+  },
+  "archive@450": {
+   "vw": 450,
+   "overflowX": 0,
+   "bodyInset": true,
+   "title": {
+    "x": 21.4,
+    "w": 407.2
+   },
+   "firstP": null,
+   "archiveQuery": {
+    "x": 0,
+    "w": 450
+   },
+   "sections": [],
+   "pageWide": null,
+   "console": []
+  },
+  "home@450": {
+   "vw": 450,
+   "overflowX": 0,
+   "bodyInset": true,
+   "title": null,
+   "firstP": null,
+   "archiveQuery": null,
+   "sections": [
+    {
+     "group": {
+      "x": 21.4,
+      "w": 407.2
+     },
+     "heading": {
+      "x": 21.4,
+      "w": 407.2
+     },
+     "wideImage": null,
+     "cards": {
+      "x": 21.4,
+      "w": 407.2
+     },
+     "maxWidth": "1125px"
+    },
+    {
+     "group": {
+      "x": 21.4,
+      "w": 407.2
+     },
+     "heading": {
+      "x": 21.4,
+      "w": 407.2
+     },
+     "wideImage": {
+      "x": 21.4,
+      "w": 407.2
+     },
+     "cards": null,
+     "maxWidth": "1125px"
+    }
+   ],
+   "pageWide": null,
+   "console": []
+  }
+ }
+}

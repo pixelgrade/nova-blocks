@@ -63,7 +63,9 @@ test( 'the frontend draws the rule only above lap, as a pseudo grid item in the 
 	// (the rail-gap share under Content Inset, else the whole separator).
 	const position = decl( rule, 'background-position' );
 	assert.match( position, /^left calc\(var\(--nb-layout-rail-gap-left, var\(--nb-sidecar-sidebar-left-gap\)\) \/ 2 - var\(--nb-sidecar-rule-weight\) \/ 2\) top 0,/ );
-	assert.match( position, /right calc\(var\(--nb-layout-rail-gap-right, var\(--nb-sidecar-sidebar-right-gap\)\) \/ 2 - var\(--nb-sidecar-rule-weight\) \/ 2\) top 0$/ );
+	// The right layer from the left edge (`left calc(100% - x)` = `right x`;
+	// Firefox 115 mis-converts a `right` offset holding clamp(), #685).
+	assert.match( position, /left calc\(100% - var\(--nb-layout-rail-gap-right, var\(--nb-sidecar-sidebar-right-gap\)\) \/ 2 \+ var\(--nb-sidecar-rule-weight\) \/ 2\) top 0$/ );
 } );
 
 test( 'no divider pseudo-element exists below lap, where the rail stacks', () => {

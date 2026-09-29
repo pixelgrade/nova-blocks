@@ -78,6 +78,7 @@ require_once dirname( __FILE__ ) . '/lib/core-tools-ownership.php';
 require_once dirname( __FILE__ ) . '/lib/core-container-spacing.php';
 require_once dirname( __FILE__ ) . '/lib/rule-styles.php';
 require_once dirname( __FILE__ ) . '/lib/site-tagline.php';
+require_once dirname( __FILE__ ) . '/lib/legacy-browser-classes.php';
 require_once dirname( __FILE__ ) . '/lib/site-title.php';
 require_once dirname( __FILE__ ) . '/lib/site-identity.php';
 require_once dirname( __FILE__ ) . '/lib/collection-layout-recipes.php';

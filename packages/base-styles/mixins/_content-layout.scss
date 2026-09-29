@@ -1,3 +1,40 @@
+// Content Inset gate (GitHub #655, Firefox 115 twin #685).
+//
+// The Content Inset contract applies once Style Manager emits its opt-in
+// signal `--sm-content-inset-explicit: 1`, read with a container style query.
+// Browsers without style queries (Firefox before 128, the last release for
+// Windows 7/8 being 115 ESR) skip those rules, so Nova also prints the body
+// class `nb-content-inset-explicit` from the same server state
+// (lib/content-inset.php) and every gated rule gets a twin under
+// `:where(body.nb-content-inset-explicit)`. `:where()` adds no specificity and
+// the twin follows its original, so where both apply the result is the same.
+// The class is not printed in a Customizer preview, where the signal can
+// change without a reload; there the style query alone decides.
+$nb-content-inset-class: 'nb-content-inset-explicit';
+$nb-content-inset-twin: ':where(body.#{$nb-content-inset-class})';
+
+// True while the class twin is being emitted, so a nested gate (the #656
+// pull-out flag) can swap its own style query for a selector.
+$nb-content-inset-emitting-twin: false;
+
+@mixin nb-when-content-inset-explicit {
+  @container style(--sm-content-inset-explicit: 1) {
+    @content;
+  }
+
+  $nb-content-inset-emitting-twin: true !global;
+  @if & {
+    @at-root #{selector-nest($nb-content-inset-twin, &)} {
+      @content;
+    }
+  } @else {
+    #{$nb-content-inset-twin} {
+      @content;
+    }
+  }
+  $nb-content-inset-emitting-twin: false !global;
+}
+
 // Default Layout Settings
 // In Anima this value will be equal with site header height. 
 // In this way, the sticky block will not be under the header.
@@ -46,7 +83,7 @@
   // inset keeps `acs` = `cs` and `ace` = `ce` instead of inheriting an outer
   // Sidecar's split; the inset containers override it (core _layout.scss).
   // Behind the Style Manager opt-in signal like the rest of the inset.
-  @container style(--sm-content-inset-explicit: 1) {
+  @include nb-when-content-inset-explicit {
     @each $side in left, right {
       --nb-layout-rail-gap-#{$side}: var(--nb-sidecar-sidebar-#{$side}-gap);
     }
@@ -141,7 +178,7 @@
     [we] var(--nb-sidecar-sides)
     [fe];
 
-  @container style(--sm-content-inset-explicit: 1) {
+  @include nb-when-content-inset-explicit {
     --nb-layout-sep-left: var(--nb-layout-rail-gap-left, var(--nb-sidecar-sidebar-left-gap)) [acs] calc(var(--nb-sidecar-sidebar-left-gap) - var(--nb-layout-rail-gap-left, var(--nb-sidecar-sidebar-left-gap)));
     --nb-layout-sep-right: calc(var(--nb-sidecar-sidebar-right-gap) - var(--nb-layout-rail-gap-right, var(--nb-sidecar-sidebar-right-gap))) [ace] var(--nb-layout-rail-gap-right, var(--nb-sidecar-sidebar-right-gap));
     --nb-layout-acs-alias: acs;
@@ -266,7 +303,11 @@ $nb-layout-header-chrome: '.nb-header, .nb-header--mobile, .nb-header__mobile-ma
   // not a `.wp-block-image`. The caption's text alignment stays the theme's call.
   // The doubled class lifts the figure rule over the (0,4,0) stretch above and
   // its editor twin, whatever the source order.
-  > .wp-block-image.wp-block-image:not(.alignleft, .alignright, .alignwide, .alignfull, [data-align="left"], [data-align="right"], [data-align="wide"], [data-align="full"]):has(> figcaption) {
+  // "Captioned" is the class the core/image render prints
+  // (`nb-image--has-caption`, lib/image-caption.php) or, in the editor,
+  // `:has(> figcaption)`. `:where()` is a forgiving list, so a browser without
+  // `:has()` (Firefox 115, #685) keeps the class and drops only `:has()`.
+  > .wp-block-image.wp-block-image:not(.alignleft, .alignright, .alignwide, .alignfull, [data-align="left"], [data-align="right"], [data-align="wide"], [data-align="full"]):where(.nb-image--has-caption, :has(> figcaption)) {
     width: fit-content;
     margin-left: auto;
     margin-right: auto;

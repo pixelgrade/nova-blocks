@@ -48,7 +48,7 @@
   // wide lines, so the title, meta, featured image and Post Content share one
   // column; wide/full keep the rail-bounded spans below (and the break layers).
   // Without the signal this matches nothing and the alias above stands.
-  @container style(--sm-content-inset-explicit: 1) {
+  @include nb-when-content-inset-explicit {
     .nb-sidecar:not(.nb-sidecar--no-left-rail.nb-sidecar--no-right-rail) {
 
       > .nb-sidecar-area--content {
@@ -87,7 +87,7 @@
   // untouched (ws/we, fs/fe), and the break layers below still open a
   // side (inherit / break-align-*) exactly as before. Same specificity as the
   // rules above, later in source.
-  @container style(--sm-content-inset-explicit: 1) {
+  @include nb-when-content-inset-explicit {
     .nb-sidecar:not(.nb-sidecar--no-left-rail) > .nb-sidecar-area--content {
       --block-wide-start: acs;
       --block-full-start: acs;
@@ -197,7 +197,7 @@
 
   // Under a saved Content Inset the constrained span beside a rail is the
   // rail gap line (see the inset rule above), so Never pins there.
-  @container style(--sm-content-inset-explicit: 1) {
+  @include nb-when-content-inset-explicit {
     .nb-sidecar:not(.nb-sidecar--no-left-rail) > .nb-sidecar-area--content > .nb-break-never {
       --block-wide-start: acs;
       --block-full-start: acs;
@@ -235,8 +235,22 @@
     --nb-sidecar-rule-right: none;
   }
 
+  //
+  // "Has content" is known twice: the render prints
+  // `nb-sidecar--has-{left,right}-content` on a rule-on Sidecar whose rail
+  // area renders an element (Firefox 115 has no `:has()`, #685), and `:has()`
+  // covers the editor, where the markup is not the render's. Separate rules:
+  // an unsupported `:has()` would drop a shared selector list.
+  .nb-sidecar--has-rule:not(.nb-sidecar--no-left-rail).nb-sidecar--has-left-content {
+    --nb-sidecar-rule-left: linear-gradient(var(--nb-sidecar-rule-color), var(--nb-sidecar-rule-color));
+  }
+
   .nb-sidecar--has-rule:not(.nb-sidecar--no-left-rail):has(> .nb-sidecar-area--sidebar-left > *) {
     --nb-sidecar-rule-left: linear-gradient(var(--nb-sidecar-rule-color), var(--nb-sidecar-rule-color));
+  }
+
+  .nb-sidecar--has-rule:not(.nb-sidecar--no-right-rail).nb-sidecar--has-right-content {
+    --nb-sidecar-rule-right: linear-gradient(var(--nb-sidecar-rule-color), var(--nb-sidecar-rule-color));
   }
 
   .nb-sidecar--has-rule:not(.nb-sidecar--no-right-rail):has(> .nb-sidecar-area--sidebar-right > *) {
@@ -256,8 +270,12 @@
     background-image: var(--nb-sidecar-rule-left, none), var(--nb-sidecar-rule-right, none);
     background-repeat: no-repeat;
     background-size: var(--nb-sidecar-rule-weight) 100%;
+    // The right layer is placed from the left edge: `left calc(100% - x)` is
+    // `right x` (100% aligns the layer's right edge), but Firefox 115 ESR
+    // negates the rail gap's clamp() wrongly when it converts a `right`
+    // offset and drew the line outside the Sidecar (#685).
     background-position:
       left calc(var(--nb-layout-rail-gap-left, var(--nb-sidecar-sidebar-left-gap)) / 2 - var(--nb-sidecar-rule-weight) / 2) top 0,
-      right calc(var(--nb-layout-rail-gap-right, var(--nb-sidecar-sidebar-right-gap)) / 2 - var(--nb-sidecar-rule-weight) / 2) top 0;
+      left calc(100% - var(--nb-layout-rail-gap-right, var(--nb-sidecar-sidebar-right-gap)) / 2 + var(--nb-sidecar-rule-weight) / 2) top 0;
   }
 }

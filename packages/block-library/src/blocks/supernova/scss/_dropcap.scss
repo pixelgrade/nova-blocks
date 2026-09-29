@@ -72,6 +72,9 @@
   transform-origin: 50% 0;
 }
 
+// Browsers without `@property` (Firefox before 128, #685) give the var no
+// initial value, which would drop the whole transform: the lines below fall
+// back to the same initial value (they only lose the scale transition).
 @property --nb-dropcap-line-scale-y {
   syntax: '<number>'; /* <- defined as type number for the transition to work */
   initial-value: 0.9999;
@@ -79,11 +82,11 @@
 }
 
 .nb-supernova-item__dropcap-line--top {
-  transform: translate3d(-2em, -2em, 0) rotate(135deg) scaleY(var(--nb-dropcap-line-scale-y));
+  transform: translate3d(-2em, -2em, 0) rotate(135deg) scaleY(var(--nb-dropcap-line-scale-y, 0.9999));
 }
 
 .nb-supernova-item__dropcap-line--bottom {
-  transform: translate3d(2em, 2em, 0) rotate(-45deg) scaleY(var(--nb-dropcap-line-scale-y));
+  transform: translate3d(2em, 2em, 0) rotate(-45deg) scaleY(var(--nb-dropcap-line-scale-y, 0.9999));
 }
 
 .u-collection-hover-felt {

@@ -276,6 +276,37 @@
   --nb-layout-rail-right: 0px;
 }
 
+// The #656 pull-out flag gate. Current browsers read the inherited
+// `--nb-pullout-in-column` with a style query. The Firefox 115 twin (#685)
+// cannot, so it scopes the grid parent by where the flag comes from instead:
+// the inset containers set it to 1 and a template part resets it to 0, so the
+// grid parent must sit in (or be) an inset container with no template part
+// in between. One level of nesting is modelled (an inset container inside a
+// template part, e.g. a footer Sidecar); deeper alternations fall back to the
+// shared placement in Firefox 115 only. `:where()` keeps the twin's
+// specificity equal to the original's.
+$nb-pullout-flag-on: '.nb-sidecar, .nb-sidecar-area--content, .is-root-container, .edit-post-visual-editor__post-title-wrapper, .wp-block-post-content';
+$nb-pullout-flag-off: '.wp-block-template-part';
+
+@function nb-pullout-in-column-scope() {
+  @if not $nb-content-inset-emitting-twin {
+    @return '';
+  }
+  $on: ':is(#{$nb-pullout-flag-on})';
+  $off: $nb-pullout-flag-off;
+  @return ':where(:is(#{$on}, #{$on} *):not(#{$off}, #{$off} *), :is(#{$off} #{$on}, #{$off} #{$on} *):not(#{$off} #{$on} #{$off}, #{$off} #{$on} #{$off} *))';
+}
+
+@mixin nb-when-pullout-in-column {
+  @if $nb-content-inset-emitting-twin {
+    @content;
+  } @else {
+    @container style(--nb-pullout-in-column: 1) {
+      @content;
+    }
+  }
+}
+
 // Content Inset — the Style Manager Layout board contract (GitHub #655).
 //
 // The board ("The Layout contract", style-manager spacing-overlay
@@ -295,8 +326,10 @@
 // Manager opt-in signal `--sm-content-inset-explicit: 1`, which SM emits ONLY
 // once a Content Inset value is saved (`--sm-content-inset` itself is always
 // emitted with its 230 default, so it cannot tell a saved value apart). Sites
-// that never saved Content Inset — and browsers without style queries — match
-// none of it: the ungated cascade is untouched, byte for byte.
+// that never saved Content Inset match none of it: the ungated cascade is
+// untouched, byte for byte. Browsers without style queries read the same
+// rules through the `nb-content-inset-explicit` body class twin (#685, see
+// nb-when-content-inset-explicit).
 //
 // Rails: `--nb-inset-rail-*` is the rail that actually sits on each side. A
 // Sidecar sets it on its present sides; an absent side INHERITS it, so a nested
@@ -318,7 +351,7 @@
 // Wide and full stop there beside a rail (sidecar _desktop-layout.scss), so a
 // Wide post header spans container edge to rail gap while the text keeps the
 // reading column; see nb-layout-desktop-template-columns for the split.
-@container style(--sm-content-inset-explicit: 1) {
+@include nb-when-content-inset-explicit {
 
   .nb-sidecar:not(.nb-sidecar--no-left-rail) {
     --nb-inset-rail-left: var(--nb-sidecar-sidebar-left-width);
@@ -395,9 +428,9 @@
   // does not fit that half unbroken, so it stays in cs-ce at full size. Below
   // `lap` the grid collapses to one column and the shared rules stand. Same
   // selectors as the shared placement above, later in source order.
-  @container style(--nb-pullout-in-column: 1) {
+  @include nb-when-pullout-in-column {
     @include above(lap) {
-      :is(#{$nb-layout-grid-parents}) {
+      :is(#{$nb-layout-grid-parents})#{nb-pullout-in-column-scope()} {
 
         > :is(.alignleft, [data-align="left"]):is(.break-align-left, .nb-break-always) {
           grid-column: cs / gcs;

@@ -236,6 +236,11 @@ $nb-group-measure-children: ':not(.alignwide, .alignfull, .alignleft, .alignrigh
       grid-column: fs / fe;
       grid-template-columns: subgrid;
       grid-auto-rows: min-content;
+      // A subgrid ignores max-width on its subgridded axis in current browsers
+      // (per spec), but Firefox 115 ESR still applies core's
+      // `.is-layout-constrained > .alignwide { max-width }` to it, which
+      // narrowed a wide section and shifted its inherited tracks (#685).
+      max-width: none;
 
       // Children are placed by the inherited grid, not the max-width fallback.
       // `width: 100%` mirrors nb-layout-root's stretch (`> * { width: 100% }`)

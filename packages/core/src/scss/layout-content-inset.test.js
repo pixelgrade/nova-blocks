@@ -21,9 +21,29 @@ const SASS_OPTIONS = {
 };
 const SIGNAL = 'style(--sm-content-inset-explicit: 1)';
 
-const compile = ( entry, loadPaths ) => postcss.parse(
+// Every gated rule also has a Firefox 115 twin under
+// `:where(body.nb-content-inset-explicit)` (GitHub #685), which repeats it for
+// browsers without style queries. The twins are pinned equal to the gated
+// rules in legacy-firefox.test.js; this file checks the style-query half, so
+// it drops them.
+const TWIN = ':where(body.nb-content-inset-explicit)';
+const withoutTwins = root => {
+	root.walkRules( rule => {
+		if ( rule.selector.includes( TWIN ) ) {
+			rule.remove();
+		}
+	} );
+	root.walkAtRules( atRule => {
+		if ( atRule.nodes && ! atRule.nodes.length ) {
+			atRule.remove();
+		}
+	} );
+	return root;
+};
+
+const compile = ( entry, loadPaths ) => withoutTwins( postcss.parse(
 	sass.compileString( entry, { ...SASS_OPTIONS, loadPaths } ).css
-);
+) );
 
 const layoutSheet = compile( "@import 'mixins';\n@import 'scss/layout';\n", [
 	path.join( REPO_ROOT, 'packages/base-styles' ),

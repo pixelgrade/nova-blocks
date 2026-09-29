@@ -11,7 +11,17 @@
  *
  * Only what the Nova layout contracts need is modelled: `@media` with the
  * Nova `lap` breakpoint (desktop / below-desktop), `@supports` (assumed true),
- * and `@container` style queries (assumed false: Content Inset unset).
+ * and `@container` style queries (false by default: Content Inset unset).
+ *
+ * Two opt-in context flags model a browser more closely (GitHub #685):
+ * - `styleQueries: true` evaluates `@container style(--x: v)` against the
+ *   computed custom property on the query container, the element's parent
+ *   (every element is a style container). Custom properties inherit, so the
+ *   value comes from the nearest ancestor that declares it.
+ * - `legacy: true` models Firefox 115 ESR: no container style queries, and no
+ *   `:has()`. A selector that uses `:has()` is invalid, which drops the whole
+ *   rule; inside the forgiving `:is()` / `:where()` lists only that argument
+ *   is dropped.
  */
 const path = require( 'node:path' );
 const postcss = require( 'postcss' );
@@ -73,13 +83,27 @@ const selectorsOf = selector => {
 	return list;
 };
 
-const atRulesApply = ( rule, { desktop } ) => {
+const STYLE_QUERY = /^style\(\s*(--[\w-]+)\s*:\s*(.+?)\s*\)$/;
+
+const parentElement = element => ( element.parent && element.parent.type === 'tag' ? element.parent : null );
+
+const atRulesApply = ( rule, context, element ) => {
+	const { desktop, styleQueries, legacy } = context;
 	for ( let parent = rule.parent; parent; parent = parent.parent ) {
 		if ( parent.type !== 'atrule' ) {
 			continue;
 		}
 		if ( parent.name === 'container' ) {
-			return false;
+			const query = STYLE_QUERY.exec( parent.params.trim() );
+			const container = element && parentElement( element );
+			if ( legacy || ! styleQueries || ! query || ! container ) {
+				return false;
+			}
+			const value = computedCustomProperty( context.sheets, container, query[ 1 ], context );
+			if ( value === null || value.trim() !== query[ 2 ] ) {
+				return false;
+			}
+			continue;
 		}
 		if ( parent.name === 'media' ) {
 			const isDesktopQuery = /min-width:\s*1024px/.test( parent.params );
@@ -106,6 +130,46 @@ const find = ( dom, selector ) => {
 	return element;
 };
 
+// Firefox 115: `:has()` is unknown. In a forgiving list (`:is()`, `:where()`)
+// the argument that uses it is dropped; anywhere else the selector is invalid
+// (null), which invalidates the rule.
+const legacySelector = selector => {
+	let invalid = false;
+	const forgiving = node => node.type === 'pseudo' && [ ':is', ':where' ].includes( node.value.toLowerCase() );
+	const usesHas = node => {
+		let found = false;
+		node.walk( child => {
+			if ( child.type === 'pseudo' && child.value.toLowerCase() === ':has' ) {
+				found = true;
+			}
+		} );
+		return found;
+	};
+	const clean = container => {
+		container.each( node => {
+			if ( node.type !== 'pseudo' ) {
+				return;
+			}
+			if ( node.value.toLowerCase() === ':has' ) {
+				invalid = true;
+				return;
+			}
+			if ( forgiving( node ) ) {
+				node.nodes.filter( usesHas ).forEach( arg => arg.remove() );
+				if ( ! node.nodes.length ) {
+					// `:is()` with no valid argument matches nothing.
+					invalid = true;
+					return;
+				}
+			}
+			node.nodes.forEach( clean );
+		} );
+	};
+	const copy = selector.clone();
+	clean( copy );
+	return invalid ? null : copy;
+};
+
 const matches = ( element, selector ) => {
 	try {
 		return CSSselect.is( element, selector );
@@ -124,21 +188,23 @@ const matches = ( element, selector ) => {
  * @param {Object}  context `{ desktop: boolean }`.
  * @return {Object|null} `{ value, selector, specificity, important }`.
  */
-const winningDeclaration = ( sheets, element, prop, { desktop } ) => {
+const winningDeclaration = ( sheets, element, prop, context ) => {
 	let winner = null;
 	let order = 0;
+	const ctx = { ...context, sheets };
 
 	sheets.forEach( sheet => sheet.walkRules( rule => {
 		order++;
-		if ( ! atRulesApply( rule, { desktop } ) ) {
-			return;
-		}
 		const declarations = rule.nodes.filter( node => node.type === 'decl' && node.prop === prop );
 		if ( ! declarations.length ) {
 			return;
 		}
+		const selectors = selectorsOf( rule.selector ).map( selector => ( ctx.legacy ? legacySelector( selector ) : selector ) );
+		if ( selectors.includes( null ) ) {
+			return;
+		}
 		let best = null;
-		for ( const selector of selectorsOf( rule.selector ) ) {
+		for ( const selector of selectors ) {
 			if ( matches( element, selector.toString().trim() ) ) {
 				const specificity = specificityOf( selector );
 				if ( ! best || compare( specificity, best.specificity ) > 0 ) {
@@ -146,7 +212,7 @@ const winningDeclaration = ( sheets, element, prop, { desktop } ) => {
 				}
 			}
 		}
-		if ( ! best ) {
+		if ( ! best || ! atRulesApply( rule, ctx, element ) ) {
 			return;
 		}
 		const declaration = declarations[ declarations.length - 1 ];
@@ -163,7 +229,23 @@ const winningDeclaration = ( sheets, element, prop, { desktop } ) => {
 	return winner;
 };
 
+/**
+ * The computed value of a custom property on `element`: its own winning
+ * declaration, else the inherited one (nearest ancestor), else null.
+ */
+function computedCustomProperty( sheets, element, prop, context ) {
+	for ( let node = element; node; node = parentElement( node ) ) {
+		const winner = winningDeclaration( sheets, node, prop, context );
+		if ( winner ) {
+			return winner.value;
+		}
+	}
+	return null;
+}
+
 module.exports = {
+	computedCustomProperty,
+	legacySelector,
 	compileImports,
 	specificityOf,
 	selectorsOf,

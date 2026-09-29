@@ -45,6 +45,53 @@ function novablocks_get_sidecar_rule_style_properties( array $attributes ): arra
 	return novablocks_get_rule_role_style_properties( $attributes, '--nb-sidecar-rule' );
 }
 
+/**
+ * Which rail areas render an element child (GitHub #685).
+ *
+ * The divider rule draws beside a rail only while the rail has content,
+ * which the stylesheet tests with `:has(> .nb-sidecar-area--sidebar-* > *)`.
+ * Browsers without `:has()` (Firefox 115 ESR) read the classes this feeds
+ * instead. Same test as the selector: an element (not text, not a comment)
+ * directly inside a top-level rail area of the rendered Sidecar content.
+ *
+ * @param string $content The Sidecar's rendered inner content.
+ * @return array{left: bool, right: bool}
+ */
+function novablocks_get_sidecar_rail_content( string $content ): array {
+	$found = [ 'left' => false, 'right' => false ];
+
+	if ( '' === $content || ! class_exists( 'WP_HTML_Processor' ) ) {
+		return $found;
+	}
+
+	$processor = WP_HTML_Processor::create_fragment( $content );
+	if ( null === $processor ) {
+		return $found;
+	}
+
+	$area_depth = null;
+	$side       = '';
+	while ( $processor->next_tag() ) {
+		$depth = $processor->get_current_depth();
+		if ( null === $area_depth ) {
+			$area_depth = $depth;
+		}
+
+		if ( $depth === $area_depth ) {
+			$side = '';
+			if ( $processor->has_class( 'nb-sidecar-area--sidebar-left' ) ) {
+				$side = 'left';
+			} elseif ( $processor->has_class( 'nb-sidecar-area--sidebar-right' ) ) {
+				$side = 'right';
+			}
+		} elseif ( '' !== $side && $depth === $area_depth + 1 ) {
+			$found[ $side ] = true;
+		}
+	}
+
+	return $found;
+}
+
 if ( ! function_exists( 'novablocks_render_sidecar_block' ) ) {
 
 	/**
@@ -143,7 +190,17 @@ if ( ! function_exists( 'novablocks_render_sidecar_block' ) ) {
 
 		// Divider rule between content and rail (GitHub #658). Off adds no
 		// class and no property, so existing Sidecars stay byte-identical.
-		$classes = array_merge( $classes, novablocks_get_sidecar_rule_classes( $attributes ) );
+		$rule_classes = novablocks_get_sidecar_rule_classes( $attributes );
+		$classes      = array_merge( $classes, $rule_classes );
+		// Which rails have content, for browsers without `:has()` (#685).
+		// Only a rule-on Sidecar reads it, so others stay byte-identical.
+		if ( ! empty( $rule_classes ) ) {
+			foreach ( novablocks_get_sidecar_rail_content( $content ) as $side => $has_content ) {
+				if ( $has_content ) {
+					$classes[] = 'nb-sidecar--has-' . $side . '-content';
+				}
+			}
+		}
 		foreach ( novablocks_get_sidecar_rule_style_properties( $attributes ) as $property => $value ) {
 			$cssProps[] = $property . ': ' . $value;
 		}

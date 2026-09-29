@@ -144,4 +144,29 @@ foreach ( $GLOBALS['nb_rule_data_calls'] as $call ) {
 	);
 }
 
+// 5. Rail content classes for browsers without `:has()` (#685): a rule-on
+// Sidecar marks each rail that renders an element; rule-off prints nothing.
+require __DIR__ . '/support/wp-html-api.php';
+if ( nb_load_wp_html_api() ) {
+	$rendered = '<div class="nb-sidecar-area nb-sidecar-area--content nb-content-layout-grid"><p>Text</p></div>'
+		. '<div class="nb-sidecar-area nb-sidecar-area--sidebar nb-sidecar-area--sidebar-right"><p>Rail</p></div>';
+	$render   = function ( array $attributes, string $content ) {
+		$block = new WP_Block( [
+			'innerBlocks' => [
+				[ 'blockName' => 'novablocks/sidecar-area', 'attrs' => [ 'areaName' => 'content' ] ],
+				[ 'blockName' => 'novablocks/sidecar-area', 'attrs' => [ 'areaName' => 'sidebar-right' ] ],
+			],
+		] );
+		return novablocks_render_sidecar_block( $attributes, $content, $block );
+	};
+	$on_rail = $render( $base + [ 'ruleRole' => 'primary' ], $rendered );
+	nb_rule_expect( false !== strpos( $on_rail, 'nb-sidecar--rule-primary nb-sidecar--has-right-content"' ), "A rule-on Sidecar with rail content must print the content class. Got:\n$on_rail" );
+	nb_rule_expect( false === strpos( $on_rail, 'has-left-content' ), 'An absent left rail has no content class.' );
+	$empty_rail = str_replace( '<p>Rail</p>', "\n", $rendered );
+	nb_rule_expect( false === strpos( $render( $base + [ 'ruleRole' => 'primary' ], $empty_rail ), '-content"' ), 'An empty rail prints no content class.' );
+	nb_rule_expect( false === strpos( $render( $base, $rendered ), 'has-right-content' ), 'A rule-off Sidecar stays byte-identical (no content class).' );
+} else {
+	echo "sidecar-rule-contract: rail content section SKIPPED (no local WordPress install)\n";
+}
+
 echo "sidecar-rule-contract: all assertions passed\n";
