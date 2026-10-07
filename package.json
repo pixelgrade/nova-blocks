@@ -79,7 +79,7 @@
 		"gulp-rsync": "0.0.9",
 		"lodash": "4.18.1",
 		"node-watch": "^0.7.2",
-		"npm-check-updates": "^11.1.1",
+		"npm-check-updates": "^23.0.0",
 		"postcss": "^8.5.10",
 		"react-contenteditable": "^3.3.6",
 		"rimraf": "^3.0.2",
