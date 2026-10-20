@@ -37,6 +37,11 @@ $GLOBALS['store'] = [
 	'next_item_id'       => 1000,
 ];
 
+function current_theme_supports( $name ) { return true; }
+function get_option( $key, $default = false ) { return $default; }
+function get_post_meta( $id, $key = '', $single = false ) {
+	return '' === $key ? ( $GLOBALS['store']['post_meta'][ $id ] ?? [] ) : '';
+}
 function __( $text, $domain = 'default' ) { return $text; }
 function apply_filters( $hook, $value ) { return $value; }
 function is_wp_error( $thing ) { return $thing instanceof WP_Error; }
@@ -218,10 +223,11 @@ function nb_reset_store(): void {
 nb_reset_store();
 $GLOBALS['store']['nav_menus'][] = new WP_Term( 200, 'gen' );
 $GLOBALS['store']['term_meta'][200]['_novablocks_generated_for'] = 'primary';
+$GLOBALS['store']['locations']['primary'] = 200;
 $GLOBALS['store']['menu_items'][200] = [
-	(object) [ 'db_id' => 9001, 'menu_order' => 1 ],
-	(object) [ 'db_id' => 9002, 'menu_order' => 2 ],
-	(object) [ 'db_id' => 9003, 'menu_order' => 3 ],
+	(object) [ 'ID' => 9001, 'db_id' => 9001, 'menu_order' => 1 ],
+	(object) [ 'ID' => 9002, 'db_id' => 9002, 'menu_order' => 2 ],
+	(object) [ 'ID' => 9003, 'db_id' => 9003, 'menu_order' => 3 ],
 ];
 $GLOBALS['store']['fail_on_title'] = 'Home';
 $rows_err = novablocks_header_nav_flatten_descriptors( novablocks_header_nav_blocks_to_descriptors( [
@@ -235,7 +241,8 @@ nb_assert_same( 0, count( $GLOBALS['store']['deleted'] ), 'no surplus deletion a
 nb_reset_store();
 $GLOBALS['store']['nav_menus'][] = new WP_Term( 300, 'gen' );
 $GLOBALS['store']['term_meta'][300]['_novablocks_generated_for'] = 'primary';
-$GLOBALS['store']['menu_items'][300] = [ (object) [ 'db_id' => 7001, 'menu_order' => 1 ] ];
+$GLOBALS['store']['locations']['primary'] = 300;
+$GLOBALS['store']['menu_items'][300] = [ (object) [ 'ID' => 7001, 'db_id' => 7001, 'menu_order' => 1 ] ];
 nb_assert_same( true, novablocks_header_nav_apply_rows_to_menu( [], 'primary' ), 'empty rows is a safe no-op' );
 nb_assert_same( 0, count( $GLOBALS['store']['deleted'] ), 'empty rows never deletes existing items' );
 
@@ -243,10 +250,11 @@ nb_assert_same( 0, count( $GLOBALS['store']['deleted'] ), 'empty rows never dele
 nb_reset_store();
 $GLOBALS['store']['nav_menus'][] = new WP_Term( 400, 'gen' );
 $GLOBALS['store']['term_meta'][400]['_novablocks_generated_for'] = 'primary';
+$GLOBALS['store']['locations']['primary'] = 400;
 $GLOBALS['store']['menu_items'][400] = [
-	(object) [ 'db_id' => 6001, 'menu_order' => 1 ],
-	(object) [ 'db_id' => 6002, 'menu_order' => 2 ],
-	(object) [ 'db_id' => 6003, 'menu_order' => 3 ],
+	(object) [ 'ID' => 6001, 'db_id' => 6001, 'menu_order' => 1 ],
+	(object) [ 'ID' => 6002, 'db_id' => 6002, 'menu_order' => 2 ],
+	(object) [ 'ID' => 6003, 'db_id' => 6003, 'menu_order' => 3 ],
 ];
 $rows_short = novablocks_header_nav_flatten_descriptors( novablocks_header_nav_blocks_to_descriptors( [
 	nb_block( 'core/navigation-link', [ 'label' => 'Only', 'url' => '/', 'kind' => 'custom' ] ),

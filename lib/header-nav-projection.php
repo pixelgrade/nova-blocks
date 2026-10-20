@@ -17,6 +17,8 @@
 
 defined( 'ABSPATH' ) || exit;
 
+require_once __DIR__ . '/header-nav-compatibility.php';
+
 /**
  * The predefined header locations handled by the block navigation editor.
  *
@@ -463,10 +465,12 @@ function novablocks_header_nav_menu_items_to_blocks( array $items ): array {
  * `add_theme_support( 'novablocks-block-navigation' )` — so themes designed for
  * it (e.g. Anima) get it by default and other themes don't. The
  * `novablocks/enable_block_nav_editing` filter stays an explicit override to
- * force it on or off regardless of theme support.
+ * force it on or off regardless of theme support. Location-level ownership
+ * and compatibility checks still apply; this flag alone does not migrate menus.
  */
 function novablocks_header_nav_block_editing_enabled(): bool {
-	$enabled = (bool) current_theme_supports( 'novablocks-block-navigation' );
+	$enabled = current_theme_supports( 'novablocks-block-navigation' )
+		&& 'classic' !== get_option( 'novablocks_header_nav_editing_mode' );
 
 	return (bool) apply_filters( 'novablocks/enable_block_nav_editing', $enabled );
 }
@@ -515,6 +519,7 @@ function novablocks_header_nav_get_or_create_generated_menu( string $location ) 
 	}
 
 	update_term_meta( $menu_id, '_novablocks_generated_for', $location );
+	update_term_meta( $menu_id, '_novablocks_compatible_projection', 1 );
 
 	return wp_get_nav_menu_object( $menu_id );
 }
@@ -525,11 +530,19 @@ function novablocks_header_nav_get_or_create_generated_menu( string $location ) 
  * Diff-based by position: existing item ids are reused row-for-row so item ids
  * stay stable across edits; surplus items are deleted.
  *
- * @param int    $entity_id wp_navigation post id.
- * @param string $location  Theme location slug.
+ * @param int    $entity_id     wp_navigation post id.
+ * @param string $location      Theme location slug.
+ * @param int    $source_permit Exact source assignment allowed during initial import only.
+ * @param bool   $allow_empty_import Explicit adoption may replace the projection with an empty menu.
  * @return bool True on success.
  */
-function novablocks_header_nav_project_entity_to_menu( int $entity_id, string $location ): bool {
+function novablocks_header_nav_project_entity_to_menu( int $entity_id, string $location, int $source_permit = 0, bool $allow_empty_import = false ): bool {
+	// The apply step checks location ownership and compatibility immediately
+	// before writes. Validate entity ownership before reading its content.
+	$mapped = novablocks_header_nav_entity_map()[ $location ] ?? 0;
+	if ( (int) $mapped !== $entity_id ) {
+		return false;
+	}
 	$entity = get_post( $entity_id );
 
 	if ( ! $entity instanceof WP_Post ) {
@@ -539,7 +552,7 @@ function novablocks_header_nav_project_entity_to_menu( int $entity_id, string $l
 	$descriptors = novablocks_header_nav_blocks_to_descriptors( parse_blocks( $entity->post_content ) );
 	$rows        = novablocks_header_nav_flatten_descriptors( $descriptors );
 
-	return novablocks_header_nav_apply_rows_to_menu( $rows, $location );
+	return novablocks_header_nav_apply_rows_to_menu( $rows, $location, $source_permit, $allow_empty_import );
 }
 
 /**
@@ -551,13 +564,18 @@ function novablocks_header_nav_project_entity_to_menu( int $entity_id, string $l
  *
  * @param array  $rows     Flattened rows (see novablocks_header_nav_flatten_descriptors).
  * @param string $location Theme location slug.
+ * @param int    $source_permit Exact assigned source allowed during import.
+ * @param bool   $allow_empty_import Allow an explicit empty source import, never an ordinary save.
  * @return bool True on success.
  */
-function novablocks_header_nav_apply_rows_to_menu( array $rows, string $location ): bool {
-	// Guard against wiping the menu on an empty (likely failed-parse) entity.
-	// A deliberate "clear everything" is rare and can be added later behind an
-	// explicit flag; silently deleting every item is the worse failure mode.
-	if ( empty( $rows ) ) {
+function novablocks_header_nav_apply_rows_to_menu( array $rows, string $location, int $source_permit = 0, bool $allow_empty_import = false ): bool {
+	if ( ! novablocks_header_nav_location_editing_enabled( $location, $source_permit ) ) {
+		return false;
+	}
+	// Empty entity saves remain a no-op. An explicit settings import of an
+	// empty assigned classic menu must instead produce an empty projection,
+	// never resurrect links from an older generated target.
+	if ( empty( $rows ) && ! ( $allow_empty_import && $source_permit > 0 ) ) {
 		return true;
 	}
 
@@ -568,6 +586,9 @@ function novablocks_header_nav_apply_rows_to_menu( array $rows, string $location
 	}
 
 	$menu_id = $menu->term_id;
+	if ( $source_permit > 0 && $source_permit !== (int) $menu_id ) {
+		update_term_meta( $menu_id, '_novablocks_source_menu', $source_permit );
+	}
 
 	// wp_get_nav_menu_items() is documented to order by menu_order, but re-sort
 	// defensively so position-based id reuse never matches the wrong item.
@@ -754,10 +775,21 @@ function novablocks_header_nav_create_entity( string $location, array $blocks ):
  * @return int Entity post id.
  */
 function novablocks_header_nav_get_or_create_entity_for_location( string $location ): int {
+	if ( ! novablocks_header_nav_location_editing_enabled( $location ) ) {
+		return 0;
+	}
 	$map = novablocks_header_nav_entity_map();
 
 	if ( ! empty( $map[ $location ] ) && get_post( $map[ $location ] ) instanceof WP_Post ) {
 		return (int) $map[ $location ];
+	}
+
+	$locations = get_nav_menu_locations();
+	if ( ! empty( $locations[ $location ] ) ) {
+		if ( ! novablocks_header_nav_seed_location( $location ) ) {
+			return 0;
+		}
+		return novablocks_header_nav_entity_map()[ $location ] ?? 0;
 	}
 
 	return novablocks_header_nav_create_entity( $location, [] );
@@ -769,13 +801,20 @@ function novablocks_header_nav_get_or_create_entity_for_location( string $locati
  * location is reassigned to a fresh Nova-owned generated menu by the projection.
  *
  * @param string $location Theme location slug.
- * @return bool True if a new entity was seeded.
+ * @param bool   $reimport Explicitly import current menu into a new entity, unbinding old editors.
+ * @return bool True if a new entity was seeded and projection succeeded.
  */
-function novablocks_header_nav_seed_location( string $location ): bool {
+function novablocks_header_nav_seed_location( string $location, bool $reimport = false ): bool {
+	$eligible = $reimport
+		? novablocks_header_nav_block_editing_enabled() && novablocks_header_nav_location_is_compatible( $location )
+		: novablocks_header_nav_location_editing_enabled( $location );
+	if ( ! $eligible ) {
+		return false;
+	}
 	$map = novablocks_header_nav_entity_map();
 
 	// Already seeded.
-	if ( ! empty( $map[ $location ] ) && get_post( $map[ $location ] ) instanceof WP_Post ) {
+	if ( ! $reimport && ! empty( $map[ $location ] ) && get_post( $map[ $location ] ) instanceof WP_Post ) {
 		return false;
 	}
 
@@ -783,15 +822,16 @@ function novablocks_header_nav_seed_location( string $location ): bool {
 	$menu_id   = isset( $locations[ $location ] ) ? (int) $locations[ $location ] : 0;
 
 	if ( $menu_id <= 0 ) {
-		return false;
+		return $reimport && novablocks_header_nav_create_entity( $location, [] ) > 0;
 	}
 
 	$raw_items = wp_get_nav_menu_items( $menu_id );
 
-	if ( empty( $raw_items ) ) {
+	if ( empty( $raw_items ) && ! $reimport ) {
 		return false;
 	}
 
+	$raw_items = $raw_items ?: [];
 	$items  = array_map( 'novablocks_header_nav_normalize_menu_item', $raw_items );
 	$blocks = novablocks_header_nav_menu_items_to_blocks( $items );
 
@@ -801,13 +841,18 @@ function novablocks_header_nav_seed_location( string $location ): bool {
 		return false;
 	}
 
-	novablocks_header_nav_project_entity_to_menu( $entity_id, $location );
+	if ( novablocks_header_nav_project_entity_to_menu( $entity_id, $location, $menu_id, $reimport ) ) {
+		return true;
+	}
 
-	return true;
+	// A failed import must not unbind the previous working editor.
+	update_option( 'novablocks_header_nav_entities', $map );
+	wp_delete_post( $entity_id, true );
+	return false;
 }
 
 /**
- * One-time migration: seed all predefined locations from their existing menus.
+ * One-time initialization: seed eligible, explicitly adopted classic menus.
  * Guarded by an option so it only runs once per site.
  */
 function novablocks_header_nav_maybe_seed(): void {
@@ -891,6 +936,13 @@ function novablocks_header_nav_on_entity_save( int $post_id ): void {
  * Register projection hooks. Called from setup (flag-gated), not at include.
  */
 function novablocks_header_nav_register_projection(): void {
+	if ( current_theme_supports( 'novablocks-block-navigation' )
+		|| novablocks_header_nav_entity_map()
+		|| apply_filters( 'novablocks/enable_block_nav_editing', false ) ) {
+		add_action( 'admin_menu', 'novablocks_header_nav_register_settings' );
+		add_action( 'admin_post_novablocks_header_nav_settings', 'novablocks_header_nav_save_settings' );
+		add_action( 'admin_notices', 'novablocks_header_nav_menu_notice' );
+	}
 	if ( ! novablocks_header_nav_block_editing_enabled() ) {
 		return;
 	}
