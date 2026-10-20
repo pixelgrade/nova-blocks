@@ -14,7 +14,9 @@ identifies the menu currently used by each header location.
 
 Choose **Header block editor** to import the currently assigned compatible menus. Applying
 this option again imports the latest classic edits. Reopen the header editor afterward:
-previously open editors are no longer connected to the imported menus.
+previously open editors are no longer connected to the imported menus. If a previously used
+header location is now unassigned, assign its intended menu before importing. Nova keeps
+that deliberate unassignment instead of restoring an older generated menu.
 
 Menus with additional per-item plugin settings stay in the classic editor. Nova checks the
 assigned menu, its generated target and recorded source before writing. Older generated menus

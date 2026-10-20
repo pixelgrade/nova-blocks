@@ -662,7 +662,9 @@ function novablocks_header_nav_apply_rows_to_menu( array $rows, string $location
 
 	// Remove surplus items left over from a previous, longer projection.
 	for ( $i = count( $rows ); $i < count( $existing_ids ); $i++ ) {
-		wp_delete_post( (int) $existing_ids[ $i ], true );
+		if ( ! wp_delete_post( (int) $existing_ids[ $i ], true ) ) {
+			return false;
+		}
 	}
 
 	// Ensure the generated menu is assigned to the location.
@@ -822,6 +824,11 @@ function novablocks_header_nav_seed_location( string $location, bool $reimport =
 	$menu_id   = isset( $locations[ $location ] ) ? (int) $locations[ $location ] : 0;
 
 	if ( $menu_id <= 0 ) {
+		// Preserve a deliberate unassignment. Require an assigned source before
+		// adopting an older target, rather than reporting an unusable editor.
+		if ( novablocks_header_nav_generated_menu( $location ) ) {
+			return false;
+		}
 		return $reimport && novablocks_header_nav_create_entity( $location, [] ) > 0;
 	}
 

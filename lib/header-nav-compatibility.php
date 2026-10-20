@@ -128,7 +128,7 @@ function novablocks_header_nav_settings_page(): void {
 	echo '<p>' . esc_html__( 'Existing classic menus stay in Appearance → Menus until you choose the header block editor. Empty header locations can use the block editor automatically.', '__plugin_txtd' ) . '</p>';
 	novablocks_header_nav_menu_links();
 	if ( get_option( 'novablocks_header_nav_import_errors', [] ) ) {
-		echo '<div class="notice notice-warning inline" role="alert"><p>' . esc_html__( 'Some menus could not be imported. Review the assigned menus and their plugin settings before trying again.', '__plugin_txtd' ) . '</p></div>';
+		echo '<div class="notice notice-warning inline" role="alert"><p>' . esc_html__( 'Some menus could not be imported. Review their plugin settings and assign a menu to any previously used header location before trying again.', '__plugin_txtd' ) . '</p></div>';
 	}
 	echo '<p>' . esc_html__( 'Menus with additional plugin settings stay in the classic editor. If your menus were converted by an earlier version, review their settings before using them; switching editors does not restore settings lost during an earlier conversion.', '__plugin_txtd' ) . '</p>';
 	echo '<form method="post" action="' . esc_url( admin_url( 'admin-post.php' ) ) . '">';

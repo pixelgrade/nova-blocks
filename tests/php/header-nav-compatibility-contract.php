@@ -158,6 +158,7 @@ function update_post_meta( $id, $key, $value ) {
 function wp_delete_post( $id, $force ) {
 	global $writes;
 	$writes[] = 'delete';
+	return empty( $GLOBALS['fail_delete'] );
 }
 
 
@@ -306,6 +307,27 @@ check( true, novablocks_header_nav_seed_location( 'primary', true ), 'first empt
 check( true, 10 !== $locations['primary'], 'first empty import assigns a generated target' );
 check( [], wp_get_nav_menu_items( $locations['primary'] ), 'first empty projection contains no links' );
 check( true, novablocks_header_nav_location_editing_enabled( 'primary' ), 'first empty adoption remains editable' );
+
+// An explicit empty import must not activate retained links when deletion fails.
+$menus = [new WP_Term( 10 ), new WP_Term( 20 )];
+$term_meta[20] = ['_novablocks_generated_for' => 'primary', '_novablocks_compatible_projection' => 1];
+$locations = ['primary' => 10];
+$items[10] = [];
+$items[20] = [(object) ['ID' => 21, 'db_id' => 21, 'menu_order' => 1]];
+$previous_map = $options['novablocks_header_nav_entities'];
+$GLOBALS['fail_delete'] = true;
+check( false, novablocks_header_nav_seed_location( 'primary', true ), 'failed empty target clearing rejects import' );
+check( ['primary' => 10], $locations, 'failed clearing never assigns retained links' );
+check( $previous_map, $options['novablocks_header_nav_entities'], 'failed clearing restores editor map' );
+$GLOBALS['fail_delete'] = false;
+
+// A deliberately unassigned previous location cannot be silently reclaimed.
+$locations = [];
+$previous_map = $options['novablocks_header_nav_entities'];
+$writes = [];
+check( false, novablocks_header_nav_seed_location( 'primary', true ), 'unassigned old target reports an actionable import hold' );
+check( $previous_map, $options['novablocks_header_nav_entities'], 'unassigned import does not replace the editor map' );
+check( [], $writes, 'unassigned import does not mutate retained content' );
 
 // Installing Nova on an unrelated theme must not add header-navigation UI.
 $GLOBALS['theme_support'] = false;
