@@ -59,10 +59,12 @@ if ( ! function_exists( 'novablocks_register_vendor_scripts' ) ) {
 		wp_script_add_data( 'novablocks-velocity', 'crossorigin', 'anonymous' );
 
 		$google_maps_api_key = get_option( 'novablocks_google_maps_api_key', '' );
-		wp_register_script(
-			'google-maps',
-			'//maps.googleapis.com/maps/api/js?key=' . $google_maps_api_key . '&libraries=places'
-		);
+		if ( ! empty( $google_maps_api_key ) ) {
+			wp_register_script(
+				'google-maps',
+				'//maps.googleapis.com/maps/api/js?key=' . esc_attr( $google_maps_api_key ) . '&libraries=places'
+			);
+		}
 
 		// Comments related.
 		/** The Rich Text Editor from Basecamp - Trix.
