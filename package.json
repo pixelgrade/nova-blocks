@@ -57,7 +57,7 @@
 		"@wordpress/custom-templated-path-webpack-plugin": "^2.1.0",
 		"@wordpress/dependency-extraction-webpack-plugin": "^4.31.0",
 		"@wordpress/library-export-default-webpack-plugin": "^2.2.0",
-		"@wordpress/scripts": "^17",
+		"@wordpress/scripts": "^33",
 		"autoprefixer": "^10.4.21",
 		"babel-plugin-inline-json-import": "^0.3.2",
 		"babel-plugin-lodash": "^3.3.4",
