@@ -3,7 +3,7 @@ Contributors: pixelgrade, vlad.olaru, babbardel, razvanonofrei, gorby31
 Tags: blocks, gutenberg, gutenberg blocks, page builder, full site editing
 Requires at least: 7.0
 Tested up to: 7.2
-Stable tag: 2.7.2
+Stable tag: 2.7.3
 Requires PHP: 7.4
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -113,6 +113,10 @@ Yes! Nova Block's core features are free to use.
 3. Slideshow Me the Way block options
 
 == Changelog ==
+
+= 2.7.3 =
+* Confirmed compatibility with WordPress 7.2.
+* Fix: the gallery preview stays stable when you add or clear its images.
 
 = 2.7.2 =
 * Fix: post-format cards (Quote, Image and similar) in a Cards Collection no longer repeat the collection's title, subtitle, description or buttons. They show only their own content, with the byline above the media when the collection places it there.
