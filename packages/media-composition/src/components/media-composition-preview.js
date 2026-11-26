@@ -22,14 +22,6 @@ const MediaCompositionPreview = ( props ) => {
 	} = props;
 
 	const gallery = attributes?.images || [];
-	const galleryValue = gallery.map( ( image ) => image.id );
-
-	if ( ! gallery || ! gallery.length ) {
-		return (
-		  <MediaCompositionPlaceholder { ...props } />
-    );
-	}
-
 	const [ height, setHeight ] = useState(0);
 	const ref = useRef( null );
 
@@ -37,6 +29,11 @@ const MediaCompositionPreview = ( props ) => {
 		setHeight( !! ref.current ? ref.current.clientHeight : 0 );
 	});
 
+	if ( ! gallery.length ) {
+		return <MediaCompositionPlaceholder { ...props } />;
+	}
+
+	const galleryValue = gallery.map( ( image ) => image.id );
 	const gridItemsCollection = new GridItemCollection( gallery, attributes );
 	const gridStyle = getMediaCompositionCSSProps( attributes );
 
