@@ -10,7 +10,7 @@
  * License URI: http://www.gnu.org/licenses/gpl-2.0.txt
  * Text Domain: __plugin_txtd
  * Requires at least: 7.0
- * Tested up to: 7.1
+ * Tested up to: 7.2
  * Requires PHP: 7.4
  * GitHub Plugin URI: pixelgrade/nova-blocks
  * Release Asset: true
